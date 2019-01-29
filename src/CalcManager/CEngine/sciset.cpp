@@ -1,29 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-/**************************************************************************/
-/*** SCICALC Scientific Calculator for Windows 3.00.12                  ***/
-/*** (c)1989 Microsoft Corporation.  All Rights Reserved.               ***/
-/***                                                                    ***/
-/*** sciset.c                                                           ***/
-/***                                                                    ***/
-/*** Functions contained:                                               ***/
-/***                                                                    ***/
-/*** Functions called:                                                  ***/
-/***    none                                                            ***/
-/***                                                                    ***/
-/*** History:                                                           ***/
-/***    12-Dec-1996 Added SetMaxIntDigits                               ***/
-/***    Whenever-97 Removed SetMaxIntDigits                             ***/
-/***                                                                    ***/
-/**************************************************************************/
 #include "pch.h"
 #include "Header Files/CalcEngine.h"
 
 using namespace CalcEngine;
+using namespace CalcEngine::RationalMath;
 
-// 
-//  To be called when either the radix or num width changes. You can use -1 in either of these values to mean
+// To be called when either the radix or num width changes. You can use -1 in either of these values to mean
 // dont change that.
 void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwidth)
 {
@@ -34,22 +18,17 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwid
     // back to 1111,1111,1000,0001 when in Word mode.
     if (m_fIntegerMode)
     {
-        PRAT curRat = m_currentVal.ToPRAT();
-        ULONGLONG w64Bits = NumObjGetUlValue(curRat, m_radix, m_precision);
+        uint64_t w64Bits = m_currentVal.ToUInt64_t(m_radix, m_precision);
         bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1; // make sure you use the old width
 
         if (fMsb)
         {
             // If high bit is set, then get the decimal number in -ve 2'scompl form.
-            PRAT chopRat = m_chopNumbers[m_numwidth].ToPRAT();
-            NumObjNot(&curRat, true, chopRat, m_radix, m_precision);
-            destroyrat(chopRat);
-            addrat(&curRat, rat_one, m_precision);
-            NumObjNegate(&curRat);
-            m_currentVal = Rational{ curRat };
-        }
+            auto tempResult = Not(m_currentVal, true, m_chopNumbers[m_numwidth], m_radix, m_precision);
+            tempResult = Add(tempResult, 1, m_precision);
 
-        destroyrat(curRat);
+            m_currentVal = Negate(tempResult);
+        }
     }
 
     if (radixtype >= HEX_RADIX && radixtype <= BIN_RADIX)
@@ -84,9 +63,9 @@ LONG CCalcEngine::DwWordBitWidthFromeNumWidth(NUM_WIDTH /*numwidth*/)
     return wmax;
 }
 
-uint32_t CCalcEngine::NRadixFromRadixType( RADIX_TYPE radixtype)
+uint32_t CCalcEngine::NRadixFromRadixType(RADIX_TYPE radixtype)
 {
-    static constexpr uint32_t rgnRadish[4]={16, 10, 8, 2};  /* Number bases in the same order as radixtype */
+    static constexpr uint32_t rgnRadish[4] = { 16, 10, 8, 2 };  /* Number bases in the same order as radixtype */
     uint32_t radix = 10;
 
     // convert special bases into symbolic values
@@ -106,25 +85,16 @@ bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno)
         return false; // ignore error cant happen
     }
 
-    PRAT hnumPow = nullptr;
-    NumObjAssign(&hnumPow, rat_two);
-    PRAT hnum = longtorat(wbitno);
-    powrat(&hnumPow, hnum, m_radix, m_precision);
-
-    PRAT resultRat = rat.ToPRAT();
-    intrat(&resultRat, m_radix, m_precision);
-    if (NumObjIsZero(resultRat))
+    Rational result = Integer(rat, m_radix, m_precision);
+    if (result.IsZero())
     {
         // This is the same work around happenning in SciCalcFunctions. Ought to move to intrat function itself.
-        // Basic bug is there which doesn treat 0/ n as 0, or -0 as 0 etc.
-        NumObjAssign(&resultRat, rat_zero);
+        // Basic bug is there which doesn't treat 0/ n as 0, or -0 as 0 etc.
+        result = Rational{};
     }
 
-    xorrat(&resultRat, hnumPow, m_radix, m_precision);
-    rat = Rational{ resultRat };
-    destroyrat(resultRat);
-    NumObjDestroy(&hnumPow);
-    NumObjDestroy(&hnum);
+    auto pow = Pow(2, static_cast<int32_t>(wbitno), m_radix, m_precision);
+    rat = Xor(result, pow, m_radix, m_precision);
 
     return true;
 }

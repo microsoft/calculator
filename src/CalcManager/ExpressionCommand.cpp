@@ -293,9 +293,7 @@ wstring COpndCommand::GetString(uint32_t radix, int32_t precision, wchar_t decim
 
     if (m_fInitialized)
     {
-        PRAT valRat = m_value.ToPRAT();
-        result = NumObjToString(valRat, radix, eNUMOBJ_FMT::FMT_FLOAT, precision);
-        destroyrat(valRat);
+        result = m_value.ToString(radix, eNUMOBJ_FMT::FMT_FLOAT, precision);
     }
 
     return result;

@@ -1,29 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-/**************************************************************************\
- *** SCICALC Scientific Calculator for Windows 3.00.12
- *** (c)1989 Microsoft Corporation.  All Rights Reserved.
- ***
- *** scimain.c
- ***
- *** Definitions of all globals, WinMain procedure
- ***
- *** Last modification
- ***    Fri  22-Nov-1996
- ***
- *** 22-Nov-1996
- *** Converted Calc from floating point to infinite precision.
- *** The new math engine is in ..\ratpak
- ***
- ***
- *** 05-Jan-1990
- *** Calc did not have a floating point exception signal handler. This
- *** would cause CALC to be forced to exit on a FP exception as that's
- *** the default.
- *** The signal handler is defined in SCIFUNC.C, in WinMain we hook the
- *** the signal.
-\**************************************************************************/
 #include "pch.h"
 #include "Header Files/CalcEngine.h"
 
@@ -46,9 +23,7 @@ static constexpr wstring_view DEFAULT_GRP_STR = L"3;0";
 static constexpr wstring_view DEFAULT_NUMBER_STR = L"0";
 
 // Read strings for keys, errors, trig types, etc.
-// These will be copied from the resources to local memory.  A larger
-// than needed block is allocated first and then reallocated once we
-// know how much is actually used.
+// These will be copied from the resources to local memory.
 
 array<wstring, CSTRINGSENGMAX> CCalcEngine::s_engineStrings;
 
@@ -111,7 +86,7 @@ CCalcEngine::CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager
     m_numberString(DEFAULT_NUMBER_STR),
     m_nOp(),
     m_nPrecOp(),
-    m_memoryValue{make_unique<Rational>()},
+    m_memoryValue{ make_unique<Rational>() },
     m_holdVal{},
     m_currentVal{},
     m_lastVal{}
@@ -120,12 +95,7 @@ CCalcEngine::CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager
 
     m_dwWordBitWidth = DwWordBitWidthFromeNumWidth(m_numwidth);
 
-    PRAT maxTrig = longtorat(10L);
-    PRAT hundred = longtorat(100L);
-    powrat(&maxTrig, hundred, m_radix, m_precision);
-    m_maxTrigonometricNum = Rational{ maxTrig };
-    destroyrat(maxTrig);
-    destroyrat(hundred);
+    m_maxTrigonometricNum = RationalMath::Pow(10, 100, m_radix, m_precision);
 
     SetRadixTypeAndNumWidth(DEC_RADIX, m_numwidth);
     SettingsChanged();
@@ -147,14 +117,10 @@ void CCalcEngine::InitChopNumbers()
     assert(m_chopNumbers.size() == m_maxDecimalValueStrings.size());
     for (size_t i = 0; i < m_chopNumbers.size(); i++)
     {
-        PRAT hno = m_chopNumbers[i].ToPRAT();
+        auto maxVal = RationalMath::Div(m_chopNumbers[i], 2, m_precision);
+        maxVal = RationalMath::Integer(maxVal, m_radix, m_precision);
 
-        divrat(&hno, rat_two, m_precision);
-        intrat(&hno, m_radix, m_precision);
-
-        m_maxDecimalValueStrings[i] = NumObjToString(hno, 10, FMT_FLOAT, m_precision);
-
-        NumObjDestroy(&hno);
+        m_maxDecimalValueStrings[i] = maxVal.ToString(10, FMT_FLOAT, m_precision);
     }
 }
 
