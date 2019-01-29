@@ -17,13 +17,11 @@ all community interactions must abide by the [Code of Conduct](CODE_OF_CONDUCT.m
 
 ## Finding issues you can help with
 Looking for something to work on?
-[Issues marked *up for grabs*](https://microsoft.com/#TODO_MIGRATE_THIS_LINK_AFTER_GITHUB_MIGRATION)
+[Issues marked *good first issue*](https://github.com/Microsoft/calculator/labels/good%20first%20issue)
 are a good place to start.
 
-Another way you can help is by reproducing issues others have reported.
-[Issues marked *more info needed*](https://microsoft.com/#TODO_MIGRATE_THIS_LINK_AFTER_GITHUB_MIGRATION)
-don't have all the information needed to take action. You can try to reproduce the issue on your
-machine and add more details so we can take action on the report.
+You can also check [the *help wanted* tag](https://github.com/Microsoft/calculator/labels/help%20wanted)
+to find other issues to help with.
 
 ## Contributions we accept
 We welcome your contributions to the Calculator project, especially to fix bugs and to make
@@ -79,7 +77,7 @@ participate in the review, but at least one member of the Calculator team will u
 the request.
 
 Often, multiple iterations will be needed to responding to feedback from reviewers. Try looking at
-[past pull requests](https://microsoft.com/#TODO_MIGRATE_THIS_LINK_AFTER_GITHUB_MIGRATION) to see
+[past pull requests](https://github.com/Microsoft/calculator/pulls?q=is%3Apr+is%3Aclosed) to see
 what the experience might be like.
 
 ## Contributor License Agreement
