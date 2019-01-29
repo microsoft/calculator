@@ -49,11 +49,11 @@ private:
 class COpndCommand : public IOpndCommand
 {
 public:
-    COpndCommand(_In_ std::shared_ptr<CalculatorVector<int>> const &commands,
+    COpndCommand(
+        std::shared_ptr<CalculatorVector<int>> const &commands,
         bool fNegative,
         bool fDecimal,
         bool fSciFmt);
-    ~COpndCommand();
     void Initialize(CalcEngine::Rational const& rat);
 
     const std::shared_ptr<CalculatorVector<int>> & GetCommands() const;

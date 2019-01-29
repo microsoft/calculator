@@ -95,11 +95,13 @@ void CBinaryCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
     commandVisitor.Visit(*this);
 }
 
-COpndCommand::COpndCommand(_In_ shared_ptr<CalculatorVector<int>> const &commands,
-    bool fNegative,
-    bool fDecimal,
-    bool fSciFmt) :
-    m_commands(commands), m_fNegative(fNegative), m_fDecimal(fDecimal), m_fSciFmt(fSciFmt), m_fInitialized(false), m_value{}
+COpndCommand::COpndCommand(shared_ptr<CalculatorVector<int>> const &commands, bool fNegative, bool fDecimal, bool fSciFmt) :
+    m_commands(commands),
+    m_fNegative(fNegative),
+    m_fDecimal(fDecimal),
+    m_fSciFmt(fSciFmt),
+    m_fInitialized(false),
+    m_value{}
 {}
 
 void COpndCommand::Initialize(Rational const& rat)
@@ -298,9 +300,6 @@ wstring COpndCommand::GetString(uint32_t radix, int32_t precision, wchar_t decim
 
     return result;
 }
-
-COpndCommand::~COpndCommand()
-{}
 
 void COpndCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
 {
