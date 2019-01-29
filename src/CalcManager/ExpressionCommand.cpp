@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -7,6 +7,7 @@
 #include "ExpressionCommand.h"
 
 using namespace std;
+using namespace CalcEngine;
 
 constexpr wchar_t chNegate = L'-';
 constexpr wchar_t chExp = L'e';
@@ -94,25 +95,19 @@ void CBinaryCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
     commandVisitor.Visit(*this);
 }
 
-COpndCommand::COpndCommand(_In_ shared_ptr<CalculatorVector<int>> const &commands,
-        _In_ bool fNegative,
-        _In_ bool fDecimal,
-        _In_ bool fSciFmt) :
-    m_commands(commands), m_fNegative(fNegative), m_fDecimal(fDecimal), m_fSciFmt(fSciFmt)
-{
-    m_hnoNum = nullptr;
-}
+COpndCommand::COpndCommand(shared_ptr<CalculatorVector<int>> const &commands, bool fNegative, bool fDecimal, bool fSciFmt) :
+    m_commands(commands),
+    m_fNegative(fNegative),
+    m_fDecimal(fDecimal),
+    m_fSciFmt(fSciFmt),
+    m_fInitialized(false),
+    m_value{}
+{}
 
-
-void COpndCommand::Initialize(_In_ PRAT hNoNum)
+void COpndCommand::Initialize(Rational const& rat)
 {
-    assert(&m_hnoNum != nullptr);
-    if (m_hnoNum != nullptr)
-    {
-        destroyrat(m_hnoNum);
-        m_hnoNum = nullptr;
-    }
-    DUPRAT(m_hnoNum, hNoNum);
+    m_value = rat;
+    m_fInitialized = true;
 }
 
 const shared_ptr<CalculatorVector<int>> & COpndCommand::GetCommands() const
@@ -294,18 +289,16 @@ const wstring & COpndCommand::GetToken(wchar_t decimalSymbol)
 
 wstring COpndCommand::GetString(uint32_t radix, int32_t precision, wchar_t decimalSymbol)
 {
-    wstring numString{};
-    if (m_hnoNum != nullptr)
+    wstring result{};
+
+    if (m_fInitialized)
     {
-        numString = NumObjToString(m_hnoNum, radix, eNUMOBJ_FMT::FMT_FLOAT, precision);
+        PRAT valRat = m_value.ToPRAT();
+        result = NumObjToString(valRat, radix, eNUMOBJ_FMT::FMT_FLOAT, precision);
+        destroyrat(valRat);
     }
 
-    return numString;
-}
-
-COpndCommand::~COpndCommand()
-{
-    destroyrat(m_hnoNum);
+    return result;
 }
 
 void COpndCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)

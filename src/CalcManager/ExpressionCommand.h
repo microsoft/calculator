@@ -1,9 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
 #include "ExpressionCommandInterface.h"
-#include "Header Files\CalcEngine.h"
+#include "Header Files/CalcEngine.h"
+#include "Header Files/Rational.h"
 
 class CParentheses : public IParenthesisCommand
 {
@@ -48,12 +49,12 @@ private:
 class COpndCommand : public IOpndCommand
 {
 public:
-    COpndCommand(_In_ std::shared_ptr<CalculatorVector<int>> const &commands,
-        _In_ bool fNegative,
-        _In_ bool fDecimal,
-        _In_ bool fSciFmt);
-    ~COpndCommand();
-    void Initialize(_In_ PRAT hNoNum);
+    COpndCommand(
+        std::shared_ptr<CalculatorVector<int>> const &commands,
+        bool fNegative,
+        bool fDecimal,
+        bool fSciFmt);
+    void Initialize(CalcEngine::Rational const& rat);
 
     const std::shared_ptr<CalculatorVector<int>> & GetCommands() const;
     void SetCommands(std::shared_ptr<CalculatorVector<int>> const& commands);
@@ -73,8 +74,9 @@ private:
     bool m_fNegative;
     bool m_fSciFmt;
     bool m_fDecimal;
+    bool m_fInitialized;
     std::wstring m_token;
-    PRAT m_hnoNum;
+    CalcEngine::Rational m_value;
     void ClearAllAndAppendCommand(CalculationManager::Command command);
 };
 
