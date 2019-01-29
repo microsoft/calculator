@@ -334,7 +334,7 @@ DoPrecedenceCheckAgain:
         if(wParam == IDC_PERCENT)
         {
             CheckAndAddLastBinOpToHistory();
-            m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal, true);
+            m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal, true /* Add to primary and secondary display */);
         }
 
         /* reset the m_bInv flag and indicators if it is set
