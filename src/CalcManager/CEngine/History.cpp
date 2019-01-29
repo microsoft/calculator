@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -52,7 +52,7 @@ CHistoryCollector::~CHistoryCollector()
     }
 }
 
-void CHistoryCollector::AddOpndToHistory(wstring_view numStr, Rational rat, bool fRepetition)
+void CHistoryCollector::AddOpndToHistory(wstring_view numStr, Rational const& rat, bool fRepetition)
 {
     std::shared_ptr<CalculatorVector<int>> commands = std::make_shared<CalculatorVector<int>>();
     // Check for negate
@@ -92,7 +92,8 @@ void CHistoryCollector::AddOpndToHistory(wstring_view numStr, Rational rat, bool
         }
     }
 
-    auto operandCommand = std::make_shared<COpndCommand>(commands, rat, fNegative, fDecimal, fSciFmt);
+    auto operandCommand = std::make_shared<COpndCommand>(commands, fNegative, fDecimal, fSciFmt);
+    operandCommand->Initialize(rat);
     int iCommandEnd = AddCommand(operandCommand);
     m_lastOpStartIndex = IchAddSzToEquationSz(numStr, iCommandEnd);
 

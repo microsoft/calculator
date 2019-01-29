@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -50,11 +50,11 @@ class COpndCommand : public IOpndCommand
 {
 public:
     COpndCommand(_In_ std::shared_ptr<CalculatorVector<int>> const &commands,
-        CalcEngine::Rational const& rat,
         bool fNegative,
         bool fDecimal,
         bool fSciFmt);
     ~COpndCommand();
+    void Initialize(CalcEngine::Rational const& rat);
 
     const std::shared_ptr<CalculatorVector<int>> & GetCommands() const;
     void SetCommands(std::shared_ptr<CalculatorVector<int>> const& commands);
@@ -74,6 +74,7 @@ private:
     bool m_fNegative;
     bool m_fSciFmt;
     bool m_fDecimal;
+    bool m_fInitialized;
     std::wstring m_token;
     CalcEngine::Rational m_value;
     void ClearAllAndAppendCommand(CalculationManager::Command command);

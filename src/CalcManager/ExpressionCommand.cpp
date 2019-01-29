@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -96,12 +96,17 @@ void CBinaryCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
 }
 
 COpndCommand::COpndCommand(_In_ shared_ptr<CalculatorVector<int>> const &commands,
-        Rational const& rat,
-        bool fNegative,
-        bool fDecimal,
-        bool fSciFmt) :
-    m_commands(commands), m_value{ rat }, m_fNegative(fNegative), m_fDecimal(fDecimal), m_fSciFmt(fSciFmt)
+    bool fNegative,
+    bool fDecimal,
+    bool fSciFmt) :
+    m_commands(commands), m_fNegative(fNegative), m_fDecimal(fDecimal), m_fSciFmt(fSciFmt), m_fInitialized(false), m_value{}
 {}
+
+void COpndCommand::Initialize(Rational const& rat)
+{
+    m_value = rat;
+    m_fInitialized = true;
+}
 
 const shared_ptr<CalculatorVector<int>> & COpndCommand::GetCommands() const
 { 
@@ -282,9 +287,14 @@ const wstring & COpndCommand::GetToken(wchar_t decimalSymbol)
 
 wstring COpndCommand::GetString(uint32_t radix, int32_t precision, wchar_t decimalSymbol)
 {
-    PRAT valRat = m_value.ToPRAT();
-    auto result = NumObjToString(valRat, radix, eNUMOBJ_FMT::FMT_FLOAT, precision);
-    destroyrat(valRat);
+    wstring result{};
+
+    if (m_fInitialized)
+    {
+        PRAT valRat = m_value.ToPRAT();
+        result = NumObjToString(valRat, radix, eNUMOBJ_FMT::FMT_FLOAT, precision);
+        destroyrat(valRat);
+    }
 
     return result;
 }
