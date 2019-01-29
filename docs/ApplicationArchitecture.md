@@ -141,8 +141,19 @@ property and a `PropertyChanged` event will be raised, allowing the UI to respon
 --------
 ## Model
 
-The Model for the Calculator modes is contained in the [CalcManager][CalcManager folder] project.
-<!-- TODO joshuako: Add the docs -->
+The Model for the Calculator modes is contained in the [CalcManager][CalcManager folder] project. It consists of three layers: a `CalculatorManager`, which relies on a `CalcEngine`, which relies on the `Ratpack`.
+
+### CalculatorManager
+
+The CalculatorManager contains the logic for managing the overall Calculator app's data such as the History and Memory lists, as well as maintaining the instances of calculator engines used for the various modes. The core of this layer is represented in [CalculatorManager.h][CalculatorManager.h].
+
+### CalcEngine
+
+The CalcEngine contains the logic for interpreting and performing operations according to the commands passed to it. It maintains the current state of calculations and relies on the RatPack for performing mathematical operations. The core of this layer is represented in [CalcEngine.h][CalcEngine.h].
+
+### RatPack
+
+The RatPack (short for Rational Pack) is the core of the Calculator model and contains the logic for performing its mathematical operations. The core of this layer is represented in [ratpak.h][ratpak.h].
 
 [References]:####################################################################################################
 
@@ -186,3 +197,6 @@ The Model for the Calculator modes is contained in the [CalcManager][CalcManager
 [Utils.h]:                            ..\src\CalcViewModel\Common\Utils.h
 
 [CalcManager folder]:                 ..\src\CalcManager
+[CalculatorManager.h]:                ..\src\CalcManager\CalculatorManager.h
+[CalcEngine.h]:                       ..\src\CalcManager\Header&#32;Files\CalcEngine.h
+[ratpak.h]:                           ..\src\CalcManager\Ratpack\ratpak.h
