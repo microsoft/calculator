@@ -1,0 +1,2151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppName" xml:space="preserve">
+    <value>Manahajar lissafi</value>
+    <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"}</comment>
+  </data>
+  <data name="AppStoreName" xml:space="preserve">
+    <value>Manahajar lissafi Windows</value>
+    <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps.</comment>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>Manahajar lissafi</value>
+    <comment>{@Appx_Description@}</comment>
+  </data>
+  <data name="copyMenuItem" xml:space="preserve">
+    <value>Kwafa</value>
+    <comment>Copy context menu string</comment>
+  </data>
+  <data name="pasteMenuItem" xml:space="preserve">
+    <value>Manna</value>
+    <comment>Paste context menu string</comment>
+  </data>
+  <data name="SupplementaryResultsHeader.Text" xml:space="preserve">
+    <value>Wajen daidai da</value>
+    <comment>The text that shows at the bottom of the converter to head the supplementary results. Indicates that the main result is approximately equal to the supplementary results.</comment>
+  </data>
+  <data name="BitAutomationName" xml:space="preserve">
+    <value>Bit </value>
+    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  </data>
+  <data name="ValueAutomationName" xml:space="preserve">
+    <value>Daraja</value>
+    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  </data>
+  <data name="BinaryZeroValueAutomationName" xml:space="preserve">
+    <value>Sifiri</value>
+    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  </data>
+  <data name="BinaryOneValueAutomationName" xml:space="preserve">
+    <value>Ɗaya</value>
+    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  </data>
+  <data name="63" xml:space="preserve">
+    <value>na 6</value>
+    <comment>Sub-string used in automation name for 63 bit in bit flip</comment>
+  </data>
+  <data name="62" xml:space="preserve">
+    <value>na 62</value>
+    <comment>Sub-string used in automation name for 62 bit in bit flip</comment>
+  </data>
+  <data name="61" xml:space="preserve">
+    <value>na 61</value>
+    <comment>Sub-string used in automation name for 61 bit in bit flip</comment>
+  </data>
+  <data name="60" xml:space="preserve">
+    <value>na 60</value>
+    <comment>Sub-string used in automation name for 60 bit in bit flip</comment>
+  </data>
+  <data name="59" xml:space="preserve">
+    <value>na 59</value>
+    <comment>Sub-string used in automation name for 59 bit in bit flip</comment>
+  </data>
+  <data name="58" xml:space="preserve">
+    <value>na 58</value>
+    <comment>Sub-string used in automation name for 58 bit in bit flip</comment>
+  </data>
+  <data name="57" xml:space="preserve">
+    <value>na 57</value>
+    <comment>Sub-string used in automation name for 57 bit in bit flip</comment>
+  </data>
+  <data name="56" xml:space="preserve">
+    <value>na 56</value>
+    <comment>Sub-string used in automation name for 56 bit in bit flip</comment>
+  </data>
+  <data name="55" xml:space="preserve">
+    <value>na 55</value>
+    <comment>Sub-string used in automation name for 55 bit in bit flip</comment>
+  </data>
+  <data name="54" xml:space="preserve">
+    <value>na 54</value>
+    <comment>Sub-string used in automation name for 54 bit in bit flip</comment>
+  </data>
+  <data name="53" xml:space="preserve">
+    <value>na 53</value>
+    <comment>Sub-string used in automation name for 53 bit in bit flip</comment>
+  </data>
+  <data name="52" xml:space="preserve">
+    <value>na 52</value>
+    <comment>Sub-string used in automation name for 52 bit in bit flip</comment>
+  </data>
+  <data name="51" xml:space="preserve">
+    <value>na 51</value>
+    <comment>Sub-string used in automation name for 51 bit in bit flip</comment>
+  </data>
+  <data name="50" xml:space="preserve">
+    <value>na 50</value>
+    <comment>Sub-string used in automation name for 50 bit in bit flip</comment>
+  </data>
+  <data name="49" xml:space="preserve">
+    <value>na 49</value>
+    <comment>Sub-string used in automation name for 49 bit in bit flip</comment>
+  </data>
+  <data name="48" xml:space="preserve">
+    <value>na 48</value>
+    <comment>Sub-string used in automation name for 48 bit in bit flip</comment>
+  </data>
+  <data name="47" xml:space="preserve">
+    <value>na 47</value>
+    <comment>Sub-string used in automation name for 47 bit in bit flip</comment>
+  </data>
+  <data name="46" xml:space="preserve">
+    <value>na 46</value>
+    <comment>Sub-string used in automation name for 46 bit in bit flip</comment>
+  </data>
+  <data name="45" xml:space="preserve">
+    <value>na 45</value>
+    <comment>Sub-string used in automation name for 45 bit in bit flip</comment>
+  </data>
+  <data name="44" xml:space="preserve">
+    <value>na 44</value>
+    <comment>Sub-string used in automation name for 44 bit in bit flip</comment>
+  </data>
+  <data name="43" xml:space="preserve">
+    <value>na 43</value>
+    <comment>Sub-string used in automation name for 43 bit in bit flip</comment>
+  </data>
+  <data name="42" xml:space="preserve">
+    <value>na 42</value>
+    <comment>Sub-string used in automation name for 42 bit in bit flip</comment>
+  </data>
+  <data name="41" xml:space="preserve">
+    <value>na 41</value>
+    <comment>Sub-string used in automation name for 41 bit in bit flip</comment>
+  </data>
+  <data name="40" xml:space="preserve">
+    <value>na 40</value>
+    <comment>Sub-string used in automation name for 40 bit in bit flip</comment>
+  </data>
+  <data name="39" xml:space="preserve">
+    <value>na 39</value>
+    <comment>Sub-string used in automation name for 39 bit in bit flip</comment>
+  </data>
+  <data name="38" xml:space="preserve">
+    <value>na 38</value>
+    <comment>Sub-string used in automation name for 38 bit in bit flip</comment>
+  </data>
+  <data name="37" xml:space="preserve">
+    <value>na 37</value>
+    <comment>Sub-string used in automation name for 37 bit in bit flip</comment>
+  </data>
+  <data name="36" xml:space="preserve">
+    <value>na 36</value>
+    <comment>Sub-string used in automation name for 36 bit in bit flip</comment>
+  </data>
+  <data name="35" xml:space="preserve">
+    <value>na 35</value>
+    <comment>Sub-string used in automation name for 35 bit in bit flip</comment>
+  </data>
+  <data name="34" xml:space="preserve">
+    <value>na 34</value>
+    <comment>Sub-string used in automation name for 34 bit in bit flip</comment>
+  </data>
+  <data name="33" xml:space="preserve">
+    <value>na 33</value>
+    <comment>Sub-string used in automation name for 33 bit in bit flip</comment>
+  </data>
+  <data name="32" xml:space="preserve">
+    <value>na 32</value>
+    <comment>Sub-string used in automation name for 32 bit in bit flip</comment>
+  </data>
+  <data name="31" xml:space="preserve">
+    <value>na 31</value>
+    <comment>Sub-string used in automation name for 31 bit in bit flip</comment>
+  </data>
+  <data name="30" xml:space="preserve">
+    <value>na 30</value>
+    <comment>Sub-string used in automation name for 30 bit in bit flip</comment>
+  </data>
+  <data name="29" xml:space="preserve">
+    <value>na 29</value>
+    <comment>Sub-string used in automation name for 29 bit in bit flip</comment>
+  </data>
+  <data name="28" xml:space="preserve">
+    <value>na 28</value>
+    <comment>Sub-string used in automation name for 28 bit in bit flip</comment>
+  </data>
+  <data name="27" xml:space="preserve">
+    <value>na 27</value>
+    <comment>Sub-string used in automation name for 27 bit in bit flip</comment>
+  </data>
+  <data name="26" xml:space="preserve">
+    <value>na 26</value>
+    <comment>Sub-string used in automation name for 26 bit in bit flip</comment>
+  </data>
+  <data name="25" xml:space="preserve">
+    <value>na 25</value>
+    <comment>Sub-string used in automation name for 25 bit in bit flip</comment>
+  </data>
+  <data name="24" xml:space="preserve">
+    <value>na 24</value>
+    <comment>Sub-string used in automation name for 24 bit in bit flip</comment>
+  </data>
+  <data name="23" xml:space="preserve">
+    <value>na 23</value>
+    <comment>Sub-string used in automation name for 23 bit in bit flip</comment>
+  </data>
+  <data name="22" xml:space="preserve">
+    <value>na 22</value>
+    <comment>Sub-string used in automation name for 22 bit in bit flip</comment>
+  </data>
+  <data name="21" xml:space="preserve">
+    <value>na 21</value>
+    <comment>Sub-string used in automation name for 21 bit in bit flip</comment>
+  </data>
+  <data name="20" xml:space="preserve">
+    <value>na 20</value>
+    <comment>Sub-string used in automation name for 20 bit in bit flip</comment>
+  </data>
+  <data name="19" xml:space="preserve">
+    <value>na 19</value>
+    <comment>Sub-string used in automation name for 19 bit in bit flip</comment>
+  </data>
+  <data name="18" xml:space="preserve">
+    <value>na 18</value>
+    <comment>Sub-string used in automation name for 18 bit in bit flip</comment>
+  </data>
+  <data name="17" xml:space="preserve">
+    <value>na 17</value>
+    <comment>Sub-string used in automation name for 17 bit in bit flip</comment>
+  </data>
+  <data name="16" xml:space="preserve">
+    <value>na 16</value>
+    <comment>Sub-string used in automation name for 16 bit in bit flip</comment>
+  </data>
+  <data name="15" xml:space="preserve">
+    <value>na 15</value>
+    <comment>Sub-string used in automation name for 15 bit in bit flip</comment>
+  </data>
+  <data name="14" xml:space="preserve">
+    <value>na 14</value>
+    <comment>Sub-string used in automation name for 14 bit in bit flip</comment>
+  </data>
+  <data name="13" xml:space="preserve">
+    <value>na 13</value>
+    <comment>Sub-string used in automation name for 13 bit in bit flip</comment>
+  </data>
+  <data name="12" xml:space="preserve">
+    <value>na 12</value>
+    <comment>Sub-string used in automation name for 12 bit in bit flip</comment>
+  </data>
+  <data name="11" xml:space="preserve">
+    <value>na 11</value>
+    <comment>Sub-string used in automation name for 11 bit in bit flip</comment>
+  </data>
+  <data name="10" xml:space="preserve">
+    <value>na 10</value>
+    <comment>Sub-string used in automation name for 10 bit in bit flip</comment>
+  </data>
+  <data name="9" xml:space="preserve">
+    <value>na 9</value>
+    <comment>Sub-string used in automation name for 9 bit in bit flip</comment>
+  </data>
+  <data name="8" xml:space="preserve">
+    <value>na 8</value>
+    <comment>Sub-string used in automation name for 8 bit in bit flip</comment>
+  </data>
+  <data name="7" xml:space="preserve">
+    <value>na 7</value>
+    <comment>Sub-string used in automation name for 7 bit in bit flip</comment>
+  </data>
+  <data name="6" xml:space="preserve">
+    <value>na 6</value>
+    <comment>Sub-string used in automation name for 6 bit in bit flip</comment>
+  </data>
+  <data name="5" xml:space="preserve">
+    <value>na 5</value>
+    <comment>Sub-string used in automation name for 5 bit in bit flip</comment>
+  </data>
+  <data name="4" xml:space="preserve">
+    <value>na 4</value>
+    <comment>Sub-string used in automation name for 4 bit in bit flip</comment>
+  </data>
+  <data name="3" xml:space="preserve">
+    <value>na 3</value>
+    <comment>Sub-string used in automation name for 3 bit in bit flip</comment>
+  </data>
+  <data name="2" xml:space="preserve">
+    <value>na 2</value>
+    <comment>Sub-string used in automation name for 2 bit in bit flip</comment>
+  </data>
+  <data name="1" xml:space="preserve">
+    <value>na 1</value>
+    <comment>Sub-string used in automation name for 1 bit in bit flip</comment>
+  </data>
+  <data name="0" xml:space="preserve">
+    <value>na 0</value>
+    <comment>Sub-string used in automation name for 0 bit in bit flip</comment>
+  </data>
+  <data name="MemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Mahardata</value>
+    <comment>This is the tool tip automation name for the memory button.</comment>
+  </data>
+  <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Shingen alƙaluma na kilisawa bit</value>
+    <comment>This is the tool tip automation name for the bitFlip button.</comment>
+  </data>
+  <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Cikakken shingen alƙaluma</value>
+    <comment>This is the tool tip automation name for the numberPad button.</comment>
+  </data>
+  <data name="HistoryLabel.Text" xml:space="preserve">
+    <value>Tarihi</value>
+    <comment>The text that shows as the header for the history list</comment>
+  </data>
+  <data name="converterModeButton.Content" xml:space="preserve">
+    <value>Mai canzawa</value>
+    <comment>Label for a control that activates the unit converter mode.</comment>
+  </data>
+  <data name="scientificModeButton.Content" xml:space="preserve">
+    <value>Na kimiyya</value>
+    <comment>Label for a control that activates scientific mode calculator layout</comment>
+  </data>
+  <data name="standardModeButton.Content" xml:space="preserve">
+    <value>Misali</value>
+    <comment>Label for a control that activates standard mode calculator layout.</comment>
+  </data>
+  <data name="converterModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Yanayin Mai canzawa</value>
+    <comment>Screen reader prompt for a control that activates the unit converter mode.</comment>
+  </data>
+  <data name="scientificModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Yanayi na Kimiyya</value>
+    <comment>Screen reader prompt for a control that activates scientific mode calculator layout</comment>
+  </data>
+  <data name="standardModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Daidaitaccen Yanayi</value>
+    <comment>Screen reader prompt for a control that activates standard mode calculator layout.</comment>
+  </data>
+  <data name="HideHistory.Name" xml:space="preserve">
+    <value>Ɓoye</value>
+    <comment>"HideHistory" used on the calculator history pane that stores the calculation history.</comment>
+  </data>
+  <data name="StandardModeText" xml:space="preserve">
+    <value>Misali</value>
+    <comment>The text that shows in the dropdown navigation control in snapped mode when standard calculator mode is selected.</comment>
+  </data>
+  <data name="ScientificModeText" xml:space="preserve">
+    <value>Na kimiyya</value>
+    <comment>The text that shows in the dropdown navigation control in snapped mode when scientific calculator mode is selected.</comment>
+  </data>
+  <data name="ProgrammerModeText" xml:space="preserve">
+    <value>Marubucin shiri</value>
+    <comment>The text that shows in the dropdown navigation control in snapped mode when programmer calculator mode is selected.</comment>
+  </data>
+  <data name="ConverterModeText" xml:space="preserve">
+    <value>Mai canzawa</value>
+    <comment>The text that shows in the dropdown navigation control for the converter group. The previous key for this was "ConverterMode.Text".</comment>
+  </data>
+  <data name="CalculatorModeText" xml:space="preserve">
+    <value>Manahajar lissafi</value>
+    <comment>The text that shows in the dropdown navigation control for the calculator group.</comment>
+  </data>
+  <data name="HistoryPane" xml:space="preserve">
+    <value>Tarihi</value>
+    <comment>Screen reader prompt for the history flyout</comment>
+  </data>
+  <data name="MemoryPane" xml:space="preserve">
+    <value>Mahardatar kwamfuta</value>
+    <comment>Screen reader prompt for the memory flyout</comment>
+  </data>
+  <data name="HideHistory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ɓoye Tarihi</value>
+    <comment>Screen reader prompt for the Calculator History Hide button</comment>
+  </data>
+  <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Wurin Adana na Mahardata</value>
+    <comment>Screen reader prompt for the Calculator Memory button</comment>
+  </data>
+  <data name="backSpaceButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Magogin baya</value>
+    <comment>Screen reader prompt for the Calculator Backspace button</comment>
+  </data>
+  <data name="BinaryZero.Text" xml:space="preserve">
+    <value>0</value>
+    <comment>Screen reader prompt for the Calculator number "0" button</comment>
+  </data>
+  <data name="BinaryOne.Text" xml:space="preserve">
+    <value>1</value>
+    <comment>Screen reader prompt for the Calculator number "1" button</comment>
+  </data>
+  <data name="num0Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Sifiri</value>
+    <comment>Screen reader prompt for the Calculator number "0" button</comment>
+  </data>
+  <data name="num1Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ɗaya</value>
+    <comment>Screen reader prompt for the Calculator number "1" button</comment>
+  </data>
+  <data name="num2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Biyu</value>
+    <comment>Screen reader prompt for the Calculator number "2" button</comment>
+  </data>
+  <data name="num3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Uku</value>
+    <comment>Screen reader prompt for the Calculator number "3" button</comment>
+  </data>
+  <data name="num4Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Huɗu</value>
+    <comment>Screen reader prompt for the Calculator number "4" button</comment>
+  </data>
+  <data name="num5Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Biyar</value>
+    <comment>Screen reader prompt for the Calculator number "5" button</comment>
+  </data>
+  <data name="num6Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Shida</value>
+    <comment>Screen reader prompt for the Calculator number "6" button</comment>
+  </data>
+  <data name="num7Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Bakwai</value>
+    <comment>Screen reader prompt for the Calculator number "7" button</comment>
+  </data>
+  <data name="num8Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Takwas</value>
+    <comment>Screen reader prompt for the Calculator number "8" button</comment>
+  </data>
+  <data name="num9Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tara</value>
+    <comment>Screen reader prompt for the Calculator number "9" button</comment>
+  </data>
+  <data name="aButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>A</value>
+    <comment>Screen reader prompt for the Calculator number "A" button</comment>
+  </data>
+  <data name="bButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>B</value>
+    <comment>Screen reader prompt for the Calculator number "B" button</comment>
+  </data>
+  <data name="cButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>C</value>
+    <comment>Screen reader prompt for the Calculator number "C" button</comment>
+  </data>
+  <data name="dButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>D</value>
+    <comment>Screen reader prompt for the Calculator number "D" button</comment>
+  </data>
+  <data name="eButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>E</value>
+    <comment>Screen reader prompt for the Calculator number "E" button</comment>
+  </data>
+  <data name="fButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>F</value>
+    <comment>Screen reader prompt for the Calculator number "F" button</comment>
+  </data>
+  <data name="andButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Da</value>
+    <comment>Screen reader prompt for the Calculator And button</comment>
+  </data>
+  <data name="orButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ko</value>
+    <comment>Screen reader prompt for the Calculator Or button</comment>
+  </data>
+  <data name="notButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Babu</value>
+    <comment>Screen reader prompt for the Calculator Not button</comment>
+  </data>
+  <data name="rolButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Kewaye a hagu</value>
+    <comment>Screen reader prompt for the Calculator ROL button</comment>
+  </data>
+  <data name="rorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Kewaye a dama</value>
+    <comment>Screen reader prompt for the Calculator ROR button</comment>
+  </data>
+  <data name="lshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Matsawa ta hagu</value>
+    <comment>Screen reader prompt for the Calculator LSH button</comment>
+  </data>
+  <data name="rshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Matsawa ta dama</value>
+    <comment>Screen reader prompt for the Calculator RSH button</comment>
+  </data>
+  <data name="xorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Keɓaɓɓen ko</value>
+    <comment>Screen reader prompt for the Calculator XOR button</comment>
+  </data>
+  <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Shingen alƙaluma na kilisawa bit</value>
+    <comment>Screen reader prompt for the Calculator bitFlip button</comment>
+  </data>
+  <data name="fullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Cikakken shingen alƙaluma</value>
+    <comment>Screen reader prompt for the Calculator numberPad button</comment>
+  </data>
+  <data name="decimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mai Rabewar Gomiya</value>
+    <comment>Screen reader prompt for the "." button</comment>
+  </data>
+  <data name="clearEntryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Share shigarwa</value>
+    <comment>Screen reader prompt for the "CE" button</comment>
+  </data>
+  <data name="clearButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Share</value>
+    <comment>Screen reader prompt for the "C" button</comment>
+  </data>
+  <data name="divideButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Raba ta</value>
+    <comment>Screen reader prompt for the divide button on the number pad</comment>
+  </data>
+  <data name="multiplyButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ninka ta</value>
+    <comment>Screen reader prompt for the multiply button on the number pad</comment>
+  </data>
+  <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Daidai</value>
+    <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
+  </data>
+  <data name="minusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ɗebewa</value>
+    <comment>Screen reader prompt for the minus button on the number pad</comment>
+  </data>
+  <data name="minus" xml:space="preserve">
+    <value>Deɓewa</value>
+    <comment>We use this resource to replace "-" sign for accessibility. So expression like, 1 - 3 = -2 becomes 1 minus 3 = minus 2</comment>
+  </data>
+  <data name="plusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tara da</value>
+    <comment>Screen reader prompt for the plus button on the number pad</comment>
+  </data>
+  <data name="squareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Logar murabba'i</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="percentButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Kaso</value>
+    <comment>Screen reader prompt for the percent button on the scientific operator keypad</comment>
+  </data>
+  <data name="negateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tabbatacce Korau</value>
+    <comment>Screen reader prompt for the negate button on the scientific operator keypad</comment>
+  </data>
+  <data name="converterNegateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tabbatacce Korau</value>
+    <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
+  </data>
+  <data name="invertButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Na saka wa</value>
+    <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
+  </data>
+  <data name="ftoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Alamar kimiyya</value>
+    <comment>Screen reader prompt for the Calculator F-E the scientific operator keypad</comment>
+  </data>
+  <data name="hyperbolicButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Aikin lanƙwasasshen layi</value>
+    <comment>Screen reader prompt for the Calculator button HYP in the scientific operator keypad</comment>
+  </data>
+  <data name="piButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Pi</value>
+    <comment>Screen reader prompt for the Calculator pi button  on the scientific operator keypad</comment>
+  </data>
+  <data name="sinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Sayin</value>
+    <comment>Screen reader prompt for the Calculator sin button  on the scientific operator keypad</comment>
+  </data>
+  <data name="cosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Kosayin</value>
+    <comment>Screen reader prompt for the Calculator cos button  on the scientific operator keypad</comment>
+  </data>
+  <data name="tanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Miƙaƙƙen layi</value>
+    <comment>Screen reader prompt for the Calculator tan button  on the scientific operator keypad</comment>
+  </data>
+  <data name="sinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Sayin na layi mai lanƙwasa</value>
+    <comment>Screen reader prompt for the Calculator sinh button  on the scientific operator keypad</comment>
+  </data>
+  <data name="coshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Kosayin Layi mai lanƙwasa</value>
+    <comment>Screen reader prompt for the Calculator cosh button  on the scientific operator keypad</comment>
+  </data>
+  <data name="tanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Miƙaƙƙen layi mai Lanƙwasawa</value>
+    <comment>Screen reader prompt for the Calculator tanh button  on the scientific operator keypad</comment>
+  </data>
+  <data name="xpower2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Murabba'i</value>
+    <comment>Screen reader prompt for the x squared on the scientific operator keypad. </comment>
+  </data>
+  <data name="xpower3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Dunƙulle</value>
+    <comment>Screen reader prompt for the x cubed on the scientific operator keypad. </comment>
+  </data>
+  <data name="invsinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc sine</value>
+    <comment>Screen reader prompt for the inverted sin on the scientific operator keypad.</comment>
+  </data>
+  <data name="invcosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc cosine</value>
+    <comment>Screen reader prompt for the inverted cos on the scientific operator keypad.</comment>
+  </data>
+  <data name="invtanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc tangent</value>
+    <comment>Screen reader prompt for the inverted tan on the scientific operator keypad.</comment>
+  </data>
+  <data name="invsinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc sine na layi mai lanƙwasa</value>
+    <comment>Screen reader prompt for the inverted sinh on the scientific operator keypad.</comment>
+  </data>
+  <data name="invcoshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc cosine na layi mai lanƙwasa</value>
+    <comment>Screen reader prompt for the inverted cosh on the scientific operator keypad.</comment>
+  </data>
+  <data name="invtanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc tangent na layi mai lanƙwasa</value>
+    <comment>Screen reader prompt for the inverted tanh on the scientific operator keypad.</comment>
+  </data>
+  <data name="powerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>'X' zuwa ninkawa</value>
+    <comment>Screen reader prompt for x power y button on the scientific operator keypad. </comment>
+  </data>
+  <data name="powerOf10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Goma zuwa ninkawa</value>
+    <comment>Screen reader prompt for the 10 power x button on the scientific operator keypad.</comment>
+  </data>
+  <data name="powerOfEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>'e' zuwa ninkawa</value>
+    <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
+  </data>
+  <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>'y' logar 'x'</value>
+    <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
+  </data>
+  <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Logu</value>
+    <comment>Screen reader for the log base 10  on the scientific operator keypad</comment>
+  </data>
+  <data name="logBaseEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Logu na asali</value>
+    <comment>Screen reader for the log base e on the scientific operator keypad</comment>
+  </data>
+  <data name="modButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Modulo</value>
+    <comment>Screen reader for the mod button on the scientific operator keypad</comment>
+  </data>
+  <data name="expButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Saurin ƙarawa</value>
+    <comment>Screen reader for the exp button on the scientific operator keypad</comment>
+  </data>
+  <data name="dmsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Digiri Minti Daƙiƙa</value>
+    <comment>Screen reader for the exp button on the scientific operator keypad</comment>
+  </data>
+  <data name="degreesButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Digiri</value>
+    <comment>Screen reader for the exp button on the scientific operator keypad</comment>
+  </data>
+  <data name="intButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Kashin lamba</value>
+    <comment>Screen reader for the int button on the scientific operator keypad</comment>
+  </data>
+  <data name="fractButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Kashin unshi</value>
+    <comment>Screen reader for the frac button on the scientific operator keypad</comment>
+  </data>
+  <data name="factorialButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Na lissafi</value>
+    <comment>Screen reader for the factorial button on the basic operator keypad</comment>
+  </data>
+  <data name="FlyoutNav.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Yanayin Ja-Gaba</value>
+    <comment>Screen reader prompt for the Mode dropdown field in Snapped and Portrait modes.</comment>
+  </data>
+  <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ɓangarorin Ja-Gaba</value>
+    <comment>Screen reader prompt for the Categories dropdown field.</comment>
+  </data>
+  <data name="UnitName_FluidOunceUK" xml:space="preserve">
+    <value>Ozozi na ruwa (UK)</value>
+    <comment>A measurement unit for volume, in plural. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_FluidOunceUK" xml:space="preserve">
+    <value>fl oz (UK)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_FluidOunceUS" xml:space="preserve">
+    <value>Ozozi na ruwa (US)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_FluidOunceUS" xml:space="preserve">
+    <value>fl oz (US)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_GallonUK" xml:space="preserve">
+    <value>Galan (US)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_GallonUK" xml:space="preserve">
+    <value>galan (UK)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_GallonUS" xml:space="preserve">
+    <value>Galan (US)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_GallonUS" xml:space="preserve">
+    <value>galan (US)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_Liter" xml:space="preserve">
+    <value>Litoci</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Liter" xml:space="preserve">
+    <value>L</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_Milliliter" xml:space="preserve">
+    <value>Milimita</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Milliliter" xml:space="preserve">
+    <value>mL</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_PintUK" xml:space="preserve">
+    <value>Ma’aunin Pints (UK)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_PintUK" xml:space="preserve">
+    <value>pt (UK)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_PintUS" xml:space="preserve">
+    <value>Ma’aunin Pints (US)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_PintUS" xml:space="preserve">
+    <value>pt (US)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_TablespoonUS" xml:space="preserve">
+    <value>Manyan cokula (US)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_TablespoonUS" xml:space="preserve">
+    <value>tbsp. (US)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_TeaspoonUS" xml:space="preserve">
+    <value>Ƙananan cokula (US)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_TeaspoonUS" xml:space="preserve">
+    <value>tsp. (US)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_TablespoonUK" xml:space="preserve">
+    <value>Manyan cokula (UK)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_TablespoonUK" xml:space="preserve">
+    <value>tbsp. (UK)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_TeaspoonUK" xml:space="preserve">
+    <value>Ƙananan cokula (UK)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_TeaspoonUK" xml:space="preserve">
+    <value>tsp. (UK)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_QuartUK" xml:space="preserve">
+    <value>Ma’aunin Quart (UK)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_QuartUK" xml:space="preserve">
+    <value>qt (UK)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_QuartUS" xml:space="preserve">
+    <value>Ma’aunin Quart (US)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_QuartUS" xml:space="preserve">
+    <value>qt (US)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_CupUS" xml:space="preserve">
+    <value>Kofina (US)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_CupUS" xml:space="preserve">
+    <value>kofi (US)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_Acre" xml:space="preserve">
+    <value>ac</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_Bit" xml:space="preserve">
+    <value>b</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_BritishThermalUnit" xml:space="preserve">
+    <value>BTU</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_BTUPerMinute" xml:space="preserve">
+    <value>BTU/min</value>
+    <comment>An abbreviation for a measurement unit of power</comment>
+  </data>
+  <data name="UnitAbbreviation_Byte" xml:space="preserve">
+    <value>B</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Calorie" xml:space="preserve">
+    <value>cal</value>
+    <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Centimeter" xml:space="preserve">
+    <value>Cm</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_CentimetersPerSecond" xml:space="preserve">
+    <value>cm/ s</value>
+    <comment>An abbreviation for a measurement unit of speed</comment>
+  </data>
+  <data name="UnitAbbreviation_CubicCentimeter" xml:space="preserve">
+    <value>cm³</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_CubicFoot" xml:space="preserve">
+    <value>ft³</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_CubicInch" xml:space="preserve">
+    <value>in³</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_CubicMeter" xml:space="preserve">
+    <value>m³</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_CubicYard" xml:space="preserve">
+    <value>yd³</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_Day" xml:space="preserve">
+    <value>d</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_DegreesCelsius" xml:space="preserve">
+    <value>°C</value>
+    <comment>An abbreviation for "degrees Celsius"</comment>
+  </data>
+  <data name="UnitAbbreviation_DegreesFahrenheit" xml:space="preserve">
+    <value>°F</value>
+    <comment>An abbreviation for a "degrees Fahrenheit"</comment>
+  </data>
+  <data name="UnitAbbreviation_Electron-Volt" xml:space="preserve">
+    <value>eV</value>
+    <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Foot" xml:space="preserve">
+    <value>ft</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_FeetPerSecond" xml:space="preserve">
+    <value>ft/s</value>
+    <comment>An abbreviation for a measurement unit of speed</comment>
+  </data>
+  <data name="UnitAbbreviation_Foot-Pound" xml:space="preserve">
+    <value>ft•lb</value>
+    <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Gigabit" xml:space="preserve">
+    <value>GB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Gigabyte" xml:space="preserve">
+    <value>GB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Hectare" xml:space="preserve">
+    <value>ha</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_Horsepower" xml:space="preserve">
+    <value>hp (US)</value>
+    <comment>An abbreviation for a measurement unit of power</comment>
+  </data>
+  <data name="UnitAbbreviation_Hour" xml:space="preserve">
+    <value>hr</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_Inch" xml:space="preserve">
+    <value>in</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_Joule" xml:space="preserve">
+    <value>J</value>
+    <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
+    <value>K</value>
+    <comment>An abbreviation for the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin)</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilobit" xml:space="preserve">
+    <value>Kb</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilobyte" xml:space="preserve">
+    <value>KB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilocalorie" xml:space="preserve">
+    <value>kcal</value>
+    <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilojoule" xml:space="preserve">
+    <value>kJ</value>
+    <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilometer" xml:space="preserve">
+    <value>km</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_KilometersPerHour" xml:space="preserve">
+    <value>km/a</value>
+    <comment>An abbreviation for a measurement unit of speed</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilowatt" xml:space="preserve">
+    <value>kW</value>
+    <comment>An abbreviation for a measurement unit of power</comment>
+  </data>
+  <data name="UnitAbbreviation_Knot" xml:space="preserve">
+    <value>kn</value>
+    <comment>An abbreviation for a measurement unit of speed</comment>
+  </data>
+  <data name="UnitAbbreviation_Mach" xml:space="preserve">
+    <value>M</value>
+    <comment>An abbreviation for a measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
+  </data>
+  <data name="UnitAbbreviation_Megabit" xml:space="preserve">
+    <value>Mb</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Megabyte" xml:space="preserve">
+    <value>MB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Meter" xml:space="preserve">
+    <value>m</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_MetersPerSecond" xml:space="preserve">
+    <value>m/s</value>
+    <comment>An abbreviation for a measurement unit of speed</comment>
+  </data>
+  <data name="UnitAbbreviation_Micron" xml:space="preserve">
+    <value>µm</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_Microsecond" xml:space="preserve">
+    <value>µs</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_Mile" xml:space="preserve">
+    <value>mi</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_MilesPerHour" xml:space="preserve">
+    <value>mph</value>
+    <comment>An abbreviation for a measurement unit of speed</comment>
+  </data>
+  <data name="UnitAbbreviation_Millimeter" xml:space="preserve">
+    <value>mm</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_Millisecond" xml:space="preserve">
+    <value>ms</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_Minute" xml:space="preserve">
+    <value>min</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_Nanometer" xml:space="preserve">
+    <value>nm</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_NauticalMile" xml:space="preserve">
+    <value>nmi</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_Petabit" xml:space="preserve">
+    <value>Pb</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Petabyte" xml:space="preserve">
+    <value>PB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Foot-PoundPerMinute" xml:space="preserve">
+    <value>ft•lb/min</value>
+    <comment>An abbreviation for a measurement unit of power</comment>
+  </data>
+  <data name="UnitAbbreviation_Second" xml:space="preserve">
+    <value>s</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareCentimeter" xml:space="preserve">
+    <value>cm²</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareFoot" xml:space="preserve">
+    <value>ft²</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareInch" xml:space="preserve">
+    <value>in²</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareKilometer" xml:space="preserve">
+    <value>km²</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareMeter" xml:space="preserve">
+    <value>m²</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareMile" xml:space="preserve">
+    <value>mi²</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareMillimeter" xml:space="preserve">
+    <value>mm²</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareYard" xml:space="preserve">
+    <value>yd²</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_Terabit" xml:space="preserve">
+    <value>Tb</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Terabyte" xml:space="preserve">
+    <value>TB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Watt" xml:space="preserve">
+    <value>W</value>
+    <comment>An abbreviation for a measurement unit of power</comment>
+  </data>
+  <data name="UnitAbbreviation_Week" xml:space="preserve">
+    <value>mk</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_Yard" xml:space="preserve">
+    <value>yd</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_Year" xml:space="preserve">
+    <value>sh</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_Gibibits" xml:space="preserve">
+    <value>Gi</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Gibibytes" xml:space="preserve">
+    <value>GiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Kibibits" xml:space="preserve">
+    <value>Ki</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Kibibytes" xml:space="preserve">
+    <value>KiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Mebibits" xml:space="preserve">
+    <value>Mi</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Mebibytes" xml:space="preserve">
+    <value>MiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
+    <value>Pi</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Pebibytes" xml:space="preserve">
+    <value>PiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Tebibits" xml:space="preserve">
+    <value>Ti</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Tebibytes" xml:space="preserve">
+    <value>TiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Exabits" xml:space="preserve">
+    <value>E</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Exabytes" xml:space="preserve">
+    <value>EB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Exbibits" xml:space="preserve">
+    <value>Ei</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Exbibytes" xml:space="preserve">
+    <value>EiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Zetabits" xml:space="preserve">
+    <value>Z</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Zetabytes" xml:space="preserve">
+    <value>ZB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Zebibits" xml:space="preserve">
+    <value>Zi</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Zebibytes" xml:space="preserve">
+    <value>ZiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Yottabit" xml:space="preserve">
+    <value>Y</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Yottabyte" xml:space="preserve">
+    <value>YB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Yobibits" xml:space="preserve">
+    <value>Yi</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Yobibytes" xml:space="preserve">
+    <value>YiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitName_Acre" xml:space="preserve">
+    <value>Ekoki</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Bit" xml:space="preserve">
+    <value>Bits</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_BritishThermalUnit" xml:space="preserve">
+    <value>Ma’aunin zafi na Birtaniya</value>
+    <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_BTUPerMinute" xml:space="preserve">
+    <value>BTUs/minti</value>
+    <comment>A measurement unit for power: British Thermal Units per minute. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Byte" xml:space="preserve">
+    <value>Bayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Calorie" xml:space="preserve">
+    <value>Kalorin zafi</value>
+    <comment>A measurement unit for energy. Please note that this is the "small calorie" used in science for measuring heat energy, not the "large calorie" commonly used for measuring food energy. If there is a simple term to distinguish this one from the large "Food calorie", please use that. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Centimeter" xml:space="preserve">
+    <value>Santimita</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CentimetersPerSecond" xml:space="preserve">
+    <value>Sentimotoci a daƙiƙa</value>
+    <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CubicCentimeter" xml:space="preserve">
+    <value>Centimitocin riɓa sau uku</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CubicFoot" xml:space="preserve">
+    <value>Ƙafa na riɓa sau uku</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CubicInch" xml:space="preserve">
+    <value>Inci na riɓa sau uku</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CubicMeter" xml:space="preserve">
+    <value>Mitoci na riɓa sau uku</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CubicYard" xml:space="preserve">
+    <value>Yaduna na riɓa sau uku</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Day" xml:space="preserve">
+    <value>Kwanaki</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_DegreesCelsius" xml:space="preserve">
+    <value>Celsius</value>
+    <comment>An option in the unit converter to select degrees Celsius</comment>
+  </data>
+  <data name="UnitName_DegreesFahrenheit" xml:space="preserve">
+    <value>Faranhit</value>
+    <comment>An option in the unit converter to select degrees Fahrenheit</comment>
+  </data>
+  <data name="UnitName_Electron-Volt" xml:space="preserve">
+    <value>Ƙwayayen-Lantarki</value>
+    <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Foot" xml:space="preserve">
+    <value>Ƙafa</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_FeetPerSecond" xml:space="preserve">
+    <value>Ƙafa a daƙiƙa</value>
+    <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Foot-Pound" xml:space="preserve">
+    <value>Takun ƙafa</value>
+    <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Foot-PoundPerMinute" xml:space="preserve">
+    <value>Takun ƙafa/minti</value>
+    <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Gigabit" xml:space="preserve">
+    <value>Gigabit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Gigabyte" xml:space="preserve">
+    <value>Gigabayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Hectare" xml:space="preserve">
+    <value>Ekoki</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Horsepower" xml:space="preserve">
+    <value>Ƙarfin doki (US)</value>
+    <comment>A measurement unit for power</comment>
+  </data>
+  <data name="UnitName_Hour" xml:space="preserve">
+    <value>Awanni</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Inch" xml:space="preserve">
+    <value>Inci</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Joule" xml:space="preserve">
+    <value>Ma’aunin Joules</value>
+    <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kelvin" xml:space="preserve">
+    <value>Kelbin</value>
+    <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
+  </data>
+  <data name="UnitName_Kilobit" xml:space="preserve">
+    <value>Kilobit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kilobyte" xml:space="preserve">
+    <value>Kilobayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kilocalorie" xml:space="preserve">
+    <value>Karfin abinci</value>
+    <comment>A measurement unit for energy. The scientific name is kilocalorie, but this is what is commonly referred to as a "calorie" or "large calorie" when talking about food. Please use the everyday-use word for food energy calories if there is one. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kilojoule" xml:space="preserve">
+    <value>Kilojoules</value>
+    <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kilometer" xml:space="preserve">
+    <value>Kilomitoci</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_KilometersPerHour" xml:space="preserve">
+    <value>Kilimitoci a awa</value>
+    <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kilowatt" xml:space="preserve">
+    <value>Kilowat</value>
+    <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Knot" xml:space="preserve">
+    <value>Noti</value>
+    <comment>A nautical/aerial measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Mach" xml:space="preserve">
+    <value>Gudun sauti</value>
+    <comment>A measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
+  </data>
+  <data name="UnitName_Megabit" xml:space="preserve">
+    <value>Megabit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Megabyte" xml:space="preserve">
+    <value>Megabayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Meter" xml:space="preserve">
+    <value>Mitoci</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_MetersPerSecond" xml:space="preserve">
+    <value>Mitoci a daƙiƙa</value>
+    <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Micron" xml:space="preserve">
+    <value>Mikron</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Microsecond" xml:space="preserve">
+    <value>Ƙananan daƙiƙoƙi</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Mile" xml:space="preserve">
+    <value>Miloli</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_MilesPerHour" xml:space="preserve">
+    <value>Miloli a awa</value>
+    <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Millimeter" xml:space="preserve">
+    <value>Milimitoci</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Millisecond" xml:space="preserve">
+    <value>Ɗan daƙiƙoƙi</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Minute" xml:space="preserve">
+    <value>Mintoci</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Nanometer" xml:space="preserve">
+    <value>Ma’aunin Nanometers</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_NauticalMile" xml:space="preserve">
+    <value>Milolin Teku</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Petabit" xml:space="preserve">
+    <value>Ma’aunin Petabit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Petabyte" xml:space="preserve">
+    <value>Petabayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Second" xml:space="preserve">
+    <value>Daƙiƙoƙi</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareCentimeter" xml:space="preserve">
+    <value>Sentimitoci murabba’i</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareFoot" xml:space="preserve">
+    <value>Ƙafa murabba’i</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareInch" xml:space="preserve">
+    <value>Inci murabba’i</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareKilometer" xml:space="preserve">
+    <value>Kilimitoci murabba’i</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareMeter" xml:space="preserve">
+    <value>Mitoci murabba’i</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareMile" xml:space="preserve">
+    <value>Miloli murabba’i</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareMillimeter" xml:space="preserve">
+    <value>Milimitoci murabba’i</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareYard" xml:space="preserve">
+    <value>Yaduna murabba’i</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Terabit" xml:space="preserve">
+    <value>Ma’aunin Terabits</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Terabyte" xml:space="preserve">
+    <value>Terabayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Watt" xml:space="preserve">
+    <value>Ƙarfin lantarki</value>
+    <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Week" xml:space="preserve">
+    <value>Makanni</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Yard" xml:space="preserve">
+    <value>Yaduna</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Year" xml:space="preserve">
+    <value>Shekaru</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Carat" xml:space="preserve">
+    <value>CD</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Degree" xml:space="preserve">
+    <value>deg</value>
+    <comment>An abbreviation for a measurement unit of Angle</comment>
+  </data>
+  <data name="UnitAbbreviation_Radian" xml:space="preserve">
+    <value>rad</value>
+    <comment>An abbreviation for a measurement unit of Angle</comment>
+  </data>
+  <data name="UnitAbbreviation_Gradian" xml:space="preserve">
+    <value>grad</value>
+    <comment>An abbreviation for a measurement unit of Angle</comment>
+  </data>
+  <data name="UnitAbbreviation_Atmosphere" xml:space="preserve">
+    <value>atm</value>
+    <comment>An abbreviation for a measurement unit of Pressure</comment>
+  </data>
+  <data name="UnitAbbreviation_Bar" xml:space="preserve">
+    <value>ba</value>
+    <comment>An abbreviation for a measurement unit of Pressure</comment>
+  </data>
+  <data name="UnitAbbreviation_KiloPascal" xml:space="preserve">
+    <value>kPa</value>
+    <comment>An abbreviation for a measurement unit of Pressure</comment>
+  </data>
+  <data name="UnitAbbreviation_MillimeterOfMercury" xml:space="preserve">
+    <value>mmHg</value>
+    <comment>An abbreviation for a measurement unit of Pressure</comment>
+  </data>
+  <data name="UnitAbbreviation_Pascal" xml:space="preserve">
+    <value>Pa</value>
+    <comment>An abbreviation for a measurement unit of Pressure</comment>
+  </data>
+  <data name="UnitAbbreviation_PSI" xml:space="preserve">
+    <value>psi</value>
+    <comment>An abbreviation for a measurement unit of Pressure</comment>
+  </data>
+  <data name="UnitAbbreviation_Centigram" xml:space="preserve">
+    <value>cg</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Decagram" xml:space="preserve">
+    <value>giram goma</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Decigram" xml:space="preserve">
+    <value>dg</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Gram" xml:space="preserve">
+    <value>g</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Hectogram" xml:space="preserve">
+    <value>hg</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilogram" xml:space="preserve">
+    <value>kg</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_LongTon" xml:space="preserve">
+    <value>tan (UK)</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Milligram" xml:space="preserve">
+    <value>mg</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Ounce" xml:space="preserve">
+    <value>oz</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Pound" xml:space="preserve">
+    <value>lb</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_ShortTon" xml:space="preserve">
+    <value>tan (US)</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Stone" xml:space="preserve">
+    <value>st</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Tonne" xml:space="preserve">
+    <value>t</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitName_Carat" xml:space="preserve">
+    <value>Ma’anunin karat</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Degree" xml:space="preserve">
+    <value>Digiri</value>
+    <comment>A measurement unit for Angle.</comment>
+  </data>
+  <data name="UnitName_Radian" xml:space="preserve">
+    <value>Radians</value>
+    <comment>A measurement unit for Angle.</comment>
+  </data>
+  <data name="UnitName_Gradian" xml:space="preserve">
+    <value>Gradians</value>
+    <comment>A measurement unit for Angle.</comment>
+  </data>
+  <data name="UnitName_Atmosphere" xml:space="preserve">
+    <value>Yanayi</value>
+    <comment>A measurement unit for Pressure.</comment>
+  </data>
+  <data name="UnitName_Bar" xml:space="preserve">
+    <value>Bars</value>
+    <comment>A measurement unit for Pressure.</comment>
+  </data>
+  <data name="UnitName_KiloPascal" xml:space="preserve">
+    <value>Kilopascals</value>
+    <comment>A measurement unit for Pressure.</comment>
+  </data>
+  <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
+    <value>Milimitoci na zaiba </value>
+    <comment>A measurement unit for Pressure.</comment>
+  </data>
+  <data name="UnitName_Pascal" xml:space="preserve">
+    <value>Pascal</value>
+    <comment>A measurement unit for Pressure.</comment>
+  </data>
+  <data name="UnitName_PSI" xml:space="preserve">
+    <value>Laba a kowane inci murabba'i</value>
+    <comment>A measurement unit for Pressure.</comment>
+  </data>
+  <data name="UnitName_Centigram" xml:space="preserve">
+    <value>Sentigiram</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Decagram" xml:space="preserve">
+    <value>Giram goma</value>
+    <comment>A measurement unit for weight. Note: Dekagram is spelled "decagram" everywhere except where US English is used. (EN-US dekagram, elsewhere decagram). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Decigram" xml:space="preserve">
+    <value>Giram ɗaya cikin goma</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Gram" xml:space="preserve">
+    <value>Giram</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Hectogram" xml:space="preserve">
+    <value>Giram ɗari</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kilogram" xml:space="preserve">
+    <value>Kilogiram</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_LongTon" xml:space="preserve">
+    <value>Dogon tan (UK)</value>
+    <comment>A measurement unit for weight. This is the UK version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Milligram" xml:space="preserve">
+    <value>Miligiram</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Ounce" xml:space="preserve">
+    <value>Ozozi</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Pound" xml:space="preserve">
+    <value>Labobi</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_ShortTon" xml:space="preserve">
+    <value>Gajerun tan (US)</value>
+    <comment>A measurement unit for weight. This is the US version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Stone" xml:space="preserve">
+    <value>Dutse</value>
+    <comment>A measurement unit for weight. Equal to 14 pounds. Note that this is the plural form of the word in English (eg. "This man weighs 11 stone."). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Tonne" xml:space="preserve">
+    <value>Tan na metrik</value>
+    <comment>A measurement unit for weight. This is the metric version of tonne. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CD" xml:space="preserve">
+    <value>CDs</value>
+    <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_CD" xml:space="preserve">
+    <value>CDs</value>
+    <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SoccerField" xml:space="preserve">
+    <value>filayen ƙwallon ƙafa</value>
+    <comment>A professional-sized soccer field, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_SoccerField" xml:space="preserve">
+    <value>filayen ƙwallon ƙafa</value>
+    <comment>A professional-sized soccer field, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_FloppyDisk" xml:space="preserve">
+    <value>diski</value>
+    <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_FloppyDisk" xml:space="preserve">
+    <value>diski</value>
+    <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_DVD" xml:space="preserve">
+    <value>DVDs</value>
+    <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_DVD" xml:space="preserve">
+    <value>DVDs</value>
+    <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Battery" xml:space="preserve">
+    <value>batura</value>
+    <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Battery" xml:space="preserve">
+    <value>batura</value>
+    <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Paperclip" xml:space="preserve">
+    <value>maratayen-takarda</value>
+    <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Paperclip" xml:space="preserve">
+    <value>maratayen-takarda</value>
+    <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_JumboJet" xml:space="preserve">
+    <value>manyan jiragen sama</value>
+    <comment>A jumbo jet (eg. Boeing 747), used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_JumboJet" xml:space="preserve">
+    <value>manyan jiragen sama</value>
+    <comment>A jumbo jet (eg. Boeing 747), used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_LightBulb" xml:space="preserve">
+    <value>ƙwayayen lantarki</value>
+    <comment>A light bulb, used as a comparison measurement unit for power (60 watts). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_LightBulb" xml:space="preserve">
+    <value>ƙwayayen lantarki</value>
+    <comment>A light bulb, used as a comparison measurement unit for power (60 watts). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Horse" xml:space="preserve">
+    <value>dawaki</value>
+    <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Horse" xml:space="preserve">
+    <value>dawaki</value>
+    <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Bathtub" xml:space="preserve">
+    <value>bahunan wanka</value>
+    <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Bathtub" xml:space="preserve">
+    <value>bahunan wanka</value>
+    <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Snowflake" xml:space="preserve">
+    <value>ɓarɓashin ƙanƙara</value>
+    <comment>A snowflake, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Snowflake" xml:space="preserve">
+    <value>ɓarɓashin ƙanƙara</value>
+    <comment>A snowflake, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Elephant" xml:space="preserve">
+    <value>giwaye</value>
+    <comment>An elephant, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Elephant" xml:space="preserve">
+    <value>giwaye</value>
+    <comment>An elephant, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Turtle" xml:space="preserve">
+    <value>ƙififiyoyi</value>
+    <comment>A turtle, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Turtle" xml:space="preserve">
+    <value>ƙififiyoyi</value>
+    <comment>A turtle, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Jet" xml:space="preserve">
+    <value>ƙananan jiragen sama</value>
+    <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Jet" xml:space="preserve">
+    <value>ƙananan jiragen sama</value>
+    <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Whale" xml:space="preserve">
+    <value>ayu</value>
+    <comment>A blue whale, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Whale" xml:space="preserve">
+    <value>ayu</value>
+    <comment>A blue whale, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CoffeeCup" xml:space="preserve">
+    <value>kofinan kofi</value>
+    <comment>A coffee cup, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_CoffeeCup" xml:space="preserve">
+    <value>kofinan kofi</value>
+    <comment>A coffee cup, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SwimmingPool" xml:space="preserve">
+    <value>wuraren iyo</value>
+    <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_SwimmingPool" xml:space="preserve">
+    <value>wuraren iyo</value>
+    <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Hand" xml:space="preserve">
+    <value>hannaye</value>
+    <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Hand" xml:space="preserve">
+    <value>hannaye</value>
+    <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Paper" xml:space="preserve">
+    <value>falle-fallen takarda</value>
+    <comment>A sheet of 8.5 x 11 inch paper, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Paper" xml:space="preserve">
+    <value>falle-fallen takarda</value>
+    <comment>A sheet of 8.5 x 11 inch paper, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Castle" xml:space="preserve">
+    <value>fadoji</value>
+    <comment>A castle, used as a comparison measurement unit for area (floorspace). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Castle" xml:space="preserve">
+    <value>fadoji</value>
+    <comment>A castle, used as a comparison measurement unit for area (floorspace). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Banana" xml:space="preserve">
+    <value>ayaba</value>
+    <comment>A banana, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Banana" xml:space="preserve">
+    <value>ayaba</value>
+    <comment>A banana, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SliceOfCake" xml:space="preserve">
+    <value>yankunan kek</value>
+    <comment>A slice of chocolate cake, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_SliceOfCake" xml:space="preserve">
+    <value>yankunan kek</value>
+    <comment>A slice of chocolate cake, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_TrainEngine" xml:space="preserve">
+    <value>injunan jirgin ƙasa</value>
+    <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_TrainEngine" xml:space="preserve">
+    <value>injunan jirgin ƙasa</value>
+    <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SoccerBall" xml:space="preserve">
+    <value>ƙwallayen ƙwallon ƙafa</value>
+    <comment>A soccer ball, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_SoccerBall" xml:space="preserve">
+    <value>ƙwallayen ƙwallon ƙafa</value>
+    <comment>A soccer ball, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="MemoryItemHelpText" xml:space="preserve">
+    <value>Abun Mahardata</value>
+    <comment>Help text used by accessibility tools to indicate that an item in the list of memory values is a memory item.</comment>
+  </data>
+  <data name="SupplementaryUnit_AutomationName" xml:space="preserve">
+    <value>%1 %2</value>
+    <comment>This string is what is read by Narrator, and other screen readers, for the supplementary value at the bottom of the converter view, %1 = the value of the supplementary unit (i.e. 0.5), %2 = the unit itself (i.e. inches, meters, etc)</comment>
+  </data>
+  <data name="AboutControlBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Baya</value>
+    <comment>Screen reader prompt for the About panel back button</comment>
+  </data>
+  <data name="AboutControlBackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Baya</value>
+    <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
+  </data>
+  <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
+    <value>Jumlar Sirri ta Microsoft</value>
+    <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
+  </data>
+  <data name="AboutButton.Content" xml:space="preserve">
+    <value>Game da</value>
+    <comment>The text that shows in the dropdown navigation control to open About panel</comment>
+  </data>
+  <data name="FeedbackButton.Content" xml:space="preserve">
+    <value>Aika martani</value>
+    <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
+  </data>
+  <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mahardata</value>
+    <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
+  </data>
+  <data name="CannotPaste" xml:space="preserve">
+    <value>Ba a iya manna wannan bayani ba</value>
+    <comment>The paste operation cannot be performed, if the expression is invalid.</comment>
+  </data>
+  <data name="UnitName_Gibibits" xml:space="preserve">
+    <value>Gibibits</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Gibibytes" xml:space="preserve">
+    <value>Gibibayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kibibits" xml:space="preserve">
+    <value>Kibibits</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kibibytes" xml:space="preserve">
+    <value>Kibibayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Mebibits" xml:space="preserve">
+    <value>Mebibits</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Mebibytes" xml:space="preserve">
+    <value>Mebibayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Pebibits" xml:space="preserve">
+    <value>Pebibits</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Pebibytes" xml:space="preserve">
+    <value>Pebibayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Tebibits" xml:space="preserve">
+    <value>Tebibits</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Tebibytes" xml:space="preserve">
+    <value>Tebibayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Exabits" xml:space="preserve">
+    <value>Exabits</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Exabytes" xml:space="preserve">
+    <value>Exabayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Exbibits" xml:space="preserve">
+    <value>Exbibits</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Exbibytes" xml:space="preserve">
+    <value>Exbibayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Zetabits" xml:space="preserve">
+    <value>Zetabits</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Zetabytes" xml:space="preserve">
+    <value>Zetabayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Zebibits" xml:space="preserve">
+    <value>Zebibits</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Zebibytes" xml:space="preserve">
+    <value>Zebibayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Yottabit" xml:space="preserve">
+    <value>Yottabit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Yottabyte" xml:space="preserve">
+    <value>Yottabayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Yobibits" xml:space="preserve">
+    <value>Yobibits</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Yobibytes" xml:space="preserve">
+    <value>Yobibayit</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="AddOption.Content" xml:space="preserve">
+    <value>Ƙara</value>
+    <comment>Add toggle button text</comment>
+  </data>
+  <data name="Date_AddSubtractOption.Content" xml:space="preserve">
+    <value>Ƙara ko ɗebe kwanaki</value>
+    <comment>Add or Subtract days option</comment>
+  </data>
+  <data name="DateLabel.Text" xml:space="preserve">
+    <value>Kwanan wata</value>
+    <comment>Date result label</comment>
+  </data>
+  <data name="Date_DifferenceOption.Content" xml:space="preserve">
+    <value>Bambanci tsakanin kwanakin wata</value>
+    <comment>Date Difference option</comment>
+  </data>
+  <data name="DaysLabel.Text" xml:space="preserve">
+    <value>Kwanaki</value>
+    <comment>Add/Subtract Days label</comment>
+  </data>
+  <data name="Date_DifferenceLabel.Text" xml:space="preserve">
+    <value>Bambanci</value>
+    <comment>Difference result label</comment>
+  </data>
+  <data name="Date_FromLabel.Text" xml:space="preserve">
+    <value>Daga</value>
+    <comment>From Date label for Date Picker</comment>
+  </data>
+  <data name="MonthsLabel.Text" xml:space="preserve">
+    <value>Watanni</value>
+    <comment>Add/Subtract Months label</comment>
+  </data>
+  <data name="SubtractOption.Content" xml:space="preserve">
+    <value>Ɗebe</value>
+    <comment>Subtract toggle button text</comment>
+  </data>
+  <data name="Date_ToLabel.Text" xml:space="preserve">
+    <value>Zuwa</value>
+    <comment>To Date label for Date Picker</comment>
+  </data>
+  <data name="YearsLabel.Text" xml:space="preserve">
+    <value>Shekaru</value>
+    <comment>Add/Subtract Years label</comment>
+  </data>
+  <data name="Date_OutOfBoundMessage" xml:space="preserve">
+    <value>Kwanan wata ya wuce iyaka</value>
+    <comment>Out of bound message shown as result when the date calculation exceeds the bounds</comment>
+  </data>
+  <data name="Date_Day" xml:space="preserve">
+    <value>kwana</value>
+  </data>
+  <data name="Date_Days" xml:space="preserve">
+    <value>kwanaki</value>
+  </data>
+  <data name="Date_Month" xml:space="preserve">
+    <value>wata</value>
+  </data>
+  <data name="Date_Months" xml:space="preserve">
+    <value>watanni</value>
+  </data>
+  <data name="Date_SameDates" xml:space="preserve">
+    <value>Kwanan wata ɗaya</value>
+  </data>
+  <data name="Date_Week" xml:space="preserve">
+    <value>mako</value>
+  </data>
+  <data name="Date_Weeks" xml:space="preserve">
+    <value>makanni</value>
+  </data>
+  <data name="Date_Year" xml:space="preserve">
+    <value>shekara</value>
+  </data>
+  <data name="Date_Years" xml:space="preserve">
+    <value>shekaru</value>
+  </data>
+  <data name="Date_DifferenceResultAutomationName" xml:space="preserve">
+    <value>Bambanci %1</value>
+    <comment>Automation name for reading out the date difference. %1 =  Date difference</comment>
+  </data>
+  <data name="Date_ResultingDateAutomationName" xml:space="preserve">
+    <value>Kwanan wata da ya sanadi %1</value>
+    <comment>Automation name for reading out the resulting date in Add/Subtract mode. %1 = Resulting date</comment>
+  </data>
+  <data name="Format_ButtonPressAuditoryFeedback" xml:space="preserve">
+    <value>%1 %2</value>
+    <comment>{Locked='%1','%2'} Formatting string for a Narrator announcement when user presses a button with auditory feedback. "%1" is the display value and "%2" is the button press feedback. Example, user presses "plus" and hears "Display is 7 plus".</comment>
+  </data>
+  <data name="minusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Deɓewa</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
+  </data>
+  <data name="plusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Tara da</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
+  </data>
+  <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Matsawa ta hagu</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
+  </data>
+  <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Matsawa ta dama</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
+  </data>
+</root>

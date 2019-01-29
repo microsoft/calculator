@@ -1,0 +1,12 @@
+﻿{
+  "dependencies": {
+    "AppModel.TestHelper": "2018.3.22",
+    "EtwProcessor.Managed": "10.34.181220007",
+    "MITALite": "1.0.180128001",
+    "Taef.Managed": "10.34.181220007",
+    "Test.Net.Redist": "2.0.1"
+  },
+  "frameworks": {
+    "netcore50": {}
+  }
+}

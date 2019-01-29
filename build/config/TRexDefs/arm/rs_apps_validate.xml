@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TReXRunConfigurations>
+
+  <!-- RS_APPS_VALIDATE WindowsCore ARM Device run -->
+  <!-- Disabling this until we have a testlist template -->
+  <!--<TReXRunConfiguration>
+    <BuildLogName>RS_APPS_VALIDATE ARM WCOS Test Run</BuildLogName>
+    <TemplateId>140487</TemplateId>
+    <Owner>paxeedev</Owner>
+    <PrivateRun>true</PrivateRun>
+    <CopyFirstJobSettingWithJobOverride>true</CopyFirstJobSettingWithJobOverride>
+    <RelativeFilePath>Desktop_ARM.testlist</RelativeFilePath>
+    <Branch>rs_apps_validate</Branch>
+    <WorkflowParameters>
+      <WorkflowParameter>
+        <Key>AlternatePackageRoot</Key>
+        <Value>\\pkges\release\TAEF\validation.taef.provenance\1812.20007-develop\UniversalTestPackages;\\edge-svcs\Release\MITALite\Apps_eng.mitalite_ci\Latest.tst</Value>
+      </WorkflowParameter>
+      <WorkflowParameter>
+        <Key>_AlternatePackageRoot</Key>
+        <Value>\\pkges\release\TAEF\validation.taef.provenance\1812.20007-develop\UniversalTestPackages;\\edge-svcs\Release\MITALite\Apps_eng.mitalite_ci\Latest.tst</Value>
+      </WorkflowParameter>
+    </WorkflowParameters>
+  </TReXRunConfiguration>-->
+
+</TReXRunConfigurations>

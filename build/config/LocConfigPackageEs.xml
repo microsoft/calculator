@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Modules>
+  <Module
+    name="Microsoft.Windows.Apps.Calculator"
+    tdbuildteamid="86">
+  <File
+    location="Calculator"
+    path="%TFS_SOURCESDIRECTORY%\src\Calculator\Resources\en-US\Resources.resw" />
+  <File
+    location="Calculator"
+    path="%TFS_SOURCESDIRECTORY%\src\Calculator\Resources\en-US\CEngineStrings.resw" />
+  </Module>
+</Modules>

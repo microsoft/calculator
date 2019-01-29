@@ -1,0 +1,111 @@
+# This template contains a job which builds artifacts needed to release the app to the store and to
+# Windows using Microsoft-internal systems. It relies Microsoft-internal resources and will not
+# work outside of Microsoft.
+# Specifically, this job:
+# - Signs the bundle using a secure system. If you want to build your own, use SignTool following
+#   the example in the continuous integration pipeline.
+# - Builds VPacks for including the app in the Windows OS build. Azure DevOps Universal Packages
+#   offers similar capabilities.
+# - Creates StoreBroker packages containing Microsoft Store assets. Although the Store assets for
+#   this app are not open source, the StoreBroker tool is available at
+#   https://github.com/Microsoft/StoreBroker.
+
+jobs:
+- job: WindowsInternalRelease
+  dependsOn: Package
+  pool:
+    name: Package ES Custom Demands Lab A
+    demands:
+    - ClientAlias -equals PKGESUTILAPPS
+  workspace:
+    clean: outputs
+  steps:
+  - checkout: self
+    clean: true
+
+  # This must be the first task in the job definition, since it modifies the build environment
+  # in ways other tasks would not expect (for example, it clears the artifacts directory).
+  - task: PkgESSetupBuild@10
+    displayName: Initialize Package ES
+    inputs:
+        productName: Calculator
+        disableWorkspace: true
+    env:
+      XES_DISABLEPROV: true
+
+  - task: DownloadBuildArtifacts@0
+    displayName: Download appxBundle artifact
+    inputs:
+      artifactName: appxBundle
+
+  - task: PkgESCodeSign@10
+    displayName: Send bundle to Package ES code signing service
+    inputs:
+      signConfigXml: build\config\SignConfig.xml
+      inPathRoot: $(Build.ArtifactStagingDirectory)\appxBundle
+      outPathRoot: $(Build.ArtifactStagingDirectory)\appxBundleSigned
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish AppxBundleSigned artifact
+    inputs:
+      pathtoPublish: $(Build.ArtifactStagingDirectory)\appxBundleSigned
+      artifactName: AppxBundleSigned
+
+  - task: CopyFiles@2
+    displayName: Copy signed AppxBundle to vpack staging folder
+    inputs:
+        sourceFolder: $(Build.ArtifactStagingDirectory)\appxBundleSigned
+        targetFolder: $(Build.ArtifactStagingDirectory)\vpack\appxBundle
+
+  - task: PkgESVPack@10
+    displayName: Create and push vpack for app
+    env:
+        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    inputs:
+        sourceDirectory: $(Build.ArtifactStagingDirectory)\vpack\appxBundle
+        description: VPack for the Calculator Application
+        pushPkgName: calculator.app
+        version: $(versionMajor).$(versionMinor).$(versionBuild)
+        owner: paxeeapps
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish vpack\app artifact with vpack manifest
+    inputs:
+        pathtoPublish: $(XES_VPACKMANIFESTDIRECTORY)\$(XES_VPACKMANIFESTNAME)
+        artifactName: vpack\app
+
+    # TODO (macool): create and push internal test packages and test config
+
+  - task: UniversalPackages@0
+    displayName: Download internals package
+    inputs:
+      command: download
+      downloadDirectory: $(Build.SourcesDirectory)
+      vstsFeed: WindowsApps
+      vstsFeedPackage: calculator-internals
+      vstsPackageVersion: 0.0.7
+
+  - task: PkgESStoreBrokerPackage@10
+    displayName: Create StoreBroker Packages
+    env:
+      XES_SERIALPOSTBUILDREADY: True
+    inputs:
+      addToFlight: false
+      configPath: tools/Build/StoreBroker/SBCalculatorConfig.json
+      PDPRootPath: $(Build.SourcesDirectory)\PDP
+      imagesRootPath: $(Build.SourcesDirectory)\PDPMediaRoot
+      appxPath: $(Build.ArtifactStagingDirectory)\appxBundleSigned\Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
+      useArtifactServiceForMedia: true
+      outPath: $(Build.ArtifactStagingDirectory)\StoreBrokerPayload
+      paToken: $(System.AccessToken)
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish StoreBrokerPayload artifact
+    inputs:
+      artifactName: storeBrokerPayload
+      pathToPublish: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload
+
+  - task: PkgESLateTasks@10
+    displayName: Run PackageES LateTasks
+    env:
+      XES_DISABLEPROV: true

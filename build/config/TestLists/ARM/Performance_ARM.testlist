@@ -1,0 +1,9 @@
+{
+    "$schema": "http://universaltest/schema/testlist-2.json",
+    "TestMDs": [
+        {
+            "FilePath": "Calculator.UITests\\Prebuilt\\Test\\arm\\fre\\Calculator.UITests.testmd",
+            "ExecutionProfile": "Performance"
+        }
+    ]
+}

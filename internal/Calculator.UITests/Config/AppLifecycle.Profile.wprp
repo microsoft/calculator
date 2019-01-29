@@ -1,0 +1,526 @@
+﻿<!-- 
+
+    This WPRP (WPR profile) contains the App Life Cycle settings for Mobile and Client Performance Gates (MPG and CPG).
+    Since the appcycle automations are currently still separate, any changes here should be made in two places to keep these wprp's in sync.
+    CPG: base\PerfTest\MemRe\AppLifecycle\Common\AppLifeCycle.wprp
+    MPG: wm\src\tools\Product\DH\Test\PerfWorkloads\AppLifeCycle\AppLifeCycle.wprp
+    
+    Prefixes in the WPRP:
+    SC_  - System Collector controlling kernel event tracing
+    EC_  - Event Collector controlling user mode event tracing
+    
+    SP_  - System Provider 
+    
+    EP_  - Event Provider
+    
+    There are two separate traces - Responsiveness and Memory.
+    Within that, we have Light tracing which is for official gating metrics/traces, and we have Verbose tracing, which is for Diagnostic metrics\traces.
+
+-->
+
+<WindowsPerformanceRecorder Version="1.0" Comments="Test" Company="Microsoft Corporation" Copyright="Microsoft Corporation">
+    <Profiles>
+        <!-- BufferSizes are in KB in WPRP -->
+
+        <!-- System Collectors -->
+        <SystemCollector Id="SC_Responsiveness.LowCost.Light" Name="NT Kernel Resposiveness Logger LowCost Light">
+            <BufferSize Value="1024" />
+            <Buffers Value="3" PercentageOfTotalMemory="true" MaximumBufferSpace="30" />
+        </SystemCollector>
+
+        <SystemCollector Id="SC_Responsiveness.LowCost" Name="NT Kernel Resposiveness Logger LowCost">
+            <BufferSize Value="1024" />
+            <Buffers Value="35" />
+        </SystemCollector>
+
+        <SystemCollector Id="SC_Responsiveness.HighCost.Verbose" Name="NT Kernel Resposiveness Logger HighCost Verbose">
+            <BufferSize Value="1024" />
+            <Buffers Value="7" PercentageOfTotalMemory="true" MaximumBufferSpace="140" />
+        </SystemCollector>
+
+        <SystemCollector Id="SC_Memory.LowCost.Light" Name="NT Kernel Memory Logger LowCost Light">
+            <BufferSize Value="1024" />
+            <Buffers Value="35" />
+        </SystemCollector>
+
+        <SystemCollector Id="SC_Memory.HighCost.Verbose" Name="NT Kernel Memory Logger LowCost Light">
+            <BufferSize Value="1024" />
+            <Buffers Value="75" />
+        </SystemCollector>
+
+        <!-- Event Collectors -->
+        <EventCollector Id="EC_Responsiveness.LowCost.Light" Name="User Session Logger LowCost Light">
+            <BufferSize Value="1024" />
+            <Buffers Value="2" PercentageOfTotalMemory="true" MaximumBufferSpace="20"/>
+        </EventCollector>
+
+        <EventCollector Id="EC_Responsiveness.LowCost.Light.UTC" Name="User Session Logger LowCost Light UTC">
+            <BufferSize Value="1024"/>
+            <Buffers Value="5"/>
+        </EventCollector>
+
+        <EventCollector Id="EC_Responsiveness.LowCost" Name="User Session Logger LowCost">
+            <BufferSize Value="1024" />
+            <Buffers Value="15" />
+        </EventCollector>
+
+        <EventCollector Id="EC_Responsiveness.HighCost.Verbose" Name="User Session Logger Higcost Verbose">
+            <BufferSize Value="1024" />
+            <Buffers Value="3" PercentageOfTotalMemory="true" MaximumBufferSpace="60" />
+        </EventCollector>
+
+        <EventCollector Id="EC_Memory.LowCost.Light" Name="User Session Logger LowCost Light">
+            <BufferSize Value="1024" />
+            <Buffers Value="30" />
+        </EventCollector>
+
+        <!-- System Providers for collecting kernel events. -->
+        <SystemProvider Id="SP_Responsiveness.Light">
+            <Keywords Operation="Add">
+                <Keyword Value="CompactCSwitch"/>
+                <Keyword Value="CSwitch"/>
+                <Keyword Value="DiskIO"/>
+                <Keyword Value="ProcessThread"/>
+                <Keyword Value="Loader"/>
+            </Keywords>
+        </SystemProvider>
+        <SystemProvider Id="SP_Responsiveness" Base="SP_Responsiveness.Light">
+            <Keywords Operation="Add">
+                <Keyword Value="HardFaults"/>
+                <Keyword Value="MemoryInfo"/>
+                <Keyword Value="ReadyThread"/>
+                <Keyword Value="SampledProfile"/>
+                <Keyword Value="Session"/>
+                <Keyword Value="VAMap"/>
+                <Keyword Value="DPC"/>
+                <Keyword Value="Power"/>
+            </Keywords>
+            <Stacks Operation="Add">
+                <Stack Value="CSwitch"/>
+                <Stack Value="ReadyThread"/>
+                <Stack Value="SampledProfile"/>
+            </Stacks>
+        </SystemProvider>
+        <SystemProvider Id="SP_Memory.Light" Base="SP_Responsiveness.Light" >
+            <Keywords Operation="Add">
+                <Keyword Value="Memory"/>
+                <Keyword Value="MemoryInfo"/>
+                <Keyword Value="HardFaults"/>
+                <Keyword Value="ReferenceSet"/>
+                <Keyword Value="VirtualAllocation"/>
+            </Keywords>
+        </SystemProvider>
+        <SystemProvider Id="SP_Memory" Base="SP_Responsiveness" >
+            <Keywords Operation="Add">
+                <Keyword Value="FootPrint"/>
+                <Keyword Value="Memory"/>
+                <Keyword Value="MemoryInfoWS"/>
+                <Keyword Value="ReferenceSet"/>
+                <Keyword Value="VirtualAllocation"/>
+            </Keywords>
+            <Stacks Operation="Add">
+                <Stack Value="HeapCreate" />
+                <Stack Value="ImageLoad" />
+                <Stack Value="PageAccess" />
+                <Stack Value="PageAccessEx" />
+                <Stack Value="PagefileMappedSectionCreate" />
+                <Stack Value="PagefileMappedSectionDelete" />
+                <Stack Value="PageRangeAccess" />
+                <Stack Value="PageRangeRelease" />
+                <Stack Value="PageRelease" />
+                <Stack Value="PageRemovedfromWorkingSet" />
+                <Stack Value="VirtualAllocation" />
+                <Stack Value="VirtualFree" />
+            </Stacks>
+        </SystemProvider>
+        <!-- Start - AppLaunch.wprp -->
+        <EventProvider Id="EP_UTC" Name="UTC" NonPagedMemory="true" Level="4" />
+        <EventProvider Id="EP_Microsoft-WindowsPhone-AppPlatProvider" Name="3C42000F-CC27-48C3-A005-48F6E38B131F" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_XNA" Name="CD698436-A3E3-4607-BB60-0BAC4D765B59" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_TaskHost" Name="5CBDF2A5-7290-4ACC-B8A7-9BA285BEBC39" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-WindowsPhone-Silverlight" Name="AA087E0E-0B35-4e28-8F3A-440C3F51EEF1" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Device-Health-Etw" Name="F7A8FD9F-8FFD-482f-86C0-4C19240F334C" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-WindowsMobile-Compositor" Name="85FFFBA1-CF12-402c-B9B3-29A3217BB007" Level="5">
+            <Keywords>
+                <Keyword Value="0xfffffff" />
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-WindowsMobile-Splash" Name="872c8950-0def-4d5b-83f6-57dd027f88ce" Level="4">
+            <Keywords>
+                <Keyword Value="0xfffffff" />
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-WindowsMobile-UIXMobile" Name="0C0FFEE0-F4B1-4F4D-B591-FB3175B13413">
+            <Keywords>
+                <Keyword Value="0xE" />
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-WindowsMobile-StartMenu" Name="BECF83FD-D220-4b19-B7C1-C9127307F6B1" Level="5">
+            <Keywords>
+                <Keyword Value="0xfffffff" />
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-Kernel-EventTracing" Name="b675ec37-bdb6-4648-bc92-f3fdc74d3ca2" Level="5">
+            <Keywords>
+                <Keyword Value="0x50" />
+            </Keywords>
+            <CaptureStateOnSave>
+                <Keyword Value="0x50" />
+            </CaptureStateOnSave>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-WindowsPhone-MobileUI" Name="F243DC34-205E-4d34-94CA-36E8C0859787" Level="5">
+            <Keywords>
+                <Keyword Value="0xfffffff" />
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-Kernel-Process" Name="2839ff94-8f12-4e1b-82e3-af7af77a450f" NonPagedMemory="true" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-TestExecution" Name="Microsoft-Windows-TestExecution" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft.Windows.WinPerf" Name="BE6F04EA-3488-4543-8082-24843EAEC303" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-Shell-Launcher" Name="*Microsoft-Windows-Shell-Launcher" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-Immersive-Shell" Name="315A8872-923E-4EA2-9889-33CD4754BF64" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-XAML-Light" Name="531A35AB-63CE-4BCF-AA98-F88C7A89E455" Level="4" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-XAML-Verbose" Name="531A35AB-63CE-4BCF-AA98-F88C7A89E455" Level="5" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-ProcessLifetimeManager" Name="*Microsoft.Windows.ProcessLifetimeManager" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-Desktop-ApplicationFrame" Name="678e492b-5de1-50c5-7219-ae4aa7d6a141" Level="5" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Microsoft-Phone-AppLifecycle" Name="f623a8ef-84da-4640-8917-fd5b0f847f28" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-WindowsPhone-CoreUIComponents" Name="a0b7550f-4e9a-4f03-ad41-b8042d06a2f7" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-AppModel-Exec" Name="EB65A492-86C0-406A-BACE-9912D595BD69" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft.Windows.ActivationManager" Name="cf7f94b3-08dc-5257-422f-497d7dc86ab3">
+            <Keywords>
+                <Keyword Value="0x0" />
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-WindowsMobile-ExecManLogPublisher" Name="82c8ad90-5f3c-11be-bd9a-85bb5f50dfa4" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-Shell-CortanaSearch" Name="E34441D9-5BCF-4958-B787-3BF824F362D7" >
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-Dwm-Core" Name="9e9bba3c-2e38-40cb-99f4-9e8281425164" Level="4" >
+            <Keywords>
+                <Keyword Value="0x2000C"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-ImageLoad" Name="2cb15d1d-5fc1-11d2-abe1-00a0c911f518" >
+            <Keywords>
+                <Keyword Value="0x10"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-AppLifeCycle-UI" Name="ee97cdc4-b095-5c70-6e37-a541eb74c2b5" Level="5">
+            <Keywords>
+                <Keyword Value="0x400000000000"/>
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-AppLifeCycle" Name="ef00584a-2655-462c-bc24-e7de630e7fbf">
+            <Keywords>
+                <Keyword Value="0x0000000000000"/>
+            </Keywords>
+            <CaptureStateOnSave>
+                <Keyword Value="0x0000000000000"/>
+            </CaptureStateOnSave>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-Kernel-Power" Name="331C3B3A-2005-44C2-AC5E-77220C37D6B4" NonPagedMemory="true" EventKey="true">
+            <Keywords>
+                <Keyword Value="0xA4"/>
+            </Keywords>
+            <CaptureStateOnSave Timeout="0">
+                <Keyword Value="0xA4"/>
+            </CaptureStateOnSave>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-Kernel-Processor-Power" Name="0f67e49f-fe51-4e9f-b490-6f2948cc6027" NonPagedMemory="true" EventKey="true" Level="4">
+            <Keywords>
+                <Keyword Value="0xC2"/>
+            </Keywords>
+            <CaptureStateOnSave Timeout="0">
+                <Keyword Value="0xC2"/>
+            </CaptureStateOnSave>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-Kernel-Pep" Name="5412704E-B2E1-4624-8FFD-55777B8F7373" NonPagedMemory="true" EventKey="true">
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+            <CaptureStateOnSave Timeout="0">
+                <Keyword Value="0x0"/>
+            </CaptureStateOnSave>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-Kernel-Acpi" Name="C514638F-7723-485B-BCFC-96565D735D4A" Level="5" NonPagedMemory="true" EventKey="true">
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+            <CaptureStateOnSave>
+                <Keyword Value="0x0"/>
+            </CaptureStateOnSave>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-UserModePowerService" Name="CE8DEE0B-D539-4000-B0F8-77BED049C590" NonPagedMemory="true" EventKey="true">
+            <Keywords>
+                <Keyword Value="0x0"/>
+            </Keywords>
+            <CaptureStateOnSave Timeout="0">
+                <Keyword Value="0x0"/>
+            </CaptureStateOnSave>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft.ClipC" Level="0" Name="ed0c10a5-5396-4a96-9ee3-6f4aa0d1120d" NonPagedMemory="true" EventKey="true">
+            <Keywords>
+                <Keyword Value="0x200000000000" />
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft.ClipSp" Level="0" Name="b4b126de-32fe-4591-9ac5-b0778d79a0e7" NonPagedMemory="true" EventKey="true">
+            <Keywords>
+                <Keyword Value="0x200000000000" />
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft.ClipSvc" Level="0" Name="b94d76c5-9d56-454a-8d1b-6ca30898160e" NonPagedMemory="true" EventKey="true">
+            <Keywords>
+                <Keyword Value="0x200000000000" />
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft.Windows.LicenseManager.Telemetry" Level="0" Name="af9f58ec-0c04-4be9-9eb5-55ff6dbe72d7" NonPagedMemory="true" EventKey="true">
+            <Keywords>
+                <Keyword Value="0x200000000000" />
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-Win32k" Level="0" Name="8c416c79-d49b-4f01-a467-e56d3aa8234c" NonPagedMemory="true" EventKey="true">
+            <Keywords>
+                <Keyword Value="0x26A000" />
+            </Keywords>
+        </EventProvider>
+        <EventProvider Id="EP_Microsoft-Windows-Kernel-Prefetch" Level="0" Name="Microsoft-Windows-Kernel-Prefetch" NonPagedMemory="true" EventKey="true">
+            <Keywords>
+                <Keyword Value="0x0" />
+            </Keywords>
+        </EventProvider>
+        <!-- End - AppLaunch.wprp -->
+        <Profile Id="AppLifecycle.Responsiveness.Light.File" LoggingMode="File" Name="AppLifecycle.Responsiveness" DetailLevel="Light" Description="App lifecycle responsiveness light to file">
+            <Collectors>
+                <SystemCollectorId Value="SC_Responsiveness.LowCost.Light">
+                    <SystemProviderId Value="SP_Responsiveness.Light" />
+                </SystemCollectorId>
+                <EventCollectorId Value="EC_Responsiveness.LowCost.Light">
+                    <EventProviders>
+                        <EventProviderId Value="EP_Microsoft-Windows-TestExecution" />
+                        <EventProviderId Value="EP_Microsoft.Windows.WinPerf" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Immersive-Shell"/>
+                        <EventProviderId Value="EP_Microsoft-Windows-AppLifeCycle" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Shell-Launcher" />
+                        <EventProviderId Value="EP_Microsoft-Windows-XAML-Light" />
+                        <EventProviderId Value="EP_Microsoft-Windows-AppLifeCycle-UI" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Kernel-Process" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Shell-CortanaSearch"/>
+                        <EventProviderId Value="EP_Microsoft-Windows-AppModel-Exec"/>
+                        <EventProviderId Value="EP_Microsoft.Windows.ActivationManager" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Kernel-EventTracing" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Desktop-ApplicationFrame" />
+                        <EventProviderId Value="EP_XNA" />
+                        <EventProviderId Value="EP_TaskHost" />
+                        <EventProviderId Value="EP_Device-Health-Etw" />
+                        <EventProviderId Value="EP_Microsoft-Microsoft-Phone-AppLifecycle"/>
+                        <EventProviderId Value="EP_Microsoft-WindowsPhone-CoreUIComponents"/>
+                        <EventProviderId Value="EP_Microsoft-WindowsPhone-AppPlatProvider" />
+                        <EventProviderId Value="EP_Microsoft-WindowsPhone-Silverlight" />
+                        <EventProviderId Value="EP_Microsoft-WindowsMobile-Splash" />
+                    </EventProviders>
+                </EventCollectorId>
+                <EventCollectorId Value="EC_Responsiveness.LowCost.Light.UTC">
+                    <EventProviders>
+                        <EventProviderId Value="EP_UTC"/>
+                    </EventProviders>
+                </EventCollectorId>
+            </Collectors>
+        </Profile>
+        <Profile Id="AppLifecycle.Responsiveness.Diagnostic.Verbose.File" Base="AppLifecycle.Responsiveness.Light.File" LoggingMode="File" Name="AppLifecycle.Responsiveness.Diagnostic" DetailLevel="Verbose" Description="App lifecycle responsiveness verbose to file">
+            <Collectors Operation="Add">
+                <SystemCollectorId Value="SC_Responsiveness.LowCost">
+                    <SystemProviderId Value="SP_Responsiveness" />
+                </SystemCollectorId>
+                <EventCollectorId Value="EC_Responsiveness.LowCost">
+                    <EventProviders>
+                        <EventProviderId Value="EP_Microsoft-Windows-XAML-Verbose" />
+                        <EventProviderId Value="EP_Microsoft-WindowsMobile-ExecManLogPublisher"/>
+                        <EventProviderId Value="EP_Microsoft-WindowsMobile-Compositor" />
+                        <EventProviderId Value="EP_Microsoft-WindowsMobile-UIXMobile" />
+                        <EventProviderId Value="EP_Microsoft-WindowsMobile-StartMenu" />
+                        <EventProviderId Value="EP_Microsoft-WindowsPhone-MobileUI" />
+                    </EventProviders>
+                </EventCollectorId>
+            </Collectors>
+        </Profile>
+        <Profile Id="AppLifecycle.Responsiveness.Diagnostic.Verbose.Memory" Base="AppLifecycle.Responsiveness.Light.File" LoggingMode="Memory" Name="AppLifecycle.Responsiveness.Diagnostic" DetailLevel="Verbose" Description="App life cycle responsiveness verbose to memory">
+            <Collectors>
+                <SystemCollectorId Value="SC_Responsiveness.HighCost.Verbose">
+                    <SystemProviderId Value="SP_Responsiveness"/>
+                </SystemCollectorId>
+                <EventCollectorId Value="EC_Responsiveness.HighCost.Verbose">
+                    <EventProviders>
+                        <EventProviderId Value="EP_Microsoft-Windows-ProcessLifetimeManager" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Shell-CortanaSearch"/>
+                        <EventProviderId Value="EP_Microsoft-WindowsMobile-ExecManLogPublisher"/>
+                        <EventProviderId Value="EP_Microsoft-WindowsMobile-Compositor" />
+                        <EventProviderId Value="EP_Microsoft-WindowsMobile-UIXMobile" />
+                        <EventProviderId Value="EP_Microsoft-WindowsMobile-StartMenu" />
+                        <EventProviderId Value="EP_Microsoft-WindowsPhone-MobileUI" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Kernel-Power" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Kernel-Processor-Power" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Kernel-Pep" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Kernel-Acpi" />
+                        <EventProviderId Value="EP_Microsoft-Windows-UserModePowerService" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Dwm-Core" />
+                        <EventProviderId Value="EP_Microsoft-Windows-ImageLoad" />
+                        <EventProviderId Value="EP_Microsoft.ClipC" />
+                        <EventProviderId Value="EP_Microsoft.ClipSp" />
+                        <EventProviderId Value="EP_Microsoft.ClipSvc" />
+                        <EventProviderId Value="EP_Microsoft.Windows.LicenseManager.Telemetry" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Win32k" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Kernel-Prefetch" />
+                    </EventProviders>
+                </EventCollectorId>
+            </Collectors>
+        </Profile>
+        <Profile Id="AppLifecycle.Memory.Light.File" LoggingMode="File" Name="AppLifecycle.Memory" DetailLevel="Light" Description="App lifecycle memory light to file">
+            <Collectors>
+                <SystemCollectorId Value="SC_Memory.LowCost.Light">
+                    <SystemProviderId Value="SP_Memory.Light" />
+                </SystemCollectorId>
+                <EventCollectorId Value="EC_Memory.LowCost.Light">
+                    <EventProviders>
+                        <EventProviderId Value="EP_Microsoft-Windows-TestExecution" />
+                        <EventProviderId Value="EP_Microsoft.Windows.WinPerf" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Immersive-Shell"/>
+                        <EventProviderId Value="EP_Microsoft-Windows-AppModel-Exec"/>
+                        <EventProviderId Value="EP_Microsoft.Windows.ActivationManager" />
+                        <EventProviderId Value="EP_Microsoft-Windows-AppLifeCycle" />
+                        <EventProviderId Value="EP_Microsoft-Windows-AppLifeCycle-UI" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Kernel-EventTracing" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Desktop-ApplicationFrame" />
+                        <EventProviderId Value="EP_XNA" />
+                        <EventProviderId Value="EP_TaskHost" />
+                        <EventProviderId Value="EP_Device-Health-Etw" />
+                        <EventProviderId Value="EP_Microsoft-WindowsMobile-ExecManLogPublisher"/>
+                        <EventProviderId Value="EP_Microsoft-Microsoft-Phone-AppLifecycle"/>
+                        <EventProviderId Value="EP_Microsoft-WindowsPhone-CoreUIComponents"/>
+                        <EventProviderId Value="EP_Microsoft-WindowsPhone-AppPlatProvider" />
+                        <EventProviderId Value="EP_Microsoft-WindowsPhone-Silverlight" />
+                        <EventProviderId Value="EP_Microsoft-Windows-XAML-Light" />
+                        <EventProviderId Value="EP_Microsoft-WindowsMobile-Splash" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Kernel-Prefetch" />
+                    </EventProviders>
+                </EventCollectorId>
+                <EventCollectorId Value="EC_Responsiveness.LowCost.Light.UTC">
+                    <EventProviders>
+                        <EventProviderId Value="EP_UTC"/>
+                    </EventProviders>
+                </EventCollectorId>
+            </Collectors>
+        </Profile>
+        <Profile Id="AppLifecycle.Memory.Diagnostic.Verbose.File" Base="AppLifecycle.Memory.Light.File" LoggingMode="File" Name="AppLifecycle.Memory.Diagnostic" DetailLevel="Verbose" Description="App lifecycle memory verbose to file">
+            <Collectors Operation="Add">
+                <SystemCollectorId Value="SC_Memory.HighCost.Verbose">
+                    <SystemProviderId Value="SP_Memory" />
+                </SystemCollectorId>
+                <EventCollectorId Value="EC_Memory.LowCost.Light">
+                    <EventProviders>
+                        <EventProviderId Value="EP_Microsoft-Windows-Shell-Launcher" />
+                        <EventProviderId Value="EP_Microsoft-Windows-XAML-Verbose" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Kernel-Power" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Kernel-Processor-Power" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Kernel-Pep" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Dwm-Core" />
+                        <EventProviderId Value="EP_Microsoft-Windows-ImageLoad" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Kernel-Process" />
+                        <EventProviderId Value="EP_Microsoft-Windows-Shell-CortanaSearch"/>
+                        <EventProviderId Value="EP_Microsoft-WindowsMobile-Compositor" />
+                        <EventProviderId Value="EP_Microsoft-WindowsMobile-UIXMobile" />
+                        <EventProviderId Value="EP_Microsoft-WindowsMobile-StartMenu" />
+                        <EventProviderId Value="EP_Microsoft-WindowsPhone-MobileUI" />
+                        <EventProviderId Value="EP_Microsoft-Windows-ProcessLifetimeManager" />
+                    </EventProviders>
+                </EventCollectorId>
+            </Collectors>
+        </Profile>
+    </Profiles>
+    <TraceMergeProperties>
+        <TraceMergeProperty Id="TraceMerge_Default" Name="TraceMerge_Default" Base="">
+            <DeletePreMergedTraceFiles Value="true"/>
+            <CustomEvents>
+                <CustomEvent Value="ImageId"/>
+                <CustomEvent Value="BuildInfo"/>
+                <CustomEvent Value="VolumeMapping"/>
+                <CustomEvent Value="EventMetadata"/>
+                <CustomEvent Value="PerfTrackMetadata"/>
+                <CustomEvent Value="WinSAT"/>
+                <CustomEvent Value="NetworkInterface"/>
+            </CustomEvents>
+        </TraceMergeProperty>
+    </TraceMergeProperties>
+</WindowsPerformanceRecorder>

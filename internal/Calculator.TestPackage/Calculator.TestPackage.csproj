@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{24767C43-CD5A-4DC9-8D6B-429F255524E5}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>Calculator.TestPackage</RootNamespace>
+        <AssemblyName>Calculator.TestPackage</AssemblyName>
+        <TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>
+        <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+        <NuGetTargetMoniker>.NETCore,Version=v5.0</NuGetTargetMoniker>
+        <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+        <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
+        <TargetPlatformMinVersion>10.0.17134.0</TargetPlatformMinVersion>
+        <FileAlignment>512</FileAlignment>
+        <!-- The app doesn't contain any tests so we don't generate a testmd -->
+        <NoTestMD>true</NoTestMD>
+        <NoPackage Condition="'$(IsTFSBuild)' != 'True'">True</NoPackage>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\x86</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <PlatformTarget>x86</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\x86</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <PlatformTarget>x86</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\x64</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\x64</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\arm</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <PlatformTarget>ARM</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\arm</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <PlatformTarget>ARM</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM64' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\ARM64\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <PlatformTarget>ARM64</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM64' ">
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\ARM64\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <PlatformTarget>ARM64</PlatformTarget>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="Calculator.TestPackage.wm.xml" />
+        <None Include="project.json" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Calculator\Calculator.vcxproj">
+            <Project>{9447424a-0e05-4911-beb8-e0354405f39a}</Project>
+            <Name>Calculator</Name>
+        </ProjectReference>
+    </ItemGroup>
+    <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
+        <VisualStudioVersion>15.0</VisualStudioVersion>
+    </PropertyGroup>
+    <!-- Redefine build target as we don't want to build anything. -->
+    <Target Name="Build" />
+    <Target Name="Clean" />
+    <Target Name="Rebuild" />
+    <!-- Append the appx properties to the custom macros as we use this in the testmd.definition file. -->
+    <Target Name="AppendUniversalTestCustomMacros" BeforeTargets="BuildUniversalTest">
+        <ItemGroup>
+            <AppxBundleOutput Include="$(OutDir)..\Calculator\AppPackages\**\*.appxbundle" />
+            <AppxPackagePublicKeyFile Include="$(OutDir)..\Calculator\AppPackages\**\*.cer" />
+        </ItemGroup>
+        <PropertyGroup>
+            <AppxPackageTestDir>@(AppxBundleOutput->'%(RootDir)%(Directory)')</AppxPackageTestDir>
+            <UniversalTestCustomMacros Condition="'$(Configuration)'=='Debug'">$(UniversalTestCustomMacros)AppxPackageVCLibsDependency=$(AppxPackageTestDir)Dependencies\$(PlatformTarget)\Microsoft.VCLibs.$(PlatformTarget).Debug.14.00.appx;</UniversalTestCustomMacros>
+            <UniversalTestCustomMacros Condition="'$(Configuration)'=='Release'">$(UniversalTestCustomMacros)AppxPackageVCLibsDependency=$(AppxPackageTestDir)Dependencies\$(PlatformTarget)\Microsoft.VCLibs.$(PlatformTarget).14.00.appx;</UniversalTestCustomMacros>
+            <UniversalTestCustomMacros>$(UniversalTestCustomMacros)AppxPackageWinUIDependency=$(AppxPackageTestDir)Dependencies\$(PlatformTarget)\Microsoft.UI.Xaml.2.0.appx;</UniversalTestCustomMacros>
+            <UniversalTestCustomMacros>$(UniversalTestCustomMacros)AppxPackagePublicKeyFile=@(AppxPackagePublicKeyFile->'%(FullPath)');AppxBundleOutput=@(AppxBundleOutput->'%(FullPath)');</UniversalTestCustomMacros>
+        </PropertyGroup>
+    </Target>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,73 @@
+{
+    "$schema": "http://universaltest/schema/testmddefinition-4.json",
+    "Package": {
+        "ComponentName": "Calculator",
+        "SubComponentName": "UITests"
+    },
+    "SupportedArchitectures": [ "All" ],
+    "Execution": {
+        "Type": "TAEF",
+        "Parameter": "/ScreenCaptureOnError /TestMode:EnsureLoggedOnUser",
+        "ExecutionTimeoutInMinutes": "30"
+    },
+    "Dependencies": {
+        "Files": [
+            {
+                "SourcePath": "$(OUT_DIR)Calculator.UIAutomationLibrary.dll",
+                "DestinationFolderPath": "$$(TEST_DEPLOY_BIN)"
+            },
+            {
+                "SourcePath": "$(OUT_DIR)Microsoft.Windows.Apps.Performance.dll",
+                "DestinationFolderPath": "$$(TEST_DEPLOY_BIN)"
+            },
+            {
+                "SourcePath": "$(OUT_DIR)Config\\AppLifecycle.Profile.wprp",
+                "DestinationFolderPath": "$$(TEST_DEPLOY_BIN)\\Config\\"
+            },
+            {
+                "SourcePath": "$(OUT_DIR)Config\\AppLifecycle.Regions.xml",
+                "DestinationFolderPath": "$$(TEST_DEPLOY_BIN)\\Config\\"
+            },
+            {
+                "SourcePath": "$(OUT_DIR)Config\\AppLifecycle.Iterations.xml",
+                "DestinationFolderPath": "$$(TEST_DEPLOY_BIN)\\Config\\"
+            }
+        ],
+        "Packages": [
+            "Microsoft-Windows-Test-Taef",
+            "Microsoft-Windows-Test-EtwProcessor",
+            "Microsoft-Test-Taef-EnsureLoggedOnUserTestMode",
+            "Microsoft-Test-Taef-EtwLoggerTestMode",
+            "Microsoft-Windows-Test-MitaLite",
+            "Microsoft-Windows-Test-TestNetV2.0",
+            "Microsoft-OneCoreUap-Test-AppModel-AreaLibrary"
+        ]
+    },
+    "Logs": [],
+    "Plugins": [],
+    "Profiles": [
+        {
+            "Name": "All",
+            "Execution": {
+                "AdditionalParameter": "/TestMode:EtwLogger /p:InstallApp=true /select:not(@Category='Performance')"
+            },
+            "Dependencies": {
+                "AdditionalPackages": [
+                    "Microsoft-Calculator-App"
+                ]
+            }
+        },
+        {
+            "Name": "Performance",
+            "Execution": {
+                "AdditionalParameter": "/TestMode:WinPerf /WinPerf:Upload=Full /winperf:WinPerfSource=\"Utility Apps Performance Tests\" /winperf:VersionProcess=Calculator.exe /winperf:VersionImage=Calculator.exe /p:InstallApp=true /select:@Category='Performance'"
+            },
+            "Dependencies": {
+                "AdditionalPackages": [
+                    "Microsoft-Windows-Performance-Winperf-Winperf",
+                    "Microsoft-Calculator-App"
+                ]
+            }
+        }
+    ]
+}

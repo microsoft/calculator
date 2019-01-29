@@ -1,0 +1,82 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#include <winver.h>
+
+#if !defined(APP_VERSION_MAJOR) || APP_VERSION_MAJOR < 0 || APP_VERSION_MAJOR > 32768
+#error Invalid APP_VERSION_MAJOR
+#endif
+
+#if !defined(APP_VERSION_MINOR) || APP_VERSION_MINOR < 0 || APP_VERSION_MINOR > 32768
+#error Invalid APP_VERSION_MINOR
+#endif
+
+#if !defined(APP_VERSION_BUILD) || APP_VERSION_BUILD < 0 || APP_VERSION_BUILD > 32768
+#error Invalid APP_VERSION_BUILD
+#endif
+
+#if !defined(APP_VERSION_REVISION) || APP_VERSION_REVISION < 0 || APP_VERSION_REVISION > 32768
+#error Invalid APP_VERSION_REVISION
+#endif
+
+#ifndef APP_FILE_NAME
+#error Expected APP_FILE_NAME
+#endif
+
+#if !(defined(APP_FILE_IS_DLL) ^ defined(APP_FILE_IS_EXE))
+#error Expected either APP_FILE_IS_DLL or APP_FILE_IS_EXE to be defined
+#endif
+
+#ifndef APP_PRODUCT_NAME
+#error Expected APP_PRODUCT_NAME
+#endif
+
+#ifndef APP_COMPANY_NAME
+#error Expected APP_COMPANY_NAME
+#endif
+
+#ifndef APP_COPYRIGHT
+#error Expected APP_COPYRIGHT
+#endif
+
+#define STR_QUOTE(x) #x
+#define STR(x) STR_QUOTE(x)
+#define STR_VERSION STR(APP_VERSION_MAJOR) "." STR(APP_VERSION_MINOR) "." STR(APP_VERSION_BUILD) "." STR(APP_VERSION_REVISION)
+
+#ifdef APP_FILE_IS_DLL
+#define _APP_VERSION_EXTENSION ".dll"
+#define _APP_VERSION_FILETYPE VFT_DLL
+#endif
+#ifdef APP_FILE_IS_EXE
+#define _APP_VERSION_EXTENSION ".exe"
+#define _APP_VERSION_FILETYPE VFT_APP
+#endif
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     APP_VERSION_MAJOR, APP_VERSION_MINOR, APP_VERSION_BUILD, APP_VERSION_REVISION
+PRODUCTVERSION  APP_VERSION_MAJOR, APP_VERSION_MINOR, APP_VERSION_BUILD, APP_VERSION_REVISION
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0x0L
+FILEOS          VOS__WINDOWS32
+FILETYPE        _APP_VERSION_FILETYPE
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0" /* en-US, Unicode */
+        BEGIN
+            VALUE "CompanyName", APP_COMPANY_NAME
+            VALUE "FileDescription", APP_FILE_NAME _APP_VERSION_EXTENSION
+            VALUE "FileVersion", STR_VERSION
+            VALUE "InternalName", APP_FILE_NAME
+            VALUE "LegalCopyright", APP_COPYRIGHT
+            VALUE "OriginalFilename", APP_FILE_NAME _APP_VERSION_EXTENSION
+            VALUE "ProductName", APP_PRODUCT_NAME
+            VALUE "ProductVersion", STR_VERSION
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0, 1200 /* Language-neutral, Unicode */
+    END
+END

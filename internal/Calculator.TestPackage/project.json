@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "Microsoft.TestInfrastructure.UniversalTest": "1.0.20181107.1"
+  },
+  "frameworks": {
+    "netcore50": {}
+  },
+  "runtimes": {
+    "win10-arm": {},
+    "win10-x64": {},
+    "win10-x86": {}
+  }
+}

@@ -1,0 +1,2891 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppName" xml:space="preserve">
+    <value>الحاسبة</value>
+    <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"}</comment>
+  </data>
+  <data name="AppStoreName" xml:space="preserve">
+    <value>الحاسبة في Windows</value>
+    <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps.</comment>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>الحاسبة</value>
+    <comment>{@Appx_Description@}</comment>
+  </data>
+  <data name="copyMenuItem" xml:space="preserve">
+    <value>نسخ</value>
+    <comment>Copy context menu string</comment>
+  </data>
+  <data name="pasteMenuItem" xml:space="preserve">
+    <value>لصق</value>
+    <comment>Paste context menu string</comment>
+  </data>
+  <data name="SupplementaryResultsHeader.Text" xml:space="preserve">
+    <value>تساوي حوالي</value>
+    <comment>The text that shows at the bottom of the converter to head the supplementary results. Indicates that the main result is approximately equal to the supplementary results.</comment>
+  </data>
+  <data name="BitAutomationName" xml:space="preserve">
+    <value>البت </value>
+    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  </data>
+  <data name="ValueAutomationName" xml:space="preserve">
+    <value>القيمة </value>
+    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  </data>
+  <data name="BinaryZeroValueAutomationName" xml:space="preserve">
+    <value>صفر</value>
+    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  </data>
+  <data name="BinaryOneValueAutomationName" xml:space="preserve">
+    <value>واحد</value>
+    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  </data>
+  <data name="63" xml:space="preserve">
+    <value>الثالث والستون </value>
+    <comment>Sub-string used in automation name for 63 bit in bit flip</comment>
+  </data>
+  <data name="62" xml:space="preserve">
+    <value>الثاني والستون </value>
+    <comment>Sub-string used in automation name for 62 bit in bit flip</comment>
+  </data>
+  <data name="61" xml:space="preserve">
+    <value>الحادي والستون </value>
+    <comment>Sub-string used in automation name for 61 bit in bit flip</comment>
+  </data>
+  <data name="60" xml:space="preserve">
+    <value>الستون </value>
+    <comment>Sub-string used in automation name for 60 bit in bit flip</comment>
+  </data>
+  <data name="59" xml:space="preserve">
+    <value>التاسع والخمسون </value>
+    <comment>Sub-string used in automation name for 59 bit in bit flip</comment>
+  </data>
+  <data name="58" xml:space="preserve">
+    <value>الثامن والخمسون </value>
+    <comment>Sub-string used in automation name for 58 bit in bit flip</comment>
+  </data>
+  <data name="57" xml:space="preserve">
+    <value>السابع والخمسون </value>
+    <comment>Sub-string used in automation name for 57 bit in bit flip</comment>
+  </data>
+  <data name="56" xml:space="preserve">
+    <value>السادس والخمسون </value>
+    <comment>Sub-string used in automation name for 56 bit in bit flip</comment>
+  </data>
+  <data name="55" xml:space="preserve">
+    <value>الخامس والخمسون </value>
+    <comment>Sub-string used in automation name for 55 bit in bit flip</comment>
+  </data>
+  <data name="54" xml:space="preserve">
+    <value>الرابع والخمسون </value>
+    <comment>Sub-string used in automation name for 54 bit in bit flip</comment>
+  </data>
+  <data name="53" xml:space="preserve">
+    <value>الثالث والخمسون </value>
+    <comment>Sub-string used in automation name for 53 bit in bit flip</comment>
+  </data>
+  <data name="52" xml:space="preserve">
+    <value>الثاني والخمسون </value>
+    <comment>Sub-string used in automation name for 52 bit in bit flip</comment>
+  </data>
+  <data name="51" xml:space="preserve">
+    <value>الحادي والخمسون </value>
+    <comment>Sub-string used in automation name for 51 bit in bit flip</comment>
+  </data>
+  <data name="50" xml:space="preserve">
+    <value>الخمسون </value>
+    <comment>Sub-string used in automation name for 50 bit in bit flip</comment>
+  </data>
+  <data name="49" xml:space="preserve">
+    <value>التاسع والأربعون </value>
+    <comment>Sub-string used in automation name for 49 bit in bit flip</comment>
+  </data>
+  <data name="48" xml:space="preserve">
+    <value>الثامن والأربعون </value>
+    <comment>Sub-string used in automation name for 48 bit in bit flip</comment>
+  </data>
+  <data name="47" xml:space="preserve">
+    <value>السابع والأربعون </value>
+    <comment>Sub-string used in automation name for 47 bit in bit flip</comment>
+  </data>
+  <data name="46" xml:space="preserve">
+    <value>السادس والأربعون </value>
+    <comment>Sub-string used in automation name for 46 bit in bit flip</comment>
+  </data>
+  <data name="45" xml:space="preserve">
+    <value>الخامس والأربعون </value>
+    <comment>Sub-string used in automation name for 45 bit in bit flip</comment>
+  </data>
+  <data name="44" xml:space="preserve">
+    <value>الرابع والأربعون </value>
+    <comment>Sub-string used in automation name for 44 bit in bit flip</comment>
+  </data>
+  <data name="43" xml:space="preserve">
+    <value>الثالث والأربعون </value>
+    <comment>Sub-string used in automation name for 43 bit in bit flip</comment>
+  </data>
+  <data name="42" xml:space="preserve">
+    <value>الثاني والأربعون </value>
+    <comment>Sub-string used in automation name for 42 bit in bit flip</comment>
+  </data>
+  <data name="41" xml:space="preserve">
+    <value>الحادي والأربعون </value>
+    <comment>Sub-string used in automation name for 41 bit in bit flip</comment>
+  </data>
+  <data name="40" xml:space="preserve">
+    <value>الأربعون </value>
+    <comment>Sub-string used in automation name for 40 bit in bit flip</comment>
+  </data>
+  <data name="39" xml:space="preserve">
+    <value>التاسع والثلاثون </value>
+    <comment>Sub-string used in automation name for 39 bit in bit flip</comment>
+  </data>
+  <data name="38" xml:space="preserve">
+    <value>الثامن والثلاثون </value>
+    <comment>Sub-string used in automation name for 38 bit in bit flip</comment>
+  </data>
+  <data name="37" xml:space="preserve">
+    <value>السابع والثلاثون </value>
+    <comment>Sub-string used in automation name for 37 bit in bit flip</comment>
+  </data>
+  <data name="36" xml:space="preserve">
+    <value>السادس والثلاثون </value>
+    <comment>Sub-string used in automation name for 36 bit in bit flip</comment>
+  </data>
+  <data name="35" xml:space="preserve">
+    <value>الخامس والثلاثون </value>
+    <comment>Sub-string used in automation name for 35 bit in bit flip</comment>
+  </data>
+  <data name="34" xml:space="preserve">
+    <value>الرابع والثلاثون </value>
+    <comment>Sub-string used in automation name for 34 bit in bit flip</comment>
+  </data>
+  <data name="33" xml:space="preserve">
+    <value>الثالث والثلاثون </value>
+    <comment>Sub-string used in automation name for 33 bit in bit flip</comment>
+  </data>
+  <data name="32" xml:space="preserve">
+    <value>الثاني والثلاثون </value>
+    <comment>Sub-string used in automation name for 32 bit in bit flip</comment>
+  </data>
+  <data name="31" xml:space="preserve">
+    <value>الحادي والثلاثون </value>
+    <comment>Sub-string used in automation name for 31 bit in bit flip</comment>
+  </data>
+  <data name="30" xml:space="preserve">
+    <value>الثلاثون </value>
+    <comment>Sub-string used in automation name for 30 bit in bit flip</comment>
+  </data>
+  <data name="29" xml:space="preserve">
+    <value>التاسع والعشرون </value>
+    <comment>Sub-string used in automation name for 29 bit in bit flip</comment>
+  </data>
+  <data name="28" xml:space="preserve">
+    <value>الثامن والعشرون </value>
+    <comment>Sub-string used in automation name for 28 bit in bit flip</comment>
+  </data>
+  <data name="27" xml:space="preserve">
+    <value>السابع والعشرون </value>
+    <comment>Sub-string used in automation name for 27 bit in bit flip</comment>
+  </data>
+  <data name="26" xml:space="preserve">
+    <value>السادس والعشرون </value>
+    <comment>Sub-string used in automation name for 26 bit in bit flip</comment>
+  </data>
+  <data name="25" xml:space="preserve">
+    <value>الخامس والعشرون </value>
+    <comment>Sub-string used in automation name for 25 bit in bit flip</comment>
+  </data>
+  <data name="24" xml:space="preserve">
+    <value>الرابع والعشرون </value>
+    <comment>Sub-string used in automation name for 24 bit in bit flip</comment>
+  </data>
+  <data name="23" xml:space="preserve">
+    <value>الثالث والعشرون </value>
+    <comment>Sub-string used in automation name for 23 bit in bit flip</comment>
+  </data>
+  <data name="22" xml:space="preserve">
+    <value>الثاني والعشرون </value>
+    <comment>Sub-string used in automation name for 22 bit in bit flip</comment>
+  </data>
+  <data name="21" xml:space="preserve">
+    <value>الحادي والعشرون </value>
+    <comment>Sub-string used in automation name for 21 bit in bit flip</comment>
+  </data>
+  <data name="20" xml:space="preserve">
+    <value>العشرون </value>
+    <comment>Sub-string used in automation name for 20 bit in bit flip</comment>
+  </data>
+  <data name="19" xml:space="preserve">
+    <value>التاسع عشر </value>
+    <comment>Sub-string used in automation name for 19 bit in bit flip</comment>
+  </data>
+  <data name="18" xml:space="preserve">
+    <value>الثامن عشر </value>
+    <comment>Sub-string used in automation name for 18 bit in bit flip</comment>
+  </data>
+  <data name="17" xml:space="preserve">
+    <value>السابع عشر </value>
+    <comment>Sub-string used in automation name for 17 bit in bit flip</comment>
+  </data>
+  <data name="16" xml:space="preserve">
+    <value>السادس عشر </value>
+    <comment>Sub-string used in automation name for 16 bit in bit flip</comment>
+  </data>
+  <data name="15" xml:space="preserve">
+    <value>الخامس عشر </value>
+    <comment>Sub-string used in automation name for 15 bit in bit flip</comment>
+  </data>
+  <data name="14" xml:space="preserve">
+    <value>الرابع عشر </value>
+    <comment>Sub-string used in automation name for 14 bit in bit flip</comment>
+  </data>
+  <data name="13" xml:space="preserve">
+    <value>الثالث عشر </value>
+    <comment>Sub-string used in automation name for 13 bit in bit flip</comment>
+  </data>
+  <data name="12" xml:space="preserve">
+    <value>الثاني عشر </value>
+    <comment>Sub-string used in automation name for 12 bit in bit flip</comment>
+  </data>
+  <data name="11" xml:space="preserve">
+    <value>الحادي عشر </value>
+    <comment>Sub-string used in automation name for 11 bit in bit flip</comment>
+  </data>
+  <data name="10" xml:space="preserve">
+    <value>العاشر </value>
+    <comment>Sub-string used in automation name for 10 bit in bit flip</comment>
+  </data>
+  <data name="9" xml:space="preserve">
+    <value>التاسع </value>
+    <comment>Sub-string used in automation name for 9 bit in bit flip</comment>
+  </data>
+  <data name="8" xml:space="preserve">
+    <value>الثامن </value>
+    <comment>Sub-string used in automation name for 8 bit in bit flip</comment>
+  </data>
+  <data name="7" xml:space="preserve">
+    <value>السابع </value>
+    <comment>Sub-string used in automation name for 7 bit in bit flip</comment>
+  </data>
+  <data name="6" xml:space="preserve">
+    <value>السادس </value>
+    <comment>Sub-string used in automation name for 6 bit in bit flip</comment>
+  </data>
+  <data name="5" xml:space="preserve">
+    <value>الخامس </value>
+    <comment>Sub-string used in automation name for 5 bit in bit flip</comment>
+  </data>
+  <data name="4" xml:space="preserve">
+    <value>الرابع </value>
+    <comment>Sub-string used in automation name for 4 bit in bit flip</comment>
+  </data>
+  <data name="3" xml:space="preserve">
+    <value>الثالث </value>
+    <comment>Sub-string used in automation name for 3 bit in bit flip</comment>
+  </data>
+  <data name="2" xml:space="preserve">
+    <value>الثاني </value>
+    <comment>Sub-string used in automation name for 2 bit in bit flip</comment>
+  </data>
+  <data name="1" xml:space="preserve">
+    <value>الأول </value>
+    <comment>Sub-string used in automation name for 1 bit in bit flip</comment>
+  </data>
+  <data name="0" xml:space="preserve">
+    <value>صفر </value>
+    <comment>Sub-string used in automation name for 0 bit in bit flip</comment>
+  </data>
+  <data name="MemoryButton_Open" xml:space="preserve">
+    <value>فتح قائمة الذاكرة المنبثقة</value>
+    <comment>This is the automation name and label for the memory button when the memory flyout is closed.</comment>
+  </data>
+  <data name="MemoryButton_Close" xml:space="preserve">
+    <value>إغلاق قائمة الذاكرة المنبثقة</value>
+    <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
+  </data>
+  <data name="MemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>الذاكرة</value>
+    <comment>This is the tool tip automation name for the memory button.</comment>
+  </data>
+  <data name="HistoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>المحفوظات (Ctrl+H)</value>
+    <comment>This is the tool tip automation name for the history button.</comment>
+  </data>
+  <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>لوحة المفاتيح الرقمية لتبديل البت</value>
+    <comment>This is the tool tip automation name for the bitFlip button.</comment>
+  </data>
+  <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>لوحة المفاتيح الرقمية الكاملة</value>
+    <comment>This is the tool tip automation name for the numberPad button.</comment>
+  </data>
+  <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>مسح الذاكرة بالكامل (Ctrl+L)</value>
+    <comment>This is the tool tip automation name for the Clear Memory (MC) button.</comment>
+  </data>
+  <data name="MemoryLabel.Text" xml:space="preserve">
+    <value>الذاكرة</value>
+    <comment>The text that shows as the header for the memory list</comment>
+  </data>
+  <data name="MemoryPivotItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>الذاكرة</value>
+    <comment>The automation name for the Memory pivot item that is shown when Calculator is in wide layout.</comment>
+  </data>
+  <data name="HistoryLabel.Text" xml:space="preserve">
+    <value>السجل</value>
+    <comment>The text that shows as the header for the history list</comment>
+  </data>
+  <data name="HistoryPivotItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>المحفوظات</value>
+    <comment>The automation name for the History pivot item that is shown when Calculator is in wide layout.</comment>
+  </data>
+  <data name="converterModeButton.Content" xml:space="preserve">
+    <value>محول</value>
+    <comment>Label for a control that activates the unit converter mode.</comment>
+  </data>
+  <data name="scientificModeButton.Content" xml:space="preserve">
+    <value>علمي</value>
+    <comment>Label for a control that activates scientific mode calculator layout</comment>
+  </data>
+  <data name="standardModeButton.Content" xml:space="preserve">
+    <value>قياسي</value>
+    <comment>Label for a control that activates standard mode calculator layout.</comment>
+  </data>
+  <data name="converterModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>وضع التحويل</value>
+    <comment>Screen reader prompt for a control that activates the unit converter mode.</comment>
+  </data>
+  <data name="scientificModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>الوضع العلمي</value>
+    <comment>Screen reader prompt for a control that activates scientific mode calculator layout</comment>
+  </data>
+  <data name="standardModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>الوضع القياسي</value>
+    <comment>Screen reader prompt for a control that activates standard mode calculator layout.</comment>
+  </data>
+  <data name="ClearHistory.Name" xml:space="preserve">
+    <value>مسح سجل الويب بالكامل</value>
+    <comment>"ClearHistory" used on the calculator history pane that stores the calculation history.</comment>
+  </data>
+  <data name="ClearHistory.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>مسح سجل الويب بالكامل</value>
+    <comment>This is the tool tip automation name for the Clear History button.</comment>
+  </data>
+  <data name="HideHistory.Name" xml:space="preserve">
+    <value>إخفاء</value>
+    <comment>"HideHistory" used on the calculator history pane that stores the calculation history.</comment>
+  </data>
+  <data name="StandardModeText" xml:space="preserve">
+    <value>‏‏قياسي</value>
+    <comment>The text that shows in the dropdown navigation control in snapped mode when standard calculator mode is selected.</comment>
+  </data>
+  <data name="ScientificModeText" xml:space="preserve">
+    <value>علمي</value>
+    <comment>The text that shows in the dropdown navigation control in snapped mode when scientific calculator mode is selected.</comment>
+  </data>
+  <data name="ProgrammerModeText" xml:space="preserve">
+    <value>مبرمج</value>
+    <comment>The text that shows in the dropdown navigation control in snapped mode when programmer calculator mode is selected.</comment>
+  </data>
+  <data name="ConverterModeText" xml:space="preserve">
+    <value>المحول</value>
+    <comment>The text that shows in the dropdown navigation control for the converter group. The previous key for this was "ConverterMode.Text".</comment>
+  </data>
+  <data name="CalculatorModeText" xml:space="preserve">
+    <value>الحاسبة</value>
+    <comment>The text that shows in the dropdown navigation control for the calculator group.</comment>
+  </data>
+  <data name="ConverterModeTextCaps" xml:space="preserve">
+    <value>المحول</value>
+    <comment>The text that shows in the dropdown navigation control for the converter group in upper case. The previous key for this was "ConverterMode.Text".</comment>
+  </data>
+  <data name="CalculatorModeTextCaps" xml:space="preserve">
+    <value>الحاسبة</value>
+    <comment>The text that shows in the dropdown navigation control for the calculator group in upper case.</comment>
+  </data>
+  <data name="ConverterModePluralText" xml:space="preserve">
+    <value>المحولات</value>
+    <comment>Pluralized version of the converter group text, used for the screen reader prompt.</comment>
+  </data>
+  <data name="CalculatorModePluralText" xml:space="preserve">
+    <value>الحاسبات</value>
+    <comment>Pluralized version of the calculator group text, used for the screen reader prompt.</comment>
+  </data>
+  <data name="Format_CalculatorResults" xml:space="preserve">
+    <value>الناتج %1</value>
+    <comment>{Locked="%1"}. Screen reader prompt for the Calculator results text block. %1 = Localized display value, e.g. "50".</comment>
+  </data>
+  <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
+    <value>العرض هو %1 نقطة</value>
+    <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Display is 7 point". "point" should be localized to the locale's appropriate decimal separator.</comment>
+  </data>
+  <data name="Format_CalculatorExpression" xml:space="preserve">
+    <value>التعبير %1</value>
+    <comment>{Locked="%1"}. Screen reader prompt for the Calculator expression results. %1 = Localized display value, e.g. "50 + 2 - 60 +".</comment>
+  </data>
+  <data name="Display_Copied" xml:space="preserve">
+    <value>تم نسخ قيمة العرض إلى الحافظة</value>
+    <comment>Screen reader prompt for the Calculator display copy button, when the button is invoked.</comment>
+  </data>
+  <data name="HistoryPane" xml:space="preserve">
+    <value>المحفوظات</value>
+    <comment>Screen reader prompt for the history flyout</comment>
+  </data>
+  <data name="MemoryPane" xml:space="preserve">
+    <value>الذاكرة</value>
+    <comment>Screen reader prompt for the memory flyout</comment>
+  </data>
+  <data name="Format_HexButtonValue" xml:space="preserve">
+    <value>سداسي عشري %1</value>
+    <comment>{Locked="%1"}. Screen reader prompt for the hexadecimal value in Programmer mode. %1 = the localized hexadecimal value, e.g. "21B4 8F73".</comment>
+  </data>
+  <data name="Format_DecButtonValue" xml:space="preserve">
+    <value>عشري %1</value>
+    <comment>{Locked="%1"}. Screen reader prompt for the decimal value in Programmer mode. %1 = the localized decimal value, e.g. "5,732".</comment>
+  </data>
+  <data name="Format_OctButtonValue" xml:space="preserve">
+    <value>ثماني %1</value>
+    <comment>{Locked="%1"}. Screen reader prompt for the octal value in Programmer mode. %1 = the localized octal value, e.g. "155 174".</comment>
+  </data>
+  <data name="Format_BinButtonValue" xml:space="preserve">
+    <value>ثنائي %1</value>
+    <comment>{Locked="%1"}. Screen reader prompt for the binary value in Programmer mode. %1 = the localized binary value, e.g. "0010 1011".</comment>
+  </data>
+  <data name="ClearHistory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مسح سجل الويب بالكامل</value>
+    <comment>Screen reader prompt for the Calculator History Clear button</comment>
+  </data>
+  <data name="HistoryList_Cleared" xml:space="preserve">
+    <value>تم مسح المحفوظات</value>
+    <comment>Screen reader prompt for the Calculator History Clear button, when the button is invoked.</comment>
+  </data>
+  <data name="HideHistory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>إخفاء المحفوظات</value>
+    <comment>Screen reader prompt for the Calculator History Hide button</comment>
+  </data>
+  <data name="HistoryButton_Open" xml:space="preserve">
+    <value>فتح قائمة سجل الويب المنبثقة</value>
+    <comment>Screen reader prompt for the Calculator History button, when the flyout is closed.</comment>
+  </data>
+  <data name="HistoryButton_Close" xml:space="preserve">
+    <value>إغلاق قائمة سجل الويب المنبثقة</value>
+    <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
+  </data>
+  <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ذاكرة</value>
+    <comment>Screen reader prompt for the Calculator Memory button</comment>
+  </data>
+  <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>التخزين بالذاكرة (Ctrl+M)</value>
+    <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
+  </data>
+  <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مسح الذاكرة بالكامل</value>
+    <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
+  </data>
+  <data name="Memory_Cleared" xml:space="preserve">
+    <value>تم مسح الذاكرة</value>
+    <comment>Screen reader prompt for the Calculator Clear Memory button, when the button is invoked.</comment>
+  </data>
+  <data name="MemRecall.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>استدعاء الذاكرة</value>
+    <comment>Screen reader prompt for the Calculator Memory Recall button</comment>
+  </data>
+  <data name="MemRecall.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>استرجاع الذاكرة (Ctrl+R)</value>
+    <comment>This is the tool tip automation name for the Memory Recall (MR) button.</comment>
+  </data>
+  <data name="MemPlus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>إضافة إلى الذاكرة</value>
+    <comment>Screen reader prompt for the Calculator Memory Add button</comment>
+  </data>
+  <data name="MemPlus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>إضافة إلى الذاكرة (Ctrl+P)</value>
+    <comment>This is the tool tip automation name for the Memory Add (M+) button.</comment>
+  </data>
+  <data name="MemMinus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>حذف من الذاكرة</value>
+    <comment>Screen reader prompt for the Calculator Memory Subtract button</comment>
+  </data>
+  <data name="MemMinus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>حذف من الذاكرة (Ctrl+Q)</value>
+    <comment>This is the tool tip automation name for the Memory Subtract (M-) button.</comment>
+  </data>
+  <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مسح عنصر الذاكرة</value>
+    <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
+  </data>
+  <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>مسح عنصر الذاكرة</value>
+    <comment>This is the tool tip automation name for the Clear Memory Item (MC) button in the Memory list.</comment>
+  </data>
+  <data name="MemPlusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>إضافة إلى عنصر ذاكرة</value>
+    <comment>Screen reader prompt for the Calculator Memory Add button in the Memory list</comment>
+  </data>
+  <data name="MemPlusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>إضافة إلى عنصر ذاكرة</value>
+    <comment>This is the tool tip automation name for the Calculator Memory Add button in the Memory list</comment>
+  </data>
+  <data name="MemMinusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>حذف من عنصر الذاكرة</value>
+    <comment>Screen reader prompt for the Calculator Memory Subtract button in the Memory list</comment>
+  </data>
+  <data name="MemMinusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>حذف من عنصر الذاكرة</value>
+    <comment>This is the tool tip automation name for the Calculator Memory Subtract button in the Memory list</comment>
+  </data>
+  <data name="ClearMemorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مسح عنصر الذاكرة</value>
+    <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
+  </data>
+  <data name="ClearMemoryMenuItem.Text" xml:space="preserve">
+    <value>مسح عنصر الذاكرة</value>
+    <comment>Text string for the Calculator Clear Memory option in the Memory list context menu</comment>
+  </data>
+  <data name="MemPlusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>إضافة إلى عنصر ذاكرة</value>
+    <comment>Screen reader prompt for the Calculator Memory Add swipe button in the Memory list</comment>
+  </data>
+  <data name="MemPlusMenuItem.Text" xml:space="preserve">
+    <value>إضافة إلى عنصر ذاكرة</value>
+    <comment>Text string for the Calculator Memory Add option in the Memory list context menu</comment>
+  </data>
+  <data name="MemMinusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>حذف من عنصر الذاكرة</value>
+    <comment>Screen reader prompt for the Calculator Memory Subtract swipe button in the Memory list</comment>
+  </data>
+  <data name="MemMinusMenuItem.Text" xml:space="preserve">
+    <value>حذف من عنصر الذاكرة</value>
+    <comment>Text string for the Calculator Memory Subtract option in the Memory list context menu</comment>
+  </data>
+  <data name="DeleteHistorySwipeItem.Text" xml:space="preserve">
+    <value>حذف</value>
+    <comment>Text string for the Calculator Delete swipe button in the History list</comment>
+  </data>
+  <data name="DeleteHistoryMenuItem.Text" xml:space="preserve">
+    <value>حذف</value>
+    <comment>Text string for the Calculator Delete option in the History list context menu</comment>
+  </data>
+  <data name="DeleteHistorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>حذف عنصر المحفوظات</value>
+    <comment>Screen reader prompt for the Calculator Delete swipe button in the History list</comment>
+  </data>
+  <data name="DeleteHistoryMenuItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>حذف عنصر المحفوظات</value>
+    <comment>Screen reader prompt for the Calculator Delete option in the History list context menu</comment>
+  </data>
+  <data name="backSpaceButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مسافة للخلف</value>
+    <comment>Screen reader prompt for the Calculator Backspace button</comment>
+  </data>
+  <data name="BinaryZero.Text" xml:space="preserve">
+    <value>٠</value>
+    <comment>Screen reader prompt for the Calculator number "0" button</comment>
+  </data>
+  <data name="BinaryOne.Text" xml:space="preserve">
+    <value>١</value>
+    <comment>Screen reader prompt for the Calculator number "1" button</comment>
+  </data>
+  <data name="num0Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>صفر</value>
+    <comment>Screen reader prompt for the Calculator number "0" button</comment>
+  </data>
+  <data name="num1Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>واحد</value>
+    <comment>Screen reader prompt for the Calculator number "1" button</comment>
+  </data>
+  <data name="num2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>اثنان</value>
+    <comment>Screen reader prompt for the Calculator number "2" button</comment>
+  </data>
+  <data name="num3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ثلاثة</value>
+    <comment>Screen reader prompt for the Calculator number "3" button</comment>
+  </data>
+  <data name="num4Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>أربعة</value>
+    <comment>Screen reader prompt for the Calculator number "4" button</comment>
+  </data>
+  <data name="num5Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>خمسة</value>
+    <comment>Screen reader prompt for the Calculator number "5" button</comment>
+  </data>
+  <data name="num6Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ستة</value>
+    <comment>Screen reader prompt for the Calculator number "6" button</comment>
+  </data>
+  <data name="num7Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>سبعة</value>
+    <comment>Screen reader prompt for the Calculator number "7" button</comment>
+  </data>
+  <data name="num8Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ثمانية</value>
+    <comment>Screen reader prompt for the Calculator number "8" button</comment>
+  </data>
+  <data name="num9Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>تسعة</value>
+    <comment>Screen reader prompt for the Calculator number "9" button</comment>
+  </data>
+  <data name="aButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ِ</value>
+    <comment>Screen reader prompt for the Calculator number "A" button</comment>
+  </data>
+  <data name="bButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ب</value>
+    <comment>Screen reader prompt for the Calculator number "B" button</comment>
+  </data>
+  <data name="cButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>C</value>
+    <comment>Screen reader prompt for the Calculator number "C" button</comment>
+  </data>
+  <data name="dButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>D</value>
+    <comment>Screen reader prompt for the Calculator number "D" button</comment>
+  </data>
+  <data name="eButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>E</value>
+    <comment>Screen reader prompt for the Calculator number "E" button</comment>
+  </data>
+  <data name="fButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>F</value>
+    <comment>Screen reader prompt for the Calculator number "F" button</comment>
+  </data>
+  <data name="andButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>و</value>
+    <comment>Screen reader prompt for the Calculator And button</comment>
+  </data>
+  <data name="orButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>أو</value>
+    <comment>Screen reader prompt for the Calculator Or button</comment>
+  </data>
+  <data name="notButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Not</value>
+    <comment>Screen reader prompt for the Calculator Not button</comment>
+  </data>
+  <data name="rolButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>استدارة إلى اليسار</value>
+    <comment>Screen reader prompt for the Calculator ROL button</comment>
+  </data>
+  <data name="rorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>استدارة إلى اليمين</value>
+    <comment>Screen reader prompt for the Calculator ROR button</comment>
+  </data>
+  <data name="lshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Shift الأيسر</value>
+    <comment>Screen reader prompt for the Calculator LSH button</comment>
+  </data>
+  <data name="rshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Shift الأيمن</value>
+    <comment>Screen reader prompt for the Calculator RSH button</comment>
+  </data>
+  <data name="xorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>حصري أو</value>
+    <comment>Screen reader prompt for the Calculator XOR button</comment>
+  </data>
+  <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>تبديل الكلمة الرباعية</value>
+    <comment>Screen reader prompt for the Calculator qword button. Should read as "Quadruple word toggle button".</comment>
+  </data>
+  <data name="dwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>تبديل الكلمة المزدوجة</value>
+    <comment>Screen reader prompt for the Calculator dword button. Should read as "Double word toggle button".</comment>
+  </data>
+  <data name="wordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>تبديل الكلمة</value>
+    <comment>Screen reader prompt for the Calculator word button. Should read as "Word toggle button".</comment>
+  </data>
+  <data name="byteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>تبديل البايت</value>
+    <comment>Screen reader prompt for the Calculator byte button. Should read as "Byte toggle button".</comment>
+  </data>
+  <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>لوحة المفاتيح الرقمية لتبديل البت</value>
+    <comment>Screen reader prompt for the Calculator bitFlip button</comment>
+  </data>
+  <data name="fullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>لوحة المفاتيح الرقمية الكاملة</value>
+    <comment>Screen reader prompt for the Calculator numberPad button</comment>
+  </data>
+  <data name="decimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>فاصل عشري</value>
+    <comment>Screen reader prompt for the "." button</comment>
+  </data>
+  <data name="clearEntryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مسح الإدخال</value>
+    <comment>Screen reader prompt for the "CE" button</comment>
+  </data>
+  <data name="clearButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مسح</value>
+    <comment>Screen reader prompt for the "C" button</comment>
+  </data>
+  <data name="divideButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>قسمة</value>
+    <comment>Screen reader prompt for the divide button on the number pad</comment>
+  </data>
+  <data name="multiplyButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>l</value>
+    <comment>Screen reader prompt for the multiply button on the number pad</comment>
+  </data>
+  <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>يساوي</value>
+    <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
+  </data>
+  <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>الدالة العكسية</value>
+    <comment>Screen Reader prompt for the shift button on the number pad in scientific mode.</comment>
+  </data>
+  <data name="minusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ناقص</value>
+    <comment>Screen reader prompt for the minus button on the number pad</comment>
+  </data>
+  <data name="minus" xml:space="preserve">
+    <value>ناقص</value>
+    <comment>We use this resource to replace "-" sign for accessibility. So expression like, 1 - 3 = -2 becomes 1 minus 3 = minus 2</comment>
+  </data>
+  <data name="plusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>زائد</value>
+    <comment>Screen reader prompt for the plus button on the number pad</comment>
+  </data>
+  <data name="squareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>جزر تربيعي</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="percentButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>نسبة مئوية</value>
+    <comment>Screen reader prompt for the percent button on the scientific operator keypad</comment>
+  </data>
+  <data name="negateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>إيجابي سلبي</value>
+    <comment>Screen reader prompt for the negate button on the scientific operator keypad</comment>
+  </data>
+  <data name="converterNegateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>إيجابي سلبي</value>
+    <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
+  </data>
+  <data name="invertButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>معكوس</value>
+    <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
+  </data>
+  <data name="openParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>أقواس يسرى</value>
+    <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
+  </data>
+  <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
+    <value>القوس الأيسر، عدد الأقواس المفتوحة %1</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
+  </data>
+  <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>أقواس يمنى</value>
+    <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
+  </data>
+  <data name="ftoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>رموز علمية</value>
+    <comment>Screen reader prompt for the Calculator F-E the scientific operator keypad</comment>
+  </data>
+  <data name="hyperbolicButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>دالة زائدية</value>
+    <comment>Screen reader prompt for the Calculator button HYP in the scientific operator keypad</comment>
+  </data>
+  <data name="piButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>pi</value>
+    <comment>Screen reader prompt for the Calculator pi button  on the scientific operator keypad</comment>
+  </data>
+  <data name="sinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>جيب الزاوية</value>
+    <comment>Screen reader prompt for the Calculator sin button  on the scientific operator keypad</comment>
+  </data>
+  <data name="cosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>جيب التمام</value>
+    <comment>Screen reader prompt for the Calculator cos button  on the scientific operator keypad</comment>
+  </data>
+  <data name="tanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ظل الزاوية</value>
+    <comment>Screen reader prompt for the Calculator tan button  on the scientific operator keypad</comment>
+  </data>
+  <data name="sinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>جيب الزاوية الزائدي</value>
+    <comment>Screen reader prompt for the Calculator sinh button  on the scientific operator keypad</comment>
+  </data>
+  <data name="coshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>جيب التمام الزائدي</value>
+    <comment>Screen reader prompt for the Calculator cosh button  on the scientific operator keypad</comment>
+  </data>
+  <data name="tanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ظل الزاوية الزائدي</value>
+    <comment>Screen reader prompt for the Calculator tanh button  on the scientific operator keypad</comment>
+  </data>
+  <data name="xpower2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مربع</value>
+    <comment>Screen reader prompt for the x squared on the scientific operator keypad. </comment>
+  </data>
+  <data name="xpower3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مكعب</value>
+    <comment>Screen reader prompt for the x cubed on the scientific operator keypad. </comment>
+  </data>
+  <data name="invsinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مقابل الجيب</value>
+    <comment>Screen reader prompt for the inverted sin on the scientific operator keypad.</comment>
+  </data>
+  <data name="invcosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مقابل جيب التمام</value>
+    <comment>Screen reader prompt for the inverted cos on the scientific operator keypad.</comment>
+  </data>
+  <data name="invtanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مقابل الظل</value>
+    <comment>Screen reader prompt for the inverted tan on the scientific operator keypad.</comment>
+  </data>
+  <data name="invsinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مقابل الجيب الزائدي</value>
+    <comment>Screen reader prompt for the inverted sinh on the scientific operator keypad.</comment>
+  </data>
+  <data name="invcoshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مقابل جيب التمام الزائدي</value>
+    <comment>Screen reader prompt for the inverted cosh on the scientific operator keypad.</comment>
+  </data>
+  <data name="invtanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مقابل الظل الزائدي</value>
+    <comment>Screen reader prompt for the inverted tanh on the scientific operator keypad.</comment>
+  </data>
+  <data name="powerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>’X‘ مرفوعة إلى الأس</value>
+    <comment>Screen reader prompt for x power y button on the scientific operator keypad. </comment>
+  </data>
+  <data name="powerOf10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>عشرة مرفوعة إلى الأس</value>
+    <comment>Screen reader prompt for the 10 power x button on the scientific operator keypad.</comment>
+  </data>
+  <data name="powerOfEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>’e‘ مرفوعة إلى الأس</value>
+    <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
+  </data>
+  <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>y جذر x</value>
+    <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
+  </data>
+  <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Log</value>
+    <comment>Screen reader for the log base 10  on the scientific operator keypad</comment>
+  </data>
+  <data name="logBaseEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>لوغاريتم عادي</value>
+    <comment>Screen reader for the log base e on the scientific operator keypad</comment>
+  </data>
+  <data name="modButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>باقي القسمة</value>
+    <comment>Screen reader for the mod button on the scientific operator keypad</comment>
+  </data>
+  <data name="expButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>أسي</value>
+    <comment>Screen reader for the exp button on the scientific operator keypad</comment>
+  </data>
+  <data name="dmsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>درجة دقيقة ثانية</value>
+    <comment>Screen reader for the exp button on the scientific operator keypad</comment>
+  </data>
+  <data name="degreesButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>درجات</value>
+    <comment>Screen reader for the exp button on the scientific operator keypad</comment>
+  </data>
+  <data name="intButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>الجزء الصحيح</value>
+    <comment>Screen reader for the int button on the scientific operator keypad</comment>
+  </data>
+  <data name="fractButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>الجزء الكسري</value>
+    <comment>Screen reader for the frac button on the scientific operator keypad</comment>
+  </data>
+  <data name="factorialButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مضروب</value>
+    <comment>Screen reader for the factorial button on the basic operator keypad</comment>
+  </data>
+  <data name="degButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>تبديل الدرجات</value>
+    <comment>This the Deg button's Degree mode automation nameon the scientific operator keypad. Should read as "Degrees toggle button".</comment>
+  </data>
+  <data name="gradButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>تبديل Gradians</value>
+    <comment>This is the Deg button's Grad mode automation name on the scientific operator keypad. Should read as "Gradians toggle button".</comment>
+  </data>
+  <data name="radButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>تبديل التقدير الدائري</value>
+    <comment>This is the Deg button's Rad mode automation name on the scientific operator keypad. Should read as "Radians toggle button".</comment>
+  </data>
+  <data name="FlyoutNav.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>القائمة المنسدلة للأوضاع</value>
+    <comment>Screen reader prompt for the Mode dropdown field in Snapped and Portrait modes.</comment>
+  </data>
+  <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>القائمة المنسدلة للفئات</value>
+    <comment>Screen reader prompt for the Categories dropdown field.</comment>
+  </data>
+  <data name="Format_ValueFrom" xml:space="preserve">
+    <value>تحويل من %1 %2</value>
+    <comment>Screen reader prompt for the Unit Converter Value1 i.e. top number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
+  </data>
+  <data name="Format_ValueFrom_Decimal" xml:space="preserve">
+    <value>تحويل من %1.%2</value>
+    <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Convert from 7 point _current_unit_". "point" should be localized to the locale's appropriate decimal separator.</comment>
+  </data>
+  <data name="Format_ValueTo" xml:space="preserve">
+    <value>تحويل إلى %1 %2</value>
+    <comment>Screen reader prompt for the Unit Converter Value2 i.e. bottom number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
+  </data>
+  <data name="Format_ConversionResult" xml:space="preserve">
+    <value>%1 %2 يعادل %3 %4</value>
+    <comment>Screen reader prompt for a conversion result, ie "2 liters is 2,000 milliliters" . %1 = From unit display value, %2 = From unit, %3 = To unit display value, %4 = To unit.</comment>
+  </data>
+  <data name="InputUnit_Name" xml:space="preserve">
+    <value>وحدة الإدخال</value>
+    <comment>Screen reader prompt for the Unit Converter Units1 i.e. top units field.</comment>
+  </data>
+  <data name="OutputUnit_Name" xml:space="preserve">
+    <value>وحدة الإخراج</value>
+    <comment>Screen reader prompt for the Unit Converter Units2 i.e. bottom units field.</comment>
+  </data>
+  <data name="CategoryName_AreaText" xml:space="preserve">
+    <value>المساحة</value>
+    <comment>Unit conversion category name called Area (eg. area of a sports field in square meters)</comment>
+  </data>
+  <data name="CategoryName_DataText" xml:space="preserve">
+    <value>البيانات</value>
+    <comment>Unit conversion category name called Data</comment>
+  </data>
+  <data name="CategoryName_EnergyText" xml:space="preserve">
+    <value>الطاقة</value>
+    <comment>Unit conversion category name called Energy. (eg. the energy in a battery or in food)</comment>
+  </data>
+  <data name="CategoryName_LengthText" xml:space="preserve">
+    <value>الطول</value>
+    <comment>Unit conversion category name called Length</comment>
+  </data>
+  <data name="CategoryName_PowerText" xml:space="preserve">
+    <value>القوة</value>
+    <comment>Unit conversion category name called Power (eg. the power of an engine or a light bulb)</comment>
+  </data>
+  <data name="CategoryName_SpeedText" xml:space="preserve">
+    <value>السرعة</value>
+    <comment>Unit conversion category name called Speed</comment>
+  </data>
+  <data name="CategoryName_TimeText" xml:space="preserve">
+    <value>الوقت</value>
+    <comment>Unit conversion category name called Time</comment>
+  </data>
+  <data name="CategoryName_VolumeText" xml:space="preserve">
+    <value>الحجم</value>
+    <comment>Unit conversion category name called Volume (eg. cups, teaspoons, milliliters)</comment>
+  </data>
+  <data name="CategoryName_TemperatureText" xml:space="preserve">
+    <value>حرارة</value>
+    <comment>Unit conversion category name called Temperature</comment>
+  </data>
+  <data name="CategoryName_WeightText" xml:space="preserve">
+    <value>الوزن والكتلة</value>
+    <comment>Unit conversion category name called Weight and Mass. Note that this category includes units of both mass and weight. People use the word "weight" in everyday life for measuring things such as food and people. In case a language has same word for "weight" and "mass" please use one word only.</comment>
+  </data>
+  <data name="CategoryName_PressureText" xml:space="preserve">
+    <value>الضغط</value>
+    <comment>Unit conversion category name called Pressure</comment>
+  </data>
+  <data name="CategoryName_AngleText" xml:space="preserve">
+    <value>الزاوية</value>
+    <comment>Unit conversion category name called Angle</comment>
+  </data>
+  <data name="CategoryName_CurrencyText" xml:space="preserve">
+    <value>العملة</value>
+    <comment>Unit conversion category name called Currency</comment>
+  </data>
+  <data name="UnitName_FluidOunceUK" xml:space="preserve">
+    <value>أونصة السوائل (المملكة المتحدة)</value>
+    <comment>A measurement unit for volume, in plural. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_FluidOunceUK" xml:space="preserve">
+    <value>أونصة سائلة (المملكة المتحدة) </value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_FluidOunceUS" xml:space="preserve">
+    <value>أونصة السوائل (الولايات المتحدة)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_FluidOunceUS" xml:space="preserve">
+    <value>أونصة سائلة (الولايات المتحدة) </value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_GallonUK" xml:space="preserve">
+    <value>غالون (المملكة المتحدة)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_GallonUK" xml:space="preserve">
+    <value>جالون (المملكة المتحدة)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_GallonUS" xml:space="preserve">
+    <value>غالون (الولايات المتحدة)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_GallonUS" xml:space="preserve">
+    <value>جالون (الولايات المتحدة)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_Liter" xml:space="preserve">
+    <value>لتر</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Liter" xml:space="preserve">
+    <value>لتر</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_Milliliter" xml:space="preserve">
+    <value>مللي لتر</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Milliliter" xml:space="preserve">
+    <value>ملليلتر</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_PintUK" xml:space="preserve">
+    <value>ثمن جالون (المملكة المتحدة)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_PintUK" xml:space="preserve">
+    <value>ثمن غالون (المملكة المتحدة)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_PintUS" xml:space="preserve">
+    <value>ثمن جالون (الولايات المتحدة)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_PintUS" xml:space="preserve">
+    <value>ثمن غالون (الولايات المتحدة)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_TablespoonUS" xml:space="preserve">
+    <value>ملعقة كبيرة (الولايات المتحدة)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_TablespoonUS" xml:space="preserve">
+    <value>ملعقة كبيرة (الولايات المتحدة)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_TeaspoonUS" xml:space="preserve">
+    <value>ملعقة صغيرة (الولايات المتحدة)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_TeaspoonUS" xml:space="preserve">
+    <value>ملعقة صغيرة (الولايات المتحدة)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_TablespoonUK" xml:space="preserve">
+    <value>ملعقة كبيرة (المملكة المتحدة)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_TablespoonUK" xml:space="preserve">
+    <value>ملعقة كبيرة (المملكة المتحدة)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_TeaspoonUK" xml:space="preserve">
+    <value>ملعقة صغيرة (المملكة المتحدة)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_TeaspoonUK" xml:space="preserve">
+    <value>ملعقة صغيرة (المملكة المتحدة)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_QuartUK" xml:space="preserve">
+    <value>كوارت (المملكة المتحدة)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_QuartUK" xml:space="preserve">
+    <value>كوارت (المملكة المتحدة)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_QuartUS" xml:space="preserve">
+    <value>كوارت (الولايات المتحدة)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_QuartUS" xml:space="preserve">
+    <value>كوارت (الولايات المتحدة)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitName_CupUS" xml:space="preserve">
+    <value>فنجان (الولايات المتحدة)</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_CupUS" xml:space="preserve">
+    <value>كوب (الولايات المتحدة)</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_Acre" xml:space="preserve">
+    <value>فدان</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_Bit" xml:space="preserve">
+    <value>بت</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_BritishThermalUnit" xml:space="preserve">
+    <value>وحدة حرارية بريطانية</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_BTUPerMinute" xml:space="preserve">
+    <value>وحدة حرارية بريطانية/دقيقة</value>
+    <comment>An abbreviation for a measurement unit of power</comment>
+  </data>
+  <data name="UnitAbbreviation_Byte" xml:space="preserve">
+    <value>بت</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Calorie" xml:space="preserve">
+    <value>سُعر حراري</value>
+    <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Centimeter" xml:space="preserve">
+    <value>سنتيمتر</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_CentimetersPerSecond" xml:space="preserve">
+    <value>سنتيمتر/ثانية</value>
+    <comment>An abbreviation for a measurement unit of speed</comment>
+  </data>
+  <data name="UnitAbbreviation_CubicCentimeter" xml:space="preserve">
+    <value>سم٣</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_CubicFoot" xml:space="preserve">
+    <value>قدم٣</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_CubicInch" xml:space="preserve">
+    <value>بوصة٣</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_CubicMeter" xml:space="preserve">
+    <value>متر٣</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_CubicYard" xml:space="preserve">
+    <value>ياردة٣</value>
+    <comment>An abbreviation for a measurement unit of volume</comment>
+  </data>
+  <data name="UnitAbbreviation_Day" xml:space="preserve">
+    <value>يوم</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_DegreesCelsius" xml:space="preserve">
+    <value>سيلزيوس</value>
+    <comment>An abbreviation for "degrees Celsius"</comment>
+  </data>
+  <data name="UnitAbbreviation_DegreesFahrenheit" xml:space="preserve">
+    <value>فهرنهايت</value>
+    <comment>An abbreviation for a "degrees Fahrenheit"</comment>
+  </data>
+  <data name="UnitAbbreviation_Electron-Volt" xml:space="preserve">
+    <value>إلكترون فولت</value>
+    <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Foot" xml:space="preserve">
+    <value>قدم</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_FeetPerSecond" xml:space="preserve">
+    <value>قدم/ثانية</value>
+    <comment>An abbreviation for a measurement unit of speed</comment>
+  </data>
+  <data name="UnitAbbreviation_Foot-Pound" xml:space="preserve">
+    <value>رِطل•قدم</value>
+    <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Gigabit" xml:space="preserve">
+    <value>غيغابايت</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Gigabyte" xml:space="preserve">
+    <value>GB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Hectare" xml:space="preserve">
+    <value>هكتار</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_Horsepower" xml:space="preserve">
+    <value>حصان (الولايات المتحدة)</value>
+    <comment>An abbreviation for a measurement unit of power</comment>
+  </data>
+  <data name="UnitAbbreviation_Hour" xml:space="preserve">
+    <value>ساعة</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_Inch" xml:space="preserve">
+    <value>بوصة</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_Joule" xml:space="preserve">
+    <value>جول</value>
+    <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
+    <value>كلفن</value>
+    <comment>An abbreviation for the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin)</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilobit" xml:space="preserve">
+    <value>كيلوبايت</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilobyte" xml:space="preserve">
+    <value>كيلوبايت</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilocalorie" xml:space="preserve">
+    <value>كيلو سُعر حراري</value>
+    <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilojoule" xml:space="preserve">
+    <value>كيلوجول</value>
+    <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilometer" xml:space="preserve">
+    <value>كيلومتر</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_KilometersPerHour" xml:space="preserve">
+    <value>كيلومتر/ساعة</value>
+    <comment>An abbreviation for a measurement unit of speed</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilowatt" xml:space="preserve">
+    <value>كيلو واط</value>
+    <comment>An abbreviation for a measurement unit of power</comment>
+  </data>
+  <data name="UnitAbbreviation_Knot" xml:space="preserve">
+    <value>عقدة</value>
+    <comment>An abbreviation for a measurement unit of speed</comment>
+  </data>
+  <data name="UnitAbbreviation_Mach" xml:space="preserve">
+    <value>ماخ</value>
+    <comment>An abbreviation for a measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
+  </data>
+  <data name="UnitAbbreviation_Megabit" xml:space="preserve">
+    <value>ميغابايت</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Megabyte" xml:space="preserve">
+    <value>ميغابايت</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Meter" xml:space="preserve">
+    <value>متر</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_MetersPerSecond" xml:space="preserve">
+    <value>متر/ثانية</value>
+    <comment>An abbreviation for a measurement unit of speed</comment>
+  </data>
+  <data name="UnitAbbreviation_Micron" xml:space="preserve">
+    <value>µميكرون</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_Microsecond" xml:space="preserve">
+    <value>µميكرو ثانية</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_Mile" xml:space="preserve">
+    <value>ميل</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_MilesPerHour" xml:space="preserve">
+    <value>ميل/ساعة</value>
+    <comment>An abbreviation for a measurement unit of speed</comment>
+  </data>
+  <data name="UnitAbbreviation_Millimeter" xml:space="preserve">
+    <value>ملليمتر</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_Millisecond" xml:space="preserve">
+    <value>مللي ثانية</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_Minute" xml:space="preserve">
+    <value>دقيقة</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_Nanometer" xml:space="preserve">
+    <value>ميل بحري</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_NauticalMile" xml:space="preserve">
+    <value>ميل بحري</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_Petabit" xml:space="preserve">
+    <value>بيتا بايت</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Petabyte" xml:space="preserve">
+    <value>بيتا بايت</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Foot-PoundPerMinute" xml:space="preserve">
+    <value>قدم•رطل/دقيقة</value>
+    <comment>An abbreviation for a measurement unit of power</comment>
+  </data>
+  <data name="UnitAbbreviation_Second" xml:space="preserve">
+    <value>ثانية</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareCentimeter" xml:space="preserve">
+    <value>سم٢</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareFoot" xml:space="preserve">
+    <value>قدم٢</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareInch" xml:space="preserve">
+    <value>بوصة٢</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareKilometer" xml:space="preserve">
+    <value>كيلومتر٢</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareMeter" xml:space="preserve">
+    <value>متر٢</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareMile" xml:space="preserve">
+    <value>ميل٢</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareMillimeter" xml:space="preserve">
+    <value>ملليمتر٢</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_SquareYard" xml:space="preserve">
+    <value>ياردة٢</value>
+    <comment>An abbreviation for a measurement unit of area</comment>
+  </data>
+  <data name="UnitAbbreviation_Terabit" xml:space="preserve">
+    <value> ترليون بايت</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Terabyte" xml:space="preserve">
+    <value> ترليون بايت</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Watt" xml:space="preserve">
+    <value>واط</value>
+    <comment>An abbreviation for a measurement unit of power</comment>
+  </data>
+  <data name="UnitAbbreviation_Week" xml:space="preserve">
+    <value>أسبوع</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_Yard" xml:space="preserve">
+    <value>ياردة</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_Year" xml:space="preserve">
+    <value>سنة</value>
+    <comment>An abbreviation for a measurement unit of time</comment>
+  </data>
+  <data name="UnitAbbreviation_Gibibits" xml:space="preserve">
+    <value>Gi</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Gibibytes" xml:space="preserve">
+    <value>GiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Kibibits" xml:space="preserve">
+    <value>Ki</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Kibibytes" xml:space="preserve">
+    <value>KiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Mebibits" xml:space="preserve">
+    <value>ميل</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Mebibytes" xml:space="preserve">
+    <value>MiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
+    <value>Pi</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Pebibytes" xml:space="preserve">
+    <value>PiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Tebibits" xml:space="preserve">
+    <value>Ti</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Tebibytes" xml:space="preserve">
+    <value>TiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Exabits" xml:space="preserve">
+    <value>E</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Exabytes" xml:space="preserve">
+    <value>EB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Exbibits" xml:space="preserve">
+    <value>Ei</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Exbibytes" xml:space="preserve">
+    <value>EiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Zetabits" xml:space="preserve">
+    <value>Z</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Zetabytes" xml:space="preserve">
+    <value>ZB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Zebibits" xml:space="preserve">
+    <value>Zi</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Zebibytes" xml:space="preserve">
+    <value>ZiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Yottabit" xml:space="preserve">
+    <value>Y</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Yottabyte" xml:space="preserve">
+    <value>YB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Yobibits" xml:space="preserve">
+    <value>Yi</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitAbbreviation_Yobibytes" xml:space="preserve">
+    <value>YiB</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
+  <data name="UnitName_Acre" xml:space="preserve">
+    <value>فدان</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Bit" xml:space="preserve">
+    <value>بت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_BritishThermalUnit" xml:space="preserve">
+    <value>وحدة حرارية بريطانية</value>
+    <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_BTUPerMinute" xml:space="preserve">
+    <value>وحدة حرارية بريطانية/دقيقة</value>
+    <comment>A measurement unit for power: British Thermal Units per minute. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Byte" xml:space="preserve">
+    <value>بايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Calorie" xml:space="preserve">
+    <value>سُعرات حرارية</value>
+    <comment>A measurement unit for energy. Please note that this is the "small calorie" used in science for measuring heat energy, not the "large calorie" commonly used for measuring food energy. If there is a simple term to distinguish this one from the large "Food calorie", please use that. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Centimeter" xml:space="preserve">
+    <value>سنتيمتر</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CentimetersPerSecond" xml:space="preserve">
+    <value>سنتيمتر في الثانية</value>
+    <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CubicCentimeter" xml:space="preserve">
+    <value>سنتيمتر مكعب</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CubicFoot" xml:space="preserve">
+    <value>قدم مكعب</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CubicInch" xml:space="preserve">
+    <value>بوصة مكعبة</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CubicMeter" xml:space="preserve">
+    <value>متر مكعب</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CubicYard" xml:space="preserve">
+    <value>ياردة مكعبة</value>
+    <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Day" xml:space="preserve">
+    <value>أيام</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_DegreesCelsius" xml:space="preserve">
+    <value>سلزيوس</value>
+    <comment>An option in the unit converter to select degrees Celsius</comment>
+  </data>
+  <data name="UnitName_DegreesFahrenheit" xml:space="preserve">
+    <value>فهرنهايت</value>
+    <comment>An option in the unit converter to select degrees Fahrenheit</comment>
+  </data>
+  <data name="UnitName_Electron-Volt" xml:space="preserve">
+    <value>فُولْت إلكتروني</value>
+    <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Foot" xml:space="preserve">
+    <value>قدم</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_FeetPerSecond" xml:space="preserve">
+    <value>قدم في الثانية</value>
+    <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Foot-Pound" xml:space="preserve">
+    <value>رطل/قدم</value>
+    <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Foot-PoundPerMinute" xml:space="preserve">
+    <value>رطل - قدم/دقيقة</value>
+    <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Gigabit" xml:space="preserve">
+    <value>غيغابت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Gigabyte" xml:space="preserve">
+    <value>غيغابايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Hectare" xml:space="preserve">
+    <value>هيكتار</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Horsepower" xml:space="preserve">
+    <value>حصان (الولايات المتحدة)</value>
+    <comment>A measurement unit for power</comment>
+  </data>
+  <data name="UnitName_Hour" xml:space="preserve">
+    <value>ساعة</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Inch" xml:space="preserve">
+    <value>بوصة</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Joule" xml:space="preserve">
+    <value>جول</value>
+    <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kelvin" xml:space="preserve">
+    <value>كلفن</value>
+    <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
+  </data>
+  <data name="UnitName_Kilobit" xml:space="preserve">
+    <value>كيلوبت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kilobyte" xml:space="preserve">
+    <value>كيلوبايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kilocalorie" xml:space="preserve">
+    <value>السعرات الحرارية للأطعمة</value>
+    <comment>A measurement unit for energy. The scientific name is kilocalorie, but this is what is commonly referred to as a "calorie" or "large calorie" when talking about food. Please use the everyday-use word for food energy calories if there is one. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kilojoule" xml:space="preserve">
+    <value>كيلوجول</value>
+    <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kilometer" xml:space="preserve">
+    <value>كيلومتر</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_KilometersPerHour" xml:space="preserve">
+    <value>كيلومتر في الساعة</value>
+    <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kilowatt" xml:space="preserve">
+    <value>كيلوواط</value>
+    <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Knot" xml:space="preserve">
+    <value>عقدة</value>
+    <comment>A nautical/aerial measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Mach" xml:space="preserve">
+    <value>ماخ</value>
+    <comment>A measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
+  </data>
+  <data name="UnitName_Megabit" xml:space="preserve">
+    <value>ميغابت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Megabyte" xml:space="preserve">
+    <value>ميغابايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Meter" xml:space="preserve">
+    <value>متر</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_MetersPerSecond" xml:space="preserve">
+    <value>متر في الثانية</value>
+    <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Micron" xml:space="preserve">
+    <value>ميكرون</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Microsecond" xml:space="preserve">
+    <value>ميكرو ثانية</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Mile" xml:space="preserve">
+    <value>ميل</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_MilesPerHour" xml:space="preserve">
+    <value>ميل في الساعة</value>
+    <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Millimeter" xml:space="preserve">
+    <value>ملليمتر</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Millisecond" xml:space="preserve">
+    <value>مللي ثانية</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Minute" xml:space="preserve">
+    <value>دقيقة</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Nanometer" xml:space="preserve">
+    <value>نانومتر</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_NauticalMile" xml:space="preserve">
+    <value>ميل بحري</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Petabit" xml:space="preserve">
+    <value>بيتابت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Petabyte" xml:space="preserve">
+    <value>بيتابايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Second" xml:space="preserve">
+    <value>ثانية</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareCentimeter" xml:space="preserve">
+    <value>سنتيمتر مربع</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareFoot" xml:space="preserve">
+    <value>قدم مربع</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareInch" xml:space="preserve">
+    <value>بوصة مربعة</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareKilometer" xml:space="preserve">
+    <value>كيلومتر مربع</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareMeter" xml:space="preserve">
+    <value>متر مربع</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareMile" xml:space="preserve">
+    <value>ميل مربع</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareMillimeter" xml:space="preserve">
+    <value>ملليمتر مربع</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SquareYard" xml:space="preserve">
+    <value>ياردة مربعة</value>
+    <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Terabit" xml:space="preserve">
+    <value>تيرابت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Terabyte" xml:space="preserve">
+    <value>تيرابايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Watt" xml:space="preserve">
+    <value>واط</value>
+    <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Week" xml:space="preserve">
+    <value>أسبوع</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Yard" xml:space="preserve">
+    <value>ياردة</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Year" xml:space="preserve">
+    <value>سنة</value>
+    <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Carat" xml:space="preserve">
+    <value>قرص مضغوط</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Degree" xml:space="preserve">
+    <value>درجة</value>
+    <comment>An abbreviation for a measurement unit of Angle</comment>
+  </data>
+  <data name="UnitAbbreviation_Radian" xml:space="preserve">
+    <value>rad</value>
+    <comment>An abbreviation for a measurement unit of Angle</comment>
+  </data>
+  <data name="UnitAbbreviation_Gradian" xml:space="preserve">
+    <value>غراد</value>
+    <comment>An abbreviation for a measurement unit of Angle</comment>
+  </data>
+  <data name="UnitAbbreviation_Atmosphere" xml:space="preserve">
+    <value>ضغط جوي</value>
+    <comment>An abbreviation for a measurement unit of Pressure</comment>
+  </data>
+  <data name="UnitAbbreviation_Bar" xml:space="preserve">
+    <value>بار
+</value>
+    <comment>An abbreviation for a measurement unit of Pressure</comment>
+  </data>
+  <data name="UnitAbbreviation_KiloPascal" xml:space="preserve">
+    <value>كيلو باسكال</value>
+    <comment>An abbreviation for a measurement unit of Pressure</comment>
+  </data>
+  <data name="UnitAbbreviation_MillimeterOfMercury" xml:space="preserve">
+    <value>ملم زئبق</value>
+    <comment>An abbreviation for a measurement unit of Pressure</comment>
+  </data>
+  <data name="UnitAbbreviation_Pascal" xml:space="preserve">
+    <value>باسكال</value>
+    <comment>An abbreviation for a measurement unit of Pressure</comment>
+  </data>
+  <data name="UnitAbbreviation_PSI" xml:space="preserve">
+    <value>باوند لكل بوصة مربعة</value>
+    <comment>An abbreviation for a measurement unit of Pressure</comment>
+  </data>
+  <data name="UnitAbbreviation_Centigram" xml:space="preserve">
+    <value>سنتيغرام</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Decagram" xml:space="preserve">
+    <value>ديكاغرام</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Decigram" xml:space="preserve">
+    <value>ديسيغرام</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Gram" xml:space="preserve">
+    <value>غرام</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Hectogram" xml:space="preserve">
+    <value>هيكتوغرام</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilogram" xml:space="preserve">
+    <value>كيلوغرام</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_LongTon" xml:space="preserve">
+    <value>طن (المملكة المتحدة)</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Milligram" xml:space="preserve">
+    <value>مللي غرام</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Ounce" xml:space="preserve">
+    <value>أونصة</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Pound" xml:space="preserve">
+    <value>رطل</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_ShortTon" xml:space="preserve">
+    <value>طن (أمريكي)</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Stone" xml:space="preserve">
+    <value>ستون</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitAbbreviation_Tonne" xml:space="preserve">
+    <value>طن</value>
+    <comment>An abbreviation for a measurement unit of weight</comment>
+  </data>
+  <data name="UnitName_Carat" xml:space="preserve">
+    <value>قيراط</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Degree" xml:space="preserve">
+    <value>درجات</value>
+    <comment>A measurement unit for Angle.</comment>
+  </data>
+  <data name="UnitName_Radian" xml:space="preserve">
+    <value>وحدات راديان</value>
+    <comment>A measurement unit for Angle.</comment>
+  </data>
+  <data name="UnitName_Gradian" xml:space="preserve">
+    <value>وحدات غراد</value>
+    <comment>A measurement unit for Angle.</comment>
+  </data>
+  <data name="UnitName_Atmosphere" xml:space="preserve">
+    <value>الجو</value>
+    <comment>A measurement unit for Pressure.</comment>
+  </data>
+  <data name="UnitName_Bar" xml:space="preserve">
+    <value>بار</value>
+    <comment>A measurement unit for Pressure.</comment>
+  </data>
+  <data name="UnitName_KiloPascal" xml:space="preserve">
+    <value>كيلو باسكال</value>
+    <comment>A measurement unit for Pressure.</comment>
+  </data>
+  <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
+    <value>مللي متر من الزئبق</value>
+    <comment>A measurement unit for Pressure.</comment>
+  </data>
+  <data name="UnitName_Pascal" xml:space="preserve">
+    <value>باسكال</value>
+    <comment>A measurement unit for Pressure.</comment>
+  </data>
+  <data name="UnitName_PSI" xml:space="preserve">
+    <value>رطل لكل بوصة مربعة</value>
+    <comment>A measurement unit for Pressure.</comment>
+  </data>
+  <data name="UnitName_Centigram" xml:space="preserve">
+    <value>سنتيغرام</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Decagram" xml:space="preserve">
+    <value>ديكاغرام</value>
+    <comment>A measurement unit for weight. Note: Dekagram is spelled "decagram" everywhere except where US English is used. (EN-US dekagram, elsewhere decagram). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Decigram" xml:space="preserve">
+    <value>ديسيغرام</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Gram" xml:space="preserve">
+    <value>غرام</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Hectogram" xml:space="preserve">
+    <value>هيكتوغرام</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kilogram" xml:space="preserve">
+    <value>كيلوغرام</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_LongTon" xml:space="preserve">
+    <value>طن إمبراطوري (المملكة المتحدة)</value>
+    <comment>A measurement unit for weight. This is the UK version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Milligram" xml:space="preserve">
+    <value>ملليغرام</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Ounce" xml:space="preserve">
+    <value>أونصة</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Pound" xml:space="preserve">
+    <value>رطل</value>
+    <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_ShortTon" xml:space="preserve">
+    <value>طن أمريكي</value>
+    <comment>A measurement unit for weight. This is the US version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Stone" xml:space="preserve">
+    <value>ستون</value>
+    <comment>A measurement unit for weight. Equal to 14 pounds. Note that this is the plural form of the word in English (eg. "This man weighs 11 stone."). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Tonne" xml:space="preserve">
+    <value>طن متري</value>
+    <comment>A measurement unit for weight. This is the metric version of tonne. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CD" xml:space="preserve">
+    <value>أقراص مضغوطة</value>
+    <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_CD" xml:space="preserve">
+    <value>أقراص مضغوطة</value>
+    <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SoccerField" xml:space="preserve">
+    <value>ملعب كرة قدم</value>
+    <comment>A professional-sized soccer field, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_SoccerField" xml:space="preserve">
+    <value>ملعب كرة قدم</value>
+    <comment>A professional-sized soccer field, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_FloppyDisk" xml:space="preserve">
+    <value>أقراص مرنة</value>
+    <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_FloppyDisk" xml:space="preserve">
+    <value>أقراص مرنة</value>
+    <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_DVD" xml:space="preserve">
+    <value>أقراص الفيديو الرقمي (DVD)</value>
+    <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_DVD" xml:space="preserve">
+    <value>أقراص الفيديو الرقمي (dvd)</value>
+    <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Battery" xml:space="preserve">
+    <value>بطارية</value>
+    <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Battery" xml:space="preserve">
+    <value>بطاريات</value>
+    <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Paperclip" xml:space="preserve">
+    <value>مشبك ورق</value>
+    <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Paperclip" xml:space="preserve">
+    <value>مشبك ورق</value>
+    <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_JumboJet" xml:space="preserve">
+    <value>طائرة جامبو نفاثة</value>
+    <comment>A jumbo jet (eg. Boeing 747), used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_JumboJet" xml:space="preserve">
+    <value>طائرة جامبو نفاثة</value>
+    <comment>A jumbo jet (eg. Boeing 747), used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_LightBulb" xml:space="preserve">
+    <value>مصباح</value>
+    <comment>A light bulb, used as a comparison measurement unit for power (60 watts). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_LightBulb" xml:space="preserve">
+    <value>مصباح</value>
+    <comment>A light bulb, used as a comparison measurement unit for power (60 watts). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Horse" xml:space="preserve">
+    <value>حصان</value>
+    <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Horse" xml:space="preserve">
+    <value>حصان</value>
+    <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Bathtub" xml:space="preserve">
+    <value>حوض استحمام</value>
+    <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Bathtub" xml:space="preserve">
+    <value>حوض استحمام</value>
+    <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Snowflake" xml:space="preserve">
+    <value>ثلج</value>
+    <comment>A snowflake, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Snowflake" xml:space="preserve">
+    <value>ثلوج</value>
+    <comment>A snowflake, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Elephant" xml:space="preserve">
+    <value>فيل</value>
+    <comment>An elephant, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Elephant" xml:space="preserve">
+    <value>أفيال</value>
+    <comment>An elephant, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Turtle" xml:space="preserve">
+    <value>سلحفاة</value>
+    <comment>A turtle, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Turtle" xml:space="preserve">
+    <value>سلحفاة</value>
+    <comment>A turtle, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Jet" xml:space="preserve">
+    <value>طائرة نفاثة</value>
+    <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Jet" xml:space="preserve">
+    <value>طائرة نفاثة</value>
+    <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Whale" xml:space="preserve">
+    <value>حوت</value>
+    <comment>A blue whale, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Whale" xml:space="preserve">
+    <value>حوت</value>
+    <comment>A blue whale, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_CoffeeCup" xml:space="preserve">
+    <value>فنجان قهوة</value>
+    <comment>A coffee cup, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_CoffeeCup" xml:space="preserve">
+    <value>فنجان شاي</value>
+    <comment>A coffee cup, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SwimmingPool" xml:space="preserve">
+    <value>حمام سباحة</value>
+    <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_SwimmingPool" xml:space="preserve">
+    <value>حمام سباحة</value>
+    <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Hand" xml:space="preserve">
+    <value>يد</value>
+    <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Hand" xml:space="preserve">
+    <value>يد</value>
+    <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Paper" xml:space="preserve">
+    <value>ورقة</value>
+    <comment>A sheet of 8.5 x 11 inch paper, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Paper" xml:space="preserve">
+    <value>ورقة</value>
+    <comment>A sheet of 8.5 x 11 inch paper, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Castle" xml:space="preserve">
+    <value>قلعة</value>
+    <comment>A castle, used as a comparison measurement unit for area (floorspace). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Castle" xml:space="preserve">
+    <value>قلعة</value>
+    <comment>A castle, used as a comparison measurement unit for area (floorspace). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Banana" xml:space="preserve">
+    <value>موزة</value>
+    <comment>A banana, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_Banana" xml:space="preserve">
+    <value>موز</value>
+    <comment>A banana, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SliceOfCake" xml:space="preserve">
+    <value>شريحة كعك</value>
+    <comment>A slice of chocolate cake, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_SliceOfCake" xml:space="preserve">
+    <value>شريحة من الكعك</value>
+    <comment>A slice of chocolate cake, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_TrainEngine" xml:space="preserve">
+    <value>محرك قطار</value>
+    <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_TrainEngine" xml:space="preserve">
+    <value>محرك قطار</value>
+    <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_SoccerBall" xml:space="preserve">
+    <value>كرة قدم</value>
+    <comment>A soccer ball, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitAbbreviation_SoccerBall" xml:space="preserve">
+    <value>كرة قدم</value>
+    <comment>A soccer ball, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="MemoryItemHelpText" xml:space="preserve">
+    <value>عنصر ذاكرة</value>
+    <comment>Help text used by accessibility tools to indicate that an item in the list of memory values is a memory item.</comment>
+  </data>
+  <data name="SupplementaryUnit_AutomationName" xml:space="preserve">
+    <value>%1 %2</value>
+    <comment>This string is what is read by Narrator, and other screen readers, for the supplementary value at the bottom of the converter view, %1 = the value of the supplementary unit (i.e. 0.5), %2 = the unit itself (i.e. inches, meters, etc)</comment>
+  </data>
+  <data name="AboutControlBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>الخلف</value>
+    <comment>Screen reader prompt for the About panel back button</comment>
+  </data>
+  <data name="AboutControlBackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>الخلف</value>
+    <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
+  </data>
+  <data name="AboutFlyoutEULA.Text" xml:space="preserve">
+    <value>شروط ترخيص برامج Microsoft</value>
+    <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
+  </data>
+  <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
+    <value>بيان الخصوصية الخاص بشركة Microsoft</value>
+    <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
+  </data>
+  <data name="AboutControlCopyright.Text" xml:space="preserve">
+    <value>© 2018 Microsoft. جميع الحقوق محفوظة.</value>
+    <comment>Copyright statement, displayed on the About panel</comment>
+  </data>
+  <data name="AboutButton.Content" xml:space="preserve">
+    <value>حول</value>
+    <comment>The text that shows in the dropdown navigation control to open About panel</comment>
+  </data>
+  <data name="FeedbackButton.Content" xml:space="preserve">
+    <value>إرسال ملاحظات</value>
+    <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
+  </data>
+  <data name="HistoryEmpty.Text" xml:space="preserve">
+    <value>لا توجد محفوظات بعد</value>
+    <comment>The text that shows as the header for the history list</comment>
+  </data>
+  <data name="MemoryPaneEmpty.Text" xml:space="preserve">
+    <value>لا يوجد شيء محفوظ في الذاكرة</value>
+    <comment>The text that shows as the header for the memory list</comment>
+  </data>
+  <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>الذاكرة</value>
+    <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
+  </data>
+  <data name="CannotPaste" xml:space="preserve">
+    <value>لا يمكن لصق هذا التعبير</value>
+    <comment>The paste operation cannot be performed, if the expression is invalid.</comment>
+  </data>
+  <data name="UnitName_Gibibits" xml:space="preserve">
+    <value>جيبي بت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Gibibytes" xml:space="preserve">
+    <value>جيبي بايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kibibits" xml:space="preserve">
+    <value>كيبي بت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Kibibytes" xml:space="preserve">
+    <value>كيبي بايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Mebibits" xml:space="preserve">
+    <value>ميبي بت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Mebibytes" xml:space="preserve">
+    <value>ميبي بايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Pebibits" xml:space="preserve">
+    <value>بيبي بت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Pebibytes" xml:space="preserve">
+    <value>بيبي بايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Tebibits" xml:space="preserve">
+    <value>تيبي بت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Tebibytes" xml:space="preserve">
+    <value>تيبي بايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Exabits" xml:space="preserve">
+    <value>إكسا بت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Exabytes" xml:space="preserve">
+    <value>إكسا بايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Exbibits" xml:space="preserve">
+    <value>إكسبي بت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Exbibytes" xml:space="preserve">
+    <value>إكسبي بايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Zetabits" xml:space="preserve">
+    <value>زيتابت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Zetabytes" xml:space="preserve">
+    <value>زيتابايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Zebibits" xml:space="preserve">
+    <value>زيبي بت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Zebibytes" xml:space="preserve">
+    <value>زيبي بايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Yottabit" xml:space="preserve">
+    <value>يوتا بت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Yottabyte" xml:space="preserve">
+    <value>يوتا بايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Yobibits" xml:space="preserve">
+    <value>يوبي بت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Yobibytes" xml:space="preserve">
+    <value>يوبي بايت</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="DateCalculationModeText" xml:space="preserve">
+    <value>حساب التاريخ</value>
+  </data>
+  <data name="DateCalculationOption.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>وضع الحساب</value>
+    <comment>Automation label for the Date Calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
+  </data>
+  <data name="AddOption.Content" xml:space="preserve">
+    <value>إضافة</value>
+    <comment>Add toggle button text</comment>
+  </data>
+  <data name="Date_AddSubtractOption.Content" xml:space="preserve">
+    <value>إضافة أيام أو اجتزائها</value>
+    <comment>Add or Subtract days option</comment>
+  </data>
+  <data name="DateLabel.Text" xml:space="preserve">
+    <value>التاريخ</value>
+    <comment>Date result label</comment>
+  </data>
+  <data name="Date_DifferenceOption.Content" xml:space="preserve">
+    <value>الاختلاف بين التواريخ</value>
+    <comment>Date Difference option</comment>
+  </data>
+  <data name="DaysLabel.Text" xml:space="preserve">
+    <value>أيام</value>
+    <comment>Add/Subtract Days label</comment>
+  </data>
+  <data name="Date_DifferenceLabel.Text" xml:space="preserve">
+    <value>الاختلاف</value>
+    <comment>Difference result label</comment>
+  </data>
+  <data name="Date_FromLabel.Text" xml:space="preserve">
+    <value>من</value>
+    <comment>From Date label for Date Picker</comment>
+  </data>
+  <data name="MonthsLabel.Text" xml:space="preserve">
+    <value>شهور</value>
+    <comment>Add/Subtract Months label</comment>
+  </data>
+  <data name="SubtractOption.Content" xml:space="preserve">
+    <value>اجتزاء</value>
+    <comment>Subtract toggle button text</comment>
+  </data>
+  <data name="Date_ToLabel.Text" xml:space="preserve">
+    <value>إلى</value>
+    <comment>To Date label for Date Picker</comment>
+  </data>
+  <data name="YearsLabel.Text" xml:space="preserve">
+    <value>سنوات</value>
+    <comment>Add/Subtract Years label</comment>
+  </data>
+  <data name="Date_OutOfBoundMessage" xml:space="preserve">
+    <value>التاريخ خارج الحد</value>
+    <comment>Out of bound message shown as result when the date calculation exceeds the bounds</comment>
+  </data>
+  <data name="Date_Day" xml:space="preserve">
+    <value>يوم</value>
+  </data>
+  <data name="Date_Days" xml:space="preserve">
+    <value>أيام</value>
+  </data>
+  <data name="Date_Month" xml:space="preserve">
+    <value>شهر</value>
+  </data>
+  <data name="Date_Months" xml:space="preserve">
+    <value>شهور</value>
+  </data>
+  <data name="Date_SameDates" xml:space="preserve">
+    <value>نفس التواريخ</value>
+  </data>
+  <data name="Date_Week" xml:space="preserve">
+    <value>أسبوع</value>
+  </data>
+  <data name="Date_Weeks" xml:space="preserve">
+    <value>أسابيع</value>
+  </data>
+  <data name="Date_Year" xml:space="preserve">
+    <value>سنة</value>
+  </data>
+  <data name="Date_Years" xml:space="preserve">
+    <value>سنوات</value>
+  </data>
+  <data name="Date_DifferenceResultAutomationName" xml:space="preserve">
+    <value>الاختلاف %1</value>
+    <comment>Automation name for reading out the date difference. %1 =  Date difference</comment>
+  </data>
+  <data name="Date_ResultingDateAutomationName" xml:space="preserve">
+    <value>تاريخ الناتج %1</value>
+    <comment>Automation name for reading out the resulting date in Add/Subtract mode. %1 = Resulting date</comment>
+  </data>
+  <data name="HeaderAutomationName_Calculator" xml:space="preserve">
+    <value>وضع الحاسبة %1</value>
+    <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current calculator mode: Scientific, Standard, or Programmer.</comment>
+  </data>
+  <data name="HeaderAutomationName_Converter" xml:space="preserve">
+    <value>وضع التحويل %1</value>
+    <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and Mass", "Energy", "Volume", etc.</comment>
+  </data>
+  <data name="HeaderAutomationName_Date" xml:space="preserve">
+    <value>وضع حساب التاريخ</value>
+    <comment>Automation name for when the mode header is focused and the current mode is Date Calculation.</comment>
+  </data>
+  <data name="DockPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>المحفوظات وقوائم الذاكرة</value>
+    <comment>Automation name for the group of controls for history and memory lists.</comment>
+  </data>
+  <data name="MemoryPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>عناصر تحكم الذاكرة</value>
+    <comment>Automation name for the group of memory controls (Mem Clear, Mem Recall, Mem Add, Mem Subtract, Mem Store, Memory flyout toggle)</comment>
+  </data>
+  <data name="StandardFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>وظائف قياسية</value>
+    <comment>Automation name for the group of standard function buttons (Percent, Square Root, Square, Cube, Reciprocal)</comment>
+  </data>
+  <data name="DisplayControls.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>عناصر ‏‏التحكم بالعرض</value>
+    <comment>Automation name for the group of display control buttons (Clear, Clear Entry, and Backspace)</comment>
+  </data>
+  <data name="StandardOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>عوامل قياسية</value>
+    <comment>Automation name for the group of standard operator buttons (Add, Subtract, Multiply, Divide, and Equals)</comment>
+  </data>
+  <data name="NumberPad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>لوحة الأرقام</value>
+    <comment>Automation name for the group of NumberPad buttons (0-9, A-F and Decimal button)</comment>
+  </data>
+  <data name="ScientificAngleOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>عوامل الزاوية</value>
+    <comment>Automation name for the group of Scientific angle operators (Degree mode, Hyperbolic toggle, and Precision button)</comment>
+  </data>
+  <data name="ScientificFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>الوظائف العلمية</value>
+    <comment>Automation name for the group of Scientific functions.</comment>
+  </data>
+  <data name="RadixGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>تحديد الرقم الأساس</value>
+    <comment>Automation name for the group of radices (Hexadecimal, Decimal, Octal, Binary). https://en.wikipedia.org/wiki/Radix </comment>
+  </data>
+  <data name="ProgrammerOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>عوامل المبرمج</value>
+    <comment>Automation name for the group of programmer operators (RoL, RoR, Lsh, Rsh, OR, XOR, NOT, AND).</comment>
+  </data>
+  <data name="InputModeSelectionGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>تحديد وضع الإدخال</value>
+    <comment>Automation name for the group of input mode toggling buttons.</comment>
+  </data>
+  <data name="BitFlipPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>لوحة مفاتيح تبديل البت</value>
+    <comment>Automation name for the group of bit toggling buttons.</comment>
+  </data>
+  <data name="scrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>تمرير التعبير إلى اليسار</value>
+    <comment>Automation label for the "scroll left" button that appears when an expression is too large to fit in the window.</comment>
+  </data>
+  <data name="scrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>تمرير التعبير إلى اليمين</value>
+    <comment>Automation label for the "scroll right" button that appears when an expression is too large to fit in the window.</comment>
+  </data>
+  <data name="Format_MaxDigitsReached" xml:space="preserve">
+    <value>تم الوصول إلى الحد الأقصى من الأرقام. %1</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when user reaches max digits. The %1 is the automation name of the display. Users will hear "Max digits reached. Display is _current_value_".</comment>
+  </data>
+  <data name="Format_ButtonPressAuditoryFeedback" xml:space="preserve">
+    <value>%1 %2</value>
+    <comment>{Locked='%1','%2'} Formatting string for a Narrator announcement when user presses a button with auditory feedback. "%1" is the display value and "%2" is the button press feedback. Example, user presses "plus" and hears "Display is 7 plus".</comment>
+  </data>
+  <data name="Format_MemorySave" xml:space="preserve">
+    <value>تم حفظ %1 في الذاكرة</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user stores a number to memory. The %1 is the automation name of the display. Users will hear "_current_value_ saved to memory".</comment>
+  </data>
+  <data name="Format_MemorySlotChanged" xml:space="preserve">
+    <value>فتحة الذاكرة %1 هي %2</value>
+    <comment>{Locked='%1','%2'} Formatting string for a Narrator announcement when the user changes a memory slot. The %1 is the index of the memory slot and %2 is the new value. For example, users might hear "Memory slot 2 is 37".</comment>
+  </data>
+  <data name="Format_MemorySlotCleared" xml:space="preserve">
+    <value>تم مسح %1 من فتحة بطاقة الذاكرة</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a memory slot. The %1 is the index of the memory slot. For example, users might hear "Memory slot 2 cleared".</comment>
+  </data>
+  <data name="divideButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>مقسوم على</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
+  </data>
+  <data name="multiplyButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>مرات</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
+  </data>
+  <data name="minusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>ناقص</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
+  </data>
+  <data name="plusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>زائد</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
+  </data>
+  <data name="powerButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>أُس</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
+  </data>
+  <data name="ySquareRootButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>y جذر</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
+  </data>
+  <data name="modButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>المعامل</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
+  </data>
+  <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Shift الأيسر</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
+  </data>
+  <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Shift الأيمن</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
+  </data>
+  <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>or</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>x or</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronounciation.</comment>
+  </data>
+  <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>و</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="CurrencyFromToRatioFormat" xml:space="preserve">
+    <value>%1 %2 = %3 %4</value>
+    <comment>The exact ratio between converted currencies, e.g. "1 USD = 0.8885 EUR". %1 will always be '1'. %2 is the From currency code. %3 is the formatted conversion ratio. %4 is the To currency code.</comment>
+  </data>
+  <data name="CurrencyTimestampFormat" xml:space="preserve">
+    <value>تم تحديث %1 %2</value>
+    <comment>The timestamp of currency conversion ratios fetched from an online service. %1 is the date. %2 is the time. Example: "Updated Sep 28, 2016 5:42 PM"</comment>
+  </data>
+  <data name="RefreshButtonText.Text" xml:space="preserve">
+    <value>تحديث الأسعار</value>
+    <comment>The text displayed for a hyperlink button that refreshes currency converter ratios.</comment>
+  </data>
+  <data name="DataChargesMayApply" xml:space="preserve">
+    <value>قد يتم تطبيق رسوم البيانات.</value>
+    <comment>The text displayed when users are on a metered connection and using currency converter.</comment>
+  </data>
+  <data name="FailedToRefresh" xml:space="preserve">
+    <value>تعذر الحصول على أسعار جديدة. حاول مرة أخرى لاحقاً.</value>
+    <comment>The text displayed when currency ratio data fails to load.</comment>
+  </data>
+  <data name="OfflineStatusHyperlinkText" xml:space="preserve">
+    <value>غير متصل. الرجاء التحقق من%HL%إعدادات الشبكة%HL%</value>
+    <comment>Status text displayed when currency converter is disconnected from the internet. The text "Notification Settings" should be surrounded by %HL% since they are used to indicate that that text should be the hyperlink text. {Locked="%HL%"}</comment>
+  </data>
+  <data name="UpdatingCurrencyRates" xml:space="preserve">
+    <value>جارٍ تحديث أسعار العملات</value>
+    <comment>This string is what is read by Narrator, and other screen readers, when the "Update rates" button in the Currency Converter is clicked.</comment>
+  </data>
+  <data name="CurrencyRatesUpdated" xml:space="preserve">
+    <value>تم تحديث أسعار العملات</value>
+    <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have successfully updated.</comment>
+  </data>
+  <data name="CurrencyRatesUpdateFailed" xml:space="preserve">
+    <value>تعذر تحديث الأسعار</value>
+    <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
+  </data>
+  <data name="AboutButton.AccessKey" xml:space="preserve">
+    <value>ح ز</value>
+    <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="DateCalculationModeAccessKey" xml:space="preserve">
+    <value>4</value>
+    <comment>AccessKey for the Date Calculation mode navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="HistoryButton.AccessKey" xml:space="preserve">
+    <value>I</value>
+    <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="MemoryButton.AccessKey" xml:space="preserve">
+    <value>M</value>
+    <comment>Access key for the Memory button. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="NavView.AccessKey" xml:space="preserve">
+    <value>H</value>
+    <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="ProgrammerModeAccessKey" xml:space="preserve">
+    <value>3</value>
+    <comment>AccessKey for the Programmer mode navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="ScientificModeAccessKey" xml:space="preserve">
+    <value>2</value>
+    <comment>AccessKey for the Scientific mode navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="StandardModeAccessKey" xml:space="preserve">
+    <value>١</value>
+    <comment>AccessKey for the Standard mode navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="CategoryName_AngleAccessKey" xml:space="preserve">
+    <value>AN</value>
+    <comment>AccessKey for the angle converter navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="CategoryName_AreaAccessKey" xml:space="preserve">
+    <value>AR</value>
+    <comment>AccessKey for the area converter navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="CategoryName_CurrencyAccessKey" xml:space="preserve">
+    <value>C</value>
+    <comment>AccessKey for the currency converter navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="CategoryName_DataAccessKey" xml:space="preserve">
+    <value>D</value>
+    <comment>AccessKey for the data converter navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="CategoryName_EnergyAccessKey" xml:space="preserve">
+    <value>E</value>
+    <comment>AccessKey for the energy converter navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="CategoryName_LengthAccessKey" xml:space="preserve">
+    <value>L</value>
+    <comment>AccessKey for the length converter navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="CategoryName_PowerAccessKey" xml:space="preserve">
+    <value>PO</value>
+    <comment>AccessKey for the power converter navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="CategoryName_PressureAccessKey" xml:space="preserve">
+    <value>PR</value>
+    <comment>AccessKey for the pressure converter navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="CategoryName_SpeedAccessKey" xml:space="preserve">
+    <value>S</value>
+    <comment>AccessKey for the speed converter navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="CategoryName_TimeAccessKey" xml:space="preserve">
+    <value>TI</value>
+    <comment>AccessKey for the time converter navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="CategoryName_VolumeAccessKey" xml:space="preserve">
+    <value>V</value>
+    <comment>AccessKey for the volume converter navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="CategoryName_WeightAccessKey" xml:space="preserve">
+    <value>W</value>
+    <comment>AccessKey for the weight converter navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="CategoryName_TemperatureAccessKey" xml:space="preserve">
+    <value>TE</value>
+    <comment>AccessKey for the temperature converter navbar item. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="ClearHistory.AccessKey" xml:space="preserve">
+    <value>C</value>
+    <comment>Access key for the Clear history button.{StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="ClearMemory.AccessKey" xml:space="preserve">
+    <value>C</value>
+    <comment>Access key for the Clear memory button. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="ClearMemory.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>مسح الذاكرة بالكامل (Ctrl+L)</value>
+    <comment>This is the tool tip automation name for the Clear Memory button in the Memory Pane.</comment>
+  </data>
+  <data name="ClearMemory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مسح الذاكرة بالكامل</value>
+    <comment>Screen reader prompt for the Calculator Clear Memory button in the Memory Pane</comment>
+  </data>
+  <data name="HistoryLabel.AccessKey" xml:space="preserve">
+    <value>I</value>
+    <comment>Access key for the History pivot item.{StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="MemoryLabel.AccessKey" xml:space="preserve">
+    <value>M</value>
+    <comment>Access key for the Memory pivot item.{StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="SineDegrees" xml:space="preserve">
+    <value>درجات جيب الزاوية</value>
+    <comment>Name for the sine function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="SineRadians" xml:space="preserve">
+    <value>زوايا نصف قطرية لجيب الزاوية</value>
+    <comment>Name for the sine function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="SineGradians" xml:space="preserve">
+    <value>وحدات غراد جيب الزاوية</value>
+    <comment>Name for the sine function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSineDegrees" xml:space="preserve">
+    <value>درجات جيب الزاوية المعكوسة</value>
+    <comment>Name for the inverse sine function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSineRadians" xml:space="preserve">
+    <value>زوايا نصف قطرية لجيب الزاوية المعكوسة</value>
+    <comment>Name for the inverse sine function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSineGradians" xml:space="preserve">
+    <value>وحدات غراد جيب الزاوية المعكوسة</value>
+    <comment>Name for the inverse sine function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicSine" xml:space="preserve">
+    <value>جيب الزاوية الزائدي</value>
+    <comment>Name for the hyperbolic sine function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicSine" xml:space="preserve">
+    <value>جيب الزاوية الزائدي المعكوس</value>
+    <comment>Name for the inverse hyperbolic sine function. Used by screen readers.</comment>
+  </data>
+  <data name="CosineDegrees" xml:space="preserve">
+    <value>درجات جيب التمام</value>
+    <comment>Name for the cosine function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="CosineRadians" xml:space="preserve">
+    <value>زوايا نصف قطرية لجيب التمام</value>
+    <comment>Name for the cosine function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="CosineGradians" xml:space="preserve">
+    <value>وحدات غراد جيب التمام</value>
+    <comment>Name for the cosine function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosineDegrees" xml:space="preserve">
+    <value>درجات جيب التمام المعكوسة</value>
+    <comment>Name for the inverse cosine function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosineRadians" xml:space="preserve">
+    <value>زوايا نصف قطرية لجيب التمام المعكوسة</value>
+    <comment>Name for the inverse cosine function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosineGradians" xml:space="preserve">
+    <value>وحدات غراد جيب التمام المعكوسة</value>
+    <comment>Name for the inverse cosine function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicCosine" xml:space="preserve">
+    <value>جيب التمام الزائدي</value>
+    <comment>Name for the hyperbolic cosine function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicCosine" xml:space="preserve">
+    <value>جيب التمام الزائدي المعكوس</value>
+    <comment>Name for the inverse hyperbolic cosine function. Used by screen readers.</comment>
+  </data>
+  <data name="TangentDegrees" xml:space="preserve">
+    <value>درجات ظل الزاوية</value>
+    <comment>Name for the tangent function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="TangentRadians" xml:space="preserve">
+    <value>زوايا نصف قطرية لظل الزاوية</value>
+    <comment>Name for the tangent function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="TangentGradians" xml:space="preserve">
+    <value>وحدات غراد ظل الزاوية</value>
+    <comment>Name for the tangent function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseTangentDegrees" xml:space="preserve">
+    <value>درجات ظل الزاوية المعكوسة</value>
+    <comment>Name for the inverse tangent function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseTangentRadians" xml:space="preserve">
+    <value>زوايا نصف قطرية لظل الزاوية المعكوسة</value>
+    <comment>Name for the inverse tangent function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseTangentGradians" xml:space="preserve">
+    <value>وحدات غراد ظل الزاوية المعكوسة</value>
+    <comment>Name for the inverse tangent function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicTangent" xml:space="preserve">
+    <value>ظل الزاوية الزائدي</value>
+    <comment>Name for the hyperbolic tangent function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicTangent" xml:space="preserve">
+    <value>ظل الزاوية الزائدي المعكوس</value>
+    <comment>Name for the inverse hyperbolic tangent function. Used by screen readers.</comment>
+  </data>
+  <data name="LeftShift" xml:space="preserve">
+    <value>Shift الأيسر</value>
+    <comment>Name for the programmer function that shifts bits to the left. Used by screen readers.</comment>
+  </data>
+  <data name="RightShift" xml:space="preserve">
+    <value>Shift الأيمن</value>
+    <comment>Name for the programmer function that shifts bits to the right. Used by screen readers.</comment>
+  </data>
+  <data name="Factorial" xml:space="preserve">
+    <value>مضروب</value>
+    <comment>Name for the factorial function. Used by screen readers.</comment>
+  </data>
+  <data name="DegreeMinuteSecond" xml:space="preserve">
+    <value>درجة دقيقة ثانية</value>
+    <comment>Name for the degree minute second (dms) function. Used by screen readers.</comment>
+  </data>
+  <data name="NaturalLog" xml:space="preserve">
+    <value>لوغاريتم عادي</value>
+    <comment>Name for the natural log (ln) function. Used by screen readers.</comment>
+  </data>
+  <data name="Square" xml:space="preserve">
+    <value>تربيع</value>
+    <comment>Name for the square function. Used by screen readers.</comment>
+  </data>
+  <data name="YRoot" xml:space="preserve">
+    <value>جذر y</value>
+    <comment>Name for the y root function. Used by screen readers.</comment>
+  </data>
+  <data name="NavCategoryItem_AutomationNameFormat" xml:space="preserve">
+    <value>%1 %2</value>
+    <comment>{Locked='%1','%2'}.  Format string for the accessible name of a Calculator menu item, used by screen readers. "%1" is the item name, e.g. Standard, Programmer, etc. %2 is the category name, e.g. Calculator, Converter. An example when formatted is "Standard Calculator" or "Currency Converter".</comment>
+  </data>
+  <data name="NavCategoryHeader_AutomationNameFormat" xml:space="preserve">
+    <value>فئة %1</value>
+    <comment>{Locked='%1'} Format string for the accessible name of a Calculator menu category header, used by screen readers. "%1" is the pluralized category name, e.g. Calculators, Converters. An example when formatted is "Calculators category".</comment>
+  </data>
+  <data name="AboutControlServicesAgreement.Text" xml:space="preserve">
+    <value>اتفاقية خدمات Microsoft</value>
+    <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
+  </data>
+</root>

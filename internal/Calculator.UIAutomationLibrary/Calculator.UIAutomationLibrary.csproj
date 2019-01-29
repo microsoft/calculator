@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A43517B5-8BE3-4312-913F-004978C34444}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Calculator.UIAutomationLibrary</RootNamespace>
+    <AssemblyName>Calculator.UIAutomationLibrary</AssemblyName>
+    <TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <NuGetTargetMoniker>.NETCore,Version=v5.0</NuGetTargetMoniker>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17134.0</TargetPlatformMinVersion>
+    <FileAlignment>512</FileAlignment>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="CalculatorAppLauncher.cs" />
+    <Compile Include="Components\App\CalculatorAppLfm.cs" />
+    <Compile Include="Components\App\CalculatorAppPom.cs" />
+    <Compile Include="Components\ContentDialogLfm.cs" />
+    <Compile Include="Components\Pages\CalculatorBasePom.cs" />
+    <Compile Include="Components\Pages\AboutFlyoutLfm.cs" />
+    <Compile Include="Components\Pages\AboutFlyoutPom.cs" />
+    <Compile Include="Components\Pages\DateCalculatorLfm.cs" />
+    <Compile Include="Components\Pages\DateCalculatorPom.cs" />
+    <Compile Include="Components\Pages\UnitConverterLfm.cs" />
+    <Compile Include="Components\Pages\UnitConverterPom.cs" />
+    <Compile Include="Components\Shared\HistoryLfm.cs" />
+    <Compile Include="Components\Shared\HistoryPom.cs" />
+    <Compile Include="Components\Shared\ICanFocusWithClicks.cs" />
+    <Compile Include="Components\Shared\MemoryLfm.cs" />
+    <Compile Include="Components\Shared\MemoryPom.cs" />
+    <Compile Include="Components\Pages\NavBarLfm.cs" />
+    <Compile Include="Components\Pages\NavBarPom.cs" />
+    <Compile Include="Components\Shared\NumberPadPom.cs" />
+    <Compile Include="Components\Pages\ProgrammerCalculatorLfm.cs" />
+    <Compile Include="Components\Pages\ProgrammerCalculatorPom.cs" />
+    <Compile Include="Components\Pages\ScientificCalculatorLfm.cs" />
+    <Compile Include="Components\Pages\ScientificCalculatorPom.cs" />
+    <Compile Include="Components\Pages\StandardCalculatorLfm.cs" />
+    <Compile Include="Components\Pages\StandardCalculatorPom.cs" />
+    <Compile Include="Components\Pages\MainPageLfm.cs" />
+    <Compile Include="Components\Pages\MainPagePom.cs" />
+    <Compile Include="Utilities\Impersonator.cs" />
+    <Compile Include="Utilities\PerfTestConstants.cs" />
+    <Compile Include="Tests\BasicCalculationTest.cs" />
+    <Compile Include="Tests\ScientificCalculationTest.cs" />
+    <Compile Include="Utilities\EtwHelper.cs" />
+    <Compile Include="Utilities\InstallHelper.cs" />
+    <Compile Include="Components\ContentDialogPom.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Constants.cs" />
+    <Compile Include="Utilities\NativeMethods.cs" />
+    <Compile Include="Utilities\ServiceHelper.cs" />
+    <Compile Include="Utilities\UIObjectExtensions.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
+    <Compile Include="Utilities\WindowHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
+    <VisualStudioVersion>15.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!--additional imports-->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,44 @@
+#
+# Localization
+# This pipeline uploads English strings files to the localization service, downloads any translated
+# files which are available, and checks them in to git. This pipeline relies on Microsoft-internal
+# resources to run.
+#
+
+# Expects a variable called LocServiceKey to contain the OAuth client secret for Touchdown.
+
+trigger: none
+pr: none
+
+name: $(BuildDefinitionName)_$(date:yyMM).$(date:dd)$(rev:rrr)
+
+jobs:
+- job: Localize
+  pool:
+    name: Package ES Custom Demands Lab A
+    demands:
+    - ClientAlias -equals PKGESUTILAPPS
+  workspace:
+    clean: outputs
+  steps:
+  - checkout: self
+    clean: true
+
+  - task: PkgESSetupBuild@10
+    displayName: Initialize Package ES
+    inputs:
+      productName: Calculator
+      branchVersion: true
+
+  - task: PkgESTouchdownLocService@10
+    displayName: Package ES Touchdown Loc Service
+    inputs:
+      IsCallToServiceStepSelected: true
+      IsCheckedInFileSelected: true
+      CheckinFilesAtOriginFilePath: true
+      GitLocPath: Loc/Resources
+      LocConfigFile: build/config/LocConfigPackageEs.xml
+      AuthenticationMode: OAuth
+      ClientApplicationID: d3dd8113-65b3-4526-bdca-a00a7d1c37ba
+      ApplicationKeyID: $(LocServiceKey)
+      SendToLoc: true

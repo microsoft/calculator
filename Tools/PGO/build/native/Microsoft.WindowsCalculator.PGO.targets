@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <PropertyGroup>
+        <VC_PGO_RunTime_Dir>$(VCToolsInstallDir)bin\Host$(PlatformShortName)\$(PlatformShortName)</VC_PGO_RunTime_Dir>
+        <VC_PGO_RunTime_Dir Condition="'$(Platform)'=='ARM' or '$(Platform)'=='ARM64'">$(VCToolsInstallDir)bin\$(PlatformShortName)</VC_PGO_RunTime_Dir>
+        <ProfileGuidedDatabaseFileName>$(MSBuildThisFileDirectory)..\..\tools\$(PlatformShortName)\Calculator.pgd</ProfileGuidedDatabaseFileName>
+    </PropertyGroup>
+
+    <!-- Enable PGO optimization only for Release builds. -->
+    <ItemDefinitionGroup Condition="'$(Configuration)' == 'Release' and '$(PGOBuildMode)' == 'Instrument'">
+        <Link>
+            <LinkTimeCodeGeneration>PGInstrument</LinkTimeCodeGeneration>
+            <AdditionalDependencies Condition="'$(Platform)'=='ARM'">$(VC_ReferencesPath_VC_ARM)\pgort.lib;%(AdditionalDependencies)</AdditionalDependencies>
+            <AdditionalDependencies Condition="'$(Platform)'=='ARM64'">$(VC_ReferencesPath_VC_ARM64)\pgort.lib;%(AdditionalDependencies)</AdditionalDependencies>
+            <AdditionalDependencies Condition="'$(Platform)'=='Win32'">$(VC_ReferencesPath_VC_x86)\pgort.lib;%(AdditionalDependencies)</AdditionalDependencies>
+            <AdditionalDependencies Condition="'$(Platform)'=='x64'">$(VC_ReferencesPath_VC_x64)\pgort.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        </Link>
+    </ItemDefinitionGroup>
+
+    <!-- Include pgort140.dll in the app package -->
+    <ItemGroup Condition="'$(Configuration)' == 'Release' and '$(PGOBuildMode)' == 'Instrument'">
+        <None Include="$(VC_PGO_RunTime_Dir)\pgort140.dll">
+            <Link>%(Filename)%(Extension)</Link>
+            <DeploymentContent>true</DeploymentContent>
+            <Visible>false</Visible>
+            <InProject>false</InProject>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <!-- Enable PGO optimization only for if the pgds file exists. -->
+    <ItemDefinitionGroup Condition="'$(Configuration)' == 'Release' and '$(PGOBuildMode)' == 'Optimize' and Exists('$(ProfileGuidedDatabaseFileName)')">
+        <Link>
+            <LinkTimeCodeGeneration>PGUpdate</LinkTimeCodeGeneration>
+            <ProfileGuidedDatabase>$(ProfileGuidedDatabaseFileName)</ProfileGuidedDatabase>
+        </Link>
+    </ItemDefinitionGroup>
+
+</Project>

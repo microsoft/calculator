@@ -1,0 +1,53 @@
+# This template contains steps to build the app for a single architecture.
+# The job containing these steps must set the variables 'BuildConfiguration' and 'BuildPlatform'.
+
+parameters:
+  extraMsBuildArgs: ''
+
+steps:
+  - task: NuGetToolInstaller@0
+    displayName: Use NuGet 4.7.1
+    inputs:
+      versionSpec: 4.7.1
+      checkLatest: true
+
+  # In most accounts, you can just use 'NuGetCommand' instead of this GUID.
+  # In the microsoft.visualstudio.com account, NuGetCommand is ambiguous so the GUID is needed.
+  - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
+    displayName: NuGet restore src/Calculator.sln
+    inputs:
+      command: custom
+      arguments: restore src/Calculator.sln -Verbosity Detailed -NonInteractive
+
+  - task: PowerShell@2
+    displayName: Set version number in AppxManifest
+    inputs:
+      filePath: $(Build.SourcesDirectory)\build\scripts\UpdateAppxManifestVersion.ps1
+      arguments: '-AppxManifest $(Build.SourcesDirectory)\src\Calculator\Package.appxmanifest -Version $(Build.BuildNumber)'
+
+  - task: VSBuild@1
+    displayName: 'Build solution src/Calculator.sln'
+    inputs:
+      solution: src/Calculator.sln
+      vsVersion: 15.0
+      msbuildArgs: /bl:$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator.binlog /p:OutDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\ /p:GenerateProjectSpecificOutputFolder=true /p:AppVersion=$(Build.BuildNumber) ${{ parameters.extraMsBuildArgs }}
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+      clean: true
+      maximumCpuCount: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish drop artifact
+    inputs:
+      artifactName: drop
+      pathToPublish: $(Build.BinariesDirectory)
+      parallel: true
+
+  - task: PublishSymbols@2
+    displayName: Publish symbols
+    inputs:
+      symbolsFolder: $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)
+      searchPattern: '**/*.pdb'
+      symbolServerType: teamServices
+      treatNotIndexedAsWarning: true
+      symbolsArtifactName: $(System.teamProject)/$(Build.BuildNumber)_$(BuildPlatform)$(BuildConfiguration)

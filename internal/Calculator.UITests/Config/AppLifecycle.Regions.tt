@@ -1,0 +1,364 @@
+﻿<# // Copyright (c) Microsoft Corporation.  All rights reserved. #>
+<#@ template language="C#" hostspecific="True" #>
+<#@ output extension=".xml" #>
+<# // Set options specific to your app here
+var options = new {
+	RegionPrefix = "Calculator",
+    ImageFileName = "Calculator.exe",
+    PackageFamilyName = "Microsoft.WindowsCalculator",
+    FirstView = "ms-resource:///Files/Views/MainPage.xbf"
+};
+#>
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+
+<!-- 
+Based on:
+\base\PerfTest\MemRe\AppLifecycle\Common\Regions\Regions_Calculator.xml	Regions_Calculator.xml	
+
+This is a regions of interest file that can be used by WPA to get a quick overview of the time
+spent on a set of operations called "regions".
+
+A region is defined as the combination of a Start and a Stop event.
+
+This file contains regions that are of interest for the startup of a UWP app.
+The first region "<#= options.RegionPrefix #>_AppLifecycle" is defined by the Start and Stop event of the test.
+Subsequent regions are defined as children of this region to make sure we are only tracking 
+events that occurred during the test.
+
+The events that are defined as Start and Stop events must come from an event provider that is enabled for the
+trace that is being analyzed. For WinPerf, that means that the WPR Profile must have these providers enabled.
+-->
+    
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<InstrumentationManifest>
+    <Instrumentation>
+        <Regions>
+            <RegionRoot Guid="{7e8672b5-efe5-4862-90f3-944f136d6c75}"
+                Name="<#= options.RegionPrefix #>_AppLifeCycle Region Root"
+                FriendlyName="Root">
+                <Region Guid="{cf6c4996-1dc8-4fc5-b275-7a7051376f77}"
+                    Name="<#= options.RegionPrefix #>_AppLifeCycle"
+                    FriendlyName="Application Life Cycle Test">
+                    <Start>
+                        <!-- Microsoft-Windows-TestExecution\RunTest_TestRunScope\win:Start -->
+                        <Event Provider="{70d27130-f2f3-4365-b790-d31223254ef4}" Name="RunTest_TestRunScope" Opcode="1"/>
+                        <!-- Match the name of the test we are running. -->
+                        <PayloadIdentifier FieldName="Name" FieldValue="Calculator.PerfTests.AppLifecycleTests.*" FieldValueRelationship="RegEx"/>
+                    </Start>
+                    <Stop>
+                        <!-- Microsoft-Windows-TestExecution\RunTest_TestRunScope\win:Stop -->
+                        <Event Provider="{70d27130-f2f3-4365-b790-d31223254ef4}" Name="RunTest_TestRunScope" Opcode="2"/>
+                        <!-- Match the name of the test we are running. -->
+                        <PayloadIdentifier FieldName="Name" FieldValue="Calculator.PerfTests.AppLifecycleTests.*" FieldValueRelationship="RegEx"/>
+                    </Stop>
+                    <Naming>
+                        <PayloadBased NameField="Name"/>
+                    </Naming>
+                    <Region Guid="{b18b32ec-6796-43e1-802f-aec9aea5eb28}" 
+                        Name="<#= options.RegionPrefix #>_Launch_ProcessStart" 
+                        FriendlyName="Process Started">
+                        <Start>
+                            <!-- Use AAMShim_ActivationStart instead of AppLaunch_UserClick as we don't lanch from Start -->
+                            <Event Provider="{cf7f94b3-08dc-5257-422f-497d7dc86ab3}" Name="AAMShim_ActivationStart" />
+                            <PayloadIdentifier FieldName="AppId" FieldValue="<#= options.PackageFamilyName #>.*" FieldValueRelationship="RegEx" />
+                        </Start>
+                        <Stop>
+                            <Event Provider="{2839ff94-8f12-4e1b-82e3-af7af77a450f}" Name="ProcessStarted" Version="0" />
+                            <PayloadIdentifier FieldName="ImageFileName" FieldValue=".*<#= options.ImageFileName #>" FieldValueRelationship="RegEx" />
+                        </Stop>
+                        <Naming>
+                            <PrependParentName />
+                        </Naming>
+                        <Metadata>
+                            <WinperfWPAPreset.1>CPU</WinperfWPAPreset.1>
+                            <WinperfWPAPreset.1.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.1.ProcessName>
+                            <WinperfWPAPreset.2>Commit</WinperfWPAPreset.2>
+                            <WinperfWPAPreset.2.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.2.ProcessName>
+                        </Metadata>
+                    </Region>
+                    <Region Guid="{b1e4255d-131c-4ea8-899d-30b7345bf7d3}" 
+                            Name="<#= options.RegionPrefix #>_Launch_UIThreadStart" 
+                            FriendlyName="UI Thread Started">
+                        <Start>
+                            <!-- Use AAMShim_ActivationStart instead of AppLaunch_UserClick as we don't lanch from Start -->
+                            <Event Provider="{cf7f94b3-08dc-5257-422f-497d7dc86ab3}" Name="AAMShim_ActivationStart" />
+                            <PayloadIdentifier FieldName="AppId" FieldValue="<#= options.PackageFamilyName #>.*" FieldValueRelationship="RegEx" />
+                        </Start>
+                        <Stop>
+                            <!-- Ideally use actual thread start event, for now it's just close, using InitializeCore -->                
+                            <Event Provider="{531A35AB-63CE-4BCF-AA98-F88C7A89E455}" Id="31" Version="0" />
+                        </Stop>
+                        <Naming>
+                            <PrependParentName />
+                        </Naming>
+                        <Metadata>
+                            <WinperfWPAPreset.1>CPU</WinperfWPAPreset.1>
+                            <WinperfWPAPreset.1.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.1.ProcessName>
+                            <WinperfWPAPreset.2>Commit</WinperfWPAPreset.2>
+                            <WinperfWPAPreset.2.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.2.ProcessName>
+                        </Metadata>
+                    </Region>
+                    <Region Guid="{38084b96-d955-4603-a2c7-2720195ce160}" 
+                            Name="<#= options.RegionPrefix #>_Launch_InitializeCore" 
+                            FriendlyName="Create XAML Core">
+                        <Start>
+                            <!-- Initialize Core Start -->
+                            <Event Provider="{531A35AB-63CE-4BCF-AA98-F88C7A89E455}" Id="31" Version="0" />
+                        </Start>
+                        <Stop>
+                            <!-- Initialize Core Stop -->
+                            <Event Provider="{531A35AB-63CE-4BCF-AA98-F88C7A89E455}" Id="32" Version="0" />
+                        </Stop>
+                        <Naming>
+                            <PrependParentName />
+                        </Naming>
+                        <Metadata>
+                            <WinperfWPAPreset.1>CPU</WinperfWPAPreset.1>
+                            <WinperfWPAPreset.1.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.1.ProcessName>
+                            <WinperfWPAPreset.2>Commit</WinperfWPAPreset.2>
+                            <WinperfWPAPreset.2.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.2.ProcessName>
+                        </Metadata>
+                    </Region>
+                    <Region Guid="{cc909ec4-17c0-4cd9-9a83-293e06e0dc72}" 
+                            Name="<#= options.RegionPrefix #>_Launch_CreateDevice" 
+                            FriendlyName="Create Graphics Device">
+                        <Start>
+                            <!-- Create Device Start -->
+                            <Event Provider="{531A35AB-63CE-4BCF-AA98-F88C7A89E455}" Id="76" Version="0" />
+                        </Start>
+                        <Stop>
+                            <!-- Create Device Stop -->
+                            <Event Provider="{531A35AB-63CE-4BCF-AA98-F88C7A89E455}" Id="77" Version="0" />
+                        </Stop>
+                        <Naming>
+                            <PrependParentName />
+                        </Naming>
+                        <Metadata>
+                            <WinperfWPAPreset.1>CPU</WinperfWPAPreset.1>
+                            <WinperfWPAPreset.1.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.1.ProcessName>
+                            <WinperfWPAPreset.2>Commit</WinperfWPAPreset.2>
+                            <WinperfWPAPreset.2.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.2.ProcessName>
+                        </Metadata>
+                    </Region>
+                    <Region Guid="{0ed49a01-2604-499e-8003-0878b3b3c61e}" 
+                            Name="<#= options.RegionPrefix #>_Launch_CreateResourceManager" 
+                            FriendlyName="Create Resource Manager">
+                        <Start>
+                            <!-- Create Resource Manager Start -->
+                            <Event Provider="{531A35AB-63CE-4BCF-AA98-F88C7A89E455}" Id="463" Version="0" />
+                        </Start>
+                        <Stop>
+                            <!-- Create Resource Manager Stop -->
+                            <Event Provider="{531A35AB-63CE-4BCF-AA98-F88C7A89E455}" Id="464" Version="0" />
+                        </Stop>
+                        <Naming>
+                            <PrependParentName />
+                        </Naming>
+                        <Metadata>
+                            <WinperfWPAPreset.1>CPU</WinperfWPAPreset.1>
+                            <WinperfWPAPreset.1.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.1.ProcessName>
+                            <WinperfWPAPreset.2>Commit</WinperfWPAPreset.2>
+                            <WinperfWPAPreset.2.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.2.ProcessName>
+                        </Metadata>
+                    </Region>
+                    <Region Guid="{365920df-10e7-4b6e-8dcb-e769844ac11f}" 
+                            Name="<#= options.RegionPrefix #>_Launch_CreateWindow" 
+                            FriendlyName="Create Window">
+                        <Start>
+                            <!-- Create Window Start -->
+                            <Event Provider="{531A35AB-63CE-4BCF-AA98-F88C7A89E455}" Id="29" Version="0" />
+                        </Start>
+                        <Stop>
+                            <!-- Create Window Stop -->
+                            <Event Provider="{531A35AB-63CE-4BCF-AA98-F88C7A89E455}" Id="30" Version="0" />
+                        </Stop>
+                        <Naming>
+                            <PrependParentName />
+                        </Naming>
+                        <Metadata>
+                            <WinperfWPAPreset.1>CPU</WinperfWPAPreset.1>
+                            <WinperfWPAPreset.1.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.1.ProcessName>
+                            <WinperfWPAPreset.2>Commit</WinperfWPAPreset.2>
+                            <WinperfWPAPreset.2.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.2.ProcessName>
+                        </Metadata>
+                    </Region>
+                    <Region Guid="{09995446-0266-4a34-aa39-d99467dfe85d}" 
+                            Name="<#= options.RegionPrefix #>_Launch_InitializeTheme" 
+                            FriendlyName="Initialize Theme Resources">
+                        <Start>
+                            <!-- Theme Changed Start -->
+                            <Event Provider="{531A35AB-63CE-4BCF-AA98-F88C7A89E455}" Id="457" Version="0" />
+                        </Start>
+                        <Stop>
+                            <!-- Theme Changed Stop -->
+                            <Event Provider="{531A35AB-63CE-4BCF-AA98-F88C7A89E455}" Id="458" Version="0" />
+                        </Stop>
+                        <Naming>
+                            <PrependParentName />
+                        </Naming>
+                        <Metadata>
+                            <WinperfWPAPreset.1>CPU</WinperfWPAPreset.1>
+                            <WinperfWPAPreset.1.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.1.ProcessName>
+                            <WinperfWPAPreset.2>Commit</WinperfWPAPreset.2>
+                            <WinperfWPAPreset.2.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.2.ProcessName>
+                        </Metadata>
+                    </Region>
+                    <Region Guid="{a2fdff0b-75c8-440d-bb55-b87a3c60d55f}"
+                            Name="<#= options.RegionPrefix #>_Launch_NavToFirstFrame" 
+                            FriendlyName="XAML Navigate To First Frame Drawn">
+                        <Start>
+                            <!-- Parse XAML -->
+                            <Event Provider="{531A35AB-63CE-4BCF-AA98-F88C7A89E455}" Id="1" Version="0" />
+                            <PayloadIdentifier FieldName="URI" FieldValue="<#= options.FirstView #>" />
+                        </Start>
+                        <Stop>
+                            <!-- Frame Drawn -->
+                            <Event Provider="{531A35AB-63CE-4BCF-AA98-F88C7A89E455}" Id="65" Version="0" />
+                        </Stop>
+                        <Naming>
+                            <PrependParentName />
+                        </Naming>
+                        <Metadata>
+                            <WinperfWPAPreset.1>CPU</WinperfWPAPreset.1>
+                            <WinperfWPAPreset.1.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.1.ProcessName>
+                            <WinperfWPAPreset.2>Commit</WinperfWPAPreset.2>
+                            <WinperfWPAPreset.2.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.2.ProcessName>
+                        </Metadata>
+                        <Match>
+                            <Event PID="true"/>
+                        </Match>
+                    </Region>
+                    <Region Guid="{ffc47f79-2d90-470a-bfde-0d075972f23b}"
+                        Name="<#= options.RegionPrefix #>_ApplicationActivate"
+                        FriendlyName="Application Activate">
+                        <Start>
+                            <Event Provider="{315a8872-923e-4ea2-9889-33cd4754bf64}" Id="5901" Version="1" />
+                        </Start>
+                        <Stop>
+                            <Event Provider="{315a8872-923e-4ea2-9889-33cd4754bf64}" Id="5902" Version="1" />
+                        </Stop>
+                        <Naming>
+                            <PrependParentName />
+                        </Naming>
+                        <Metadata>
+                            <WinperfWPAPreset.1>CPU</WinperfWPAPreset.1>
+                            <WinperfWPAPreset.1.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.1.ProcessName>
+                            <WinperfWPAPreset.2>Commit</WinperfWPAPreset.2>
+                            <WinperfWPAPreset.2.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.2.ProcessName>
+                        </Metadata>
+                    </Region>
+                    <Region Guid="{b0c74cf1-16fc-4a33-ba7e-2169727a08d7}"
+                        Name="<#= options.RegionPrefix #>_Launch_SplashScreen"
+                        FriendlyName="Splash Screen Dismissed">
+                        <Start>
+                            <!-- Use AAMShim_ActivationStart instead of AppLaunch_UserClick as we don't lanch from Start -->
+                            <Event Provider="{cf7f94b3-08dc-5257-422f-497d7dc86ab3}" Name="AAMShim_ActivationStart" />
+                            <PayloadIdentifier FieldName="AppId" FieldValue="<#= options.PackageFamilyName #>.*" FieldValueRelationship="RegEx" />
+                        </Start>
+                        <Stop>
+                            <!-- NavigationServerTask_SplashScreenDismissed -->
+                            <Event Provider="{a0b7550f-4e9a-4f03-ad41-b8042d06a2f7}" Id="1572" Version="0" />
+                        </Stop>
+                        <Naming>
+                            <PrependParentName />
+                        </Naming>
+                        <Metadata>
+                            <WinperfWPAPreset.1>CPU</WinperfWPAPreset.1>
+                            <WinperfWPAPreset.1.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.1.ProcessName>
+                            <WinperfWPAPreset.2>Commit</WinperfWPAPreset.2>
+                            <WinperfWPAPreset.2.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.2.ProcessName>
+                        </Metadata>
+                    </Region>
+                    <Region Guid="{a1648637-d5ec-46d2-9655-a26d00a35764}"
+                        Name="<#= options.RegionPrefix #>_Launch_UIResponsive"
+                        FriendlyName="UI Responsive">
+                        <Start>
+                            <!-- Use AAMShim_ActivationStart instead of AppLaunch_UserClick as we don't lanch from Start -->
+                            <Event Provider="{cf7f94b3-08dc-5257-422f-497d7dc86ab3}" Name="AAMShim_ActivationStart" />
+                            <PayloadIdentifier FieldName="AppId" FieldValue="<#= options.PackageFamilyName #>.*" FieldValueRelationship="RegEx" />
+                        </Start>
+                        <Stop>
+                            <Event Provider="{EF00584A-2655-462C-BC24-E7DE630E7FBF}" Name="ModernAppLaunch_UIResponsive" Version="0" />
+                        </Stop>
+                        <Naming>
+                            <PrependParentName />
+                        </Naming>
+                        <Metadata>
+                            <WinperfWPAPreset.1>CPU</WinperfWPAPreset.1>
+                            <WinperfWPAPreset.1.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.1.ProcessName>
+                            <WinperfWPAPreset.2>Commit</WinperfWPAPreset.2>
+                            <WinperfWPAPreset.2.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.2.ProcessName>
+                        </Metadata>
+                    </Region>
+                    <Region Guid="{74d63c4e-7dd7-4ff6-9ee8-adb462c1c101}"
+                        Name="<#= options.RegionPrefix #>_Launch_VisibleComplete"
+                        FriendlyName="Visible Complete">
+                        <Start>
+                            <!-- Use AAMShim_ActivationStart instead of AppLaunch_UserClick as we don't lanch from Start -->
+                            <Event Provider="{cf7f94b3-08dc-5257-422f-497d7dc86ab3}" Name="AAMShim_ActivationStart" />
+                            <PayloadIdentifier FieldName="AppId" FieldValue="<#= options.PackageFamilyName #>.*" FieldValueRelationship="RegEx" />
+                        </Start>
+                        <Stop>
+                            <Event Provider="{EF00584A-2655-462C-BC24-E7DE630E7FBF}" Name="ModernAppLaunch_VisibleComplete" Version="0" />
+                        </Stop>
+                        <Naming>
+                            <PrependParentName />
+                        </Naming>
+                        <Metadata>
+                            <WinperfWPAPreset.1>CPU</WinperfWPAPreset.1>
+                            <WinperfWPAPreset.1.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.1.ProcessName>
+                            <WinperfWPAPreset.2>Commit</WinperfWPAPreset.2>
+                            <WinperfWPAPreset.2.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.2.ProcessName>
+                        </Metadata>
+                    </Region>
+                    <Region Guid="{ec31fb10-992b-438b-8c9e-42454f4b2e5a}"
+                        Name="<#= options.RegionPrefix #>_Suspend"
+                        FriendlyName="Suspended">
+                        <Start>
+                            <!-- Microsoft-Windows-Immersive-Shell\PerfTrack_PLM_SuspendApplication\win:Start -->
+                            <Event Provider="{315a8872-923e-4ea2-9889-33cd4754bf64}" Id="2450" Version="1" />
+                            <PayloadIdentifier FieldName="PsmKey" FieldValueRelationship="RegEx" FieldValue="<#= options.PackageFamilyName #>.*" />
+                        </Start>
+                        <Stop>
+                            <!-- Microsoft-Windows-Immersive-Shell\PerfTrack_PLM_SuspendApplication\win:Stop -->
+                            <Event Provider="{315a8872-923e-4ea2-9889-33cd4754bf64}" Id="2451" Version="1" />
+                            <PayloadIdentifier FieldName="AppUserModelId" FieldValue="<#= options.PackageFamilyName #>.*" FieldValueRelationship="RegEx" />
+                        </Stop>
+                        <Naming>
+                            <PrependParentName />
+                        </Naming>
+                        <Metadata>
+                            <WinperfWPAPreset.1>CPU</WinperfWPAPreset.1>
+                            <WinperfWPAPreset.1.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.1.ProcessName>
+                            <WinperfWPAPreset.2>Commit</WinperfWPAPreset.2>
+                            <WinperfWPAPreset.2.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.2.ProcessName>
+                        </Metadata>
+                    </Region>
+                    <Region Guid="{83735b08-b17e-48cf-82f1-02cb08e45597}"
+                        Name="<#= options.RegionPrefix #>_Resume"
+                        FriendlyName="Resumed">
+                        <Start>
+                            <!-- Microsoft-Windows-Immersive-Shell\PerfTrack_PLM_ResumeApplication_EndToEnd\win:Start -->
+                            <Event Provider="{315a8872-923e-4ea2-9889-33cd4754bf64}" Id="11118" Version="0" />
+                            <PayloadIdentifier FieldName="PsmKey" FieldValueRelationship="RegEx" FieldValue="<#= options.PackageFamilyName #>.*" />
+                        </Start>
+                        <Stop>
+                            <!-- Microsoft-Windows-Immersive-Shell\PerfTrack_PLM_ResumeApplication_EndToEnd\win:Stop -->
+                            <Event Provider="{315a8872-923e-4ea2-9889-33cd4754bf64}" Id="11119" Version="0" />
+                            <PayloadIdentifier FieldName="AppUserModelId" FieldValue="<#= options.PackageFamilyName #>.*" FieldValueRelationship="RegEx" />
+                        </Stop>
+                        <Naming>
+                            <PrependParentName />
+                        </Naming>
+                        <Metadata>
+                            <WinperfWPAPreset.1>CPU</WinperfWPAPreset.1>
+                            <WinperfWPAPreset.1.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.1.ProcessName>
+                            <WinperfWPAPreset.2>Commit</WinperfWPAPreset.2>
+                            <WinperfWPAPreset.2.ProcessName><#= options.ImageFileName #></WinperfWPAPreset.2.ProcessName>
+                        </Metadata>
+                    </Region>
+                </Region>
+            </RegionRoot>
+        </Regions>
+    </Instrumentation>
+</InstrumentationManifest>

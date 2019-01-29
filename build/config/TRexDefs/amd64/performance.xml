@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TReXRunConfigurations>
+
+  <TReXRunConfiguration>
+    <BuildLogName>RS_APPS_VALIDATE AMD64 Desktop WinPerf Test Run</BuildLogName>
+    <TemplateId>134858</TemplateId>
+    <Owner>paxeedev</Owner>
+    <PrivateRun>true</PrivateRun>
+    <CopyFirstJobSettingWithJobOverride>true</CopyFirstJobSettingWithJobOverride>
+    <RelativeFilePath>Performance_AMD64.testlist</RelativeFilePath>
+    <!-- Needed to be able to process multiple results for the same test case but not have reliability run checked on the task -->
+    <OptionalMetadataItems>
+      <OptionalMetadataItem>
+        <Key>VSTS\IsReliabilityRun</Key>
+        <Value>True</Value>
+      </OptionalMetadataItem>
+    </OptionalMetadataItems>
+    <WorkflowParameters>
+      <WorkflowParameter>
+        <Key>AlternatePackageRoot</Key>
+        <Value>\\pkges\release\TAEF\validation.taef.provenance\1812.20007-develop\UniversalTestPackages;\\edge-svcs\Release\MITALite\Apps_eng.mitalite_ci\Latest.tst</Value>
+      </WorkflowParameter>
+      <WorkflowParameter>
+        <Key>_AlternatePackageRoot</Key>
+        <Value>\\pkges\release\TAEF\validation.taef.provenance\1812.20007-develop\UniversalTestPackages;\\edge-svcs\Release\MITALite\Apps_eng.mitalite_ci\Latest.tst</Value>
+      </WorkflowParameter>
+    </WorkflowParameters>
+  </TReXRunConfiguration>
+
+</TReXRunConfigurations>

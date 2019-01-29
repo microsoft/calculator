@@ -1,0 +1,134 @@
+{
+    "default": {
+        "from": "USD",
+        "to": "EUR"
+	},
+    "ar-AE": {
+        "from": "USD",
+        "to": "AED"
+    },
+    "ar-EG": {
+        "from": "USD",
+        "to": "EGP"
+    },
+    "ar-SA": {
+        "from": "USD",
+        "to": "SAR"
+    },
+    "da-DK": {
+        "from": "DKK",
+        "to": "USD"
+    },
+    "de-CH": {
+        "from": "EUR",
+        "to": "CHF"
+    },
+    "de-DE": {
+        "from": "EUR",
+        "to": "USD"
+    },
+    "en-AU": {
+        "from": "AUD",
+        "to": "USD"
+    },
+    "en-CA": {
+        "from": "CAD",
+        "to": "USD"
+    },
+    "en-ES": {
+        "from": "EUR",
+        "to": "USD"
+    },
+    "en-GB": {
+        "from": "GBP",
+        "to": "USD"
+    },
+    "en-IN": {
+        "from": "USD",
+        "to": "INR"
+    },
+    "en-US": {
+        "from": "USD",
+        "to": "EUR"
+    },
+    "es-AR": {
+        "from": "USD",
+        "to": "ARS"
+    },
+    "es-CL": {
+        "from": "USD",
+        "to": "CLP"
+    },
+    "es-CO": {
+        "from": "USD",
+        "to": "COP"
+    },
+    "es-ES": {
+        "from": "EUR",
+        "to": "USD"
+    },
+    "es-MX": {
+        "from": "USD",
+        "to": "MXN"
+    },
+    "es-PE": {
+        "from": "USD",
+        "to": "PEN"
+    },
+    "es-VE": {
+        "from": "USD",
+        "to": "VEF"
+    },
+    "es-XL": {
+        "from": "USD",
+        "to": "EUR"
+    },
+    "es-US": {
+        "from": "USD",
+        "to": "EUR"
+    },
+    "fr-CH": {
+        "from": "EUR",
+        "to": "CHF"
+    },
+    "fr-FR": {
+        "from": "EUR",
+        "to": "USD"
+    },
+    "it-IT": {
+        "from": "EUR",
+        "to": "USD"
+    },
+    "it-SM": {
+        "from": "EUR",
+        "to": "USD"
+    },
+    "ja-JP": {
+        "from": "USD",
+        "to": "JPY"
+    },
+    "nb-NO": {
+        "from": "NOK",
+        "to": "USD"
+    },
+    "pt-BR": {
+        "from": "USD",
+        "to": "BRL"
+    },
+    "sv-SE": {
+        "from": "SEK",
+        "to": "USD"
+    },
+    "th-TH": {
+        "from": "USD",
+        "to": "THB"
+    },
+    "zh-CN": {
+        "from": "USD",
+        "to": "CNY"
+    },
+    "zh-HK": {
+        "from": "USD",
+        "to": "HKD"
+    }
+}

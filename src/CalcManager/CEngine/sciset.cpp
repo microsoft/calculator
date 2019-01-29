@@ -1,0 +1,213 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+/**************************************************************************/
+/*** SCICALC Scientific Calculator for Windows 3.00.12                  ***/
+/*** (c)1989 Microsoft Corporation.  All Rights Reserved.               ***/
+/***                                                                    ***/
+/*** sciset.c                                                           ***/
+/***                                                                    ***/
+/*** Functions contained:                                               ***/
+/***                                                                    ***/
+/*** Functions called:                                                  ***/
+/***    none                                                            ***/
+/***                                                                    ***/
+/*** History:                                                           ***/
+/***    12-Dec-1996 Added SetMaxIntDigits                               ***/
+/***    Whenever-97 Removed SetMaxIntDigits                             ***/
+/***                                                                    ***/
+/**************************************************************************/
+#include "pch.h"
+#include "Header Files/CalcEngine.h"
+
+using namespace CalcEngine;
+
+// 
+//  To be called when either the radix or num width changes. You can use -1 in either of these values to mean
+// dont change that.
+void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwidth)
+{
+    // When in integer mode, the number is represented in 2's complement form. When a bit width is changing, we can 
+    // change the number representation back to sign, abs num form in ratpak. Soon when display sees this, it will 
+    // convert to 2's complement form, but this time all high bits will be propogated. Eg. -127, in byte mode is 
+    // represented as 1000,0001. This puts it back as sign=-1, 01111111 . But DisplayNum will see this and convert it 
+    // back to 1111,1111,1000,0001 when in Word mode.
+    if (m_fIntegerMode)
+    {
+        PRAT curRat = m_currentVal.ToPRAT();
+        ULONGLONG w64Bits = NumObjGetUlValue(curRat, m_radix, m_precision);
+        bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1; // make sure you use the old width
+
+        if (fMsb)
+        {
+            // If high bit is set, then get the decimal number in -ve 2'scompl form.
+            PRAT chopRat = m_chopNumbers[m_numwidth].ToPRAT();
+            NumObjNot(&curRat, true, chopRat, m_radix, m_precision);
+            destroyrat(chopRat);
+            addrat(&curRat, rat_one, m_precision);
+            NumObjNegate(&curRat);
+            m_currentVal = Rational{ curRat };
+        }
+
+        destroyrat(curRat);
+    }
+
+    if (radixtype >= HEX_RADIX && radixtype <= BIN_RADIX)
+    {
+        m_radix = NRadixFromRadixType(radixtype);
+        // radixtype is not even saved
+    }
+
+    if (numwidth >= QWORD_WIDTH && numwidth <= BYTE_WIDTH)
+    {
+        m_numwidth = numwidth;
+        m_dwWordBitWidth = DwWordBitWidthFromeNumWidth(numwidth);
+    }
+
+    // inform ratpak that a change in base or precision has occured
+    BaseOrPrecisionChanged();
+
+    // display the correct number for the new state (ie convert displayed 
+    //  number to correct base)
+    DisplayNum();
+}
+
+LONG CCalcEngine::DwWordBitWidthFromeNumWidth(NUM_WIDTH /*numwidth*/)
+{
+    static constexpr int nBitMax[] = { 64, 32, 16, 8 };
+    LONG wmax = nBitMax[0];
+
+    if (m_numwidth >= 0 && m_numwidth < ARRAYSIZE(nBitMax))
+    {
+        wmax = nBitMax[m_numwidth];
+    }
+    return wmax;
+}
+
+uint32_t CCalcEngine::NRadixFromRadixType( RADIX_TYPE radixtype)
+{
+    static constexpr uint32_t rgnRadish[4]={16, 10, 8, 2};  /* Number bases in the same order as radixtype */
+    uint32_t radix = 10;
+
+    // convert special bases into symbolic values
+    if (radixtype >= 0 && radixtype < ARRAYSIZE(rgnRadish))
+    {
+        radix = rgnRadish[radixtype];
+    }
+    return radix;
+}
+
+//  Toggles a given bit into the number representation. returns true if it changed it actually.
+bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno)
+{
+    DWORD wmax = DwWordBitWidthFromeNumWidth(m_numwidth);
+    if (wbitno >= wmax)
+    {
+        return false; // ignore error cant happen
+    }
+
+    PRAT hnumPow = nullptr;
+    NumObjAssign(&hnumPow, rat_two);
+    PRAT hnum = longtorat(wbitno);
+    powrat(&hnumPow, hnum, m_radix, m_precision);
+
+    PRAT resultRat = rat.ToPRAT();
+    intrat(&resultRat, m_radix, m_precision);
+    if (NumObjIsZero(resultRat))
+    {
+        // This is the same work around happenning in SciCalcFunctions. Ought to move to intrat function itself.
+        // Basic bug is there which doesn treat 0/ n as 0, or -0 as 0 etc.
+        NumObjAssign(&resultRat, rat_zero);
+    }
+
+    xorrat(&resultRat, hnumPow, m_radix, m_precision);
+    rat = Rational{ resultRat };
+    destroyrat(resultRat);
+    NumObjDestroy(&hnumPow);
+    NumObjDestroy(&hnum);
+
+    return true;
+}
+
+// Returns the nearest power of two
+int CCalcEngine::QuickLog2(int iNum)
+{
+    int iRes = 0;
+
+    // while first digit is a zero
+    while (!(iNum & 1))
+    {
+        iRes++;
+        iNum >>= 1;
+    }
+
+    // if our number isn't a perfect square
+    iNum = iNum >> 1;
+    if (iNum)
+    {
+        // find the largest digit
+        for (iNum = iNum >> 1; iNum; iNum = iNum >> 1)
+            ++iRes;
+
+        // and then add two
+        iRes += 2;
+    }
+
+    return iRes;
+}
+
+////////////////////////////////////////////////////////////////////////
+//
+//  UpdateMaxIntDigits
+//
+// determine the maximum number of digits needed for the current precision,
+// word size, and base.  This number is conservative towards the small side
+// such that there may be some extra bits left over. For example, base 8 requires 3 bits per digit.
+// A word size of 32 bits allows for 10 digits with a remainder of two bits.  Bases
+// that require variable numnber of bits (non-power-of-two bases) are approximated
+// by the next highest power-of-two base (again, to be conservative and gaurentee
+// there will be no over flow verse the current word size for numbers entered).
+// Base 10 is a special case and always uses the base 10 precision (m_nPrecisionSav).
+void CCalcEngine::UpdateMaxIntDigits()
+{
+    if (m_radix == 10)
+    {
+        // if in integer mode you still have to honor the max digits you can enter based on bit width
+        if (m_fIntegerMode)
+        {
+            m_cIntDigitsSav = static_cast<int>(m_maxDecimalValueStrings[m_numwidth].length()) - 1;
+            // This is the max digits you can enter a decimal in fixed width mode aka integer mode -1. The last digit 
+            // has to be checked separately
+        }
+        else
+        {
+            m_cIntDigitsSav = m_precision;
+        }
+    }
+    else
+    {
+        m_cIntDigitsSav = m_dwWordBitWidth / CCalcEngine::QuickLog2(m_radix);
+    }
+}
+
+void CCalcEngine::ChangeBaseConstants(uint32_t radix, int maxIntDigits, int32_t precision)
+{
+    if (10 == radix)
+    {
+        ChangeConstants(radix, precision); // Base 10 precesion for internal computing still needs to be 32, to 
+        // take care of decimals preceisly. For eg. to get the HI word of a qword, we do a rsh, which depends on getting
+        // 18446744073709551615 / 4294967296 = 4294967295.9999917... This is important it works this and doesnt reduce 
+        // the precision to number of digits allowed to enter. In otherwords precision and # of allowed digits to be 
+        // entered are different.
+    }
+    else
+    {
+        ChangeConstants(radix, maxIntDigits + 1);
+    }
+}
+
+void CCalcEngine::BaseOrPrecisionChanged()
+{
+    UpdateMaxIntDigits();
+    CCalcEngine::ChangeBaseConstants(m_radix, m_cIntDigitsSav, m_precision);
+}

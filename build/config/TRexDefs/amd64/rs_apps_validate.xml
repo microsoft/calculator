@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TReXRunConfigurations>
+
+  <TReXRunConfiguration>
+    <BuildLogName>RS_APPS_VALIDATE AMD64 DesktopVM Test Run</BuildLogName>
+    <TemplateId>139642</TemplateId>
+    <Owner>paxeedev</Owner>
+    <PrivateRun>true</PrivateRun>
+    <CopyFirstJobSettingWithJobOverride>true</CopyFirstJobSettingWithJobOverride>
+    <RelativeFilePath>Desktop_AMD64.testlist</RelativeFilePath>
+    <Branch>rs_apps_validate</Branch>
+    <WorkflowParameters>
+      <WorkflowParameter>
+        <Key>AlternatePackageRoot</Key>
+        <Value>\\pkges\release\TAEF\validation.taef.provenance\1812.20007-develop\UniversalTestPackages;\\edge-svcs\Release\MITALite\Apps_eng.mitalite_ci\Latest.tst</Value>
+      </WorkflowParameter>
+      <WorkflowParameter>
+        <Key>_AlternatePackageRoot</Key>
+        <Value>\\pkges\release\TAEF\validation.taef.provenance\1812.20007-develop\UniversalTestPackages;\\edge-svcs\Release\MITALite\Apps_eng.mitalite_ci\Latest.tst</Value>
+      </WorkflowParameter>
+    </WorkflowParameters>
+  </TReXRunConfiguration>
+  
+  <TReXRunConfiguration>
+    <BuildLogName>RS_APPS_VALIDATE AMD64 WCOS Test Run</BuildLogName>
+    <TemplateId>153648</TemplateId>
+    <Owner>paxeedev</Owner>
+    <PrivateRun>true</PrivateRun>
+    <CopyFirstJobSettingWithJobOverride>true</CopyFirstJobSettingWithJobOverride>
+    <RelativeFilePath>WCOS_AMD64.testlist</RelativeFilePath>
+    <Branch>rs_apps_validate</Branch>
+    <WorkflowParameters>
+      <WorkflowParameter>
+        <Key>AlternatePackageRoot</Key>
+        <Value>\\pkges\release\TAEF\validation.taef.provenance\1812.20007-develop\UniversalTestPackages;\\edge-svcs\Release\MITALite\Apps_eng.mitalite_ci\Latest.tst</Value>
+      </WorkflowParameter>
+      <WorkflowParameter>
+        <Key>_AlternatePackageRoot</Key>
+        <Value>\\pkges\release\TAEF\validation.taef.provenance\1812.20007-develop\UniversalTestPackages;\\edge-svcs\Release\MITALite\Apps_eng.mitalite_ci\Latest.tst</Value>
+      </WorkflowParameter>
+    </WorkflowParameters>
+  </TReXRunConfiguration>
+
+</TReXRunConfigurations>

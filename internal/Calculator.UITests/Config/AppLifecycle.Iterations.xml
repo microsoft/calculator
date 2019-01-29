@@ -1,0 +1,40 @@
+﻿<?xml version="1.0"?>
+
+<!--
+This file defines a table of preformance configuration for use with
+TAEF Table Based Data-driven Testing.
+
+This table specifies we will run the test three times (each iteration has a 
+unique name to identify the scenario) with different parameters each time.
+We use the same region file for WinPerf but we specify different WPR profiles 
+to capture ETW events from different providers, focusing on responsiveness for 
+launch runs and on memory for one diagnostic memory run.
+
+The warm run is the one we are primarily interested in for startup performance.
+-->
+
+<Data>
+    <Table Id="PerformanceConfigurations">
+        <Row Name="Cold"
+             WinPerf.FriendlyAutomationName="AppLifecycle_Responsiveness_Cold"
+             WinPerf.Iterations="1"
+             WinPerf.WPRProfile="Config\AppLifecycle.Profile.wprp"
+             WinPerf.WPRProfileId="AppLifecycle.Responsiveness.Diagnostic.Verbose.File"
+             WinPerf.Regions="Config\AppLifecycle.Regions.xml">
+        </Row>
+        <Row Name="Warm"
+             WinPerf.FriendlyAutomationName="AppLifecycle_Responsiveness_Warm"
+             WinPerf.Iterations="10"
+             WinPerf.WPRProfile="Config\AppLifecycle.Profile.wprp"
+             WinPerf.WPRProfileId="AppLifecycle.Responsiveness.Diagnostic.Verbose.Memory"
+             WinPerf.Regions="Config\AppLifecycle.Regions.xml">
+        </Row>
+        <Row Name="Memory"
+             WinPerf.FriendlyAutomationName="AppLifecycle_Memory"
+             WinPerf.Iterations="1"
+             WinPerf.WPRProfile="Config\AppLifecycle.Profile.wprp"
+             WinPerf.WPRProfileId="AppLifecycle.Memory.Diagnostic.Verbose.File"
+             WinPerf.Regions="Config\AppLifecycle.Regions.xml">
+        </Row>
+    </Table>
+</Data>

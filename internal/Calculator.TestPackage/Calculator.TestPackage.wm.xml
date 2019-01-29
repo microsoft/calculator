@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright (c) Microsoft Corporation.  All rights reserved.-->
+<identity 
+    xmlns="urn:Microsoft.CompPlat/ManifestSchema.v1.00"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    name="App"
+    namespace="Calculator"
+    owner="Microsoft">
+    <files>
+        <file 
+            source="$(AppxBundleOutput)" 
+            destinationDir="$(runtime.testbin)"
+            name="Calculator.appxbundle" />
+        <file 
+            source="$(AppxPackagePublicKeyFile)" 
+            destinationDir="$(runtime.testbin)"
+            name="Calculator.cer" />
+        <file 
+            source="$(AppxPackageVCLibsDependency)" 
+            destinationDir="$(runtime.testbin)" 
+            name="Microsoft.VCLibs.appx" />
+        <file 
+            source="$(AppxPackageWinUIDependency)" 
+            destinationDir="$(runtime.testbin)" 
+            name="Microsoft.UI.Xaml.appx" />
+    </files>
+</identity>

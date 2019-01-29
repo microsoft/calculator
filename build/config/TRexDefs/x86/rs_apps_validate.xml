@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TReXRunConfigurations>
+
+  <!-- RS_APPS_VALIDATE Desktop x86 VM run -->
+  <TReXRunConfiguration>
+    <BuildLogName>RS_APPS_VALIDATE x86 DesktopVM Test Run</BuildLogName>
+    <TemplateId>139643</TemplateId>
+    <Owner>paxeedev</Owner>
+    <PrivateRun>true</PrivateRun>
+    <CopyFirstJobSettingWithJobOverride>true</CopyFirstJobSettingWithJobOverride>
+    <RelativeFilePath>Desktop_x86.testlist</RelativeFilePath>
+    <Branch>rs_apps_validate</Branch>
+    <WorkflowParameters>
+      <WorkflowParameter>
+        <Key>AlternatePackageRoot</Key>
+        <Value>\\pkges\release\TAEF\validation.taef.provenance\1812.20007-develop\UniversalTestPackages;\\edge-svcs\Release\MITALite\Apps_eng.mitalite_ci\Latest.tst</Value>
+      </WorkflowParameter>
+      <WorkflowParameter>
+        <Key>_AlternatePackageRoot</Key>
+        <Value>\\pkges\release\TAEF\validation.taef.provenance\1812.20007-develop\UniversalTestPackages;\\edge-svcs\Release\MITALite\Apps_eng.mitalite_ci\Latest.tst</Value>
+      </WorkflowParameter>
+    </WorkflowParameters>
+  </TReXRunConfiguration>
+
+  <!-- RS_APPS_VALIDATE WindowsCore x86 VM run -->
+  <TReXRunConfiguration>
+    <BuildLogName>RS_PRERELEASE x86 WindowsCoreVM Test Run</BuildLogName>
+    <TemplateId>153715</TemplateId>
+    <Owner>paxeedev</Owner>
+    <PrivateRun>true</PrivateRun>
+    <CopyFirstJobSettingWithJobOverride>true</CopyFirstJobSettingWithJobOverride>
+    <RelativeFilePath>WCOS_x86.testlist</RelativeFilePath>
+    <Branch>rs_apps_validate</Branch>
+    <WorkflowParameters>
+      <WorkflowParameter>
+        <Key>AlternatePackageRoot</Key>
+        <Value>\\pkges\release\TAEF\validation.taef.provenance\1812.20007-develop\UniversalTestPackages;\\edge-svcs\Release\MITALite\Apps_eng.mitalite_ci\Latest.tst</Value>
+      </WorkflowParameter>
+      <WorkflowParameter>
+        <Key>_AlternatePackageRoot</Key>
+        <Value>\\pkges\release\TAEF\validation.taef.provenance\1812.20007-develop\UniversalTestPackages;\\edge-svcs\Release\MITALite\Apps_eng.mitalite_ci\Latest.tst</Value>
+      </WorkflowParameter>
+    </WorkflowParameters>
+  </TReXRunConfiguration>
+  
+</TReXRunConfigurations>

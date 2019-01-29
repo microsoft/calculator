@@ -1,0 +1,48 @@
+#
+# Release
+# This pipeline builds a version of the app in a production configuration to be released to the
+# Store and the Windows image. This pipeline relies on Microsoft-internal resources to run.
+#
+
+trigger: none
+pr: none
+
+variables:
+  versionMajor: 10
+  versionMinor: 1901
+  versionBuild: $[counter('10.1901.*', 500)]
+  versionPatch: 0
+
+name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
+
+jobs:
+- template: ./templates/build-app-internal.yaml
+  parameters:
+    platform: x64
+
+- template: ./templates/build-app-internal.yaml
+  parameters:
+    platform: x86
+    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+
+- template: ./templates/build-app-internal.yaml
+  parameters:
+    platform: ARM
+    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+
+- template: ./templates/build-app-internal.yaml
+  parameters:
+    platform: ARM64
+    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+
+- template: ./templates/run-unit-tests.yaml
+  parameters:
+    platform: x64
+
+- template: ./templates/run-unit-tests.yaml
+  parameters:
+    platform: x86
+
+- template: ./templates/package-appxbundle.yaml
+
+- template: ./templates/prepare-release-internalonly.yaml

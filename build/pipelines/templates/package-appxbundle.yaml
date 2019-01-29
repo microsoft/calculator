@@ -1,0 +1,61 @@
+# This template contains a job which takes .appx packages which were built separately for each
+# architecture (arm, x86, etc.) and combines them into a single .appxbundle.
+
+jobs:
+- job: Package
+  dependsOn:
+    - Buildx64
+    - Buildx86
+    - BuildARM
+    - BuildARM64
+  condition: |
+    and
+    (
+      in(dependencies.Buildx64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+      in(dependencies.Buildx86.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+      in(dependencies.BuildARM.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+      in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+    ) 
+  pool:
+    name: Package ES Custom Demands Lab A
+    demands:
+    - msbuild
+    - visualstudio
+    - ClientAlias -equals PKGESUTILAPPS
+  workspace:
+    clean: outputs
+  steps:
+  - checkout: self
+    clean: true
+
+  - task: DownloadBuildArtifacts@0
+    displayName: Download all .appx artifacts
+    inputs:
+      artifactName: drop
+      itemPattern: '**/*.appx'
+
+  - task: PowerShell@2
+    displayName: Generate AppxBundle mapping
+    inputs:
+      filePath: $(Build.SourcesDirectory)\build\scripts\CreateAppxBundleMapping.ps1
+      arguments: '-InputPath $(Build.ArtifactStagingDirectory)\drop\Release -ProjectName Calculator -OutputFile $(Build.BinariesDirectory)\AppxBundleMapping.txt'
+
+  - script: '"C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86\MakeAppx.exe" bundle /v /bv %BUNDLEVERSION% /f %MAPPINGFILEPATH% /p %OUTPUTPATH%'
+    displayName: Make AppxBundle
+    env:
+      BUNDLEVERSION: $(Build.BuildNumber)
+      MAPPINGFILEPATH: $(Build.BinariesDirectory)\AppxBundleMapping.txt
+      OUTPUTPATH: $(Build.BinariesDirectory)\Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
+
+  - task: CopyFiles@2
+    displayName: Copy AppxBundle to staging directory
+    inputs:
+      sourceFolder: $(Build.BinariesDirectory)
+      contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
+      targetFolder: $(Build.ArtifactStagingDirectory)\appxBundle
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish AppxBundle artifact
+    inputs:
+      artifactName: appxBundle
+      pathToPublish: $(Build.ArtifactStagingDirectory)\appxBundle

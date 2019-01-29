@@ -1,0 +1,145 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#pragma once
+#include "CalculatorHistory.h"
+#include "Header Files\Rational.h"
+
+namespace CalculationManager
+{
+    enum class Command;
+    struct HISTORYITEM;
+
+    enum class CalculatorMode
+    {
+        StandardMode,
+        ScientificMode,
+        ProgrammerMode,
+    };
+
+    enum class CalculatorPrecision
+    {
+        StandardModePrecision = 16,
+        ScientificModePrecision = 32,
+        ProgrammerModePrecision = 64
+    };
+
+    // Numbering continues from the Enum Command from Command.h 
+    // with some gap to ensure there is no overlap of these ids
+    // when static_cast<unsigned char> is performed on these ids 
+    // they shouldn't fall in any number range greater than 80. So never
+    // make the memory command ids go below 330
+    enum class MemoryCommand
+    {
+        MemorizeNumber = 330,
+        MemorizedNumberLoad = 331,
+        MemorizedNumberAdd = 332,
+        MemorizedNumberSubtract = 333,
+        MemorizedNumberClearAll = 334,
+        MemorizedNumberClear = 335
+    };
+
+    class CalculatorManager sealed : public virtual ICalcDisplay
+    {
+    private:
+        ICalcDisplay* const m_displayCallback;
+        CCalcEngine* m_currentCalculatorEngine;
+        std::unique_ptr<CCalcEngine> m_scientificCalculatorEngine;
+        std::unique_ptr<CCalcEngine> m_standardCalculatorEngine;
+        std::unique_ptr<CCalcEngine> m_programmerCalculatorEngine;
+        IResourceProvider* const m_resourceProvider;
+        bool m_inHistoryItemLoadMode;
+
+        std::vector<CalcEngine::Rational> m_memorizedNumbers;
+        CalcEngine::Rational m_persistedPrimaryValue;
+
+        bool m_isExponentialFormat;
+
+        static const unsigned int m_maximumMemorySize = 100;
+
+        // For persistance
+        std::vector<unsigned char> m_savedCommands;
+        std::vector<long> m_savedPrimaryValue;
+        std::vector<long> m_serializedMemory;
+        std::vector<long> m_currentSerializedMemory;
+        Command m_currentDegreeMode;
+        Command m_savedDegreeMode;
+        unsigned char MapCommandForSerialize(Command command);
+        unsigned int MapCommandForDeSerialize(unsigned char command);
+
+        void SaveMemoryCommand(_In_ MemoryCommand command, _In_ unsigned int indexOfMemory);
+
+        void MemorizedNumberSelect(_In_ unsigned int);
+        void MemorizedNumberChanged(_In_ unsigned int);
+
+        void LoadPersistedPrimaryValue();
+
+        static std::vector<long> SerializeRational(CalcEngine::Rational const& rat);
+        static CalcEngine::Rational DeSerializeRational(std::vector<long>::const_iterator itr);
+
+        static std::vector<long> SerializeNumber(CalcEngine::Number const& num);
+        static CalcEngine::Number DeSerializeNumber(std::vector<long>::const_iterator itr);
+
+        std::shared_ptr<CalculatorHistory> m_pStdHistory;
+        std::shared_ptr<CalculatorHistory> m_pSciHistory;
+        CalculatorHistory* m_pHistory;
+
+    public:
+        // ICalcDisplay
+        void SetPrimaryDisplay(_In_ const std::wstring& displayString, _In_ bool isError) override;
+        void SetIsInError(bool isError) override;
+        void SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &commands) override;
+        void SetMemorizedNumbers(_In_ const std::vector<std::wstring>& memorizedNumbers) override;
+        void OnHistoryItemAdded(_In_ unsigned int addedItemIndex) override;
+        void SetParenDisplayText(const std::wstring& parenthesisCount);
+        void DisplayPasteError();
+        void MaxDigitsReached() override;
+        void BinaryOperatorReceived() override;
+        void MemoryItemChanged(unsigned int indexOfMemory) override;
+
+
+        CalculatorManager(ICalcDisplay* displayCallback, IResourceProvider* resourceProvider);
+        ~CalculatorManager();
+
+        void Reset(bool clearMemory = true);
+        void SetStandardMode();
+        void SetScientificMode();
+        void SetProgrammerMode();
+        void SendCommand(_In_ Command command);
+        std::vector<unsigned char> SerializeCommands();
+        void DeSerializeCommands(_In_ const std::vector<unsigned char>& serializedData);
+        void SerializeMemory();
+        std::vector<long> GetSerializedMemory();
+        void DeSerializeMemory(const std::vector<long> &serializedMemory);
+        void SerializePrimaryDisplay();
+        std::vector<long> GetSerializedPrimaryDisplay();
+        void DeSerializePrimaryDisplay(const std::vector<long> &serializedPrimaryDisplay);
+        Command SerializeSavedDegreeMode();
+
+        void MemorizeNumber();
+        void MemorizedNumberLoad(_In_ unsigned int);
+        void MemorizedNumberAdd(_In_ unsigned int);
+        void MemorizedNumberSubtract(_In_ unsigned int);
+        void MemorizedNumberClear(_In_ unsigned int);
+        void MemorizedNumberClearAll();
+
+        bool IsEngineRecording();
+        std::vector<unsigned char> GetSavedCommands(){ return m_savedCommands; }
+        void SetRadix(RADIX_TYPE iRadixType);
+        void SetMemorizedNumbersString();
+        std::wstring GetResultForRadix(uint32_t radix, int32_t precision);
+        void SetPrecision(int32_t precision);
+        void UpdateMaxIntDigits();
+        wchar_t DecimalSeparator();
+
+        std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistoryItems();
+        std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistoryItems(_In_ CalculationManager::CALCULATOR_MODE mode);
+        std::shared_ptr<HISTORYITEM> const& GetHistoryItem(_In_ unsigned int uIdx);
+        bool RemoveHistoryItem(_In_ unsigned int uIdx);
+        void ClearHistory();
+        const size_t MaxHistorySize() const { return m_pHistory->MaxHistorySize(); }
+        CalculationManager::Command GetCurrentDegreeMode();
+        void SetHistory(_In_ CALCULATOR_MODE eMode, _In_ std::vector<std::shared_ptr<HISTORYITEM>> const& history);
+        void SetInHistoryItemLoadMode(_In_ bool isHistoryItemLoadMode);
+    };
+}

@@ -1,0 +1,28 @@
+{
+    "Branch": [
+        {
+            "collection":"microsoft",
+            "project":"OS",
+            "repo":"os",
+            "name":"official/rs_apps_utils",
+            "CheckinFiles": [
+                {
+                    "source":"vpack/app/calculator.app.man",
+                    "path": "/redist/mspartners/ipa/Calculator",
+                    "type": "File"
+                },
+                {
+                    "source":"vpack/app/calculator.app.man",
+                    "path": "/onecoreuap/redist/mspartners/ipa/Calculator",
+                    "type": "File"
+                }
+            ]
+        }
+    ],
+    "Email": [
+        {
+            "sendTo":"paxeedev",
+            "sendOnErrorOnly": "True"
+        }
+    ]
+}

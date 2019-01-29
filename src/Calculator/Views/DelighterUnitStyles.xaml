@@ -1,0 +1,216 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="using:CalculatorApp">
+
+    <Style x:Key="DelighterBaseStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Segoe UI Symbol"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0,3,8,-3"/>
+    </Style>
+
+    <Style x:Key="Unit_118"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Hand #1 (Area) -->
+        <Setter Property="Text" Value="👋"/>
+        <Setter Property="Margin" Value="0,3,8,-3"/>
+    </Style>
+
+    <Style x:Key="Unit_127"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Paper -->
+        <Setter Property="Text" Value="📄"/>
+        <Setter Property="Margin" Value="0,3,8,-3"/>
+    </Style>
+
+    <Style x:Key="Unit_99"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Soccer field -->
+        <Setter Property="Text" Value="⚽"/>
+        <Setter Property="Margin" Value="0,3,10,-3"/>
+    </Style>
+
+    <Style x:Key="Unit_128"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Castle -->
+        <Setter Property="Text" Value="🏰"/>
+        <Setter Property="Margin" Value="0,2,10,-2"/>
+    </Style>
+
+    <Style x:Key="Unit_100"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Floppy disk -->
+        <Setter Property="Text" Value="💾"/>
+        <Setter Property="Margin" Value="0,3,9,-3"/>
+    </Style>
+
+    <!-- Duplicate of Unit_97 as CD appears twice in config -->
+    <Style x:Key="Unit_101"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- CD -->
+        <Setter Property="Text" Value="💿"/>
+        <Setter Property="Margin" Value="0,3,9,-3"/>
+    </Style>
+
+    <Style x:Key="Unit_102"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- DVD -->
+        <Setter Property="Text" Value="📀"/>
+        <Setter Property="Margin" Value="0,3,10,-3"/>
+    </Style>
+
+    <Style x:Key="Unit_103"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Battery -->
+        <Setter Property="Text" Value="🔋"/>
+        <Setter Property="Margin" Value="0,3,10,-3"/>
+    </Style>
+
+    <Style x:Key="Unit_129"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Banana -->
+        <Setter Property="Text" Value="🍌"/>
+    </Style>
+
+    <Style x:Key="Unit_130"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Slice of cake -->
+        <Setter Property="Text" Value="🍰"/>
+    </Style>
+
+    <Style x:Key="Unit_105"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Paperclip -->
+        <Setter Property="Text" Value="📎"/>
+        <Setter Property="Margin" Value="0,3,6,-3"/>
+    </Style>
+
+    <Style x:Key="Unit_131"
+           BasedOn="{StaticResource Unit_118}"
+           TargetType="TextBlock">
+        <!-- Hand #2 (Length) -->
+    </Style>
+
+    <Style x:Key="Unit_107"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Jumbojet -->
+        <Setter Property="Text" Value="✈"/>
+        <Setter Property="Margin" Value="0,2,8,-2"/>
+    </Style>
+
+    <Style x:Key="Unit_108"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Lightbulb -->
+        <Setter Property="Text" Value="💡"/>
+        <Setter Property="Margin" Value="0,3,10,-3"/>
+    </Style>
+
+    <Style x:Key="Unit_109"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Horse -->
+        <Setter Property="Text" Value="🐎"/>
+        <Setter Property="Margin" Value="0,3,8,-2"/>
+    </Style>
+
+    <Style x:Key="Unit_132"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Train Engine -->
+        <Setter Property="Text" Value="🚂"/>
+        <Setter Property="Margin" Value="0,2,9,-2"/>
+    </Style>
+
+    <Style x:Key="Unit_121"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Turtle -->
+        <Setter Property="Text" Value="🐢"/>
+        <Setter Property="Margin" Value="0,2,9,-2"/>
+    </Style>
+
+    <Style x:Key="Unit_126"
+           BasedOn="{StaticResource Unit_109}"
+           TargetType="TextBlock">
+        <!-- Horse -->
+    </Style>
+
+    <Style x:Key="Unit_122"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Jet -->
+        <Setter Property="Text" Value="✈"/>
+        <Setter Property="Margin" Value="0,3,8,-3"/>
+    </Style>
+
+    <Style x:Key="Unit_124"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- CoffeeCup -->
+        <Setter Property="Text" Value="☕"/>
+        <Setter Property="Margin" Value="0,-1,8,1"/>
+    </Style>
+
+    <Style x:Key="Unit_111"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Bathtub -->
+        <Setter Property="Text" Value="🛀"/>
+        <Setter Property="Margin" Value="0,2,10,-2"/>
+    </Style>
+
+    <Style x:Key="Unit_125"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- SwimmingPool -->
+        <Setter Property="Text" Value="🏊"/>
+        <Setter Property="Margin" Value="0,2,8,-2"/>
+    </Style>
+
+    <Style x:Key="Unit_113"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Snowflake -->
+        <Setter Property="Text" Value="❄"/>
+        <Setter Property="Margin" Value="0,3,8,-3"/>
+    </Style>
+
+    <Style x:Key="Unit_133"
+           BasedOn="{StaticResource Unit_99}"
+           TargetType="TextBlock">
+        <!-- Soccer ball -->
+        <Setter Property="Margin" Value="0,3,8,-3"/>
+    </Style>
+
+    <Style x:Key="Unit_114"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Elephant -->
+        <Setter Property="Text" Value="🐘"/>
+        <Setter Property="Margin" Value="0,2,9,-2"/>
+    </Style>
+
+    <Style x:Key="Unit_123"
+           BasedOn="{StaticResource DelighterBaseStyle}"
+           TargetType="TextBlock">
+        <!-- Whale -->
+        <Setter Property="Text" Value="🐳"/>
+        <Setter Property="Margin" Value="0,1,9,-1"/>
+    </Style>
+
+</ResourceDictionary>

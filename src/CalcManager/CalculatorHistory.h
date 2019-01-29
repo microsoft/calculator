@@ -1,0 +1,49 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#pragma once
+#include "ExpressionCommandInterface.h"
+#include "Header Files/IHistoryDisplay.h"
+
+namespace CalculationManager
+{
+    enum CALCULATOR_MODE
+    {
+        CM_STD = 0,
+        CM_SCI,
+    };
+
+    struct HISTORYITEMVECTOR
+    {
+        std::shared_ptr<CalculatorVector <std::pair<std::wstring, int>>> spTokens;
+        std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> spCommands;
+        std::wstring    expression;
+        std::wstring    result;
+    };
+
+    struct HISTORYITEM
+    {
+        HISTORYITEMVECTOR historyItemVector;
+    };
+
+    class CalculatorHistory :
+        public IHistoryDisplay
+    {
+
+    public:
+        CalculatorHistory(CALCULATOR_MODE eMode, const size_t maxSize);
+        unsigned int AddToHistory(_In_ std::shared_ptr<CalculatorVector <std::pair<std::wstring, int>>> const &spTokens, _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &spCommands, std::wstring_view result);
+        std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistory();
+        std::shared_ptr<HISTORYITEM> const& GetHistoryItem(unsigned int uIdx);
+        void ClearHistory();
+        unsigned int AddItem(_In_ std::shared_ptr<HISTORYITEM> const &spHistoryItem);
+        bool RemoveItem(unsigned int uIdx);
+        const size_t MaxHistorySize() const { return m_maxHistorySize; }
+        ~CalculatorHistory(void);
+
+    private:
+        std::vector<std::shared_ptr<HISTORYITEM>> m_historyItems;
+        CALCULATOR_MODE m_mode;
+        const size_t m_maxHistorySize;
+    };
+}

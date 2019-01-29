@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TReXRunConfigurations>
+
+  <!-- RS5_RELEASE Desktop x64 VM run -->
+  <TReXRunConfiguration>
+    <BuildLogName>RS5_RELEASE AMD64 DesktopVM Test Run</BuildLogName>
+    <TemplateId>139642</TemplateId>
+    <Owner>paxeedev</Owner>
+    <PrivateRun>true</PrivateRun>
+    <CopyFirstJobSettingWithJobOverride>true</CopyFirstJobSettingWithJobOverride>
+    <RelativeFilePath>Desktop_AMD64.testlist</RelativeFilePath>
+    <Branch>rs5_release</Branch>
+    <WorkflowParameters>
+      <WorkflowParameter>
+        <Key>AlternatePackageRoot</Key>
+        <Value>\\pkges\release\TAEF\validation.taef.provenance\1812.20007-develop\UniversalTestPackages;\\edge-svcs\Release\MITALite\Apps_eng.mitalite_ci\Latest.tst</Value>
+      </WorkflowParameter>
+      <WorkflowParameter>
+        <Key>_AlternatePackageRoot</Key>
+        <Value>\\pkges\release\TAEF\validation.taef.provenance\1812.20007-develop\UniversalTestPackages;\\edge-svcs\Release\MITALite\Apps_eng.mitalite_ci\Latest.tst</Value>
+      </WorkflowParameter>
+    </WorkflowParameters>
+  </TReXRunConfiguration>
+
+</TReXRunConfigurations>
