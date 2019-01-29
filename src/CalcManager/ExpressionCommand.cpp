@@ -7,6 +7,7 @@
 #include "ExpressionCommand.h"
 
 using namespace std;
+using namespace CalcEngine;
 
 constexpr wchar_t chNegate = L'-';
 constexpr wchar_t chExp = L'e';
@@ -95,25 +96,12 @@ void CBinaryCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
 }
 
 COpndCommand::COpndCommand(_In_ shared_ptr<CalculatorVector<int>> const &commands,
-        _In_ bool fNegative,
-        _In_ bool fDecimal,
-        _In_ bool fSciFmt) :
-    m_commands(commands), m_fNegative(fNegative), m_fDecimal(fDecimal), m_fSciFmt(fSciFmt)
-{
-    m_hnoNum = nullptr;
-}
-
-
-void COpndCommand::Initialize(_In_ PRAT hNoNum)
-{
-    assert(&m_hnoNum != nullptr);
-    if (m_hnoNum != nullptr)
-    {
-        destroyrat(m_hnoNum);
-        m_hnoNum = nullptr;
-    }
-    DUPRAT(m_hnoNum, hNoNum);
-}
+        Rational const& rat,
+        bool fNegative,
+        bool fDecimal,
+        bool fSciFmt) :
+    m_commands(commands), m_value{ rat }, m_fNegative(fNegative), m_fDecimal(fDecimal), m_fSciFmt(fSciFmt)
+{}
 
 const shared_ptr<CalculatorVector<int>> & COpndCommand::GetCommands() const
 { 
@@ -294,19 +282,15 @@ const wstring & COpndCommand::GetToken(wchar_t decimalSymbol)
 
 wstring COpndCommand::GetString(uint32_t radix, int32_t precision, wchar_t decimalSymbol)
 {
-    wstring numString{};
-    if (m_hnoNum != nullptr)
-    {
-        numString = NumObjToString(m_hnoNum, radix, eNUMOBJ_FMT::FMT_FLOAT, precision);
-    }
+    PRAT valRat = m_value.ToPRAT();
+    auto result = NumObjToString(valRat, radix, eNUMOBJ_FMT::FMT_FLOAT, precision);
+    destroyrat(valRat);
 
-    return numString;
+    return result;
 }
 
 COpndCommand::~COpndCommand()
-{
-    destroyrat(m_hnoNum);
-}
+{}
 
 void COpndCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
 {

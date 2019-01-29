@@ -211,9 +211,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         if (!m_HistoryCollector.FOpndAddedToHistory())
         {
             // if the prev command was ) or unop then it is already in history as a opnd form (...)
-            PRAT curRat = m_currentVal.ToPRAT();
-            m_HistoryCollector.AddOpndToHistory(m_numberString, curRat);
-            destroyrat(curRat);
+            m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
         }
 
         /* m_bChangeOp is true if there was an operation done and the   */
@@ -310,10 +308,7 @@ DoPrecedenceCheckAgain:
         {
             if (!m_HistoryCollector.FOpndAddedToHistory())
             {
-
-                PRAT curRat = m_currentVal.ToPRAT();
-                m_HistoryCollector.AddOpndToHistory(m_numberString, curRat);
-                destroyrat(curRat);
+                m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
             }
 
             m_HistoryCollector.AddUnaryOpToHistory((INT)wParam, m_bInv, m_angletype);
@@ -339,9 +334,7 @@ DoPrecedenceCheckAgain:
         if(wParam == IDC_PERCENT)
         {
             CheckAndAddLastBinOpToHistory();
-            PRAT curRat = m_currentVal.ToPRAT();
-            m_HistoryCollector.AddOpndToHistory(m_numberString, curRat, true);
-            destroyrat(curRat);
+            m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal, true);
         }
 
         /* reset the m_bInv flag and indicators if it is set
@@ -464,9 +457,7 @@ DoPrecedenceCheckAgain:
 
         if (!m_HistoryCollector.FOpndAddedToHistory())
         {
-            PRAT curRat = m_currentVal.ToPRAT();
-            m_HistoryCollector.AddOpndToHistory(m_numberString, curRat);
-            destroyrat(curRat);
+            m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
         }
 
         do {
@@ -485,9 +476,7 @@ DoPrecedenceCheckAgain:
                     m_currentVal = m_holdVal;
                     DisplayNum(); // to update the m_numberString
                     m_HistoryCollector.AddBinOpToHistory(m_nOpCode, false);
-                    PRAT curRat = m_currentVal.ToPRAT();
-                    m_HistoryCollector.AddOpndToHistory(m_numberString, curRat); // Adding the repeated last op to history
-                    destroyrat(curRat);
+                    m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal); // Adding the repeated last op to history
                 }
 
                 // Do the current or last operation.
@@ -595,9 +584,7 @@ DoPrecedenceCheckAgain:
 
             if (!m_HistoryCollector.FOpndAddedToHistory())
             {
-                PRAT curRat = m_currentVal.ToPRAT();
-                m_HistoryCollector.AddOpndToHistory(m_numberString, curRat);
-                destroyrat(curRat);
+                m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
             }
 
             // Get the operation and number and return result.
@@ -701,9 +688,7 @@ DoPrecedenceCheckAgain:
 
             if (!m_HistoryCollector.FOpndAddedToHistory())
             {
-                PRAT curRat = m_currentVal.ToPRAT();
-                m_HistoryCollector.AddOpndToHistory(m_numberString, curRat);
-                destroyrat(curRat);
+                m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
             }
 
             PRAT curRat = m_currentVal.ToPRAT();

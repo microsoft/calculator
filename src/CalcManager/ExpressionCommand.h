@@ -3,7 +3,8 @@
 
 #pragma once
 #include "ExpressionCommandInterface.h"
-#include "Header Files\CalcEngine.h"
+#include "Header Files/CalcEngine.h"
+#include "Header Files/Rational.h"
 
 class CParentheses : public IParenthesisCommand
 {
@@ -49,11 +50,11 @@ class COpndCommand : public IOpndCommand
 {
 public:
     COpndCommand(_In_ std::shared_ptr<CalculatorVector<int>> const &commands,
-        _In_ bool fNegative,
-        _In_ bool fDecimal,
-        _In_ bool fSciFmt);
+        CalcEngine::Rational const& rat,
+        bool fNegative,
+        bool fDecimal,
+        bool fSciFmt);
     ~COpndCommand();
-    void Initialize(_In_ PRAT hNoNum);
 
     const std::shared_ptr<CalculatorVector<int>> & GetCommands() const;
     void SetCommands(std::shared_ptr<CalculatorVector<int>> const& commands);
@@ -74,7 +75,7 @@ private:
     bool m_fSciFmt;
     bool m_fDecimal;
     std::wstring m_token;
-    PRAT m_hnoNum;
+    CalcEngine::Rational m_value;
     void ClearAllAndAppendCommand(CalculationManager::Command command);
 };
 
