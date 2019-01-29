@@ -151,20 +151,20 @@ The Model for the Calculator modes is contained in the [CalcManager][CalcManager
 [XAML Overview]:                      https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/xaml-overview
 [MVVM]:                               https://docs.microsoft.com/en-us/windows/uwp/data-binding/data-binding-and-mvvm
 
-[Calculator folder]:                  ..\src\Calculator
-[App.xaml]:                           ..\src\Calculator\App.xaml
-[App.xaml.cpp]:                       ..\src\Calculator\App.xaml.cpp
+[Calculator folder]:                  ../src/Calculator
+[App.xaml]:                           ../src/Calculator/App.xaml
+[App.xaml.cpp]:                       ../src/Calculator/App.xaml.cpp
 [StaticResource]:                     https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/staticresource-markup-extension
 [ThemeResource]:                      https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/themeresource-markup-extension
 [Page]:                               https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.Page
 [UserControl]:                        https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.UserControl
-[MainPage.xaml]:                      ..\src\Calculator\Views\MainPage.xaml
-[Calculator.xaml]:                    ..\src\Calculator\Views\Calculator.xaml
-[CalculatorStandardOperators.xaml]:   ..\src\Calculator\Views\CalculatorStandardOperators.xaml
-[CalculatorScientificOperators.xaml]: ..\src\Calculator\Views\CalculatorScientificOperators.xaml
-[CalculatorProgrammerOperators.xaml]: ..\src\Calculator\Views\CalculatorProgrammerOperators.xaml
-[DateCalculator.xaml]:                ..\src\Calculator\Views\DateCalculator.xaml
-[UnitConverter.xaml]:                 ..\src\Calculator\Views\UnitConverter.xaml
+[MainPage.xaml]:                      ../src/Calculator/Views/MainPage.xaml
+[Calculator.xaml]:                    ../src/Calculator/Views/Calculator.xaml
+[CalculatorStandardOperators.xaml]:   ../src/Calculator/Views/CalculatorStandardOperators.xaml
+[CalculatorScientificOperators.xaml]: ../src/Calculator/Views/CalculatorScientificOperators.xaml
+[CalculatorProgrammerOperators.xaml]: ../src/Calculator/Views/CalculatorProgrammerOperators.xaml
+[DateCalculator.xaml]:                ../src/Calculator/Views/DateCalculator.xaml
+[UnitConverter.xaml]:                 ../src/Calculator/Views/UnitConverter.xaml
 
 [VisualState]:                        https://docs.microsoft.com/en-us/windows/uwp/design/layout/layouts-with-xaml#adaptive-layouts-with-visual-states-and-state-triggers
 [Style]:                              https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles
@@ -175,14 +175,14 @@ The Model for the Calculator modes is contained in the [CalcManager][CalcManager
 [Binding]:                            https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/binding-markup-extension
 [BindingComparison]:                  https://docs.microsoft.com/en-us/windows/uwp/data-binding/data-binding-in-depth#xbind-and-binding-feature-comparison
 
-[CalcViewModel folder]:               ..\src\CalcViewModel
-[ApplicationViewModel.h]:             ..\src\CalcViewModel\ApplicationViewModel.h
-[StandardCalculatorViewModel.h]:      ..\src\CalcViewModel\StandardCalculatorViewModel.h
-[DateCalculatorViewModel.h]:          ..\src\CalcViewModel\DateCalculatorViewModel.h
-[UnitConverterViewModel.h]:           ..\src\CalcViewModel\UnitConverterViewModel.h
+[CalcViewModel folder]:               ../src/CalcViewModel
+[ApplicationViewModel.h]:             ../src/CalcViewModel/ApplicationViewModel.h
+[StandardCalculatorViewModel.h]:      ../src/CalcViewModel/StandardCalculatorViewModel.h
+[DateCalculatorViewModel.h]:          ../src/CalcViewModel/DateCalculatorViewModel.h
+[UnitConverterViewModel.h]:           ../src/CalcViewModel/UnitConverterViewModel.h
 
 [INotifyPropertyChanged]:             https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.data.inotifypropertychanged
 [PropertyChanged]:                    https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.data.inotifypropertychanged.propertychanged
-[Utils.h]:                            ..\src\CalcViewModel\Common\Utils.h
+[Utils.h]:                            ../src/CalcViewModel/Common/Utils.h
 
-[CalcManager folder]:                 ..\src\CalcManager
+[CalcManager folder]:                 ../src/CalcManager
