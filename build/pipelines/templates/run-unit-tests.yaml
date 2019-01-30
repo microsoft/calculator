@@ -24,18 +24,18 @@ jobs:
     displayName: Download CalculatorUnitTests
     inputs:
       artifactName: drop
-      itemPattern: drop/Release/${{ parameters.platform }}/CalculatorUnitTests_VS/AppPackages/CalculatorUnitTests_Test/**
+      itemPattern: drop/Release/${{ parameters.platform }}/CalculatorUnitTests/AppPackages/CalculatorUnitTests_Test/**
 
   - task: PowerShell@2
     displayName: Install Certificate
     inputs:
-      filePath: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests_VS\AppPackages\CalculatorUnitTests_Test\Add-AppDevPackage.ps1
-      arguments: -CertificatePath $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests_VS\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.cer -Force
+      filePath: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\Add-AppDevPackage.ps1
+      arguments: -CertificatePath $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.cer -Force
 
   - task: VSTest@2
     displayName: Run CalculatorUnitTests
     inputs:
-      testAssemblyVer2: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests_VS\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.appx
+      testAssemblyVer2: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.appx
       otherConsoleOptions: /Platform:${{ parameters.platform }}
 
 - job: CleanUpUnitTests${{ parameters.platform }}

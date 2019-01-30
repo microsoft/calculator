@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalcViewModel", "CalcViewModel\CalcViewModel.vcxproj", "{90E9761D-9262-4773-942D-CAEAE75D7140}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalculatorUnitTests_VS", "CalculatorUnitTests_VS\CalculatorUnitTests_VS.vcxproj", "{D3BAED2C-4B07-4E1D-8807-9D6499450349}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalculatorUnitTests", "CalculatorUnitTests\CalculatorUnitTests.vcxproj", "{D3BAED2C-4B07-4E1D-8807-9D6499450349}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
