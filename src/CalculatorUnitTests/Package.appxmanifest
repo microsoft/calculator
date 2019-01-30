@@ -3,7 +3,7 @@
   <Identity Name="0f7457a6-1a6a-4607-b3b8-e3dd274567c8" Publisher="CN=CalculatorUnitTests" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="0f7457a6-1a6a-4607-b3b8-e3dd274567c8" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>CalculatorUnitTests_VS</DisplayName>
+    <DisplayName>CalculatorUnitTests</DisplayName>
     <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -14,8 +14,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="vstest.executionengine.universal.App" Executable="$targetnametoken$.exe" EntryPoint="CalculatorUnitTests_VS.App">
-      <uap:VisualElements DisplayName="CalculatorUnitTests_VS" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="CalculatorUnitTests_VS" BackgroundColor="transparent">
+    <Application Id="vstest.executionengine.universal.App" Executable="$targetnametoken$.exe" EntryPoint="CalculatorUnitTests.App">
+      <uap:VisualElements DisplayName="CalculatorUnitTests" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="CalculatorUnitTests" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
