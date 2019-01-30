@@ -136,11 +136,6 @@
     <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
     <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(XefOutputRoot)' != ''">
-    <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>$(Platform)</AppxBundlePlatforms>
-    <AppxBundlePlatforms Condition="'$(Platform)'=='win32'">x86</AppxBundlePlatforms>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /await /std:c++17 </AdditionalOptions>
