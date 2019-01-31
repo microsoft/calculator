@@ -57,6 +57,6 @@
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CalculatorUnitTests_VS_TemporaryKey.pfx" />
+    <None Include="CalculatorUnitTests_TemporaryKey.pfx" />
   </ItemGroup>
 </Project>
