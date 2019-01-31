@@ -25,7 +25,6 @@
 
 using namespace std;
 using namespace CalcEngine;
-using namespace CalcEngine::RationalMath;
 
 // NPrecedenceOfOp
 //

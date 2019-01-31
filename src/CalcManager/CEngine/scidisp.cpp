@@ -66,7 +66,7 @@ CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational con
         // if negative make positive by doing a twos complement
         result = result.Negate();
         result = result.Sub(1, m_precision);
-        result = result.Not(true, m_chopNumbers[m_numwidth], m_radix, m_precision);
+        result = result.Not(true /* IntegerMode */, m_chopNumbers[m_numwidth], m_radix, m_precision);
     }
 
     result = result.And(m_chopNumbers[m_numwidth], m_radix, m_precision);

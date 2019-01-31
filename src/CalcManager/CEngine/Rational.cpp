@@ -5,7 +5,6 @@
 #include "Header Files/scimath.h"
 
 using namespace std;
-using namespace CalcEngine::RationalMath;
 
 namespace CalcEngine
 {
