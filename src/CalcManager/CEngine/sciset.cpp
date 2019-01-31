@@ -24,10 +24,10 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwid
         if (fMsb)
         {
             // If high bit is set, then get the decimal number in -ve 2'scompl form.
-            auto tempResult = Not(m_currentVal, true, m_chopNumbers[m_numwidth], m_radix, m_precision);
-            tempResult = Add(tempResult, 1, m_precision);
+            auto tempResult = m_currentVal.Not(true /* IntegerMode */, m_chopNumbers[m_numwidth], m_radix, m_precision);
+            tempResult = tempResult.Add(1, m_precision);
 
-            m_currentVal = Negate(tempResult);
+            m_currentVal = tempResult.Negate();
         }
     }
 
@@ -94,7 +94,7 @@ bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno)
     }
 
     auto pow = Pow(2, static_cast<int32_t>(wbitno), m_radix, m_precision);
-    rat = Xor(result, pow, m_radix, m_precision);
+    rat = result.Xor(pow, m_radix, m_precision);
 
     return true;
 }

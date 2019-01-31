@@ -31,7 +31,7 @@ namespace CalcEngine
         m_q{ q }
     {}
 
-    Rational::Rational(int32_t i) noexcept
+    Rational::Rational(int32_t i)
     {
         PRAT pr = longtorat(static_cast<long>(i));
 
@@ -41,7 +41,7 @@ namespace CalcEngine
         destroyrat(pr);
     }
 
-    Rational::Rational(uint32_t ui) noexcept
+    Rational::Rational(uint32_t ui)
     {
         PRAT pr = Ulongtorat(static_cast<unsigned long>(ui));
 
@@ -51,13 +51,12 @@ namespace CalcEngine
         destroyrat(pr);
     }
 
-    Rational::Rational(uint64_t ui, uint32_t radix, int32_t precision) noexcept
+    Rational::Rational(uint64_t ui, uint32_t radix, int32_t precision)
     {
         uint32_t hi = HIDWORD(ui);
         uint32_t lo = LODWORD(ui);
 
-        Rational temp = Lsh(hi, 32, radix, precision);
-        temp = Or(temp, lo, radix, precision);
+        Rational temp = Rational{ hi }.Lsh(32, radix, precision).Or(lo, radix, precision);
 
         m_p = Number{ temp.P() };
         m_q = Number{ temp.Q() };
@@ -86,6 +85,248 @@ namespace CalcEngine
     Number const& Rational::Q() const
     {
         return m_q;
+    }
+
+    Rational Rational::Negate() const
+    {
+        return Rational{ Number{ -1 * m_p.Sign(), m_p.Exp(), m_p.Mantissa() }, m_q};
+    }
+    Rational Rational::Add(Rational const& rhs, int32_t precision) const
+    {
+        PRAT lhsRat = this->ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
+
+        try
+        {
+            addrat(&lhsRat, rhsRat, precision);
+            destroyrat(rhsRat);
+        }
+        catch (DWORD error)
+        {
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
+            throw(error);
+        }
+
+        Rational result = Rational{ lhsRat };
+        destroyrat(lhsRat);
+
+        return result;
+    }
+    Rational Rational::Sub(Rational const& rhs, int32_t precision) const
+    {
+        PRAT lhsRat = this->ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
+
+        try
+        {
+            subrat(&lhsRat, rhsRat, precision);
+            destroyrat(rhsRat);
+        }
+        catch (DWORD error)
+        {
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
+            throw(error);
+        }
+
+        Rational result = Rational{ lhsRat };
+        destroyrat(lhsRat);
+
+        return result;
+    }
+    Rational Rational::Mul(Rational const& rhs, int32_t precision) const
+    {
+        PRAT lhsRat = this->ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
+
+        try
+        {
+            mulrat(&lhsRat, rhsRat, precision);
+            destroyrat(rhsRat);
+        }
+        catch (DWORD error)
+        {
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
+            throw(error);
+        }
+
+        Rational result = Rational{ lhsRat };
+        destroyrat(lhsRat);
+
+        return result;
+    }
+    Rational Rational::Div(Rational const& rhs, int32_t precision) const
+    {
+        PRAT lhsRat = this->ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
+
+        try
+        {
+            divrat(&lhsRat, rhsRat, precision);
+            destroyrat(rhsRat);
+        }
+        catch (DWORD error)
+        {
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
+            throw(error);
+        }
+
+        Rational result = Rational{ lhsRat };
+        destroyrat(lhsRat);
+
+        return result;
+    }
+    Rational Rational::Mod(Rational const& rhs) const
+    {
+        PRAT lhsRat = this->ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
+
+        try
+        {
+            modrat(&lhsRat, rhsRat);
+            destroyrat(rhsRat);
+        }
+        catch (DWORD error)
+        {
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
+            throw(error);
+        }
+
+        Rational result = Rational{ lhsRat };
+        destroyrat(lhsRat);
+
+        return result;
+    }
+
+    Rational Rational::Lsh(Rational const& rhs, uint32_t radix, int32_t precision) const
+    {
+        PRAT lhsRat = this->ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
+
+        try
+        {
+            lshrat(&lhsRat, rhsRat, radix, precision);
+            destroyrat(rhsRat);
+        }
+        catch (DWORD error)
+        {
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
+            throw(error);
+        }
+
+        Rational result = Rational{ lhsRat };
+        destroyrat(lhsRat);
+
+        return result;
+    }
+    Rational Rational::Rsh(Rational const& rhs, uint32_t radix, int32_t precision) const
+    {
+        PRAT lhsRat = this->ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
+
+        try
+        {
+            rshrat(&lhsRat, rhsRat, radix, precision);
+            destroyrat(rhsRat);
+        }
+        catch (DWORD error)
+        {
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
+            throw(error);
+        }
+
+        Rational result = Rational{ lhsRat };
+        destroyrat(lhsRat);
+
+        return result;
+    }
+
+    Rational Rational::Not(bool isIntegerMode, Rational const& chopNum, uint32_t radix, int32_t precision) const
+    {
+        Rational result{};
+
+        if (radix == 10 && !isIntegerMode)
+        {
+            result = RationalMath::Integer(*this, radix, precision);
+            result = result.Add(1, precision);
+            result = result.Negate();
+        }
+        else
+        {
+            result = this->Xor(chopNum, radix, precision);
+        }
+
+        return result;
+    }
+    Rational Rational::And(Rational const& rhs, uint32_t radix, int32_t precision) const
+    {
+        PRAT lhsRat = this->ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
+
+        try
+        {
+            andrat(&lhsRat, rhsRat, radix, precision);
+            destroyrat(rhsRat);
+        }
+        catch (DWORD error)
+        {
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
+            throw(error);
+        }
+
+        Rational result = Rational{ lhsRat };
+        destroyrat(lhsRat);
+
+        return result;
+    }
+    Rational Rational::Or(Rational const& rhs, uint32_t radix, int32_t precision) const
+    {
+        PRAT lhsRat = this->ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
+        try
+        {
+            orrat(&lhsRat, rhsRat, radix, precision);
+            destroyrat(rhsRat);
+        }
+        catch (DWORD error)
+        {
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
+            throw(error);
+        }
+
+        Rational result = Rational{ lhsRat };
+        destroyrat(lhsRat);
+
+        return result;
+    }
+    Rational Rational::Xor(Rational const& rhs, uint32_t radix, int32_t precision) const
+    {
+        PRAT lhsRat = this->ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
+        try
+        {
+            xorrat(&lhsRat, rhsRat, radix, precision);
+            destroyrat(rhsRat);
+        }
+        catch (DWORD error)
+        {
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
+            throw(error);
+        }
+
+        Rational result = Rational{ lhsRat };
+        destroyrat(lhsRat);
+
+        return result;
     }
 
     bool Rational::IsZero() const

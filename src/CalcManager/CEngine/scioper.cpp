@@ -18,15 +18,15 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
         switch (operation)
         {
         case IDC_AND:
-            result = And(result, rhs, m_radix, m_precision);
+            result = result.And(rhs, m_radix, m_precision);
             break;
 
         case IDC_OR:
-            result = Or(result, rhs, m_radix, m_precision);
+            result = result.Or(rhs, m_radix, m_precision);
             break;
 
         case IDC_XOR:
-            result = Xor(result, rhs, m_radix, m_precision);
+            result = result.Xor(rhs, m_radix, m_precision);
             break;
 
         case IDC_RSHF:
@@ -40,17 +40,17 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
 
             Rational holdVal = result;
-            result = Rsh(rhs, holdVal, m_radix, m_precision);
+            result = rhs.Rsh(holdVal, m_radix, m_precision);
 
             if (fMsb)
             {
                 result = Integer(result, m_radix, m_precision);
 
-                auto tempRat = Rsh(m_chopNumbers[m_numwidth], holdVal, m_radix, m_precision);
+                auto tempRat = m_chopNumbers[m_numwidth].Rsh(holdVal, m_radix, m_precision);
                 tempRat = Integer(tempRat, m_radix, m_precision);
 
-                tempRat = Xor(tempRat, m_chopNumbers[m_numwidth], m_radix, m_precision);
-                result = Or(result, tempRat, m_radix, m_precision);
+                tempRat = tempRat.Xor(m_chopNumbers[m_numwidth], m_radix, m_precision);
+                result = result.Or(tempRat, m_radix, m_precision);
             }
             break;
         }
@@ -61,19 +61,19 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
                 throw CALC_E_NORESULT;
             }
 
-            result = Lsh(rhs, result, m_radix, m_precision);
+            result = rhs.Lsh(result, m_radix, m_precision);
             break;
 
         case IDC_ADD:
-            result = Add(result, rhs, m_precision);
+            result = result.Add(rhs, m_precision);
             break;
 
         case IDC_SUB:
-            result = Sub(rhs, result, m_precision);
+            result = rhs.Sub(result, m_precision);
             break;
 
         case IDC_MUL:
-            result = Mul(result, rhs, m_precision);
+            result = result.Mul(rhs, m_precision);
             break;
 
         case IDC_DIV:
@@ -90,8 +90,8 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
                 if (fMsb)
                 {
-                    result = Not(rhs, true, m_chopNumbers[m_numwidth], m_radix, m_precision);
-                    result = Add(result, 1, m_precision);
+                    result = rhs.Not(true /* IntegerMode */, m_chopNumbers[m_numwidth], m_radix, m_precision);
+                    result = result.Add(1, m_precision);
 
                     iNumeratorSign = -1;
                 }
@@ -101,8 +101,8 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
                 if (fMsb)
                 {
-                    temp = Not(temp, true, m_chopNumbers[m_numwidth], m_radix, m_precision);
-                    temp = Add(temp, 1, m_precision);
+                    temp = temp.Not(true /* IntegerMode */, m_chopNumbers[m_numwidth], m_radix, m_precision);
+                    temp = temp.Add(1, m_precision);
 
                     iDenominatorSign = -1;
                 }
@@ -111,17 +111,17 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             if (operation == IDC_DIV)
             {
                 iFinalSign = iNumeratorSign * iDenominatorSign;
-                result = Div(result, temp, m_precision);
+                result = result.Div(temp, m_precision);
             }
             else
             {
                 iFinalSign = iNumeratorSign;
-                result = Mod(result, temp);
+                result = result.Mod(temp);
             }
 
             if (m_fIntegerMode && iFinalSign == -1)
             {
-                result = Negate(Integer(result, m_radix, m_precision));
+                result = Integer(result, m_radix, m_precision).Negate();
             }
 
             break;

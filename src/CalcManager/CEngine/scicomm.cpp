@@ -692,7 +692,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
         }
 
-        m_currentVal = Negate(m_currentVal);
+        m_currentVal = m_currentVal.Negate();
 
         DisplayNum();
         m_HistoryCollector.AddUnaryOpToHistory(IDC_SIGN, m_bInv, m_angletype);
@@ -719,7 +719,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     {
         /* MPLUS adds m_currentVal to immediate memory and kills the "mem"   */
         /* indicator if the result is zero.                           */
-        Rational result = Add(*m_memoryValue, m_currentVal, m_precision);
+        Rational result = (*m_memoryValue).Add(m_currentVal, m_precision);
         m_memoryValue = make_unique<Rational>(TruncateNumForIntMath(result)); // Memory should follow the current int mode
 
         break;
@@ -728,7 +728,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     {
         /* MMINUS subtracts m_currentVal to immediate memory and kills the "mem"   */
         /* indicator if the result is zero.                           */
-        Rational result = Sub(*m_memoryValue, m_currentVal, m_precision);
+        Rational result = (*m_memoryValue).Sub(m_currentVal, m_precision);
         m_memoryValue = make_unique<Rational>(TruncateNumForIntMath(result));
 
         break;
@@ -1054,9 +1054,9 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
             if ((radix == 10) && fMsb)
             {
                 // If high bit is set, then get the decimal number in negative 2's compl form.
-                tempRat = Not(tempRat, true, m_chopNumbers[m_numwidth], m_radix, m_precision);
-                tempRat = Add(tempRat, 1, m_precision);
-                tempRat = Negate(tempRat);
+                tempRat = tempRat.Not(true, m_chopNumbers[m_numwidth], m_radix, m_precision);
+                tempRat = tempRat.Add(1, m_precision);
+                tempRat = tempRat.Negate();
             }
 
             result = tempRat.ToString(radix, m_nFE, m_precision);

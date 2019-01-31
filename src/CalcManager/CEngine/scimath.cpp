@@ -45,117 +45,6 @@ Rational RationalMath::Integer(Rational const& rat, uint32_t radix, int32_t prec
     return result;
 }
 
-Rational RationalMath::Add(Rational const& lhs, Rational const& rhs, int32_t precision)
-{
-    PRAT lhsRat = lhs.ToPRAT();
-    PRAT rhsRat = rhs.ToPRAT();
-
-    try
-    {
-        addrat(&lhsRat, rhsRat, precision);
-        destroyrat(rhsRat);
-    }
-    catch (DWORD error)
-    {
-        destroyrat(lhsRat);
-        destroyrat(rhsRat);
-        throw(error);
-    }
-
-    Rational result{ lhsRat };
-    destroyrat(lhsRat);
-
-    return result;
-}
-Rational RationalMath::Sub(Rational const& lhs, Rational const& rhs, int32_t precision)
-{
-    PRAT lhsRat = lhs.ToPRAT();
-    PRAT rhsRat = rhs.ToPRAT();
-
-    try
-    {
-        subrat(&lhsRat, rhsRat, precision);
-        destroyrat(rhsRat);
-    }
-    catch (DWORD error)
-    {
-        destroyrat(lhsRat);
-        destroyrat(rhsRat);
-        throw(error);
-    }
-
-    Rational result{ lhsRat };
-    destroyrat(lhsRat);
-
-    return result;
-}
-Rational RationalMath::Mul(Rational const& lhs, Rational const& rhs, int32_t precision)
-{
-    PRAT lhsRat = lhs.ToPRAT();
-    PRAT rhsRat = rhs.ToPRAT();
-
-    try
-    {
-        mulrat(&lhsRat, rhsRat, precision);
-        destroyrat(rhsRat);
-    }
-    catch (DWORD error)
-    {
-        destroyrat(lhsRat);
-        destroyrat(rhsRat);
-        throw(error);
-    }
-
-    Rational result{ lhsRat };
-    destroyrat(lhsRat);
-
-    return result;
-}
-Rational RationalMath::Div(Rational const& lhs, Rational const& rhs, int32_t precision)
-{
-    PRAT lhsRat = lhs.ToPRAT();
-    PRAT rhsRat = rhs.ToPRAT();
-
-    try
-    {
-        divrat(&lhsRat, rhsRat, precision);
-        destroyrat(rhsRat);
-    }
-    catch (DWORD error)
-    {
-        destroyrat(lhsRat);
-        destroyrat(rhsRat);
-        throw(error);
-    }
-
-    Rational result{ lhsRat };
-    destroyrat(lhsRat);
-
-    return result;
-}
-Rational RationalMath::Mod(Rational const& lhs, Rational const& rhs)
-{
-    PRAT lhsRat = lhs.ToPRAT();
-    PRAT rhsRat = rhs.ToPRAT();
-
-    try
-    {
-        modrat(&lhsRat, rhsRat);
-        destroyrat(rhsRat);
-    }
-    catch (DWORD error)
-    {
-        destroyrat(lhsRat);
-        destroyrat(rhsRat);
-        throw(error);
-    }
-
-    Rational result{ lhsRat };
-    destroyrat(lhsRat);
-
-    return result;
-}
-
 Rational RationalMath::Pow(Rational const& base, Rational const& pow, uint32_t radix, int32_t precision)
 {
     PRAT baseRat = base.ToPRAT();
@@ -180,7 +69,7 @@ Rational RationalMath::Pow(Rational const& base, Rational const& pow, uint32_t r
 }
 Rational RationalMath::Root(Rational const& base, Rational const& root, uint32_t radix, int32_t precision)
 {
-    return Pow(base, Div(1, root, precision), radix, precision);
+    return Pow(base, Invert(root, precision), radix, precision);
 }
 Rational RationalMath::Fact(Rational const& rat, uint32_t radix, int32_t precision)
 {
@@ -242,61 +131,12 @@ Rational RationalMath::Log(Rational const& rat, int32_t precision)
 }
 Rational RationalMath::Log10(Rational const& rat, int32_t precision)
 {
-    return Div(Log(rat, precision), 10, precision);
-}
-
-Rational RationalMath::Lsh(Rational const& lhs, Rational const& rhs, uint32_t radix, int32_t precision)
-{
-    PRAT lhsRat = lhs.ToPRAT();
-    PRAT rhsRat = rhs.ToPRAT();
-
-    try
-    {
-        lshrat(&lhsRat, rhsRat, radix, precision);
-        destroyrat(rhsRat);
-    }
-    catch (DWORD error)
-    {
-        destroyrat(lhsRat);
-        destroyrat(rhsRat);
-        throw(error);
-    }
-
-    Rational result{ lhsRat };
-    destroyrat(lhsRat);
-
-    return result;
-}
-Rational RationalMath::Rsh(Rational const& lhs, Rational const& rhs, uint32_t radix, int32_t precision)
-{
-    PRAT lhsRat = lhs.ToPRAT();
-    PRAT rhsRat = rhs.ToPRAT();
-
-    try
-    {
-        rshrat(&lhsRat, rhsRat, radix, precision);
-        destroyrat(rhsRat);
-    }
-    catch (DWORD error)
-    {
-        destroyrat(lhsRat);
-        destroyrat(rhsRat);
-        throw(error);
-    }
-
-    Rational result{ lhsRat };
-    destroyrat(lhsRat);
-
-    return result;
+    return Log(rat, precision).Div(10, precision);
 }
 
 Rational RationalMath::Invert(Rational const& rat, int32_t precision)
 {
-    return Div(1, rat, precision);
-}
-Rational RationalMath::Negate(Rational const& rat)
-{
-    return Rational{ Number{ -1 * rat.P().Sign(), rat.P().Exp(), rat.P().Mantissa() }, rat.Q() };
+    return Rational{ 1 }.Div(rat, precision);
 }
 Rational RationalMath::Abs(Rational const& rat)
 {
@@ -531,88 +371,6 @@ Rational RationalMath::ATanh(Rational const& rat, int32_t precision)
 
     Rational result{ prat };
     destroyrat(prat);
-
-    return result;
-}
-
-Rational RationalMath::Not(Rational const& rat, bool fIntegerMode, Rational const& chopNum, uint32_t radix, int32_t precision)
-{
-    Rational result{};
-
-    if (radix == 10 && !fIntegerMode)
-    {
-        result = Integer(rat, radix, precision);
-        result = Add(result, 1, precision);
-        result = Negate(result);
-    }
-    else
-    {
-        result = Xor(rat, chopNum, radix, precision);
-    }
-
-    return result;
-}
-Rational RationalMath::And(Rational const& lhs, Rational const& rhs, uint32_t radix, int32_t precision)
-{
-    PRAT lhsRat = lhs.ToPRAT();
-    PRAT rhsRat = rhs.ToPRAT();
-
-    try
-    {
-        andrat(&lhsRat, rhsRat, radix, precision);
-        destroyrat(rhsRat);
-    }
-    catch (DWORD error)
-    {
-        destroyrat(lhsRat);
-        destroyrat(rhsRat);
-        throw(error);
-    }
-
-    Rational result{ lhsRat };
-    destroyrat(lhsRat);
-
-    return result;
-}
-Rational RationalMath::Or(Rational const& lhs, Rational const& rhs, uint32_t radix, int32_t precision)
-{
-    PRAT lhsRat = lhs.ToPRAT();
-    PRAT rhsRat = rhs.ToPRAT();
-    try
-    {
-        orrat(&lhsRat, rhsRat, radix, precision);
-        destroyrat(rhsRat);
-    }
-    catch (DWORD error)
-    {
-        destroyrat(lhsRat);
-        destroyrat(rhsRat);
-        throw(error);
-    }
-
-    Rational result{ lhsRat };
-    destroyrat(lhsRat);
-
-    return result;
-}
-Rational RationalMath::Xor(Rational const& lhs, Rational const& rhs, uint32_t radix, int32_t precision)
-{
-    PRAT lhsRat = lhs.ToPRAT();
-    PRAT rhsRat = rhs.ToPRAT();
-    try
-    {
-        xorrat(&lhsRat, rhsRat, radix, precision);
-        destroyrat(rhsRat);
-    }
-    catch (DWORD error)
-    {
-        destroyrat(lhsRat);
-        destroyrat(rhsRat);
-        throw(error);
-    }
-
-    Rational result{ lhsRat };
-    destroyrat(lhsRat);
 
     return result;
 }

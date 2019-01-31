@@ -64,12 +64,12 @@ CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational con
     if (result.IsLess(Rational{}, m_precision))
     {
         // if negative make positive by doing a twos complement
-        result = RationalMath::Negate(result);
-        result = RationalMath::Sub(result, 1, m_precision);
-        result = RationalMath::Not(result, true, m_chopNumbers[m_numwidth], m_radix, m_precision);
+        result = result.Negate();
+        result = result.Sub(1, m_precision);
+        result = result.Not(true, m_chopNumbers[m_numwidth], m_radix, m_precision);
     }
 
-    result = RationalMath::And(result, m_chopNumbers[m_numwidth], m_radix, m_precision);
+    result = result.And(m_chopNumbers[m_numwidth], m_radix, m_precision);
 
     return result;
 }

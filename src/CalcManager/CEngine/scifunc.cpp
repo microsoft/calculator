@@ -37,7 +37,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
 
             /* Return complement. */
         case IDC_COM:
-            result = Not(rat, true, m_chopNumbers[m_numwidth], m_radix, m_precision);
+            result = rat.Not(true, m_chopNumbers[m_numwidth], m_radix, m_precision);
             break;
 
             // Rotate Left with hi bit wrapped over to lo bit
@@ -76,12 +76,12 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             // Otherwise, we evaluate it as "X [op] (X * Y%)"
             if (m_nOpCode == IDC_MUL || m_nOpCode == IDC_DIV)
             {
-                result = Div(rat, 100, m_precision);
+                result = rat.Div(100, m_precision);
             }
             else
             {
-                result = Div(m_lastVal, 100, m_precision);
-                result = Mul(rat, result, m_precision);
+                result = m_lastVal.Div(100, m_precision);
+                result = rat.Mul(result, m_precision);
             }
             break;
         }
@@ -175,27 +175,27 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
 
                 Rational degreeRat = Integer(rat, m_radix, m_precision);
 
-                Rational minuteRat = Sub(rat, degreeRat, m_precision);
-                minuteRat = Mul(minuteRat, shftRat, m_precision);
+                Rational minuteRat = rat.Sub(degreeRat, m_precision);
+                minuteRat = minuteRat.Mul(shftRat, m_precision);
 
                 Rational secondRat = minuteRat;
 
                 minuteRat = Integer(minuteRat, m_radix, m_precision);
 
-                secondRat = Sub(secondRat, minuteRat, m_precision);
-                secondRat = Mul(secondRat, shftRat, m_precision);
+                secondRat = secondRat.Sub(minuteRat, m_precision);
+                secondRat = secondRat.Mul(shftRat, m_precision);
 
                 //
                 // degreeRat == degrees, minuteRat == minutes, secondRat == seconds
                 //
 
                 shftRat = Rational{ m_bInv ? 60 : 100 };
-                secondRat = Div(secondRat, shftRat, m_precision);
+                secondRat = secondRat.Div(shftRat, m_precision);
 
-                minuteRat = Add(minuteRat, secondRat, m_precision);
-                minuteRat = Div(minuteRat, shftRat, m_precision);
+                minuteRat = minuteRat.Add(secondRat, m_precision);
+                minuteRat = minuteRat.Div(shftRat, m_precision);
 
-                result = Add(degreeRat, minuteRat, m_precision);
+                result = degreeRat.Add(minuteRat, m_precision);
             }
             break;
         }
