@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -40,9 +40,7 @@ namespace CalculatorApp
         Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ CreateUIElementsForCategories(_In_ Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup^>^ categories);
 
     protected:
-        virtual void LoadState(_In_ Platform::Object^ navigationParameter,
-            _In_ Windows::Foundation::Collections::IMap<Platform::String^, Platform::Object^>^ pageState) override;
-        virtual void SaveState(_In_ Windows::Foundation::Collections::IMap<Platform::String^, Platform::Object^>^ pageState) override;
+        virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
 
     private:
         void WindowSizeChanged(_In_ Platform::Object^ sender, _In_ Windows::UI::Core::WindowSizeChangedEventArgs^ e);
