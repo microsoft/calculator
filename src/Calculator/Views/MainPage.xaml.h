@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include "Common\LayoutAwarePage.h" // Required by generated header
 #include "Views\Calculator.xaml.h"
 #include "Views\MainPage.g.h"
 #include "Views\DateCalculator.xaml.h"
