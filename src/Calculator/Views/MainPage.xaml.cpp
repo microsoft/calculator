@@ -85,7 +85,7 @@ MainPage::MainPage() :
     }    
 }
 
-void MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e)
+void MainPage::OnNavigatedTo(NavigationEventArgs^ e)
 {
     if (m_model->CalculatorViewModel)
     {
