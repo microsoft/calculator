@@ -219,8 +219,6 @@
     <ClInclude Include="Controls\OverflowTextBlockAutomationPeer.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h" />
     <ClInclude Include="Common\BindableBase.h" />
-    <ClInclude Include="Common\LayoutAwarePage.h" />
-    <ClInclude Include="Common\SuspensionManager.h" />
     <ClInclude Include="Controls\AppBar.h" />
     <ClInclude Include="Controls\CalculationResult.h" />
     <ClInclude Include="Controls\CalculatorButton.h" />
@@ -355,8 +353,6 @@
     <ClCompile Include="Controls\CalculationResultAutomationPeer.cpp" />
     <ClCompile Include="Controls\OverflowTextBlockAutomationPeer.cpp" />
     <ClCompile Include="Common\BindableBase.cpp" />
-    <ClCompile Include="Common\LayoutAwarePage.cpp" />
-    <ClCompile Include="Common\SuspensionManager.cpp" />
     <ClCompile Include="Controls\CalculationResult.cpp" />
     <ClCompile Include="Controls\CalculatorButton.cpp" />
     <ClCompile Include="Controls\FlipButtons.cpp" />
