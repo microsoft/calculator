@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include "LayoutAwarePage.h"
-#include "SuspensionManager.h"
 #include "CalcViewModel\Common\LocalizationService.h"
 #include "App.xaml.h"
 
@@ -43,35 +42,7 @@ LayoutAwarePage::LayoutAwarePage()
 /// property provides the group to be displayed.</param>
 void LayoutAwarePage::OnNavigatedTo(NavigationEventArgs^ e)
 {
-    // Returning to a cached page through navigation shouldn't trigger state loading
-    if (_pageKey != nullptr) return;
-
-    auto frameState = SuspensionManager::SessionStateForFrame(Frame);
-    _pageKey = "Page-" + Frame->BackStackDepth;
-
-    if (e->NavigationMode == NavigationMode::New)
-    {
-        // Clear existing state for forward navigation when adding a new page to the
-        // navigation stack
-        auto nextPageKey = _pageKey;
-        int nextPageIndex = Frame->BackStackDepth;
-        while (frameState->HasKey(nextPageKey))
-        {
-            frameState->Remove(nextPageKey);
-            nextPageIndex++;
-            nextPageKey = "Page-" + nextPageIndex;
-        }
-
-        // Pass the navigation parameter to the new page
-        LoadState(e->Parameter, nullptr);
-    }
-    else
-    {
-        // Pass the navigation parameter and preserved page state to the page, using
-        // the same strategy for loading suspended state and recreating pages discarded
-        // from cache
-        LoadState(e->Parameter, safe_cast<IMap<String^, Object^>^>(frameState->Lookup(_pageKey)));
-    }
+    LoadState(e->Parameter, nullptr);
 }
 
 /// <summary>
@@ -81,10 +52,8 @@ void LayoutAwarePage::OnNavigatedTo(NavigationEventArgs^ e)
 /// property provides the group to be displayed.</param>
 void LayoutAwarePage::OnNavigatedFrom(NavigationEventArgs^ e)
 {
-    auto frameState = SuspensionManager::SessionStateForFrame(Frame);
     auto pageState = ref new Map<String^, Object^>();
     SaveState(pageState);
-    frameState->Insert(_pageKey, pageState);
 }
 
 /// <summary>
