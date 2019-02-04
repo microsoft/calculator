@@ -288,7 +288,7 @@
     <ClInclude Include="UnitConverter.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CalculatorHistory.Cpp" />
+    <ClCompile Include="CalculatorHistory.cpp" />
     <ClCompile Include="CalculatorManager.cpp" />
     <ClCompile Include="CEngine\calc.cpp" />
     <ClCompile Include="CEngine\CalcUtils.cpp" />
