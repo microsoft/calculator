@@ -12,7 +12,6 @@
 #include "CalcViewModel\Common\Automation\NarratorNotifier.h"
 #include "CalcViewModel\Common\AppResourceProvider.h"
 #include "CalcViewModel\Common\LocalizationSettings.h"
-#include "Common\SuspensionManager.h"
 #include "Views\MainPage.xaml.h"
 
 using namespace CalculatorApp;
@@ -283,10 +282,8 @@ void App::OnAppLaunch(IActivatedEventArgs^ args, String^ argument)
             }
         }
 
-        // Create a Frame to act as the navigation context and associate it with
-        // a SuspensionManager key
+        // Create a Frame to act as the navigation context
         rootFrame = App::CreateFrame();
-        //SuspensionManager::RegisterFrame(rootFrame, "AppFrame");
 
         // When the navigation stack isn't restored navigate to the first page,
         // configuring the new page by passing required information as a navigation

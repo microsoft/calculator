@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -85,105 +85,32 @@ MainPage::MainPage() :
     }    
 }
 
-/// <summary>
-/// Populates the page with content passed during navigation.  Any saved state is also
-/// provided when recreating a page from a prior session.
-/// </summary>
-/// <param name="navigationParameter">The parameter value passed to
-/// <see cref="Frame::Navigate(Type, Object)"/> when this page was initially requested.
-/// </param>
-/// <param name="pageState">A map of state preserved by this page during an earlier
-/// session.  This will be null the first time a page is visited.</param>
-void MainPage::LoadState(_In_ Object^ navigationParameter, _In_ IMap<String^, Object^>^ pageState)
+void MainPage::OnNavigatedTo(NavigationEventArgs^ e)
 {
-    if (pageState != nullptr)
+    if (m_model->CalculatorViewModel)
     {
-        if (pageState->HasKey("ConverterViewModelState"))
+        m_model->CalculatorViewModel->HistoryVM->ClearHistory();
+    }
+
+    ViewMode initialMode = ViewMode::Standard;
+    if (e->Parameter != nullptr)
+    {
+        String^ stringParameter = dynamic_cast<String^>(e->Parameter);
+        if (stringParameter != nullptr)
         {
-            auto converterViewModelState = safe_cast<String^>(pageState->Lookup("ConverterViewModelState"));
-
-            m_model->ConverterViewModel->Deserialize(converterViewModelState);
+            initialMode = (ViewMode)stoi(stringParameter->Data());
         }
-
-        //Moving these below the converter view model deserialize, since the converter modes are also displayed in the MainPage NavBar and thus need to be deserialized before setting the current mode 
-        if (pageState->HasKey(ApplicationViewModelProperties::Mode))
-        {
-            m_model->Mode = NavCategory::Deserialize(pageState->Lookup(ApplicationViewModelProperties::Mode));
-        }
-
-        if (pageState->HasKey(ApplicationViewModelProperties::PreviousMode))
-        {
-            m_model->PreviousMode = NavCategory::Deserialize(pageState->Lookup(ApplicationViewModelProperties::PreviousMode));
-        }
-
-        // rehydrate
-        if (pageState->HasKey("CalculatorViewModelState"))
-        {
-            auto calculatorViewModelState = safe_cast<Array<unsigned char>^>(pageState->Lookup("CalculatorViewModelState"));
-
-            m_model->CalculatorViewModel->Deserialize(calculatorViewModelState);
-        }
-
-        m_model->CalculatorViewModel->HistoryVM->RestoreCompleteHistory();
-        m_model->CalculatorViewModel->HistoryVM->ReloadHistory(m_model->Mode);
     }
     else
     {
-        // initialize
-        if (m_model->CalculatorViewModel)
+        ApplicationDataContainer^ localSettings = ApplicationData::Current->LocalSettings;
+        if (localSettings->Values->HasKey(ApplicationViewModelProperties::Mode))
         {
-            m_model->CalculatorViewModel->HistoryVM->ClearHistory();
+            initialMode = NavCategory::Deserialize(localSettings->Values->Lookup(ApplicationViewModelProperties::Mode));
         }
-
-        ViewMode initialMode = ViewMode::Standard;
-        if (navigationParameter != nullptr)
-        {
-            String^ stringParameter = dynamic_cast<String^>(navigationParameter);
-            if (stringParameter != nullptr)
-            {
-                initialMode = (ViewMode)stoi(stringParameter->Data());
-            }
-        }
-        else
-        {
-            ApplicationDataContainer^ localSettings = ApplicationData::Current->LocalSettings;
-            if (localSettings->Values->HasKey(ApplicationViewModelProperties::Mode))
-            {
-                initialMode = NavCategory::Deserialize(localSettings->Values->Lookup(ApplicationViewModelProperties::Mode));
-            }
-        }
-
-        m_model->Initialize(initialMode);
-    }
-}
-
-/// <summary>
-/// Preserves state associated with this page in case the application is suspended or the
-/// page is discarded from the navigation cache.  Values must conform to the serialization
-/// requirements of <see cref="SuspensionManager::SessionState"/>.
-/// </summary>
-/// <param name="pageState">An empty map to be populated with serializable state.</param>
-void MainPage::SaveState(_In_ IMap<String^, Object^>^ pageState)
-{
-    int serializedCurrentMode = NavCategory::Serialize(m_model->Mode);
-
-    pageState->Insert(ApplicationViewModelProperties::Mode, serializedCurrentMode);
-    pageState->Insert(ApplicationViewModelProperties::PreviousMode, NavCategory::Serialize(m_model->PreviousMode));
-
-    ApplicationDataContainer^ localSettings = ApplicationData::Current->LocalSettings;
-    localSettings->Values->Insert(ApplicationViewModelProperties::Mode, serializedCurrentMode);
-    
-    auto serializedCalculatorData = m_model->CalculatorViewModel->Serialize();
-    auto serializedConverterData = m_model->ConverterViewModel->Serialize();
-    if (serializedCalculatorData->Length > 0)
-    {
-        pageState->Insert("CalculatorViewModelState", serializedCalculatorData);
     }
 
-    if (serializedConverterData != nullptr)
-    {
-        pageState->Insert("ConverterViewModelState", serializedConverterData);
-    }
+    m_model->Initialize(initialMode);
 }
 
 void MainPage::WindowSizeChanged(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Core::WindowSizeChangedEventArgs^ e)
