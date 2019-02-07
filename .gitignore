@@ -289,13 +289,5 @@ __pycache__/
 
 # Calculator specific
 Generated Files/
-# Don't ignore anything under SpkgDefs or TrexDefs
-!/SpkgDefs/**
-!/TrexDefs/**
 !/build/config/TRexDefs/**
-
-# Localized strings
-# LCT files are loc system artifacts that we don't want in our repo.
-*.lct
-
-WorkspaceInfo.xml
+!src/CalculatorUnitTests/CalculatorUnitTests_TemporaryKey.pfx

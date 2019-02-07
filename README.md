@@ -26,7 +26,7 @@ Prerequisites:
   - Install the latest Windows 10 SDK
 
   ![Visual Studio Installation Screenshot](docs/Images/VSInstallationScreenshot.png)
-- Install the [XamlStyler](https://marketplace.visualstudio.com/items?itemName=TeamXavalon.XAMLStyler) Visual Studio extension
+- Install the [XAML Styler](https://marketplace.visualstudio.com/items?itemName=TeamXavalon.XAMLStyler) Visual Studio extension
 
 - Get the code:
     ```

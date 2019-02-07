@@ -14,9 +14,6 @@
     <Filter Include="Converters">
       <UniqueIdentifier>{5a666ef7-54fb-46cc-9588-5cbcfaed3465}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PerfTrack">
-      <UniqueIdentifier>{1cba827f-63eb-4cda-8bf0-eea60190725e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{f9b88d9e-918b-49ac-869b-a1a380ec3201}</UniqueIdentifier>
     </Filter>
@@ -231,12 +228,6 @@
     <ClCompile Include="Common\BindableBase.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Common\LayoutAwarePage.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\SuspensionManager.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="Controls\CalculationResult.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -325,12 +316,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\BindableBase.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\LayoutAwarePage.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\SuspensionManager.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Controls\AppBar.h">
@@ -428,7 +413,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Calculator_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\Calculator.xaml">
@@ -1578,5 +1562,8 @@
     <Font Include="Assets\CalcMDL2.ttf">
       <Filter>Assets</Filter>
     </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -15,12 +15,21 @@ using namespace winrt::Windows::UI::ViewManagement;
 
 namespace CalculatorApp
 {
+
+#ifdef SEND_TELEMETRY
     // c.f. WINEVENT_KEYWORD_RESERVED_63-56 0xFF00000000000000 // Bits 63-56 - channel keywords
     // c.f. WINEVENT_KEYWORD_*              0x00FF000000000000 // Bits 55-48 - system-reserved keywords
     constexpr int64_t MICROSOFT_KEYWORD_CRITICAL_DATA = 0x0000800000000000; // Bit 47
-    constexpr int64_t MICROSOFT_KEYWORD_MEASURES      = 0x0000400000000000; // Bit 46
-    constexpr int64_t MICROSOFT_KEYWORD_TELEMETRY     = 0x0000200000000000; // Bit 45
-    constexpr int64_t MICROSOFT_KEYWORD_RESERVED_44   = 0x0000100000000000; // Bit 44 (reserved for future assignment)
+    constexpr int64_t MICROSOFT_KEYWORD_MEASURES = 0x0000400000000000; // Bit 46
+    constexpr int64_t MICROSOFT_KEYWORD_TELEMETRY = 0x0000200000000000; // Bit 45
+    constexpr int64_t MICROSOFT_KEYWORD_RESERVED_44 = 0x0000100000000000; // Bit 44 (reserved for future assignment)
+#else
+    // define all Keyword options as 0 when we do not want to upload app telemetry
+    constexpr int64_t MICROSOFT_KEYWORD_CRITICAL_DATA = 0;
+    constexpr int64_t MICROSOFT_KEYWORD_MEASURES = 0;
+    constexpr int64_t MICROSOFT_KEYWORD_TELEMETRY = 0;
+    constexpr int64_t MICROSOFT_KEYWORD_RESERVED_44 = 0;
+#endif
 
 #pragma region TraceLogger setup and cleanup
 
