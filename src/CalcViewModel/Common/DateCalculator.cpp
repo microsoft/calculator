@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -273,12 +273,24 @@ bool DateCalculationEngine::TryGetCalendarDaysInYear(_In_ DateTime date, _Out_ U
 // Adds/Subtracts certain value for a particular date unit
 DateTime DateCalculationEngine::AdjustCalendarDate(Windows::Foundation::DateTime date, DateUnit dateUnit, int difference)
 {
+    auto currentCalendarSystem = m_calendar->GetCalendarSystem();
+
     m_calendar->SetDateTime(date);
 
     switch (dateUnit)
     {
     case DateUnit::Year:
+        // In the Japanese calendar, transition years have 2 partial years.
+        // It is not guaranteed that adding 1 year will always add 365 days in the Japanese Calendar.
+        // To work around this quirk, we will change the calendar system to Gregorian before adding 1 year in the Japanese Calendar case only.
+        // We will then return the calendar system back to the Japanese Calendar.
+        if (currentCalendarSystem == L"JapaneseCalendar")
+        {
+            m_calendar->ChangeCalendarSystem(L"GregorianCalendar");
+        }
+
         m_calendar->AddYears(difference);
+        m_calendar->ChangeCalendarSystem(currentCalendarSystem);
         break;
     case DateUnit::Month:
         m_calendar->AddMonths(difference);
