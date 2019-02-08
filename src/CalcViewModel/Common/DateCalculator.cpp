@@ -284,9 +284,9 @@ DateTime DateCalculationEngine::AdjustCalendarDate(Windows::Foundation::DateTime
         // It is not guaranteed that adding 1 year will always add 365 days in the Japanese Calendar.
         // To work around this quirk, we will change the calendar system to Gregorian before adding 1 year in the Japanese Calendar case only.
         // We will then return the calendar system back to the Japanese Calendar.
-        if (currentCalendarSystem == L"JapaneseCalendar")
+        if (currentCalendarSystem == CalendarIdentifiers::Japanese)
         {
-            m_calendar->ChangeCalendarSystem(L"GregorianCalendar");
+            m_calendar->ChangeCalendarSystem(CalendarIdentifiers::Gregorian);
         }
 
         m_calendar->AddYears(difference);
