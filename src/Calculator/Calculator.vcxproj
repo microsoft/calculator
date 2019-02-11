@@ -136,11 +136,6 @@
     <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
     <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(XefOutputRoot)' != ''">
-    <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>$(Platform)</AppxBundlePlatforms>
-    <AppxBundlePlatforms Condition="'$(Platform)'=='win32'">x86</AppxBundlePlatforms>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /await /std:c++17 </AdditionalOptions>
@@ -209,6 +204,11 @@
       <AdditionalDependencies>WindowsApp.lib;$(VC_ReferencesPath_VC_x64)\pgort.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(IsStoreBuild)' == 'True'">
+    <ClCompile>
+      <AdditionalOptions>/DSEND_TELEMETRY %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <PropertyGroup>
     <AppVersion Condition="'$(AppVersion)' == ''">0.0.0.0</AppVersion>
   </PropertyGroup>
@@ -224,8 +224,6 @@
     <ClInclude Include="Controls\OverflowTextBlockAutomationPeer.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h" />
     <ClInclude Include="Common\BindableBase.h" />
-    <ClInclude Include="Common\LayoutAwarePage.h" />
-    <ClInclude Include="Common\SuspensionManager.h" />
     <ClInclude Include="Controls\AppBar.h" />
     <ClInclude Include="Controls\CalculationResult.h" />
     <ClInclude Include="Controls\CalculatorButton.h" />
@@ -360,8 +358,6 @@
     <ClCompile Include="Controls\CalculationResultAutomationPeer.cpp" />
     <ClCompile Include="Controls\OverflowTextBlockAutomationPeer.cpp" />
     <ClCompile Include="Common\BindableBase.cpp" />
-    <ClCompile Include="Common\LayoutAwarePage.cpp" />
-    <ClCompile Include="Common\SuspensionManager.cpp" />
     <ClCompile Include="Controls\CalculationResult.cpp" />
     <ClCompile Include="Controls\CalculatorButton.cpp" />
     <ClCompile Include="Controls\FlipButtons.cpp" />
@@ -822,9 +818,6 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CalcManager\CalcManager.vcxproj">
-      <Project>{311e866d-8b93-4609-a691-265941fee101}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">
       <Project>{90e9761d-9262-4773-942d-caeae75d7140}</Project>
     </ProjectReference>

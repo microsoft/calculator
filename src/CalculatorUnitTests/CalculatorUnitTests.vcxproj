@@ -2,7 +2,7 @@
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ProjectGuid>{d3baed2c-4b07-4e1d-8807-9d6499450349}</ProjectGuid>
-    <RootNamespace>CalculatorUnitTests_VS</RootNamespace>
+    <RootNamespace>CalculatorUnitTests</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -129,7 +129,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <PackageCertificateKeyFile>CalculatorUnitTests_VS_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>CalculatorUnitTests_TemporaryKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>3F0C32266A4D995CC08C9AEC3960CFF3EF0D1853</PackageCertificateThumbprint>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -259,7 +259,7 @@
     <Xml Include="UnitTestApp.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CalculatorUnitTests_VS_TemporaryKey.pfx" />
+    <None Include="CalculatorUnitTests_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="..\Calculator\Resources\en-US\CEngineStrings.resw" />
@@ -269,7 +269,7 @@
     </PRIResource>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="CalculatorUnitTests_VS.rc" />
+    <ResourceCompile Include="CalculatorUnitTests.rc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalcManager\CalcManager.vcxproj">

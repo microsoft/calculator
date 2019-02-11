@@ -5,6 +5,7 @@
 
 #include "ICalcDisplay.h"
 #include "IHistoryDisplay.h"
+#include "Rational.h"
 
 // maximum depth you can get by precedence. It is just an array's size limit.
 static constexpr size_t MAXPRECDEPTH = 25;
@@ -16,7 +17,7 @@ class CHistoryCollector {
 public:
     CHistoryCollector(ICalcDisplay *pCalcDisplay, std::shared_ptr<IHistoryDisplay> pHistoryDisplay, wchar_t decimalSymbol); // Can throw errors
     ~CHistoryCollector();
-    void AddOpndToHistory(std::wstring_view numStr, PRAT hNoNum, bool fRepetition = false);
+    void AddOpndToHistory(std::wstring_view numStr, CalcEngine::Rational const& rat, bool fRepetition = false);
     void RemoveLastOpndFromHistory();
     void AddBinOpToHistory(int nOpCode, bool fNoRepetition = true);
     void ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher);
