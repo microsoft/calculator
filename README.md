@@ -41,3 +41,24 @@ Want to contribute? The team encourages community feedback and contributions. Pl
 
 If Calculator is not working properly, please file a report in the [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130).
 We also welcome [issues submitted on GitHub](https://github.com/Microsoft/calculator/issues).
+
+# Data / Telemetry
+This project collects usage data and sends it to Microsoft to help improve our products and services.
+Read our [privacy statement](http://go.microsoft.com/fwlink/?LinkId=521839) to learn more.
+Telemetry is disabled in builds by default, and can be enabled with the `SEND_TELEMETRY` build flag.
+
+# Reporting Security Issues
+Security issues and bugs should be reported privately, via email, to the
+Microsoft Security Response Center (MSRC) at <[secure@microsoft.com](mailto:secure@microsoft.com)>.
+You should receive a response within 24 hours. If for some reason you do not, please follow up via
+email to ensure we received your original message. Further information, including the
+[MSRC PGP](https://technet.microsoft.com/en-us/security/dn606155) key, can be found in the
+[Security TechCenter](https://technet.microsoft.com/en-us/security/default).
+
+# License
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+Licensed under the [MIT License](.\LICENSE).
+
+# Contact
+Questions that can't be answered on GitHub? Reach out to the team: <[calculator@microsoft.com](mailto:calculator@microsoft.com)>
