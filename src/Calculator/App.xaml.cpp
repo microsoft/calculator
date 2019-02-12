@@ -255,9 +255,9 @@ void App::OnAppLaunch(IActivatedEventArgs^ args, String^ argument)
     // For very first launch, set the size of the calc as size of the default standard mode
     if (!localSettings->Values->HasKey(L"VeryFirstLaunch"))
     {
-        appView->PreferredLaunchViewSize = minWindowSize;
-        appView->PreferredLaunchWindowingMode = ApplicationViewWindowingMode::PreferredLaunchViewSize;
         localSettings->Values->Insert(ref new String(L"VeryFirstLaunch"), false);
+        appView->SetPreferredMinSize(minWindowSize);
+        appView->TryResizeView(minWindowSize);
     }
     else
     {
