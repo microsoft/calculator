@@ -6,6 +6,9 @@ labels: ''
 assignees: ''
 
 ---
+**Before filing a bug**
+- Ensure the bug reproduces on the latest version of the app.
+- Search existing issues and make sure this issue is not already filed.
 
 **Describe the bug**
 A clear and concise description of what the bug is.
@@ -27,6 +30,11 @@ If applicable, add screenshots to help explain your problem.
  - OS Build Number:
  - Architecture:
  - Application Version Number:
+
+ Run the following commands in Powershell and copy/paste the output.
+ - OS Build: "$([Environment]::OSVersion.Version)"
+ - Architecture: "$((Get-AppxPackage -Name Microsoft.WindowsCalculator).Architecture)"
+ - Application Version: "$((Get-AppxPackage -Name Microsoft.WindowsCalculator).Version)"
 
 **Additional context**
 Add any other context about the problem here.
