@@ -45,7 +45,8 @@ We also welcome [issues submitted on GitHub](https://github.com/Microsoft/calcul
 # Data / Telemetry
 This project collects usage data and sends it to Microsoft to help improve our products and services.
 Read our [privacy statement](http://go.microsoft.com/fwlink/?LinkId=521839) to learn more.
-Telemetry is disabled in builds by default, and can be enabled with the `SEND_TELEMETRY` build flag.
+Telemetry is disabled in development builds by default, and can be enabled with the `SEND_TELEMETRY`
+build flag.
 
 # Reporting Security Issues
 Security issues and bugs should be reported privately, via email, to the
