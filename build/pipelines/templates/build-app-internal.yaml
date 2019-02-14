@@ -35,6 +35,15 @@ jobs:
     parameters:
       extraMsBuildArgs: '/p:IsStoreBuild=true'
 
+  - task: PublishSymbols@2
+    displayName: Publish symbols
+    inputs:
+      symbolsFolder: $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)
+      searchPattern: '**/*.pdb'
+      symbolServerType: teamServices
+      treatNotIndexedAsWarning: true
+      symbolsArtifactName: $(System.teamProject)/$(Build.BuildNumber)_$(BuildPlatform)$(BuildConfiguration)
+
   - task: securedevelopmentteam.vss-secure-development-tools.build-task-binskim.BinSkim@3
     displayName: Run BinSkim
     inputs:
