@@ -1,11 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
 #include "ApplicationViewModel.h"
+#include "Common\TraceLogger.h"
+#include "Common\AppResourceProvider.h"
 #include "StandardCalculatorViewModel.h"
 #include "DateCalculatorViewModel.h"
-#include "Common\AppResourceProvider.h"
 #include "DataLoaders\CurrencyHttpClient.h"
 #include "DataLoaders\CurrencyDataLoader.h"
 #include "DataLoaders\UnitConverterDataLoader.h"

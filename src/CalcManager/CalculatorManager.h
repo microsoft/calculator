@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 #pragma once
+
 #include "CalculatorHistory.h"
-#include "Header Files\Rational.h"
+#include "Header Files/CalcEngine.h"
+#include "Header Files/Rational.h"
+#include "Header Files/ICalcDisplay.h"
 
 namespace CalculationManager
 {

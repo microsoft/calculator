@@ -7,6 +7,7 @@
 #include "Common\LocalizationStringUtil.h"
 #include "Common\LocalizationSettings.h"
 #include "Common\CopyPasteManager.h"
+#include "Common\TraceLogger.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;

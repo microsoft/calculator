@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 /* The NavCategory group of classes and enumerations is intended to serve
@@ -13,6 +13,9 @@
  */
 
 #pragma once
+
+#include "Utils.h"
+#include "MyVirtualKey.h"
 
 namespace CalculatorApp
 {
@@ -59,7 +62,7 @@ namespace CalculatorApp
                 wchar_t const * nameKey,
                 wchar_t const * glyph,
                 CategoryGroupType group,
-                CalculatorApp::Common::MyVirtualKey vKey,
+                MyVirtualKey vKey,
                 bool categorySupportsNegative)
                 :
                 viewMode(mode),
@@ -78,7 +81,7 @@ namespace CalculatorApp
             const wchar_t * const nameResourceKey;
             const wchar_t * const glyph;
             const CategoryGroupType groupType;
-            const CalculatorApp::Common::MyVirtualKey virtualKey;
+            const MyVirtualKey virtualKey;
             const bool supportsNegative;
         };
 
@@ -173,7 +176,7 @@ namespace CalculatorApp
             static int GetIndexInGroup(ViewMode mode, CategoryGroupType type);
             static int GetPosition(ViewMode mode);
 
-            static ViewMode GetViewModeForVirtualKey(CalculatorApp::Common::MyVirtualKey virtualKey);
+            static ViewMode GetViewModeForVirtualKey(MyVirtualKey virtualKey);
 
         internal:
             NavCategory(Platform::String^ name, Platform::String^ automationName, Platform::String^ glyph, Platform::String^ accessKey, Platform::String^ mode, ViewMode viewMode, bool supportsNegative) :
@@ -188,7 +191,7 @@ namespace CalculatorApp
                 m_position = NavCategory::GetPosition(m_viewMode);
             }
 
-            static std::vector<CalculatorApp::Common::MyVirtualKey> GetCategoryAcceleratorKeys();
+            static std::vector<MyVirtualKey> GetCategoryAcceleratorKeys();
 
         private:
             static bool IsModeInCategoryGroup(ViewMode mode, CategoryGroupType groupType);

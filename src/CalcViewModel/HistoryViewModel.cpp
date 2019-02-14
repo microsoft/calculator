@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "HistoryViewModel.h"
+#include "Common\TraceLogger.h"
 #include "Common\LocalizationStringUtil.h"
 #include "Common\LocalizationSettings.h"
 
@@ -17,7 +18,6 @@ using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Security::Cryptography;
 using namespace Windows::Foundation::Collections;
-using CalculatorApp::TraceLogger;
 
 static StringReference HistoryVectorLengthKey{ L"HistoryVectorLength" };
 

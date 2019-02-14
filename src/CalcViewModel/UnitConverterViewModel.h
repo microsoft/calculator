@@ -1,11 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
 
-#include "Common\NetworkManager.h"
-#include "Common\Automation\NarratorAnnouncement.h"
-#include "Common\ConversionResultTaskHelper.h"
+#include "CalcManager/UnitConverter.h"
+#include "Common/Utils.h"
+#include "Common/NetworkManager.h"
+#include "Common/Automation/NarratorAnnouncement.h"
+#include "Common/ConversionResultTaskHelper.h"
+#include "Common/CalculatorButtonUser.h"
+#include "Common/NavCategory.h"
 
 namespace CalculatorApp
 {

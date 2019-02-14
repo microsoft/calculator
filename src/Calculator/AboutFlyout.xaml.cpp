@@ -1,11 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
 #include "AboutFlyout.xaml.h"
-#include "CalcViewModel\Common\AppResourceProvider.h"
-#include "CalcViewModel\Common\LocalizationService.h"
-#include "CalcViewModel\Common\LocalizationStringUtil.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
+#include "CalcViewModel/Common/LocalizationService.h"
+#include "CalcViewModel/Common/LocalizationStringUtil.h"
+#include "CalcViewModel/Common/TraceLogger.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
