@@ -17,11 +17,7 @@ jobs:
       in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
     ) 
   pool:
-    name: Package ES Custom Demands Lab A
-    demands:
-    - msbuild
-    - visualstudio
-    - ClientAlias -equals PKGESUTILAPPS
+    vmImage: vs2017-win2016
   workspace:
     clean: outputs
   steps:
