@@ -22,7 +22,7 @@
 //
 // RETAIL version of NUMOBJ math that uses Infinite Precision
 //
-#include "Ratpack/ratpak.h"
+#include "../Ratpack/ratpak.h"
 
 //
 // Unary functions

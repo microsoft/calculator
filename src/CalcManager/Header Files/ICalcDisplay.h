@@ -1,7 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
+
+#include "../CalculatorVector.h"
+#include "../ExpressionCommandInterface.h"
 
 // Callback interface to be implemented by the clients of CCalcEngine
 class ICalcDisplay {

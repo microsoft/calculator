@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -43,19 +43,3 @@
 namespace StandardPeers = Windows::UI::Xaml::Automation::Peers;
 namespace CalculatorApp::Common::Automation {}
 namespace CustomPeers = CalculatorApp::Common::Automation;
-
-// CalcManager Headers
-#include "CalcManager\CalculatorVector.h"
-#include "CalcManager\ExpressionCommand.h"
-#include "CalcManager\CalculatorResource.h"
-#include "CalcManager\CalculatorManager.h"
-#include "CalcManager\UnitConverter.h"
-
-// Project Headers
-#include "Common\DelegateCommand.h"
-#include "Common\Utils.h"
-#include "Common\MyVirtualKey.h"
-#include "Common\NavCategory.h"
-#include "Common\TraceLogger.h"
-#include "Common\CalculatorButtonUser.h"
-

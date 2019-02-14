@@ -3,13 +3,14 @@
 
 #include "pch.h"
 #include "MainPage.xaml.h"
-#include "Views\Memory.xaml.h"
-#include "Converters\BooleanToVisibilityConverter.h"
-#include "CalcViewModel\Common\KeyboardShortcutManager.h"
-#include "CalcViewModel\Common\LocalizationService.h"
-#include "CalcViewModel\Common\Automation\NarratorNotifier.h"
-#include "CalcViewModel\Common\AppResourceProvider.h"
-#include "Common\AppLifecycleLogger.h"
+#include "CalcViewModel/Common/TraceLogger.h"
+#include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "CalcViewModel/Common/LocalizationService.h"
+#include "CalcViewModel/Common/Automation/NarratorNotifier.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
+#include "Views/Memory.xaml.h"
+#include "Converters/BooleanToVisibilityConverter.h"
+#include "Common/AppLifecycleLogger.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;

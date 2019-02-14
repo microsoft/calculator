@@ -8,11 +8,12 @@
 
 #include "pch.h"
 #include "App.xaml.h"
-#include "CalcViewModel\ViewState.h"
-#include "CalcViewModel\Common\Automation\NarratorNotifier.h"
-#include "CalcViewModel\Common\AppResourceProvider.h"
-#include "CalcViewModel\Common\LocalizationSettings.h"
-#include "Views\MainPage.xaml.h"
+#include "CalcViewModel/Common/TraceLogger.h"
+#include "CalcViewModel/Common/Automation/NarratorNotifier.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
+#include "CalcViewModel/ViewState.h"
+#include "Views/MainPage.xaml.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
