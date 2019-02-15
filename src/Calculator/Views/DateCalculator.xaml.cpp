@@ -8,9 +8,10 @@
 
 #include "pch.h"
 #include "DateCalculator.xaml.h"
-#include "CalcViewModel\Common\CopyPasteManager.h"
-#include "CalcViewModel\Common\LocalizationSettings.h"
-#include "CalcViewModel\DateCalculatorViewModel.h"
+#include "CalcViewModel/Common/TraceLogger.h"
+#include "CalcViewModel/Common/CopyPasteManager.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
+#include "CalcViewModel/DateCalculatorViewModel.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;

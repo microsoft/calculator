@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 /* The AspectRatioTrigger class is a custom trigger for use with a VisualState. The trigger is designed to fire when the
@@ -8,6 +8,8 @@
    greater than the threshold, or if equal should be considered acceptable for the state to trigger. */
 
 #pragma once
+
+#include "CalcViewModel/Common/Utils.h"
 
 namespace CalculatorApp::Views::StateTriggers
 {

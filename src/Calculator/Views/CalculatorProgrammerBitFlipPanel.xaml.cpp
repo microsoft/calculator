@@ -8,8 +8,9 @@
 
 #include "pch.h"
 #include "CalculatorProgrammerBitFlipPanel.xaml.h"
-#include "CalcViewModel\Common\LocalizationSettings.h"
-#include "Converters\BooleanToVisibilityConverter.h"
+#include "CalcViewModel/Common/TraceLogger.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
+#include "Converters/BooleanToVisibilityConverter.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
