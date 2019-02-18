@@ -26,6 +26,7 @@ Rational RationalMath::Frac(Rational const& rat, uint32_t radix, int32_t precisi
 
     return result;
 }
+
 Rational RationalMath::Integer(Rational const& rat, uint32_t radix, int32_t precision)
 {
     PRAT prat = rat.ToPRAT();
@@ -67,10 +68,12 @@ Rational RationalMath::Pow(Rational const& base, Rational const& pow, uint32_t r
 
     return result;
 }
+
 Rational RationalMath::Root(Rational const& base, Rational const& root, uint32_t radix, int32_t precision)
 {
     return Pow(base, Invert(root, precision), radix, precision);
 }
+
 Rational RationalMath::Fact(Rational const& rat, uint32_t radix, int32_t precision)
 {
     PRAT prat = rat.ToPRAT();
@@ -110,6 +113,7 @@ Rational RationalMath::Exp(Rational const& rat, uint32_t radix, int32_t precisio
 
     return result;
 }
+
 Rational RationalMath::Log(Rational const& rat, int32_t precision)
 {
     PRAT prat = rat.ToPRAT();
@@ -129,6 +133,7 @@ Rational RationalMath::Log(Rational const& rat, int32_t precision)
 
     return result;
 }
+
 Rational RationalMath::Log10(Rational const& rat, int32_t precision)
 {
     return Log(rat, precision).Div(10, precision);
@@ -138,6 +143,7 @@ Rational RationalMath::Invert(Rational const& rat, int32_t precision)
 {
     return Rational{ 1 }.Div(rat, precision);
 }
+
 Rational RationalMath::Abs(Rational const& rat)
 {
     return Rational{ Number{ 1, rat.P().Exp(), rat.P().Mantissa() }, Number{ 1, rat.Q().Exp(), rat.Q().Mantissa() } };
@@ -162,6 +168,7 @@ Rational RationalMath::Sin(Rational const& rat, ANGLE_TYPE angletype, uint32_t r
 
     return result;
 }
+
 Rational RationalMath::Cos(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
 {
     PRAT prat = rat.ToPRAT();
@@ -181,6 +188,7 @@ Rational RationalMath::Cos(Rational const& rat, ANGLE_TYPE angletype, uint32_t r
 
     return result;
 }
+
 Rational RationalMath::Tan(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
 {
     PRAT prat = rat.ToPRAT();
@@ -220,6 +228,7 @@ Rational RationalMath::ASin(Rational const& rat, ANGLE_TYPE angletype, uint32_t 
 
     return result;
 }
+
 Rational RationalMath::ACos(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
 {
     PRAT prat = rat.ToPRAT();
@@ -239,6 +248,7 @@ Rational RationalMath::ACos(Rational const& rat, ANGLE_TYPE angletype, uint32_t 
 
     return result;
 }
+
 Rational RationalMath::ATan(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
 {
     PRAT prat = rat.ToPRAT();
@@ -278,6 +288,7 @@ Rational RationalMath::Sinh(Rational const& rat, uint32_t radix, int32_t precisi
 
     return result;
 }
+
 Rational RationalMath::Cosh(Rational const& rat, uint32_t radix, int32_t precision)
 {
     PRAT prat = rat.ToPRAT();
@@ -297,6 +308,7 @@ Rational RationalMath::Cosh(Rational const& rat, uint32_t radix, int32_t precisi
 
     return result;
 }
+
 Rational RationalMath::Tanh(Rational const& rat, uint32_t radix, int32_t precision)
 {
     PRAT prat = rat.ToPRAT();
@@ -336,6 +348,7 @@ Rational RationalMath::ASinh(Rational const& rat, uint32_t radix, int32_t precis
 
     return result;
 }
+
 Rational RationalMath::ACosh(Rational const& rat, uint32_t radix, int32_t precision)
 {
     PRAT prat = rat.ToPRAT();
@@ -355,6 +368,7 @@ Rational RationalMath::ACosh(Rational const& rat, uint32_t radix, int32_t precis
 
     return result;
 }
+
 Rational RationalMath::ATanh(Rational const& rat, int32_t precision)
 {
     PRAT prat = rat.ToPRAT();

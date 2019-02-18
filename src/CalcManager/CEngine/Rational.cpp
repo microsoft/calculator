@@ -90,6 +90,7 @@ namespace CalcEngine
     {
         return Rational{ Number{ -1 * m_p.Sign(), m_p.Exp(), m_p.Mantissa() }, m_q};
     }
+
     Rational Rational::Add(Rational const& rhs, int32_t precision) const
     {
         PRAT lhsRat = this->ToPRAT();
@@ -112,6 +113,7 @@ namespace CalcEngine
 
         return result;
     }
+
     Rational Rational::Sub(Rational const& rhs, int32_t precision) const
     {
         PRAT lhsRat = this->ToPRAT();
@@ -134,6 +136,7 @@ namespace CalcEngine
 
         return result;
     }
+
     Rational Rational::Mul(Rational const& rhs, int32_t precision) const
     {
         PRAT lhsRat = this->ToPRAT();
@@ -156,6 +159,7 @@ namespace CalcEngine
 
         return result;
     }
+
     Rational Rational::Div(Rational const& rhs, int32_t precision) const
     {
         PRAT lhsRat = this->ToPRAT();
@@ -178,6 +182,7 @@ namespace CalcEngine
 
         return result;
     }
+
     Rational Rational::Mod(Rational const& rhs) const
     {
         PRAT lhsRat = this->ToPRAT();
@@ -223,6 +228,7 @@ namespace CalcEngine
 
         return result;
     }
+
     Rational Rational::Rsh(Rational const& rhs, uint32_t radix, int32_t precision) const
     {
         PRAT lhsRat = this->ToPRAT();
@@ -263,6 +269,7 @@ namespace CalcEngine
 
         return result;
     }
+
     Rational Rational::And(Rational const& rhs, uint32_t radix, int32_t precision) const
     {
         PRAT lhsRat = this->ToPRAT();
@@ -285,6 +292,7 @@ namespace CalcEngine
 
         return result;
     }
+
     Rational Rational::Or(Rational const& rhs, uint32_t radix, int32_t precision) const
     {
         PRAT lhsRat = this->ToPRAT();
@@ -306,6 +314,7 @@ namespace CalcEngine
 
         return result;
     }
+
     Rational Rational::Xor(Rational const& rhs, uint32_t radix, int32_t precision) const
     {
         PRAT lhsRat = this->ToPRAT();
@@ -448,7 +457,7 @@ namespace CalcEngine
     uint64_t Rational::ToUInt64_t(uint32_t radix, int32_t precision) const
     {
         PRAT rat = this->ToPRAT();
-        uint64_t result{};
+        uint64_t result;
         try
         {
             result = rattoUlonglong(rat, radix, precision);
