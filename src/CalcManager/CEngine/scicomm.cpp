@@ -718,7 +718,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     {
         /* MPLUS adds m_currentVal to immediate memory and kills the "mem"   */
         /* indicator if the result is zero.                           */
-        Rational result = (*m_memoryValue).Add(m_currentVal, m_precision);
+        Rational result = m_memoryValue->Add(m_currentVal, m_precision);
         m_memoryValue = make_unique<Rational>(TruncateNumForIntMath(result)); // Memory should follow the current int mode
 
         break;
@@ -727,7 +727,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     {
         /* MMINUS subtracts m_currentVal to immediate memory and kills the "mem"   */
         /* indicator if the result is zero.                           */
-        Rational result = (*m_memoryValue).Sub(m_currentVal, m_precision);
+        Rational result = m_memoryValue->Sub(m_currentVal, m_precision);
         m_memoryValue = make_unique<Rational>(TruncateNumForIntMath(result));
 
         break;
