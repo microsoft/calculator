@@ -1,7 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
+
+#include "CalcManager/CalculatorVector.h"
+#include "CalcManager/ExpressionCommandInterface.h"
+#include "DelegateCommand.h"
 
 // Utility macros to make Models easier to write
 // generates a member variable called m_<n>

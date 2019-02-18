@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "DateCalculatorViewModel.h"
+#include "Common\TraceLogger.h"
 #include "Common\LocalizationStringUtil.h"
 #include "Common\LocalizationService.h"
 #include "Common\LocalizationSettings.h"

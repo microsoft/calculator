@@ -1,10 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
 #include "CalculatorProgrammerOperators.xaml.h"
-#include "CalcViewModel\StandardCalculatorViewModel.h"
-#include "CalcViewModel\Common\CopyPasteManager.h"
+#include "CalcViewModel/Common/TraceLogger.h"
+#include "CalcViewModel/Common/CopyPasteManager.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;

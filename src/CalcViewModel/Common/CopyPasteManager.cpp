@@ -1,8 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
 #include "CopyPasteManager.h"
+#include "Common\TraceLogger.h"
 #include "Common\LocalizationSettings.h"
 
 using namespace std;

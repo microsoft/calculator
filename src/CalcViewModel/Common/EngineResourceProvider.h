@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "CalcManager\CalculatorResource.h"
+
 namespace CalculatorApp
 {
     class EngineResourceProvider : public CalculationManager::IResourceProvider

@@ -17,9 +17,9 @@
 #include "scimath.h"
 #include "CCommand.h"
 #include "EngineStrings.h"
-#include "Command.h"
-#include "CalculatorVector.h"
-#include "ExpressionCommand.h"
+#include "../Command.h"
+#include "../CalculatorVector.h"
+#include "../ExpressionCommand.h"
 #include "History.h"  // for History Collector
 #include "CalcInput.h"
 #include "ICalcDisplay.h"

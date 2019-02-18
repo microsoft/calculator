@@ -1,8 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
 #include "CalculatorProgrammerDisplayPanel.xaml.h"
+#include "CalcViewModel/Common/TraceLogger.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::ViewModel;

@@ -8,11 +8,12 @@
 
 #include "pch.h"
 #include "App.xaml.h"
-#include "CalcViewModel\ViewState.h"
-#include "CalcViewModel\Common\Automation\NarratorNotifier.h"
-#include "CalcViewModel\Common\AppResourceProvider.h"
-#include "CalcViewModel\Common\LocalizationSettings.h"
-#include "Views\MainPage.xaml.h"
+#include "CalcViewModel/Common/TraceLogger.h"
+#include "CalcViewModel/Common/Automation/NarratorNotifier.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
+#include "CalcViewModel/ViewState.h"
+#include "Views/MainPage.xaml.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -255,9 +256,9 @@ void App::OnAppLaunch(IActivatedEventArgs^ args, String^ argument)
     // For very first launch, set the size of the calc as size of the default standard mode
     if (!localSettings->Values->HasKey(L"VeryFirstLaunch"))
     {
-        appView->PreferredLaunchViewSize = minWindowSize;
-        appView->PreferredLaunchWindowingMode = ApplicationViewWindowingMode::PreferredLaunchViewSize;
         localSettings->Values->Insert(ref new String(L"VeryFirstLaunch"), false);
+        appView->SetPreferredMinSize(minWindowSize);
+        appView->TryResizeView(minWindowSize);
     }
     else
     {
