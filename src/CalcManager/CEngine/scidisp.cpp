@@ -61,7 +61,7 @@ CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational con
 
     // Can be converting a dec negative number to Hex/Oct/Bin rep. Use 2's complement form
     // Check the range.
-    if (result.IsLess(Rational{}, m_precision))
+    if (result.IsLess(0, m_precision))
     {
         // if negative make positive by doing a twos complement
         result = result.Negate();
@@ -146,7 +146,7 @@ int CCalcEngine::IsNumberInvalid(const wstring& numberString, int iMaxExp, int i
         // in case there's an exponent:
         //      its optionally followed by a + or -
         //      which is followed by zero or more digits
-        wregex rx(wstring{ c_decPreSepStr } +m_decimalSeparator + wstring{ c_decPostSepStr });
+        wregex rx(wstring{ c_decPreSepStr } + m_decimalSeparator + wstring{ c_decPostSepStr });
         wsmatch matches;
         if (regex_match(numberString, matches, rx))
         {

@@ -37,7 +37,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
 
             /* Return complement. */
         case IDC_COM:
-            result = rat.Not(true, m_chopNumbers[m_numwidth], m_radix, m_precision);
+            result = rat.Not(m_fIntegerMode, m_chopNumbers[m_numwidth], m_radix, m_precision);
             break;
 
             // Rotate Left with hi bit wrapped over to lo bit
@@ -136,7 +136,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             result = Pow(rat, 2, m_radix, m_precision);
             break;
 
-        case IDC_SQRT: /* Sqrt only in Std mode */
+        case IDC_SQRT: /* Square Root */
             result = Root(rat, 2, m_radix, m_precision);
             break;
 
