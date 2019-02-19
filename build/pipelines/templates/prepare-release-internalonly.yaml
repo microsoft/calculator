@@ -14,9 +14,7 @@ jobs:
 - job: WindowsInternalRelease
   dependsOn: Package
   pool:
-    name: Package ES Custom Demands Lab A
-    demands:
-    - ClientAlias -equals PKGESUTILAPPS
+    name: Package ES Lab E
   workspace:
     clean: outputs
   steps:

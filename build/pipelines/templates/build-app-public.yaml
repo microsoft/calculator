@@ -10,11 +10,7 @@ jobs:
   displayName: Build ${{ parameters.platform }}
   condition: ${{ parameters.condition }}
   pool:
-    name: Package ES Custom Demands Lab A
-    demands:
-    - msbuild
-    - visualstudio
-    - ClientAlias -equals PKGESUTILAPPS
+    vmImage: vs2017-win2016
   variables:
     BuildConfiguration: Release
     BuildPlatform: ${{ parameters.platform }}
