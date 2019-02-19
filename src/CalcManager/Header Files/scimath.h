@@ -1,79 +1,35 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-/**************************************************************************\
-*                                                                          *
-*                                                                          *
-*                                                                          *
-*    #          #                           #####                          *
-*    #         #              #             #    #                         *
-*    #         #  #        #  #             #    #                         *
-*    #        ###            ###            #    #                         *
-*    # # ###   #  # # ###  #  #   ###       #####  # ###  ###   ###        *
-*    # ##   #  #  # ##   # #  #  #   #      #      ##    #   # #           *
-*    # #    #  #  # #    # #  #  #####      #      #     ##### #           *
-*    # #    #  #  # #    # #  #  #          #      #     #     #    ##     *
-*    # #    #  #  # #    # #   #  ###       #      #      ###   ### ##     *
-*                                                                          *
-*                                                                          *
-*              Infinte Precision Production Version                        *
-*                                                                          *
-\**************************************************************************/
-//
-// RETAIL version of NUMOBJ math that uses Infinite Precision
-//
-#include "../Ratpack/ratpak.h"
+#include "Rational.h"
 
-//
-// Unary functions
-//
-void NumObjInvert(PRAT *phno, int32_t precision);
-void NumObjNegate(PRAT *phno);
-void NumObjAbs(PRAT *phno);
+namespace CalcEngine::RationalMath
+{
+    Rational Frac(Rational const& rat, uint32_t radix, int32_t precision);
+    Rational Integer(Rational const& rat, uint32_t radix, int32_t precision);
 
-void NumObjSin(PRAT *phno, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
-void NumObjCos(PRAT *phno, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
-void NumObjTan(PRAT *phno, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
-void NumObjAntiLog10(PRAT *phno, uint32_t radix, int32_t precision);
+    Rational Pow(Rational const& base, Rational const& pow, uint32_t radix, int32_t precision);
+    Rational Root(Rational const& base, Rational const& root, uint32_t radix, int32_t precision);
+    Rational Fact(Rational const& rat, uint32_t radix, int32_t precision);
 
-void NumObjNot(PRAT *phno, bool fIntegerMode, PRAT chopNum, uint32_t radix, int32_t precision);
+    Rational Exp(Rational const& rat, uint32_t radix, int32_t precision);
+    Rational Log(Rational const& rat, int32_t precision);
+    Rational Log10(Rational const& rat, int32_t precision);
 
-//
-// Comparison functions
-//
-bool NumObjIsZero(PRAT hno);
-bool NumObjIsLess(PRAT hno1, PRAT hno2, int32_t precision);
-bool NumObjIsLessEq(PRAT hno1, PRAT hno2, int32_t precision);
-bool NumObjIsGreaterEq(PRAT hno1, PRAT hno2, int32_t precision);
-bool NumObjIsEq(PRAT hno1, PRAT hno2, int32_t precision);
+    Rational Invert(Rational const& rat, int32_t precision);
+    Rational Abs(Rational const& rat);
 
-//
-// Assignment operator.  ('=' in C language)
-//
-void NumObjAssign(PRAT *phnol, PRAT hnor);
+    Rational Sin(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
+    Rational Cos(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
+    Rational Tan(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
+    Rational ASin(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
+    Rational ACos(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
+    Rational ATan(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
 
-//
-// Data type conversion functions
-//
-void NumObjSetIntValue(PRAT *phnol, LONG i );
-void NumObjSetUlonglongValue(PRAT *phnol, ULONGLONG ul, uint32_t radix, int32_t precision);
-
-ULONGLONG NumObjGetUlValue( PRAT hnol, uint32_t radix, int32_t precision);
-
-// Returns a string representation of hnoNum
-std::wstring NumObjToString(PRAT hnoNum, uint32_t radix, NUMOBJ_FMT fmt, int32_t precision);
-
-//
-//  NumObjGetExp
-//
-//  returns an int that equals the exponent of the NumObj
-//
-int32_t NumObjGetExp(PRAT hno);
-
-//
-//  NumObjDestroy( hno )
-//
-//      call this when you nolonger need the NumObj.  Failure to do so
-//  will result in memory leaks.
-//
-void NumObjDestroy(PRAT *phno);
+    Rational Sinh(Rational const& rat, uint32_t radix, int32_t precision);
+    Rational Cosh(Rational const& rat, uint32_t radix, int32_t precision);
+    Rational Tanh(Rational const& rat, uint32_t radix, int32_t precision);
+    Rational ASinh(Rational const& rat, uint32_t radix, int32_t precision);
+    Rational ACosh(Rational const& rat, uint32_t radix, int32_t precision);
+    Rational ATanh(Rational const& rat, int32_t precision);
+}

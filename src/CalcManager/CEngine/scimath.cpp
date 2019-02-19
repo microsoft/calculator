@@ -3,204 +3,388 @@
 
 #include "pch.h"
 #include "Header Files/CalcEngine.h"
+#include "Ratpack/ratpak.h"
 
 using namespace std;
+using namespace CalcEngine;
 
-/**************************************************************************\
-*                                                                          *
-*                                                                          *
-*                                                                          *
-*    #          #                           #####                          *
-*    #         #              #             #    #                         *
-*    #         #  #        #  #             #    #                         *
-*    #        ###            ###            #    #                         *
-*    # # ###   #  # # ###  #  #   ###       #####  # ###  ###   ###        *
-*    # ##   #  #  # ##   # #  #  #   #      #      ##    #   # #           *
-*    # #    #  #  # #    # #  #  #####      #      #     ##### #           *
-*    # #    #  #  # #    # #  #  #          #      #     #     #    ##     *
-*    # #    #  #  # #    # #   #  ###       #      #      ###   ### ##     *
-*                                                                          *
-*                                                                          *
-*              Infinte Precision Production Version                        *
-*                                                                          *
-\**************************************************************************/
-//
-// RETAIL version of NUMOBJ math that uses Infinite Precision
-//
-// History
-//
-//  16-Nov-1996 Wrote it
-//  whenever-97 Rewrote it using improved ratpak model
-//
-
-/*****************************************************************\
-*
-* Generic Math Package support routines and variables
-*
-* History:
-*   01-Dec-1996 Wrote them
-*   whenever-97 Rewrote them
-*
-\*****************************************************************/
-
-/*****************************************************************\
-*
-* Unary functions
-*
-* History:
-*   01-Dec-1996 Wrote them
-*   whenever-97 Rewrote them
-*
-\*****************************************************************/
-
-void NumObjInvert(PRAT * phno, int32_t precision)
+Rational RationalMath::Frac(Rational const& rat, uint32_t radix, int32_t precision)
 {
-    PRAT hno = nullptr;
-
-    NumObjAssign( &hno, rat_one);
-    divrat( &hno, *phno, precision);
-    NumObjAssign( phno, hno );
-    NumObjDestroy( &hno );
-}
-
-void NumObjNegate(PRAT *phno)
-{
-    (*phno)->pp->sign = -(*phno)->pp->sign;
-}
-
-void NumObjAbs(PRAT *phno)
-{
-    (*phno)->pp->sign = 1;
-    (*phno)->pq->sign = 1;
-}
-
-void NumObjAntiLog10(PRAT *phno, uint32_t radix, int32_t precision)
-{
-    PRAT hno = nullptr;
-
-    NumObjSetIntValue( &hno, 10 );
-    powrat( &hno, *phno, radix, precision);
-    NumObjAssign( phno, hno );
-    NumObjDestroy( &hno );
-}
-
-void NumObjNot(PRAT *phno, bool fIntegerMode, PRAT chopNum, uint32_t radix, int32_t precision)
-{
-    if (radix == 10 && !fIntegerMode)
+    PRAT prat = rat.ToPRAT();
+    try
     {
-        intrat( phno, radix, precision);
-        addrat( phno, rat_one, precision);
-        NumObjNegate( phno );
+        fracrat(&prat, radix, precision);
     }
-    else
+    catch (DWORD error)
     {
-
-        xorrat( phno, chopNum, radix, precision);
+        destroyrat(prat);
+        throw(error);
     }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
 }
 
-void NumObjSin(PRAT *phno, ANGLE_TYPE angletype, uint32_t radix, int32_t precision )
+Rational RationalMath::Integer(Rational const& rat, uint32_t radix, int32_t precision)
 {
-    sinanglerat(phno, angletype, radix, precision);
+    PRAT prat = rat.ToPRAT();
+    try
+    {
+        intrat(&prat, radix, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
 }
 
-void NumObjCos(PRAT *phno, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
+Rational RationalMath::Pow(Rational const& base, Rational const& pow, uint32_t radix, int32_t precision)
 {
-    cosanglerat(phno, angletype, radix, precision);
+    PRAT baseRat = base.ToPRAT();
+    PRAT powRat = pow.ToPRAT();
+
+    try
+    {
+        powrat(&baseRat, powRat, radix, precision);
+        destroyrat(powRat);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(baseRat);
+        destroyrat(powRat);
+        throw(error);
+    }
+
+    Rational result{ baseRat };
+    destroyrat(baseRat);
+
+    return result;
 }
 
-void NumObjTan(PRAT *phno, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
+Rational RationalMath::Root(Rational const& base, Rational const& root, uint32_t radix, int32_t precision)
 {
-    tananglerat(phno, angletype, radix, precision);
+    return Pow(base, Invert(root, precision), radix, precision);
 }
 
-/******************************************************************\
-*
-* Number format conversion routines
-*
-* History:
-*   06-Dec-1996 wrote them
-\******************************************************************/
-void NumObjSetIntValue(PRAT *phnol, LONG i )
+Rational RationalMath::Fact(Rational const& rat, uint32_t radix, int32_t precision)
 {
-    PRAT pr = nullptr;
+    PRAT prat = rat.ToPRAT();
 
-    pr = longtorat( i );
-    NumObjAssign( phnol, pr );
-    destroyrat(pr);
+    try
+    {
+        factrat(&prat, radix, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
 }
 
-void NumObjSetIUlongValue(PRAT *phnol, ULONG ul )
+Rational RationalMath::Exp(Rational const& rat, uint32_t radix, int32_t precision)
 {
-    PRAT pr = nullptr;
+    PRAT prat = rat.ToPRAT();
 
-    pr = Ulongtorat( ul );
-    NumObjAssign( phnol, pr );
-    destroyrat(pr);
+    try
+    {
+        exprat(&prat, radix, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
 }
 
-// A Set with 64 bit number
-void NumObjSetUlonglongValue(PRAT *phnol, ULONGLONG ul, uint32_t radix, int32_t precision)
+Rational RationalMath::Log(Rational const& rat, int32_t precision)
 {
-    ULONG hi, lo;
-    PRAT hno = nullptr;
+    PRAT prat = rat.ToPRAT();
 
-    hi = HIDWORD(ul);
-    lo = LODWORD(ul);
-    NumObjSetIUlongValue(phnol, hi);
-    NumObjSetIntValue(&hno, 32);
-    lshrat(phnol, hno, radix, precision);
-    NumObjSetIUlongValue(&hno, lo);
-    orrat(phnol, hno, radix, precision);
-    NumObjDestroy(&hno);
+    try
+    {
+        lograt(&prat, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
 }
 
-ULONGLONG NumObjGetUlValue( PRAT hnol, uint32_t radix, int32_t precision)
+Rational RationalMath::Log10(Rational const& rat, int32_t precision)
 {
-    return rattoUlonglong(hnol, radix, precision);
+    return Log(rat, precision).Div(10, precision);
 }
 
-wstring NumObjToString(PRAT hnoNum, uint32_t radix, NUMOBJ_FMT fmt, int32_t precision)
+Rational RationalMath::Invert(Rational const& rat, int32_t precision)
 {
-    return RatToString(hnoNum, fmt, radix, precision);
+    return Rational{ 1 }.Div(rat, precision);
 }
 
-bool NumObjIsZero(PRAT hno)
+Rational RationalMath::Abs(Rational const& rat)
 {
-    return zerrat(hno);
+    return Rational{ Number{ 1, rat.P().Exp(), rat.P().Mantissa() }, Number{ 1, rat.Q().Exp(), rat.Q().Mantissa() } };
 }
 
-bool NumObjIsLess(PRAT hno1, PRAT hno2, int32_t precision)
+Rational RationalMath::Sin(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
 {
-    return rat_lt(hno1, hno2, precision);
+    PRAT prat = rat.ToPRAT();
+
+    try
+    {
+        sinanglerat(&prat, angletype, radix, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
 }
 
-bool NumObjIsLessEq(PRAT hno1, PRAT hno2, int32_t precision)
+Rational RationalMath::Cos(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
 {
-    return rat_le(hno1, hno2, precision);
+    PRAT prat = rat.ToPRAT();
+
+    try
+    {
+        cosanglerat(&prat, angletype, radix, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
 }
 
-bool NumObjIsGreaterEq(PRAT hno1, PRAT hno2, int32_t precision)
+Rational RationalMath::Tan(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
 {
-    return rat_ge(hno1, hno2, precision);
+    PRAT prat = rat.ToPRAT();
+
+    try
+    {
+        tananglerat(&prat, angletype, radix, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
 }
 
-bool NumObjIsEq(PRAT hno1, PRAT hno2, int32_t precision)
+Rational RationalMath::ASin(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
 {
-    return rat_equ(hno1, hno2, precision);
+    PRAT prat = rat.ToPRAT();
+
+    try
+    {
+        asinanglerat(&prat, angletype, radix, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
 }
 
-void NumObjAssign(PRAT *phnol, PRAT hnor)
+Rational RationalMath::ACos(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
 {
-    DUPRAT(*phnol, hnor);
+    PRAT prat = rat.ToPRAT();
+
+    try
+    {
+        acosanglerat(&prat, angletype, radix, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
 }
 
-int32_t NumObjGetExp(PRAT hno)
+Rational RationalMath::ATan(Rational const& rat, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
 {
-    return LOGRATRADIX(hno);
+    PRAT prat = rat.ToPRAT();
+
+    try
+    {
+        atananglerat(&prat, angletype, radix, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
 }
 
-void NumObjDestroy(PRAT *phno)
+Rational RationalMath::Sinh(Rational const& rat, uint32_t radix, int32_t precision)
 {
-    destroyrat(*phno);
+    PRAT prat = rat.ToPRAT();
+
+    try
+    {
+        sinhrat(&prat, radix, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
+}
+
+Rational RationalMath::Cosh(Rational const& rat, uint32_t radix, int32_t precision)
+{
+    PRAT prat = rat.ToPRAT();
+
+    try
+    {
+        coshrat(&prat, radix, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
+}
+
+Rational RationalMath::Tanh(Rational const& rat, uint32_t radix, int32_t precision)
+{
+    PRAT prat = rat.ToPRAT();
+
+    try
+    {
+        tanhrat(&prat, radix, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
+}
+
+Rational RationalMath::ASinh(Rational const& rat, uint32_t radix, int32_t precision)
+{
+    PRAT prat = rat.ToPRAT();
+
+    try
+    {
+        asinhrat(&prat, radix, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
+}
+
+Rational RationalMath::ACosh(Rational const& rat, uint32_t radix, int32_t precision)
+{
+    PRAT prat = rat.ToPRAT();
+
+    try
+    {
+        acoshrat(&prat, radix, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
+}
+
+Rational RationalMath::ATanh(Rational const& rat, int32_t precision)
+{
+    PRAT prat = rat.ToPRAT();
+
+    try
+    {
+        atanhrat(&prat, precision);
+    }
+    catch (DWORD error)
+    {
+        destroyrat(prat);
+        throw(error);
+    }
+
+    Rational result{ prat };
+    destroyrat(prat);
+
+    return result;
 }

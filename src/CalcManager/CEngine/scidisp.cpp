@@ -36,7 +36,7 @@ constexpr wstring_view c_decPostSepStr = L"]?(\\d*)(?:e[+-]?(\\d*))?$";
 // State of calc last time DisplayNum was called
 //
 typedef struct {
-    PRAT     hnoNum;
+    Rational value;
     int32_t precision;
     uint32_t radix;
     INT         nFE;
@@ -46,7 +46,7 @@ typedef struct {
     bool        bUseSep;
 } LASTDISP;
 
-LASTDISP gldPrevious = { nullptr, -1, 0, -1, (NUM_WIDTH)-1, false, false, false };
+LASTDISP gldPrevious = { 0, -1, 0, -1, (NUM_WIDTH)-1, false, false, false };
 
 // Truncates if too big, makes it a non negative - the number in rat. Doesn't do anything if not in INT mode
 CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational const& rat)
@@ -56,27 +56,20 @@ CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational con
         return rat;
     }
 
-    PRAT tempRat = rat.ToPRAT();
-
     // Truncate to an integer. Do not round here.
-    intrat(&tempRat, m_radix, m_precision);
+    auto result = RationalMath::Integer(rat, m_radix, m_precision);
 
-    PRAT chopRat = m_chopNumbers[m_numwidth].ToPRAT();
-    // Can be converting a dec -ve number to Hex/Oct/Bin rep. Use 2's completement form
+    // Can be converting a dec negative number to Hex/Oct/Bin rep. Use 2's complement form
     // Check the range.
-    if (NumObjIsLess(tempRat, rat_zero, m_precision))
+    if (result.IsLess(0, m_precision))
     {
         // if negative make positive by doing a twos complement
-        NumObjNegate(&tempRat);
-        subrat(&tempRat, rat_one, m_precision);
-        NumObjNot(&tempRat, true, chopRat, m_radix, m_precision);
+        result = result.Negate();
+        result = result.Sub(1, m_precision);
+        result = result.Not(true /* IntegerMode */, m_chopNumbers[m_numwidth], m_radix, m_precision);
     }
 
-    andrat(&tempRat, chopRat, m_radix, m_precision);
-    destroyrat(chopRat);
-
-    Rational result{ tempRat };
-    destroyrat(tempRat);
+    result = result.And(m_chopNumbers[m_numwidth], m_radix, m_precision);
 
     return result;
 }
@@ -90,27 +83,24 @@ void CCalcEngine::DisplayNum(void)
     //  something important has changed since the last time DisplayNum was
     //  called.
     //
-    PRAT curRat = m_currentVal.ToPRAT();
-    bool hasValChanged = !gldPrevious.hnoNum || !NumObjIsEq(gldPrevious.hnoNum, curRat, m_precision);
-    destroyrat(curRat);
-    if ( m_bRecord || gldPrevious.hnoNum == nullptr ||
-            hasValChanged ||
-            gldPrevious.precision  != m_precision ||
-            gldPrevious.radix != m_radix ||
-            gldPrevious.nFE         != (int)m_nFE     ||
-            gldPrevious.bUseSep     != true     ||
-            gldPrevious.numwidth    != m_numwidth ||
-            gldPrevious.fIntMath    != m_fIntegerMode  ||
-            gldPrevious.bRecord     != m_bRecord )
+    if (m_bRecord ||
+        !gldPrevious.value.IsEq(m_currentVal, m_precision) ||
+        gldPrevious.precision != m_precision ||
+        gldPrevious.radix != m_radix ||
+        gldPrevious.nFE != (int)m_nFE ||
+        gldPrevious.bUseSep != true ||
+        gldPrevious.numwidth != m_numwidth ||
+        gldPrevious.fIntMath != m_fIntegerMode ||
+        gldPrevious.bRecord != m_bRecord)
     {
         gldPrevious.precision = m_precision;
         gldPrevious.radix = m_radix;
-        gldPrevious.nFE        = (int)m_nFE;
-        gldPrevious.numwidth   = m_numwidth;
+        gldPrevious.nFE = (int)m_nFE;
+        gldPrevious.numwidth = m_numwidth;
 
-        gldPrevious.fIntMath   = m_fIntegerMode;
-        gldPrevious.bRecord    = m_bRecord;
-        gldPrevious.bUseSep    = true;
+        gldPrevious.fIntMath = m_fIntegerMode;
+        gldPrevious.bRecord = m_bRecord;
+        gldPrevious.bUseSep = true;
 
         if (m_bRecord)
         {
@@ -128,10 +118,9 @@ void CCalcEngine::DisplayNum(void)
         }
 
         // Displayed number can go thru transformation. So copy it after transformation
-        destroyrat(gldPrevious.hnoNum);
-        gldPrevious.hnoNum = m_currentVal.ToPRAT();
+        gldPrevious.value = m_currentVal;
 
-        if((m_radix == 10) && IsNumberInvalid(m_numberString, MAX_EXPONENT, m_precision, m_radix))
+        if ((m_radix == 10) && IsNumberInvalid(m_numberString, MAX_EXPONENT, m_precision, m_radix))
         {
             DisplayError(CALC_E_OVERFLOW);
         }
@@ -268,7 +257,7 @@ wstring CCalcEngine::GroupDigitsPerRadix(wstring_view numberString, uint32_t rad
     switch (radix)
     {
     case 10:
-        return GroupDigits(wstring{ m_groupSeparator }, m_decGrouping,  numberString, (L'-' == numberString[0]));
+        return GroupDigits(wstring{ m_groupSeparator }, m_decGrouping, numberString, (L'-' == numberString[0]));
     case 8:
         return GroupDigits(L" ", { 3, 0 }, numberString);
     case 2:
