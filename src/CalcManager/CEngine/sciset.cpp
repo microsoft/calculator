@@ -18,13 +18,13 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwid
     // back to 1111,1111,1000,0001 when in Word mode.
     if (m_fIntegerMode)
     {
-        uint64_t w64Bits = m_currentVal.ToUInt64_t(m_radix, m_precision);
+        uint64_t w64Bits = m_currentVal.ToUInt64_t(m_precision);
         bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1; // make sure you use the old width
 
         if (fMsb)
         {
             // If high bit is set, then get the decimal number in -ve 2'scompl form.
-            auto tempResult = m_currentVal.Not(true /* IntegerMode */, m_chopNumbers[m_numwidth], m_radix, m_precision);
+            auto tempResult = m_currentVal.Not(m_chopNumbers[m_numwidth], m_precision);
             tempResult = tempResult.Add(1, m_precision);
 
             m_currentVal = tempResult.Negate();
@@ -85,7 +85,7 @@ bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno)
         return false; // ignore error cant happen
     }
 
-    Rational result = Integer(rat, m_radix, m_precision);
+    Rational result = Integer(rat, m_precision);
     if (result.IsZero())
     {
         // This is the same work around happenning in SciCalcFunctions. Ought to move to intrat function itself.
@@ -93,8 +93,8 @@ bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno)
         result = Rational{};
     }
 
-    auto pow = Pow(2, static_cast<int32_t>(wbitno), m_radix, m_precision);
-    rat = result.Xor(pow, m_radix, m_precision);
+    auto pow = Pow(2, static_cast<int32_t>(wbitno), m_precision);
+    rat = result.Xor(pow, m_precision);
 
     return true;
 }

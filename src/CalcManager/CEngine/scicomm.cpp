@@ -139,7 +139,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             (IDC_SIGN == wParam && 10 != m_radix))
         {
             m_bRecord = false;
-            m_currentVal = m_input.ToRational(m_radix, m_precision);
+            m_currentVal = m_input.ToRational(m_precision);
             DisplayNum();   // Causes 3.000 to shrink to 3. on first op.
         }
     }
@@ -651,7 +651,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     case IDM_BYTE:
         if (m_bRecord)
         {
-            m_currentVal = m_input.ToRational(m_radix, m_precision);
+            m_currentVal = m_input.ToRational(m_precision);
             m_bRecord = false;
         }
 
@@ -1018,7 +1018,7 @@ int CCalcEngine::GetCurrentRadix()
 
 wstring CCalcEngine::GetCurrentResultForRadix(uint32_t radix, int32_t precision)
 {
-    Rational rat = (m_bRecord ? m_input.ToRational(m_radix, m_precision) : m_currentVal);
+    Rational rat = (m_bRecord ? m_input.ToRational(m_precision) : m_currentVal);
 
     ChangeConstants(m_radix, precision);
 
@@ -1048,12 +1048,12 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
 
         try
         {
-            uint64_t w64Bits = tempRat.ToUInt64_t(m_radix, m_precision);
+            uint64_t w64Bits = tempRat.ToUInt64_t(m_precision);
             bool fMsb = ((w64Bits >> (m_dwWordBitWidth - 1)) & 1);
             if ((radix == 10) && fMsb)
             {
                 // If high bit is set, then get the decimal number in negative 2's compl form.
-                tempRat = tempRat.Not(true, m_chopNumbers[m_numwidth], m_radix, m_precision);
+                tempRat = tempRat.Not(m_chopNumbers[m_numwidth], m_precision);
                 tempRat = tempRat.Add(1, m_precision);
                 tempRat = tempRat.Negate();
             }

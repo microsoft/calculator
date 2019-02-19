@@ -18,15 +18,15 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
         switch (operation)
         {
         case IDC_AND:
-            result = result.And(rhs, m_radix, m_precision);
+            result = result.And(rhs, m_precision);
             break;
 
         case IDC_OR:
-            result = result.Or(rhs, m_radix, m_precision);
+            result = result.Or(rhs, m_precision);
             break;
 
         case IDC_XOR:
-            result = result.Xor(rhs, m_radix, m_precision);
+            result = result.Xor(rhs, m_precision);
             break;
 
         case IDC_RSHF:
@@ -36,21 +36,21 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
                 throw CALC_E_NORESULT;
             }
 
-            uint64_t w64Bits = rhs.ToUInt64_t(m_radix, m_precision);
+            uint64_t w64Bits = rhs.ToUInt64_t(m_precision);
             bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
 
             Rational holdVal = result;
-            result = rhs.Rsh(holdVal, m_radix, m_precision);
+            result = rhs.Rsh(holdVal, m_precision);
 
             if (fMsb)
             {
-                result = Integer(result, m_radix, m_precision);
+                result = Integer(result, m_precision);
 
-                auto tempRat = m_chopNumbers[m_numwidth].Rsh(holdVal, m_radix, m_precision);
-                tempRat = Integer(tempRat, m_radix, m_precision);
+                auto tempRat = m_chopNumbers[m_numwidth].Rsh(holdVal, m_precision);
+                tempRat = Integer(tempRat, m_precision);
 
-                tempRat = tempRat.Xor(m_chopNumbers[m_numwidth], m_radix, m_precision);
-                result = result.Or(tempRat, m_radix, m_precision);
+                tempRat = tempRat.Xor(m_chopNumbers[m_numwidth], m_precision);
+                result = result.Or(tempRat, m_precision);
             }
             break;
         }
@@ -61,7 +61,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
                 throw CALC_E_NORESULT;
             }
 
-            result = rhs.Lsh(result, m_radix, m_precision);
+            result = rhs.Lsh(result, m_precision);
             break;
 
         case IDC_ADD:
@@ -85,23 +85,23 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
             if (m_fIntegerMode)
             {
-                uint64_t w64Bits = rhs.ToUInt64_t(m_radix, m_precision);
+                uint64_t w64Bits = rhs.ToUInt64_t(m_precision);
                 bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
 
                 if (fMsb)
                 {
-                    result = rhs.Not(true /* IntegerMode */, m_chopNumbers[m_numwidth], m_radix, m_precision);
+                    result = rhs.Not(m_chopNumbers[m_numwidth], m_precision);
                     result = result.Add(1, m_precision);
 
                     iNumeratorSign = -1;
                 }
 
-                w64Bits = temp.ToUInt64_t(m_radix, m_precision);
+                w64Bits = temp.ToUInt64_t(m_precision);
                 fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
 
                 if (fMsb)
                 {
-                    temp = temp.Not(true /* IntegerMode */, m_chopNumbers[m_numwidth], m_radix, m_precision);
+                    temp = temp.Not(m_chopNumbers[m_numwidth], m_precision);
                     temp = temp.Add(1, m_precision);
 
                     iDenominatorSign = -1;
@@ -121,18 +121,18 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
             if (m_fIntegerMode && iFinalSign == -1)
             {
-                result = Integer(result, m_radix, m_precision).Negate();
+                result = Integer(result, m_precision).Negate();
             }
 
             break;
         }
 
         case IDC_PWR: // Calculates rhs to the result(th) power.
-            result = Pow(rhs, result, m_radix, m_precision);
+            result = Pow(rhs, result, m_precision);
             break;
 
         case IDC_ROOT: // Calculates rhs to the result(th) root.
-            result = Root(rhs, result, m_radix, m_precision);
+            result = Root(rhs, result, m_precision);
             break;
         }
     }
