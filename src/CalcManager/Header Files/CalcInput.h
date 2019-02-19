@@ -54,7 +54,7 @@ namespace CalcEngine
         void Backspace();
         void SetDecimalSymbol(wchar_t decSymbol);
         std::wstring ToString(uint32_t radix, bool isIntegerMode);
-        Rational ToRational(uint32_t radix, int32_t precision);
+        Rational ToRational(int32_t precision);
 
     private:
         bool m_hasExponent;
