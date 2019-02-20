@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "RadixToStringConverter.h"
-#include "CalcManager/Header Files/CalcEngine.h"
+#include "CalcManager/Header Files/RadixType.h"
 #include "CalcViewModel/Common/AppResourceProvider.h"
 
 using namespace Platform;

@@ -279,6 +279,7 @@
     <ClInclude Include="Header Files\CalcInput.h" />
     <ClInclude Include="Header Files\IHistoryDisplay.h" />
     <ClInclude Include="Header Files\Number.h" />
+    <ClInclude Include="Header Files\RadixType.h" />
     <ClInclude Include="Header Files\Rational.h" />
     <ClInclude Include="Header Files\scimath.h" />
     <ClInclude Include="pch.h" />

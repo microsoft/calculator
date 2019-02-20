@@ -20,6 +20,7 @@
 #include "../Command.h"
 #include "../CalculatorVector.h"
 #include "../ExpressionCommand.h"
+#include "RadixType.h"
 #include "History.h"  // for History Collector
 #include "CalcInput.h"
 #include "ICalcDisplay.h"
@@ -37,15 +38,6 @@ enum eNUM_WIDTH {
 };
 typedef enum eNUM_WIDTH NUM_WIDTH;
 static constexpr size_t NUM_WIDTH_LENGTH = 4;
-
-// This is expected to be in same order as IDM_HEX, IDM_DEC, IDM_OCT, IDM_BIN
-enum eRADIX_TYPE {
-    HEX_RADIX,
-    DEC_RADIX,
-    OCT_RADIX,
-    BIN_RADIX
-};
-typedef enum eRADIX_TYPE RADIX_TYPE;
 
 namespace CalculationManager
 {
