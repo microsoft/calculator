@@ -161,5 +161,8 @@
     <ClInclude Include="Header Files\Rational.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\RadixType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
