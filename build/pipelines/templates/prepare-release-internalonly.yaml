@@ -31,6 +31,12 @@ jobs:
     env:
       XES_DISABLEPROV: true
 
+  - task: NuGetToolInstaller@0
+    displayName: Use NuGet 4.7.1
+    inputs:
+      versionSpec: 4.7.1
+      checkLatest: true
+
   - task: DownloadBuildArtifacts@0
     displayName: Download appxBundle artifact
     inputs:
