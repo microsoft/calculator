@@ -10,6 +10,9 @@ namespace CalcEngine
     // RatPack calculations currently support up to Base64.
     inline constexpr uint32_t RATIONAL_BASE = 10;
 
+    // Default Precision to use for Rational calculations
+    static constexpr int32_t RATIONAL_PRECISION = 128;
+
     class Rational
     {
     public:
@@ -26,7 +29,7 @@ namespace CalcEngine
         Number const& P() const;
         Number const& Q() const;
 
-        Rational Negate() const;
+        Rational operator-() const;
         Rational Add(Rational const& rhs, int32_t precision) const;
         Rational Sub(Rational const& rhs, int32_t precision) const;
         Rational Mul(Rational const& rhs, int32_t precision) const;

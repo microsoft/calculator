@@ -25,9 +25,8 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwid
         {
             // If high bit is set, then get the decimal number in -ve 2'scompl form.
             auto tempResult = m_currentVal.Not(m_chopNumbers[m_numwidth], m_precision);
-            tempResult = tempResult.Add(1, m_precision);
 
-            m_currentVal = tempResult.Negate();
+            m_currentVal = -(tempResult.Add(1, m_precision));
         }
     }
 

@@ -86,9 +86,9 @@ namespace CalcEngine
         return m_q;
     }
 
-    Rational Rational::Negate() const
+    Rational Rational::operator-() const
     {
-        return Rational{ Number{ -1 * m_p.Sign(), m_p.Exp(), m_p.Mantissa() }, m_q};
+        return Rational{ Number{ -1 * m_p.Sign(), m_p.Exp(), m_p.Mantissa() }, m_q };
     }
 
     Rational Rational::Add(Rational const& rhs, int32_t precision) const

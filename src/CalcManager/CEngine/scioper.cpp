@@ -121,7 +121,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
             if (m_fIntegerMode && iFinalSign == -1)
             {
-                result = Integer(result, m_precision).Negate();
+                result = -(Integer(result, m_precision));
             }
 
             break;

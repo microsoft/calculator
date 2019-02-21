@@ -691,7 +691,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
         }
 
-        m_currentVal = m_currentVal.Negate();
+        m_currentVal = -(m_currentVal);
 
         DisplayNum();
         m_HistoryCollector.AddUnaryOpToHistory(IDC_SIGN, m_bInv, m_angletype);
@@ -1054,8 +1054,7 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
             {
                 // If high bit is set, then get the decimal number in negative 2's compl form.
                 tempRat = tempRat.Not(m_chopNumbers[m_numwidth], m_precision);
-                tempRat = tempRat.Add(1, m_precision);
-                tempRat = tempRat.Negate();
+                tempRat = -(tempRat.Add(1, m_precision));
             }
 
             result = tempRat.ToString(radix, m_nFE, m_precision);

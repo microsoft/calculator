@@ -40,8 +40,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             if (m_radix == 10 && !m_fIntegerMode)
             {
                 result = RationalMath::Integer(rat, m_precision);
-                result = result.Add(1, m_precision);
-                result = result.Negate();
+                result = -(result.Add(1, m_precision));
             }
             else
             {
