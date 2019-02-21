@@ -73,7 +73,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             break;
 
         case IDC_MUL:
-            result = result.Mul(rhs, m_precision);
+            result *= rhs;
             break;
 
         case IDC_DIV:
@@ -109,7 +109,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             if (operation == IDC_DIV)
             {
                 iFinalSign = iNumeratorSign * iDenominatorSign;
-                result = result.Div(temp, m_precision);
+                result /= temp;
             }
             else
             {

@@ -137,6 +137,52 @@ namespace CalcEngine
         return *this;
     }
 
+    Rational& Rational::operator*=(Rational const& rhs)
+    {
+        PRAT lhsRat = this->ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
+
+        try
+        {
+            mulrat(&lhsRat, rhsRat, RATIONAL_PRECISION);
+            destroyrat(rhsRat);
+        }
+        catch (DWORD error)
+        {
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
+            throw(error);
+        }
+
+        *this = Rational{ lhsRat };
+        destroyrat(lhsRat);
+
+        return *this;
+    }
+
+    Rational& Rational::operator/=(Rational const& rhs)
+    {
+        PRAT lhsRat = this->ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
+
+        try
+        {
+            divrat(&lhsRat, rhsRat, RATIONAL_PRECISION);
+            destroyrat(rhsRat);
+        }
+        catch (DWORD error)
+        {
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
+            throw(error);
+        }
+
+        *this = Rational{ lhsRat };
+        destroyrat(lhsRat);
+
+        return *this;
+    }
+
     Rational operator+(Rational lhs, Rational const& rhs)
     {
         lhs += rhs;
@@ -149,50 +195,16 @@ namespace CalcEngine
         return lhs;
     }
 
-    Rational Rational::Mul(Rational const& rhs, int32_t precision) const
+    Rational operator*(Rational lhs, Rational const& rhs)
     {
-        PRAT lhsRat = this->ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
-
-        try
-        {
-            mulrat(&lhsRat, rhsRat, precision);
-            destroyrat(rhsRat);
-        }
-        catch (DWORD error)
-        {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
-            throw(error);
-        }
-
-        Rational result = Rational{ lhsRat };
-        destroyrat(lhsRat);
-
-        return result;
+        lhs *= rhs;
+        return lhs;
     }
 
-    Rational Rational::Div(Rational const& rhs, int32_t precision) const
+    Rational operator/(Rational lhs, Rational const& rhs)
     {
-        PRAT lhsRat = this->ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
-
-        try
-        {
-            divrat(&lhsRat, rhsRat, precision);
-            destroyrat(rhsRat);
-        }
-        catch (DWORD error)
-        {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
-            throw(error);
-        }
-
-        Rational result = Rational{ lhsRat };
-        destroyrat(lhsRat);
-
-        return result;
+        lhs /= rhs;
+        return lhs;
     }
 
     Rational Rational::Mod(Rational const& rhs) const

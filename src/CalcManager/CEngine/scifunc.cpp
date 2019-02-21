@@ -83,12 +83,11 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             // Otherwise, we evaluate it as "X [op] (X * Y%)"
             if (m_nOpCode == IDC_MUL || m_nOpCode == IDC_DIV)
             {
-                result = rat.Div(100, m_precision);
+                result = rat / 100;
             }
             else
             {
-                result = m_lastVal.Div(100, m_precision);
-                result = rat.Mul(result, m_precision);
+                result = rat * (m_lastVal / 100);
             }
             break;
         }
@@ -182,25 +181,22 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
 
                 Rational degreeRat = Integer(rat, m_precision);
 
-                Rational minuteRat = rat - degreeRat;
-                minuteRat = minuteRat.Mul(shftRat, m_precision);
+                Rational minuteRat = (rat - degreeRat) * shftRat;
 
                 Rational secondRat = minuteRat;
 
                 minuteRat = Integer(minuteRat, m_precision);
 
-                secondRat -= minuteRat;
-                secondRat = secondRat.Mul(shftRat, m_precision);
+                secondRat = (secondRat - minuteRat) * shftRat;
 
                 //
                 // degreeRat == degrees, minuteRat == minutes, secondRat == seconds
                 //
 
                 shftRat = Rational{ m_bInv ? 60 : 100 };
-                secondRat = secondRat.Div(shftRat, m_precision);
+                secondRat /= shftRat;
 
-                minuteRat += secondRat;
-                minuteRat = minuteRat.Div(shftRat, m_precision);
+                minuteRat = (minuteRat + secondRat) / shftRat;
 
                 result = degreeRat + minuteRat;
             }
