@@ -113,6 +113,8 @@ jobs:
   - task: PkgESStoreBrokerFlight@10
     name: StoreBrokerFlight
     displayName: Flight package with StoreBroker
+    env:
+      XES_SERIALPOSTBUILDREADY: True
     inputs:
       packageToFlight: Custom
       appId: 9WZDNCRFHVN5
