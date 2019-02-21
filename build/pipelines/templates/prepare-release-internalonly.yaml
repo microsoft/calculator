@@ -96,6 +96,7 @@ jobs:
       useArtifactServiceForMedia: true
       outPath: $(Build.ArtifactStagingDirectory)\StoreBrokerPayload
       paToken: $(System.AccessToken)
+      logRootPath: $(Build.ArtifactStagingDirectory)/StoreBrokerLogs
 
   - task: PublishBuildArtifacts@1
     displayName: Publish StoreBrokerPayload artifact
@@ -113,13 +114,13 @@ jobs:
       submissionDataPath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.json
       packagePath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.zip
       updatePackageAction: AddPackages
-      pogRootPath: $(Build.ArtifactStagingDirectory)/StoreBrokerFlightLogs
+      pogRootPath: $(Build.ArtifactStagingDirectory)/StoreBrokerLogs
 
   - task: PublishBuildArtifacts@1
-    displayName: Publish StoreBrokerFlightLogs artifact
+    displayName: Publish StoreBrokerLogs artifact
     inputs:
-      artifactName: storeBrokerFlightLogs
-      pathToPublish: $(Build.ArtifactStagingDirectory)/StoreBrokerFlightLogs
+      artifactName: storeBrokerLogs
+      pathToPublish: $(Build.ArtifactStagingDirectory)/StoreBrokerLogs
 
   - task: PkgESStoreBrokerAeroUpload@10
     displayName: Upload to Aero flighting dashboard
