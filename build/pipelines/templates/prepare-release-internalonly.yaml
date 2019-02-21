@@ -122,7 +122,7 @@ jobs:
       submissionDataPath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.json
       packagePath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.zip
       updatePackageAction: AddPackages
-      pogRootPath: $(Build.ArtifactStagingDirectory)/StoreBrokerLogs
+      logRootPath: $(Build.ArtifactStagingDirectory)/StoreBrokerLogs
 
   - task: PublishBuildArtifacts@1
     displayName: Publish StoreBrokerLogs artifact
