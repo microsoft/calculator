@@ -55,7 +55,7 @@ namespace CalcEngine
         uint32_t hi = HIDWORD(ui);
         uint32_t lo = LODWORD(ui);
 
-        Rational temp = Rational{ hi }.Lsh(32, precision).Or(lo, precision);
+        Rational temp = (Rational{ hi } << 32).Or(lo, precision);
 
         m_p = Number{ temp.P() };
         m_q = Number{ temp.Q() };
@@ -206,6 +206,52 @@ namespace CalcEngine
         return *this;
     }
 
+    Rational& Rational::operator<<=(Rational const& rhs)
+    {
+        PRAT lhsRat = this->ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
+
+        try
+        {
+            lshrat(&lhsRat, rhsRat, RATIONAL_BASE, RATIONAL_PRECISION);
+            destroyrat(rhsRat);
+        }
+        catch (DWORD error)
+        {
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
+            throw(error);
+        }
+
+        *this = Rational{ lhsRat };
+        destroyrat(lhsRat);
+
+        return *this;
+    }
+
+    Rational& Rational::operator>>=(Rational const& rhs)
+    {
+        PRAT lhsRat = this->ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
+
+        try
+        {
+            rshrat(&lhsRat, rhsRat, RATIONAL_BASE, RATIONAL_PRECISION);
+            destroyrat(rhsRat);
+        }
+        catch (DWORD error)
+        {
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
+            throw(error);
+        }
+
+        *this = Rational{ lhsRat };
+        destroyrat(lhsRat);
+
+        return *this;
+    }
+
     Rational operator+(Rational lhs, Rational const& rhs)
     {
         lhs += rhs;
@@ -236,50 +282,16 @@ namespace CalcEngine
         return lhs;
     }
 
-    Rational Rational::Lsh(Rational const& rhs, int32_t precision) const
+    Rational operator<<(Rational lhs, Rational const& rhs)
     {
-        PRAT lhsRat = this->ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
-
-        try
-        {
-            lshrat(&lhsRat, rhsRat, RATIONAL_BASE, precision);
-            destroyrat(rhsRat);
-        }
-        catch (DWORD error)
-        {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
-            throw(error);
-        }
-
-        Rational result = Rational{ lhsRat };
-        destroyrat(lhsRat);
-
-        return result;
+        lhs <<= rhs;
+        return lhs;
     }
 
-    Rational Rational::Rsh(Rational const& rhs, int32_t precision) const
+    Rational operator>>(Rational lhs, Rational const& rhs)
     {
-        PRAT lhsRat = this->ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
-
-        try
-        {
-            rshrat(&lhsRat, rhsRat, RATIONAL_BASE, precision);
-            destroyrat(rhsRat);
-        }
-        catch (DWORD error)
-        {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
-            throw(error);
-        }
-
-        Rational result = Rational{ lhsRat };
-        destroyrat(lhsRat);
-
-        return result;
+        lhs >>= rhs;
+        return lhs;
     }
 
     Rational Rational::Not(Rational const& chopNum, int32_t precision) const

@@ -40,13 +40,13 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
 
             Rational holdVal = result;
-            result = rhs.Rsh(holdVal, m_precision);
+            result = rhs >> holdVal;
 
             if (fMsb)
             {
                 result = Integer(result, m_precision);
 
-                auto tempRat = m_chopNumbers[m_numwidth].Rsh(holdVal, m_precision);
+                auto tempRat = m_chopNumbers[m_numwidth] >> holdVal;
                 tempRat = Integer(tempRat, m_precision);
 
                 tempRat = tempRat.Xor(m_chopNumbers[m_numwidth], m_precision);
@@ -61,7 +61,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
                 throw CALC_E_NORESULT;
             }
 
-            result = rhs.Lsh(result, m_precision);
+            result = rhs << result;
             break;
 
         case IDC_ADD:

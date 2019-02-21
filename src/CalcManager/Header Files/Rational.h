@@ -36,14 +36,17 @@ namespace CalcEngine
         Rational& operator/=(Rational const& rhs);
         Rational& operator%=(Rational const& rhs);
 
+        Rational& operator<<=(Rational const& rhs);
+        Rational& operator>>=(Rational const& rhs);
+
         friend Rational operator+(Rational lhs, Rational const& rhs);
         friend Rational operator-(Rational lhs, Rational const& rhs);
         friend Rational operator*(Rational lhs, Rational const& rhs);
         friend Rational operator/(Rational lhs, Rational const& rhs);
         friend Rational operator%(Rational lhs, Rational const& rhs);
 
-        Rational Lsh(Rational const& r, int32_t precision) const;
-        Rational Rsh(Rational const& r, int32_t precision) const;
+        friend Rational operator<<(Rational lhs, Rational const& rhs);
+        friend Rational operator>>(Rational lhs, Rational const& rhs);
 
         Rational Not(Rational const& chopNum, int32_t precision) const;
         Rational And(Rational const& r, int32_t precision) const;
