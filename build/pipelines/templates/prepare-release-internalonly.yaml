@@ -103,6 +103,33 @@ jobs:
       artifactName: storeBrokerPayload
       pathToPublish: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload
 
+  - task: PkgESStoreBrokerFlight@10
+    name: StoreBrokerFlight
+    displayName: Flight package with StoreBroker
+    inputs:
+      packageToFlight: Custom
+      appId: 9WZDNCRFHVN5
+      flightId: 161f0975-cb5f-475b-8ef6-26383c37621f
+      submissionDataPath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.json
+      packagePath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.zip
+      updatePackageAction: AddPackages
+      pogRootPath: $(Build.ArtifactStagingDirectory)/StoreBrokerFlightLogs
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish StoreBrokerFlightLogs artifact
+    inputs:
+      artifactName: storeBrokerFlightLogs
+      pathToPublish: $(Build.ArtifactStagingDirectory)/StoreBrokerFlightLogs
+
+  - task: PkgESStoreBrokerAeroUpload@10
+    displayName: Upload to Aero flighting dashboard
+    inputs:
+      productId: 00009007199266248474
+      flightId: 161f0975-cb5f-475b-8ef6-26383c37621f
+      submissionId: $(StoreBrokerFlight.WS_SubmissionId)
+      submissionDataPath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.json
+      packagePath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.zip
+
   - task: PkgESLateTasks@10
     displayName: Run PackageES LateTasks
     env:
