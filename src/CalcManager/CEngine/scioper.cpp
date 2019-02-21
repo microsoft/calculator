@@ -65,7 +65,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             break;
 
         case IDC_ADD:
-            result = result.Add(rhs, m_precision);
+            result += rhs;
             break;
 
         case IDC_SUB:
@@ -90,8 +90,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
                 if (fMsb)
                 {
-                    result = rhs.Not(m_chopNumbers[m_numwidth], m_precision);
-                    result = result.Add(1, m_precision);
+                    result = rhs.Not(m_chopNumbers[m_numwidth], m_precision) + 1;
 
                     iNumeratorSign = -1;
                 }
@@ -101,8 +100,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
                 if (fMsb)
                 {
-                    temp = temp.Not(m_chopNumbers[m_numwidth], m_precision);
-                    temp = temp.Add(1, m_precision);
+                    temp = temp.Not(m_chopNumbers[m_numwidth], m_precision) + 1;
 
                     iDenominatorSign = -1;
                 }

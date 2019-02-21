@@ -91,14 +91,14 @@ namespace CalcEngine
         return Rational{ Number{ -1 * m_p.Sign(), m_p.Exp(), m_p.Mantissa() }, m_q };
     }
 
-    Rational Rational::Add(Rational const& rhs, int32_t precision) const
+    Rational& Rational::operator+=(Rational const& rhs)
     {
         PRAT lhsRat = this->ToPRAT();
         PRAT rhsRat = rhs.ToPRAT();
 
         try
         {
-            addrat(&lhsRat, rhsRat, precision);
+            addrat(&lhsRat, rhsRat, RATIONAL_PRECISION);
             destroyrat(rhsRat);
         }
         catch (DWORD error)
@@ -108,10 +108,16 @@ namespace CalcEngine
             throw(error);
         }
 
-        Rational result = Rational{ lhsRat };
+        *this = Rational{ lhsRat };
         destroyrat(lhsRat);
 
-        return result;
+        return *this;
+    }
+
+    Rational operator+(Rational lhs, Rational const& rhs)
+    {
+        lhs += rhs;
+        return lhs;
     }
 
     Rational Rational::Sub(Rational const& rhs, int32_t precision) const

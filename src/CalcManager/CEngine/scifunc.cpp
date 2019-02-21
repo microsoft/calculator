@@ -39,8 +39,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
         case IDC_COM:
             if (m_radix == 10 && !m_fIntegerMode)
             {
-                result = RationalMath::Integer(rat, m_precision);
-                result = -(result.Add(1, m_precision));
+                result = -(RationalMath::Integer(rat, m_precision) + 1);
             }
             else
             {
@@ -200,10 +199,10 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
                 shftRat = Rational{ m_bInv ? 60 : 100 };
                 secondRat = secondRat.Div(shftRat, m_precision);
 
-                minuteRat = minuteRat.Add(secondRat, m_precision);
+                minuteRat += secondRat;
                 minuteRat = minuteRat.Div(shftRat, m_precision);
 
-                result = degreeRat.Add(minuteRat, m_precision);
+                result = degreeRat + minuteRat;
             }
             break;
         }

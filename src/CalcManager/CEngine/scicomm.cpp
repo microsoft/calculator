@@ -718,7 +718,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     {
         /* MPLUS adds m_currentVal to immediate memory and kills the "mem"   */
         /* indicator if the result is zero.                           */
-        Rational result = m_memoryValue->Add(m_currentVal, m_precision);
+        Rational result = *m_memoryValue + m_currentVal;
         m_memoryValue = make_unique<Rational>(TruncateNumForIntMath(result)); // Memory should follow the current int mode
 
         break;
@@ -1053,8 +1053,7 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
             if ((radix == 10) && fMsb)
             {
                 // If high bit is set, then get the decimal number in negative 2's compl form.
-                tempRat = tempRat.Not(m_chopNumbers[m_numwidth], m_precision);
-                tempRat = -(tempRat.Add(1, m_precision));
+                tempRat = -(tempRat.Not(m_chopNumbers[m_numwidth], m_precision) + 1);
             }
 
             result = tempRat.ToString(radix, m_nFE, m_precision);

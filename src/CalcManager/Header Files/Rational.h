@@ -30,11 +30,13 @@ namespace CalcEngine
         Number const& Q() const;
 
         Rational operator-() const;
-        Rational Add(Rational const& rhs, int32_t precision) const;
+        Rational& operator+=(Rational const& rhs);
         Rational Sub(Rational const& rhs, int32_t precision) const;
         Rational Mul(Rational const& rhs, int32_t precision) const;
         Rational Div(Rational const& rhs, int32_t precision) const;
         Rational Mod(Rational const& rhs) const;
+
+        friend Rational operator+(Rational lhs, Rational const& rhs);
 
         Rational Lsh(Rational const& r, int32_t precision) const;
         Rational Rsh(Rational const& r, int32_t precision) const;
