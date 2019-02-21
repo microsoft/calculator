@@ -130,6 +130,8 @@ jobs:
 
   - task: PkgESStoreBrokerAeroUpload@10
     displayName: Upload to Aero flighting dashboard
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     inputs:
       productId: 00009007199266248474
       flightId: 161f0975-cb5f-475b-8ef6-26383c37621f
