@@ -302,9 +302,9 @@ wstring CalcInput::ToString(uint32_t radix, bool isIntegerMode)
     return result;
 }
 
-Rational CalcInput::ToRational(int32_t precision)
+Rational CalcInput::ToRational(uint32_t radix, int32_t precision)
 {
-    PRAT rat = StringToRat(m_base.IsNegative(), m_base.value, m_exponent.IsNegative(), m_exponent.value, BASEX, precision);
+    PRAT rat = StringToRat(m_base.IsNegative(), m_base.value, m_exponent.IsNegative(), m_exponent.value, radix, precision);
     if (rat == nullptr)
     {
         return 0;

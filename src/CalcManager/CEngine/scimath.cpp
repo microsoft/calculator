@@ -13,7 +13,7 @@ Rational RationalMath::Frac(Rational const& rat, int32_t precision)
     PRAT prat = rat.ToPRAT();
     try
     {
-        fracrat(&prat, BASEX, precision);
+        fracrat(&prat, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {
@@ -32,7 +32,7 @@ Rational RationalMath::Integer(Rational const& rat, int32_t precision)
     PRAT prat = rat.ToPRAT();
     try
     {
-        intrat(&prat, BASEX, precision);
+        intrat(&prat, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {
@@ -53,7 +53,7 @@ Rational RationalMath::Pow(Rational const& base, Rational const& pow, int32_t pr
 
     try
     {
-        powrat(&baseRat, powRat, BASEX, precision);
+        powrat(&baseRat, powRat, DEFAULT_BASE, precision);
         destroyrat(powRat);
     }
     catch (DWORD error)
@@ -80,7 +80,7 @@ Rational RationalMath::Fact(Rational const& rat, int32_t precision)
 
     try
     {
-        factrat(&prat, BASEX, precision);
+        factrat(&prat, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {
@@ -100,7 +100,7 @@ Rational RationalMath::Exp(Rational const& rat, int32_t precision)
 
     try
     {
-        exprat(&prat, BASEX, precision);
+        exprat(&prat, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {
@@ -155,7 +155,7 @@ Rational RationalMath::Sin(Rational const& rat, ANGLE_TYPE angletype, int32_t pr
 
     try
     {
-        sinanglerat(&prat, angletype, BASEX, precision);
+        sinanglerat(&prat, angletype, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {
@@ -175,7 +175,7 @@ Rational RationalMath::Cos(Rational const& rat, ANGLE_TYPE angletype, int32_t pr
 
     try
     {
-        cosanglerat(&prat, angletype, BASEX, precision);
+        cosanglerat(&prat, angletype, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {
@@ -195,7 +195,7 @@ Rational RationalMath::Tan(Rational const& rat, ANGLE_TYPE angletype, int32_t pr
 
     try
     {
-        tananglerat(&prat, angletype, BASEX, precision);
+        tananglerat(&prat, angletype, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {
@@ -215,7 +215,7 @@ Rational RationalMath::ASin(Rational const& rat, ANGLE_TYPE angletype, int32_t p
 
     try
     {
-        asinanglerat(&prat, angletype, BASEX, precision);
+        asinanglerat(&prat, angletype, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {
@@ -235,7 +235,7 @@ Rational RationalMath::ACos(Rational const& rat, ANGLE_TYPE angletype, int32_t p
 
     try
     {
-        acosanglerat(&prat, angletype, BASEX, precision);
+        acosanglerat(&prat, angletype, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {
@@ -255,7 +255,7 @@ Rational RationalMath::ATan(Rational const& rat, ANGLE_TYPE angletype, int32_t p
 
     try
     {
-        atananglerat(&prat, angletype, BASEX, precision);
+        atananglerat(&prat, angletype, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {
@@ -275,7 +275,7 @@ Rational RationalMath::Sinh(Rational const& rat, int32_t precision)
 
     try
     {
-        sinhrat(&prat, BASEX, precision);
+        sinhrat(&prat, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {
@@ -295,7 +295,7 @@ Rational RationalMath::Cosh(Rational const& rat, int32_t precision)
 
     try
     {
-        coshrat(&prat, BASEX, precision);
+        coshrat(&prat, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {
@@ -315,7 +315,7 @@ Rational RationalMath::Tanh(Rational const& rat, int32_t precision)
 
     try
     {
-        tanhrat(&prat, BASEX, precision);
+        tanhrat(&prat, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {
@@ -335,7 +335,7 @@ Rational RationalMath::ASinh(Rational const& rat, int32_t precision)
 
     try
     {
-        asinhrat(&prat, BASEX, precision);
+        asinhrat(&prat, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {
@@ -355,7 +355,7 @@ Rational RationalMath::ACosh(Rational const& rat, int32_t precision)
 
     try
     {
-        acoshrat(&prat, BASEX, precision);
+        acoshrat(&prat, DEFAULT_BASE, precision);
     }
     catch (DWORD error)
     {

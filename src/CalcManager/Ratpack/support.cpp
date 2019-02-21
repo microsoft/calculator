@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //----------------------------------------------------------------------------
@@ -291,12 +291,12 @@ void intrat( PRAT *px, uint32_t radix, int32_t precision)
     // and only if the bottom part is not one.
     if ( !zernum( (*px)->pp ) && !equnum( (*px)->pq, num_one ) )
     {
-        wstring ratStr = RatToString(*px, FMT_FLOAT, radix, precision);
-        PNUMBER pnum = StringToNumber(ratStr, radix, precision);
-
-        destroyrat( *px );
-        *px = numtorat( pnum, radix);
-        destroynum( pnum );
+        //wstring ratStr = RatToString(*px, FMT_FLOAT, radix, precision);
+        //PNUMBER pnum = StringToNumber(ratStr, radix, precision);
+        //
+        //destroyrat( *px );
+        //*px = numtorat( pnum, radix);
+        //destroynum( pnum );
 
         PRAT pret = nullptr;
         DUPRAT(pret,*px);
