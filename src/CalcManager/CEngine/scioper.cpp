@@ -114,7 +114,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             else
             {
                 iFinalSign = iNumeratorSign;
-                result = result.Mod(temp);
+                result %= temp;
             }
 
             if (m_fIntegerMode && iFinalSign == -1)
