@@ -18,13 +18,13 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwid
     // back to 1111,1111,1000,0001 when in Word mode.
     if (m_fIntegerMode)
     {
-        uint64_t w64Bits = m_currentVal.ToUInt64_t(m_precision);
+        uint64_t w64Bits = m_currentVal.ToUInt64_t();
         bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1; // make sure you use the old width
 
         if (fMsb)
         {
             // If high bit is set, then get the decimal number in -ve 2'scompl form.
-            auto tempResult = m_currentVal.Not(m_chopNumbers[m_numwidth], m_precision);
+            auto tempResult = m_currentVal.Not(m_chopNumbers[m_numwidth]);
 
             m_currentVal = -(tempResult + 1);
         }

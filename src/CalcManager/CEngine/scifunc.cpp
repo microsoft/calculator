@@ -53,12 +53,12 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             {
                 result = Integer(rat, m_precision);
 
-                uint64_t w64Bits = result.ToUInt64_t(m_precision);
+                uint64_t w64Bits = result.ToUInt64_t();
                 uint64_t msb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
                 w64Bits <<= 1; // LShift by 1
                 w64Bits |= msb; // Set the prev Msb as the current Lsb
 
-                result = Rational{ w64Bits, m_precision };
+                result = w64Bits;
             }
             break;
 
@@ -68,12 +68,12 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             {
                 result = Integer(rat, m_precision);
 
-                uint64_t w64Bits = result.ToUInt64_t(m_precision);
+                uint64_t w64Bits = result.ToUInt64_t();
                 uint64_t lsb = ((w64Bits & 0x01) == 1) ? 1 : 0;
                 w64Bits >>= 1; //RShift by 1
                 w64Bits |= (lsb << (m_dwWordBitWidth - 1));
 
-                result = Rational{ w64Bits, m_precision };
+                result = w64Bits;
             }
             break;
 
@@ -177,7 +177,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
         {
             if (!m_fIntegerMode)
             {
-                Rational shftRat{ m_bInv ? 100 : 60 };
+                auto shftRat{ m_bInv ? 100 : 60 };
 
                 Rational degreeRat = Integer(rat, m_precision);
 
@@ -193,7 +193,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
                 // degreeRat == degrees, minuteRat == minutes, secondRat == seconds
                 //
 
-                shftRat = Rational{ m_bInv ? 60 : 100 };
+                shftRat = m_bInv ? 60 : 100;
                 secondRat /= shftRat;
 
                 minuteRat = (minuteRat + secondRat) / shftRat;

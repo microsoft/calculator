@@ -382,7 +382,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             CheckAndAddLastBinOpToHistory(false);
         }
 
-        m_lastVal = Rational{};
+        m_lastVal = 0;
 
         m_bChangeOp = false;
         m_precedenceOpCount = m_nTempCom = m_nLastCom = m_nOpCode = m_openParenCount = 0;
@@ -563,12 +563,12 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
                 m_nPrecOp[m_precedenceOpCount++] = 0;
             }
 
-            m_lastVal = Rational{};
+            m_lastVal = 0;
             if (IsBinOpCode(m_nLastCom))
             {
                 // We want 1 + ( to start as 1 + (0. Any number you type replaces 0. But if it is 1 + 3 (, it is 
                 // treated as 1 + (3
-                m_currentVal = Rational{};
+                m_currentVal = 0;
             }
             m_nTempCom = 0;
             m_nOpCode = 0;
@@ -708,7 +708,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         else
         {
             // Recall immediate memory value.
-            m_currentVal = Rational{ *m_memoryValue };
+            m_currentVal = *m_memoryValue;
         }
         CheckAndAddLastBinOpToHistory();
         DisplayNum();
@@ -734,7 +734,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     }
     case IDC_STORE:
     case IDC_MCLEAR:
-        m_memoryValue = make_unique<Rational>(wParam == IDC_STORE ? TruncateNumForIntMath(m_currentVal) : Rational{});
+        m_memoryValue = make_unique<Rational>(wParam == IDC_STORE ? TruncateNumForIntMath(m_currentVal) : 0);
         break;
 
     case IDC_PI:
@@ -1048,12 +1048,12 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
 
         try
         {
-            uint64_t w64Bits = tempRat.ToUInt64_t(m_precision);
+            uint64_t w64Bits = tempRat.ToUInt64_t();
             bool fMsb = ((w64Bits >> (m_dwWordBitWidth - 1)) & 1);
             if ((radix == 10) && fMsb)
             {
                 // If high bit is set, then get the decimal number in negative 2's compl form.
-                tempRat = -(tempRat.Not(m_chopNumbers[m_numwidth], m_precision) + 1);
+                tempRat = -(tempRat.Not(m_chopNumbers[m_numwidth]) + 1);
             }
 
             result = tempRat.ToString(radix, m_nFE, m_precision);

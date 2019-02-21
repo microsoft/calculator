@@ -21,7 +21,7 @@ namespace CalcEngine
         Rational(Number const& p, Number const& q) noexcept;
         Rational(int32_t i);
         Rational(uint32_t ui);
-        Rational(uint64_t ui, int32_t precision);
+        Rational(uint64_t ui);
 
         explicit Rational(PRAT prat) noexcept;
         PRAT ToPRAT() const;
@@ -56,7 +56,7 @@ namespace CalcEngine
         friend Rational operator|(Rational lhs, Rational const& rhs);
         friend Rational operator^(Rational lhs, Rational const& rhs);
 
-        Rational Not(Rational const& chopNum, int32_t precision) const;
+        Rational Not(Rational const& chopNum) const;
 
         bool IsZero() const;
 
@@ -68,7 +68,7 @@ namespace CalcEngine
         friend bool operator>=(Rational const& lhs, Rational const& rhs);
 
         std::wstring ToString(uint32_t radix, NUMOBJ_FMT format, int32_t precision) const;
-        uint64_t ToUInt64_t(int32_t precision) const;
+        uint64_t ToUInt64_t() const;
 
     private:
         Number m_p;

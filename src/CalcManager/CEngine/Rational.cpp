@@ -50,7 +50,7 @@ namespace CalcEngine
         destroyrat(pr);
     }
 
-    Rational::Rational(uint64_t ui, int32_t precision)
+    Rational::Rational(uint64_t ui)
     {
         uint32_t hi = HIDWORD(ui);
         uint32_t lo = LODWORD(ui);
@@ -379,7 +379,7 @@ namespace CalcEngine
         return lhs;
     }
 
-    Rational Rational::Not(Rational const& chopNum, int32_t precision) const
+    Rational Rational::Not(Rational const& chopNum) const
     {
         return *this ^ chopNum;
     }
@@ -475,13 +475,13 @@ namespace CalcEngine
         return result;
     }
 
-    uint64_t Rational::ToUInt64_t(int32_t precision) const
+    uint64_t Rational::ToUInt64_t() const
     {
         PRAT rat = this->ToPRAT();
         uint64_t result;
         try
         {
-            result = rattoUlonglong(rat, RATIONAL_BASE, precision);
+            result = rattoUlonglong(rat, RATIONAL_BASE, RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {

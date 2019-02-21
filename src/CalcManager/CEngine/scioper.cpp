@@ -11,7 +11,7 @@ using namespace CalcEngine::RationalMath;
 CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs)
 {
     // Remove any variance in how 0 could be represented in rat e.g. -0, 0/n, etc.
-    auto result = (!lhs.IsZero() ? lhs : Rational{});
+    auto result = (!lhs.IsZero() ? lhs : 0);
 
     try
     {
@@ -36,7 +36,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
                 throw CALC_E_NORESULT;
             }
 
-            uint64_t w64Bits = rhs.ToUInt64_t(m_precision);
+            uint64_t w64Bits = rhs.ToUInt64_t();
             bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
 
             Rational holdVal = result;
@@ -84,22 +84,22 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
             if (m_fIntegerMode)
             {
-                uint64_t w64Bits = rhs.ToUInt64_t(m_precision);
+                uint64_t w64Bits = rhs.ToUInt64_t();
                 bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
 
                 if (fMsb)
                 {
-                    result = rhs.Not(m_chopNumbers[m_numwidth], m_precision) + 1;
+                    result = rhs.Not(m_chopNumbers[m_numwidth]) + 1;
 
                     iNumeratorSign = -1;
                 }
 
-                w64Bits = temp.ToUInt64_t(m_precision);
+                w64Bits = temp.ToUInt64_t();
                 fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
 
                 if (fMsb)
                 {
-                    temp = temp.Not(m_chopNumbers[m_numwidth], m_precision) + 1;
+                    temp = temp.Not(m_chopNumbers[m_numwidth]) + 1;
 
                     iDenominatorSign = -1;
                 }
