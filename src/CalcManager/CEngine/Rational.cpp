@@ -213,7 +213,7 @@ namespace CalcEngine
 
         try
         {
-            lshrat(&lhsRat, rhsRat, DEFAULT_BASE, precision);
+            lshrat(&lhsRat, rhsRat, RATIONAL_BASE, precision);
             destroyrat(rhsRat);
         }
         catch (DWORD error)
@@ -236,7 +236,7 @@ namespace CalcEngine
 
         try
         {
-            rshrat(&lhsRat, rhsRat, DEFAULT_BASE, precision);
+            rshrat(&lhsRat, rhsRat, RATIONAL_BASE, precision);
             destroyrat(rhsRat);
         }
         catch (DWORD error)
@@ -264,7 +264,7 @@ namespace CalcEngine
 
         try
         {
-            andrat(&lhsRat, rhsRat, DEFAULT_BASE, precision);
+            andrat(&lhsRat, rhsRat, RATIONAL_BASE, precision);
             destroyrat(rhsRat);
         }
         catch (DWORD error)
@@ -286,7 +286,7 @@ namespace CalcEngine
         PRAT rhsRat = rhs.ToPRAT();
         try
         {
-            orrat(&lhsRat, rhsRat, DEFAULT_BASE, precision);
+            orrat(&lhsRat, rhsRat, RATIONAL_BASE, precision);
             destroyrat(rhsRat);
         }
         catch (DWORD error)
@@ -308,7 +308,7 @@ namespace CalcEngine
         PRAT rhsRat = rhs.ToPRAT();
         try
         {
-            xorrat(&lhsRat, rhsRat, DEFAULT_BASE, precision);
+            xorrat(&lhsRat, rhsRat, RATIONAL_BASE, precision);
             destroyrat(rhsRat);
         }
         catch (DWORD error)
@@ -447,7 +447,7 @@ namespace CalcEngine
         uint64_t result;
         try
         {
-            result = rattoUlonglong(rat, DEFAULT_BASE, precision);
+            result = rattoUlonglong(rat, RATIONAL_BASE, precision);
         }
         catch (DWORD error)
         {
