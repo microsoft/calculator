@@ -59,10 +59,13 @@ namespace CalcEngine
         Rational Not(Rational const& chopNum, int32_t precision) const;
 
         bool IsZero() const;
-        bool IsLess(Rational const& r, int32_t precision) const;
-        bool IsLessEq(Rational const& r, int32_t precision) const;
-        bool IsGreaterEq(Rational const& r, int32_t precision) const;
-        bool IsEq(Rational const& r, int32_t precision) const;
+
+        friend bool operator==(Rational const& lhs, Rational const& rhs);
+        friend bool operator!=(Rational const& lhs, Rational const& rhs);
+        friend bool operator<(Rational const& lhs, Rational const& rhs);
+        friend bool operator>(Rational const& lhs, Rational const& rhs);
+        friend bool operator<=(Rational const& lhs, Rational const& rhs);
+        friend bool operator>=(Rational const& lhs, Rational const& rhs);
 
         std::wstring ToString(uint32_t radix, NUMOBJ_FMT format, int32_t precision) const;
         uint64_t ToUInt64_t(int32_t precision) const;

@@ -31,7 +31,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
         case IDC_RSHF:
         {
-            if (m_fIntegerMode && result.IsGreaterEq(Rational{ m_dwWordBitWidth }, m_precision)) // Lsh/Rsh >= than current word size is always 0
+            if (m_fIntegerMode && result >= m_dwWordBitWidth) // Lsh/Rsh >= than current word size is always 0
             {
                 throw CALC_E_NORESULT;
             }
@@ -55,7 +55,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
         }
 
         case IDC_LSHF:
-            if (m_fIntegerMode && result.IsGreaterEq(Rational{ m_dwWordBitWidth }, m_precision)) // Lsh/Rsh >= than current word size is always 0
+            if (m_fIntegerMode && result >= m_dwWordBitWidth) // Lsh/Rsh >= than current word size is always 0
             {
                 throw CALC_E_NORESULT;
             }

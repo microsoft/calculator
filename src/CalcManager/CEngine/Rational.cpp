@@ -389,96 +389,70 @@ namespace CalcEngine
         return this->P().IsZero();
     }
 
-    bool Rational::IsLess(Rational const& r, int32_t precision) const
+    bool operator==(Rational const& lhs, Rational const& rhs)
     {
-        PRAT thisRat = this->ToPRAT();
-        PRAT rRat = r.ToPRAT();
+        PRAT lhsRat = lhs.ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
 
         bool result = false;
         try
         {
-            result = rat_lt(thisRat, rRat, precision);
+            result = rat_equ(lhsRat, rhsRat, RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {
-            destroyrat(thisRat);
-            destroyrat(rRat);
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
             throw(error);
         }
 
-        destroyrat(thisRat);
-        destroyrat(rRat);
+        destroyrat(lhsRat);
+        destroyrat(rhsRat);
 
         return result;
     }
 
-    bool Rational::IsLessEq(Rational const& r, int32_t precision) const
+    bool operator!=(Rational const& lhs, Rational const& rhs)
     {
-        PRAT thisRat = this->ToPRAT();
-        PRAT rRat = r.ToPRAT();
+        return !(lhs == rhs);
+    }
+
+    bool operator<(Rational const& lhs, Rational const& rhs)
+    {
+        PRAT lhsRat = lhs.ToPRAT();
+        PRAT rhsRat = rhs.ToPRAT();
 
         bool result = false;
         try
         {
-            result = rat_le(thisRat, rRat, precision);
+            result = rat_lt(lhsRat, rhsRat, RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {
-            destroyrat(thisRat);
-            destroyrat(rRat);
+            destroyrat(lhsRat);
+            destroyrat(rhsRat);
             throw(error);
         }
 
-        destroyrat(thisRat);
-        destroyrat(rRat);
+        destroyrat(lhsRat);
+        destroyrat(rhsRat);
 
         return result;
     }
 
-    bool Rational::IsGreaterEq(Rational const& r, int32_t precision) const
+    bool operator>(Rational const& lhs, Rational const& rhs)
     {
-        PRAT thisRat = this->ToPRAT();
-        PRAT rRat = r.ToPRAT();
-
-        bool result = false;
-        try
-        {
-            result = rat_ge(thisRat, rRat, precision);
-        }
-        catch (DWORD error)
-        {
-            destroyrat(thisRat);
-            destroyrat(rRat);
-            throw(error);
-        }
-
-        destroyrat(thisRat);
-        destroyrat(rRat);
-
-        return result;
+        return rhs < lhs;
     }
 
-    bool Rational::IsEq(Rational const& r, int32_t precision) const
+    bool operator<=(Rational const& lhs, Rational const& rhs)
     {
-        PRAT thisRat = this->ToPRAT();
-        PRAT rRat = r.ToPRAT();
+        return !(lhs > rhs);
+    }
 
-        bool result = false;
-        try
-        {
-            result = rat_equ(thisRat, rRat, precision);
-        }
-        catch (DWORD error)
-        {
-            destroyrat(thisRat);
-            destroyrat(rRat);
-            throw(error);
-        }
-
-        destroyrat(thisRat);
-        destroyrat(rRat);
-
-        return result;
+    bool operator>=(Rational const& lhs, Rational const& rhs)
+    {
+        return !(lhs < rhs);
     }
 
     wstring Rational::ToString(uint32_t radix, NUMOBJ_FMT fmt, int32_t precision) const

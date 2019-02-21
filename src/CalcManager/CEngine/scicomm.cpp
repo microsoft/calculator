@@ -1002,9 +1002,9 @@ int CCalcEngine::IdcSetAngleTypeDecMode(int idc)
 
 bool CCalcEngine::IsCurrentTooBigForTrig()
 {
-    if (m_currentVal.IsGreaterEq(m_maxTrigonometricNum, m_precision))
+    if (m_currentVal >= m_maxTrigonometricNum)
     {
-        m_currentVal = Rational{};
+        m_currentVal = 0;
         return true;
     }
 

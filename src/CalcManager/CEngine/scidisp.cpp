@@ -61,7 +61,7 @@ CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational con
 
     // Can be converting a dec negative number to Hex/Oct/Bin rep. Use 2's complement form
     // Check the range.
-    if (result.IsLess(0, m_precision))
+    if (result < 0)
     {
         // if negative make positive by doing a twos complement
         result = -(result) - 1;
@@ -83,7 +83,7 @@ void CCalcEngine::DisplayNum(void)
     //  called.
     //
     if (m_bRecord ||
-        !gldPrevious.value.IsEq(m_currentVal, m_precision) ||
+        gldPrevious.value != m_currentVal ||
         gldPrevious.precision != m_precision ||
         gldPrevious.radix != m_radix ||
         gldPrevious.nFE != (int)m_nFE ||
