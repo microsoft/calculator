@@ -136,7 +136,7 @@ Rational RationalMath::Log(Rational const& rat, int32_t precision)
 
 Rational RationalMath::Log10(Rational const& rat, int32_t precision)
 {
-    return Log(rat, precision).Div(10, precision);
+    return Log(rat, precision).Div(Rational{ ln_ten }, precision);
 }
 
 Rational RationalMath::Invert(Rational const& rat, int32_t precision)
