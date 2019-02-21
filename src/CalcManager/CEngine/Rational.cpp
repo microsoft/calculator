@@ -114,20 +114,14 @@ namespace CalcEngine
         return *this;
     }
 
-    Rational operator+(Rational lhs, Rational const& rhs)
-    {
-        lhs += rhs;
-        return lhs;
-    }
-
-    Rational Rational::Sub(Rational const& rhs, int32_t precision) const
+    Rational& Rational::operator-=(Rational const& rhs)
     {
         PRAT lhsRat = this->ToPRAT();
         PRAT rhsRat = rhs.ToPRAT();
 
         try
         {
-            subrat(&lhsRat, rhsRat, precision);
+            subrat(&lhsRat, rhsRat, RATIONAL_PRECISION);
             destroyrat(rhsRat);
         }
         catch (DWORD error)
@@ -137,10 +131,22 @@ namespace CalcEngine
             throw(error);
         }
 
-        Rational result = Rational{ lhsRat };
+        *this = Rational{ lhsRat };
         destroyrat(lhsRat);
 
-        return result;
+        return *this;
+    }
+
+    Rational operator+(Rational lhs, Rational const& rhs)
+    {
+        lhs += rhs;
+        return lhs;
+    }
+
+    Rational operator-(Rational lhs, Rational const& rhs)
+    {
+        lhs -= rhs;
+        return lhs;
     }
 
     Rational Rational::Mul(Rational const& rhs, int32_t precision) const

@@ -727,7 +727,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     {
         /* MMINUS subtracts m_currentVal to immediate memory and kills the "mem"   */
         /* indicator if the result is zero.                           */
-        Rational result = m_memoryValue->Sub(m_currentVal, m_precision);
+        Rational result = *m_memoryValue - m_currentVal;
         m_memoryValue = make_unique<Rational>(TruncateNumForIntMath(result));
 
         break;

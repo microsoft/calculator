@@ -182,14 +182,14 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
 
                 Rational degreeRat = Integer(rat, m_precision);
 
-                Rational minuteRat = rat.Sub(degreeRat, m_precision);
+                Rational minuteRat = rat - degreeRat;
                 minuteRat = minuteRat.Mul(shftRat, m_precision);
 
                 Rational secondRat = minuteRat;
 
                 minuteRat = Integer(minuteRat, m_precision);
 
-                secondRat = secondRat.Sub(minuteRat, m_precision);
+                secondRat -= minuteRat;
                 secondRat = secondRat.Mul(shftRat, m_precision);
 
                 //

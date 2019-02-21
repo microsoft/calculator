@@ -31,12 +31,13 @@ namespace CalcEngine
 
         Rational operator-() const;
         Rational& operator+=(Rational const& rhs);
-        Rational Sub(Rational const& rhs, int32_t precision) const;
+        Rational& operator-=(Rational const& rhs);
         Rational Mul(Rational const& rhs, int32_t precision) const;
         Rational Div(Rational const& rhs, int32_t precision) const;
         Rational Mod(Rational const& rhs) const;
 
         friend Rational operator+(Rational lhs, Rational const& rhs);
+        friend Rational operator-(Rational lhs, Rational const& rhs);
 
         Rational Lsh(Rational const& r, int32_t precision) const;
         Rational Rsh(Rational const& r, int32_t precision) const;

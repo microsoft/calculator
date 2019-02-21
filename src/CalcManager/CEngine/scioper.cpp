@@ -69,7 +69,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             break;
 
         case IDC_SUB:
-            result = rhs.Sub(result, m_precision);
+            result = rhs - result;
             break;
 
         case IDC_MUL:
