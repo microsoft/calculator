@@ -32,14 +32,14 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
         switch (op)
         {
         case IDC_CHOP:
-            result = m_bInv ? Frac(rat, m_precision) : Integer(rat, m_precision);
+            result = m_bInv ? Frac(rat) : Integer(rat);
             break;
 
             /* Return complement. */
         case IDC_COM:
             if (m_radix == 10 && !m_fIntegerMode)
             {
-                result = -(RationalMath::Integer(rat, m_precision) + 1);
+                result = -(RationalMath::Integer(rat) + 1);
             }
             else
             {
@@ -51,7 +51,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
         case IDC_ROL:
             if (m_fIntegerMode)
             {
-                result = Integer(rat, m_precision);
+                result = Integer(rat);
 
                 uint64_t w64Bits = result.ToUInt64_t();
                 uint64_t msb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
@@ -66,7 +66,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
         case IDC_ROR:
             if (m_fIntegerMode)
             {
-                result = Integer(rat, m_precision);
+                result = Integer(rat);
 
                 uint64_t w64Bits = result.ToUInt64_t();
                 uint64_t lsb = ((w64Bits & 0x01) == 1) ? 1 : 0;
@@ -95,76 +95,76 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
         case IDC_SIN: /* Sine; normal and arc */
             if (!m_fIntegerMode)
             {
-                result = m_bInv ? ASin(rat, m_angletype, m_precision) : Sin(rat, m_angletype, m_precision);
+                result = m_bInv ? ASin(rat, m_angletype) : Sin(rat, m_angletype);
             }
             break;
 
         case IDC_SINH: /* Sine- hyperbolic and archyperbolic */
             if (!m_fIntegerMode)
             {
-                result = m_bInv ? ASinh(rat, m_precision) : Sinh(rat, m_precision);
+                result = m_bInv ? ASinh(rat) : Sinh(rat);
             }
             break;
 
         case IDC_COS: /* Cosine, follows convention of sine function. */
             if (!m_fIntegerMode)
             {
-                result = m_bInv ? ACos(rat, m_angletype, m_precision) : Cos(rat, m_angletype, m_precision);
+                result = m_bInv ? ACos(rat, m_angletype) : Cos(rat, m_angletype);
             }
             break;
 
         case IDC_COSH: /* Cosine hyperbolic, follows convention of sine h function. */
             if (!m_fIntegerMode)
             {
-                result = m_bInv ? ACosh(rat, m_precision) : Cosh(rat, m_precision);
+                result = m_bInv ? ACosh(rat) : Cosh(rat);
             }
             break;
 
         case IDC_TAN: /* Same as sine and cosine. */
             if (!m_fIntegerMode)
             {
-                result = m_bInv ? ATan(rat, m_angletype, m_precision) : Tan(rat, m_angletype, m_precision);
+                result = m_bInv ? ATan(rat, m_angletype) : Tan(rat, m_angletype);
             }
             break;
 
         case IDC_TANH: /* Same as sine h and cosine h. */
             if (!m_fIntegerMode)
             {
-                result = m_bInv ? ATanh(rat, m_precision) : Tanh(rat, m_precision);
+                result = m_bInv ? ATanh(rat) : Tanh(rat);
             }
             break;
 
         case IDC_REC: /* Reciprocal. */
-            result = Invert(rat, m_precision);
+            result = Invert(rat);
             break;
 
         case IDC_SQR: /* Square */
-            result = Pow(rat, 2, m_precision);
+            result = Pow(rat, 2);
             break;
 
         case IDC_SQRT: /* Square Root */
-            result = Root(rat, 2, m_precision);
+            result = Root(rat, 2);
             break;
 
         case IDC_CUBEROOT:
         case IDC_CUB: /* Cubing and cube root functions. */
-            result = IDC_CUBEROOT == op ? Root(rat, 3, m_precision) : Pow(rat, 3, m_precision);
+            result = IDC_CUBEROOT == op ? Root(rat, 3) : Pow(rat, 3);
             break;
 
         case IDC_LOG: /* Functions for common log. */
-            result = Log10(rat, m_precision);
+            result = Log10(rat);
             break;
 
         case IDC_POW10:
-            result = Pow(10, rat, m_precision);
+            result = Pow(10, rat);
             break;
 
         case IDC_LN: /* Functions for natural log. */
-            result = m_bInv ? Exp(rat, m_precision) : Log(rat, m_precision);
+            result = m_bInv ? Exp(rat) : Log(rat);
             break;
 
         case IDC_FAC: /* Calculate factorial.  Inverse is ineffective. */
-            result = Fact(rat, m_precision);
+            result = Fact(rat);
             break;
 
         case IDC_DEGREES:
@@ -179,13 +179,13 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             {
                 auto shftRat{ m_bInv ? 100 : 60 };
 
-                Rational degreeRat = Integer(rat, m_precision);
+                Rational degreeRat = Integer(rat);
 
                 Rational minuteRat = (rat - degreeRat) * shftRat;
 
                 Rational secondRat = minuteRat;
 
-                minuteRat = Integer(minuteRat, m_precision);
+                minuteRat = Integer(minuteRat);
 
                 secondRat = (secondRat - minuteRat) * shftRat;
 

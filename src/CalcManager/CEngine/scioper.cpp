@@ -44,10 +44,10 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
             if (fMsb)
             {
-                result = Integer(result, m_precision);
+                result = Integer(result);
 
                 auto tempRat = m_chopNumbers[m_numwidth] >> holdVal;
-                tempRat = Integer(tempRat, m_precision);
+                tempRat = Integer(tempRat);
 
                 result |= tempRat ^ m_chopNumbers[m_numwidth];
             }
@@ -118,18 +118,18 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
             if (m_fIntegerMode && iFinalSign == -1)
             {
-                result = -(Integer(result, m_precision));
+                result = -(Integer(result));
             }
 
             break;
         }
 
         case IDC_PWR: // Calculates rhs to the result(th) power.
-            result = Pow(rhs, result, m_precision);
+            result = Pow(rhs, result);
             break;
 
         case IDC_ROOT: // Calculates rhs to the result(th) root.
-            result = Root(rhs, result, m_precision);
+            result = Root(rhs, result);
             break;
         }
     }

@@ -57,7 +57,7 @@ CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational con
     }
 
     // Truncate to an integer. Do not round here.
-    auto result = RationalMath::Integer(rat, m_precision);
+    auto result = RationalMath::Integer(rat);
 
     // Can be converting a dec negative number to Hex/Oct/Bin rep. Use 2's complement form
     // Check the range.

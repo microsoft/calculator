@@ -84,7 +84,7 @@ bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno)
         return false; // ignore error cant happen
     }
 
-    Rational result = Integer(rat, m_precision);
+    Rational result = Integer(rat);
     if (result.IsZero())
     {
         // This is the same work around happenning in SciCalcFunctions. Ought to move to intrat function itself.
@@ -92,8 +92,8 @@ bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno)
         result = 0;
     }
 
-    auto pow = Pow(2, static_cast<int32_t>(wbitno), m_precision);
-    rat = result ^ pow;
+    // XOR the result with 2^wbitno power
+    rat = result ^ Pow(2, static_cast<int32_t>(wbitno));
 
     return true;
 }

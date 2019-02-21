@@ -95,7 +95,7 @@ CCalcEngine::CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager
 
     m_dwWordBitWidth = DwWordBitWidthFromeNumWidth(m_numwidth);
 
-    m_maxTrigonometricNum = RationalMath::Pow(10, 100, m_precision);
+    m_maxTrigonometricNum = RationalMath::Pow(10, 100);
 
     SetRadixTypeAndNumWidth(DEC_RADIX, m_numwidth);
     SettingsChanged();
@@ -118,7 +118,7 @@ void CCalcEngine::InitChopNumbers()
     for (size_t i = 0; i < m_chopNumbers.size(); i++)
     {
         auto maxVal = m_chopNumbers[i] / 2;
-        maxVal = RationalMath::Integer(maxVal, m_precision);
+        maxVal = RationalMath::Integer(maxVal);
 
         m_maxDecimalValueStrings[i] = maxVal.ToString(10, FMT_FLOAT, m_precision);
     }

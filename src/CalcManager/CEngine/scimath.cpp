@@ -8,12 +8,12 @@
 using namespace std;
 using namespace CalcEngine;
 
-Rational RationalMath::Frac(Rational const& rat, int32_t precision)
+Rational RationalMath::Frac(Rational const& rat)
 {
     PRAT prat = rat.ToPRAT();
     try
     {
-        fracrat(&prat, RATIONAL_BASE, precision);
+        fracrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -27,12 +27,12 @@ Rational RationalMath::Frac(Rational const& rat, int32_t precision)
     return result;
 }
 
-Rational RationalMath::Integer(Rational const& rat, int32_t precision)
+Rational RationalMath::Integer(Rational const& rat)
 {
     PRAT prat = rat.ToPRAT();
     try
     {
-        intrat(&prat, RATIONAL_BASE, precision);
+        intrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -46,14 +46,14 @@ Rational RationalMath::Integer(Rational const& rat, int32_t precision)
     return result;
 }
 
-Rational RationalMath::Pow(Rational const& base, Rational const& pow, int32_t precision)
+Rational RationalMath::Pow(Rational const& base, Rational const& pow)
 {
     PRAT baseRat = base.ToPRAT();
     PRAT powRat = pow.ToPRAT();
 
     try
     {
-        powrat(&baseRat, powRat, RATIONAL_BASE, precision);
+        powrat(&baseRat, powRat, RATIONAL_BASE, RATIONAL_PRECISION);
         destroyrat(powRat);
     }
     catch (DWORD error)
@@ -69,18 +69,18 @@ Rational RationalMath::Pow(Rational const& base, Rational const& pow, int32_t pr
     return result;
 }
 
-Rational RationalMath::Root(Rational const& base, Rational const& root, int32_t precision)
+Rational RationalMath::Root(Rational const& base, Rational const& root)
 {
-    return Pow(base, Invert(root, precision), precision);
+    return Pow(base, Invert(root));
 }
 
-Rational RationalMath::Fact(Rational const& rat, int32_t precision)
+Rational RationalMath::Fact(Rational const& rat)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        factrat(&prat, RATIONAL_BASE, precision);
+        factrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -94,13 +94,13 @@ Rational RationalMath::Fact(Rational const& rat, int32_t precision)
     return result;
 }
 
-Rational RationalMath::Exp(Rational const& rat, int32_t precision)
+Rational RationalMath::Exp(Rational const& rat)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        exprat(&prat, RATIONAL_BASE, precision);
+        exprat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -114,13 +114,13 @@ Rational RationalMath::Exp(Rational const& rat, int32_t precision)
     return result;
 }
 
-Rational RationalMath::Log(Rational const& rat, int32_t precision)
+Rational RationalMath::Log(Rational const& rat)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        lograt(&prat, precision);
+        lograt(&prat, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -134,12 +134,12 @@ Rational RationalMath::Log(Rational const& rat, int32_t precision)
     return result;
 }
 
-Rational RationalMath::Log10(Rational const& rat, int32_t precision)
+Rational RationalMath::Log10(Rational const& rat)
 {
-    return Log(rat, precision) / Rational{ ln_ten };
+    return Log(rat) / Rational{ ln_ten };
 }
 
-Rational RationalMath::Invert(Rational const& rat, int32_t precision)
+Rational RationalMath::Invert(Rational const& rat)
 {
     return 1 / rat;
 }
@@ -149,13 +149,13 @@ Rational RationalMath::Abs(Rational const& rat)
     return Rational{ Number{ 1, rat.P().Exp(), rat.P().Mantissa() }, Number{ 1, rat.Q().Exp(), rat.Q().Mantissa() } };
 }
 
-Rational RationalMath::Sin(Rational const& rat, ANGLE_TYPE angletype, int32_t precision)
+Rational RationalMath::Sin(Rational const& rat, ANGLE_TYPE angletype)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        sinanglerat(&prat, angletype, RATIONAL_BASE, precision);
+        sinanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -169,13 +169,13 @@ Rational RationalMath::Sin(Rational const& rat, ANGLE_TYPE angletype, int32_t pr
     return result;
 }
 
-Rational RationalMath::Cos(Rational const& rat, ANGLE_TYPE angletype, int32_t precision)
+Rational RationalMath::Cos(Rational const& rat, ANGLE_TYPE angletype)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        cosanglerat(&prat, angletype, RATIONAL_BASE, precision);
+        cosanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -189,13 +189,13 @@ Rational RationalMath::Cos(Rational const& rat, ANGLE_TYPE angletype, int32_t pr
     return result;
 }
 
-Rational RationalMath::Tan(Rational const& rat, ANGLE_TYPE angletype, int32_t precision)
+Rational RationalMath::Tan(Rational const& rat, ANGLE_TYPE angletype)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        tananglerat(&prat, angletype, RATIONAL_BASE, precision);
+        tananglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -209,13 +209,13 @@ Rational RationalMath::Tan(Rational const& rat, ANGLE_TYPE angletype, int32_t pr
     return result;
 }
 
-Rational RationalMath::ASin(Rational const& rat, ANGLE_TYPE angletype, int32_t precision)
+Rational RationalMath::ASin(Rational const& rat, ANGLE_TYPE angletype)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        asinanglerat(&prat, angletype, RATIONAL_BASE, precision);
+        asinanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -229,13 +229,13 @@ Rational RationalMath::ASin(Rational const& rat, ANGLE_TYPE angletype, int32_t p
     return result;
 }
 
-Rational RationalMath::ACos(Rational const& rat, ANGLE_TYPE angletype, int32_t precision)
+Rational RationalMath::ACos(Rational const& rat, ANGLE_TYPE angletype)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        acosanglerat(&prat, angletype, RATIONAL_BASE, precision);
+        acosanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -249,13 +249,13 @@ Rational RationalMath::ACos(Rational const& rat, ANGLE_TYPE angletype, int32_t p
     return result;
 }
 
-Rational RationalMath::ATan(Rational const& rat, ANGLE_TYPE angletype, int32_t precision)
+Rational RationalMath::ATan(Rational const& rat, ANGLE_TYPE angletype)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        atananglerat(&prat, angletype, RATIONAL_BASE, precision);
+        atananglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -269,13 +269,13 @@ Rational RationalMath::ATan(Rational const& rat, ANGLE_TYPE angletype, int32_t p
     return result;
 }
 
-Rational RationalMath::Sinh(Rational const& rat, int32_t precision)
+Rational RationalMath::Sinh(Rational const& rat)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        sinhrat(&prat, RATIONAL_BASE, precision);
+        sinhrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -289,13 +289,13 @@ Rational RationalMath::Sinh(Rational const& rat, int32_t precision)
     return result;
 }
 
-Rational RationalMath::Cosh(Rational const& rat, int32_t precision)
+Rational RationalMath::Cosh(Rational const& rat)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        coshrat(&prat, RATIONAL_BASE, precision);
+        coshrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -309,13 +309,13 @@ Rational RationalMath::Cosh(Rational const& rat, int32_t precision)
     return result;
 }
 
-Rational RationalMath::Tanh(Rational const& rat, int32_t precision)
+Rational RationalMath::Tanh(Rational const& rat)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        tanhrat(&prat, RATIONAL_BASE, precision);
+        tanhrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -329,13 +329,13 @@ Rational RationalMath::Tanh(Rational const& rat, int32_t precision)
     return result;
 }
 
-Rational RationalMath::ASinh(Rational const& rat, int32_t precision)
+Rational RationalMath::ASinh(Rational const& rat)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        asinhrat(&prat, RATIONAL_BASE, precision);
+        asinhrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -349,13 +349,13 @@ Rational RationalMath::ASinh(Rational const& rat, int32_t precision)
     return result;
 }
 
-Rational RationalMath::ACosh(Rational const& rat, int32_t precision)
+Rational RationalMath::ACosh(Rational const& rat)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        acoshrat(&prat, RATIONAL_BASE, precision);
+        acoshrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
@@ -369,13 +369,13 @@ Rational RationalMath::ACosh(Rational const& rat, int32_t precision)
     return result;
 }
 
-Rational RationalMath::ATanh(Rational const& rat, int32_t precision)
+Rational RationalMath::ATanh(Rational const& rat)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        atanhrat(&prat, precision);
+        atanhrat(&prat, RATIONAL_PRECISION);
     }
     catch (DWORD error)
     {
