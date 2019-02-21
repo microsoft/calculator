@@ -68,7 +68,7 @@ CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational con
         result = result.Not(m_chopNumbers[m_numwidth], m_precision);
     }
 
-    result = result.And(m_chopNumbers[m_numwidth], m_precision);
+    result &= m_chopNumbers[m_numwidth];
 
     return result;
 }

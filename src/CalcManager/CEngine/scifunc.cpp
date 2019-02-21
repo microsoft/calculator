@@ -43,7 +43,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             }
             else
             {
-                result = rat.Xor(m_chopNumbers[m_numwidth], m_precision);
+                result = rat ^ m_chopNumbers[m_numwidth];
             }
             break;
 

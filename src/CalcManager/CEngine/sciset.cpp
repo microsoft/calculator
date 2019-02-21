@@ -89,11 +89,11 @@ bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno)
     {
         // This is the same work around happenning in SciCalcFunctions. Ought to move to intrat function itself.
         // Basic bug is there which doesn't treat 0/ n as 0, or -0 as 0 etc.
-        result = Rational{};
+        result = 0;
     }
 
     auto pow = Pow(2, static_cast<int32_t>(wbitno), m_precision);
-    rat = result.Xor(pow, m_precision);
+    rat = result ^ pow;
 
     return true;
 }

@@ -39,6 +39,10 @@ namespace CalcEngine
         Rational& operator<<=(Rational const& rhs);
         Rational& operator>>=(Rational const& rhs);
 
+        Rational& operator&=(Rational const& rhs);
+        Rational& operator|=(Rational const& rhs);
+        Rational& operator^=(Rational const& rhs);
+
         friend Rational operator+(Rational lhs, Rational const& rhs);
         friend Rational operator-(Rational lhs, Rational const& rhs);
         friend Rational operator*(Rational lhs, Rational const& rhs);
@@ -48,10 +52,11 @@ namespace CalcEngine
         friend Rational operator<<(Rational lhs, Rational const& rhs);
         friend Rational operator>>(Rational lhs, Rational const& rhs);
 
+        friend Rational operator&(Rational lhs, Rational const& rhs);
+        friend Rational operator|(Rational lhs, Rational const& rhs);
+        friend Rational operator^(Rational lhs, Rational const& rhs);
+
         Rational Not(Rational const& chopNum, int32_t precision) const;
-        Rational And(Rational const& r, int32_t precision) const;
-        Rational Or(Rational const& r, int32_t precision) const;
-        Rational Xor(Rational const& r, int32_t precision) const;
 
         bool IsZero() const;
         bool IsLess(Rational const& r, int32_t precision) const;

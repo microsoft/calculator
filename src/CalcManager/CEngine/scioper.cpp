@@ -18,15 +18,15 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
         switch (operation)
         {
         case IDC_AND:
-            result = result.And(rhs, m_precision);
+            result &= rhs;
             break;
 
         case IDC_OR:
-            result = result.Or(rhs, m_precision);
+            result |= rhs;
             break;
 
         case IDC_XOR:
-            result = result.Xor(rhs, m_precision);
+            result ^= rhs;
             break;
 
         case IDC_RSHF:
@@ -49,8 +49,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
                 auto tempRat = m_chopNumbers[m_numwidth] >> holdVal;
                 tempRat = Integer(tempRat, m_precision);
 
-                tempRat = tempRat.Xor(m_chopNumbers[m_numwidth], m_precision);
-                result = result.Or(tempRat, m_precision);
+                result |= tempRat ^ m_chopNumbers[m_numwidth];
             }
             break;
         }
