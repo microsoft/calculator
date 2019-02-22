@@ -378,7 +378,7 @@ namespace CalcEngine
         lhs ^= rhs;
         return lhs;
     }
-    
+
     bool operator==(Rational const& lhs, Rational const& rhs)
     {
         PRAT lhsRat = lhs.ToPRAT();
