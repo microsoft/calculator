@@ -56,8 +56,6 @@ namespace CalcEngine
         friend Rational operator|(Rational lhs, Rational const& rhs);
         friend Rational operator^(Rational lhs, Rational const& rhs);
 
-        bool IsZero() const;
-
         friend bool operator==(Rational const& lhs, Rational const& rhs);
         friend bool operator!=(Rational const& lhs, Rational const& rhs);
         friend bool operator<(Rational const& lhs, Rational const& rhs);
@@ -65,6 +63,7 @@ namespace CalcEngine
         friend bool operator<=(Rational const& lhs, Rational const& rhs);
         friend bool operator>=(Rational const& lhs, Rational const& rhs);
 
+        bool IsZero() const;
         std::wstring ToString(uint32_t radix, NUMOBJ_FMT format, int32_t precision) const;
         uint64_t ToUInt64_t() const;
 

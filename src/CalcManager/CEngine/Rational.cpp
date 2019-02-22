@@ -378,12 +378,7 @@ namespace CalcEngine
         lhs ^= rhs;
         return lhs;
     }
-
-    bool Rational::IsZero() const
-    {
-        return this->P().IsZero();
-    }
-
+    
     bool operator==(Rational const& lhs, Rational const& rhs)
     {
         PRAT lhsRat = lhs.ToPRAT();
@@ -448,6 +443,11 @@ namespace CalcEngine
     bool operator>=(Rational const& lhs, Rational const& rhs)
     {
         return !(lhs < rhs);
+    }
+
+    bool Rational::IsZero() const
+    {
+        return this->P().IsZero();
     }
 
     wstring Rational::ToString(uint32_t radix, NUMOBJ_FMT fmt, int32_t precision) const
