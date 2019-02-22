@@ -112,7 +112,7 @@ private:
     int m_openParenCount; // Number of open parentheses.
     std::array<int, MAXPRECDEPTH> m_nOp;        /* Holding array for parenthesis operations.    */
     std::array<int, MAXPRECDEPTH> m_nPrecOp;    /* Holding array for precedence  operations.    */
-    int m_nPrecNum;     /* Current number of precedence ops in holding. */
+    size_t m_precedenceOpCount;     /* Current number of precedence ops in holding. */
     int m_nLastCom;   // Last command entered.
     ANGLE_TYPE m_angletype;  // Current Angle type when in dec mode. one of deg, rad or grad
     NUM_WIDTH m_numwidth;  // one of qword, dword, word or byte mode.
