@@ -8,7 +8,7 @@ namespace CalcEngine
 {
     // Default Base/Radix to use for Rational calculations
     // RatPack calculations currently support up to Base64.
-    static constexpr uint32_t RATIONAL_BASE = 10;
+    inline constexpr uint32_t RATIONAL_BASE = 10;
 
     class Rational
     {
