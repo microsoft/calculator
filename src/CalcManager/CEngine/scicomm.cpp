@@ -1048,12 +1048,12 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
 
         try
         {
-            uint64_t w64Bits = tempRat.ToUInt64_t(m_radix, m_precision);
+            uint64_t w64Bits = tempRat.ToUInt64_t(m_precision);
             bool fMsb = ((w64Bits >> (m_dwWordBitWidth - 1)) & 1);
             if ((radix == 10) && fMsb)
             {
                 // If high bit is set, then get the decimal number in negative 2's compl form.
-                tempRat = tempRat.Not(true, m_chopNumbers[m_numwidth], m_radix, m_precision);
+                tempRat = tempRat.Not(m_chopNumbers[m_numwidth], m_precision);
                 tempRat = tempRat.Add(1, m_precision);
                 tempRat = tempRat.Negate();
             }

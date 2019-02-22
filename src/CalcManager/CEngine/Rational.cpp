@@ -50,12 +50,12 @@ namespace CalcEngine
         destroyrat(pr);
     }
 
-    Rational::Rational(uint64_t ui, uint32_t radix, int32_t precision)
+    Rational::Rational(uint64_t ui, int32_t precision)
     {
         uint32_t hi = HIDWORD(ui);
         uint32_t lo = LODWORD(ui);
 
-        Rational temp = Rational{ hi }.Lsh(32, radix, precision).Or(lo, radix, precision);
+        Rational temp = Rational{ hi }.Lsh(32, precision).Or(lo, precision);
 
         m_p = Number{ temp.P() };
         m_q = Number{ temp.Q() };
@@ -206,14 +206,14 @@ namespace CalcEngine
         return result;
     }
 
-    Rational Rational::Lsh(Rational const& rhs, uint32_t radix, int32_t precision) const
+    Rational Rational::Lsh(Rational const& rhs, int32_t precision) const
     {
         PRAT lhsRat = this->ToPRAT();
         PRAT rhsRat = rhs.ToPRAT();
 
         try
         {
-            lshrat(&lhsRat, rhsRat, radix, precision);
+            lshrat(&lhsRat, rhsRat, RATIONAL_BASE, precision);
             destroyrat(rhsRat);
         }
         catch (DWORD error)
@@ -229,14 +229,14 @@ namespace CalcEngine
         return result;
     }
 
-    Rational Rational::Rsh(Rational const& rhs, uint32_t radix, int32_t precision) const
+    Rational Rational::Rsh(Rational const& rhs, int32_t precision) const
     {
         PRAT lhsRat = this->ToPRAT();
         PRAT rhsRat = rhs.ToPRAT();
 
         try
         {
-            rshrat(&lhsRat, rhsRat, radix, precision);
+            rshrat(&lhsRat, rhsRat, RATIONAL_BASE, precision);
             destroyrat(rhsRat);
         }
         catch (DWORD error)
@@ -252,32 +252,19 @@ namespace CalcEngine
         return result;
     }
 
-    Rational Rational::Not(bool isIntegerMode, Rational const& chopNum, uint32_t radix, int32_t precision) const
+    Rational Rational::Not(Rational const& chopNum, int32_t precision) const
     {
-        Rational result{};
-
-        if (radix == 10 && !isIntegerMode)
-        {
-            result = RationalMath::Integer(*this, radix, precision);
-            result = result.Add(1, precision);
-            result = result.Negate();
-        }
-        else
-        {
-            result = this->Xor(chopNum, radix, precision);
-        }
-
-        return result;
+        return this->Xor(chopNum, precision);
     }
 
-    Rational Rational::And(Rational const& rhs, uint32_t radix, int32_t precision) const
+    Rational Rational::And(Rational const& rhs, int32_t precision) const
     {
         PRAT lhsRat = this->ToPRAT();
         PRAT rhsRat = rhs.ToPRAT();
 
         try
         {
-            andrat(&lhsRat, rhsRat, radix, precision);
+            andrat(&lhsRat, rhsRat, RATIONAL_BASE, precision);
             destroyrat(rhsRat);
         }
         catch (DWORD error)
@@ -293,13 +280,13 @@ namespace CalcEngine
         return result;
     }
 
-    Rational Rational::Or(Rational const& rhs, uint32_t radix, int32_t precision) const
+    Rational Rational::Or(Rational const& rhs, int32_t precision) const
     {
         PRAT lhsRat = this->ToPRAT();
         PRAT rhsRat = rhs.ToPRAT();
         try
         {
-            orrat(&lhsRat, rhsRat, radix, precision);
+            orrat(&lhsRat, rhsRat, RATIONAL_BASE, precision);
             destroyrat(rhsRat);
         }
         catch (DWORD error)
@@ -315,13 +302,13 @@ namespace CalcEngine
         return result;
     }
 
-    Rational Rational::Xor(Rational const& rhs, uint32_t radix, int32_t precision) const
+    Rational Rational::Xor(Rational const& rhs, int32_t precision) const
     {
         PRAT lhsRat = this->ToPRAT();
         PRAT rhsRat = rhs.ToPRAT();
         try
         {
-            xorrat(&lhsRat, rhsRat, radix, precision);
+            xorrat(&lhsRat, rhsRat, RATIONAL_BASE, precision);
             destroyrat(rhsRat);
         }
         catch (DWORD error)
@@ -454,13 +441,13 @@ namespace CalcEngine
         return result;
     }
 
-    uint64_t Rational::ToUInt64_t(uint32_t radix, int32_t precision) const
+    uint64_t Rational::ToUInt64_t(int32_t precision) const
     {
         PRAT rat = this->ToPRAT();
         uint64_t result;
         try
         {
-            result = rattoUlonglong(rat, radix, precision);
+            result = rattoUlonglong(rat, RATIONAL_BASE, precision);
         }
         catch (DWORD error)
         {

@@ -307,7 +307,7 @@ Rational CalcInput::ToRational(uint32_t radix, int32_t precision)
     PRAT rat = StringToRat(m_base.IsNegative(), m_base.value, m_exponent.IsNegative(), m_exponent.value, radix, precision);
     if (rat == nullptr)
     {
-        return Rational{};
+        return 0;
     }
 
     Rational result{ rat };

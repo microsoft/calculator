@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //---------------------------------------------------------------------------
@@ -347,6 +347,7 @@ PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix)
 //              mantissa a string representation of a number
 //              exponentIsNegative  true if exponent is less than zero
 //              exponent a string representation of a number
+//              radix is the number base used in the source string
 //
 //  RETURN: PRAT representation of string input.
 //          Or nullptr if no number scanned.
