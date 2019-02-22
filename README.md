@@ -60,6 +60,3 @@ email to ensure we received your original message. Further information, includin
 Copyright (c) Microsoft Corporation. All rights reserved.
 
 Licensed under the [MIT License](.\LICENSE).
-
-## Contact
-Questions that can't be answered on GitHub? Reach out to the team: <[calculator@microsoft.com](mailto:calculator@microsoft.com)>
