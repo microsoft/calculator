@@ -1259,25 +1259,46 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
 //-----------------------------------------------------------------------------
 wstring RatToString(_Inout_ PRAT& prat, int format, uint32_t radix, int32_t precision)
 {
-    // Convert p and q of rational form from internal base to requested base.
-    // Scale by largest power of BASEX possible.
-    long scaleby = min(prat->pp->exp, prat->pq->exp);
-    scaleby = max(scaleby, 0);
-
-    prat->pp->exp -= scaleby;
-    prat->pq->exp -= scaleby;
-
-    PNUMBER p = nRadixxtonum(prat->pp, radix, precision);
-    PNUMBER q = nRadixxtonum(prat->pq, radix, precision);
-
-    // finally take the time hit to actually divide.
-    divnum(&p, q, radix, precision);
-    destroynum(q);
+    PNUMBER p = RatToNumber(prat, radix, precision);
 
     wstring result = NumberToString(p, format, radix, precision);
     destroynum(p);
 
     return result;
+}
+
+PNUMBER RatToNumber(_In_ PRAT prat, uint32_t radix, int32_t precision)
+{
+    PRAT temprat = nullptr;
+    DUPRAT(temprat, prat);
+    // Convert p and q of rational form from internal base to requested base.
+    // Scale by largest power of BASEX possible.
+    long scaleby = min(temprat->pp->exp, temprat->pq->exp);
+    scaleby = max(scaleby, 0);
+
+    temprat->pp->exp -= scaleby;
+    temprat->pq->exp -= scaleby;
+
+    PNUMBER p = nRadixxtonum(temprat->pp, radix, precision);
+    PNUMBER q = nRadixxtonum(temprat->pq, radix, precision);
+
+    destroyrat(temprat);
+
+    // finally take the time hit to actually divide.
+    divnum(&p, q, radix, precision);
+    destroynum(q);
+
+    return p;
+}
+
+// Converts a PRAT to a PNUMBER and back to a PRAT, flattening/simplifying the rational in the process
+void flatrat(_Inout_ PRAT& prat, uint32_t radix, int32_t precision)
+{
+    PNUMBER pnum = RatToNumber(prat, radix, precision);
+
+    destroyrat(prat);
+    prat = numtorat(pnum, radix);
+    destroynum(pnum);
 }
 
 //-----------------------------------------------------------------------------
