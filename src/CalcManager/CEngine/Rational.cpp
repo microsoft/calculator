@@ -379,11 +379,6 @@ namespace CalcEngine
         return lhs;
     }
 
-    Rational Rational::Not(Rational const& chopNum) const
-    {
-        return *this ^ chopNum;
-    }
-
     bool Rational::IsZero() const
     {
         return this->P().IsZero();

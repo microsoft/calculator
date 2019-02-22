@@ -1053,7 +1053,7 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
             if ((radix == 10) && fMsb)
             {
                 // If high bit is set, then get the decimal number in negative 2's compl form.
-                tempRat = -(tempRat.Not(m_chopNumbers[m_numwidth]) + 1);
+                tempRat = -((tempRat ^ m_chopNumbers[m_numwidth]) + 1);
             }
 
             result = tempRat.ToString(radix, m_nFE, m_precision);

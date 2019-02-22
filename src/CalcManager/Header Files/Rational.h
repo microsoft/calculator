@@ -56,8 +56,6 @@ namespace CalcEngine
         friend Rational operator|(Rational lhs, Rational const& rhs);
         friend Rational operator^(Rational lhs, Rational const& rhs);
 
-        Rational Not(Rational const& chopNum) const;
-
         bool IsZero() const;
 
         friend bool operator==(Rational const& lhs, Rational const& rhs);

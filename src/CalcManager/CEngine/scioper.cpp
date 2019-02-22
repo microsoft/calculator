@@ -89,7 +89,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
                 if (fMsb)
                 {
-                    result = rhs.Not(m_chopNumbers[m_numwidth]) + 1;
+                    result = (rhs ^ m_chopNumbers[m_numwidth]) + 1;
 
                     iNumeratorSign = -1;
                 }
@@ -99,7 +99,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
                 if (fMsb)
                 {
-                    temp = temp.Not(m_chopNumbers[m_numwidth]) + 1;
+                    temp = (temp ^ m_chopNumbers[m_numwidth]) + 1;
 
                     iDenominatorSign = -1;
                 }
