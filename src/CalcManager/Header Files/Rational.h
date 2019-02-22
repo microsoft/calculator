@@ -11,7 +11,7 @@ namespace CalcEngine
     inline constexpr uint32_t RATIONAL_BASE = 10;
 
     // Default Precision to use for Rational calculations
-    static constexpr int32_t RATIONAL_PRECISION = 128;
+    inline constexpr int32_t RATIONAL_PRECISION = 128;
 
     class Rational
     {
