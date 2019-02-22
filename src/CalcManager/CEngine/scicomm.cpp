@@ -228,19 +228,19 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
 
             if ((nx > ni) && m_fPrecedence)
             {
-                if (m_nPrecNum < MAXPRECDEPTH)
+                if (m_precedenceOpCount < MAXPRECDEPTH)
                 {
-                    m_precedenceVals[m_nPrecNum] = m_lastVal;
+                    m_precedenceVals[m_precedenceOpCount] = m_lastVal;
 
-                    m_nPrecOp[m_nPrecNum] = m_nOpCode;
+                    m_nPrecOp[m_precedenceOpCount] = m_nOpCode;
                     m_HistoryCollector.PushLastOpndStart(); // Eg. 1 + 2  *, Need to remember the start of 2 to do Precedence invertion if need to
                 }
                 else
                 {
-                    m_nPrecNum = MAXPRECDEPTH - 1;
+                    m_precedenceOpCount = MAXPRECDEPTH - 1;
                     HandleErrorCommand(wParam);
                 }
-                m_nPrecNum++;
+                m_precedenceOpCount++;
             }
             else
             {
@@ -256,12 +256,12 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
                     DisplayNum();
                 }
 
-                if ((m_nPrecNum != 0) && (m_nPrecOp[m_nPrecNum - 1]))
+                if ((m_precedenceOpCount != 0) && (m_nPrecOp[m_precedenceOpCount - 1]))
                 {
-                    m_nPrecNum--;
-                    m_nOpCode = m_nPrecOp[m_nPrecNum];
+                    m_precedenceOpCount--;
+                    m_nOpCode = m_nPrecOp[m_precedenceOpCount];
 
-                    m_lastVal = m_precedenceVals[m_nPrecNum];
+                    m_lastVal = m_precedenceVals[m_precedenceOpCount];
 
                     nx = NPrecedenceOfOp(m_nOpCode);
                     // Precedence Invertion Higher to lower can happen which needs explicit enclosure of brackets
@@ -385,7 +385,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         m_lastVal = Rational{};
 
         m_bChangeOp = false;
-        m_nPrecNum = m_nTempCom = m_nLastCom = m_nOpCode = m_openParenCount = 0;
+        m_precedenceOpCount = m_nTempCom = m_nLastCom = m_nOpCode = m_openParenCount = 0;
         m_nPrevOpCode = 0;
         m_bNoPrevEqu = true;
 
@@ -495,11 +495,11 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             else if (!m_bError)
                 DisplayNum();
 
-            if (m_nPrecNum == 0 || !m_fPrecedence)
+            if (m_precedenceOpCount == 0 || !m_fPrecedence)
                 break;
 
-            m_nOpCode = m_nPrecOp[--m_nPrecNum];
-            m_lastVal = m_precedenceVals[m_nPrecNum];
+            m_nOpCode = m_nPrecOp[--m_precedenceOpCount];
+            m_lastVal = m_precedenceVals[m_precedenceOpCount];
 
             // Precedence Invertion check
             ni = NPrecedenceOfOp(m_nPrevOpCode);
@@ -511,7 +511,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             m_HistoryCollector.PopLastOpndStart();
 
             m_bNoPrevEqu = true;
-        } while (m_nPrecNum >= 0);
+        } while (m_precedenceOpCount >= 0);
 
         if (!m_bError)
         {
@@ -541,7 +541,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         //      paren
         // -OR- the the precidence holding array is full
         if ((m_openParenCount >= MAXPRECDEPTH && nx) || (!m_openParenCount && !nx)
-            || ((m_nPrecNum >= MAXPRECDEPTH && m_nPrecOp[m_nPrecNum - 1] != 0)))
+            || ((m_precedenceOpCount >= MAXPRECDEPTH && m_nPrecOp[m_precedenceOpCount - 1] != 0)))
         {
             HandleErrorCommand(wParam);
             break;
@@ -558,9 +558,9 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             m_nOp[m_openParenCount++] = (m_bChangeOp ? m_nOpCode : 0);
 
             /* save a special marker on the precedence array */
-            if (m_nPrecNum < m_nPrecOp.size())
+            if (m_precedenceOpCount < m_nPrecOp.size())
             {
-                m_nPrecOp[m_nPrecNum++] = 0;
+                m_nPrecOp[m_precedenceOpCount++] = 0;
             }
 
             m_lastVal = Rational{};
@@ -592,7 +592,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             m_nPrevOpCode = m_nOpCode;
 
             // Now process the precedence stack till we get to an opcode which is zero.
-            for (m_nOpCode = m_nPrecOp[--m_nPrecNum]; m_nOpCode; m_nOpCode = m_nPrecOp[--m_nPrecNum])
+            for (m_nOpCode = m_nPrecOp[--m_precedenceOpCount]; m_nOpCode; m_nOpCode = m_nPrecOp[--m_precedenceOpCount])
             {
                 // Precedence Inversion check
                 ni = NPrecedenceOfOp(m_nPrevOpCode);
@@ -603,7 +603,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
                 }
                 m_HistoryCollector.PopLastOpndStart();
 
-                m_lastVal = m_precedenceVals[m_nPrecNum];
+                m_lastVal = m_precedenceVals[m_precedenceOpCount];
 
                 m_currentVal = DoOperation(m_nOpCode, m_currentVal, m_lastVal);
                 m_nPrevOpCode = m_nOpCode;

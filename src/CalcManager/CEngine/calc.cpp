@@ -65,7 +65,7 @@ CCalcEngine::CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager
     m_nOpCode(0),
     m_nPrevOpCode(0),
     m_openParenCount(0),
-    m_nPrecNum(0),
+    m_precedenceOpCount(0),
     m_nTempCom(0),
     m_nLastCom(0),
     m_parenVals{},
