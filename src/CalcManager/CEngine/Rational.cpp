@@ -2,7 +2,6 @@
 
 #include "pch.h"
 #include "Header Files/Rational.h"
-#include "Header Files/scimath.h"
 
 using namespace std;
 

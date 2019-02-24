@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "Header Files/CalcEngine.h"
-#include "Ratpack/ratpak.h"
+#include "Header Files/scimath.h"
 
 using namespace std;
 using namespace CalcEngine;

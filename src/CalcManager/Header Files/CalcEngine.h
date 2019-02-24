@@ -14,7 +14,6 @@
 *
 \****************************************************************************/
 
-#include "scimath.h"
 #include "CCommand.h"
 #include "EngineStrings.h"
 #include "../Command.h"
@@ -24,6 +23,7 @@
 #include "History.h"  // for History Collector
 #include "CalcInput.h"
 #include "ICalcDisplay.h"
+#include "scimath.h"
 #include "Rational.h"
 
 // The following are NOT real exports of CalcEngine, but for forward declarations
