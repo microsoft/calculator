@@ -110,7 +110,7 @@ void CHistoryCollector::RemoveLastOpndFromHistory()
     TruncateEquationSzFromIch(m_lastOpStartIndex);
     SetExpressionDisplay();
     m_lastOpStartIndex = -1;
-    // This will not restore the m_lastBinOpStartIndex, as it isnt possible to remove that also later
+    // This will not restore the m_lastBinOpStartIndex, as it isn't possible to remove that also later
 }
 
 void CHistoryCollector::AddBinOpToHistory(int nOpCode, bool fNoRepetition)

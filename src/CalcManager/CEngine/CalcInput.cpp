@@ -39,7 +39,7 @@ bool CalcInput::TryToggleSign(bool isIntegerMode, wstring_view maxNumStr)
     }
     else
     {
-        // When in integer only mode, it isnt always allowed to toggle, as toggling can cause the num to be out of 
+        // When in integer only mode, it isn't always allowed to toggle, as toggling can cause the num to be out of
         // bounds. For eg. in byte -128 is valid, but when it toggled it becomes 128, which is more than 127.
         if (isIntegerMode && m_base.IsNegative())
         {
@@ -74,7 +74,7 @@ bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMo
         pNumSec = &m_base;
         maxCount = maxDigits;
         // Don't include the decimal point in the count. In that way you can enter the maximum allowed precision.
-        // Precision doesnt include decimal point.
+        // Precision doesn't include decimal point.
         if (HasDecimalPt())
         {
             maxCount++;
