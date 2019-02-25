@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "Header Files/scimath.h"
+#include "Header Files/RationalMath.h"
 
 using namespace std;
 using namespace CalcEngine;

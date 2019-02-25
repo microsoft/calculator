@@ -281,7 +281,7 @@
     <ClInclude Include="Header Files\Number.h" />
     <ClInclude Include="Header Files\RadixType.h" />
     <ClInclude Include="Header Files\Rational.h" />
-    <ClInclude Include="Header Files\scimath.h" />
+    <ClInclude Include="Header Files\RationalMath.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Ratpack\CalcErr.h" />
     <ClInclude Include="Ratpack\ratconst.h" />
@@ -300,7 +300,7 @@
     <ClCompile Include="CEngine\scicomm.cpp" />
     <ClCompile Include="CEngine\scidisp.cpp" />
     <ClCompile Include="CEngine\scifunc.cpp" />
-    <ClCompile Include="CEngine\scimath.cpp" />
+    <ClCompile Include="CEngine\RationalMath.cpp" />
     <ClCompile Include="CEngine\scioper.cpp" />
     <ClCompile Include="CEngine\sciset.cpp" />
     <ClCompile Include="ExpressionCommand.cpp" />
