@@ -318,6 +318,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         {
             if (IsCurrentTooBigForTrig())
             {
+                m_currentVal = 0;
                 DisplayError(CALC_E_DOMAIN);
                 return;
             }
@@ -1002,13 +1003,7 @@ int CCalcEngine::IdcSetAngleTypeDecMode(int idc)
 
 bool CCalcEngine::IsCurrentTooBigForTrig()
 {
-    if (m_currentVal >= m_maxTrigonometricNum)
-    {
-        m_currentVal = 0;
-        return true;
-    }
-
-    return false;
+    return m_currentVal >= m_maxTrigonometricNum;
 }
 
 int CCalcEngine::GetCurrentRadix()
