@@ -618,9 +618,7 @@
                         <HyperlinkButton x:Name="CurrencyRefreshBlock"
                                Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}"
                                Click="CurrencyRefreshButton_Click"
-                               AutomationProperties.AccessibilityView="Control" 
-                               x:Uid="RefreshButtonText">
-                        </HyperlinkButton>
+                               x:Uid="RefreshButtonText"/>
                         <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Margin="0, 7, 0, 0">
                             <Run x:Name="Spacing" Text="&#x200A;"/>
                             <Run x:Name="CurrencySecondaryStatus"
