@@ -43,7 +43,7 @@ If Calculator is not working properly, please file a report in the [Feedback Hub
 We also welcome [issues submitted on GitHub](https://github.com/Microsoft/calculator/issues).
 
 ## Roadmap
-For info on the Windows Calculator plans and release schedule, please see the [Windows Calculator Roadmap](docs/Roadmap.md).
+For information regarding Windows Calculator plans and release schedule, please see the [Windows Calculator Roadmap](docs/Roadmap.md).
 
 ## Data / Telemetry
 This project collects usage data and sends it to Microsoft to help improve our products and services.
