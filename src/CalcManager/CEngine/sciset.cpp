@@ -85,12 +85,9 @@ bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno)
     }
 
     Rational result = Integer(rat);
-    if (result.IsZero())
-    {
-        // This is the same work around happenning in SciCalcFunctions. Ought to move to intrat function itself.
-        // Basic bug is there which doesn't treat 0/ n as 0, or -0 as 0 etc.
-        result = 0;
-    }
+
+    // Remove any variance in how 0 could be represented in rat e.g. -0, 0/n, etc.
+    result = (result != 0 ? result : 0);
 
     // XOR the result with 2^wbitno power
     rat = result ^ Pow(2, static_cast<int32_t>(wbitno));

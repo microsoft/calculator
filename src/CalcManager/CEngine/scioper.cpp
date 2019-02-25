@@ -11,7 +11,7 @@ using namespace CalcEngine::RationalMath;
 CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs)
 {
     // Remove any variance in how 0 could be represented in rat e.g. -0, 0/n, etc.
-    auto result = (!lhs.IsZero() ? lhs : 0);
+    auto result = (lhs != 0 ? lhs : 0);
 
     try
     {

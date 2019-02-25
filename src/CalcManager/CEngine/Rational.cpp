@@ -444,11 +444,6 @@ namespace CalcEngine
         return !(lhs < rhs);
     }
 
-    bool Rational::IsZero() const
-    {
-        return this->P().IsZero();
-    }
-
     wstring Rational::ToString(uint32_t radix, NUMOBJ_FMT fmt, int32_t precision) const
     {
         PRAT rat = this->ToPRAT();
