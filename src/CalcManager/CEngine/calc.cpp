@@ -44,7 +44,7 @@ void CCalcEngine::InitialOneTimeOnlySetup(CalculationManager::IResourceProvider&
 {
     LoadEngineStrings(resourceProvider);
 
-    // we must now setup all the ratpak constants and our arrayed pointers
+    // we must now set up all the ratpak constants and our arrayed pointers
     // to these constants.
     ChangeBaseConstants(DEFAULT_RADIX, DEFAULT_MAX_DIGITS, DEFAULT_PRECISION);
 }
@@ -112,8 +112,8 @@ void CCalcEngine::InitChopNumbers()
     m_chopNumbers[2] = Rational{ rat_word };
     m_chopNumbers[3] = Rational{ rat_byte };
 
-    // initialize the max dec number you can support for each of the supported bit length
-    // this is basically max num in that width  / 2 in integer
+    // initialize the max dec number you can support for each of the supported bit lengths
+    // this is basically max num in that width / 2 in integer
     assert(m_chopNumbers.size() == m_maxDecimalValueStrings.size());
     for (size_t i = 0; i < m_chopNumbers.size(); i++)
     {
