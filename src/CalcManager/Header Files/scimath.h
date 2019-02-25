@@ -5,31 +5,31 @@
 
 namespace CalcEngine::RationalMath
 {
-    Rational Frac(Rational const& rat, int32_t precision);
-    Rational Integer(Rational const& rat, int32_t precision);
+    Rational Frac(Rational const& rat);
+    Rational Integer(Rational const& rat);
 
-    Rational Pow(Rational const& base, Rational const& pow, int32_t precision);
-    Rational Root(Rational const& base, Rational const& root, int32_t precision);
-    Rational Fact(Rational const& rat, int32_t precision);
+    Rational Pow(Rational const& base, Rational const& pow);
+    Rational Root(Rational const& base, Rational const& root);
+    Rational Fact(Rational const& rat);
 
-    Rational Exp(Rational const& rat, int32_t precision);
-    Rational Log(Rational const& rat, int32_t precision);
-    Rational Log10(Rational const& rat, int32_t precision);
+    Rational Exp(Rational const& rat);
+    Rational Log(Rational const& rat);
+    Rational Log10(Rational const& rat);
 
-    Rational Invert(Rational const& rat, int32_t precision);
+    Rational Invert(Rational const& rat);
     Rational Abs(Rational const& rat);
 
-    Rational Sin(Rational const& rat, ANGLE_TYPE angletype, int32_t precision);
-    Rational Cos(Rational const& rat, ANGLE_TYPE angletype, int32_t precision);
-    Rational Tan(Rational const& rat, ANGLE_TYPE angletype, int32_t precision);
-    Rational ASin(Rational const& rat, ANGLE_TYPE angletype, int32_t precision);
-    Rational ACos(Rational const& rat, ANGLE_TYPE angletype, int32_t precision);
-    Rational ATan(Rational const& rat, ANGLE_TYPE angletype, int32_t precision);
+    Rational Sin(Rational const& rat, ANGLE_TYPE angletype);
+    Rational Cos(Rational const& rat, ANGLE_TYPE angletype);
+    Rational Tan(Rational const& rat, ANGLE_TYPE angletype);
+    Rational ASin(Rational const& rat, ANGLE_TYPE angletype);
+    Rational ACos(Rational const& rat, ANGLE_TYPE angletype);
+    Rational ATan(Rational const& rat, ANGLE_TYPE angletype);
 
-    Rational Sinh(Rational const& rat, int32_t precision);
-    Rational Cosh(Rational const& rat, int32_t precision);
-    Rational Tanh(Rational const& rat, int32_t precision);
-    Rational ASinh(Rational const& rat, int32_t precision);
-    Rational ACosh(Rational const& rat, int32_t precision);
-    Rational ATanh(Rational const& rat, int32_t precision);
+    Rational Sinh(Rational const& rat);
+    Rational Cosh(Rational const& rat);
+    Rational Tanh(Rational const& rat);
+    Rational ASinh(Rational const& rat);
+    Rational ACosh(Rational const& rat);
+    Rational ATanh(Rational const& rat);
 }

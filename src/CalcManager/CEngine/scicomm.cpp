@@ -318,6 +318,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         {
             if (IsCurrentTooBigForTrig())
             {
+                m_currentVal = 0;
                 DisplayError(CALC_E_DOMAIN);
                 return;
             }
@@ -382,7 +383,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             CheckAndAddLastBinOpToHistory(false);
         }
 
-        m_lastVal = Rational{};
+        m_lastVal = 0;
 
         m_bChangeOp = false;
         m_precedenceOpCount = m_nTempCom = m_nLastCom = m_nOpCode = m_openParenCount = 0;
@@ -563,12 +564,12 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
                 m_nPrecOp[m_precedenceOpCount++] = 0;
             }
 
-            m_lastVal = Rational{};
+            m_lastVal = 0;
             if (IsBinOpCode(m_nLastCom))
             {
                 // We want 1 + ( to start as 1 + (0. Any number you type replaces 0. But if it is 1 + 3 (, it is 
                 // treated as 1 + (3
-                m_currentVal = Rational{};
+                m_currentVal = 0;
             }
             m_nTempCom = 0;
             m_nOpCode = 0;
@@ -691,7 +692,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
         }
 
-        m_currentVal = m_currentVal.Negate();
+        m_currentVal = -(m_currentVal);
 
         DisplayNum();
         m_HistoryCollector.AddUnaryOpToHistory(IDC_SIGN, m_bInv, m_angletype);
@@ -708,7 +709,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         else
         {
             // Recall immediate memory value.
-            m_currentVal = Rational{ *m_memoryValue };
+            m_currentVal = *m_memoryValue;
         }
         CheckAndAddLastBinOpToHistory();
         DisplayNum();
@@ -718,7 +719,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     {
         /* MPLUS adds m_currentVal to immediate memory and kills the "mem"   */
         /* indicator if the result is zero.                           */
-        Rational result = m_memoryValue->Add(m_currentVal, m_precision);
+        Rational result = *m_memoryValue + m_currentVal;
         m_memoryValue = make_unique<Rational>(TruncateNumForIntMath(result)); // Memory should follow the current int mode
 
         break;
@@ -727,14 +728,14 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     {
         /* MMINUS subtracts m_currentVal to immediate memory and kills the "mem"   */
         /* indicator if the result is zero.                           */
-        Rational result = m_memoryValue->Sub(m_currentVal, m_precision);
+        Rational result = *m_memoryValue - m_currentVal;
         m_memoryValue = make_unique<Rational>(TruncateNumForIntMath(result));
 
         break;
     }
     case IDC_STORE:
     case IDC_MCLEAR:
-        m_memoryValue = make_unique<Rational>(wParam == IDC_STORE ? TruncateNumForIntMath(m_currentVal) : Rational{});
+        m_memoryValue = make_unique<Rational>(wParam == IDC_STORE ? TruncateNumForIntMath(m_currentVal) : 0);
         break;
 
     case IDC_PI:
@@ -1002,13 +1003,7 @@ int CCalcEngine::IdcSetAngleTypeDecMode(int idc)
 
 bool CCalcEngine::IsCurrentTooBigForTrig()
 {
-    if (m_currentVal.IsGreaterEq(m_maxTrigonometricNum, m_precision))
-    {
-        m_currentVal = Rational{};
-        return true;
-    }
-
-    return false;
+    return m_currentVal >= m_maxTrigonometricNum;
 }
 
 int CCalcEngine::GetCurrentRadix()
@@ -1048,14 +1043,12 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
 
         try
         {
-            uint64_t w64Bits = tempRat.ToUInt64_t(m_precision);
+            uint64_t w64Bits = tempRat.ToUInt64_t();
             bool fMsb = ((w64Bits >> (m_dwWordBitWidth - 1)) & 1);
             if ((radix == 10) && fMsb)
             {
                 // If high bit is set, then get the decimal number in negative 2's compl form.
-                tempRat = tempRat.Not(m_chopNumbers[m_numwidth], m_precision);
-                tempRat = tempRat.Add(1, m_precision);
-                tempRat = tempRat.Negate();
+                tempRat = -((tempRat ^ m_chopNumbers[m_numwidth]) + 1);
             }
 
             result = tempRat.ToString(radix, m_nFE, m_precision);

@@ -18,16 +18,15 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwid
     // back to 1111,1111,1000,0001 when in Word mode.
     if (m_fIntegerMode)
     {
-        uint64_t w64Bits = m_currentVal.ToUInt64_t(m_precision);
+        uint64_t w64Bits = m_currentVal.ToUInt64_t();
         bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1; // make sure you use the old width
 
         if (fMsb)
         {
             // If high bit is set, then get the decimal number in -ve 2'scompl form.
-            auto tempResult = m_currentVal.Not(m_chopNumbers[m_numwidth], m_precision);
-            tempResult = tempResult.Add(1, m_precision);
+            auto tempResult = m_currentVal ^ m_chopNumbers[m_numwidth];
 
-            m_currentVal = tempResult.Negate();
+            m_currentVal = -(tempResult + 1);
         }
     }
 
@@ -85,16 +84,13 @@ bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno)
         return false; // ignore error cant happen
     }
 
-    Rational result = Integer(rat, m_precision);
-    if (result.IsZero())
-    {
-        // This is the same work around happenning in SciCalcFunctions. Ought to move to intrat function itself.
-        // Basic bug is there which doesn't treat 0/ n as 0, or -0 as 0 etc.
-        result = Rational{};
-    }
+    Rational result = Integer(rat);
 
-    auto pow = Pow(2, static_cast<int32_t>(wbitno), m_precision);
-    rat = result.Xor(pow, m_precision);
+    // Remove any variance in how 0 could be represented in rat e.g. -0, 0/n, etc.
+    result = (result != 0 ? result : 0);
+
+    // XOR the result with 2^wbitno power
+    rat = result ^ Pow(2, static_cast<int32_t>(wbitno));
 
     return true;
 }

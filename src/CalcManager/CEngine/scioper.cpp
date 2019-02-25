@@ -11,69 +11,68 @@ using namespace CalcEngine::RationalMath;
 CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs)
 {
     // Remove any variance in how 0 could be represented in rat e.g. -0, 0/n, etc.
-    auto result = (!lhs.IsZero() ? lhs : Rational{});
+    auto result = (lhs != 0 ? lhs : 0);
 
     try
     {
         switch (operation)
         {
         case IDC_AND:
-            result = result.And(rhs, m_precision);
+            result &= rhs;
             break;
 
         case IDC_OR:
-            result = result.Or(rhs, m_precision);
+            result |= rhs;
             break;
 
         case IDC_XOR:
-            result = result.Xor(rhs, m_precision);
+            result ^= rhs;
             break;
 
         case IDC_RSHF:
         {
-            if (m_fIntegerMode && result.IsGreaterEq(Rational{ m_dwWordBitWidth }, m_precision)) // Lsh/Rsh >= than current word size is always 0
+            if (m_fIntegerMode && result >= m_dwWordBitWidth) // Lsh/Rsh >= than current word size is always 0
             {
                 throw CALC_E_NORESULT;
             }
 
-            uint64_t w64Bits = rhs.ToUInt64_t(m_precision);
+            uint64_t w64Bits = rhs.ToUInt64_t();
             bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
 
             Rational holdVal = result;
-            result = rhs.Rsh(holdVal, m_precision);
+            result = rhs >> holdVal;
 
             if (fMsb)
             {
-                result = Integer(result, m_precision);
+                result = Integer(result);
 
-                auto tempRat = m_chopNumbers[m_numwidth].Rsh(holdVal, m_precision);
-                tempRat = Integer(tempRat, m_precision);
+                auto tempRat = m_chopNumbers[m_numwidth] >> holdVal;
+                tempRat = Integer(tempRat);
 
-                tempRat = tempRat.Xor(m_chopNumbers[m_numwidth], m_precision);
-                result = result.Or(tempRat, m_precision);
+                result |= tempRat ^ m_chopNumbers[m_numwidth];
             }
             break;
         }
 
         case IDC_LSHF:
-            if (m_fIntegerMode && result.IsGreaterEq(Rational{ m_dwWordBitWidth }, m_precision)) // Lsh/Rsh >= than current word size is always 0
+            if (m_fIntegerMode && result >= m_dwWordBitWidth) // Lsh/Rsh >= than current word size is always 0
             {
                 throw CALC_E_NORESULT;
             }
 
-            result = rhs.Lsh(result, m_precision);
+            result = rhs << result;
             break;
 
         case IDC_ADD:
-            result = result.Add(rhs, m_precision);
+            result += rhs;
             break;
 
         case IDC_SUB:
-            result = rhs.Sub(result, m_precision);
+            result = rhs - result;
             break;
 
         case IDC_MUL:
-            result = result.Mul(rhs, m_precision);
+            result *= rhs;
             break;
 
         case IDC_DIV:
@@ -85,24 +84,22 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
             if (m_fIntegerMode)
             {
-                uint64_t w64Bits = rhs.ToUInt64_t(m_precision);
+                uint64_t w64Bits = rhs.ToUInt64_t();
                 bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
 
                 if (fMsb)
                 {
-                    result = rhs.Not(m_chopNumbers[m_numwidth], m_precision);
-                    result = result.Add(1, m_precision);
+                    result = (rhs ^ m_chopNumbers[m_numwidth]) + 1;
 
                     iNumeratorSign = -1;
                 }
 
-                w64Bits = temp.ToUInt64_t(m_precision);
+                w64Bits = temp.ToUInt64_t();
                 fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
 
                 if (fMsb)
                 {
-                    temp = temp.Not(m_chopNumbers[m_numwidth], m_precision);
-                    temp = temp.Add(1, m_precision);
+                    temp = (temp ^ m_chopNumbers[m_numwidth]) + 1;
 
                     iDenominatorSign = -1;
                 }
@@ -111,28 +108,28 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             if (operation == IDC_DIV)
             {
                 iFinalSign = iNumeratorSign * iDenominatorSign;
-                result = result.Div(temp, m_precision);
+                result /= temp;
             }
             else
             {
                 iFinalSign = iNumeratorSign;
-                result = result.Mod(temp);
+                result %= temp;
             }
 
             if (m_fIntegerMode && iFinalSign == -1)
             {
-                result = Integer(result, m_precision).Negate();
+                result = -(Integer(result));
             }
 
             break;
         }
 
         case IDC_PWR: // Calculates rhs to the result(th) power.
-            result = Pow(rhs, result, m_precision);
+            result = Pow(rhs, result);
             break;
 
         case IDC_ROOT: // Calculates rhs to the result(th) root.
-            result = Root(rhs, result, m_precision);
+            result = Root(rhs, result);
             break;
         }
     }

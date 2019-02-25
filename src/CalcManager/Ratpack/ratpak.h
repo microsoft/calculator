@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -316,6 +316,10 @@ extern std::wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t r
 
 // returns a text representation of a PRAT
 extern std::wstring RatToString(_Inout_ PRAT& prat, int format, uint32_t radix, int32_t precision);
+// converts a PRAT into a PNUMBER
+extern PNUMBER RatToNumber(_In_ PRAT prat, uint32_t radix, int32_t precision);
+// flattens a PRAT by converting it to a PNUMBER and back to a PRAT
+extern void flatrat(_Inout_ PRAT& prat, uint32_t radix, int32_t precision);
 
 extern long numtolong(_In_ PNUMBER pnum, uint32_t radix );
 extern long rattolong(_In_ PRAT prat, uint32_t radix, int32_t precision);
