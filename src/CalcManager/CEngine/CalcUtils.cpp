@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -14,8 +14,8 @@ bool IsBinOpCode(WPARAM opCode)
     return IsOpInRange(opCode, IDC_AND, IDC_PWR);
 }
 
-// WARNING: IDC_SIGN is a special unary op but still this doesnt catch this. Caller has to be aware
-// of it and catch it themself or not needing this
+// WARNING: IDC_SIGN is a special unary op but still this doesn't catch this. Caller has to be aware
+// of it and catch it themselves or not needing this
 bool IsUnaryOpCode(WPARAM opCode)
 {
     return IsOpInRange(opCode, IDC_UNARYFIRST, IDC_UNARYLAST);

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 // CalcErr.h
@@ -6,7 +6,7 @@
 // Defines the error codes thrown by ratpak and caught by Calculator
 //
 //
-//  Ratpak errors are 32 bit values layed out as follows:
+//  Ratpak errors are 32 bit values laid out as follows:
 //
 //   3 3 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1
 //   1 0 9 8 7 6 5 4 3 2 1 0 9 8 7 6 5 4 3 2 1 0 9 8 7 6 5 4 3 2 1 0
@@ -31,8 +31,8 @@
 //
 //      Code - is the actual error code
 //
-// This format is based losely on an OLE HRESULT and is compatible with the
-// SUCCEEDED and FAILED marcos as well as the HRESULT_CODE macro
+// This format is based loosely on an OLE HRESULT and is compatible with the
+// SUCCEEDED and FAILED macros as well as the HRESULT_CODE macro
 
 // CALC_E_DIVIDEBYZERO
 //

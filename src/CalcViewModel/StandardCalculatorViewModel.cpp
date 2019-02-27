@@ -616,7 +616,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object^ parameter)
                 // Also, the Primary Display Value should not show in exponential format.
                 // Hence the check below to ensure parity with Desktop Calculator.
                 // Clear the FE mode if the switching to StandardMode, since 'C'/'CE' in StandardMode
-                // doesn't honour the FE button.
+                // doesn't honor the FE button.
                 if (IsFToEChecked)
                 {
                     IsFToEChecked = false;

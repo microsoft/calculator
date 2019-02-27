@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -11,7 +11,7 @@
 static constexpr size_t MAXPRECDEPTH = 25;
 
 // Helper class really a internal class to CCalcEngine, to accumulate each history line of text by collecting the 
-// operands, operator, unary operator etc. Since it is a seperate entity, it can be unit tested on its own but does 
+// operands, operator, unary operator etc. Since it is a separate entity, it can be unit tested on its own but does 
 // rely on CCalcEngine calling it in appropriate order.
 class CHistoryCollector {
 public:
@@ -38,7 +38,7 @@ private:
     std::shared_ptr<IHistoryDisplay> m_pHistoryDisplay;
     ICalcDisplay *m_pCalcDisplay;
 
-    int m_iCurLineHistStart; // index of the begginning of the current equation
+    int m_iCurLineHistStart; // index of the beginning of the current equation
     // a sort of state, set to the index before 2 after 2 in the expression 2 + 3 say. Useful for auto correct portion of history and for 
     // attaching the unary op around the last operand
     int m_lastOpStartIndex; // index of the beginning of the last operand added to the history

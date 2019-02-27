@@ -1,10 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 /****************************Module*Header***********************************
 * Module Name: CCommand.h
 *
-* Module Descripton:
+* Module Description:
 *       Resource ID's for the Engine Commands exposed.
 *
 * Warnings:

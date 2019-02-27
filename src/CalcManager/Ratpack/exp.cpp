@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //-----------------------------------------------------------------------------
@@ -235,7 +235,7 @@ void log10rat( PRAT *px, int32_t precision)
 }
 
 //
-// return if the given x is even number. The assumption here is its numberator is 1 and we are testing the numerator is 
+// return if the given x is even number. The assumption here is its numerator is 1 and we are testing the numerator is 
 // even or not
 bool IsEven(PRAT x, uint32_t radix, int32_t precision)
 {
@@ -291,7 +291,7 @@ void powrat(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
     catch (...)
     {
         // If calculating the power using numerator/denominator
-        // failed, fallback to the less accurate method of
+        // failed, fall back to the less accurate method of
         // passing in the original y
         powratcomp(px, y, radix, precision);
     }

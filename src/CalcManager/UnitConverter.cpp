@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -1024,7 +1024,7 @@ void UnitConverter::Calculate()
 }
 
 /// <summary>
-/// Trims out any trailing zeroes or decimals in the given input string
+/// Trims out any trailing zeros or decimals in the given input string
 /// </summary>
 /// <param name="input">wstring to trim</param>
 void UnitConverter::TrimString(wstring& returnString)

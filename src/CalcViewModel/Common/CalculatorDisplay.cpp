@@ -1,7 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// This class provides the concrete implemenation for the ICalcDisplay interface
+// This class provides the concrete implementation for the ICalcDisplay interface
 // that is declared in the Calculation Manager Library. 
 #include "pch.h"
 #include "CalculatorDisplay.h"

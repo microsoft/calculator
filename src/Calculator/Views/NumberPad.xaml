@@ -102,7 +102,7 @@
 
         <!--
             This is the only button in all of the app that should ever have a explicit reference to KeyboardShortcutManager in Xaml
-            this is needed because we need to have at least 1 refernece from Xaml so the right metadata is generated for the
+            this is needed because we need to have at least 1 reference from Xaml so the right metadata is generated for the
             KeyboardShortcutManager class, otherwise the Xaml will stop parsing and the app won't boot therefore:
             DO NOT REMOVE the common:KeyboardShortcutManager.Character from this element, it's value will be overwritten by the
             string coming from the RESW file

@@ -237,7 +237,7 @@ void addrat( PRAT *pa, PRAT b, int32_t precision)
         (*pa)->pq = bot;
         trimit(pa, precision);
         
-        // Get rid of negative zeroes here.
+        // Get rid of negative zeros here.
         (*pa)->pp->sign *= (*pa)->pq->sign; 
         (*pa)->pq->sign = 1;
         }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -23,8 +23,8 @@ int NarratorAnnouncementHostFactory::Initialize()
 }
 
 // For now, there are two type of announcement hosts.
-// We'd prefer to use Notification if it's available and fallback to LiveRegion
-// if not.  The availabilty of the host depends on the version of the OS the app is running on.
+// We'd prefer to use Notification if it's available and fall back to LiveRegion
+// if not.  The availability of the host depends on the version of the OS the app is running on.
 // When the app switches to min version RS3, the LiveRegionHost can be removed and we will always
 // use NotificationHost.
 // TODO - MSFT 12735088

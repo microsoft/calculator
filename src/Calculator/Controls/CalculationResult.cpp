@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -154,7 +154,7 @@ void CalculationResult::OnIsInErrorPropertyChanged(bool /*oldValue*/, bool newVa
     if (newValue)
     {
         // If there's an error message we need to override the normal display font
-        // with the font appropiate for this language. This is because the error 
+        // with the font appropriate for this language. This is because the error 
         // message is localized and therefore can contain characters that are not
         // available in the normal font. 
         // We use UIText as the font type because this is the most common font type to use

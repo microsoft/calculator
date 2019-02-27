@@ -32,7 +32,7 @@ namespace CalculatorApp
 
             // Sometimes, like with popups, escape is treated as special and even
             // though it is handled we get it passed through to us. In those cases
-            // we need to be able to ignore it (looking at e->Hanlded isn't sufficient
+            // we need to be able to ignore it (looking at e->Handled isn't sufficient
             // because that always returns true).
             // The onlyOnce flag is used to indicate whether we should only ignore the
             // next escape, or keep ignoring until you explicitly HonorEscape.
