@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //-----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ void __inline mulnumx( PNUMBER *pa, PNUMBER b )
         // If b is not one we multiply
         if ( (*pa)->cdigit > 1 || (*pa)->mant[0] != 1 || (*pa)->exp != 0 )
             { 
-            // pa and b are both nonone.
+            // pa and b are both non-one.
             _mulnumx( pa, b );
             }
         else
@@ -71,7 +71,7 @@ void __inline mulnumx( PNUMBER *pa, PNUMBER b )
 //
 //    DESCRIPTION: Does the number equivalent of *pa *= b.
 //    Assumes the base is BASEX of both numbers.  This algorithm is the
-//    same one you learned in gradeschool, except the base isn't 10 it's
+//    same one you learned in grade school, except the base isn't 10 it's
 //    BASEX.
 //
 //----------------------------------------------------------------------------
@@ -148,7 +148,7 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
         }
     }
     
-    // prevent different kinds of zeros, by stripping leading duplicate zeroes.
+    // prevent different kinds of zeros, by stripping leading duplicate zeros.
     // digits are in order of increasing significance.
     while ( c->cdigit > 1 && c->mant[c->cdigit-1] == 0 )
         {
@@ -342,7 +342,7 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
 
     if ( !cdigits )
         {   
-        // A zero, make sure no wierd exponents creep in
+        // A zero, make sure no weird exponents creep in
         c->exp = 0;
         c->cdigit = 1;
         }
@@ -351,7 +351,7 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
         c->cdigit = cdigits;
         c->exp -= cdigits;
         // prevent different kinds of zeros, by stripping leading duplicate 
-        // zeroes. digits are in order of increasing significance.
+        // zeros. digits are in order of increasing significance.
         while ( c->cdigit > 1 && c->mant[c->cdigit-1] == 0 )
             {
             c->cdigit--;

@@ -154,7 +154,7 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
 
                         if (tempDaysDiff < 0)
                         {
-                            // pivotDate has gone over the end date; start from the begining of this unit
+                            // pivotDate has gone over the end date; start from the beginning of this unit
                             differenceInDates[unitIndex] -= 1;
                             pivotDate = tempPivotDate;
                             pivotDate = AdjustCalendarDate(pivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex]));

@@ -116,7 +116,7 @@ void MainPage::OnNavigatedTo(NavigationEventArgs^ e)
 
 void MainPage::WindowSizeChanged(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Core::WindowSizeChangedEventArgs^ e)
 {
-    // We dont use layout aware page's view states, we have our own
+    // We don't use layout aware page's view states, we have our own
     UpdateViewState();
 }
 
@@ -321,7 +321,7 @@ void MainPage::EnsureCalculator()
 
         CalcHolder->Child = m_calculator;
 
-        // Calculator's "default" state is visibile, but if we get delay loaded
+        // Calculator's "default" state is visible, but if we get delay loaded
         // when in converter, we should not be visible. This is not a problem for converter
         // since it's default state is hidden.
         ShowHideControls(this->Model->Mode);

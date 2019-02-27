@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -72,7 +72,7 @@ SupplementaryResults::SupplementaryResults() :
 
 void SupplementaryResults::RefreshData()
 {
-    // Copy the list so that when we chop stuff off, we dont modify the original
+    // Copy the list so that when we chop stuff off, we don't modify the original
     // complete list.
     m_data->Clear();
     for(SupplementaryResult^ sr : safe_cast<UnitConverterViewModel^>(this->DataContext)->SupplementaryResults)

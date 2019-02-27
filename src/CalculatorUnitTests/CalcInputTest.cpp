@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -83,7 +83,7 @@ namespace CalculatorUnitTests
             VERIFY_IS_TRUE(m_calcInput.TryAddDigit(0, 10, false, L"999", 64, 32), L"Verify TryAddDigit succeeds.");
             VERIFY_IS_TRUE(m_calcInput.TryAddDigit(0, 10, false, L"999", 64, 32), L"Verify TryAddDigit succeeds.");
             VERIFY_IS_TRUE(m_calcInput.TryAddDigit(0, 10, false, L"999", 64, 32), L"Verify TryAddDigit succeeds.");
-            VERIFY_ARE_EQUAL(L"0", m_calcInput.ToString(10, false), L"Verify leading zeroes are ignored.");
+            VERIFY_ARE_EQUAL(L"0", m_calcInput.ToString(10, false), L"Verify leading zeros are ignored.");
         }
         TEST_METHOD(TryAddDigitMaxCount)
         {

@@ -31,6 +31,12 @@ jobs:
     env:
       XES_DISABLEPROV: true
 
+  - task: NuGetToolInstaller@0
+    displayName: Use NuGet 4.7.1
+    inputs:
+      versionSpec: 4.7.1
+      checkLatest: true
+
   - task: DownloadBuildArtifacts@0
     displayName: Download appxBundle artifact
     inputs:
@@ -96,12 +102,44 @@ jobs:
       useArtifactServiceForMedia: true
       outPath: $(Build.ArtifactStagingDirectory)\StoreBrokerPayload
       paToken: $(System.AccessToken)
+      logRootPath: $(Build.ArtifactStagingDirectory)/StoreBrokerLogs
 
   - task: PublishBuildArtifacts@1
     displayName: Publish StoreBrokerPayload artifact
     inputs:
       artifactName: storeBrokerPayload
       pathToPublish: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload
+
+  - task: PkgESStoreBrokerFlight@10
+    name: StoreBrokerFlight
+    displayName: Flight package with StoreBroker
+    env:
+      XES_SERIALPOSTBUILDREADY: True
+    inputs:
+      packageToFlight: Custom
+      appId: 9WZDNCRFHVN5
+      flightId: 161f0975-cb5f-475b-8ef6-26383c37621f
+      submissionDataPath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.json
+      packagePath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.zip
+      updatePackageAction: AddPackages
+      logRootPath: $(Build.ArtifactStagingDirectory)/StoreBrokerLogs
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish StoreBrokerLogs artifact
+    inputs:
+      artifactName: storeBrokerLogs
+      pathToPublish: $(Build.ArtifactStagingDirectory)/StoreBrokerLogs
+
+  - task: PkgESStoreBrokerAeroUpload@10
+    displayName: Upload to Aero flighting dashboard
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    inputs:
+      productId: 00009007199266248474
+      flightId: 161f0975-cb5f-475b-8ef6-26383c37621f
+      submissionId: $(StoreBrokerFlight.WS_SubmissionId)
+      submissionDataPath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.json
+      packagePath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.zip
 
   - task: PkgESLateTasks@10
     displayName: Run PackageES LateTasks

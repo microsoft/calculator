@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //-----------------------------------------------------------------------------
@@ -73,16 +73,11 @@ void gcdrat( PRAT *pa, uint32_t radix, int32_t precision)
 
 void fracrat( PRAT *pa , uint32_t radix, int32_t precision)
 {
-    // Only do the intrat operation if number is nonzero.
+    // Only do the flatrat operation if number is nonzero.
     // and only if the bottom part is not one.
     if ( !zernum( (*pa)->pp ) && !equnum( (*pa)->pq, num_one ) )
     {
-        wstring ratStr = RatToString(*pa, FMT_FLOAT, radix, precision);
-        PNUMBER pnum = StringToNumber(ratStr, radix, precision);
-
-        destroyrat( *pa );
-        *pa = numtorat( pnum, radix);
-        destroynum( pnum );
+        flatrat(*pa, radix, precision);
     }
 
     remnum( &((*pa)->pp), (*pa)->pq, BASEX );
@@ -242,7 +237,7 @@ void addrat( PRAT *pa, PRAT b, int32_t precision)
         (*pa)->pq = bot;
         trimit(pa, precision);
         
-        // Get rid of negative zeroes here.
+        // Get rid of negative zeros here.
         (*pa)->pp->sign *= (*pa)->pq->sign; 
         (*pa)->pq->sign = 1;
         }

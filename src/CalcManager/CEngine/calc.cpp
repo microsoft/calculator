@@ -44,7 +44,7 @@ void CCalcEngine::InitialOneTimeOnlySetup(CalculationManager::IResourceProvider&
 {
     LoadEngineStrings(resourceProvider);
 
-    // we must now setup all the ratpak constants and our arrayed pointers
+    // we must now set up all the ratpak constants and our arrayed pointers
     // to these constants.
     ChangeBaseConstants(DEFAULT_RADIX, DEFAULT_MAX_DIGITS, DEFAULT_PRECISION);
 }
@@ -65,7 +65,7 @@ CCalcEngine::CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager
     m_nOpCode(0),
     m_nPrevOpCode(0),
     m_openParenCount(0),
-    m_nPrecNum(0),
+    m_precedenceOpCount(0),
     m_nTempCom(0),
     m_nLastCom(0),
     m_parenVals{},
@@ -95,7 +95,7 @@ CCalcEngine::CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager
 
     m_dwWordBitWidth = DwWordBitWidthFromeNumWidth(m_numwidth);
 
-    m_maxTrigonometricNum = RationalMath::Pow(10, 100, m_radix, m_precision);
+    m_maxTrigonometricNum = RationalMath::Pow(10, 100);
 
     SetRadixTypeAndNumWidth(DEC_RADIX, m_numwidth);
     SettingsChanged();
@@ -112,13 +112,13 @@ void CCalcEngine::InitChopNumbers()
     m_chopNumbers[2] = Rational{ rat_word };
     m_chopNumbers[3] = Rational{ rat_byte };
 
-    // initialize the max dec number you can support for each of the supported bit length
-    // this is basically max num in that width  / 2 in integer
+    // initialize the max dec number you can support for each of the supported bit lengths
+    // this is basically max num in that width / 2 in integer
     assert(m_chopNumbers.size() == m_maxDecimalValueStrings.size());
     for (size_t i = 0; i < m_chopNumbers.size(); i++)
     {
-        auto maxVal = m_chopNumbers[i].Div(2, m_precision);
-        maxVal = RationalMath::Integer(maxVal, m_radix, m_precision);
+        auto maxVal = m_chopNumbers[i] / 2;
+        maxVal = RationalMath::Integer(maxVal);
 
         m_maxDecimalValueStrings[i] = maxVal.ToString(10, FMT_FLOAT, m_precision);
     }

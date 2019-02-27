@@ -13,21 +13,20 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwid
 {
     // When in integer mode, the number is represented in 2's complement form. When a bit width is changing, we can 
     // change the number representation back to sign, abs num form in ratpak. Soon when display sees this, it will 
-    // convert to 2's complement form, but this time all high bits will be propogated. Eg. -127, in byte mode is 
+    // convert to 2's complement form, but this time all high bits will be propagated. Eg. -127, in byte mode is 
     // represented as 1000,0001. This puts it back as sign=-1, 01111111 . But DisplayNum will see this and convert it 
     // back to 1111,1111,1000,0001 when in Word mode.
     if (m_fIntegerMode)
     {
-        uint64_t w64Bits = m_currentVal.ToUInt64_t(m_radix, m_precision);
+        uint64_t w64Bits = m_currentVal.ToUInt64_t();
         bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1; // make sure you use the old width
 
         if (fMsb)
         {
             // If high bit is set, then get the decimal number in -ve 2'scompl form.
-            auto tempResult = m_currentVal.Not(true /* IntegerMode */, m_chopNumbers[m_numwidth], m_radix, m_precision);
-            tempResult = tempResult.Add(1, m_precision);
+            auto tempResult = m_currentVal ^ m_chopNumbers[m_numwidth];
 
-            m_currentVal = tempResult.Negate();
+            m_currentVal = -(tempResult + 1);
         }
     }
 
@@ -43,7 +42,7 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwid
         m_dwWordBitWidth = DwWordBitWidthFromeNumWidth(numwidth);
     }
 
-    // inform ratpak that a change in base or precision has occured
+    // inform ratpak that a change in base or precision has occurred
     BaseOrPrecisionChanged();
 
     // display the correct number for the new state (ie convert displayed 
@@ -85,16 +84,13 @@ bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno)
         return false; // ignore error cant happen
     }
 
-    Rational result = Integer(rat, m_radix, m_precision);
-    if (result.IsZero())
-    {
-        // This is the same work around happenning in SciCalcFunctions. Ought to move to intrat function itself.
-        // Basic bug is there which doesn't treat 0/ n as 0, or -0 as 0 etc.
-        result = Rational{};
-    }
+    Rational result = Integer(rat);
 
-    auto pow = Pow(2, static_cast<int32_t>(wbitno), m_radix, m_precision);
-    rat = result.Xor(pow, m_radix, m_precision);
+    // Remove any variance in how 0 could be represented in rat e.g. -0, 0/n, etc.
+    result = (result != 0 ? result : 0);
+
+    // XOR the result with 2^wbitno power
+    rat = result ^ Pow(2, static_cast<int32_t>(wbitno));
 
     return true;
 }
@@ -134,8 +130,8 @@ int CCalcEngine::QuickLog2(int iNum)
 // word size, and base.  This number is conservative towards the small side
 // such that there may be some extra bits left over. For example, base 8 requires 3 bits per digit.
 // A word size of 32 bits allows for 10 digits with a remainder of two bits.  Bases
-// that require variable numnber of bits (non-power-of-two bases) are approximated
-// by the next highest power-of-two base (again, to be conservative and gaurentee
+// that require variable number of bits (non-power-of-two bases) are approximated
+// by the next highest power-of-two base (again, to be conservative and guarantee
 // there will be no over flow verse the current word size for numbers entered).
 // Base 10 is a special case and always uses the base 10 precision (m_nPrecisionSav).
 void CCalcEngine::UpdateMaxIntDigits()
@@ -164,10 +160,10 @@ void CCalcEngine::ChangeBaseConstants(uint32_t radix, int maxIntDigits, int32_t 
 {
     if (10 == radix)
     {
-        ChangeConstants(radix, precision); // Base 10 precesion for internal computing still needs to be 32, to 
-        // take care of decimals preceisly. For eg. to get the HI word of a qword, we do a rsh, which depends on getting
-        // 18446744073709551615 / 4294967296 = 4294967295.9999917... This is important it works this and doesnt reduce 
-        // the precision to number of digits allowed to enter. In otherwords precision and # of allowed digits to be 
+        ChangeConstants(radix, precision); // Base 10 precision for internal computing still needs to be 32, to 
+        // take care of decimals precisely. For eg. to get the HI word of a qword, we do a rsh, which depends on getting
+        // 18446744073709551615 / 4294967296 = 4294967295.9999917... This is important it works this and doesn't reduce 
+        // the precision to number of digits allowed to enter. In other words, precision and # of allowed digits to be 
         // entered are different.
     }
     else

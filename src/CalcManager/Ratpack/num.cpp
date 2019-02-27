@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //-----------------------------------------------------------------------------
@@ -150,7 +150,7 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
             }
         else
             {
-            // In this particular case an overflow or underflow has occoured 
+            // In this particular case an overflow or underflow has occurred 
             // and all the digits need to be complemented, at one time an 
             // attempt to handle this above was made, it turned out to be much 
             // slower on average.
@@ -167,7 +167,7 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
             }
         }
     
-    // Remove leading zeroes, remember digits are in order of
+    // Remove leading zeros, remember digits are in order of
     // increasing significance. i.e. 100 would be 0,0,1
     while ( c->cdigit > 1 && *(--pchc) == 0 )
         {
@@ -188,7 +188,7 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 //
 //    DESCRIPTION: Does the number equivalent of *pa *= b.
 //    Assumes radix is the radix of both numbers.  This algorithm is the
-//    same one you learned in gradeschool.
+//    same one you learned in grade school.
 //
 //----------------------------------------------------------------------------
 
@@ -200,7 +200,7 @@ void __inline mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
     if ( b->cdigit > 1 || b->mant[0] != 1 || b->exp != 0 )
         {    // If b is one we don't multiply exactly.
         if ( (*pa)->cdigit > 1 || (*pa)->mant[0] != 1 || (*pa)->exp != 0 )
-            { // pa and b are both nonone.
+            { // pa and b are both non-one.
             _mulnum( pa, b, radix);
             }
         else
@@ -285,7 +285,7 @@ void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
             }
         }
     
-    // prevent different kinds of zeros, by stripping leading duplicate zeroes.
+    // prevent different kinds of zeros, by stripping leading duplicate zeros.
     // digits are in order of increasing significance.
     while ( c->cdigit > 1 && c->mant[c->cdigit-1] == 0 )
         {

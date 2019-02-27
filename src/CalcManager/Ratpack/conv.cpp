@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //---------------------------------------------------------------------------
@@ -33,7 +33,7 @@ long g_ratio;    // int(log(2L^BASEXPWR)/log(radix))
 // Default decimal separator
 wchar_t g_decimalSeparator = L'.';
 
-// Used to strip trailing zeroes, and prevent combinatorial explosions
+// Used to strip trailing zeros, and prevent combinatorial explosions
 bool stripzeroesnum(_Inout_ PNUMBER pnum, long starting);
 
 void SetDecimalSeparator(wchar_t decimalSeparator)
@@ -121,7 +121,7 @@ void _destroyrat( _In_ PRAT prat )
 //
 //    RETURN: pointer to a number
 //
-//    DESCRIPTION: allocates and zeroes out number type.
+//    DESCRIPTION: allocates and zeros out number type.
 //
 //-----------------------------------------------------------------------------
 
@@ -347,6 +347,7 @@ PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix)
 //              mantissa a string representation of a number
 //              exponentIsNegative  true if exponent is less than zero
 //              exponent a string representation of a number
+//              radix is the number base used in the source string
 //
 //  RETURN: PRAT representation of string input.
 //          Or nullptr if no number scanned.
@@ -479,7 +480,7 @@ PRAT StringToRat(bool mantissaIsNegative, wstring_view mantissa, bool exponentIs
 //    ZR         '0'
 //    NZ         '1'..'9' 'A'..'Z' 'a'..'z' '@' '_'
 //    SG         '+' '-'
-//    EX         'e' '^' e is used for radix 10, ^ for all other radixs.
+//    EX         'e' '^' e is used for radix 10, ^ for all other radixes.
 //
 //-----------------------------------------------------------------------------
 static constexpr uint8_t DP = 0;
@@ -910,8 +911,8 @@ unsigned long rattoUlong( _In_ PRAT prat, uint32_t radix, int32_t precision)
 //    DESCRIPTION: returns the 64 bit (irrespective of which processor this is running in) representation of the
 //    number input.  Assumes that the number is in the internal
 //    base. Can throw exception if the number exceeds 2^64
-//    Implementation by getting the HI & LO 32 bit words and concating them, as the
-//    internal base choosen happens to be 2^32, this is easier.
+//    Implementation by getting the HI & LO 32 bit words and concatenating them, as the
+//    internal base chosen happens to be 2^32, this is easier.
 //-----------------------------------------------------------------------------
 
 ULONGLONG rattoUlonglong( _In_ PRAT prat, uint32_t radix, int32_t precision)
@@ -980,7 +981,7 @@ long numtolong( _In_ PNUMBER pnum, uint32_t radix )
 //
 //    RETURN: true if stripping done, modifies number in place.
 //
-//    DESCRIPTION: Strips off trailing zeroes.
+//    DESCRIPTION: Strips off trailing zeros.
 //
 //-----------------------------------------------------------------------------
 
@@ -1000,7 +1001,7 @@ bool stripzeroesnum(_Inout_ PNUMBER pnum, long starting)
         cdigits = starting;
         }
 
-    // Check we haven't gone too far, and we are still looking at zeroes.
+    // Check we haven't gone too far, and we are still looking at zeros.
     while ( ( cdigits > 0 ) && !(*pmant) )
         {
         // move to next significant digit and keep track of digits we can
@@ -1010,7 +1011,7 @@ bool stripzeroesnum(_Inout_ PNUMBER pnum, long starting)
         fstrip = true;
     }
 
-    // If there are zeroes to remove.
+    // If there are zeros to remove.
     if ( fstrip )
         {
         // Remove them.
@@ -1060,7 +1061,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
     // 10 for maximum exponent size.
     int cchNum = (precision + 16);
 
-    // If there is a chance a round has to occour, round.
+    // If there is a chance a round has to occur, round.
     // - if number is zero no rounding
     // - if number of digits is less than the maximum output no rounding
     PNUMBER round = nullptr;
@@ -1086,7 +1087,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
 
     if (format == FMT_FLOAT)
     {
-        // Figure out if the exponent will fill more space than the nonexponent field.
+        // Figure out if the exponent will fill more space than the non-exponent field.
         if ((length - exponent > precision) || (exponent > precision + 3))
         {
             if (exponent >= -MAX_ZEROS_AFTER_DECIMAL)
@@ -1096,15 +1097,15 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
             }
             else
             {
-                // Case where too many zeroes are to the right or left of the
+                // Case where too many zeros are to the right or left of the
                 // decimal pt. And we are forced to switch to scientific form.
                 format = FMT_SCIENTIFIC;
             }
         }
         else if (length + abs(exponent) < precision && round)
         {
-            // Minimum loss of precision occours with listing leading zeros
-            // if we need to make room for zeroes sacrifice some digits.
+            // Minimum loss of precision occurs with listing leading zeros
+            // if we need to make room for zeros sacrifice some digits.
             round->exp -= exponent;
         }
     }
@@ -1117,7 +1118,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
         if (stripzeroesnum(pnum, offset))
         {
             // WARNING: nesting/recursion, too much has been changed, need to
-            // refigure format.
+            // re-figure format.
             return NumberToString(pnum, oldFormat, radix, precision);
         }
     }
@@ -1164,7 +1165,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
     // Begin building the result string
     wstringstream resultStream{};
 
-    // Make sure negative zeroes aren't allowed.
+    // Make sure negative zeros aren't allowed.
     if ((pnum->sign == -1) && (length > 0))
     {
         resultStream << L'-';
@@ -1258,25 +1259,46 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
 //-----------------------------------------------------------------------------
 wstring RatToString(_Inout_ PRAT& prat, int format, uint32_t radix, int32_t precision)
 {
-    // Convert p and q of rational form from internal base to requested base.
-    // Scale by largest power of BASEX possible.
-    long scaleby = min(prat->pp->exp, prat->pq->exp);
-    scaleby = max(scaleby, 0);
-
-    prat->pp->exp -= scaleby;
-    prat->pq->exp -= scaleby;
-
-    PNUMBER p = nRadixxtonum(prat->pp, radix, precision);
-    PNUMBER q = nRadixxtonum(prat->pq, radix, precision);
-
-    // finally take the time hit to actually divide.
-    divnum(&p, q, radix, precision);
-    destroynum(q);
+    PNUMBER p = RatToNumber(prat, radix, precision);
 
     wstring result = NumberToString(p, format, radix, precision);
     destroynum(p);
 
     return result;
+}
+
+PNUMBER RatToNumber(_In_ PRAT prat, uint32_t radix, int32_t precision)
+{
+    PRAT temprat = nullptr;
+    DUPRAT(temprat, prat);
+    // Convert p and q of rational form from internal base to requested base.
+    // Scale by largest power of BASEX possible.
+    long scaleby = min(temprat->pp->exp, temprat->pq->exp);
+    scaleby = max(scaleby, 0);
+
+    temprat->pp->exp -= scaleby;
+    temprat->pq->exp -= scaleby;
+
+    PNUMBER p = nRadixxtonum(temprat->pp, radix, precision);
+    PNUMBER q = nRadixxtonum(temprat->pq, radix, precision);
+
+    destroyrat(temprat);
+
+    // finally take the time hit to actually divide.
+    divnum(&p, q, radix, precision);
+    destroynum(q);
+
+    return p;
+}
+
+// Converts a PRAT to a PNUMBER and back to a PRAT, flattening/simplifying the rational in the process
+void flatrat(_Inout_ PRAT& prat, uint32_t radix, int32_t precision)
+{
+    PNUMBER pnum = RatToNumber(prat, radix, precision);
+
+    destroyrat(prat);
+    prat = numtorat(pnum, radix);
+    destroynum(pnum);
 }
 
 //-----------------------------------------------------------------------------
@@ -1377,7 +1399,7 @@ PNUMBER longfactnum(long inlong, uint32_t radix)
 //  ARGUMENTS:
 //              long integer to factorialize.
 //              long integer representing base of answer.
-//              unsignd long integer for radix
+//              unsigned long integer for radix
 //
 //  RETURN: Factorial of input in base PNUMBER form.
 //

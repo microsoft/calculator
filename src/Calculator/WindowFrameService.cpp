@@ -109,7 +109,7 @@ namespace CalculatorApp
             that->InvokeWindowClosingHandlers();
             // This is to ensure InvokeWindowClosingHandlers is be done before RemoveWindowFromMap
             // If InvokeWindowClosingHandlers throws any exception we want it to crash the application
-            // so we are ok not setting closingHandlersCompletedEvent in that case
+            // so we are OK not setting closingHandlersCompletedEvent in that case
             closingHandlersCompletedEvent.set();
             that->m_coreDispatcher->StopProcessEvents();
             Window::Current->Close();

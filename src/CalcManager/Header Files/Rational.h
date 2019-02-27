@@ -1,4 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 #pragma once
 
@@ -6,6 +7,13 @@
 
 namespace CalcEngine
 {
+    // Default Base/Radix to use for Rational calculations
+    // RatPack calculations currently support up to Base64.
+    inline constexpr uint32_t RATIONAL_BASE = 10;
+
+    // Default Precision to use for Rational calculations
+    inline constexpr int32_t RATIONAL_PRECISION = 128;
+
     class Rational
     {
     public:
@@ -14,7 +22,7 @@ namespace CalcEngine
         Rational(Number const& p, Number const& q) noexcept;
         Rational(int32_t i);
         Rational(uint32_t ui);
-        Rational(uint64_t ui, uint32_t radix, int32_t precision);
+        Rational(uint64_t ui);
 
         explicit Rational(PRAT prat) noexcept;
         PRAT ToPRAT() const;
@@ -22,29 +30,42 @@ namespace CalcEngine
         Number const& P() const;
         Number const& Q() const;
 
-        Rational Negate() const;
-        Rational Add(Rational const& rhs, int32_t precision) const;
-        Rational Sub(Rational const& rhs, int32_t precision) const;
-        Rational Mul(Rational const& rhs, int32_t precision) const;
-        Rational Div(Rational const& rhs, int32_t precision) const;
-        Rational Mod(Rational const& rhs) const;
+        Rational operator-() const;
+        Rational& operator+=(Rational const& rhs);
+        Rational& operator-=(Rational const& rhs);
+        Rational& operator*=(Rational const& rhs);
+        Rational& operator/=(Rational const& rhs);
+        Rational& operator%=(Rational const& rhs);
 
-        Rational Lsh(Rational const& r, uint32_t radix, int32_t precision) const;
-        Rational Rsh(Rational const& r, uint32_t radix, int32_t precision) const;
+        Rational& operator<<=(Rational const& rhs);
+        Rational& operator>>=(Rational const& rhs);
 
-        Rational Not(bool isIntegerMode, Rational const& chopNum, uint32_t radix, int32_t precision) const;
-        Rational And(Rational const& r, uint32_t radix, int32_t precision) const;
-        Rational Or(Rational const& r, uint32_t radix, int32_t precision) const;
-        Rational Xor(Rational const& r, uint32_t radix, int32_t precision) const;
+        Rational& operator&=(Rational const& rhs);
+        Rational& operator|=(Rational const& rhs);
+        Rational& operator^=(Rational const& rhs);
 
-        bool IsZero() const;
-        bool IsLess(Rational const& r, int32_t precision) const;
-        bool IsLessEq(Rational const& r, int32_t precision) const;
-        bool IsGreaterEq(Rational const& r, int32_t precision) const;
-        bool IsEq(Rational const& r, int32_t precision) const;
+        friend Rational operator+(Rational lhs, Rational const& rhs);
+        friend Rational operator-(Rational lhs, Rational const& rhs);
+        friend Rational operator*(Rational lhs, Rational const& rhs);
+        friend Rational operator/(Rational lhs, Rational const& rhs);
+        friend Rational operator%(Rational lhs, Rational const& rhs);
+
+        friend Rational operator<<(Rational lhs, Rational const& rhs);
+        friend Rational operator>>(Rational lhs, Rational const& rhs);
+
+        friend Rational operator&(Rational lhs, Rational const& rhs);
+        friend Rational operator|(Rational lhs, Rational const& rhs);
+        friend Rational operator^(Rational lhs, Rational const& rhs);
+
+        friend bool operator==(Rational const& lhs, Rational const& rhs);
+        friend bool operator!=(Rational const& lhs, Rational const& rhs);
+        friend bool operator<(Rational const& lhs, Rational const& rhs);
+        friend bool operator>(Rational const& lhs, Rational const& rhs);
+        friend bool operator<=(Rational const& lhs, Rational const& rhs);
+        friend bool operator>=(Rational const& lhs, Rational const& rhs);
 
         std::wstring ToString(uint32_t radix, NUMOBJ_FMT format, int32_t precision) const;
-        uint64_t ToUInt64_t(uint32_t radix, int32_t precision) const;
+        uint64_t ToUInt64_t() const;
 
     private:
         Number m_p;

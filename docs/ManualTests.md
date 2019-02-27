@@ -277,8 +277,8 @@ Steps:
 **All Calculators Test: Hotkeys: Verify Hot Key function.**
 Steps:
 1.	Launch the "Calculator" app.
-For All Applicable Modes:
-Verify the following:
+
+    For All Applicable Modes verify the following:
 2.	Press **Alt +1** to Enter "Standard" mode
 *Expected: Move to "Standard" screen.*
 3.	Press **Alt +2** to Enter "Scientific" mode
@@ -305,8 +305,9 @@ Verify the following:
 *Expected: Function when in small scale window.*
 19.	Press **Ctrl + Shift + D** to Clear History Panel
 *Expected: Function when in small scale window.*
-20.	Press **Spacebar** to Repeat Last Input:
-Verify the following in Scientific Mode
+20.	Press **Spacebar** to Repeat Last Input
+
+    Verify the following in Scientific Mode
 21.	Press **F3** to Select 'DEG'
 22.	Press **F4** to Select 'RAD'
 23.	Press **F5** to Select 'GRAD'
@@ -333,7 +334,8 @@ Verify the following in Scientific Mode
 44.	Press **Y** or **^** to Select 'xʸ'
 45.	Press **#** to Select 'x³'
 46.	Press **!** to Select 'n!'
-Verify the following in Programmer Mode
+
+    Verify the following in Programmer Mode
 47.	Press **F2** to Select 'DWORD'
 48.	Press **F3** to Select 'WORD'
 49.	Press **F4** to Select 'BYTE'
@@ -348,6 +350,6 @@ Verify the following in Programmer Mode
 58.	Press **<** to Select 'Lsh'
 59.	Press **>** to Select 'Rsh'
 60.	Press **%** to Select 'Mod'
-61.	Press ** | ** to Select 'Or'
+61.	Press **|** to Select 'Or'
 62.	Press **~** to Select 'Not'
 63.	Press **&** to Select 'And'

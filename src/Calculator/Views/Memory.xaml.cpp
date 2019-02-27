@@ -48,7 +48,7 @@ void Memory::MemoryListItemClick(_In_ Object^ sender, _In_ ItemClickEventArgs^ e
 {
     MemoryItemViewModel^ memorySlot = safe_cast<MemoryItemViewModel^>(e->ClickedItem);
 
-    // Incase the memory list is clicked and enter is pressed,
+    // In case the memory list is clicked and enter is pressed,
     // On Item clicked event gets fired and e->ClickedItem is Null.
     if (memorySlot != nullptr)
     {

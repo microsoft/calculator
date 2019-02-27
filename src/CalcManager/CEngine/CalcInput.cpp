@@ -39,7 +39,7 @@ bool CalcInput::TryToggleSign(bool isIntegerMode, wstring_view maxNumStr)
     }
     else
     {
-        // When in integer only mode, it isnt always allowed to toggle, as toggling can cause the num to be out of 
+        // When in integer only mode, it isn't always allowed to toggle, as toggling can cause the num to be out of
         // bounds. For eg. in byte -128 is valid, but when it toggled it becomes 128, which is more than 127.
         if (isIntegerMode && m_base.IsNegative())
         {
@@ -59,7 +59,7 @@ bool CalcInput::TryToggleSign(bool isIntegerMode, wstring_view maxNumStr)
 bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, wstring_view maxNumStr, long wordBitWidth, int maxDigits)
 {
     // Convert from an integer into a character
-    // This includes both normal digits and alpha 'digits' for radices > 10
+    // This includes both normal digits and alpha 'digits' for radixes > 10
     auto chDigit = static_cast<wchar_t>((value < 10) ? (L'0' + value) : (L'A' + value - 10));
 
     CalcNumSec* pNumSec;
@@ -74,13 +74,13 @@ bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMo
         pNumSec = &m_base;
         maxCount = maxDigits;
         // Don't include the decimal point in the count. In that way you can enter the maximum allowed precision.
-        // Precision doesnt include decimal point.
+        // Precision doesn't include decimal point.
         if (HasDecimalPt())
         {
             maxCount++;
         }
         // First leading 0 is not counted in input restriction as the output can be of that form
-        // See NumberToString algorithm. REVIEW: We dont have such input restriction mimicking based on output of NumberToString for exponent
+        // See NumberToString algorithm. REVIEW: We don't have such input restriction mimicking based on output of NumberToString for exponent
         // NumberToString can give 10 digit exponent, but we still restrict the exponent here to be only 4 digits.
         if (!pNumSec->IsEmpty() && pNumSec->value.front() == L'0')
         {
@@ -307,7 +307,7 @@ Rational CalcInput::ToRational(uint32_t radix, int32_t precision)
     PRAT rat = StringToRat(m_base.IsNegative(), m_base.value, m_exponent.IsNegative(), m_exponent.value, radix, precision);
     if (rat == nullptr)
     {
-        return Rational{};
+        return 0;
     }
 
     Rational result{ rat };
