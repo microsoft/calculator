@@ -166,7 +166,7 @@ void CalculatorProgrammerBitFlipPanel::OnBitToggled(_In_ Object^ sender, _In_ Ro
     // Any input from the Numpad may also result in toggling the bit as their state is bound to the BinaryDisplayValue.
     // Also, if the mode is switched to other Calculator modes when the BitFlip panel is open,
     // a race condition exists in which the IsProgrammerMode property is still true and the UpdatePrimaryResult() is called,
-    // which continously alters the Display Value and the state of the Bit Flip buttons.
+    // which continuously alters the Display Value and the state of the Bit Flip buttons.
     if ((Model->IsBitFlipChecked)
         && Model->IsProgrammer)
     {

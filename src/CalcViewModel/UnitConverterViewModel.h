@@ -74,7 +74,7 @@ namespace CalculatorApp
                 Platform::String^ get() { return ref new Platform::String(m_original.abbreviation.c_str()); }
             }
 
-            // This method is used to return the desired autonamtion name for default unit in UnitConveter combo box.
+            // This method is used to return the desired automation name for default unit in UnitConveter combo box.
             Platform::String^ ToString() override
             {
                 return AccessibleName;

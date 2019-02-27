@@ -1,10 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 /****************************Module*Header***********************************
 * Module Name: EngineStrings.h
 *
-* Module Descripton:
+* Module Description:
 *       Resource String ID's for the private strings used by Engine. Internal to Engine related code
 *         not required by the clients
 *

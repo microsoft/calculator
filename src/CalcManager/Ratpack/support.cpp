@@ -474,7 +474,7 @@ void scale( PRAT *px, PRAT scalefact, uint32_t radix, int32_t precision )
     DUPRAT(pret,*px);
     
     // Logscale is a quick way to tell how much extra precision is needed for 
-    // scaleing by scalefact.
+    // scaling by scalefact.
     long logscale = g_ratio * ( (pret->pp->cdigit+pret->pp->exp) - 
             (pret->pq->cdigit+pret->pq->exp) );
     if ( logscale > 0 )
@@ -509,7 +509,7 @@ void scale2pi( PRAT *px, uint32_t radix, int32_t precision )
     DUPRAT(pret,*px);
 
     // Logscale is a quick way to tell how much extra precision is needed for 
-    // scaleing by 2 pi.
+    // scaling by 2 pi.
     long logscale = g_ratio * ( (pret->pp->cdigit+pret->pp->exp) - 
             (pret->pq->cdigit+pret->pq->exp) );
     if ( logscale > 0 )

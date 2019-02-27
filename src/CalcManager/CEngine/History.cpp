@@ -129,7 +129,7 @@ void CHistoryCollector::AddBinOpToHistory(int nOpCode, bool fNoRepetition)
 }
 
 // This is expected to be called when a binary op in the last say 1+2+ is changing to another one say 1+2* (+ changed to *)
-// It needs to know by this change a Precedence inversion happenned. i.e. previous op was lower or equal to its previous op, but the new 
+// It needs to know by this change a Precedence inversion happened. i.e. previous op was lower or equal to its previous op, but the new 
 // one isn't. (Eg. 1*2* to 1*2^). It can add explicit brackets to ensure the precedence is inverted. (Eg. (1*2) ^)
 void CHistoryCollector::ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher)
 {
@@ -196,7 +196,7 @@ bool CHistoryCollector::FOpndAddedToHistory()
 
 // AddUnaryOpToHistory
 //
-// This is does the postfix to prefix transalation of the input and adds the text to the history. Eg. doing 2 + 4 (sqrt), 
+// This is does the postfix to prefix translation of the input and adds the text to the history. Eg. doing 2 + 4 (sqrt), 
 // this routine will ensure the last sqrt call unary operator, actually goes back in history and wraps 4 in sqrt(4)
 //
 void CHistoryCollector::AddUnaryOpToHistory(int nOpCode, bool fInv, ANGLE_TYPE angletype)

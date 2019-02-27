@@ -59,7 +59,7 @@ bool CalcInput::TryToggleSign(bool isIntegerMode, wstring_view maxNumStr)
 bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, wstring_view maxNumStr, long wordBitWidth, int maxDigits)
 {
     // Convert from an integer into a character
-    // This includes both normal digits and alpha 'digits' for radices > 10
+    // This includes both normal digits and alpha 'digits' for radixes > 10
     auto chDigit = static_cast<wchar_t>((value < 10) ? (L'0' + value) : (L'A' + value - 10));
 
     CalcNumSec* pNumSec;
@@ -80,7 +80,7 @@ bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMo
             maxCount++;
         }
         // First leading 0 is not counted in input restriction as the output can be of that form
-        // See NumberToString algorithm. REVIEW: We dont have such input restriction mimicking based on output of NumberToString for exponent
+        // See NumberToString algorithm. REVIEW: We don't have such input restriction mimicking based on output of NumberToString for exponent
         // NumberToString can give 10 digit exponent, but we still restrict the exponent here to be only 4 digits.
         if (!pNumSec->IsEmpty() && pNumSec->value.front() == L'0')
         {

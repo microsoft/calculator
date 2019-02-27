@@ -5,7 +5,7 @@
 /****************************Module*Header***********************************\
 * Module Name: CalcEngine.h
 *
-* Module Descripton:
+* Module Description:
 *       The class definition for the Calculator's engine class CCalcEngine
 *
 * Warnings:
@@ -69,7 +69,7 @@ public:
     wchar_t DecimalSeparator() const;
 
     // Static methods for the instance
-    static void InitialOneTimeOnlySetup(CalculationManager::IResourceProvider& resourceProvider); // Once per load time to call to intialize all shared global variables
+    static void InitialOneTimeOnlySetup(CalculationManager::IResourceProvider& resourceProvider); // Once per load time to call to initialize all shared global variables
     // returns the ptr to string representing the operator. Mostly same as the button, but few special cases for x^y etc.
     static std::wstring_view GetString(int ids) { return s_engineStrings[ids]; }
     static std::wstring_view OpCodeToString(int nOpCode) { return GetString(IdStrFromCmdId(nOpCode)); }
@@ -82,10 +82,10 @@ private:
     CalculationManager::IResourceProvider* const m_resourceProvider;
     int m_nOpCode;    /* ID value of operation.                       */
     int m_nPrevOpCode; // opcode which computed the number in m_currentVal. 0 if it is already bracketed or plain number or
-    // if it hasnt yet been computed
+    // if it hasn't yet been computed
     bool m_bChangeOp; /* Flag for changing operation.       */
     bool m_bRecord;   // Global mode: recording or displaying
-    bool m_bSetCalcState;  //Falg for setting teh engine result state
+    bool m_bSetCalcState;  //Flag for setting the engine result state
     CalcEngine::CalcInput m_input; // Global calc input object for decimal strings
     eNUMOBJ_FMT m_nFE;    /* Scientific notation conversion flag.       */
     CalcEngine::Rational m_maxTrigonometricNum;

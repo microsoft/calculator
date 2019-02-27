@@ -4,7 +4,7 @@
 /****************************Module*Header***********************************\
 * Module Name: SCIDISP.C
 *
-* Module Descripton:
+* Module Description:
 *
 * Warnings:
 *
@@ -116,7 +116,7 @@ void CCalcEngine::DisplayNum(void)
             m_numberString = GetStringForDisplay(m_currentVal, m_radix);
         }
 
-        // Displayed number can go thru transformation. So copy it after transformation
+        // Displayed number can go through transformation. So copy it after transformation
         gldPrevious.value = m_currentVal;
 
         if ((m_radix == 10) && IsNumberInvalid(m_numberString, MAX_EXPONENT, m_precision, m_radix))

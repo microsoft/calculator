@@ -88,7 +88,7 @@ task<String^> CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupTyp
     // Retrieve the text in the clipboard
     auto dataPackageView = Clipboard::GetContent();
 
-    // TODO: Suport all formats supported by ClipboardHasText
+    // TODO: Support all formats supported by ClipboardHasText
     //-- add support to avoid pasting of expressions like 12 34(as of now we allow 1234)
     //-- add support to allow pasting for expressions like .2 , -.2
     //-- add support to allow pasting for expressions like 1.3e12(as of now we allow 1.3e+12)

@@ -600,8 +600,8 @@ namespace CalculationManager
     }
 
     /// <summary>
-/// Helper function that selects a memeory from the vector and set it to CCalcEngine
-/// Saved RAT number needs to be copied and passed in, as CCalcEngine destoried the passed in RAT
+/// Helper function that selects a memory from the vector and set it to CCalcEngine
+/// Saved RAT number needs to be copied and passed in, as CCalcEngine destroyed the passed in RAT
 /// </summary>
 /// <param name="indexOfMemeory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberSelect(_In_ unsigned int indexOfMemory)
@@ -615,7 +615,7 @@ namespace CalculationManager
 
     /// <summary>
     /// Helper function that needs to be executed when memory is modified
-    /// When memory is modified, destory the old RAT and put the new RAT in vector
+    /// When memory is modified, destroy the old RAT and put the new RAT in vector
     /// </summary>
     /// <param name="indexOfMemeory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberChanged(_In_ unsigned int indexOfMemory)

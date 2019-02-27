@@ -13,7 +13,7 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwid
 {
     // When in integer mode, the number is represented in 2's complement form. When a bit width is changing, we can 
     // change the number representation back to sign, abs num form in ratpak. Soon when display sees this, it will 
-    // convert to 2's complement form, but this time all high bits will be propogated. Eg. -127, in byte mode is 
+    // convert to 2's complement form, but this time all high bits will be propagated. Eg. -127, in byte mode is 
     // represented as 1000,0001. This puts it back as sign=-1, 01111111 . But DisplayNum will see this and convert it 
     // back to 1111,1111,1000,0001 when in Word mode.
     if (m_fIntegerMode)
@@ -42,7 +42,7 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwid
         m_dwWordBitWidth = DwWordBitWidthFromeNumWidth(numwidth);
     }
 
-    // inform ratpak that a change in base or precision has occured
+    // inform ratpak that a change in base or precision has occurred
     BaseOrPrecisionChanged();
 
     // display the correct number for the new state (ie convert displayed 
@@ -130,8 +130,8 @@ int CCalcEngine::QuickLog2(int iNum)
 // word size, and base.  This number is conservative towards the small side
 // such that there may be some extra bits left over. For example, base 8 requires 3 bits per digit.
 // A word size of 32 bits allows for 10 digits with a remainder of two bits.  Bases
-// that require variable numnber of bits (non-power-of-two bases) are approximated
-// by the next highest power-of-two base (again, to be conservative and gaurentee
+// that require variable number of bits (non-power-of-two bases) are approximated
+// by the next highest power-of-two base (again, to be conservative and guarantee
 // there will be no over flow verse the current word size for numbers entered).
 // Base 10 is a special case and always uses the base 10 precision (m_nPrecisionSav).
 void CCalcEngine::UpdateMaxIntDigits()
@@ -160,10 +160,10 @@ void CCalcEngine::ChangeBaseConstants(uint32_t radix, int maxIntDigits, int32_t 
 {
     if (10 == radix)
     {
-        ChangeConstants(radix, precision); // Base 10 precesion for internal computing still needs to be 32, to 
-        // take care of decimals preceisly. For eg. to get the HI word of a qword, we do a rsh, which depends on getting
-        // 18446744073709551615 / 4294967296 = 4294967295.9999917... This is important it works this and doesnt reduce 
-        // the precision to number of digits allowed to enter. In otherwords precision and # of allowed digits to be 
+        ChangeConstants(radix, precision); // Base 10 precision for internal computing still needs to be 32, to 
+        // take care of decimals precisely. For eg. to get the HI word of a qword, we do a rsh, which depends on getting
+        // 18446744073709551615 / 4294967296 = 4294967295.9999917... This is important it works this and doesn't reduce 
+        // the precision to number of digits allowed to enter. In other words, precision and # of allowed digits to be 
         // entered are different.
     }
     else

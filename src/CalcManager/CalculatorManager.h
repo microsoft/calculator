@@ -60,7 +60,7 @@ namespace CalculationManager
 
         static const unsigned int m_maximumMemorySize = 100;
 
-        // For persistance
+        // For persistence
         std::vector<unsigned char> m_savedCommands;
         std::vector<long> m_savedPrimaryValue;
         std::vector<long> m_serializedMemory;

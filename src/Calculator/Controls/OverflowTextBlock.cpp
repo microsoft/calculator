@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -201,7 +201,7 @@ void OverflowTextBlock::UnregisterEventHandlers()
 
     auto borderContainer = safe_cast<Border^>(GetTemplateChild("expressionborder"));
 
-    // Adding an extra check, incase the returned template is null
+    // Adding an extra check, in case the returned template is null
     if (borderContainer != nullptr)
     {
         borderContainer->PointerEntered -= m_pointerEnteredEventToken;

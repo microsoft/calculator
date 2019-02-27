@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //----------------------------------------------------------------------------
@@ -134,7 +134,7 @@ void sinanglerat( _Inout_ PRAT *pa, ANGLE_TYPE angletype, uint32_t radix, int32_
 //
 //  ARGUMENTS:  x PRAT representation of number to take the cosine of
 //
-//  RETURN: cosin of x in PRAT form.
+//  RETURN: cosine of x in PRAT form.
 //
 //  EXPLANATION: This uses Taylor series
 //
