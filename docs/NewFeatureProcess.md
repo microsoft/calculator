@@ -1,25 +1,27 @@
 # New feature process
 
-## When should I follow this process?
-You need to follow this process for any change which "users will notice". This applies especially
-to new features and major visual changes.
+## Where do I submit my idea for a new feature?
+We encourage new feature requests in [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130).
+Feedback Hub is easy to use. You can write your request in any language, and any Windows user (even
+if they aren't on GitHub) can upvote it. The Calculator team reviews Feedback Hub regularly and
+takes action on upvoted ideas.
 
-You do not need to follow this process for bug fixes, performance improvements, or changes to the
+Once we're ready to develop an idea further, we'll create a [feature pitch issue here on GitHub](https://github.com/Microsoft/calculator/issues)
+to track our progress. If you want to help develop the idea, you can write a feature pitch too!
+This document explains the elements of a good pitch and how we'll guide features from a pitch to a
+finished product.
+
+## Do I need to follow this process? Can I just start coding and submit a PR?
+You *do not* need to follow this process for bug fixes, performance improvements, or changes to the
 development tools. To contribute these changes, discuss the issue with the team and then submit a
 pull request.
 
-## Step 1: Create an issue and discuss with the community
-New features are submitted in Feedback Hub. In Feedback Hub you can upvote existing feedback or
-submit your own. We also encourage discussion on open issues in Feedback Hub and in GitHub.
+You *do* need to follow this process for any change which "users will notice". This applies
+especially to new features and major visual changes.
 
-## Step 2: Wait for Microsoft product team sponsorship
-New features must have a sponsor from the Microsoft product team. We can only work on a few ideas
-at a time, so some good feature ideas might remain open but unassigned to a sponsor.
-
-## Step 3: Scoping and feature pitch
-Once we've decided to sponsor a feature, a member of the Microsoft team will write a
-*feature pitch*. The feature pitch concisely describes our point of view on the problem and will
-typically include these sections:
+## Step 1: Feature pitch
+The feature pitch concisely describes a point of view on the problem the new feature should solve.
+It will typically include these sections:
 
 * **Problem Statement**: What problem are we trying to solve? Who’s the customer? Is there a
   customer need or pain point we need to remedy? Is there a business goal or metric we are trying
@@ -38,11 +40,12 @@ typically include these sections:
   including any reasoning to why.
 
 The feature pitch may also include a low-fidelity concept which will be refined during the
-prototyping process.
+pre-production process.
 
-We will edit the issue description on GitHub to include the feature pitch.
+Feature pitches are submitted as issues on GitHub. We encourage discussion on open issues, and as
+discussion progresses we will edit the issue description to refine the idea.
 
-## Step 4: Prototyping
+## Step 2: Pre-production
 After the goals are written, we think of a variety of ways to address these goals and build
 *prototypes* to try them out. We welcome community participation in this process.
 
@@ -59,7 +62,7 @@ the wiki for this project. Progress updates will be posted in the issues section
 During the investigation phase, we might discover that the idea isn't feasible or doesn't align
 with our product roadmap. If this happens, we'll document what we learned and close the issue.
 
-## Step 5: Prototype review
+### Spec review
 Once there is a high-fidelity design which addresses the goals described in the original pitch, the
 Microsoft product team will review the prototype and ensure all items on this checklist are
 addressed:
@@ -75,7 +78,7 @@ addressed:
 - [ ] Is it technically feasible to build this feature? Take a look at the "before committing"
   checklist below and identify any issues which are likely to be blockers.
 
-## Step 6: Implementation
+## Step 3: Production
 A feature can be implemented by the original proposer, the Microsoft team sponsor, or by other
 community members. Code contributions and testing help are greatly appreciated. Please let us know
 in the issue comments if you're actively working on a feature so we can ensure it's assigned to
@@ -85,7 +88,7 @@ You might be able to reuse code written during the prototype process, although t
 be more work required to make the solution robust. Once the code is ready, you can begin
 [submitting pull requests](../CONTRIBUTING.md).
 
-## Step 7: Technical review
+### Technical review
 As with all changes, the code for new features will be reviewed by a member of the Microsoft team
 before being checked in to the master branch.
 
@@ -135,13 +138,9 @@ new features, the Microsoft team considers at least these items:
       [Fiddler](http://docs.telerik.com/fiddler/knowledgebase/fiddlerscript/perftesting)
       can be used to simulate slow or failed requests.
 
-## Step 8: Final product review and merge to master
+## Step 4: Final product review and merge to master
 After the technical review is complete, the product team will review the finished product to make
 sure the final implementation is ready to release to Windows customers.
-
-## Step 9: Release
-The release process is handled internally by the Microsoft team. When we release, we create a
-`servicing` branch from master. We merge changes into servicing branches only to fix severe bugs.
 
 Releases are distributed through the Microsoft Store, first to Windows Insiders and then to all
 supported Windows 10 devices once we are confident in the update's quality. We usually ship an
