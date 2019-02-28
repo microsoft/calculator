@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -411,7 +411,7 @@ namespace CalculatorUnitTests
                 ChangeMode(viewModels[i], i);
 
                 // Validate that the history items list is initially empty
-                VERIFY_IS_TRUE(0 == viewModels[i]->m_standardCalculatorManager->GetHistoryItems().size());
+                VERIFY_IS_TRUE(0 == viewModels[i]->m_standardCalculatorManager.GetHistoryItems().size());
             }
 
             // Perform Calculations on both the instances and check that the History items work independently
@@ -440,9 +440,9 @@ namespace CalculatorUnitTests
             ValidateViewModelByCommands(viewModels[1], scientificModeTestItems, true);
 
             // Assert for the history list items of 1st instance
-            VERIFY_IS_TRUE(1 == viewModels[0]->m_standardCalculatorManager->GetHistoryItems().size());
+            VERIFY_IS_TRUE(1 == viewModels[0]->m_standardCalculatorManager.GetHistoryItems().size());
 
-            auto item1 = viewModels[0]->m_standardCalculatorManager->GetHistoryItem(0);
+            auto item1 = viewModels[0]->m_standardCalculatorManager.GetHistoryItem(0);
             String ^expression1 = UtfUtils::LRO + L"1   +   2 =" + UtfUtils::PDF;
             String^ result1 = L"3";
 
@@ -450,9 +450,9 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(result1, StringReference(item1->historyItemVector.result.c_str()));
 
             // Assert for the history list items of 2nd instance
-            VERIFY_IS_TRUE(1 == viewModels[1]->m_standardCalculatorManager->GetHistoryItems().size());
+            VERIFY_IS_TRUE(1 == viewModels[1]->m_standardCalculatorManager.GetHistoryItems().size());
 
-            auto item2 = viewModels[1]->m_standardCalculatorManager->GetHistoryItem(0);
+            auto item2 = viewModels[1]->m_standardCalculatorManager.GetHistoryItem(0);
             String^ expression2 = UtfUtils::LRO + L"1   +   2   " + UtfUtils::MUL + L"   3 =" + UtfUtils::PDF;
             String^ result2 = L"7";
 
@@ -474,7 +474,7 @@ namespace CalculatorUnitTests
                 ChangeMode(viewModels[i], 0);
 
                 // Validate that the history items list is initially empty
-                VERIFY_IS_TRUE(0 == viewModels[i]->m_standardCalculatorManager->GetHistoryItems().size());
+                VERIFY_IS_TRUE(0 == viewModels[i]->m_standardCalculatorManager.GetHistoryItems().size());
             }
 
             // Perform Calculations on both the instances and check that the History items work independently
@@ -513,9 +513,9 @@ namespace CalculatorUnitTests
             // Assert for the history list items of the instances
             for (int i = 0; i < 2; i++)
             {
-                VERIFY_IS_TRUE(1 == viewModels[i]->m_standardCalculatorManager->GetHistoryItems().size());
+                VERIFY_IS_TRUE(1 == viewModels[i]->m_standardCalculatorManager.GetHistoryItems().size());
 
-                auto item = viewModels[i]->m_standardCalculatorManager->GetHistoryItem(0);
+                auto item = viewModels[i]->m_standardCalculatorManager.GetHistoryItem(0);
 
                 VERIFY_ARE_EQUAL(expression[i], StringReference(item->historyItemVector.expression.c_str()));
                 VERIFY_ARE_EQUAL(result[i], StringReference(item->historyItemVector.result.c_str()));
@@ -536,7 +536,7 @@ namespace CalculatorUnitTests
                 ChangeMode(viewModels[i], 1);
 
                 // Validate that the history items list is initially empty
-                VERIFY_IS_TRUE(0 == viewModels[i]->m_standardCalculatorManager->GetHistoryItems().size());
+                VERIFY_IS_TRUE(0 == viewModels[i]->m_standardCalculatorManager.GetHistoryItems().size());
             }
 
             // Perform Calculations on both the instances and check that the History items work independently
@@ -575,9 +575,9 @@ namespace CalculatorUnitTests
             // Assert for the history list items of the instances
             for (int i = 0; i < 2; i++)
             {
-                VERIFY_IS_TRUE(1 == viewModels[i]->m_standardCalculatorManager->GetHistoryItems().size());
+                VERIFY_IS_TRUE(1 == viewModels[i]->m_standardCalculatorManager.GetHistoryItems().size());
 
-                auto item = viewModels[i]->m_standardCalculatorManager->GetHistoryItem(0);
+                auto item = viewModels[i]->m_standardCalculatorManager.GetHistoryItem(0);
 
                 VERIFY_ARE_EQUAL(expression[i], StringReference(item->historyItemVector.expression.c_str()));
                 VERIFY_ARE_EQUAL(result[i], StringReference(item->historyItemVector.result.c_str()));

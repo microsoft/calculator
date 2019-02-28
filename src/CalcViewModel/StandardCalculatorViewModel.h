@@ -214,7 +214,7 @@ namespace CalculatorApp
             }
 
             property bool IsEngineRecording {
-                bool get() { return m_standardCalculatorManager->IsEngineRecording(); }
+                bool get() { return m_standardCalculatorManager.IsEngineRecording(); }
             }
 
             property bool  IsOperandEnabled {
@@ -311,7 +311,7 @@ namespace CalculatorApp
             void ResetDisplay();
             RADIX_TYPE GetCurrentRadixType() { return (RADIX_TYPE)m_CurrentRadixType; }
             void SetPrecision(int32_t precision);
-            void UpdateMaxIntDigits() { m_standardCalculatorManager->UpdateMaxIntDigits(); }
+            void UpdateMaxIntDigits() { m_standardCalculatorManager.UpdateMaxIntDigits(); }
             NumbersAndOperatorsEnum GetCurrentAngleType() { return m_CurrentAngleType; }
 
         private:
@@ -323,7 +323,7 @@ namespace CalculatorApp
             wchar_t m_decimalSeparator;
             CalculatorDisplay m_calculatorDisplay;
             CalculatorApp::EngineResourceProvider m_resourceProvider;
-            std::unique_ptr<CalculationManager::CalculatorManager> m_standardCalculatorManager;
+            CalculationManager::CalculatorManager m_standardCalculatorManager;
             Platform::String^ m_expressionAutomationNameFormat;
             Platform::String^ m_localizedCalculationResultAutomationFormat;
             Platform::String^ m_localizedCalculationResultDecimalAutomationFormat;
