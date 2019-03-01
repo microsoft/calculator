@@ -1,15 +1,14 @@
 # New feature process
 
 ## Where do I submit my idea for a new feature?
-We encourage new feature requests in [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130).
-Feedback Hub is easy to use. You can write your request in any language, and any Windows user (even
-if they aren't on GitHub) can upvote it. The Calculator team reviews Feedback Hub regularly and
-takes action on upvoted ideas.
+The easiest way to submit new feature requests is through [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130).
+In Feedback Hub, any Windows user (even if they aren't on GitHub) can upvote suggestions. The
+Calculator team reviews these suggestions regularly, and when we're ready to work on an idea we
+create [feature pitch issues here on GitHub](https://github.com/Microsoft/calculator/issues).
 
-Once we're ready to develop an idea further, we'll create a [feature pitch issue here on GitHub](https://github.com/Microsoft/calculator/issues)
-to track our progress. If you want to help develop the idea, you can write a feature pitch too!
-This document explains the elements of a good pitch and how we'll guide features from a pitch to a
-finished product.
+But using Feedback Hub is not required&mdash;you can write a feature pitch too! This document
+explains the elements of a good pitch and how we'll guide features from a pitch to a finished
+product.
 
 ## Do I need to follow this process? Can I just start coding and submit a PR?
 You *do not* need to follow this process for bug fixes, performance improvements, or changes to the
