@@ -14,6 +14,7 @@
 
     <UserControl.Resources>
         <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind Model.Announcement, Mode=OneWay}"/>
+
         <Style x:Key="OperandTextBoxStyle" TargetType="controls:OperandTextBox">
             <Setter Property="MinWidth" Value="32"/>
             <Setter Property="MinHeight" Value="20"/>
@@ -122,12 +123,14 @@
                        IsTextScaleFactorEnabled="False"
                        Text="{Binding Token, Mode=OneWay}"/>
         </DataTemplate>
+
         <DataTemplate x:Key="Operator" x:DataType="common:DisplayExpressionToken">
             <TextBlock Margin="2,0,0,0"
                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
                        IsTextScaleFactorEnabled="False"
                        Text="{Binding Token, Mode=OneWay}"/>
         </DataTemplate>
+
         <DataTemplate x:Key="Separator" x:DataType="common:DisplayExpressionToken">
             <TextBlock x:Name="MainText"
                        IsTextScaleFactorEnabled="False"
@@ -172,6 +175,7 @@
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="MinWidth" Value="4"/>
         </Style>
+
         <Style x:Key="EditableOperatorContainerStyle"
                BasedOn="{StaticResource ExpressionBaseContainerStyle}"
                TargetType="ListViewItem">
@@ -183,6 +187,7 @@
                                                    OperandTemplate="{StaticResource Operand}"
                                                    OperatorTemplate="{StaticResource Operator}"
                                                    SeparatorTemplate="{StaticResource Separator}"/>
+
         <converters:ExpressionItemContainerStyle x:Key="ExpressionItemContainerStyle"
                                                  EditableOperatorStyle="{StaticResource NonEditableOperatorContainerStyle}"
                                                  NonEditableOperatorStyle="{StaticResource NonEditableOperatorContainerStyle}"
@@ -399,6 +404,7 @@
                 </EasingDoubleKeyFrame>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+
         <Storyboard x:Name="AnimateWithoutResult">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="NumpadPanel" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0.92">
@@ -579,6 +585,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+
         <Grid FlowDirection="LeftToRight">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="RowHamburger" Height="{StaticResource HamburgerHeightGridLength}"/>
@@ -683,6 +690,7 @@
                                       Width="1*"
                                       MaxWidth="80"/>
                 </Grid.ColumnDefinitions>
+
                 <controls:CalculatorButton x:Name="ClearMemoryButton"
                                            x:Uid="ClearMemoryButton"
                                            Style="{StaticResource CaptionButtonStyle}"
@@ -763,9 +771,8 @@
 
                 <local:OperatorsPanel x:Name="OpsPanel" IsBitFlipChecked="{x:Bind Model.IsBitFlipChecked, Mode=OneWay}"/>
             </Grid>
-
-
         </Grid>
+
         <!-- Docked Pivot panel for history/memory -->
         <Border x:Name="DockPanel"
                 x:Uid="DockPanel"
@@ -810,6 +817,7 @@
                                 <Setter Property="FontSize" Value="{ThemeResource PivotTitleFontSize}"/>
                             </Style>
                         </Grid.Resources>
+
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
@@ -818,7 +826,6 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="Orientation">
                                 <VisualState x:Name="Portrait">
-
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TitleContentControl" Storyboard.TargetProperty="Margin">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotPortraitThemePadding}"/>
@@ -826,7 +833,6 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Landscape">
-
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TitleContentControl" Storyboard.TargetProperty="Margin">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotLandscapeThemePadding}"/>
@@ -837,7 +843,6 @@
                             <VisualStateGroup x:Name="NavigationButtonsVisibility">
                                 <VisualState x:Name="NavigationButtonsHidden"/>
                                 <VisualState x:Name="NavigationButtonsVisible">
-
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NextButton" Storyboard.TargetProperty="Opacity">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
@@ -854,7 +859,6 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="PreviousButtonVisible">
-
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PreviousButton" Storyboard.TargetProperty="Opacity">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
@@ -865,7 +869,6 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="NextButtonVisible">
-
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NextButton" Storyboard.TargetProperty="Opacity">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
@@ -879,7 +882,6 @@
                             <VisualStateGroup x:Name="HeaderStates">
                                 <VisualState x:Name="HeaderDynamic"/>
                                 <VisualState x:Name="HeaderStatic">
-
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Header" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
@@ -892,6 +894,7 @@
                             </VisualStateGroup>
 
                         </VisualStateManager.VisualStateGroups>
+
                         <ContentControl x:Name="TitleContentControl"
                                         Margin="{StaticResource PivotPortraitThemePadding}"
                                         Style="{StaticResource TitleContentControlStyle}"
@@ -899,6 +902,7 @@
                                         ContentTemplate="{TemplateBinding TitleTemplate}"
                                         IsTabStop="False"
                                         Visibility="Collapsed"/>
+
                         <Grid Grid.Row="1">
                             <Grid.Resources>
                                 <ControlTemplate x:Key="NextTemplate" TargetType="Button">
@@ -948,6 +952,7 @@
                                                   UseLayoutRounding="False"/>
                                     </Border>
                                 </ControlTemplate>
+
                                 <ControlTemplate x:Key="PreviousTemplate" TargetType="Button">
                                     <Border x:Name="Root"
                                             Background="{ThemeResource PivotPreviousButtonBackground}"
@@ -996,6 +1001,7 @@
                                     </Border>
                                 </ControlTemplate>
                             </Grid.Resources>
+
                             <ScrollViewer x:Name="ScrollViewer"
                                           Margin="{TemplateBinding Padding}"
                                           VerticalContentAlignment="Stretch"
@@ -1104,10 +1110,10 @@
                                 </PivotPanel>
                             </ScrollViewer>
                         </Grid>
-
                     </Grid>
                 </ControlTemplate>
             </Border.Resources>
+
             <Pivot x:Name="DockPivot"
                    SelectionChanged="DockPivot_SelectionChanged"
                    TabIndex="5"
@@ -1261,4 +1267,3 @@
         </Border>
     </Grid>
 </UserControl>
-
