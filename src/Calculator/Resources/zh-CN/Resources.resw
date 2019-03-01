@@ -2615,7 +2615,7 @@
     <value>已更新 %1 %2</value>
     <comment>The timestamp of currency conversion ratios fetched from an online service. %1 is the date. %2 is the time. Example: "Updated Sep 28, 2016 5:42 PM"</comment>
   </data>
-  <data name="RefreshButtonText.Text" xml:space="preserve">
+  <data name="RefreshButtonText.Content" xml:space="preserve">
     <value>更新汇率</value>
     <comment>The text displayed for a hyperlink button that refreshes currency converter ratios.</comment>
   </data>
