@@ -11,7 +11,7 @@ pr:
 - master
 - servicing/*
 
-name: 0.$(Date:yyMM).$(Date:dd)$(Rev:rr).0
+name: 0.$(Date:yyMM).$(DayOfMonth)$(Rev:rr).0
 
 jobs:
 - template: ./templates/build-app-public.yaml
