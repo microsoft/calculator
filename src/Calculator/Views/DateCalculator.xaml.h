@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -39,9 +39,7 @@ namespace CalculatorApp
         void DateCalcOption_Changed(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e);
         void AddSubtractDateGrid_Loaded(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
         void ReselectCalendarDate(_In_ Windows::UI::Xaml::Controls::CalendarDatePicker^ calendarDatePicker, Windows::Foundation::DateTime dateTime);
-        void OffsetDropDownClosed(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
-        void CalendarFlyoutClosed(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
-        void RaiseLiveRegionChangedAutomationEvent(_In_ bool isDateDiffMode);
+        void OnDateResultLabelChanged(Windows::UI::Xaml::DependencyObject ^ sender, Windows::UI::Xaml::DependencyProperty ^ dp);
 
         Windows::Foundation::EventRegistrationToken m_dateCalcOptionChangedEventToken;
     };

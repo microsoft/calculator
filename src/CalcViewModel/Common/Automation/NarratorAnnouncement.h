@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -57,7 +57,7 @@ namespace CalculatorApp::Common::Automation
     private:
         // Make CalculatorAnnouncement a friend class so it is the only
         // class that can access the private constructor.
-        friend class CalculatorAnnouncement;
+        friend ref class CalculatorAnnouncement;
 
         NarratorAnnouncement(
             Platform::String^ announcement,
@@ -73,7 +73,7 @@ namespace CalculatorApp::Common::Automation
 
     // CalculatorAnnouncement is intended to contain only static methods
     // that return announcements made for the Calculator app.
-    class CalculatorAnnouncement
+    public ref class CalculatorAnnouncement sealed
     {
     public:
         static NarratorAnnouncement^ GetDisplayUpdatedAnnouncement(Platform::String^ announcement);
@@ -90,5 +90,9 @@ namespace CalculatorApp::Common::Automation
         static NarratorAnnouncement^ GetUpdateCurrencyRatesAnnouncement(Platform::String^ announcement);
         
         static NarratorAnnouncement^ GetDisplayCopiedAnnouncement(Platform::String^ announcement);
+
+    private:
+        CalculatorAnnouncement() { }
     };
+
 }
