@@ -38,9 +38,13 @@ namespace CalculatorApp
         void OnLoaded(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
         void DateCalcOption_Changed(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e);
         void AddSubtractDateGrid_Loaded(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
+        void AddSubtractOption_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void ReselectCalendarDate(_In_ Windows::UI::Xaml::Controls::CalendarDatePicker^ calendarDatePicker, Windows::Foundation::DateTime dateTime);
-        void OnDateResultLabelChanged(Windows::UI::Xaml::DependencyObject ^ sender, Windows::UI::Xaml::DependencyProperty ^ dp);
+        void OffsetDropDownClosed(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
+        void CalendarFlyoutClosed(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
+        void RaiseLiveRegionChangedAutomationEvent(_In_ bool isDateDiffMode);
 
         Windows::Foundation::EventRegistrationToken m_dateCalcOptionChangedEventToken;
+        void AddOption_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
     };
 }

@@ -182,10 +182,6 @@ void DateCalculator::DateCalcOption_Changed(_In_ Platform::Object^ sender, _In_ 
 {
     FindName("AddSubtractDateGrid");
     DateCalculationOption->SelectionChanged -= m_dateCalcOptionChangedEventToken;
-
-    DateResultLabel->RegisterPropertyChangedCallback(TextBlock::TextProperty, ref new DependencyPropertyChangedCallback(this, &DateCalculator::OnDateResultLabelChanged));
-    DateDiffAllUnitsResultLabel->RegisterPropertyChangedCallback(TextBlock::TextProperty, ref new DependencyPropertyChangedCallback(this, &DateCalculator::OnDateResultLabelChanged));
-
 }
 
 void CalculatorApp::DateCalculator::AddSubtractDateGrid_Loaded(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e)
@@ -211,8 +207,25 @@ void DateCalculator::ReselectCalendarDate(_In_ Windows::UI::Xaml::Controls::Cale
     calendarDatePicker->IsCalendarOpen = false;
 }
 
-void DateCalculator::OnDateResultLabelChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyProperty^ dp)
+void DateCalculator::OffsetDropDownClosed(_In_ Object^ sender, _In_ Object^ e)
 {
-    String^ automationName = AutomationProperties::GetName(sender);
-    TextBlockAutomationPeer::FromElement((TextBlock^)sender)->RaiseAutomationEvent(AutomationEvents::LiveRegionChanged);
+    RaiseLiveRegionChangedAutomationEvent(false);
+}
+
+void DateCalculator::CalendarFlyoutClosed(_In_ Object^ sender, _In_ Object^ e)
+{
+    auto dateCalcViewModel = safe_cast<DateCalculatorViewModel^>(this->DataContext);
+    RaiseLiveRegionChangedAutomationEvent(dateCalcViewModel->IsDateDiffMode);
+}
+
+void DateCalculator::RaiseLiveRegionChangedAutomationEvent(_In_ bool isDateDiffMode)
+{
+    TextBlock^ resultTextBlock = (isDateDiffMode ? DateDiffAllUnitsResultLabel : DateResultLabel);
+    String^ automationName = AutomationProperties::GetName(resultTextBlock);
+    TextBlockAutomationPeer::FromElement(resultTextBlock)->RaiseAutomationEvent(AutomationEvents::LiveRegionChanged);
+}
+
+void CalculatorApp::DateCalculator::AddSubtractOption_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+    RaiseLiveRegionChangedAutomationEvent(false);
 }
