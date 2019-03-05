@@ -136,9 +136,4 @@ new features, the Microsoft team considers at least these items:
 
 ## Step 4: Final product review and merge to master
 After the technical review is complete, the product team will review the finished product to make
-sure the final implementation is ready to release to Windows customers.
-
-Releases are distributed through the Microsoft Store, first to Windows Insiders and then to all
-supported Windows 10 devices once we are confident in the update's quality. We usually ship an
-update every month. After the app has been released to the Microsoft Store, it will be part of
-the next major update to Windows 10 (especially for new devices).
+sure the final implementation is ready to [release to Windows customers](Roadmap.md#Releases).
