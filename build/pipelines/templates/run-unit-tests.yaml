@@ -2,6 +2,9 @@
 
 parameters:
   platform: ''
+  reimageServiceConnection: ''
+  reimageSubscriptionId: ''
+  reimageResourceGroup: ''
 
 jobs:
 - job: UnitTests${{ parameters.platform }}
@@ -49,6 +52,6 @@ jobs:
     displayName: Reimage test machine
     inputs:
       connectionType: connectedServiceNameARM
-      azureServiceConnection: macool-sandbox-interactiveDesktopRS5
-      urlSuffix: subscriptions/012a8008-c00f-45b3-9828-41ebba30141d/resourceGroups/interactiveDesktopRS5/providers/Microsoft.Compute/virtualMachineScaleSets/essential/reimage?api-version=2018-10-01
+      azureServiceConnection: ${{ parameters.reimageServiceConnection }}
+      urlSuffix: subscriptions/${{ parameters.reimageSubscriptionId }}/resourceGroups/${{ parameters.reimageResourceGroup }}/providers/Microsoft.Compute/virtualMachineScaleSets/essential/reimage?api-version=2018-10-01
       body: '{ "instanceIds": ["$(agentInstanceId)"] }'

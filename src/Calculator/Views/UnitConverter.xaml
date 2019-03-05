@@ -614,17 +614,18 @@
                                 IsTabStop="False"
                                 TabIndex="5"
                                 Visibility="Collapsed">
-                    <TextBlock x:Name="CurrencyRefreshBlock"
-                               Style="{ThemeResource CaptionTextBlockStyle}"
-                               AutomationProperties.AccessibilityView="Raw">
-                        <Hyperlink Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}" Click="CurrencyRefreshButton_Click">
-                            <Run x:Uid="RefreshButtonText"/>
-                        </Hyperlink>
-                        <Run x:Name="Spacing" Text="&#x200A;"/>
-                        <Run x:Name="CurrencySecondaryStatus"
-                             FontWeight="SemiBold"
-                             Text=""/>
-                    </TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <HyperlinkButton x:Name="CurrencyRefreshBlock"
+                               Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}"
+                               Click="CurrencyRefreshButton_Click"
+                               x:Uid="RefreshButtonText"/>
+                        <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Margin="0, 7, 0, 0">
+                            <Run x:Name="Spacing" Text="&#x200A;"/>
+                            <Run x:Name="CurrencySecondaryStatus"
+                                 FontWeight="SemiBold"
+                                 Text=""/>
+                        </TextBlock>
+                    </StackPanel>
                 </ContentControl>
 
                 <!-- Offline TextBlock -->
