@@ -225,7 +225,7 @@ void DateCalculator::RaiseLiveRegionChangedAutomationEvent(_In_ bool isDateDiffM
     TextBlockAutomationPeer::FromElement(resultTextBlock)->RaiseAutomationEvent(AutomationEvents::LiveRegionChanged);
 }
 
-void DateCalculator::AddSubtractOption_Checked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e)
+void DateCalculator::AddSubtractOption_Checked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
 {
     RaiseLiveRegionChangedAutomationEvent(/* DateDiff mode */ false);
 }
