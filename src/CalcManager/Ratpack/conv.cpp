@@ -578,7 +578,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
     long expValue = 0L;          // expValue is exponent mantissa, should be unsigned
 
     PNUMBER pnumret = nullptr;
-    createnum(pnumret, numberString.length());
+    createnum(pnumret, static_cast<ULONG>(numberString.length()));
     pnumret->sign = 1L;
     pnumret->cdigit = 0;
     pnumret->exp = 0;
