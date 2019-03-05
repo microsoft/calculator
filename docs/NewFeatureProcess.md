@@ -6,7 +6,7 @@ In Feedback Hub, any Windows user (even if they aren't on GitHub) can upvote sug
 Calculator team reviews these suggestions regularly, and when we're ready to work on an idea we
 create [feature pitch issues here on GitHub](https://github.com/Microsoft/calculator/issues?q=is%3Aissue+is%3Aopen+project%3AMicrosoft%2Fcalculator%2F1).
 
-But using Feedback Hub is not required&mdash;you can write a feature pitch too! This document
+But using Feedback Hub is not required&mdash;you can create feature pitches too! This document
 explains the elements of a good pitch and how we'll guide features from a pitch to a finished
 product. The [Feature Tracking board](https://github.com/Microsoft/calculator/projects/1) shows
 all the features we're working on and where they're at in the process.
