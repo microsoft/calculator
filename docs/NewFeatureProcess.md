@@ -13,8 +13,8 @@ all the features we're working on and where they're at in the process.
 
 ## Do I need to follow this process? Can I just start coding and submit a PR?
 You *do not* need to follow this process for bug fixes, performance improvements, or changes to the
-development tools. To contribute these changes, discuss the issue with the team and then submit a
-pull request.
+development tools. To contribute these changes, [discuss the proposed change in an issue](https://github.com/Microsoft/calculator/issues/new)
+and then submit a pull request.
 
 You *do* need to follow this process for any change which "users will notice". This applies
 especially to new features and major visual changes.
