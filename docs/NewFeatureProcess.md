@@ -46,21 +46,17 @@ Feature pitches are submitted as issues on GitHub. We encourage discussion on op
 discussion progresses we will edit the issue description to refine the idea.
 
 ## Step 2: Pre-production
-After the goals are written, we think of a variety of ways to address these goals and build
-*prototypes* to try them out. We welcome community participation in this process.
+In the pre-production phase, we experiment with a variety of ways to address the goals described in
+the feature pitch. The output of this phase is a specification which demonstrates how the feature
+will work, supported by design renderings and code prototypes as needed. Sometimes we'll learn new
+things about a feature proposal during pre-production, and we'll edit or close the original pitch.
 
-Prototypes can take many forms. For many ideas, making changes directly to the app code (without
-spending too much time making the code robust or maintainable) can be a fast and effective way to
-try out new ideas. Or you might prefer to use design software, or even pencil and paper. Work from
-low-fidelity to high-fidelity&mdash;try a few ideas for the overall approach before making your
-preferred design pixel-perfect.
+We welcome community participation in the pre-production process. The GitHub issue will be the
+primary place to share progress updates.
 
-An important part of the prototyping process is sharing our work along the way, getting feedback,
-and iterating on the design. Drawings, links to code, and other work-in-progress can be added to
-the wiki for this project. Progress updates will be posted in the issues section.
-
-During the investigation phase, we might discover that the idea isn't feasible or doesn't align
-with our product roadmap. If this happens, we'll document what we learned and close the issue.
+The best ideas often come from trying many ideas during the pre-production phase. To enable rapid
+experimentation, we encourage developing and sharing rough ideas&mdash;maybe even with pencil and
+paper&mdash;before making designs pixel-perfect or making code robust and maintainable.
 
 ### Spec review
 Once there is a high-fidelity design which addresses the goals described in the original pitch, the
