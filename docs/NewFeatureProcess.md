@@ -75,7 +75,7 @@ addressed:
   checklist below and identify any issues which are likely to be blockers.
 
 ## Step 3: Production
-A feature can be implemented by the original proposer, the Microsoft team sponsor, or by other
+A feature can be implemented by the original proposer, a Microsoft team member, or by other
 community members. Code contributions and testing help are greatly appreciated. Please let us know
 in the issue comments if you're actively working on a feature so we can ensure it's assigned to
 you.
