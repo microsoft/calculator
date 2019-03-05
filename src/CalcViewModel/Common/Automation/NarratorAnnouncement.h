@@ -57,7 +57,7 @@ namespace CalculatorApp::Common::Automation
     private:
         // Make CalculatorAnnouncement a friend class so it is the only
         // class that can access the private constructor.
-        friend ref class CalculatorAnnouncement;
+        friend class CalculatorAnnouncement;
 
         NarratorAnnouncement(
             Platform::String^ announcement,
@@ -73,7 +73,7 @@ namespace CalculatorApp::Common::Automation
 
     // CalculatorAnnouncement is intended to contain only static methods
     // that return announcements made for the Calculator app.
-    public ref class CalculatorAnnouncement sealed
+    class CalculatorAnnouncement
     {
     public:
         static NarratorAnnouncement^ GetDisplayUpdatedAnnouncement(Platform::String^ announcement);
@@ -88,11 +88,7 @@ namespace CalculatorApp::Common::Automation
         static NarratorAnnouncement^ GetCategoryNameChangedAnnouncement(Platform::String^ announcement);
 
         static NarratorAnnouncement^ GetUpdateCurrencyRatesAnnouncement(Platform::String^ announcement);
-        
+
         static NarratorAnnouncement^ GetDisplayCopiedAnnouncement(Platform::String^ announcement);
-
-    private:
-        CalculatorAnnouncement() { }
     };
-
 }
