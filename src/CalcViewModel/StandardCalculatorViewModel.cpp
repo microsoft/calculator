@@ -69,7 +69,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_HexDisplayValue(L"0"),
     m_BinaryDisplayValue(L"0"),
     m_OctalDisplayValue(L"0"),
-    m_standardCalculatorManager(make_unique<CalculatorManager>(&m_calculatorDisplay, &m_resourceProvider)),
+    m_standardCalculatorManager(&m_calculatorDisplay, &m_resourceProvider),
     m_MemorizedNumbers(ref new Vector<MemoryItemViewModel^>()),
     m_IsMemoryEmpty(true),
     m_IsFToEChecked(false),
@@ -110,7 +110,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     CalculationExpressionAutomationName = GetLocalizedStringFormat(m_expressionAutomationNameFormat, L"");
 
     // Initialize history view model
-    m_HistoryVM = ref new HistoryViewModel(m_standardCalculatorManager.get());
+    m_HistoryVM = ref new HistoryViewModel(&m_standardCalculatorManager);
     m_HistoryVM->SetCalculatorDisplay(m_calculatorDisplay);
 
     m_decimalSeparator = LocalizationSettings::GetInstance().GetDecimalSeparator();
@@ -215,7 +215,7 @@ void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ wstring const &displayS
 
 void StandardCalculatorViewModel::DisplayPasteError()
 {
-    m_standardCalculatorManager->DisplayPasteError();
+    m_standardCalculatorManager.DisplayPasteError();
 }
 
 void StandardCalculatorViewModel::SetParenthesisCount(_In_ const wstring& parenthesisCount)
@@ -285,9 +285,9 @@ void StandardCalculatorViewModel::SetHistoryExpressionDisplay(_Inout_ shared_ptr
     IsEditingEnabled = false;
 
     // Setting the History Item Load Mode so that UI does not get updated with recalculation of every token
-    m_standardCalculatorManager->SetInHistoryItemLoadMode(true);
+    m_standardCalculatorManager.SetInHistoryItemLoadMode(true);
     Recalculate(true);
-    m_standardCalculatorManager->SetInHistoryItemLoadMode(false);
+    m_standardCalculatorManager.SetInHistoryItemLoadMode(false);
     m_isLastOperationHistoryLoad = true;
 }
 
@@ -573,7 +573,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object^ parameter)
 
     if (IsInError)
     {
-        m_standardCalculatorManager->SendCommand(Command::CommandCLEAR);
+        m_standardCalculatorManager.SendCommand(Command::CommandCLEAR);
         
         if (!IsRecoverableCommand((int)numOpEnum))
         {
@@ -643,7 +643,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object^ parameter)
                 m_isLastOperationHistoryLoad = false;
             }
 
-            m_standardCalculatorManager->SendCommand(cmdenum);
+            m_standardCalculatorManager.SendCommand(cmdenum);
         }
     }
 }
@@ -746,7 +746,7 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
 
     TraceLogger::GetInstance().LogValidInputPasted(mode);
     bool isFirstLegalChar = true;
-    m_standardCalculatorManager->SendCommand(Command::CommandCENTR);
+    m_standardCalculatorManager.SendCommand(Command::CommandCENTR);
     bool sendNegate = false;
     bool processedExp = false;
     bool processedDigit = false;
@@ -836,7 +836,7 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
             {
                 sentEquals = (mappedNumOp == NumbersAndOperatorsEnum::Equals);
                 Command cmdenum = ConvertToOperatorsEnum(mappedNumOp);
-                m_standardCalculatorManager->SendCommand(cmdenum);
+                m_standardCalculatorManager.SendCommand(cmdenum);
 
                 // The CalcEngine state machine won't allow the negate command to be sent before any 
                 // other digits, so instead a flag is set and the command is sent after the first appropriate 
@@ -846,7 +846,7 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
                     if (canSendNegate)
                     {
                         Command cmdNegate = ConvertToOperatorsEnum(NumbersAndOperatorsEnum::Negate);
-                        m_standardCalculatorManager->SendCommand(cmdNegate);
+                        m_standardCalculatorManager.SendCommand(cmdNegate);
                     }
 
                     // Can't send negate on a leading zero, so wait until the appropriate time to send it.
@@ -865,7 +865,7 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
             if (!(MapCharacterToButtonId(*it, canSendNegate) == NumbersAndOperatorsEnum::Add))
             {
                 Command cmdNegate = ConvertToOperatorsEnum(NumbersAndOperatorsEnum::Negate);
-                m_standardCalculatorManager->SendCommand(cmdNegate);
+                m_standardCalculatorManager.SendCommand(cmdNegate);
             }
         }
 
@@ -876,7 +876,7 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
 void StandardCalculatorViewModel::OnClearMemoryCommand(
     Object^ parameter)
 {
-    m_standardCalculatorManager->MemorizedNumberClearAll();
+    m_standardCalculatorManager.MemorizedNumberClearAll();
 
     int windowId = Utils::GetWindowId();
     TraceLogger::GetInstance().LogMemoryClearAll(windowId);
@@ -1013,7 +1013,7 @@ NumbersAndOperatorsEnum StandardCalculatorViewModel::MapCharacterToButtonId(
 
 void StandardCalculatorViewModel::OnMemoryButtonPressed()
 {
-    m_standardCalculatorManager->MemorizeNumber();
+    m_standardCalculatorManager.MemorizeNumber();
 
     int windowId = Utils::GetWindowId();
     TraceLogger::GetInstance().InsertIntoMemoryMap(windowId, IsStandard, IsScientific, IsProgrammer);
@@ -1051,7 +1051,7 @@ void StandardCalculatorViewModel::OnMemoryItemPressed(Object^ memoryItemPosition
     if (MemorizedNumbers && MemorizedNumbers->Size > 0)
     {
         auto boxedPosition = safe_cast<Box<int>^>(memoryItemPosition);
-        m_standardCalculatorManager->MemorizedNumberLoad(boxedPosition->Value);
+        m_standardCalculatorManager.MemorizedNumberLoad(boxedPosition->Value);
         HideMemoryClicked();
         int windowId = Utils::GetWindowId();
         TraceLogger::GetInstance().LogMemoryUsed(windowId, boxedPosition->Value, IsStandard, IsScientific, IsProgrammer, MemorizedNumbers->Size);
@@ -1075,7 +1075,7 @@ void StandardCalculatorViewModel::OnMemoryAdd(Object^ memoryItemPosition)
         {
             TraceLogger::GetInstance().InsertIntoMemoryMap(windowId, IsStandard, IsScientific, IsProgrammer);
         }
-        m_standardCalculatorManager->MemorizedNumberAdd(boxedPosition->Value);
+        m_standardCalculatorManager.MemorizedNumberAdd(boxedPosition->Value);
     }
 }
 
@@ -1096,7 +1096,7 @@ void StandardCalculatorViewModel::OnMemorySubtract(Object^ memoryItemPosition)
         {
             TraceLogger::GetInstance().InsertIntoMemoryMap(windowId, IsStandard, IsScientific, IsProgrammer);
         }
-        m_standardCalculatorManager->MemorizedNumberSubtract(boxedPosition->Value);
+        m_standardCalculatorManager.MemorizedNumberSubtract(boxedPosition->Value);
     }
 }
 
@@ -1110,7 +1110,7 @@ void StandardCalculatorViewModel::OnMemoryClear(_In_ Object^ memoryItemPosition)
         if (boxedPosition->Value >= 0)
         {
             unsigned int unsignedPosition = safe_cast<unsigned int>(boxedPosition->Value);
-            m_standardCalculatorManager->MemorizedNumberClear(unsignedPosition);
+            m_standardCalculatorManager.MemorizedNumberClear(unsignedPosition);
 
             MemorizedNumbers->RemoveAt(unsignedPosition);
             for (unsigned int i = 0; i < MemorizedNumbers->Size; i++)
@@ -1145,11 +1145,11 @@ Array<unsigned char>^ StandardCalculatorViewModel::Serialize()
     writer->WriteUInt32(static_cast<UINT32>(m_CurrentAngleType));
     writer->WriteBoolean(IsFToEChecked);
     writer->WriteBoolean(IsCurrentViewPinned);
-    writer->WriteUInt32(static_cast<UINT32>(m_standardCalculatorManager->SerializeSavedDegreeMode()));
+    writer->WriteUInt32(static_cast<UINT32>(m_standardCalculatorManager.SerializeSavedDegreeMode()));
 
     // Serialize Memory
     vector<long> serializedMemory;
-    serializedMemory = m_standardCalculatorManager->GetSerializedMemory();
+    serializedMemory = m_standardCalculatorManager.GetSerializedMemory();
     size_t lengthOfSerializedMemory = serializedMemory.size();
     writer->WriteUInt32(static_cast<UINT32>(lengthOfSerializedMemory));
     for (auto data : serializedMemory)
@@ -1158,7 +1158,7 @@ Array<unsigned char>^ StandardCalculatorViewModel::Serialize()
     }
 
     // Serialize Primary Display
-    vector<long> serializedPrimaryDisplay = m_standardCalculatorManager->GetSerializedPrimaryDisplay();
+    vector<long> serializedPrimaryDisplay = m_standardCalculatorManager.GetSerializedPrimaryDisplay();
     writer->WriteUInt32(static_cast<UINT32>(serializedPrimaryDisplay.size()));
     for (auto data : serializedPrimaryDisplay)
     {
@@ -1169,7 +1169,7 @@ Array<unsigned char>^ StandardCalculatorViewModel::Serialize()
     writer->WriteUInt32(static_cast<UINT32>(CurrentRadixType));
 
     //Serialize commands of calculator manager
-    vector<unsigned char> serializedCommand = m_standardCalculatorManager->SerializeCommands();
+    vector<unsigned char> serializedCommand = m_standardCalculatorManager.SerializeCommands();
     writer->WriteUInt32(static_cast<UINT32>(serializedCommand.size()));
     writer->WriteBytes(ref new Array<unsigned char>(serializedCommand.data(), static_cast<unsigned int>(serializedCommand.size())));
 
@@ -1205,7 +1205,7 @@ void StandardCalculatorViewModel::Deserialize(Array<unsigned char>^ state)
         IsCurrentViewPinned = reader->ReadBoolean();
         Command serializedDegreeMode = static_cast<Command>(reader->ReadUInt32());
 
-        m_standardCalculatorManager->SendCommand(serializedDegreeMode);
+        m_standardCalculatorManager.SendCommand(serializedDegreeMode);
 
         // Deserialize Memory
         UINT32 memoryDataLength = reader->ReadUInt32();
@@ -1214,7 +1214,7 @@ void StandardCalculatorViewModel::Deserialize(Array<unsigned char>^ state)
         {
             serializedMemory.push_back(reader->ReadInt32());
         }
-        m_standardCalculatorManager->DeSerializeMemory(serializedMemory);
+        m_standardCalculatorManager.DeSerializeMemory(serializedMemory);
 
         // Serialize Primary Display
         UINT32 serializedPrimaryDisplayLength = reader->ReadUInt32();
@@ -1223,14 +1223,14 @@ void StandardCalculatorViewModel::Deserialize(Array<unsigned char>^ state)
         {
             serializedPrimaryDisplay.push_back(reader->ReadInt32());
         }
-        m_standardCalculatorManager->DeSerializePrimaryDisplay(serializedPrimaryDisplay);
+        m_standardCalculatorManager.DeSerializePrimaryDisplay(serializedPrimaryDisplay);
 
         CurrentRadixType = reader->ReadUInt32();
         //Read command data and Deserialize
         UINT32 modeldatalength = reader->ReadUInt32();
         Array<unsigned char>^ modelDataAsBytes = ref new Array<unsigned char>(modeldatalength);
         reader->ReadBytes(modelDataAsBytes);
-        m_standardCalculatorManager->DeSerializeCommands(vector<unsigned char>(modelDataAsBytes->begin(), modelDataAsBytes->end()));
+        m_standardCalculatorManager.DeSerializeCommands(vector<unsigned char>(modelDataAsBytes->begin(), modelDataAsBytes->end()));
 
         // After recalculation. If there is an error then
         // IsInError should be set synchronously.
@@ -1326,31 +1326,31 @@ void StandardCalculatorViewModel::ResetDisplay()
 {
     AreHEXButtonsEnabled = false;
     CurrentRadixType = (int)RADIX_TYPE::DEC_RADIX;
-    m_standardCalculatorManager->SetRadix(DEC_RADIX);
+    m_standardCalculatorManager.SetRadix(DEC_RADIX);
     ProgModeRadixChange();
 }
 
 void StandardCalculatorViewModel::SetPrecision(int32_t precision)
 {
-    m_standardCalculatorManager->SetPrecision(precision);
+    m_standardCalculatorManager.SetPrecision(precision);
 }
 
 void StandardCalculatorViewModel::SwitchProgrammerModeBase(RADIX_TYPE radixType)
 {
     if (IsInError)
     {
-        m_standardCalculatorManager->SendCommand(Command::CommandCLEAR);
+        m_standardCalculatorManager.SendCommand(Command::CommandCLEAR);
     }
 
     AreHEXButtonsEnabled = (radixType == RADIX_TYPE::HEX_RADIX);
     CurrentRadixType = (int)radixType;
-    m_standardCalculatorManager->SetRadix(radixType);
+    m_standardCalculatorManager.SetRadix(radixType);
     ProgModeRadixChange();
 }
 
 void StandardCalculatorViewModel::SetMemorizedNumbersString()
 {
-    m_standardCalculatorManager->SetMemorizedNumbersString();
+    m_standardCalculatorManager.SetMemorizedNumbersString();
 }
 
 ANGLE_TYPE GetAngleTypeFromCommand(Command command)
@@ -1384,7 +1384,7 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
 
     if (IsUnaryOp(nOpCode) && command != Command::CommandSIGN)
     {
-        int angleCmd = static_cast<int>(m_standardCalculatorManager->GetCurrentDegreeMode());
+        int angleCmd = static_cast<int>(m_standardCalculatorManager.GetCurrentDegreeMode());
         ANGLE_TYPE angleType = GetAngleTypeFromCommand(static_cast<Command>(angleCmd));
 
         if (IsTrigOp(nOpCode))
@@ -1452,7 +1452,7 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
         {
             shared_ptr<IOpndCommand> spOpndCommand = dynamic_pointer_cast<IOpndCommand>(tokenCommand);
             spOpndCommand->ToggleSign();
-            updatedToken = spOpndCommand->GetToken(m_standardCalculatorManager->DecimalSeparator());
+            updatedToken = spOpndCommand->GetToken(m_standardCalculatorManager.DecimalSeparator());
         }
         IsOperandUpdatedUsingViewModel = true;
     }
@@ -1481,7 +1481,7 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
 void StandardCalculatorViewModel::Recalculate(bool fromHistory)
 {
     // Recalculate
-    Command currentDegreeMode = m_standardCalculatorManager->GetCurrentDegreeMode();
+    Command currentDegreeMode = m_standardCalculatorManager.GetCurrentDegreeMode();
     shared_ptr <CalculatorVector<shared_ptr<IExpressionCommand>>> savedCommands = make_shared <CalculatorVector<shared_ptr<IExpressionCommand>>>();
 
     vector<int> currentCommands;
@@ -1556,29 +1556,29 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
         savedTokens->Append(currentToken);
     }
 
-    m_standardCalculatorManager->Reset(false);
+    m_standardCalculatorManager.Reset(false);
     if (IsScientific)
     {
-        m_standardCalculatorManager->SendCommand(Command::ModeScientific);
+        m_standardCalculatorManager.SendCommand(Command::ModeScientific);
     }
 
     if (IsFToEChecked)
     {
-        m_standardCalculatorManager->SendCommand(Command::CommandFE);
+        m_standardCalculatorManager.SendCommand(Command::CommandFE);
     }
 
-    m_standardCalculatorManager->SendCommand(currentDegreeMode);
+    m_standardCalculatorManager.SendCommand(currentDegreeMode);
     size_t currentCommandsSize = currentCommands.size();
     for (size_t i = 0; i < currentCommandsSize; i++)
     {
-        m_standardCalculatorManager->SendCommand(static_cast<CalculationManager::Command>(currentCommands[i]));
+        m_standardCalculatorManager.SendCommand(static_cast<CalculationManager::Command>(currentCommands[i]));
     }
 
     if (fromHistory)   // This is for the cases where the expression is loaded from history    
     {
         // To maintain F-E state of the engine, as the last operand hasn't reached engine by now
-        m_standardCalculatorManager->SendCommand(Command::CommandFE);
-        m_standardCalculatorManager->SendCommand(Command::CommandFE);
+        m_standardCalculatorManager.SendCommand(Command::CommandFE);
+        m_standardCalculatorManager.SendCommand(Command::CommandFE);
     }
 
     // After recalculation. If there is an error then
@@ -1785,7 +1785,7 @@ void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
     {
         // we want the precision to be set to maximum value so that the autoconversions result as desired
         int32_t precision = 64;
-        if (m_standardCalculatorManager->GetResultForRadix(16, precision) == L"")
+        if (m_standardCalculatorManager.GetResultForRadix(16, precision) == L"")
         {
             hexDisplayString = DisplayValue->Data();
             decimalDisplayString = DisplayValue->Data();
@@ -1794,10 +1794,10 @@ void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
         }
         else
         {
-            hexDisplayString = m_standardCalculatorManager->GetResultForRadix(16, precision);
-            decimalDisplayString = m_standardCalculatorManager->GetResultForRadix(10, precision);
-            octalDisplayString = m_standardCalculatorManager->GetResultForRadix(8, precision);
-            binaryDisplayString = m_standardCalculatorManager->GetResultForRadix(2, precision);
+            hexDisplayString = m_standardCalculatorManager.GetResultForRadix(16, precision);
+            decimalDisplayString = m_standardCalculatorManager.GetResultForRadix(10, precision);
+            octalDisplayString = m_standardCalculatorManager.GetResultForRadix(8, precision);
+            binaryDisplayString = m_standardCalculatorManager.GetResultForRadix(2, precision);
         }
     }
     const auto& localizer = LocalizationSettings::GetInstance();
@@ -1909,7 +1909,7 @@ void StandardCalculatorViewModel::UpdateOperand(int pos, String^ text)
 
 void  StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
 {
-    vector<unsigned char> savedCommands = m_standardCalculatorManager->GetSavedCommands();
+    vector<unsigned char> savedCommands = m_standardCalculatorManager.GetSavedCommands();
     shared_ptr<CalculatorVector<int>> commands = make_shared<CalculatorVector<int>>();
     bool isDecimal = false;
     bool isNegative = false;

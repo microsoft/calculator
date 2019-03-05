@@ -159,7 +159,6 @@ void UnitConverter::OnOfflineNetworkAccess()
 
 void UnitConverter::SetNormalCurrencyStatus()
 {
-    AutomationProperties::SetAccessibilityView(CurrencyRefreshBlock, AccessibilityView::Raw);
     CurrencySecondaryStatus->Text = L"";
 }
 

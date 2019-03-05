@@ -13,7 +13,30 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind Model.Announcement, Mode=OneWay}"/>
+        <!-- DataTemplates -->
+
+        <DataTemplate x:Key="Operand" x:DataType="common:DisplayExpressionToken">
+            <TextBlock Margin="2,0,0,0"
+                       Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
+                       IsTextScaleFactorEnabled="False"
+                       Text="{Binding Token, Mode=OneWay}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="Operator" x:DataType="common:DisplayExpressionToken">
+            <TextBlock Margin="2,0,0,0"
+                       Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
+                       IsTextScaleFactorEnabled="False"
+                       Text="{Binding Token, Mode=OneWay}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="Separator" x:DataType="common:DisplayExpressionToken">
+            <TextBlock x:Name="MainText"
+                       IsTextScaleFactorEnabled="False"
+                       Text="{Binding Token, Mode=OneWay}"/>
+        </DataTemplate>
+
+        <!-- TextBox Styles -->
+
         <Style x:Key="OperandTextBoxStyle" TargetType="controls:OperandTextBox">
             <Setter Property="MinWidth" Value="32"/>
             <Setter Property="MinHeight" Value="20"/>
@@ -113,135 +136,6 @@
             </Setter>
         </Style>
 
-        <!-- Used by hidden shortcut buttons -->
-        <x:Int32 x:Key="Zero">0</x:Int32>
-
-        <DataTemplate x:Key="Operand" x:DataType="common:DisplayExpressionToken">
-            <TextBlock Margin="2,0,0,0"
-                       Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{Binding Token, Mode=OneWay}"/>
-        </DataTemplate>
-        <DataTemplate x:Key="Operator" x:DataType="common:DisplayExpressionToken">
-            <TextBlock Margin="2,0,0,0"
-                       Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{Binding Token, Mode=OneWay}"/>
-        </DataTemplate>
-        <DataTemplate x:Key="Separator" x:DataType="common:DisplayExpressionToken">
-            <TextBlock x:Name="MainText"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{Binding Token, Mode=OneWay}"/>
-        </DataTemplate>
-
-        <Style x:Key="ExpressionBaseContainerStyle" TargetType="ListViewItem">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="MinWidth" Value="0"/>
-            <Setter Property="MinHeight" Value="0"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListViewItem">
-                        <ListViewItemPresenter Padding="0"
-                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                               ContentMargin="0"
-                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-                                               PointerOverBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}"
-                                               PointerOverBackgroundMargin="0"
-                                               SelectedBackground="{ThemeResource SystemControlBackgroundAccentBrush}"
-                                               SelectedBorderThickness="0"
-                                               SelectedForeground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"
-                                               SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}"
-                                               SelectedPointerOverBorderBrush="Transparent"
-                                               SelectionCheckMarkVisualEnabled="False"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="NonEditableOperatorContainerStyle"
-               BasedOn="{StaticResource ExpressionBaseContainerStyle}"
-               TargetType="ListViewItem">
-            <Setter Property="IsHitTestVisible" Value="False"/>
-            <Setter Property="IsTabStop" Value="False"/>
-            <Setter Property="MinWidth" Value="4"/>
-        </Style>
-        <Style x:Key="EditableOperatorContainerStyle"
-               BasedOn="{StaticResource ExpressionBaseContainerStyle}"
-               TargetType="ListViewItem">
-            <Setter Property="IsHitTestVisible" Value="True"/>
-            <Setter Property="MinWidth" Value="32"/>
-        </Style>
-
-        <converters:ExpressionItemTemplateSelector x:Key="ExpressionItemTemplateSelector"
-                                                   OperandTemplate="{StaticResource Operand}"
-                                                   OperatorTemplate="{StaticResource Operator}"
-                                                   SeparatorTemplate="{StaticResource Separator}"/>
-        <converters:ExpressionItemContainerStyle x:Key="ExpressionItemContainerStyle"
-                                                 EditableOperatorStyle="{StaticResource NonEditableOperatorContainerStyle}"
-                                                 NonEditableOperatorStyle="{StaticResource NonEditableOperatorContainerStyle}"
-                                                 OperandStyle="{StaticResource NonEditableOperatorContainerStyle}"
-                                                 SeparatorStyle="{StaticResource NonEditableOperatorContainerStyle}"/>
-
-        <Style x:Key="ResultsStyleL"
-               x:Name="ResultsStyleL"
-               BasedOn="{StaticResource CalculationResultStyleL}"
-               TargetType="controls:CalculationResult">
-            <Setter Property="HorizontalContentAlignment" Value="Right"/>
-            <Setter Property="VerticalContentAlignment" Value="Top"/>
-            <Setter Property="FontSize" Value="{StaticResource CalcResultFontSizeL}"/>
-            <Setter Property="MinFontSize" Value="12"/>
-            <Setter Property="IsActive" Value="True"/>
-            <Setter Property="DisplayMargin" Value="0,0,0,0"/>
-            <Setter Property="MaxExpressionHistoryCharacters" Value="51"/>
-        </Style>
-
-        <Style x:Key="ResultsStyleM"
-               x:Name="ResultsStyleM"
-               BasedOn="{StaticResource CalculationResultStyleM}"
-               TargetType="controls:CalculationResult">
-            <Setter Property="HorizontalContentAlignment" Value="Right"/>
-            <Setter Property="VerticalContentAlignment" Value="Top"/>
-            <Setter Property="FontSize" Value="{StaticResource CalcResultFontSizeM}"/>
-            <Setter Property="MinFontSize" Value="12"/>
-            <Setter Property="IsActive" Value="True"/>
-            <Setter Property="DisplayMargin" Value="0,0,0,0"/>
-            <Setter Property="MaxExpressionHistoryCharacters" Value="30"/>
-        </Style>
-
-        <Style x:Key="ResultsStyleS"
-               x:Name="ResultsStyleS"
-               BasedOn="{StaticResource CalculationResultStyleS}"
-               TargetType="controls:CalculationResult">
-            <Setter Property="HorizontalContentAlignment" Value="Right"/>
-            <Setter Property="VerticalContentAlignment" Value="Top"/>
-            <Setter Property="FontSize" Value="{StaticResource CalcResultFontSizeS}"/>
-            <Setter Property="MinFontSize" Value="12"/>
-            <Setter Property="IsActive" Value="True"/>
-            <Setter Property="DisplayMargin" Value="0,0,0,0"/>
-            <Setter Property="MaxExpressionHistoryCharacters" Value="30"/>
-        </Style>
-
-        <Style x:Key="ScrollButtonStyle" TargetType="Button">
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="0,0,0,0"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="Width" Value="20"/>
-            <Setter Property="MinWidth" Value="20"/>
-            <Setter Property="MinHeight" Value="24"/>
-            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundAccentBrush}"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Visibility" Value="Collapsed"/>
-        </Style>
-
         <Style TargetType="controls:OverflowTextBlock">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Template">
@@ -312,6 +206,113 @@
             </Setter>
         </Style>
 
+        <!-- ListViewItem Styles -->
+
+        <Style x:Key="ExpressionBaseContainerStyle" TargetType="ListViewItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="MinWidth" Value="0"/>
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ListViewItemPresenter Padding="0"
+                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               ContentMargin="0"
+                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                                               PointerOverBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}"
+                                               PointerOverBackgroundMargin="0"
+                                               SelectedBackground="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                               SelectedBorderThickness="0"
+                                               SelectedForeground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"
+                                               SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}"
+                                               SelectedPointerOverBorderBrush="Transparent"
+                                               SelectionCheckMarkVisualEnabled="False"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="NonEditableOperatorContainerStyle"
+               BasedOn="{StaticResource ExpressionBaseContainerStyle}"
+               TargetType="ListViewItem">
+            <Setter Property="IsHitTestVisible" Value="False"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="MinWidth" Value="4"/>
+        </Style>
+
+        <Style x:Key="EditableOperatorContainerStyle"
+               BasedOn="{StaticResource ExpressionBaseContainerStyle}"
+               TargetType="ListViewItem">
+            <Setter Property="IsHitTestVisible" Value="True"/>
+            <Setter Property="MinWidth" Value="32"/>
+        </Style>
+
+        <!-- Calculation Result Styles -->
+
+        <Style x:Key="ResultsStyleL"
+               x:Name="ResultsStyleL"
+               BasedOn="{StaticResource CalculationResultStyleL}"
+               TargetType="controls:CalculationResult">
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="FontSize" Value="{StaticResource CalcResultFontSizeL}"/>
+            <Setter Property="MinFontSize" Value="12"/>
+            <Setter Property="IsActive" Value="True"/>
+            <Setter Property="DisplayMargin" Value="0,0,0,0"/>
+            <Setter Property="MaxExpressionHistoryCharacters" Value="51"/>
+        </Style>
+
+        <Style x:Key="ResultsStyleM"
+               x:Name="ResultsStyleM"
+               BasedOn="{StaticResource CalculationResultStyleM}"
+               TargetType="controls:CalculationResult">
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="FontSize" Value="{StaticResource CalcResultFontSizeM}"/>
+            <Setter Property="MinFontSize" Value="12"/>
+            <Setter Property="IsActive" Value="True"/>
+            <Setter Property="DisplayMargin" Value="0,0,0,0"/>
+            <Setter Property="MaxExpressionHistoryCharacters" Value="30"/>
+        </Style>
+
+        <Style x:Key="ResultsStyleS"
+               x:Name="ResultsStyleS"
+               BasedOn="{StaticResource CalculationResultStyleS}"
+               TargetType="controls:CalculationResult">
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="FontSize" Value="{StaticResource CalcResultFontSizeS}"/>
+            <Setter Property="MinFontSize" Value="12"/>
+            <Setter Property="IsActive" Value="True"/>
+            <Setter Property="DisplayMargin" Value="0,0,0,0"/>
+            <Setter Property="MaxExpressionHistoryCharacters" Value="30"/>
+        </Style>
+
+        <!-- Button Styles -->
+
+        <Style x:Key="ScrollButtonStyle" TargetType="Button">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0,0,0,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="MinWidth" Value="20"/>
+            <Setter Property="MinHeight" Value="24"/>
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundAccentBrush}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Visibility" Value="Collapsed"/>
+        </Style>
+
+        <!-- Flyout Styles -->
+
         <Style x:Key="MemoryFlyoutStyle" TargetType="FlyoutPresenter">
             <Setter Property="MinWidth" Value="200"/>
             <Setter Property="MaxHeight" Value="2400"/>
@@ -373,6 +374,8 @@
             </Setter>
         </Style>
 
+        <!-- Storyboards -->
+
         <Storyboard x:Name="Animate">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="NumpadPanel" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0.92">
@@ -399,6 +402,7 @@
                 </EasingDoubleKeyFrame>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+
         <Storyboard x:Name="AnimateWithoutResult">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="NumpadPanel" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0.92">
@@ -426,8 +430,31 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
 
+        <!-- Value Converters -->
+
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
+
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
+
+        <!-- DataTemplate Selectors and Style Selectors -->
+
+        <converters:ExpressionItemTemplateSelector x:Key="ExpressionItemTemplateSelector"
+                                                   OperandTemplate="{StaticResource Operand}"
+                                                   OperatorTemplate="{StaticResource Operator}"
+                                                   SeparatorTemplate="{StaticResource Separator}"/>
+
+        <converters:ExpressionItemContainerStyle x:Key="ExpressionItemContainerStyle"
+                                                 EditableOperatorStyle="{StaticResource NonEditableOperatorContainerStyle}"
+                                                 NonEditableOperatorStyle="{StaticResource NonEditableOperatorContainerStyle}"
+                                                 OperandStyle="{StaticResource NonEditableOperatorContainerStyle}"
+                                                 SeparatorStyle="{StaticResource NonEditableOperatorContainerStyle}"/>
+
+        <!-- Miscellaneous Resources -->
+
+        <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind Model.Announcement, Mode=OneWay}"/>
+
+        <!-- Used by hidden shortcut buttons -->
+        <x:Int32 x:Key="Zero">0</x:Int32>
 
         <MenuFlyout x:Key="DisplayContextMenu">
             <MenuFlyoutItem x:Name="CopyMenuItem"
@@ -579,6 +606,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+
         <Grid FlowDirection="LeftToRight">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="RowHamburger" Height="{StaticResource HamburgerHeightGridLength}"/>
@@ -683,6 +711,7 @@
                                       Width="1*"
                                       MaxWidth="80"/>
                 </Grid.ColumnDefinitions>
+
                 <controls:CalculatorButton x:Name="ClearMemoryButton"
                                            x:Uid="ClearMemoryButton"
                                            Style="{StaticResource CaptionButtonStyle}"
@@ -763,9 +792,8 @@
 
                 <local:OperatorsPanel x:Name="OpsPanel" IsBitFlipChecked="{x:Bind Model.IsBitFlipChecked, Mode=OneWay}"/>
             </Grid>
-
-
         </Grid>
+
         <!-- Docked Pivot panel for history/memory -->
         <Border x:Name="DockPanel"
                 x:Uid="DockPanel"
@@ -810,6 +838,7 @@
                                 <Setter Property="FontSize" Value="{ThemeResource PivotTitleFontSize}"/>
                             </Style>
                         </Grid.Resources>
+
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
@@ -818,7 +847,6 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="Orientation">
                                 <VisualState x:Name="Portrait">
-
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TitleContentControl" Storyboard.TargetProperty="Margin">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotPortraitThemePadding}"/>
@@ -826,7 +854,6 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Landscape">
-
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TitleContentControl" Storyboard.TargetProperty="Margin">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotLandscapeThemePadding}"/>
@@ -837,7 +864,6 @@
                             <VisualStateGroup x:Name="NavigationButtonsVisibility">
                                 <VisualState x:Name="NavigationButtonsHidden"/>
                                 <VisualState x:Name="NavigationButtonsVisible">
-
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NextButton" Storyboard.TargetProperty="Opacity">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
@@ -854,7 +880,6 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="PreviousButtonVisible">
-
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PreviousButton" Storyboard.TargetProperty="Opacity">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
@@ -865,7 +890,6 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="NextButtonVisible">
-
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NextButton" Storyboard.TargetProperty="Opacity">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
@@ -879,7 +903,6 @@
                             <VisualStateGroup x:Name="HeaderStates">
                                 <VisualState x:Name="HeaderDynamic"/>
                                 <VisualState x:Name="HeaderStatic">
-
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Header" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
@@ -892,6 +915,7 @@
                             </VisualStateGroup>
 
                         </VisualStateManager.VisualStateGroups>
+
                         <ContentControl x:Name="TitleContentControl"
                                         Margin="{StaticResource PivotPortraitThemePadding}"
                                         Style="{StaticResource TitleContentControlStyle}"
@@ -899,6 +923,7 @@
                                         ContentTemplate="{TemplateBinding TitleTemplate}"
                                         IsTabStop="False"
                                         Visibility="Collapsed"/>
+
                         <Grid Grid.Row="1">
                             <Grid.Resources>
                                 <ControlTemplate x:Key="NextTemplate" TargetType="Button">
@@ -948,6 +973,7 @@
                                                   UseLayoutRounding="False"/>
                                     </Border>
                                 </ControlTemplate>
+
                                 <ControlTemplate x:Key="PreviousTemplate" TargetType="Button">
                                     <Border x:Name="Root"
                                             Background="{ThemeResource PivotPreviousButtonBackground}"
@@ -996,6 +1022,7 @@
                                     </Border>
                                 </ControlTemplate>
                             </Grid.Resources>
+
                             <ScrollViewer x:Name="ScrollViewer"
                                           Margin="{TemplateBinding Padding}"
                                           VerticalContentAlignment="Stretch"
@@ -1104,10 +1131,10 @@
                                 </PivotPanel>
                             </ScrollViewer>
                         </Grid>
-
                     </Grid>
                 </ControlTemplate>
             </Border.Resources>
+
             <Pivot x:Name="DockPivot"
                    SelectionChanged="DockPivot_SelectionChanged"
                    TabIndex="5"
@@ -1261,4 +1288,3 @@
         </Border>
     </Grid>
 </UserControl>
-
