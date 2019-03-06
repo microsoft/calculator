@@ -209,7 +209,7 @@ void DateCalculator::ReselectCalendarDate(_In_ Windows::UI::Xaml::Controls::Cale
 
 void DateCalculator::OffsetDropDownClosed(_In_ Object^ sender, _In_ Object^ e)
 {
-    RaiseLiveRegionChangedAutomationEvent(false);
+    RaiseLiveRegionChangedAutomationEvent(/* DateDiff mode */ false);
 }
 
 void DateCalculator::CalendarFlyoutClosed(_In_ Object^ sender, _In_ Object^ e)
@@ -223,4 +223,9 @@ void DateCalculator::RaiseLiveRegionChangedAutomationEvent(_In_ bool isDateDiffM
     TextBlock^ resultTextBlock = (isDateDiffMode ? DateDiffAllUnitsResultLabel : DateResultLabel);
     String^ automationName = AutomationProperties::GetName(resultTextBlock);
     TextBlockAutomationPeer::FromElement(resultTextBlock)->RaiseAutomationEvent(AutomationEvents::LiveRegionChanged);
+}
+
+void DateCalculator::AddSubtractOption_Checked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+{
+    RaiseLiveRegionChangedAutomationEvent(/* DateDiff mode */ false);
 }

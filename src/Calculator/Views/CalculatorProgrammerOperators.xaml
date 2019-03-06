@@ -25,7 +25,7 @@
             <Setter Property="Typography.NumeralAlignment" Value="Tabular"/>
             <Setter Property="FontSize" Value="{ThemeResource CaptionFontSize}"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
+            <Setter Property="IsTextScaleFactorEnabled" Value="True"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
