@@ -4,8 +4,7 @@ The app provides standard, scientific, and programmer calculator functionality, 
 
 Calculator ships regularly with new features and bug fixes. You can get the latest version of Calculator in the [Windows Store.](https://www.microsoft.com/store/apps/9WZDNCRFHVN5)
 
-<!-- TODO: Replace with badge from public pipeline -->
-[![Build Status](https://microsoft.visualstudio.com/Apps/_apis/build/status/Utility%20Apps/Calculator-Daily)](https://microsoft.visualstudio.com/Apps/_build?definitionId=3539)
+[![Build Status](https://dev.azure.com/ms/calculator/_apis/build/status/Calculator-CI?branchName=master)](https://dev.azure.com/ms/calculator/_build/latest?definitionId=57&branchName=master)
 
   ![Calculator Screenshot](docs/Images/CalculatorScreenshot.png)
 
