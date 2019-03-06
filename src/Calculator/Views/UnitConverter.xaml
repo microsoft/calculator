@@ -59,7 +59,7 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
+            <Setter Property="IsTextScaleFactorEnabled" Value="True"/>
             <Setter Property="UseSystemFocusVisuals" Value="True"/>
             <Setter Property="ItemsPanel">
                 <Setter.Value>
