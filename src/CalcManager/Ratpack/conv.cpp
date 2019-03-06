@@ -22,7 +22,7 @@
 
 using namespace std;
 
-static constexpr int MAX_ZEROS_AFTER_DECIMAL = 2;
+static constexpr int MAX_ZEROS_AFTER_DECIMAL = 7;
 
 // digits 0..64 used by bases 2 .. 64
 static constexpr wstring_view DIGITS = L"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_@";
