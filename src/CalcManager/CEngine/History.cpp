@@ -35,8 +35,8 @@ void CHistoryCollector::ReinitHistory()
 CHistoryCollector::CHistoryCollector(ICalcDisplay *pCalcDisplay, std::shared_ptr<IHistoryDisplay> pHistoryDisplay, wchar_t decimalSymbol) :
     m_pHistoryDisplay(pHistoryDisplay),
     m_pCalcDisplay(pCalcDisplay),
-    m_decimalSymbol(decimalSymbol),
-    m_iCurLineHistStart(-1)
+    m_iCurLineHistStart(-1),
+    m_decimalSymbol(decimalSymbol)
 {
     ReinitHistory();
 }
