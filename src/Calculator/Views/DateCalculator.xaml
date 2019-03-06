@@ -516,6 +516,7 @@
                              MinWidth="80"
                              MaxWidth="160"
                              VerticalAlignment="Top"
+                             Checked="AddSubtractOption_Checked"
                              IsChecked="{Binding IsAddMode, Mode=TwoWay}"/>
                 <RadioButton x:Name="SubtractOption"
                              x:Uid="SubtractOption"
@@ -524,6 +525,7 @@
                              MaxWidth="160"
                              Margin="20,0,0,0"
                              VerticalAlignment="Top"
+                             Checked="AddSubtractOption_Checked"
                              IsChecked="{Binding IsAddMode, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}"/>
 
             </Grid>
