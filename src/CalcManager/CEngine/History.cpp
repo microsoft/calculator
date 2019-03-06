@@ -161,7 +161,7 @@ void CHistoryCollector::PopLastOpndStart()
 
 void CHistoryCollector::AddOpenBraceToHistory()
 {
-    int iCommandEnd = AddCommand(std::make_shared<CParentheses>(IDC_OPENP));
+    AddCommand(std::make_shared<CParentheses>(IDC_OPENP));
     int ichOpndStart = IchAddSzToEquationSz(CCalcEngine::OpCodeToString(IDC_OPENP), -1);
     PushLastOpndStart(ichOpndStart);
 
@@ -171,7 +171,7 @@ void CHistoryCollector::AddOpenBraceToHistory()
 
 void CHistoryCollector::AddCloseBraceToHistory()
 {
-    int iCommandEnd = AddCommand(std::make_shared<CParentheses>(IDC_CLOSEP));
+    AddCommand(std::make_shared<CParentheses>(IDC_CLOSEP));
     IchAddSzToEquationSz(CCalcEngine::OpCodeToString(IDC_CLOSEP), -1);
     SetExpressionDisplay();
     PopLastOpndStart();
@@ -450,20 +450,16 @@ std::shared_ptr<CalculatorVector<int>> CHistoryCollector::GetOperandCommandsFrom
     std::shared_ptr<CalculatorVector<int>> commands = std::make_shared<CalculatorVector<int>>();
     // Check for negate
     bool fNegative = (numStr[0] == L'-');
-    bool fSciFmt = false;
-    bool fDecimal = false;
 
     for (size_t i = (fNegative ? 1 : 0); i < numStr.length(); i++)
     {
         if (numStr[i] == m_decimalSymbol)
         {
             IFT(commands->Append(IDC_PNT));
-            fDecimal = true;
         }
         else if (numStr[i] == L'e')
         {
             IFT(commands->Append(IDC_EXP));
-            fSciFmt = true;
         }
         else if (numStr[i] == L'-')
         {
