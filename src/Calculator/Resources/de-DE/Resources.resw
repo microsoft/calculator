@@ -934,7 +934,7 @@
     <comment>Screen reader prompt for the Calculator tanh button on the scientific operator keypad</comment>
   </data>
   <data name="xpower2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Quadrieren</value>
+    <value>Quadrat</value>
     <comment>Screen reader prompt for the x squared on the scientific operator keypad. </comment>
   </data>
   <data name="xpower3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
