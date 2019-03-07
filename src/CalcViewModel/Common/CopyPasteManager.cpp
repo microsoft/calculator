@@ -157,13 +157,6 @@ bool CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode mode
 
     wstring pasteExpression = pastedText->Data();
 
-    // Verify if string contains the en-US digit separator if the local digit separator is a different one.
-    wchar_t localDigitSeparator = LocalizationSettings::GetInstance().GetDecimalSeparator();
-    if (localDigitSeparator != '.' && pasteExpression.find('.') != std::string::npos)
-    {
-        return false;
-    }
-
     // Get english translated expression 
     String^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(pasteExpression);
 
