@@ -8,6 +8,8 @@
 #include "NetworkManager.h"
 #include "CalculatorButtonUser.h"
 
+
+
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace Concurrency;
@@ -18,6 +20,10 @@ using namespace winrt::Windows::Foundation::Diagnostics;
 using namespace winrt::Windows::Globalization;
 using namespace winrt::Windows::Globalization::DateTimeFormatting;
 using namespace winrt::Windows::System::UserProfile;
+
+#ifdef SEND_TELEMETRY
+    #undef SEND_TELEMETRY
+#endif
 
 namespace CalculatorApp
 {
@@ -80,7 +86,7 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_CORE_WINDOW_WAS_NULL                                      = L"CoreWindowWasNull";
 
     constexpr auto EVENT_NAME_EXCEPTION                                                 = L"Exception";
-
+    
 #ifdef SEND_TELEMETRY
     // c.f. WINEVENT_KEYWORD_RESERVED_63-56 0xFF00000000000000 // Bits 63-56 - channel keywords
     // c.f. WINEVENT_KEYWORD_*              0x00FF000000000000 // Bits 55-48 - system-reserved keywords
