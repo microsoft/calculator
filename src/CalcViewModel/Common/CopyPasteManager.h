@@ -37,12 +37,12 @@ namespace CalculatorApp
 
     private:
         static int ClipboardTextFormat();
-        static Platform::String^ ValidatePasteExpression(
+        static bool ValidatePasteExpression(
             Platform::String^ pastedText,
             CalculatorApp::Common::ViewMode mode,
             int programmerNumberBase,
             int bitLengthType);
-        static Platform::String^ ValidatePasteExpression(
+        static bool ValidatePasteExpression(
             Platform::String^ pastedText,
             CalculatorApp::Common::ViewMode mode,
             CalculatorApp::Common::CategoryGroupType modeType,

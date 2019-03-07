@@ -690,28 +690,6 @@ void Calculator::expressionContainer_LayoutUpdated(_In_ Object^ sender, _In_ Obj
     expressionText->UpdateScrollButtons();
 }
 
-bool Calculator::IsValidRegularExpression(std::wstring str)
-{
-    bool result = false;
-    std::wregex regexPatterns[3];
-    regexPatterns[0] = L"[-]{0,1}[0-9]{0,}[.]{0,1}[0-9]{0,}";
-    regexPatterns[1] = L"[-]{0,1}[0-9]{0,}[.]{0,1}[0-9]{0,}[e]{1}[+]{1}[0-9]{1,}";
-    regexPatterns[2] = L"[-]{0,1}[0-9]{0,}[.]{0,1}[0-9]{0,}[e]{1}[-]{1}[0-9]{1,}";
-
-    const auto& localizer = LocalizationSettings::GetInstance();
-    String^ englishString = localizer.GetEnglishValueFromLocalizedDigits(str);
-
-    for (int i = 0; i < 3; ++i)
-    {
-        if (regex_match(englishString->Data(), regexPatterns[i]))
-        {
-            result = true;
-            break;
-        }
-    }
-    return result;
-}
-
 void Calculator::DockPanelTapped(_In_ TappedRoutedEventArgs^ e)
 {
     int index = DockPivot->SelectedIndex;

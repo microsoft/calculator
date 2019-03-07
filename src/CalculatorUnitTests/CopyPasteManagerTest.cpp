@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -28,7 +28,7 @@ namespace CalculatorUnitTests
     int size = sizeof(dataSet)/sizeof(*dataSet);\
     while(--size)\
     {\
-        VERIFY_ARE_EQUAL(func(dataSet[size]), dataSet[size]);\
+        VERIFY_IS_TRUE(func(dataSet[size]));\
     }\
 }
 
@@ -37,7 +37,7 @@ namespace CalculatorUnitTests
     int size = sizeof(dataSet)/sizeof(*dataSet);;\
     while(--size)\
     {\
-        VERIFY_ARE_EQUAL(func(dataSet[size]), StringReference(L"NoOp"));\
+        VERIFY_IS_FALSE(func(dataSet[size]));\
     }\
 }
 
@@ -71,15 +71,15 @@ namespace CalculatorUnitTests
             {
                 exp_TooLong += L"-1234567";
             }
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ValidatePasteExpression(StringReference(exp_TooLong.c_str()), ViewMode::Standard, CategoryGroupType::Calculator, -1, -1), StringReference(exp_TooLong.c_str()), L"Verify ValidatePasteExpression handles expressions up to max length");
+            VERIFY_IS_TRUE(m_CopyPasteManager.ValidatePasteExpression(StringReference(exp_TooLong.c_str()), ViewMode::Standard, CategoryGroupType::Calculator, -1, -1), L"Verify ValidatePasteExpression handles expressions up to max length");
             exp_TooLong += L"1";
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ValidatePasteExpression(StringReference(exp_TooLong.c_str()), ViewMode::Standard, CategoryGroupType::Calculator, -1, -1), StringReference(L"NoOp"), L"Verify ValidatePasteExpression returns NoOp for strings over max length");
+            VERIFY_IS_FALSE(m_CopyPasteManager.ValidatePasteExpression(StringReference(exp_TooLong.c_str()), ViewMode::Standard, CategoryGroupType::Calculator, -1, -1), L"Verify ValidatePasteExpression returns NoOp for strings over max length");
 
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ValidatePasteExpression(StringReference(L""), ViewMode::Standard, CategoryGroupType::Calculator, -1, -1), StringReference(L"NoOp"), L"Verify empty string is invalid");
+            VERIFY_IS_FALSE(m_CopyPasteManager.ValidatePasteExpression(StringReference(L""), ViewMode::Standard, CategoryGroupType::Calculator, -1, -1), L"Verify empty string is invalid");
 
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ValidatePasteExpression(StringReference(L"123e456"), ViewMode::Standard, CategoryGroupType::Calculator, -1, -1), StringReference(L"NoOp"), L"Verify pasting unsupported strings for the current mode is invalid");
+            VERIFY_IS_FALSE(m_CopyPasteManager.ValidatePasteExpression(StringReference(L"123e+456"), ViewMode::Standard, CategoryGroupType::Calculator, -1, -1), L"Verify pasting unsupported strings for the current mode is invalid");
 
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ValidatePasteExpression(StringReference(L"123"), ViewMode::None, CategoryGroupType::None, -1, -1), StringReference(L"NoOp"), L"Verify pasting without a ViewMode or Category is invalid");
+            VERIFY_IS_FALSE(m_CopyPasteManager.ValidatePasteExpression(StringReference(L"123"), ViewMode::None, CategoryGroupType::None, -1, -1), L"Verify pasting without a ViewMode or Category is invalid");
         };
 
         TEST_METHOD(ValidateExtractOperands)
@@ -89,9 +89,7 @@ namespace CalculatorUnitTests
             vector<wstring> oneOperand = { L"123456" };
             VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"123456", ViewMode::Standard), oneOperand);
             oneOperand = { L"123^456" };
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"123^456", ViewMode::Standard), oneOperand);
-
-            vector<wstring> twoOperands = { L"123", L"456" };
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"123^456", ViewMode::Standard), oneOperand);            vector<wstring> twoOperands = { L"123", L"456" };
             VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"123+456", ViewMode::Standard), twoOperands);
             VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"123-456", ViewMode::Standard), twoOperands);
             VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"123*456", ViewMode::Standard), twoOperands);
@@ -313,97 +311,97 @@ namespace CalculatorUnitTests
 
     private:
         CopyPasteManager m_CopyPasteManager;
-        String^ ValidateStandardPasteExpression(_In_ String^ pastedText)
+        bool ValidateStandardPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Standard, -1/*number base*/, -1/*bitlength Type*/);
         }
 
-        String^ ValidateScientificPasteExpression(_In_ String^ pastedText)
+        bool ValidateScientificPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Scientific, -1/*number base*/, -1/*bitlength Type*/);
         }
 
-        String^ ValidateConverterPasteExpression(_In_ String^ pastedText)
+        bool ValidateConverterPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::None, CategoryGroupType::Converter, -1/*number base*/, -1/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerHexQwordPasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerHexQwordPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, HexBase/*number base*/, QwordType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerHexDwordPasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerHexDwordPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, HexBase/*number base*/, DwordType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerHexWordPasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerHexWordPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, HexBase/*number base*/, WordType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerHexBytePasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerHexBytePasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, HexBase/*number base*/, ByteType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerDecQwordPasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerDecQwordPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, DecBase/*number base*/, QwordType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerDecDwordPasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerDecDwordPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, DecBase/*number base*/, DwordType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerDecWordPasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerDecWordPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, DecBase/*number base*/, WordType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerDecBytePasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerDecBytePasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, DecBase/*number base*/, ByteType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerOctQwordPasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerOctQwordPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, OctBase/*number base*/, QwordType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerOctDwordPasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerOctDwordPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, OctBase/*number base*/, DwordType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerOctWordPasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerOctWordPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, OctBase/*number base*/, WordType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerOctBytePasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerOctBytePasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, OctBase/*number base*/, ByteType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerBinQwordPasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerBinQwordPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, BinBase/*number base*/, QwordType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerBinDwordPasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerBinDwordPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, BinBase/*number base*/, DwordType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerBinWordPasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerBinWordPasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, BinBase/*number base*/, WordType/*bitlength Type*/);
         }
 
-        String^ ValidateProgrammerBinBytePasteExpression(_In_ String^ pastedText)
+        bool ValidateProgrammerBinBytePasteExpression(_In_ String^ pastedText)
         {
             return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, BinBase/*number base*/, ByteType/*bitlength Type*/);
         }
@@ -455,17 +453,17 @@ namespace CalculatorUnitTests
         START_LOOP(input)
             // paste number in standard mode and then validate the pastability of displayed number for other modes
             scvm->OnPaste(input[size], ViewMode::Standard);
-            VERIFY_ARE_EQUAL(ValidateStandardPasteExpression(scvm->DisplayValue), scvm->DisplayValue);
-            VERIFY_ARE_EQUAL(ValidateScientificPasteExpression(scvm->DisplayValue), scvm->DisplayValue);
-            VERIFY_ARE_EQUAL(ValidateProgrammerHexQwordPasteExpression(scvm->DisplayValue), scvm->DisplayValue);
+            VERIFY_IS_TRUE(ValidateStandardPasteExpression(scvm->DisplayValue));
+            VERIFY_IS_TRUE(ValidateScientificPasteExpression(scvm->DisplayValue));
+            VERIFY_IS_TRUE(ValidateProgrammerHexQwordPasteExpression(scvm->DisplayValue));
         END_LOOP
     }
 
 
     void CopyPasteManagerTest::ValidateStandardPasteExpressionTest()
     {
-        String^ positiveInput[] = { L"123", L"+123", L"-133", L"12345.", L"+12.34", L"12.345", L"012.034", L"-23.032", L"-.123", L".1234", L"012.012", L"123+456", L"123+-234", L"123*-345", L"123*4*-3", L"123*+4*-3", L"1,234", L"1 2 3", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85", L"\n 1+\n2 ", L"1\"2", L"1234567891234567"/*boundary condition <=16 digits*/, L"2+2=", L"2+2=   " };
-        String^ negativeInput[] = { L"(123)+(456)", L"1.2e23"/*unsigned exponent*/, L"12345e-23", L"abcdef", L"xyz", L"ABab", L"e+234", L"12345678912345678"/*boundary condition: greater than 16 digits*/, L"SIN(2)", L"2+2==", L"2=+2" };
+        String^ positiveInput[] = { L"123", L"+123", L"-133", L"12345.", L"+12.34", L"12.345", L"012.034", L"-23.032", L"-.123", L".1234", L"012.012", L"123+456", L"123+-234", L"123*-345", L"123*4*-3", L"123*+4*-3", L"1,234", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85", L"\n 1+\n2 ", L"1\"2", L"1234567891234567"/*boundary condition <=16 digits*/, L"2+2=", L"2+2=   " };
+        String^ negativeInput[] = { L"(123)+(456)", L"1.2e23"/*unsigned exponent*/, L"12345e-23", L"abcdef", L"xyz", L"ABab", L"e+234", L"12345678912345678"/*boundary condition: greater than 16 digits*/, L"SIN(2)", L"2+2==", L"2=+2", L"1 2 3" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateStandardPasteExpression, positiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateStandardPasteExpression, negativeInput);
@@ -473,8 +471,8 @@ namespace CalculatorUnitTests
 
     void CopyPasteManagerTest::ValidateScientificPasteExpressionTest()
     {
-        String^ positiveInput[] = { L"123", L"+123", L"-133", L"123+456", L"12345e+023", L"1,234", L"1.23", L"-.123", L".1234", L"012.012", L"123+-234", L"123*-345", L"123*4*-3", L"123*+4*-3", L"1 2 3", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85", L"\n 1+\n2 ", L"1\"2", L"1.2e+023", L"12345e-23", L"(123)+(456)", L"12345678912345678123456789012345", L"(123)+(456)=", L"2+2=   " };
-        String^ negativeInput[] = { L"1.2e23"/*unsigned exponent*/, L"abcdef", L"xyz", L"ABab", L"e+234", L"123456789123456781234567890123456"/*boundary condition: greater than 32 digits*/, L"SIN(2)", L"2+2==", L"2=+2" };
+        String^ positiveInput[] = { L"1.2e23", L"123", L"+123", L"-133", L"123+456", L"12345e+023", L"1,234", L"1.23", L"-.123", L".1234", L"012.012", L"123+-234", L"123*-345", L"123*4*-3", L"123*+4*-3", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85", L"\n 1+\n2 ", L"1\"2", L"1.2e+023", L"12345e-23", L"(123)+(456)", L"12345678912345678123456789012345", L"(123)+(456)=", L"2+2=   " };
+        String^ negativeInput[] = { L"abcdef", L"xyz", L"ABab", L"e+234", L"123456789123456781234567890123456"/*boundary condition: greater than 32 digits*/, L"SIN(2)", L"2+2==", L"2=+2", L"1 2 3" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateScientificPasteExpression, positiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateScientificPasteExpression, negativeInput);
@@ -590,8 +588,8 @@ namespace CalculatorUnitTests
 
     void CopyPasteManagerTest::ValidateConverterPasteExpressionTest()
     {
-        String^ positiveInput[] = { L"123", L"+123", L"-133", L"12345.", L"012.012", L"1,234", L"1 2 3", L"\n\r1,234\n", L"\f\n12\t\r\v\x85", L"1\"2", L"100=", L"100=   " };
-        String^ negativeInput[] = { L"(123)+(456)", L"1.2e23"/*unsigned exponent*/, L"12345e-23", L"\n 1+\n2 ", L"123+456", L"abcdef", L"\n 1+\n2 ", L"xyz", L"ABab", L"e+234", L"12345678912345678"/*boundary condition: greater than 16 bits*/, L"SIN(2)", L"123+-234", L"100==", L"=100" };
+        String^ positiveInput[] = { L"123", L"+123", L"-133", L"12345.", L"012.012", L"1,234", L"\n\r1,234\n", L"\f\n12\t\r\v\x85", L"1\"2", L"100=", L"100=   " };
+        String^ negativeInput[] = { L"(123)+(456)", L"1.2e23"/*unsigned exponent*/, L"12345e-23", L"\n 1+\n2 ", L"123+456", L"abcdef", L"\n 1+\n2 ", L"xyz", L"ABab", L"e+234", L"12345678912345678"/*boundary condition: greater than 16 bits*/, L"SIN(2)", L"123+-234", L"100==", L"=100", L"1 2 3" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateConverterPasteExpression, positiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateConverterPasteExpression, negativeInput);

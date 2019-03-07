@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -84,13 +84,6 @@ void Utils::RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Core
 bool Utils::IsLastCharacterTarget(_In_ wstring const &input, _In_ wchar_t target)
 {
     return !input.empty() && input.back() == target;
-}
-
-//return wstring after removing characters like space, comma, and double quotes
-wstring Utils::RemoveUnwantedCharsFromWstring(wstring input)
-{
-    wchar_t unWantedChars[] = { L' ', L',', L'"', 8234, 8235, 8236, 8237 };
-    return RemoveUnwantedCharsFromWstring(input, unWantedChars, 6);
 }
 
 //return wstring after removing characters specified by unwantedChars array

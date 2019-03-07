@@ -25,39 +25,42 @@ String^ CopyPasteManager::supportedFormats[] =
 
 constexpr wstring_view c_validCharacterSet{ L"0123456789()+-*/.abcdefABCDEF" };
 // [\s\x85] means white-space characters
-static const wstring c_wspc = L"[\\s\\x85]*";
-static const wstring c_wspcLParens = c_wspc + L"[(]*" + c_wspc;
-static const wstring c_wspcRParens = c_wspc + L"[)]*" + c_wspc;
+static const wstring c_wspcLParens = L"[(]*";
+static const wstring c_wspcRParens = L"[)]*";
 static const wstring c_signedDecFloat = L"[-+]?\\d*(\\d|[.])\\d*";
 
 // Programmer Mode Integer patterns
 // Support digit separators ` (WinDbg/MASM), ' (C++), and _ (C# and other languages)
-static const wstring c_hexProgrammerChars = L"([a-f]|[A-F]|\\d)+((_|'|`)([a-f]|[A-F]|\\d)+)*";
-static const wstring c_decProgrammerChars = L"\\d+((_|'|`)\\d+)*";
-static const wstring c_octProgrammerChars = L"[0-7]+((_|'|`)[0-7]+)*";
-static const wstring c_binProgrammerChars = L"[0-1]+((_|'|`)[0-1]+)*";
+static const wstring c_hexProgrammerChars = L"[a-fA-F0-9]+([_'`][a-fA-F0-9]+)*";
+static const wstring c_decProgrammerChars = L"\\d+([_'`]\\d+)*";
+static const wstring c_octProgrammerChars = L"[0-7]+([_'`][0-7]+)*";
+static const wstring c_binProgrammerChars = L"[0-1]+([_'`][0-1]+)*";
 static const wstring c_uIntSuffixes = L"[uU]?[lL]{0,2}";
+
+// Regex used to format the string coming from the clipboard
+static const wstring c_formatSpaces = L"[\\s\\x85]+";
+static const wstring c_formatTrimAndRemoveUselessChars = L"^ | $|,|\"";
 
 // RegEx Patterns used by various modes
 static const array<wregex, 1> standardModePatterns =
 {
-    wregex(c_wspc + c_signedDecFloat + c_wspc)
+    wregex(c_signedDecFloat)
 };
 static const array<wregex, 2> scientificModePatterns =
 {
     wregex(c_wspcLParens + c_signedDecFloat + c_wspcRParens),
-    wregex(c_wspcLParens + c_signedDecFloat + L"[e]([+]|[-])+\\d+" + c_wspcRParens)
+    wregex(c_wspcLParens + c_signedDecFloat + L"e[+-]?\\d+" + c_wspcRParens)
 };
 static const array<array<wregex, 5>, 4> programmerModePatterns =
 { {
-    // Hex numbers like 5F, 4A0C, 0xa9, 0xFFull, 47CDh
-    {
-        wregex(c_wspcLParens + L"(0[xX])?" + c_hexProgrammerChars + c_uIntSuffixes + c_wspcRParens),
-        wregex(c_wspcLParens + c_hexProgrammerChars + L"[hH]?" + c_wspcRParens)
-    },
+        // Hex numbers like 5F, 4A0C, 0xa9, 0xFFull, 47CDh
+        {
+            wregex(c_wspcLParens + L"(0[xX])?" + c_hexProgrammerChars + c_uIntSuffixes + c_wspcRParens),
+            wregex(c_wspcLParens + c_hexProgrammerChars + L"[hH]?" + c_wspcRParens)
+        },
     // Decimal numbers like -145, 145, 0n145, 123ull etc
     {
-        wregex(c_wspcLParens + L"[-+]?" + c_decProgrammerChars + L"[lL]{0,2}" +c_wspcRParens),
+        wregex(c_wspcLParens + L"[-+]?" + c_decProgrammerChars + L"[lL]{0,2}" + c_wspcRParens),
         wregex(c_wspcLParens + L"(0[nN])?" + c_decProgrammerChars + c_uIntSuffixes + c_wspcRParens)
     },
     // Octal numbers like 06, 010, 0t77, 0o77, 077ull etc
@@ -72,8 +75,28 @@ static const array<array<wregex, 5>, 4> programmerModePatterns =
     } };
 static const array<wregex, 1> unitConverterPatterns =
 {
-    wregex(c_wspc + L"[-+]?\\d*[.]?\\d*" + c_wspc)
+    wregex(c_signedDecFloat)
 };
+
+
+//Used by ExtractOperands
+//Trim extra blank space before and after the string we want to extract (c_formatSpaces already replaces the sequences of white spaces by a single blank character)
+std::wstring _subStrWithBasicTrim(const std::wstring & text, unsigned int pos, unsigned int len)
+{
+    if (len == 0)
+    {
+        return wstring();
+    }
+    if (text[pos] == ' ')
+    {
+        ++pos;
+        --len;
+    }
+
+    if (text[pos + len - 1] == ' ')
+        --len;
+    return text.substr(pos, len);
+}
 
 void CopyPasteManager::CopyToClipboard(String^ stringToCopy)
 {
@@ -89,14 +112,15 @@ task<String^> CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupTyp
     auto dataPackageView = Clipboard::GetContent();
 
     // TODO: Support all formats supported by ClipboardHasText
-    //-- add support to avoid pasting of expressions like 12 34(as of now we allow 1234)
-    //-- add support to allow pasting for expressions like .2 , -.2
-    //-- add support to allow pasting for expressions like 1.3e12(as of now we allow 1.3e+12)
 
     return create_task((dataPackageView->GetTextAsync(::StandardDataFormats::Text)))
         .then([mode, modeType, programmerNumberBase, bitLengthType](String^ pastedText)
     {
-        return ValidatePasteExpression(pastedText, mode, modeType, programmerNumberBase, bitLengthType);
+        if (ValidatePasteExpression(pastedText, mode, modeType, programmerNumberBase, bitLengthType))
+        {
+            return pastedText;
+        }
+        return ref new String(PasteErrorString);
     }
     , task_continuation_context::use_arbitrary());
 }
@@ -118,29 +142,36 @@ int CopyPasteManager::ClipboardTextFormat()
     return result;
 }
 
-String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode mode, int programmerNumberBase, int bitLengthType)
+bool CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode mode, int programmerNumberBase, int bitLengthType)
 {
     return CopyPasteManager::ValidatePasteExpression(pastedText, mode, NavCategory::GetGroupType(mode), programmerNumberBase, bitLengthType);
 }
 
-// return "NoOp" if pastedText is invalid else return pastedText
-
-String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, int bitLengthType)
+bool CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, int bitLengthType)
 {
     if (pastedText->Length() > MaxPasteableLength)
     {
-        // return NoOp to indicate don't paste anything.
         TraceLogger::GetInstance().LogInvalidInputPasted(L"PastedExpressionSizeGreaterThanMaxAllowed", L"MoreThanMaxInput", mode, programmerNumberBase, bitLengthType);
-        return StringReference(PasteErrorString);
+        return false;
     }
 
     wstring pasteExpression = pastedText->Data();
 
+    // Verify if string contains the en-US digit separator if the local digit separator is a different one.
+    wchar_t localDigitSeparator = LocalizationSettings::GetInstance().GetDecimalSeparator();
+    if (localDigitSeparator != '.' && pasteExpression.find('.') != std::string::npos)
+    {
+        return false;
+    }
+
     // Get english translated expression 
     String^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(pasteExpression);
 
-    // Removing the spaces, comma separator from the pasteExpression to allow pasting of expressions like 1  +     2+1,333
-    pasteExpression = Utils::RemoveUnwantedCharsFromWstring(englishString->Data());
+    //replace all sequences of whitespace characters by 1 single blank space character (u+0020).
+    pasteExpression = regex_replace(englishString->Data(), wregex(c_formatSpaces),
+        mode == ViewMode::Programmer? L"" : L" ");
+    //Trim the string and remove commas
+    pasteExpression = regex_replace(pasteExpression, wregex(c_formatTrimAndRemoveUselessChars), L"");
 
     // If the last character is an = sign, remove it from the pasteExpression to allow evaluating the result on paste.
     if (!pasteExpression.empty() && pasteExpression.back() == L'=')
@@ -153,8 +184,7 @@ String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode m
     vector<wstring> operands = ExtractOperands(pasteExpression, mode, programmerNumberBase, bitLengthType);
     if (operands.empty())
     {
-        // return NoOp to indicate don't paste anything.
-        return StringReference(PasteErrorString);
+        return false;
     }
 
     if (modeType == CategoryGroupType::Converter)
@@ -166,10 +196,10 @@ String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode m
     if (!ExpressionRegExMatch(operands, mode, modeType, programmerNumberBase, bitLengthType))
     {
         TraceLogger::GetInstance().LogInvalidInputPasted(L"InvalidExpressionForPresentMode", pastedText->Data(), mode, programmerNumberBase, bitLengthType);
-        return StringReference(PasteErrorString);
+        return false;
     }
 
-    return ref new String(pastedText->Data());
+    return true;
 }
 
 vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression, ViewMode mode, int programmerNumberBase, int bitLengthType)
@@ -236,7 +266,7 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
             expLength = 0;
             haveOperator = true;
             isPreviousOperator = true;
-            operands.push_back(pasteExpression.substr(lastIndex, i - lastIndex));
+            operands.push_back(_subStrWithBasicTrim(pasteExpression, lastIndex, i - lastIndex));
             lastIndex = i + 1;
         }
         else
@@ -255,7 +285,7 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
     }
     else
     {
-        operands.push_back(pasteExpression.substr(lastIndex, pasteExpression.length() - 1));
+        operands.push_back(_subStrWithBasicTrim(pasteExpression, lastIndex, pasteExpression.length() - lastIndex));
     }
 
     return operands;
@@ -298,7 +328,11 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
         bool operandMatched = false;
         for (const wregex& pattern : patterns)
         {
-            operandMatched = operandMatched || regex_match(operand, pattern);
+            if (regex_match(operand, pattern))
+            {
+                operandMatched = true;
+                break;
+            }
         }
 
         if (operandMatched)
