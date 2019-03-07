@@ -401,9 +401,9 @@ int CHistoryCollector::AddCommand(_In_ const std::shared_ptr<IExpressionCommand>
         throw(CALC_E_OUTOFMEMORY);
     }
 
-    unsigned int nCommmands = 0;
-    m_spCommands->GetSize(&nCommmands);
-    return nCommmands - 1;
+    unsigned int nCommands = 0;
+    m_spCommands->GetSize(&nCommands);
+    return nCommands - 1;
 }
 
 //To Update the operands in the Expression according to the current Radix 

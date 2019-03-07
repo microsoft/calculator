@@ -429,7 +429,7 @@ namespace CalculationManager
                 *commandItr <= MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizedNumberClearAll))
             {
                 //MemoryCommands(which have values above 255) are pushed on m_savedCommands upon casting to unsigned char.
-                //SerializeCommands uses m_savedCommands, which is then used in DeSerializeCommnds.
+                //SerializeCommands uses m_savedCommands, which is then used in DeSerializeCommands.
                 //Hence, a simple cast to MemoryCommand is not sufficient.
                 MemoryCommand memoryCommand = static_cast<MemoryCommand>(*commandItr + UCHAR_MAX + 1);
                 unsigned int indexOfMemory = 0;
