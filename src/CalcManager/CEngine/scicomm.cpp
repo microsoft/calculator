@@ -389,7 +389,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         m_precedenceOpCount = m_nTempCom = m_nLastCom = m_nOpCode = m_openParenCount = 0;
         m_nPrevOpCode = 0;
         m_bNoPrevEqu = true;
-
+        m_nAE = AUTOFMT_ENABLED;
 
         /* clear the parenthesis status box indicator, this will not be
         cleared for CENTR */
@@ -757,6 +757,12 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         DisplayNum();
         break;
 
+    case IDC_AE:
+        // Toggle automatic exponential notation display.
+        m_nAE = NUMOBJ_AUTOFMT(!(int)m_nAE);
+        DisplayNum();
+        break;
+
     case IDC_EXP:
         if (m_bRecord && !m_fIntegerMode && m_input.TryBeginExponent())
         {
@@ -1033,7 +1039,7 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
     // Check for standard\scientific mode
     if (!m_fIntegerMode)
     {
-        result = rat.ToString(radix, m_nFE, m_precision);
+        result = rat.ToString(radix, m_nFE, m_nAE, m_precision);
     }
     else
     {
@@ -1051,7 +1057,7 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
                 tempRat = -((tempRat ^ m_chopNumbers[m_numwidth]) + 1);
             }
 
-            result = tempRat.ToString(radix, m_nFE, m_precision);
+            result = tempRat.ToString(radix, m_nFE, m_nAE, m_precision);
         }
         catch (DWORD)
         {

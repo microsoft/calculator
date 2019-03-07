@@ -99,6 +99,7 @@ namespace CalculationManager
         CommandPERCENT = 118,
 
         CommandFE = 119,
+        CommandAE = 148,
         CommandPI = 120,
         CommandEQU = 121,
 

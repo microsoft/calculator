@@ -1038,14 +1038,14 @@ bool stripzeroesnum(_Inout_ PNUMBER pnum, long starting)
 //    representation.
 //
 //-----------------------------------------------------------------------------
-wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_t precision)
+wstring NumberToString(_Inout_ PNUMBER& pnum, int format, int autoformat, uint32_t radix, int32_t precision)
 {
     stripzeroesnum(pnum, precision + 2);
     long length = pnum->cdigit;
     long exponent = pnum->exp + length; // Actual number of digits to the left of decimal
 
     long oldFormat = format;
-    if (exponent > precision && format == FMT_FLOAT)
+    if (exponent > precision && format == FMT_FLOAT && autoformat == AUTOFMT_ENABLED)
     {
         // Force scientific mode to prevent user from assuming 33rd digit is exact.
         format = FMT_SCIENTIFIC;
@@ -1065,7 +1065,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
     // - if number is zero no rounding
     // - if number of digits is less than the maximum output no rounding
     PNUMBER round = nullptr;
-    if (!zernum(pnum) && (pnum->cdigit >= precision || (length - exponent > precision && exponent >= -MAX_ZEROS_AFTER_DECIMAL)))
+    if (!zernum(pnum) && (pnum->cdigit >= precision && autoformat == AUTOFMT_ENABLED || (length - exponent > precision && (exponent >= -MAX_ZEROS_AFTER_DECIMAL || autoformat == AUTOFMT_DISABLED))))
     {
         // Otherwise round.
         round = longtonum(radix, radix);
@@ -1088,9 +1088,9 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
     if (format == FMT_FLOAT)
     {
         // Figure out if the exponent will fill more space than the non-exponent field.
-        if ((length - exponent > precision) || (exponent > precision + 3))
+        if ((length - exponent > precision) || (exponent > precision + 3 && autoformat == AUTOFMT_ENABLED))
         {
-            if (exponent >= -MAX_ZEROS_AFTER_DECIMAL)
+            if (exponent >= -MAX_ZEROS_AFTER_DECIMAL || autoformat == AUTOFMT_DISABLED)
             {
                 round->exp -= exponent;
                 length = precision + exponent;
@@ -1119,7 +1119,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
         {
             // WARNING: nesting/recursion, too much has been changed, need to
             // re-figure format.
-            return NumberToString(pnum, oldFormat, radix, precision);
+            return NumberToString(pnum, oldFormat, autoformat, radix, precision);
         }
     }
     else
@@ -1257,11 +1257,11 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
 //       why a pointer to the rational is passed in.
 //
 //-----------------------------------------------------------------------------
-wstring RatToString(_Inout_ PRAT& prat, int format, uint32_t radix, int32_t precision)
+wstring RatToString(_Inout_ PRAT& prat, int format, int autoformat, uint32_t radix, int32_t precision)
 {
     PNUMBER p = RatToNumber(prat, radix, precision);
 
-    wstring result = NumberToString(p, format, radix, precision);
+    wstring result = NumberToString(p, format, autoformat, radix, precision);
     destroynum(p);
 
     return result;

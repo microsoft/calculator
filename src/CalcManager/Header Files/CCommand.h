@@ -103,6 +103,7 @@
 #define IDC_UNARYLAST IDC_PERCENT
 
 #define IDC_FE          119
+#define IDC_AE          148
 #define IDC_PI          120
 #define IDC_EQU         121
 

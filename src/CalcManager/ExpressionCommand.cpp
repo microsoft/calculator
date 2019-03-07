@@ -293,7 +293,7 @@ wstring COpndCommand::GetString(uint32_t radix, int32_t precision, wchar_t decim
 
     if (m_fInitialized)
     {
-        result = m_value.ToString(radix, eNUMOBJ_FMT::FMT_FLOAT, precision);
+        result = m_value.ToString(radix, eNUMOBJ_FMT::FMT_FLOAT, eNUMOBJ_AUTOFMT::AUTOFMT_ENABLED, precision);
     }
 
     return result;
