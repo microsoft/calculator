@@ -98,7 +98,7 @@ namespace CalculationManager
     }
 
     /// <summary>
-    /// Callback from the CalculatorControll
+    /// Callback from the CalculatorControl
     /// Passed in string representations of memorized numbers get passed to the client
     /// </summary>
     /// <param name="memorizedNumber">vector containing wstring values of memorized numbers</param>
