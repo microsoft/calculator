@@ -9,6 +9,15 @@ assignees: ''
 
 <!--
 
+!!!!!IF YOU ARE A TROLL READ THIHS FIST!!!!
+Before trolling Microsoft Calculator Team ask yourself one simple question.
+Is it smart to anger company that owns GitHub?
+!!!!!IF YOU ARE A TROLL READ THIHS FIST!!!!
+
+-->
+
+<!--
+
 See https://github.com/Microsoft/calculator/blob/master/docs/NewFeatureProcess.md for
 suggestions on how to write a good feature pitch. Just want to submit an idea quickly? Try Feedback
 Hub instead: https://insider.windows.com/en-us/fb/?contextid=130
