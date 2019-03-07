@@ -206,7 +206,8 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
 int DateCalculationEngine::GetDifferenceInDays(DateTime date1, DateTime date2)
 {
     // A tick is defined as the number of 100 nanoseconds
-    long long ticksDifference = date2.UniversalTime - date1.UniversalTime;
+    // Add one hour to the difference to have correct number of days when change of daylight time (winter to summer) happens between date1 and date2
+    long long ticksDifference = date2.UniversalTime - date1.UniversalTime + c_hour;
     return static_cast<int>(ticksDifference / static_cast<long long>(c_day));
 }
 
