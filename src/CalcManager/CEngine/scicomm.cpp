@@ -12,7 +12,7 @@
 *
 * Author:
 \****************************************************************************/
-#include "pch.h"
+#include "pch_cross_platform.h"
 #include "Header Files/CalcEngine.h"
 #include "Header Files/CalcUtils.h"
 

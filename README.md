@@ -18,6 +18,17 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 - Currency conversion based on data retrieved from [Bing](https://www.bing.com).
 
 ## Getting started
+
+### On macOS
+Prerequisites:
+- CMake
+- macOS
+
+- Create a new directory named `cmake_build` in the repository folder
+- Run `cmake .. -GXcode` from `cmake_build`
+- Run `cmake --build cmake_build` from the repository folder to build the project
+
+### On Windows
 Prerequisites:
 - Your computer must be running Windows 10, version 1803 or newer.
 - Install the latest version of [Visual Studio](https://developer.microsoft.com/en-us/windows/downloads) (the free community edition is sufficient).

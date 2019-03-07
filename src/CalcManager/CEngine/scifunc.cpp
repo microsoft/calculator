@@ -16,7 +16,7 @@
 /***                                                                    ***/
 /***                                                                    ***/
 /**************************************************************************/
-#include "pch.h"
+#include "pch_cross_platform.h"
 #include "Header Files/CalcEngine.h"
 
 using namespace std;

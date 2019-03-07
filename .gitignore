@@ -23,6 +23,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+[Cc]make_build/
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -292,3 +293,9 @@ Generated Files/
 !/build/config/TRexDefs/**
 !src/Calculator/TemporaryKey.pfx
 !src/CalculatorUnitTests/CalculatorUnitTests_TemporaryKey.pfx
+
+# macOS specific
+.DS_Store
+
+# VSCode
+.vscode
