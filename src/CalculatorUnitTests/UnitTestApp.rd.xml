@@ -3,7 +3,7 @@
     developers. However, you can modify these parameters to modify the behavior of the .NET Native
     optimizer.
 
-    Runtime Directives are documented at http://go.microsoft.com/fwlink/?LinkID=391919
+    Runtime Directives are documented at https://go.microsoft.com/fwlink/?LinkID=391919
 
     To fully enable reflection for App1.MyClass and all of its public/private members
     <Type Name="App1.MyClass" Dynamic="Required All"/>
