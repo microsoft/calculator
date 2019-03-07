@@ -136,7 +136,7 @@ void CHistoryCollector::ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher)
     TruncateEquationSzFromIch(m_lastBinOpStartIndex);
     if (fPrecInvToHigher)
     {
-        EnclosePrecInvertionBrackets();
+        EnclosePrecInversionBrackets();
     }
     AddBinOpToHistory(nOpCode);
 }
@@ -180,7 +180,7 @@ void CHistoryCollector::AddCloseBraceToHistory()
     m_bLastOpndBrace = true;
 }
 
-void CHistoryCollector::EnclosePrecInvertionBrackets()
+void CHistoryCollector::EnclosePrecInversionBrackets()
 {
     // Top of the Opnd starts index or 0 is nothing is in top
     int ichStart = (m_curOperandIndex > 0) ? m_operandIndices[m_curOperandIndex - 1] : 0;
