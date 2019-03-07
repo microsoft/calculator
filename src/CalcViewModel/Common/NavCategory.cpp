@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "NavCategory.h"
 #include "AppResourceProvider.h"
-#include "Common\LocalizationStringUtil.h"
+#include "Common/LocalizationStringUtil.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;

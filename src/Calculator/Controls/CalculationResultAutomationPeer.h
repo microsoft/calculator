@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "Controls\CalculationResult.h"
+#include "Controls/CalculationResult.h"
 
 namespace CalculatorApp
 {

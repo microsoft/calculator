@@ -3,11 +3,11 @@
 
 #include "pch.h"
 #include "CurrencyDataLoader.h"
-#include "Common\AppResourceProvider.h"
-#include "Common\LocalizationStringUtil.h"
-#include "Common\LocalizationService.h"
-#include "Common\LocalizationSettings.h"
-#include "Common\TraceLogger.h"
+#include "Common/AppResourceProvider.h"
+#include "Common/LocalizationStringUtil.h"
+#include "Common/LocalizationService.h"
+#include "Common/LocalizationSettings.h"
+#include "Common/TraceLogger.h"
 #include "UnitConverterDataConstants.h"
 
 using namespace CalculatorApp;

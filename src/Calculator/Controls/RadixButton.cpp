@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "RadixButton.h"
-#include "CalcViewModel\Common\LocalizationSettings.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;

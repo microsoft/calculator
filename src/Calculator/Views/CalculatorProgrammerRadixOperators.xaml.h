@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include "Views\CalculatorProgrammerRadixOperators.g.h"
-#include "Converters\VisibilityNegationConverter.h"
-#include "CalcViewModel\StandardCalculatorViewModel.h"
+#include "Views/CalculatorProgrammerRadixOperators.g.h"
+#include "Converters/VisibilityNegationConverter.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
 
 namespace CalculatorApp
 {
