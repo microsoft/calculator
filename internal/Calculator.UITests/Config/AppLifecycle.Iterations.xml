@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 
 <!--
-This file defines a table of preformance configuration for use with
+This file defines a table of performance configuration for use with
 TAEF Table Based Data-driven Testing.
 
 This table specifies we will run the test three times (each iteration has a 

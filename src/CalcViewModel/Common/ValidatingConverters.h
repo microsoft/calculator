@@ -23,7 +23,7 @@ namespace CalculatorApp { namespace Common
             return value;
         }
 
-        virtual Platform::Object^ ConverBack(
+        virtual Platform::Object^ ConvertBack(
             Platform::Object^ value, 
             Windows::UI::Xaml::Interop::TypeName /*targetType*/, 
             Platform::Object^ /*parameter*/, 
@@ -56,7 +56,7 @@ namespace CalculatorApp { namespace Common
             return value;
         }
 
-        virtual Platform::Object^ ConverBack(
+        virtual Platform::Object^ ConvertBack(
             Platform::Object^ value, 
             Windows::UI::Xaml::Interop::TypeName /*targetType*/, 
             Platform::Object^ /*parameter*/, 

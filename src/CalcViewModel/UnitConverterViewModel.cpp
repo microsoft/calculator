@@ -674,7 +674,7 @@ void UnitConverterViewModel::Deserialize(Platform::String^ state)
     RaisePropertyChanged(nullptr);  // Update since all props have been updated.
 }
 
-//Saving User Prefernces of Category and Associated-Units across Sessions. 
+//Saving User Preferences of Category and Associated-Units across Sessions. 
 void UnitConverterViewModel::SaveUserPreferences()
 {
     if (UnitsAreValid())
@@ -695,7 +695,7 @@ void UnitConverterViewModel::SaveUserPreferences()
     }
 }
 
-//Restoring User Prefernces of Category and Associated-Units.
+//Restoring User Preferences of Category and Associated-Units.
 void UnitConverterViewModel::RestoreUserPreferences()
 {
     if (!IsCurrencyCurrentCategory)

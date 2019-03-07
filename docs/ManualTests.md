@@ -124,7 +124,7 @@ Steps:
     m.	“( )" Parenthesis
 
 
-**All Calulators Test: Verify memory functions**
+**All Calculators Test: Verify memory functions**
 Steps:
 1.	Launch the "Calculator" app.
 2.	Navigate to "Standard" Calculator.

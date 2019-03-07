@@ -22,7 +22,7 @@ namespace Numbers
             OBSERVABLE_PROPERTY_RW(Platform::String^, SlotValue);
         };
 
-        // This class is to be consumbed exclusively by Blend and the VS designer
+        // This class is to be consumed exclusively by Blend and the VS designer
         // with this class Blend will be able to populate the controls, the CalculationResults control for example,
         // with the hardcoded strings so whoever is working on the UI can actually see how the app would look like 
         // with semi-realistic data.
