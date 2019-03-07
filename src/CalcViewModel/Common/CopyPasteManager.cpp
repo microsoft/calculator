@@ -136,6 +136,13 @@ String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode m
 
     wstring pasteExpression = pastedText->Data();
 
+    // Reject strings with '.' when the local decimal separator is different
+    wchar_t decimalSeparator = LocalizationSettings::GetInstance().GetDecimalSeparator();
+    if (decimalSeparator != '.' && pasteExpression.find('.') != std::string::npos)
+    {
+        return StringReference(PasteErrorString);
+    }
+
     // Get english translated expression 
     String^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(pasteExpression);
 
