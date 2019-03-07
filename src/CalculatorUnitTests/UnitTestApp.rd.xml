@@ -12,7 +12,7 @@
     <TypeInstantiation Name="App1.AppClass" Arguments="System.Int32" Activate="Required Public" />
 
     Using the Namespace directive to apply reflection policy to all the types in a particular namespace
-    <Namespace Name="DataClasses.ViewModels" Seralize="All" />
+    <Namespace Name="DataClasses.ViewModels" Serialize="All" />
 -->
 
 <Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
