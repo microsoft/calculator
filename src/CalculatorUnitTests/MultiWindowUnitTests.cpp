@@ -6,10 +6,10 @@
 #include "UnitConverterViewModelUnitTests.h"
 #include "DateUtils.h"
 
-#include "CalcViewModel\StandardCalculatorViewModel.h"
-#include "CalcViewModel\UnitConverterViewModel.h"
-#include "CalcViewModel\DateCalculatorViewModel.h"
-#include "CalcViewModel\DataLoaders\UnitConverterDataLoader.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
+#include "CalcViewModel/UnitConverterViewModel.h"
+#include "CalcViewModel/DateCalculatorViewModel.h"
+#include "CalcViewModel/DataLoaders/UnitConverterDataLoader.h"
 
 using namespace Platform;
 using namespace Platform::Collections;

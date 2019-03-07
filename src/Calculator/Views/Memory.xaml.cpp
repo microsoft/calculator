@@ -8,9 +8,9 @@
 
 #include "pch.h"
 #include "Memory.xaml.h"
-#include "Controls\CalculatorButton.h"
-#include "CalcViewModel\StandardCalculatorViewModel.h"
-#include "CalcViewModel\Common\LocalizationService.h"
+#include "Controls/CalculatorButton.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
+#include "CalcViewModel/Common/LocalizationService.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;

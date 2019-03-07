@@ -3,11 +3,11 @@
 
 #include "pch.h"
 #include "StandardCalculatorViewModel.h"
-#include "Common\CalculatorButtonPressedEventArgs.h"
-#include "Common\LocalizationStringUtil.h"
-#include "Common\LocalizationSettings.h"
-#include "Common\CopyPasteManager.h"
-#include "Common\TraceLogger.h"
+#include "Common/CalculatorButtonPressedEventArgs.h"
+#include "Common/LocalizationStringUtil.h"
+#include "Common/LocalizationSettings.h"
+#include "Common/CopyPasteManager.h"
+#include "Common/TraceLogger.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;

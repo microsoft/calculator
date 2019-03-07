@@ -5,8 +5,8 @@
 #include <CppUnitTest.h>
 #include "UnitConverterViewModelUnitTests.h"
 
-#include "CalcViewModel\UnitConverterViewModel.h"
-#include "CalcViewModel\DataLoaders\UnitConverterDataLoader.h"
+#include "CalcViewModel/UnitConverterViewModel.h"
+#include "CalcViewModel/DataLoaders/UnitConverterDataLoader.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
