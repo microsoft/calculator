@@ -770,23 +770,23 @@
     <comment>Screen reader prompt for the Calculator number "F" button</comment>
   </data>
   <data name="andButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>And</value>
+    <value>UND</value>
     <comment>Screen reader prompt for the Calculator And button</comment>
   </data>
   <data name="orButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Or</value>
+    <value>ODER</value>
     <comment>Screen reader prompt for the Calculator Or button</comment>
   </data>
   <data name="notButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Not</value>
+    <value>NICHT</value>
     <comment>Screen reader prompt for the Calculator Not button</comment>
   </data>
   <data name="rolButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Nach links drehen</value>
+    <value>Nach links verschieben</value>
     <comment>Screen reader prompt for the Calculator ROL button</comment>
   </data>
   <data name="rorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Nach rechts drehen</value>
+    <value>Nach rechts verschieben</value>
     <comment>Screen reader prompt for the Calculator ROR button</comment>
   </data>
   <data name="lshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -847,7 +847,7 @@
   </data>
   <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Gleich</value>
-    <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
+    <comment>Screen reader prompt for the equal button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Inverse Function</value>
@@ -918,7 +918,7 @@
     <comment>Screen reader prompt for the Calculator cos button  on the scientific operator keypad</comment>
   </data>
   <data name="tanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Tagens</value>
+    <value>Tangens</value>
     <comment>Screen reader prompt for the Calculator tan button  on the scientific operator keypad</comment>
   </data>
   <data name="sinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -931,26 +931,26 @@
   </data>
   <data name="tanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Hyperbolischer Tangens</value>
-    <comment>Screen reader prompt for the Calculator tanh button  on the scientific operator keypad</comment>
+    <comment>Screen reader prompt for the Calculator tanh button on the scientific operator keypad</comment>
   </data>
   <data name="xpower2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Quadrat</value>
+    <value>Quadrieren</value>
     <comment>Screen reader prompt for the x squared on the scientific operator keypad. </comment>
   </data>
   <data name="xpower3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Würfel</value>
+    <value>Hoch 3</value>
     <comment>Screen reader prompt for the x cubed on the scientific operator keypad. </comment>
   </data>
   <data name="invsinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Arcussinus</value>
+    <value>Arkussinus</value>
     <comment>Screen reader prompt for the inverted sin on the scientific operator keypad.</comment>
   </data>
   <data name="invcosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Arcuscosinus</value>
+    <value>Arkuskosinus</value>
     <comment>Screen reader prompt for the inverted cos on the scientific operator keypad.</comment>
   </data>
   <data name="invtanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Arcustangens</value>
+    <value>Arkustangens</value>
     <comment>Screen reader prompt for the inverted tan on the scientific operator keypad.</comment>
   </data>
   <data name="invsinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1866,7 +1866,7 @@
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Carat" xml:space="preserve">
-    <value>cd</value>
+    <value>kt</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Degree" xml:space="preserve">
