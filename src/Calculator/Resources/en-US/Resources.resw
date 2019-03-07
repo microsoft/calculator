@@ -3371,4 +3371,8 @@
     <value>Microsoft Services Agreement</value>
     <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
   </data>
+  <data name="autoeButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+    <value>B</value>
+    <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
+  </data>
 </root>

@@ -35,6 +35,7 @@ namespace CalculatorApp
     private:
         void OnAngleButtonPressed(_In_ Platform::Object^ commandParameter);
         void FToEButton_Toggled(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
+        void AutoEButton_Toggled(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
         void HypButton_Toggled(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
 
         bool m_isErrorVisualState;

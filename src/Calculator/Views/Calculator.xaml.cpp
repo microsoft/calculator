@@ -492,6 +492,7 @@ void Calculator::OnHistoryItemClicked(_In_ HistoryItemViewModel^ e)
     Model->SetExpressionDisplay(e->GetTokens(), e->GetCommands());
     Model->SetPrimaryDisplay(e->Result->Data(), false);
     Model->IsFToEEnabled = false;
+    Model->IsAutoEEnabled = false;
    
     TraceLogger::GetInstance().LogHistoryItemLoadEnd(tokenSize);
     CloseHistoryFlyout();

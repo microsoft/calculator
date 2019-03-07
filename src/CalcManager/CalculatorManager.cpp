@@ -28,6 +28,7 @@ namespace CalculationManager
         m_currentDegreeMode(Command::CommandNULL),
         m_savedDegreeMode(Command::CommandDEG),
         m_isExponentialFormat(false),
+        m_isAutoExponentialFormat(true),
         m_persistedPrimaryValue(),
         m_currentCalculatorEngine(nullptr),
         m_pStdHistory(new CalculatorHistory(CM_STD, MAX_HISTORY_ITEMS)),
@@ -139,6 +140,11 @@ namespace CalculationManager
                 m_isExponentialFormat = false;
                 m_scientificCalculatorEngine->ProcessCommand(IDC_FE);
             }
+            if (!m_isAutoExponentialFormat)
+            {
+                m_isAutoExponentialFormat = true;
+                m_scientificCalculatorEngine->ProcessCommand(IDC_AE);
+            }
         }
         if (m_programmerCalculatorEngine)
         {
@@ -248,7 +254,7 @@ namespace CalculationManager
             m_currentDegreeMode = command;
         }
 
-        if (command != Command::CommandFE)
+        if (command != Command::CommandFE && command != Command::CommandAE)
         {
             m_savedCommands.push_back(MapCommandForSerialize(command)); // Save the commands in the m_savedCommands
         }
@@ -285,6 +291,8 @@ namespace CalculationManager
             break;
         case Command::CommandFE:
             m_isExponentialFormat = !m_isExponentialFormat;
+        case Command::CommandAE:
+            m_isAutoExponentialFormat = !m_isAutoExponentialFormat;
             // fall through
         default:
             m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(command));

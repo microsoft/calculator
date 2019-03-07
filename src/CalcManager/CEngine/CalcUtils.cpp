@@ -44,6 +44,7 @@ bool IsGuiSettingOpCode(WPARAM opCode)
     {
     case IDC_INV:
     case IDC_FE:
+    case IDC_AE:
     case IDC_MCLEAR:
     case IDC_BACK:
     case IDC_EXP:

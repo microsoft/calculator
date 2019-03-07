@@ -88,6 +88,7 @@ private:
     bool m_bSetCalcState;  //Flag for setting the engine result state
     CalcEngine::CalcInput m_input; // Global calc input object for decimal strings
     eNUMOBJ_FMT m_nFE;    /* Scientific notation conversion flag.       */
+    eNUMOBJ_AUTOFMT m_nAE;    /* Automatic scientific notation conversion flag.       */
     CalcEngine::Rational m_maxTrigonometricNum;
     std::unique_ptr<CalcEngine::Rational> m_memoryValue; // Current memory value.
 

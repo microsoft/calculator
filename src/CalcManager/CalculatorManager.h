@@ -57,6 +57,7 @@ namespace CalculationManager
         CalcEngine::Rational m_persistedPrimaryValue;
 
         bool m_isExponentialFormat;
+        bool m_isAutoExponentialFormat;
 
         static const unsigned int m_maximumMemorySize = 100;
 

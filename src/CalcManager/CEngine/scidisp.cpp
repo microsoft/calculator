@@ -40,13 +40,14 @@ typedef struct {
     int32_t precision;
     uint32_t radix;
     INT         nFE;
+    INT         nAE;
     NUM_WIDTH   numwidth;
     bool        fIntMath;
     bool        bRecord;
     bool        bUseSep;
 } LASTDISP;
 
-LASTDISP gldPrevious = { 0, -1, 0, -1, (NUM_WIDTH)-1, false, false, false };
+LASTDISP gldPrevious = { 0, -1, 0, -1, -1, (NUM_WIDTH)-1, false, false, false };
 
 // Truncates if too big, makes it a non negative - the number in rat. Doesn't do anything if not in INT mode
 CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational const& rat)
@@ -87,6 +88,7 @@ void CCalcEngine::DisplayNum(void)
         gldPrevious.precision != m_precision ||
         gldPrevious.radix != m_radix ||
         gldPrevious.nFE != (int)m_nFE ||
+        gldPrevious.nAE != (int)m_nAE ||
         gldPrevious.bUseSep != true ||
         gldPrevious.numwidth != m_numwidth ||
         gldPrevious.fIntMath != m_fIntegerMode ||
@@ -95,6 +97,7 @@ void CCalcEngine::DisplayNum(void)
         gldPrevious.precision = m_precision;
         gldPrevious.radix = m_radix;
         gldPrevious.nFE = (int)m_nFE;
+        gldPrevious.nAE = (int)m_nAE;
         gldPrevious.numwidth = m_numwidth;
 
         gldPrevious.fIntMath = m_fIntegerMode;

@@ -75,6 +75,7 @@ CCalcEngine::CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager
     m_bError(false),
     m_bInv(false),
     m_nFE(FMT_FLOAT),
+    m_nAE(AUTOFMT_DISABLED),
     m_bNoPrevEqu(true),
     m_numwidth(QWORD_WIDTH),
     m_angletype(ANGLE_DEG),
@@ -120,7 +121,7 @@ void CCalcEngine::InitChopNumbers()
         auto maxVal = m_chopNumbers[i] / 2;
         maxVal = RationalMath::Integer(maxVal);
 
-        m_maxDecimalValueStrings[i] = maxVal.ToString(10, FMT_FLOAT, m_precision);
+        m_maxDecimalValueStrings[i] = maxVal.ToString(10, FMT_FLOAT, AUTOFMT_ENABLED, m_precision);
     }
 }
 

@@ -73,6 +73,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_MemorizedNumbers(ref new Vector<MemoryItemViewModel^>()),
     m_IsMemoryEmpty(true),
     m_IsFToEChecked(false),
+    m_IsAutoEChecked(true),
     m_isShiftChecked(false),
     m_IsShiftProgrammerChecked(false),
     m_IsQwordEnabled(true),
@@ -414,6 +415,11 @@ void StandardCalculatorViewModel::FtoEButtonToggled()
     OnButtonPressed(NumbersAndOperatorsEnum::FToE);
 }
 
+void StandardCalculatorViewModel::AutoEButtonToggled()
+{
+    OnButtonPressed(NumbersAndOperatorsEnum::AutoE);
+}
+
 void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
 {
     DisplayExpressionToken^ displayExpressionToken = ExpressionTokens->GetAt(m_tokenPosition);
@@ -553,7 +559,7 @@ bool StandardCalculatorViewModel::IsOperator(Command cmdenum)
 {
     if ((cmdenum == Command::Command0) || (cmdenum == Command::Command1) || (cmdenum == Command::Command2) || (cmdenum == Command::Command3) || (cmdenum == Command::Command4) || (cmdenum == Command::Command5)
         || (cmdenum == Command::Command6) || (cmdenum == Command::Command7) || (cmdenum == Command::Command8) || (cmdenum == Command::Command9) || (cmdenum == Command::CommandPNT) || (cmdenum == Command::CommandBACK)
-        || (cmdenum == Command::CommandEXP) || (cmdenum == Command::CommandFE) || (cmdenum == Command::ModeBasic) || (cmdenum == Command::ModeBasic) || (cmdenum == Command::ModeProgrammer) || (cmdenum == Command::ModeScientific)
+        || (cmdenum == Command::CommandEXP) || (cmdenum == Command::CommandFE) || (cmdenum == Command::CommandAE) || (cmdenum == Command::ModeBasic) || (cmdenum == Command::ModeBasic) || (cmdenum == Command::ModeProgrammer) || (cmdenum == Command::ModeScientific)
         || (cmdenum == Command::CommandINV) || (cmdenum == Command::CommandCENTR) || (cmdenum == Command::CommandDEG) || (cmdenum == Command::CommandRAD) || (cmdenum == Command::CommandGRAD)
         || ((cmdenum >= Command::CommandBINEDITSTART) && (cmdenum <= Command::CommandBINEDITEND)))
     {
@@ -586,6 +592,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object^ parameter)
         numOpEnum != NumbersAndOperatorsEnum::IsStandardMode &&
         numOpEnum != NumbersAndOperatorsEnum::IsProgrammerMode &&
         numOpEnum != NumbersAndOperatorsEnum::FToE &&
+        numOpEnum != NumbersAndOperatorsEnum::AutoE &&
         (numOpEnum != NumbersAndOperatorsEnum::Degree) && (numOpEnum != NumbersAndOperatorsEnum::Radians) && (numOpEnum != NumbersAndOperatorsEnum::Grads))
     {
         if (!m_keyPressed)
@@ -621,6 +628,10 @@ void StandardCalculatorViewModel::OnButtonPressed(Object^ parameter)
                 {
                     IsFToEChecked = false;
                 }
+                if (!IsAutoEChecked)
+                {
+                    IsAutoEChecked = true;
+                }
             }
             if (numOpEnum == NumbersAndOperatorsEnum::Degree || numOpEnum == NumbersAndOperatorsEnum::Radians || numOpEnum == NumbersAndOperatorsEnum::Grads)
             {
@@ -640,6 +651,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object^ parameter)
                 ((numOpEnum != NumbersAndOperatorsEnum::Degree) && (numOpEnum != NumbersAndOperatorsEnum::Radians) && (numOpEnum != NumbersAndOperatorsEnum::Grads)))
             {
                 IsFToEEnabled = true;
+                IsAutoEEnabled = true;
                 m_isLastOperationHistoryLoad = false;
             }
 
@@ -1144,6 +1156,7 @@ Array<unsigned char>^ StandardCalculatorViewModel::Serialize()
     DataWriter^ writer = ref new DataWriter();
     writer->WriteUInt32(static_cast<UINT32>(m_CurrentAngleType));
     writer->WriteBoolean(IsFToEChecked);
+    writer->WriteBoolean(IsAutoEChecked);
     writer->WriteBoolean(IsCurrentViewPinned);
     writer->WriteUInt32(static_cast<UINT32>(m_standardCalculatorManager.SerializeSavedDegreeMode()));
 
@@ -1202,6 +1215,7 @@ void StandardCalculatorViewModel::Deserialize(Array<unsigned char>^ state)
         m_CurrentAngleType = ConvertIntegerToNumbersAndOperatorsEnum(reader->ReadUInt32());
 
         IsFToEChecked = reader->ReadBoolean();
+        IsAutoEChecked = reader->ReadBoolean();
         IsCurrentViewPinned = reader->ReadBoolean();
         Command serializedDegreeMode = static_cast<Command>(reader->ReadUInt32());
 
@@ -1565,6 +1579,10 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
     if (IsFToEChecked)
     {
         m_standardCalculatorManager.SendCommand(Command::CommandFE);
+    }
+    if (!IsAutoEChecked)
+    {
+        m_standardCalculatorManager.SendCommand(Command::CommandAE);
     }
 
     m_standardCalculatorManager.SendCommand(currentDegreeMode);

@@ -44,6 +44,19 @@ void CalculatorScientificAngleButtons::FToEButton_Toggled(_In_ Object^ sender,_I
 {
     auto viewModel = safe_cast<StandardCalculatorViewModel^>(this->DataContext);
     viewModel->FtoEButtonToggled();
+    if (Model->IsFToEChecked)
+    {
+        autoeButton->Visibility = ::Visibility::Collapsed;
+    }
+    else {
+        autoeButton->Visibility = ::Visibility::Visible;
+    }
+}
+
+void CalculatorScientificAngleButtons::AutoEButton_Toggled(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+{
+    auto viewModel = safe_cast<StandardCalculatorViewModel^>(this->DataContext);
+    viewModel->AutoEButtonToggled();
 }
 
 void CalculatorApp::CalculatorScientificAngleButtons::OnAngleButtonPressed(_In_ Object^ commandParameter)

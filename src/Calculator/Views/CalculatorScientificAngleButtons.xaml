@@ -50,6 +50,7 @@
 
                         <Setter Target="hyperbolicButton.Style" Value="{StaticResource CaptionToggleButtonSmallStyle}"/>
                         <Setter Target="ftoeButton.Style" Value="{StaticResource CaptionToggleButtonSmallStyle}"/>
+                        <Setter Target="autoeButton.Style" Value="{StaticResource CaptionToggleButtonSmallStyle}"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -62,6 +63,7 @@
                         <Setter Target="gradsButton.IsEnabled" Value="False"/>
                         <Setter Target="hyperbolicButton.IsEnabled" Value="False"/>
                         <Setter Target="ftoeButton.IsEnabled" Value="False"/>
+                        <Setter Target="autoeButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -114,6 +116,22 @@
                       Unchecked="FToEButton_Toggled">
             <ToggleButton.CommandParameter>
                 <local:NumbersAndOperatorsEnum>FToE</local:NumbersAndOperatorsEnum>
+            </ToggleButton.CommandParameter>
+        </ToggleButton>
+        <ToggleButton x:Name="autoeButton"
+                      x:Uid="autoeButton"
+                      Grid.Column="3"
+                      Style="{StaticResource CaptionToggleButtonStyle}"
+                      Background="{ThemeResource SystemControlBackgroundTransparentBrush}"
+                      FontWeight="SemiBold"
+                      AutomationProperties.AutomationId="autoeButton"
+                      Checked="AutoEButton_Toggled"
+                      Content="Auto-E"
+                      IsChecked="{Binding IsAutoEChecked, Mode=TwoWay}"
+                      IsEnabled="{x:Bind Model.IsAutoEEnabled, Mode=OneWay}"
+                      Unchecked="AutoEButton_Toggled">
+            <ToggleButton.CommandParameter>
+                <local:NumbersAndOperatorsEnum>AutoE</local:NumbersAndOperatorsEnum>
             </ToggleButton.CommandParameter>
         </ToggleButton>
     </Grid>

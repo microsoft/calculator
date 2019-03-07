@@ -72,6 +72,8 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, IsMemoryEmpty);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEChecked);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEEnabled);
+            OBSERVABLE_PROPERTY_RW(bool, IsAutoEChecked);
+            OBSERVABLE_PROPERTY_RW(bool, IsAutoEEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsHyperbolicChecked);
             OBSERVABLE_PROPERTY_RW(bool, AreHEXButtonsEnabled);
             NAMED_OBSERVABLE_PROPERTY_RW(Platform::String^, CalculationResultAutomationName);
@@ -226,6 +228,7 @@ namespace CalculatorApp
                         IsDecimalEnabled = value;
                         AreHEXButtonsEnabled = IsProgrammer;
                         IsFToEEnabled = value;
+                        IsAutoEEnabled = value;
                         RaisePropertyChanged(L"IsOperandEnabled");
                     }
                 }
@@ -305,6 +308,7 @@ namespace CalculatorApp
             void Recalculate(bool fromHistory = false);
             bool IsOperator(CalculationManager::Command cmdenum);
             void FtoEButtonToggled();
+            void AutoEButtonToggled();
             void SwitchProgrammerModeBase(RADIX_TYPE calculatorBase);
             void SetMemorizedNumbersString();
             void SwitchAngleType(NumbersAndOperatorsEnum num);
