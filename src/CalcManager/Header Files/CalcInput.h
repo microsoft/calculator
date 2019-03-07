@@ -14,8 +14,8 @@ namespace CalcEngine
     {
     public:
         CalcNumSec() :
-            m_isNegative(false),
-            value()
+            value(),
+            m_isNegative(false)
         {}
 
         void Clear();
@@ -37,12 +37,12 @@ namespace CalcEngine
         {}
 
         CalcInput(wchar_t decSymbol) :
-            m_base(),
-            m_exponent(),
             m_hasExponent(false),
             m_hasDecimal(false),
             m_decPtIndex(0),
-            m_decSymbol(decSymbol)
+            m_decSymbol(decSymbol),
+            m_base(),
+            m_exponent()
         {}
 
         void Clear();
