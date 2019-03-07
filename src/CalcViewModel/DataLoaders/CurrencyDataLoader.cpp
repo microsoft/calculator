@@ -588,7 +588,7 @@ bool CurrencyDataLoader::TryParseAllRatiosData(_In_ String^ rawJson, _Inout_ Cur
 //
 // There are a few ways we can get the data needed for Currency Converter, including from cache or from web.
 // This function accepts the data from any source, and acts as a 'last-steps' for the converter to be ready.
-// This includes identifying which units will be selected and building the map of curreny ratios.
+// This includes identifying which units will be selected and building the map of currency ratios.
 #pragma optimize("", off) // Turn off optimizations to work around DevDiv 393321
 task<void> CurrencyDataLoader::FinalizeUnits(_In_ const vector<UCM::CurrencyStaticData>& staticData, _In_ const CurrencyRatioMap& ratioMap)
 {

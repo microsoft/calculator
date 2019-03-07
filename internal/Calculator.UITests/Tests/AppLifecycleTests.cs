@@ -34,7 +34,7 @@ namespace Calculator.PerfTests
         /// The test launches the application, suspend and resumes it and then terminates the app.
         /// 
         /// A TAEF data source is used to specify the Windows Performance Recorder profile and
-        /// regions of interest file to use and defines threee different configurations to execute this test with.
+        /// regions of interest file to use and defines three different configurations to execute this test with.
         /// Cold: The initial run to get dlls loaded into memory and to execute any first-run app logic.
         /// Warm: The run that will produce consistent results and that would be used for measures.
         /// Memory: A run that is focused on collecting more info on allocations.
@@ -42,7 +42,7 @@ namespace Calculator.PerfTests
         [TestMethod]
         [TestProperty("RunAs", "User")]
         [TestProperty("Category", "Performance")]
-        [TestProperty(WinperfConstants.DataSource, PerfConstants.AppLifecycleInterationsSource)]
+        [TestProperty(WinperfConstants.DataSource, PerfConstants.AppLifecycleIterationsSource)]
         public void AppLifecycleTest()
         {
             AppLifecycle.Run(Constants.PackageAppUserModelId);

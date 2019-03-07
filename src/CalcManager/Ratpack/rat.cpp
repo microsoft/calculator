@@ -183,7 +183,7 @@ void divrat( PRAT *pa, PRAT b, int32_t precision)
 //    RETURN: None, changes first pointer.
 //
 //    DESCRIPTION: Does the rational equivalent of *pa += b.
-//    Assumes base is internal througought.
+//    Assumes base is internal throughout.
 //
 //-----------------------------------------------------------------------------
 
@@ -204,7 +204,7 @@ void subrat( PRAT *pa, PRAT b, int32_t precision)
 //    RETURN: None, changes first pointer.
 //
 //    DESCRIPTION: Does the rational equivalent of *pa += b.
-//    Assumes base is internal througought.
+//    Assumes base is internal throughout.
 //
 //-----------------------------------------------------------------------------
 
