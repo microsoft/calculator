@@ -42,7 +42,7 @@ namespace Calculator.PerfTests
         [TestMethod]
         [TestProperty("RunAs", "User")]
         [TestProperty("Category", "Performance")]
-        [TestProperty(WinperfConstants.DataSource, PerfConstants.AppLifecycleInterationsSource)]
+        [TestProperty(WinperfConstants.DataSource, PerfConstants.AppLifecycleIterationsSource)]
         public void AppLifecycleTest()
         {
             AppLifecycle.Run(Constants.PackageAppUserModelId);
