@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#pragma once
 #include "Header Files/CalcEngine.h"
 #include "Command.h"
 #include "CalculatorVector.h"
@@ -14,6 +13,16 @@ constexpr int ASCII_0 = 48;
 using namespace std;
 using namespace CalcEngine;
 
+namespace {
+    void IFT(HRESULT hr)
+    {
+        if (FAILED(hr))
+        {
+            CalcException exception(hr);
+            throw(exception);
+        }
+    }
+}
 void CHistoryCollector::ReinitHistory()
 {
     m_lastOpStartIndex = -1;

@@ -15,12 +15,3 @@ public:
 private:
     HRESULT m_hr;
 };
-
-void IFT(HRESULT hr)
-{
-    if (FAILED(hr))
-    {
-        CalcException exception(hr);
-        throw(exception);
-    }
-}
