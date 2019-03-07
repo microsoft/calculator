@@ -938,7 +938,7 @@
     <comment>Screen reader prompt for the x squared on the scientific operator keypad. </comment>
   </data>
   <data name="xpower3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Hoch 3</value>
+    <value>Kubik</value>
     <comment>Screen reader prompt for the x cubed on the scientific operator keypad. </comment>
   </data>
   <data name="invsinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
