@@ -488,7 +488,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
         m_selectedExpressionLastData = L"";
         if (ch == 'x')
         {
-            temp = L'\0';
+            temp[0] = L'\0';
             commandIndex = 0;
         }
         else
@@ -505,7 +505,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
         {
             if (commandIndex == 0)
             {
-                delete temp;
+                delete [] temp;
                 return;
             }
 
