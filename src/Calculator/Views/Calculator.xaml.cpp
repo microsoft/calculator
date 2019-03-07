@@ -238,8 +238,8 @@ void Calculator::AnimateCalculator(bool resultAnimate)
         m_resultAnimate = resultAnimate;
         if (((m_isLastAnimatedInScientific && IsScientific) || (!m_isLastAnimatedInScientific && !IsScientific)) && ((m_isLastAnimatedInProgrammer && IsProgrammer) || (!m_isLastAnimatedInProgrammer && !IsProgrammer)))
         {
-            // We are forcing the animation here
-            // It's because if last animation was in standard, then go to unit converter, then comes back to standard
+            // We are forcing the animation here.
+            // It's because if last animation was in standard, then go to unit converter, then comes back to standard.
             // The state for the calculator does not change and the animation would not get run.
             this->OnStoryboardCompleted(nullptr, nullptr);
         }
