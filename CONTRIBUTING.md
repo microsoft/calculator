@@ -3,11 +3,11 @@ The Calculator team encourages community feedback and contributions. Thank you f
 making Calculator better! There are several ways you can get involved.
 
 ## Reporting issues and suggesting new features
-If Calculator is not working properly, please file a report in the [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130&newFeedback=True).
+If the Calculator is not working properly, please file a report in the [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130&newFeedback=True).
 Feedback Hub reports automatically include diagnostic data, such as the version of Calculator
 you're using.
 
-We are happy to hear your ideas for the future of Calculator. Check the
+We are happy to hear your ideas for the future of the Calculator. Check the
 [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130) and see if others have
 submitted similar feedback. You can upvote existing feedback or submit a new suggestion.
 
@@ -45,12 +45,12 @@ components, prefer the patterns described in the [C++ core guidelines](http://is
 and the [modern C++/WinRT language projections](https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/).
 
 ### Testing
-Your change should include tests to verify new functionality wherever possible. Code should be
+Your change should include tests to verify new functionality wherever possible. The code should be
 structured so that it can be unit tested independently of the UI. [Manual test cases](docs/ManualTests.md)
 should be used where automated testing is not feasible.
 
 ### Git workflow
-Calculator uses the [GitHub flow](https://guides.github.com/introduction/flow/) where most
+The Calculator uses the [GitHub flow](https://guides.github.com/introduction/flow/) where most
 development happens directly on the `master` branch. The `master` branch should always be in a
 healthy state which is ready for release.
 
@@ -76,7 +76,7 @@ assign the request to an appropriate reviewer within two days. Any member of the
 participate in the review, but at least one member of the Calculator team will ultimately approve
 the request.
 
-Often, multiple iterations will be needed to responding to feedback from reviewers. Try looking at
+Often, multiple iterations will be needed to respond to feedback from reviewers. Try looking at
 [past pull requests](https://github.com/Microsoft/calculator/pulls?q=is%3Apr+is%3Aclosed) to see
 what the experience might be like.
 

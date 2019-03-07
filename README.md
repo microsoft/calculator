@@ -10,7 +10,7 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 
 ## Features
 - Standard Calculator functionality which offers basic operations and evaluates commands immediately as they are entered.
-- Scientific Calculator functionality which offers expanded operations and evaluates commands using order of operations.
+- Scientific Calculator functionality which offers expanded operations and evaluates commands using the order of operations.
 - Programmer Calculator functionality which offers common mathematical operations for developers including conversion between common bases.
 - Calculation history and memory capabilities.
 - Conversion between many units of measurement.
@@ -38,7 +38,7 @@ Prerequisites:
 ## Contributing
 Want to contribute? The team encourages community feedback and contributions. Please follow our [contributing guidelines](CONTRIBUTING.md).
 
-If Calculator is not working properly, please file a report in the [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130).
+If the Calculator is not working properly, please file a report in the [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130).
 We also welcome [issues submitted on GitHub](https://github.com/Microsoft/calculator/issues).
 
 ## Roadmap

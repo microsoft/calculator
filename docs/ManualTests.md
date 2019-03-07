@@ -124,13 +124,13 @@ Steps:
     m.	“( )" Parenthesis
 
 
-**All Calulators Test: Verify memory functions**
+**All Calculators Test: Verify memory functions**
 Steps:
 1.	Launch the "Calculator" app.
 2.	Navigate to "Standard" Calculator.
 3.	Perform a calculation and press the MS button.
-4.	If small scale, Select the (M) with the drop down arrow
-*Expected: Calculation from previous step is present.*
+4.	If small scale, Select the (M) with the drop-down arrow
+*Expected: Calculation from the previous step is present.*
 5.	Click the (M+) Add to Memory.
 *Expected: Previous calculation is added to itself.*
 6.	Click the (M-) Subtract from Memory.
@@ -210,7 +210,7 @@ Steps:
 *Expected: All buttons are present and the up arrow is grayed out.*
 6.	For Scientific Mode: At a Smaller Scale
 *Expected: All buttons are present and the up arrow is able to be toggled.*
-7.	For Programmer Mode: At a Any Scale
+7.	For Programmer Mode: At an Any Scale
 *Expected: All buttons are present and the up arrow is able to be toggled.*
 8.	For Converter Mode: While Scaling
 *Expected: The number pad and input areas move around each other gracefully.*
@@ -237,11 +237,11 @@ Verify the following:
 For Programmer Mode
 Verify the following:
 6.	"Bit Toggling Keypad":
-*Expected: In app keypad changes to represent Bits (1s and 0s).*
+*Expected: In-app keypad changes to represent Bits (1s and 0s).*
 7.	"QWORD / DWORD / WORD / BYTE":
 *Expected: Toggles as expected.*
 8.	"Hex" Hexadecimal:
-*Expected: A B C D E F become active and user can use them. A maximum of 16 characters can be entered.*
+*Expected: A B C D E F become active and the user can use them. A maximum of 16 characters can be entered.*
 9.	"Dec" Decimal:
 *Expected: A B C D E F are inactive. A maximum of 19 characters can be entered.*
 10.	"Oct" Octal:

@@ -1,7 +1,7 @@
 # Application Architecture
 
 Windows Calculator is a [C++/CX][C++/CX] application, built for the Universal Windows Platform ([UWP][What is UWP?]).
-Calculator uses the [XAML][XAML Overview] UI framework, and the project follows the Model-View-ViewModel ([MVVM][MVVM])
+The calculator uses the [XAML][XAML Overview] UI framework, and the project follows the Model-View-ViewModel ([MVVM][MVVM])
 design pattern. This document discusses each of the layers and how they are related to the three Visual Studio projects
 that build into the final Calculator application.
 
@@ -56,7 +56,7 @@ Once the window is resized to have enough space, the panel becomes docked along 
 
 #### Scientific mode, inverse function button presence
 
-In the Scientific mode, for small window sizes there is not enough room to show all the function buttons. The mode
+In the Scientific mode, for small window sizes, there is not enough room to show all the function buttons. The mode
 hides some of the buttons and provides a Shift (↑) button to toggle the visibility of the collapsed rows. When the
 window size is large enough, the buttons are re-arranged to display all function buttons at the same time.
 
@@ -64,14 +64,14 @@ window size is large enough, the buttons are re-arranged to display all function
 
 #### Unit Converter aspect ratio adjustment
 
-In the Unit Converter mode, the converter inputs and the numberpad will re-arrange depending on if the window is in
+In the Unit Converter mode, the converter inputs and the number pad will re-arrange depending on if the window is in
 a Portrait or Landscape aspect ratio.
 
 <img src="Images\VisualStates\Converter1.gif" height="400" />
 
 ### Data-Binding
 
-Calculator uses [data binding][Data Binding] to dynamically update the properties of UI elements. If this concept
+The calculator uses [data binding][Data Binding] to dynamically update the properties of UI elements. If this concept
 is new for you, it's also worth reading about [data binding in depth][Data binding in depth].
 
 The [x:Bind][x:Bind] markup extension is a newer replacement for the older [Binding][Binding] style. You may see both

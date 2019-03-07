@@ -27,7 +27,7 @@ It will typically include these sections:
   customer need or pain point we need to remedy? Is there a business goal or metric we are trying
   to improve? Do we have a hypothesis we want to prove or disprove?
 * **Evidence or User Insights**: Why should we do this? Potential sources of data: Feedback Hub,
-  other GitHub issues, other anecdotes from listening to customers in person or online, request
+  other GitHub issues, other anecdotes from listening to customers in person or online, a request
   from another team, telemetry data, user research, market or competitive research
 * **Proposal**: How will the solution/feature help us solve the problem? How will it meet the
   target audience’s needs? If there are business goals or metrics, how does this improve them?
@@ -72,7 +72,7 @@ addressed:
 - [ ] Does the design include provisions for [all users](https://docs.microsoft.com/en-us/windows/uwp/design/accessibility/designing-inclusive-software)
   and [all cultures](https://docs.microsoft.com/en-us/windows/uwp/design/globalizing/guidelines-and-checklist-for-globalizing-your-app)?
 - [ ] Is it technically feasible to build this feature? Take a look at the "before committing"
-  checklist below and identify any issues which are likely to be blockers.
+  the checklist below and identify any issues which are likely to be blockers.
 
 ## Step 3: Production
 A feature can be implemented by the original proposer, a Microsoft team member, or by other
