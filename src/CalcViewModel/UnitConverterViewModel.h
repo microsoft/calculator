@@ -243,7 +243,7 @@ namespace CalculatorApp
             Platform::String^ Serialize();
             void Deserialize(Platform::String^ state);
             
-            //Saving And Restoring User Prefernces of Category and Associated-Units across Sessions.
+            //Saving And Restoring User Preferences of Category and Associated-Units across Sessions.
             void SaveUserPreferences();
             void RestoreUserPreferences();
 
