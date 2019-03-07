@@ -101,7 +101,7 @@ namespace CalculatorUnitTests
             }
         }
 
-        // Perform calculations on diferent calculator modes and verify that they work independently
+        // Perform calculations on different calculator modes and verify that they work independently
         TEST_METHOD(MultipleModesCalculationTest)
         {
             std::vector<StandardCalculatorViewModel^> viewModels(3);

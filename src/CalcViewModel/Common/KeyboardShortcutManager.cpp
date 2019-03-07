@@ -441,8 +441,8 @@ void KeyboardShortcutManager::OnVirtualKeyControlInverseChordPropertyChanged(
     }
 }
 
-// In the three event handlers bellow we will not mark the event as handled
-// because this is a sumplemental operation and we don't want to interfere with 
+// In the three event handlers below we will not mark the event as handled
+// because this is a supplemental operation and we don't want to interfere with
 // the normal keyboard handling.
 void KeyboardShortcutManager::OnCharacterReceivedHandler(CoreWindow^ sender, CharacterReceivedEventArgs^ args)
 {
