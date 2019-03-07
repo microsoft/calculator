@@ -439,7 +439,7 @@ namespace CalculatorUnitTests
     12. octal numbers
     13. very large number
     14. number with some escape characters in b/w like ",/. \n\r ", '"
-    15. expression involving sin, cos or other mathematic functions
+    15. expression involving sin, cos or other mathematical functions
     16. expression having more than one operator in b/w operands
     17. expression involving open and close parenthesis (, )
 
