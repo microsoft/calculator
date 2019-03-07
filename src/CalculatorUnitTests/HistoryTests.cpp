@@ -4,8 +4,8 @@
 #include "pch.h"
 #include <CppUnitTest.h>
 
-#include "CalcViewModel\HistoryViewModel.h"
-#include "CalcViewModel\StandardCalculatorViewModel.h"
+#include "CalcViewModel/HistoryViewModel.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
 
 using namespace CalculationManager;
 using namespace CalculatorApp;

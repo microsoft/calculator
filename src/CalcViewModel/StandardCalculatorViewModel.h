@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include "Common\Automation\NarratorAnnouncement.h"
-#include "Common\DisplayExpressionToken.h"
-#include "Common\CalculatorDisplay.h"
-#include "Common\EngineResourceProvider.h"
-#include "Common\CalculatorButtonUser.h"
+#include "Common/Automation/NarratorAnnouncement.h"
+#include "Common/DisplayExpressionToken.h"
+#include "Common/CalculatorDisplay.h"
+#include "Common/EngineResourceProvider.h"
+#include "Common/CalculatorButtonUser.h"
 #include "HistoryViewModel.h"
 #include "MemoryItemViewModel.h"
 

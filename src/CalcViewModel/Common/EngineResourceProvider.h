@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "CalcManager\CalculatorResource.h"
+#include "CalcManager/CalculatorResource.h"
 
 namespace CalculatorApp
 {

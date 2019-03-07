@@ -8,9 +8,9 @@
 
 #include "pch.h"
 #include "CalculatorProgrammerRadixOperators.xaml.h"
-#include "Controls\CalculatorButton.h"
-#include "Converters\BooleanToVisibilityConverter.h"
-#include "Views\NumberPad.xaml.h"
+#include "Controls/CalculatorButton.h"
+#include "Converters/BooleanToVisibilityConverter.h"
+#include "Views/NumberPad.xaml.h"
 
 using namespace CalculatorApp;
 

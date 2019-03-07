@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "CalcManager\UnitConverter.h"
-#include "Common\NetworkManager.h"
+#include "CalcManager/UnitConverter.h"
+#include "Common/NetworkManager.h"
 #include "ICurrencyHttpClient.h"
 
 namespace CalculatorApp

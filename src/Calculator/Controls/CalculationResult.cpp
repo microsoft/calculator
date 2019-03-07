@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "CalculationResult.h"
 #include "CalculationResultAutomationPeer.h"
-#include "CalcViewModel\Common\LocalizationSettings.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Controls;

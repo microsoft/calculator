@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "Common\AppResourceProvider.h"
+#include "Common/AppResourceProvider.h"
 #include "UnitConverterDataLoader.h"
 #include "UnitConverterDataConstants.h"
 #include "CurrencyDataLoader.h"
