@@ -889,7 +889,7 @@ namespace CalculatorManagerTest
         VerifyPersistence();
     }
 
-    // 1 + 2 then serialize and deserialze 3 times
+    // 1 + 2 then serialize and deserialize 3 times
     // Check if the values are persisted correctly
     void CalculatorManagerTest::CalculatorManagerTestSerializeMultiple()
     {
