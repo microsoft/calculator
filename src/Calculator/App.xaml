@@ -13,7 +13,7 @@
             </ResourceDictionary.MergedDictionaries>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
-                    <Thickness x:Key="HighContrastThicknessTop">0,0,0,0</Thickness>
+                    <Thickness x:Key="HighContrastThicknessTop">0</Thickness>
                     <x:Double x:Key="HighContrastStrokeThickness">0</x:Double>
                     <Color x:Key="AltHighColor">#FF000000</Color>
                     <Color x:Key="ChromeMediumLowColor">#FF2B2B2B</Color>
@@ -45,7 +45,7 @@
                                   TintOpacity="0.7"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
-                    <Thickness x:Key="HighContrastThicknessTop">0,0,0,0</Thickness>
+                    <Thickness x:Key="HighContrastThicknessTop">0</Thickness>
                     <x:Double x:Key="HighContrastStrokeThickness">0</x:Double>
                     <Color x:Key="AltHighColor">#FFF2F2F2</Color>
                     <Color x:Key="ChromeMediumLowColor">#FFE0E0E0</Color>
@@ -381,7 +381,7 @@
                                 </VisualStateManager.VisualStateGroups>
                                 <ScrollViewer x:Name="textContainer"
                                               Grid.Column="1"
-                                              Padding="0,0,0,0"
+                                              Padding="0"
                                               Style="{ThemeResource ResultsScrollerSnapped}"
                                               AutomationProperties.AccessibilityView="Raw">
                                     <TextBlock x:Name="normalOutput"
@@ -467,7 +467,7 @@
                                 </VisualStateManager.VisualStateGroups>
                                 <ScrollViewer x:Name="textContainer"
                                               Grid.Column="1"
-                                              Padding="0,0,0,0"
+                                              Padding="0"
                                               Style="{ThemeResource ResultsScrollerSnapped}"
                                               AutomationProperties.AccessibilityView="Raw">
                                     <TextBlock x:Name="normalOutput"
@@ -554,7 +554,7 @@
                                 </VisualStateManager.VisualStateGroups>
                                 <ScrollViewer x:Name="textContainer"
                                               Grid.Column="1"
-                                              Padding="0,0,0,0"
+                                              Padding="0"
                                               Style="{ThemeResource ResultsScrollerSnapped}"
                                               AutomationProperties.AccessibilityView="Raw">
                                     <TextBlock x:Name="normalOutput"
@@ -1222,7 +1222,7 @@
                                            Opacity="0"
                                            IsHitTestVisible="False"/>
                                 <Grid x:Name="ContentPresenterGrid"
-                                      Margin="0,0,0,0"
+                                      Margin="0"
                                       Background="Transparent">
                                     <Grid.RenderTransform>
                                         <TranslateTransform x:Name="ContentPresenterTranslateTransform"/>

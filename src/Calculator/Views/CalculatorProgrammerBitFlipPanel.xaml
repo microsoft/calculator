@@ -23,7 +23,7 @@
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
             <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
-            <Setter Property="Padding" Value="0,0,0,0"/>
+            <Setter Property="Padding" Value="0"/>
             <Setter Property="MinWidth" Value="12"/>
             <Setter Property="MinHeight" Value="20"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>

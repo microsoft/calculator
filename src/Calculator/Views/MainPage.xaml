@@ -19,12 +19,12 @@
     <Page.Resources>
         <automation:NarratorNotifier x:Name="NarratorNotifier"/>
         <Style x:Name="CalculatorBaseStyle" TargetType="local:Calculator">
-            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Margin" Value="0"/>
         </Style>
         <Style x:Name="UnitConverterBaseStyle" TargetType="local:UnitConverter">
             <Setter Property="Visibility" Value="Collapsed"/>
             <Setter Property="IsEnabled" Value="False"/>
-            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Margin" Value="0"/>
         </Style>
         <Style x:Key="AboutFlyoutPresenterStyle" TargetType="FlyoutPresenter">
             <Setter Property="IsTabStop" Value="False"/>

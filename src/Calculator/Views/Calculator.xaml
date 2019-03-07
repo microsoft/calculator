@@ -150,7 +150,7 @@
                                 </Grid.ColumnDefinitions>
                                 <ScrollViewer x:Name="expressionContainer"
                                               Grid.Column="1"
-                                              Padding="0,0,0,0"
+                                              Padding="0"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               Style="{StaticResource ResultsScrollerSnapped}"
                                               AutomationProperties.AccessibilityView="Raw"
@@ -265,7 +265,7 @@
             <Setter Property="FontSize" Value="{StaticResource CalcResultFontSizeL}"/>
             <Setter Property="MinFontSize" Value="12"/>
             <Setter Property="IsActive" Value="True"/>
-            <Setter Property="DisplayMargin" Value="0,0,0,0"/>
+            <Setter Property="DisplayMargin" Value="0"/>
             <Setter Property="MaxExpressionHistoryCharacters" Value="51"/>
         </Style>
 
@@ -278,7 +278,7 @@
             <Setter Property="FontSize" Value="{StaticResource CalcResultFontSizeM}"/>
             <Setter Property="MinFontSize" Value="12"/>
             <Setter Property="IsActive" Value="True"/>
-            <Setter Property="DisplayMargin" Value="0,0,0,0"/>
+            <Setter Property="DisplayMargin" Value="0"/>
             <Setter Property="MaxExpressionHistoryCharacters" Value="30"/>
         </Style>
 
@@ -291,7 +291,7 @@
             <Setter Property="FontSize" Value="{StaticResource CalcResultFontSizeS}"/>
             <Setter Property="MinFontSize" Value="12"/>
             <Setter Property="IsActive" Value="True"/>
-            <Setter Property="DisplayMargin" Value="0,0,0,0"/>
+            <Setter Property="DisplayMargin" Value="0"/>
             <Setter Property="MaxExpressionHistoryCharacters" Value="30"/>
         </Style>
 
@@ -299,7 +299,7 @@
 
         <Style x:Key="ScrollButtonStyle" TargetType="Button">
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="0,0,0,0"/>
+            <Setter Property="Padding" Value="0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -628,7 +628,7 @@
             <controls:CalculationResult x:Name="Results"
                                         x:Uid="CalculatorResults"
                                         Grid.Row="2"
-                                        Margin="0,0,0,0"
+                                        Margin="0"
                                         Style="{ThemeResource ResultsStyleM}"
                                         AutomationProperties.AutomationId="CalculatorResults"
                                         AutomationProperties.HeadingLevel="Level1"

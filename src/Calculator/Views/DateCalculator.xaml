@@ -21,7 +21,7 @@
         </DataTemplate>
 
         <Style x:Key="DateCalculation_ComboStyle" TargetType="ComboBox">
-            <Setter Property="Padding" Value="0,0,0,0"/>
+            <Setter Property="Padding" Value="0"/>
             <Setter Property="MinHeight" Value="20"/>
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
             <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
@@ -242,7 +242,7 @@
                                                             </VisualStateManager.VisualStateGroups>
                                                             <ContentPresenter Grid.Row="1"
                                                                               Grid.Column="1"
-                                                                              Margin="0,0,0,0"
+                                                                              Margin="0"
                                                                               HorizontalAlignment="Stretch"
                                                                               VerticalAlignment="Top"
                                                                               Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
@@ -440,7 +440,7 @@
                        TextWrapping="Wrap"/>
             <CalendarDatePicker x:Name="DateDiff_ToDate"
                                 Grid.Row="5"
-                                Margin="0,0,0,0"
+                                Margin="0"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
                                 AutomationProperties.LabeledBy="{x:Bind Date_ToLabel}"
                                 CalendarViewStyle="{StaticResource DateCalculation_CalendarViewStyle}"
@@ -450,7 +450,7 @@
             <!-- Difference Result -->
             <TextBlock x:Uid="Date_DifferenceLabel"
                        Grid.Row="7"
-                       Margin="0,0,0,0"
+                       Margin="0"
                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
             <TextBlock x:Name="DateDiffAllUnitsResultLabel"
                        Grid.Row="8"
@@ -498,7 +498,7 @@
                        TextWrapping="Wrap"/>
             <CalendarDatePicker x:Name="AddSubtract_FromDate"
                                 Grid.Row="2"
-                                Margin="0,0,0,0"
+                                Margin="0"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
                                 AutomationProperties.LabeledBy="{x:Bind AddSubtract_Date_FromLabel}"
                                 CalendarViewStyle="{StaticResource DateCalculation_CalendarViewStyle}"
