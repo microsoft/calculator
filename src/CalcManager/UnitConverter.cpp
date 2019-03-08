@@ -496,7 +496,7 @@ wstring UnitConverter::Unquote(const wstring& s)
 /// <param name="command">Command enum representing the command that was entered</param>
 void UnitConverter::SendCommand(Command command)
 {
-    if (CheckLoad())
+    if (!CheckLoad())
     {
         return;
     }
