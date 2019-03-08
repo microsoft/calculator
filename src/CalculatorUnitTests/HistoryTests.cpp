@@ -42,7 +42,7 @@ namespace CalculatorFunctionalTests
         HistoryViewModel^ m_historyViewModel;
         StandardCalculatorViewModel^ m_standardViewModel;
 
-        void Initialize(unsigned int windowId = 0)
+        void Initialize(unsigned int /*windowId*/ = 0)
         {
             m_standardViewModel = ref new StandardCalculatorViewModel();
             m_standardViewModel->IsStandard = true;
@@ -50,7 +50,7 @@ namespace CalculatorFunctionalTests
             m_historyViewModel->SetCalculatorDisplay(m_standardViewModel->m_calculatorDisplay);
         }
 
-        void Cleanup(unsigned int windowId = 0)
+        void Cleanup(unsigned int /*windowId*/ = 0)
         {
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeBasic);
             m_historyViewModel->OnClearCommand(nullptr);
@@ -100,7 +100,6 @@ namespace CalculatorFunctionalTests
         void AddMaxHistoryItems(unsigned int windowId = 0)
         {
             Initialize(windowId);
-            int initialSize = m_historyViewModel->ItemSize;
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);

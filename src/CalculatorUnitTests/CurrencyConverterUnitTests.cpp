@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -74,15 +74,15 @@ public:
         m_task_completion_event{ tce }
     {}
 
-    void CurrencyDataLoadFinished(bool didLoad) override
+    void CurrencyDataLoadFinished(bool /*didLoad*/) override
     {
         m_task_completion_event.set();
     }
 
-    void CurrencySymbolsCallback(_In_ const wstring& fromSymbol, _In_ const wstring& toSymbol) override {}
-    void CurrencyRatiosCallback(_In_ const wstring& ratioEquality, _In_ const wstring& accRatioEquality) override {}
-    void CurrencyTimestampCallback(_In_ const std::wstring& timestamp, bool isWeekOldData) override {}
-    void NetworkBehaviorChanged(_In_ int newBehavior) override {}
+    void CurrencySymbolsCallback(_In_ const wstring& /*fromSymbol*/, _In_ const wstring& /*toSymbol*/) override {}
+    void CurrencyRatiosCallback(_In_ const wstring& /*ratioEquality*/, _In_ const wstring& /*accRatioEquality*/) override {}
+    void CurrencyTimestampCallback(_In_ const std::wstring& /*timestamp*/, bool /*isWeekOldData*/) override {}
+    void NetworkBehaviorChanged(_In_ int /*newBehavior*/) override {}
 
 private:
     Concurrency::task_completion_event<void> m_task_completion_event;

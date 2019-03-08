@@ -102,7 +102,7 @@ void DateCalculator::FromDate_DateChanged(_In_ CalendarDatePicker^ sender, _In_ 
     {
         auto dateCalcViewModel = safe_cast<DateCalculatorViewModel^>(this->DataContext);
         dateCalcViewModel->FromDate = e->NewDate->Value;
-        TraceLogger::GetInstance().LogDateDifferenceModeUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+        TraceLogger::GetInstance().LogDateDifferenceModeUsed();
     }
     else
     {
@@ -116,7 +116,7 @@ void DateCalculator::ToDate_DateChanged(_In_ CalendarDatePicker^ sender, _In_ Ca
     {
         auto dateCalcViewModel = safe_cast<DateCalculatorViewModel^>(this->DataContext);
         dateCalcViewModel->ToDate = e->NewDate->Value;
-        TraceLogger::GetInstance().LogDateDifferenceModeUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+        TraceLogger::GetInstance().LogDateDifferenceModeUsed();
     }
     else
     {
