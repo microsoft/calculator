@@ -46,7 +46,7 @@ UnitConverter::UnitConverter(_In_ const shared_ptr<IConverterDataLoader>& dataLo
 {
     m_dataLoader = dataLoader;
     m_currencyDataLoader = currencyDataLoader;
-    //declaring the delimiter character conversion map
+    // declaring the delimiter character conversion map
     quoteConversions[L'|'] = L"{p}";
     quoteConversions[L'['] = L"{lc}";
     quoteConversions[L']'] = L"{rc}";
