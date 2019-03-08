@@ -553,7 +553,7 @@ bool StandardCalculatorViewModel::IsOperator(Command cmdenum)
 {
     if ((cmdenum == Command::Command0) || (cmdenum == Command::Command1) || (cmdenum == Command::Command2) || (cmdenum == Command::Command3) || (cmdenum == Command::Command4) || (cmdenum == Command::Command5)
         || (cmdenum == Command::Command6) || (cmdenum == Command::Command7) || (cmdenum == Command::Command8) || (cmdenum == Command::Command9) || (cmdenum == Command::CommandPNT) || (cmdenum == Command::CommandBACK)
-        || (cmdenum == Command::CommandEXP) || (cmdenum == Command::CommandFE) || (cmdenum == Command::ModeBasic) || (cmdenum == Command::ModeBasic) || (cmdenum == Command::ModeProgrammer) || (cmdenum == Command::ModeScientific)
+        || (cmdenum == Command::CommandEXP) || (cmdenum == Command::CommandFE) || (cmdenum == Command::ModeBasic) || (cmdenum == Command::ModeProgrammer) || (cmdenum == Command::ModeScientific)
         || (cmdenum == Command::CommandINV) || (cmdenum == Command::CommandCENTR) || (cmdenum == Command::CommandDEG) || (cmdenum == Command::CommandRAD) || (cmdenum == Command::CommandGRAD)
         || ((cmdenum >= Command::CommandBINEDITSTART) && (cmdenum <= Command::CommandBINEDITEND)))
     {
