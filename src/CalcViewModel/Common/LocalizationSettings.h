@@ -26,8 +26,9 @@ namespace CalculatorApp
                     m_digitSymbols.at(i) = formatter->FormatUInt(i)->Data()[0];
                 }
 
+                wchar_t resolvedName[LOCALE_NAME_MAX_LENGTH];
                 result = ResolveLocaleName(formatter->ResolvedLanguage->Data(),
-                    m_resolvedName,
+                    resolvedName,
                     LOCALE_NAME_MAX_LENGTH);
                 if (result == 0)
                 {
@@ -35,8 +36,9 @@ namespace CalculatorApp
                 }
                 else
                 {
+                    m_resolvedName = resolvedName;
                     wchar_t decimalString[LocaleSettingBufferSize] = L"";
-                    result = GetLocaleInfoEx(m_resolvedName,
+                    result = GetLocaleInfoEx(m_resolvedName.c_str(),
                         LOCALE_SDECIMAL,
                         decimalString,
                         ARRAYSIZE(decimalString));
@@ -46,7 +48,7 @@ namespace CalculatorApp
                     }
 
                     wchar_t groupingSymbolString[LocaleSettingBufferSize] = L"";
-                    result = GetLocaleInfoEx(m_resolvedName,
+                    result = GetLocaleInfoEx(m_resolvedName.c_str(),
                         LOCALE_STHOUSAND,
                         groupingSymbolString,
                         ARRAYSIZE(groupingSymbolString));
@@ -56,7 +58,7 @@ namespace CalculatorApp
                     }
 
                     wchar_t numberGroupingString[LocaleSettingBufferSize] = L"";
-                    result = GetLocaleInfoEx(m_resolvedName,
+                    result = GetLocaleInfoEx(m_resolvedName.c_str(),
                         LOCALE_SGROUPING,
                         numberGroupingString,
                         ARRAYSIZE(numberGroupingString));
@@ -77,7 +79,7 @@ namespace CalculatorApp
                     }
 
                     int currencyTrailingDigits = 0;
-                    result = GetLocaleInfoEx(m_resolvedName,
+                    result = GetLocaleInfoEx(m_resolvedName.c_str(),
                         LOCALE_ICURRDIGITS | LOCALE_RETURN_NUMBER,
                         (LPWSTR)&currencyTrailingDigits,
                         sizeof(currencyTrailingDigits) / sizeof(WCHAR));
@@ -147,7 +149,7 @@ namespace CalculatorApp
 
             Platform::String^ GetLocaleName() const
             {
-                return ref new Platform::String(m_resolvedName);
+                return ref new Platform::String(m_resolvedName.c_str());
             }
 
             bool IsDigitEnUsSetting() const
@@ -377,7 +379,7 @@ namespace CalculatorApp
             Platform::String^ m_calendarIdentifier;
             Windows::Globalization::DayOfWeek m_firstDayOfWeek;
             int m_currencySymbolPrecedence;
-            wchar_t m_resolvedName[LOCALE_NAME_MAX_LENGTH];
+            std::wstring m_resolvedName;
             int m_currencyTrailingDigits;
             static const unsigned int LocaleSettingBufferSize = 16;
         };
