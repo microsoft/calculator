@@ -307,11 +307,12 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
             // or which will break conversion from string-to-ULL.
             wstring operandValue = SanitizeOperand(operand);
 
-            // If an operand exceeds the maximum length allowed, break and return.
-            if (OperandLength(operandValue, mode, modeType, programmerNumberBase) > maxOperandLength)
+            // If an operand exceeds the maximum length allowed, trim it to its allowed length.
+            size_t OperandLen = OperandLength(operandValue, mode, modeType, programmerNumberBase);
+            if (OperandLen > maxOperandLength)
             {
-                expMatched = false;
-                break;
+                // Try to trim the length to allowed length
+                TrimOperand(operandValue, OperandLen - maxOperandLength);
             }
 
             // If maxOperandValue is set and the operandValue exceeds it, break and return.
@@ -337,6 +338,11 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
     }
 
     return expMatched;
+}
+
+void CopyPasteManager::TrimOperand(std::wstring& operand, size_t exceededBy)
+{
+    operand = operand.substr(0, operand.length() - exceededBy);
 }
 
 pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, int bitLengthType)
