@@ -483,22 +483,24 @@ namespace CalculationManager
     void CalculatorManager::MemorizeNumber()
     {
         m_savedCommands.push_back(MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizeNumber));
-        if (!(m_currentCalculatorEngine->FInErrorState()))
-        {
-            m_currentCalculatorEngine->ProcessCommand(IDC_STORE);
 
-            auto memoryObjectPtr = m_currentCalculatorEngine->PersistedMemObject();
-            if (memoryObjectPtr != nullptr)
-            {
-                m_memorizedNumbers.insert(m_memorizedNumbers.begin(), *memoryObjectPtr);
-            }
-
-            if (m_memorizedNumbers.size() > m_maximumMemorySize)
-            {
-                m_memorizedNumbers.resize(m_maximumMemorySize);
-            }
-            this->SetMemorizedNumbersString();
+        if (m_currentCalculatorEngine->FInErrorState()) {
+            return;
         }
+
+        m_currentCalculatorEngine->ProcessCommand(IDC_STORE);
+
+        auto memoryObjectPtr = m_currentCalculatorEngine->PersistedMemObject();
+        if (memoryObjectPtr != nullptr)
+        {
+            m_memorizedNumbers.insert(m_memorizedNumbers.begin(), *memoryObjectPtr);
+        }
+
+        if (m_memorizedNumbers.size() > m_maximumMemorySize)
+        {
+            m_memorizedNumbers.resize(m_maximumMemorySize);
+        }
+        this->SetMemorizedNumbersString();
     }
 
     /// <summary>
@@ -509,11 +511,13 @@ namespace CalculationManager
     void CalculatorManager::MemorizedNumberLoad(_In_ unsigned int indexOfMemory)
     {
         SaveMemoryCommand(MemoryCommand::MemorizedNumberLoad, indexOfMemory);
-        if (!(m_currentCalculatorEngine->FInErrorState()))
-        {
-            this->MemorizedNumberSelect(indexOfMemory);
-            m_currentCalculatorEngine->ProcessCommand(IDC_RECALL);
+
+        if (m_currentCalculatorEngine->FInErrorState()) {
+            return;
         }
+
+        this->MemorizedNumberSelect(indexOfMemory);
+        m_currentCalculatorEngine->ProcessCommand(IDC_RECALL);
     }
 
     /// <summary>
@@ -525,24 +529,26 @@ namespace CalculationManager
     void CalculatorManager::MemorizedNumberAdd(_In_ unsigned int indexOfMemory)
     {
         SaveMemoryCommand(MemoryCommand::MemorizedNumberAdd, indexOfMemory);
-        if (!(m_currentCalculatorEngine->FInErrorState()))
-        {
-            if (m_memorizedNumbers.empty())
-            {
-                this->MemorizeNumber();
-            }
-            else
-            {
-                this->MemorizedNumberSelect(indexOfMemory);
-                m_currentCalculatorEngine->ProcessCommand(IDC_MPLUS);
 
-                this->MemorizedNumberChanged(indexOfMemory);
-
-                this->SetMemorizedNumbersString();
-            }
-
-            m_displayCallback->MemoryItemChanged(indexOfMemory);
+        if (m_currentCalculatorEngine->FInErrorState()) {
+            return;
         }
+
+        if (m_memorizedNumbers.empty())
+        {
+            this->MemorizeNumber();
+        }
+        else
+        {
+            this->MemorizedNumberSelect(indexOfMemory);
+            m_currentCalculatorEngine->ProcessCommand(IDC_MPLUS);
+
+            this->MemorizedNumberChanged(indexOfMemory);
+
+            this->SetMemorizedNumbersString();
+        }
+
+        m_displayCallback->MemoryItemChanged(indexOfMemory);
     }
 
     void CalculatorManager::MemorizedNumberClear(_In_ unsigned int indexOfMemory)
@@ -563,27 +569,29 @@ namespace CalculationManager
     void CalculatorManager::MemorizedNumberSubtract(_In_ unsigned int indexOfMemory)
     {
         SaveMemoryCommand(MemoryCommand::MemorizedNumberSubtract, indexOfMemory);
-        if (!(m_currentCalculatorEngine->FInErrorState()))
-        {
-            // To add negative of the number on display to the memory -x = x - 2x
-            if (m_memorizedNumbers.empty())
-            {
-                this->MemorizeNumber();
-                this->MemorizedNumberSubtract(0);
-                this->MemorizedNumberSubtract(0);
-            }
-            else
-            {
-                this->MemorizedNumberSelect(indexOfMemory);
-                m_currentCalculatorEngine->ProcessCommand(IDC_MMINUS);
 
-                this->MemorizedNumberChanged(indexOfMemory);
-
-                this->SetMemorizedNumbersString();
-            }
-
-            m_displayCallback->MemoryItemChanged(indexOfMemory);
+        if (m_currentCalculatorEngine->FInErrorState()) {
+            return;
         }
+
+        // To add negative of the number on display to the memory -x = x - 2x
+        if (m_memorizedNumbers.empty())
+        {
+            this->MemorizeNumber();
+            this->MemorizedNumberSubtract(0);
+            this->MemorizedNumberSubtract(0);
+        }
+        else
+        {
+            this->MemorizedNumberSelect(indexOfMemory);
+            m_currentCalculatorEngine->ProcessCommand(IDC_MMINUS);
+
+            this->MemorizedNumberChanged(indexOfMemory);
+
+            this->SetMemorizedNumbersString();
+        }
+
+        m_displayCallback->MemoryItemChanged(indexOfMemory);
     }
 
     /// <summary>
@@ -606,11 +614,12 @@ namespace CalculationManager
 /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberSelect(_In_ unsigned int indexOfMemory)
     {
-        if (!(m_currentCalculatorEngine->FInErrorState()))
-        {
-            auto memoryObject = m_memorizedNumbers.at(indexOfMemory);
-            m_currentCalculatorEngine->PersistedMemObject(memoryObject);
+        if (m_currentCalculatorEngine->FInErrorState()) {
+            return;
         }
+
+        auto memoryObject = m_memorizedNumbers.at(indexOfMemory);
+        m_currentCalculatorEngine->PersistedMemObject(memoryObject);
     }
 
     /// <summary>
@@ -620,13 +629,14 @@ namespace CalculationManager
     /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberChanged(_In_ unsigned int indexOfMemory)
     {
-        if (!(m_currentCalculatorEngine->FInErrorState()))
+        if (m_currentCalculatorEngine->FInErrorState()) {
+            return;
+        }
+
+        auto memoryObject = m_currentCalculatorEngine->PersistedMemObject();
+        if (memoryObject != nullptr)
         {
-            auto memoryObject = m_currentCalculatorEngine->PersistedMemObject();
-            if (memoryObject != nullptr)
-            {
-                m_memorizedNumbers.at(indexOfMemory) = *memoryObject;
-            }
+            m_memorizedNumbers.at(indexOfMemory) = *memoryObject;
         }
     }
 
