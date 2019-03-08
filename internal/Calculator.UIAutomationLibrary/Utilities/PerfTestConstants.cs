@@ -36,6 +36,6 @@ namespace Calculator.UIAutomationLibrary
         /// <summary>
         /// These are uses with the DataSource test property to specify iteration info.
         /// </summary>
-        public const string AppLifecycleInterationsSource = "Table:" + ConfigDirectory + "AppLifecycle.Iterations.xml#PerformanceConfigurations";
+        public const string AppLifecycleIterationsSource = "Table:" + ConfigDirectory + "AppLifecycle.Iterations.xml#PerformanceConfigurations";
     }
 }

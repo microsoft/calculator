@@ -35,8 +35,8 @@ void CHistoryCollector::ReinitHistory()
 CHistoryCollector::CHistoryCollector(ICalcDisplay *pCalcDisplay, std::shared_ptr<IHistoryDisplay> pHistoryDisplay, wchar_t decimalSymbol) :
     m_pHistoryDisplay(pHistoryDisplay),
     m_pCalcDisplay(pCalcDisplay),
-    m_decimalSymbol(decimalSymbol),
-    m_iCurLineHistStart(-1)
+    m_iCurLineHistStart(-1),
+    m_decimalSymbol(decimalSymbol)
 {
     ReinitHistory();
 }
@@ -136,7 +136,7 @@ void CHistoryCollector::ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher)
     TruncateEquationSzFromIch(m_lastBinOpStartIndex);
     if (fPrecInvToHigher)
     {
-        EnclosePrecInvertionBrackets();
+        EnclosePrecInversionBrackets();
     }
     AddBinOpToHistory(nOpCode);
 }
@@ -161,7 +161,7 @@ void CHistoryCollector::PopLastOpndStart()
 
 void CHistoryCollector::AddOpenBraceToHistory()
 {
-    int iCommandEnd = AddCommand(std::make_shared<CParentheses>(IDC_OPENP));
+    AddCommand(std::make_shared<CParentheses>(IDC_OPENP));
     int ichOpndStart = IchAddSzToEquationSz(CCalcEngine::OpCodeToString(IDC_OPENP), -1);
     PushLastOpndStart(ichOpndStart);
 
@@ -171,7 +171,7 @@ void CHistoryCollector::AddOpenBraceToHistory()
 
 void CHistoryCollector::AddCloseBraceToHistory()
 {
-    int iCommandEnd = AddCommand(std::make_shared<CParentheses>(IDC_CLOSEP));
+    AddCommand(std::make_shared<CParentheses>(IDC_CLOSEP));
     IchAddSzToEquationSz(CCalcEngine::OpCodeToString(IDC_CLOSEP), -1);
     SetExpressionDisplay();
     PopLastOpndStart();
@@ -180,7 +180,7 @@ void CHistoryCollector::AddCloseBraceToHistory()
     m_bLastOpndBrace = true;
 }
 
-void CHistoryCollector::EnclosePrecInvertionBrackets()
+void CHistoryCollector::EnclosePrecInversionBrackets()
 {
     // Top of the Opnd starts index or 0 is nothing is in top
     int ichStart = (m_curOperandIndex > 0) ? m_operandIndices[m_curOperandIndex - 1] : 0;
@@ -401,9 +401,9 @@ int CHistoryCollector::AddCommand(_In_ const std::shared_ptr<IExpressionCommand>
         throw(CALC_E_OUTOFMEMORY);
     }
 
-    unsigned int nCommmands = 0;
-    m_spCommands->GetSize(&nCommmands);
-    return nCommmands - 1;
+    unsigned int nCommands = 0;
+    m_spCommands->GetSize(&nCommands);
+    return nCommands - 1;
 }
 
 //To Update the operands in the Expression according to the current Radix 
@@ -450,20 +450,16 @@ std::shared_ptr<CalculatorVector<int>> CHistoryCollector::GetOperandCommandsFrom
     std::shared_ptr<CalculatorVector<int>> commands = std::make_shared<CalculatorVector<int>>();
     // Check for negate
     bool fNegative = (numStr[0] == L'-');
-    bool fSciFmt = false;
-    bool fDecimal = false;
 
     for (size_t i = (fNegative ? 1 : 0); i < numStr.length(); i++)
     {
         if (numStr[i] == m_decimalSymbol)
         {
             IFT(commands->Append(IDC_PNT));
-            fDecimal = true;
         }
         else if (numStr[i] == L'e')
         {
             IFT(commands->Append(IDC_EXP));
-            fSciFmt = true;
         }
         else if (numStr[i] == L'-')
         {

@@ -25,7 +25,7 @@ using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-// The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
+// The Blank Application template is documented at https://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
 
 /// <summary>
 /// Initializes the singleton application object.  This is the first line of authored code

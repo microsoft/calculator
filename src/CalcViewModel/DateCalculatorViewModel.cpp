@@ -3,11 +3,11 @@
 
 #include "pch.h"
 #include "DateCalculatorViewModel.h"
-#include "Common\TraceLogger.h"
-#include "Common\LocalizationStringUtil.h"
-#include "Common\LocalizationService.h"
-#include "Common\LocalizationSettings.h"
-#include "Common\CopyPasteManager.h"
+#include "Common/TraceLogger.h"
+#include "Common/LocalizationStringUtil.h"
+#include "Common/LocalizationService.h"
+#include "Common/LocalizationSettings.h"
+#include "Common/CopyPasteManager.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -81,14 +81,14 @@ DateCalculatorViewModel::DateCalculatorViewModel() :
     }
 
     /* In the ClipTime function, we used to change timezone to UTC before clipping the time.
-     The comment from the previous delopers said this was done to eliminate the effects of
-     Daylight Savings Time. We can't think of a good reason why this change in timezone is
-     necessary and did find bugs related to the change, therefore, we have removed the
-     change. Just in case, we will see if the clipped time is ever a different day from the
-     original day, which would hopefully indicate the change in timezone was actually
-     necessary. We will collect telemetry if we find this case. If we don't see any
-     telemetry events after the application has been used for some time, we will feel safe
-     and can remove this function. */
+       The comment from the previous developers said this was done to eliminate the effects of
+       Daylight Savings Time. We can't think of a good reason why this change in timezone is
+       necessary and did find bugs related to the change, therefore, we have removed the
+       change. Just in case, we will see if the clipped time is ever a different day from the
+       original day, which would hopefully indicate the change in timezone was actually
+       necessary. We will collect telemetry if we find this case. If we don't see any
+       telemetry events after the application has been used for some time, we will feel safe
+       and can remove this function. */
     DayOfWeek trueDayOfWeek = calendar->DayOfWeek;
 
     DateTime clippedTime = ClipTime(today);

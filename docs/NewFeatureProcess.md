@@ -131,7 +131,7 @@ new features, the Microsoft team considers at least these items:
     - [ ] Microsoft must plan to keep these dependencies secure and functional for the lifetime of
       the app (which might be several years).
     - [ ] The app should be fully functional if some network requests are slow or fail. Tools like
-      [Fiddler](http://docs.telerik.com/fiddler/knowledgebase/fiddlerscript/perftesting)
+      [Fiddler](https://docs.telerik.com/fiddler/knowledgebase/fiddlerscript/perftesting)
       can be used to simulate slow or failed requests.
 
 ## Step 4: Final product review and merge to master

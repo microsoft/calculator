@@ -8,12 +8,12 @@
 
 #pragma once
 
-#include "Views\CalculatorProgrammerBitFlipPanel.g.h"
-#include "Controls\FlipButtons.h"
-#include "Converters\BitFlipAutomationNameConverter.h"
-#include "Converters\BooleanNegationConverter.h"
-#include "Converters\VisibilityNegationConverter.h"
-#include "CalcViewModel\StandardCalculatorViewModel.h"
+#include "Views/CalculatorProgrammerBitFlipPanel.g.h"
+#include "Controls/FlipButtons.h"
+#include "Converters/BitFlipAutomationNameConverter.h"
+#include "Converters/BooleanNegationConverter.h"
+#include "Converters/VisibilityNegationConverter.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
 
 namespace CalculatorApp
 {

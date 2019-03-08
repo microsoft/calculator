@@ -98,7 +98,7 @@ namespace CalculatorApp
             void UpdateDisplayResult();
             void UpdateStrDateDiffResultAutomationName();
             void UpdateStrDateResultAutomationName();
-            void InitializeDateOutputFormats(Platform::String^ calendarIdentifer);
+            void InitializeDateOutputFormats(Platform::String^ calendarIdentifier);
             Platform::String^ GetDateDiffString() const;
             Platform::String^ GetDateDiffStringInDays() const;
             Platform::String^ GetLocalizedNumberString(int value) const;

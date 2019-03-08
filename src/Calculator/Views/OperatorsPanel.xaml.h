@@ -3,11 +3,11 @@
 
 #pragma once
 
-#include "Views\OperatorsPanel.g.h"
-#include "Views\CalculatorStandardOperators.xaml.h"
-#include "Views\CalculatorScientificOperators.xaml.h"
-#include "Views\CalculatorProgrammerBitFlipPanel.xaml.h"
-#include "Views\CalculatorProgrammerRadixOperators.xaml.h"
+#include "Views/OperatorsPanel.g.h"
+#include "Views/CalculatorStandardOperators.xaml.h"
+#include "Views/CalculatorScientificOperators.xaml.h"
+#include "Views/CalculatorProgrammerBitFlipPanel.xaml.h"
+#include "Views/CalculatorProgrammerRadixOperators.xaml.h"
 
 namespace CalculatorApp
 {
