@@ -129,7 +129,7 @@ void CHistoryCollector::AddBinOpToHistory(int nOpCode, bool fNoRepetition)
 }
 
 // This is expected to be called when a binary op in the last say 1+2+ is changing to another one say 1+2* (+ changed to *)
-// It needs to know by this change a Precedence inversion happened. i.e. previous op was lower or equal to its previous op, but the new 
+// It needs to know by this change a Precedence inversion happened. i.e. previous op was lower or equal to its previous op, but the new
 // one isn't. (Eg. 1*2* to 1*2^). It can add explicit brackets to ensure the precedence is inverted. (Eg. (1*2) ^)
 void CHistoryCollector::ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher)
 {
@@ -196,7 +196,7 @@ bool CHistoryCollector::FOpndAddedToHistory()
 
 // AddUnaryOpToHistory
 //
-// This is does the postfix to prefix translation of the input and adds the text to the history. Eg. doing 2 + 4 (sqrt), 
+// This is does the postfix to prefix translation of the input and adds the text to the history. Eg. doing 2 + 4 (sqrt),
 // this routine will ensure the last sqrt call unary operator, actually goes back in history and wraps 4 in sqrt(4)
 //
 void CHistoryCollector::AddUnaryOpToHistory(int nOpCode, bool fInv, ANGLE_TYPE angletype)
@@ -290,7 +290,7 @@ void CHistoryCollector::AddUnaryOpToHistory(int nOpCode, bool fInv, ANGLE_TYPE a
 }
 
 // Called after = with the result of the equation
-// Responsible for clearing the top line of current running history display, as well as adding yet another element to 
+// Responsible for clearing the top line of current running history display, as well as adding yet another element to
 // history of equations
 void CHistoryCollector::CompleteHistoryLine(wstring_view numStr)
 {
@@ -406,37 +406,39 @@ int CHistoryCollector::AddCommand(_In_ const std::shared_ptr<IExpressionCommand>
     return nCommands - 1;
 }
 
-//To Update the operands in the Expression according to the current Radix 
+//To Update the operands in the Expression according to the current Radix
 void CHistoryCollector::UpdateHistoryExpression(uint32_t radix, int32_t precision)
 {
-    if (m_spTokens != nullptr)
+    if (m_spTokens == nullptr)
     {
-        unsigned int size;
-        IFT(m_spTokens->GetSize(&size));
+        return;
+    }
 
-        for (unsigned int i = 0; i < size; ++i)
+    unsigned int size;
+    IFT(m_spTokens->GetSize(&size));
+
+    for (unsigned int i = 0; i < size; ++i)
+    {
+        std::pair<std::wstring, int> token;
+        IFT(m_spTokens->GetAt(i, &token));
+        int commandPosition = token.second;
+        if (commandPosition != -1)
         {
-            std::pair<std::wstring, int> token;
-            IFT(m_spTokens->GetAt(i, &token));
-            int commandPosition = token.second;
-            if (commandPosition != -1)
+            std::shared_ptr<IExpressionCommand> expCommand;
+            IFT(m_spCommands->GetAt(commandPosition, &expCommand));
+            if (expCommand != nullptr && CalculationManager::CommandType::OperandCommand == expCommand->GetCommandType())
             {
-                std::shared_ptr<IExpressionCommand> expCommand;
-                IFT(m_spCommands->GetAt(commandPosition, &expCommand));
-                if (expCommand != nullptr && CalculationManager::CommandType::OperandCommand == expCommand->GetCommandType())
+                std::shared_ptr<COpndCommand> opndCommand = std::static_pointer_cast<COpndCommand>(expCommand);
+                if (opndCommand != nullptr)
                 {
-                    std::shared_ptr<COpndCommand> opndCommand = std::static_pointer_cast<COpndCommand>(expCommand);
-                    if (opndCommand != nullptr)
-                    {
-                        token.first = opndCommand->GetString(radix, precision, m_decimalSymbol);
-                        IFT(m_spTokens->SetAt(i, token));
-                        opndCommand->SetCommands(GetOperandCommandsFromString(token.first));
-                    }
+                    token.first = opndCommand->GetString(radix, precision, m_decimalSymbol);
+                    IFT(m_spTokens->SetAt(i, token));
+                    opndCommand->SetCommands(GetOperandCommandsFromString(token.first));
                 }
             }
         }
-        SetExpressionDisplay();
     }
+    SetExpressionDisplay();
 }
 
 void CHistoryCollector::SetDecimalSymbol(wchar_t decimalSymbol)

@@ -90,7 +90,7 @@ vector<Category> UnitConverter::GetCategories()
 }
 
 /// <summary>
-/// Sets the current category in use by this converter, 
+/// Sets the current category in use by this converter,
 /// and returns a list of unit types that exist under the given category.
 /// </summary>
 /// <param name="input">Category struct which we are setting</param>
@@ -338,7 +338,7 @@ void UnitConverter::DeSerialize(const wstring& serializedData)
 {
     Reset();
 
-    if (!serializedData.empty())
+    if (serializedData.empty())
     {
         return;
     }

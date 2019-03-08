@@ -293,7 +293,7 @@ namespace CalculationManager
     }
 
     /// <summary>
-    /// Convert Command to unsigned char. 
+    /// Convert Command to unsigned char.
     /// Since some Commands are higher than 255, they are saved after subtracting 255
     /// The smallest Command is CommandSIGN = 80, thus, subtracted value does not overlap with other values.
     /// </summary>
@@ -484,7 +484,8 @@ namespace CalculationManager
     {
         m_savedCommands.push_back(MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizeNumber));
 
-        if (m_currentCalculatorEngine->FInErrorState()) {
+        if (m_currentCalculatorEngine->FInErrorState())
+        {
             return;
         }
 
@@ -512,7 +513,8 @@ namespace CalculationManager
     {
         SaveMemoryCommand(MemoryCommand::MemorizedNumberLoad, indexOfMemory);
 
-        if (m_currentCalculatorEngine->FInErrorState()) {
+        if (m_currentCalculatorEngine->FInErrorState())
+        {
             return;
         }
 
@@ -530,7 +532,8 @@ namespace CalculationManager
     {
         SaveMemoryCommand(MemoryCommand::MemorizedNumberAdd, indexOfMemory);
 
-        if (m_currentCalculatorEngine->FInErrorState()) {
+        if (m_currentCalculatorEngine->FInErrorState())
+        {
             return;
         }
 
@@ -570,7 +573,8 @@ namespace CalculationManager
     {
         SaveMemoryCommand(MemoryCommand::MemorizedNumberSubtract, indexOfMemory);
 
-        if (m_currentCalculatorEngine->FInErrorState()) {
+        if (m_currentCalculatorEngine->FInErrorState())
+        {
             return;
         }
 
@@ -614,7 +618,8 @@ namespace CalculationManager
 /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberSelect(_In_ unsigned int indexOfMemory)
     {
-        if (m_currentCalculatorEngine->FInErrorState()) {
+        if (m_currentCalculatorEngine->FInErrorState())
+        {
             return;
         }
 
@@ -629,7 +634,8 @@ namespace CalculationManager
     /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberChanged(_In_ unsigned int indexOfMemory)
     {
-        if (m_currentCalculatorEngine->FInErrorState()) {
+        if (m_currentCalculatorEngine->FInErrorState())
+        {
             return;
         }
 
@@ -764,7 +770,7 @@ namespace CalculationManager
     }
 
     void CalculatorManager::UpdateMaxIntDigits()
-    { 
+    {
         m_currentCalculatorEngine->UpdateMaxIntDigits();
     }
 
@@ -788,7 +794,7 @@ namespace CalculationManager
     /// How Rational is serialized :
     ///     Serialized Rational.P(Number) + Serialized Rational.Q(Number)
     /// How Number is saved :
-    ///     [0] = Rational.P.Sign 
+    ///     [0] = Rational.P.Sign
     ///     [1] = Rational.P.Mantissa.size
     ///     [2] = Rational.P.Exp
     ///     [3] = Rational.P.Mantissa[0]
@@ -826,7 +832,7 @@ namespace CalculationManager
     /// <summary>
     /// Serialize Number to vector of long
     /// How Number is saved :
-    ///     [0] = Number.Sign 
+    ///     [0] = Number.Sign
     ///     [1] = Number.Mantissa.size
     ///     [2] = Number.Exp
     ///     [3] = Number.Mantissa[0]
@@ -853,7 +859,7 @@ namespace CalculationManager
     /// <summary>
     /// DeserializeNumber vector and construct a Number
     /// How Number is saved :
-    ///     [0] = Number.Sign 
+    ///     [0] = Number.Sign
     ///     [1] = Number.Mantissa.size
     ///     [2] = Number.Exp
     ///     [3] = Number.Mantissa[0]
