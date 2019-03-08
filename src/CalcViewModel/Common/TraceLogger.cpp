@@ -867,11 +867,12 @@ namespace CalculatorApp
         }
     }
 
-    void TraceLogger::LogDateDifferenceModeUsed()
+    void TraceLogger::LogDateDifferenceModeUsed(int windowId)
     {
         if (!m_dateDiffUsageLoggedInSession)
         {
             LoggingFields fields{};
+            fields.AddUInt32(L"WindowId", windowId);
             LogTelemetryEvent(EVENT_NAME_DATE_DIFFERENCE_USED, fields);
 
             m_dateDiffUsageLoggedInSession = true;
