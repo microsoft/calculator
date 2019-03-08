@@ -49,7 +49,7 @@ void rshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
 
     intrat(pa, radix, precision);
     if ( !zernum( (*pa)->pp ) )
-        { 
+        {
         // If input is zero we're done.
         if ( rat_lt( b, rat_min_exp, precision) )
             {
@@ -155,11 +155,11 @@ void boolnum( PNUMBER *pa, PNUMBER b, int func )
     pchc = c->mant;
     for ( ;cdigits > 0; cdigits--, mexp++ )
         {
-        da = ( ( ( mexp >= a->exp ) && ( cdigits + a->exp - c->exp > 
-                    (c->cdigit - a->cdigit) ) ) ? 
+        da = ( ( ( mexp >= a->exp ) && ( cdigits + a->exp - c->exp >
+                    (c->cdigit - a->cdigit) ) ) ?
                     *pcha++ : 0 );
-        db = ( ( ( mexp >= b->exp ) && ( cdigits + b->exp - c->exp > 
-                    (c->cdigit - b->cdigit) ) ) ? 
+        db = ( ( ( mexp >= b->exp ) && ( cdigits + b->exp - c->exp >
+                    (c->cdigit - b->cdigit) ) ) ?
                     *pchb++ : 0 );
         switch ( func )
             {
@@ -205,15 +205,14 @@ void modrat( PRAT *pa, PRAT b )
         throw CALC_E_INDEFINITE;
         }
     DUPRAT(tmp,b);
-    
+
     mulnumx( &((*pa)->pp), tmp->pq );
     mulnumx( &(tmp->pp), (*pa)->pq );
     remnum( &((*pa)->pp), tmp->pp, BASEX );
     mulnumx( &((*pa)->pq), tmp->pq );
-    
-    //Get *pa back in the integer over integer form.
+
+    // Get *pa back in the integer over integer form.
     RENORMALIZE(*pa);
 
     destroyrat( tmp );
 }
-

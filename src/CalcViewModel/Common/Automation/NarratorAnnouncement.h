@@ -88,7 +88,7 @@ namespace CalculatorApp::Common::Automation
         static NarratorAnnouncement^ GetCategoryNameChangedAnnouncement(Platform::String^ announcement);
 
         static NarratorAnnouncement^ GetUpdateCurrencyRatesAnnouncement(Platform::String^ announcement);
-        
+
         static NarratorAnnouncement^ GetDisplayCopiedAnnouncement(Platform::String^ announcement);
     };
 }

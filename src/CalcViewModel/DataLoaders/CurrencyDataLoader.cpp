@@ -203,7 +203,7 @@ void CurrencyDataLoader::LoadData()
                 }
             }
 
-            co_return didLoad;            
+            co_return didLoad;
         }).then([this](bool didLoad)
         {
             UpdateDisplayedTimestamp();
@@ -329,7 +329,7 @@ task<bool> CurrencyDataLoader::TryLoadDataFromCacheAsync()
         {
             loadComplete = co_await TryLoadDataFromWebAsync();
         }
-        
+
         if (!loadComplete)
         {
             loadComplete = co_await TryFinishLoadFromCacheAsync();

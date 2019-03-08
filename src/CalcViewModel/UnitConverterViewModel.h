@@ -19,7 +19,7 @@ namespace CalculatorApp
         public ref class Category sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         internal:
-            Category(const UnitConversionManager::Category& category) : 
+            Category(const UnitConversionManager::Category& category) :
                 m_original(category)
             { }
 
@@ -52,7 +52,7 @@ namespace CalculatorApp
         public ref class Unit sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         internal:
-            Unit(const UnitConversionManager::Unit& unit) : 
+            Unit(const UnitConversionManager::Unit& unit) :
                 m_original(unit)
             { }
 
@@ -163,7 +163,7 @@ namespace CalculatorApp
         internal:
             UnitConverterViewModel(const std::shared_ptr<UnitConversionManager::IUnitConverter>& model);
 
-        public: 
+        public:
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
 
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Category^>^, Categories);
@@ -224,7 +224,7 @@ namespace CalculatorApp
             COMMAND_FOR_METHOD(PasteCommand, UnitConverterViewModel::OnPasteCommand);
 
             void AnnounceConversionResult();
-            
+
         internal:
             void ResetView();
             void PopulateData();
@@ -242,8 +242,8 @@ namespace CalculatorApp
             void UpdateValue2AutomationName();
             Platform::String^ Serialize();
             void Deserialize(Platform::String^ state);
-            
-            //Saving And Restoring User Preferences of Category and Associated-Units across Sessions.
+
+            // Saving And Restoring User Preferences of Category and Associated-Units across Sessions.
             void SaveUserPreferences();
             void RestoreUserPreferences();
 
@@ -360,9 +360,9 @@ namespace CalculatorApp
             UnitConverterVMCallback(UnitConverterViewModel^ viewModel) : m_viewModel(viewModel)
             {}
 
-            void DisplayCallback(const std::wstring& from, const std::wstring& to) override 
-            { 
-                m_viewModel->UpdateDisplay(from, to); 
+            void DisplayCallback(const std::wstring& from, const std::wstring& to) override
+            {
+                m_viewModel->UpdateDisplay(from, to);
             }
 
             void SuggestedValueCallback(

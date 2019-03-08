@@ -102,7 +102,7 @@ namespace CalculatorApp
         g_calculatorProvider(
             L"MicrosoftCalculator",
             LoggingChannelOptions(GUID{ 0x4f50731a, 0x89cf, 0x4782, 0xb3, 0xe0, 0xdc, 0xe8, 0xc9, 0x4, 0x76, 0xba }), // Microsoft Telemetry group
-            GUID{ 0x905ca09, 0x610e, 0x401e, 0xb6, 0x50, 0x2f, 0x21, 0x29, 0x80, 0xb9, 0xe0 }), //Unique providerID {0905CA09-610E-401E-B650-2F212980B9E0}
+            GUID{ 0x905ca09, 0x610e, 0x401e, 0xb6, 0x50, 0x2f, 0x21, 0x29, 0x80, 0xb9, 0xe0 }), // Unique providerID {0905CA09-610E-401E-B650-2F212980B9E0}
         m_appLaunchActivity{ nullptr }
     {
         // initialize the function array
@@ -247,7 +247,7 @@ namespace CalculatorApp
         {
             windowIdLog.insert(pair<int, bool>(windowId, false));
         }
-        // if the event is not logged already for the present mode 
+        // if the event is not logged already for the present mode
         if (currentMode != mode)
         {
             currentMode = mode;
@@ -270,7 +270,7 @@ namespace CalculatorApp
         {
             windowIdLog.insert(pair<int, bool>(windowId, false));
         }
-        // if the event is not logged already for the present mode 
+        // if the event is not logged already for the present mode
         if (currentMode != mode)
         {
             currentMode = mode;
@@ -292,7 +292,7 @@ namespace CalculatorApp
         {
             windowIdLog.insert(pair<int, bool>(windowId, false));
         }
-        // if the event is not logged already for the present mode 
+        // if the event is not logged already for the present mode
         if (currentMode != mode)
         {
             currentMode = mode;
@@ -481,9 +481,9 @@ namespace CalculatorApp
         LogTelemetryEvent(EVENT_NAME_MEMORY_BODY_OPENED, fields);
     }
 
-    //If calculator is launched in any mode other than standard then this call will come which is not intended. But there is no way to avoid it.
-    //So don't use this function to analyze the count of mode change in session instead use CalculatorViewedInSession and ConverterViewedInSession to do that.
-    //Use of this function is to analyze perf of mode change.
+    // If calculator is launched in any mode other than standard then this call will come which is not intended. But there is no way to avoid it.
+    // So don't use this function to analyze the count of mode change in session instead use CalculatorViewedInSession and ConverterViewedInSession to do that.
+    // Use of this function is to analyze perf of mode change.
     void TraceLogger::LogModeChangeBegin(ViewMode fromMode, ViewMode toMode, int windowId)
     {
         if (!GetTraceLoggingProviderEnabled()) return;
@@ -498,7 +498,7 @@ namespace CalculatorApp
         }
     }
 
-    //comment: same as LogModeChangeBegin
+    // comment: same as LogModeChangeBegin
     void TraceLogger::LogModeChangeEnd(ViewMode toMode, int windowId) const
     {
         if (!GetTraceLoggingProviderEnabled()) return;
@@ -577,7 +577,7 @@ namespace CalculatorApp
         // Writer lock for the static resources
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
         auto iterMap = s_memoryMap.find(windowId);
-        
+
         LoggingFields fields{};
         LogTelemetryEvent(EVENT_NAME_MEMORY_CLEAR_ALL, fields);
 

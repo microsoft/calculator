@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 // This class provides the concrete implementation for the ICalcDisplay interface
-// that is declared in the Calculation Manager Library. 
+// that is declared in the Calculation Manager Library.
 #include "pch.h"
 #include "CalculatorDisplay.h"
 #include "StandardCalculatorViewModel.h"

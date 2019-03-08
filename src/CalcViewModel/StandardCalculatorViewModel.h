@@ -263,7 +263,7 @@ namespace CalculatorApp
 
             property Platform::String^ LeftParenthesisAutomationName
             {
-                Platform::String^ get() 
+                Platform::String^ get()
                 {
                     return GetLeftParenthesisAutomationName();
                 }
@@ -276,7 +276,7 @@ namespace CalculatorApp
 
             NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
 
-            //Memory feature related methods. They are internal because they need to called from the MainPage code-behind
+            // Memory feature related methods. They are internal because they need to called from the MainPage code-behind
             void OnMemoryButtonPressed();
             void OnMemoryItemPressed(Platform::Object^ memoryItemPosition);
             void OnMemoryAdd(Platform::Object^ memoryItemPosition);
