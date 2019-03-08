@@ -146,7 +146,7 @@ namespace CalculatorApp
             CalculatorApp::Common::DateCalculation::DateUnit m_daysOutputFormat;
             CalculatorApp::Common::DateCalculation::DateUnit m_allDateUnitsOutputFormat;
             Windows::Globalization::DateTimeFormatting::DateTimeFormatter^ m_dateTimeFormatter;
-            Platform::String^ m_listSeparator;
+            std::wstring m_listSeparator;
         };
     }
 }
