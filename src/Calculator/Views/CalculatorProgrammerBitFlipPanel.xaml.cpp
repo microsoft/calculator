@@ -30,7 +30,6 @@ CalculatorProgrammerBitFlipPanel::CalculatorProgrammerBitFlipPanel() :
 {
     InitializeComponent();
     auto booleanToVisibilityConverter = ref new Converters::BooleanToVisibilityConverter;
-    auto booleanToVisibilityNegationConverter = ref new Converters::BooleanToVisibilityNegationConverter;
     SetVisibilityBinding(BitFlipPanel, L"IsBinaryBitFlippingEnabled", booleanToVisibilityConverter);
 
     AssignFlipButtons();
