@@ -132,10 +132,10 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
             {
 
                 // update carry from addition(s) and multiply.
-                cy += (TWO_MANTTYPE)ptrc[icdigit]+((DWORD)mcy&((DWORD)~BASEX));
+                cy += (TWO_MANTTYPE)ptrc[icdigit]+((uint32_t)mcy&((uint32_t)~BASEX));
 
                 // update result digit from
-                ptrc[icdigit++]=(MANTTYPE)((DWORD)cy&((DWORD)~BASEX));
+                ptrc[icdigit++]=(MANTTYPE)((uint32_t)cy&((uint32_t)~BASEX));
 
                 // update carries from
                 mcy >>= BASEXPWR;

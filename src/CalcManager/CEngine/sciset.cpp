@@ -77,9 +77,9 @@ uint32_t CCalcEngine::NRadixFromRadixType(RADIX_TYPE radixtype)
 }
 
 //  Toggles a given bit into the number representation. returns true if it changed it actually.
-bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno)
+bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno)
 {
-    DWORD wmax = DwWordBitWidthFromeNumWidth(m_numwidth);
+    uint32_t wmax = DwWordBitWidthFromeNumWidth(m_numwidth);
     if (wbitno >= wmax)
     {
         return false; // ignore error cant happen

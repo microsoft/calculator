@@ -100,7 +100,7 @@ namespace CalcEngine
             addrat(&lhsRat, rhsRat, RATIONAL_PRECISION);
             destroyrat(rhsRat);
         }
-        catch (DWORD error)
+        catch (uint32_t error)
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
@@ -123,7 +123,7 @@ namespace CalcEngine
             subrat(&lhsRat, rhsRat, RATIONAL_PRECISION);
             destroyrat(rhsRat);
         }
-        catch (DWORD error)
+        catch (uint32_t error)
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
@@ -146,7 +146,7 @@ namespace CalcEngine
             mulrat(&lhsRat, rhsRat, RATIONAL_PRECISION);
             destroyrat(rhsRat);
         }
-        catch (DWORD error)
+        catch (uint32_t error)
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
@@ -169,7 +169,7 @@ namespace CalcEngine
             divrat(&lhsRat, rhsRat, RATIONAL_PRECISION);
             destroyrat(rhsRat);
         }
-        catch (DWORD error)
+        catch (uint32_t error)
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
@@ -192,7 +192,7 @@ namespace CalcEngine
             modrat(&lhsRat, rhsRat);
             destroyrat(rhsRat);
         }
-        catch (DWORD error)
+        catch (uint32_t error)
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
@@ -215,7 +215,7 @@ namespace CalcEngine
             lshrat(&lhsRat, rhsRat, RATIONAL_BASE, RATIONAL_PRECISION);
             destroyrat(rhsRat);
         }
-        catch (DWORD error)
+        catch (uint32_t error)
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
@@ -238,7 +238,7 @@ namespace CalcEngine
             rshrat(&lhsRat, rhsRat, RATIONAL_BASE, RATIONAL_PRECISION);
             destroyrat(rhsRat);
         }
-        catch (DWORD error)
+        catch (uint32_t error)
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
@@ -261,7 +261,7 @@ namespace CalcEngine
             andrat(&lhsRat, rhsRat, RATIONAL_BASE, RATIONAL_PRECISION);
             destroyrat(rhsRat);
         }
-        catch (DWORD error)
+        catch (uint32_t error)
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
@@ -283,7 +283,7 @@ namespace CalcEngine
             orrat(&lhsRat, rhsRat, RATIONAL_BASE, RATIONAL_PRECISION);
             destroyrat(rhsRat);
         }
-        catch (DWORD error)
+        catch (uint32_t error)
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
@@ -305,7 +305,7 @@ namespace CalcEngine
             xorrat(&lhsRat, rhsRat, RATIONAL_BASE, RATIONAL_PRECISION);
             destroyrat(rhsRat);
         }
-        catch (DWORD error)
+        catch (uint32_t error)
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
@@ -388,7 +388,7 @@ namespace CalcEngine
         {
             result = rat_equ(lhsRat, rhsRat, RATIONAL_PRECISION);
         }
-        catch (DWORD error)
+        catch (uint32_t error)
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
@@ -416,7 +416,7 @@ namespace CalcEngine
         {
             result = rat_lt(lhsRat, rhsRat, RATIONAL_PRECISION);
         }
-        catch (DWORD error)
+        catch (uint32_t error)
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
@@ -453,7 +453,7 @@ namespace CalcEngine
         {
             result = RatToString(rat, fmt, radix, precision);
         }
-        catch (DWORD error)
+        catch (uint32_t error)
         {
             destroyrat(rat);
             throw(error);
@@ -472,7 +472,7 @@ namespace CalcEngine
         {
             result = rattoUlonglong(rat, RATIONAL_BASE, RATIONAL_PRECISION);
         }
-        catch (DWORD error)
+        catch (uint32_t error)
         {
             destroyrat(rat);
             throw(error);

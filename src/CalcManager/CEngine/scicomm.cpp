@@ -326,7 +326,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             }
         }
 
-        m_currentVal = SciCalcFunctions(m_currentVal, (DWORD)wParam);
+        m_currentVal = SciCalcFunctions(m_currentVal, (uint32_t)wParam);
 
         if (m_bError)
             return;
@@ -366,7 +366,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
 
         CheckAndAddLastBinOpToHistory();
 
-        if (TryToggleBit(m_currentVal, (DWORD)wParam - IDC_BINEDITSTART))
+        if (TryToggleBit(m_currentVal, (uint32_t)wParam - IDC_BINEDITSTART))
         {
             DisplayNum();
         }
@@ -1060,7 +1060,7 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
 
             result = tempRat.ToString(radix, m_nFE, m_precision);
         }
-        catch (DWORD)
+        catch (uint32_t)
         {
         }
     }
