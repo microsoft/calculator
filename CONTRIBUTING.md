@@ -41,7 +41,7 @@ To learn how to build the code and run tests, follow the instructions in the [RE
 ### Style guidelines
 The code in this project uses several different coding styles, depending on the age and history of
 the code. Please attempt to match the style of surrounding code as much as possible. In new
-components, prefer the patterns described in the [C++ core guidelines](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
+components, prefer the patterns described in the [C++ core guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
 and the [modern C++/WinRT language projections](https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/).
 
 ### Testing

@@ -6,13 +6,13 @@
 
 #include "pch.h"
 #include "UnitConverter.xaml.h"
-#include "CalcViewModel\UnitConverterViewModel.h"
-#include "Controls\CalculationResult.h"
-#include "Controls\CalculatorButton.h"
-#include "CalcViewModel\Common\CopyPasteManager.h"
-#include "CalcViewModel\Common\KeyboardShortcutManager.h"
-#include "CalcViewModel\Common\LocalizationService.h"
-#include "CalcViewModel\Common\LocalizationSettings.h"
+#include "CalcViewModel/UnitConverterViewModel.h"
+#include "Controls/CalculationResult.h"
+#include "Controls/CalculatorButton.h"
+#include "CalcViewModel/Common/CopyPasteManager.h"
+#include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "CalcViewModel/Common/LocalizationService.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -38,7 +38,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::ViewManagement;
 
-// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
+// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 // Calculate number of 100-nanosecond intervals in 500 milliseconds.
 // There are 10,000 intervals in 1 ms.

@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <CppUnitTest.h>
 
-#include "CalcViewModel\Common\EngineResourceProvider.h"
+#include "CalcViewModel/Common/EngineResourceProvider.h"
 
 using namespace std;
 using namespace CalculatorApp;

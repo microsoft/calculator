@@ -136,7 +136,7 @@ void CHistoryCollector::ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher)
     TruncateEquationSzFromIch(m_lastBinOpStartIndex);
     if (fPrecInvToHigher)
     {
-        EnclosePrecInvertionBrackets();
+        EnclosePrecInversionBrackets();
     }
     AddBinOpToHistory(nOpCode);
 }
@@ -180,7 +180,7 @@ void CHistoryCollector::AddCloseBraceToHistory()
     m_bLastOpndBrace = true;
 }
 
-void CHistoryCollector::EnclosePrecInvertionBrackets()
+void CHistoryCollector::EnclosePrecInversionBrackets()
 {
     // Top of the Opnd starts index or 0 is nothing is in top
     int ichStart = (m_curOperandIndex > 0) ? m_operandIndices[m_curOperandIndex - 1] : 0;
@@ -401,9 +401,9 @@ int CHistoryCollector::AddCommand(_In_ const std::shared_ptr<IExpressionCommand>
         throw(CALC_E_OUTOFMEMORY);
     }
 
-    unsigned int nCommmands = 0;
-    m_spCommands->GetSize(&nCommmands);
-    return nCommmands - 1;
+    unsigned int nCommands = 0;
+    m_spCommands->GetSize(&nCommands);
+    return nCommands - 1;
 }
 
 //To Update the operands in the Expression according to the current Radix 
