@@ -33,7 +33,7 @@ namespace {
     // 0 is returned. Higher the number, higher the precedence of the operator.
     int NPrecedenceOfOp(int nopCode)
     {
-        static BYTE    rgbPrec[] = { 0,0,  IDC_OR,0, IDC_XOR,0,  IDC_AND,1,
+        static uint8_t rgbPrec[] = { 0,0,  IDC_OR,0, IDC_XOR,0,  IDC_AND,1,
             IDC_ADD,2, IDC_SUB,2,    IDC_RSHF,3, IDC_LSHF,3,
             IDC_MOD,3, IDC_DIV,3, IDC_MUL,3,  IDC_PWR,4,   IDC_ROOT, 4 };
         unsigned int iPrec;
