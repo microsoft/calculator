@@ -12,28 +12,12 @@ constexpr int ASCII_0 = 48;
 using namespace std;
 using namespace CalcEngine;
 
-class CalcException : public std::exception
-{
-public:
-    CalcException(HRESULT hr)
-    {
-        m_hr = hr;
-    }
-    HRESULT GetException()
-    {
-        return m_hr;
-    }
-private:
-    HRESULT m_hr;
-};
-
 namespace {
     void IFT(HRESULT hr)
     {
         if (FAILED(hr))
         {
-            CalcException exception(hr);
-            throw(exception);
+            throw hr;
         }
     }
 }

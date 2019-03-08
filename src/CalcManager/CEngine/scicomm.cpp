@@ -26,11 +26,11 @@
 using namespace std;
 using namespace CalcEngine;
 
-// NPrecedenceOfOp
-//
-//  returns a virtual number for precedence for the operator. We expect binary operator only, otherwise the lowest number
-// 0 is returned. Higher the number, higher the precedence of the operator.
 namespace {
+    // NPrecedenceOfOp
+    //
+    //  returns a virtual number for precedence for the operator. We expect binary operator only, otherwise the lowest number
+    // 0 is returned. Higher the number, higher the precedence of the operator.
     INT NPrecedenceOfOp(int nopCode)
     {
         static BYTE    rgbPrec[] = { 0,0,  IDC_OR,0, IDC_XOR,0,  IDC_AND,1,
