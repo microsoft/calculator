@@ -8,11 +8,11 @@
 
 #pragma once
 
-#include "Views\SupplementaryResults.g.h"
-#include "Controls\SupplementaryItemsControl.h"
-#include "Controls\OperandTextBox.h"
-#include "Controls\OperatorTextBox.h"
-#include "CalcViewModel\UnitConverterViewModel.h"
+#include "Views/SupplementaryResults.g.h"
+#include "Controls/SupplementaryItemsControl.h"
+#include "Controls/OperandTextBox.h"
+#include "Controls/OperatorTextBox.h"
+#include "CalcViewModel/UnitConverterViewModel.h"
 
 namespace CalculatorApp
 {

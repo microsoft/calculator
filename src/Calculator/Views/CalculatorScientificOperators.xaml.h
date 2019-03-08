@@ -8,11 +8,11 @@
 
 #pragma once
 
-#include "Views\CalculatorScientificOperators.g.h"
-#include "Views\NumberPad.xaml.h"
-#include "Converters\BooleanNegationConverter.h"
-#include "Converters\VisibilityNegationConverter.h"
-#include "CalcViewModel\StandardCalculatorViewModel.h"
+#include "Views/CalculatorScientificOperators.g.h"
+#include "Views/NumberPad.xaml.h"
+#include "Converters/BooleanNegationConverter.h"
+#include "Converters/VisibilityNegationConverter.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
 
 namespace CalculatorApp
 {

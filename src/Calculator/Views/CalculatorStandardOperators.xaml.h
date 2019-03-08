@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include "Views\CalculatorStandardOperators.g.h"
-#include "Views\NumberPad.xaml.h"
+#include "Views/CalculatorStandardOperators.g.h"
+#include "Views/NumberPad.xaml.h"
 
 namespace CalculatorApp
 {

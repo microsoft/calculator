@@ -4,15 +4,15 @@
 #include "pch.h"
 #include "UnitConverterViewModel.h"
 #include "CalcManager/Header Files/EngineStrings.h"
-#include "Common\CalculatorButtonPressedEventArgs.h"
-#include "Common\CopyPasteManager.h"
-#include "Common\LocalizationStringUtil.h"
-#include "Common\LocalizationService.h"
-#include "Common\LocalizationSettings.h"
-#include "Common\TraceLogger.h"
-#include "DataLoaders\CurrencyHttpClient.h"
-#include "DataLoaders\CurrencyDataLoader.h"
-#include "DataLoaders\UnitConverterDataLoader.h"
+#include "Common/CalculatorButtonPressedEventArgs.h"
+#include "Common/CopyPasteManager.h"
+#include "Common/LocalizationStringUtil.h"
+#include "Common/LocalizationService.h"
+#include "Common/LocalizationSettings.h"
+#include "Common/TraceLogger.h"
+#include "DataLoaders/CurrencyHttpClient.h"
+#include "DataLoaders/CurrencyDataLoader.h"
+#include "DataLoaders/UnitConverterDataLoader.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -674,7 +674,7 @@ void UnitConverterViewModel::Deserialize(Platform::String^ state)
     RaisePropertyChanged(nullptr);  // Update since all props have been updated.
 }
 
-//Saving User Prefernces of Category and Associated-Units across Sessions. 
+//Saving User Preferences of Category and Associated-Units across Sessions. 
 void UnitConverterViewModel::SaveUserPreferences()
 {
     if (UnitsAreValid())
@@ -695,7 +695,7 @@ void UnitConverterViewModel::SaveUserPreferences()
     }
 }
 
-//Restoring User Prefernces of Category and Associated-Units.
+//Restoring User Preferences of Category and Associated-Units.
 void UnitConverterViewModel::RestoreUserPreferences()
 {
     if (!IsCurrencyCurrentCategory)

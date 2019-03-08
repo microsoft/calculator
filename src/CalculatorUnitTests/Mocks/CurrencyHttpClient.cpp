@@ -6,7 +6,7 @@
 #include "pch.h"
 #include "CurrencyHttpClient.h"
 
-#include "CalcViewModel\Common\NetworkManager.h"
+#include "CalcViewModel/Common/NetworkManager.h"
 
 using namespace CalculatorApp::DataLoaders;
 using namespace Platform;

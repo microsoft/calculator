@@ -397,7 +397,7 @@ namespace Utils
     static void On##name##PropertyChangedImpl(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ args) {\
         On##name##PropertyChanged(sender, safe_cast<type>(args->OldValue), safe_cast<type>(args->NewValue)); } public:
 
-// This goes into the cpp to initalize the static variable
+// This goes into the cpp to initialize the static variable
 #define DEPENDENCY_PROPERTY_INITIALIZATION(owner, name)\
     Windows::UI::Xaml::DependencyProperty^ owner::s_##name##Property =\
         owner::Initialize##name##Property();

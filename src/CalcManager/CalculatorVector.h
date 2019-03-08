@@ -14,7 +14,7 @@ public:
         {
             *item = m_vector.at(index);
         }
-        catch (std::out_of_range /*ex*/)
+        catch (const std::out_of_range& /*ex*/)
         {
             hr = E_BOUNDS;
         }
@@ -34,7 +34,7 @@ public:
         {
             m_vector[index] = item;
         }
-        catch (std::out_of_range /*ex*/)
+        catch (const std::out_of_range& /*ex*/)
         {
             hr = E_BOUNDS;
         }
@@ -63,7 +63,7 @@ public:
             auto iter = m_vector.begin() + index;
             m_vector.insert(iter, item);
         }
-        catch (std::bad_alloc /*ex*/)
+        catch (const std::bad_alloc& /*ex*/)
         {
             hr = E_OUTOFMEMORY;
         }
@@ -92,7 +92,7 @@ public:
         {
             m_vector.push_back(item);
         }
-        catch (std::bad_alloc /*ex*/)
+        catch (const std::bad_alloc& /*ex*/)
         {
             hr = E_OUTOFMEMORY;
         }

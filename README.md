@@ -46,7 +46,7 @@ For information regarding Windows Calculator plans and release schedule, please 
 
 ## Data / Telemetry
 This project collects usage data and sends it to Microsoft to help improve our products and services.
-Read our [privacy statement](http://go.microsoft.com/fwlink/?LinkId=521839) to learn more.
+Read our [privacy statement](https://go.microsoft.com/fwlink/?LinkId=521839) to learn more.
 Telemetry is disabled in development builds by default, and can be enabled with the `SEND_TELEMETRY`
 build flag.
 

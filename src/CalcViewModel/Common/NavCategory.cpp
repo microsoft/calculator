@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "NavCategory.h"
 #include "AppResourceProvider.h"
-#include "Common\LocalizationStringUtil.h"
+#include "Common/LocalizationStringUtil.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -199,7 +199,7 @@ CategoryGroupType NavCategory::GetGroupType(ViewMode mode)
         : CategoryGroupType::None;
 }
 
-// GetIndex is 0-based, GetPostion is 1-based
+// GetIndex is 0-based, GetPosition is 1-based
 int NavCategory::GetIndex(ViewMode mode)
 {
     int position = NavCategory::GetPosition(mode);
@@ -228,7 +228,7 @@ int NavCategory::GetFlatIndex(ViewMode mode)
         : -1;
 }
 
-// GetIndex is 0-based, GetPostion is 1-based
+// GetIndex is 0-based, GetPosition is 1-based
 int NavCategory::GetIndexInGroup(ViewMode mode, CategoryGroupType type)
 {
     int index = -1;
@@ -249,7 +249,7 @@ int NavCategory::GetIndexInGroup(ViewMode mode, CategoryGroupType type)
         : -1;
 }
 
-// GetIndex is 0-based, GetPostion is 1-based
+// GetIndex is 0-based, GetPosition is 1-based
 int NavCategory::GetPosition(ViewMode mode)
 {
     int position = 0;

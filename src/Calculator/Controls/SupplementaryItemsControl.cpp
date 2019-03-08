@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "SupplementaryItemsControl.h"
-#include "CalcViewModel\UnitConverterViewModel.h"
+#include "CalcViewModel/UnitConverterViewModel.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Controls;
