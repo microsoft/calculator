@@ -158,6 +158,12 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     {
         unsigned int iValue = static_cast<unsigned int>(wParam - IDC_0);
 
+        m_bNoPrevEqu = true;
+        if (!m_bChangeOp)
+        {
+            m_nPrevOpCode = m_nOpCode = 0;
+        }
+
         // this is redundant, illegal keys are disabled
         if (iValue >= static_cast<unsigned int>(m_radix))
         {
@@ -180,6 +186,8 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     // BINARY OPERATORS:
     if (IsBinOpCode(wParam))
     {
+        m_bNoPrevEqu = true;
+
         /* Change the operation if last input was operation.          */
         if (IsBinOpCode(m_nLastCom))
         {
@@ -285,13 +293,17 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         m_lastVal = m_currentVal;
         m_nOpCode = (INT)wParam;
         m_HistoryCollector.AddBinOpToHistory(m_nOpCode);
-        m_bNoPrevEqu = m_bChangeOp = true;
+        m_bChangeOp = true;
         return;
     }
 
     // UNARY OPERATORS:
     if (IsUnaryOpCode(wParam) || (wParam == IDC_DEGREES))
     {
+        m_bNoPrevEqu = true;
+        m_bChangeOp = false;
+        m_nPrevOpCode = m_nOpCode = 0;
+
         /* Functions are unary operations.                            */
         /* If the last thing done was an operator, m_currentVal was cleared. */
         /* In that case we better use the number before the operator  */
@@ -476,10 +488,12 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
                 {
                     m_currentVal = m_holdVal;
                     DisplayNum(); // to update the m_numberString
-                    m_HistoryCollector.AddBinOpToHistory(m_nOpCode, false);
-                    m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal); // Adding the repeated last op to history
+                    if (IsBinOpCode(m_nOpCode))
+                    {
+                        m_HistoryCollector.AddBinOpToHistory(m_nOpCode, false);
+                        m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal); // Adding the repeated last op to history
+                    }
                 }
-
                 // Do the current or last operation.
                 m_currentVal = DoOperation(m_nOpCode, m_currentVal, m_lastVal);
                 m_nPrevOpCode = m_nOpCode;
