@@ -150,7 +150,7 @@
     <comment>Same 107</comment>
   </data>
   <data name="99" xml:space="preserve">
-    <value>Sıfırla bölmək mümkün deyil</value>
+    <value>Sıfra bölmək mümkün deyil</value>
     <comment>Error string shown when a divide by zero condition happens during the calculation</comment>
   </data>
 </root>
