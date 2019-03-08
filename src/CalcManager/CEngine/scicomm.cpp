@@ -161,7 +161,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         m_bNoPrevEqu = true;
         if (!m_bChangeOp)
         {
-            m_nPrevOpCode = m_nOpCode = 0;
+            m_nOpCode = 0;
         }
 
         // this is redundant, illegal keys are disabled
@@ -753,6 +753,13 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         break;
 
     case IDC_PI:
+
+        m_bNoPrevEqu = true;
+        if (!m_bChangeOp)
+        {
+            m_nOpCode = 0;
+        }
+
         if (!m_fIntegerMode)
         {
             CheckAndAddLastBinOpToHistory(); // pi is like entering the number
