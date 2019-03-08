@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "Views\TitleBar.g.h"
+#include "Views/TitleBar.g.h"
 
 namespace CalculatorApp
 {

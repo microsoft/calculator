@@ -5,8 +5,8 @@
 #include <CppUnitTest.h>
 #include "DateUtils.h"
 
-#include "CalcViewModel\Common\DateCalculator.h"
-#include "CalcViewModel\DateCalculatorViewModel.h"
+#include "CalcViewModel/Common/DateCalculator.h"
+#include "CalcViewModel/DateCalculatorViewModel.h"
 
 using namespace Platform;
 using namespace std;

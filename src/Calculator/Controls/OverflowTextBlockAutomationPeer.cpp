@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "Controls\OverflowTextBlock.h"
+#include "Controls/OverflowTextBlock.h"
 #include "OverflowTextBlockAutomationPeer.h"
 
 using namespace Windows::UI::Xaml::Automation::Peers;

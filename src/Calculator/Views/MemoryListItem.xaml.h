@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "Views\MemoryListItem.g.h"
-#include "CalcViewModel\MemoryItemViewModel.h"
+#include "Views/MemoryListItem.g.h"
+#include "CalcViewModel/MemoryItemViewModel.h"
 
 namespace CalculatorApp
 {

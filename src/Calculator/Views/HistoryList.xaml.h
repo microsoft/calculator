@@ -8,11 +8,11 @@
 
 #pragma once
 
-#include "Views\HistoryList.g.h"
-#include "Common\TitleBarHelper.h"
-#include "Converters\ItemSizeToVisibilityConverter.h"
-#include "Converters\VisibilityNegationConverter.h"
-#include "CalcViewModel\HistoryViewModel.h"
+#include "Views/HistoryList.g.h"
+#include "Common/TitleBarHelper.h"
+#include "Converters/ItemSizeToVisibilityConverter.h"
+#include "Converters/VisibilityNegationConverter.h"
+#include "CalcViewModel/HistoryViewModel.h"
 
 namespace CalculatorApp
 {

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "Header Files\CalcEngine.h"
+#include "Header Files/CalcEngine.h"
 #include "CalculatorManager.h"
 #include "CalculatorResource.h"
 
@@ -98,7 +98,7 @@ namespace CalculationManager
     }
 
     /// <summary>
-    /// Callback from the CalculatorControll
+    /// Callback from the CalculatorControl
     /// Passed in string representations of memorized numbers get passed to the client
     /// </summary>
     /// <param name="memorizedNumber">vector containing wstring values of memorized numbers</param>
@@ -429,7 +429,7 @@ namespace CalculationManager
                 *commandItr <= MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizedNumberClearAll))
             {
                 //MemoryCommands(which have values above 255) are pushed on m_savedCommands upon casting to unsigned char.
-                //SerializeCommands uses m_savedCommands, which is then used in DeSerializeCommnds.
+                //SerializeCommands uses m_savedCommands, which is then used in DeSerializeCommands.
                 //Hence, a simple cast to MemoryCommand is not sufficient.
                 MemoryCommand memoryCommand = static_cast<MemoryCommand>(*commandItr + UCHAR_MAX + 1);
                 unsigned int indexOfMemory = 0;
@@ -505,7 +505,7 @@ namespace CalculationManager
     /// Recall the memorized number.
     /// The memorized number gets loaded to the primary display
     /// </summary>
-    /// <param name="indexOfMemeory">Index of the target memory</param>
+    /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberLoad(_In_ unsigned int indexOfMemory)
     {
         SaveMemoryCommand(MemoryCommand::MemorizedNumberLoad, indexOfMemory);
@@ -521,7 +521,7 @@ namespace CalculationManager
     /// It adds primary display value to the selected memory
     /// Notify the client with new the new memorize value vector
     /// </summary>
-    /// <param name="indexOfMemeory">Index of the target memory</param>
+    /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberAdd(_In_ unsigned int indexOfMemory)
     {
         SaveMemoryCommand(MemoryCommand::MemorizedNumberAdd, indexOfMemory);
@@ -559,7 +559,7 @@ namespace CalculationManager
     /// It adds primary display value to the selected memory
     /// Notify the client with new the new memorize value vector
     /// </summary>
-    /// <param name="indexOfMemeory">Index of the target memory</param>
+    /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberSubtract(_In_ unsigned int indexOfMemory)
     {
         SaveMemoryCommand(MemoryCommand::MemorizedNumberSubtract, indexOfMemory);
@@ -603,7 +603,7 @@ namespace CalculationManager
 /// Helper function that selects a memory from the vector and set it to CCalcEngine
 /// Saved RAT number needs to be copied and passed in, as CCalcEngine destroyed the passed in RAT
 /// </summary>
-/// <param name="indexOfMemeory">Index of the target memory</param>
+/// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberSelect(_In_ unsigned int indexOfMemory)
     {
         if (!(m_currentCalculatorEngine->FInErrorState()))
@@ -617,7 +617,7 @@ namespace CalculationManager
     /// Helper function that needs to be executed when memory is modified
     /// When memory is modified, destroy the old RAT and put the new RAT in vector
     /// </summary>
-    /// <param name="indexOfMemeory">Index of the target memory</param>
+    /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberChanged(_In_ unsigned int indexOfMemory)
     {
         if (!(m_currentCalculatorEngine->FInErrorState()))

@@ -235,7 +235,7 @@ void log10rat( PRAT *px, int32_t precision)
 }
 
 //
-// return if the given x is even number. The assumption here is its numerator is 1 and we are testing the numerator is 
+// return if the given x is even number. The assumption here is its denominator is 1 and we are testing the numerator is 
 // even or not
 bool IsEven(PRAT x, uint32_t radix, int32_t precision)
 {
