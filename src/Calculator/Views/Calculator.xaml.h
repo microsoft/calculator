@@ -3,22 +3,22 @@
 
 #pragma once
 
-#include "Views\Calculator.g.h"
-#include "Converters\BooleanNegationConverter.h"
-#include "Converters\ExpressionItemContainerStyle.h"
-#include "Converters\ExpressionItemTemplateSelector.h"
-#include "Converters\VisibilityNegationConverter.h"
-#include "CalcViewModel\Common\Automation\NarratorNotifier.h"
-#include "Controls\CalculatorButton.h"
-#include "Controls\CalculationResult.h"
-#include "Controls\OverflowTextBlock.h"
-#include "CalcViewModel\HistoryViewModel.h"
-#include "Views\CalculatorProgrammerDisplayPanel.xaml.h"
-#include "Views\CalculatorProgrammerOperators.xaml.h"
-#include "Views\CalculatorScientificAngleButtons.xaml.h"
-#include "Views\HistoryList.xaml.h"
-#include "Views\Memory.xaml.h"
-#include "Views\OperatorsPanel.xaml.h"
+#include "Views/Calculator.g.h"
+#include "Converters/BooleanNegationConverter.h"
+#include "Converters/ExpressionItemContainerStyle.h"
+#include "Converters/ExpressionItemTemplateSelector.h"
+#include "Converters/VisibilityNegationConverter.h"
+#include "CalcViewModel/Common/Automation/NarratorNotifier.h"
+#include "Controls/CalculatorButton.h"
+#include "Controls/CalculationResult.h"
+#include "Controls/OverflowTextBlock.h"
+#include "CalcViewModel/HistoryViewModel.h"
+#include "Views/CalculatorProgrammerDisplayPanel.xaml.h"
+#include "Views/CalculatorProgrammerOperators.xaml.h"
+#include "Views/CalculatorScientificAngleButtons.xaml.h"
+#include "Views/HistoryList.xaml.h"
+#include "Views/Memory.xaml.h"
+#include "Views/OperatorsPanel.xaml.h"
 
 namespace CalculatorApp
 {

@@ -6,7 +6,7 @@
 #include "Header Files/CalcEngine.h"
 #include "Header Files/Rational.h"
 
-class CParentheses : public IParenthesisCommand
+class CParentheses final : public IParenthesisCommand
 {
 public:
     CParentheses(_In_ int command);
@@ -18,7 +18,7 @@ private:
     int m_command;
 };
 
-class CUnaryCommand : public IUnaryCommand
+class CUnaryCommand final : public IUnaryCommand
 {
 public:
     CUnaryCommand(int command);
@@ -33,7 +33,7 @@ private:
     std::shared_ptr<CalculatorVector<int>> m_command;
 };
 
-class CBinaryCommand : public IBinaryCommand
+class CBinaryCommand final : public IBinaryCommand
 {
 public:
     CBinaryCommand(int command);
@@ -46,7 +46,7 @@ private:
     int m_command;
 };
 
-class COpndCommand : public IOpndCommand
+class COpndCommand final : public IOpndCommand
 {
 public:
     COpndCommand(

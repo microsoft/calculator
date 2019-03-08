@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include "Views\CalculatorScientificAngleButtons.g.h"
-#include "CalcViewModel\StandardCalculatorViewModel.h"
+#include "Views/CalculatorScientificAngleButtons.g.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
 
 namespace CalculatorApp
 {

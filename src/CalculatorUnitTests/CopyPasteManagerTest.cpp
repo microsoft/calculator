@@ -4,8 +4,8 @@
 #include "pch.h"
 #include <CppUnitTest.h>
 
-#include "CalcViewModel\StandardCalculatorViewModel.h"
-#include "CalcViewModel\Common\CopyPasteManager.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
+#include "CalcViewModel/Common/CopyPasteManager.h"
 
 using namespace CalculationManager;
 using namespace CalculatorApp;
