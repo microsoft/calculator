@@ -223,7 +223,7 @@ void CHistoryCollector::AddUnaryOpToHistory(int nOpCode, bool fInv, ANGLE_TYPE a
             {
                 angleOpCode = CalculationManager::Command::CommandDEG;
             }
-            if (angletype == ANGLE_RAD)
+            else if (angletype == ANGLE_RAD)
             {
                 angleOpCode = CalculationManager::Command::CommandRAD;
             }
