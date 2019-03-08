@@ -2,7 +2,7 @@
 The Windows Calculator app is a modern Windows app written in C++ that ships pre-installed with Windows.
 The app provides standard, scientific, and programmer calculator functionality, as well as a set of converters between various units of measurement and currencies.
 
-Calculator ships regularly with new features and bug fixes. You can get the latest version of Calculator in the [Microsoft Store.](https://www.microsoft.com/store/apps/9WZDNCRFHVN5)
+Calculator ships regularly with new features and bug fixes. You can get the latest version of Calculator in the [Microsoft Store](https://www.microsoft.com/store/apps/9WZDNCRFHVN5).
 
 [![Build Status](https://dev.azure.com/ms/calculator/_apis/build/status/Calculator-CI?branchName=master)](https://dev.azure.com/ms/calculator/_build/latest?definitionId=57&branchName=master)
 
@@ -18,14 +18,14 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 
 ## Getting started
 Prerequisites:
-- Your computer must be running Windows 10, version 1803 or newer
-- Install the latest version of [Visual Studio](https://developer.microsoft.com/en-us/windows/downloads) (the free community edition is sufficient)
-  - Install the "Universal Windows Platform Development" workload
-  - Install the optional "C++ Universal Windows Platform tools" component
-  - Install the latest Windows 10 SDK
+- Your computer must be running Windows 10, version 1803 or newer.
+- Install the latest version of [Visual Studio](https://developer.microsoft.com/en-us/windows/downloads) (the free community edition is sufficient).
+  - Install the "Universal Windows Platform Development" workload.
+  - Install the optional "C++ Universal Windows Platform tools" component.
+  - Install the latest Windows 10 SDK.
 
   ![Visual Studio Installation Screenshot](docs/Images/VSInstallationScreenshot.png)
-- Install the [XAML Styler](https://marketplace.visualstudio.com/items?itemName=TeamXavalon.XAMLStyler) Visual Studio extension
+- Install the [XAML Styler](https://marketplace.visualstudio.com/items?itemName=TeamXavalon.XAMLStyler) Visual Studio extension.
 
 - Get the code:
     ```
