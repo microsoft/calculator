@@ -82,6 +82,19 @@ namespace CalculatorUnitTests
             VERIFY_IS_FALSE(m_CopyPasteManager.ValidatePasteExpression(StringReference(L"123"), ViewMode::None, CategoryGroupType::None, -1, -1), L"Verify pasting without a ViewMode or Category is invalid");
         };
 
+        TEST_METHOD(ValidatePasteWhiteSpacesStates)
+        {
+            VERIFY_IS_TRUE(m_CopyPasteManager.ValidatePasteExpression(StringReference(L"\t123\t+\t\t124\t"), ViewMode::Standard, CategoryGroupType::None, -1, -1), L"Verify pasting with tabs");
+            VERIFY_IS_TRUE(m_CopyPasteManager.ValidatePasteExpression(StringReference(L"     123    +    124      "), ViewMode::Standard, CategoryGroupType::None, -1, -1), L"Verify pasting with spaces");
+            VERIFY_IS_TRUE(m_CopyPasteManager.ValidatePasteExpression(StringReference(L"\n\n\n\n\n\n123\n\n\n+\n\n124\n\n\n\n\n\n\n\n\n\n\n\n\n\n"), ViewMode::Standard, CategoryGroupType::None, -1, -1), L"Verify pasting with new line");
+            VERIFY_IS_TRUE(m_CopyPasteManager.ValidatePasteExpression(StringReference(L"\r\r\r123\r\r\r\r+124\r\r"), ViewMode::Standard, CategoryGroupType::None, -1, -1), L"Verify pasting with carriage return");
+            VERIFY_IS_TRUE(m_CopyPasteManager.ValidatePasteExpression(StringReference(L"\u0020\u0020 123\u0020\u0020\u0020\u0020+\u0020\u0020 124\u0020\u0020"), ViewMode::Standard, CategoryGroupType::None, -1, -1), L"Verify pasting with no-break space");
+            VERIFY_IS_TRUE(m_CopyPasteManager.ValidatePasteExpression(StringReference(L"\f\f\f123+\f\f124\f\f\f"), ViewMode::Standard, CategoryGroupType::None, -1, -1), L"Verify pasting with feeds");
+            VERIFY_IS_TRUE(m_CopyPasteManager.ValidatePasteExpression(StringReference(L"\t123\t+\t\t124\t"), ViewMode::Standard, CategoryGroupType::None, -1, -1), L"Verify pasting with tabs");
+            VERIFY_IS_TRUE(m_CopyPasteManager.ValidatePasteExpression(StringReference(L"\x85 123\x85+\x85\x85\x85 124"), ViewMode::Standard, CategoryGroupType::None, -1, -1), L"Verify pasting with tabs");
+            VERIFY_IS_TRUE(m_CopyPasteManager.ValidatePasteExpression(StringReference(L"\t\x85\r\t \n\u0020\n123\t\n+\t  \t124\r\n"), ViewMode::Standard, CategoryGroupType::None, -1, -1), L"Verify pasting with tabs");
+        };
+
         TEST_METHOD(ValidateExtractOperands)
         {
             vector<wstring> results = {};

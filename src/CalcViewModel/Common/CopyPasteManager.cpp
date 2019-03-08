@@ -38,7 +38,7 @@ static const wstring c_binProgrammerChars = L"[0-1]+([_'`][0-1]+)*";
 static const wstring c_uIntSuffixes = L"[uU]?[lL]{0,2}";
 
 // Regex used to format the string coming from the clipboard
-static const wstring c_formatSpaces = L"[\\s\\x85]+";
+static const wstring c_formatSpaces = L"\\s+";
 static const wstring c_formatTrimAndRemoveUselessChars = L"^ | $|,|\"";
 
 // RegEx Patterns used by various modes
