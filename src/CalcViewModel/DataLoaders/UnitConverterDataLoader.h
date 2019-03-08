@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "CalcManager\UnitConverter.h"
+#include "CalcManager/UnitConverter.h"
 #include "Common/NavCategory.h"
 
 namespace CalculatorApp
@@ -64,7 +64,6 @@ namespace CalculatorApp
             void GetExplicitConversionData(_In_ std::unordered_map<int, std::unordered_map<int, UnitConversionManager::ConversionData>>& unitToUnitConversionList);
 
             std::wstring GetLocalizedStringName(_In_ Platform::String^ stringId);
-            std::wstring GetRegion();
 
             std::shared_ptr<std::vector<UnitConversionManager::Category>> m_categoryList;
             std::shared_ptr<UnitConversionManager::CategoryToUnitVectorMap> m_categoryToUnits;

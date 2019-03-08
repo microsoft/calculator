@@ -87,7 +87,7 @@ The ViewModel layer is contained in the [CalcViewModel][CalcViewModel folder] pr
 data for the UI to bind against and act as the intermediary separating pure business logic from UI components that
 should not care about the model's implementation. Just as the View layer consists of a hierarchy of XAML files, the
 ViewModel consists of a hierarchy of ViewModel files. The relationship between XAML and ViewModel files is often 1:1.
-Here are the noteable ViewModel files to start exploring with:
+Here are the notable ViewModel files to start exploring with:
 
 * [ApplicationViewModel.h][ApplicationViewModel.h]: The ViewModel for [MainPage.xaml][MainPage.xaml]. This ViewModel
   is the root of the other mode-specific ViewModels. The application changes between modes by updating the `Mode` property

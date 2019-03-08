@@ -23,14 +23,13 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 
-// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
+// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 CalculatorProgrammerBitFlipPanel::CalculatorProgrammerBitFlipPanel() :
     m_updatingCheckedStates(false)
 {
     InitializeComponent();
     auto booleanToVisibilityConverter = ref new Converters::BooleanToVisibilityConverter;
-    auto booleanToVisibilityNegationConverter = ref new Converters::BooleanToVisibilityNegationConverter;
     SetVisibilityBinding(BitFlipPanel, L"IsBinaryBitFlippingEnabled", booleanToVisibilityConverter);
 
     AssignFlipButtons();

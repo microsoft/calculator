@@ -64,7 +64,7 @@
             <Buffers Value="15" />
         </EventCollector>
 
-        <EventCollector Id="EC_Responsiveness.HighCost.Verbose" Name="User Session Logger Higcost Verbose">
+        <EventCollector Id="EC_Responsiveness.HighCost.Verbose" Name="User Session Logger HighCost Verbose">
             <BufferSize Value="1024" />
             <Buffers Value="3" PercentageOfTotalMemory="true" MaximumBufferSpace="60" />
         </EventCollector>

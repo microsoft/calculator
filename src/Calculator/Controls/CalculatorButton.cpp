@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "CalculatorButton.h"
-#include "CalcViewModel\Common\CalculatorButtonPressedEventArgs.h"
+#include "CalcViewModel/Common/CalculatorButtonPressedEventArgs.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;

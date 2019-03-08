@@ -173,6 +173,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             // the degrees functionality was achieved as 'Inv' of 'dms' operation,
             // so setting the IDC_INV command first and then performing 'dms' operation as global variables m_bInv, m_bRecord 
             // are set properly through ProcessCommand(IDC_INV)
+            [[fallthrough]];
         case IDC_DMS:
         {
             if (!m_fIntegerMode)

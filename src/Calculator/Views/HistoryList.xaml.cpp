@@ -8,7 +8,7 @@
 
 #include "pch.h"
 #include "HistoryList.xaml.h"
-#include "CalcViewModel\Common\LocalizationService.h"
+#include "CalcViewModel/Common/LocalizationService.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -29,7 +29,7 @@ using namespace Windows::UI::ViewManagement;
 
 namespace MUXC = Microsoft::UI::Xaml::Controls;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=390556
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=390556
 
 DEPENDENCY_PROPERTY_INITIALIZATION(HistoryList, RowHeight);
 

@@ -20,7 +20,7 @@ namespace Calculator.UIAutomationLibrary
     {
         public const string CoreWindowClassName = "Windows.UI.Core.CoreWindow";
 
-        // This doesn't actually work right now becaue popup will disappear
+        // This doesn't actually work right now because popup will disappear
         // Bug 13713223: ContentDialog/Popup does not show up in the UIA tree when Windows.Current.Content has an AutomationName set.
         // public static readonly UICondition TopLevelWindowUICondition = UICondition.CreateFromId(Constants.TopLevelWindowAutomationId);
         public static readonly UICondition CoreWindowUICondition = UICondition.CreateFromClassName(CoreWindowClassName)

@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "CalcViewModel\DataLoaders\ICurrencyHttpClient.h"
+#include "CalcViewModel/DataLoaders/ICurrencyHttpClient.h"
 
 namespace CalculatorApp
 {

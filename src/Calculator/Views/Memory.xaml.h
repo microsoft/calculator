@@ -8,11 +8,11 @@
 
 #pragma once
 
-#include "Views\Memory.g.h"
-#include "Common\TitleBarHelper.h"
-#include "Converters\BooleanNegationConverter.h"
-#include "Converters\VisibilityNegationConverter.h"
-#include "CalcViewModel\StandardCalculatorViewModel.h"
+#include "Views/Memory.g.h"
+#include "Common/TitleBarHelper.h"
+#include "Converters/BooleanNegationConverter.h"
+#include "Converters/VisibilityNegationConverter.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
 
 namespace CalculatorApp
 {

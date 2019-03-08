@@ -12,7 +12,7 @@
 namespace CalculatorApp::Common::Automation
 {
     // This class exists so that the app can run on RS2 and use LiveRegions
-    // to host notifiactions on those builds.
+    // to host notifications on those builds.
     // When the app switches to min version RS3, this class can be removed
     // and the app will switch to using the Notification API.
     // TODO - MSFT 12735088

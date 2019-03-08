@@ -11,7 +11,7 @@ These manual tests are run before every release of the Calculator app.
 Steps:
 1. From the Standard Calculator page, input “3”, “+”, “3”, “Enter” on the keyboard 
 Expected: “6” shows up in the display 
-2. Input “4”, “-“, “2”, “=” using the in-app buttons 
+2. Input “4”, “-”, “2”, “=” using the in-app buttons 
 *Expected: “2” shows up in the display*
  
  **Test 2**
@@ -31,7 +31,7 @@ Steps:
 
 **Test 2**
 Steps:
-1. Input “5”, “n!“, “=” using the in-app buttons 
+1. Input “5”, “n!”, “=” using the in-app buttons 
 *Expected: “120” shows up in the display*
 
 ### Math in Programmer Calculator 
@@ -124,7 +124,7 @@ Steps:
     m.	“( )" Parenthesis
 
 
-**All Calulators Test: Verify memory functions**
+**All Calculators Test: Verify memory functions**
 Steps:
 1.	Launch the "Calculator" app.
 2.	Navigate to "Standard" Calculator.
