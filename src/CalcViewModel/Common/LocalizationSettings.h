@@ -177,11 +177,11 @@ namespace CalculatorApp
 
             Platform::String^ GetEnglishValueFromLocalizedDigits(const std::wstring& localizedString) const
             {
-                if (m_resolvedName == L"en-US")
+                if (!wcscmp(m_resolvedName, L"en-US"))
                 {
                     return ref new Platform::String(localizedString.c_str());
                 }
-
+                    
                 size_t i = 0;
                 size_t length = localizedString.size();
                 std::unique_ptr<wchar_t[]> englishString(new wchar_t[length + 1]); // +1 for the null termination

@@ -227,7 +227,7 @@ void CHistoryCollector::AddUnaryOpToHistory(int nOpCode, bool fInv, ANGLE_TYPE a
             {
                 angleOpCode = CalculationManager::Command::CommandRAD;
             }
-            if (angletype == ANGLE_GRAD)
+            else // (angletype == ANGLE_GRAD)
             {
                 angleOpCode = CalculationManager::Command::CommandGRAD;
             }
@@ -428,7 +428,7 @@ void CHistoryCollector::UpdateHistoryExpression(uint32_t radix, int32_t precisio
                     std::shared_ptr<COpndCommand> opndCommand = std::static_pointer_cast<COpndCommand>(expCommand);
                     if (opndCommand != nullptr)
                     {
-                        token.first = opndCommand->GetString(radix, precision, m_decimalSymbol);
+                        token.first = opndCommand->GetString(radix, precision);
                         IFT(m_spTokens->SetAt(i, token));
                         opndCommand->SetCommands(GetOperandCommandsFromString(token.first));
                     }

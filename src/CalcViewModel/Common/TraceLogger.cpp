@@ -156,7 +156,7 @@ namespace CalculatorApp
     }
 #pragma endregion
 
-    void TraceLogger::InsertIntoMemoryMap(int windowId, bool isStandard, bool isScientific, bool isProgrammer)
+    void TraceLogger::InsertIntoMemoryMap(int windowId, bool isScientific, bool isProgrammer)
     {
         // Writer lock for the static resources
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
@@ -182,7 +182,7 @@ namespace CalculatorApp
         }
     }
 
-    void TraceLogger::UpdateMemoryMap(int windowId, int memoryPosition, bool isStandard, bool isScientific, bool isProgrammer)
+    void TraceLogger::UpdateMemoryMap(int windowId, int memoryPosition, bool isScientific, bool isProgrammer)
     {
         // Writer lock for the static resources
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
@@ -867,7 +867,7 @@ namespace CalculatorApp
         }
     }
 
-    void TraceLogger::LogDateDifferenceModeUsed(int windowId)
+    void TraceLogger::LogDateDifferenceModeUsed()
     {
         if (!m_dateDiffUsageLoggedInSession)
         {

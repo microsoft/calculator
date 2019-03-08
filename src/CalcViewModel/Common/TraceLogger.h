@@ -53,8 +53,8 @@ namespace CalculatorApp
         void LogModeChangeBegin(CalculatorApp::Common::ViewMode, CalculatorApp::Common::ViewMode, int);
         void LogModeChangeEnd(CalculatorApp::Common::ViewMode, int) const;
         void LogClearHistory() const;
-        void InsertIntoMemoryMap(int, bool, bool, bool);
-        void UpdateMemoryMap(int, int, bool, bool, bool);
+        void InsertIntoMemoryMap(int, bool, bool);
+        void UpdateMemoryMap(int, int, bool, bool);
         void DeleteFromMemoryMap(int, int);
         void LogMemoryUsed(int, unsigned int, bool, bool, bool, unsigned int) const;
         void LogMultipleMemoryUsed(unsigned int, unsigned int) const;
@@ -91,7 +91,7 @@ namespace CalculatorApp
         void LogCoreWindowWasNull() const;
 
         // Trace methods for Date Calculator usage
-        void LogDateDifferenceModeUsed(int windowId);
+        void LogDateDifferenceModeUsed();
         void LogDateAddSubtractModeUsed(int windowId, bool isAddMode);
         void LogDateClippedTimeDifferenceFound(winrt::Windows::Globalization::Calendar const& today, winrt::Windows::Foundation::DateTime const& clippedTime) const;
 

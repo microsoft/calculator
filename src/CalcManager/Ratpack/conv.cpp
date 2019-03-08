@@ -566,7 +566,7 @@ wchar_t NormalizeCharDigit(wchar_t c, uint32_t radix)
     // is in the range where this is not ambiguous.
     if (size_t{ radix } >= DIGITS.find(L'A') && size_t { radix } <= DIGITS.find(L'Z'))
     {
-        return toupper(c);
+        return towupper(c);
     }
 
     return c;
@@ -1056,10 +1056,6 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
     {
         length = precision;
     }
-
-    // 2 for signs, 1 for 'e'(or leading zero), 1 for dp, 1 for null and
-    // 10 for maximum exponent size.
-    int cchNum = (precision + 16);
 
     // If there is a chance a round has to occur, round.
     // - if number is zero no rounding
