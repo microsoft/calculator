@@ -25,7 +25,7 @@ using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
+// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 Object^ DelighterUnitToStyleConverter::Convert(Object^ value, TypeName /*targetType*/, Object^ /*parameter*/, String^ /*language*/)
 {
@@ -103,13 +103,13 @@ void SupplementaryResults::OnConverterPropertyChanged(Object^ /*sender*/, Proper
 
 void SupplementaryResults::OnWindowSizeChanged(Platform::Object^ sender, Windows::UI::Core::WindowSizeChangedEventArgs^ e)
 {
-    // to reload supplementary results everytime the window is resized
+    // to reload supplementary results every time the window is resized
     RefreshData();
 }
 
 void SupplementaryResults::OnSupplementaryValuesLayoutUpdated(Platform::Object^ sender, Platform::Object^ e)
 {
-    // This means we overflowed and are cutting off, or in a very rare case we fit exactly. Unforunately
+    // This means we overflowed and are cutting off, or in a very rare case we fit exactly. Unfortunately
     // the fitting exactly case will still have an item removed, as there is no other way for us to
     // detect that we need to trim.
     Grid^ parentGrid = dynamic_cast<Grid^>(VisualTreeHelper::GetParent(this));

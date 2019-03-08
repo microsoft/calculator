@@ -279,7 +279,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
                     // 1 + (2 Or 3)
                     if (ni <= nx)
                     {
-                        m_HistoryCollector.EnclosePrecInvertionBrackets();
+                        m_HistoryCollector.EnclosePrecInversionBrackets();
                     }
                     m_HistoryCollector.PopLastOpndStart();
                     goto DoPrecedenceCheckAgain;
@@ -521,7 +521,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             nx = NPrecedenceOfOp(m_nOpCode);
             if (ni <= nx)
             {
-                m_HistoryCollector.EnclosePrecInvertionBrackets();
+                m_HistoryCollector.EnclosePrecInversionBrackets();
             }
             m_HistoryCollector.PopLastOpndStart();
 
@@ -614,7 +614,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
                 nx = NPrecedenceOfOp(m_nOpCode);
                 if (ni <= nx)
                 {
-                    m_HistoryCollector.EnclosePrecInvertionBrackets();
+                    m_HistoryCollector.EnclosePrecInversionBrackets();
                 }
                 m_HistoryCollector.PopLastOpndStart();
 

@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #pragma once
-#include "CalcViewModel\Common\CalculatorButtonUser.h"
+#include "CalcViewModel/Common/CalculatorButtonUser.h"
 
 namespace CalculatorUnitTests
 {

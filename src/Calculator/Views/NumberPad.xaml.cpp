@@ -8,9 +8,9 @@
 
 #include "pch.h"
 #include "NumberPad.xaml.h"
-#include "Controls\CalculatorButton.h"
-#include "CalcViewModel\StandardCalculatorViewModel.h"
-#include "CalcViewModel\Common\LocalizationSettings.h"
+#include "Controls/CalculatorButton.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::ViewModel;
@@ -27,7 +27,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace CalculatorApp::Common;
 
-// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
+// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 DEPENDENCY_PROPERTY_INITIALIZATION(NumberPad, ButtonStyle);
 
