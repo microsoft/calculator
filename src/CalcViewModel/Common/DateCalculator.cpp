@@ -12,6 +12,7 @@ using namespace CalculatorApp::Common::DateCalculation;
 DateCalculationEngine::DateCalculationEngine(_In_ String^ calendarIdentifier)
 {
     m_calendar = ref new Calendar();
+    m_calendar->ChangeTimeZone("UTC");
     m_calendar->ChangeCalendarSystem(calendarIdentifier);
 }
 
