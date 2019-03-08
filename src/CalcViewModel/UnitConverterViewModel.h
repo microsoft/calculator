@@ -74,7 +74,7 @@ namespace CalculatorApp
                 Platform::String^ get() { return ref new Platform::String(m_original.abbreviation.c_str()); }
             }
 
-            // This method is used to return the desired automation name for default unit in UnitConveter combo box.
+            // This method is used to return the desired automation name for default unit in UnitConverter combo box.
             Platform::String^ ToString() override
             {
                 return AccessibleName;
@@ -243,7 +243,7 @@ namespace CalculatorApp
             Platform::String^ Serialize();
             void Deserialize(Platform::String^ state);
             
-            //Saving And Restoring User Prefernces of Category and Associated-Units across Sessions.
+            //Saving And Restoring User Preferences of Category and Associated-Units across Sessions.
             void SaveUserPreferences();
             void RestoreUserPreferences();
 
@@ -333,7 +333,7 @@ namespace CalculatorApp
             std::wstring m_valueFromUnlocalized;
             std::wstring m_valueToUnlocalized;
             bool m_relocalizeStringOnSwitch;
-            // For Saving the User Preferences only if the Unit convertyer ViewModel is initialised for the first time
+            // For Saving the User Preferences only if the Unit converter ViewModel is initialised for the first time
             bool m_IsFirstTime;
 
             Platform::String^ m_localizedValueFromFormat;

@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "Common\KeyboardShortcutManager.h"
+#include "Common/KeyboardShortcutManager.h"
 
 namespace CalculatorApp
 {

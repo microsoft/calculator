@@ -3,12 +3,12 @@
 
 #pragma once
 
-#include "Views\Calculator.xaml.h"
-#include "Views\MainPage.g.h"
-#include "Views\DateCalculator.xaml.h"
-#include "Views\UnitConverter.xaml.h"
-#include "CalcViewModel\ApplicationViewModel.h"
-#include "Views\TitleBar.xaml.h"
+#include "Views/Calculator.xaml.h"
+#include "Views/MainPage.g.h"
+#include "Views/DateCalculator.xaml.h"
+#include "Views/UnitConverter.xaml.h"
+#include "CalcViewModel/ApplicationViewModel.h"
+#include "Views/TitleBar.xaml.h"
 
 namespace CalculatorApp
 {

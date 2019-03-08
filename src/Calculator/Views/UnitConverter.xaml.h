@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include "Views\UnitConverter.g.h"
-#include "Common\AlwaysSelectedCollectionView.h"
-#include "CalcViewModel\Common\ValidatingConverters.h"
-#include "Converters\BooleanToVisibilityConverter.h"
-#include "Converters\VisibilityNegationConverter.h"
-#include "CalcViewModel\UnitConverterViewModel.h"
-#include "Views\StateTriggers\AspectRatioTrigger.h"
+#include "Views/UnitConverter.g.h"
+#include "Common/AlwaysSelectedCollectionView.h"
+#include "CalcViewModel/Common/ValidatingConverters.h"
+#include "Converters/BooleanToVisibilityConverter.h"
+#include "Converters/VisibilityNegationConverter.h"
+#include "CalcViewModel/UnitConverterViewModel.h"
+#include "Views/StateTriggers/AspectRatioTrigger.h"
 
 namespace CalculatorApp
 {

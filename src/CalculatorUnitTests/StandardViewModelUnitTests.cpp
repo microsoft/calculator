@@ -509,7 +509,7 @@ namespace CalculatorUnitTests
         }
 
         // Switch Calculator Mode and verify if mode switch is happening as expected.
-        // Test precendence to check if mode switch is happening
+        // Test precedence to check if mode switch is happening
         // Standard mode 1+2*3  = 9; Scientific mode 1+2*3 = 7
         // Intermediate value is also different. after 1 + 2 * , standard shows 3, scientific shows 2
         TEST_METHOD(ButtonPressedCalculatorModeSwitch)

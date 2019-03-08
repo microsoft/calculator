@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "HistoryItemViewModel.h"
-#include "Common\LocalizationService.h"
+#include "Common/LocalizationService.h"
 
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::ViewModel;

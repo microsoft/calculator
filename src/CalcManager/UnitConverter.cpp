@@ -903,7 +903,7 @@ shared_ptr<IConverterDataLoader> UnitConverter::GetDataLoaderForCategory(const C
 }
 
 /// <summary>
-/// Sets the intial values for m_fromType and m_toType.
+/// Sets the initial values for m_fromType and m_toType.
 /// This is an internal helper method as opposed to SetCurrentUnits
 /// which is for external use by clients.
 /// If we fail to set units, we will fallback to the EMPTY_UNIT.

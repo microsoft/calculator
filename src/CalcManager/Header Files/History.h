@@ -26,7 +26,7 @@ public:
     void AddCloseBraceToHistory();
     void PushLastOpndStart(int ichOpndStart = -1);
     void PopLastOpndStart();
-    void EnclosePrecInvertionBrackets();
+    void EnclosePrecInversionBrackets();
     bool FOpndAddedToHistory();
     void CompleteHistoryLine(std::wstring_view numStr);
     void ClearHistoryLine(std::wstring_view errStr);

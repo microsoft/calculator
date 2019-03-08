@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "MemoryListItem.xaml.h"
-#include "Controls\CalculatorButton.h"
+#include "Controls/CalculatorButton.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
