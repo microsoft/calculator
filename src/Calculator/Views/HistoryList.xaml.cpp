@@ -8,7 +8,7 @@
 
 #include "pch.h"
 #include "HistoryList.xaml.h"
-#include "CalcViewModel\Common\LocalizationService.h"
+#include "CalcViewModel/Common/LocalizationService.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;

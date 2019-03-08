@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "TitleBar.xaml.h"
-#include "CalcViewModel\Common\AppResourceProvider.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
 
 using namespace std;
 using namespace Platform;

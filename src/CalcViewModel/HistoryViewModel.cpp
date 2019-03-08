@@ -3,9 +3,9 @@
 
 #include "pch.h"
 #include "HistoryViewModel.h"
-#include "Common\TraceLogger.h"
-#include "Common\LocalizationStringUtil.h"
-#include "Common\LocalizationSettings.h"
+#include "Common/TraceLogger.h"
+#include "Common/LocalizationStringUtil.h"
+#include "Common/LocalizationSettings.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;

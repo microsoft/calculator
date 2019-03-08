@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "Header Files\CCommand.h"
+#include "Header Files/CCommand.h"
 #include "CalculatorVector.h"
 #include "ExpressionCommand.h"
 

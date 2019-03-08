@@ -3,8 +3,8 @@
 
 #include "pch.h"
 #include "CopyPasteManager.h"
-#include "Common\TraceLogger.h"
-#include "Common\LocalizationSettings.h"
+#include "Common/TraceLogger.h"
+#include "Common/LocalizationSettings.h"
 
 using namespace std;
 using namespace concurrency;
