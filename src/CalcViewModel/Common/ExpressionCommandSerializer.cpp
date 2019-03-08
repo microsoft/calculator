@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "Common\ExpressionCommandSerializer.h"
+#include "Common/ExpressionCommandSerializer.h"
 
 using namespace CalculatorApp::Common;
 using namespace Windows::Storage::Streams;

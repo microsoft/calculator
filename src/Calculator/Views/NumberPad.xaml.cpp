@@ -8,9 +8,9 @@
 
 #include "pch.h"
 #include "NumberPad.xaml.h"
-#include "Controls\CalculatorButton.h"
-#include "CalcViewModel\StandardCalculatorViewModel.h"
-#include "CalcViewModel\Common\LocalizationSettings.h"
+#include "Controls/CalculatorButton.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::ViewModel;
