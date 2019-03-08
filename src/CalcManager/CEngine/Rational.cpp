@@ -1,11 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-#ifdef _WIN32
 #include "pch.h"
-#else
-#include "pch_cross_platform.h"
-#endif
-
 #include "Header Files/Rational.h"
 
 using namespace std;

@@ -1,17 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#ifdef _WIN32
 #include "pch.h"
-#else
-#include "pch_cross_platform.h"
-#endif
-
 #include "Header Files/CalcEngine.h"
 #include "CalculatorResource.h"
-
-#include <memory>
-#include <string_view>
 
 using namespace std;
 using namespace CalcEngine;

@@ -3,18 +3,18 @@
 #include <cstdint>
 
 typedef uint64_t ULONGLONG;
-typedef int INT;
-typedef char CHAR;
-typedef long LONG;
-typedef unsigned char BYTE;
-typedef unsigned int UINT_PTR;
+typedef int32_t INT;
+typedef uint8_t CHAR;
+typedef int32_t LONG;
+typedef uint8_t BYTE;
+typedef uintptr_t UINT_PTR;
 typedef unsigned long ULONG_PTR;
-typedef unsigned int ULONG32;
-typedef unsigned long DWORD;
-typedef unsigned long ULONG;
-typedef unsigned short USHORT;
+typedef uint32_t ULONG32;
+typedef uint32_t DWORD;
+typedef uint32_t ULONG;
+typedef uint16_t USHORT;
 typedef wchar_t WCHAR;
-typedef unsigned short WORD;
+typedef uint16_t WORD;
 typedef UINT_PTR WPARAM;
 typedef ULONG_PTR DWORD_PTR;
 

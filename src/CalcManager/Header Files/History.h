@@ -7,6 +7,8 @@
 #include "IHistoryDisplay.h"
 #include "Rational.h"
 
+#include <array>
+
 // maximum depth you can get by precedence. It is just an array's size limit.
 static constexpr size_t MAXPRECDEPTH = 25;
 
