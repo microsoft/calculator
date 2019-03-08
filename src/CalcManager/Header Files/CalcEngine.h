@@ -32,6 +32,8 @@
 #include "Rational.h"
 #include "RationalMath.h"
 
+#include <array>
+
 // The following are NOT real exports of CalcEngine, but for forward declarations
 // The real exports follows later
 

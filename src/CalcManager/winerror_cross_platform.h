@@ -16,3 +16,4 @@ typedef int32_t HRESULT;
 
 #define SUCCEEDED(hr) (((HRESULT)(hr)) >= 0)
 #define FAILED(hr) (((HRESULT)(hr)) < 0)
+#define SCODE_CODE(sc) ((sc) & 0xFFFF)

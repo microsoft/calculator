@@ -13,6 +13,11 @@
 * Created: 13-Feb-2008
 *
 \****************************************************************************/
+
+#pragma once
+
+#include <string>
+
 #define IDS_FIRSTENGSTR     IDS_ENGINESTR_FIRST
 
 #define IDS_DECIMAL     4
