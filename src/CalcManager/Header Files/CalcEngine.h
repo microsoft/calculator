@@ -116,7 +116,7 @@ private:
     int m_nLastCom;   // Last command entered.
     ANGLE_TYPE m_angletype;  // Current Angle type when in dec mode. one of deg, rad or grad
     NUM_WIDTH m_numwidth;  // one of qword, dword, word or byte mode.
-    LONG m_dwWordBitWidth; // # of bits in currently selected word size
+    int32_t m_dwWordBitWidth; // # of bits in currently selected word size
 
     CHistoryCollector m_HistoryCollector; // Accumulator of each line of history as various commands are processed
 
@@ -139,7 +139,7 @@ private:
     CalcEngine::Rational SciCalcFunctions(CalcEngine::Rational const& rat, DWORD op);
     CalcEngine::Rational DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs);
     void SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwidth);
-    LONG DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
+    int32_t DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
     uint32_t NRadixFromRadixType( RADIX_TYPE radixtype);
 
     bool TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno);

@@ -51,10 +51,10 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwid
     DisplayNum();
 }
 
-LONG CCalcEngine::DwWordBitWidthFromeNumWidth(NUM_WIDTH /*numwidth*/)
+int32_t CCalcEngine::DwWordBitWidthFromeNumWidth(NUM_WIDTH /*numwidth*/)
 {
     static constexpr int nBitMax[] = { 64, 32, 16, 8 };
-    LONG wmax = nBitMax[0];
+    int32_t wmax = nBitMax[0];
 
     if (m_numwidth >= 0 && (size_t)m_numwidth < size(nBitMax))
     {
