@@ -323,7 +323,7 @@ extern void flatrat(_Inout_ PRAT& prat, uint32_t radix, int32_t precision);
 
 extern long numtolong(_In_ PNUMBER pnum, uint32_t radix );
 extern long rattolong(_In_ PRAT prat, uint32_t radix, int32_t precision);
-ULONGLONG rattoUlonglong(_In_ PRAT prat, uint32_t radix, int32_t precision);
+uint64_t rattoUlonglong(_In_ PRAT prat, uint32_t radix, int32_t precision);
 extern PNUMBER _createnum(_In_ uint32_t size ); // returns an empty number structure with size digits
 extern PNUMBER nRadixxtonum(_In_ PNUMBER a, uint32_t radix, int32_t precision);
 extern PNUMBER gcd(_In_ PNUMBER a, _In_ PNUMBER b );

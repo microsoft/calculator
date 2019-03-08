@@ -916,7 +916,7 @@ unsigned long rattoUlong( _In_ PRAT prat, uint32_t radix, int32_t precision)
 //    internal base chosen happens to be 2^32, this is easier.
 //-----------------------------------------------------------------------------
 
-ULONGLONG rattoUlonglong( _In_ PRAT prat, uint32_t radix, int32_t precision)
+uint64_t rattoUlonglong( _In_ PRAT prat, uint32_t radix, int32_t precision)
 {
     PRAT pint = nullptr;
 
@@ -935,7 +935,7 @@ ULONGLONG rattoUlonglong( _In_ PRAT prat, uint32_t radix, int32_t precision)
     destroyrat(prat32);
     destroyrat(pint);
 
-    return (((ULONGLONG)hi << 32) | lo);
+    return (((uint64_t)hi << 32) | lo);
 }
 
 //-----------------------------------------------------------------------------
