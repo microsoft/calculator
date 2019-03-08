@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "Views\CalculatorProgrammerDisplayPanel.g.h"
-#include "CalcViewModel\StandardCalculatorViewModel.h"
+#include "Views/CalculatorProgrammerDisplayPanel.g.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
 
 namespace CalculatorApp
 {

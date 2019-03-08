@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "ExpressionItemTemplateSelector.h"
-#include "CalcViewModel\Common\DisplayExpressionToken.h"
+#include "CalcViewModel/Common/DisplayExpressionToken.h"
 
 using namespace CalculatorApp::Common;
 

@@ -4,8 +4,8 @@
 #include "pch.h"
 #include <CppUnitTest.h>
 
-#include "CalcViewModel\DataLoaders\CurrencyDataLoader.h"
-#include "CalcViewModel\Common\LocalizationService.h"
+#include "CalcViewModel/DataLoaders/CurrencyDataLoader.h"
+#include "CalcViewModel/Common/LocalizationService.h"
 
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Common::LocalizationServiceProperties;
