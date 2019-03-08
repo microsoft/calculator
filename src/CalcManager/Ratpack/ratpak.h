@@ -24,8 +24,8 @@ static constexpr uint32_t BASEX = 0x80000000; // Internal radix used in calculat
                         // this to 2^32 after solving scaling problems with
                         // overflow detection esp. in mul
 
-typedef unsigned long MANTTYPE;
-typedef unsigned __int64 TWO_MANTTYPE;
+typedef uint32_t MANTTYPE;
+typedef uint64_t TWO_MANTTYPE;
 
 enum eNUMOBJ_FMT {
     FMT_FLOAT,        // returns floating point, or exponential if number is too big
