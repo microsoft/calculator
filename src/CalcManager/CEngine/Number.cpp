@@ -28,7 +28,7 @@ namespace CalcEngine
 
     PNUMBER Number::ToPNUMBER() const
     {
-        PNUMBER ret = _createnum(static_cast<ULONG>(this->Mantissa().size()) + 1);
+        PNUMBER ret = _createnum(static_cast<uint32_t>(this->Mantissa().size()) + 1);
         ret->sign = this->Sign();
         ret->exp = this->Exp();
         ret->cdigit = static_cast<long>(this->Mantissa().size());

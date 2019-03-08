@@ -125,11 +125,11 @@ void _destroyrat( _In_ PRAT prat )
 //
 //-----------------------------------------------------------------------------
 
-PNUMBER _createnum( _In_ ULONG size )
+PNUMBER _createnum( _In_ uint32_t size )
 
 {
     PNUMBER pnumret= nullptr;
-    ULONG cbAlloc;
+    uint32_t cbAlloc;
 
     // sizeof( MANTTYPE ) is the size of a 'digit'
     if (SUCCEEDED(ULongAdd(size, 1, &cbAlloc)) &&
@@ -578,7 +578,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
     long expValue = 0L;          // expValue is exponent mantissa, should be unsigned
 
     PNUMBER pnumret = nullptr;
-    createnum(pnumret, static_cast<ULONG>(numberString.length()));
+    createnum(pnumret, static_cast<uint32_t>(numberString.length()));
     pnumret->sign = 1L;
     pnumret->cdigit = 0;
     pnumret->exp = 0;
@@ -797,7 +797,7 @@ PNUMBER longtonum( long inlong, uint32_t radix)
 //
 //    FUNCTION: Ulongtonum
 //
-//    ARGUMENTS: ULONG input and radix requested.
+//    ARGUMENTS: uint32_t input and radix requested.
 //
 //    RETURN: number
 //
