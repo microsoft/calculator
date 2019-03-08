@@ -24,7 +24,7 @@
 //      R - Reserved - not currently used for anything
 //
 //      r - reserved portion of the facility code. Reserved for internal
-//              use. Used to indicate HRESULT values that are not status
+//              use. Used to indicate int32_t values that are not status
 //              values, but are instead message ids for display strings.
 //
 //      Facility - is the facility code
@@ -33,6 +33,8 @@
 //
 // This format is based loosely on an OLE HRESULT and is compatible with the
 // SUCCEEDED and FAILED macros as well as the HRESULT_CODE macro
+
+typedef int32_t ResultCode;
 
 // CALC_E_DIVIDEBYZERO
 //

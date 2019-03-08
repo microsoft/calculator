@@ -13,7 +13,7 @@ using namespace std;
 using namespace CalcEngine;
 
 namespace {
-    void IFT(HRESULT hr)
+    void IFT(ResultCode hr)
     {
         if (FAILED(hr))
         {
