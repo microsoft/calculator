@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "CalcManager\UnitConverter.h"
+#include "CalcManager/UnitConverter.h"
 #include "Common/NavCategory.h"
 
 namespace CalculatorApp

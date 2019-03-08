@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "CalcViewModel\Common\AppResourceProvider.h"
-#include "CalcViewModel\Common\LocalizationSettings.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
 #include "BitFlipAutomationNameConverter.h"
 
 using namespace CalculatorApp::Common;

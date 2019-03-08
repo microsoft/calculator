@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "Header Files\CalcEngine.h"
+#include "Header Files/CalcEngine.h"
 #include "CalculatorManager.h"
 #include "CalculatorResource.h"
 

@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include "Views\CalculatorProgrammerOperators.g.h"
-#include "Controls\RadixButton.h"
-#include "CalcViewModel\StandardCalculatorViewModel.h"
+#include "Views/CalculatorProgrammerOperators.g.h"
+#include "Controls/RadixButton.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
 
 namespace CalculatorApp
 {

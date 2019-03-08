@@ -8,9 +8,9 @@
 
 #include "pch.h"
 #include "CalculatorScientificOperators.xaml.h"
-#include "CalcViewModel\Common\KeyboardShortcutManager.h"
-#include "Controls\CalculatorButton.h"
-#include "CalcViewModel\StandardCalculatorViewModel.h"
+#include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "Controls/CalculatorButton.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;

@@ -3,11 +3,11 @@
 
 #include "pch.h"
 #include "DateCalculatorViewModel.h"
-#include "Common\TraceLogger.h"
-#include "Common\LocalizationStringUtil.h"
-#include "Common\LocalizationService.h"
-#include "Common\LocalizationSettings.h"
-#include "Common\CopyPasteManager.h"
+#include "Common/TraceLogger.h"
+#include "Common/LocalizationStringUtil.h"
+#include "Common/LocalizationService.h"
+#include "Common/LocalizationSettings.h"
+#include "Common/CopyPasteManager.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <wrl\wrappers\corewrappers.h>
+#include <wrl/wrappers/corewrappers.h>
 
 namespace CalculatorApp
 {
