@@ -3,8 +3,8 @@
 
 #include "pch.h"
 #include "TitleBarHelper.h"
-#include "Converters\BooleanToVisibilityConverter.h"
-#include "CalcViewModel\ViewState.h"
+#include "Converters/BooleanToVisibilityConverter.h"
+#include "CalcViewModel/ViewState.h"
 
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Converters;

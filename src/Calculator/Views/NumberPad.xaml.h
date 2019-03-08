@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include "Views\NumberPad.g.h"
-#include "CalcViewModel\Common\KeyboardShortcutManager.h"
+#include "Views/NumberPad.g.h"
+#include "CalcViewModel/Common/KeyboardShortcutManager.h"
 
 namespace CalculatorApp
 {

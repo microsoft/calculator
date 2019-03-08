@@ -7,9 +7,9 @@
 
 #include "pch.h"
 #include "Utils.h"
-#include "Common\AppResourceProvider.h"
-#include "Common\ExpressionCommandSerializer.h"
-#include "Common\ExpressionCommandDeserializer.h"
+#include "Common/AppResourceProvider.h"
+#include "Common/ExpressionCommandSerializer.h"
+#include "Common/ExpressionCommandDeserializer.h"
 #include "ViewState.h"
 
 using namespace CalculatorApp;

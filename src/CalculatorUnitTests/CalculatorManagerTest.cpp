@@ -5,8 +5,8 @@
 
 #include <CppUnitTest.h>
 
-#include "CalcManager\CalculatorHistory.h"
-#include "CalcViewModel\Common\EngineResourceProvider.h"
+#include "CalcManager/CalculatorHistory.h"
+#include "CalcViewModel/Common/EngineResourceProvider.h"
 
 using namespace CalculatorApp;
 using namespace CalculationManager;
