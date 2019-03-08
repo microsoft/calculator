@@ -505,7 +505,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
         {
             if (commandIndex == 0)
             {
-                delete temp;
+                delete[] temp;
                 return;
             }
 
