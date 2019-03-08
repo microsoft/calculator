@@ -12,7 +12,13 @@
 *
 * Author:
 \****************************************************************************/
+
+#ifdef _WIN32
+#include "pch.h"
+#else
 #include "pch_cross_platform.h"
+#endif
+
 #include "Header Files/CalcEngine.h"
 #include "Header Files/CalcUtils.h"
 

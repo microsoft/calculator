@@ -7,3 +7,4 @@
 #define _In_
 #define _Out_
 #define _Inout_
+#define __in_opt

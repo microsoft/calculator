@@ -17,6 +17,13 @@
 //
 //-----------------------------------------------------------------------------
 
+#ifndef _WIN32
+#include "win_data_types_cross_platform.h"
+#include "sal_cross_platform.h"
+#endif
+
+#include <cstdint>
+#include <string>
 #include "CalcErr.h"
 
 static constexpr uint32_t BASEXPWR = 31L;// Internal log2(BASEX)

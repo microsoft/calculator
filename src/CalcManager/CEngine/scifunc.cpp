@@ -16,7 +16,13 @@
 /***                                                                    ***/
 /***                                                                    ***/
 /**************************************************************************/
+
+#ifdef _WIN32
+#include "pch.h"
+#else
 #include "pch_cross_platform.h"
+#endif
+
 #include "Header Files/CalcEngine.h"
 
 using namespace std;

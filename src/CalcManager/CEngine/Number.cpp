@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
+#ifdef _WIN32
+#include "pch.h"
+#else
 #include "pch_cross_platform.h"
+#endif
+
 #include "Header Files/Number.h"
 
 using namespace std;
@@ -59,6 +64,13 @@ namespace CalcEngine
 
     bool Number::IsZero() const
     {
-        return all_of(m_mantissa.begin(), m_mantissa.end(), [](auto &&i) { return i == 0; });
+        for (auto const& digit : Mantissa())
+        {
+            if (digit != 0)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
