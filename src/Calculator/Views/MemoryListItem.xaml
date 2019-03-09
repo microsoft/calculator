@@ -59,6 +59,7 @@
                        Style="{ThemeResource TitleTextBlockStyle}"
                        FontWeight="SemiBold"
                        FlowDirection="LeftToRight"
+                       IsTextSelectionEnabled="True"
                        Text="{x:Bind Model.Value, Mode=OneWay}"
                        TextAlignment="Right"
                        TextReadingOrder="DetectFromContent"

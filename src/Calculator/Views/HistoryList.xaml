@@ -66,6 +66,7 @@
                                    Margin="0,0,0,4"
                                    Style="{ThemeResource BodyTextBlockMediumStyle}"
                                    AutomationProperties.Name="{x:Bind AccExpression}"
+                                   IsTextSelectionEnabled="True"
                                    Text="{x:Bind Expression}"
                                    TextAlignment="Right"
                                    TextWrapping="Wrap"/>
@@ -73,6 +74,7 @@
                                    Style="{ThemeResource TitleTextBlockStyle}"
                                    FontWeight="SemiBold"
                                    AutomationProperties.Name="{x:Bind AccResult}"
+                                   IsTextSelectionEnabled="True"
                                    Text="{x:Bind Result}"
                                    TextAlignment="Right"
                                    TextWrapping="Wrap"/>

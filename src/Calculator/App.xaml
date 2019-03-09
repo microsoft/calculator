@@ -392,6 +392,7 @@
                                                FontSize="{TemplateBinding FontSize}"
                                                FontWeight="SemiBold"
                                                AutomationProperties.AccessibilityView="Raw"
+                                               IsTextSelectionEnabled="True"
                                                Text="{TemplateBinding DisplayValue}"
                                                TextAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                TextWrapping="NoWrap"/>
@@ -478,6 +479,7 @@
                                                FontSize="{TemplateBinding FontSize}"
                                                FontWeight="SemiBold"
                                                AutomationProperties.AccessibilityView="Raw"
+                                               IsTextSelectionEnabled="True"
                                                Text="{TemplateBinding DisplayValue}"
                                                TextAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                TextWrapping="NoWrap"/>
@@ -565,6 +567,7 @@
                                                FontSize="{TemplateBinding FontSize}"
                                                FontWeight="SemiBold"
                                                AutomationProperties.AccessibilityView="Raw"
+                                               IsTextSelectionEnabled="True"
                                                Text="{TemplateBinding DisplayValue}"
                                                TextAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                TextWrapping="NoWrap"/>
