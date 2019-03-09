@@ -277,7 +277,7 @@ void Calculator::OnLayoutStateChanged(_In_ Object^ sender, _In_ Object^ e)
     UpdatePanelViewState();
 }
 
-void Calculator::OnIsStandardPropertyChanged(bool /*oldValue*/, bool newValue)
+void Calculator::OnIsStandardPropertyChanged(bool /*oldValue*/, bool /*newValue*/)
 {
     UpdateViewState();
     UpdatePanelViewState();

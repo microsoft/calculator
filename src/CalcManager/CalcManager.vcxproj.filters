@@ -136,9 +136,6 @@
     <ClInclude Include="Header Files\History.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\scimath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UnitConverter.h" />
     <ClInclude Include="CalculatorHistory.h" />
     <ClInclude Include="CalculatorManager.h" />

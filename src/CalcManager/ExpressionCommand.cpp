@@ -287,7 +287,7 @@ const wstring & COpndCommand::GetToken(wchar_t decimalSymbol)
     return m_token;
 }
 
-wstring COpndCommand::GetString(uint32_t radix, int32_t precision, wchar_t decimalSymbol)
+wstring COpndCommand::GetString(uint32_t radix, int32_t precision)
 {
     wstring result{};
 

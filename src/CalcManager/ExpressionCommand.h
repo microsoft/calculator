@@ -67,7 +67,7 @@ public:
     const std::wstring & GetToken(wchar_t decimalSymbol) override;
     CalculationManager::CommandType GetCommandType() const override;
     void Accept(_In_ ISerializeCommandVisitor &commandVisitor) override;
-    std::wstring GetString(uint32_t radix, int32_t precision, wchar_t decimalSymbol);
+    std::wstring GetString(uint32_t radix, int32_t precision);
 
 private:
     std::shared_ptr<CalculatorVector<int>> m_commands;
