@@ -566,7 +566,7 @@
                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                Foreground="{TemplateBinding Foreground}"
                                                FontSize="{TemplateBinding FontSize}"
-                                               FontWeight="SemiBold"
+                                               FontWeight="Light"
                                                AutomationProperties.AccessibilityView="Raw"
                                                Text="{TemplateBinding DisplayValue}"
                                                TextAlignment="{TemplateBinding HorizontalContentAlignment}"
