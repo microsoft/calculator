@@ -424,7 +424,7 @@ extern void divrat( _Inout_ PRAT *pa, _In_ PRAT b, int32_t precision);
 extern void fracrat( _Inout_ PRAT *pa , uint32_t radix, int32_t precision);
 extern void factrat( _Inout_ PRAT *pa, uint32_t radix, int32_t precision);
 extern void modrat( _Inout_ PRAT *pa, _In_ PRAT b );
-extern void gcdrat( _Inout_ PRAT *pa, uint32_t radix, int32_t precision);
+extern void gcdrat( _Inout_ PRAT *pa, int32_t precision);
 extern void intrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision);
 extern void mulnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix);
 extern void mulnumx( _Inout_ PNUMBER *pa, _In_ PNUMBER b );

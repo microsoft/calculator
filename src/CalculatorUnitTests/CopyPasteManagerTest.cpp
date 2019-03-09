@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -34,7 +34,7 @@ namespace CalculatorUnitTests
 
 #define ASSERT_NEGATIVE_TESTCASES(func, dataSet) \
 {\
-    int size = sizeof(dataSet)/sizeof(*dataSet);;\
+    int size = sizeof(dataSet)/sizeof(*dataSet);\
     while(--size)\
     {\
         VERIFY_ARE_EQUAL(func(dataSet[size]), StringReference(L"NoOp"));\

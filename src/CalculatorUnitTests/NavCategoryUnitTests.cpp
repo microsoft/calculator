@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -274,7 +274,7 @@ namespace CalculatorUnitTests
         for (size_t index = 0; index < orderedModes.size(); index++)
         {
             ViewMode mode = orderedModes[index];
-            VERIFY_ARE_EQUAL(index, NavCategory::GetIndex(mode));
+            VERIFY_ARE_EQUAL(index, (size_t)NavCategory::GetIndex(mode));
         }
 
         VERIFY_ARE_EQUAL(-1, NavCategory::GetIndex(ViewMode::None));
@@ -306,7 +306,7 @@ namespace CalculatorUnitTests
         for (size_t pos = 1; pos <= orderedModes.size(); pos++)
         {
             ViewMode mode = orderedModes[pos - 1];
-            VERIFY_ARE_EQUAL(pos, NavCategory::GetPosition(mode));
+            VERIFY_ARE_EQUAL(pos, (size_t)NavCategory::GetPosition(mode));
         }
 
         VERIFY_ARE_EQUAL(-1, NavCategory::GetPosition(ViewMode::None));

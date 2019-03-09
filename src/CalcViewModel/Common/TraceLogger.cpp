@@ -176,7 +176,7 @@ namespace CalculatorApp
         {
             iterMap->second.insert(iterMap->second.begin(), L"Programmer");
         }
-        else
+        else if (isStandard)
         {
             iterMap->second.insert(iterMap->second.begin(), L"Standard");
         }
@@ -199,7 +199,7 @@ namespace CalculatorApp
         {
             iterMap->second[memoryPosition] = L"Programmer";
         }
-        else
+        else if (isStandard)
         {
             iterMap->second[memoryPosition] = L"Standard";
         }
@@ -872,6 +872,7 @@ namespace CalculatorApp
         if (!m_dateDiffUsageLoggedInSession)
         {
             LoggingFields fields{};
+            fields.AddUInt32(L"WindowId", windowId);
             LogTelemetryEvent(EVENT_NAME_DATE_DIFFERENCE_USED, fields);
 
             m_dateDiffUsageLoggedInSession = true;
