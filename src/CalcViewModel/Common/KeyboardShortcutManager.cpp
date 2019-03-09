@@ -43,7 +43,6 @@ static multimap<int, multimap<MyVirtualKey, WeakReference>> s_VirtualKeyControlS
 static multimap<int, multimap<MyVirtualKey, WeakReference>> s_VirtualKeyInverseChordsForButtons;
 static multimap<int, multimap<MyVirtualKey, WeakReference>> s_VirtualKeyControlInverseChordsForButtons;
 
-static const TimeSpan c_lightUpTime = { 500000 }; // Quarter of a second
 static multimap<int, bool> s_ShiftKeyPressed;
 static multimap<int, bool> s_ControlKeyPressed;
 static multimap<int, bool> s_ShiftButtonChecked;
@@ -83,11 +82,13 @@ namespace CalculatorApp
             // The button will go into the visual Pressed state with this call 
             VisualStateManager::GoToState(button, "Pressed", true);
 
-            // This timer will fire after c_lightUpTime and make the button
+            // This timer will fire after lightUpTime and make the button
             // go back to the normal state. 
             // This timer will only fire once after which it will be destroyed
             auto timer = ref new DispatcherTimer();
-            timer->Interval = c_lightUpTime;
+            TimeSpan lightUpTime{};
+            lightUpTime.Duration = 500000L; // Half second (in 100-ns units)
+            timer->Interval = lightUpTime;
     
             WeakReference timerWeakReference(timer);
             WeakReference buttonWeakReference(button);
@@ -579,9 +580,9 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow^ sender, KeyEventArgs^
             // Writer lock for the static maps
             reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
-            auto currentControlKeyPressed = s_ControlKeyPressed.find(viewId);
+            auto currControlKeyPressed = s_ControlKeyPressed.find(viewId);
 
-            if (currentControlKeyPressed != s_ControlKeyPressed.end())
+            if (currControlKeyPressed != s_ControlKeyPressed.end())
             {
                 s_ControlKeyPressed.erase(viewId);
                 s_ControlKeyPressed.insert(std::make_pair(viewId, true));
@@ -593,9 +594,9 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow^ sender, KeyEventArgs^
             // Writer lock for the static maps
             reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
-            auto currentShiftKeyPressed = s_ShiftKeyPressed.find(viewId);
+            auto currShiftKeyPressed = s_ShiftKeyPressed.find(viewId);
 
-            if (currentShiftKeyPressed != s_ShiftKeyPressed.end())
+            if (currShiftKeyPressed != s_ShiftKeyPressed.end())
             {
                 s_ShiftKeyPressed.erase(viewId);
                 s_ShiftKeyPressed.insert(std::make_pair(viewId, true));
@@ -636,7 +637,7 @@ void KeyboardShortcutManager::OnKeyUpHandler(CoreWindow^ sender, KeyEventArgs^ a
     int viewId = Utils::GetWindowId();
     auto key = args->VirtualKey;
 
-    if (args->VirtualKey == VirtualKey::Shift)
+    if (key == VirtualKey::Shift)
     {
         // Writer lock for the static maps
         reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
@@ -649,14 +650,14 @@ void KeyboardShortcutManager::OnKeyUpHandler(CoreWindow^ sender, KeyEventArgs^ a
             s_ShiftKeyPressed.insert(std::make_pair(viewId, false));
         }
     }
-    else if (args->VirtualKey == VirtualKey::Control)
+    else if (key == VirtualKey::Control)
     {
         // Writer lock for the static maps
         reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
-        auto currentControlKeyPressed = s_ControlKeyPressed.find(viewId);
+        auto currControlKeyPressed = s_ControlKeyPressed.find(viewId);
 
-        if (currentControlKeyPressed != s_ControlKeyPressed.end())
+        if (currControlKeyPressed != s_ControlKeyPressed.end())
         {
             s_ControlKeyPressed.erase(viewId);
             s_ControlKeyPressed.insert(std::make_pair(viewId, false));

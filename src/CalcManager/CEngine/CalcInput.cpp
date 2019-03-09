@@ -261,7 +261,7 @@ void CalcInput::SetDecimalSymbol(wchar_t decSymbol)
     }
 }
 
-wstring CalcInput::ToString(uint32_t radix, bool isIntegerMode)
+wstring CalcInput::ToString(uint32_t radix)
 {
     // In theory both the base and exponent could be C_NUM_MAX_DIGITS long.
     wstringstream resStream;
