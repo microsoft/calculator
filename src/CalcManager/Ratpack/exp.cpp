@@ -343,10 +343,31 @@ void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precis
         powratcomp(&originalResult, oneoveryDenom, radix, precision);
                 
         // ##################################
+        // Find number of digits after decimal point
+        // and prepare multiplier for rounding
+        // ##################################
+        PRAT resultMultiplier = nullptr;
+        PRAT resultDigits = nullptr;
+        PNUMBER numResult = RatToNumber(pxPow, radix, precision);
+        if (-numResult->exp < precision)
+        {
+            DUPRAT(resultDigits, longtorat(-numResult->exp / 2));
+        }
+        else
+        {
+            DUPRAT(resultDigits, rat_zero);
+        }
+        DUPRAT(resultMultiplier, rat_ten);
+        powratcomp(&resultMultiplier, resultDigits, radix, precision);
+        destroyrat(resultDigits);
+        destroynum(numResult);
+
+        // ##################################
         // Round the originalResult to roundedResult
         // ##################################
         PRAT roundedResult = nullptr;
         DUPRAT(roundedResult, originalResult);
+        mulrat(&roundedResult, resultMultiplier, precision);
         if (roundedResult->pp->sign == -1)
         {
             subrat(&roundedResult, rat_half, precision);
@@ -356,6 +377,8 @@ void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precis
             addrat(&roundedResult, rat_half, precision);
         }
         intrat(&roundedResult, radix, precision);
+        divrat(&roundedResult, resultMultiplier, precision);
+        destroyrat(resultMultiplier);
 
         // ##################################
         // Take the yDenom power of the roundedResult.
