@@ -348,18 +348,7 @@ String^ DateCalculatorViewModel::GetDateDiffString() const
 
 String^ DateCalculatorViewModel::GetDateDiffStringInDays() const
 {
-    wstring result;
-
-    if (m_toDate.UniversalTime < m_fromDate.UniversalTime)
-    {
-        result = L"- "; //
-    }
-    else
-    {
-        result = L"";
-    }
-
-    result += GetLocalizedNumberString(m_dateDiffResultInDays.day)->Data();
+    wstring result = GetLocalizedNumberString(m_dateDiffResultInDays.day)->Data();
     result += L" ";
 
     // Display the result as '1 day' or 'N days'
