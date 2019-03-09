@@ -249,15 +249,6 @@ String^ DateCalculatorViewModel::GetDateDiffString() const
     bool addDelimiter = false;
     AppResourceProvider resourceLoader = AppResourceProvider::GetInstance();
 
-    if (m_toDate.UniversalTime < m_fromDate.UniversalTime)
-    {
-        result = L"- ";
-    }
-    else
-    {
-        result = L"";
-    }
-
     auto yearCount = m_dateDiffResult.year;
     if (yearCount > 0)
     {
