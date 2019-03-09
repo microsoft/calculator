@@ -79,7 +79,7 @@ namespace CalculatorFunctionalTests
             m_standardViewModel->IsFToEEnabled = false;
         }
 
-        void AddSingleHistoryItem(unsigned int windowId = 0)
+        void AddSingleHistoryItem()
         {
             Initialize();
             int initialSize = m_historyViewModel->ItemSize;
@@ -97,7 +97,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void AddMaxHistoryItems(unsigned int windowId = 0)
+        void AddMaxHistoryItems()
         {
             Initialize();
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
@@ -132,7 +132,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void ReloadHistory(unsigned int windowId = 0)
+        void ReloadHistory()
         {
             Initialize();
 
@@ -189,7 +189,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void ClearHistory(unsigned int windowId = 0)
+        void ClearHistory()
         {
             Initialize();
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeScientific);
@@ -209,7 +209,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void SerializeDeSerializeHistoryItem(unsigned int windowId = 0)
+        void SerializeDeSerializeHistoryItem()
         {
             Initialize();
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeScientific);
@@ -225,7 +225,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void SaveAndReloadHistory(unsigned int windowid = 0)
+        void SaveAndReloadHistory()
         {
             Initialize();
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeScientific);
@@ -260,7 +260,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void HistoryItemWithPrettyExpressions(unsigned int windowId = 0)
+        void HistoryItemWithPrettyExpressions()
         {
             Initialize();
             Command commands[] = { Command::CommandSIN, Command::CommandCOS, Command::CommandTAN, Command::CommandASIN, Command::CommandACOS, Command::CommandATAN };
@@ -292,7 +292,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void HistoryItemWithPrettyExpressionsMixedRadix(unsigned int windowId = 0)
+        void HistoryItemWithPrettyExpressionsMixedRadix()
         {
             Initialize();
             ResourceLoader^ m_uiResourceLoader = ResourceLoader::GetForViewIndependentUse(L"CEngineStrings");
@@ -323,7 +323,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void HistoryItemClicked(unsigned int windowId = 0)
+        void HistoryItemClicked()
         {
             Initialize();
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeScientific);
@@ -350,7 +350,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void HistoryItemLoadAndContinueCalculation(unsigned int windowId = 0)
+        void HistoryItemLoadAndContinueCalculation()
         {
             Initialize();
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeBasic);
@@ -387,7 +387,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void DisplayValueAutomationNames(unsigned int windowId = 0)
+        void DisplayValueAutomationNames()
         {
             Initialize();
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
@@ -416,7 +416,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void RadixAutomationName(unsigned int windowId = 0)
+        void RadixAutomationName()
         {
             Initialize();
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeProgrammer);
@@ -437,7 +437,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void HistoryEmpty(unsigned int windowId = 0)
+        void HistoryEmpty()
         {
             Initialize();
             VERIFY_ARE_EQUAL(0, m_historyViewModel->ItemSize);
@@ -446,7 +446,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void HistoryClearCommandWithEmptyHistory(unsigned int windowId = 0)
+        void HistoryClearCommandWithEmptyHistory()
         {
             Initialize();
             VERIFY_ARE_EQUAL(0, m_historyViewModel->ItemSize);
