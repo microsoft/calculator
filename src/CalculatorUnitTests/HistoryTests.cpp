@@ -104,14 +104,14 @@ namespace CalculatorFunctionalTests
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
-            for (int i = 1; i < m_standardViewModel->m_standardCalculatorManager.MaxHistorySize(); i++)
+            for (size_t i = 1; i < m_standardViewModel->m_standardCalculatorManager.MaxHistorySize(); i++)
             {
                 m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
                 m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
                 m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command2);
                 m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
             }
-            VERIFY_ARE_EQUAL(m_historyViewModel->ItemSize, m_standardViewModel->m_standardCalculatorManager.MaxHistorySize());
+            VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemSize, m_standardViewModel->m_standardCalculatorManager.MaxHistorySize());
             String ^expression = UtfUtils::LRO + L"1   +   1 =" + UtfUtils::PDF;
             int output = 2;
             String ^result = output.ToString();
@@ -122,7 +122,7 @@ namespace CalculatorFunctionalTests
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command5);
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
-            VERIFY_ARE_EQUAL(m_historyViewModel->ItemSize, m_standardViewModel->m_standardCalculatorManager.MaxHistorySize());
+            VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemSize, m_standardViewModel->m_standardCalculatorManager.MaxHistorySize());
             expression = UtfUtils::LRO + L"1   +   2 =" + UtfUtils::PDF;
             output = 3;
             result = output.ToString();

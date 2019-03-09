@@ -183,7 +183,7 @@ namespace CalculatorApp
                 {
                     return ref new Platform::String(localizedString.c_str());
                 }
-                    
+
                 size_t i = 0;
                 size_t length = localizedString.size();
                 std::unique_ptr<wchar_t[]> englishString(new wchar_t[length + 1]); // +1 for the null termination
