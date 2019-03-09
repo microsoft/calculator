@@ -180,46 +180,31 @@
             </Setter>
         </Style>
 
-        <Style x:Key="ValueLargeStyle"
-               BasedOn="{StaticResource CalculationResultStyleL}"
+        <Style x:Key="ValueBaseStyle"
+               BasedOn="{StaticResource CalculationResultStyle}"
                TargetType="controls:CalculationResult">
             <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="VerticalContentAlignment" Value="Bottom"/>
-            <Setter Property="FontSize" Value="46"/>
-            <Setter Property="MinFontSize" Value="{ThemeResource BodyFontSize}"/>
             <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="MinFontSize" Value="{ThemeResource BodyFontSize}"/>
+        </Style>
+        <Style x:Key="ValueLargeStyle"
+               BasedOn="{StaticResource ValueBaseStyle}"
+               TargetType="controls:CalculationResult">
+            <Setter Property="MaxFontSize" Value="46"/>
             <Setter Property="Margin" Value="-2,0,0,0"/>
             <Setter Property="DisplayMargin" Value="0,0,0,12"/>
         </Style>
         <Style x:Key="ValueMediumStyle"
-               BasedOn="{StaticResource CalculationResultStyleM}"
+               BasedOn="{StaticResource ValueBaseStyle}"
                TargetType="controls:CalculationResult">
-            <Setter Property="FontSize" Value="34"/>
-            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
-            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
-            <Setter Property="MinFontSize" Value="{ThemeResource BodyFontSize}"/>
-            <Setter Property="FontWeight" Value="Light"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+            <Setter Property="MaxFontSize" Value="34"/>
             <Setter Property="Margin" Value="0,0,0,0"/>
             <Setter Property="DisplayMargin" Value="0,0,0,4"/>
         </Style>
-        <Style x:Key="ValueSmallStyle"
-               BasedOn="{StaticResource CalculationResultStyleS}"
-               TargetType="controls:CalculationResult">
-            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
-            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="MinFontSize" Value="{ThemeResource BodyFontSize}"/>
-            <Setter Property="FontWeight" Value="Light"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
-            <Setter Property="Margin" Value="0,0,0,0"/>
-            <Setter Property="DisplayMargin" Value="0,0,0,4"/>
-        </Style>
-
+        
         <Style x:Key="CurrencySymbolBaseStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Light"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -616,10 +601,10 @@
                                 Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
                         <HyperlinkButton x:Name="CurrencyRefreshBlock"
-                               Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}"
-                               Click="CurrencyRefreshButton_Click"
-                               x:Uid="RefreshButtonText"/>
-                        <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Margin="0, 7, 0, 0">
+                                         x:Uid="RefreshButtonText"
+                                         Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}"
+                                         Click="CurrencyRefreshButton_Click"/>
+                        <TextBlock Margin="0,7,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
                             <Run x:Name="Spacing" Text="&#x200A;"/>
                             <Run x:Name="CurrencySecondaryStatus"
                                  FontWeight="SemiBold"

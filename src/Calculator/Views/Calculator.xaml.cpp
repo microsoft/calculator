@@ -42,10 +42,10 @@ DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsScientific);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsProgrammer);
 
 Calculator::Calculator() :
-m_doAnimate(false),
-m_isLastAnimatedInScientific(false),
-m_isLastAnimatedInProgrammer(false),
-m_resultAnimate(false)
+    m_doAnimate(false),
+    m_isLastAnimatedInScientific(false),
+    m_isLastAnimatedInProgrammer(false),
+    m_resultAnimate(false)
 {
     SetFontSizeResources();
     InitializeComponent();
@@ -211,19 +211,22 @@ void Calculator::SetResultStyles()
         float curHeight = window->Bounds.Height;
         if (curHeight >= 800)
         {
-            Results->Style = ResultsStyleL;
+            Results->MaxFontSize = (double)Application::Current->Resources->Lookup("CalcResultFontSizeL");
+            Results->MaxExpressionHistoryCharacters = 51;
             RowResult->MinHeight = 108;
             RowResult->Height = GridLength(72, GridUnitType::Star);
         }
         else if ((IsProgrammer && curHeight >= 640) || (IsScientific && curHeight >= 544) || IsStandard)
         {
-            Results->Style = ResultsStyleM;
+            Results->MaxExpressionHistoryCharacters = 30;
+            Results->MaxFontSize = (double)Application::Current->Resources->Lookup("CalcResultFontSizeM");
             RowResult->MinHeight = 72;
             RowResult->Height = GridLength(72, GridUnitType::Star);
         }
         else
         {
-            Results->Style = ResultsStyleS;
+            Results->MaxFontSize = (double)Application::Current->Resources->Lookup("CalcResultFontSizeS");
+            Results->MaxExpressionHistoryCharacters = 30;
             RowResult->MinHeight = 42;
             RowResult->Height = GridLength(42, GridUnitType::Star);
         }
@@ -492,7 +495,7 @@ void Calculator::OnHistoryItemClicked(_In_ HistoryItemViewModel^ e)
     Model->SetExpressionDisplay(e->GetTokens(), e->GetCommands());
     Model->SetPrimaryDisplay(e->Result->Data(), false);
     Model->IsFToEEnabled = false;
-   
+
     TraceLogger::GetInstance().LogHistoryItemLoadEnd(tokenSize);
     CloseHistoryFlyout();
     this->Focus(::FocusState::Programmatic);
@@ -658,7 +661,7 @@ void Calculator::EnableMemoryControls(bool enable)
 void Calculator::EnableControls(bool enable)
 {
     OpsPanel->IsEnabled = enable;
-    
+
     EnableMemoryControls(enable);
 }
 
