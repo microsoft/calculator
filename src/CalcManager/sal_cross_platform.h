@@ -8,3 +8,4 @@
 #define _Out_
 #define _Inout_
 #define __in_opt
+#define _Frees_ptr_opt_

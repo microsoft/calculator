@@ -59,13 +59,6 @@ namespace CalcEngine
 
     bool Number::IsZero() const
     {
-        for (auto const& digit : Mantissa())
-        {
-            if (digit != 0)
-            {
-                return false;
-            }
-        }
-        return true;
+        return all_of(m_mantissa.begin(), m_mantissa.end(), [](auto &&i) { return i == 0; });
     }
 }

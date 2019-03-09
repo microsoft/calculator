@@ -25,7 +25,7 @@
 #include <array>
 #include <string_view>
 
-#ifdef _WIN32
+#if defined(_WIN32) && defined(_MSC_VER)
 
 #include <windows.h>
 #include <winerror.h>
@@ -40,5 +40,11 @@
 #include "winerror_cross_platform.h"
 #include "win_data_types_cross_platform.h"
 #include "sal_cross_platform.h"
+
+#ifdef __GNUC__
+#define DECLSPEC_SELECTANY __attribute__((selectany))
+#else
+#define DECLSPEC_SELECTANY __declspec(selectany)
+#endif
 
 #endif

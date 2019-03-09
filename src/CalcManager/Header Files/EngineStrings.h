@@ -219,7 +219,7 @@
 #define SIDS_ERR_INPUT_OVERFLOW L"119"
 #define SIDS_ERR_OUTPUT_OVERFLOW L"120"
 
-__declspec(selectany) std::wstring g_sids[] =
+DECLSPEC_SELECTANY std::wstring g_sids[] =
 {
     std::wstring(SIDS_PLUS_MINUS),
     std::wstring(SIDS_C),
