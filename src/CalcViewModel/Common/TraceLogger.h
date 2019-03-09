@@ -53,8 +53,8 @@ namespace CalculatorApp
         void LogModeChangeBegin(CalculatorApp::Common::ViewMode, CalculatorApp::Common::ViewMode, int);
         void LogModeChangeEnd(CalculatorApp::Common::ViewMode, int) const;
         void LogClearHistory() const;
-        void InsertIntoMemoryMap(int, bool, bool);
-        void UpdateMemoryMap(int, int, bool, bool);
+        void InsertIntoMemoryMap(int, bool, bool, bool);
+        void UpdateMemoryMap(int, int, bool, bool, bool);
         void DeleteFromMemoryMap(int, int);
         void LogMemoryUsed(int, unsigned int, bool, bool, bool, unsigned int) const;
         void LogMultipleMemoryUsed(unsigned int, unsigned int) const;

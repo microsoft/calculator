@@ -156,7 +156,7 @@ namespace CalculatorApp
     }
 #pragma endregion
 
-    void TraceLogger::InsertIntoMemoryMap(int windowId, bool isScientific, bool isProgrammer)
+    void TraceLogger::InsertIntoMemoryMap(int windowId, bool isStandard, bool isScientific, bool isProgrammer)
     {
         // Writer lock for the static resources
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
@@ -176,13 +176,13 @@ namespace CalculatorApp
         {
             iterMap->second.insert(iterMap->second.begin(), L"Programmer");
         }
-        else
+        else if (isStandard)
         {
             iterMap->second.insert(iterMap->second.begin(), L"Standard");
         }
     }
 
-    void TraceLogger::UpdateMemoryMap(int windowId, int memoryPosition, bool isScientific, bool isProgrammer)
+    void TraceLogger::UpdateMemoryMap(int windowId, int memoryPosition, bool isStandard, bool isScientific, bool isProgrammer)
     {
         // Writer lock for the static resources
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
@@ -199,7 +199,7 @@ namespace CalculatorApp
         {
             iterMap->second[memoryPosition] = L"Programmer";
         }
-        else
+        else if (isStandard)
         {
             iterMap->second[memoryPosition] = L"Standard";
         }

@@ -1013,7 +1013,7 @@ void StandardCalculatorViewModel::OnMemoryButtonPressed()
     m_standardCalculatorManager.MemorizeNumber();
 
     int windowId = Utils::GetWindowId();
-    TraceLogger::GetInstance().InsertIntoMemoryMap(windowId, IsScientific, IsProgrammer);
+    TraceLogger::GetInstance().InsertIntoMemoryMap(windowId, IsStandard, IsScientific, IsProgrammer);
 
     String^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
         CalculatorResourceKeys::MemorySave,
@@ -1066,11 +1066,11 @@ void StandardCalculatorViewModel::OnMemoryAdd(Object^ memoryItemPosition)
         if (MemorizedNumbers->Size > 0)
         {
             TraceLogger::GetInstance().LogMemoryUsed(windowId, boxedPosition->Value, IsStandard, IsScientific, IsProgrammer, MemorizedNumbers->Size);
-            TraceLogger::GetInstance().UpdateMemoryMap(windowId, boxedPosition->Value, IsScientific, IsProgrammer);
+            TraceLogger::GetInstance().UpdateMemoryMap(windowId, boxedPosition->Value, IsStandard, IsScientific, IsProgrammer);
         }
         else
         {
-            TraceLogger::GetInstance().InsertIntoMemoryMap(windowId, IsScientific, IsProgrammer);
+            TraceLogger::GetInstance().InsertIntoMemoryMap(windowId, IsStandard, IsScientific, IsProgrammer);
         }
         m_standardCalculatorManager.MemorizedNumberAdd(boxedPosition->Value);
     }
@@ -1087,11 +1087,11 @@ void StandardCalculatorViewModel::OnMemorySubtract(Object^ memoryItemPosition)
         if (MemorizedNumbers->Size > 0)
         {
             TraceLogger::GetInstance().LogMemoryUsed(windowId, boxedPosition->Value, IsStandard, IsScientific, IsProgrammer, MemorizedNumbers->Size);
-            TraceLogger::GetInstance().UpdateMemoryMap(windowId, boxedPosition->Value, IsScientific, IsProgrammer);
+            TraceLogger::GetInstance().UpdateMemoryMap(windowId, boxedPosition->Value, IsStandard, IsScientific, IsProgrammer);
         }
         else
         {
-            TraceLogger::GetInstance().InsertIntoMemoryMap(windowId, IsScientific, IsProgrammer);
+            TraceLogger::GetInstance().InsertIntoMemoryMap(windowId, IsStandard, IsScientific, IsProgrammer);
         }
         m_standardCalculatorManager.MemorizedNumberSubtract(boxedPosition->Value);
     }
