@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -109,8 +109,22 @@ CategorySelectionInitializer UnitConverter::SetCurrentCategory(const Category& i
             vector<Unit>& unitVector = m_categoryToUnits[m_currentCategory];
             for (unsigned int i = 0; i < unitVector.size(); i++)
             {
-                unitVector[i].isConversionSource = unitVector[i].id == m_fromType.id;
-                unitVector[i].isConversionTarget = unitVector[i].id == m_toType.id;
+                if (unitVector[i].id == m_fromType.id)
+                {
+                    unitVector[i].isConversionSource = true;
+                }
+                else
+                {
+                    unitVector[i].isConversionSource = false;
+                }
+                if (unitVector[i].id == m_toType.id)
+                {
+                    unitVector[i].isConversionTarget = true;
+                }
+                else
+                {
+                    unitVector[i].isConversionTarget = false;
+                }
             }
             m_currentCategory = input;
             if (!m_currentCategory.supportsNegative && m_currentDisplay.front() == L'-')
