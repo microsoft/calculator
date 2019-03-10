@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -32,7 +32,7 @@ void OverflowTextBlock::OnApplyTemplate()
 {
     assert(((m_scrollLeft == nullptr) && (m_scrollRight == nullptr)) || ((m_scrollLeft != nullptr) && (m_scrollRight != nullptr)));
 
-    m_expressionContainer = safe_cast<ScrollViewer^>(GetTemplateChild("expressionContainer"));
+    m_expressionContainer = safe_cast<ScrollViewer^>(GetTemplateChild("ExpressionContainer"));
     m_expressionContainer->ChangeView(m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth, nullptr, nullptr);
         
     m_scrollLeft = safe_cast<Button^>(GetTemplateChild("ScrollLeft"));
@@ -44,7 +44,7 @@ void OverflowTextBlock::OnApplyTemplate()
     m_scrollingLeft = false;
     m_scrollingRight = false;
     
-    auto borderContainer = safe_cast<Border^>(GetTemplateChild("expressionborder"));
+    auto borderContainer = safe_cast<Border^>(GetTemplateChild("Expressionborder"));
     m_pointerEnteredEventToken = borderContainer->PointerEntered += ref new PointerEventHandler(this, &OverflowTextBlock::OnPointerEntered);
     m_pointerExitedEventToken = borderContainer->PointerExited += ref new PointerEventHandler(this, &OverflowTextBlock::OnPointerExited);
 
@@ -199,7 +199,7 @@ void OverflowTextBlock::UnregisterEventHandlers()
         m_scrollRight->Click -= m_scrollRightClickEventToken;
     }
 
-    auto borderContainer = safe_cast<Border^>(GetTemplateChild("expressionborder"));
+    auto borderContainer = safe_cast<Border^>(GetTemplateChild("Expressionborder"));
 
     // Adding an extra check, in case the returned template is null
     if (borderContainer != nullptr)
