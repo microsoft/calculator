@@ -487,6 +487,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="CurrencySymbol1Block"
                        Grid.Column="0"
@@ -541,6 +542,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="CurrencySymbol2Block"
                        Grid.Column="0"
@@ -620,7 +622,7 @@
                                Click="CurrencyRefreshButton_Click"
                                x:Uid="RefreshButtonText"/>
                         <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Margin="0, 7, 0, 0">
-                            <Run x:Name="Spacing" Text="&#x200A;"/>
+                                         <Run x:Name="Spacing" Text="&#x200A;"/>
                             <Run x:Name="CurrencySecondaryStatus"
                                  FontWeight="SemiBold"
                                  Text=""/>

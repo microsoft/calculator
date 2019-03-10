@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 // UnitConverter.xaml.cpp
@@ -66,11 +66,8 @@ UnitConverter::UnitConverter() :
     if (preferRight)
     {
         // Currency symbol should appear on the right. Reverse the order of children.
-        Grid::SetColumn(Value1, 0);
-        Grid::SetColumn(CurrencySymbol1Block, 1);
-        
-        Grid::SetColumn(Value2, 0);
-        Grid::SetColumn(CurrencySymbol2Block, 1);
+        Grid::SetColumn(CurrencySymbol1Block, 2);     
+        Grid::SetColumn(CurrencySymbol2Block, 2);
     }
 
     auto userSettings = ref new UISettings();
