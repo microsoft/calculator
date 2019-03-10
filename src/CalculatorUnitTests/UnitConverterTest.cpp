@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -116,7 +116,7 @@ namespace UnitConverterUnitTests
             return m_ratioMaps[u];
         }
 
-        bool SupportsCategory(const Category& target)
+        bool SupportsCategory(const Category& /*target*/)
         {
             return true;
         }

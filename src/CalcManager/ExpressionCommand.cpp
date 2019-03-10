@@ -135,7 +135,7 @@ void COpndCommand::AppendCommand(int command)
     if (command == IDC_PNT)
     {
         m_fDecimal = true;
-}
+    }
 }
 
 void COpndCommand::ToggleSign()
@@ -178,10 +178,10 @@ void COpndCommand::RemoveFromEnd()
             if (nOpCode == IDC_PNT)
             {
                 m_fDecimal = false;
-        }
+            }
             m_commands->RemoveAt(nCommands - 1);
+        }
     }
-}
 }
 
 bool COpndCommand::IsNegative() const
@@ -287,7 +287,7 @@ const wstring & COpndCommand::GetToken(wchar_t decimalSymbol)
     return m_token;
 }
 
-wstring COpndCommand::GetString(uint32_t radix, int32_t precision, wchar_t decimalSymbol)
+wstring COpndCommand::GetString(uint32_t radix, int32_t precision)
 {
     wstring result{};
 
@@ -303,4 +303,3 @@ void COpndCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
 {
     commandVisitor.Visit(*this);
 }
-

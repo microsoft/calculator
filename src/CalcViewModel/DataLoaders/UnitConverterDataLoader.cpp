@@ -158,7 +158,6 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
 {
     // US + Federated States of Micronesia, Marshall Islands, Palau
     bool useUSCustomaryAndFahrenheit = m_currentRegionCode == L"US" ||
-        m_currentRegionCode == L"PW" ||
         m_currentRegionCode == L"FM" ||
         m_currentRegionCode == L"MH" ||
         m_currentRegionCode == L"PW";

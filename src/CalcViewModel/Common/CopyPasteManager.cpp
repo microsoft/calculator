@@ -15,7 +15,6 @@ using namespace Windows::Foundation;
 using namespace Windows::System;
 using namespace Windows::ApplicationModel::DataTransfer;
 
-size_t maxOperandLength;
 unsigned long long maxOperandNumber;
 
 String^ CopyPasteManager::supportedFormats[] =
@@ -533,7 +532,7 @@ size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int num
     suffixes.insert(suffixes.end(), uintSuffixes.begin(), uintSuffixes.end());
 
     wstring operandUpper = operand;
-    transform(operandUpper.begin(), operandUpper.end(), operandUpper.begin(), toupper);
+    transform(operandUpper.begin(), operandUpper.end(), operandUpper.begin(), towupper);
 
     // Detect if there is a suffix and subtract its length
     // Check suffixes first to allow e.g. "0b" to result in length 1 (value 0), rather than length 0 (no value).

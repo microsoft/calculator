@@ -178,7 +178,6 @@ String^ StandardCalculatorViewModel::CalculateNarratorDisplayValue(_In_ wstring 
 String^ StandardCalculatorViewModel::GetNarratorStringReadRawNumbers(_In_ String^ localizedDisplayValue)
 {
     wstringstream wss;
-    RADIX_TYPE radix = static_cast<RADIX_TYPE>(CurrentRadixType);
     auto& locSettings = LocalizationSettings::GetInstance();
 
     // Insert a space after each digit in the string, to force Narrator to read them as separate numbers.
@@ -426,50 +425,50 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
         displayExpressionToken->CommandIndex = 0;
     }
 
-    wchar_t ch;
+    wchar_t ch = 0;
     if ((cmdenum >= Command::Command0) && (cmdenum <= Command::Command9))
     {
         switch (cmdenum)
         {
         case Command::Command0:
-            ch = '0';
+            ch = L'0';
             break;
         case Command::Command1:
-            ch = '1';
+            ch = L'1';
             break;
         case Command::Command2:
-            ch = '2';
+            ch = L'2';
             break;
         case Command::Command3:
-            ch = '3';
+            ch = L'3';
             break;
         case Command::Command4:
-            ch = '4';
+            ch = L'4';
             break;
         case Command::Command5:
-            ch = '5';
+            ch = L'5';
             break;
         case Command::Command6:
-            ch = '6';
+            ch = L'6';
             break;
         case Command::Command7:
-            ch = '7';
+            ch = L'7';
             break;
         case Command::Command8:
-            ch = '8';
+            ch = L'8';
             break;
         case Command::Command9:
-            ch = '9';
+            ch = L'9';
             break;
         }
     }
     else if (cmdenum == Command::CommandPNT)
     {
-        ch = '.';
+        ch = L'.';
     }
     else if (cmdenum == Command::CommandBACK)
     {
-        ch = 'x';
+        ch = L'x';
     }
     else
     {
@@ -486,9 +485,9 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
     {
         // Clear older text;
         m_selectedExpressionLastData = L"";
-        if (ch == 'x')
+        if (ch == L'x')
         {
-            temp = L'\0';
+            temp[0] = L'\0';
             commandIndex = 0;
         }
         else
@@ -501,11 +500,11 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
     }
     else
     {
-        if (ch == 'x')
+        if (ch == L'x')
         {
             if (commandIndex == 0)
             {
-                delete temp;
+                delete [] temp;
                 return;
             }
 
@@ -518,7 +517,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
                 }
                 temp[i++] = data[j];
             }
-            temp[i] = '\0';
+            temp[i] = L'\0';
             commandIndex -= 1;
         }
         else
@@ -537,7 +536,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
                 }
                 temp[i] = data[j++];
             }
-            temp[i] = '\0';
+            temp[i] = L'\0';
             commandIndex += 1;
         }
     }
@@ -553,7 +552,7 @@ bool StandardCalculatorViewModel::IsOperator(Command cmdenum)
 {
     if ((cmdenum == Command::Command0) || (cmdenum == Command::Command1) || (cmdenum == Command::Command2) || (cmdenum == Command::Command3) || (cmdenum == Command::Command4) || (cmdenum == Command::Command5)
         || (cmdenum == Command::Command6) || (cmdenum == Command::Command7) || (cmdenum == Command::Command8) || (cmdenum == Command::Command9) || (cmdenum == Command::CommandPNT) || (cmdenum == Command::CommandBACK)
-        || (cmdenum == Command::CommandEXP) || (cmdenum == Command::CommandFE) || (cmdenum == Command::ModeBasic) || (cmdenum == Command::ModeBasic) || (cmdenum == Command::ModeProgrammer) || (cmdenum == Command::ModeScientific)
+        || (cmdenum == Command::CommandEXP) || (cmdenum == Command::CommandFE) || (cmdenum == Command::ModeBasic) || (cmdenum == Command::ModeProgrammer) || (cmdenum == Command::ModeScientific)
         || (cmdenum == Command::CommandINV) || (cmdenum == Command::CommandCENTR) || (cmdenum == Command::CommandDEG) || (cmdenum == Command::CommandRAD) || (cmdenum == Command::CommandGRAD)
         || ((cmdenum >= Command::CommandBINEDITSTART) && (cmdenum <= Command::CommandBINEDITEND)))
     {
@@ -567,7 +566,6 @@ void StandardCalculatorViewModel::OnButtonPressed(Object^ parameter)
     m_feedbackForButtonPress = CalculatorButtonPressedEventArgs::GetAuditoryFeedbackFromCommandParameter(parameter);
     NumbersAndOperatorsEnum numOpEnum = CalculatorButtonPressedEventArgs::GetOperationFromCommandParameter(parameter);
     Command cmdenum = ConvertToOperatorsEnum(numOpEnum);
-    bool isOperator = IsOperator(cmdenum);
 
     TraceLogger::GetInstance().UpdateFunctionUsage((int)numOpEnum);
 
@@ -748,7 +746,6 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
     bool isFirstLegalChar = true;
     m_standardCalculatorManager.SendCommand(Command::CommandCENTR);
     bool sendNegate = false;
-    bool processedExp = false;
     bool processedDigit = false;
     bool sentEquals = false;
     bool isPreviousOperator = false;
@@ -1371,7 +1368,6 @@ ANGLE_TYPE GetAngleTypeFromCommand(Command command)
 void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosition, _In_ Command command)
 {
     pair<wstring, int> token;
-    bool fNegative = false;
     bool handleOperand = false;
     int nOpCode = static_cast<int>(command);
     wstring updatedToken = L"";

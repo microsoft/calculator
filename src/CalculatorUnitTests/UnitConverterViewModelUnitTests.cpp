@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -234,7 +234,7 @@ namespace CalculatorUnitTests
         return wstring(L"");
     }
 
-    void UnitConverterMock::DeSerialize(const wstring& serializedData)
+    void UnitConverterMock::DeSerialize(const wstring& /*serializedData*/)
     {
         m_deSerializeCallCount++;
     }
@@ -244,7 +244,7 @@ namespace CalculatorUnitTests
         return L"TEST";
     };
 
-    void UnitConverterMock::RestoreUserPreferences(_In_ const std::wstring& userPreferences)
+    void UnitConverterMock::RestoreUserPreferences(_In_ const std::wstring& /*userPreferences*/)
     {
     };
 

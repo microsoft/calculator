@@ -302,8 +302,8 @@ wstring UnitConverter::Serialize()
         out << std::to_wstring(m_currentHasDecimal) << delimiter << std::to_wstring(m_returnHasDecimal) << delimiter << std::to_wstring(m_switchedActive) << delimiter;
         out << m_currentDisplay << delimiter << m_returnDisplay << delimiter << "|";
         wstringstream categoryString(wstringstream::out);
-        wstringstream categoryToUnitString(wstringstream::out);;
-        wstringstream unitToUnitToDoubleString(wstringstream::out);;
+        wstringstream categoryToUnitString(wstringstream::out);
+        wstringstream unitToUnitToDoubleString(wstringstream::out);
         for (const Category& c : m_categories)
         {
             categoryString << CategoryToString(c, delimiter) << ",";

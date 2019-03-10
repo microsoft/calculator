@@ -6,47 +6,47 @@
 #include "Header Files/CalcEngine.h"
 #include "Header Files/Rational.h"
 
-class CParentheses : public IParenthesisCommand
+class CParentheses final : public IParenthesisCommand
 {
 public:
     CParentheses(_In_ int command);
-    int GetCommand() const;
-    CalculationManager::CommandType GetCommandType() const;
-    void Accept(_In_ ISerializeCommandVisitor &commandVisitor);
+    int GetCommand() const override;
+    CalculationManager::CommandType GetCommandType() const override;
+    void Accept(_In_ ISerializeCommandVisitor &commandVisitor) override;
 
 private:
     int m_command;
 };
 
-class CUnaryCommand : public IUnaryCommand
+class CUnaryCommand final : public IUnaryCommand
 {
 public:
     CUnaryCommand(int command);
     CUnaryCommand(int command1, int command2);
-    const std::shared_ptr<CalculatorVector<int>> & GetCommands() const;
-    CalculationManager::CommandType GetCommandType() const;
-    void SetCommand(int command);
-    void SetCommands(int command1, int command2);
-    void Accept(_In_ ISerializeCommandVisitor &commandVisitor);
+    const std::shared_ptr<CalculatorVector<int>> & GetCommands() const override;
+    CalculationManager::CommandType GetCommandType() const override;
+    void SetCommand(int command) override;
+    void SetCommands(int command1, int command2) override;
+    void Accept(_In_ ISerializeCommandVisitor &commandVisitor) override;
 
 private:
     std::shared_ptr<CalculatorVector<int>> m_command;
 };
 
-class CBinaryCommand : public IBinaryCommand
+class CBinaryCommand final : public IBinaryCommand
 {
 public:
     CBinaryCommand(int command);
-    void SetCommand(int command);
-    int GetCommand() const;
-    CalculationManager::CommandType GetCommandType() const;
-    void Accept(_In_ ISerializeCommandVisitor &commandVisitor);
+    void SetCommand(int command) override;
+    int GetCommand() const override;
+    CalculationManager::CommandType GetCommandType() const override;
+    void Accept(_In_ ISerializeCommandVisitor &commandVisitor) override;
 
 private:
     int m_command;
 };
 
-class COpndCommand : public IOpndCommand
+class COpndCommand final : public IOpndCommand
 {
 public:
     COpndCommand(
@@ -56,18 +56,18 @@ public:
         bool fSciFmt);
     void Initialize(CalcEngine::Rational const& rat);
 
-    const std::shared_ptr<CalculatorVector<int>> & GetCommands() const;
-    void SetCommands(std::shared_ptr<CalculatorVector<int>> const& commands);
-    void AppendCommand(int command);
-    void ToggleSign();
-    void RemoveFromEnd();
-    bool IsNegative() const;
-    bool IsSciFmt() const;
-    bool IsDecimalPresent() const;
-    const std::wstring & GetToken(wchar_t decimalSymbol);
-    CalculationManager::CommandType GetCommandType() const;
-    void Accept(_In_ ISerializeCommandVisitor &commandVisitor);
-    std::wstring GetString(uint32_t radix, int32_t precision, wchar_t decimalSymbol);
+    const std::shared_ptr<CalculatorVector<int>> & GetCommands() const override;
+    void SetCommands(std::shared_ptr<CalculatorVector<int>> const& commands) override;
+    void AppendCommand(int command) override;
+    void ToggleSign() override;
+    void RemoveFromEnd() override;
+    bool IsNegative() const override;
+    bool IsSciFmt() const override;
+    bool IsDecimalPresent() const override;
+    const std::wstring & GetToken(wchar_t decimalSymbol) override;
+    CalculationManager::CommandType GetCommandType() const override;
+    void Accept(_In_ ISerializeCommandVisitor &commandVisitor) override;
+    std::wstring GetString(uint32_t radix, int32_t precision);
 
 private:
     std::shared_ptr<CalculatorVector<int>> m_commands;

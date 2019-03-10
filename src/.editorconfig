@@ -1,0 +1,10 @@
+root = true
+
+[*.{xaml,cpp,h}]
+charset = utf-8-bom
+indent_style = space
+indent_size = 4
+
+[*.{cpp,h}]
+insert_final_newline = true
+trim_trailing_whitespace = true

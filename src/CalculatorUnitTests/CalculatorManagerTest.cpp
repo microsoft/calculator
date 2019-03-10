@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -40,7 +40,7 @@ namespace CalculatorManagerTest
         {
             m_isError = isError;
         }
-        void SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &commands)
+        void SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const & /*commands*/)
         {
             m_expression.clear();
             unsigned int nTokens = 0;
@@ -79,7 +79,7 @@ namespace CalculatorManagerTest
             return m_isError;
         }
 
-        void OnHistoryItemAdded(_In_ unsigned int addedItemIndex)
+        void OnHistoryItemAdded(_In_ unsigned int /*addedItemIndex */)
         {
         }
 
@@ -98,7 +98,7 @@ namespace CalculatorManagerTest
             m_binaryOperatorReceivedCallCount++;
         }
 
-        void MemoryItemChanged(unsigned int indexOfMemory)
+        void MemoryItemChanged(unsigned int /*indexOfMemory*/)
         {
         }
 

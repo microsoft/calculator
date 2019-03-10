@@ -38,7 +38,7 @@ using namespace std;
 //
 //-----------------------------------------------------------------------------
 
-void gcdrat( PRAT *pa, uint32_t radix, int32_t precision)
+void gcdrat( PRAT *pa, int32_t precision)
 
 {
     PNUMBER pgcd= nullptr;
