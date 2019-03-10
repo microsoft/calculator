@@ -705,7 +705,7 @@
     <value>1</value>
     <comment>Screen reader prompt for the Calculator number "1" button</comment>
   </data>
-  <data name="num0Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num0Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Zero</value>
     <comment>Screen reader prompt for the Calculator number "0" button</comment>
   </data>
@@ -737,7 +737,7 @@
     <value>Set</value>
     <comment>Screen reader prompt for the Calculator number "7" button</comment>
   </data>
-  <data name="num8Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num8Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Vuit</value>
     <comment>Screen reader prompt for the Calculator number "8" button</comment>
   </data>

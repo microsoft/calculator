@@ -825,7 +825,7 @@
     <value>Пълна клавиатура</value>
     <comment>Screen reader prompt for the Calculator numberPad button</comment>
   </data>
-  <data name="decimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DecimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Десетичен знак</value>
     <comment>Screen reader prompt for the "." button</comment>
   </data>
