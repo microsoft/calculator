@@ -161,11 +161,11 @@
     <value>OCT</value>
     <comment>{Locked}The Oct button</comment>
   </data>
-  <data name="copyMenuItem" xml:space="preserve">
+  <data name="CopyMenuItem" xml:space="preserve">
     <value>Copy</value>
     <comment>Copy context menu string</comment>
   </data>
-  <data name="pasteMenuItem" xml:space="preserve">
+  <data name="PasteMenuItem" xml:space="preserve">
     <value>Paste</value>
     <comment>Paste context menu string</comment>
   </data>
@@ -181,279 +181,279 @@
     <value>H</value>
     <comment>{Locked}This is the shortcut for hiding history Ctrl+H.</comment>
   </data>
-  <data name="memButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
+  <data name="MemButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
     <value>M</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="clearButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="ClearButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>Escape</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="clearEntryButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="ClearEntryButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>Delete</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="closeParenthesisButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="CloseParenthesisButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>)</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="cosButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="CosButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>O</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="coshButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
+  <data name="CoshButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
     <value>O</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="expButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="ExpButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>X</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="dmsButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="DmsButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>M</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="decimalSeparatorButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="DecimalSeparatorButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>Decimal</value>
     <comment>{Locked}This is the Virtual Kez that should trigger this button. It comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="divideButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="DivideButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>/</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="equalButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="EqualButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>=</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="equalButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="EqualButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>Enter</value>
     <comment>{Locked}This is the value from the VirtualKey enum that maps to this button</comment>
   </data>
-  <data name="factorialButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="FactorialButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>!</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="ftoeButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="FtoeButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>V</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="invertButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="InvertButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>R</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="logBase10Button.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="LogBase10Button.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>L</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="logBaseEButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="LogBaseEButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>N</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="minusButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="MinusButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>-</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="modButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="ModButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>%</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="negateButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="NegateButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>F9</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="converterNegateButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="ConverterNegateButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>F9</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="converterNegateButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="ConverterNegateButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>-</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="num0Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="Num0Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>0</value>
     <comment>{Locked}This is the character for the corresponding button.</comment>
   </data>
-  <data name="num1Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="Num1Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>1</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="num2Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="Num2Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>2</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="num3Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="Num3Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>3</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="num4Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="Num4Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>4</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="num5Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="Num5Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>5</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="num6Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="Num6Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>6</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="num7Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="Num7Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>7</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="num8Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="Num8Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>8</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="num9Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="Num9Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>9</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="aButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="AButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>A</value>
     <comment>{Locked}This is the character for the corresponding button.</comment>
   </data>
-  <data name="bButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="BButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>B</value>
     <comment>{Locked}This is the character for the corresponding button.</comment>
   </data>
-  <data name="cButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="CButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>C</value>
     <comment>{Locked}This is the character for the corresponding button.</comment>
   </data>
-  <data name="dButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="DButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>D</value>
     <comment>{Locked}This is the character for the corresponding button.</comment>
   </data>
-  <data name="eButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="EButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>E</value>
     <comment>{Locked}This is the character for the corresponding button.</comment>
   </data>
-  <data name="fButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="FButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>F</value>
     <comment>{Locked}This is the character for the corresponding button.</comment>
   </data>
-  <data name="aButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+  <data name="AButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
     <value>A</value>
     <comment>{Locked}This is the character for the corresponding button.</comment>
   </data>
-  <data name="bButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+  <data name="BButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
     <value>B</value>
     <comment>{Locked}This is the character for the corresponding button.</comment>
   </data>
-  <data name="cButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+  <data name="CButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
     <value>C</value>
     <comment>{Locked}This is the character for the corresponding button.</comment>
   </data>
-  <data name="dButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+  <data name="DButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
     <value>D</value>
     <comment>{Locked}This is the character for the corresponding button.</comment>
   </data>
-  <data name="eButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+  <data name="EButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
     <value>E</value>
     <comment>{Locked}This is the character for the corresponding button.</comment>
   </data>
-  <data name="fButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+  <data name="FButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
     <value>F</value>
     <comment>{Locked}This is the character for the corresponding button.</comment>
   </data>
-  <data name="openParenthesisButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="OpenParenthesisButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>(</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="percentButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="PercentButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>%</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="piButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="PiButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>P</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="plusButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="PlusButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>+</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="powerButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="PowerButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>Y</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="powerButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="PowerButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>^</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="powerOf10Button.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
+  <data name="PowerOf10Button.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
     <value>G</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum. This one is in combination with the Control key.</comment>
   </data>
-  <data name="sinButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="SinButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>S</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="sinhButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
+  <data name="SinhButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
     <value>S</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="squareRootButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="SquareRootButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>@</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="tanButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="TanButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>T</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="tanhButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
+  <data name="TanhButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
     <value>T</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="xpower2Button.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="Xpower2Button.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>Q</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="xpower3Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="Xpower3Button.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>#</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="ySquareRootButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
+  <data name="YSquareRootButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
     <value>Y</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum. This one is in combination with the Control key.</comment>
   </data>
-  <data name="backSpaceButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="BackSpaceButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>Back</value>
     <comment>{Locked}When this character is received by KeyboardShortcutManager, it will cause this button to execute. This value is not localized.</comment>
   </data>
-  <data name="multiplyButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="MultiplyButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>*</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="orButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="OrButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>|</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="notButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="NotButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>~</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="andButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="AndButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>&amp;</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="lshButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="LshButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>&lt;</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="rshButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="RshButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>&gt;</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="xorButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+  <data name="XorButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
     <value>^</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="rolButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="RolButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>J</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="rorButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="RorButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>K</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
@@ -477,55 +477,55 @@
     <value>D</value>
     <comment>{Locked}The shortcut for the Deg button</comment>
   </data>
-  <data name="invcosButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+  <data name="InvcosButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
     <value>O</value>
     <comment>{Locked}The shortcut for the inverted cos button</comment>
   </data>
-  <data name="invcosButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyInverseChord" xml:space="preserve">
+  <data name="InvcosButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyInverseChord" xml:space="preserve">
     <value>O</value>
     <comment>{Locked}The shortcut for the inverted cos button</comment>
   </data>
-  <data name="invcoshButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlShiftChord" xml:space="preserve">
+  <data name="InvcoshButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlShiftChord" xml:space="preserve">
     <value>O</value>
     <comment>{Locked}The shortcut for the inverted cosh button</comment>
   </data>
-  <data name="invcoshButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlInverseChord" xml:space="preserve">
+  <data name="InvcoshButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlInverseChord" xml:space="preserve">
     <value>O</value>
     <comment>{Locked}The shortcut for the inverted cosh button</comment>
   </data>
-  <data name="invsinButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+  <data name="InvsinButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
     <value>S</value>
     <comment>{Locked}This is the shortcut for the inverted sin button</comment>
   </data>
-  <data name="invsinButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyInverseChord" xml:space="preserve">
+  <data name="InvsinButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyInverseChord" xml:space="preserve">
     <value>S</value>
     <comment>{Locked}This is the shortcut for the inverted sin button</comment>
   </data>
-  <data name="invsinhButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlShiftChord" xml:space="preserve">
+  <data name="InvsinhButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlShiftChord" xml:space="preserve">
     <value>S</value>
     <comment>{Locked}This is the shortcut for the inverted sinh button</comment>
   </data>
-  <data name="invsinhButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlInverseChord" xml:space="preserve">
+  <data name="InvsinhButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlInverseChord" xml:space="preserve">
     <value>S</value>
     <comment>{Locked}This is the shortcut for the inverted sinh button</comment>
   </data>
-  <data name="invtanButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+  <data name="InvtanButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
     <value>T</value>
     <comment>{Locked}This is the shortcut for the inverted tan button. </comment>
   </data>
-  <data name="invtanButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyInverseChord" xml:space="preserve">
+  <data name="InvtanButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyInverseChord" xml:space="preserve">
     <value>T</value>
     <comment>{Locked}This is the shortcut for the inverted tan button. </comment>
   </data>
-  <data name="invtanhButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlShiftChord" xml:space="preserve">
+  <data name="InvtanhButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlShiftChord" xml:space="preserve">
     <value>T</value>
     <comment>{Locked}This is the shortcut for the inverted tanh button</comment>
   </data>
-  <data name="invtanhButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlInverseChord" xml:space="preserve">
+  <data name="InvtanhButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlInverseChord" xml:space="preserve">
     <value>T</value>
     <comment>{Locked}This is the shortcut for the inverted tanh button</comment>
   </data>
-  <data name="powerOfEButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
+  <data name="PowerOfEButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
     <value>N</value>
     <comment>{Locked}This is the shortcut for the power x  button.</comment>
   </data>
@@ -833,11 +833,11 @@
     <value>History (Ctrl+H)</value>
     <comment>This is the tool tip automation name for the history button.</comment>
   </data>
-  <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+  <data name="BitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Bit toggling keypad</value>
-    <comment>This is the tool tip automation name for the bitFlip button.</comment>
+    <comment>This is the tool tip automation name for the BitFlip button.</comment>
   </data>
-  <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+  <data name="FullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Full keypad</value>
     <comment>This is the tool tip automation name for the numberPad button.</comment>
   </data>
@@ -881,27 +881,27 @@
     <value>&lt;&lt;</value>
     <comment>{Locked}The chevron that shows to indicate that the expression history has overflowed the available space and is therefore trimmed.</comment>
   </data>
-  <data name="converterModeButton.Content" xml:space="preserve">
+  <data name="ConverterModeButton.Content" xml:space="preserve">
     <value>Converter</value>
     <comment>Label for a control that activates the unit converter mode.</comment>
   </data>
-  <data name="scientificModeButton.Content" xml:space="preserve">
+  <data name="ScientificModeButton.Content" xml:space="preserve">
     <value>Scientific</value>
     <comment>Label for a control that activates scientific mode calculator layout</comment>
   </data>
-  <data name="standardModeButton.Content" xml:space="preserve">
+  <data name="StandardModeButton.Content" xml:space="preserve">
     <value>Standard</value>
     <comment>Label for a control that activates standard mode calculator layout.</comment>
   </data>
-  <data name="converterModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ConverterModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Converter Mode</value>
     <comment>Screen reader prompt for a control that activates the unit converter mode.</comment>
   </data>
-  <data name="scientificModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ScientificModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Scientific Mode</value>
     <comment>Screen reader prompt for a control that activates scientific mode calculator layout</comment>
   </data>
-  <data name="standardModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="StandardModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Standard Mode</value>
     <comment>Screen reader prompt for a control that activates standard mode calculator layout.</comment>
   </data>
@@ -1013,11 +1013,11 @@
     <value>Close history flyout</value>
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
-  <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="MemButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Memory Store</value>
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
-  <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+  <data name="MemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Memory store (Ctrl+M)</value>
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
@@ -1117,7 +1117,7 @@
     <value>Delete history item</value>
     <comment>Screen reader prompt for the Calculator Delete option in the History list context menu</comment>
   </data>
-  <data name="backSpaceButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="BackSpaceButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Backspace</value>
     <comment>Screen reader prompt for the Calculator Backspace button</comment>
   </data>
@@ -1129,187 +1129,187 @@
     <value>1</value>
     <comment>Screen reader prompt for the Calculator number "1" button</comment>
   </data>
-  <data name="num0Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num0Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Zero</value>
     <comment>Screen reader prompt for the Calculator number "0" button</comment>
   </data>
-  <data name="num1Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num1Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>One</value>
     <comment>Screen reader prompt for the Calculator number "1" button</comment>
   </data>
-  <data name="num2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Two</value>
     <comment>Screen reader prompt for the Calculator number "2" button</comment>
   </data>
-  <data name="num3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Three</value>
     <comment>Screen reader prompt for the Calculator number "3" button</comment>
   </data>
-  <data name="num4Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num4Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Four</value>
     <comment>Screen reader prompt for the Calculator number "4" button</comment>
   </data>
-  <data name="num5Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num5Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Five</value>
     <comment>Screen reader prompt for the Calculator number "5" button</comment>
   </data>
-  <data name="num6Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num6Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Six</value>
     <comment>Screen reader prompt for the Calculator number "6" button</comment>
   </data>
-  <data name="num7Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num7Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Seven</value>
     <comment>Screen reader prompt for the Calculator number "7" button</comment>
   </data>
-  <data name="num8Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num8Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Eight</value>
     <comment>Screen reader prompt for the Calculator number "8" button</comment>
   </data>
-  <data name="num9Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num9Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Nine</value>
     <comment>Screen reader prompt for the Calculator number "9" button</comment>
   </data>
-  <data name="aButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="AButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>A</value>
     <comment>Screen reader prompt for the Calculator number "A" button</comment>
   </data>
-  <data name="bButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="BButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>B</value>
     <comment>Screen reader prompt for the Calculator number "B" button</comment>
   </data>
-  <data name="cButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="CButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>C</value>
     <comment>Screen reader prompt for the Calculator number "C" button</comment>
   </data>
-  <data name="dButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>D</value>
     <comment>Screen reader prompt for the Calculator number "D" button</comment>
   </data>
-  <data name="eButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="EButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>E</value>
     <comment>Screen reader prompt for the Calculator number "E" button</comment>
   </data>
-  <data name="fButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="FButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>F</value>
     <comment>Screen reader prompt for the Calculator number "F" button</comment>
   </data>
-  <data name="andButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="AndButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>And</value>
     <comment>Screen reader prompt for the Calculator And button</comment>
   </data>
-  <data name="orButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="OrButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Or</value>
     <comment>Screen reader prompt for the Calculator Or button</comment>
   </data>
-  <data name="notButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="NotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Not</value>
     <comment>Screen reader prompt for the Calculator Not button</comment>
   </data>
-  <data name="rolButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="RolButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Rotate on left</value>
     <comment>Screen reader prompt for the Calculator ROL button</comment>
   </data>
-  <data name="rorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="RorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Rotate on right</value>
     <comment>Screen reader prompt for the Calculator ROR button</comment>
   </data>
-  <data name="lshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="LshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Left shift</value>
     <comment>Screen reader prompt for the Calculator LSH button</comment>
   </data>
-  <data name="rshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="RshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Right shift</value>
     <comment>Screen reader prompt for the Calculator RSH button</comment>
   </data>
-  <data name="xorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="XorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Exclusive or</value>
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
-  <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="QwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Quadruple Word toggle</value>
     <comment>Screen reader prompt for the Calculator qword button. Should read as "Quadruple word toggle button".</comment>
   </data>
-  <data name="dwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Double Word toggle</value>
     <comment>Screen reader prompt for the Calculator dword button. Should read as "Double word toggle button".</comment>
   </data>
-  <data name="wordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="WordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Word toggle</value>
     <comment>Screen reader prompt for the Calculator word button. Should read as "Word toggle button".</comment>
   </data>
-  <data name="byteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ByteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Byte toggle</value>
     <comment>Screen reader prompt for the Calculator byte button. Should read as "Byte toggle button".</comment>
   </data>
-  <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="BitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Bit toggling keypad</value>
-    <comment>Screen reader prompt for the Calculator bitFlip button</comment>
+    <comment>Screen reader prompt for the Calculator BitFlip button</comment>
   </data>
-  <data name="fullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="FullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Full keypad</value>
     <comment>Screen reader prompt for the Calculator numberPad button</comment>
   </data>
-  <data name="decimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DecimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Decimal Separator</value>
     <comment>Screen reader prompt for the "." button</comment>
   </data>
-  <data name="clearEntryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ClearEntryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Clear entry</value>
     <comment>Screen reader prompt for the "CE" button</comment>
   </data>
-  <data name="clearButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ClearButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Clear</value>
     <comment>Screen reader prompt for the "C" button</comment>
   </data>
-  <data name="divideButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DivideButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Divide by</value>
     <comment>Screen reader prompt for the divide button on the number pad</comment>
   </data>
-  <data name="multiplyButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="MultiplyButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Multiply by</value>
     <comment>Screen reader prompt for the multiply button on the number pad</comment>
   </data>
-  <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="EqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Equals</value>
     <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
   </data>
-  <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Inverse Function</value>
     <comment>Screen Reader prompt for the shift button on the number pad in scientific mode.</comment>
   </data>
-  <data name="minusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="MinusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Minus</value>
     <comment>Screen reader prompt for the minus button on the number pad</comment>
   </data>
-  <data name="minus" xml:space="preserve">
+  <data name="Minus" xml:space="preserve">
     <value>Minus</value>
     <comment>We use this resource to replace "-" sign for accessibility. So expression like, 1 - 3 = -2 becomes 1 minus 3 = minus 2</comment>
   </data>
-  <data name="plusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="PlusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Plus</value>
     <comment>Screen reader prompt for the plus button on the number pad</comment>
   </data>
-  <data name="squareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="SquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Square root</value>
     <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
   </data>
-  <data name="percentButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="PercentButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Percent</value>
     <comment>Screen reader prompt for the percent button on the scientific operator keypad</comment>
   </data>
-  <data name="negateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="NegateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Positive Negative</value>
     <comment>Screen reader prompt for the negate button on the scientific operator keypad</comment>
   </data>
-  <data name="converterNegateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ConverterNegateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Positive Negative</value>
     <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
   </data>
-  <data name="invertButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="InvertButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Reciprocal</value>
     <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
   </data>
-  <data name="openParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="OpenParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Left parenthesis</value>
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
@@ -1317,139 +1317,139 @@
     <value>Left parenthesis, open parenthesis count %1</value>
     <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
   </data>
-  <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="CloseParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Right parenthesis</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
   </data>
-  <data name="ftoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="FtoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Scientific notation</value>
     <comment>Screen reader prompt for the Calculator F-E the scientific operator keypad</comment>
   </data>
-  <data name="hyperbolicButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="HyperbolicButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Hyperbolic function</value>
     <comment>Screen reader prompt for the Calculator button HYP in the scientific operator keypad</comment>
   </data>
-  <data name="piButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="PiButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Pi</value>
     <comment>Screen reader prompt for the Calculator pi button  on the scientific operator keypad</comment>
   </data>
-  <data name="sinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="SinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Sine</value>
     <comment>Screen reader prompt for the Calculator sin button  on the scientific operator keypad</comment>
   </data>
-  <data name="cosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="CosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Cosine</value>
     <comment>Screen reader prompt for the Calculator cos button  on the scientific operator keypad</comment>
   </data>
-  <data name="tanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="TanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Tangent</value>
     <comment>Screen reader prompt for the Calculator tan button  on the scientific operator keypad</comment>
   </data>
-  <data name="sinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="SinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Hyperbolic Sine</value>
     <comment>Screen reader prompt for the Calculator sinh button  on the scientific operator keypad</comment>
   </data>
-  <data name="coshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="CoshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Hyperbolic Cosine</value>
     <comment>Screen reader prompt for the Calculator cosh button  on the scientific operator keypad</comment>
   </data>
-  <data name="tanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="TanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Hyperbolic Tangent</value>
     <comment>Screen reader prompt for the Calculator tanh button  on the scientific operator keypad</comment>
   </data>
-  <data name="xpower2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Xpower2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Square</value>
     <comment>Screen reader prompt for the x squared on the scientific operator keypad. </comment>
   </data>
-  <data name="xpower3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Xpower3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Cube</value>
     <comment>Screen reader prompt for the x cubed on the scientific operator keypad. </comment>
   </data>
-  <data name="invsinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="InvsinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Arc sine</value>
     <comment>Screen reader prompt for the inverted sin on the scientific operator keypad.</comment>
   </data>
-  <data name="invcosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="InvcosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Arc cosine</value>
     <comment>Screen reader prompt for the inverted cos on the scientific operator keypad.</comment>
   </data>
-  <data name="invtanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="InvtanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Arc tangent</value>
     <comment>Screen reader prompt for the inverted tan on the scientific operator keypad.</comment>
   </data>
-  <data name="invsinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="InvsinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Hyperbolic arc sine</value>
     <comment>Screen reader prompt for the inverted sinh on the scientific operator keypad.</comment>
   </data>
-  <data name="invcoshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="InvcoshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Hyperbolic arc cosine</value>
     <comment>Screen reader prompt for the inverted cosh on the scientific operator keypad.</comment>
   </data>
-  <data name="invtanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="InvtanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Hyperbolic arc tangent</value>
     <comment>Screen reader prompt for the inverted tanh on the scientific operator keypad.</comment>
   </data>
-  <data name="powerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="PowerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>'X' to the exponent</value>
     <comment>Screen reader prompt for x power y button on the scientific operator keypad. </comment>
   </data>
-  <data name="powerOf10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="PowerOf10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Ten to the exponent</value>
     <comment>Screen reader prompt for the 10 power x button on the scientific operator keypad.</comment>
   </data>
-  <data name="powerOfEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="PowerOfEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>'e' to the exponent</value>
     <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
   </data>
-  <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="YSquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>'y' root of 'x'</value>
     <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
   </data>
-  <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="LogBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Log</value>
     <comment>Screen reader for the log base 10  on the scientific operator keypad</comment>
   </data>
-  <data name="logBaseEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="LogBaseEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Natural log</value>
     <comment>Screen reader for the log base e on the scientific operator keypad</comment>
   </data>
-  <data name="modButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ModButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Modulo</value>
     <comment>Screen reader for the mod button on the scientific operator keypad</comment>
   </data>
-  <data name="expButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ExpButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Exponential</value>
     <comment>Screen reader for the exp button on the scientific operator keypad</comment>
   </data>
-  <data name="dmsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DmsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Degree Minute Second</value>
     <comment>Screen reader for the exp button on the scientific operator keypad</comment>
   </data>
-  <data name="degreesButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DegreesButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Degrees</value>
     <comment>Screen reader for the exp button on the scientific operator keypad</comment>
   </data>
-  <data name="intButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="IntButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Integer part</value>
     <comment>Screen reader for the int button on the scientific operator keypad</comment>
   </data>
-  <data name="fractButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="FractButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Fractional part</value>
     <comment>Screen reader for the frac button on the scientific operator keypad</comment>
   </data>
-  <data name="factorialButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="FactorialButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Factorial</value>
     <comment>Screen reader for the factorial button on the basic operator keypad</comment>
   </data>
-  <data name="degButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DegButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Degrees toggle</value>
     <comment>This the Deg button's Degree mode automation nameon the scientific operator keypad. Should read as "Degrees toggle button".</comment>
   </data>
-  <data name="gradButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="GradButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Gradians toggle</value>
     <comment>This is the Deg button's Grad mode automation name on the scientific operator keypad. Should read as "Gradians toggle button".</comment>
   </data>
-  <data name="radButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="RadButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Radians toggle</value>
     <comment>This is the Deg button's Rad mode automation name on the scientific operator keypad. Should read as "Radians toggle button".</comment>
   </data>
@@ -2665,15 +2665,15 @@
     <value>soccer balls</value>
     <comment>A soccer ball, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
-  <data name="degButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="DegButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>F4</value>
     <comment>{Locked}This is the shortcut for the DEG command, that sets the scientific calculator in degree mode. This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="radButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="RadButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>F5</value>
     <comment>{Locked}This is the shortcut for the RAD command, that sets the scientific calculator in radian mode. This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="gradButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="GradButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>F3</value>
     <comment>{Locked}This is the shortcut for the GRAD command, that sets the scientific calculator in grad mode. This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
@@ -2761,19 +2761,19 @@
     <value>This expression cannot be pasted</value>
     <comment>The paste operation cannot be performed, if the expression is invalid.</comment>
   </data>
-  <data name="wordButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="WordButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>F4</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="qwordButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="QwordButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>F2</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="byteButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="ByteButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>F12</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="dwordButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+  <data name="DwordButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>F3</value>
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
@@ -3015,11 +3015,11 @@
     <value>Bit toggling keypad</value>
     <comment>Automation name for the group of bit toggling buttons.</comment>
   </data>
-  <data name="scrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ScrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Scroll expression left</value>
     <comment>Automation label for the "scroll left" button that appears when an expression is too large to fit in the window.</comment>
   </data>
-  <data name="scrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ScrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Scroll expression right</value>
     <comment>Automation label for the "scroll right" button that appears when an expression is too large to fit in the window.</comment>
   </data>
@@ -3043,51 +3043,51 @@
     <value>Memory slot %1 cleared</value>
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a memory slot. The %1 is the index of the memory slot. For example, users might hear "Memory slot 2 cleared".</comment>
   </data>
-  <data name="divideButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="DivideButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>divided by</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
   </data>
-  <data name="multiplyButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="MultiplyButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>times</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
   </data>
-  <data name="minusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="MinusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>minus</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
   </data>
-  <data name="plusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="PlusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>plus</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
   </data>
-  <data name="powerButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="PowerButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>to the power of</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
   </data>
-  <data name="ySquareRootButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="YSquareRootButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>y root</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
   </data>
-  <data name="modButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="ModButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>mod</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
-  <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="LshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>left shift</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
-  <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="RshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>right shift</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
-  <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="OrButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>or</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
   </data>
-  <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="XorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>x or</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronounciation.</comment>
   </data>
-  <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="AndButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>and</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
   </data>

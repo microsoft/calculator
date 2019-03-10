@@ -396,7 +396,7 @@
                                                TextAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                TextWrapping="NoWrap"/>
                                 </ScrollViewer>
-                                <HyperlinkButton x:Name="scrollLeft"
+                                <HyperlinkButton x:Name="ScrollLeft"
                                                  Grid.Column="0"
                                                  Width="20"
                                                  MinWidth="20"
@@ -414,7 +414,7 @@
                                               FontSize="12"
                                               Glyph="&#xE26C;"/>
                                 </HyperlinkButton>
-                                <HyperlinkButton x:Name="scrollRight"
+                                <HyperlinkButton x:Name="ScrollRight"
                                                  Grid.Column="2"
                                                  Width="20"
                                                  MinWidth="20"
@@ -482,7 +482,7 @@
                                                TextAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                TextWrapping="NoWrap"/>
                                 </ScrollViewer>
-                                <HyperlinkButton x:Name="scrollLeft"
+                                <HyperlinkButton x:Name="ScrollLeft"
                                                  Grid.Column="0"
                                                  Width="20"
                                                  MinWidth="20"
@@ -500,7 +500,7 @@
                                               FontSize="12"
                                               Glyph="&#xE26C;"/>
                                 </HyperlinkButton>
-                                <HyperlinkButton x:Name="scrollRight"
+                                <HyperlinkButton x:Name="ScrollRight"
                                                  Grid.Column="2"
                                                  Width="20"
                                                  MinWidth="20"
@@ -569,7 +569,7 @@
                                                TextAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                TextWrapping="NoWrap"/>
                                 </ScrollViewer>
-                                <HyperlinkButton x:Name="scrollLeft"
+                                <HyperlinkButton x:Name="ScrollLeft"
                                                  Grid.Column="0"
                                                  Width="20"
                                                  MinWidth="20"
@@ -587,7 +587,7 @@
                                               FontSize="12"
                                               Glyph="&#xE26C;"/>
                                 </HyperlinkButton>
-                                <HyperlinkButton x:Name="scrollRight"
+                                <HyperlinkButton x:Name="ScrollRight"
                                                  Grid.Column="2"
                                                  Width="20"
                                                  MinWidth="20"

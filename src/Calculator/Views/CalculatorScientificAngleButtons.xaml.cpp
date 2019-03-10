@@ -51,27 +51,27 @@ void CalculatorApp::CalculatorScientificAngleButtons::OnAngleButtonPressed(_In_ 
     TraceLogger::GetInstance().LogAngleButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
     String^ buttonId = static_cast<String^>(commandParameter);
 
-    degreeButton->Visibility = ::Visibility::Collapsed;
-    radianButton->Visibility = ::Visibility::Collapsed;
-    gradsButton->Visibility = ::Visibility::Collapsed;
+    DegreeButton->Visibility = ::Visibility::Collapsed;
+    RadianButton->Visibility = ::Visibility::Collapsed;
+    GradsButton->Visibility = ::Visibility::Collapsed;
 
     if (buttonId == L"0")
     {
         Model->SwitchAngleType(NumbersAndOperatorsEnum::Radians);
-        radianButton->Visibility = ::Visibility::Visible;
-        radianButton->Focus(::FocusState::Programmatic);
+        RadianButton->Visibility = ::Visibility::Visible;
+        RadianButton->Focus(::FocusState::Programmatic);
     }
     else if (buttonId == L"1")
     {
         Model->SwitchAngleType(NumbersAndOperatorsEnum::Grads);
-        gradsButton->Visibility = ::Visibility::Visible;
-        gradsButton->Focus(::FocusState::Programmatic);
+        GradsButton->Visibility = ::Visibility::Visible;
+        GradsButton->Focus(::FocusState::Programmatic);
     }
     else if (buttonId == L"2")
     {
         Model->SwitchAngleType(NumbersAndOperatorsEnum::Degree);
-        degreeButton->Visibility = ::Visibility::Visible;
-        degreeButton->Focus(::FocusState::Programmatic);
+        DegreeButton->Visibility = ::Visibility::Visible;
+        DegreeButton->Focus(::FocusState::Programmatic);
     }
 }
 

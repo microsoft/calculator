@@ -58,8 +58,8 @@ m_resultAnimate(false)
 
     m_displayFlyout = static_cast<MenuFlyout^>(Resources->Lookup(L"DisplayContextMenu"));
     auto resLoader = AppResourceProvider::GetInstance();
-    CopyMenuItem->Text = resLoader.GetResourceString(L"copyMenuItem");
-    PasteMenuItem->Text = resLoader.GetResourceString(L"pasteMenuItem");
+    CopyMenuItem->Text = resLoader.GetResourceString(L"CopyMenuItem");
+    PasteMenuItem->Text = resLoader.GetResourceString(L"PasteMenuItem");
 }
 
 void Calculator::LoadResourceStrings()
@@ -645,7 +645,7 @@ void Calculator::OnHideMemoryClicked()
 
 void Calculator::EnableMemoryControls(bool enable)
 {
-    memButton->IsEnabled = enable;
+    MemButton->IsEnabled = enable;
     MemMinus->IsEnabled = enable;
     MemPlus->IsEnabled = enable;
     if (!Model->IsMemoryEmpty)
@@ -687,7 +687,7 @@ void Calculator::OnHistoryFlyOutTapped(_In_ Object^ sender, _In_ TappedRoutedEve
 
 void Calculator::expressionContainer_LayoutUpdated(_In_ Object^ sender, _In_ Object^ e)
 {
-    expressionText->UpdateScrollButtons();
+    ExpressionText->UpdateScrollButtons();
 }
 
 bool Calculator::IsValidRegularExpression(std::wstring str)
@@ -731,7 +731,7 @@ void Calculator::OnResultsLayoutChanged(_In_ Object^ sender, _In_ Object^ e)
 
 void Calculator::UnregisterEventHandlers()
 {
-    expressionText->UnregisterEventHandlers();
+    ExpressionText->UnregisterEventHandlers();
 }
 
 void Calculator::OnErrorLayoutCompleted(_In_ Object^ sender, _In_ Object^ e)

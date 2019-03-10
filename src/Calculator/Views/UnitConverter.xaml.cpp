@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 // UnitConverter.xaml.cpp
@@ -52,7 +52,7 @@ UnitConverter::UnitConverter() :
     InitializeComponent();
 
     //adding ESC key shortcut binding to clear button
-    clearEntryButtonPos0->SetValue(Common::KeyboardShortcutManager::VirtualKeyProperty, Common::MyVirtualKey::Escape);
+    ClearEntryButtonPos0->SetValue(Common::KeyboardShortcutManager::VirtualKeyProperty, Common::MyVirtualKey::Escape);
 
     m_layoutDirection = LocalizationService::GetInstance()->GetFlowDirection();
     if (m_layoutDirection == ::FlowDirection::RightToLeft)
@@ -83,8 +83,8 @@ UnitConverter::UnitConverter() :
     InitializeOfflineStatusTextBlock();
 
     m_resultsFlyout = static_cast<MenuFlyout^>(Resources->Lookup(L"CalculationResultContextMenu"));
-    CopyMenuItem->Text = resLoader.GetResourceString(L"copyMenuItem");
-    PasteMenuItem->Text = resLoader.GetResourceString(L"pasteMenuItem");
+    CopyMenuItem->Text = resLoader.GetResourceString(L"CopyMenuItem");
+    PasteMenuItem->Text = resLoader.GetResourceString(L"PasteMenuItem");
 }
 
 void UnitConverter::OnPropertyChanged(_In_ Object^ sender, _In_ PropertyChangedEventArgs^ e)
@@ -299,7 +299,7 @@ void UnitConverter::SetDefaultFocus()
         Value1,
         CurrencyRefreshBlockControl,
         OfflineBlock,
-        clearEntryButtonPos0
+        ClearEntryButtonPos0
     };
 
     for (Control^ control : focusPrecedence)

@@ -43,10 +43,10 @@
                 <VisualState x:Name="NoErrorLayout"/>
                 <VisualState x:Name="ErrorLayout">
                     <VisualState.Setters>
-                        <Setter Target="qwordButton.IsEnabled" Value="False"/>
-                        <Setter Target="dwordButton.IsEnabled" Value="False"/>
-                        <Setter Target="wordButton.IsEnabled" Value="False"/>
-                        <Setter Target="byteButton.IsEnabled" Value="False"/>
+                        <Setter Target="QwordButton.IsEnabled" Value="False"/>
+                        <Setter Target="DwordButton.IsEnabled" Value="False"/>
+                        <Setter Target="WordButton.IsEnabled" Value="False"/>
+                        <Setter Target="ByteButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -59,57 +59,57 @@
                 <ColumnDefinition Width="1*" MaxWidth="80"/>
             </Grid.ColumnDefinitions>
 
-            <RadioButton x:Name="fullKeypad"
-                         x:Uid="fullKeypad"
+            <RadioButton x:Name="FullKeypad"
+                         x:Uid="FullKeypad"
                          Style="{StaticResource ProgKeypadRadioButtonStyle}"
-                         AutomationProperties.AutomationId="fullKeypad"
+                         AutomationProperties.AutomationId="FullKeypad"
                          Content="&#xe75f;"
                          IsChecked="{x:Bind Model.IsBitFlipChecked, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}"/>
-            <RadioButton x:Name="bitFlip"
-                         x:Uid="bitFlip"
+            <RadioButton x:Name="BitFlip"
+                         x:Uid="BitFlip"
                          Grid.Column="1"
                          Style="{StaticResource ProgKeypadRadioButtonStyle}"
-                         AutomationProperties.AutomationId="bitFlip"
+                         AutomationProperties.AutomationId="BitFlip"
                          Checked="ShowBitFlip"
                          Content="&#xf7d0;"
                          IsChecked="{x:Bind Model.IsBitFlipChecked, Mode=TwoWay}"/>
         </Grid>
 
-        <Button x:Name="qwordButton"
-                x:Uid="qwordButton"
+        <Button x:Name="QwordButton"
+                x:Uid="QwordButton"
                 Grid.Column="0"
                 Grid.ColumnSpan="7"
                 Style="{StaticResource ProgWordSizeButtonStyle}"
-                AutomationProperties.AutomationId="qwordButton"
+                AutomationProperties.AutomationId="QwordButton"
                 Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
                 CommandParameter="0"
                 Content="QWORD"/>
-        <Button x:Name="dwordButton"
-                x:Uid="dwordButton"
+        <Button x:Name="DwordButton"
+                x:Uid="DwordButton"
                 Grid.Column="0"
                 Grid.ColumnSpan="7"
                 Style="{StaticResource ProgWordSizeButtonStyle}"
-                AutomationProperties.AutomationId="dwordButton"
+                AutomationProperties.AutomationId="DwordButton"
                 Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
                 CommandParameter="1"
                 Content="DWORD"
                 Visibility="Collapsed"/>
-        <Button x:Name="wordButton"
-                x:Uid="wordButton"
+        <Button x:Name="WordButton"
+                x:Uid="WordButton"
                 Grid.Column="0"
                 Grid.ColumnSpan="7"
                 Style="{StaticResource ProgWordSizeButtonStyle}"
-                AutomationProperties.AutomationId="wordButton"
+                AutomationProperties.AutomationId="WordButton"
                 Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
                 CommandParameter="2"
                 Content="WORD"
                 Visibility="Collapsed"/>
-        <Button x:Name="byteButton"
-                x:Uid="byteButton"
+        <Button x:Name="ByteButton"
+                x:Uid="ByteButton"
                 Grid.Column="0"
                 Grid.ColumnSpan="7"
                 Style="{StaticResource ProgWordSizeButtonStyle}"
-                AutomationProperties.AutomationId="byteButton"
+                AutomationProperties.AutomationId="ByteButton"
                 Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
                 CommandParameter="3"
                 Content="BYTE"

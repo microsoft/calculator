@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -129,11 +129,11 @@
     <value>ማስሊያ</value>
     <comment>{@Appx_Description@}</comment>
   </data>
-  <data name="copyMenuItem" xml:space="preserve">
+  <data name="CopyMenuItem" xml:space="preserve">
     <value>ቅዳ</value>
     <comment>Copy context menu string</comment>
   </data>
-  <data name="pasteMenuItem" xml:space="preserve">
+  <data name="PasteMenuItem" xml:space="preserve">
     <value>ለጥፍ</value>
     <comment>Paste context menu string</comment>
   </data>
@@ -429,11 +429,11 @@
     <value>ታሪክ (Ctrl+H)</value>
     <comment>This is the tool tip automation name for the history button.</comment>
   </data>
-  <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+  <data name="BitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>የቢት መቀያየሪያ የቁልፍ ፓድ</value>
-    <comment>This is the tool tip automation name for the bitFlip button.</comment>
+    <comment>This is the tool tip automation name for the BitFlip button.</comment>
   </data>
-  <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+  <data name="FullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>ሙሉ ቁልፍ መደብ</value>
     <comment>This is the tool tip automation name for the numberPad button.</comment>
   </data>
@@ -457,27 +457,27 @@
     <value>ታሪክ</value>
     <comment>The automation name for the History pivot item that is shown when Calculator is in wide layout.</comment>
   </data>
-  <data name="converterModeButton.Content" xml:space="preserve">
+  <data name="ConverterModeButton.Content" xml:space="preserve">
     <value>ለዋጭ</value>
     <comment>Label for a control that activates the unit converter mode.</comment>
   </data>
-  <data name="scientificModeButton.Content" xml:space="preserve">
+  <data name="ScientificModeButton.Content" xml:space="preserve">
     <value>ሳይንሳዊ</value>
     <comment>Label for a control that activates scientific mode calculator layout</comment>
   </data>
-  <data name="standardModeButton.Content" xml:space="preserve">
+  <data name="StandardModeButton.Content" xml:space="preserve">
     <value>መደበኛ</value>
     <comment>Label for a control that activates standard mode calculator layout.</comment>
   </data>
-  <data name="converterModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ConverterModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>የለዋጭ ሁኔታ</value>
     <comment>Screen reader prompt for a control that activates the unit converter mode.</comment>
   </data>
-  <data name="scientificModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ScientificModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>በሳይንሳዊ ሁኔታ</value>
     <comment>Screen reader prompt for a control that activates scientific mode calculator layout</comment>
   </data>
-  <data name="standardModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="StandardModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>መደበኛ ሁኔታ</value>
     <comment>Screen reader prompt for a control that activates standard mode calculator layout.</comment>
   </data>
@@ -589,11 +589,11 @@
     <value>ታሪክ ፍላይአውት ዝጋ</value>
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
-  <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="MemButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>የማኅደረ ትውስታ ማከማቻ</value>
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
-  <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+  <data name="MemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>የትውስታ ማከማቻ (Ctrl+M)</value>
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
@@ -693,7 +693,7 @@
     <value>የታሪክ ንጥል ነገር ይሰርዙ</value>
     <comment>Screen reader prompt for the Calculator Delete option in the History list context menu</comment>
   </data>
-  <data name="backSpaceButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="BackSpaceButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>የኋሊት ደምሳሽ</value>
     <comment>Screen reader prompt for the Calculator Backspace button</comment>
   </data>
@@ -705,187 +705,187 @@
     <value>1</value>
     <comment>Screen reader prompt for the Calculator number "1" button</comment>
   </data>
-  <data name="num0Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num0Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ዜሮ</value>
     <comment>Screen reader prompt for the Calculator number "0" button</comment>
   </data>
-  <data name="num1Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num1Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>አንድ</value>
     <comment>Screen reader prompt for the Calculator number "1" button</comment>
   </data>
-  <data name="num2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሁለት</value>
     <comment>Screen reader prompt for the Calculator number "2" button</comment>
   </data>
-  <data name="num3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሶስት</value>
     <comment>Screen reader prompt for the Calculator number "3" button</comment>
   </data>
-  <data name="num4Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num4Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>አራት</value>
     <comment>Screen reader prompt for the Calculator number "4" button</comment>
   </data>
-  <data name="num5Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num5Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>አምስት</value>
     <comment>Screen reader prompt for the Calculator number "5" button</comment>
   </data>
-  <data name="num6Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num6Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ስድስት</value>
     <comment>Screen reader prompt for the Calculator number "6" button</comment>
   </data>
-  <data name="num7Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num7Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሰባት</value>
     <comment>Screen reader prompt for the Calculator number "7" button</comment>
   </data>
-  <data name="num8Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num8Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ስምንት</value>
     <comment>Screen reader prompt for the Calculator number "8" button</comment>
   </data>
-  <data name="num9Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Num9Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ዘጠኝ</value>
     <comment>Screen reader prompt for the Calculator number "9" button</comment>
   </data>
-  <data name="aButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="AButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>A</value>
     <comment>Screen reader prompt for the Calculator number "A" button</comment>
   </data>
-  <data name="bButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="BButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>B</value>
     <comment>Screen reader prompt for the Calculator number "B" button</comment>
   </data>
-  <data name="cButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="CButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>C</value>
     <comment>Screen reader prompt for the Calculator number "C" button</comment>
   </data>
-  <data name="dButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>D</value>
     <comment>Screen reader prompt for the Calculator number "D" button</comment>
   </data>
-  <data name="eButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="EButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>E</value>
     <comment>Screen reader prompt for the Calculator number "E" button</comment>
   </data>
-  <data name="fButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="FButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>F</value>
     <comment>Screen reader prompt for the Calculator number "F" button</comment>
   </data>
-  <data name="andButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="AndButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>እና</value>
     <comment>Screen reader prompt for the Calculator And button</comment>
   </data>
-  <data name="orButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="OrButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ወይም</value>
     <comment>Screen reader prompt for the Calculator Or button</comment>
   </data>
-  <data name="notButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="NotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>አይደለም</value>
     <comment>Screen reader prompt for the Calculator Not button</comment>
   </data>
-  <data name="rolButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="RolButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>በግራ በኩል አሽከርክር</value>
     <comment>Screen reader prompt for the Calculator ROL button</comment>
   </data>
-  <data name="rorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="RorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>በቀኝ በኩል አሽከርክር</value>
     <comment>Screen reader prompt for the Calculator ROR button</comment>
   </data>
-  <data name="lshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="LshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ግራ shift</value>
     <comment>Screen reader prompt for the Calculator LSH button</comment>
   </data>
-  <data name="rshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="RshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ቀኝ shift</value>
     <comment>Screen reader prompt for the Calculator RSH button</comment>
   </data>
-  <data name="xorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="XorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>የማያጠቃልል ወይም</value>
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
-  <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="QwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ባለአራት ቃል መቀያየሪያ</value>
     <comment>Screen reader prompt for the Calculator qword button. Should read as "Quadruple word toggle button".</comment>
   </data>
-  <data name="dwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ድርብ ቃል መቀያየሪያ</value>
     <comment>Screen reader prompt for the Calculator dword button. Should read as "Double word toggle button".</comment>
   </data>
-  <data name="wordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="WordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ቃል</value>
     <comment>Screen reader prompt for the Calculator word button. Should read as "Word toggle button".</comment>
   </data>
-  <data name="byteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ByteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ባይት መቀያየሪያ</value>
     <comment>Screen reader prompt for the Calculator byte button. Should read as "Byte toggle button".</comment>
   </data>
-  <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="BitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>የቢት መቀያየሪያ የቁልፍ ፓድ</value>
-    <comment>Screen reader prompt for the Calculator bitFlip button</comment>
+    <comment>Screen reader prompt for the Calculator BitFlip button</comment>
   </data>
-  <data name="fullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="FullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሙሉ ቁልፍ መደብ</value>
     <comment>Screen reader prompt for the Calculator numberPad button</comment>
   </data>
-  <data name="decimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DecimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>የቁጥር መለያ</value>
     <comment>Screen reader prompt for the "." button</comment>
   </data>
-  <data name="clearEntryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ClearEntryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ምዝግብ አጽዳ</value>
     <comment>Screen reader prompt for the "CE" button</comment>
   </data>
-  <data name="clearButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ClearButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>አጽዳ</value>
     <comment>Screen reader prompt for the "C" button</comment>
   </data>
-  <data name="divideButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DivideButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሲካፈል በ</value>
     <comment>Screen reader prompt for the divide button on the number pad</comment>
   </data>
-  <data name="multiplyButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="MultiplyButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሲባዛ</value>
     <comment>Screen reader prompt for the multiply button on the number pad</comment>
   </data>
-  <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="EqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ይሆናል</value>
     <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
   </data>
-  <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ቅልብስ ቀመር</value>
     <comment>Screen Reader prompt for the shift button on the number pad in scientific mode.</comment>
   </data>
-  <data name="minusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="MinusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሲቀነስ</value>
     <comment>Screen reader prompt for the minus button on the number pad</comment>
   </data>
-  <data name="minus" xml:space="preserve">
+  <data name="Minus" xml:space="preserve">
     <value>ሲቀነስ</value>
     <comment>We use this resource to replace "-" sign for accessibility. So expression like, 1 - 3 = -2 becomes 1 minus 3 = minus 2</comment>
   </data>
-  <data name="plusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="PlusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሲደመር</value>
     <comment>Screen reader prompt for the plus button on the number pad</comment>
   </data>
-  <data name="squareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="SquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ዳግም ዘር</value>
     <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
   </data>
-  <data name="percentButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="PercentButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>መቶኛ</value>
     <comment>Screen reader prompt for the percent button on the scientific operator keypad</comment>
   </data>
-  <data name="negateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="NegateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>አወንታዊ አሉታዊ</value>
     <comment>Screen reader prompt for the negate button on the scientific operator keypad</comment>
   </data>
-  <data name="converterNegateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ConverterNegateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>አወንታዊ አሉታዊ</value>
     <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
   </data>
-  <data name="invertButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="InvertButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ተገላቢጦሽ</value>
     <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
   </data>
-  <data name="openParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="OpenParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>የግራ ቅንፍ</value>
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
@@ -893,139 +893,139 @@
     <value>የግራ ቅንፍ፣ የክፍት ቅንፍ ቁጥር %1</value>
     <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
   </data>
-  <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="CloseParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>የቀኝ ቅንፍ</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
   </data>
-  <data name="ftoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="FtoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሳይንሳዊ እሳቤ</value>
     <comment>Screen reader prompt for the Calculator F-E the scientific operator keypad</comment>
   </data>
-  <data name="hyperbolicButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="HyperbolicButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሃይፐርቦሊክ ተግባር</value>
     <comment>Screen reader prompt for the Calculator button HYP in the scientific operator keypad</comment>
   </data>
-  <data name="piButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="PiButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ፓይ</value>
     <comment>Screen reader prompt for the Calculator pi button  on the scientific operator keypad</comment>
   </data>
-  <data name="sinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="SinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሳይን</value>
     <comment>Screen reader prompt for the Calculator sin button  on the scientific operator keypad</comment>
   </data>
-  <data name="cosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="CosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ኮዚን</value>
     <comment>Screen reader prompt for the Calculator cos button  on the scientific operator keypad</comment>
   </data>
-  <data name="tanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="TanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሰያፍ</value>
     <comment>Screen reader prompt for the Calculator tan button  on the scientific operator keypad</comment>
   </data>
-  <data name="sinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="SinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሃይፐርቦሊክ ሳይን</value>
     <comment>Screen reader prompt for the Calculator sinh button  on the scientific operator keypad</comment>
   </data>
-  <data name="coshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="CoshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሃይፐርቦሊክ፣ ኮዚን</value>
     <comment>Screen reader prompt for the Calculator cosh button  on the scientific operator keypad</comment>
   </data>
-  <data name="tanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="TanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሃይፐርቦሊክ ሰያፍ</value>
     <comment>Screen reader prompt for the Calculator tanh button  on the scientific operator keypad</comment>
   </data>
-  <data name="xpower2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Xpower2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ካሬ</value>
     <comment>Screen reader prompt for the x squared on the scientific operator keypad. </comment>
   </data>
-  <data name="xpower3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Xpower3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ኪዩብ</value>
     <comment>Screen reader prompt for the x cubed on the scientific operator keypad. </comment>
   </data>
-  <data name="invsinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="InvsinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>አርክ ሲን</value>
     <comment>Screen reader prompt for the inverted sin on the scientific operator keypad.</comment>
   </data>
-  <data name="invcosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="InvcosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>አርክ ኮዚን</value>
     <comment>Screen reader prompt for the inverted cos on the scientific operator keypad.</comment>
   </data>
-  <data name="invtanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="InvtanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>አርክ ሰያፍ</value>
     <comment>Screen reader prompt for the inverted tan on the scientific operator keypad.</comment>
   </data>
-  <data name="invsinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="InvsinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሃይፐርቦሊክ አርክ ኮዚን</value>
     <comment>Screen reader prompt for the inverted sinh on the scientific operator keypad.</comment>
   </data>
-  <data name="invcoshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="InvcoshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሃይፐርቦሊክ አርክ ኮዚን</value>
     <comment>Screen reader prompt for the inverted cosh on the scientific operator keypad.</comment>
   </data>
-  <data name="invtanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="InvtanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሃይፐርቦሊክ አርክ ሰያፍ</value>
     <comment>Screen reader prompt for the inverted tanh on the scientific operator keypad.</comment>
   </data>
-  <data name="powerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="PowerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>«X» ወደ አርቢ</value>
     <comment>Screen reader prompt for x power y button on the scientific operator keypad. </comment>
   </data>
-  <data name="powerOf10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="PowerOf10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>አስርኛ ወደ አርቢ</value>
     <comment>Screen reader prompt for the 10 power x button on the scientific operator keypad.</comment>
   </data>
-  <data name="powerOfEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="PowerOfEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>«e» ወደ አርቢ</value>
     <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
   </data>
-  <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="YSquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>'y' ራዲካል 'x'</value>
     <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
   </data>
-  <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="LogBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ግንድ</value>
     <comment>Screen reader for the log base 10  on the scientific operator keypad</comment>
   </data>
-  <data name="logBaseEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="LogBaseEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ተፈጥሮዋዊ ግንድ</value>
     <comment>Screen reader for the log base e on the scientific operator keypad</comment>
   </data>
-  <data name="modButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ModButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ሞዱሎ</value>
     <comment>Screen reader for the mod button on the scientific operator keypad</comment>
   </data>
-  <data name="expButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ExpButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>አርቢ ቁጥር</value>
     <comment>Screen reader for the exp button on the scientific operator keypad</comment>
   </data>
-  <data name="dmsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DmsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ዲግሪ ደቂቃ ሰከንድ</value>
     <comment>Screen reader for the exp button on the scientific operator keypad</comment>
   </data>
-  <data name="degreesButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DegreesButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ዲግሪዎች</value>
     <comment>Screen reader for the exp button on the scientific operator keypad</comment>
   </data>
-  <data name="intButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="IntButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ኢንቲጀር ክፍል</value>
     <comment>Screen reader for the int button on the scientific operator keypad</comment>
   </data>
-  <data name="fractButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="FractButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ክፍልፋይ ክፍል</value>
     <comment>Screen reader for the frac button on the scientific operator keypad</comment>
   </data>
-  <data name="factorialButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="FactorialButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ብዜት</value>
     <comment>Screen reader for the factorial button on the basic operator keypad</comment>
   </data>
-  <data name="degButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="DegButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ዲግሪዎች መቀያየሪያ</value>
     <comment>This the Deg button's Degree mode automation nameon the scientific operator keypad. Should read as "Degrees toggle button".</comment>
   </data>
-  <data name="gradButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="GradButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ግራዲያንስ መቀያየሪያ</value>
     <comment>This is the Deg button's Grad mode automation name on the scientific operator keypad. Should read as "Gradians toggle button".</comment>
   </data>
-  <data name="radButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="RadButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ራዲያንስ መቀያየሪያ</value>
     <comment>This is the Deg button's Rad mode automation name on the scientific operator keypad. Should read as "Radians toggle button".</comment>
   </data>
@@ -2531,11 +2531,11 @@
     <value>ቢት መምረጫ ቁልፍሰሌዳ</value>
     <comment>Automation name for the group of bit toggling buttons.</comment>
   </data>
-  <data name="scrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ScrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>አገላለጽ ወደ ግራ ሸብልል</value>
     <comment>Automation label for the "scroll left" button that appears when an expression is too large to fit in the window.</comment>
   </data>
-  <data name="scrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ScrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>አገላለጽ ወደ ቀኝ ሸብልል</value>
     <comment>Automation label for the "scroll right" button that appears when an expression is too large to fit in the window.</comment>
   </data>
@@ -2559,51 +2559,51 @@
     <value>የማህደረ ትውስታ ማስገቢያ %1 ጸድቷል</value>
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a memory slot. The %1 is the index of the memory slot. For example, users might hear "Memory slot 2 cleared".</comment>
   </data>
-  <data name="divideButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="DivideButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ሲካፈል</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
   </data>
-  <data name="multiplyButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="MultiplyButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ሲባዛ</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
   </data>
-  <data name="minusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="MinusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ሲቀነስ</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
   </data>
-  <data name="plusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="PlusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ሲደመር</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
   </data>
-  <data name="powerButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="PowerButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ኃይል</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
   </data>
-  <data name="ySquareRootButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="YSquareRootButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>y ሩት</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
   </data>
-  <data name="modButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="ModButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ሞድ</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
-  <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="LshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ወደግራ ማቀያየር</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
-  <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="RshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ወደቀኝ ማቀያየር</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
-  <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="OrButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ወይም</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
   </data>
-  <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="XorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>x ወይም</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronounciation.</comment>
   </data>
-  <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+  <data name="AndButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>እና</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
   </data>
