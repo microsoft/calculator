@@ -347,7 +347,6 @@
                         <Setter Target="RowUnit1.Height" Value="2*"/>
                         <Setter Target="RowDisplay2.Height" Value="4*"/>
                         <Setter Target="RowUnit2.Height" Value="2*"/>
-                        <Setter Target="RowDltrUnits.Height" Value="Auto"/>
                         <Setter Target="CurrencyLoadingGrid.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="ConverterNumPad.(Grid.Row)" Value="1"/>
                         <Setter Target="ConverterNumPad.(Grid.RowSpan)" Value="5"/>
