@@ -394,9 +394,9 @@ namespace DateCalculationUnitTests
           viewModel->IsDateDiffMode = true;
           VERIFY_IS_TRUE(viewModel->IsDateDiffMode);
 
-          /*29.02.2008*/
+          // 29.02.2008
           viewModel->FromDate = DateUtils::SystemTimeToDateTime(datetimeDifftest[5].startDate);
-          /*31.03.2008*/
+          // 31.03.2008
           viewModel->ToDate = DateUtils::SystemTimeToDateTime(datetimeDifftest[5].endDate);
 
           //// Assert for the result
@@ -404,8 +404,8 @@ namespace DateCalculationUnitTests
           VERIFY_ARE_EQUAL(StringReference(L"31 days"), viewModel->StrDateDiffResultInDays);
           VERIFY_ARE_EQUAL(StringReference(L"1 month, 2 days"), viewModel->StrDateDiffResult);
 
-          // Daylight saving time - Clock Forward
-          /*10.03.2019*/
+          // Daylight Saving Time - Clock Forward
+          // 10.03.2019
           SYSTEMTIME startDate;
           startDate.wYear = 2019;
           startDate.wMonth = 03;
@@ -414,7 +414,7 @@ namespace DateCalculationUnitTests
           startDate.wHour = startDate.wMinute = 0;
           startDate.wSecond = startDate.wMilliseconds = 0;
           viewModel->FromDate = DateUtils::SystemTimeToDateTime(startDate);
-          /*11.03.2019*/
+          // 11.03.2019
           SYSTEMTIME endDate;
           endDate.wYear = 2019;
           endDate.wMonth = 03;
@@ -423,22 +423,20 @@ namespace DateCalculationUnitTests
           endDate.wHour = endDate.wMinute = 0;
           endDate.wSecond = endDate.wMilliseconds = 0;
           viewModel->ToDate = DateUtils::SystemTimeToDateTime(endDate);
-          //// Assert for the result
           VERIFY_IS_TRUE(viewModel->IsDiffInDays);
           VERIFY_ARE_EQUAL(StringReference(L"1 day"), viewModel->StrDateDiffResult);
 
           endDate.wDay += 6;
           viewModel->ToDate = DateUtils::SystemTimeToDateTime(endDate);
-          //// Assert for the result
           VERIFY_IS_FALSE(viewModel->IsDiffInDays);
           VERIFY_ARE_EQUAL(StringReference(L"1 week"), viewModel->StrDateDiffResult);
 
-          // Daylight saving time - Clock Backward
-          /*03.11.2019*/
+          // Daylight Saving Time - Clock Backward
+          // 03.11.2019
           startDate.wMonth = 11;
           startDate.wDay = 03;
           viewModel->FromDate = DateUtils::SystemTimeToDateTime(startDate);
-          /*04.11.2019*/
+          // 04.11.2019
           endDate.wMonth = 11;
           endDate.wDay = 04;
           viewModel->ToDate = DateUtils::SystemTimeToDateTime(endDate);
