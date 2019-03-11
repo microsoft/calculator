@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -596,6 +596,38 @@ namespace CalculatorUnitTests
 
             VERIFY_ARE_EQUAL(wstring(L""), ratio.first);
             VERIFY_ARE_EQUAL(wstring(L""), ratio.second);
+        }
+
+        TEST_METHOD(Test_RoundCurrencyRatio)
+        {
+            CurrencyDataLoader loader{ nullptr };
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(1234567), 1234567);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0), 0);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(9999.999), 9999.999);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(8765.4321), 8765.4321);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(4815.162342), 4815.1623);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(4815.162358), 4815.1624);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(4815.162388934723), 4815.1624);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.12), 0.12);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.123), 0.123);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.1234), 0.1234);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.12343), 0.1234);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0321), 0.0321);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.03211), 0.0321);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.03219), 0.0322);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.003219), 0.0032);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.003269), 0.0033);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.000269), 0.00027);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.000069), 0.000069);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.000061), 0.000061);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000612), 0.000061);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000616), 0.000062);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000016), 0.0000016);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000016134324), 0.0000016);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000096134324), 0.0000096);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.00000169348392), 0.0000017);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000000034987218), 0.0000000035);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000000000000231445), 0.000000000000023);
         }
     };
 }

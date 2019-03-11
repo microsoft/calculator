@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -71,6 +71,7 @@ namespace CalculatorApp
             std::pair<std::wstring, std::wstring> GetCurrencySymbols(const UCM::Unit& unit1, const UCM::Unit& unit2) override;
             std::pair<std::wstring, std::wstring> GetCurrencyRatioEquality(_In_ const UnitConversionManager::Unit& unit1, _In_ const UnitConversionManager::Unit& unit2) override;
             std::wstring GetCurrencyTimestamp() override;
+            static double RoundCurrencyRatio(double ratio);
 
             concurrency::task<bool> TryLoadDataFromCacheAsync() override;
             concurrency::task<bool> TryLoadDataFromWebAsync() override;
@@ -87,7 +88,7 @@ namespace CalculatorApp
 
             bool TryParseWebResponses(
                 _In_ Platform::String^ staticDataJson,
-                _In_ Platform::String^ allRatiosJson, 
+                _In_ Platform::String^ allRatiosJson,
                 _Inout_ std::vector<UCM::CurrencyStaticData>& staticData,
                 _Inout_ CurrencyRatioMap& allRatiosData);
             bool TryParseStaticData(_In_ Platform::String^ rawJson, _Inout_ std::vector<UCM::CurrencyStaticData>& staticData);

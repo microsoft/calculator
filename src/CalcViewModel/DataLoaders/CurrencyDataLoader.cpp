@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -40,6 +40,8 @@ static constexpr long long DAY_DURATION = 1LL * 60 * 60 * 24 * 10000000;
 static constexpr long long WEEK_DURATION = DAY_DURATION * 7;
 
 static constexpr int FORMATTER_DIGIT_COUNT = 4;
+static constexpr int FORMATTER_RATE_MIN_DIGIT_COUNT = 4;
+static constexpr int FORMATTER_RATE_MIN_MEANINGFULL_DIGITS = 2;
 
 static constexpr auto CACHE_TIMESTAMP_KEY = L"CURRENCY_CONVERTER_TIMESTAMP";
 static constexpr auto CACHE_LANGCODE_KEY = L"CURRENCY_CONVERTER_LANGCODE";
@@ -203,7 +205,7 @@ void CurrencyDataLoader::LoadData()
                 }
             }
 
-            co_return didLoad;            
+            co_return didLoad;
         }).then([this](bool didLoad)
         {
             UpdateDisplayedTimestamp();
@@ -262,6 +264,23 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencySymbols(const UCM::Unit& u
     return make_pair(symbol1, symbol2);
 }
 
+double CurrencyDataLoader::RoundCurrencyRatio(double ratio)
+{
+    // Compute how many decimals we need to display two meaningful digits at minimum
+    // For example: 0.000000003423 -> 0.0000000034, 0.000212 -> 0.00021
+    int numberDecimals = FORMATTER_RATE_MIN_DIGIT_COUNT;
+    if (ratio < 1)
+    {
+        numberDecimals = max(
+            FORMATTER_RATE_MIN_DIGIT_COUNT,
+            (int)(-log10(ratio)) + FORMATTER_RATE_MIN_MEANINGFULL_DIGITS);
+    }
+
+    unsigned long long scale = (unsigned long long)powl(10l, numberDecimals);
+
+    return (double)(round(ratio * scale) / scale);
+}
+
 pair<wstring, wstring> CurrencyDataLoader::GetCurrencyRatioEquality(_In_ const UCM::Unit& unit1, _In_ const UCM::Unit& unit2)
 {
     try
@@ -274,16 +293,10 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencyRatioEquality(_In_ const U
             if (iter2 != ratioMap.end())
             {
                 double ratio = (iter2->second).ratio;
-
-                // Round the ratio to FORMATTER_DIGIT_COUNT digits using int math.
-                // Ex: to round 1.23456 to three digits, use
-                //     ((int) 1.23456 * (10^3)) / (10^3)
-                double scale = pow(10, FORMATTER_DIGIT_COUNT);
-                double rounded = static_cast<int>(ratio * static_cast<int>(scale)) / scale;
+                double rounded = RoundCurrencyRatio(ratio);
+                wstring roundedFormat = m_ratioFormatter->Format(rounded)->Data();;
 
                 wstring digitSymbol = wstring{ LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit(L'1') };
-                wstring roundedFormat = m_ratioFormatter->Format(rounded)->Data();
-
                 wstring ratioString = LocalizationStringUtil::GetLocalizedString(
                     m_ratioFormat.c_str(),
                     digitSymbol.c_str(),
@@ -329,7 +342,7 @@ task<bool> CurrencyDataLoader::TryLoadDataFromCacheAsync()
         {
             loadComplete = co_await TryLoadDataFromWebAsync();
         }
-        
+
         if (!loadComplete)
         {
             loadComplete = co_await TryFinishLoadFromCacheAsync();
@@ -578,7 +591,7 @@ bool CurrencyDataLoader::TryParseAllRatiosData(_In_ String^ rawJson, _Inout_ Cur
             relativeRatio,
             sourceCurrencyCode,
             targetCurrencyCode
-        });
+            });
     }
 
     return true;
