@@ -9,6 +9,7 @@
 #include "Common/LocalizationSettings.h"
 #include "Common/TraceLogger.h"
 #include "UnitConverterDataConstants.h"
+#include <locale>
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -547,9 +548,15 @@ bool CurrencyDataLoader::TryParseStaticData(_In_ String^ rawJson, _Inout_ vector
     }
 
     // TODO - MSFT 8533667: this sort will be replaced by a WinRT call to sort localized strings
-    sort(begin(staticData), end(staticData), [](CurrencyStaticData unit1, CurrencyStaticData unit2)
+
+    auto loc = std::locale("");  //Use the user-preferred locale to sort country names
+    const std::collate<wchar_t>& coll = std::use_facet<std::collate<wchar_t> >(loc);
+    sort(begin(staticData), end(staticData), [&coll](CurrencyStaticData unit1, CurrencyStaticData unit2)
     {
-        return unit1.countryName < unit2.countryName;
+        auto country1 = unit1.countryName.data();
+        auto country2 = unit2.countryName.data();
+        return coll.compare(country1, country1 + unit1.countryName.length(),
+            country2, country2 + unit2.countryName.length()) < 0;
     });
 
     return true;
