@@ -294,11 +294,11 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencyRatioEquality(_In_ const U
             {
                 double ratio = (iter2->second).ratio;
                 double rounded = RoundCurrencyRatio(ratio);
-                wstring roundedFormat = m_ratioFormatter->Format(rounded)->Data();;
 
                 wstring digitSymbol = wstring{ LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit(L'1') };
+                wstring roundedFormat = m_ratioFormatter->Format(rounded)->Data();
                 wstring ratioString = LocalizationStringUtil::GetLocalizedString(
-                    m_ratioFormat.c_str(),
+                    m_ratioFormat.c_str(),                                          
                     digitSymbol.c_str(),
                     unit1.abbreviation.c_str(),
                     roundedFormat.c_str(),
@@ -591,7 +591,7 @@ bool CurrencyDataLoader::TryParseAllRatiosData(_In_ String^ rawJson, _Inout_ Cur
             relativeRatio,
             sourceCurrencyCode,
             targetCurrencyCode
-            });
+        });
     }
 
     return true;
