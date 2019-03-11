@@ -297,8 +297,9 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencyRatioEquality(_In_ const U
 
                 wstring digitSymbol = wstring{ LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit(L'1') };
                 wstring roundedFormat = m_ratioFormatter->Format(rounded)->Data();
+
                 wstring ratioString = LocalizationStringUtil::GetLocalizedString(
-                    m_ratioFormat.c_str(),                                          
+                    m_ratioFormat.c_str(),
                     digitSymbol.c_str(),
                     unit1.abbreviation.c_str(),
                     roundedFormat.c_str(),
