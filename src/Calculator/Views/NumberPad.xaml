@@ -109,7 +109,7 @@
         -->
         <controls:CalculatorButton x:Name="decimalSeparatorButton"
                                    x:Uid="decimalSeparatorButton"
-                                   Grid.Row="4"
+                                   Grid.Row="3"
                                    Grid.Column="2"
                                    Style="{Binding ElementName=ControlRoot, Path=ButtonStyle}"
                                    Background="{ThemeResource AppBackgroundAltMediumLowBrush}"
