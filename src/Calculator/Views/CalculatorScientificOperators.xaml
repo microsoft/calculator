@@ -727,7 +727,6 @@
                                    Style="{StaticResource ParenthesisCalcButtonStyle}"
                                    FontSize="19"
                                    AutomationProperties.AutomationId="openParenthesisButton"
-                                   AutomationProperties.Name="{Binding LeftParenthesisAutomationName}"
                                    ButtonId="OpenParenthesis"
                                    Content="("
                                    Tag="{x:Bind Model.OpenParenthesisCount, Mode=OneWay}"/>

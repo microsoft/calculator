@@ -581,7 +581,6 @@ void StandardCalculatorViewModel::OnButtonPressed(Object^ parameter)
     m_feedbackForButtonPress = CalculatorButtonPressedEventArgs::GetAuditoryFeedbackFromCommandParameter(parameter);
     NumbersAndOperatorsEnum numOpEnum = CalculatorButtonPressedEventArgs::GetOperationFromCommandParameter(parameter);
     Command cmdenum = ConvertToOperatorsEnum(numOpEnum);
-    bool isOperator = IsOperator(cmdenum);
     String^ previousParenthesisCount = m_OpenParenthesisCount;
 
     TraceLogger::GetInstance().UpdateFunctionUsage((int)numOpEnum);
