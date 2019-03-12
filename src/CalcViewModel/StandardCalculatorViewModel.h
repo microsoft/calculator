@@ -261,14 +261,6 @@ namespace CalculatorApp
                 void set(bool value) { m_completeTextSelection = value; }
             }
 
-            property Platform::String^ LeftParenthesisAutomationName
-            {
-                Platform::String^ get() 
-                {
-                    return GetLeftParenthesisAutomationName();
-                }
-            }
-
         internal:
             void OnPaste(Platform::String^ pastedString, CalculatorApp::Common::ViewMode mode);
             void OnCopyCommand(Platform::Object^ parameter);
@@ -284,12 +276,15 @@ namespace CalculatorApp
             void OnMemoryClear(_In_ Platform::Object^ memoryItemPosition);
             void OnPinUnpinCommand(Platform::Object^ parameter);
 
+            void OpenParenthesisCountNarratorAnnouncment();
+
             void SetPrimaryDisplay(_In_ std::wstring const&displayString, _In_ bool isError);
             void DisplayPasteError();
             void SetTokens(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens);
             void SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &commands);
             void SetHistoryExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector <std::shared_ptr<IExpressionCommand>>> const &commands);
             void SetParenthesisCount(_In_ const std::wstring& parenthesisCount);
+            void SetNoParenAddedNarratorAnnouncement();
             void OnMaxDigitsReached();
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
@@ -337,6 +332,8 @@ namespace CalculatorApp
             Platform::String^ m_localizedMemoryItemChangedAutomationFormat;
             Platform::String^ m_localizedMemoryItemClearedAutomationFormat;
             Platform::String^ m_localizedMemoryCleared;
+            Platform::String^ m_localizedOpenParenthesisCountChangedAutomationFormat;
+            Platform::String^ m_localizaedNoParenthesisAddedAutomationFormat;
 
             bool m_pinned;
             bool m_isOperandEnabled;
@@ -355,7 +352,6 @@ namespace CalculatorApp
             bool m_isLastOperationHistoryLoad;
             Platform::String^ m_selectedExpressionLastData;
             Common::DisplayExpressionToken^ m_selectedExpressionToken;
-            Platform::String^ m_leftParenthesisAutomationFormat;
 
             Platform::String^ LocalizeDisplayValue(_In_ std::wstring const &displayValue, _In_ bool isError);
             Platform::String^ CalculateNarratorDisplayValue(_In_ std::wstring const &displayValue, _In_ Platform::String^ localizedDisplayValue, _In_ bool isError);
@@ -365,7 +361,6 @@ namespace CalculatorApp
 
             CalculationManager::Command ConvertToOperatorsEnum(NumbersAndOperatorsEnum operation);
             void DisableButtons(CalculationManager::CommandType selectedExpressionCommandType);
-            Platform::String^ GetLeftParenthesisAutomationName();
 
             Platform::String^ m_feedbackForButtonPress;
             void OnButtonPressed(Platform::Object^ parameter);

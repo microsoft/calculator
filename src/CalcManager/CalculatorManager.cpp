@@ -118,6 +118,15 @@ namespace CalculationManager
     }
 
     /// <summary>
+    /// Callback from the engine
+    /// Used to set the narrator text when no parenthesis can be added
+    /// </summary>
+    void CalculatorManager::OnNoParenAdded()
+    {
+        m_displayCallback->OnNoParenAdded();
+    }
+
+    /// <summary>
     /// Reset CalculatorManager.
     /// Set the mode to the standard calculator
     /// Set the degree mode as regular degree (as oppose to Rad or Grad)

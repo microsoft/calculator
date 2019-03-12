@@ -42,7 +42,7 @@ namespace CalculationManager
         MemorizedNumberClear = 335
     };
 
-    class CalculatorManager sealed : public virtual ICalcDisplay
+    class CalculatorManager sealed : public ICalcDisplay
     {
     private:
         ICalcDisplay* const m_displayCallback;
@@ -94,7 +94,8 @@ namespace CalculationManager
         void SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &commands) override;
         void SetMemorizedNumbers(_In_ const std::vector<std::wstring>& memorizedNumbers) override;
         void OnHistoryItemAdded(_In_ unsigned int addedItemIndex) override;
-        void SetParenDisplayText(const std::wstring& parenthesisCount);
+        void SetParenDisplayText(const std::wstring& parenthesisCount) override;
+        void OnNoParenAdded() override;
         void DisplayPasteError();
         void MaxDigitsReached() override;
         void BinaryOperatorReceived() override;

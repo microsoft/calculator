@@ -544,6 +544,11 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         if ((m_openParenCount >= MAXPRECDEPTH && nx) || (!m_openParenCount && !nx)
             || ((m_precedenceOpCount >= MAXPRECDEPTH && m_nPrecOp[m_precedenceOpCount - 1] != 0)))
         {
+            if (!m_openParenCount && !nx)
+            {
+                m_pCalcDisplay->OnNoParenAdded();
+            }
+
             HandleErrorCommand(wParam);
             break;
         }

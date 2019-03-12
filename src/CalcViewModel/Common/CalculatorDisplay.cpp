@@ -49,6 +49,18 @@ void CalculatorDisplay::SetParenDisplayText(_In_ const std::wstring& parenthesis
     }
 }
 
+void CalculatorDisplay::OnNoParenAdded()
+{
+    if (m_callbackReference != nullptr)
+    {
+        auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>();
+        if (calcVM)
+        {
+            calcVM->SetNoParenAddedNarratorAnnouncement();
+        }
+    }
+}
+
 void CalculatorDisplay::SetIsInError(bool isError)
 {
     if (m_callbackReference != nullptr)
