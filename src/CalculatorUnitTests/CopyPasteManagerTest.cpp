@@ -26,7 +26,7 @@ namespace CalculatorUnitTests
 #define ASSERT_POSITIVE_TESTCASES(func, dataSet) \
 {\
     int size = sizeof(dataSet)/sizeof(*dataSet);\
-    while(--size)\
+    while(--size >= 0)\
     {\
         VERIFY_ARE_EQUAL(func(dataSet[size]), dataSet[size]);\
     }\
@@ -35,7 +35,7 @@ namespace CalculatorUnitTests
 #define ASSERT_NEGATIVE_TESTCASES(func, dataSet) \
 {\
     int size = sizeof(dataSet)/sizeof(*dataSet);\
-    while(--size)\
+    while(--size >= 0)\
     {\
         VERIFY_ARE_EQUAL(func(dataSet[size]), StringReference(L"NoOp"));\
     }\
@@ -45,7 +45,7 @@ namespace CalculatorUnitTests
 #define START_LOOP(dataSet)\
 {\
     int size = sizeof(dataSet)/sizeof(*dataSet);\
-    while(--size)\
+    while(--size >= 0)\
     {
 
 #define END_LOOP\
