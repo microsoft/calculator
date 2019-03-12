@@ -148,9 +148,8 @@ namespace CalculatorUnitTests
 
             VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"1.23e+456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
             VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"123e-456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
-            VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"123e -456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
+            VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"123e-456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
             VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"12323e456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
-            VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"12323 e  456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
 
             VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"123", L"12345678901234567" }, ViewMode::Standard, CategoryGroupType::Calculator, -1, -1), L"Verify all operands must be within maxlength");
             VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"123", L"9223372036854775808" }, ViewMode::Programmer, CategoryGroupType::Calculator, DecBase, QwordType), L"Verify all operand must be within max value.");
@@ -477,8 +476,8 @@ namespace CalculatorUnitTests
 
     void CopyPasteManagerTest::ValidateScientificPasteExpressionTest()
     {
-        String^ positiveInput[] = { L"123", L"+123", L"-133", L"123+456", L"12345e+023", L"1,234", L"1.23", L"-.123", L".1234", L"012.012", L"123+-234", L"123*-345", L"123*4*-3", L"123*+4*-3", L"1 2 3", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85", L"\n 1+\n2 ", L"1\"2", L"1.2e+023", L"12345e-23", L"(123)+(456)", L"12345678912345678123456789012345", L"(123)+(456)=", L"2+2=   " };
-        String^ negativeInput[] = { L"1.2e23"/*unsigned exponent*/, L"abcdef", L"xyz", L"ABab", L"e+234", L"123456789123456781234567890123456"/*boundary condition: greater than 32 digits*/, L"SIN(2)", L"2+2==", L"2=+2" };
+        String^ positiveInput[] = { L"123", L"+123", L"-133", L"123+456", L"12345e+023", L"1,234", L"1.23", L"-.123", L".1234", L"012.012", L"123+-234", L"123*-345", L"123*4*-3", L"123*+4*-3", L"1 2 3", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85", L"\n 1+\n2 ", L"1\"2", L"1.2e+023", L"12345e-23", L"(123)+(456)", L"12345678912345678123456789012345", L"(123)+(456)=", L"2+2=   ", L"1.2e23"/*unsigned exponent*/};
+        String^ negativeInput[] = { L"abcdef", L"xyz", L"ABab", L"e+234", L"123456789123456781234567890123456"/*boundary condition: greater than 32 digits*/, L"SIN(2)", L"2+2==", L"2=+2" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateScientificPasteExpression, positiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateScientificPasteExpression, negativeInput);
