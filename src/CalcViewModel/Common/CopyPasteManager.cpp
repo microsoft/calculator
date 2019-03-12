@@ -45,7 +45,7 @@ static const array<wregex, 1> standardModePatterns =
 static const array<wregex, 2> scientificModePatterns =
 {
     wregex(c_wspcLParens + c_signedDecFloat + c_wspcRParens),
-    wregex(c_wspcLParens + c_signedDecFloat + L"[e]([+]|[-])+\\d+" + c_wspcRParens)
+    wregex(c_wspcLParens + c_signedDecFloat + L"e[+-]?\\d+" + c_wspcRParens)
 };
 static const array<array<wregex, 5>, 4> programmerModePatterns =
 { {

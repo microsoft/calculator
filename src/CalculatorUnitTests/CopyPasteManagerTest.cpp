@@ -147,6 +147,10 @@ namespace CalculatorUnitTests
             VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"123", L"1e23" }, ViewMode::Standard, CategoryGroupType::Calculator, -1, -1));
 
             VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"1.23e+456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
+            VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"123e-456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
+            VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"123e -456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
+            VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"12323e456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
+            VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"12323 e  456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
 
             VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"123", L"12345678901234567" }, ViewMode::Standard, CategoryGroupType::Calculator, -1, -1), L"Verify all operands must be within maxlength");
             VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"123", L"9223372036854775808" }, ViewMode::Programmer, CategoryGroupType::Calculator, DecBase, QwordType), L"Verify all operand must be within max value.");
