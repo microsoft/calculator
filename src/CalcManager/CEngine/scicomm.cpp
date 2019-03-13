@@ -108,6 +108,18 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         m_nTempCom = (INT)wParam;
     }
 
+    // Hardcoded settings for unit tests
+    if (wParam == IDC_TESTS)
+    {
+        m_decimalSeparator = L'.';
+        SetDecimalSeparator(m_decimalSeparator);
+        m_groupSeparator = L',';
+        m_decGrouping = DigitGroupingStringToGroupingVector(L"3;0");
+        m_input.SetDecimalSymbol(m_decimalSeparator);
+        m_HistoryCollector.SetDecimalSymbol(m_decimalSeparator);
+        s_engineStrings[IDS_DECIMAL] = m_decimalSeparator;
+    }
+
     if (m_bError)
     {
         if (wParam == IDC_CLEAR)

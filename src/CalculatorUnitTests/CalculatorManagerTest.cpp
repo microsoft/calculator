@@ -144,6 +144,8 @@ namespace CalculatorManagerTest
                 m_calculatorManager->SendCommand(Command::ModeScientific);
             }
 
+            m_calculatorManager->SendCommand(Command::CommandTESTS);
+
             Command* currentCommand = testCommands;
             while (*currentCommand != Command::CommandNULL)
             {
@@ -309,6 +311,7 @@ namespace CalculatorManagerTest
     void CalculatorManagerTest::Cleanup()
     {
         m_calculatorManager->Reset();
+        m_calculatorManager->SendCommand(Command::CommandTESTS);
         m_calculatorDisplayTester->Reset();
     }
 

@@ -212,3 +212,4 @@
 #define IDS_ENGINESTR_FIRST     0
 #define IDS_ENGINESTR_MAX     200
 
+#define IDC_TESTS           999

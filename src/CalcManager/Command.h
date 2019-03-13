@@ -222,6 +222,8 @@ namespace CalculationManager
         CommandBINPOS61 = 761,
         CommandBINPOS62 = 762,
         CommandBINPOS63 = 763,
-        CommandBINEDITEND = 763
+        CommandBINEDITEND = 763,
+
+        CommandTESTS = 999
     };
 }
