@@ -347,6 +347,7 @@
                         <Setter Target="RowUnit1.Height" Value="2*"/>
                         <Setter Target="RowDisplay2.Height" Value="4*"/>
                         <Setter Target="RowUnit2.Height" Value="2*"/>
+                        <Setter Target="RowDltrUnits.Height" Value="2*"/>
                         <Setter Target="CurrencyLoadingGrid.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="ConverterNumPad.(Grid.Row)" Value="1"/>
                         <Setter Target="ConverterNumPad.(Grid.RowSpan)" Value="5"/>
@@ -585,12 +586,16 @@
                   TabIndex="4"
                   Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
 
-        <Grid x:Name="SupplementaryResultsPanelInGrid"
-              Grid.Row="5"
-              Grid.Column="1"
-              Margin="12,0,12,0"
-              FlowDirection="{x:Bind LayoutDirection}"
-              Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+        <StackPanel x:Name="SupplementaryResultsPanelInGrid"
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    MinHeight="48"
+                    Margin="12,0,6,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    FlowDirection="{x:Bind LayoutDirection}"
+                    SizeChanged="SupplementaryResultsPanelInGrid_SizeChanged"
+                    Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
             <local:SupplementaryResults x:Name="SupplementaryResults"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
@@ -643,7 +648,7 @@
                     </TextBlock>
                 </ContentControl>
             </StackPanel>
-        </Grid>
+        </StackPanel>
 
         <Grid x:Name="ConverterNumPad"
               Grid.Row="6"

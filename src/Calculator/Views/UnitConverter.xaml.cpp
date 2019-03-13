@@ -385,3 +385,10 @@ void UnitConverter::HideProgressRing()
 
     CurrencyLoadingProgressRing->IsActive = false;
 }
+
+
+void CalculatorApp::UnitConverter::SupplementaryResultsPanelInGrid_SizeChanged(Platform::Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e)
+{
+    //We add 0.01 to be sure to not create an infinite loop with SizeChanged events cascading due to float approximation 
+    RowDltrUnits->MinHeight = max(48, e->NewSize.Height + 0.01);
+}
