@@ -26,7 +26,7 @@
 #include <sstream>
 #include <concrt.h>
 #include <regex>
-
+#include <iterator>
 // C++\WinRT Headers
 #include "winrt/base.h"
 #include "winrt/Windows.Foundation.Diagnostics.h"

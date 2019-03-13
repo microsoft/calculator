@@ -9,8 +9,6 @@
 #include "Common/CopyPasteManager.h"
 #include "Common/TraceLogger.h"
 
-#include <iterator>
-
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Common::Automation;

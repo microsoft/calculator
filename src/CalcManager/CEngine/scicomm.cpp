@@ -16,8 +16,6 @@
 #include "Header Files/CalcEngine.h"
 #include "Header Files/CalcUtils.h"
 
-#include <iterator>
-
 #define IDC_RADSIN  IDC_UNARYLAST+1
 #define IDC_RADCOS  IDC_UNARYLAST+2
 #define IDC_RADTAN  IDC_UNARYLAST+3

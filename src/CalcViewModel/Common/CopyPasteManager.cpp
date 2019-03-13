@@ -6,8 +6,6 @@
 #include "Common/TraceLogger.h"
 #include "Common/LocalizationSettings.h"
 
-#include <iterator>
-
 using namespace std;
 using namespace concurrency;
 using namespace CalculatorApp;

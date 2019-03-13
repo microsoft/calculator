@@ -4,8 +4,6 @@
 #include "pch.h"
 #include "Header Files/CalcEngine.h"
 
-#include <iterator>
-
 using namespace CalcEngine;
 using namespace CalcEngine::RationalMath;
 using namespace std;
