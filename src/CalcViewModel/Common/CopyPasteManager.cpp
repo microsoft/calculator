@@ -129,7 +129,7 @@ String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode m
     if (pastedText->Length() > MaxPasteableLength)
     {
         // return NoOp to indicate don't paste anything.
-        TraceLogger::GetInstance().LogInvalidInputPasted(L"PastedExpressionSizeGreaterThanMaxAllowed", L"MoreThanMaxInput", mode, programmerNumberBase, bitLengthType);
+        TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"PastedExpressionSizeGreaterThanMaxAllowed", mode, programmerNumberBase, bitLengthType);
         return StringReference(PasteErrorString);
     }
 
@@ -164,7 +164,7 @@ String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode m
     // validate each operand with patterns for different modes
     if (!ExpressionRegExMatch(operands, mode, modeType, programmerNumberBase, bitLengthType))
     {
-        TraceLogger::GetInstance().LogInvalidInputPasted(L"InvalidExpressionForPresentMode", pastedText->Data(), mode, programmerNumberBase, bitLengthType);
+        TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"InvalidExpressionForPresentMode", mode, programmerNumberBase, bitLengthType);
         return StringReference(PasteErrorString);
     }
 
@@ -193,7 +193,7 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
 
         if (operands.size() >= MaxOperandCount)
         {
-            TraceLogger::GetInstance().LogInvalidInputPasted(L"OperandCountGreaterThanMaxCount", pasteExpression.c_str(), mode, programmerNumberBase, bitLengthType);
+            TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"OperandCountGreaterThanMaxCount", mode, programmerNumberBase, bitLengthType);
             operands.clear();
             return operands;
         }
@@ -207,7 +207,7 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
                 // to disallow pasting of 1e+12345 as 1e+1234, max exponent that can be pasted is 9999.
                 if (expLength > MaxExponentLength)
                 {
-                    TraceLogger::GetInstance().LogInvalidInputPasted(L"ExponentLengthGreaterThanMaxLength", pasteExpression.c_str(), mode, programmerNumberBase, bitLengthType);
+                    TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"ExponentLengthGreaterThanMaxLength", mode, programmerNumberBase, bitLengthType);
                     operands.clear();
                     return operands;
                 }

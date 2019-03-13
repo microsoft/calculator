@@ -26,28 +26,30 @@
 using namespace std;
 using namespace CalcEngine;
 
-// NPrecedenceOfOp
-//
-// Returns a virtual number for precedence for the operator. We expect binary operator only, otherwise the lowest number
-// 0 is returned. Higher the number, higher the precedence of the operator.
-INT NPrecedenceOfOp(int nopCode)
-{
-    static BYTE    rgbPrec[] = { 0,0,  IDC_OR,0, IDC_XOR,0,  IDC_AND,1,
-        IDC_ADD,2, IDC_SUB,2,    IDC_RSHF,3, IDC_LSHF,3,
-        IDC_MOD,3, IDC_DIV,3, IDC_MUL,3,  IDC_PWR,4,   IDC_ROOT, 4 };
-    int iPrec;
+namespace {
+    // NPrecedenceOfOp
+    //
+    // returns a virtual number for precedence for the operator. We expect binary operator only, otherwise the lowest number
+    // 0 is returned. Higher the number, higher the precedence of the operator.
+    INT NPrecedenceOfOp(int nopCode)
+    {
+        static BYTE    rgbPrec[] = { 0,0,  IDC_OR,0, IDC_XOR,0,  IDC_AND,1,
+            IDC_ADD,2, IDC_SUB,2,    IDC_RSHF,3, IDC_LSHF,3,
+            IDC_MOD,3, IDC_DIV,3, IDC_MUL,3,  IDC_PWR,4,   IDC_ROOT, 4 };
+        int iPrec;
 
-    iPrec = 0;
-    while ((iPrec < ARRAYSIZE(rgbPrec)) && (nopCode != rgbPrec[iPrec]))
-    {
-        iPrec += 2;
-    }
-    if (iPrec >= ARRAYSIZE(rgbPrec))
-    {
         iPrec = 0;
-    }
-    return rgbPrec[iPrec + 1];
+        while ((iPrec < ARRAYSIZE(rgbPrec)) && (nopCode != rgbPrec[iPrec]))
+        {
+            iPrec += 2;
+        }
+        if (iPrec >= ARRAYSIZE(rgbPrec))
+        {
+            iPrec = 0;
+        }
+        return rgbPrec[iPrec + 1];
 
+    }
 }
 
 // HandleErrorCommand

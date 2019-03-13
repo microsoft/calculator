@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma once
-
 #include "pch.h"
 #include "TraceLogger.h"
 #include "NetworkManager.h"
@@ -59,7 +57,7 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_MEMORY_FLYOUT_OPEN_BEGIN                                  = L"MemoryFlyoutOpenBegin";
     constexpr auto EVENT_NAME_MEMORY_FLYOUT_OPEN_END                                    = L"MemoryFlyoutOpenEnd";
     constexpr auto EVENT_NAME_MEMORY_CLEAR_ALL                                          = L"MemoryClearAll";
-    constexpr auto EVENT_NAME_INVALID_INPUT_PASTED                                      = L"InvalidInputPasted";
+    constexpr auto EVENT_NAME_INVALID_PASTED_INPUT_OCCURRED                             = L"InvalidPastedInputOccurred";
     constexpr auto EVENT_NAME_VALID_INPUT_PASTED                                        = L"ValidInputPasted";
     constexpr auto EVENT_NAME_BITFLIP_PANE_CLICKED                                      = L"BitFlipPaneClicked";
     constexpr auto EVENT_NAME_BITFLIP_BUTTONS_USED                                      = L"BitFlipToggleButtonUsed";
@@ -80,6 +78,9 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_CORE_WINDOW_WAS_NULL                                      = L"CoreWindowWasNull";
 
     constexpr auto EVENT_NAME_EXCEPTION                                                 = L"Exception";
+
+    constexpr auto PDT_PRIVACY_DATA_TAG                                                 = L"PartA_PrivTags";
+    constexpr auto PDT_PRODUCT_AND_SERVICE_USAGE                                        = 0x0000'0000'0200'0000u;
 
 #ifdef SEND_TELEMETRY
     // c.f. WINEVENT_KEYWORD_RESERVED_63-56 0xFF00000000000000 // Bits 63-56 - channel keywords
@@ -641,17 +642,17 @@ namespace CalculatorApp
         LogTelemetryEvent(EVENT_NAME_SINGLE_MEMORY_USED, fields);
     }
 
-    void TraceLogger::LogInvalidInputPasted(wstring_view reason, wstring_view pastedExpression, ViewMode mode, int programmerNumberBase, int bitLengthType)
+    void TraceLogger::LogInvalidPastedInputOccurred(wstring_view reason, ViewMode mode, int programmerNumberBase, int bitLengthType)
     {
         if (!GetTraceLoggingProviderEnabled()) return;
 
         LoggingFields fields{};
         fields.AddString(L"Mode", NavCategory::GetFriendlyName(mode)->Data());
         fields.AddString(L"Reason", reason);
-        fields.AddString(L"PastedExpression", pastedExpression);
         fields.AddString(L"ProgrammerNumberBase", GetProgrammerType(programmerNumberBase).c_str());
         fields.AddString(L"BitLengthType", GetProgrammerType(bitLengthType).c_str());
-        LogTelemetryEvent(EVENT_NAME_INVALID_INPUT_PASTED, fields);
+        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
+        LogTelemetryEvent(EVENT_NAME_INVALID_PASTED_INPUT_OCCURRED, fields);
     }
 
     void TraceLogger::LogValidInputPasted(ViewMode mode) const
