@@ -17,7 +17,7 @@ namespace CalculatorApp
 
                 // Use DecimalFormatter as it respects the locale and the user setting
                 Windows::Globalization::NumberFormatting::DecimalFormatter^ formatter;
-                formatter = CalculatorApp::Common::LocalizationService::GetRegionalSettingsAwareDecimalFormatter();
+                formatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter();
                 formatter->FractionDigits = 0;
                 formatter->IsDecimalPointAlwaysDisplayed = false;
 

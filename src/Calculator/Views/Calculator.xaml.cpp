@@ -108,7 +108,7 @@ void Calculator::SetFontSizeResources()
             { L"Default", 104, 29.333, 23, 40, 56, 40, 56 }
     };
 
-    DecimalFormatter^ formatter = LocalizationService::GetRegionalSettingsAwareDecimalFormatter();
+    DecimalFormatter^ formatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter();
 
     const FontTable* currentItem = fontTables;
     while (currentItem->numericSystem.compare(std::wstring(L"Default")) != 0 &&

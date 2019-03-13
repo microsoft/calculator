@@ -200,7 +200,7 @@ namespace CalculatorUnitTests
         {
             RemoveFromLocalSettings(CurrencyDataLoaderConstants::CacheTimestampKey);
 
-            CurrencyDataLoader loader{ nullptr };
+            CurrencyDataLoader loader(nullptr, L"en-US");
 
             bool didLoad = loader.TryLoadDataFromCacheAsync().get();
 
@@ -218,7 +218,7 @@ namespace CalculatorUnitTests
             dayOld.UniversalTime = now.UniversalTime - CurrencyDataLoaderConstants::DayDuration - 1;
             InsertToLocalSettings(CurrencyDataLoaderConstants::CacheTimestampKey, dayOld);
 
-            CurrencyDataLoader loader{ nullptr };
+            CurrencyDataLoader loader(nullptr, L"en-US");
 
             bool didLoad = loader.TryLoadDataFromCacheAsync().get();
 
@@ -237,7 +237,7 @@ namespace CalculatorUnitTests
             VERIFY_IS_TRUE(DeleteFileFromLocalCacheFolder(CurrencyDataLoaderConstants::StaticDataFilename));
             VERIFY_IS_TRUE(WriteToFileInLocalCacheFolder(CurrencyDataLoaderConstants::AllRatiosDataFilename, CurrencyHttpClient::GetRawAllRatiosDataResponse()));
 
-            CurrencyDataLoader loader{ nullptr };
+            CurrencyDataLoader loader(nullptr, L"en-US");
 
             bool didLoad = loader.TryLoadDataFromCacheAsync().get();
 
@@ -256,7 +256,7 @@ namespace CalculatorUnitTests
             VERIFY_IS_TRUE(WriteToFileInLocalCacheFolder(CurrencyDataLoaderConstants::StaticDataFilename, CurrencyHttpClient::GetRawStaticDataResponse()));
             VERIFY_IS_TRUE(DeleteFileFromLocalCacheFolder(CurrencyDataLoaderConstants::AllRatiosDataFilename));
 
-            CurrencyDataLoader loader{ nullptr };
+            CurrencyDataLoader loader(nullptr, L"en-US");
 
             bool didLoad = loader.TryLoadDataFromCacheAsync().get();
 
@@ -276,7 +276,7 @@ namespace CalculatorUnitTests
             VERIFY_IS_TRUE(WriteToFileInLocalCacheFolder(CurrencyDataLoaderConstants::StaticDataFilename, CurrencyHttpClient::GetRawStaticDataResponse()));
             VERIFY_IS_TRUE(DeleteFileFromLocalCacheFolder(CurrencyDataLoaderConstants::AllRatiosDataFilename));
 
-            CurrencyDataLoader loader{ nullptr };
+            CurrencyDataLoader loader(nullptr, L"en-US");
 
             bool didLoad = loader.TryLoadDataFromCacheAsync().get();
 
@@ -289,7 +289,7 @@ namespace CalculatorUnitTests
         {
             StandardCacheSetup();
 
-            CurrencyDataLoader loader{ nullptr };
+            CurrencyDataLoader loader(nullptr, L"en-US");
 
             bool didLoad = loader.TryLoadDataFromCacheAsync().get();
 
@@ -300,7 +300,7 @@ namespace CalculatorUnitTests
 
         TEST_METHOD(LoadFromWeb_Fail_ClientIsNullptr)
         {
-            CurrencyDataLoader loader{ nullptr };
+            CurrencyDataLoader loader(nullptr, L"en-US");
 
             bool didLoad = loader.TryLoadDataFromWebAsync().get();
 
@@ -311,7 +311,7 @@ namespace CalculatorUnitTests
 
         TEST_METHOD(LoadFromWeb_Fail_WebException)
         {
-            CurrencyDataLoader loader{ make_unique<MockCurrencyHttpClientThrowsException>() };
+            CurrencyDataLoader loader(make_unique<MockCurrencyHttpClientThrowsException>(), L"en-US");
 
             bool didLoad = loader.TryLoadDataFromWebAsync().get();
 
@@ -337,7 +337,7 @@ namespace CalculatorUnitTests
         {
             StandardCacheSetup();
 
-            CurrencyDataLoader loader{ nullptr };
+            CurrencyDataLoader loader(nullptr, L"en-US");
 
             auto data_loaded_event = task_completion_event<void>();
             loader.SetViewModelCallback(make_shared<DataLoadedCallback>(data_loaded_event));
@@ -388,7 +388,7 @@ namespace CalculatorUnitTests
         {
             StandardCacheSetup();
 
-            CurrencyDataLoader loader{ nullptr };
+            CurrencyDataLoader loader(nullptr, L"en-US");
 
             auto data_loaded_event = task_completion_event<void>();
             loader.SetViewModelCallback(make_shared<DataLoadedCallback>(data_loaded_event));
@@ -418,7 +418,7 @@ namespace CalculatorUnitTests
         {
             StandardCacheSetup();
 
-            CurrencyDataLoader loader{ nullptr };
+            CurrencyDataLoader loader(nullptr, L"en-US");
 
             auto data_loaded_event = task_completion_event<void>();
             loader.SetViewModelCallback(make_shared<DataLoadedCallback>(data_loaded_event));
@@ -451,7 +451,7 @@ namespace CalculatorUnitTests
         {
             StandardCacheSetup();
 
-            CurrencyDataLoader loader{ nullptr };
+            CurrencyDataLoader loader(nullptr, L"en-US");
 
             auto data_loaded_event = task_completion_event<void>();
             loader.SetViewModelCallback(make_shared<DataLoadedCallback>(data_loaded_event));
@@ -480,7 +480,7 @@ namespace CalculatorUnitTests
         {
             StandardCacheSetup();
 
-            CurrencyDataLoader loader{ nullptr };
+            CurrencyDataLoader loader(nullptr, L"en-US");
 
             auto data_loaded_event = task_completion_event<void>();
             loader.SetViewModelCallback(make_shared<DataLoadedCallback>(data_loaded_event));
@@ -527,7 +527,7 @@ namespace CalculatorUnitTests
         {
             StandardCacheSetup();
 
-            CurrencyDataLoader loader{ nullptr };
+            CurrencyDataLoader loader(nullptr, L"en-US");
 
             auto data_loaded_event = task_completion_event<void>();
             loader.SetViewModelCallback(make_shared<DataLoadedCallback>(data_loaded_event));
@@ -556,7 +556,7 @@ namespace CalculatorUnitTests
         {
             StandardCacheSetup();
 
-            CurrencyDataLoader loader{ nullptr };
+            CurrencyDataLoader loader(nullptr, L"en-US");
 
             auto data_loaded_event = task_completion_event<void>();
             loader.SetViewModelCallback(make_shared<DataLoadedCallback>(data_loaded_event));

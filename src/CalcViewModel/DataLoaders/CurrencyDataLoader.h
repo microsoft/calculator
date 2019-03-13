@@ -51,7 +51,7 @@ namespace CalculatorApp
             public UCM::ICurrencyConverterDataLoader
         {
         public:
-            CurrencyDataLoader(_In_ std::unique_ptr<CalculatorApp::DataLoaders::ICurrencyHttpClient> client);
+            CurrencyDataLoader(_In_ std::unique_ptr<CalculatorApp::DataLoaders::ICurrencyHttpClient> client, const wchar_t* overrideLanguage = nullptr);
             ~CurrencyDataLoader();
 
             bool LoadFinished();

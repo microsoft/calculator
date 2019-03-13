@@ -56,9 +56,15 @@ LocalizationService^ LocalizationService::GetInstance()
     return s_singletonInstance;
 }
 
-LocalizationService::LocalizationService()
+void LocalizationService::OverrideWithLanguage(const wchar_t * const language)
 {
-    m_language = ApplicationLanguages::Languages->GetAt(0);
+    s_singletonInstance = ref new LocalizationService(language);
+}
+
+LocalizationService::LocalizationService(const wchar_t * const overridedLanguage)
+{
+    m_isLanguageOverrided = overridedLanguage != nullptr;
+    m_language = m_isLanguageOverrided ? ref new Platform::String(overridedLanguage) : ApplicationLanguages::Languages->GetAt(0);
     m_flowDirection = ResourceContext::GetForCurrentView()->QualifierValues->Lookup(L"LayoutDirection")
         != L"LTR" ? FlowDirection::RightToLeft : FlowDirection::LeftToRight;
 
@@ -340,9 +346,9 @@ void LocalizationService::UpdateFontFamilyAndSize(DependencyObject^ target)
 
 // If successful, returns a formatter that respects the user's regional format settings,
 // as configured by running intl.cpl.
-DecimalFormatter^ LocalizationService::GetRegionalSettingsAwareDecimalFormatter()
+DecimalFormatter^ LocalizationService::GetRegionalSettingsAwareDecimalFormatter() const
 {
-    IIterable<String^>^ languageIdentifiers = LocalizationService::GetLanguageIdentifiers();
+    IIterable<String^>^ languageIdentifiers = GetLanguageIdentifiers();
     if (languageIdentifiers != nullptr)
     {
         return ref new DecimalFormatter(languageIdentifiers, GlobalizationPreferences::HomeGeographicRegion);
@@ -355,9 +361,9 @@ DecimalFormatter^ LocalizationService::GetRegionalSettingsAwareDecimalFormatter(
 // as configured by running intl.cpl.
 //
 // This helper function creates a DateTimeFormatter with a TwentyFour hour clock
-DateTimeFormatter^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String^ format)
+DateTimeFormatter^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String^ format) const
 {
-    IIterable<String^>^ languageIdentifiers = LocalizationService::GetLanguageIdentifiers();
+    IIterable<String^>^ languageIdentifiers = GetLanguageIdentifiers();
     if (languageIdentifiers == nullptr)
     {
         languageIdentifiers = ApplicationLanguages::Languages;
@@ -371,9 +377,9 @@ DateTimeFormatter^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatte
 DateTimeFormatter^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(
     _In_ String^ format,
     _In_ String^ calendarIdentifier,
-    _In_ String^ clockIdentifier)
+    _In_ String^ clockIdentifier) const
 {
-    IIterable<String^>^ languageIdentifiers = LocalizationService::GetLanguageIdentifiers();
+    IIterable<String^>^ languageIdentifiers = GetLanguageIdentifiers();
     if (languageIdentifiers == nullptr)
     {
         languageIdentifiers = ApplicationLanguages::Languages;
@@ -387,13 +393,13 @@ DateTimeFormatter^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatte
         clockIdentifier);
 }
 
-CurrencyFormatter^ LocalizationService::GetRegionalSettingsAwareCurrencyFormatter()
+CurrencyFormatter^ LocalizationService::GetRegionalSettingsAwareCurrencyFormatter() const
 {
     String^ userCurrency = (GlobalizationPreferences::Currencies->Size > 0)
         ? GlobalizationPreferences::Currencies->GetAt(0)
         : StringReference(DefaultCurrencyCode.data());
 
-    IIterable<String^>^ languageIdentifiers = LocalizationService::GetLanguageIdentifiers();
+    IIterable<String^>^ languageIdentifiers = GetLanguageIdentifiers();
     if (languageIdentifiers == nullptr)
     {
         languageIdentifiers = ApplicationLanguages::Languages;
@@ -410,10 +416,19 @@ CurrencyFormatter^ LocalizationService::GetRegionalSettingsAwareCurrencyFormatte
     return currencyFormatter;
 }
 
-IIterable<String^>^ LocalizationService::GetLanguageIdentifiers()
+IIterable<String^>^ LocalizationService::GetLanguageIdentifiers() const
 {
+
     WCHAR currentLocale[LOCALE_NAME_MAX_LENGTH] = {};
     int result = GetUserDefaultLocaleName(currentLocale, LOCALE_NAME_MAX_LENGTH);
+
+    if (m_isLanguageOverrided)
+    {
+        auto overridedLanguageList = ref new Vector<String^>();
+        overridedLanguageList->Append(m_language);
+        return overridedLanguageList;
+    }
+
     if (result != 0)
     {
         // GetUserDefaultLocaleName may return an invalid bcp47 language tag with trailing non-BCP47 friendly characters, 
