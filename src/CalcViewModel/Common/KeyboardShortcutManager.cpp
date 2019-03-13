@@ -82,12 +82,6 @@ namespace CalculatorApp
             // The button will go into the visual Pressed state with this call
             VisualStateManager::GoToState(button, "Pressed", true);
 
-            // This timer will fire after c_lightUpTime and make the button
-            // go back to the normal state.
-            // This timer will only fire once after which it will be destroyed
-            auto timer = ref new DispatcherTimer();
-            timer->Interval = c_lightUpTime;
-          
             // This timer will fire after lightUpTime and make the button
             // go back to the normal state. 
             // This timer will only fire once after which it will be destroyed
@@ -95,7 +89,7 @@ namespace CalculatorApp
             TimeSpan lightUpTime{};
             lightUpTime.Duration = 500000L; // Half second (in 100-ns units)
             timer->Interval = lightUpTime;
-          
+
             WeakReference timerWeakReference(timer);
             WeakReference buttonWeakReference(button);
             timer->Tick += ref new EventHandler<Object^>(
