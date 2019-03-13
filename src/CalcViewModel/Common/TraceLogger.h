@@ -64,7 +64,7 @@ namespace CalculatorApp
         void LogMemoryFlyoutOpenBegin(unsigned int) const;
         void LogDebug(std::wstring_view debugData);
         void LogMemoryFlyoutOpenEnd(unsigned int) const;
-        void LogInvalidInputPasted(std::wstring_view reason, std::wstring_view pastedExpression, CalculatorApp::Common::ViewMode mode, int ProgrammerNumberBase, int bitLengthType);
+        void LogInvalidPastedInputOccurred(std::wstring_view reason, CalculatorApp::Common::ViewMode mode, int ProgrammerNumberBase, int bitLengthType);
         void LogValidInputPasted(CalculatorApp::Common::ViewMode mode) const;
         void UpdateFunctionUsage(int func);
         void LogFunctionUsage(int);
