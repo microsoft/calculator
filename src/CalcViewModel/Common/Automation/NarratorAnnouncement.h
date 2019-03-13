@@ -91,7 +91,7 @@ namespace CalculatorApp::Common::Automation
         
         static NarratorAnnouncement^ GetDisplayCopiedAnnouncement(Platform::String^ announcement);
 
-        static NarratorAnnouncement^ GetOpenParenethisCount(Platform::String^ announcement);
-        static NarratorAnnouncement^ GetNoParenthesisAddedAnnouncement(Platform::String ^ announcement);
+        static NarratorAnnouncement^ GetOpenParenthesisCountChangedAnnouncement(Platform::String^ announcement);
+        static NarratorAnnouncement^ GetNoRightParenthesisAddedAnnouncement(Platform::String ^ announcement);
     };
 }

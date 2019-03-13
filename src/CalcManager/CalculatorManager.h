@@ -95,7 +95,7 @@ namespace CalculationManager
         void SetMemorizedNumbers(_In_ const std::vector<std::wstring>& memorizedNumbers) override;
         void OnHistoryItemAdded(_In_ unsigned int addedItemIndex) override;
         void SetParenDisplayText(const std::wstring& parenthesisCount) override;
-        void OnNoParenAdded() override;
+        void OnNoRightParenAdded() override;
         void DisplayPasteError();
         void MaxDigitsReached() override;
         void BinaryOperatorReceived() override;

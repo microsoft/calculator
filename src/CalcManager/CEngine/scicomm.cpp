@@ -546,7 +546,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         {
             if (!m_openParenCount && !nx)
             {
-                m_pCalcDisplay->OnNoParenAdded();
+                m_pCalcDisplay->OnNoRightParenAdded();
             }
 
             HandleErrorCommand(wParam);

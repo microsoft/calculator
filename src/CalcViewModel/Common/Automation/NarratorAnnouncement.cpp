@@ -145,7 +145,7 @@ NarratorAnnouncement^ CalculatorAnnouncement::GetDisplayCopiedAnnouncement(Strin
         AutomationNotificationProcessing::ImportantMostRecent);
 }
 
-NarratorAnnouncement^ CalculatorAnnouncement::GetOpenParenethisCount(String^ announcement)
+NarratorAnnouncement^ CalculatorAnnouncement::GetOpenParenthesisCountChangedAnnouncement(String^ announcement)
 {
     return ref new NarratorAnnouncement(
         announcement,
@@ -154,7 +154,7 @@ NarratorAnnouncement^ CalculatorAnnouncement::GetOpenParenethisCount(String^ ann
         AutomationNotificationProcessing::ImportantMostRecent);
 }
 
-NarratorAnnouncement^ CalculatorAnnouncement::GetNoParenthesisAddedAnnouncement(String^ announcement)
+NarratorAnnouncement^ CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(String^ announcement)
 {
     return ref new NarratorAnnouncement(
         announcement,

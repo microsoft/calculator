@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -34,8 +34,12 @@ CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators() :
 
 void CalculatorProgrammerRadixOperators::OnLoaded(Object^, RoutedEventArgs^)
 {
-    auto viewmodel = safe_cast<StandardCalculatorViewModel^>(this->DataContext);
-    viewmodel->ProgModeRadixChange += ref new ProgModeRadixChangeHandler(this, &CalculatorProgrammerRadixOperators::ProgModeRadixChange);
+    Model->ProgModeRadixChange += ref new ProgModeRadixChangeHandler(this, &CalculatorProgrammerRadixOperators::ProgModeRadixChange);
+    m_propertyChangedToken = Model->PropertyChanged += ref new PropertyChangedEventHandler(this, &CalculatorProgrammerRadixOperators::OnPropertyChanged);
+}
+void CalculatorProgrammerRadixOperators::OnUnloaded(Object^, RoutedEventArgs^)
+{
+    Model->PropertyChanged -=  m_propertyChangedToken;
 }
 
 void CalculatorProgrammerRadixOperators::Shift_Clicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
@@ -92,5 +96,13 @@ void CalculatorProgrammerRadixOperators::IsErrorVisualState::set(bool value)
         String^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
         VisualStateManager::GoToState(this, newState, false);
         NumberPad->IsErrorVisualState = m_isErrorVisualState;
+    }
+}
+
+void CalculatorProgrammerRadixOperators::OnPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+{
+    if (e->PropertyName == CalculatorViewModelProperties::OpenParenthesisCount && closeParenthesisButton->FocusState != Windows::UI::Xaml::FocusState::Unfocused)
+    {
+        Model->SetOpenParenthesisCountNarratorAnnouncement();
     }
 }

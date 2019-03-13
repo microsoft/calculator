@@ -109,7 +109,6 @@ namespace CalculationManager
 
     /// <summary>
     /// Callback from the engine
-    /// Used to set the current unmatched open parenthesis count
     /// </summary>
     /// <param name="parenthesisCount">string containing the parenthesis count</param>
     void CalculatorManager::SetParenDisplayText(const wstring& parenthesisCount)
@@ -121,9 +120,9 @@ namespace CalculationManager
     /// Callback from the engine
     /// Used to set the narrator text when no parenthesis can be added
     /// </summary>
-    void CalculatorManager::OnNoParenAdded()
+    void CalculatorManager::OnNoRightParenAdded()
     {
-        m_displayCallback->OnNoParenAdded();
+        m_displayCallback->OnNoRightParenAdded();
     }
 
     /// <summary>

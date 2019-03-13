@@ -10,6 +10,7 @@
              d:DesignHeight="395"
              d:DesignWidth="315"
              Loaded="OnLoaded"
+             Unloaded="OnUnloaded"
              mc:Ignorable="d">
 
     <Grid x:Name="ProgRadixOps">
@@ -408,6 +409,7 @@
                                    Style="{StaticResource ParenthesisCalcButtonStyle}"
                                    FontSize="18"
                                    AutomationProperties.AutomationId="openParenthesisButton"
+                                   AutomationProperties.Name="{Binding LeftParenthesisAutomationName}"
                                    ButtonId="OpenParenthesis"
                                    Content="("
                                    Tag="{x:Bind Model.OpenParenthesisCount, Mode=OneWay}"/>

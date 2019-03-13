@@ -41,6 +41,7 @@ namespace CalculatorApp::ViewModel
         StringReference DisplayValue(L"DisplayValue");
         StringReference IsInError(L"IsInError");
         StringReference BinaryDisplayValue(L"BinaryDisplayValue");
+        StringReference OpenParenthesisCount(L"OpenParenthesisCount");
     }
     
     namespace CalculatorResourceKeys
@@ -52,6 +53,7 @@ namespace CalculatorApp::ViewModel
         StringReference DecButton(L"Format_DecButtonValue");
         StringReference OctButton(L"Format_OctButtonValue");
         StringReference BinButton(L"Format_BinButtonValue");
+        StringReference LeftParenthesisAutomationFormat(L"Format_OpenParenthesisAutomationNamePrefix");
         StringReference OpenParenthesisCountAutomationFormat(L"Format_OpenParenthesisCountAutomationNamePrefix");
         StringReference NoParenthesisAdded(L"NoParenthesisAdded_Announcement");
         StringReference MaxDigitsReachedFormat(L"Format_MaxDigitsReached");
@@ -95,7 +97,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_localizedMemoryItemClearedAutomationFormat(nullptr),
     m_localizedMemoryCleared(nullptr),
     m_localizedOpenParenthesisCountChangedAutomationFormat(nullptr),
-    m_localizaedNoParenthesisAddedAutomationFormat(nullptr)
+    m_localizedNoRightParenthesisAddedAutomationFormat(nullptr)
 {
     WeakReference calculatorViewModel(this);
     m_calculatorDisplay.SetCallback(calculatorViewModel);
@@ -106,6 +108,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_localizedDecimalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::DecButton);
     m_localizedOctalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::OctButton);
     m_localizedBinaryAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::BinButton);
+    m_leftParenthesisAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::LeftParenthesisAutomationFormat);
 
     // Initialize the Automation Name
     CalculationResultAutomationName = GetLocalizedStringFormat(m_localizedCalculationResultAutomationFormat, m_DisplayValue);
@@ -224,13 +227,14 @@ void StandardCalculatorViewModel::SetParenthesisCount(_In_ const wstring& parent
     if (IsProgrammer || IsScientific)
     {
         OpenParenthesisCount = ref new String(parenthesisCount.c_str());
+        RaisePropertyChanged("LeftParenthesisAutomationName");
     }
 }
 
-void StandardCalculatorViewModel::OpenParenthesisCountNarratorAnnouncment()
+void StandardCalculatorViewModel::SetOpenParenthesisCountNarratorAnnouncement()
 {
     String^ parenthesisCount = ((m_OpenParenthesisCount == nullptr) ? "0" : m_OpenParenthesisCount);
-    wstring localizedParenthesisCount = std::wstring(parenthesisCount->Data());
+    wstring localizedParenthesisCount = parenthesisCount->Data();
     LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
 
     String^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
@@ -238,16 +242,21 @@ void StandardCalculatorViewModel::OpenParenthesisCountNarratorAnnouncment()
         m_localizedOpenParenthesisCountChangedAutomationFormat,
         localizedParenthesisCount.c_str());
 
-    Announcement = CalculatorAnnouncement::GetOpenParenethisCount(announcement);
+    Announcement = CalculatorAnnouncement::GetOpenParenthesisCountChangedAnnouncement(announcement);
+}
+
+void StandardCalculatorViewModel::OnNoRightParenAdded()
+{
+    SetNoParenAddedNarratorAnnouncement();
 }
 
 void StandardCalculatorViewModel::SetNoParenAddedNarratorAnnouncement()
 {
     String^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
         CalculatorResourceKeys::NoParenthesisAdded,
-        m_localizaedNoParenthesisAddedAutomationFormat);
+        m_localizedNoRightParenthesisAddedAutomationFormat);
 
-    Announcement = CalculatorAnnouncement::GetNoParenthesisAddedAnnouncement(announcement);
+    Announcement = CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(announcement);
 }
 
 void StandardCalculatorViewModel::DisableButtons(CommandType selectedExpressionCommandType)
@@ -276,6 +285,15 @@ void StandardCalculatorViewModel::DisableButtons(CommandType selectedExpressionC
         IsNegateEnabled = true;
         IsDecimalEnabled = false;
     }
+}
+
+String ^ StandardCalculatorViewModel::GetLeftParenthesisAutomationName()
+{
+    String^ parenthesisCount = ((m_OpenParenthesisCount == nullptr) ? "0" : m_OpenParenthesisCount);
+    wstring localizedParenthesisCount = std::wstring(parenthesisCount->Data());
+    LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
+
+    return GetLocalizedStringFormat(m_leftParenthesisAutomationFormat, ref new String(localizedParenthesisCount.c_str()));
 }
 
 void StandardCalculatorViewModel::SetExpressionDisplay(_Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const &tokens, _Inout_ shared_ptr<CalculatorVector <shared_ptr<IExpressionCommand>>> const &commands)
@@ -581,7 +599,6 @@ void StandardCalculatorViewModel::OnButtonPressed(Object^ parameter)
     m_feedbackForButtonPress = CalculatorButtonPressedEventArgs::GetAuditoryFeedbackFromCommandParameter(parameter);
     NumbersAndOperatorsEnum numOpEnum = CalculatorButtonPressedEventArgs::GetOperationFromCommandParameter(parameter);
     Command cmdenum = ConvertToOperatorsEnum(numOpEnum);
-    String^ previousParenthesisCount = m_OpenParenthesisCount;
 
     TraceLogger::GetInstance().UpdateFunctionUsage((int)numOpEnum);
 
@@ -658,11 +675,6 @@ void StandardCalculatorViewModel::OnButtonPressed(Object^ parameter)
             }
 
             m_standardCalculatorManager.SendCommand(cmdenum);
-        }
-
-        if (numOpEnum == NumbersAndOperatorsEnum::OpenParenthesis || (numOpEnum == NumbersAndOperatorsEnum::CloseParenthesis && previousParenthesisCount) )
-        {
-            OpenParenthesisCountNarratorAnnouncment();
         }
     }
 }
