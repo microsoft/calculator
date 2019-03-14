@@ -428,6 +428,23 @@ namespace CalculatorManagerTest
             Command::CommandSQRT, Command::CommandSUB, Command::Command3, Command::Command2,
             Command::CommandADD, Command::CommandNULL };
         TestDriver::Test(L"0", L"\x221A(1024) - 32 + ", commands22);
+
+        Command commands23[] = { Command::Command2, Command::CommandPNT, Command::Command2, Command::Command5,
+            Command::CommandSQRT, Command::CommandSUB, Command::Command1, Command::CommandPNT, Command::Command5,
+            Command::CommandADD, Command::CommandNULL };
+        TestDriver::Test(L"0", L"\x221A(2.25) - 1.5 + ", commands23);
+
+        Command commands24[] = { Command::Command8, Command::Command7, Command::Command6, Command::Command5,
+            Command::Command4, Command::Command3, Command::Command2, Command::Command1,
+            Command::CommandPNT, Command::Command1, Command::Command2, Command::Command3, Command::Command4,
+            Command::Command5, Command::Command6, Command::Command7, Command::Command8,
+            Command::CommandSQR, Command::CommandSQRT, Command::CommandSUB,
+            Command::Command8, Command::Command7, Command::Command6, Command::Command5,
+            Command::Command4, Command::Command3, Command::Command2, Command::Command1,
+            Command::CommandPNT, Command::Command1, Command::Command2, Command::Command3, Command::Command4,
+            Command::Command5, Command::Command6, Command::Command7, Command::Command8,
+            Command::CommandADD, Command::CommandNULL };
+        TestDriver::Test(L"0", L"\x221A(sqr(87654321.12345678)) - 87654321.12345678 + ", commands24);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestScientific()
@@ -611,6 +628,17 @@ namespace CalculatorManagerTest
             Command::CommandPNT, Command::Command2, Command::Command3, Command::Command4, Command::Command5,
             Command::Command6, Command::CommandADD, Command::CommandNULL };
         TestDriver::Test(L"17.161687912241792074207286679393", L"10 ^ 1.23456 + ", commands22, true, true);
+
+        Command commands23[] = { Command::CommandOPENP, Command::Command1, Command::CommandDIV,
+            Command::Command9, Command::CommandCLOSEP, Command::CommandSQRT, Command::CommandSUB,
+            Command::Command1, Command::CommandDIV, Command::Command3, Command::CommandADD, Command::CommandNULL };
+        TestDriver::Test(L"0", L"\x221A(1 \x00F7 9) - 1 \x00F7 3 + ", commands23, true, true);
+
+        Command commands24[] = { Command::CommandOPENP, Command::Command2, Command::Command7,
+            Command::CommandDIV, Command::Command1, Command::Command2, Command::CommandCLOSEP,
+            Command::CommandSQRT, Command::CommandSUB, Command::Command1, Command::CommandPNT, Command::Command5,
+            Command::CommandADD, Command::CommandNULL };
+        TestDriver::Test(L"0", L"\x221A(27 \x00F7 12) - 1.5 + ", commands24, true, true);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestScientificParenthesis()

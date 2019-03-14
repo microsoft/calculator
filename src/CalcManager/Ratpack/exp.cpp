@@ -297,7 +297,7 @@ void powrat(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
     }
 }
 
-void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
+void powratNumeratorDenominatorPartial(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
 {
     // Prepare rationals
     PRAT yNumerator = nullptr;
@@ -390,6 +390,31 @@ void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precis
     destroyrat(yNumerator);
     destroyrat(yDenominator);
     destroyrat(pxPow);
+}
+
+void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
+{
+    // We need px as simple as possible
+    gcdrat(px, radix, precision);
+
+    // Prepare rationals
+    PRAT pxNumerator = nullptr;
+    PRAT pxDenominator = nullptr;
+    DUPRAT(pxNumerator, rat_zero); // pxNumerator->pq is 1 one
+    DUPRAT(pxDenominator, rat_zero); // pxDenominator->pq is 1 one
+    DUPNUM(pxNumerator->pp, (*px)->pp);
+    DUPNUM(pxDenominator->pp, (*px)->pq);
+
+    // Calculate pow for Numerator and Denominator separately
+    powratNumeratorDenominatorPartial(&pxNumerator, y, radix, precision);
+    powratNumeratorDenominatorPartial(&pxDenominator, y, radix, precision);
+
+    // Combine results back to px
+    DUPRAT(*px, pxNumerator);
+    divrat(px, pxDenominator, precision);
+
+    destroyrat(pxNumerator);
+    destroyrat(pxDenominator);
 }
 
 //---------------------------------------------------------------------------
