@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -9,7 +9,6 @@
 #include "Common/LocalizationSettings.h"
 #include "Common/TraceLogger.h"
 #include "UnitConverterDataConstants.h"
-#include <locale>
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -204,7 +203,7 @@ void CurrencyDataLoader::LoadData()
                 }
             }
 
-            co_return didLoad;            
+            co_return didLoad;
         }).then([this](bool didLoad)
         {
             UpdateDisplayedTimestamp();
@@ -330,7 +329,7 @@ task<bool> CurrencyDataLoader::TryLoadDataFromCacheAsync()
         {
             loadComplete = co_await TryLoadDataFromWebAsync();
         }
-        
+
         if (!loadComplete)
         {
             loadComplete = co_await TryFinishLoadFromCacheAsync();
@@ -505,6 +504,12 @@ bool CurrencyDataLoader::TryParseWebResponses(
         && TryParseAllRatiosData(allRatiosJson, allRatiosData);
 }
 
+Platform::String ^ te(const UCM::CurrencyStaticData& s)
+{
+    return ref new Platform::String(s.countryName.c_str());
+};
+
+
 bool CurrencyDataLoader::TryParseStaticData(_In_ String^ rawJson, _Inout_ vector<UCM::CurrencyStaticData>& staticData)
 {
     JsonArray^ data = nullptr;
@@ -547,17 +552,11 @@ bool CurrencyDataLoader::TryParseStaticData(_In_ String^ rawJson, _Inout_ vector
         };
     }
 
-    // TODO - MSFT 8533667: this sort will be replaced by a WinRT call to sort localized strings
+    auto sortCurrencyNames = [](UCM::CurrencyStaticData s) {
+        return ref new Platform::String(s.countryName.c_str());
+    };
 
-    auto loc = std::locale("");  //Use the user-preferred locale to sort country names
-    const std::collate<wchar_t>& coll = std::use_facet<std::collate<wchar_t> >(loc);
-    sort(begin(staticData), end(staticData), [&coll](CurrencyStaticData unit1, CurrencyStaticData unit2)
-    {
-        auto country1 = unit1.countryName.data();
-        auto country2 = unit2.countryName.data();
-        return coll.compare(country1, country1 + unit1.countryName.length(),
-            country2, country2 + unit2.countryName.length()) < 0;
-    });
+    LocalizationService::GetInstance()->Sort<UCM::CurrencyStaticData>(staticData, sortCurrencyNames);
 
     return true;
 }
@@ -585,7 +584,7 @@ bool CurrencyDataLoader::TryParseAllRatiosData(_In_ String^ rawJson, _Inout_ Cur
             relativeRatio,
             sourceCurrencyCode,
             targetCurrencyCode
-        });
+            });
     }
 
     return true;

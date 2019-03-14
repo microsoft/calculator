@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -39,6 +39,21 @@ namespace CalculatorApp { namespace Common
         Windows::UI::Text::FontWeight GetFontWeightOverride();
         double GetFontScaleFactorOverride(LanguageFontType fontType);
 
+        void Sort(std::vector<Platform::String^>& source);
+
+        template<typename T>
+        void Sort(std::vector<T>& source, std::function<Platform::String^(T)> func)
+        {
+            const collate<wchar_t>& coll = use_facet<collate<wchar_t>>(m_locale);
+            sort(source.begin(), source.end(), [&coll, &func](T obj1, T obj2)
+            {
+                Platform::String^ str1 = func(obj1);
+                Platform::String^ str2 = func(obj2);
+                return coll.compare(str1->Begin(), str1->End(),
+                    str2->Begin(), str2->End()) < 0;
+            });
+        }
+
         static Windows::Globalization::NumberFormatting::DecimalFormatter^ GetRegionalSettingsAwareDecimalFormatter();
         static Windows::Globalization::DateTimeFormatting::DateTimeFormatter^ GetRegionalSettingsAwareDateTimeFormatter(_In_ Platform::String^ format);
         static Windows::Globalization::DateTimeFormatting::DateTimeFormatter^ GetRegionalSettingsAwareDateTimeFormatter(
@@ -50,7 +65,6 @@ namespace CalculatorApp { namespace Common
 
         static Platform::String^ GetNarratorReadableToken(Platform::String^ rawToken);
         static Platform::String^ GetNarratorReadableString(Platform::String^ rawString);
-
     private:
         Windows::Globalization::Fonts::LanguageFont^ GetLanguageFont(LanguageFontType fontType);
         Windows::UI::Text::FontWeight ParseFontWeight(Platform::String^ fontWeight);
@@ -79,6 +93,7 @@ namespace CalculatorApp { namespace Common
         Windows::UI::Text::FontWeight m_fontWeightOverride;
         double m_uiTextFontScaleFactorOverride;
         double m_uiCaptionFontScaleFactorOverride;
+        std::locale m_locale;
     };
 
 }}

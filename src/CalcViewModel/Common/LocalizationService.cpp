@@ -62,8 +62,19 @@ LocalizationService::LocalizationService()
     m_flowDirection = ResourceContext::GetForCurrentView()->QualifierValues->Lookup(L"LayoutDirection")
         != L"LTR" ? FlowDirection::RightToLeft : FlowDirection::LeftToRight;
 
+    auto localeName = std::string(m_language->Begin(), m_language->End());
+    localeName += ".UTF8";
+    try
+    {
+        m_locale = locale(localeName);
+    }
+    catch(...)
+    {
+        m_locale = locale("");
+    }
     auto resourceLoader = AppResourceProvider::GetInstance();
     m_fontFamilyOverride = resourceLoader.GetResourceString(L"LocalizedFontFamilyOverride");
+
 
     String^ reserved = L"RESERVED_FOR_FONTLOC";
 
@@ -206,7 +217,7 @@ FontWeight LocalizationService::GetFontWeightOverride()
 double LocalizationService::GetFontScaleFactorOverride(LanguageFontType fontType)
 {
     assert(m_overrideFontApiValues);
-    
+
     switch (fontType)
     {
     case LanguageFontType::UIText:
@@ -271,12 +282,12 @@ void LocalizationService::UpdateFontFamilyAndSize(DependencyObject^ target)
         {
             control->FontSize = sizeToUse;
         }
-        else 
+        else
         {
             control->ClearValue(Control::FontSizeProperty);
         }
     }
-    else 
+    else
     {
         auto textBlock = dynamic_cast<TextBlock^>(target);
         if (textBlock)
@@ -290,7 +301,7 @@ void LocalizationService::UpdateFontFamilyAndSize(DependencyObject^ target)
             {
                 textBlock->FontSize = sizeToUse;
             }
-            else 
+            else
             {
                 textBlock->ClearValue(TextBlock::FontSizeProperty);
             }
@@ -309,7 +320,7 @@ void LocalizationService::UpdateFontFamilyAndSize(DependencyObject^ target)
                 {
                     richTextBlock->FontSize = sizeToUse;
                 }
-                else 
+                else
                 {
                     richTextBlock->ClearValue(RichTextBlock::FontSizeProperty);
                 }
@@ -328,7 +339,7 @@ void LocalizationService::UpdateFontFamilyAndSize(DependencyObject^ target)
                     {
                         textElement->FontSize = sizeToUse;
                     }
-                    else 
+                    else
                     {
                         textElement->ClearValue(TextElement::FontSizeProperty);
                     }
@@ -551,4 +562,14 @@ String^ LocalizationService::GetNarratorReadableString(String^ rawString)
     }
 
     return ref new String(readableString.str().c_str());
+}
+
+void LocalizationService::Sort(std::vector<Platform::String^>& source)
+{
+    const collate<wchar_t>& coll = use_facet<collate<wchar_t>>(m_locale);
+    sort(source.begin(), source.end(), [&coll](Platform::String^ str1, Platform::String^ str2)
+    {
+        return coll.compare(str1->Begin(), str1->End(),
+            str2->Begin(), str2->End()) < 0;
+    });
 }
