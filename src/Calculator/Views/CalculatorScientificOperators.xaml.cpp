@@ -40,7 +40,7 @@ CalculatorScientificOperators::CalculatorScientificOperators()
 
 void CalculatorScientificOperators::OnLoaded(Object^, RoutedEventArgs^)
 {
-    m_propertyChangedToken = Model->PropertyChanged += ref new PropertyChangedEventHandler(this, &CalculatorScientificOperators::OnPropertyChanged);
+    m_propertyChangedToken = Model->PropertyChanged += ref new PropertyChangedEventHandler(this, &CalculatorScientificOperators::OnViewModelPropertyChanged);
 }
 void CalculatorScientificOperators::OnUnloaded(Object^, RoutedEventArgs^)
 {
@@ -107,9 +107,9 @@ void CalculatorScientificOperators::SetOperatorRowVisibility()
     InvRow2->Visibility = invRowVis;
 }
 
-void CalculatorScientificOperators::OnPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+void CalculatorScientificOperators::OnViewModelPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 {
-    if (e->PropertyName == CalculatorViewModelProperties::OpenParenthesisCount && closeParenthesisButton->FocusState != Windows::UI::Xaml::FocusState::Unfocused)
+    if (e->PropertyName == CalculatorViewModelProperties::OpenParenthesisCount && closeParenthesisButton->FocusState != ::FocusState::Unfocused)
     {
         Model->SetOpenParenthesisCountNarratorAnnouncement();
     }

@@ -41,7 +41,7 @@ namespace CalculatorApp
         void shiftButton_Check(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
         void shiftButton_IsEnabledChanged(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
         void SetOperatorRowVisibility();
-        void OnPropertyChanged(Platform::Object^ sender, Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e);
+        void OnViewModelPropertyChanged(Platform::Object^ sender, Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e);
         void OnLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void OnUnloaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 

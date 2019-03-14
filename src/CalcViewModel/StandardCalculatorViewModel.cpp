@@ -55,7 +55,7 @@ namespace CalculatorApp::ViewModel
         StringReference BinButton(L"Format_BinButtonValue");
         StringReference LeftParenthesisAutomationFormat(L"Format_OpenParenthesisAutomationNamePrefix");
         StringReference OpenParenthesisCountAutomationFormat(L"Format_OpenParenthesisCountAutomationNamePrefix");
-        StringReference NoParenthesisAdded(L"NoParenthesisAdded_Announcement");
+        StringReference NoParenthesisAdded(L"NoRightParenthesisAdded_Announcement");
         StringReference MaxDigitsReachedFormat(L"Format_MaxDigitsReached");
         StringReference ButtonPressFeedbackFormat(L"Format_ButtonPressAuditoryFeedback");
         StringReference MemorySave(L"Format_MemorySave");
@@ -97,7 +97,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_localizedMemoryItemClearedAutomationFormat(nullptr),
     m_localizedMemoryCleared(nullptr),
     m_localizedOpenParenthesisCountChangedAutomationFormat(nullptr),
-    m_localizedNoRightParenthesisAddedAutomationFormat(nullptr)
+    m_localizedNoRightParenthesisAddedFormat(nullptr)
 {
     WeakReference calculatorViewModel(this);
     m_calculatorDisplay.SetCallback(calculatorViewModel);
@@ -254,7 +254,7 @@ void StandardCalculatorViewModel::SetNoParenAddedNarratorAnnouncement()
 {
     String^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
         CalculatorResourceKeys::NoParenthesisAdded,
-        m_localizedNoRightParenthesisAddedAutomationFormat);
+        m_localizedNoRightParenthesisAddedFormat);
 
     Announcement = CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(announcement);
 }

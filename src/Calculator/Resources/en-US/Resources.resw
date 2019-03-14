@@ -1313,7 +1313,7 @@
     <value>Left parenthesis</value>
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
-    <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
+  <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
     <value>Left parenthesis, open parenthesis count %1</value>
     <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
   </data>
@@ -1325,7 +1325,7 @@
     <value>Open parenthesis count %1</value>
     <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific and programmer operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
   </data>
-  <data name="NoParenthesisAdded_Announcement" xml:space="preserve">
+  <data name="NoRightParenthesisAdded_Announcement" xml:space="preserve">
     <value>There are no open parentheses to close.</value>
     <comment>{Locked="%1"} Screen reader prompt for the Calculator when the ")" button on the scientific and programmer operator keypad cannot be added to the equation. e.g. "1+)".</comment>
   </data>

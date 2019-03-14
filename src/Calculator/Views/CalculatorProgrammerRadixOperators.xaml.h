@@ -35,9 +35,10 @@ namespace CalculatorApp
         void OnLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void OnUnloaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void ProgModeRadixChange();
-        void OnPropertyChanged(Platform::Object^ sender, Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e);
+        void OnViewModelPropertyChanged(Platform::Object^ sender, Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e);
 
         bool m_isErrorVisualState;
+        Windows::Foundation::EventRegistrationToken m_progModeRadixChangeToken;
         Windows::Foundation::EventRegistrationToken m_propertyChangedToken;
     };
 }

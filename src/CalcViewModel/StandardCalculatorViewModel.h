@@ -342,7 +342,7 @@ namespace CalculatorApp
             Platform::String^ m_localizedMemoryItemClearedAutomationFormat;
             Platform::String^ m_localizedMemoryCleared;
             Platform::String^ m_localizedOpenParenthesisCountChangedAutomationFormat;
-            Platform::String^ m_localizedNoRightParenthesisAddedAutomationFormat;
+            Platform::String^ m_localizedNoRightParenthesisAddedFormat;
 
             bool m_pinned;
             bool m_isOperandEnabled;

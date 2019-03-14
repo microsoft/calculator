@@ -118,7 +118,6 @@ namespace CalculationManager
 
     /// <summary>
     /// Callback from the engine
-    /// Used to set the narrator text when no parenthesis can be added
     /// </summary>
     void CalculatorManager::OnNoRightParenAdded()
     {
