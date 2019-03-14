@@ -30,37 +30,32 @@ constexpr int StandardModePrecision = 16;
 constexpr int ScientificModePrecision = 32;
 constexpr int ProgrammerModePrecision = 64;
 
-namespace CalculatorApp::ViewModel
+namespace
 {
-    namespace CalculatorViewModelProperties
-    {
-        StringReference IsMemoryEmpty(L"IsMemoryEmpty");
-        StringReference IsScientific(L"IsScientific");
-        StringReference IsStandard(L"IsStandard");
-        StringReference IsProgrammer(L"IsProgrammer");
-        StringReference DisplayValue(L"DisplayValue");
-        StringReference IsInError(L"IsInError");
-        StringReference BinaryDisplayValue(L"BinaryDisplayValue");
-    }
-    
-    namespace CalculatorResourceKeys
-    {
-        StringReference CalculatorExpression(L"Format_CalculatorExpression");
-        StringReference CalculatorResults(L"Format_CalculatorResults");
-        StringReference CalculatorResults_DecimalSeparator_Announced(L"Format_CalculatorResults_Decimal");
-        StringReference HexButton(L"Format_HexButtonValue");
-        StringReference DecButton(L"Format_DecButtonValue");
-        StringReference OctButton(L"Format_OctButtonValue");
-        StringReference BinButton(L"Format_BinButtonValue");
-        StringReference LeftParenthesisAutomationFormat(L"Format_OpenParenthesisAutomationNamePrefix");
-        StringReference MaxDigitsReachedFormat(L"Format_MaxDigitsReached");
-        StringReference ButtonPressFeedbackFormat(L"Format_ButtonPressAuditoryFeedback");
-        StringReference MemorySave(L"Format_MemorySave");
-        StringReference MemoryItemChanged(L"Format_MemorySlotChanged");
-        StringReference MemoryItemCleared(L"Format_MemorySlotCleared");
-        StringReference MemoryCleared(L"Memory_Cleared");
-        StringReference DisplayCopied(L"Display_Copied");
-    }
+    StringReference IsStandardPropertyName(L"IsStandard");
+    StringReference IsScientificPropertyName(L"IsScientific");
+    StringReference IsProgrammerPropertyName(L"IsProgrammer");
+    StringReference DisplayValuePropertyName(L"DisplayValue");
+    StringReference CalculationResultAutomationNamePropertyName(L"CalculationResultAutomationName");
+}
+
+namespace CalculatorApp::ViewModel::CalculatorResourceKeys
+{
+    StringReference CalculatorExpression(L"Format_CalculatorExpression");
+    StringReference CalculatorResults(L"Format_CalculatorResults");
+    StringReference CalculatorResults_DecimalSeparator_Announced(L"Format_CalculatorResults_Decimal");
+    StringReference HexButton(L"Format_HexButtonValue");
+    StringReference DecButton(L"Format_DecButtonValue");
+    StringReference OctButton(L"Format_OctButtonValue");
+    StringReference BinButton(L"Format_BinButtonValue");
+    StringReference LeftParenthesisAutomationFormat(L"Format_OpenParenthesisAutomationNamePrefix");
+    StringReference MaxDigitsReachedFormat(L"Format_MaxDigitsReached");
+    StringReference ButtonPressFeedbackFormat(L"Format_ButtonPressAuditoryFeedback");
+    StringReference MemorySave(L"Format_MemorySave");
+    StringReference MemoryItemChanged(L"Format_MemorySlotChanged");
+    StringReference MemoryItemCleared(L"Format_MemorySlotCleared");
+    StringReference MemoryCleared(L"Memory_Cleared");
+    StringReference DisplayCopied(L"Display_Copied");
 }
 
 StandardCalculatorViewModel::StandardCalculatorViewModel() :
@@ -1242,30 +1237,30 @@ void StandardCalculatorViewModel::Deserialize(Array<unsigned char>^ state)
 
 void StandardCalculatorViewModel::OnPropertyChanged(String^ propertyname)
 {
-    if (propertyname == CalculatorViewModelProperties::IsScientific)
+    if (propertyname == IsScientificPropertyName)
     {
         if (IsScientific)
         {
             OnButtonPressed(NumbersAndOperatorsEnum::IsScientificMode);
         }
     }
-    else if (propertyname == CalculatorViewModelProperties::IsProgrammer)
+    else if (propertyname == IsProgrammerPropertyName)
     {
         if (IsProgrammer)
         {
             OnButtonPressed(NumbersAndOperatorsEnum::IsProgrammerMode);
         }
     }
-    else if (propertyname == CalculatorViewModelProperties::IsStandard)
+    else if (propertyname == IsStandardPropertyName)
     {
         if (IsStandard)
         {
             OnButtonPressed(NumbersAndOperatorsEnum::IsStandardMode);
         }
     }
-    else if (propertyname == CalculatorViewModelProperties::DisplayValue)
+    else if (propertyname == DisplayValuePropertyName)
     {
-        RaisePropertyChanged(CalculationResultAutomationName_PropertyName);
+        RaisePropertyChanged(CalculationResultAutomationNamePropertyName);
         Announcement = GetDisplayUpdatedNarratorAnnouncement();
     }
 }

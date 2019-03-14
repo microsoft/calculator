@@ -42,10 +42,16 @@
         }\
     } private: t m_##n; public:
 
-#define NAMED_OBSERVABLE_PROPERTY_RW(t, n)\
+#define OBSERVABLE_NAMED_PROPERTY_R(t, n)\
+    OBSERVABLE_PROPERTY_R(t, n)\
+    internal: static property Platform::String^ n##PropertyName {\
+    Platform::String^ get() { return Platform::StringReference(L#n); }\
+    } public:
+
+#define OBSERVABLE_NAMED_PROPERTY_RW(t, n)\
     OBSERVABLE_PROPERTY_RW(t, n)\
-    private: property Platform::StringReference n##_PropertyName {\
-    Platform::StringReference get() { return Platform::StringReference(L#n); }\
+    internal: static property Platform::String^ n##PropertyName {\
+    Platform::String^ get() { return Platform::StringReference(L#n); }\
     } public:
 
 #define OBSERVABLE_PROPERTY_FIELD(n) m_##n

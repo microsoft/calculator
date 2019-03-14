@@ -68,7 +68,7 @@ void CalculatorProgrammerBitFlipPanel::UnsubscribePropertyChanged()
 
 void CalculatorProgrammerBitFlipPanel::OnPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 {
-    if (e->PropertyName == CalculatorViewModelProperties::BinaryDisplayValue)
+    if (e->PropertyName == StandardCalculatorViewModel::BinaryDisplayValuePropertyName)
     {
         UpdateCheckedStates();
     }
