@@ -514,7 +514,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             m_HistoryCollector.PopLastOpndStart();
 
             m_bNoPrevEqu = true;
-        } while (m_precedenceOpCount >= 0);
+        } while (true);
 
         if (!m_bError)
         {
