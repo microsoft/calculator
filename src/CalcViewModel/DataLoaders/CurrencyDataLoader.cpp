@@ -584,7 +584,7 @@ bool CurrencyDataLoader::TryParseAllRatiosData(_In_ String^ rawJson, _Inout_ Cur
             relativeRatio,
             sourceCurrencyCode,
             targetCurrencyCode
-            });
+        });
     }
 
     return true;

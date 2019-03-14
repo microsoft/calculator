@@ -65,6 +65,7 @@ namespace CalculatorApp { namespace Common
 
         static Platform::String^ GetNarratorReadableToken(Platform::String^ rawToken);
         static Platform::String^ GetNarratorReadableString(Platform::String^ rawString);
+
     private:
         Windows::Globalization::Fonts::LanguageFont^ GetLanguageFont(LanguageFontType fontType);
         Windows::UI::Text::FontWeight ParseFontWeight(Platform::String^ fontWeight);

@@ -75,7 +75,6 @@ LocalizationService::LocalizationService()
     auto resourceLoader = AppResourceProvider::GetInstance();
     m_fontFamilyOverride = resourceLoader.GetResourceString(L"LocalizedFontFamilyOverride");
 
-
     String^ reserved = L"RESERVED_FOR_FONTLOC";
 
     m_overrideFontApiValues = ((m_fontFamilyOverride != nullptr) && (m_fontFamilyOverride != reserved));
@@ -217,7 +216,6 @@ FontWeight LocalizationService::GetFontWeightOverride()
 double LocalizationService::GetFontScaleFactorOverride(LanguageFontType fontType)
 {
     assert(m_overrideFontApiValues);
-
     switch (fontType)
     {
     case LanguageFontType::UIText:
