@@ -81,7 +81,7 @@ void Utils::RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Core
 }
 
 // returns if the last character of a wstring is the target wchar_t
-bool Utils::IsLastCharacterTarget(_In_ wstring const &input, _In_ wchar_t target)
+bool Utils::IsLastCharacterTarget(_In_ wstring const &input, wchar_t target)
 {
     return !input.empty() && input.back() == target;
 }

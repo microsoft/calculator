@@ -86,7 +86,7 @@ MainPage::MainPage() :
     }    
 }
 
-void MainPage::OnNavigatedTo(NavigationEventArgs^ e)
+void MainPage::OnNavigatedTo(_In_ NavigationEventArgs^ e)
 {
     if (m_model->CalculatorViewModel)
     {
@@ -409,7 +409,7 @@ void MainPage::OnNavPaneClosed(_In_ MUXC::NavigationView^ sender, _In_ Object^ a
     this->SetDefaultFocus();
 }
 
-void MainPage::OnAboutButtonClick(Object^ sender, ItemClickEventArgs^ e)
+void MainPage::OnAboutButtonClick(_In_ Object^ sender, _In_ ItemClickEventArgs^ e)
 {
     ShowAboutPage();
 }
