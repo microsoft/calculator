@@ -38,7 +38,7 @@ using namespace std;
 //
 //-----------------------------------------------------------------------------
 
-void gcdrat( PRAT *pa, int32_t precision)
+void gcdrat( _Inout_ PRAT *pa, int32_t precision)
 
 {
     PNUMBER pgcd= nullptr;
@@ -71,7 +71,7 @@ void gcdrat( PRAT *pa, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void fracrat( PRAT *pa , uint32_t radix, int32_t precision)
+void fracrat( _Inout_ PRAT *pa , uint32_t radix, int32_t precision)
 {
     // Only do the flatrat operation if number is nonzero.
     // and only if the bottom part is not one.
@@ -99,7 +99,7 @@ void fracrat( PRAT *pa , uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void mulrat( PRAT *pa, PRAT b, int32_t precision)
+void mulrat( _Inout_ PRAT *pa, _In_ PRAT b, int32_t precision)
     
     {
     // Only do the multiply if it isn't zero.
@@ -135,7 +135,7 @@ void mulrat( PRAT *pa, PRAT b, int32_t precision)
 //-----------------------------------------------------------------------------
 
 
-void divrat( PRAT *pa, PRAT b, int32_t precision)
+void divrat( _Inout_ PRAT *pa, _In_ PRAT b, int32_t precision)
 
 {
 
@@ -187,7 +187,7 @@ void divrat( PRAT *pa, PRAT b, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void subrat( PRAT *pa, PRAT b, int32_t precision)
+void subrat( _Inout_ PRAT *pa, _In_ PRAT b, int32_t precision)
 
 {
     b->pp->sign *= -1;
@@ -208,7 +208,7 @@ void subrat( PRAT *pa, PRAT b, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void addrat( PRAT *pa, PRAT b, int32_t precision)
+void addrat( _Inout_ PRAT *pa, _In_ PRAT b, int32_t precision)
 
 {
     PNUMBER bot= nullptr;
@@ -263,7 +263,7 @@ void addrat( PRAT *pa, PRAT b, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void rootrat( PRAT *py, PRAT n, uint32_t radix, int32_t precision)
+void rootrat( _Inout_ PRAT *py, _In_ PRAT n, uint32_t radix, int32_t precision)
 {    
     // Initialize 1/n
     PRAT oneovern= nullptr;
@@ -289,7 +289,7 @@ void rootrat( PRAT *py, PRAT n, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-bool zerrat( PRAT a )
+bool zerrat( _In_ PRAT a )
 
 {
     return( zernum(a->pp) );

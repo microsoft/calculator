@@ -101,7 +101,7 @@ namespace CalculationManager
         void MemoryItemChanged(unsigned int indexOfMemory) override;
 
 
-        CalculatorManager(ICalcDisplay* displayCallback, IResourceProvider* resourceProvider);
+        CalculatorManager(_In_ ICalcDisplay* displayCallback, _In_ IResourceProvider* resourceProvider);
         ~CalculatorManager();
 
         void Reset(bool clearMemory = true);

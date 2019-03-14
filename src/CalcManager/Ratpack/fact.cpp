@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //-----------------------------------------------------------------------------
@@ -193,7 +193,7 @@ void _gamma( PRAT *pn, uint32_t radix, int32_t precision)
     destroyrat(sum);
 }
 
-void factrat( PRAT *px, uint32_t radix, int32_t precision)
+void factrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision)
 
 {
     PRAT fact = nullptr;

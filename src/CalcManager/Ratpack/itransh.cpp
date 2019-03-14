@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //-----------------------------------------------------------------------------
@@ -50,7 +50,7 @@
 //
 //-----------------------------------------------------------------------------
 
-void asinhrat( PRAT *px, uint32_t radix, int32_t precision)
+void asinhrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision)
 
 {
     PRAT neg_pt_eight_five = nullptr;
@@ -107,7 +107,7 @@ void asinhrat( PRAT *px, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void acoshrat( PRAT *px, uint32_t radix, int32_t precision)
+void acoshrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision)
 
 {
     if ( rat_lt( *px, rat_one, precision) )
@@ -144,7 +144,7 @@ void acoshrat( PRAT *px, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void atanhrat( PRAT *px, int32_t precision)
+void atanhrat( _Inout_ PRAT *px, int32_t precision)
 
 {
     PRAT ptmp = nullptr;

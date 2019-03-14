@@ -191,7 +191,7 @@ void _cosrat( PRAT *px, uint32_t radix, int32_t precision)
         }
 }
 
-void cosrat( PRAT *px, uint32_t radix, int32_t precision)
+void cosrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision)
 {
     scale2pi(px, radix, precision);
     _cosrat(px, radix, precision);
@@ -263,7 +263,7 @@ void _tanrat( PRAT *px, uint32_t radix, int32_t precision)
 
 }
 
-void tanrat( PRAT *px, uint32_t radix, int32_t precision)
+void tanrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision)
 {
     scale2pi(px, radix, precision);
     _tanrat(px, radix, precision);

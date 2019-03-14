@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -94,7 +94,7 @@ wstring Utils::RemoveUnwantedCharsFromWstring(wstring input)
 }
 
 //return wstring after removing characters specified by unwantedChars array
-wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, wchar_t* unwantedChars, unsigned int size)
+wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, _In_reads_(size) wchar_t* unwantedChars, unsigned int size)
 {
     for (unsigned int i = 0; i < size; ++i)
     {

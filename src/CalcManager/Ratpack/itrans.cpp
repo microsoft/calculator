@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //-----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ void asinanglerat( _Inout_ PRAT *pa, ANGLE_TYPE angletype, uint32_t radix, int32
     ascalerat( pa, angletype, precision);
 }
 
-void asinrat( PRAT *px, uint32_t radix, int32_t precision)
+void asinrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision)
 
 {
     long sgn;
@@ -201,7 +201,7 @@ void _acosrat( PRAT *px, int32_t precision)
     DESTROYTAYLOR();
 }
 
-void acosrat( PRAT *px, uint32_t radix, int32_t precision)
+void acosrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision)
 
 {
     long sgn;
@@ -288,7 +288,7 @@ void _atanrat( PRAT *px, int32_t precision)
     DESTROYTAYLOR();
 }
 
-void atanrat( PRAT *px, uint32_t radix, int32_t precision)
+void atanrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision)
 
 {
     long sgn;

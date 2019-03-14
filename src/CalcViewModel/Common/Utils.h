@@ -278,8 +278,8 @@ namespace Utils
 
     void IFTPlatformException(HRESULT hr);
     Platform::String^ GetStringValue(Platform::String^ input);
-    bool IsLastCharacterTarget(std::wstring const &input, wchar_t target);
-    std::wstring RemoveUnwantedCharsFromWstring(std::wstring inputString, wchar_t* unwantedChars, unsigned int size);
+    bool IsLastCharacterTarget(_In_ std::wstring const &input, wchar_t target);
+    std::wstring RemoveUnwantedCharsFromWstring(std::wstring inputString, _In_reads_(size) wchar_t* unwantedChars, unsigned int size);
     std::wstring RemoveUnwantedCharsFromWstring(std::wstring input);
     double GetDoubleFromWstring(std::wstring input);
     int GetWindowId();
