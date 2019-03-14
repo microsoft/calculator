@@ -343,7 +343,7 @@ String^ DateCalculatorViewModel::GetDateDiffString() const
         }
     }
 
-    return ref new Platform::String(result.data());
+    return ref new String(result.data());
 }
 
 String^ DateCalculatorViewModel::GetDateDiffStringInDays() const
@@ -361,7 +361,7 @@ String^ DateCalculatorViewModel::GetDateDiffStringInDays() const
         result += AppResourceProvider::GetInstance().GetResourceString(L"Date_Day")->Data();
     }
 
-    return ref new Platform::String(result.data());
+    return ref new String(result.data());
 }
 
 void DateCalculatorViewModel::OnCopyCommand(Platform::Object^ parameter)

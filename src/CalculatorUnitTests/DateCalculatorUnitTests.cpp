@@ -494,7 +494,7 @@ namespace DateCalculationUnitTests
             }
         }
 
-        TEST_METHOD(DateCalcViewModelDateDiffSignTest)
+        TEST_METHOD(DateCalcViewModelDateDiffIgnoreSignTest)
         {
             auto viewModel = ref new DateCalculatorViewModel();
 
@@ -504,19 +504,14 @@ namespace DateCalculationUnitTests
             viewModel->FromDate = DateUtils::SystemTimeToDateTime(date[10]);
             viewModel->ToDate = DateUtils::SystemTimeToDateTime(date[6]);
 
-            auto dfd = viewModel->StrDateDiffResultInDays;
-            auto dfffg = viewModel->StrDateDiffResult;
-            //// check negative difference
             VERIFY_IS_FALSE(viewModel->IsDiffInDays);
             VERIFY_ARE_EQUAL(StringReference(L"305 days"), viewModel->StrDateDiffResultInDays);
             VERIFY_ARE_EQUAL(StringReference(L"10 months"), viewModel->StrDateDiffResult);
-
-            //// check positive difference
             viewModel->FromDate = DateUtils::SystemTimeToDateTime(date[6]);
             viewModel->ToDate = DateUtils::SystemTimeToDateTime(date[10]);
             VERIFY_IS_FALSE(viewModel->IsDiffInDays);
-            VERIFY_ARE_EQUAL(StringReference(L"- 305 days"), viewModel->StrDateDiffResultInDays);
-            VERIFY_ARE_EQUAL(StringReference(L"- 10 months"), viewModel->StrDateDiffResult);
+            VERIFY_ARE_EQUAL(StringReference(L"305 days"), viewModel->StrDateDiffResultInDays);
+            VERIFY_ARE_EQUAL(StringReference(L"10 months"), viewModel->StrDateDiffResult);
         }
 
         TEST_METHOD(DateCalcViewModelDateDiffTest)
@@ -557,7 +552,7 @@ namespace DateCalculationUnitTests
             VERIFY_IS_NULL(viewModel->StrDateDiffResultInDays);
         }
 
-        TEST_METHOD(DateCalcViewModelDateDiffResultInNegativeDaysTest)
+        TEST_METHOD(DateCalcViewModelDateDiffFromDateHigherThanToDate)
         {
             auto viewModel = ref new DateCalculatorViewModel();
 
@@ -569,7 +564,7 @@ namespace DateCalculationUnitTests
 
             // Assert for the result
             VERIFY_IS_TRUE(viewModel->IsDiffInDays);
-            VERIFY_ARE_EQUAL(StringReference(L"- 1 day"), viewModel->StrDateDiffResult);
+            VERIFY_ARE_EQUAL(StringReference(L"1 day"), viewModel->StrDateDiffResult);
             VERIFY_IS_NULL(viewModel->StrDateDiffResultInDays);
         }
 
