@@ -78,7 +78,7 @@ void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER * const src)
 //
 //-----------------------------------------------------------------------------
 
-void _destroynum( _In_ PNUMBER pnum )
+void _destroynum( _Frees_ptr_opt_ PNUMBER pnum )
 
 {
     if ( pnum != nullptr)
@@ -101,7 +101,7 @@ void _destroynum( _In_ PNUMBER pnum )
 //
 //-----------------------------------------------------------------------------
 
-void _destroyrat( _In_ PRAT prat )
+void _destroyrat( _Frees_ptr_opt_ PRAT prat )
 
 {
     if ( prat != nullptr)
@@ -301,7 +301,7 @@ PNUMBER nRadixxtonum( _In_ PNUMBER a, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix)
+PNUMBER numtonRadixx(PNUMBER a, uint32_t radix)
 {
     PNUMBER pnumret = longtonum(0, BASEX); // pnumret is the number in internal form.
     PNUMBER num_radix = longtonum(radix, BASEX);
@@ -716,7 +716,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
 //
 //-----------------------------------------------------------------------------
 
-PRAT longtorat( _In_ long inlong )
+PRAT longtorat(long inlong )
 
 {
     PRAT pratret= nullptr;
@@ -740,7 +740,7 @@ PRAT longtorat( _In_ long inlong )
 //
 //-----------------------------------------------------------------------------
 
-PRAT Ulongtorat( _In_ unsigned long inulong )
+PRAT Ulongtorat(unsigned long inulong )
 
 {
     PRAT pratret= nullptr;

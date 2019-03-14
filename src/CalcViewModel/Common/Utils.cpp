@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -80,8 +80,8 @@ void Utils::RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Core
     }
 }
 
-// Returns if the last character of a wstring is the target wchar_t
-bool Utils::IsLastCharacterTarget(_In_ wstring const &input, _In_ wchar_t target)
+// returns if the last character of a wstring is the target wchar_t
+bool Utils::IsLastCharacterTarget(_In_ wstring const &input, wchar_t target)
 {
     return !input.empty() && input.back() == target;
 }
@@ -93,8 +93,8 @@ wstring Utils::RemoveUnwantedCharsFromWstring(wstring input)
     return RemoveUnwantedCharsFromWstring(input, unWantedChars, 6);
 }
 
-// Returns wstring after removing characters specified by unwantedChars array
-wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, wchar_t* unwantedChars, unsigned int size)
+//return wstring after removing characters specified by unwantedChars array
+wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, _In_reads_(size) wchar_t* unwantedChars, unsigned int size)
 {
     for (unsigned int i = 0; i < size; ++i)
     {

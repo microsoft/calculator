@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -14,7 +14,7 @@ using namespace Windows::ApplicationModel::Core;
 using namespace Windows::Foundation;
 using namespace Windows::UI::Xaml;
 
-unique_ptr<TitleBarHelper> TitleBarHelper::CreateTitleBarHelperIfNotDocked(FrameworkElement^ customTitleBar)
+unique_ptr<TitleBarHelper> TitleBarHelper::CreateTitleBarHelperIfNotDocked(_In_ FrameworkElement^ customTitleBar)
 {
     return (App::GetAppViewState() == ViewState::DockedView)
         ? nullptr

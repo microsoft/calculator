@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //---------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 
 
 
-void lshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void lshrat( _Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision)
 
 {
     PRAT pwr= nullptr;
@@ -41,7 +41,7 @@ void lshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
         }
 }
 
-void rshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void rshrat( _Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision)
 
 {
     PRAT pwr= nullptr;
@@ -74,19 +74,19 @@ enum {
     FUNC_XOR
 } BOOL_FUNCS;
 
-void andrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void andrat( _Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision)
 
 {
     boolrat( pa, b, FUNC_AND, radix, precision);
 }
 
-void orrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void orrat( _Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision)
 
 {
     boolrat( pa, b, FUNC_OR, radix, precision);
 }
 
-void xorrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void xorrat( _Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision)
 
 {
     boolrat( pa, b, FUNC_XOR, radix, precision);
@@ -195,7 +195,7 @@ void boolnum( PNUMBER *pa, PNUMBER b, int func )
 //
 //-----------------------------------------------------------------------------
 
-void modrat( PRAT *pa, PRAT b )
+void modrat( _Inout_ PRAT *pa, _In_ PRAT b )
 
 {
     PRAT tmp = nullptr;

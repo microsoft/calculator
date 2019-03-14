@@ -102,7 +102,7 @@ namespace CalculatorApp
             void UnregisterForNetworkBehaviorChanges();
 
             concurrency::task<SelectedUnits> GetDefaultFromToCurrency();
-            bool TryGetLastUsedCurrenciesFromLocalSettings(_Out_ std::wstring* const fromCurrency, _Out_ std::wstring* const toCurrency);
+            _Success_(return) bool TryGetLastUsedCurrenciesFromLocalSettings(_Out_ std::wstring* const fromCurrency, _Out_ std::wstring* const toCurrency);
             void SaveSelectedUnitsToLocalSettings(_In_ const SelectedUnits& selectedUnits);
 
         private:

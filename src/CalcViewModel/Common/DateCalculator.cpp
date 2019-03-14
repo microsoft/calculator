@@ -212,6 +212,7 @@ int DateCalculationEngine::GetDifferenceInDays(DateTime date1, DateTime date2)
 
 // Gets number of Calendar days in the month in which this date falls.
 // Returns true if successful, false otherwise.
+_Success_(return)
 bool DateCalculationEngine::TryGetCalendarDaysInMonth(_In_ DateTime date, _Out_ UINT& daysInMonth)
 {
     bool result = false;
@@ -230,6 +231,7 @@ bool DateCalculationEngine::TryGetCalendarDaysInMonth(_In_ DateTime date, _Out_ 
 
 // Gets number of Calendar days in the year in which this date falls.
 // Returns true if successful, false otherwise.
+_Success_(return) 
 bool DateCalculationEngine::TryGetCalendarDaysInYear(_In_ DateTime date, _Out_ UINT& daysInYear)
 {
     bool result = false;

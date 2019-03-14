@@ -413,8 +413,8 @@ extern void tananglerat( _Inout_ PRAT *px, ANGLE_TYPE angletype, uint32_t radix,
 
 extern void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER * const src);
 
-extern void _destroynum( _In_ PNUMBER pnum );
-extern void _destroyrat( _In_ PRAT prat );
+extern void _destroynum( _Frees_ptr_opt_ PNUMBER pnum );
+extern void _destroyrat( _Frees_ptr_opt_ PRAT prat );
 extern void addnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix);
 extern void addrat( _Inout_ PRAT *pa, _In_ PRAT b, int32_t precision);
 extern void andrat( _Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision);
@@ -450,7 +450,7 @@ extern bool rat_gt( _In_ PRAT a, _In_ PRAT b, int32_t precision);
 extern bool rat_ge( _In_ PRAT a, _In_ PRAT b, int32_t precision);
 extern bool rat_lt( _In_ PRAT a, _In_ PRAT b, int32_t precision);
 extern bool rat_le( _In_ PRAT a, _In_ PRAT b, int32_t precision);
-extern void inbetween( _In_ PRAT *px, _In_ PRAT range, int32_t precision);
+extern void inbetween( _Inout_ PRAT *px, _In_ PRAT range, int32_t precision);
 extern void trimit( _Inout_ PRAT *px, int32_t precision);
-extern void _dumprawrat(_In_ const wchar_t *varname, _In_ PRAT rat, std::wostream& out);
-extern void _dumprawnum(_In_ const wchar_t *varname, _In_ PNUMBER num, std::wostream& out);
+extern void _dumprawrat(_In_z_ const wchar_t *varname, _In_ PRAT rat, std::wostream& out);
+extern void _dumprawnum(_In_z_ const wchar_t *varname, _In_ PNUMBER num, std::wostream& out);

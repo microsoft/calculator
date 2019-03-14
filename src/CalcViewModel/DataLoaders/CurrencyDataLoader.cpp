@@ -780,7 +780,7 @@ task<SelectedUnits> CurrencyDataLoader::GetDefaultFromToCurrency()
     co_return make_pair(fromCurrency, toCurrency);
 };
 #pragma optimize("", on)
-
+_Success_(return)
 bool CurrencyDataLoader::TryGetLastUsedCurrenciesFromLocalSettings(_Out_ wstring* const fromCurrency, _Out_ wstring* const toCurrency)
 {
     String^ fromKey = UnitConverterResourceKeys::CurrencyUnitFromKey;

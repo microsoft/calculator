@@ -40,9 +40,9 @@ using namespace std;
 //
 //----------------------------------------------------------------------------
 
-void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix);
+void _addnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix);
 
-void __inline addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
+void __inline addnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix)
 
 {
     if ( b->cdigit > 1 || b->mant[0] != 0 )
@@ -58,7 +58,7 @@ void __inline addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
         }
 }
 
-void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
+void _addnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix)
 
 {
     PNUMBER c= nullptr;     // c will contain the result.
@@ -192,9 +192,9 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 //
 //----------------------------------------------------------------------------
 
-void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix);
+void _mulnum( _Inout_ PNUMBER *pa, _In_ _Const_ PNUMBER b, uint32_t radix);
 
-void __inline mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
+void __inline mulnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix)
 
 {
     if ( b->cdigit > 1 || b->mant[0] != 1 || b->exp != 0 )
@@ -216,7 +216,7 @@ void __inline mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
         }
 }
 
-void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
+void _mulnum( _Inout_ PNUMBER *pa, _In_ _Const_ PNUMBER b, uint32_t radix)
 
 {
     PNUMBER c= nullptr;         // c will contain the result.
@@ -312,7 +312,7 @@ void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 //
 //----------------------------------------------------------------------------
 
-void remnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
+void remnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix)
 
 {
     PNUMBER tmp = nullptr;     // tmp is the working remainder.
@@ -375,9 +375,9 @@ void remnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 //
 //---------------------------------------------------------------------------
 
-void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision);
+void _divnum( _Inout_ PNUMBER *pa, _In_ _Const_ PNUMBER b, uint32_t radix, int32_t precision);
 
-void __inline divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
+void __inline divnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix, int32_t precision)
 
 {
     if ( b->cdigit > 1 || b->mant[0] != 1 || b->exp != 0 )
@@ -391,7 +391,7 @@ void __inline divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
         }
 }
 
-void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
+void _divnum( _Inout_ PNUMBER *pa, _In_ _Const_ PNUMBER b, uint32_t radix, int32_t precision)
 {
     PNUMBER a = *pa;
     long thismax = precision + 2;
@@ -502,7 +502,7 @@ void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-bool equnum( PNUMBER a, PNUMBER b )
+bool equnum( _In_ PNUMBER a, _In_ PNUMBER b )
 
 {
     long diff;
@@ -570,7 +570,7 @@ bool equnum( PNUMBER a, PNUMBER b )
 //
 //---------------------------------------------------------------------------
 
-bool lessnum( PNUMBER a, PNUMBER b )
+bool lessnum( _In_ PNUMBER a, _In_ PNUMBER b )
 
 {
     long diff;
@@ -632,7 +632,7 @@ bool lessnum( PNUMBER a, PNUMBER b )
 //
 //----------------------------------------------------------------------------
 
-bool zernum( PNUMBER a )
+bool zernum( _In_ PNUMBER a )
 
 {
     long length;

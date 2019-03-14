@@ -549,7 +549,7 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
     }
  }
 
- wstring UnitConverterDataLoader::GetLocalizedStringName(String^ stringId)
+ wstring UnitConverterDataLoader::GetLocalizedStringName(_In_ String^ stringId)
  {
      return AppResourceProvider::GetInstance().GetResourceString(stringId)->Data();
  }

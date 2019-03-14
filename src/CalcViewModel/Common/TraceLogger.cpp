@@ -664,7 +664,7 @@ namespace CalculatorApp
         LogTelemetryEvent(EVENT_NAME_VALID_INPUT_PASTED, fields);
     }
 
-    void TraceLogger::LogStandardException(wstring_view functionName, const exception& e) const
+    void TraceLogger::LogStandardException(wstring_view functionName, _In_ const exception& e) const
     {
         if (!GetTraceLoggingProviderEnabled()) return;
 
@@ -676,7 +676,7 @@ namespace CalculatorApp
         LogMeasureEvent(EVENT_NAME_EXCEPTION, fields);
     }
 
-    void TraceLogger::LogWinRTException(wstring_view functionName, hresult_error const& e) const
+    void TraceLogger::LogWinRTException(wstring_view functionName, _In_ hresult_error const& e) const
     {
         if (!GetTraceLoggingProviderEnabled()) return;
 
@@ -687,7 +687,7 @@ namespace CalculatorApp
         LogMeasureEvent(EVENT_NAME_EXCEPTION, fields);
     }
 
-    void TraceLogger::LogPlatformException(wstring_view functionName, Platform::Exception^ e) const
+    void TraceLogger::LogPlatformException(wstring_view functionName, _In_ Platform::Exception^ e) const
     {
         if (!GetTraceLoggingProviderEnabled()) return;
 

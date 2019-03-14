@@ -34,7 +34,7 @@ void _mulnumx( PNUMBER *pa, PNUMBER b );
 //
 //----------------------------------------------------------------------------
 
-void __inline mulnumx( PNUMBER *pa, PNUMBER b )
+void __inline mulnumx( _Inout_ PNUMBER *pa, _In_ PNUMBER b )
 
 {
     if ( b->cdigit > 1 || b->mant[0] != 1 || b->exp != 0 )
@@ -174,7 +174,7 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
 //
 //-----------------------------------------------------------------------------
 
-void numpowlongx( _Inout_ PNUMBER *proot, _In_ long power )
+void numpowlongx( _Inout_ PNUMBER *proot, long power )
 
 {
     PNUMBER lret = longtonum( 1, BASEX );
@@ -201,7 +201,7 @@ void numpowlongx( _Inout_ PNUMBER *proot, _In_ long power )
 
 }
 
-void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision);
+void _divnumx( _Inout_ PNUMBER *pa, _In_ PNUMBER b, int32_t precision);
 
 //----------------------------------------------------------------------------
 //
@@ -218,7 +218,7 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision);
 //
 //----------------------------------------------------------------------------
 
-void __inline divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
+void __inline divnumx( _Inout_ PNUMBER *pa, _In_ PNUMBER b, int32_t precision)
 
 {
     if ( b->cdigit > 1 || b->mant[0] != 1 || b->exp != 0 )
@@ -257,7 +257,7 @@ void __inline divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
 //
 //----------------------------------------------------------------------------
 
-void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
+void _divnumx( _Inout_ PNUMBER *pa, _In_ PNUMBER b, int32_t precision)
 
 {
     PNUMBER a= nullptr;         // a is the dereferenced number pointer from *pa

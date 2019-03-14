@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -53,8 +53,8 @@ namespace CalculatorApp
 
                 // Private Methods
                 int GetDifferenceInDays(Windows::Foundation::DateTime date1, Windows::Foundation::DateTime date2);
-                bool TryGetCalendarDaysInMonth(_In_ Windows::Foundation::DateTime date, _Out_ UINT& daysInMonth);
-                bool TryGetCalendarDaysInYear(_In_ Windows::Foundation::DateTime date, _Out_ UINT& daysInYear);
+                _Success_(return) bool TryGetCalendarDaysInMonth(_In_ Windows::Foundation::DateTime date, _Out_ UINT& daysInMonth);
+                _Success_(return) bool TryGetCalendarDaysInYear(_In_ Windows::Foundation::DateTime date, _Out_ UINT& daysInYear);
                 Windows::Foundation::DateTime AdjustCalendarDate(Windows::Foundation::DateTime date, DateUnit dateUnit, int difference);
             };
         }
