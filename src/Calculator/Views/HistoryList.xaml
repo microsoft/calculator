@@ -64,6 +64,7 @@
                                 ContextFlyout="{StaticResource HistoryContextMenu}">
                         <TextBlock x:Name="exprTextBlock"
                                    Margin="0,0,0,4"
+                                   HorizontalAlignment="Right"
                                    Style="{ThemeResource BodyTextBlockMediumStyle}"
                                    AutomationProperties.Name="{x:Bind AccExpression}"
                                    IsTextSelectionEnabled="True"
@@ -71,6 +72,7 @@
                                    TextAlignment="Right"
                                    TextWrapping="Wrap"/>
                         <TextBlock x:Name="resultTextBlock"
+                                   HorizontalAlignment="Right"
                                    Style="{ThemeResource TitleTextBlockStyle}"
                                    FontWeight="SemiBold"
                                    AutomationProperties.Name="{x:Bind AccResult}"
