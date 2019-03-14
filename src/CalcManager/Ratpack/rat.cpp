@@ -44,7 +44,7 @@ void gcdrat( PRAT *pa, int32_t precision)
     PNUMBER pgcd= nullptr;
     PRAT a= nullptr;
 
-    a=*pa;
+    DUPRAT(a,*pa);
     pgcd = gcd( a->pp, a->pq );
 
     if ( !zernum( pgcd ) )
@@ -54,9 +54,14 @@ void gcdrat( PRAT *pa, int32_t precision)
         }
 
     destroynum( pgcd );
-    *pa=a;
 
-    RENORMALIZE(*pa);    
+    RENORMALIZE(a);
+
+    if (rat_equ(*pa, a, precision))
+    {
+        DUPRAT(*pa, a);
+    }
+    destroyrat(a);
 }
 
 //-----------------------------------------------------------------------------
