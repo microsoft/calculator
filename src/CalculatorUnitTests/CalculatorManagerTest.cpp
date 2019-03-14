@@ -62,6 +62,11 @@ namespace CalculatorManagerTest
             m_parenDisplay = parenthesisCount;
         }
 
+        void OnNoRightParenAdded() override
+        {
+            // This method is used to create a narrator announcement when a close parenthesis cannot be added because there are no open parentheses
+        }
+
         const wstring& GetPrimaryDisplay() const
         {
             return m_primaryDisplay;

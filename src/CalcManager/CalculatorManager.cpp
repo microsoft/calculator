@@ -109,12 +109,19 @@ namespace CalculationManager
 
     /// <summary>
     /// Callback from the engine
-    /// Used to set the current unmatched open parenthesis count
     /// </summary>
     /// <param name="parenthesisCount">string containing the parenthesis count</param>
     void CalculatorManager::SetParenDisplayText(const wstring& parenthesisCount)
     {
         m_displayCallback->SetParenDisplayText(parenthesisCount);
+    }
+
+    /// <summary>
+    /// Callback from the engine
+    /// </summary>
+    void CalculatorManager::OnNoRightParenAdded()
+    {
+        m_displayCallback->OnNoRightParenAdded();
     }
 
     /// <summary>
