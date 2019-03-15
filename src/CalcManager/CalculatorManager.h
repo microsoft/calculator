@@ -27,9 +27,9 @@ namespace CalculationManager
         ProgrammerModePrecision = 64
     };
 
-    // Numbering continues from the Enum Command from Command.h 
+    // Numbering continues from the Enum Command from Command.h
     // with some gap to ensure there is no overlap of these ids
-    // when static_cast<unsigned char> is performed on these ids 
+    // when static_cast<unsigned char> is performed on these ids
     // they shouldn't fall in any number range greater than 80. So never
     // make the memory command ids go below 330
     enum class MemoryCommand
@@ -42,7 +42,7 @@ namespace CalculationManager
         MemorizedNumberClear = 335
     };
 
-    class CalculatorManager sealed : public virtual ICalcDisplay
+    class CalculatorManager sealed : public ICalcDisplay
     {
     private:
         ICalcDisplay* const m_displayCallback;
@@ -94,7 +94,8 @@ namespace CalculationManager
         void SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &commands) override;
         void SetMemorizedNumbers(_In_ const std::vector<std::wstring>& memorizedNumbers) override;
         void OnHistoryItemAdded(_In_ unsigned int addedItemIndex) override;
-        void SetParenDisplayText(const std::wstring& parenthesisCount);
+        void SetParenDisplayText(const std::wstring& parenthesisCount) override;
+        void OnNoRightParenAdded() override;
         void DisplayPasteError();
         void MaxDigitsReached() override;
         void BinaryOperatorReceived() override;

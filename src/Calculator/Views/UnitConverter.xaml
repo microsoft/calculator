@@ -506,13 +506,8 @@
                                         FlowDirection="{x:Bind LayoutDirection}"
                                         IsActive="{Binding Value1Active, Mode=TwoWay}"
                                         KeyDown="OnValueKeyDown"
-                                        RenderTransformOrigin="0.5,0.5"
                                         Selected="OnValueSelected"
-                                        TabIndex="1">
-                <controls:CalculationResult.RenderTransform>
-                    <CompositeTransform/>
-                </controls:CalculationResult.RenderTransform>
-            </controls:CalculationResult>
+                                        TabIndex="1"/>
         </Grid>
 
         <ComboBox x:Name="Units1"
@@ -561,13 +556,8 @@
                                         FlowDirection="{x:Bind LayoutDirection}"
                                         IsActive="{Binding Value2Active, Mode=TwoWay}"
                                         KeyDown="OnValueKeyDown"
-                                        RenderTransformOrigin="0.5,0.5"
                                         Selected="OnValueSelected"
-                                        TabIndex="3">
-                <controls:CalculationResult.RenderTransform>
-                    <CompositeTransform/>
-                </controls:CalculationResult.RenderTransform>
-            </controls:CalculationResult>
+                                        TabIndex="3"/>
         </Grid>
 
         <ComboBox x:Name="Units2"

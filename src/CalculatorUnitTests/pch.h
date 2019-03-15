@@ -73,7 +73,7 @@ namespace StandardPeers = Windows::UI::Xaml::Automation::Peers;
 namespace CalculatorApp::Common::Automation {}
 namespace CustomPeers = CalculatorApp::Common::Automation;
 
-//CalcManager Headers
+// CalcManager Headers
 #include "CalcManager/CalculatorVector.h"
 #include "CalcManager/ExpressionCommand.h"
 #include "CalcManager/CalculatorResource.h"

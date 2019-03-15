@@ -203,7 +203,7 @@ void CurrencyDataLoader::LoadData()
                 }
             }
 
-            co_return didLoad;            
+            co_return didLoad;
         }).then([this](bool didLoad)
         {
             UpdateDisplayedTimestamp();
@@ -275,7 +275,7 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencyRatioEquality(_In_ const U
             {
                 double ratio = (iter2->second).ratio;
 
-                // Round the raio to FORMATTER_DIGIT_COUNT digits using int math.
+                // Round the ratio to FORMATTER_DIGIT_COUNT digits using int math.
                 // Ex: to round 1.23456 to three digits, use
                 //     ((int) 1.23456 * (10^3)) / (10^3)
                 double scale = pow(10, FORMATTER_DIGIT_COUNT);
@@ -329,7 +329,7 @@ task<bool> CurrencyDataLoader::TryLoadDataFromCacheAsync()
         {
             loadComplete = co_await TryLoadDataFromWebAsync();
         }
-        
+
         if (!loadComplete)
         {
             loadComplete = co_await TryFinishLoadFromCacheAsync();

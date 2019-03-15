@@ -6,7 +6,7 @@
 
 namespace CalculatorApp
 {
-    
+
     public ref class WindowFrameService sealed
     {
     public:
@@ -16,16 +16,16 @@ namespace CalculatorApp
     internal:
         // createdByUs means any window that we create.
         // !createdByUs means the main window
-        static WindowFrameService^ CreateNewWindowFrameService(_In_ Windows::UI::Xaml::Controls::Frame^ viewFrame, 
-                                                               bool createdByUs, 
+        static WindowFrameService^ CreateNewWindowFrameService(_In_ Windows::UI::Xaml::Controls::Frame^ viewFrame,
+                                                               bool createdByUs,
                                                                Platform::WeakReference parent);
-        
+
         Windows::UI::Core::CoreDispatcher^ GetCoreDispatcher();
         int GetViewId();
-        
+
         void RegisterOnWindowClosingHandler(std::function<void()> onWindowClosingHandler);
         concurrency::task<void> HandleViewRelease();
-        
+
         // Throws InvalidArgumentException if a service is already registered with the specified id
         void RegisterRuntimeWindowService(Windows::UI::Xaml::Interop::TypeName serviceId, _In_opt_ Platform::Object^ service);
 
@@ -53,7 +53,7 @@ namespace CalculatorApp
         Platform::Agile<Windows::UI::Core::CoreWindow^> m_currentWindow;
         Platform::Agile<Windows::UI::Core::CoreDispatcher^> m_coreDispatcher;
         Windows::UI::Xaml::Controls::Frame^ m_frame;
-        int m_viewId;        
+        int m_viewId;
         Platform::WeakReference m_parent;
 
         std::unordered_map<Platform::String^, Platform::Object^> m_runtimeServicesMap;

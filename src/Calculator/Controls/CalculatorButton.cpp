@@ -54,7 +54,7 @@ void CalculatorButton::OnKeyUp(KeyRoutedEventArgs^ e)
 }
 
 void CalculatorButton::OnButtonIdPropertyChanged(
-    NumbersAndOperatorsEnum /*oldValue*/, 
+    NumbersAndOperatorsEnum /*oldValue*/,
     NumbersAndOperatorsEnum newValue)
 {
     this->CommandParameter = ref new CalculatorButtonPressedEventArgs(AuditoryFeedback, newValue);

@@ -158,7 +158,6 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
 {
     // US + Federated States of Micronesia, Marshall Islands, Palau
     bool useUSCustomaryAndFahrenheit = m_currentRegionCode == L"US" ||
-        m_currentRegionCode == L"PW" ||
         m_currentRegionCode == L"FM" ||
         m_currentRegionCode == L"MH" ||
         m_currentRegionCode == L"PW";
@@ -201,7 +200,7 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
     dataUnits.push_back(OrderedUnit{ UnitConverterUnits::Data_Exbibits, GetLocalizedStringName(L"UnitName_Exbibits"), GetLocalizedStringName(L"UnitAbbreviation_Exbibits"), 24 });
     dataUnits.push_back(OrderedUnit{ UnitConverterUnits::Data_Exbibytes, GetLocalizedStringName(L"UnitName_Exbibytes"), GetLocalizedStringName(L"UnitAbbreviation_Exbibytes"), 26 });
     dataUnits.push_back(OrderedUnit{ UnitConverterUnits::Data_Gibibits, GetLocalizedStringName(L"UnitName_Gibibits"), GetLocalizedStringName(L"UnitAbbreviation_Gibibits"), 12 });
-    dataUnits.push_back(OrderedUnit{ UnitConverterUnits::Data_Gibibytes, GetLocalizedStringName(L"UnitName_Gibibytes"), GetLocalizedStringName(L"UnitAbbreviation_Gibibytes"), 14 }); 
+    dataUnits.push_back(OrderedUnit{ UnitConverterUnits::Data_Gibibytes, GetLocalizedStringName(L"UnitName_Gibibytes"), GetLocalizedStringName(L"UnitAbbreviation_Gibibytes"), 14 });
     dataUnits.push_back(OrderedUnit{ UnitConverterUnits::Data_Gigabit, GetLocalizedStringName(L"UnitName_Gigabit"), GetLocalizedStringName(L"UnitAbbreviation_Gigabit"), 11 });
     dataUnits.push_back(OrderedUnit{ UnitConverterUnits::Data_Gigabyte, GetLocalizedStringName(L"UnitName_Gigabyte"), GetLocalizedStringName(L"UnitAbbreviation_Gigabyte"),13,  true, false, false});
     dataUnits.push_back(OrderedUnit{ UnitConverterUnits::Data_Kibibits, GetLocalizedStringName(L"UnitName_Kibibits"), GetLocalizedStringName(L"UnitAbbreviation_Kibibits"), 4 });

@@ -69,13 +69,13 @@ void _asinrat( PRAT *px, int32_t precision)
 
 {
     CREATETAYLOR();
-    DUPRAT(pret,*px); 
+    DUPRAT(pret,*px);
     DUPRAT(thisterm,*px);
     DUPNUM(n2,num_one);
 
     do
         {
-        NEXTTERM(xx,MULNUM(n2) MULNUM(n2) 
+        NEXTTERM(xx,MULNUM(n2) MULNUM(n2)
             INC(n2) DIVNUM(n2) INC(n2) DIVNUM(n2), precision);
         }
     while ( !SMALL_ENOUGH_RAT( thisterm, precision) );
@@ -100,7 +100,7 @@ void asinrat( PRAT *px, uint32_t radix, int32_t precision)
 
     (*px)->pp->sign = 1;
     (*px)->pq->sign = 1;
-    
+
     // Avoid the really bad part of the asin curve near +/-1.
     DUPRAT(phack,*px);
     subrat(&phack, rat_one, precision);
@@ -185,15 +185,15 @@ void _acosrat( PRAT *px, int32_t precision)
 {
     CREATETAYLOR();
 
-    createrat(thisterm); 
+    createrat(thisterm);
     thisterm->pp=longtonum( 1L, BASEX );
-    thisterm->pq=longtonum( 1L, BASEX ); 
+    thisterm->pq=longtonum( 1L, BASEX );
 
     DUPNUM(n2,num_one);
 
     do
         {
-        NEXTTERM(xx,MULNUM(n2) MULNUM(n2) 
+        NEXTTERM(xx,MULNUM(n2) MULNUM(n2)
             INC(n2) DIVNUM(n2) INC(n2) DIVNUM(n2), precision);
         }
     while ( !SMALL_ENOUGH_RAT( thisterm, precision) );
@@ -210,7 +210,7 @@ void acosrat( PRAT *px, uint32_t radix, int32_t precision)
 
     (*px)->pp->sign = 1;
     (*px)->pq->sign = 1;
-    
+
     if ( rat_equ( *px, rat_one, precision) )
         {
         if ( sgn == -1 )
@@ -274,7 +274,7 @@ void _atanrat( PRAT *px, int32_t precision)
 {
     CREATETAYLOR();
 
-    DUPRAT(pret,*px); 
+    DUPRAT(pret,*px);
     DUPRAT(thisterm,*px);
 
     DUPNUM(n2,num_one);
@@ -298,7 +298,7 @@ void atanrat( PRAT *px, uint32_t radix, int32_t precision)
 
     (*px)->pp->sign = 1;
     (*px)->pq->sign = 1;
-    
+
     if ( rat_gt( (*px), pt_eight_five, precision) )
         {
         if ( rat_gt( (*px), rat_two, precision) )
@@ -314,7 +314,7 @@ void atanrat( PRAT *px, uint32_t radix, int32_t precision)
             subrat(px, tmpx, precision);
             destroyrat( tmpx );
             }
-        else 
+        else
             {
             (*px)->pp->sign = sgn;
             DUPRAT(tmpx,*px);

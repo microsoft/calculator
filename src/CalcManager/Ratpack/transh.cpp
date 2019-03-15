@@ -80,7 +80,7 @@ void _sinhrat( PRAT *px, int32_t precision)
 
     CREATETAYLOR();
 
-    DUPRAT(pret,*px); 
+    DUPRAT(pret,*px);
     DUPRAT(thisterm,pret);
 
     DUPNUM(n2,num_one);
@@ -194,7 +194,7 @@ void coshrat( PRAT *px, uint32_t radix, int32_t precision)
         {
         _coshrat( px, radix, precision);
         }
-    // Since *px might be epsilon below 1 due to TRIMIT 
+    // Since *px might be epsilon below 1 due to TRIMIT
     // we need this trick here.
     if ( rat_lt(*px, rat_one, precision) )
         {
