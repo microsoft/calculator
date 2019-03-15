@@ -10,6 +10,7 @@
              d:DesignHeight="395"
              d:DesignWidth="315"
              Loaded="OnLoaded"
+             Unloaded="OnUnloaded"
              mc:Ignorable="d">
 
     <Grid x:Name="ProgRadixOps">

@@ -264,7 +264,7 @@ namespace CalculatorUnitTests
             VERIFY_IS_FALSE(loader.LoadFinished());
             VERIFY_IS_FALSE(loader.LoadedFromCache());
         }
-        
+
         TEST_METHOD(LoadFromCache_Fail_ResponseLanguageChanged)
         {
             DateTime now = Utils::GetUniversalSystemTime();

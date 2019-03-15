@@ -43,7 +43,7 @@ void FlipButtons::OnKeyUp(KeyRoutedEventArgs^ e)
 }
 
 void FlipButtons::OnButtonIdPropertyChanged(
-    NumbersAndOperatorsEnum /*oldValue*/, 
+    NumbersAndOperatorsEnum /*oldValue*/,
     NumbersAndOperatorsEnum newValue)
 {
     this->CommandParameter = newValue;

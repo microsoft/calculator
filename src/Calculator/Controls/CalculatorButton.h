@@ -13,7 +13,7 @@ namespace CalculatorApp
         public ref class CalculatorButton sealed: Windows::UI::Xaml::Controls::Button
         {
         public:
-  
+
             CalculatorButton();
             DEPENDENCY_PROPERTY_OWNER(CalculatorButton);
 

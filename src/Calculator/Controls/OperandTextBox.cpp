@@ -23,7 +23,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
 void OperandTextBox::OnApplyTemplate()
-{   
+{
     this->IsEnabled = false;
     this->IsHitTestVisible = false;
     this->IsTapEnabled = false;

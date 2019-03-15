@@ -2,20 +2,20 @@
 // Licensed under the MIT License.
 
 //-----------------------------------------------------------------------------
-//  Package Title  ratpak                                                   
-//  File           num.c         
-//  Copyright      (C) 1995-97 Microsoft                                    
-//  Date           01-16-95                                                 
-//                                                                          
-//                                                                          
-//  Description                                                             
-//                                                                          
-//     Contains number routines for add, mul, div, rem and other support       
-//  and longs.                                                              
-//                                                                          
-//  Special Information                                                     
-//                                                                          
-//                                                                          
+//  Package Title  ratpak
+//  File           num.c
+//  Copyright      (C) 1995-97 Microsoft
+//  Date           01-16-95
+//
+//
+//  Description
+//
+//     Contains number routines for add, mul, div, rem and other support
+//  and longs.
+//
+//  Special Information
+//
+//
 //-----------------------------------------------------------------------------
 #include "pch.h"
 #include "ratpak.h"
@@ -76,8 +76,8 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
     long  fcomplb = 0;  // fcomplb is a flag to signal b is negative.
 
     a=*pa;
-    
-    
+
+
     // Calculate the overlap of the numbers after alignment, this includes
     // necessary padding 0's
     cdigits = max( a->cdigit+a->exp, b->cdigit+b->exp ) -
@@ -90,7 +90,7 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
     pcha = a->mant;
     pchb = b->mant;
     pchc = c->mant;
-    
+
     // Figure out the sign of the numbers
     if ( a->sign != b->sign )
         {
@@ -98,21 +98,21 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
         fcompla = ( a->sign == -1 );
         fcomplb = ( b->sign == -1 );
         }
-    
+
     // Loop over all the digits, real and 0 padded. Here we know a and b are
-    // aligned 
+    // aligned
     for ( ;cdigits > 0; cdigits--, mexp++ )
         {
-        
+
         // Get digit from a, taking padding into account.
-        da = ( ( ( mexp >= a->exp ) && ( cdigits + a->exp - c->exp > 
-                    (c->cdigit - a->cdigit) ) ) ? 
+        da = ( ( ( mexp >= a->exp ) && ( cdigits + a->exp - c->exp >
+                    (c->cdigit - a->cdigit) ) ) ?
                     *pcha++ : 0 );
         // Get digit from b, taking padding into account.
-        db = ( ( ( mexp >= b->exp ) && ( cdigits + b->exp - c->exp > 
-                    (c->cdigit - b->cdigit) ) ) ? 
+        db = ( ( ( mexp >= b->exp ) && ( cdigits + b->exp - c->exp >
+                    (c->cdigit - b->cdigit) ) ) ?
                     *pchb++ : 0 );
-        
+
         // Handle complementing for a and b digit. Might be a better way, but
         // haven't found it yet.
         if ( fcompla )
@@ -123,20 +123,20 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
             {
             db = (MANTTYPE)(radix) - 1 - db;
             }
-        
+
         // Update carry as necessary
         cy = da + db + cy;
         *pchc++ = (MANTTYPE)(cy % (MANTTYPE)radix);
         cy /= (MANTTYPE)radix;
         }
-    
+
     // Handle carry from last sum as extra digit
     if ( cy && !(fcompla || fcomplb) )
         {
         *pchc++ = cy;
         c->cdigit++;
         }
-    
+
     // Compute sign of result
     if ( !(fcompla || fcomplb) )
         {
@@ -150,14 +150,14 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
             }
         else
             {
-            // In this particular case an overflow or underflow has occurred 
-            // and all the digits need to be complemented, at one time an 
-            // attempt to handle this above was made, it turned out to be much 
+            // In this particular case an overflow or underflow has occurred
+            // and all the digits need to be complemented, at one time an
+            // attempt to handle this above was made, it turned out to be much
             // slower on average.
             c->sign = -1;
             cy = 1;
             for ( ( cdigits = c->cdigit ), (pchc = c->mant);
-                cdigits > 0; 
+                cdigits > 0;
                 cdigits-- )
                 {
                 cy = (MANTTYPE)radix - (MANTTYPE)1 - *pchc + cy;
@@ -166,7 +166,7 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
                 }
             }
         }
-    
+
     // Remove leading zeros, remember digits are in order of
     // increasing significance. i.e. 100 would be 0,0,1
     while ( c->cdigit > 1 && *(--pchc) == 0 )
@@ -231,7 +231,7 @@ void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
     MANTTYPE  da = 0;       // da is the digit from the fist number.
     TWO_MANTTYPE  cy = 0;   // cy is the carry resulting from the addition of
                             // a multiplied row into the result.
-    TWO_MANTTYPE  mcy = 0;  // mcy is the resultant from a single 
+    TWO_MANTTYPE  mcy = 0;  // mcy is the resultant from a single
                             // multiply, AND the carry of that multiply.
     long  icdigit = 0;      // Index of digit being calculated in final result.
 
@@ -249,8 +249,8 @@ void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
         {
         da =  *pcha++;
         pchb = b->mant;
-        
-        // Shift pchc, and pchcoffset, one for each digit 
+
+        // Shift pchc, and pchcoffset, one for each digit
         pchc = pchcoffset++;
 
         for ( ibdigit = b->cdigit; ibdigit > 0; ibdigit-- )
@@ -268,23 +268,23 @@ void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
             // If result is nonzero, or while result of carry is nonzero...
             while ( mcy || cy )
                 {
-                
+
                 // update carry from addition(s) and multiply.
                 cy += (TWO_MANTTYPE)pchc[icdigit]+(mcy%(TWO_MANTTYPE)radix);
-                
-                // update result digit from 
+
+                // update result digit from
                 pchc[icdigit++]=(MANTTYPE)(cy%(TWO_MANTTYPE)radix);
-                
+
                 // update carries from
                 mcy /= (TWO_MANTTYPE)radix;
                 cy /= (TWO_MANTTYPE)radix;
                 }
-            
+
             pchb++;
             pchc++;
             }
         }
-    
+
     // prevent different kinds of zeros, by stripping leading duplicate zeros.
     // digits are in order of increasing significance.
     while ( c->cdigit > 1 && c->mant[c->cdigit-1] == 0 )
@@ -317,7 +317,7 @@ void remnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 {
     PNUMBER tmp = nullptr;     // tmp is the working remainder.
     PNUMBER lasttmp = nullptr; // lasttmp is the last remainder which worked.
-    
+
     // Once *pa is less than b, *pa is the remainder.
     while ( !lessnum( *pa, b ) )
         {
@@ -336,20 +336,20 @@ void remnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
         destroynum( lasttmp );
         lasttmp=longtonum( 0, radix);
 
-        while ( lessnum( tmp, *pa ) ) 
+        while ( lessnum( tmp, *pa ) )
             {
             DUPNUM( lasttmp, tmp );
             addnum( &tmp, tmp, radix);
             }
 
         if ( lessnum( *pa, tmp ) )
-            {    
+            {
             // too far, back up...
             destroynum( tmp );
             tmp=lasttmp;
             lasttmp= nullptr;
             }
-        
+
         // Subtract the working remainder from the remainder holder.
         tmp->sign = -1*(*pa)->sign;
         addnum( pa, tmp, radix);
@@ -357,7 +357,7 @@ void remnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
         destroynum( tmp );
         destroynum( lasttmp );
 
-        } 
+        }
 }
 
 
@@ -381,7 +381,7 @@ void __inline divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
 
 {
     if ( b->cdigit > 1 || b->mant[0] != 1 || b->exp != 0 )
-        {    
+        {
         // b is not one
         _divnum( pa, b, radix, precision);
         }
@@ -418,7 +418,7 @@ void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
     tmp->sign = a->sign;
     rem->exp = b->cdigit + b->exp - rem->cdigit;
 
-    // Build a table of multiplications of the divisor, this is quicker for 
+    // Build a table of multiplications of the divisor, this is quicker for
     // more than radix 'digits'
     list<PNUMBER> numberList{ longtonum(0L, radix) };
     for (unsigned long i = 1; i < radix; i++)
@@ -535,21 +535,21 @@ bool equnum( PNUMBER a, PNUMBER b )
             pb += b->cdigit - 1;
             cdigits = max( a->cdigit, b->cdigit );
             ccdigits = cdigits;
-            
+
             // Loop over all digits until we run out of digits or there is a
             // difference in the digits.
             for ( ;cdigits > 0; cdigits-- )
                 {
-                da = ( (cdigits > (ccdigits - a->cdigit) ) ? 
+                da = ( (cdigits > (ccdigits - a->cdigit) ) ?
                     *pa-- : 0 );
-                db = ( (cdigits > (ccdigits - b->cdigit) ) ? 
+                db = ( (cdigits > (ccdigits - b->cdigit) ) ?
                     *pb-- : 0 );
                 if ( da != db )
                     {
                     return false;
                     }
                 }
-            
+
             // In this case, they are equal.
             return true;
             }
@@ -604,9 +604,9 @@ bool lessnum( PNUMBER a, PNUMBER b )
             ccdigits = cdigits;
             for ( ;cdigits > 0; cdigits-- )
                 {
-                da = ( (cdigits > (ccdigits - a->cdigit) ) ? 
+                da = ( (cdigits > (ccdigits - a->cdigit) ) ?
                     *pa-- : 0 );
-                db = ( (cdigits > (ccdigits - b->cdigit) ) ? 
+                db = ( (cdigits > (ccdigits - b->cdigit) ) ?
                     *pb-- : 0 );
                 diff = da-db;
                 if ( diff )
@@ -639,8 +639,8 @@ bool zernum( PNUMBER a )
     MANTTYPE *pcha;
     length = a->cdigit;
     pcha = a->mant;
-    
-    // loop over all the digits until you find a nonzero or until you run 
+
+    // loop over all the digits until you find a nonzero or until you run
     // out of digits
     while ( length-- > 0 )
         {

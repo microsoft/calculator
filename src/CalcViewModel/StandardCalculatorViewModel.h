@@ -36,6 +36,7 @@ namespace CalculatorApp
             extern Platform::StringReference IsMemoryEmpty;
             extern Platform::StringReference IsInError;
             extern Platform::StringReference BinaryDisplayValue;
+            extern Platform::StringReference OpenParenthesisCount;
         }
 
         [Windows::UI::Xaml::Data::Bindable]
@@ -263,7 +264,7 @@ namespace CalculatorApp
 
             property Platform::String^ LeftParenthesisAutomationName
             {
-                Platform::String^ get() 
+                Platform::String^ get()
                 {
                     return GetLeftParenthesisAutomationName();
                 }
@@ -276,7 +277,7 @@ namespace CalculatorApp
 
             NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
 
-            //Memory feature related methods. They are internal because they need to called from the MainPage code-behind
+            // Memory feature related methods. They are internal because they need to called from the MainPage code-behind
             void OnMemoryButtonPressed();
             void OnMemoryItemPressed(Platform::Object^ memoryItemPosition);
             void OnMemoryAdd(Platform::Object^ memoryItemPosition);
@@ -290,6 +291,9 @@ namespace CalculatorApp
             void SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &commands);
             void SetHistoryExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector <std::shared_ptr<IExpressionCommand>>> const &commands);
             void SetParenthesisCount(_In_ const std::wstring& parenthesisCount);
+            void SetOpenParenthesisCountNarratorAnnouncement();
+            void OnNoRightParenAdded();
+            void SetNoParenAddedNarratorAnnouncement();
             void OnMaxDigitsReached();
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
@@ -337,6 +341,8 @@ namespace CalculatorApp
             Platform::String^ m_localizedMemoryItemChangedAutomationFormat;
             Platform::String^ m_localizedMemoryItemClearedAutomationFormat;
             Platform::String^ m_localizedMemoryCleared;
+            Platform::String^ m_localizedOpenParenthesisCountChangedAutomationFormat;
+            Platform::String^ m_localizedNoRightParenthesisAddedFormat;
 
             bool m_pinned;
             bool m_isOperandEnabled;
