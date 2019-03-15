@@ -595,8 +595,7 @@
             <!-- Resulting Date -->
             <TextBlock x:Uid="DateLabel"
                        Grid.Row="8"
-                       Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
-                       IsTextSelectionEnabled="True"/>
+                       Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
 
             <TextBlock x:Name="DateResultLabel"
                        Grid.Row="9"
