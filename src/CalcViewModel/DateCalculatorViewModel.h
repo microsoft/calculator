@@ -24,7 +24,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, IsDateDiffMode);
             OBSERVABLE_PROPERTY_RW(bool, IsAddMode);
             OBSERVABLE_PROPERTY_R(bool, IsDiffInDays);     // If diff is only in days or the dates are the same,
-                                                            // then show only one result and avoid redundancy
+                                                           // then show only one result and avoid redundancy
 
             OBSERVABLE_PROPERTY_RW(int, DaysOffset);
             OBSERVABLE_PROPERTY_RW(int, MonthsOffset);
