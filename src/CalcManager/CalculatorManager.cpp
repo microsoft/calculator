@@ -109,12 +109,19 @@ namespace CalculationManager
 
     /// <summary>
     /// Callback from the engine
-    /// Used to set the current unmatched open parenthesis count
     /// </summary>
     /// <param name="parenthesisCount">string containing the parenthesis count</param>
     void CalculatorManager::SetParenDisplayText(const wstring& parenthesisCount)
     {
         m_displayCallback->SetParenDisplayText(parenthesisCount);
+    }
+
+    /// <summary>
+    /// Callback from the engine
+    /// </summary>
+    void CalculatorManager::OnNoRightParenAdded()
+    {
+        m_displayCallback->OnNoRightParenAdded();
     }
 
     /// <summary>
@@ -428,9 +435,9 @@ namespace CalculationManager
             if (*commandItr >= MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizeNumber) &&
                 *commandItr <= MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizedNumberClearAll))
             {
-                //MemoryCommands(which have values above 255) are pushed on m_savedCommands upon casting to unsigned char.
-                //SerializeCommands uses m_savedCommands, which is then used in DeSerializeCommands.
-                //Hence, a simple cast to MemoryCommand is not sufficient.
+                // MemoryCommands(which have values above 255) are pushed on m_savedCommands upon casting to unsigned char.
+                // SerializeCommands uses m_savedCommands, which is then used in DeSerializeCommands.
+                // Hence, a simple cast to MemoryCommand is not sufficient.
                 MemoryCommand memoryCommand = static_cast<MemoryCommand>(*commandItr + UCHAR_MAX + 1);
                 unsigned int indexOfMemory = 0;
                 switch (memoryCommand)

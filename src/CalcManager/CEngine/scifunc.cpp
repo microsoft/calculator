@@ -70,7 +70,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
 
                 uint64_t w64Bits = result.ToUInt64_t();
                 uint64_t lsb = ((w64Bits & 0x01) == 1) ? 1 : 0;
-                w64Bits >>= 1; //RShift by 1
+                w64Bits >>= 1; // RShift by 1
                 w64Bits |= (lsb << (m_dwWordBitWidth - 1));
 
                 result = w64Bits;

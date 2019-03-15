@@ -411,7 +411,7 @@ extern void tanrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision);
 // angle type
 extern void tananglerat( _Inout_ PRAT *px, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
 
-extern void _dupnum(_In_ PNUMBER dest, _In_ PNUMBER src);
+extern void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER * const src);
 
 extern void _destroynum( _In_ PNUMBER pnum );
 extern void _destroyrat( _In_ PRAT prat );

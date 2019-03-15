@@ -62,6 +62,11 @@ namespace CalculatorManagerTest
             m_parenDisplay = parenthesisCount;
         }
 
+        void OnNoRightParenAdded() override
+        {
+            // This method is used to create a narrator announcement when a close parenthesis cannot be added because there are no open parentheses
+        }
+
         const wstring& GetPrimaryDisplay() const
         {
             return m_primaryDisplay;
@@ -521,7 +526,7 @@ namespace CalculatorManagerTest
 
         Command commands22[] = { Command::Command0, Command::CommandSQRT, Command::CommandNULL };
         TestDriver::Test(L"0", L"\x221A(0)", commands22);
-                
+
         Command commands23[] = { Command::Command1, Command::Command0, Command::Command2, Command::Command4,
             Command::CommandSQRT, Command::CommandSUB, Command::Command3, Command::Command2,
             Command::CommandADD, Command::CommandNULL };
@@ -588,11 +593,11 @@ namespace CalculatorManagerTest
         Command commands17[] = { Command::Command5, Command::CommandPWR, Command::Command0,
             Command::CommandADD, Command::CommandNULL };
         TestDriver::Test(L"1", L"5 ^ 0 + ", commands17);
-        
+
         Command commands18[] = { Command::Command0, Command::CommandPWR, Command::Command0,
             Command::CommandADD, Command::CommandNULL };
         TestDriver::Test(L"1", L"0 ^ 0 + ", commands18);
-        
+
         Command commands19[] = { Command::Command2, Command::Command7, Command::CommandSIGN, Command::CommandROOT,
             Command::Command3, Command::CommandADD, Command::CommandNULL };
         TestDriver::Test(L"-3", L"-27 yroot 3 + ", commands19, true, true);
@@ -854,7 +859,7 @@ namespace CalculatorManagerTest
         memorizedNumbers = pCalculatorDisplay->GetMemorizedNumbers();
         VERIFY_ARE_EQUAL(wstring(L"2"), memorizedNumbers.at(0));
 
-        // Test for trying to memorize invalid value 
+        // Test for trying to memorize invalid value
         m_calculatorManager->SendCommand(Command::Command2);
         m_calculatorManager->SendCommand(Command::CommandSIGN);
         m_calculatorManager->SendCommand(Command::CommandSQRT);

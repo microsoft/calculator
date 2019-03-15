@@ -46,7 +46,7 @@ UnitConverter::UnitConverter(_In_ const shared_ptr<IConverterDataLoader>& dataLo
 {
     m_dataLoader = dataLoader;
     m_currencyDataLoader = currencyDataLoader;
-    //declaring the delimiter character conversion map
+    // declaring the delimiter character conversion map
     quoteConversions[L'|'] = L"{p}";
     quoteConversions[L'['] = L"{lc}";
     quoteConversions[L']'] = L"{rc}";
@@ -434,7 +434,7 @@ wstring UnitConverter::Quote(const wstring& s)
 {
     wstringstream quotedString(wstringstream::out);
 
-    //Iterate over the delimiter characters we need to quote
+    // Iterate over the delimiter characters we need to quote
     wstring::const_iterator cursor = s.begin();
     while(cursor != s.end())
     {
@@ -472,7 +472,7 @@ wstring UnitConverter::Unquote(const wstring& s)
             }
             if (cursor == s.end())
             {
-                //badly formatted
+                // Badly formatted
                 break;
             }
             else
@@ -501,7 +501,7 @@ void UnitConverter::SendCommand(Command command)
         return;
     }
 
-    //TODO: Localization of characters
+    // TODO: Localization of characters
     bool clearFront = false;
     if (m_currentDisplay == L"0")
     {
@@ -723,7 +723,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
     vector<SuggestedValueIntermediate> intermediateVector;
     vector<SuggestedValueIntermediate> intermediateWhimsicalVector;
     unordered_map<Unit, ConversionData, UnitHash> ratios = m_ratioMap[m_fromType];
-    //Calculate converted values for every other unit type in this category, along with their magnitude
+    // Calculate converted values for every other unit type in this category, along with their magnitude
     for (const auto& cur : ratios)
     {
         if (cur.first != m_fromType && cur.first != m_toType)
@@ -740,7 +740,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         }
     }
 
-    //Sort the resulting list by absolute magnitude, breaking ties by choosing the positive value
+    // Sort the resulting list by absolute magnitude, breaking ties by choosing the positive value
     sort(intermediateVector.begin(), intermediateVector.end(), []
     (SuggestedValueIntermediate first, SuggestedValueIntermediate second)
     {
@@ -754,7 +754,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         }
     });
 
-    //Now that the list is sorted, iterate over it and populate the return vector with properly rounded and formatted return strings
+    // Now that the list is sorted, iterate over it and populate the return vector with properly rounded and formatted return strings
     for (const auto& entry : intermediateVector)
     {
         wstring roundedString;
@@ -778,7 +778,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
     }
 
     // The Whimsicals are determined differently
-    //Sort the resulting list by absolute magnitude, breaking ties by choosing the positive value
+    // Sort the resulting list by absolute magnitude, breaking ties by choosing the positive value
     sort(intermediateWhimsicalVector.begin(), intermediateWhimsicalVector.end(), []
     (SuggestedValueIntermediate first, SuggestedValueIntermediate second)
     {
@@ -792,7 +792,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         }
     });
 
-    //Now that the list is sorted, iterate over it and populate the return vector with properly rounded and formatted return strings
+    // Now that the list is sorted, iterate over it and populate the return vector with properly rounded and formatted return strings
     vector<tuple<wstring, Unit>> whimsicalReturnVector;
 
     for (const auto& entry : intermediateWhimsicalVector)

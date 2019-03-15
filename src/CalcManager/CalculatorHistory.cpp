@@ -23,7 +23,7 @@ unsigned int CalculatorHistory::AddToHistory(_In_ shared_ptr<CalculatorVector <p
 
     // to be changed when pszexp is back
     tokens->GetString(&generatedExpression);
-    // Prefixing and suffixing the special Unicode markers to ensure that the expression 
+    // Prefixing and suffixing the special Unicode markers to ensure that the expression
     // in the history doesn't get broken for RTL languages
     spHistoryItem->historyItemVector.expression = L'\u202d' + generatedExpression + L'\u202c';
     spHistoryItem->historyItemVector.result = wstring(result);

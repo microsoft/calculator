@@ -61,7 +61,7 @@ void* zmalloc(size_t a)
 //
 //-----------------------------------------------------------------------------
 
-void _dupnum(_In_ PNUMBER dest, _In_ PNUMBER src)
+void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER * const src)
 {
     memcpy(dest, src, (int)(sizeof(NUMBER) + ((src)->cdigit)*(sizeof(MANTTYPE))));
 }
@@ -801,7 +801,7 @@ PNUMBER longtonum( long inlong, uint32_t radix)
 //    RETURN: number
 //
 //    DESCRIPTION: Returns a number representation in the
-//    base   requested of the unsigned long value passed in. Being unsigned number it has no 
+//    base   requested of the unsigned long value passed in. Being unsigned number it has no
 //    negative number and takes the full range of unsigned number
 //
 //-----------------------------------------------------------------------------
@@ -817,7 +817,7 @@ PNUMBER Ulongtonum(unsigned long inlong, uint32_t radix)
     pnumret->cdigit = 0;
     pnumret->exp = 0;
     pnumret->sign = 1;
-    
+
     do    {
         *pmant++ = (MANTTYPE)(inlong % radix);
         inlong /= radix;
