@@ -43,7 +43,7 @@ namespace CalculatorApp::ViewModel
         StringReference BinaryDisplayValue(L"BinaryDisplayValue");
         StringReference OpenParenthesisCount(L"OpenParenthesisCount");
     }
-    
+
     namespace CalculatorResourceKeys
     {
         StringReference CalculatorExpression(L"Format_CalculatorExpression");
@@ -516,7 +516,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
 
     if (IsOperandTextCompletelySelected)
     {
-        //Clear older text;
+        // Clear older text;
         m_selectedExpressionLastData = L"";
         if (ch == L'x')
         {
@@ -606,7 +606,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object^ parameter)
     if (IsInError)
     {
         m_standardCalculatorManager.SendCommand(Command::CommandCLEAR);
-        
+
         if (!IsRecoverableCommand((int)numOpEnum))
         {
             return;
@@ -869,8 +869,8 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
                 Command cmdenum = ConvertToOperatorsEnum(mappedNumOp);
                 m_standardCalculatorManager.SendCommand(cmdenum);
 
-                // The CalcEngine state machine won't allow the negate command to be sent before any 
-                // other digits, so instead a flag is set and the command is sent after the first appropriate 
+                // The CalcEngine state machine won't allow the negate command to be sent before any
+                // other digits, so instead a flag is set and the command is sent after the first appropriate
                 // command.
                 if (sendNegate)
                 {
@@ -1196,10 +1196,10 @@ Array<unsigned char>^ StandardCalculatorViewModel::Serialize()
         writer->WriteInt32(data);
     }
 
-    //For ProgrammerMode
+    // For ProgrammerMode
     writer->WriteUInt32(static_cast<UINT32>(CurrentRadixType));
 
-    //Serialize commands of calculator manager
+    // Serialize commands of calculator manager
     vector<unsigned char> serializedCommand = m_standardCalculatorManager.SerializeCommands();
     writer->WriteUInt32(static_cast<UINT32>(serializedCommand.size()));
     writer->WriteBytes(ref new Array<unsigned char>(serializedCommand.data(), static_cast<unsigned int>(serializedCommand.size())));
@@ -1209,7 +1209,7 @@ Array<unsigned char>^ StandardCalculatorViewModel::Serialize()
         Utils::SerializeCommandsAndTokens(m_tokens, m_commands, writer);
     }
 
-    //Convert viewmodel data in writer to bytes
+    // Convert viewmodel data in writer to bytes
     IBuffer^ buffer = writer->DetachBuffer();
     DataReader^ reader = DataReader::FromBuffer(buffer);
     Platform::Array<unsigned char>^ viewModelDataAsBytes = ref new Array<unsigned char>(buffer->Length);
@@ -1257,7 +1257,7 @@ void StandardCalculatorViewModel::Deserialize(Array<unsigned char>^ state)
         m_standardCalculatorManager.DeSerializePrimaryDisplay(serializedPrimaryDisplay);
 
         CurrentRadixType = reader->ReadUInt32();
-        //Read command data and Deserialize
+        // Read command data and Deserialize
         UINT32 modeldatalength = reader->ReadUInt32();
         Array<unsigned char>^ modelDataAsBytes = ref new Array<unsigned char>(modeldatalength);
         reader->ReadBytes(modelDataAsBytes);
@@ -1604,7 +1604,7 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
         m_standardCalculatorManager.SendCommand(static_cast<CalculationManager::Command>(currentCommands[i]));
     }
 
-    if (fromHistory)   // This is for the cases where the expression is loaded from history    
+    if (fromHistory)   // This is for the cases where the expression is loaded from history
     {
         // To maintain F-E state of the engine, as the last operand hasn't reached engine by now
         m_standardCalculatorManager.SendCommand(Command::CommandFE);
@@ -1981,7 +1981,7 @@ void  StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
         }
         else
         {
-            //reset all vars
+            // Reset all vars
             isDecimal = false;
             isNegative = false;
             isExpMode = false;

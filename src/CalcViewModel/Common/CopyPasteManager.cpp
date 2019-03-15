@@ -135,7 +135,7 @@ String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode m
 
     wstring pasteExpression = pastedText->Data();
 
-    // Get english translated expression 
+    // Get english translated expression
     String^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(pasteExpression);
 
     // Removing the spaces, comma separator from the pasteExpression to allow pasting of expressions like 1  +     2+1,333

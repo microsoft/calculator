@@ -27,9 +27,9 @@ namespace CalculationManager
         ProgrammerModePrecision = 64
     };
 
-    // Numbering continues from the Enum Command from Command.h 
+    // Numbering continues from the Enum Command from Command.h
     // with some gap to ensure there is no overlap of these ids
-    // when static_cast<unsigned char> is performed on these ids 
+    // when static_cast<unsigned char> is performed on these ids
     // they shouldn't fall in any number range greater than 80. So never
     // make the memory command ids go below 330
     enum class MemoryCommand

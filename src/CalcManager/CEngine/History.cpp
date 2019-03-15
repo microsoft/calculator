@@ -413,7 +413,7 @@ int CHistoryCollector::AddCommand(_In_ const std::shared_ptr<IExpressionCommand>
     return nCommands - 1;
 }
 
-//To Update the operands in the Expression according to the current Radix 
+// To Update the operands in the Expression according to the current Radix 
 void CHistoryCollector::UpdateHistoryExpression(uint32_t radix, int32_t precision)
 {
     if (m_spTokens != nullptr)
@@ -451,7 +451,7 @@ void CHistoryCollector::SetDecimalSymbol(wchar_t decimalSymbol)
     m_decimalSymbol = decimalSymbol;
 }
 
-//Update the commands corresponding to the passed string Number
+// Update the commands corresponding to the passed string Number
 std::shared_ptr<CalculatorVector<int>> CHistoryCollector::GetOperandCommandsFromString(wstring_view numStr)
 {
     std::shared_ptr<CalculatorVector<int>> commands = std::make_shared<CalculatorVector<int>>();

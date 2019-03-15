@@ -20,11 +20,11 @@ namespace CalculatorApp
                 va_list args = NULL;
                 va_start(args, pMessage);
                 DWORD fmtReturnVal = FormatMessage(FORMAT_MESSAGE_FROM_STRING,
-                                                   pMessage, 
+                                                   pMessage,
                                                    0,
                                                    0,
-                                                   spBuffer.get(), 
-                                                   length, 
+                                                   spBuffer.get(),
+                                                   length,
                                                    &args);
                 va_end(args);
 

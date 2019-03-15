@@ -29,7 +29,7 @@ namespace CalculatorApp
         private:
 
             void OnButtonIdPropertyChanged(
-                NumbersAndOperatorsEnum oldValue, 
+                NumbersAndOperatorsEnum oldValue,
                 NumbersAndOperatorsEnum newValue);
         };
     }
