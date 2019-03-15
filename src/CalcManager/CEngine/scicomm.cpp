@@ -39,11 +39,11 @@ namespace {
         int iPrec;
 
         iPrec = 0;
-        while ((iPrec < ARRAYSIZE(rgbPrec)) && (nopCode != rgbPrec[iPrec]))
+        while ((iPrec < size(rgbPrec)) && (nopCode != rgbPrec[iPrec]))
         {
             iPrec += 2;
         }
-        if (iPrec >= ARRAYSIZE(rgbPrec))
+        if (iPrec >= size(rgbPrec))
         {
             iPrec = 0;
         }
@@ -947,7 +947,7 @@ wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE
     // Try to lookup the ID in the UFNE table
     int ids = 0;
     int iufne = nOpCode - IDC_UNARYFIRST;
-    if (iufne >= 0 && iufne < ARRAYSIZE(rgUfne))
+    if (iufne >= 0 && iufne < size(rgUfne))
     {
         if (fInv)
         {

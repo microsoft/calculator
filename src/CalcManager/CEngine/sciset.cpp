@@ -6,6 +6,7 @@
 
 using namespace CalcEngine;
 using namespace CalcEngine::RationalMath;
+using namespace std;
 
 // To be called when either the radix or num width changes. You can use -1 in either of these values to mean
 // dont change that.
@@ -55,7 +56,7 @@ LONG CCalcEngine::DwWordBitWidthFromeNumWidth(NUM_WIDTH /*numwidth*/)
     static constexpr int nBitMax[] = { 64, 32, 16, 8 };
     LONG wmax = nBitMax[0];
 
-    if (m_numwidth >= 0 && m_numwidth < ARRAYSIZE(nBitMax))
+    if (m_numwidth >= 0 && m_numwidth < size(nBitMax))
     {
         wmax = nBitMax[m_numwidth];
     }
@@ -68,7 +69,7 @@ uint32_t CCalcEngine::NRadixFromRadixType(RADIX_TYPE radixtype)
     uint32_t radix = 10;
 
     // convert special bases into symbolic values
-    if (radixtype >= 0 && radixtype < ARRAYSIZE(rgnRadish))
+    if (radixtype >= 0 && radixtype < size(rgnRadish))
     {
         radix = rgnRadish[radixtype];
     }

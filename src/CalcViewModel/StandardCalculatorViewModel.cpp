@@ -1647,7 +1647,7 @@ bool StandardCalculatorViewModel::IsOpnd(int nOpCode)
         Command::CommandPNT
     };
 
-    for (int i = 0; i < ARRAYSIZE(opnd); i++)
+    for (int i = 0; i < size(opnd); i++)
     {
         if (nOpCode == static_cast<int>(opnd[i]))
         {
@@ -1678,7 +1678,7 @@ bool StandardCalculatorViewModel::IsUnaryOp(int nOpCode)
         Command::CommandCUB
     };
 
-    for (int i = 0; i < ARRAYSIZE(unaryOp); i++)
+    for (int i = 0; i < size(unaryOp); i++)
     {
         if (nOpCode == static_cast<int>(unaryOp[i]))
         {
@@ -1705,7 +1705,7 @@ bool StandardCalculatorViewModel::IsTrigOp(int nOpCode)
         Command::CommandATAN
     };
 
-    for (int i = 0; i < ARRAYSIZE(trigOp); i++)
+    for (int i = 0; i < size(trigOp); i++)
     {
         if (nOpCode == static_cast<int>(trigOp[i]))
         {
@@ -1728,7 +1728,7 @@ bool StandardCalculatorViewModel::IsBinOp(int nOpCode)
         Command::CommandPWR
     };
 
-    for (int i = 0; i < ARRAYSIZE(binOp); i++)
+    for (int i = 0; i < size(binOp); i++)
     {
         if (nOpCode == static_cast<int>(binOp[i]))
         {
@@ -1762,7 +1762,7 @@ bool StandardCalculatorViewModel::IsRecoverableCommand(int nOpCode)
         Command::CommandF
     };
 
-    for (int i = 0; i < ARRAYSIZE(recoverableCommands); i++)
+    for (int i = 0; i < size(recoverableCommands); i++)
     {
         if (nOpCode == static_cast<int>(recoverableCommands[i]))
         {

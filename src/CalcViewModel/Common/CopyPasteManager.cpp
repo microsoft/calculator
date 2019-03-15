@@ -404,7 +404,7 @@ wstring CopyPasteManager::SanitizeOperand(const wstring& operand)
 {
     wchar_t unWantedChars[] = { L'\'', L'_', L'`', L'(', L')', L'-' };
 
-    return Utils::RemoveUnwantedCharsFromWstring(operand, unWantedChars, ARRAYSIZE(unWantedChars));
+    return Utils::RemoveUnwantedCharsFromWstring(operand, unWantedChars, static_cast<int>(size(unWantedChars)));
 }
 
 bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, unsigned long long int& result)
