@@ -59,7 +59,7 @@ LocalizationService^ LocalizationService::GetInstance()
 LocalizationService::LocalizationService()
 {
     m_language = ApplicationLanguages::Languages->GetAt(0);
-    m_flowDirection = ResourceContext::GetForCurrentView()->QualifierValues->Lookup(L"LayoutDirection")
+    m_flowDirection = ResourceContext::GetForViewIndependentUse()->QualifierValues->Lookup(L"LayoutDirection")
         != L"LTR" ? FlowDirection::RightToLeft : FlowDirection::LeftToRight;
 
     auto localeName = std::string(m_language->Begin(), m_language->End());

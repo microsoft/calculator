@@ -504,12 +504,6 @@ bool CurrencyDataLoader::TryParseWebResponses(
         && TryParseAllRatiosData(allRatiosJson, allRatiosData);
 }
 
-Platform::String ^ te(const UCM::CurrencyStaticData& s)
-{
-    return ref new Platform::String(s.countryName.c_str());
-};
-
-
 bool CurrencyDataLoader::TryParseStaticData(_In_ String^ rawJson, _Inout_ vector<UCM::CurrencyStaticData>& staticData)
 {
     JsonArray^ data = nullptr;
@@ -552,11 +546,11 @@ bool CurrencyDataLoader::TryParseStaticData(_In_ String^ rawJson, _Inout_ vector
         };
     }
 
-    auto sortCurrencyNames = [](UCM::CurrencyStaticData s) {
-        return ref new Platform::String(s.countryName.c_str());
+    auto sortCountryNames = [](const UCM::CurrencyStaticData & s) {
+        return ref new String(s.countryName.c_str());
     };
 
-    LocalizationService::GetInstance()->Sort<UCM::CurrencyStaticData>(staticData, sortCurrencyNames);
+    LocalizationService::GetInstance()->Sort<UCM::CurrencyStaticData>(staticData, sortCountryNames);
 
     return true;
 }
