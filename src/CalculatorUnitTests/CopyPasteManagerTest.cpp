@@ -466,7 +466,7 @@ namespace CalculatorUnitTests
     12. octal numbers
     13. very large number
     14. number with some escape characters in b/w like ",/. \n\r ", '"
-    15. expression involving sin, cos or other mathematic functions
+    15. expression involving sin, cos or other mathematical functions
     16. expression having more than one operator in b/w operands
     17. expression involving open and close parenthesis (, )
 
@@ -510,25 +510,25 @@ namespace CalculatorUnitTests
     void CopyPasteManagerTest::ValidateProgrammerHexPasteExpressionTest()
     {
         String^ qwordPositiveInput[] = { L"123", L"123+456", L"1,234", L"1 2 3", L"1'2'3'4", L"1_2_3_4", L"12345e-23"/*note: here is considered as E of hex*/, L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85", L"\f\n1+2\t\r\v\x85", L"\n 1+\n2 ", L"e+234", L"1\"2", L"(123)+(456)", L"abcdef", L"ABab", L"ABCDF21abc41a"/*within boundary*/, L"0x1234", L"0xab12", L"0X1234", L"AB12h", L"BC34H", L"1234u", L"1234ul", L"1234ULL", L"2+2=", L"2+2=   " };
-        String^ qwordNegativeInput[] = { L"+123", L"1.23"/*floating number*/, L"1''2", L"'123", L"123'", L"1__2", L"_123", L"123_", L"-133", L"1.2e+023", L"1.2e23"/*unsigned exponent*/, L"xyz", L"ABCDEF21abc41abc7"/*outside boundary of 16 digitis*/, L"SIN(2)", L"123+-234", L"1234x", L"A0x1234", L"0xx1234", L"1234uu", L"1234ulll", L"2+2==", L"2=+2" };
+        String^ qwordNegativeInput[] = { L"+123", L"1.23"/*floating number*/, L"1''2", L"'123", L"123'", L"1__2", L"_123", L"123_", L"-133", L"1.2e+023", L"1.2e23"/*unsigned exponent*/, L"xyz", L"ABCDEF21abc41abc7"/*outside boundary of 16 digits*/, L"SIN(2)", L"123+-234", L"1234x", L"A0x1234", L"0xx1234", L"1234uu", L"1234ulll", L"2+2==", L"2=+2" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateProgrammerHexQwordPasteExpression, qwordPositiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateProgrammerHexQwordPasteExpression, qwordNegativeInput);
 
         String^ dwordPositiveInput[] = { L"123", L"123+456", L"1,234", L"1 2 3", L"1'2'3'4", L"1_2_3_4", L"12345e-23"/*note: here is considered as E of hex*/, L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85", L"\n 1+\n2 ", L"e+234", L"1\"2", L"(123)+(456)", L"abcdef", L"ABab", L"ABCD123a"/*within boundary*/, L"0x1234", L"0xab12", L"0X1234", L"AB12h", L"BC34H", L"1234u", L"1234ul", L"1234ULL" };
-        String^ dwordNegativeInput[] = { L"+123", L"1.23"/*floating number*/, L"1''2", L"'123", L"123'", L"1__2", L"_123", L"123_", L"-133", L"1.2e+023", L"1.2e23"/*unsigned exponent*/, L"xyz", L"ABCD123ab"/*outside boundary of 8 digitis*/, L"SIN(2)", L"123+-234", L"1234x", L"A0x1234", L"0xx1234", L"1234uu", L"1234ulll" };
+        String^ dwordNegativeInput[] = { L"+123", L"1.23"/*floating number*/, L"1''2", L"'123", L"123'", L"1__2", L"_123", L"123_", L"-133", L"1.2e+023", L"1.2e23"/*unsigned exponent*/, L"xyz", L"ABCD123ab"/*outside boundary of 8 digits*/, L"SIN(2)", L"123+-234", L"1234x", L"A0x1234", L"0xx1234", L"1234uu", L"1234ulll" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateProgrammerHexDwordPasteExpression, dwordPositiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateProgrammerHexDwordPasteExpression, dwordNegativeInput);
 
         String^ wordPositiveInput[] = { L"123", L"13+456", L"1,34", L"12 3", L"1'2'3'4", L"1_2_3_4", L"15e-23"/*note: here is considered as E of hex*/, L"\r1", L"\n\r1,4", L"\n1,4\n", L"\f\n1+2\t\r\v", L"\n 1+\n2 ", L"e+24", L"1\"2", L"(23)+(4)", L"aef", L"ABab", L"A1a3"/*within boundary*/, L"0x1234", L"0xab12", L"0X1234", L"AB12h", L"BC34H", L"1234u", L"1234ul", L"1234ULL" };
-        String^ wordNegativeInput[] = { L"+123", L"1.23"/*floating number*/, L"1''2", L"'123", L"123'", L"1__2", L"_123", L"123_", L"-133", L"1.2e+023", L"1.2e23"/*unsigned exponent*/, L"xyz", L"A1a3b"/*outside boundary of 4 digitis*/, L"SIN(2)", L"123+-234", L"1234x", L"A0x1234", L"0xx1234", L"1234uu", L"1234ulll" };
+        String^ wordNegativeInput[] = { L"+123", L"1.23"/*floating number*/, L"1''2", L"'123", L"123'", L"1__2", L"_123", L"123_", L"-133", L"1.2e+023", L"1.2e23"/*unsigned exponent*/, L"xyz", L"A1a3b"/*outside boundary of 4 digits*/, L"SIN(2)", L"123+-234", L"1234x", L"A0x1234", L"0xx1234", L"1234uu", L"1234ulll" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateProgrammerHexWordPasteExpression, wordPositiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateProgrammerHexWordPasteExpression, wordNegativeInput);
 
         String^ bytePositiveInput[] = { L"13", L"13+6", L"1,4", L"2 3", L"1'2", L"1_2", L"5e-3"/*note: here is considered as E of hex*/, L"\r1", L"a", L"ab", L"A1"/*within boundary*/, L"0x12", L"0xab", L"0X12", L"A9h", L"B8H", L"12u", L"12ul", L"12ULL" };
-        String^ byteNegativeInput[] = { L"+3", L"1.2"/*floating number*/, L"1''2", L"'12", L"12'", L"1__2", L"_12", L"12_", L"-3", L"1.1e+02", L"1.2e3"/*unsigned exponent*/, L"xz", L"A3a"/*outside boundary of 2 digitis*/, L"SIN(2)", L"13+-23", L"12x", L"A0x1", L"0xx12", L"12uu", L"12ulll" };
+        String^ byteNegativeInput[] = { L"+3", L"1.2"/*floating number*/, L"1''2", L"'12", L"12'", L"1__2", L"_12", L"12_", L"-3", L"1.1e+02", L"1.2e3"/*unsigned exponent*/, L"xz", L"A3a"/*outside boundary of 2 digits*/, L"SIN(2)", L"13+-23", L"12x", L"A0x1", L"0xx12", L"12uu", L"12ulll" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateProgrammerHexBytePasteExpression, bytePositiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateProgrammerHexBytePasteExpression, byteNegativeInput);

@@ -79,7 +79,7 @@ namespace CalculatorUnitTests
             }
         }
 
-        // Create 3 separate instances of Calulator in different modes
+        // Create 3 separate instances of Calculator in different modes
         TEST_METHOD(InitializeMultipleModeInstancesTest)
         {
             std::vector<StandardCalculatorViewModel^> viewModels(3);
@@ -584,7 +584,7 @@ namespace CalculatorUnitTests
             }
         }
 
-        // Perform calculations on 3 separate instances of Calcuator and verify that their Memory List items are maintained separately
+        // Perform calculations on 3 separate instances of Calculator and verify that their Memory List items are maintained separately
         TEST_METHOD(MultipleModesMemoryAddItemTest)
         {
             std::vector<StandardCalculatorViewModel^> viewModels(3);
