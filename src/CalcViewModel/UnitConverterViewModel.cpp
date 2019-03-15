@@ -988,7 +988,7 @@ void UnitConverterViewModel::OnPaste(String^ stringToPaste, ViewMode mode)
             }
 
             // Negate is only allowed if it's the first legal character, which is handled above.
-            if (NumbersAndOperatorsEnum::None != op && NumbersAndOperatorsEnum::Negate != op)
+            if (NumbersAndOperatorsEnum::Negate != op)
             {
                 UCM::Command cmd = CommandFromButtonId(op);
                 m_model->SendCommand(cmd);
