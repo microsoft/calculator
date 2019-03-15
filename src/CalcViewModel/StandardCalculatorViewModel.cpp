@@ -39,7 +39,7 @@ namespace
     StringReference CalculationResultAutomationNamePropertyName(L"CalculationResultAutomationName");
 }
 
-namespace CalculatorApp::ViewModel::CalculatorResourceKeys
+namespace CalculatorResourceKeys
 {
     StringReference CalculatorExpression(L"Format_CalculatorExpression");
     StringReference CalculatorResults(L"Format_CalculatorResults");
@@ -49,6 +49,8 @@ namespace CalculatorApp::ViewModel::CalculatorResourceKeys
     StringReference OctButton(L"Format_OctButtonValue");
     StringReference BinButton(L"Format_BinButtonValue");
     StringReference LeftParenthesisAutomationFormat(L"Format_OpenParenthesisAutomationNamePrefix");
+    StringReference OpenParenthesisCountAutomationFormat(L"Format_OpenParenthesisCountAutomationNamePrefix");
+    StringReference NoParenthesisAdded(L"NoRightParenthesisAdded_Announcement");
     StringReference MaxDigitsReachedFormat(L"Format_MaxDigitsReached");
     StringReference ButtonPressFeedbackFormat(L"Format_ButtonPressAuditoryFeedback");
     StringReference MemorySave(L"Format_MemorySave");
@@ -87,7 +89,9 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_localizedMemorySavedAutomationFormat(nullptr),
     m_localizedMemoryItemChangedAutomationFormat(nullptr),
     m_localizedMemoryItemClearedAutomationFormat(nullptr),
-    m_localizedMemoryCleared(nullptr)
+    m_localizedMemoryCleared(nullptr),
+    m_localizedOpenParenthesisCountChangedAutomationFormat(nullptr),
+    m_localizedNoRightParenthesisAddedFormat(nullptr)
 {
     WeakReference calculatorViewModel(this);
     m_calculatorDisplay.SetCallback(calculatorViewModel);
@@ -219,6 +223,34 @@ void StandardCalculatorViewModel::SetParenthesisCount(_In_ const wstring& parent
         OpenParenthesisCount = ref new String(parenthesisCount.c_str());
         RaisePropertyChanged("LeftParenthesisAutomationName");
     }
+}
+
+void StandardCalculatorViewModel::SetOpenParenthesisCountNarratorAnnouncement()
+{
+    String^ parenthesisCount = ((m_OpenParenthesisCount == nullptr) ? "0" : m_OpenParenthesisCount);
+    wstring localizedParenthesisCount = parenthesisCount->Data();
+    LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
+
+    String^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
+        CalculatorResourceKeys::OpenParenthesisCountAutomationFormat,
+        m_localizedOpenParenthesisCountChangedAutomationFormat,
+        localizedParenthesisCount.c_str());
+
+    Announcement = CalculatorAnnouncement::GetOpenParenthesisCountChangedAnnouncement(announcement);
+}
+
+void StandardCalculatorViewModel::OnNoRightParenAdded()
+{
+    SetNoParenAddedNarratorAnnouncement();
+}
+
+void StandardCalculatorViewModel::SetNoParenAddedNarratorAnnouncement()
+{
+    String^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
+        CalculatorResourceKeys::NoParenthesisAdded,
+        m_localizedNoRightParenthesisAddedFormat);
+
+    Announcement = CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(announcement);
 }
 
 void StandardCalculatorViewModel::DisableButtons(CommandType selectedExpressionCommandType)
@@ -478,7 +510,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
 
     if (IsOperandTextCompletelySelected)
     {
-        //Clear older text;
+        // Clear older text;
         m_selectedExpressionLastData = L"";
         if (ch == L'x')
         {
@@ -520,6 +552,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
             length = m_selectedExpressionLastData->Length() + 1;
             if (length > 50)
             {
+                delete [] temp;
                 return;
             }
             for (; i < length; ++i)
@@ -567,7 +600,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object^ parameter)
     if (IsInError)
     {
         m_standardCalculatorManager.SendCommand(Command::CommandCLEAR);
-        
+
         if (!IsRecoverableCommand((int)numOpEnum))
         {
             return;
@@ -830,8 +863,8 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
                 Command cmdenum = ConvertToOperatorsEnum(mappedNumOp);
                 m_standardCalculatorManager.SendCommand(cmdenum);
 
-                // The CalcEngine state machine won't allow the negate command to be sent before any 
-                // other digits, so instead a flag is set and the command is sent after the first appropriate 
+                // The CalcEngine state machine won't allow the negate command to be sent before any
+                // other digits, so instead a flag is set and the command is sent after the first appropriate
                 // command.
                 if (sendNegate)
                 {
@@ -1157,10 +1190,10 @@ Array<unsigned char>^ StandardCalculatorViewModel::Serialize()
         writer->WriteInt32(data);
     }
 
-    //For ProgrammerMode
+    // For ProgrammerMode
     writer->WriteUInt32(static_cast<UINT32>(CurrentRadixType));
 
-    //Serialize commands of calculator manager
+    // Serialize commands of calculator manager
     vector<unsigned char> serializedCommand = m_standardCalculatorManager.SerializeCommands();
     writer->WriteUInt32(static_cast<UINT32>(serializedCommand.size()));
     writer->WriteBytes(ref new Array<unsigned char>(serializedCommand.data(), static_cast<unsigned int>(serializedCommand.size())));
@@ -1170,7 +1203,7 @@ Array<unsigned char>^ StandardCalculatorViewModel::Serialize()
         Utils::SerializeCommandsAndTokens(m_tokens, m_commands, writer);
     }
 
-    //Convert viewmodel data in writer to bytes
+    // Convert viewmodel data in writer to bytes
     IBuffer^ buffer = writer->DetachBuffer();
     DataReader^ reader = DataReader::FromBuffer(buffer);
     Platform::Array<unsigned char>^ viewModelDataAsBytes = ref new Array<unsigned char>(buffer->Length);
@@ -1218,7 +1251,7 @@ void StandardCalculatorViewModel::Deserialize(Array<unsigned char>^ state)
         m_standardCalculatorManager.DeSerializePrimaryDisplay(serializedPrimaryDisplay);
 
         CurrentRadixType = reader->ReadUInt32();
-        //Read command data and Deserialize
+        // Read command data and Deserialize
         UINT32 modeldatalength = reader->ReadUInt32();
         Array<unsigned char>^ modelDataAsBytes = ref new Array<unsigned char>(modeldatalength);
         reader->ReadBytes(modelDataAsBytes);
@@ -1565,7 +1598,7 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
         m_standardCalculatorManager.SendCommand(static_cast<CalculationManager::Command>(currentCommands[i]));
     }
 
-    if (fromHistory)   // This is for the cases where the expression is loaded from history    
+    if (fromHistory)   // This is for the cases where the expression is loaded from history
     {
         // To maintain F-E state of the engine, as the last operand hasn't reached engine by now
         m_standardCalculatorManager.SendCommand(Command::CommandFE);
@@ -1609,7 +1642,7 @@ bool StandardCalculatorViewModel::IsOpnd(int nOpCode)
         Command::CommandPNT
     };
 
-    for (int i = 0; i < ARRAYSIZE(opnd); i++)
+    for (int i = 0; i < size(opnd); i++)
     {
         if (nOpCode == static_cast<int>(opnd[i]))
         {
@@ -1640,7 +1673,7 @@ bool StandardCalculatorViewModel::IsUnaryOp(int nOpCode)
         Command::CommandCUB
     };
 
-    for (int i = 0; i < ARRAYSIZE(unaryOp); i++)
+    for (int i = 0; i < size(unaryOp); i++)
     {
         if (nOpCode == static_cast<int>(unaryOp[i]))
         {
@@ -1667,7 +1700,7 @@ bool StandardCalculatorViewModel::IsTrigOp(int nOpCode)
         Command::CommandATAN
     };
 
-    for (int i = 0; i < ARRAYSIZE(trigOp); i++)
+    for (int i = 0; i < size(trigOp); i++)
     {
         if (nOpCode == static_cast<int>(trigOp[i]))
         {
@@ -1690,7 +1723,7 @@ bool StandardCalculatorViewModel::IsBinOp(int nOpCode)
         Command::CommandPWR
     };
 
-    for (int i = 0; i < ARRAYSIZE(binOp); i++)
+    for (int i = 0; i < size(binOp); i++)
     {
         if (nOpCode == static_cast<int>(binOp[i]))
         {
@@ -1724,7 +1757,7 @@ bool StandardCalculatorViewModel::IsRecoverableCommand(int nOpCode)
         Command::CommandF
     };
 
-    for (int i = 0; i < ARRAYSIZE(recoverableCommands); i++)
+    for (int i = 0; i < size(recoverableCommands); i++)
     {
         if (nOpCode == static_cast<int>(recoverableCommands[i]))
         {
@@ -1942,7 +1975,7 @@ void  StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
         }
         else
         {
-            //reset all vars
+            // Reset all vars
             isDecimal = false;
             isNegative = false;
             isExpMode = false;

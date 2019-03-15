@@ -75,7 +75,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, IsDwordEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsWordEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsByteEnabled);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, OpenParenthesisCount);
+            OBSERVABLE_NAMED_PROPERTY_RW(Platform::String^, OpenParenthesisCount);
             OBSERVABLE_PROPERTY_RW(int, CurrentRadixType);
             OBSERVABLE_PROPERTY_RW(bool, AreTokensUpdated);
             OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
@@ -257,7 +257,7 @@ namespace CalculatorApp
 
             property Platform::String^ LeftParenthesisAutomationName
             {
-                Platform::String^ get() 
+                Platform::String^ get()
                 {
                     return GetLeftParenthesisAutomationName();
                 }
@@ -270,7 +270,7 @@ namespace CalculatorApp
 
             NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
 
-            //Memory feature related methods. They are internal because they need to called from the MainPage code-behind
+            // Memory feature related methods. They are internal because they need to called from the MainPage code-behind
             void OnMemoryButtonPressed();
             void OnMemoryItemPressed(Platform::Object^ memoryItemPosition);
             void OnMemoryAdd(Platform::Object^ memoryItemPosition);
@@ -284,6 +284,9 @@ namespace CalculatorApp
             void SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &commands);
             void SetHistoryExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector <std::shared_ptr<IExpressionCommand>>> const &commands);
             void SetParenthesisCount(_In_ const std::wstring& parenthesisCount);
+            void SetOpenParenthesisCountNarratorAnnouncement();
+            void OnNoRightParenAdded();
+            void SetNoParenAddedNarratorAnnouncement();
             void OnMaxDigitsReached();
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
@@ -331,6 +334,8 @@ namespace CalculatorApp
             Platform::String^ m_localizedMemoryItemChangedAutomationFormat;
             Platform::String^ m_localizedMemoryItemClearedAutomationFormat;
             Platform::String^ m_localizedMemoryCleared;
+            Platform::String^ m_localizedOpenParenthesisCountChangedAutomationFormat;
+            Platform::String^ m_localizedNoRightParenthesisAddedFormat;
 
             bool m_pinned;
             bool m_isOperandEnabled;

@@ -87,7 +87,7 @@ namespace CalculatorApp
 
             bool TryParseWebResponses(
                 _In_ Platform::String^ staticDataJson,
-                _In_ Platform::String^ allRatiosJson, 
+                _In_ Platform::String^ allRatiosJson,
                 _Inout_ std::vector<UCM::CurrencyStaticData>& staticData,
                 _Inout_ CurrencyRatioMap& allRatiosData);
             bool TryParseStaticData(_In_ Platform::String^ rawJson, _Inout_ std::vector<UCM::CurrencyStaticData>& staticData);

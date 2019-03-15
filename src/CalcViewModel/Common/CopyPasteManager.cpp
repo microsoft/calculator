@@ -135,7 +135,7 @@ String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode m
 
     wstring pasteExpression = pastedText->Data();
 
-    // Get english translated expression 
+    // Get english translated expression
     String^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(pasteExpression);
 
     // Removing the spaces, comma separator from the pasteExpression to allow pasting of expressions like 1  +     2+1,333
@@ -404,7 +404,7 @@ wstring CopyPasteManager::SanitizeOperand(const wstring& operand)
 {
     wchar_t unWantedChars[] = { L'\'', L'_', L'`', L'(', L')', L'-' };
 
-    return Utils::RemoveUnwantedCharsFromWstring(operand, unWantedChars, ARRAYSIZE(unWantedChars));
+    return Utils::RemoveUnwantedCharsFromWstring(operand, unWantedChars, static_cast<int>(size(unWantedChars)));
 }
 
 bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, unsigned long long int& result)
