@@ -140,7 +140,7 @@ String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode m
     String^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(pasteExpression);
 
     // Removing the spaces, comma separator from the pasteExpression to allow pasting of expressions like 1  +     2+1,333
-    pasteExpression = Utils::RemoveUnwantedCharsFromWstring(englishString->Data());
+    pasteExpression = RemoveUnwantedCharsFromWstring(englishString->Data());
 
     // If the last character is an = sign, remove it from the pasteExpression to allow evaluating the result on paste.
     if (!pasteExpression.empty() && pasteExpression.back() == L'=')
@@ -567,4 +567,22 @@ size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int num
     }
 
     return len;
+}
+
+// return wstring after removing characters like space, comma, double quotes, and monetary prefix currency symbols supported by the Windows keyboard:
+// yen or yuan(¥) - 165
+// unspecified currency sign(¤) - 164
+// Ghanaian cedi(₵) - 8373
+// dollar or peso($) - 36
+// colón(₡) - 8353
+// won(₩) - 8361
+// shekel(₪) - 8362
+// naira(₦) - 8358
+// Indian rupee(₹) - 8377
+// pound(£) - 163
+// euro(€) - 8364
+wstring CopyPasteManager::RemoveUnwantedCharsFromWstring(const wstring& input)
+{
+    wchar_t unWantedChars[] = { L' ', L',', L'"', 165, 164, 8373, 36, 8353, 8361, 8362, 8358, 8377, 163, 8364, 8234, 8235, 8236, 8237 };
+    return Utils::RemoveUnwantedCharsFromWstring(input, unWantedChars, 18);
 }

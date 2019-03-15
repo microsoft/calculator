@@ -280,7 +280,6 @@ namespace Utils
     Platform::String^ GetStringValue(Platform::String^ input);
     bool IsLastCharacterTarget(std::wstring const &input, wchar_t target);
     std::wstring RemoveUnwantedCharsFromWstring(std::wstring inputString, wchar_t* unwantedChars, unsigned int size);
-    std::wstring RemoveUnwantedCharsFromWstring(std::wstring input);
     double GetDoubleFromWstring(std::wstring input);
     int GetWindowId();
     void RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Windows::UI::Core::CoreDispatcher^ currentDispatcher);
