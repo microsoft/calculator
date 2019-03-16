@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -494,6 +494,26 @@ namespace DateCalculationUnitTests
             }
         }
 
+        TEST_METHOD(DateCalcViewModelDateDiffIgnoreSignTest)
+        {
+            auto viewModel = ref new DateCalculatorViewModel();
+
+            viewModel->IsDateDiffMode = true;
+            VERIFY_IS_TRUE(viewModel->IsDateDiffMode);
+
+            viewModel->FromDate = DateUtils::SystemTimeToDateTime(date[10]);
+            viewModel->ToDate = DateUtils::SystemTimeToDateTime(date[6]);
+
+            VERIFY_IS_FALSE(viewModel->IsDiffInDays);
+            VERIFY_ARE_EQUAL(StringReference(L"305 days"), viewModel->StrDateDiffResultInDays);
+            VERIFY_ARE_EQUAL(StringReference(L"10 months"), viewModel->StrDateDiffResult);
+            viewModel->FromDate = DateUtils::SystemTimeToDateTime(date[6]);
+            viewModel->ToDate = DateUtils::SystemTimeToDateTime(date[10]);
+            VERIFY_IS_FALSE(viewModel->IsDiffInDays);
+            VERIFY_ARE_EQUAL(StringReference(L"305 days"), viewModel->StrDateDiffResultInDays);
+            VERIFY_ARE_EQUAL(StringReference(L"10 months"), viewModel->StrDateDiffResult);
+        }
+
         TEST_METHOD(DateCalcViewModelDateDiffTest)
         {
             // TODO - MSFT 10331900, fix this test
@@ -516,7 +536,23 @@ namespace DateCalculationUnitTests
             //VERIFY_ARE_EQUAL(StringReference(L"8398 years, 11 months, 4 weeks, 2 days"), viewModel->StrDateDiffResult);
         }
 
-        TEST_METHOD(DateCalcViewModelDateDiffResultInDaysTest)
+        TEST_METHOD(DateCalcViewModelDateDiffResultInPositiveDaysTest)
+        {
+            auto viewModel = ref new DateCalculatorViewModel();
+
+            viewModel->IsDateDiffMode = true;
+            VERIFY_IS_TRUE(viewModel->IsDateDiffMode);
+
+            viewModel->FromDate = DateUtils::SystemTimeToDateTime(date[1]);
+            viewModel->ToDate = DateUtils::SystemTimeToDateTime(date[0]);
+
+            // Assert for the result
+            VERIFY_IS_TRUE(viewModel->IsDiffInDays);
+            VERIFY_ARE_EQUAL(StringReference(L"1 day"), viewModel->StrDateDiffResult);
+            VERIFY_IS_NULL(viewModel->StrDateDiffResultInDays);
+        }
+
+        TEST_METHOD(DateCalcViewModelDateDiffFromDateHigherThanToDate)
         {
             auto viewModel = ref new DateCalculatorViewModel();
 
