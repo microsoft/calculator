@@ -22,7 +22,7 @@ void lshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
 
 {
     PRAT pwr= nullptr;
-    long intb;
+    int32_t intb;
 
     intrat(pa, radix, precision);
     if ( !zernum( (*pa)->pp ) )
@@ -45,7 +45,7 @@ void rshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
 
 {
     PRAT pwr= nullptr;
-    long intb;
+    int32_t intb;
 
     intrat(pa, radix, precision);
     if ( !zernum( (*pa)->pp ) )
@@ -138,8 +138,8 @@ void boolnum( PNUMBER *pa, PNUMBER b, int func )
     MANTTYPE *pcha;
     MANTTYPE *pchb;
     MANTTYPE *pchc;
-    long cdigits;
-    long mexp;
+    int32_t cdigits;
+    int32_t mexp;
     MANTTYPE da;
     MANTTYPE db;
 

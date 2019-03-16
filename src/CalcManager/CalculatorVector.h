@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "Ratpack/CalcErr.h"
+
 template <typename TType>
 class CalculatorVector
 {

@@ -64,7 +64,7 @@ void exprat( PRAT *px, uint32_t radix, int32_t precision)
 {
     PRAT pwr= nullptr;
     PRAT pint= nullptr;
-    long intpwr;
+    int32_t intpwr;
 
     if ( rat_gt( *px, rat_max_exp, precision) || rat_lt( *px, rat_min_exp, precision) )
         {
@@ -183,7 +183,7 @@ void lograt( PRAT *px, int32_t precision)
         {
         // Take advantage of px's base BASEX to scale quickly down to
         // a reasonable range.
-        long intpwr;
+        int32_t intpwr;
         intpwr=LOGRAT2(*px)-1;
         (*px)->pq->exp += intpwr;
         pwr=longtorat(intpwr*BASEXPWR);
@@ -408,7 +408,7 @@ void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precis
 //---------------------------------------------------------------------------
 void powratcomp(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
 {
-    long sign = ((*px)->pp->sign * (*px)->pq->sign);
+    int32_t sign = ((*px)->pp->sign * (*px)->pq->sign);
 
     // Take the absolute value
     (*px)->pp->sign = 1;
@@ -453,7 +453,7 @@ void powratcomp(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
                 {
                 // If power is an integer let ratpowlong deal with it.
                 PRAT iy = nullptr;
-                long inty;
+                int32_t inty;
                 DUPRAT(iy,y);
                 subrat(&iy, podd, precision);
                 inty = rattolong(iy, radix, precision);

@@ -29,12 +29,12 @@ static constexpr wstring_view DIGITS = L"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabc
 
 // ratio of internal 'digits' to output 'digits'
 // Calculated elsewhere as part of initialization and when base is changed
-long g_ratio;    // int(log(2L^BASEXPWR)/log(radix))
+int32_t g_ratio;    // int(log(2L^BASEXPWR)/log(radix))
 // Default decimal separator
 wchar_t g_decimalSeparator = L'.';
 
 // Used to strip trailing zeros, and prevent combinatorial explosions
-bool stripzeroesnum(_Inout_ PNUMBER pnum, long starting);
+bool stripzeroesnum(_Inout_ PNUMBER pnum, int32_t starting);
 
 void SetDecimalSeparator(wchar_t decimalSeparator)
 {
@@ -245,8 +245,8 @@ PRAT numtorat( _In_ PNUMBER pin, uint32_t radix)
 PNUMBER nRadixxtonum( _In_ PNUMBER a, uint32_t radix, int32_t precision)
 
 {
-    unsigned long bitmask;
-    unsigned long cdigits;
+    uint32_t bitmask;
+    uint32_t cdigits;
     MANTTYPE *ptr;
 
     PNUMBER sum = longtonum( 0, radix );
@@ -256,9 +256,9 @@ PNUMBER nRadixxtonum( _In_ PNUMBER a, uint32_t radix, int32_t precision)
     // limit the digits to the minimum of the existing precision or the
     // requested precision.
     cdigits = precision + 1;
-    if ( cdigits > (unsigned long)a->cdigit )
+    if ( cdigits > (uint32_t)a->cdigit )
         {
-        cdigits = (unsigned long)a->cdigit;
+        cdigits = (uint32_t)a->cdigit;
         }
 
     // scale by the internal base to the internal exponent offset of the LSD
@@ -312,7 +312,7 @@ PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix)
 
     PNUMBER thisdigit = nullptr;      // thisdigit holds the current digit of a
                                    // being summed into result.
-    long idigit;                   // idigit is the iterate of digits in a.
+    int32_t idigit;                   // idigit is the iterate of digits in a.
     for ( idigit = 0; idigit < a->cdigit; idigit++ )
         {
         mulnumx( &pnumret, num_radix);
@@ -391,7 +391,7 @@ PRAT StringToRat(bool mantissaIsNegative, wstring_view mantissa, bool exponentIs
     }
 
     // Deal with exponent
-    long expt = 0;
+    int32_t expt = 0;
     if (!exponent.empty())
     {
         // Exponent specified, convert to number form.
@@ -574,8 +574,8 @@ wchar_t NormalizeCharDigit(wchar_t c, uint32_t radix)
 
 PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precision)
 {
-    long expSign = 1L;           // expSign is exponent sign ( +/- 1 )
-    long expValue = 0L;          // expValue is exponent mantissa, should be unsigned
+    int32_t expSign = 1L;           // expSign is exponent sign ( +/- 1 )
+    int32_t expValue = 0L;          // expValue is exponent mantissa, should be unsigned
 
     PNUMBER pnumret = nullptr;
     createnum(pnumret, static_cast<uint32_t>(numberString.length()));
@@ -637,7 +637,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
                 if (pos != wstring_view::npos)
                 {
                     expValue *= radix;
-                    expValue += static_cast<long>(pos);
+                    expValue += static_cast<int32_t>(pos);
                 }
                 else
                 {
@@ -683,7 +683,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
     }
     else
     {
-        while (pnumret->cdigit < static_cast<long>(numberString.length()))
+        while (pnumret->cdigit < static_cast<int32_t>(numberString.length()))
         {
             pnumret->cdigit++;
             pnumret->exp--;
@@ -708,16 +708,16 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
 //
 //    FUNCTION: longtorat
 //
-//    ARGUMENTS: long
+//    ARGUMENTS: int32_t
 //
-//    RETURN: Rational representation of long input.
+//    RETURN: Rational representation of int32_t input.
 //
-//    DESCRIPTION: Converts long input to rational (p over q)
-//    form, where q is 1 and p is the long.
+//    DESCRIPTION: Converts int32_t input to rational (p over q)
+//    form, where q is 1 and p is the int32_t.
 //
 //-----------------------------------------------------------------------------
 
-PRAT longtorat( _In_ long inlong )
+PRAT longtorat( _In_ int32_t inlong )
 
 {
     PRAT pratret= nullptr;
@@ -733,15 +733,15 @@ PRAT longtorat( _In_ long inlong )
 //
 //    ARGUMENTS: ulong
 //
-//    RETURN: Rational representation of unsigned long input.
+//    RETURN: Rational representation of uint32_t input.
 //
-//    DESCRIPTION: Converts unsigned long input to rational (p over q)
-//    form, where q is 1 and p is the unsigned long. Being unsigned cant take negative
+//    DESCRIPTION: Converts uint32_t input to rational (p over q)
+//    form, where q is 1 and p is the uint32_t. Being unsigned cant take negative
 //    numbers, but the full range of unsigned numbers
 //
 //-----------------------------------------------------------------------------
 
-PRAT Ulongtorat( _In_ unsigned long inulong )
+PRAT Ulongtorat( _In_ uint32_t inulong )
 
 {
     PRAT pratret= nullptr;
@@ -755,16 +755,16 @@ PRAT Ulongtorat( _In_ unsigned long inulong )
 //
 //    FUNCTION: longtonum
 //
-//    ARGUMENTS: long input and radix requested.
+//    ARGUMENTS: int32_t input and radix requested.
 //
 //    RETURN: number
 //
 //    DESCRIPTION: Returns a number representation in the
-//    base   requested of the long value passed in.
+//    base   requested of the int32_t value passed in.
 //
 //-----------------------------------------------------------------------------
 
-PNUMBER longtonum( long inlong, uint32_t radix)
+PNUMBER longtonum( int32_t inlong, uint32_t radix)
 
 {
     MANTTYPE *pmant;
@@ -802,13 +802,13 @@ PNUMBER longtonum( long inlong, uint32_t radix)
 //    RETURN: number
 //
 //    DESCRIPTION: Returns a number representation in the
-//    base   requested of the unsigned long value passed in. Being unsigned number it has no
+//    base   requested of the uint32_t value passed in. Being unsigned number it has no
 //    negative number and takes the full range of unsigned number
 //
 //-----------------------------------------------------------------------------
 
 
-PNUMBER Ulongtonum(unsigned long inlong, uint32_t radix)
+PNUMBER Ulongtonum(uint32_t inlong, uint32_t radix)
 {
     MANTTYPE *pmant;
     PNUMBER pnumret= nullptr;
@@ -835,15 +835,15 @@ PNUMBER Ulongtonum(unsigned long inlong, uint32_t radix)
 //
 //    ARGUMENTS: rational number in internal base, integer radix and int32_t precision.
 //
-//    RETURN: long
+//    RETURN: int32_t
 //
-//    DESCRIPTION: returns the long representation of the
+//    DESCRIPTION: returns the int32_t representation of the
 //    number input.  Assumes that the number is in the internal
 //    base.
 //
 //-----------------------------------------------------------------------------
 
-long rattolong( _In_ PRAT prat , uint32_t radix, int32_t precision)
+int32_t rattolong( _In_ PRAT prat , uint32_t radix, int32_t precision)
 {
     if ( rat_gt( prat, rat_max_long, precision) || rat_lt( prat, rat_min_long, precision) )
     {
@@ -858,7 +858,7 @@ long rattolong( _In_ PRAT prat , uint32_t radix, int32_t precision)
     divnumx( &(pint->pp), pint->pq, precision);
     DUPNUM( pint->pq, num_one );
 
-    long lret = numtolong( pint->pp, BASEX );
+    int32_t lret = numtolong( pint->pp, BASEX );
 
     destroyrat(pint);
 
@@ -878,7 +878,7 @@ long rattolong( _In_ PRAT prat , uint32_t radix, int32_t precision)
 //    base.
 //
 //-----------------------------------------------------------------------------
-unsigned long rattoUlong( _In_ PRAT prat, uint32_t radix, int32_t precision)
+uint32_t rattoUlong( _In_ PRAT prat, uint32_t radix, int32_t precision)
 {
     if ( rat_gt( prat, rat_dword, precision) || rat_lt( prat, rat_zero, precision) )
     {
@@ -893,7 +893,7 @@ unsigned long rattoUlong( _In_ PRAT prat, uint32_t radix, int32_t precision)
     divnumx( &(pint->pp), pint->pq, precision);
     DUPNUM( pint->pq, num_one );
 
-    unsigned long lret = numtolong( pint->pp, BASEX ); // This happens to work even if it is only signed
+    uint32_t lret = numtolong( pint->pp, BASEX ); // This happens to work even if it is only signed
 
     destroyrat(pint);
 
@@ -923,14 +923,14 @@ uint64_t rattoUlonglong( _In_ PRAT prat, uint32_t radix, int32_t precision)
     // first get the LO 32 bit word
     DUPRAT(pint, prat);
     andrat(&pint, rat_dword, radix, precision);  // & 0xFFFFFFFF   (2 ^ 32 -1)
-    unsigned long lo = rattoUlong(pint, radix, precision);  // wont throw exception because already hi-dword chopped off
+    uint32_t lo = rattoUlong(pint, radix, precision);  // wont throw exception because already hi-dword chopped off
 
     DUPRAT(pint, prat); // previous pint will get freed by this as well
     PRAT prat32 = longtorat(32);
     rshrat(&pint, prat32, radix, precision);
     intrat( &pint, radix, precision);
     andrat(&pint, rat_dword, radix, precision);  // & 0xFFFFFFFF   (2 ^ 32 -1)
-    unsigned long hi = rattoUlong(pint, radix, precision);
+    uint32_t hi = rattoUlong(pint, radix, precision);
 
     destroyrat(prat32);
     destroyrat(pint);
@@ -944,22 +944,22 @@ uint64_t rattoUlonglong( _In_ PRAT prat, uint32_t radix, int32_t precision)
 //
 //    ARGUMENTS: number input and base of that number.
 //
-//    RETURN: long
+//    RETURN: int32_t
 //
-//    DESCRIPTION: returns the long representation of the
+//    DESCRIPTION: returns the int32_t representation of the
 //    number input.  Assumes that the number is really in the
 //    base   claimed.
 //
 //-----------------------------------------------------------------------------
-long numtolong( _In_ PNUMBER pnum, uint32_t radix )
+int32_t numtolong( _In_ PNUMBER pnum, uint32_t radix )
 {
-    long lret = 0;
+    int32_t lret = 0;
 
     MANTTYPE *pmant = pnum->mant;
     pmant += pnum->cdigit - 1;
 
-    long expt = pnum->exp;
-    for (long length = pnum->cdigit; length > 0 && length + expt > 0; length--)
+    int32_t expt = pnum->exp;
+    for (int32_t length = pnum->cdigit; length > 0 && length + expt > 0; length--)
     {
         lret *= radix;
         lret += *(pmant--);
@@ -986,10 +986,10 @@ long numtolong( _In_ PNUMBER pnum, uint32_t radix )
 //
 //-----------------------------------------------------------------------------
 
-bool stripzeroesnum(_Inout_ PNUMBER pnum, long starting)
+bool stripzeroesnum(_Inout_ PNUMBER pnum, int32_t starting)
 {
     MANTTYPE *pmant;
-    long cdigits;
+    int32_t cdigits;
     bool fstrip = false;
 
     // point pmant to the LeastCalculatedDigit
@@ -1042,10 +1042,10 @@ bool stripzeroesnum(_Inout_ PNUMBER pnum, long starting)
 wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_t precision)
 {
     stripzeroesnum(pnum, precision + 2);
-    long length = pnum->cdigit;
-    long exponent = pnum->exp + length; // Actual number of digits to the left of decimal
+    int32_t length = pnum->cdigit;
+    int32_t exponent = pnum->exp + length; // Actual number of digits to the left of decimal
 
-    long oldFormat = format;
+    int32_t oldFormat = format;
     if (exponent > precision && format == FMT_FLOAT)
     {
         // Force scientific mode to prevent user from assuming 33rd digit is exact.
@@ -1110,7 +1110,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
     if (round != nullptr)
     {
         addnum(&pnum, round, radix);
-        long offset = (pnum->cdigit + pnum->exp) - (round->cdigit + round->exp);
+        int32_t offset = (pnum->cdigit + pnum->exp) - (round->cdigit + round->exp);
         destroynum(round);
         if (stripzeroesnum(pnum, offset))
         {
@@ -1126,7 +1126,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
 
     // Set up all the post rounding stuff.
     bool useSciForm = false;
-    long eout = exponent - 1; // Displayed exponent.
+    int32_t eout = exponent - 1; // Displayed exponent.
     MANTTYPE *pmant = pnum->mant + pnum->cdigit - 1;
     // Case where too many digits are to the left of the decimal or
     // FMT_SCIENTIFIC or FMT_ENGINEERING was specified.
@@ -1270,8 +1270,8 @@ PNUMBER RatToNumber(_In_ PRAT prat, uint32_t radix, int32_t precision)
     DUPRAT(temprat, prat);
     // Convert p and q of rational form from internal base to requested base.
     // Scale by largest power of BASEX possible.
-    long scaleby = min(temprat->pp->exp, temprat->pq->exp);
-    scaleby = max(scaleby, 0l);
+    int32_t scaleby = min(temprat->pp->exp, temprat->pq->exp);
+    scaleby = max<int32_t>(scaleby, 0);
 
     temprat->pp->exp -= scaleby;
     temprat->pq->exp -= scaleby;
@@ -1362,9 +1362,9 @@ PNUMBER gcd( _In_ PNUMBER a, _In_ PNUMBER b)
 //  FUNCTION: longfactnum
 //
 //  ARGUMENTS:
-//              long integer to factorialize.
-//              long integer representing base   of answer.
-//              unsigned long integer for radix
+//              int32_t integer to factorialize.
+//              int32_t integer representing base   of answer.
+//              uint32_t integer for radix
 //
 //  RETURN: Factorial of input in radix PNUMBER form.
 //
@@ -1372,7 +1372,7 @@ PNUMBER gcd( _In_ PNUMBER a, _In_ PNUMBER b)
 //
 //-----------------------------------------------------------------------------
 
-PNUMBER longfactnum(long inlong, uint32_t radix)
+PNUMBER longfactnum(int32_t inlong, uint32_t radix)
 
 {
     PNUMBER lret= nullptr;
@@ -1394,15 +1394,15 @@ PNUMBER longfactnum(long inlong, uint32_t radix)
 //  FUNCTION: longprodnum
 //
 //  ARGUMENTS:
-//              long integer to factorialize.
-//              long integer representing base of answer.
-//              unsigned long integer for radix
+//              int32_t integer to factorialize.
+//              int32_t integer representing base of answer.
+//              uint32_t integer for radix
 //
 //  RETURN: Factorial of input in base PNUMBER form.
 //
 //-----------------------------------------------------------------------------
 
-PNUMBER longprodnum(long start, long stop, uint32_t radix)
+PNUMBER longprodnum(int32_t start, int32_t stop, uint32_t radix)
 
 {
     PNUMBER lret= nullptr;
@@ -1427,8 +1427,8 @@ PNUMBER longprodnum(long start, long stop, uint32_t radix)
 //
 //    FUNCTION: numpowlong
 //
-//    ARGUMENTS: root as number power as long and radix of
-//               number along with the precision value in long.
+//    ARGUMENTS: root as number power as int32_t and radix of
+//               number along with the precision value in int32_t.
 //
 //    RETURN: None root is changed.
 //
@@ -1437,7 +1437,7 @@ PNUMBER longprodnum(long start, long stop, uint32_t radix)
 //
 //-----------------------------------------------------------------------------
 
-void numpowlong( _Inout_ PNUMBER *proot, long power, uint32_t radix, int32_t precision)
+void numpowlong( _Inout_ PNUMBER *proot, int32_t power, uint32_t radix, int32_t precision)
 {
     PNUMBER lret = longtonum( 1, radix );
 
@@ -1460,7 +1460,7 @@ void numpowlong( _Inout_ PNUMBER *proot, long power, uint32_t radix, int32_t pre
 //
 //    FUNCTION: ratpowlong
 //
-//    ARGUMENTS: root as rational, power as long and precision as uint32_t.
+//    ARGUMENTS: root as rational, power as int32_t and precision as int32_t.
 //
 //    RETURN: None root is changed.
 //
@@ -1469,7 +1469,7 @@ void numpowlong( _Inout_ PNUMBER *proot, long power, uint32_t radix, int32_t pre
 //
 //-----------------------------------------------------------------------------
 
-void ratpowlong( _Inout_ PRAT *proot, long power, int32_t precision)
+void ratpowlong( _Inout_ PRAT *proot, int32_t power, int32_t precision)
 
 {
     if ( power < 0 )

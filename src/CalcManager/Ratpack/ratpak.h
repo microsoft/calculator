@@ -54,10 +54,10 @@ typedef enum eANGLE_TYPE ANGLE_TYPE;
 #pragma warning(disable:4200)   // nonstandard extension used : zero-sized array in struct/union
 typedef struct _number
 {
-    long sign;        // The sign of the mantissa, +1, or -1
-    long cdigit;    // The number of digits, or what passes for digits in the
+    int32_t sign;        // The sign of the mantissa, +1, or -1
+    int32_t cdigit;    // The number of digits, or what passes for digits in the
                     // radix being used.
-    long exp;       // The offset of digits from the radix point
+    int32_t exp;       // The offset of digits from the radix point
                     // (decimal point in radix 10)
     MANTTYPE mant[];
                     // This is actually allocated as a continuation of the
@@ -208,7 +208,7 @@ _destroynum(x),(x)=nullptr
 
 // TRIMNUM ASSUMES the number is in radix form NOT INTERNAL BASEX!!!
 #define TRIMNUM(x, precision) if ( !g_ftrueinfinite ) { \
-        long trim = (x)->cdigit - precision-g_ratio;\
+        int32_t trim = (x)->cdigit - precision-g_ratio;\
             if ( trim > 1 ) \
                 { \
 memmove( (x)->mant, &((x)->mant[trim]), sizeof(MANTTYPE)*((x)->cdigit-trim) ); \
@@ -218,7 +218,7 @@ memmove( (x)->mant, &((x)->mant[trim]), sizeof(MANTTYPE)*((x)->cdigit-trim) ); \
             }
 // TRIMTOP ASSUMES the number is in INTERNAL BASEX!!!
 #define TRIMTOP(x, precision) if ( !g_ftrueinfinite ) { \
-        long trim = (x)->pp->cdigit - (precision/g_ratio) - 2;\
+        int32_t trim = (x)->pp->cdigit - (precision/g_ratio) - 2;\
             if ( trim > 1 ) \
                 { \
 memmove( (x)->pp->mant, &((x)->pp->mant[trim]), sizeof(MANTTYPE)*((x)->pp->cdigit-trim) ); \
@@ -294,7 +294,7 @@ extern bool g_ftrueinfinite; // set to true to allow infinite precision
                              // don't use unless you know what you are doing
                       // used to help decide when to stop calculating.
 
-extern long g_ratio;  // Internally calculated ratio of internal radix
+extern int32_t g_ratio;  // Internally calculated ratio of internal radix
 
 //-----------------------------------------------------------------------------
 //
@@ -321,8 +321,8 @@ extern PNUMBER RatToNumber(_In_ PRAT prat, uint32_t radix, int32_t precision);
 // flattens a PRAT by converting it to a PNUMBER and back to a PRAT
 extern void flatrat(_Inout_ PRAT& prat, uint32_t radix, int32_t precision);
 
-extern long numtolong(_In_ PNUMBER pnum, uint32_t radix );
-extern long rattolong(_In_ PRAT prat, uint32_t radix, int32_t precision);
+extern int32_t numtolong(_In_ PNUMBER pnum, uint32_t radix );
+extern int32_t rattolong(_In_ PRAT prat, uint32_t radix, int32_t precision);
 uint64_t rattoUlonglong(_In_ PRAT prat, uint32_t radix, int32_t precision);
 extern PNUMBER _createnum(_In_ uint32_t size ); // returns an empty number structure with size digits
 extern PNUMBER nRadixxtonum(_In_ PNUMBER a, uint32_t radix, int32_t precision);
@@ -332,10 +332,10 @@ extern PNUMBER StringToNumber(std::wstring_view numberString, uint32_t radix, in
 // takes a text representation of a number as a mantissa with sign and an exponent with sign.
 extern PRAT StringToRat(bool mantissaIsNegative, std::wstring_view mantissa, bool exponentIsNegative, std::wstring_view exponent, uint32_t radix, int32_t precision);
 
-extern PNUMBER longfactnum(long inlong, uint32_t radix);
-extern PNUMBER longprodnum(long start, long stop, uint32_t radix);
-extern PNUMBER longtonum(long inlong, uint32_t radix);
-extern PNUMBER Ulongtonum(unsigned long inlong, uint32_t radix);
+extern PNUMBER longfactnum(int32_t inlong, uint32_t radix);
+extern PNUMBER longprodnum(int32_t start, int32_t stop, uint32_t radix);
+extern PNUMBER longtonum(int32_t inlong, uint32_t radix);
+extern PNUMBER Ulongtonum(uint32_t inlong, uint32_t radix);
 extern PNUMBER numtonRadixx(PNUMBER a, uint32_t radix);
 
 // creates a empty/undefined rational representation (p/q)
@@ -393,8 +393,8 @@ extern void log10rat( _Inout_ PRAT *px, int32_t precision);
 // returns a new rat structure with the natural log of x->p/x->q
 extern void lograt( _Inout_ PRAT *px, int32_t precision);
 
-extern PRAT longtorat( long inlong );
-extern PRAT Ulongtorat( unsigned long inulong );
+extern PRAT longtorat( int32_t inlong );
+extern PRAT Ulongtorat( uint32_t inulong );
 extern PRAT numtorat( _In_ PNUMBER pin, uint32_t radix);
 
 extern void sinhrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision);
@@ -429,13 +429,13 @@ extern void intrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision);
 extern void mulnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix);
 extern void mulnumx( _Inout_ PNUMBER *pa, _In_ PNUMBER b );
 extern void mulrat( _Inout_ PRAT *pa, _In_ PRAT b, int32_t precision);
-extern void numpowlong( _Inout_ PNUMBER *proot, long power, uint32_t radix, int32_t precision);
-extern void numpowlongx( _Inout_ PNUMBER *proot, long power );
+extern void numpowlong( _Inout_ PNUMBER *proot, int32_t power, uint32_t radix, int32_t precision);
+extern void numpowlongx( _Inout_ PNUMBER *proot, int32_t power );
 extern void orrat( _Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision);
 extern void powrat( _Inout_ PRAT *pa, _In_ PRAT b , uint32_t radix, int32_t precision);
 extern void powratNumeratorDenominator(_Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision);
 extern void powratcomp(_Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision);
-extern void ratpowlong( _Inout_ PRAT *proot, long power, int32_t precision);
+extern void ratpowlong( _Inout_ PRAT *proot, int32_t power, int32_t precision);
 extern void remnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix);
 extern void rootrat( _Inout_ PRAT *pa, _In_ PRAT b , uint32_t radix, int32_t precision);
 extern void scale2pi( _Inout_ PRAT *px, uint32_t radix, int32_t precision);

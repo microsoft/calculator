@@ -31,7 +31,7 @@ namespace CalcEngine
 
     Rational::Rational(int32_t i)
     {
-        PRAT pr = longtorat(static_cast<long>(i));
+        PRAT pr = longtorat(static_cast<int32_t>(i));
 
         m_p = Number{ pr->pp };
         m_q = Number{ pr->pq };
@@ -41,7 +41,7 @@ namespace CalcEngine
 
     Rational::Rational(uint32_t ui)
     {
-        PRAT pr = Ulongtorat(static_cast<unsigned long>(ui));
+        PRAT pr = Ulongtorat(static_cast<uint32_t>(ui));
 
         m_p = Number{ pr->pp };
         m_q = Number{ pr->pq };

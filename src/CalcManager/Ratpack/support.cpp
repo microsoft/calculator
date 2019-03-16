@@ -215,7 +215,7 @@ void ChangeConstants(uint32_t radix, int32_t precision)
 
         // Apparently when dividing 180 by pi, another (internal) digit of
         // precision is needed.
-        long extraPrecision = precision + g_ratio;
+        int32_t extraPrecision = precision + g_ratio;
         DUPRAT(pi, rat_half);
         asinrat(&pi, radix, extraPrecision);
         mulrat(&pi, rat_six, extraPrecision);
@@ -333,7 +333,7 @@ bool rat_equ( PRAT a, PRAT b, int32_t precision)
 //
 //  FUNCTION: rat_ge
 //
-//  ARGUMENTS:  PRAT a, PRAT b and long precision
+//  ARGUMENTS:  PRAT a, PRAT b and int32_t precision
 //
 //  RETURN: true if a is greater than or equal to b
 //
@@ -384,7 +384,7 @@ bool rat_gt( PRAT a, PRAT b, int32_t precision)
 //
 //  FUNCTION: rat_le
 //
-//  ARGUMENTS:  PRAT a, PRAT b and long precision
+//  ARGUMENTS:  PRAT a, PRAT b and int32_t precision
 //
 //  RETURN: true if a is less than or equal to b
 //
@@ -411,7 +411,7 @@ bool rat_le( PRAT a, PRAT b, int32_t precision)
 //
 //  FUNCTION: rat_lt
 //
-//  ARGUMENTS:  PRAT a, PRAT b and long precision
+//  ARGUMENTS:  PRAT a, PRAT b and int32_t precision
 //
 //  RETURN: true if a is less than b
 //
@@ -475,7 +475,7 @@ void scale( PRAT *px, PRAT scalefact, uint32_t radix, int32_t precision )
 
     // Logscale is a quick way to tell how much extra precision is needed for
     // scaling by scalefact.
-    long logscale = g_ratio * ( (pret->pp->cdigit+pret->pp->exp) -
+    int32_t logscale = g_ratio * ( (pret->pp->cdigit+pret->pp->exp) -
             (pret->pq->cdigit+pret->pq->exp) );
     if ( logscale > 0 )
     {
@@ -510,7 +510,7 @@ void scale2pi( PRAT *px, uint32_t radix, int32_t precision )
 
     // Logscale is a quick way to tell how much extra precision is needed for
     // scaling by 2 pi.
-    long logscale = g_ratio * ( (pret->pp->cdigit+pret->pp->exp) -
+    int32_t logscale = g_ratio * ( (pret->pp->cdigit+pret->pp->exp) -
             (pret->pq->cdigit+pret->pq->exp) );
     if ( logscale > 0 )
     {
@@ -660,7 +660,7 @@ void _readconstants( void )
 //
 //  FUNCTION: trimit
 //
-//  ARGUMENTS:  PRAT *px, long precision
+//  ARGUMENTS:  PRAT *px, int32_t precision
 //
 //
 //  DESCRIPTION: Chops off digits from rational numbers to avoid time
@@ -681,7 +681,7 @@ void trimit( PRAT *px, int32_t precision)
 {
     if ( !g_ftrueinfinite )
         {
-        long trim;
+        int32_t trim;
         PNUMBER pp=(*px)->pp;
         PNUMBER pq=(*px)->pq;
         trim = g_ratio * (min((pp->cdigit+pp->exp),(pq->cdigit+pq->exp))-1) - precision;

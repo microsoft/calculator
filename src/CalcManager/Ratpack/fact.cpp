@@ -72,7 +72,7 @@ void _gamma( PRAT *pn, uint32_t radix, int32_t precision)
     PRAT mpy= nullptr;
     PRAT ratprec = nullptr;
     PRAT ratRadix = nullptr;
-    long oldprec;
+    int32_t oldprec;
 
     // Set up constants and initial conditions
     oldprec = precision;
