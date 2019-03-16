@@ -33,6 +33,72 @@ int32_t g_ratio;    // int(log(2L^BASEXPWR)/log(radix))
 // Default decimal separator
 wchar_t g_decimalSeparator = L'.';
 
+#if defined(MIDL_PASS) || defined(RC_INVOKED) || defined(_M_CEE_PURE) \
+    || defined(_M_AMD64) || defined(__ARM_ARCH)
+
+#ifndef UInt32x32To64
+#define UInt32x32To64(a, b) ((unsigned __int64)((ULONG)(a)) * (unsigned __int64)((ULONG)(b)))
+#endif
+
+#elif defined(_M_IX86)
+
+#ifndef UInt32x32To64
+#define UInt32x32To64(a, b) (unsigned __int64)((unsigned __int64)(ULONG)(a) * (ULONG)(b))
+#endif
+#else
+
+#error Must define a target architecture.
+
+#endif
+
+namespace {
+	HRESULT
+	ULongAdd(
+		IN ULONG ulAugend,
+		IN ULONG ulAddend,
+		OUT ULONG* pulResult)
+	{
+		HRESULT hr = INTSAFE_E_ARITHMETIC_OVERFLOW;
+		*pulResult = ULONG_ERROR;
+
+		if ((ulAugend + ulAddend) >= ulAugend)
+		{
+			*pulResult = (ulAugend + ulAddend);
+			hr = S_OK;
+		}
+
+		return hr;
+	}
+
+	HRESULT
+	ULongLongToULong(
+		IN ULONGLONG ullOperand,
+		OUT ULONG* pulResult)
+	{
+		HRESULT hr = INTSAFE_E_ARITHMETIC_OVERFLOW;
+		*pulResult = ULONG_ERROR;
+
+		if (ullOperand <= ULONG_MAX)
+		{
+			*pulResult = (ULONG)ullOperand;
+			hr = S_OK;
+		}
+
+		return hr;
+	}
+
+	HRESULT
+	ULongMult(
+		IN ULONG ulMultiplicand,
+		IN ULONG ulMultiplier,
+		OUT ULONG* pulResult)
+	{
+		ULONGLONG ull64Result = UInt32x32To64(ulMultiplicand, ulMultiplier);
+
+		return ULongLongToULong(ull64Result, pulResult);
+	}
+}
+
 // Used to strip trailing zeros, and prevent combinatorial explosions
 bool stripzeroesnum(_Inout_ PNUMBER pnum, int32_t starting);
 
