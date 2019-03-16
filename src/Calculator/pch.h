@@ -44,3 +44,5 @@ namespace CustomPeers = CalculatorApp::Common::Automation;
 
 // Project Headers
 #include "App.xaml.h"
+
+#include <string>
