@@ -56,7 +56,7 @@ LONG CCalcEngine::DwWordBitWidthFromeNumWidth(NUM_WIDTH /*numwidth*/)
     static constexpr int nBitMax[] = { 64, 32, 16, 8 };
     LONG wmax = nBitMax[0];
 
-    if (m_numwidth >= 0 && m_numwidth < size(nBitMax))
+    if (m_numwidth >= 0 && (size_t)m_numwidth < size(nBitMax))
     {
         wmax = nBitMax[m_numwidth];
     }
@@ -69,7 +69,7 @@ uint32_t CCalcEngine::NRadixFromRadixType(RADIX_TYPE radixtype)
     uint32_t radix = 10;
 
     // convert special bases into symbolic values
-    if (radixtype >= 0 && radixtype < size(rgnRadish))
+    if (radixtype >= 0 && (size_t)radixtype < size(rgnRadish))
     {
         radix = rgnRadish[radixtype];
     }
