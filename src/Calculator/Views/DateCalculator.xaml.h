@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include "Converters\BooleanNegationConverter.h"
-#include "Converters\VisibilityNegationConverter.h"
-#include "Views\DateCalculator.g.h"
+#include "Converters/BooleanNegationConverter.h"
+#include "Converters/VisibilityNegationConverter.h"
+#include "Views/DateCalculator.g.h"
 
 // We choose 2550 as the max year because CalendarDatePicker experiences clipping
 // issues just after 2558.  We would like 9999 but will need to wait for a platform

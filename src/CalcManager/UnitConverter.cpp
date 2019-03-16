@@ -46,7 +46,7 @@ UnitConverter::UnitConverter(_In_ const shared_ptr<IConverterDataLoader>& dataLo
 {
     m_dataLoader = dataLoader;
     m_currencyDataLoader = currencyDataLoader;
-    //declaring the delimiter character conversion map
+    // declaring the delimiter character conversion map
     quoteConversions[L'|'] = L"{p}";
     quoteConversions[L'['] = L"{lc}";
     quoteConversions[L']'] = L"{rc}";
@@ -90,7 +90,7 @@ vector<Category> UnitConverter::GetCategories()
 }
 
 /// <summary>
-/// Sets the current category in use by this converter, 
+/// Sets the current category in use by this converter,
 /// and returns a list of unit types that exist under the given category.
 /// </summary>
 /// <param name="input">Category struct which we are setting</param>
@@ -170,7 +170,7 @@ void UnitConverter::SetCurrentUnitTypes(const Unit& fromType, const Unit& toType
 /// <summary>
 /// Switches the active field, indicating that we are now entering data into
 /// what was originally the return field, and storing results into what was
-/// originally the current field. We swap appropriate values, 
+/// originally the current field. We swap appropriate values,
 /// but do not callback, as values have not changed.
 /// </summary>
 /// <param name="newValue">
@@ -302,8 +302,8 @@ wstring UnitConverter::Serialize()
         out << std::to_wstring(m_currentHasDecimal) << delimiter << std::to_wstring(m_returnHasDecimal) << delimiter << std::to_wstring(m_switchedActive) << delimiter;
         out << m_currentDisplay << delimiter << m_returnDisplay << delimiter << "|";
         wstringstream categoryString(wstringstream::out);
-        wstringstream categoryToUnitString(wstringstream::out);;
-        wstringstream unitToUnitToDoubleString(wstringstream::out);;
+        wstringstream categoryToUnitString(wstringstream::out);
+        wstringstream unitToUnitToDoubleString(wstringstream::out);
         for (const Category& c : m_categories)
         {
             categoryString << CategoryToString(c, delimiter) << ",";
@@ -420,7 +420,7 @@ void UnitConverter::RestoreUserPreferences(const wstring& userPreferences)
 
 /// <summary>
 /// Serializes the Category and Associated Units in the converter and returns it as a string
-/// </summary>    
+/// </summary>
 wstring UnitConverter::SaveUserPreferences()
 {
     wstringstream out(wstringstream::out);
@@ -441,7 +441,7 @@ wstring UnitConverter::Quote(const wstring& s)
 {
     wstringstream quotedString(wstringstream::out);
 
-    //Iterate over the delimiter characters we need to quote
+    // Iterate over the delimiter characters we need to quote
     wstring::const_iterator cursor = s.begin();
     while(cursor != s.end())
     {
@@ -479,7 +479,7 @@ wstring UnitConverter::Unquote(const wstring& s)
             }
             if (cursor == s.end())
             {
-                //badly formatted
+                // Badly formatted
                 break;
             }
             else
@@ -505,7 +505,7 @@ void UnitConverter::SendCommand(Command command)
 {
     if (CheckLoad())
     {
-        //TODO: Localization of characters
+        // TODO: Localization of characters
         bool clearFront = false;
         if (m_currentDisplay == L"0")
         {
@@ -625,7 +625,7 @@ void UnitConverter::SendCommand(Command command)
         default:
             break;
         }
-        
+
 
         if (clearFront)
         {
@@ -728,7 +728,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
     vector<SuggestedValueIntermediate> intermediateVector;
     vector<SuggestedValueIntermediate> intermediateWhimsicalVector;
     unordered_map<Unit, ConversionData, UnitHash> ratios = m_ratioMap[m_fromType];
-    //Calculate converted values for every other unit type in this category, along with their magnitude
+    // Calculate converted values for every other unit type in this category, along with their magnitude
     for (const auto& cur : ratios)
     {
         if (cur.first != m_fromType && cur.first != m_toType)
@@ -745,21 +745,21 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         }
     }
 
-    //Sort the resulting list by absolute magnitude, breaking ties by choosing the positive value
+    // Sort the resulting list by absolute magnitude, breaking ties by choosing the positive value
     sort(intermediateVector.begin(), intermediateVector.end(), []
     (SuggestedValueIntermediate first, SuggestedValueIntermediate second)
-    { 
-        if (abs(first.magnitude) == abs(second.magnitude)) 
-        { 
-            return first.magnitude > second.magnitude; 
-        } 
-        else 
-        { 
+    {
+        if (abs(first.magnitude) == abs(second.magnitude))
+        {
+            return first.magnitude > second.magnitude;
+        }
+        else
+        {
             return abs(first.magnitude) < abs(second.magnitude);
         }
     });
 
-    //Now that the list is sorted, iterate over it and populate the return vector with properly rounded and formatted return strings
+    // Now that the list is sorted, iterate over it and populate the return vector with properly rounded and formatted return strings
     for (const auto& entry : intermediateVector)
     {
         wstring roundedString;
@@ -783,7 +783,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
     }
 
     // The Whimsicals are determined differently
-    //Sort the resulting list by absolute magnitude, breaking ties by choosing the positive value
+    // Sort the resulting list by absolute magnitude, breaking ties by choosing the positive value
     sort(intermediateWhimsicalVector.begin(), intermediateWhimsicalVector.end(), []
     (SuggestedValueIntermediate first, SuggestedValueIntermediate second)
     {
@@ -797,7 +797,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         }
     });
 
-    //Now that the list is sorted, iterate over it and populate the return vector with properly rounded and formatted return strings
+    // Now that the list is sorted, iterate over it and populate the return vector with properly rounded and formatted return strings
     vector<tuple<wstring, Unit>> whimsicalReturnVector;
 
     for (const auto& entry : intermediateWhimsicalVector)

@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "AppLifecycleLogger.h"
-#include "CalcViewModel\Common\TraceActivity.h"
+#include "CalcViewModel/Common/TraceActivity.h"
 
 using namespace std;
 using namespace winrt;
@@ -37,7 +37,7 @@ namespace CalculatorApp
         m_appLifecycleProvider(
             L"Microsoft.Windows.AppLifeCycle",
             LoggingChannelOptions(GUID{ 0x4f50731a, 0x89cf, 0x4782, 0xb3, 0xe0, 0xdc, 0xe8, 0xc9, 0x4, 0x76, 0xba }), // Microsoft Telemetry group
-            GUID{ 0xef00584a, 0x2655, 0x462c, 0xbc, 0x24, 0xe7, 0xde, 0x63, 0xe, 0x7f, 0xbf }) //Unique provider ID {EF00584A-2655-462C-BC24-E7DE630E7FBF}
+            GUID{ 0xef00584a, 0x2655, 0x462c, 0xbc, 0x24, 0xe7, 0xde, 0x63, 0xe, 0x7f, 0xbf }) // Unique provider ID {EF00584A-2655-462C-BC24-E7DE630E7FBF}
     {
     }
 

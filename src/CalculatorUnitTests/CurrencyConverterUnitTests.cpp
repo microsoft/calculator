@@ -1,11 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
 #include <CppUnitTest.h>
 
-#include "CalcViewModel\DataLoaders\CurrencyDataLoader.h"
-#include "CalcViewModel\Common\LocalizationService.h"
+#include "CalcViewModel/DataLoaders/CurrencyDataLoader.h"
+#include "CalcViewModel/Common/LocalizationService.h"
 
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Common::LocalizationServiceProperties;
@@ -74,15 +74,15 @@ public:
         m_task_completion_event{ tce }
     {}
 
-    void CurrencyDataLoadFinished(bool didLoad) override
+    void CurrencyDataLoadFinished(bool /*didLoad*/) override
     {
         m_task_completion_event.set();
     }
 
-    void CurrencySymbolsCallback(_In_ const wstring& fromSymbol, _In_ const wstring& toSymbol) override {}
-    void CurrencyRatiosCallback(_In_ const wstring& ratioEquality, _In_ const wstring& accRatioEquality) override {}
-    void CurrencyTimestampCallback(_In_ const std::wstring& timestamp, bool isWeekOldData) override {}
-    void NetworkBehaviorChanged(_In_ int newBehavior) override {}
+    void CurrencySymbolsCallback(_In_ const wstring& /*fromSymbol*/, _In_ const wstring& /*toSymbol*/) override {}
+    void CurrencyRatiosCallback(_In_ const wstring& /*ratioEquality*/, _In_ const wstring& /*accRatioEquality*/) override {}
+    void CurrencyTimestampCallback(_In_ const std::wstring& /*timestamp*/, bool /*isWeekOldData*/) override {}
+    void NetworkBehaviorChanged(_In_ int /*newBehavior*/) override {}
 
 private:
     Concurrency::task_completion_event<void> m_task_completion_event;
@@ -264,7 +264,7 @@ namespace CalculatorUnitTests
             VERIFY_IS_FALSE(loader.LoadFinished());
             VERIFY_IS_FALSE(loader.LoadedFromCache());
         }
-        
+
         TEST_METHOD(LoadFromCache_Fail_ResponseLanguageChanged)
         {
             DateTime now = Utils::GetUniversalSystemTime();
@@ -407,11 +407,11 @@ namespace CalculatorUnitTests
             const UCM::Unit usdUnit = GetUnit(unitList, L"USD");
             const UCM::Unit eurUnit = GetUnit(unitList, L"EUR");
 
-            VERIFY_ARE_EQUAL(StringReference(L"United States - Dollar"), ref new String(usdUnit.name.c_str()));
-            VERIFY_ARE_EQUAL(StringReference(L"USD"), ref new String(usdUnit.abbreviation.c_str()));
+            VERIFY_ARE_EQUAL(wstring(L"United States - Dollar"), usdUnit.name);
+            VERIFY_ARE_EQUAL(wstring(L"USD"), usdUnit.abbreviation);
 
-            VERIFY_ARE_EQUAL(StringReference(L"Europe - Euro"), ref new String(eurUnit.name.c_str()));
-            VERIFY_ARE_EQUAL(StringReference(L"EUR"), ref new String(eurUnit.abbreviation.c_str()));
+            VERIFY_ARE_EQUAL(wstring(L"Europe - Euro"), eurUnit.name);
+            VERIFY_ARE_EQUAL(wstring(L"EUR"), eurUnit.abbreviation);
         }
 
         TEST_METHOD(Loaded_LoadOrderedRatios)
@@ -472,8 +472,8 @@ namespace CalculatorUnitTests
 
             const pair<wstring, wstring> symbols = loader.GetCurrencySymbols(usdUnit, eurUnit);
 
-            VERIFY_ARE_EQUAL(ref new String(L"$"), StringReference(symbols.first.c_str()));
-            VERIFY_ARE_EQUAL(ref new String(L"€"), StringReference(symbols.second.c_str()));
+            VERIFY_ARE_EQUAL(wstring(L"$"), symbols.first);
+            VERIFY_ARE_EQUAL(wstring(L"\x20ac"), symbols.second); // €
         }
 
         TEST_METHOD(Loaded_GetCurrencySymbols_Invalid)
@@ -503,8 +503,8 @@ namespace CalculatorUnitTests
 
             pair<wstring, wstring> symbols = loader.GetCurrencySymbols(fakeUnit1, fakeUnit2);
 
-            VERIFY_ARE_EQUAL(ref new String(L""), StringReference(symbols.first.c_str()));
-            VERIFY_ARE_EQUAL(ref new String(L""), StringReference(symbols.second.c_str()));
+            VERIFY_ARE_EQUAL(wstring(L""), wstring(symbols.first.c_str()));
+            VERIFY_ARE_EQUAL(wstring(L""), wstring(symbols.second.c_str()));
 
             // Verify that when only one unit is valid, both symbols return as empty string.
             vector<UCM::Unit> unitList = loader.LoadOrderedUnits(CURRENCY_CATEGORY);
@@ -514,13 +514,13 @@ namespace CalculatorUnitTests
 
             symbols = loader.GetCurrencySymbols(fakeUnit1, usdUnit);
 
-            VERIFY_ARE_EQUAL(ref new String(L""), StringReference(symbols.first.c_str()));
-            VERIFY_ARE_EQUAL(ref new String(L""), StringReference(symbols.second.c_str()));
+            VERIFY_ARE_EQUAL(wstring(L""), symbols.first);
+            VERIFY_ARE_EQUAL(wstring(L""), symbols.second);
 
             symbols = loader.GetCurrencySymbols(usdUnit, fakeUnit1);
 
-            VERIFY_ARE_EQUAL(ref new String(L""), StringReference(symbols.first.c_str()));
-            VERIFY_ARE_EQUAL(ref new String(L""), StringReference(symbols.second.c_str()));
+            VERIFY_ARE_EQUAL(wstring(L""), symbols.first);
+            VERIFY_ARE_EQUAL(wstring(L""), symbols.second);
         }
 
         TEST_METHOD(Loaded_GetCurrencyRatioEquality_Valid)
@@ -548,8 +548,8 @@ namespace CalculatorUnitTests
 
             const pair<wstring, wstring> ratio = loader.GetCurrencyRatioEquality(usdUnit, eurUnit);
 
-            VERIFY_ARE_EQUAL(ref new String(L"1 USD = 0.9205 EUR"), StringReference(ratio.first.c_str()));
-            VERIFY_ARE_EQUAL(ref new String(L"1 United States Dollar = 0.9205 Europe Euro"), StringReference(ratio.second.c_str()));
+            VERIFY_ARE_EQUAL(wstring(L"1 USD = 0.9205 EUR"), ratio.first);
+            VERIFY_ARE_EQUAL(wstring(L"1 United States Dollar = 0.9205 Europe Euro"), ratio.second);
         }
 
         TEST_METHOD(Loaded_GetCurrencyRatioEquality_Invalid)
@@ -578,8 +578,8 @@ namespace CalculatorUnitTests
 
             pair<wstring, wstring> ratio = loader.GetCurrencyRatioEquality(fakeUnit1, fakeUnit2);
 
-            VERIFY_ARE_EQUAL(ref new String(L""), StringReference(ratio.first.c_str()));
-            VERIFY_ARE_EQUAL(ref new String(L""), StringReference(ratio.second.c_str()));
+            VERIFY_ARE_EQUAL(wstring(L""), ratio.first);
+            VERIFY_ARE_EQUAL(wstring(L""), ratio.second);
 
             // Verify that when only one unit is valid, both symbols return as empty string.
             vector<UCM::Unit> unitList = loader.LoadOrderedUnits(CURRENCY_CATEGORY);
@@ -589,13 +589,13 @@ namespace CalculatorUnitTests
 
             ratio = loader.GetCurrencyRatioEquality(fakeUnit1, usdUnit);
 
-            VERIFY_ARE_EQUAL(ref new String(L""), StringReference(ratio.first.c_str()));
-            VERIFY_ARE_EQUAL(ref new String(L""), StringReference(ratio.second.c_str()));
+            VERIFY_ARE_EQUAL(wstring(L""), ratio.first);
+            VERIFY_ARE_EQUAL(wstring(L""), ratio.second);
 
             ratio = loader.GetCurrencyRatioEquality(usdUnit, fakeUnit1);
 
-            VERIFY_ARE_EQUAL(ref new String(L""), StringReference(ratio.first.c_str()));
-            VERIFY_ARE_EQUAL(ref new String(L""), StringReference(ratio.second.c_str()));
+            VERIFY_ARE_EQUAL(wstring(L""), ratio.first);
+            VERIFY_ARE_EQUAL(wstring(L""), ratio.second);
         }
     };
 }

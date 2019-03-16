@@ -12,6 +12,7 @@
 #include <winerror.h>
 #include <sstream>
 #include <iostream>
+#include <iterator>
 #include <string>
 #include <memory>
 #include <vector>

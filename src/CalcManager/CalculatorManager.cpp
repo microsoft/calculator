@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "Header Files\CalcEngine.h"
+#include "Header Files/CalcEngine.h"
 #include "CalculatorManager.h"
 #include "CalculatorResource.h"
 
@@ -109,12 +109,19 @@ namespace CalculationManager
 
     /// <summary>
     /// Callback from the engine
-    /// Used to set the current unmatched open parenthesis count
     /// </summary>
     /// <param name="parenthesisCount">string containing the parenthesis count</param>
     void CalculatorManager::SetParenDisplayText(const wstring& parenthesisCount)
     {
         m_displayCallback->SetParenDisplayText(parenthesisCount);
+    }
+
+    /// <summary>
+    /// Callback from the engine
+    /// </summary>
+    void CalculatorManager::OnNoRightParenAdded()
+    {
+        m_displayCallback->OnNoRightParenAdded();
     }
 
     /// <summary>
@@ -293,7 +300,7 @@ namespace CalculationManager
     }
 
     /// <summary>
-    /// Convert Command to unsigned char. 
+    /// Convert Command to unsigned char.
     /// Since some Commands are higher than 255, they are saved after subtracting 255
     /// The smallest Command is CommandSIGN = 80, thus, subtracted value does not overlap with other values.
     /// </summary>
@@ -428,9 +435,9 @@ namespace CalculationManager
             if (*commandItr >= MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizeNumber) &&
                 *commandItr <= MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizedNumberClearAll))
             {
-                //MemoryCommands(which have values above 255) are pushed on m_savedCommands upon casting to unsigned char.
-                //SerializeCommands uses m_savedCommands, which is then used in DeSerializeCommands.
-                //Hence, a simple cast to MemoryCommand is not sufficient.
+                // MemoryCommands(which have values above 255) are pushed on m_savedCommands upon casting to unsigned char.
+                // SerializeCommands uses m_savedCommands, which is then used in DeSerializeCommands.
+                // Hence, a simple cast to MemoryCommand is not sufficient.
                 MemoryCommand memoryCommand = static_cast<MemoryCommand>(*commandItr + UCHAR_MAX + 1);
                 unsigned int indexOfMemory = 0;
                 switch (memoryCommand)
@@ -754,7 +761,7 @@ namespace CalculationManager
     }
 
     void CalculatorManager::UpdateMaxIntDigits()
-    { 
+    {
         m_currentCalculatorEngine->UpdateMaxIntDigits();
     }
 
@@ -778,7 +785,7 @@ namespace CalculationManager
     /// How Rational is serialized :
     ///     Serialized Rational.P(Number) + Serialized Rational.Q(Number)
     /// How Number is saved :
-    ///     [0] = Rational.P.Sign 
+    ///     [0] = Rational.P.Sign
     ///     [1] = Rational.P.Mantissa.size
     ///     [2] = Rational.P.Exp
     ///     [3] = Rational.P.Mantissa[0]
@@ -816,7 +823,7 @@ namespace CalculationManager
     /// <summary>
     /// Serialize Number to vector of long
     /// How Number is saved :
-    ///     [0] = Number.Sign 
+    ///     [0] = Number.Sign
     ///     [1] = Number.Mantissa.size
     ///     [2] = Number.Exp
     ///     [3] = Number.Mantissa[0]
@@ -843,7 +850,7 @@ namespace CalculationManager
     /// <summary>
     /// DeserializeNumber vector and construct a Number
     /// How Number is saved :
-    ///     [0] = Number.Sign 
+    ///     [0] = Number.Sign
     ///     [1] = Number.Mantissa.size
     ///     [2] = Number.Exp
     ///     [3] = Number.Mantissa[0]

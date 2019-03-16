@@ -6,7 +6,7 @@
 #include "Rational.h"
 
 // Space to hold enough digits for a quadword binary number (64) plus digit separator strings for that number (20)
-constexpr int MAX_STRLEN = 84; 
+constexpr int MAX_STRLEN = 84;
 
 namespace CalcEngine
 {
@@ -22,7 +22,7 @@ namespace CalcEngine
         bool IsEmpty() { return value.empty(); }
 
         bool IsNegative() { return m_isNegative; }
-        void IsNegative(bool value) { m_isNegative = value; }
+        void IsNegative(bool isNegative) { m_isNegative = isNegative; }
 
         std::wstring value;
 
@@ -53,7 +53,7 @@ namespace CalcEngine
         bool TryBeginExponent();
         void Backspace();
         void SetDecimalSymbol(wchar_t decSymbol);
-        std::wstring ToString(uint32_t radix, bool isIntegerMode);
+        std::wstring ToString(uint32_t radix);
         Rational ToRational(uint32_t radix, int32_t precision);
 
     private:

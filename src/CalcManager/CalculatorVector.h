@@ -4,7 +4,7 @@
 #pragma once
 
 template <typename TType>
-class CalculatorVector 
+class CalculatorVector
 {
 public:
     HRESULT GetAt(_In_opt_ unsigned int index, _Out_ TType *item)

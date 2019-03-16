@@ -779,7 +779,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(viewModel->IsOperatorCommand, false);
         }
 
-        //When memory button is pressed - verify if display value is being stored in vector
+        // When memory button is pressed - verify if display value is being stored in vector
         TEST_METHOD(OnMemoryButtonPressed)
         {
             StandardCalculatorViewModel^ viewModel = ref new StandardCalculatorViewModel();
@@ -790,7 +790,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL((int)viewModel->MemorizedNumbers->Size, 2);
         }
 
-        //when memory list is empty and M+ is pressed
+        // When memory list is empty and M+ is pressed
         TEST_METHOD(OnMemoryAddWhenMemoryEmpty)
         {
             m_viewModel->IsStandard = true;
@@ -808,7 +808,7 @@ namespace CalculatorUnitTests
         }
 
 
-        //when memory list is empty and M- is pressed
+        // When memory list is empty and M- is pressed
         TEST_METHOD(OnMemorySubtractWhenMemoryEmpty)
         {
             m_viewModel->IsStandard = true;
@@ -825,7 +825,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(Platform::StringReference(L"-1,001"), m_viewModel->DisplayValue);
         }
 
-        //when negative number is saved in memory
+        // When negative number is saved in memory
         TEST_METHOD(OnNegativeEntryInMemory)
         {
             ChangeMode(m_viewModel, 0/*Standard*/);
@@ -851,7 +851,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(Platform::StringReference(L"-1,001"), Utils::GetStringValue(memorySlotProgrammer->Value));
         }
 
-        //when decimal number is saved in memory
+        // When decimal number is saved in memory
         TEST_METHOD(OnDecimalEntryInMemory)
         {
             ChangeMode(m_viewModel, 0/*Standard*/);
@@ -878,7 +878,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(Platform::StringReference(L"1,001"), Utils::GetStringValue(memorySlotProgrammer->Value));
         }
 
-        //when negative decimal number is saved in memory
+        // When negative decimal number is saved in memory
         TEST_METHOD(OnNegativeDecimalInMemory)
         {
             m_viewModel->IsStandard = true;
@@ -898,7 +898,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(Platform::StringReference(L"-1,001.1"), m_viewModel->DisplayValue);
         }
 
-        //when decimal number is added to the memory
+        // When decimal number is added to the memory
         TEST_METHOD(OnDecimalAddedToMemory)
         {
             m_viewModel->IsStandard = true;
@@ -928,7 +928,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(Platform::StringReference(L"2,002.1"), m_viewModel->DisplayValue);
         }
 
-        //when memory is saved in programmer as Hex value and then we switch to standard mode, test to see that memory gets converted to decimal
+        // When memory is saved in programmer as Hex value and then we switch to standard mode, test to see that memory gets converted to decimal
         TEST_METHOD(OnMemorySavedInHexRadixAndSwitchedToStandardMode)
         {
             ChangeMode(m_viewModel, 2/*programmer*/);
@@ -971,8 +971,8 @@ namespace CalculatorUnitTests
 
         }
 
-        //When memory button is pressed more than max number of slots allowed, 
-        //the MemorizedNumbers vector size should not increase.
+        // When memory button is pressed more than max number of slots allowed,
+        // the MemorizedNumbers vector size should not increase.
         TEST_METHOD(OnMemoryButtonPressedMaxTimes)
         {
             StandardCalculatorViewModel^ viewModel = ref new StandardCalculatorViewModel();
@@ -1014,7 +1014,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(Platform::StringReference(L"1,001"), m_viewModel->DisplayValue);
         }
 
-        // verify nothing happens if there is no memory and the memory slot pressed action is taken
+        // Verify nothing happens if there is no memory and the memory slot pressed action is taken
         TEST_METHOD(OnMemoryItemPressedNoMemory)
         {
             TESTITEM items[] = {

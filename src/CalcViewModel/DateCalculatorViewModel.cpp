@@ -3,11 +3,11 @@
 
 #include "pch.h"
 #include "DateCalculatorViewModel.h"
-#include "Common\TraceLogger.h"
-#include "Common\LocalizationStringUtil.h"
-#include "Common\LocalizationService.h"
-#include "Common\LocalizationSettings.h"
-#include "Common\CopyPasteManager.h"
+#include "Common/TraceLogger.h"
+#include "Common/LocalizationStringUtil.h"
+#include "Common/LocalizationService.h"
+#include "Common/LocalizationSettings.h"
+#include "Common/CopyPasteManager.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -180,8 +180,8 @@ void DateCalculatorViewModel::UpdateDisplayResult()
             StrDateDiffResultInDays = L"";
             StrDateDiffResult = AppResourceProvider::GetInstance().GetResourceString(L"Date_SameDates");
         }
-        else if ((m_dateDiffResult.year == 0) && 
-                (m_dateDiffResult.month == 0) && 
+        else if ((m_dateDiffResult.year == 0) &&
+                (m_dateDiffResult.month == 0) &&
                 (m_dateDiffResult.week == 0))
         {
             IsDiffInDays = true;

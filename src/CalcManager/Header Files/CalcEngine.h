@@ -85,7 +85,7 @@ private:
     // if it hasn't yet been computed
     bool m_bChangeOp; /* Flag for changing operation.       */
     bool m_bRecord;   // Global mode: recording or displaying
-    bool m_bSetCalcState;  //Flag for setting the engine result state
+    bool m_bSetCalcState;  // Flag for setting the engine result state
     CalcEngine::CalcInput m_input; // Global calc input object for decimal strings
     eNUMOBJ_FMT m_nFE;    /* Scientific notation conversion flag.       */
     CalcEngine::Rational m_maxTrigonometricNum;

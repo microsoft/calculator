@@ -459,11 +459,13 @@
                        AutomationProperties.LiveSetting="Polite"
                        AutomationProperties.Name="{Binding StrDateDiffResultAutomationName}"
                        ContextFlyout="{StaticResource ResultsContextMenu}"
+                       IsTextSelectionEnabled="True"
                        Text="{Binding StrDateDiffResult}"/>
             <TextBlock Grid.Row="10"
                        Style="{ThemeResource BaseTextBlockStyle}"
                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
                        ContextFlyout="{StaticResource ResultsContextMenu}"
+                       IsTextSelectionEnabled="True"
                        Text="{Binding StrDateDiffResultInDays, Mode=OneWay}"
                        Visibility="{Binding IsDiffInDays, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
         </Grid>
@@ -602,6 +604,7 @@
                        AutomationProperties.LiveSetting="Polite"
                        AutomationProperties.Name="{Binding StrDateResultAutomationName}"
                        ContextFlyout="{StaticResource ResultsContextMenu}"
+                       IsTextSelectionEnabled="True"
                        Text="{Binding StrDateResult}"/>
         </Grid>
     </Grid>

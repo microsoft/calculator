@@ -104,7 +104,7 @@ void CCalcEngine::DisplayNum(void)
         if (m_bRecord)
         {
             // Display the string and return.
-            m_numberString = m_input.ToString(m_radix, m_fIntegerMode);
+            m_numberString = m_input.ToString(m_radix);
         }
         else
         {

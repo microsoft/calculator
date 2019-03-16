@@ -1,11 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
 
-#include "Views\CalculatorProgrammerRadixOperators.g.h"
-#include "Converters\VisibilityNegationConverter.h"
-#include "CalcViewModel\StandardCalculatorViewModel.h"
+#include "Views/CalculatorProgrammerRadixOperators.g.h"
+#include "Converters/VisibilityNegationConverter.h"
+#include "CalcViewModel/StandardCalculatorViewModel.h"
 
 namespace CalculatorApp
 {
@@ -33,8 +33,12 @@ namespace CalculatorApp
         void Shift_Clicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void SetVisibilityBinding(Windows::UI::Xaml::FrameworkElement^ element, Platform::String^ path, Windows::UI::Xaml::Data::IValueConverter^ converter);
         void OnLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void OnUnloaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void ProgModeRadixChange();
+        void OnViewModelPropertyChanged(Platform::Object^ sender, Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e);
 
         bool m_isErrorVisualState;
+        Windows::Foundation::EventRegistrationToken m_progModeRadixChangeToken;
+        Windows::Foundation::EventRegistrationToken m_propertyChangedToken;
     };
 }

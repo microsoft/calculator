@@ -6,13 +6,13 @@
 
 #include "pch.h"
 #include "UnitConverter.xaml.h"
-#include "CalcViewModel\UnitConverterViewModel.h"
-#include "Controls\CalculationResult.h"
-#include "Controls\CalculatorButton.h"
-#include "CalcViewModel\Common\CopyPasteManager.h"
-#include "CalcViewModel\Common\KeyboardShortcutManager.h"
-#include "CalcViewModel\Common\LocalizationService.h"
-#include "CalcViewModel\Common\LocalizationSettings.h"
+#include "CalcViewModel/UnitConverterViewModel.h"
+#include "Controls/CalculationResult.h"
+#include "Controls/CalculatorButton.h"
+#include "CalcViewModel/Common/CopyPasteManager.h"
+#include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "CalcViewModel/Common/LocalizationService.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -51,7 +51,7 @@ UnitConverter::UnitConverter() :
 {
     InitializeComponent();
 
-    //adding ESC key shortcut binding to clear button
+    // adding ESC key shortcut binding to clear button
     clearEntryButtonPos0->SetValue(Common::KeyboardShortcutManager::VirtualKeyProperty, Common::MyVirtualKey::Escape);
 
     m_layoutDirection = LocalizationService::GetInstance()->GetFlowDirection();
@@ -278,7 +278,7 @@ void UnitConverter::AnimateConverter()
 void UnitConverter::OnValueSelected(_In_ Platform::Object^ sender)
 {
     auto value = safe_cast<CalculationResult^>(sender);
-    //update the font size since the font is changed to bold
+    // update the font size since the font is changed to bold
     value->UpdateTextState();
     safe_cast<UnitConverterViewModel^>(this->DataContext)->OnValueActivated(AsActivatable(value));
 }

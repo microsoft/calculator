@@ -3,13 +3,13 @@
 
 #include "pch.h"
 #include "ApplicationViewModel.h"
-#include "Common\TraceLogger.h"
-#include "Common\AppResourceProvider.h"
+#include "Common/TraceLogger.h"
+#include "Common/AppResourceProvider.h"
 #include "StandardCalculatorViewModel.h"
 #include "DateCalculatorViewModel.h"
-#include "DataLoaders\CurrencyHttpClient.h"
-#include "DataLoaders\CurrencyDataLoader.h"
-#include "DataLoaders\UnitConverterDataLoader.h"
+#include "DataLoaders/CurrencyHttpClient.h"
+#include "DataLoaders/CurrencyDataLoader.h"
+#include "DataLoaders/UnitConverterDataLoader.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
