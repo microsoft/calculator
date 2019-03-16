@@ -40,8 +40,8 @@ static constexpr long long DAY_DURATION = 1LL * 60 * 60 * 24 * 10000000;
 static constexpr long long WEEK_DURATION = DAY_DURATION * 7;
 
 static constexpr int FORMATTER_DIGIT_COUNT = 4;
-static constexpr int FORMATTER_RATE_MIN_DIGIT_COUNT = 4;
-static constexpr int FORMATTER_RATE_MIN_MEANINGFULL_DIGITS = 2;
+static constexpr int FORMATTER_RATE_MIN_DECIMALS = 4;
+static constexpr int FORMATTER_RATE_MIN_SIGNIFICANT_DECIMALS = 2;
 
 static constexpr auto CACHE_TIMESTAMP_KEY = L"CURRENCY_CONVERTER_TIMESTAMP";
 static constexpr auto CACHE_LANGCODE_KEY = L"CURRENCY_CONVERTER_LANGCODE";
@@ -268,12 +268,12 @@ double CurrencyDataLoader::RoundCurrencyRatio(double ratio)
 {
     // Compute how many decimals we need to display two meaningful digits at minimum
     // For example: 0.000000003423 -> 0.0000000034, 0.000212 -> 0.00021
-    int numberDecimals = FORMATTER_RATE_MIN_DIGIT_COUNT;
+    int numberDecimals = FORMATTER_RATE_MIN_DECIMALS;
     if (ratio < 1)
     {
         numberDecimals = max(
-            FORMATTER_RATE_MIN_DIGIT_COUNT,
-            (int)(-log10(ratio)) + FORMATTER_RATE_MIN_MEANINGFULL_DIGITS);
+            FORMATTER_RATE_MIN_DECIMALS,
+            (int)(-log10(ratio)) + FORMATTER_RATE_MIN_SIGNIFICANT_DECIMALS);
     }
 
     unsigned long long scale = (unsigned long long)powl(10l, numberDecimals);
