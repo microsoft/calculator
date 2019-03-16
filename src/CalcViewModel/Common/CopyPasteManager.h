@@ -58,6 +58,7 @@ namespace CalculatorApp
         static size_t OperandLength(std::wstring operand, CalculatorApp::Common::ViewMode mode, CalculatorApp::Common::CategoryGroupType modeType, int programmerNumberBase = -1);
         static size_t StandardScientificOperandLength(std::wstring operand);
         static size_t ProgrammerOperandLength(const std::wstring& operand, int numberBase);
+        static std::wstring RemoveUnwantedCharsFromWstring(const std::wstring& input);
 
         static constexpr size_t MaxStandardOperandLength = 16;
         static constexpr size_t MaxScientificOperandLength = 32;

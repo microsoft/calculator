@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -86,14 +86,7 @@ bool Utils::IsLastCharacterTarget(_In_ wstring const &input, _In_ wchar_t target
     return !input.empty() && input.back() == target;
 }
 
-// Returns wstring after removing characters like space, comma, and double quotes
-wstring Utils::RemoveUnwantedCharsFromWstring(wstring input)
-{
-    wchar_t unWantedChars[] = { L' ', L',', L'"', 8234, 8235, 8236, 8237 };
-    return RemoveUnwantedCharsFromWstring(input, unWantedChars, 6);
-}
-
-// Returns wstring after removing characters specified by unwantedChars array
+// Return wstring after removing characters specified by unwantedChars array
 wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, wchar_t* unwantedChars, unsigned int size)
 {
     for (unsigned int i = 0; i < size; ++i)
