@@ -20,8 +20,8 @@ using namespace CalcEngine;
 
 constexpr int MAX_EXPONENT = 4;
 constexpr uint32_t MAX_GROUPING_SIZE = 16;
-constexpr wstring_view c_decPreSepStr = L"[+-]?(\\d*)[";
-constexpr wstring_view c_decPostSepStr = L"]?(\\d*)(?:e[+-]?(\\d*))?$";
+constexpr wstring_view c_decPreSepStr = L"[+-]?(\\d*)["sv;
+constexpr wstring_view c_decPostSepStr = L"]?(\\d*)(?:e[+-]?(\\d*))?$"sv;
 
 
 /****************************************************************************\
