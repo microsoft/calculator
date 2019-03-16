@@ -41,7 +41,7 @@ static constexpr long long WEEK_DURATION = DAY_DURATION * 7;
 
 static constexpr int FORMATTER_DIGIT_COUNT = 4;
 static constexpr int FORMATTER_RATE_MIN_DIGIT_COUNT = 4;
-static constexpr int FORMATTER_RATE_MIN_MEANINGFULL_DIGITS = 4;
+static constexpr int FORMATTER_RATE_MIN_MEANINGFULL_DIGITS = 2;
 
 static constexpr auto CACHE_TIMESTAMP_KEY = L"CURRENCY_CONVERTER_TIMESTAMP";
 static constexpr auto CACHE_LANGCODE_KEY = L"CURRENCY_CONVERTER_LANGCODE";
