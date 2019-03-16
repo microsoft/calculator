@@ -33,17 +33,20 @@ int32_t g_ratio;    // int(log(2L^BASEXPWR)/log(radix))
 // Default decimal separator
 wchar_t g_decimalSeparator = L'.';
 
+// The following defines and Calc_ULong* functions were taken from
+// https://github.com/dotnet/coreclr/blob/8b1595b74c943b33fa794e63e440e6f4c9679478/src/pal/inc/rt/intsafe.h
+// under MIT License
 #if defined(MIDL_PASS) || defined(RC_INVOKED) || defined(_M_CEE_PURE) \
-    || defined(_M_AMD64) || defined(__ARM_ARCH)
+    || defined(_M_AMD64) || defined(__ARM_ARCH) || defined(__x86_64__)
 
-#ifndef UInt32x32To64
-#define UInt32x32To64(a, b) ((unsigned __int64)((ULONG)(a)) * (unsigned __int64)((ULONG)(b)))
+#ifndef Calc_UInt32x32To64
+#define Calc_UInt32x32To64(a, b) ((uint64_t)((uint32_t)(a)) * (uint64_t)((uint32_t)(b)))
 #endif
 
-#elif defined(_M_IX86)
+#elif defined(_M_IX86) || defined(__i386__)
 
-#ifndef UInt32x32To64
-#define UInt32x32To64(a, b) (unsigned __int64)((unsigned __int64)(ULONG)(a) * (ULONG)(b))
+#ifndef Calc_UInt32x32To64
+#define Calc_UInt32x32To64(a, b) (uint64_t)((uint64_t)(uint32_t)(a) * (uint32_t)(b))
 #endif
 #else
 
@@ -51,15 +54,18 @@ wchar_t g_decimalSeparator = L'.';
 
 #endif
 
+#define CALC_INTSAFE_E_ARITHMETIC_OVERFLOW ((int32_t)0x80070216L) // 0x216 = 534 = ERROR_ARITHMETIC_OVERFLOW
+#define CALC_ULONG_ERROR ((uint32_t)0xffffffffU)
+
 namespace {
-	HRESULT
-	ULongAdd(
-		IN ULONG ulAugend,
-		IN ULONG ulAddend,
-		OUT ULONG* pulResult)
+	int32_t
+	Calc_ULongAdd(
+		_In_ uint32_t ulAugend,
+		_In_ uint32_t ulAddend,
+		_Out_ uint32_t* pulResult)
 	{
-		HRESULT hr = INTSAFE_E_ARITHMETIC_OVERFLOW;
-		*pulResult = ULONG_ERROR;
+		int32_t hr = CALC_INTSAFE_E_ARITHMETIC_OVERFLOW;
+		*pulResult = CALC_ULONG_ERROR;
 
 		if ((ulAugend + ulAddend) >= ulAugend)
 		{
@@ -70,32 +76,32 @@ namespace {
 		return hr;
 	}
 
-	HRESULT
-	ULongLongToULong(
-		IN ULONGLONG ullOperand,
-		OUT ULONG* pulResult)
+	int32_t
+	Calc_ULongLongToULong(
+		_In_ uint64_t ullOperand,
+		_Out_ uint32_t* pulResult)
 	{
-		HRESULT hr = INTSAFE_E_ARITHMETIC_OVERFLOW;
-		*pulResult = ULONG_ERROR;
+		int32_t hr = CALC_INTSAFE_E_ARITHMETIC_OVERFLOW;
+		*pulResult = CALC_ULONG_ERROR;
 
-		if (ullOperand <= ULONG_MAX)
+		if (ullOperand <= UINT32_MAX)
 		{
-			*pulResult = (ULONG)ullOperand;
+			*pulResult = (uint32_t)ullOperand;
 			hr = S_OK;
 		}
 
 		return hr;
 	}
 
-	HRESULT
-	ULongMult(
-		IN ULONG ulMultiplicand,
-		IN ULONG ulMultiplier,
-		OUT ULONG* pulResult)
+	int32_t
+	Calc_ULongMult(
+		_In_ uint32_t ulMultiplicand,
+		_In_ uint32_t ulMultiplier,
+		_Out_ uint32_t* pulResult)
 	{
-		ULONGLONG ull64Result = UInt32x32To64(ulMultiplicand, ulMultiplier);
+		uint64_t ull64Result = Calc_UInt32x32To64(ulMultiplicand, ulMultiplier);
 
-		return ULongLongToULong(ull64Result, pulResult);
+		return Calc_ULongLongToULong(ull64Result, pulResult);
 	}
 }
 
@@ -198,9 +204,9 @@ PNUMBER _createnum( _In_ uint32_t size )
     uint32_t cbAlloc;
 
     // sizeof( MANTTYPE ) is the size of a 'digit'
-    if (SUCCEEDED(ULongAdd(size, 1, &cbAlloc)) &&
-        SUCCEEDED(ULongMult(cbAlloc, sizeof(MANTTYPE), &cbAlloc)) &&
-        SUCCEEDED(ULongAdd(cbAlloc, sizeof(NUMBER), &cbAlloc)))
+    if (SUCCEEDED(Calc_ULongAdd(size, 1, &cbAlloc)) &&
+        SUCCEEDED(Calc_ULongMult(cbAlloc, sizeof(MANTTYPE), &cbAlloc)) &&
+        SUCCEEDED(Calc_ULongAdd(cbAlloc, sizeof(NUMBER), &cbAlloc)))
     {
         pnumret = (PNUMBER)zmalloc( cbAlloc );
         if ( pnumret == nullptr)
