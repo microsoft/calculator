@@ -117,7 +117,7 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
         for ( ibdigit = b->cdigit; ibdigit > 0; ibdigit-- )
         {
             cy = 0;
-            mcy = (DWORDLONG)da * (*ptrb);
+            mcy = (uint64_t)da * (*ptrb);
             if ( mcy )
             {
                 icdigit = 0;
