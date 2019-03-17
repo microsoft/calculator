@@ -612,6 +612,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
                 break;
             }
             // Drop through in the 'e'-as-a-digit case
+            [[fallthrough]];
         default:
             state = machine[state][NZ];
             break;
@@ -646,7 +647,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
             break;
         case LD:
             pnumret->exp++;
-            // Fall through
+            [[fallthrough]];
         case DD:
             {
                 curChar = NormalizeCharDigit(curChar, radix);
