@@ -20,7 +20,9 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Data;
 
-#define BUILD_YEAR (__DATE__[7] - '0') * 1000 + (__DATE__[8] - '0') * 100 + (__DATE__[9] - '0') * 10 + (__DATE__[10] - '0')
+#ifndef BUILD_YEAR
+#define BUILD_YEAR 2019
+#endif
 
 AboutFlyout::AboutFlyout()
 {
@@ -37,7 +39,7 @@ AboutFlyout::AboutFlyout()
 
     auto copyrightText = LocalizationStringUtil::GetLocalizedString(resourceLoader.GetResourceString("AboutControlCopyright")->Data(), to_wstring(BUILD_YEAR).c_str());
     AboutControlCopyrightRun->Text = ref new String(copyrightText.c_str());
-    
+
 }
 
 void AboutFlyout::FeedbackButton_Click(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
