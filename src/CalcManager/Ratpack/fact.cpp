@@ -73,17 +73,17 @@ void _gamma( PRAT *pn, uint32_t radix, int32_t precision)
     PRAT ratprec = nullptr;
     PRAT ratRadix = nullptr;
     long oldprec;
-    
+
     // Set up constants and initial conditions
     oldprec = precision;
     ratprec = longtorat( oldprec );
-    
+
     // Find the best 'A' for convergence to the required precision.
     a=longtorat( radix );
     lograt(&a, precision);
     mulrat(&a, ratprec, precision);
 
-    // Really is -ln(n)+1, but -ln(n) will be < 1 
+    // Really is -ln(n)+1, but -ln(n) will be < 1
     // if we scale n between 0.5 and 1.5
     addrat(&a, rat_two, precision);
     DUPRAT(tmp,a);
@@ -91,9 +91,9 @@ void _gamma( PRAT *pn, uint32_t radix, int32_t precision)
     mulrat(&tmp, *pn, precision);
     addrat(&a, tmp, precision);
     addrat(&a, rat_one, precision);
-    
+
     // Calculate the necessary bump in precision and up the precision.
-    // The following code is equivalent to 
+    // The following code is equivalent to
     // precision += ln(exp(a)*pow(a,n+1.5))-ln(radix));
     DUPRAT(tmp,*pn);
     one_pt_five=longtorat( 3L );
@@ -110,7 +110,7 @@ void _gamma( PRAT *pn, uint32_t radix, int32_t precision)
     lograt( &tmp, precision);
     subrat( &term, tmp, precision);
     precision += rattolong( term, radix, precision);
-    
+
     // Set up initial terms for series, refer to series in above comment block.
     DUPRAT(factorial,rat_one); // Start factorial out with one
     count = longtonum( 0L, BASEX );
@@ -120,7 +120,7 @@ void _gamma( PRAT *pn, uint32_t radix, int32_t precision)
     // a2=a^2
     DUPRAT(a2,a);
     mulrat(&a2, a, precision);
-    
+
     // sum=(1/n)-(a/(n+1))
     DUPRAT(sum,rat_one);
     divrat(&sum, *pn, precision);
@@ -136,14 +136,14 @@ void _gamma( PRAT *pn, uint32_t radix, int32_t precision)
     divrat(&err, ratRadix, precision);
 
     // Just get something not tiny in term
-    DUPRAT(term, rat_two );    
+    DUPRAT(term, rat_two );
 
     // Loop until precision is reached, or asked to halt.
     while ( !zerrat( term ) && rat_gt( term, err, precision) )
         {
         addrat(pn, rat_two, precision);
-        
-        // WARNING: mixing numbers and  rationals here.  
+
+        // WARNING: mixing numbers and  rationals here.
         // for speed and efficiency.
         INC(count);
         mulnumx(&(factorial->pp),count);
@@ -166,15 +166,15 @@ void _gamma( PRAT *pn, uint32_t radix, int32_t precision)
         DUPRAT(term,rat_one);
         divrat( &term, *pn, precision);
         subrat( &term, tmp, precision);
-        
+
         divrat (&term, factorial, precision);
         addrat( &sum, term, precision);
         ABSRAT(term);
         }
-    
+
     // Multiply by factor.
     mulrat( &sum, mpy, precision);
-    
+
     // And cleanup
     precision = oldprec;
     destroyrat(ratprec);
@@ -199,13 +199,13 @@ void factrat( PRAT *px, uint32_t radix, int32_t precision)
     PRAT fact = nullptr;
     PRAT frac = nullptr;
     PRAT neg_rat_one = nullptr;
-    
+
     if ( rat_gt( *px, rat_max_fact, precision) || rat_lt( *px, rat_min_fact, precision) )
         {
         // Don't attempt factorial of anything too large or small.
         throw CALC_E_OVERFLOW;
         }
-    
+
     DUPRAT(fact,rat_one);
 
     DUPRAT(neg_rat_one,rat_one);
@@ -226,7 +226,7 @@ void factrat( PRAT *px, uint32_t radix, int32_t precision)
         mulrat( &fact, *px, precision);
         subrat( px, rat_one, precision);
         }
-    
+
     // Added to make numbers 'close enough' to integers use integer factorial.
     if ( LOGRATRADIX(*px) <= -precision)
         {

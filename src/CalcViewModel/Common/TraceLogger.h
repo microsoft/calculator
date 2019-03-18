@@ -9,8 +9,8 @@
 
 static const int maxFunctionSize = (int)CalculationManager::Command::CommandBINEDITEND;
 
-// A trace logging provider can only be instantiated and registered once per module. 
-// This class implements a singleton model ensure that only one instance is created. 
+// A trace logging provider can only be instantiated and registered once per module.
+// This class implements a singleton model ensure that only one instance is created.
 namespace CalculatorApp
 {
     struct FuncLog
@@ -64,7 +64,7 @@ namespace CalculatorApp
         void LogMemoryFlyoutOpenBegin(unsigned int) const;
         void LogDebug(std::wstring_view debugData);
         void LogMemoryFlyoutOpenEnd(unsigned int) const;
-        void LogInvalidInputPasted(std::wstring_view reason, std::wstring_view pastedExpression, CalculatorApp::Common::ViewMode mode, int ProgrammerNumberBase, int bitLengthType);
+        void LogInvalidPastedInputOccurred(std::wstring_view reason, CalculatorApp::Common::ViewMode mode, int ProgrammerNumberBase, int bitLengthType);
         void LogValidInputPasted(CalculatorApp::Common::ViewMode mode) const;
         void UpdateFunctionUsage(int func);
         void LogFunctionUsage(int);
@@ -105,7 +105,7 @@ namespace CalculatorApp
 
         // Any new Log method should
             // a) decide the level of logging. This will help us in limiting recording of events only up to a certain level. See this link for guidance https://msdn.microsoft.com/en-us/library/windows/desktop/aa363742(v=vs.85).aspx
-            // We're using Verbose level for events that are called frequently and needed only for debugging or capturing perf for specific scenarios 
+            // We're using Verbose level for events that are called frequently and needed only for debugging or capturing perf for specific scenarios
             // b) should decide whether or not to log to  telemetry and pass TraceLoggingKeyword(MICROSOFT_KEYWORD_TELEMETRY) accordingly
             // c) Should accept a variable number of additional data arguments if needed
         void LogTelemetryEvent(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;

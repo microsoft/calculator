@@ -141,7 +141,7 @@ namespace CalculatorApp
 
             property Platform::String^ AccessKey
             {
-                Platform::String^ get() 
+                Platform::String^ get()
                 {
                     return m_accessKey;
                 }
@@ -220,11 +220,11 @@ namespace CalculatorApp
             static Windows::Foundation::Collections::IObservableVector<NavCategoryGroup^>^ CreateMenuOptions();
 
             static Platform::String^ GetHeaderResourceKey(CategoryGroupType type);
-            
+
         internal:
             static NavCategoryGroup^ CreateCalculatorCategory();
             static NavCategoryGroup^ CreateConverterCategory();
-    
+
         private:
             NavCategoryGroup(const NavCategoryGroupInitializer& groupInitializer);
 

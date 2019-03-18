@@ -51,7 +51,7 @@ namespace UnitConversionManager
     // null checks.
     //
     // unitId, name, abbreviation, isConversionSource, isConversionTarget, isWhimsical
-    const Unit EMPTY_UNIT = Unit{ -1, L"", L"", true, true, false };
+    inline const Unit EMPTY_UNIT = Unit{ -1, L"", L"", true, true, false };
 
     struct Category
     {

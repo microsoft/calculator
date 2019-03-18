@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -41,5 +41,10 @@ namespace CalculatorApp
         void shiftButton_Check(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
         void shiftButton_IsEnabledChanged(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
         void SetOperatorRowVisibility();
+        void OnViewModelPropertyChanged(Platform::Object^ sender, Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e);
+        void OnLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void OnUnloaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+
+        Windows::Foundation::EventRegistrationToken m_propertyChangedToken;
     };
 }

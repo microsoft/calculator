@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -142,7 +142,7 @@ UnitConverterViewModel::UnitConverterViewModel(const shared_ptr<UCM::IUnitConver
     m_currencyFormatter->Mode = CurrencyFormatterMode::UseCurrencyCode;
     m_currencyFormatter->ApplyRoundingForCurrency(RoundingAlgorithm::RoundHalfDown);
     m_currencyMaxFractionDigits = m_currencyFormatter->FractionDigits;
-    
+
     auto resourceLoader = AppResourceProvider::GetInstance();
     m_localizedValueFromFormat = resourceLoader.GetResourceString(UnitConverterResourceKeys::ValueFromFormat);
     m_localizedValueToFormat = resourceLoader.GetResourceString(UnitConverterResourceKeys::ValueToFormat);
@@ -202,12 +202,10 @@ void UnitConverterViewModel::BuildUnitList(const vector<UCM::Unit>& modelUnitLis
     m_Units->Clear();
     for (const UCM::Unit& modelUnit : modelUnitList)
     {
-        if (modelUnit.isWhimsical)
+        if (!modelUnit.isWhimsical)
         {
-            continue;
+            m_Units->Append(ref new Unit(modelUnit));
         }
-
-        m_Units->Append(ref new Unit(modelUnit));
     }
 
     if (m_Units->Size == 0)
@@ -257,7 +255,7 @@ void UnitConverterViewModel::OnUnitChanged(Object^ parameter)
 
 void UnitConverterViewModel::OnSwitchActive(Platform::Object^ unused)
 {
-    // this can be false if this switch occurs without the user having explicitly updated any strings 
+    // this can be false if this switch occurs without the user having explicitly updated any strings
     // (for example, during deserialization). We only want to try this cleanup if there's actually
     // something to clean up.
     if (m_relocalizeStringOnSwitch)
@@ -279,7 +277,7 @@ void UnitConverterViewModel::OnSwitchActive(Platform::Object^ unused)
 
     m_valueFromUnlocalized.swap(m_valueToUnlocalized);
     Utils::Swap(&m_localizedValueFromFormat, &m_localizedValueToFormat);
-    
+
     Utils::Swap(&m_Unit1AutomationName, &m_Unit2AutomationName);
     RaisePropertyChanged(UnitConverterViewModelProperties::Unit1AutomationName);
     RaisePropertyChanged(UnitConverterViewModelProperties::Unit2AutomationName);
@@ -324,7 +322,7 @@ String^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& str
             if (allowPartialStrings)
             {
                 // allow "in progress" strings, like "3." that occur during the composition of
-                // a final number. Without this, when typing the three characters in "3.2" 
+                // a final number. Without this, when typing the three characters in "3.2"
                 // you don't see the decimal point when typing it, you only see it once you've finally
                 // typed a post-decimal digit.
 
@@ -341,7 +339,7 @@ String^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& str
         {
             wstring currencyResult = m_currencyFormatter->Format(stod(stringToLocalize))->Data();
             wstring currencyCode = m_currencyFormatter->Currency->Data();
-            
+
             // CurrencyFormatter always includes LangCode or Symbol. Make it include LangCode
             // because this includes a non-breaking space. Remove the LangCode.
             auto pos = currencyResult.find(currencyCode);
@@ -367,7 +365,7 @@ String^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& str
         if (hasDecimal)
         {
             // Since the output from GetLocaleInfoEx() and DecimalFormatter are differing for decimal string
-            // we are adding the below work-around of editing the string returned by DecimalFormatter 
+            // we are adding the below work-around of editing the string returned by DecimalFormatter
             // and replacing the decimal separator with the one returned by GetLocaleInfoEx()
             String^ formattedSampleString = m_decimalFormatter->Format(stod("1.1"));
             wstring formattedSampleWString = wstring(formattedSampleString->Data());
@@ -378,7 +376,7 @@ String^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& str
             {
                 resultWithDecimal.replace(pos, 1, &m_decimalSeparator);
             }
-            
+
             // Copy back the edited string to the result
             result = ref new String(resultWithDecimal.c_str());
         }
@@ -479,7 +477,7 @@ void UnitConverterViewModel::OnButtonPressed(Platform::Object^ parameter)
     NumbersAndOperatorsEnum numOpEnum = CalculatorButtonPressedEventArgs::GetOperationFromCommandParameter(parameter);
     UCM::Command command = CommandFromButtonId(numOpEnum);
 
-    //Don't clear the display if combo box is open and escape is pressed
+    // Don't clear the display if combo box is open and escape is pressed
     if (command == UCM::Command::Clear && IsDropDownOpen)
     {
         return;
@@ -643,10 +641,8 @@ String^ UnitConverterViewModel::Serialize()
         String^ serializedData = ref new String(wstring(out.str()).c_str());
         return serializedData;
     }
-    else
-    {
-        return nullptr;
-    }
+
+    return nullptr;
 }
 
 void UnitConverterViewModel::Deserialize(Platform::String^ state)
@@ -674,7 +670,7 @@ void UnitConverterViewModel::Deserialize(Platform::String^ state)
     RaisePropertyChanged(nullptr);  // Update since all props have been updated.
 }
 
-//Saving User Preferences of Category and Associated-Units across Sessions. 
+// Saving User Preferences of Category and Associated-Units across Sessions.
 void UnitConverterViewModel::SaveUserPreferences()
 {
     if (UnitsAreValid())
@@ -695,7 +691,7 @@ void UnitConverterViewModel::SaveUserPreferences()
     }
 }
 
-//Restoring User Preferences of Category and Associated-Units.
+// Restoring User Preferences of Category and Associated-Units.
 void UnitConverterViewModel::RestoreUserPreferences()
 {
     if (!IsCurrencyCurrentCategory)
@@ -879,13 +875,10 @@ void UnitConverterViewModel::UpdateInputBlocked(_In_ const wstring& currencyInpu
 {
     // currencyInput is in en-US and has the default decimal separator, so this is safe to do.
     auto posOfDecimal = currencyInput.find(L'.');
+    m_isInputBlocked  = false;
     if (posOfDecimal != wstring::npos && IsCurrencyCurrentCategory)
     {
         m_isInputBlocked = (posOfDecimal + static_cast<size_t>(m_currencyMaxFractionDigits) + 1 == currencyInput.length());
-    }
-    else
-    {
-        m_isInputBlocked = false;
     }
 }
 
@@ -973,7 +966,7 @@ void UnitConverterViewModel::OnPaste(String^ stringToPaste, ViewMode mode)
         {
             if (isFirstLegalChar)
             {
-                // Send Clear before sending something that will actually apply 
+                // Send Clear before sending something that will actually apply
                 // to the field.
                 m_model->SendCommand(UCM::Command::Clear);
                 isFirstLegalChar = false;
@@ -988,7 +981,7 @@ void UnitConverterViewModel::OnPaste(String^ stringToPaste, ViewMode mode)
             }
 
             // Negate is only allowed if it's the first legal character, which is handled above.
-            if (NumbersAndOperatorsEnum::None != op && NumbersAndOperatorsEnum::Negate != op)
+            if (NumbersAndOperatorsEnum::Negate != op)
             {
                 UCM::Command cmd = CommandFromButtonId(op);
                 m_model->SendCommand(cmd);

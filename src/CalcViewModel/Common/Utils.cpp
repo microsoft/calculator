@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -54,7 +54,7 @@ double Utils::GetDoubleFromWstring(wstring input)
     return ::atof(inputString.c_str());
 }
 
-//returns windowId for the current view
+// Returns windowId for the current view
 int Utils::GetWindowId()
 {
     int windowId = -1;
@@ -80,20 +80,13 @@ void Utils::RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Core
     }
 }
 
-// returns if the last character of a wstring is the target wchar_t
+// Returns if the last character of a wstring is the target wchar_t
 bool Utils::IsLastCharacterTarget(_In_ wstring const &input, _In_ wchar_t target)
 {
     return !input.empty() && input.back() == target;
 }
 
-//return wstring after removing characters like space, comma, and double quotes
-wstring Utils::RemoveUnwantedCharsFromWstring(wstring input)
-{
-    wchar_t unWantedChars[] = { L' ', L',', L'"', 8234, 8235, 8236, 8237 };
-    return RemoveUnwantedCharsFromWstring(input, unWantedChars, 6);
-}
-
-//return wstring after removing characters specified by unwantedChars array
+// Return wstring after removing characters specified by unwantedChars array
 wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, wchar_t* unwantedChars, unsigned int size)
 {
     for (unsigned int i = 0; i < size; ++i)
@@ -110,7 +103,7 @@ void Utils::SerializeCommandsAndTokens(_In_ shared_ptr<CalculatorVector <pair<ws
     unsigned int commandsSize;
     IFTPlatformException(commands->GetSize(&commandsSize));
 
-    // save the size of the commands vector
+    // Save the size of the commands vector
     writer->WriteUInt32(commandsSize);
 
     SerializeCommandVisitor cmdVisitor(writer);

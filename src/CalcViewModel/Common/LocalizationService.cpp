@@ -216,6 +216,7 @@ FontWeight LocalizationService::GetFontWeightOverride()
 double LocalizationService::GetFontScaleFactorOverride(LanguageFontType fontType)
 {
     assert(m_overrideFontApiValues);
+
     switch (fontType)
     {
     case LanguageFontType::UIText:
@@ -425,7 +426,7 @@ IIterable<String^>^ LocalizationService::GetLanguageIdentifiers()
     int result = GetUserDefaultLocaleName(currentLocale, LOCALE_NAME_MAX_LENGTH);
     if (result != 0)
     {
-        // GetUserDefaultLocaleName may return an invalid bcp47 language tag with trailing non-BCP47 friendly characters, 
+        // GetUserDefaultLocaleName may return an invalid bcp47 language tag with trailing non-BCP47 friendly characters,
         // which if present would start with an underscore, for example sort order
         // (see https://msdn.microsoft.com/en-us/library/windows/desktop/dd373814(v=vs.85).aspx).
         // Therefore, if there is an underscore in the locale name, trim all characters from the underscore onwards.

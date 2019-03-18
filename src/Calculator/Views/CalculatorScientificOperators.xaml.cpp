@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -36,6 +36,15 @@ CalculatorScientificOperators::CalculatorScientificOperators()
 
     expButton->SetValue(Common::KeyboardShortcutManager::VirtualKeyProperty, Common::MyVirtualKey::E);
     Common::KeyboardShortcutManager::ShiftButtonChecked(false);
+}
+
+void CalculatorScientificOperators::OnLoaded(Object^, RoutedEventArgs^)
+{
+    m_propertyChangedToken = Model->PropertyChanged += ref new PropertyChangedEventHandler(this, &CalculatorScientificOperators::OnViewModelPropertyChanged);
+}
+void CalculatorScientificOperators::OnUnloaded(Object^, RoutedEventArgs^)
+{
+    Model->PropertyChanged -= m_propertyChangedToken;
 }
 
 void CalculatorScientificOperators::ShortLayout_Completed(_In_ Platform::Object^ /*sender*/, _In_ Platform::Object^ /*e*/)
@@ -96,4 +105,12 @@ void CalculatorScientificOperators::SetOperatorRowVisibility()
     Row2->Visibility = rowVis;
     InvRow1->Visibility = invRowVis;
     InvRow2->Visibility = invRowVis;
+}
+
+void CalculatorScientificOperators::OnViewModelPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+{
+    if (e->PropertyName == CalculatorViewModelProperties::OpenParenthesisCount && closeParenthesisButton->FocusState != ::FocusState::Unfocused)
+    {
+        Model->SetOpenParenthesisCountNarratorAnnouncement();
+    }
 }

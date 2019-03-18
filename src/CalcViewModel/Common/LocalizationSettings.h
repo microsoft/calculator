@@ -4,6 +4,8 @@
 #pragma once
 #include "LocalizationService.h"
 
+#include <iterator>
+
 namespace CalculatorApp
 {
     namespace Common
@@ -41,7 +43,7 @@ namespace CalculatorApp
                     result = GetLocaleInfoEx(m_resolvedName.c_str(),
                         LOCALE_SDECIMAL,
                         decimalString,
-                        ARRAYSIZE(decimalString));
+                        static_cast<int>(std::size(decimalString)));
                     if (result == 0)
                     {
                         throw std::runtime_error("Unexpected error while getting locale info");
@@ -51,7 +53,7 @@ namespace CalculatorApp
                     result = GetLocaleInfoEx(m_resolvedName.c_str(),
                         LOCALE_STHOUSAND,
                         groupingSymbolString,
-                        ARRAYSIZE(groupingSymbolString));
+                        static_cast<int>(std::size(groupingSymbolString)));
                     if (result == 0)
                     {
                         throw std::runtime_error("Unexpected error while getting locale info");
@@ -61,7 +63,7 @@ namespace CalculatorApp
                     result = GetLocaleInfoEx(m_resolvedName.c_str(),
                         LOCALE_SGROUPING,
                         numberGroupingString,
-                        ARRAYSIZE(numberGroupingString));
+                        static_cast<int>(std::size(numberGroupingString)));
                     if (result == 0)
                     {
                         throw std::runtime_error("Unexpected error while getting locale info");
@@ -72,7 +74,7 @@ namespace CalculatorApp
                     result = ::GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT,
                         LOCALE_SLIST,
                         listSeparatorString,
-                        ARRAYSIZE(listSeparatorString)); // Max length of the expected return value is 4
+                        static_cast<int>(std::size(listSeparatorString))); // Max length of the expected return value is 4
                     if (result == 0)
                     {
                         throw std::runtime_error("Unexpected error while getting locale info");
@@ -122,7 +124,7 @@ namespace CalculatorApp
                 ::GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT,
                     LOCALE_IFIRSTDAYOFWEEK,                     // The first day in a week
                     reinterpret_cast<PWSTR>(day),               // Argument is of type PWSTR
-                    ARRAYSIZE(day));                            // Max return size are 80 characters
+                    static_cast<int>(std::size(day)));                            // Max return size are 80 characters
 
                 // The LOCALE_IFIRSTDAYOFWEEK integer value varies from 0, 1, .. 6 for Monday, Tuesday, ... Sunday
                 // DayOfWeek enum value varies from 0, 1, .. 6 for Sunday, Monday, ... Saturday
