@@ -185,16 +185,19 @@ void Calculator::UpdateViewState()
     {
         state = L"Programmer";
         Model->IsDecimalEnabled = false;
+        ResultsMVisualStateTrigger->MinWindowHeight = 640;
     }
     else if (IsScientific)
     {
         state = L"Scientific";
         Model->IsDecimalEnabled = true;
-    }
+        ResultsMVisualStateTrigger->MinWindowHeight = 544;
+  }
     else
     {
         state = L"Standard";
         Model->IsDecimalEnabled = true;
+        ResultsMVisualStateTrigger->MinWindowHeight = 1;
     }
 
     CloseHistoryFlyout();
@@ -203,35 +206,6 @@ void Calculator::UpdateViewState()
     VisualStateManager::GoToState(this, ref new String(state.c_str()), true/*useTransitions*/);
 }
 
-void Calculator::SetResultStyles()
-{
-    CoreWindow^ window = CoreWindow::GetForCurrentThread();
-    if (window)
-    {
-        float curHeight = window->Bounds.Height;
-        if (curHeight >= 800)
-        {
-            Results->MaxFontSize = (double)Application::Current->Resources->Lookup("CalcResultFontSizeL");
-            Results->MaxExpressionHistoryCharacters = 51;
-            RowResult->MinHeight = 108;
-            RowResult->Height = GridLength(72, GridUnitType::Star);
-        }
-        else if ((IsProgrammer && curHeight >= 640) || (IsScientific && curHeight >= 544) || IsStandard)
-        {
-            Results->MaxExpressionHistoryCharacters = 30;
-            Results->MaxFontSize = (double)Application::Current->Resources->Lookup("CalcResultFontSizeM");
-            RowResult->MinHeight = 72;
-            RowResult->Height = GridLength(72, GridUnitType::Star);
-        }
-        else
-        {
-            Results->MaxFontSize = (double)Application::Current->Resources->Lookup("CalcResultFontSizeS");
-            Results->MaxExpressionHistoryCharacters = 30;
-            RowResult->MinHeight = 42;
-            RowResult->Height = GridLength(42, GridUnitType::Star);
-        }
-    }
-}
 
 void Calculator::AnimateCalculator(bool resultAnimate)
 {
@@ -276,7 +250,6 @@ void Calculator::OnContextCanceled(UIElement^ sender, RoutedEventArgs^ e)
 
 void Calculator::OnLayoutStateChanged(_In_ Object^ sender, _In_ Object^ e)
 {
-    UpdateViewState();
     UpdatePanelViewState();
 }
 
@@ -360,7 +333,6 @@ void Calculator::OnStoryboardCompleted(_In_ Object^ sender, _In_ Object^ e)
             AnimateWithoutResult->Begin();
         }
     }
-    SetResultStyles();
 }
 
 void Calculator::EnsureScientific()
@@ -725,11 +697,6 @@ void Calculator::DockPanelTapped(_In_ TappedRoutedEventArgs^ e)
 
     m_IsLastFlyoutMemory = false;
     m_IsLastFlyoutHistory = false;
-}
-
-void Calculator::OnResultsLayoutChanged(_In_ Object^ sender, _In_ Object^ e)
-{
-    SetResultStyles();
 }
 
 void Calculator::UnregisterEventHandlers()

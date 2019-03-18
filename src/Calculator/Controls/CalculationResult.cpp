@@ -184,7 +184,7 @@ void CalculationResult::UpdateVisualState()
     {
         VisualStateManager::GoToState(this, "Active", true);
     }
-    else 
+    else
     {
         VisualStateManager::GoToState(this, "Normal", true);
     }
@@ -338,17 +338,17 @@ void CalculationResult::ShowHideScrollButtons(::Visibility vLeft, ::Visibility v
 void CalculationResult::UpdateScrollButtons()
 {
     // When the width is smaller than the container, don't show any
-    if (m_textBlock->ActualWidth < m_textContainer->ActualWidth) 
+    if (m_textBlock->ActualWidth < m_textContainer->ActualWidth)
     {
         ShowHideScrollButtons(::Visibility::Collapsed, ::Visibility::Collapsed);
     }
     // We have more number on both side. Show both arrows
-    else if (m_textContainer->HorizontalOffset > 0 && m_textContainer->HorizontalOffset < (m_textContainer->ExtentWidth - m_textContainer->ViewportWidth)) 
+    else if (m_textContainer->HorizontalOffset > 0 && m_textContainer->HorizontalOffset < (m_textContainer->ExtentWidth - m_textContainer->ViewportWidth))
     {
         ShowHideScrollButtons(::Visibility::Visible, ::Visibility::Visible);
     }
     // Width is larger than the container and left most part of the number is shown. Should be able to scroll left.
-    else if (m_textContainer->HorizontalOffset == 0) 
+    else if (m_textContainer->HorizontalOffset == 0)
     {
         ShowHideScrollButtons(::Visibility::Collapsed, ::Visibility::Visible);
     }
@@ -375,16 +375,9 @@ void CalculationResult::ModifyFontAndMargin(TextBlock^ textBox, double fontChang
     {
         scaleFactor = SMALLHEIGHTSCALEFACTOR;
     }
-    if (fontChange < 0)
-    {
-        newFontSize = max(cur + fontChange, MinFontSize);
-        m_textContainer->Padding = Thickness(0, 0, 0, scaleFactor * abs(cur - newFontSize));
-    }
-    else
-    {
-        newFontSize = min(cur + fontChange, MaxFontSize);
-        m_textContainer->Padding = Thickness(0, 0, 0, scaleFactor * abs(cur - newFontSize));
-    }
+
+    newFontSize = min(max(cur + fontChange, MinFontSize), MaxFontSize);
+    m_textContainer->Padding = Thickness(0, 0, 0, scaleFactor * abs(cur - newFontSize));
     textBox->FontSize = newFontSize;
 }
 

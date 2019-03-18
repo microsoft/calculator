@@ -125,10 +125,6 @@
             <!-- Standard Operators Standard/Scientific in Fill/Full -->
             <x:Double x:Key="CalcOperatorCaptionSize">15</x:Double>
 
-            <x:Double x:Key="CalcResultFontSizeL">72</x:Double>
-            <x:Double x:Key="CalcResultFontSizeM">46</x:Double>
-            <x:Double x:Key="CalcResultFontSizeS">28</x:Double>
-
             <!-- Base style for calc buttons -->
             <Style x:Key="CalcButtonStyle" TargetType="Controls:CalculatorButton">
                 <Setter Property="MinWidth" Value="24"/>

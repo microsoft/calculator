@@ -553,25 +553,34 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="800"/>
                     </VisualState.StateTriggers>
-                    <Storyboard Completed="OnResultsLayoutChanged"/>
+                    <VisualState.Setters>
+                        <Setter Target="Results.MaxFontSize" Value="72"/>
+                        <Setter Target="Results.MaxExpressionHistoryCharacters" Value="51"/>
+                        <Setter Target="RowResult.MinHeight" Value="108"/>
+                        <Setter Target="RowResult.Height" Value="72*"/>
+                    </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="ResultsProgM">
+                <VisualState x:Name="ResultsM">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="640"/>
+                        <AdaptiveTrigger x:Name="ResultsMVisualStateTrigger" MinWindowHeight="640"/>
                     </VisualState.StateTriggers>
-                    <Storyboard Completed="OnResultsLayoutChanged"/>
-                </VisualState>
-                <VisualState x:Name="ResultsSciM">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="544"/>
-                    </VisualState.StateTriggers>
-                    <Storyboard Completed="OnResultsLayoutChanged"/>
+                    <VisualState.Setters>
+                        <Setter Target="Results.MaxFontSize" Value="46"/>
+                        <Setter Target="Results.MaxExpressionHistoryCharacters" Value="30"/>
+                        <Setter Target="RowResult.MinHeight" Value="72"/>
+                        <Setter Target="RowResult.Height" Value="72*"/>
+                    </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="ResultsS">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="0"/>
                     </VisualState.StateTriggers>
-                    <Storyboard Completed="OnResultsLayoutChanged"/>
+                    <VisualState.Setters>
+                        <Setter Target="Results.MaxFontSize" Value="26"/>
+                        <Setter Target="Results.MaxExpressionHistoryCharacters" Value="30"/>
+                        <Setter Target="RowResult.MinHeight" Value="42"/>
+                        <Setter Target="RowResult.Height" Value="42*"/>
+                    </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
