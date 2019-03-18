@@ -54,7 +54,7 @@ DateCalculatorViewModel::DateCalculatorViewModel() :
     m_dateCalcEngine = make_shared<DateCalculationEngine>(localizationSettings.GetCalendarIdentifier());
     // Initialize dates of DatePicker controls to today's date
     auto calendar = ref new Calendar();
-    // We force the timezone to UTC, to be sure to not being affected by Daylight Saving Time
+    // We force the timezone to UTC, in order to avoid being affected by Daylight Saving Time
     // when we calculate the difference between 2 dates. 
     calendar->ChangeTimeZone("UTC");
     auto today = calendar->GetDateTime();
