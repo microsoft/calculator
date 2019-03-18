@@ -41,7 +41,8 @@ unsigned int CalculatorHistory::AddItem(_In_ shared_ptr<HISTORYITEM> const &spHi
     }
 
     m_historyItems.push_back(spHistoryItem);
-    return static_cast<unsigned>(m_historyItems.size() - 1);
+unsigned int lastIndex = static_cast<unsigned>(m_historyItems.size() - 1);
+return lastIndex;
 }
 
 bool CalculatorHistory::RemoveItem(_In_ unsigned int uIdx)
