@@ -24,15 +24,15 @@ namespace CalculationManager
 {
     CalculatorManager::CalculatorManager(_In_ ICalcDisplay* displayCallback, _In_ IResourceProvider* resourceProvider) :
         m_displayCallback(displayCallback),
+        m_currentCalculatorEngine(nullptr),
         m_resourceProvider(resourceProvider),
+        m_inHistoryItemLoadMode(false),
+        m_persistedPrimaryValue(),
+        m_isExponentialFormat(false),
         m_currentDegreeMode(Command::CommandNULL),
         m_savedDegreeMode(Command::CommandDEG),
-        m_isExponentialFormat(false),
-        m_persistedPrimaryValue(),
-        m_currentCalculatorEngine(nullptr),
         m_pStdHistory(new CalculatorHistory(MAX_HISTORY_ITEMS)),
-        m_pSciHistory(new CalculatorHistory(MAX_HISTORY_ITEMS)),
-        m_inHistoryItemLoadMode(false)
+        m_pSciHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
     {
         CCalcEngine::InitialOneTimeOnlySetup(*m_resourceProvider);
     }
