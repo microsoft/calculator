@@ -43,11 +43,7 @@ DateCalculatorViewModel::DateCalculatorViewModel() :
     m_StrDateDiffResultAutomationName(L""),
     m_StrDateDiffResultInDays(L""),
     m_StrDateResult(L""),
-    m_StrDateResultAutomationName(L""),
-    m_fromDate({ 0 }),
-    m_toDate({ 0 }),
-    m_startDate({ 0 }),
-    m_dateResult({ 0 })
+    m_StrDateResultAutomationName(L"")
 {
     const auto& localizationSettings = LocalizationSettings::GetInstance();
 
@@ -56,19 +52,19 @@ DateCalculatorViewModel::DateCalculatorViewModel() :
 
     // Initialize Date Calc engine
     m_dateCalcEngine = make_shared<DateCalculationEngine>(localizationSettings.GetCalendarIdentifier());
-
     // Initialize dates of DatePicker controls to today's date
     auto calendar = ref new Calendar();
+    // We force the timezone to UTC, in order to avoid being affected by Daylight Saving Time
+    // when we calculate the difference between 2 dates. 
+    calendar->ChangeTimeZone("UTC");
     auto today = calendar->GetDateTime();
 
     // FromDate and ToDate should be clipped (adjusted to a consistent hour in UTC)
-    m_fromDate = today;
-    m_toDate = today;
-    FromDate = ClipTime(today);
-    ToDate = ClipTime(today);
+    m_fromDate = ClipTime(today);
+    m_toDate = ClipTime(today);
 
     // StartDate should not be clipped
-    StartDate = today;
+    m_startDate = today;
     m_dateResult = today;
 
     // Initialize the list separator delimiter appended with a space at the end, e.g. ", "
@@ -86,15 +82,6 @@ DateCalculatorViewModel::DateCalculatorViewModel() :
         m_offsetValues->Append(ref new String(numberStr.c_str()));
     }
 
-    /* In the ClipTime function, we used to change timezone to UTC before clipping the time.
-       The comment from the previous developers said this was done to eliminate the effects of
-       Daylight Savings Time. We can't think of a good reason why this change in timezone is
-       necessary and did find bugs related to the change, therefore, we have removed the
-       change. Just in case, we will see if the clipped time is ever a different day from the
-       original day, which would hopefully indicate the change in timezone was actually
-       necessary. We will collect telemetry if we find this case. If we don't see any
-       telemetry events after the application has been used for some time, we will feel safe
-       and can remove this function. */
     DayOfWeek trueDayOfWeek = calendar->DayOfWeek;
 
     DateTime clippedTime = ClipTime(today);
@@ -383,13 +370,14 @@ String^ DateCalculatorViewModel::GetLocalizedNumberString(int value) const
     return ref new String(numberStr.c_str());
 }
 
-// Adjusts the given DateTime to 12AM of the same day
+// Adjusts the given DateTime to 12AM (UTC) of the same day
 DateTime DateCalculatorViewModel::ClipTime(DateTime dateTime)
 {
     auto calendar = ref new Calendar();
+    calendar->ChangeTimeZone("UTC");
     calendar->SetDateTime(dateTime);
-    calendar->Period = 1;
-    calendar->Hour = 12;
+    calendar->Period = calendar->FirstPeriodInThisDay;
+    calendar->Hour = calendar->FirstHourInThisPeriod;
     calendar->Minute = 0;
     calendar->Second = 0;
     calendar->Nanosecond = 0;
