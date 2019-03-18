@@ -641,6 +641,7 @@ String^ UnitConverterViewModel::Serialize()
         String^ serializedData = ref new String(wstring(out.str()).c_str());
         return serializedData;
     }
+
     return nullptr;
 }
 
