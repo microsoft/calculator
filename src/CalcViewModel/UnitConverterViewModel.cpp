@@ -53,6 +53,8 @@ constexpr size_t SELECTED_TARGET_UNIT = 2;
 
 // x millisecond delay before we consider conversion to be final
 constexpr unsigned int CONVERSION_FINALIZED_DELAY_IN_MS = 1000;
+const wregex regexTrimSpacesStart = wregex(L"^\\s+");
+const wregex regexTrimSpacesEnd = wregex(L"\\s+$");
 
 namespace CalculatorApp::ViewModel
 {
@@ -346,10 +348,15 @@ String^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& str
             if (pos != wstring::npos)
             {
                 currencyResult.erase(pos, currencyCode.length());
-                pos = currencyResult.find(L'\u00a0'); // non-breaking space
-                if (pos != wstring::npos)
+                std::wsmatch sm;
+                if (regex_search(currencyResult, sm, regexTrimSpacesStart))
                 {
-                    currencyResult.erase(pos, 1);
+                    currencyResult.erase(sm.prefix().length(), sm.length());
+                }
+
+                if (regex_search(currencyResult, sm, regexTrimSpacesEnd))
+                {
+                    currencyResult.erase(sm.prefix().length(), sm.length());
                 }
             }
 
