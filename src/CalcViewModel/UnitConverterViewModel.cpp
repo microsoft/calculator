@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -202,12 +202,10 @@ void UnitConverterViewModel::BuildUnitList(const vector<UCM::Unit>& modelUnitLis
     m_Units->Clear();
     for (const UCM::Unit& modelUnit : modelUnitList)
     {
-        if (modelUnit.isWhimsical)
+        if (!modelUnit.isWhimsical)
         {
-            continue;
+            m_Units->Append(ref new Unit(modelUnit));
         }
-
-        m_Units->Append(ref new Unit(modelUnit));
     }
 
     if (m_Units->Size == 0)
@@ -643,10 +641,8 @@ String^ UnitConverterViewModel::Serialize()
         String^ serializedData = ref new String(wstring(out.str()).c_str());
         return serializedData;
     }
-    else
-    {
-        return nullptr;
-    }
+
+    return nullptr;
 }
 
 void UnitConverterViewModel::Deserialize(Platform::String^ state)
@@ -879,13 +875,10 @@ void UnitConverterViewModel::UpdateInputBlocked(_In_ const wstring& currencyInpu
 {
     // currencyInput is in en-US and has the default decimal separator, so this is safe to do.
     auto posOfDecimal = currencyInput.find(L'.');
+    m_isInputBlocked  = false;
     if (posOfDecimal != wstring::npos && IsCurrencyCurrentCategory)
     {
         m_isInputBlocked = (posOfDecimal + static_cast<size_t>(m_currencyMaxFractionDigits) + 1 == currencyInput.length());
-    }
-    else
-    {
-        m_isInputBlocked = false;
     }
 }
 
@@ -988,7 +981,7 @@ void UnitConverterViewModel::OnPaste(String^ stringToPaste, ViewMode mode)
             }
 
             // Negate is only allowed if it's the first legal character, which is handled above.
-            if (NumbersAndOperatorsEnum::None != op && NumbersAndOperatorsEnum::Negate != op)
+            if (NumbersAndOperatorsEnum::Negate != op)
             {
                 UCM::Command cmd = CommandFromButtonId(op);
                 m_model->SendCommand(cmd);
