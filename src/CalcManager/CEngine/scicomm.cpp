@@ -26,39 +26,41 @@
 using namespace std;
 using namespace CalcEngine;
 
-// NPrecedenceOfOp
-//
-//  returns a virtual number for precedence for the operator. We expect binary operator only, otherwise the lowest number
-// 0 is returned. Higher the number, higher the precedence of the operator.
-INT NPrecedenceOfOp(int nopCode)
-{
-    static BYTE    rgbPrec[] = { 0,0,  IDC_OR,0, IDC_XOR,0,  IDC_AND,1,
-        IDC_ADD,2, IDC_SUB,2,    IDC_RSHF,3, IDC_LSHF,3,
-        IDC_MOD,3, IDC_DIV,3, IDC_MUL,3,  IDC_PWR,4,   IDC_ROOT, 4 };
-    int iPrec;
+namespace {
+    // NPrecedenceOfOp
+    //
+    // returns a virtual number for precedence for the operator. We expect binary operator only, otherwise the lowest number
+    // 0 is returned. Higher the number, higher the precedence of the operator.
+    INT NPrecedenceOfOp(int nopCode)
+    {
+        static BYTE    rgbPrec[] = { 0,0,  IDC_OR,0, IDC_XOR,0,  IDC_AND,1,
+            IDC_ADD,2, IDC_SUB,2,    IDC_RSHF,3, IDC_LSHF,3,
+            IDC_MOD,3, IDC_DIV,3, IDC_MUL,3,  IDC_PWR,4,   IDC_ROOT, 4 };
+        unsigned int iPrec;
 
-    iPrec = 0;
-    while ((iPrec < ARRAYSIZE(rgbPrec)) && (nopCode != rgbPrec[iPrec]))
-    {
-        iPrec += 2;
-    }
-    if (iPrec >= ARRAYSIZE(rgbPrec))
-    {
         iPrec = 0;
-    }
-    return rgbPrec[iPrec + 1];
+        while ((iPrec < size(rgbPrec)) && (nopCode != rgbPrec[iPrec]))
+        {
+            iPrec += 2;
+        }
+        if (iPrec >= size(rgbPrec))
+        {
+            iPrec = 0;
+        }
+        return rgbPrec[iPrec + 1];
 
+    }
 }
 
 // HandleErrorCommand
 //
-//  When it is discovered by the state machine that at this point the input is not valid (eg. "1+)"), we want to proceed as though this input never
+// When it is discovered by the state machine that at this point the input is not valid (eg. "1+)"), we want to proceed as though this input never
 // occurred and may be some feedback to user like Beep. The rest of input can then continue by just ignoring this command.
 void CCalcEngine::HandleErrorCommand(WPARAM idc)
 {
     if (!IsGuiSettingOpCode(idc))
     {
-        // we would have saved the prev command. Need to forget this state
+        // We would have saved the prev command. Need to forget this state
         m_nTempCom = m_nLastCom;
     }
 }
@@ -126,7 +128,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         }
     }
 
-    // Toggle Record/Display mode if appropriate.    
+    // Toggle Record/Display mode if appropriate.
     if (m_bRecord)
     {
         if (IsOpInRange(wParam, IDC_AND, IDC_MMINUS) ||
@@ -180,7 +182,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     // BINARY OPERATORS:
     if (IsBinOpCode(wParam))
     {
-        /* Change the operation if last input was operation.          */
+        // Change the operation if last input was operation.
         if (IsBinOpCode(m_nLastCom))
         {
             INT nPrev;
@@ -544,6 +546,11 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         if ((m_openParenCount >= MAXPRECDEPTH && nx) || (!m_openParenCount && !nx)
             || ((m_precedenceOpCount >= MAXPRECDEPTH && m_nPrecOp[m_precedenceOpCount - 1] != 0)))
         {
+            if (!m_openParenCount && !nx)
+            {
+                m_pCalcDisplay->OnNoRightParenAdded();
+            }
+
             HandleErrorCommand(wParam);
             break;
         }
@@ -567,7 +574,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             m_lastVal = 0;
             if (IsBinOpCode(m_nLastCom))
             {
-                // We want 1 + ( to start as 1 + (0. Any number you type replaces 0. But if it is 1 + 3 (, it is 
+                // We want 1 + ( to start as 1 + (0. Any number you type replaces 0. But if it is 1 + 3 (, it is
                 // treated as 1 + (3
                 m_currentVal = 0;
             }
@@ -796,7 +803,7 @@ void CCalcEngine::CheckAndAddLastBinOpToHistory(bool addToHistory)
     {
         if (m_HistoryCollector.FOpndAddedToHistory())
         {
-            // if last time opnd was added but the last command was not a binary operator, then it must have come 
+            // if last time opnd was added but the last command was not a binary operator, then it must have come
             // from commands which add the operand, like unary operator. So history at this is showing 1 + sqrt(4)
             // but in reality the sqrt(4) is getting replaced by new number (may be unary op, or MR or SUM etc.)
             // So erase the last operand
@@ -848,7 +855,7 @@ void CCalcEngine::DisplayAnnounceBinaryOperator()
 }
 
 // Unary operator Function Name table Element
-// since unary operators button names aren't exactly friendly for history purpose, 
+// since unary operators button names aren't exactly friendly for history purpose,
 // we have this separate table to get its localized name and for its Inv function if it exists.
 typedef struct
 {
@@ -940,7 +947,7 @@ wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE
     // Try to lookup the ID in the UFNE table
     int ids = 0;
     int iufne = nOpCode - IDC_UNARYFIRST;
-    if (iufne >= 0 && iufne < ARRAYSIZE(rgUfne))
+    if (iufne >= 0 && (size_t)iufne < size(rgUfne))
     {
         if (fInv)
         {
@@ -1020,7 +1027,7 @@ wstring CCalcEngine::GetCurrentResultForRadix(uint32_t radix, int32_t precision)
     wstring numberString = GetStringForDisplay(rat, radix);
     if (!numberString.empty())
     {
-        //revert the precision to previously stored precision
+        // Revert the precision to previously stored precision
         ChangeConstants(m_radix, m_precision);
     }
 

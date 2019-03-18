@@ -16,7 +16,7 @@ namespace CalculatorApp
         public:
             static constexpr Windows::UI::Xaml::Visibility Convert(bool visibility)
             {
-                return visibility 
+                return visibility
                     ? Windows::UI::Xaml::Visibility::Visible
                     : Windows::UI::Xaml::Visibility::Collapsed;
             }

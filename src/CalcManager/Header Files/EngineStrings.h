@@ -128,7 +128,7 @@
 #define SIDS_NFACTORIAL L"33"
 #define SIDS_RECIPROCAL L"34"
 #define SIDS_DMS L"35"
-#define SIDS_CUBEROOT L"36"    
+#define SIDS_CUBEROOT L"36"
 #define SIDS_POWTEN L"37"
 #define SIDS_PERCENT L"38"
 #define SIDS_SCIENTIFIC_NOTATION L"39"
@@ -200,7 +200,7 @@
 #define SIDS_NOMEM L"105"
 #define SIDS_TOOMANY L"106"
 #define SIDS_OVERFLOW L"107"
-#define SIDS_NORESULT L"108" 
+#define SIDS_NORESULT L"108"
 #define SIDS_INSUFFICIENT_DATA L"109"
 // 110 is skipped by CSTRINGSENGMAX
 #define SIDS_ERR_UNK_CH L"111"
@@ -214,7 +214,7 @@
 #define SIDS_ERR_INPUT_OVERFLOW L"119"
 #define SIDS_ERR_OUTPUT_OVERFLOW L"120"
 
-__declspec(selectany) std::wstring g_sids[] = 
+__declspec(selectany) std::wstring g_sids[] =
 {
     std::wstring(SIDS_PLUS_MINUS),
     std::wstring(SIDS_C),
@@ -252,7 +252,7 @@ __declspec(selectany) std::wstring g_sids[] =
     std::wstring(SIDS_NFACTORIAL),
     std::wstring(SIDS_RECIPROCAL),
     std::wstring(SIDS_DMS),
-    std::wstring(SIDS_CUBEROOT),    
+    std::wstring(SIDS_CUBEROOT),
     std::wstring(SIDS_POWTEN),
     std::wstring(SIDS_PERCENT),
     std::wstring(SIDS_SCIENTIFIC_NOTATION),
@@ -324,7 +324,7 @@ __declspec(selectany) std::wstring g_sids[] =
     std::wstring(SIDS_NOMEM),
     std::wstring(SIDS_TOOMANY),
     std::wstring(SIDS_OVERFLOW),
-    std::wstring(SIDS_NORESULT), 
+    std::wstring(SIDS_NORESULT),
     std::wstring(SIDS_INSUFFICIENT_DATA),
     std::wstring(SIDS_ERR_UNK_CH),
     std::wstring(SIDS_ERR_UNK_FN),

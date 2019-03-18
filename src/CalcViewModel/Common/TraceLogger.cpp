@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma once
-
 #include "pch.h"
 #include "TraceLogger.h"
 #include "NetworkManager.h"
@@ -59,7 +57,7 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_MEMORY_FLYOUT_OPEN_BEGIN                                  = L"MemoryFlyoutOpenBegin";
     constexpr auto EVENT_NAME_MEMORY_FLYOUT_OPEN_END                                    = L"MemoryFlyoutOpenEnd";
     constexpr auto EVENT_NAME_MEMORY_CLEAR_ALL                                          = L"MemoryClearAll";
-    constexpr auto EVENT_NAME_INVALID_INPUT_PASTED                                      = L"InvalidInputPasted";
+    constexpr auto EVENT_NAME_INVALID_PASTED_INPUT_OCCURRED                             = L"InvalidPastedInputOccurred";
     constexpr auto EVENT_NAME_VALID_INPUT_PASTED                                        = L"ValidInputPasted";
     constexpr auto EVENT_NAME_BITFLIP_PANE_CLICKED                                      = L"BitFlipPaneClicked";
     constexpr auto EVENT_NAME_BITFLIP_BUTTONS_USED                                      = L"BitFlipToggleButtonUsed";
@@ -80,6 +78,9 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_CORE_WINDOW_WAS_NULL                                      = L"CoreWindowWasNull";
 
     constexpr auto EVENT_NAME_EXCEPTION                                                 = L"Exception";
+
+    constexpr auto PDT_PRIVACY_DATA_TAG                                                 = L"PartA_PrivTags";
+    constexpr auto PDT_PRODUCT_AND_SERVICE_USAGE                                        = 0x0000'0000'0200'0000u;
 
 #ifdef SEND_TELEMETRY
     // c.f. WINEVENT_KEYWORD_RESERVED_63-56 0xFF00000000000000 // Bits 63-56 - channel keywords
@@ -102,7 +103,7 @@ namespace CalculatorApp
         g_calculatorProvider(
             L"MicrosoftCalculator",
             LoggingChannelOptions(GUID{ 0x4f50731a, 0x89cf, 0x4782, 0xb3, 0xe0, 0xdc, 0xe8, 0xc9, 0x4, 0x76, 0xba }), // Microsoft Telemetry group
-            GUID{ 0x905ca09, 0x610e, 0x401e, 0xb6, 0x50, 0x2f, 0x21, 0x29, 0x80, 0xb9, 0xe0 }), //Unique providerID {0905CA09-610E-401E-B650-2F212980B9E0}
+            GUID{ 0x905ca09, 0x610e, 0x401e, 0xb6, 0x50, 0x2f, 0x21, 0x29, 0x80, 0xb9, 0xe0 }), // Unique providerID {0905CA09-610E-401E-B650-2F212980B9E0}
         m_appLaunchActivity{ nullptr }
     {
         // initialize the function array
@@ -176,7 +177,7 @@ namespace CalculatorApp
         {
             iterMap->second.insert(iterMap->second.begin(), L"Programmer");
         }
-        else
+        else if (isStandard)
         {
             iterMap->second.insert(iterMap->second.begin(), L"Standard");
         }
@@ -199,7 +200,7 @@ namespace CalculatorApp
         {
             iterMap->second[memoryPosition] = L"Programmer";
         }
-        else
+        else if (isStandard)
         {
             iterMap->second[memoryPosition] = L"Standard";
         }
@@ -247,7 +248,7 @@ namespace CalculatorApp
         {
             windowIdLog.insert(pair<int, bool>(windowId, false));
         }
-        // if the event is not logged already for the present mode 
+        // if the event is not logged already for the present mode
         if (currentMode != mode)
         {
             currentMode = mode;
@@ -270,7 +271,7 @@ namespace CalculatorApp
         {
             windowIdLog.insert(pair<int, bool>(windowId, false));
         }
-        // if the event is not logged already for the present mode 
+        // if the event is not logged already for the present mode
         if (currentMode != mode)
         {
             currentMode = mode;
@@ -292,7 +293,7 @@ namespace CalculatorApp
         {
             windowIdLog.insert(pair<int, bool>(windowId, false));
         }
-        // if the event is not logged already for the present mode 
+        // if the event is not logged already for the present mode
         if (currentMode != mode)
         {
             currentMode = mode;
@@ -481,9 +482,9 @@ namespace CalculatorApp
         LogTelemetryEvent(EVENT_NAME_MEMORY_BODY_OPENED, fields);
     }
 
-    //If calculator is launched in any mode other than standard then this call will come which is not intended. But there is no way to avoid it.
-    //So don't use this function to analyze the count of mode change in session instead use CalculatorViewedInSession and ConverterViewedInSession to do that.
-    //Use of this function is to analyze perf of mode change.
+    // If calculator is launched in any mode other than standard then this call will come which is not intended. But there is no way to avoid it.
+    // So don't use this function to analyze the count of mode change in session instead use CalculatorViewedInSession and ConverterViewedInSession to do that.
+    // Use of this function is to analyze perf of mode change.
     void TraceLogger::LogModeChangeBegin(ViewMode fromMode, ViewMode toMode, int windowId)
     {
         if (!GetTraceLoggingProviderEnabled()) return;
@@ -498,7 +499,7 @@ namespace CalculatorApp
         }
     }
 
-    //comment: same as LogModeChangeBegin
+    // comment: same as LogModeChangeBegin
     void TraceLogger::LogModeChangeEnd(ViewMode toMode, int windowId) const
     {
         if (!GetTraceLoggingProviderEnabled()) return;
@@ -577,7 +578,7 @@ namespace CalculatorApp
         // Writer lock for the static resources
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
         auto iterMap = s_memoryMap.find(windowId);
-        
+
         LoggingFields fields{};
         LogTelemetryEvent(EVENT_NAME_MEMORY_CLEAR_ALL, fields);
 
@@ -641,17 +642,17 @@ namespace CalculatorApp
         LogTelemetryEvent(EVENT_NAME_SINGLE_MEMORY_USED, fields);
     }
 
-    void TraceLogger::LogInvalidInputPasted(wstring_view reason, wstring_view pastedExpression, ViewMode mode, int programmerNumberBase, int bitLengthType)
+    void TraceLogger::LogInvalidPastedInputOccurred(wstring_view reason, ViewMode mode, int programmerNumberBase, int bitLengthType)
     {
         if (!GetTraceLoggingProviderEnabled()) return;
 
         LoggingFields fields{};
         fields.AddString(L"Mode", NavCategory::GetFriendlyName(mode)->Data());
         fields.AddString(L"Reason", reason);
-        fields.AddString(L"PastedExpression", pastedExpression);
         fields.AddString(L"ProgrammerNumberBase", GetProgrammerType(programmerNumberBase).c_str());
         fields.AddString(L"BitLengthType", GetProgrammerType(bitLengthType).c_str());
-        LogTelemetryEvent(EVENT_NAME_INVALID_INPUT_PASTED, fields);
+        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
+        LogTelemetryEvent(EVENT_NAME_INVALID_PASTED_INPUT_OCCURRED, fields);
     }
 
     void TraceLogger::LogValidInputPasted(ViewMode mode) const
@@ -872,6 +873,7 @@ namespace CalculatorApp
         if (!m_dateDiffUsageLoggedInSession)
         {
             LoggingFields fields{};
+            fields.AddUInt32(L"WindowId", windowId);
             LogTelemetryEvent(EVENT_NAME_DATE_DIFFERENCE_USED, fields);
 
             m_dateDiffUsageLoggedInSession = true;

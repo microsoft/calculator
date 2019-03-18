@@ -11,9 +11,6 @@ namespace Calculator.UIAutomationLibrary.Components
     /// <summary>
     /// Physical Object Model for the app window.
     /// POM is the implementation model of the app.
-    /// See following references to POM:
-    /// * https://blogs.msdn.microsoft.com/wltester/2011/11/14/object-model-design/
-    /// * https://blogs.msdn.microsoft.com/micahel/2005/06/03/how-do-i-invoke-thee-let-me-count-the-ways-the-physical-object-model/
     /// See https://en.wikipedia.org/wiki/Model-based_testing for model-based testing.
     /// </summary>
     public class MainPagePom : UIObject

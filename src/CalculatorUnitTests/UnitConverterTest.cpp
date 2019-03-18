@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -76,7 +76,7 @@ namespace UnitConverterUnitTests
             SetConversionDataParams(&conversion4, 0.453592, 0, false);
             SetConversionDataParams(&conversion5, 2.20462, 0, false);
 
-            //Setting the conversion ratios for testing
+            // Setting the conversion ratios for testing
             unit1Map[u1] = conversion1;
             unit1Map[u2] = conversion2;
 
@@ -95,7 +95,7 @@ namespace UnitConverterUnitTests
             m_ratioMaps[u3] = unit3Map;
             m_ratioMaps[u4] = unit4Map;
         }
-            
+
         void LoadData()
         {
             m_loadDataCallCount++;
@@ -105,18 +105,18 @@ namespace UnitConverterUnitTests
         {
             return m_categories;
         }
-            
+
         vector<Unit> LoadOrderedUnits(const Category& c)
         {
             return m_units[c];
         }
-            
+
         unordered_map<Unit, ConversionData, UnitHash> LoadOrderedRatios(const Unit& u)
         {
             return m_ratioMaps[u];
         }
 
-        bool SupportsCategory(const Category& target)
+        bool SupportsCategory(const Category& /*target*/)
         {
             return true;
         }

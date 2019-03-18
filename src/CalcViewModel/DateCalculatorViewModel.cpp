@@ -73,7 +73,7 @@ DateCalculatorViewModel::DateCalculatorViewModel() :
 
     // Initialize the list separator delimiter appended with a space at the end, e.g. ", "
     // This will be used for date difference formatting: Y years, M months, W weeks, D days
-    m_listSeparator = ref new String((localizationSettings.GetListSeparator() + L" ").c_str());
+    m_listSeparator = localizationSettings.GetListSeparator() + L" ";
 
     // Initialize the output results
     UpdateDisplayResult();
@@ -180,9 +180,9 @@ void DateCalculatorViewModel::UpdateDisplayResult()
             StrDateDiffResultInDays = L"";
             StrDateDiffResult = AppResourceProvider::GetInstance().GetResourceString(L"Date_SameDates");
         }
-        else if ((m_dateDiffResult.year == 0) && 
-                (m_dateDiffResult.month == 0) && 
-                (m_dateDiffResult.week == 0))
+        else if ((m_dateDiffResult.year == 0) &&
+            (m_dateDiffResult.month == 0) &&
+            (m_dateDiffResult.week == 0))
         {
             IsDiffInDays = true;
             StrDateDiffResultInDays = L"";
@@ -245,22 +245,23 @@ void DateCalculatorViewModel::InitializeDateOutputFormats(_In_ String^ calendarI
 
 String^ DateCalculatorViewModel::GetDateDiffString() const
 {
-    String^ result = L"";
+    wstring result;
     bool addDelimiter = false;
     AppResourceProvider resourceLoader = AppResourceProvider::GetInstance();
 
     auto yearCount = m_dateDiffResult.year;
     if (yearCount > 0)
     {
-        result = String::Concat(GetLocalizedNumberString(yearCount), L" ");
+        result += GetLocalizedNumberString(yearCount)->Data();
+        result += L" ";
 
         if (yearCount > 1)
         {
-            result = String::Concat(result, resourceLoader.GetResourceString(L"Date_Years"));
+            result += resourceLoader.GetResourceString(L"Date_Years")->Data();
         }
         else
         {
-            result = String::Concat(result, resourceLoader.GetResourceString(L"Date_Year"));
+            result += resourceLoader.GetResourceString(L"Date_Year")->Data();
         }
 
         // set the flags to add a delimiter whenever the next unit is added
@@ -272,22 +273,23 @@ String^ DateCalculatorViewModel::GetDateDiffString() const
     {
         if (addDelimiter)
         {
-            result = String::Concat(result, m_listSeparator);
+            result += m_listSeparator;
         }
         else
         {
             addDelimiter = true;
         }
 
-        result = String::Concat(result, String::Concat(GetLocalizedNumberString(monthCount), L" "));
+        result += GetLocalizedNumberString(monthCount)->Data();
+        result += L" ";
 
         if (monthCount > 1)
         {
-            result = String::Concat(result, resourceLoader.GetResourceString(L"Date_Months"));
+            result += resourceLoader.GetResourceString(L"Date_Months")->Data();
         }
         else
         {
-            result = String::Concat(result, resourceLoader.GetResourceString(L"Date_Month"));
+            result += resourceLoader.GetResourceString(L"Date_Month")->Data();
         }
     }
 
@@ -296,22 +298,23 @@ String^ DateCalculatorViewModel::GetDateDiffString() const
     {
         if (addDelimiter)
         {
-            result = String::Concat(result, m_listSeparator);
+            result += m_listSeparator;
         }
         else
         {
             addDelimiter = true;
         }
 
-        result = String::Concat(result, String::Concat(GetLocalizedNumberString(weekCount), L" "));
+        result += GetLocalizedNumberString(weekCount)->Data();
+        result += L" ";
 
         if (weekCount > 1)
         {
-            result = String::Concat(result, resourceLoader.GetResourceString(L"Date_Weeks"));
+            result += resourceLoader.GetResourceString(L"Date_Weeks")->Data();
         }
         else
         {
-            result = String::Concat(result, resourceLoader.GetResourceString(L"Date_Week"));
+            result += resourceLoader.GetResourceString(L"Date_Week")->Data();
         }
     }
 
@@ -320,43 +323,45 @@ String^ DateCalculatorViewModel::GetDateDiffString() const
     {
         if (addDelimiter)
         {
-            result = String::Concat(result, m_listSeparator);
+            result += m_listSeparator;
         }
         else
         {
             addDelimiter = true;
         }
 
-        result = String::Concat(result, String::Concat(GetLocalizedNumberString(dayCount), L" "));
+        result += GetLocalizedNumberString(dayCount)->Data();
+        result += L" ";
 
         if (dayCount > 1)
         {
-            result = String::Concat(result, resourceLoader.GetResourceString(L"Date_Days"));
+            result += resourceLoader.GetResourceString(L"Date_Days")->Data();
         }
         else
         {
-            result = String::Concat(result, resourceLoader.GetResourceString(L"Date_Day"));
+            result += resourceLoader.GetResourceString(L"Date_Day")->Data();
         }
     }
 
-    return result;
+    return ref new String(result.data());
 }
 
 String^ DateCalculatorViewModel::GetDateDiffStringInDays() const
 {
-    String^ strDateUnit;
+    wstring result = GetLocalizedNumberString(m_dateDiffResultInDays.day)->Data();
+    result += L" ";
 
     // Display the result as '1 day' or 'N days'
     if (m_dateDiffResultInDays.day > 1)
     {
-        strDateUnit = AppResourceProvider::GetInstance().GetResourceString(L"Date_Days");
+        result += AppResourceProvider::GetInstance().GetResourceString(L"Date_Days")->Data();
     }
     else
     {
-        strDateUnit = AppResourceProvider::GetInstance().GetResourceString(L"Date_Day");
+        result += AppResourceProvider::GetInstance().GetResourceString(L"Date_Day")->Data();
     }
 
-    return String::Concat(GetLocalizedNumberString(m_dateDiffResultInDays.day), String::Concat(L" ", strDateUnit));
+    return ref new String(result.data());
 }
 
 void DateCalculatorViewModel::OnCopyCommand(Platform::Object^ parameter)

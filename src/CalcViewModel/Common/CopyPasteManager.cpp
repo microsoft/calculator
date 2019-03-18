@@ -15,7 +15,6 @@ using namespace Windows::Foundation;
 using namespace Windows::System;
 using namespace Windows::ApplicationModel::DataTransfer;
 
-size_t maxOperandLength;
 unsigned long long maxOperandNumber;
 
 String^ CopyPasteManager::supportedFormats[] =
@@ -130,17 +129,17 @@ String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode m
     if (pastedText->Length() > MaxPasteableLength)
     {
         // return NoOp to indicate don't paste anything.
-        TraceLogger::GetInstance().LogInvalidInputPasted(L"PastedExpressionSizeGreaterThanMaxAllowed", L"MoreThanMaxInput", mode, programmerNumberBase, bitLengthType);
+        TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"PastedExpressionSizeGreaterThanMaxAllowed", mode, programmerNumberBase, bitLengthType);
         return StringReference(PasteErrorString);
     }
 
     wstring pasteExpression = pastedText->Data();
 
-    // Get english translated expression 
+    // Get english translated expression
     String^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(pasteExpression);
 
     // Removing the spaces, comma separator from the pasteExpression to allow pasting of expressions like 1  +     2+1,333
-    pasteExpression = Utils::RemoveUnwantedCharsFromWstring(englishString->Data());
+    pasteExpression = RemoveUnwantedCharsFromWstring(englishString->Data());
 
     // If the last character is an = sign, remove it from the pasteExpression to allow evaluating the result on paste.
     if (!pasteExpression.empty() && pasteExpression.back() == L'=')
@@ -165,7 +164,7 @@ String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode m
     // validate each operand with patterns for different modes
     if (!ExpressionRegExMatch(operands, mode, modeType, programmerNumberBase, bitLengthType))
     {
-        TraceLogger::GetInstance().LogInvalidInputPasted(L"InvalidExpressionForPresentMode", pastedText->Data(), mode, programmerNumberBase, bitLengthType);
+        TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"InvalidExpressionForPresentMode", mode, programmerNumberBase, bitLengthType);
         return StringReference(PasteErrorString);
     }
 
@@ -194,7 +193,7 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
 
         if (operands.size() >= MaxOperandCount)
         {
-            TraceLogger::GetInstance().LogInvalidInputPasted(L"OperandCountGreaterThanMaxCount", pasteExpression.c_str(), mode, programmerNumberBase, bitLengthType);
+            TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"OperandCountGreaterThanMaxCount", mode, programmerNumberBase, bitLengthType);
             operands.clear();
             return operands;
         }
@@ -208,7 +207,7 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
                 // to disallow pasting of 1e+12345 as 1e+1234, max exponent that can be pasted is 9999.
                 if (expLength > MaxExponentLength)
                 {
-                    TraceLogger::GetInstance().LogInvalidInputPasted(L"ExponentLengthGreaterThanMaxLength", pasteExpression.c_str(), mode, programmerNumberBase, bitLengthType);
+                    TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"ExponentLengthGreaterThanMaxLength", mode, programmerNumberBase, bitLengthType);
                     operands.clear();
                     return operands;
                 }
@@ -405,7 +404,7 @@ wstring CopyPasteManager::SanitizeOperand(const wstring& operand)
 {
     wchar_t unWantedChars[] = { L'\'', L'_', L'`', L'(', L')', L'-' };
 
-    return Utils::RemoveUnwantedCharsFromWstring(operand, unWantedChars, ARRAYSIZE(unWantedChars));
+    return Utils::RemoveUnwantedCharsFromWstring(operand, unWantedChars, static_cast<int>(size(unWantedChars)));
 }
 
 bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, unsigned long long int& result)
@@ -533,7 +532,7 @@ size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int num
     suffixes.insert(suffixes.end(), uintSuffixes.begin(), uintSuffixes.end());
 
     wstring operandUpper = operand;
-    transform(operandUpper.begin(), operandUpper.end(), operandUpper.begin(), toupper);
+    transform(operandUpper.begin(), operandUpper.end(), operandUpper.begin(), towupper);
 
     // Detect if there is a suffix and subtract its length
     // Check suffixes first to allow e.g. "0b" to result in length 1 (value 0), rather than length 0 (no value).
@@ -567,4 +566,22 @@ size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int num
     }
 
     return len;
+}
+
+// return wstring after removing characters like space, comma, double quotes, and monetary prefix currency symbols supported by the Windows keyboard:
+// yen or yuan(¥) - 165
+// unspecified currency sign(¤) - 164
+// Ghanaian cedi(₵) - 8373
+// dollar or peso($) - 36
+// colón(₡) - 8353
+// won(₩) - 8361
+// shekel(₪) - 8362
+// naira(₦) - 8358
+// Indian rupee(₹) - 8377
+// pound(£) - 163
+// euro(€) - 8364
+wstring CopyPasteManager::RemoveUnwantedCharsFromWstring(const wstring& input)
+{
+    wchar_t unWantedChars[] = { L' ', L',', L'"', 165, 164, 8373, 36, 8353, 8361, 8362, 8358, 8377, 163, 8364, 8234, 8235, 8236, 8237 };
+    return Utils::RemoveUnwantedCharsFromWstring(input, unWantedChars, 18);
 }
