@@ -599,6 +599,7 @@
             <local:SupplementaryResults x:Name="SupplementaryResults"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
+                                        Results="{x:Bind Model.SupplementaryResults, Mode=OneWay}"
                                         Visibility="{x:Bind Model.SupplementaryVisibility, Mode=OneWay}"/>
             <StackPanel Visibility="{x:Bind Model.IsCurrencyCurrentCategory, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <!-- Currency Ratio Equality -->
