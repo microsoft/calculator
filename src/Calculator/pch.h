@@ -21,6 +21,7 @@
 #include <sstream>
 #include <concrt.h>
 #include <regex>
+#include <string>
 
 // C++\WinRT Headers
 #include "winrt/base.h"
@@ -44,5 +45,3 @@ namespace CustomPeers = CalculatorApp::Common::Automation;
 
 // Project Headers
 #include "App.xaml.h"
-
-#include <string>
