@@ -31,7 +31,7 @@ namespace CalculationManager
     {
 
     public:
-        CalculatorHistory(CALCULATOR_MODE eMode, const size_t maxSize);
+        CalculatorHistory(const size_t maxSize);
         unsigned int AddToHistory(_In_ std::shared_ptr<CalculatorVector <std::pair<std::wstring, int>>> const &spTokens, _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &spCommands, std::wstring_view result);
         std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistory();
         std::shared_ptr<HISTORYITEM> const& GetHistoryItem(unsigned int uIdx);
@@ -43,7 +43,6 @@ namespace CalculationManager
 
     private:
         std::vector<std::shared_ptr<HISTORYITEM>> m_historyItems;
-        CALCULATOR_MODE m_mode;
         const size_t m_maxHistorySize;
     };
 }

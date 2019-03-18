@@ -30,8 +30,8 @@ namespace CalculationManager
         m_isExponentialFormat(false),
         m_persistedPrimaryValue(),
         m_currentCalculatorEngine(nullptr),
-        m_pStdHistory(new CalculatorHistory(CM_STD, MAX_HISTORY_ITEMS)),
-        m_pSciHistory(new CalculatorHistory(CM_SCI, MAX_HISTORY_ITEMS)),
+        m_pStdHistory(new CalculatorHistory(MAX_HISTORY_ITEMS)),
+        m_pSciHistory(new CalculatorHistory(MAX_HISTORY_ITEMS)),
         m_inHistoryItemLoadMode(false)
     {
         CCalcEngine::InitialOneTimeOnlySetup(*m_resourceProvider);

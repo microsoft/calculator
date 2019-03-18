@@ -7,8 +7,7 @@
 using namespace std;
 using namespace CalculationManager;
 
-CalculatorHistory::CalculatorHistory(CALCULATOR_MODE eMode, size_t maxSize) :
-    m_mode(eMode),
+CalculatorHistory::CalculatorHistory(size_t maxSize) :
     m_maxHistorySize(maxSize)
 {}
 
