@@ -63,12 +63,7 @@ UnitConverter::UnitConverter() :
 
     // Is currency symbol preference set to right side
     bool preferRight = LocalizationSettings::GetInstance().GetCurrencySymbolPrecedence() == 0;
-    if (preferRight)
-    {
-        // Currency symbol should appear on the right. Reverse the order of children.
-        Grid::SetColumn(CurrencySymbol1Block, 2);     
-        Grid::SetColumn(CurrencySymbol2Block, 2);
-    }
+    VisualStateManager::GoToState(this, preferRight ? "CurrencySymbolRightState" : "CurrencySymbolLeftState", false);
 
     auto userSettings = ref new UISettings();
     m_isAnimationEnabled = userSettings->AnimationsEnabled;
@@ -265,7 +260,7 @@ void UnitConverter::OnPasteMenuItemClicked(_In_ Object^ sender, _In_ RoutedEvent
 
 void UnitConverter::AnimateConverter()
 {
-    
+
     if (App::IsAnimationEnabled())
     {
         AnimationStory->Begin();
