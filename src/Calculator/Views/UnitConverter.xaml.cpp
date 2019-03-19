@@ -260,7 +260,6 @@ void UnitConverter::OnPasteMenuItemClicked(_In_ Object^ sender, _In_ RoutedEvent
 
 void UnitConverter::AnimateConverter()
 {
-
     if (App::IsAnimationEnabled())
     {
         AnimationStory->Begin();
