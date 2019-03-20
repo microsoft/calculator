@@ -46,14 +46,16 @@ static constexpr int DATA_ID        = 13;
 static constexpr int PRESSURE_ID    = 14;
 static constexpr int ANGLE_ID       = 15;
 static constexpr int CURRENCY_ID    = 16;
+static constexpr int GRAPHING_ID    = 17;
 // ^^^ THESE CONSTANTS SHOULD NEVER CHANGE ^^^
 
 // The order of items in this list determines the order of items in the menu.
-static constexpr array<const NavCategoryInitializer, 17> s_categoryManifest = {
+static constexpr array<const NavCategoryInitializer, 18> s_categoryManifest = {
     NavCategoryInitializer { ViewMode::Standard,    STANDARD_ID,    L"Standard",        L"StandardMode",             L"\uE8EF", CategoryGroupType::Calculator, MyVirtualKey::Number1, SUPPORTS_ALL      },
     NavCategoryInitializer { ViewMode::Scientific,  SCIENTIFIC_ID,  L"Scientific",      L"ScientificMode",           L"\uF196", CategoryGroupType::Calculator, MyVirtualKey::Number2, SUPPORTS_ALL      },
     NavCategoryInitializer { ViewMode::Programmer,  PROGRAMMER_ID,  L"Programmer",      L"ProgrammerMode",           L"\uECCE", CategoryGroupType::Calculator, MyVirtualKey::Number3, SUPPORTS_ALL      },
     NavCategoryInitializer { ViewMode::Date,        DATE_ID,        L"Date",            L"DateCalculationMode",      L"\uE787", CategoryGroupType::Calculator, MyVirtualKey::Number4, SUPPORTS_ALL      },
+    NavCategoryInitializer { ViewMode::Graphing,    GRAPHING_ID,    L"Graphing",        L"GraphingCalculatorMode",   L"\uF770", CategoryGroupType::Calculator, MyVirtualKey::Number5, SUPPORTS_ALL      },
     NavCategoryInitializer { ViewMode::Currency,    CURRENCY_ID,    L"Currency",        L"CategoryName_Currency",    L"\uEB0D", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     },
     NavCategoryInitializer { ViewMode::Volume,      VOLUME_ID,      L"Volume",          L"CategoryName_Volume",      L"\uF1AA", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     },
     NavCategoryInitializer { ViewMode::Length,      LENGTH_ID,      L"Length",          L"CategoryName_Length",      L"\uECC6", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     },
@@ -121,9 +123,15 @@ bool NavCategory::IsValidViewMode(ViewMode mode)
 
 bool NavCategory::IsCalculatorViewMode(ViewMode mode)
 {
-    // Historically, Date Calculator is not a Calculator mode
-    // even though it is in the Calculator category.
-    return !IsDateCalculatorViewMode(mode) && IsModeInCategoryGroup(mode, CategoryGroupType::Calculator);
+    // Historically, Calculator modes are Standard, Scientific, and Programmer.
+    return !IsDateCalculatorViewMode(mode)
+        && !IsGraphingCalculatorViewMode(mode)
+        && IsModeInCategoryGroup(mode, CategoryGroupType::Calculator);
+}
+
+bool NavCategory::IsGraphingCalculatorViewMode(ViewMode mode)
+{
+    return mode == ViewMode::Graphing;
 }
 
 bool NavCategory::IsDateCalculatorViewMode(ViewMode mode)

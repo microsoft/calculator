@@ -350,6 +350,8 @@
     <ClInclude Include="DataLoaders\UnitConverterDataConstants.h" />
     <ClInclude Include="DataLoaders\UnitConverterDataLoader.h" />
     <ClInclude Include="DateCalculatorViewModel.h" />
+    <ClInclude Include="GraphingCalculator\EquationViewModel.h" />
+    <ClInclude Include="GraphingCalculator\GraphingCalculatorViewModel.h" />
     <ClInclude Include="HistoryItemViewModel.h" />
     <ClInclude Include="HistoryViewModel.h" />
     <ClInclude Include="MemoryItemViewModel.h" />
@@ -386,6 +388,8 @@
     <ClCompile Include="DataLoaders\CurrencyHttpClient.cpp" />
     <ClCompile Include="DataLoaders\UnitConverterDataLoader.cpp" />
     <ClCompile Include="DateCalculatorViewModel.cpp" />
+    <ClCompile Include="GraphingCalculator\EquationViewModel.cpp" />
+    <ClCompile Include="GraphingCalculator\GraphingCalculatorViewModel.cpp" />
     <ClCompile Include="HistoryItemViewModel.cpp" />
     <ClCompile Include="HistoryViewModel.cpp" />
     <ClCompile Include="MemoryItemViewModel.cpp" />

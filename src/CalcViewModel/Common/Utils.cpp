@@ -15,11 +15,13 @@
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace concurrency;
+using namespace Graphing::Renderer;
 using namespace Platform;
 using namespace std;
 using namespace Utils;
 using namespace Windows::ApplicationModel::Resources;
 using namespace Windows::Storage::Streams;
+using namespace Windows::UI;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
@@ -68,7 +70,7 @@ int Utils::GetWindowId()
     return windowId;
 }
 
-void Utils::RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ CoreDispatcher^ currentDispatcher)
+void Utils::RunOnUIThreadNonblocking(function<void()>&& function, _In_ CoreDispatcher^ currentDispatcher)
 {
     if (currentDispatcher != nullptr)
     {
@@ -91,7 +93,7 @@ wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, wchar_t* unwantedCh
 {
     for (unsigned int i = 0; i < size; ++i)
     {
-        input.erase(std::remove(input.begin(), input.end(), unwantedChars[i]), input.end());
+        input.erase(remove(input.begin(), input.end(), unwantedChars[i]), input.end());
     }
     return input;
 }
@@ -224,4 +226,54 @@ task<String^> Utils::ReadFileFromFolder(IStorageFolder^ folder, String^ fileName
 
     String^ contents = co_await FileIO::ReadTextAsync(file);
     co_return contents;
+}
+
+bool Utils::AreColorsEqual(const Color& color1, const Color& color2)
+{
+    return ((color1.A == color2.A)
+         && (color1.R == color2.R)
+         && (color1.G == color2.G)
+         && (color1.B == color2.B));
+}
+
+String^ Utils::Trim(String^ value)
+{
+    if (!value)
+    {
+        return nullptr;
+    }
+
+    wstring trimmed = value->Data();
+    Trim(trimmed);
+    return ref new String(trimmed.c_str());
+}
+
+void Utils::Trim(wstring& value)
+{
+    TrimFront(value);
+    TrimBack(value);
+}
+
+void Utils::TrimFront(wstring& value)
+{
+    value.erase(value.begin(), find_if(value.cbegin(), value.cend(), [](int ch){
+        return !isspace(ch);
+    }));
+}
+
+void Utils::TrimBack(wstring& value)
+{
+    value.erase(find_if(value.crbegin(), value.crend(), [](int ch) {
+        return !isspace(ch);
+    }).base(), value.end());
+}
+
+bool operator==(const Color& color1, const Color& color2)
+{
+    return equal_to<Color>()(color1, color2);
+}
+
+bool operator!=(const Color& color1, const Color& color2)
+{
+    return !(color1 == color2);
 }

@@ -62,10 +62,6 @@ namespace CalculatorApp
         IsStandardMode = (int) CM::Command::ModeBasic,
         None = (int) CM::Command::CommandNULL,
         IsProgrammerMode = (int) CM::Command::ModeProgrammer,
-        DecButton = (int) CM::Command::CommandDec,
-        OctButton = (int) CM::Command::CommandOct,
-        HexButton = (int) CM::Command::CommandHex,
-        BinButton = (int) CM::Command::CommandBin,
         And = (int) CM::Command::CommandAnd,
         Ror = (int) CM::Command::CommandROR,
         Rol = (int) CM::Command::CommandROL,
@@ -87,12 +83,21 @@ namespace CalculatorApp
         InvSinh = (int) CM::Command::CommandASINH,
         InvCosh = (int) CM::Command::CommandACOSH,
         InvTanh = (int) CM::Command::CommandATANH,
-        Qword = (int) CM::Command::CommandQword,
-        Dword = (int) CM::Command::CommandDword,
-        Word = (int) CM::Command::CommandWord,
-        Byte = (int) CM::Command::CommandByte,
         Cube = (int) CM::Command::CommandCUB,
         DMS = (int) CM::Command::CommandDMS,
+        Hyp = (int)CM::Command::CommandHYP,
+        HexButton = (int)CM::Command::CommandHex,
+        DecButton = (int)CM::Command::CommandDec,
+        OctButton = (int)CM::Command::CommandOct,
+        BinButton = (int)CM::Command::CommandBin,
+        Qword = (int)CM::Command::CommandQword,
+        Dword = (int)CM::Command::CommandDword,
+        Word = (int)CM::Command::CommandWord,
+        Byte = (int)CM::Command::CommandByte,
+
+        Plot,
+        X,
+        Y,
 
         BINSTART = (int) CM::Command::CommandBINEDITSTART,
         BINPOS0 = (int) CM::Command::CommandBINPOS0,
@@ -159,8 +164,7 @@ namespace CalculatorApp
         BINPOS61 = (int) CM::Command::CommandBINPOS61,
         BINPOS62 = (int) CM::Command::CommandBINPOS62,
         BINPOS63 = (int) CM::Command::CommandBINPOS63,
-        BINEND = (int) CM::Command::CommandBINEDITEND,
-        Hyp = (int) CM::Command::CommandHYP
+        BINEND = (int) CM::Command::CommandBINEDITEND
     };
 
     // This contains list of functions whose usage we are tracelogging

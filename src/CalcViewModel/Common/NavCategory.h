@@ -43,7 +43,8 @@ namespace CalculatorApp
             Data = 13,
             Pressure = 14,
             Angle = 15,
-            Currency = 16
+            Currency = 16,
+            Graphing = 17
         };
 
         public enum class CategoryGroupType
@@ -163,6 +164,7 @@ namespace CalculatorApp
 
             static bool IsValidViewMode(ViewMode mode);
             static bool IsCalculatorViewMode(ViewMode mode);
+            static bool IsGraphingCalculatorViewMode(ViewMode mode);
             static bool IsDateCalculatorViewMode(ViewMode mode);
             static bool IsConverterViewMode(ViewMode mode);
 
