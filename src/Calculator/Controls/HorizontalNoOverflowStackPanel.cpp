@@ -55,7 +55,7 @@ Size HorizontalNoOverflowStackPanel::ArrangeOverride(Size finalSize)
         {
             //stack the items horizontally (left to right)
             item->Arrange(Rect(posX, 0, itemWidth, finalSize.Height));
-            posX += item->DesiredSize.Width;
+            posX += item->RenderSize.Width;
         }
         else
         {
