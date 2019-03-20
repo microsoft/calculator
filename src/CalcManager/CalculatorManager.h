@@ -141,7 +141,7 @@ namespace CalculationManager
         std::shared_ptr<HISTORYITEM> const& GetHistoryItem(_In_ unsigned int uIdx);
         bool RemoveHistoryItem(_In_ unsigned int uIdx);
         void ClearHistory();
-        const size_t MaxHistorySize() const { return m_pHistory->MaxHistorySize(); }
+        size_t MaxHistorySize() const { return m_pHistory->MaxHistorySize(); }
         CalculationManager::Command GetCurrentDegreeMode();
         void SetHistory(_In_ CALCULATOR_MODE eMode, _In_ std::vector<std::shared_ptr<HISTORYITEM>> const& history);
         void SetInHistoryItemLoadMode(_In_ bool isHistoryItemLoadMode);
