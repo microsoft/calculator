@@ -292,7 +292,7 @@ namespace CalculationManager
             break;
         case Command::CommandFE:
             m_isExponentialFormat = !m_isExponentialFormat;
-            // fall through
+            [[fallthrough]];
         default:
             m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(command));
             break;
