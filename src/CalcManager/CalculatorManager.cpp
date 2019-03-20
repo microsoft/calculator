@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -360,7 +360,7 @@ namespace CalculationManager
     /// <param name = "serializedPrimaryDisplay">Serialized Rational of primary display</param>
     void CalculatorManager::DeSerializePrimaryDisplay(const vector<long> &serializedPrimaryDisplay)
     {
-        if (serializedPrimaryDisplay.size() == 0)
+        if (serializedPrimaryDisplay.empty())
         {
             return;
         }
