@@ -72,12 +72,14 @@ SupplementaryResults::SupplementaryResults()
 bool SupplementaryResultNoOverflowStackPanel::ShouldPrioritizeLastItem()
 {
     if (Children->Size == 0)
+    {
         return false;
+    }
     auto lastChild = dynamic_cast<FrameworkElement^>(Children->GetAt(Children->Size - 1));
     if (lastChild == nullptr)
+    {
         return false;
+    }
     auto suppResult = dynamic_cast<SupplementaryResult^>(lastChild->DataContext);
-    if (suppResult == nullptr)
-        return false;
-    return suppResult->IsWhimsical();
+    return suppResult == nullptr? false: suppResult->IsWhimsical();
 }

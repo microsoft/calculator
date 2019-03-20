@@ -42,7 +42,9 @@ Size HorizontalNoOverflowStackPanel::ArrangeOverride(Size finalSize)
     auto lastChild = Children->GetAt(Children->Size - 1);
     float lastChildWidth = 0;
     if (Children->Size > 2 && ShouldPrioritizeLastItem())
+    {
         lastChildWidth = lastChild->DesiredSize.Width;
+    }
     for (auto item : Children)
     {
         auto widthAvailable = finalSize.Width - posX;
