@@ -72,10 +72,5 @@ namespace CalculatorApp
         SupplementaryResults();
         DEPENDENCY_PROPERTY_OWNER(SupplementaryResults);
         DEPENDENCY_PROPERTY_WITH_DEFAULT(Windows::Foundation::Collections::IIterable<ViewModel::SupplementaryResult^>^, Results, nullptr);
-    private:
-        void RefreshData();
-        void OnLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OnConverterPropertyChanged(Platform::Object^ sender, Windows::UI::Xaml::Data::PropertyChangedEventArgs^ e);
-        Windows::Foundation::Collections::IObservableVector<ViewModel::SupplementaryResult^>^ m_data;
     };
 }

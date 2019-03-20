@@ -33,10 +33,12 @@ bool HorizontalNoOverflowStackPanel::ShouldPrioritizeLastItem()
 
 Size HorizontalNoOverflowStackPanel::ArrangeOverride(Size finalSize)
 {
-    float posX = 0;
     if (Children->Size == 0)
+    {
         return finalSize;
+    }
 
+    float posX = 0;
     auto lastChild = Children->GetAt(Children->Size - 1);
     float lastChildWidth = 0;
     if (Children->Size > 2 && ShouldPrioritizeLastItem())

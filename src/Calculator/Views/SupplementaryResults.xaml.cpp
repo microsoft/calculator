@@ -64,8 +64,7 @@ Windows::UI::Xaml::DataTemplate^ SupplementaryResultDataTemplateSelector::Select
     }
 }
 
-SupplementaryResults::SupplementaryResults() :
-    m_data(ref new Vector<SupplementaryResult^>)
+SupplementaryResults::SupplementaryResults()
 {
     InitializeComponent();
 }
