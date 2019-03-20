@@ -308,7 +308,10 @@ namespace CalculationManager
     unsigned char CalculatorManager::MapCommandForSerialize(Command command)
     {
         unsigned int commandToSave = static_cast<unsigned int>(command);
-        commandToSave > UCHAR_MAX ? commandToSave -= UCHAR_MAX : commandToSave;
+        if (commandToSave > UCHAR_MAX)
+        {
+            commandToSave -= UCHAR_MAX;
+        }
         return static_cast<unsigned char>(commandToSave);
     }
 
