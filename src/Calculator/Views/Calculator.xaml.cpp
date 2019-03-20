@@ -389,11 +389,11 @@ void Calculator::EnsureProgrammer()
 void Calculator::OnCalcPropertyChanged(_In_ Object^ sender, _In_ PropertyChangedEventArgs^ e)
 {
     String^ prop = e->PropertyName;
-    if (e->PropertyName->Equals(CalculatorViewModelProperties::IsMemoryEmpty))
+    if (prop == StandardCalculatorViewModel::IsMemoryEmptyPropertyName)
     {
         UpdateMemoryState();
     }
-    else if (e->PropertyName->Equals(CalculatorViewModelProperties::IsInError))
+    else if (prop == StandardCalculatorViewModel::IsInErrorPropertyName)
     {
         OnIsInErrorPropertyChanged();
     }

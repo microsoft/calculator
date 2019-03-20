@@ -82,16 +82,16 @@ UnitConverter::UnitConverter() :
 void UnitConverter::OnPropertyChanged(_In_ Object^ sender, _In_ PropertyChangedEventArgs^ e)
 {
     String^ propertyName = e->PropertyName;
-    if (propertyName->Equals(UnitConverterViewModelProperties::NetworkBehavior) ||
-        propertyName->Equals(UnitConverterViewModelProperties::CurrencyDataLoadFailed))
+    if (propertyName == UnitConverterViewModel::NetworkBehaviorPropertyName ||
+        propertyName == UnitConverterViewModel::CurrencyDataLoadFailedPropertyName)
     {
         OnNetworkBehaviorChanged();
     }
-    else if (propertyName->Equals(UnitConverterViewModelProperties::CurrencyDataIsWeekOld))
+    else if (propertyName == UnitConverterViewModel::CurrencyDataIsWeekOldPropertyName)
     {
         SetCurrencyTimestampFontWeight();
     }
-    else if (propertyName->Equals(UnitConverterViewModelProperties::IsCurrencyLoadingVisible))
+    else if (propertyName == UnitConverterViewModel::IsCurrencyLoadingVisiblePropertyName)
     {
         OnIsDisplayVisibleChanged();
     }

@@ -56,47 +56,37 @@ constexpr unsigned int CONVERSION_FINALIZED_DELAY_IN_MS = 1000;
 const wregex regexTrimSpacesStart = wregex(L"^\\s+");
 const wregex regexTrimSpacesEnd = wregex(L"\\s+$");
 
-namespace CalculatorApp::ViewModel
+namespace
 {
-    namespace UnitConverterViewModelProperties
-    {
-        StringReference CurrentCategory(L"CurrentCategory");
-        StringReference Unit1(L"Unit1");
-        StringReference Unit2(L"Unit2");
-        StringReference Value1Active(L"Value1Active");
-        StringReference Value2Active(L"Value2Active");
-        StringReference Value1(L"Value1");
-        StringReference Value2(L"Value2");
-        StringReference Value1AutomationName(L"Value1AutomationName");
-        StringReference Value2AutomationName(L"Value2AutomationName");
-        StringReference SupplementaryVisibility(L"SupplementaryVisibility");
-        StringReference SupplementaryResults(L"SupplementaryResults");
-        StringReference Unit1AutomationName(L"Unit1AutomationName");
-        StringReference Unit2AutomationName(L"Unit2AutomationName");
-        StringReference CurrencySymbol1(L"CurrencySymbol1");
-        StringReference CurrencySymbol2(L"CurrencySymbol2");
-        StringReference CurrencySymbolVisibility(L"CurrencySymbolVisibility");
-        StringReference CurrencyRatioEquality(L"CurrencyRatioEquality");
-        StringReference CurrencyRatioEqualityAutomationName(L"CurrencyRatioEqualityAutomationName");
-        StringReference NetworkBehavior(L"NetworkBehavior");
-        StringReference CurrencyDataLoadFailed(L"CurrencyDataLoadFailed");
-        StringReference CurrencyDataIsWeekOld(L"CurrencyDataIsWeekOld");
-        StringReference IsCurrencyLoadingVisible(L"IsCurrencyLoadingVisible");
-    }
+    StringReference CurrentCategoryPropertyName(L"CurrentCategory");
+    StringReference Unit1AutomationNamePropertyName(L"Unit1AutomationName");
+    StringReference Unit2AutomationNamePropertyName(L"Unit2AutomationName");
+    StringReference Unit1PropertyName(L"Unit1");
+    StringReference Unit2PropertyName(L"Unit2");
+    StringReference Value1PropertyName(L"Value1");
+    StringReference Value2PropertyName(L"Value2");
+    StringReference Value1ActivePropertyName(L"Value1Active");
+    StringReference Value2ActivePropertyName(L"Value2Active");
+    StringReference Value1AutomationNamePropertyName(L"Value1AutomationName");
+    StringReference Value2AutomationNamePropertyName(L"Value2AutomationName");
+    StringReference CurrencySymbol1PropertyName(L"CurrencySymbol1");
+    StringReference CurrencySymbol2PropertyName(L"CurrencySymbol2");
+    StringReference CurrencySymbolVisibilityPropertyName(L"CurrencySymbolVisibility");
+    StringReference SupplementaryVisibilityPropertyName(L"SupplementaryVisibility");
+}
 
-    namespace UnitConverterResourceKeys
-    {
-        StringReference ValueFromFormat(L"Format_ValueFrom");
-        StringReference ValueFromDecimalFormat(L"Format_ValueFrom_Decimal");
-        StringReference ValueToFormat(L"Format_ValueTo");
-        StringReference ConversionResultFormat(L"Format_ConversionResult");
-        StringReference InputUnit_Name(L"InputUnit_Name");
-        StringReference OutputUnit_Name(L"OutputUnit_Name");
-        StringReference MaxDigitsReachedFormat(L"Format_MaxDigitsReached");
-        StringReference UpdatingCurrencyRates(L"UpdatingCurrencyRates");
-        StringReference CurrencyRatesUpdated(L"CurrencyRatesUpdated");
-        StringReference CurrencyRatesUpdateFailed(L"CurrencyRatesUpdateFailed");
-    }
+namespace CalculatorApp::ViewModel::UnitConverterResourceKeys
+{
+    StringReference ValueFromFormat(L"Format_ValueFrom");
+    StringReference ValueFromDecimalFormat(L"Format_ValueFrom_Decimal");
+    StringReference ValueToFormat(L"Format_ValueTo");
+    StringReference ConversionResultFormat(L"Format_ConversionResult");
+    StringReference InputUnit_Name(L"InputUnit_Name");
+    StringReference OutputUnit_Name(L"OutputUnit_Name");
+    StringReference MaxDigitsReachedFormat(L"Format_MaxDigitsReached");
+    StringReference UpdatingCurrencyRates(L"UpdatingCurrencyRates");
+    StringReference CurrencyRatesUpdated(L"CurrencyRatesUpdated");
+    StringReference CurrencyRatesUpdateFailed(L"CurrencyRatesUpdateFailed");
 }
 
 UnitConverterViewModel::UnitConverterViewModel(const shared_ptr<UCM::IUnitConverter>& model) :
@@ -281,8 +271,8 @@ void UnitConverterViewModel::OnSwitchActive(Platform::Object^ unused)
     Utils::Swap(&m_localizedValueFromFormat, &m_localizedValueToFormat);
 
     Utils::Swap(&m_Unit1AutomationName, &m_Unit2AutomationName);
-    RaisePropertyChanged(UnitConverterViewModelProperties::Unit1AutomationName);
-    RaisePropertyChanged(UnitConverterViewModelProperties::Unit2AutomationName);
+    RaisePropertyChanged(Unit1AutomationNamePropertyName);
+    RaisePropertyChanged(Unit2AutomationNamePropertyName);
 
     m_isInputBlocked = false;
     m_model->SwitchActive(m_valueFromUnlocalized);
@@ -561,13 +551,13 @@ void UnitConverterViewModel::OnPropertyChanged(Platform::String^ prop)
 {
     static bool isCategoryChanging = false;
 
-    if (prop->Equals(UnitConverterViewModelProperties::CurrentCategory))
+    if (prop == CurrentCategoryPropertyName)
     {
         isCategoryChanging = true;
         CategoryChanged->Execute(nullptr);
         isCategoryChanging = false;
     }
-    else if (prop->Equals(UnitConverterViewModelProperties::Unit1) || prop->Equals(UnitConverterViewModelProperties::Unit2))
+    else if (prop == Unit1PropertyName || prop == Unit2PropertyName)
     {
         // Category changes will handle updating units after they've both been updated.
         // This event should only be used to update units from explicit user interaction.
@@ -576,7 +566,7 @@ void UnitConverterViewModel::OnPropertyChanged(Platform::String^ prop)
             UnitChanged->Execute(nullptr);
         }
         // Get the localized automation name for each CalculationResults field
-        if (prop->Equals(UnitConverterViewModelProperties::Unit1))
+        if (prop == Unit1PropertyName)
         {
             UpdateValue1AutomationName();
         }
@@ -585,15 +575,15 @@ void UnitConverterViewModel::OnPropertyChanged(Platform::String^ prop)
             UpdateValue2AutomationName();
         }
     }
-    else if (prop->Equals(UnitConverterViewModelProperties::Value1))
+    else if (prop == Value1PropertyName)
     {
         UpdateValue1AutomationName();
     }
-    else if (prop->Equals(UnitConverterViewModelProperties::Value2))
+    else if (prop == Value2PropertyName)
     {
         UpdateValue2AutomationName();
     }
-    else if (prop->Equals(UnitConverterViewModelProperties::Value1Active) || prop->Equals(UnitConverterViewModelProperties::Value2Active))
+    else if (prop == Value1ActivePropertyName || prop == Value2ActivePropertyName)
     {
         // if one of the values is activated, and as a result both are true, it means
         // that we're trying to switch.
@@ -605,11 +595,11 @@ void UnitConverterViewModel::OnPropertyChanged(Platform::String^ prop)
         UpdateValue1AutomationName();
         UpdateValue2AutomationName();
     }
-    else if (prop->Equals(UnitConverterViewModelProperties::SupplementaryResults))
+    else if (prop == SupplementaryResultsPropertyName)
     {
-        RaisePropertyChanged(UnitConverterViewModelProperties::SupplementaryVisibility);
+        RaisePropertyChanged(SupplementaryVisibilityPropertyName);
     }
-    else if (prop->Equals(UnitConverterViewModelProperties::Value1AutomationName))
+    else if (prop == Value1AutomationNamePropertyName)
     {
         m_isValue1Updating = false;
         if (!m_isValue2Updating)
@@ -617,7 +607,7 @@ void UnitConverterViewModel::OnPropertyChanged(Platform::String^ prop)
             AnnounceConversionResult();
         }
     }
-    else if (prop->Equals(UnitConverterViewModelProperties::Value2AutomationName))
+    else if (prop == Value2AutomationNamePropertyName)
     {
         m_isValue2Updating = false;
         if (!m_isValue1Updating)
@@ -625,9 +615,9 @@ void UnitConverterViewModel::OnPropertyChanged(Platform::String^ prop)
             AnnounceConversionResult();
         }
     }
-    else if (prop->Equals(UnitConverterViewModelProperties::CurrencySymbol1) || prop->Equals(UnitConverterViewModelProperties::CurrencySymbol2))
+    else if (prop == CurrencySymbol1PropertyName || prop == CurrencySymbol2PropertyName)
     {
-        RaisePropertyChanged(UnitConverterViewModelProperties::CurrencySymbolVisibility);
+        RaisePropertyChanged(CurrencySymbolVisibilityPropertyName);
     }
 }
 
@@ -852,7 +842,7 @@ void UnitConverterViewModel::RefreshSupplementaryResults()
     }
 
     m_cacheMutex.unlock();
-    RaisePropertyChanged(UnitConverterViewModelProperties::SupplementaryResults);
+    RaisePropertyChanged(SupplementaryResultsPropertyName);
     //EventWriteConverterSupplementaryResultsUpdated();
 }
 
