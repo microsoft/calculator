@@ -42,7 +42,7 @@ namespace CalculationManager
         MemorizedNumberClear = 335
     };
 
-    class CalculatorManager sealed : public ICalcDisplay
+    class CalculatorManager final : public ICalcDisplay
     {
     private:
         ICalcDisplay* const m_displayCallback;
