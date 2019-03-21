@@ -15,6 +15,10 @@
     <AppxOSMaxVersionTestedReplaceManifestVersion>false</AppxOSMaxVersionTestedReplaceManifestVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <AppxDefaultResourceQualifierUAP_Contrast>black</AppxDefaultResourceQualifierUAP_Contrast>
+    <AppxBundle>Always</AppxBundle>
+    <PackageCertificateKeyFile>TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <!-- This has to be exactly in this place for this to work -->
@@ -126,16 +130,6 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Condition="Exists('TemporaryKey.pfx')">
-    <PackageCertificateKeyFile>TemporaryKey.pfx</PackageCertificateKeyFile>
-    <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
-  </PropertyGroup>
-  <PropertyGroup Condition="!Exists('TemporaryKey.pfx')">
-    <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
-    <AppxBundle>Never</AppxBundle>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /await /std:c++17 </AdditionalOptions>
@@ -360,7 +354,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup Condition="Exists('TemporaryKey.pfx')">
+  <ItemGroup>
     <None Include="TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
