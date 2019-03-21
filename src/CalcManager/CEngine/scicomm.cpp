@@ -56,7 +56,7 @@ namespace {
 //
 // When it is discovered by the state machine that at this point the input is not valid (eg. "1+)"), we want to proceed as though this input never
 // occurred and may be some feedback to user like Beep. The rest of input can then continue by just ignoring this command.
-void CCalcEngine::HandleErrorCommand(uintptr_t idc)
+void CCalcEngine::HandleErrorCommand(OpCode idc)
 {
     if (!IsGuiSettingOpCode(idc))
     {
@@ -83,7 +83,7 @@ void CCalcEngine::ClearTemporaryValues()
     m_bError = false;
 }
 
-void CCalcEngine::ProcessCommand(uintptr_t wParam)
+void CCalcEngine::ProcessCommand(OpCode wParam)
 {
     if (wParam == IDC_SET_RESULT)
     {
@@ -94,7 +94,7 @@ void CCalcEngine::ProcessCommand(uintptr_t wParam)
     ProcessCommandWorker(wParam);
 }
 
-void CCalcEngine::ProcessCommandWorker(uintptr_t wParam)
+void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 {
     int            nx, ni;
 

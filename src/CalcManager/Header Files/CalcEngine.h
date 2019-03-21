@@ -22,6 +22,7 @@
 #include "RadixType.h"
 #include "History.h"  // for History Collector
 #include "CalcInput.h"
+#include "CalcUtils.h"
 #include "ICalcDisplay.h"
 #include "Rational.h"
 #include "RationalMath.h"
@@ -52,7 +53,7 @@ namespace CalculatorUnitTests
 class CCalcEngine {
 public:
     CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager::IResourceProvider* const pResourceProvider, __in_opt ICalcDisplay *pCalcDisplay, __in_opt std::shared_ptr<IHistoryDisplay> pHistoryDisplay);
-    void ProcessCommand(uintptr_t wID);
+    void ProcessCommand(OpCode wID);
     void DisplayError (uint32_t   nError);
     std::unique_ptr<CalcEngine::Rational> PersistedMemObject();
     void PersistedMemObject(CalcEngine::Rational const& memObject);
@@ -127,8 +128,8 @@ private:
     wchar_t m_groupSeparator;
 
 private:
-    void ProcessCommandWorker(uintptr_t wParam);
-    void HandleErrorCommand(uintptr_t idc);
+    void ProcessCommandWorker(OpCode wParam);
+    void HandleErrorCommand(OpCode idc);
     void HandleMaxDigitsReached();
     void DisplayNum(void);
     int IsNumberInvalid(const std::wstring& numberString, int iMaxExp, int iMaxMantissa, uint32_t radix) const;
