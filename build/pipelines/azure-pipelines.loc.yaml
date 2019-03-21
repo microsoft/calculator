@@ -20,6 +20,8 @@ jobs:
     - ClientAlias -equals PKGESUTILAPPS
   workspace:
     clean: outputs
+  variables:
+    skipComponentGovernanceDetection: true
   steps:
   - checkout: self
     clean: true
