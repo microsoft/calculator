@@ -10,6 +10,10 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 
+// Windows headers define min/max macros.
+// Disable it for project code.
+#define NOMINMAX
+
 #include <windows.h>
 
 #include <collection.h>

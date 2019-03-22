@@ -8,6 +8,10 @@
 
 #pragma once
 
+// Windows headers define min/max macros.
+// Disable it for project code.
+#define NOMINMAX
+
 #include <collection.h>
 #include <unordered_map>
 #include <map>
