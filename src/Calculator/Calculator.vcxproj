@@ -551,10 +551,6 @@
     <PRIResource Include="Resources\pt-br\Resources.resw" />
     <PRIResource Include="Resources\pt-PT\CEngineStrings.resw" />
     <PRIResource Include="Resources\pt-PT\Resources.resw" />
-    <PRIResource Include="Resources\qps-plocm\CEngineStrings.resw" />
-    <PRIResource Include="Resources\qps-plocm\Resources.resw" />
-    <PRIResource Include="Resources\qps-ploc\CEngineStrings.resw" />
-    <PRIResource Include="Resources\qps-ploc\Resources.resw" />
     <PRIResource Include="Resources\ro-RO\CEngineStrings.resw" />
     <PRIResource Include="Resources\ro-RO\Resources.resw" />
     <PRIResource Include="Resources\ru-ru\CEngineStrings.resw" />
