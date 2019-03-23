@@ -44,7 +44,7 @@ void OverflowTextBlock::OnApplyTemplate()
     m_scrollingLeft = false;
     m_scrollingRight = false;
     
-    auto borderContainer = safe_cast<Border^>(GetTemplateChild("Expressionborder"));
+    auto borderContainer = safe_cast<Border^>(GetTemplateChild("ExpressionBorder"));
     m_pointerEnteredEventToken = borderContainer->PointerEntered += ref new PointerEventHandler(this, &OverflowTextBlock::OnPointerEntered);
     m_pointerExitedEventToken = borderContainer->PointerExited += ref new PointerEventHandler(this, &OverflowTextBlock::OnPointerExited);
 
@@ -199,7 +199,7 @@ void OverflowTextBlock::UnregisterEventHandlers()
         m_scrollRight->Click -= m_scrollRightClickEventToken;
     }
 
-    auto borderContainer = safe_cast<Border^>(GetTemplateChild("Expressionborder"));
+    auto borderContainer = safe_cast<Border^>(GetTemplateChild("ExpressionBorder"));
 
     // Adding an extra check, in case the returned template is null
     if (borderContainer != nullptr)
