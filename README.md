@@ -12,6 +12,7 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 - Standard Calculator functionality which offers basic operations and evaluates commands immediately as they are entered.
 - Scientific Calculator functionality which offers expanded operations and evaluates commands using order of operations.
 - Programmer Calculator functionality which offers common mathematical operations for developers including conversion between common bases.
+- Date Calculation functionality which offers the difference between two dates given as input and adding/subtracting years, months and/or days to the input date.
 - Calculation history and memory capabilities.
 - Conversion between many units of measurement.
 - Currency conversion based on data retrieved from [Bing](https://www.bing.com).
