@@ -1416,26 +1416,26 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
             case static_cast<int>(Command::CommandASIN) :
                 updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSIN), true, angleType);
                 break;
-                case static_cast<int>(Command::CommandACOS) :
-                    updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOS), true, angleType);
-                    break;
-                    case static_cast<int>(Command::CommandATAN) :
-                        updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTAN), true, angleType);
-                        break;
-                        case static_cast<int>(Command::CommandASINH) :
-                            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSINH), true, angleType);
-                            break;
-                            case static_cast<int>(Command::CommandACOSH) :
-                                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOSH), true, angleType);
-                                break;
-                                case static_cast<int>(Command::CommandATANH) :
-                                    updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTANH), true, angleType);
-                                    break;
-                                    case static_cast<int>(Command::CommandPOWE) :
-                                        updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandLN), true, angleType);
-                                        break;
-                                    default:
-                                        updatedToken = CCalcEngine::OpCodeToUnaryString(nOpCode, false, angleType);
+            case static_cast<int>(Command::CommandACOS) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOS), true, angleType);
+                break;
+            case static_cast<int>(Command::CommandATAN) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTAN), true, angleType);
+                break;
+            case static_cast<int>(Command::CommandASINH) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSINH), true, angleType);
+                break;
+            case static_cast<int>(Command::CommandACOSH) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOSH), true, angleType);
+                break;
+            case static_cast<int>(Command::CommandATANH) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTANH), true, angleType);
+                break;
+            case static_cast<int>(Command::CommandPOWE) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandLN), true, angleType);
+                break;
+            default:
+                updatedToken = CCalcEngine::OpCodeToUnaryString(nOpCode, false, angleType);
         }
         if ((token.first.length() > 0) && (token.first[token.first.length() - 1] == L'('))
         {
