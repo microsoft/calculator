@@ -901,10 +901,7 @@
     <value>Dấu ngoặc đơn trái</value>
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
-  <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
-    <value>Ngoặc trái, tính ngoặc mở %1</value>
-    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
-  </data>
+  
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Dấu ngoặc đơn phải</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>

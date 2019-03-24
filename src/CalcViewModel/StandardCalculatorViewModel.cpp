@@ -48,7 +48,6 @@ namespace CalculatorResourceKeys
     StringReference DecButton(L"Format_DecButtonValue");
     StringReference OctButton(L"Format_OctButtonValue");
     StringReference BinButton(L"Format_BinButtonValue");
-    StringReference LeftParenthesisAutomationFormat(L"Format_OpenParenthesisAutomationNamePrefix");
     StringReference OpenParenthesisCountAutomationFormat(L"Format_OpenParenthesisCountAutomationNamePrefix");
     StringReference NoParenthesisAdded(L"NoRightParenthesisAdded_Announcement");
     StringReference MaxDigitsReachedFormat(L"Format_MaxDigitsReached");
@@ -80,8 +79,8 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_isBinaryBitFlippingEnabled(false),
     m_CurrentRadixType(RADIX_TYPE::DEC_RADIX),
     m_CurrentAngleType(NumbersAndOperatorsEnum::Degree),
-    m_OpenParenthesisCount(L""),
     m_Announcement(nullptr),
+    m_OpenParenthesisCount(0),
     m_feedbackForButtonPress(nullptr),
     m_isRtlLanguage(false),
     m_localizedMaxDigitsReachedAutomationFormat(nullptr),
@@ -91,8 +90,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_localizedMemoryItemClearedAutomationFormat(nullptr),
     m_localizedMemoryCleared(nullptr),
     m_localizedOpenParenthesisCountChangedAutomationFormat(nullptr),
-    m_localizedNoRightParenthesisAddedFormat(nullptr),
-    m_parenthesisCount(0)
+    m_localizedNoRightParenthesisAddedFormat(nullptr)
 {
     WeakReference calculatorViewModel(this);
     m_calculatorDisplay.SetCallback(calculatorViewModel);
@@ -103,7 +101,6 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_localizedDecimalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::DecButton);
     m_localizedOctalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::OctButton);
     m_localizedBinaryAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::BinButton);
-    m_leftParenthesisAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::LeftParenthesisAutomationFormat);
 
     // Initialize the Automation Name
     CalculationResultAutomationName = GetLocalizedStringFormat(m_localizedCalculationResultAutomationFormat, m_DisplayValue);
@@ -217,25 +214,21 @@ void StandardCalculatorViewModel::DisplayPasteError()
     m_standardCalculatorManager.DisplayPasteError();
 }
 
-void StandardCalculatorViewModel::SetParenthesisCount(_In_ unsigned int parenthesisCount, _In_  bool useNarrator)
+void StandardCalculatorViewModel::SetParenthesisCount(_In_ unsigned int parenthesisCount)
 {
+    if (m_OpenParenthesisCount == parenthesisCount)
+        return;
+
+    OpenParenthesisCount = parenthesisCount;
     if (IsProgrammer || IsScientific)
     {
-        OpenParenthesisCount = ref new String(parenthesisCount == 0 ? L"" : to_wstring(parenthesisCount).c_str());
-        RaisePropertyChanged("LeftParenthesisAutomationName");
-        if (useNarrator && m_parenthesisCount > parenthesisCount)
-        {
-            //only narrate the number of parenthesis when the counter decreases.
-            SetOpenParenthesisCountNarratorAnnouncement();
-        }
+        SetOpenParenthesisCountNarratorAnnouncement();
     }
-    m_parenthesisCount = parenthesisCount;
 }
 
 void StandardCalculatorViewModel::SetOpenParenthesisCountNarratorAnnouncement()
 {
-    String^ parenthesisCount = ((m_OpenParenthesisCount == nullptr) ? "0" : m_OpenParenthesisCount);
-    wstring localizedParenthesisCount = parenthesisCount->Data();
+    wstring localizedParenthesisCount = to_wstring(m_OpenParenthesisCount).c_str();
     LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
 
     String^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
@@ -286,15 +279,6 @@ void StandardCalculatorViewModel::DisableButtons(CommandType selectedExpressionC
         IsNegateEnabled = true;
         IsDecimalEnabled = false;
     }
-}
-
-String ^ StandardCalculatorViewModel::GetLeftParenthesisAutomationName()
-{
-    String^ parenthesisCount = ((m_OpenParenthesisCount == nullptr) ? "0" : m_OpenParenthesisCount);
-    wstring localizedParenthesisCount = std::wstring(parenthesisCount->Data());
-    LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
-
-    return GetLocalizedStringFormat(m_leftParenthesisAutomationFormat, ref new String(localizedParenthesisCount.c_str()));
 }
 
 void StandardCalculatorViewModel::SetExpressionDisplay(_Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const &tokens, _Inout_ shared_ptr<CalculatorVector <shared_ptr<IExpressionCommand>>> const &commands)
@@ -866,7 +850,7 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
             {
                 sentEquals = (mappedNumOp == NumbersAndOperatorsEnum::Equals);
                 Command cmdenum = ConvertToOperatorsEnum(mappedNumOp);
-                m_standardCalculatorManager.SendCommand(cmdenum, false);
+                m_standardCalculatorManager.SendCommand(cmdenum);
 
                 // The CalcEngine state machine won't allow the negate command to be sent before any
                 // other digits, so instead a flag is set and the command is sent after the first appropriate
@@ -876,7 +860,7 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
                     if (canSendNegate)
                     {
                         Command cmdNegate = ConvertToOperatorsEnum(NumbersAndOperatorsEnum::Negate);
-                        m_standardCalculatorManager.SendCommand(cmdNegate, false);
+                        m_standardCalculatorManager.SendCommand(cmdNegate);
                     }
 
                     // Can't send negate on a leading zero, so wait until the appropriate time to send it.
@@ -895,7 +879,7 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
             if (!(MapCharacterToButtonId(*it, canSendNegate) == NumbersAndOperatorsEnum::Add))
             {
                 Command cmdNegate = ConvertToOperatorsEnum(NumbersAndOperatorsEnum::Negate);
-                m_standardCalculatorManager.SendCommand(cmdNegate, false);
+                m_standardCalculatorManager.SendCommand(cmdNegate);
             }
         }
 

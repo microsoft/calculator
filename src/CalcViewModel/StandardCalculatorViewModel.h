@@ -75,12 +75,12 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, IsDwordEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsWordEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsByteEnabled);
-            OBSERVABLE_NAMED_PROPERTY_RW(Platform::String^, OpenParenthesisCount);
             OBSERVABLE_PROPERTY_RW(int, CurrentRadixType);
             OBSERVABLE_PROPERTY_RW(bool, AreTokensUpdated);
             OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
             OBSERVABLE_PROPERTY_RW(bool, AreProgrammerRadixOperatorsEnabled);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::Automation::NarratorAnnouncement^, Announcement);
+            OBSERVABLE_PROPERTY_R(unsigned int, OpenParenthesisCount);
 
             COMMAND_FOR_METHOD(CopyCommand, StandardCalculatorViewModel::OnCopyCommand);
             COMMAND_FOR_METHOD(PasteCommand, StandardCalculatorViewModel::OnPasteCommand);
@@ -255,14 +255,6 @@ namespace CalculatorApp
                 void set(bool value) { m_completeTextSelection = value; }
             }
 
-            property Platform::String^ LeftParenthesisAutomationName
-            {
-                Platform::String^ get()
-                {
-                    return GetLeftParenthesisAutomationName();
-                }
-            }
-
         internal:
             void OnPaste(Platform::String^ pastedString, CalculatorApp::Common::ViewMode mode);
             void OnCopyCommand(Platform::Object^ parameter);
@@ -283,7 +275,7 @@ namespace CalculatorApp
             void SetTokens(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens);
             void SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &commands);
             void SetHistoryExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector <std::shared_ptr<IExpressionCommand>>> const &commands);
-            void SetParenthesisCount(_In_ unsigned int parenthesisCount, _In_ bool useNarrator=true);
+            void SetParenthesisCount(_In_ unsigned int parenthesisCount);
             void SetOpenParenthesisCountNarratorAnnouncement();
             void OnNoRightParenAdded();
             void SetNoParenAddedNarratorAnnouncement();
@@ -352,10 +344,8 @@ namespace CalculatorApp
             bool m_operandUpdated;
             bool m_completeTextSelection;
             bool m_isLastOperationHistoryLoad;
-            unsigned int m_parenthesisCount;
             Platform::String^ m_selectedExpressionLastData;
             Common::DisplayExpressionToken^ m_selectedExpressionToken;
-            Platform::String^ m_leftParenthesisAutomationFormat;
 
             Platform::String^ LocalizeDisplayValue(_In_ std::wstring const &displayValue, _In_ bool isError);
             Platform::String^ CalculateNarratorDisplayValue(_In_ std::wstring const &displayValue, _In_ Platform::String^ localizedDisplayValue, _In_ bool isError);
@@ -365,7 +355,6 @@ namespace CalculatorApp
 
             CalculationManager::Command ConvertToOperatorsEnum(NumbersAndOperatorsEnum operation);
             void DisableButtons(CalculationManager::CommandType selectedExpressionCommandType);
-            Platform::String^ GetLeftParenthesisAutomationName();
 
             Platform::String^ m_feedbackForButtonPress;
             void OnButtonPressed(Platform::Object^ parameter);

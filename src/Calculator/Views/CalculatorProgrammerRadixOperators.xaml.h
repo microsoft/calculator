@@ -26,6 +26,7 @@ namespace CalculatorApp
             bool get();
             void set(bool value);
         }
+        Platform::String^ ParenthesisCountToString(unsigned int count);
 
         DEPENDENCY_PROPERTY_OWNER(CalculatorProgrammerRadixOperators);
 
@@ -38,5 +39,6 @@ namespace CalculatorApp
 
         bool m_isErrorVisualState;
         Windows::Foundation::EventRegistrationToken m_progModeRadixChangeToken;
+        void OpenParenthesisButton_GotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
     };
 }

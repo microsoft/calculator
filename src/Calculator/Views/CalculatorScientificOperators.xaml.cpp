@@ -16,6 +16,7 @@ using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::ViewModel;
 
+using namespace std;
 using namespace Platform;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
@@ -98,3 +99,11 @@ void CalculatorScientificOperators::SetOperatorRowVisibility()
     InvRow2->Visibility = invRowVis;
 }
 
+void CalculatorScientificOperators::OpenParenthesisButton_GotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+    Model->SetOpenParenthesisCountNarratorAnnouncement();
+}
+
+String^ CalculatorScientificOperators::ParenthesisCountToString(unsigned int count) {
+    return count == 0 ? ref new String(L"") : ref new String(to_wstring(count).data());
+}

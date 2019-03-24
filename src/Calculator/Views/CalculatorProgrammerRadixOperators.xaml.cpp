@@ -12,8 +12,8 @@
 #include "Converters/BooleanToVisibilityConverter.h"
 #include "Views/NumberPad.xaml.h"
 
+using namespace std;
 using namespace CalculatorApp;
-
 using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace Windows::UI::Xaml;
@@ -96,4 +96,14 @@ void CalculatorProgrammerRadixOperators::IsErrorVisualState::set(bool value)
         VisualStateManager::GoToState(this, newState, false);
         NumberPad->IsErrorVisualState = m_isErrorVisualState;
     }
+}
+
+String^ CalculatorProgrammerRadixOperators::ParenthesisCountToString(unsigned int count) {
+    return count == 0 ? ref new String(L"") : ref new String(to_wstring(count).data());
+}
+
+
+void CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators::OpenParenthesisButton_GotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+    Model->SetOpenParenthesisCountNarratorAnnouncement();
 }

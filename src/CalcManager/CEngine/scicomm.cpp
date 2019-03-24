@@ -83,7 +83,7 @@ void CCalcEngine::ClearTemporaryValues()
     m_bError = false;
 }
 
-void CCalcEngine::ProcessCommand(WPARAM wParam, bool useNarrator)
+void CCalcEngine::ProcessCommand(WPARAM wParam)
 {
     if (wParam == IDC_SET_RESULT)
     {
@@ -91,10 +91,10 @@ void CCalcEngine::ProcessCommand(WPARAM wParam, bool useNarrator)
         m_bSetCalcState = true;
     }
 
-    ProcessCommandWorker(wParam, useNarrator);
+    ProcessCommandWorker(wParam);
 }
 
-void CCalcEngine::ProcessCommandWorker(WPARAM wParam, bool useNarrator)
+void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
 {
     INT            nx, ni;
 
@@ -397,7 +397,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam, bool useNarrator)
         cleared for CENTR */
         if (nullptr != m_pCalcDisplay)
         {
-            m_pCalcDisplay->SetParenDisplayText(0, false);
+            m_pCalcDisplay->SetParenthesisNumber(0);
             m_pCalcDisplay->SetExpressionDisplay(make_shared<CalculatorVector<pair<wstring, int>>>(), make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>());
         }
 
@@ -440,7 +440,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam, bool useNarrator)
             }
             // automatic closing of all the parenthesis to get a meaningful result as well as ensure data integrity
             m_nTempCom = m_nLastCom; // Put back this last saved command to the prev state so ) can be handled properly
-            ProcessCommand(IDC_CLOSEP, useNarrator);
+            ProcessCommand(IDC_CLOSEP);
             m_nLastCom = m_nTempCom; // Actually this is IDC_CLOSEP
             m_nTempCom = (INT)wParam; // put back in the state where last op seen was IDC_CLOSEP, and current op is IDC_EQU
         }
@@ -632,7 +632,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam, bool useNarrator)
         // Set the "(=xx" indicator.
         if (nullptr != m_pCalcDisplay)
         {
-            m_pCalcDisplay->SetParenDisplayText(m_openParenCount >= 0 ? (unsigned int)m_openParenCount : 0, useNarrator);
+            m_pCalcDisplay->SetParenthesisNumber(m_openParenCount >= 0 ? (unsigned int)m_openParenCount : 0);
         }
 
         if (!m_bError)

@@ -6,7 +6,7 @@
 #include "pch.h"
 #include "NarratorNotifier.h"
 #include "NarratorAnnouncementHostFactory.h"
-#include <iostream>
+
 using namespace CalculatorApp::Common::Automation;
 using namespace Platform;
 using namespace Windows::UI::Xaml;
@@ -26,7 +26,6 @@ void NarratorNotifier::Announce(NarratorAnnouncement^ announcement)
         && m_announcementHost != nullptr)
     {
         m_announcementHost->Announce(announcement);
-        OutputDebugString(announcement->Announcement->Data());
     }
 }
 

@@ -57,7 +57,7 @@ namespace CalculatorManagerTest
             m_memorizedNumberStrings = numbers;
         }
 
-        void SetParenDisplayText(unsigned int parenthesisCount, bool /*useNarrator*/) override
+        void SetParenthesisNumber(unsigned int parenthesisCount) override
         {
             m_parenDisplay = parenthesisCount;
         }
