@@ -38,15 +38,6 @@ CalculatorScientificOperators::CalculatorScientificOperators()
     Common::KeyboardShortcutManager::ShiftButtonChecked(false);
 }
 
-void CalculatorScientificOperators::OnLoaded(Object^, RoutedEventArgs^)
-{
-    m_propertyChangedToken = Model->PropertyChanged += ref new PropertyChangedEventHandler(this, &CalculatorScientificOperators::OnViewModelPropertyChanged);
-}
-void CalculatorScientificOperators::OnUnloaded(Object^, RoutedEventArgs^)
-{
-    Model->PropertyChanged -= m_propertyChangedToken;
-}
-
 void CalculatorScientificOperators::ShortLayout_Completed(_In_ Platform::Object^ /*sender*/, _In_ Platform::Object^ /*e*/)
 {
     IsWideLayout = false;
@@ -107,10 +98,3 @@ void CalculatorScientificOperators::SetOperatorRowVisibility()
     InvRow2->Visibility = invRowVis;
 }
 
-void CalculatorScientificOperators::OnViewModelPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
-{
-    if (e->PropertyName == StandardCalculatorViewModel::OpenParenthesisCountPropertyName && closeParenthesisButton->FocusState != ::FocusState::Unfocused)
-    {
-        Model->SetOpenParenthesisCountNarratorAnnouncement();
-    }
-}

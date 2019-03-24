@@ -91,7 +91,8 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_localizedMemoryItemClearedAutomationFormat(nullptr),
     m_localizedMemoryCleared(nullptr),
     m_localizedOpenParenthesisCountChangedAutomationFormat(nullptr),
-    m_localizedNoRightParenthesisAddedFormat(nullptr)
+    m_localizedNoRightParenthesisAddedFormat(nullptr),
+    m_parenthesisCount(0)
 {
     WeakReference calculatorViewModel(this);
     m_calculatorDisplay.SetCallback(calculatorViewModel);
@@ -216,13 +217,19 @@ void StandardCalculatorViewModel::DisplayPasteError()
     m_standardCalculatorManager.DisplayPasteError();
 }
 
-void StandardCalculatorViewModel::SetParenthesisCount(_In_ const wstring& parenthesisCount)
+void StandardCalculatorViewModel::SetParenthesisCount(_In_ unsigned int parenthesisCount, _In_  bool useNarrator)
 {
     if (IsProgrammer || IsScientific)
     {
-        OpenParenthesisCount = ref new String(parenthesisCount.c_str());
+        OpenParenthesisCount = ref new String(parenthesisCount == 0 ? L"" : to_wstring(parenthesisCount).c_str());
         RaisePropertyChanged("LeftParenthesisAutomationName");
+        if (useNarrator && m_parenthesisCount > parenthesisCount)
+        {
+            //only narrate the number of parenthesis when the counter decreases.
+            SetOpenParenthesisCountNarratorAnnouncement();
+        }
     }
+    m_parenthesisCount = parenthesisCount;
 }
 
 void StandardCalculatorViewModel::SetOpenParenthesisCountNarratorAnnouncement()
@@ -859,7 +866,7 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
             {
                 sentEquals = (mappedNumOp == NumbersAndOperatorsEnum::Equals);
                 Command cmdenum = ConvertToOperatorsEnum(mappedNumOp);
-                m_standardCalculatorManager.SendCommand(cmdenum);
+                m_standardCalculatorManager.SendCommand(cmdenum, false);
 
                 // The CalcEngine state machine won't allow the negate command to be sent before any
                 // other digits, so instead a flag is set and the command is sent after the first appropriate
@@ -869,7 +876,7 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
                     if (canSendNegate)
                     {
                         Command cmdNegate = ConvertToOperatorsEnum(NumbersAndOperatorsEnum::Negate);
-                        m_standardCalculatorManager.SendCommand(cmdNegate);
+                        m_standardCalculatorManager.SendCommand(cmdNegate, false);
                     }
 
                     // Can't send negate on a leading zero, so wait until the appropriate time to send it.
@@ -888,7 +895,7 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
             if (!(MapCharacterToButtonId(*it, canSendNegate) == NumbersAndOperatorsEnum::Add))
             {
                 Command cmdNegate = ConvertToOperatorsEnum(NumbersAndOperatorsEnum::Negate);
-                m_standardCalculatorManager.SendCommand(cmdNegate);
+                m_standardCalculatorManager.SendCommand(cmdNegate, false);
             }
         }
 
@@ -1422,29 +1429,29 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
 
         switch (nOpCode)
         {
-        case static_cast<int>(Command::CommandASIN) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSIN), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandACOS) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOS), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandATAN) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTAN), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandASINH) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSINH), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandACOSH) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOSH), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandATANH) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTANH), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandPOWE) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandLN), true, angleType);
-            break;
-        default:
-            updatedToken = CCalcEngine::OpCodeToUnaryString(nOpCode, false, angleType);
+            case static_cast<int>(Command::CommandASIN) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSIN), true, angleType);
+                break;
+                case static_cast<int>(Command::CommandACOS) :
+                    updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOS), true, angleType);
+                    break;
+                    case static_cast<int>(Command::CommandATAN) :
+                        updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTAN), true, angleType);
+                        break;
+                        case static_cast<int>(Command::CommandASINH) :
+                            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSINH), true, angleType);
+                            break;
+                            case static_cast<int>(Command::CommandACOSH) :
+                                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOSH), true, angleType);
+                                break;
+                                case static_cast<int>(Command::CommandATANH) :
+                                    updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTANH), true, angleType);
+                                    break;
+                                    case static_cast<int>(Command::CommandPOWE) :
+                                        updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandLN), true, angleType);
+                                        break;
+                                    default:
+                                        updatedToken = CCalcEngine::OpCodeToUnaryString(nOpCode, false, angleType);
         }
         if ((token.first.length() > 0) && (token.first[token.first.length() - 1] == L'('))
         {

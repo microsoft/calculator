@@ -83,7 +83,7 @@ void CCalcEngine::ClearTemporaryValues()
     m_bError = false;
 }
 
-void CCalcEngine::ProcessCommand(WPARAM wParam)
+void CCalcEngine::ProcessCommand(WPARAM wParam, bool useNarrator)
 {
     if (wParam == IDC_SET_RESULT)
     {
@@ -91,10 +91,10 @@ void CCalcEngine::ProcessCommand(WPARAM wParam)
         m_bSetCalcState = true;
     }
 
-    ProcessCommandWorker(wParam);
+    ProcessCommandWorker(wParam, useNarrator);
 }
 
-void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
+void CCalcEngine::ProcessCommandWorker(WPARAM wParam, bool useNarrator)
 {
     INT            nx, ni;
 
@@ -397,7 +397,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         cleared for CENTR */
         if (nullptr != m_pCalcDisplay)
         {
-            m_pCalcDisplay->SetParenDisplayText(L"");
+            m_pCalcDisplay->SetParenDisplayText(0, false);
             m_pCalcDisplay->SetExpressionDisplay(make_shared<CalculatorVector<pair<wstring, int>>>(), make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>());
         }
 
@@ -440,7 +440,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             }
             // automatic closing of all the parenthesis to get a meaningful result as well as ensure data integrity
             m_nTempCom = m_nLastCom; // Put back this last saved command to the prev state so ) can be handled properly
-            ProcessCommand(IDC_CLOSEP);
+            ProcessCommand(IDC_CLOSEP, useNarrator);
             m_nLastCom = m_nTempCom; // Actually this is IDC_CLOSEP
             m_nTempCom = (INT)wParam; // put back in the state where last op seen was IDC_CLOSEP, and current op is IDC_EQU
         }
@@ -632,7 +632,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         // Set the "(=xx" indicator.
         if (nullptr != m_pCalcDisplay)
         {
-            m_pCalcDisplay->SetParenDisplayText(m_openParenCount ? to_wstring(m_openParenCount) : L"");
+            m_pCalcDisplay->SetParenDisplayText(m_openParenCount >= 0 ? (unsigned int)m_openParenCount : 0, useNarrator);
         }
 
         if (!m_bError)

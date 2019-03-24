@@ -36,13 +36,13 @@ void CalculatorDisplay::SetPrimaryDisplay(_In_ const wstring& displayStringValue
     }
 }
 
-void CalculatorDisplay::SetParenDisplayText(_In_ const std::wstring& parenthesisCount)
+void CalculatorDisplay::SetParenDisplayText(_In_ unsigned int parenthesisCount, _In_ bool useNarrator)
 {
     if (m_callbackReference != nullptr)
     {
         if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
         {
-            calcVM->SetParenthesisCount(parenthesisCount);
+            calcVM->SetParenthesisCount(parenthesisCount, useNarrator);
         }
     }
 }

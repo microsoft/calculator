@@ -35,12 +35,10 @@ CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators() :
 void CalculatorProgrammerRadixOperators::OnLoaded(Object^, RoutedEventArgs^)
 {
     m_progModeRadixChangeToken = Model->ProgModeRadixChange += ref new ProgModeRadixChangeHandler(this, &CalculatorProgrammerRadixOperators::ProgModeRadixChange);
-    m_propertyChangedToken = Model->PropertyChanged += ref new PropertyChangedEventHandler(this, &CalculatorProgrammerRadixOperators::OnViewModelPropertyChanged);
 }
 void CalculatorProgrammerRadixOperators::OnUnloaded(Object^, RoutedEventArgs^)
 {
     Model->ProgModeRadixChange -= m_progModeRadixChangeToken;
-    Model->PropertyChanged -=  m_propertyChangedToken;
 }
 
 void CalculatorProgrammerRadixOperators::Shift_Clicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
@@ -97,13 +95,5 @@ void CalculatorProgrammerRadixOperators::IsErrorVisualState::set(bool value)
         String^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
         VisualStateManager::GoToState(this, newState, false);
         NumberPad->IsErrorVisualState = m_isErrorVisualState;
-    }
-}
-
-void CalculatorProgrammerRadixOperators::OnViewModelPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
-{
-    if (e->PropertyName == StandardCalculatorViewModel::OpenParenthesisCountPropertyName && closeParenthesisButton->FocusState != ::FocusState::Unfocused)
-    {
-        Model->SetOpenParenthesisCountNarratorAnnouncement();
     }
 }

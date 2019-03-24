@@ -283,7 +283,7 @@ namespace CalculatorApp
             void SetTokens(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens);
             void SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &commands);
             void SetHistoryExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector <std::shared_ptr<IExpressionCommand>>> const &commands);
-            void SetParenthesisCount(_In_ const std::wstring& parenthesisCount);
+            void SetParenthesisCount(_In_ unsigned int parenthesisCount, _In_ bool useNarrator=true);
             void SetOpenParenthesisCountNarratorAnnouncement();
             void OnNoRightParenAdded();
             void SetNoParenAddedNarratorAnnouncement();
@@ -352,6 +352,7 @@ namespace CalculatorApp
             bool m_operandUpdated;
             bool m_completeTextSelection;
             bool m_isLastOperationHistoryLoad;
+            unsigned int m_parenthesisCount;
             Platform::String^ m_selectedExpressionLastData;
             Common::DisplayExpressionToken^ m_selectedExpressionToken;
             Platform::String^ m_leftParenthesisAutomationFormat;

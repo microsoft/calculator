@@ -52,7 +52,7 @@ namespace CalculatorUnitTests
 class CCalcEngine {
 public:
     CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager::IResourceProvider* const pResourceProvider, __in_opt ICalcDisplay *pCalcDisplay, __in_opt std::shared_ptr<IHistoryDisplay> pHistoryDisplay);
-    void ProcessCommand(WPARAM wID);
+    void ProcessCommand(WPARAM wID, bool useNarrator=true);
     void DisplayError (DWORD   nError);
     std::unique_ptr<CalcEngine::Rational> PersistedMemObject();
     void PersistedMemObject(CalcEngine::Rational const& memObject);
@@ -127,7 +127,7 @@ private:
     wchar_t m_groupSeparator;
 
 private:
-    void ProcessCommandWorker(WPARAM wParam);
+    void ProcessCommandWorker(WPARAM wParam, bool useNarrator = true);
     void HandleErrorCommand(WPARAM idc);
     void HandleMaxDigitsReached();
     void DisplayNum(void);

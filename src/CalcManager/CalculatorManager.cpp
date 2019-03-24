@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -111,9 +111,9 @@ namespace CalculationManager
     /// Callback from the engine
     /// </summary>
     /// <param name="parenthesisCount">string containing the parenthesis count</param>
-    void CalculatorManager::SetParenDisplayText(const wstring& parenthesisCount)
+    void CalculatorManager::SetParenDisplayText(_In_ unsigned int parenthesisCount, bool useNarrator)
     {
-        m_displayCallback->SetParenDisplayText(parenthesisCount);
+        m_displayCallback->SetParenDisplayText(parenthesisCount, useNarrator);
     }
 
     /// <summary>
@@ -216,7 +216,7 @@ namespace CalculationManager
     /// Handle special commands such as mode change and combination of two commands.
     /// </summary>
     /// <param name="command">Enum Command</command>
-    void CalculatorManager::SendCommand(_In_ Command command)
+    void CalculatorManager::SendCommand(_In_ Command command, bool useNarrator)
     {
         // When the expression line is cleared, we save the current state, which includes,
         // primary display, memory, and degree mode
@@ -235,7 +235,7 @@ namespace CalculationManager
                 this->SetProgrammerMode();
                 break;
             default:
-                m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(command));
+                m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(command), useNarrator);
             }
 
             m_savedCommands.clear(); // Clear the previous command history
@@ -263,38 +263,38 @@ namespace CalculationManager
         switch (command)
         {
         case Command::CommandASIN:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandSIN));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV), useNarrator);
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandSIN), useNarrator);
             break;
         case Command::CommandACOS:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandCOS));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV), useNarrator);
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandCOS), useNarrator);
             break;
         case Command::CommandATAN:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandTAN));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV), useNarrator);
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandTAN), useNarrator);
             break;
         case Command::CommandPOWE:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandLN));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV), useNarrator);
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandLN), useNarrator);
             break;
         case Command::CommandASINH:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandSINH));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV), useNarrator);
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandSINH), useNarrator);
             break;
         case Command::CommandACOSH:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandCOSH));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV), useNarrator);
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandCOSH), useNarrator);
             break;
         case Command::CommandATANH:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandTANH));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV), useNarrator);
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandTANH), useNarrator);
             break;
         case Command::CommandFE:
             m_isExponentialFormat = !m_isExponentialFormat;
             [[fallthrough]];
         default:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(command));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(command), useNarrator);
             break;
         }
     }
