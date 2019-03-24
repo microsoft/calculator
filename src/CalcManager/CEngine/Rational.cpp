@@ -71,6 +71,16 @@ namespace CalcEngine
         return ret;
     }
 
+    shared_ptr<RAT> Rational::ToSmartRAT() const
+    {
+        shared_ptr<RAT> smartRat(_createrat(), &_destroyrat);
+
+        smartRat.get()->pp = this->P().ToPNUMBER();
+        smartRat.get()->pq = this->Q().ToPNUMBER();
+
+        return smartRat;
+    }
+
     Number const& Rational::P() const
     {
         return m_p;
@@ -128,9 +138,9 @@ namespace CalcEngine
 
     Rational& Rational::operator*=(Rational const& rhs)
     {
-        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> lhsSmartRat = this->ToSmartRAT();
         auto lhsPrat = lhsSmartRat.get();
-        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> rhsSmartRat = rhs.ToSmartRAT();
 
         try
         {
@@ -148,9 +158,9 @@ namespace CalcEngine
 
     Rational& Rational::operator/=(Rational const& rhs)
     {
-        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> lhsSmartRat = this->ToSmartRAT();
         auto lhsPrat = lhsSmartRat.get();
-        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> rhsSmartRat = rhs.ToSmartRAT();
 
         try
         {
@@ -168,9 +178,9 @@ namespace CalcEngine
 
     Rational& Rational::operator%=(Rational const& rhs)
     {
-        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> lhsSmartRat = this->ToSmartRAT();
         auto lhsPrat = lhsSmartRat.get();
-        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> rhsSmartRat = rhs.ToSmartRAT();
 
         try
         {
@@ -188,9 +198,9 @@ namespace CalcEngine
 
     Rational& Rational::operator<<=(Rational const& rhs)
     {
-        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> lhsSmartRat = this->ToSmartRAT();
         auto lhsPrat = lhsSmartRat.get();
-        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> rhsSmartRat = rhs.ToSmartRAT();
 
         try
         {
@@ -208,9 +218,9 @@ namespace CalcEngine
 
     Rational& Rational::operator>>=(Rational const& rhs)
     {
-        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> lhsSmartRat = this->ToSmartRAT();
         auto lhsPrat = lhsSmartRat.get();
-        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> rhsSmartRat = rhs.ToSmartRAT();
 
         try
         {
@@ -228,9 +238,9 @@ namespace CalcEngine
 
     Rational& Rational::operator&=(Rational const& rhs)
     {
-        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> lhsSmartRat = this->ToSmartRAT();
         auto lhsPrat = lhsSmartRat.get();
-        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> rhsSmartRat = rhs.ToSmartRAT();
 
         try
         {
@@ -248,9 +258,9 @@ namespace CalcEngine
 
     Rational& Rational::operator|=(Rational const& rhs)
     {
-        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> lhsSmartRat = this->ToSmartRAT();
         auto lhsPrat = lhsSmartRat.get();
-        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> rhsSmartRat = rhs.ToSmartRAT();
         try
         {
             orrat(&lhsPrat, rhsSmartRat.get(), RATIONAL_BASE, RATIONAL_PRECISION);
@@ -267,9 +277,9 @@ namespace CalcEngine
 
     Rational& Rational::operator^=(Rational const& rhs)
     {
-        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> lhsSmartRat = this->ToSmartRAT();
         auto lhsPrat = lhsSmartRat.get();
-        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> rhsSmartRat = rhs.ToSmartRAT();
         try
         {
             xorrat(&lhsPrat, rhsSmartRat.get(), RATIONAL_BASE, RATIONAL_PRECISION);
@@ -346,8 +356,8 @@ namespace CalcEngine
 
     bool operator==(Rational const& lhs, Rational const& rhs)
     {
-        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(lhs.ToPRAT(), &_destroyrat);
-        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> lhsSmartRat = lhs.ToSmartRAT();
+        shared_ptr<RAT> rhsSmartRat = rhs.ToSmartRAT();
 
         bool result = false;
         try
@@ -369,8 +379,8 @@ namespace CalcEngine
 
     bool operator<(Rational const& lhs, Rational const& rhs)
     {
-        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(lhs.ToPRAT(), &_destroyrat);
-        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> lhsSmartRat = lhs.ToSmartRAT();
+        shared_ptr<RAT> rhsSmartRat = rhs.ToSmartRAT();
 
         bool result = false;
         try
@@ -402,7 +412,7 @@ namespace CalcEngine
 
     wstring Rational::ToString(uint32_t radix, NUMOBJ_FMT fmt, int32_t precision) const
     {
-        unique_ptr<RAT, decltype(&_destroyrat)> SmartRat(this->ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> SmartRat = this->ToSmartRAT();
         auto PRAT = SmartRat.get();
         wstring result{};
 
@@ -420,7 +430,7 @@ namespace CalcEngine
 
     uint64_t Rational::ToUInt64_t() const
     {
-        unique_ptr<RAT, decltype(&_destroyrat)> smartRat(this->ToPRAT(), &_destroyrat);
+        shared_ptr<RAT> smartRat = this->ToSmartRAT();
         uint64_t result;
         try
         {

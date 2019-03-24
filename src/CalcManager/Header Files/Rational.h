@@ -26,6 +26,7 @@ namespace CalcEngine
 
         explicit Rational(PRAT prat) noexcept;
         PRAT ToPRAT() const;
+        std::shared_ptr<RAT> ToSmartRAT() const;
 
         Number const& P() const;
         Number const& Q() const;
