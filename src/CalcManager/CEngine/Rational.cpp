@@ -31,22 +31,18 @@ namespace CalcEngine
 
     Rational::Rational(int32_t i)
     {
-        PRAT pr = longtorat(static_cast<long>(i));
+        unique_ptr<RAT, decltype(&_destroyrat)> pr(Ulongtorat(static_cast<unsigned long>(i)), &_destroyrat);
 
         m_p = Number{ pr->pp };
         m_q = Number{ pr->pq };
-
-        destroyrat(pr);
     }
 
     Rational::Rational(uint32_t ui)
     {
-        PRAT pr = Ulongtorat(static_cast<unsigned long>(ui));
+        unique_ptr<RAT, decltype(&_destroyrat)> pr(Ulongtorat(static_cast<unsigned long>(ui)), &_destroyrat);
 
         m_p = Number{ pr->pp };
         m_q = Number{ pr->pq };
-
-        destroyrat(pr);
     }
 
     Rational::Rational(uint64_t ui)
@@ -92,228 +88,198 @@ namespace CalcEngine
 
     Rational& Rational::operator+=(Rational const& rhs)
     {
-        PRAT lhsRat = this->ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
+        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        auto lhsPrat = lhsSmartRat.get();
+        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
 
         try
         {
-            addrat(&lhsRat, rhsRat, RATIONAL_PRECISION);
-            destroyrat(rhsRat);
+            addrat(&lhsPrat, rhsSmartRat.get(), RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
             throw(error);
         }
 
-        *this = Rational{ lhsRat };
-        destroyrat(lhsRat);
+        *this = Rational{ lhsSmartRat.get() };
 
         return *this;
     }
 
     Rational& Rational::operator-=(Rational const& rhs)
     {
-        PRAT lhsRat = this->ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
+        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        auto lhsPrat = lhsSmartRat.get();
+        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
 
         try
         {
-            subrat(&lhsRat, rhsRat, RATIONAL_PRECISION);
-            destroyrat(rhsRat);
+            subrat(&lhsPrat, rhsSmartRat.get(), RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
             throw(error);
         }
 
-        *this = Rational{ lhsRat };
-        destroyrat(lhsRat);
+        *this = Rational{ lhsSmartRat.get() };
 
         return *this;
     }
 
     Rational& Rational::operator*=(Rational const& rhs)
     {
-        PRAT lhsRat = this->ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
+        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        auto lhsPrat = lhsSmartRat.get();
+        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
 
         try
         {
-            mulrat(&lhsRat, rhsRat, RATIONAL_PRECISION);
-            destroyrat(rhsRat);
+            mulrat(&lhsPrat, rhsSmartRat.get(), RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
             throw(error);
         }
 
-        *this = Rational{ lhsRat };
-        destroyrat(lhsRat);
+        *this = Rational{ lhsSmartRat.get() };
 
         return *this;
     }
 
     Rational& Rational::operator/=(Rational const& rhs)
     {
-        PRAT lhsRat = this->ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
+        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        auto lhsPrat = lhsSmartRat.get();
+        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
 
         try
         {
-            divrat(&lhsRat, rhsRat, RATIONAL_PRECISION);
-            destroyrat(rhsRat);
+            divrat(&lhsPrat, rhsSmartRat.get(), RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
             throw(error);
         }
 
-        *this = Rational{ lhsRat };
-        destroyrat(lhsRat);
+        *this = Rational{ lhsSmartRat.get() };
 
         return *this;
     }
 
     Rational& Rational::operator%=(Rational const& rhs)
     {
-        PRAT lhsRat = this->ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
+        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        auto lhsPrat = lhsSmartRat.get();
+        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
 
         try
         {
-            modrat(&lhsRat, rhsRat);
-            destroyrat(rhsRat);
+            modrat(&lhsPrat, rhsSmartRat.get());
         }
         catch (DWORD error)
         {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
             throw(error);
         }
 
-        *this = Rational{ lhsRat };
-        destroyrat(lhsRat);
+        *this = Rational{ lhsSmartRat.get() };
 
         return *this;
     }
 
     Rational& Rational::operator<<=(Rational const& rhs)
     {
-        PRAT lhsRat = this->ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
+        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        auto lhsPrat = lhsSmartRat.get();
+        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
 
         try
         {
-            lshrat(&lhsRat, rhsRat, RATIONAL_BASE, RATIONAL_PRECISION);
-            destroyrat(rhsRat);
+            lshrat(&lhsPrat, rhsSmartRat.get(), RATIONAL_BASE, RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
             throw(error);
         }
 
-        *this = Rational{ lhsRat };
-        destroyrat(lhsRat);
+        *this = Rational{ lhsSmartRat.get() };
 
         return *this;
     }
 
     Rational& Rational::operator>>=(Rational const& rhs)
     {
-        PRAT lhsRat = this->ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
+        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        auto lhsPrat = lhsSmartRat.get();
+        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
 
         try
         {
-            rshrat(&lhsRat, rhsRat, RATIONAL_BASE, RATIONAL_PRECISION);
-            destroyrat(rhsRat);
+            rshrat(&lhsPrat, rhsSmartRat.get(), RATIONAL_BASE, RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
             throw(error);
         }
 
-        *this = Rational{ lhsRat };
-        destroyrat(lhsRat);
+        *this = Rational{ lhsSmartRat.get() };
 
         return *this;
     }
 
     Rational& Rational::operator&=(Rational const& rhs)
     {
-        PRAT lhsRat = this->ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
+        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        auto lhsPrat = lhsSmartRat.get();
+        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
 
         try
         {
-            andrat(&lhsRat, rhsRat, RATIONAL_BASE, RATIONAL_PRECISION);
-            destroyrat(rhsRat);
+            andrat(&lhsPrat, rhsSmartRat.get(), RATIONAL_BASE, RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
             throw(error);
         }
 
-        *this = Rational{ lhsRat };
-        destroyrat(lhsRat);
+        *this = Rational{ lhsSmartRat.get() };
 
         return *this;
     }
 
     Rational& Rational::operator|=(Rational const& rhs)
     {
-        PRAT lhsRat = this->ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
+        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        auto lhsPrat = lhsSmartRat.get();
+        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
         try
         {
-            orrat(&lhsRat, rhsRat, RATIONAL_BASE, RATIONAL_PRECISION);
-            destroyrat(rhsRat);
+            orrat(&lhsPrat, rhsSmartRat.get(), RATIONAL_BASE, RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
             throw(error);
         }
 
-        *this = Rational{ lhsRat };
-        destroyrat(lhsRat);
+        *this = Rational{ lhsSmartRat.get() };
 
         return *this;
     }
 
     Rational& Rational::operator^=(Rational const& rhs)
     {
-        PRAT lhsRat = this->ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
+        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(this->ToPRAT(), &_destroyrat);
+        auto lhsPrat = lhsSmartRat.get();
+        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
         try
         {
-            xorrat(&lhsRat, rhsRat, RATIONAL_BASE, RATIONAL_PRECISION);
-            destroyrat(rhsRat);
+            xorrat(&lhsPrat, rhsSmartRat.get(), RATIONAL_BASE, RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
             throw(error);
         }
 
-        *this = Rational{ lhsRat };
-        destroyrat(lhsRat);
+        *this = Rational{ lhsSmartRat.get() };
 
         return *this;
     }
@@ -380,23 +346,18 @@ namespace CalcEngine
 
     bool operator==(Rational const& lhs, Rational const& rhs)
     {
-        PRAT lhsRat = lhs.ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
+        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(lhs.ToPRAT(), &_destroyrat);
+        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
 
         bool result = false;
         try
         {
-            result = rat_equ(lhsRat, rhsRat, RATIONAL_PRECISION);
+            result = rat_equ(lhsSmartRat.get(), rhsSmartRat.get(), RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
             throw(error);
         }
-
-        destroyrat(lhsRat);
-        destroyrat(rhsRat);
 
         return result;
     }
@@ -408,23 +369,18 @@ namespace CalcEngine
 
     bool operator<(Rational const& lhs, Rational const& rhs)
     {
-        PRAT lhsRat = lhs.ToPRAT();
-        PRAT rhsRat = rhs.ToPRAT();
+        unique_ptr<RAT, decltype(&_destroyrat)> lhsSmartRat(lhs.ToPRAT(), &_destroyrat);
+        unique_ptr<RAT, decltype(&_destroyrat)> rhsSmartRat(rhs.ToPRAT(), &_destroyrat);
 
         bool result = false;
         try
         {
-            result = rat_lt(lhsRat, rhsRat, RATIONAL_PRECISION);
+            result = rat_lt(lhsSmartRat.get(), rhsSmartRat.get(), RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {
-            destroyrat(lhsRat);
-            destroyrat(rhsRat);
             throw(error);
         }
-
-        destroyrat(lhsRat);
-        destroyrat(rhsRat);
 
         return result;
     }
@@ -446,39 +402,34 @@ namespace CalcEngine
 
     wstring Rational::ToString(uint32_t radix, NUMOBJ_FMT fmt, int32_t precision) const
     {
-        PRAT rat = this->ToPRAT();
+        unique_ptr<RAT, decltype(&_destroyrat)> SmartRat(this->ToPRAT(), &_destroyrat);
+        auto PRAT = SmartRat.get();
         wstring result{};
 
         try
         {
-            result = RatToString(rat, fmt, radix, precision);
+            result = RatToString(PRAT, fmt, radix, precision);
         }
         catch (DWORD error)
         {
-            destroyrat(rat);
             throw(error);
         }
-
-        destroyrat(rat);
 
         return result;
     }
 
     uint64_t Rational::ToUInt64_t() const
     {
-        PRAT rat = this->ToPRAT();
+        unique_ptr<RAT, decltype(&_destroyrat)> smartRat(this->ToPRAT(), &_destroyrat);
         uint64_t result;
         try
         {
-            result = rattoUlonglong(rat, RATIONAL_BASE, RATIONAL_PRECISION);
+            result = rattoUlonglong(smartRat.get(), RATIONAL_BASE, RATIONAL_PRECISION);
         }
         catch (DWORD error)
         {
-            destroyrat(rat);
             throw(error);
         }
-
-        destroyrat(rat);
 
         return result;
     }
