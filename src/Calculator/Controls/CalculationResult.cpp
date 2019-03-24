@@ -207,7 +207,7 @@ void CalculationResult::UpdateTextState()
     {
         double widthDiff = abs(m_textBlock->ActualWidth - containerSize);
         double fontSizeChange = INCREMENTOFFSET;
-         
+
         if (widthDiff > WIDTHCUTOFF)
         {
             fontSizeChange = min<double>(max<double>(floor(WIDTHTOFONTSCALAR * widthDiff) - WIDTHTOFONTOFFSET, INCREMENTOFFSET), MAXFONTINCREMENT);
