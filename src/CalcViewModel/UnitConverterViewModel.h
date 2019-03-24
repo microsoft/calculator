@@ -221,8 +221,6 @@ namespace CalculatorApp
             Platform::String^ GetLocalizedConversionResultStringFormat(_In_ Platform::String^ fromValue, _In_ Platform::String^ fromUnit, _In_ Platform::String^ toValue, _In_ Platform::String^ toUnit);
             void UpdateValue1AutomationName();
             void UpdateValue2AutomationName();
-            Platform::String^ Serialize();
-            void Deserialize(Platform::String^ state);
 
             // Saving And Restoring User Preferences of Category and Associated-Units across Sessions.
             void SaveUserPreferences();

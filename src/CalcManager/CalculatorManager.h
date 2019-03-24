@@ -110,8 +110,6 @@ namespace CalculationManager
         void SetScientificMode();
         void SetProgrammerMode();
         void SendCommand(_In_ Command command);
-        std::vector<unsigned char> SerializeCommands();
-        void DeSerializeCommands(_In_ const std::vector<unsigned char>& serializedData);
         void SerializeMemory();
         std::vector<long> GetSerializedMemory();
         void DeSerializeMemory(const std::vector<long> &serializedMemory);

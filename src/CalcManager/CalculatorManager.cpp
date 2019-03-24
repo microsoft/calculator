@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -415,75 +415,6 @@ namespace CalculationManager
             itr += lengthMemoryItem;
         }
         this->SetMemorizedNumbersString();
-    }
-
-    /// <summary>
-    /// Return the commands saved since the expression has been cleared.
-    /// </summary>
-    vector<unsigned char> CalculatorManager::SerializeCommands()
-    {
-        return m_savedCommands;
-    }
-
-    /// <summary>
-    /// Replay the serialized commands
-    /// </summary>
-    /// <param name = "serializedData">Serialized commands</param>
-    void CalculatorManager::DeSerializeCommands(_In_ const vector<unsigned char>& serializedData)
-    {
-        m_savedCommands.clear();
-
-        for (auto commandItr = serializedData.begin(); commandItr != serializedData.end(); ++commandItr)
-        {
-            if (*commandItr >= MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizeNumber) &&
-                *commandItr <= MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizedNumberClearAll))
-            {
-                // MemoryCommands(which have values above 255) are pushed on m_savedCommands upon casting to unsigned char.
-                // SerializeCommands uses m_savedCommands, which is then used in DeSerializeCommands.
-                // Hence, a simple cast to MemoryCommand is not sufficient.
-                MemoryCommand memoryCommand = static_cast<MemoryCommand>(*commandItr + UCHAR_MAX + 1);
-                unsigned int indexOfMemory = 0;
-                switch (memoryCommand)
-                {
-                case MemoryCommand::MemorizeNumber:
-                    this->MemorizeNumber();
-                    break;
-                case MemoryCommand::MemorizedNumberLoad:
-                    if (commandItr + 1 == serializedData.end())
-                    {
-                        throw out_of_range("Expecting index of memory, data ended prematurely");
-                    }
-                    indexOfMemory = *(++commandItr);
-                    this->MemorizedNumberLoad(indexOfMemory);
-                    break;
-                case MemoryCommand::MemorizedNumberAdd:
-                    if (commandItr + 1 == serializedData.end())
-                    {
-                        throw out_of_range("Expecting index of memory, data ended prematurely");
-                    }
-                    indexOfMemory = *(++commandItr);
-                    this->MemorizedNumberAdd(indexOfMemory);
-                    break;
-                case MemoryCommand::MemorizedNumberSubtract:
-                    if (commandItr + 1 == serializedData.end())
-                    {
-                        throw out_of_range("Expecting index of memory, data ended prematurely");
-                    }
-                    indexOfMemory = *(++commandItr);
-                    this->MemorizedNumberSubtract(indexOfMemory);
-                    break;
-                case MemoryCommand::MemorizedNumberClearAll:
-                    this->MemorizedNumberClearAll();
-                    break;
-                default:
-                    break;
-                }
-            }
-            else
-            {
-                this->SendCommand(static_cast<Command>(MapCommandForDeSerialize(*commandItr)));
-            }
-        }
     }
 
     /// <summary>
