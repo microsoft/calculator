@@ -80,19 +80,6 @@ void Utils::RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Core
     }
 }
 
-// returns if the last character of a wstring is the target wchar_t
-bool Utils::IsLastCharacterTarget(_In_ wstring const &input, wchar_t target)
-{
-    return !input.empty() && input.back() == target;
-}
-
-// Returns wstring after removing characters like space, comma, and double quotes
-wstring Utils::RemoveUnwantedCharsFromWstring(wstring input)
-{
-    wchar_t unWantedChars[] = { L' ', L',', L'"', 8234, 8235, 8236, 8237 };
-    return RemoveUnwantedCharsFromWstring(input, unWantedChars, 6);
-}
-
 //return wstring after removing characters specified by unwantedChars array
 wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, _In_reads_(size) wchar_t* unwantedChars, unsigned int size)
 {

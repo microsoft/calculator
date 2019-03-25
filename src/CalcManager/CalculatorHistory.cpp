@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -7,7 +7,7 @@
 using namespace std;
 using namespace CalculationManager;
 
-CalculatorHistory::CalculatorHistory(CALCULATOR_MODE eMode, size_t maxSize) :
+CalculatorHistory::CalculatorHistory(size_t maxSize) :
     m_mode(eMode),
     m_maxHistorySize(maxSize)
 {}
