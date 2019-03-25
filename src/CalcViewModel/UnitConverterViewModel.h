@@ -144,14 +144,12 @@ namespace CalculatorApp
 
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Category ^> ^, Categories);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::ViewMode, Mode);
-            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Unit ^> ^, Units);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencySymbol1);
-            OBSERVABLE_PROPERTY_RW(Unit ^, Unit1);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, Value1);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencySymbol2);
-            OBSERVABLE_PROPERTY_RW(Unit ^, Unit2);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, Value2);
-            OBSERVABLE_NAMED_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<SupplementaryResult ^> ^, SupplementaryResults);
+            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Unit^>^, Units);
+            OBSERVABLE_PROPERTY_RW(Platform::String^, CurrencySymbol1);
+            OBSERVABLE_PROPERTY_RW(Platform::String^, Value1);
+            OBSERVABLE_PROPERTY_RW(Platform::String^, CurrencySymbol2);
+            OBSERVABLE_PROPERTY_RW(Platform::String^, Value2);
+            OBSERVABLE_NAMED_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<SupplementaryResult^>^, SupplementaryResults);
             OBSERVABLE_PROPERTY_RW(bool, Value1Active);
             OBSERVABLE_PROPERTY_RW(bool, Value2Active);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, Value1AutomationName);
@@ -217,7 +215,19 @@ namespace CalculatorApp
 
             void AnnounceConversionResult();
 
-            internal : void ResetView();
+            property Unit^ Unit1
+            {
+                Unit^ get();
+                void set(Unit^ value);
+            }
+            property Unit^ Unit2
+            {
+                Unit^ get();
+                void set(Unit^ value);
+            }
+
+        internal:
+            void ResetView();
             void PopulateData();
             NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
             void DisplayPasteError();
@@ -314,7 +324,6 @@ namespace CalculatorApp
             {
                 m_value1cp = m_value1cp == ConversionParameter::Source ? ConversionParameter::Target : ConversionParameter::Source;
             }
-
         private:
             bool m_isInputBlocked;
             Windows::System::Threading::ThreadPoolTimer ^ m_supplementaryResultsTimer;
@@ -327,6 +336,10 @@ namespace CalculatorApp
             std::wstring m_valueFromUnlocalized;
             std::wstring m_valueToUnlocalized;
             bool m_relocalizeStringOnSwitch;
+            // in order to save the User Preferences only if the Unit converter ViewModel is initialised for the first time
+            bool m_IsFirstTime;
+            Unit^ m_Unit1;
+            Unit^ m_Unit2;
 
             Platform::String ^ m_localizedValueFromFormat;
             Platform::String ^ m_localizedValueFromDecimalFormat;

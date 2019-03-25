@@ -782,13 +782,16 @@ void UnitConverterViewModel::RefreshSupplementaryResults()
 // values are not both zero.
 void UnitConverterViewModel::AnnounceConversionResult()
 {
-    if ((m_valueFromUnlocalized != m_lastAnnouncedFrom || m_valueToUnlocalized != m_lastAnnouncedTo) && Unit1 != nullptr && Unit2 != nullptr)
+    if ((m_valueFromUnlocalized != m_lastAnnouncedFrom
+        || m_valueToUnlocalized != m_lastAnnouncedTo)
+        && m_Unit1 != nullptr
+        && m_Unit2 != nullptr)
     {
         m_lastAnnouncedFrom = m_valueFromUnlocalized;
         m_lastAnnouncedTo = m_valueToUnlocalized;
 
-        Unit ^ unitFrom = Value1Active ? Unit1 : Unit2;
-        Unit ^ unitTo = (unitFrom == Unit1) ? Unit2 : Unit1;
+        Unit^ unitFrom = Value1Active ? m_Unit1 : m_Unit2;
+        Unit^ unitTo = (unitFrom == m_Unit1) ? m_Unit2 : m_Unit1;
         m_lastAnnouncedConversionResult = GetLocalizedConversionResultStringFormat(ValueFrom, unitFrom->Name, ValueTo, unitTo->Name);
 
         Announcement = CalculatorAnnouncement::GetDisplayUpdatedAnnouncement(m_lastAnnouncedConversionResult);
@@ -959,17 +962,17 @@ String
 
 void UnitConverterViewModel::UpdateValue1AutomationName()
 {
-    if (Unit1)
+    if (m_Unit1)
     {
-        Value1AutomationName = GetLocalizedAutomationName(Value1, Unit1->AccessibleName, m_localizedValueFromFormat);
+        Value1AutomationName = GetLocalizedAutomationName(Value1, m_Unit1->AccessibleName, m_localizedValueFromFormat);
     }
 }
 
 void UnitConverterViewModel::UpdateValue2AutomationName()
 {
-    if (Unit2)
+    if (m_Unit2)
     {
-        Value2AutomationName = GetLocalizedAutomationName(Value2, Unit2->AccessibleName, m_localizedValueToFormat);
+        Value2AutomationName = GetLocalizedAutomationName(Value2, m_Unit2->AccessibleName, m_localizedValueToFormat);
     }
 }
 
@@ -989,4 +992,53 @@ String ^ SupplementaryResult::GetLocalizedAutomationName()
 {
     auto format = AppResourceProvider::GetInstance()->GetResourceString("SupplementaryUnit_AutomationName");
     return LocalizationStringUtil::GetLocalizedString(format, this->Value, this->Unit->Name);
+}
+
+Unit^ UnitConverterViewModel::Unit1::get()
+{
+    return m_Unit1;
+}
+
+void UnitConverterViewModel::Unit1::set(Unit^ value)
+{
+    if (m_Unit1 == value)
+        return;
+
+    if (value == m_Unit2 && value != nullptr && m_Unit1 != nullptr)
+    {
+        auto formerValue = m_Unit1;
+        m_Unit1 = value;
+        //Be sure m_Unit1 is set before setting Unit2
+        Unit2 = formerValue;
+    }
+    else
+    {
+        m_Unit1 = value;
+    }
+    RaisePropertyChanged(Unit1PropertyName);
+}
+
+
+Unit^ UnitConverterViewModel::Unit2::get()
+{
+    return m_Unit2;
+}
+
+void UnitConverterViewModel::Unit2::set(Unit^ value)
+{
+    if (m_Unit2 == value)
+        return;
+
+    if (value == m_Unit1 && value != nullptr && m_Unit2 != nullptr)
+    {
+        auto formerValue = m_Unit2;
+        m_Unit2 = value;
+        //Be sure m_Unit2 is set before setting Unit1
+        Unit1 = formerValue;
+    }
+    else
+    {
+        m_Unit2 = value;
+    }
+    RaisePropertyChanged(Unit2PropertyName);
 }
