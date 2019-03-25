@@ -515,6 +515,7 @@
                         <Setter Target="M5.MaxWidth" Value="80"/>
                         <Setter Target="memButton.(Grid.Column)" Value="5"/>
                         <Setter Target="MemoryButton.(Grid.Column)" Value="6"/>
+                        <Setter Target="HistoryButton.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                     <Storyboard Completed="OnStoryboardCompleted"/>
                 </VisualState>

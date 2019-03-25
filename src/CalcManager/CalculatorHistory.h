@@ -43,7 +43,6 @@ namespace CalculationManager
 
     private:
         std::vector<std::shared_ptr<HISTORYITEM>> m_historyItems;
-        CALCULATOR_MODE m_mode;
         const size_t m_maxHistorySize;
     };
 }

@@ -95,7 +95,7 @@ void SupplementaryResults::OnLoaded(Object^ sender, RoutedEventArgs^ e)
 
 void SupplementaryResults::OnConverterPropertyChanged(Object^ /*sender*/, PropertyChangedEventArgs^ e)
 {
-    if (e->PropertyName == UnitConverterViewModelProperties::SupplementaryResults)
+    if (e->PropertyName == UnitConverterViewModel::SupplementaryResultsPropertyName)
     {
         RefreshData();
     }

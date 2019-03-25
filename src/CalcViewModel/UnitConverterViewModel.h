@@ -138,25 +138,6 @@ namespace CalculatorApp
             return ref new Activatable<TActivatable>(activatable);
         }
 
-        namespace UnitConverterViewModelProperties
-        {
-            extern Platform::StringReference CurrentCategory;
-            extern Platform::StringReference Unit1;
-            extern Platform::StringReference Unit2;
-            extern Platform::StringReference Value1Active;
-            extern Platform::StringReference Value2Active;
-            extern Platform::StringReference SupplementaryVisibility;
-            extern Platform::StringReference SupplementaryResults;
-            extern Platform::StringReference CurrencySymbol1;
-            extern Platform::StringReference CurrencySymbol2;
-            extern Platform::StringReference CurrencySymbolVisibility;
-            extern Platform::StringReference CurrencyRatioEquality;
-            extern Platform::StringReference NetworkBehavior;
-            extern Platform::StringReference CurrencyDataLoadFailed;
-            extern Platform::StringReference CurrencyDataIsWeekOld;
-            extern Platform::StringReference IsCurrencyLoadingVisible;
-        }
-
         [Windows::UI::Xaml::Data::Bindable]
         public ref class UnitConverterViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
@@ -176,7 +157,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(Platform::String^, CurrencySymbol2);
             OBSERVABLE_PROPERTY_RW(Unit^, Unit2);
             OBSERVABLE_PROPERTY_RW(Platform::String^, Value2);
-            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<SupplementaryResult^>^, SupplementaryResults);
+            OBSERVABLE_NAMED_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<SupplementaryResult^>^, SupplementaryResults);
             OBSERVABLE_PROPERTY_RW(bool, Value1Active);
             OBSERVABLE_PROPERTY_RW(bool, Value2Active);
             OBSERVABLE_PROPERTY_RW(Platform::String^, Value1AutomationName);
@@ -187,14 +168,14 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, IsDecimalEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsDropDownOpen);
             OBSERVABLE_PROPERTY_RW(bool, IsDropDownEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsCurrencyLoadingVisible);
+            OBSERVABLE_NAMED_PROPERTY_RW(bool, IsCurrencyLoadingVisible);
             OBSERVABLE_PROPERTY_RW(bool, IsCurrencyCurrentCategory);
             OBSERVABLE_PROPERTY_RW(Platform::String^, CurrencyRatioEquality);
             OBSERVABLE_PROPERTY_RW(Platform::String^, CurrencyRatioEqualityAutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String^, CurrencyTimestamp);
-            OBSERVABLE_PROPERTY_RW(CalculatorApp::NetworkAccessBehavior, NetworkBehavior);
-            OBSERVABLE_PROPERTY_RW(bool, CurrencyDataLoadFailed);
-            OBSERVABLE_PROPERTY_RW(bool, CurrencyDataIsWeekOld);
+            OBSERVABLE_NAMED_PROPERTY_RW(CalculatorApp::NetworkAccessBehavior, NetworkBehavior);
+            OBSERVABLE_NAMED_PROPERTY_RW(bool, CurrencyDataLoadFailed);
+            OBSERVABLE_NAMED_PROPERTY_RW(bool, CurrencyDataIsWeekOld);
 
             property Windows::UI::Xaml::Visibility SupplementaryVisibility
             {

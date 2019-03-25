@@ -80,7 +80,13 @@ void Utils::RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Core
     }
 }
 
-//return wstring after removing characters specified by unwantedChars array
+// Returns if the last character of a wstring is the target wchar_t
+bool Utils::IsLastCharacterTarget(_In_ wstring const &input, _In_ wchar_t target)
+{
+    return !input.empty() && input.back() == target;
+}
+
+// Return wstring after removing characters specified by unwantedChars array
 wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, _In_reads_(size) wchar_t* unwantedChars, unsigned int size)
 {
     for (unsigned int i = 0; i < size; ++i)

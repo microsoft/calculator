@@ -210,7 +210,7 @@ void CalculationResult::UpdateTextState()
 
         if (widthDiff > WIDTHCUTOFF)
         {
-            fontSizeChange = min(max(floor(WIDTHTOFONTSCALAR * widthDiff) - WIDTHTOFONTOFFSET, INCREMENTOFFSET), MAXFONTINCREMENT);
+            fontSizeChange = min<double>(max<double>(floor(WIDTHTOFONTSCALAR * widthDiff) - WIDTHTOFONTOFFSET, INCREMENTOFFSET), MAXFONTINCREMENT);
         }
         if (m_textBlock->ActualWidth < containerSize && abs(m_textBlock->FontSize - m_startingFontSize) > FONTTOLERANCE && !m_haveCalculatedMax)
         {

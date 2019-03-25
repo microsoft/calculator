@@ -119,7 +119,7 @@
   </resheader>
   <data name="AppName" xml:space="preserve">
     <value>Manahajar lissafi</value>
-    <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"}</comment>
+    <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the title of the official application when published through Windows Store.</comment>
   </data>
   <data name="AppStoreName" xml:space="preserve">
     <value>Manahajar lissafi Windows</value>
@@ -127,7 +127,7 @@
   </data>
   <data name="AppDescription" xml:space="preserve">
     <value>Manahajar lissafi</value>
-    <comment>{@Appx_Description@}</comment>
+    <comment>{@Appx_Description@} This description is used for the official application when published through Windows Store.</comment>
   </data>
   <data name="copyMenuItem" xml:space="preserve">
     <value>Kwafa</value>
@@ -421,10 +421,6 @@
     <value>Shingen alƙaluma na kilisawa bit</value>
     <comment>This is the tool tip automation name for the bitFlip button.</comment>
   </data>
-  <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Cikakken shingen alƙaluma</value>
-    <comment>This is the tool tip automation name for the numberPad button.</comment>
-  </data>
   <data name="HistoryLabel.Text" xml:space="preserve">
     <value>Tarihi</value>
     <comment>The text that shows as the header for the history list</comment>
@@ -604,10 +600,6 @@
   <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Shingen alƙaluma na kilisawa bit</value>
     <comment>Screen reader prompt for the Calculator bitFlip button</comment>
-  </data>
-  <data name="fullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Cikakken shingen alƙaluma</value>
-    <comment>Screen reader prompt for the Calculator numberPad button</comment>
   </data>
   <data name="decimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Mai Rabewar Gomiya</value>
@@ -2131,21 +2123,5 @@
   <data name="Format_ButtonPressAuditoryFeedback" xml:space="preserve">
     <value>%1 %2</value>
     <comment>{Locked='%1','%2'} Formatting string for a Narrator announcement when user presses a button with auditory feedback. "%1" is the display value and "%2" is the button press feedback. Example, user presses "plus" and hears "Display is 7 plus".</comment>
-  </data>
-  <data name="minusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>Deɓewa</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
-  </data>
-  <data name="plusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>Tara da</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
-  </data>
-  <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>Matsawa ta hagu</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
-  </data>
-  <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>Matsawa ta dama</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
 </root>

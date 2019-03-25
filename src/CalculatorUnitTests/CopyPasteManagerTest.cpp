@@ -193,6 +193,33 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"______1234___"), L"1234");
         };
 
+        // Using unicode literals here until the encoding issues get figured out
+        TEST_METHOD(ValidatePrefixCurrencySymbols)
+        {
+            // ¥5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u00A5\u0035"), L"5");
+            // ¤5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u00A4\u0035"), L"5");
+            // ₵5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20B5\u0035"), L"5");
+            // $5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u0024\u0035"), L"5");
+            // ₡5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20A1\u0035"), L"5");
+            // ₩5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20A9\u0035"), L"5");
+            // ₪5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20AA\u0035"), L"5");
+            // ₦5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20A6\u0035"), L"5");
+            // ₹5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20B9\u0035"), L"5");
+            // £5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u00A3\u0035"), L"5");
+            // €5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20AC\u0035"), L"5");
+        };
+
         TEST_METHOD(ValidateTryOperandToULL)
         {
             unsigned long long int result = 0;

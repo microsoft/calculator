@@ -23,8 +23,8 @@ namespace CalculatorApp
             // Input Properties
             OBSERVABLE_PROPERTY_RW(bool, IsDateDiffMode);
             OBSERVABLE_PROPERTY_RW(bool, IsAddMode);
-            OBSERVABLE_PROPERTY_RW(bool, IsDiffInDays);     // If diff is only in days or the dates are the same,
-                                                            // then show only one result and avoid redundancy
+            OBSERVABLE_PROPERTY_R(bool, IsDiffInDays);     // If diff is only in days or the dates are the same,
+                                                           // then show only one result and avoid redundancy
 
             OBSERVABLE_PROPERTY_RW(int, DaysOffset);
             OBSERVABLE_PROPERTY_RW(int, MonthsOffset);
@@ -82,11 +82,11 @@ namespace CalculatorApp
             }
 
             // Output Properties
-            OBSERVABLE_PROPERTY_RW(Platform::String^, StrDateDiffResult);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, StrDateDiffResultAutomationName);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, StrDateDiffResultInDays);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, StrDateResult);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, StrDateResultAutomationName);
+            OBSERVABLE_PROPERTY_R(Platform::String^, StrDateDiffResult);
+            OBSERVABLE_PROPERTY_R(Platform::String^, StrDateDiffResultAutomationName);
+            OBSERVABLE_PROPERTY_R(Platform::String^, StrDateDiffResultInDays);
+            OBSERVABLE_PROPERTY_R(Platform::String^, StrDateResult);
+            OBSERVABLE_PROPERTY_R(Platform::String^, StrDateResultAutomationName);
 
             COMMAND_FOR_METHOD(CopyCommand, DateCalculatorViewModel::OnCopyCommand);
 
@@ -103,8 +103,6 @@ namespace CalculatorApp
             Platform::String^ GetDateDiffStringInDays() const;
             Platform::String^ GetLocalizedNumberString(int value) const;
             static Windows::Foundation::DateTime ClipTime(Windows::Foundation::DateTime dateTime);
-
-            static void CheckClipTimeSameDay(Windows::Globalization::Calendar^ reference);
 
             property bool IsOutOfBound
             {
@@ -146,7 +144,7 @@ namespace CalculatorApp
             CalculatorApp::Common::DateCalculation::DateUnit m_daysOutputFormat;
             CalculatorApp::Common::DateCalculation::DateUnit m_allDateUnitsOutputFormat;
             Windows::Globalization::DateTimeFormatting::DateTimeFormatter^ m_dateTimeFormatter;
-            Platform::String^ m_listSeparator;
+            std::wstring m_listSeparator;
         };
     }
 }

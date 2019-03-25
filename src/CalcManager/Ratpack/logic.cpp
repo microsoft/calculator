@@ -16,7 +16,7 @@
 #include "pch.h"
 #include "ratpak.h"
 
-
+using namespace std;
 
 void lshrat( _Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision)
 

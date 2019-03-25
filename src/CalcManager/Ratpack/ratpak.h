@@ -225,7 +225,7 @@ memmove( (x)->pp->mant, &((x)->pp->mant[trim]), sizeof(MANTTYPE)*((x)->pp->cdigi
                 (x)->pp->cdigit -= trim; \
                 (x)->pp->exp += trim; \
                 } \
-            trim = min((x)->pp->exp,(x)->pq->exp);\
+            trim = std::min((x)->pp->exp,(x)->pq->exp);\
             (x)->pp->exp -= trim;\
             (x)->pq->exp -= trim;\
             }

@@ -230,19 +230,19 @@
                BasedOn="{StaticResource CurrencySymbolBaseStyle}"
                TargetType="TextBlock">
             <Setter Property="FontSize" Value="32"/>
-            <Setter Property="Margin" Value="12,0,0,17"/>
+            <Setter Property="Margin" Value="0,0,0,17"/>
         </Style>
         <Style x:Key="CurrencySymbolMediumStyle"
                BasedOn="{StaticResource CurrencySymbolBaseStyle}"
                TargetType="TextBlock">
             <Setter Property="FontSize" Value="24"/>
-            <Setter Property="Margin" Value="12,0,0,8"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
         </Style>
         <Style x:Key="CurrencySymbolSmallStyle"
                BasedOn="{StaticResource CurrencySymbolBaseStyle}"
                TargetType="TextBlock">
             <Setter Property="FontSize" Value="17"/>
-            <Setter Property="Margin" Value="12,0,0,7"/>
+            <Setter Property="Margin" Value="0,0,0,7"/>
         </Style>
 
         <Style x:Key="ValueContainerStyle" TargetType="Grid">
@@ -455,6 +455,17 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+            <VisualStateGroup x:Name="CurrencySymbolStates">
+                <VisualState x:Name="CurrencySymbolLeftState"/>
+                <VisualState x:Name="CurrencySymbolRightState">
+                    <VisualState.Setters>
+                        <Setter Target="Value1Container.Padding" Value="0,0,12,0"/>
+                        <Setter Target="Value2Container.Padding" Value="0,0,12,0"/>
+                        <Setter Target="CurrencySymbol1Block.(Grid.Column)" Value="2"/>
+                        <Setter Target="CurrencySymbol2Block.(Grid.Column)" Value="2"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
         <Grid x:Name="CurrencyLoadingGrid"
@@ -481,12 +492,15 @@
         <Grid x:Name="Value1Container"
               Grid.Row="1"
               Grid.Column="1"
+              Padding="12,0,0,0"
+              HorizontalAlignment="Left"
               Style="{ThemeResource ValueContainerStyle}"
               FlowDirection="{x:Bind LayoutDirection}"
               Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="CurrencySymbol1Block"
                        Grid.Column="0"
@@ -530,12 +544,15 @@
         <Grid x:Name="Value2Container"
               Grid.Row="3"
               Grid.Column="1"
+              Padding="12,0,0,0"
+              HorizontalAlignment="Left"
               Style="{ThemeResource ValueContainerStyle}"
               FlowDirection="{x:Bind LayoutDirection}"
               Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="CurrencySymbol2Block"
                        Grid.Column="0"
@@ -606,10 +623,10 @@
                                 Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
                         <HyperlinkButton x:Name="CurrencyRefreshBlock"
-                               Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}"
-                               Click="CurrencyRefreshButton_Click"
-                               x:Uid="RefreshButtonText"/>
-                        <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Margin="0, 7, 0, 0">
+                                         x:Uid="RefreshButtonText"
+                                         Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}"
+                                         Click="CurrencyRefreshButton_Click"/>
+                        <TextBlock Margin="0,7,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
                             <Run x:Name="Spacing" Text="&#x200A;"/>
                             <Run x:Name="CurrencySecondaryStatus"
                                  FontWeight="SemiBold"
