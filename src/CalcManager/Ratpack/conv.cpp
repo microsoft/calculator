@@ -1271,7 +1271,7 @@ PNUMBER RatToNumber(_In_ PRAT prat, uint32_t radix, int32_t precision)
     // Convert p and q of rational form from internal base to requested base.
     // Scale by largest power of BASEX possible.
     long scaleby = min(temprat->pp->exp, temprat->pq->exp);
-    scaleby = max(scaleby, 0);
+    scaleby = max(scaleby, 0l);
 
     temprat->pp->exp -= scaleby;
     temprat->pq->exp -= scaleby;
