@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma once
+
 // CalcErr.h
 //
 // Defines the error codes thrown by ratpak and caught by Calculator
