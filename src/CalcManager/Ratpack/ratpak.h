@@ -231,7 +231,7 @@ memmove( (x)->pp->mant, &((x)->pp->mant[trim]), sizeof(MANTTYPE)*((x)->pp->cdigi
                 (x)->pp->cdigit -= trim; \
                 (x)->pp->exp += trim; \
                 } \
-            trim = min((x)->pp->exp,(x)->pq->exp);\
+            trim = std::min((x)->pp->exp,(x)->pq->exp);\
             (x)->pp->exp -= trim;\
             (x)->pq->exp -= trim;\
             }
@@ -417,7 +417,7 @@ extern void tanrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision);
 // angle type
 extern void tananglerat( _Inout_ PRAT *px, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
 
-extern void _dupnum(_In_ PNUMBER dest, _In_ PNUMBER src);
+extern void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER * const src);
 
 extern void _destroynum( _In_ PNUMBER pnum );
 extern void _destroyrat( _In_ PRAT prat );
@@ -430,7 +430,7 @@ extern void divrat( _Inout_ PRAT *pa, _In_ PRAT b, int32_t precision);
 extern void fracrat( _Inout_ PRAT *pa , uint32_t radix, int32_t precision);
 extern void factrat( _Inout_ PRAT *pa, uint32_t radix, int32_t precision);
 extern void modrat( _Inout_ PRAT *pa, _In_ PRAT b );
-extern void gcdrat( _Inout_ PRAT *pa, uint32_t radix, int32_t precision);
+extern void gcdrat( _Inout_ PRAT *pa, int32_t precision);
 extern void intrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision);
 extern void mulnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix);
 extern void mulnumx( _Inout_ PNUMBER *pa, _In_ PNUMBER b );

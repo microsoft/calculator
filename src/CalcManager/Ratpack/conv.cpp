@@ -61,7 +61,7 @@ void* zmalloc(size_t a)
 //
 //-----------------------------------------------------------------------------
 
-void _dupnum(_In_ PNUMBER dest, _In_ PNUMBER src)
+void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER * const src)
 {
     memcpy(dest, src, (int)(sizeof(NUMBER) + ((src)->cdigit)*(sizeof(MANTTYPE))));
 }
@@ -566,7 +566,7 @@ wchar_t NormalizeCharDigit(wchar_t c, uint32_t radix)
     // is in the range where this is not ambiguous.
     if (size_t{ radix } >= DIGITS.find(L'A') && size_t { radix } <= DIGITS.find(L'Z'))
     {
-        return toupper(c);
+        return towupper(c);
     }
 
     return c;
@@ -612,6 +612,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
                 break;
             }
             // Drop through in the 'e'-as-a-digit case
+            [[fallthrough]];
         default:
             state = machine[state][NZ];
             break;
@@ -646,7 +647,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
             break;
         case LD:
             pnumret->exp++;
-            // Fall through
+            [[fallthrough]];
         case DD:
             {
                 curChar = NormalizeCharDigit(curChar, radix);
@@ -801,7 +802,7 @@ PNUMBER longtonum( long inlong, uint32_t radix)
 //    RETURN: number
 //
 //    DESCRIPTION: Returns a number representation in the
-//    base   requested of the unsigned long value passed in. Being unsigned number it has no 
+//    base   requested of the unsigned long value passed in. Being unsigned number it has no
 //    negative number and takes the full range of unsigned number
 //
 //-----------------------------------------------------------------------------
@@ -817,7 +818,7 @@ PNUMBER Ulongtonum(unsigned long inlong, uint32_t radix)
     pnumret->cdigit = 0;
     pnumret->exp = 0;
     pnumret->sign = 1;
-    
+
     do    {
         *pmant++ = (MANTTYPE)(inlong % radix);
         inlong /= radix;
@@ -1057,10 +1058,6 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, int autoformat, uint32
         length = precision;
     }
 
-    // 2 for signs, 1 for 'e'(or leading zero), 1 for dp, 1 for null and
-    // 10 for maximum exponent size.
-    int cchNum = (precision + 16);
-
     // If there is a chance a round has to occur, round.
     // - if number is zero no rounding
     // - if number of digits is less than the maximum output no rounding
@@ -1274,7 +1271,7 @@ PNUMBER RatToNumber(_In_ PRAT prat, uint32_t radix, int32_t precision)
     // Convert p and q of rational form from internal base to requested base.
     // Scale by largest power of BASEX possible.
     long scaleby = min(temprat->pp->exp, temprat->pq->exp);
-    scaleby = max(scaleby, 0);
+    scaleby = max(scaleby, 0l);
 
     temprat->pp->exp -= scaleby;
     temprat->pq->exp -= scaleby;

@@ -64,7 +64,7 @@ void HistoryViewModel::ReloadHistory(_In_ ViewMode currentMode)
     if (historyListModel.size() > 0)
     {
         for (auto ritr = historyListModel.rbegin(); ritr != historyListModel.rend(); ++ritr)
-        { 
+        {
             wstring expression = (*ritr)->historyItemVector.expression;
             wstring result = (*ritr)->historyItemVector.result;
             localizer.LocalizeDisplayValue(&expression);
@@ -291,7 +291,6 @@ void HistoryViewModel::SaveHistory()
 // this serializes a history item into a base64 encoded string
 Platform::String^ HistoryViewModel::SerializeHistoryItem(_In_ std::shared_ptr<CalculationManager::HISTORYITEM> const &item)
 {
-    HRESULT hr = S_OK;
     DataWriter^ writer = ref new DataWriter();
     auto expr = item->historyItemVector.expression;
     auto result = item->historyItemVector.result;

@@ -354,7 +354,7 @@ namespace CalculatorUnitTests
                 { NumbersAndOperatorsEnum::HexButton, L"0", L"" },
                 { NumbersAndOperatorsEnum::None, L"", L"" }
             };
-            
+
             ValidateViewModelByCommands(programmerViewModel1, programmerModeInitializeItems1, false);
 
             // Bit Length: Word & Radix Type: Oct
@@ -369,7 +369,7 @@ namespace CalculatorUnitTests
             TESTITEM programmerModeTestItems1[] = {
                 { NumbersAndOperatorsEnum::F, L"F", L"" },
                 { NumbersAndOperatorsEnum::F, L"FF", L"" },
-                // One more F shouldn't have any effect, testing for precision 
+                // One more F shouldn't have any effect, testing for precision
                 { NumbersAndOperatorsEnum::F, L"FF", L"" },
                 { NumbersAndOperatorsEnum::None, L"", L"" }
             };
@@ -663,7 +663,7 @@ namespace CalculatorUnitTests
             // needs to be updated with correct expected value and viewmodel needs
             // to be updated to calculate correct value.
 
-            //DateCalculatorViewModel^ viewModels[4];
+            // DateCalculatorViewModel^ viewModels[4];
 
             //// Initialize the view models
             //for (int i = 0; i < 4; i++)
@@ -776,7 +776,7 @@ namespace CalculatorUnitTests
             VERIFY_IS_TRUE(CAT1 == viewModels[0]->CurrentCategory->GetModelCategory());
             VERIFY_IS_TRUE(CAT2 == viewModels[1]->CurrentCategory->GetModelCategory());
             VERIFY_IS_TRUE(CAT3 == viewModels[2]->CurrentCategory->GetModelCategory());
-           
+
             VERIFY_IS_TRUE(UNIT1 == viewModels[0]->Unit1->GetModelUnit());
             VERIFY_IS_TRUE(UNIT2 == viewModels[0]->Unit2->GetModelUnit());
 
@@ -925,7 +925,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(GetStringValue(standardViewModel->DisplayValue), StringReference(L"1"));
 
             // Again perform calculations on Standard Calc instance and validate that the Converter remains unaffected
-            
+
             // Standard Mode: Expression 1+2=
             TESTITEM standardModeTestItems2[] = {
                 { NumbersAndOperatorsEnum::One, L"1", L"" },
@@ -978,7 +978,7 @@ namespace CalculatorUnitTests
             };
             ValidateViewModelByCommands(viewModels[0], standardModeTestItems, false /*doReset*/);
 
-            //Launch a new instance in standard mode
+            // Launch a new instance in standard mode
             viewModels[2] = ref new StandardCalculatorViewModel();
             ChangeMode(viewModels[2], 0);
 
@@ -994,7 +994,7 @@ namespace CalculatorUnitTests
             };
             ValidateViewModelByCommands(viewModels[2], standardModeTestItemsNew, false /*doReset*/);
 
-            //Radix in the programmer mode launched should still be hex.
+            // Radix in the programmer mode launched should still be hex.
             // A + 1 = B
             TESTITEM programmerModeTestItemsNew[] = {
                 { NumbersAndOperatorsEnum::A, L"A", L"" },

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "Header Files/CalcEngine.h"
+#include "Header Files/CalcUtils.h"
 
 bool IsOpInRange(WPARAM op, uint32_t x, uint32_t y)
 {

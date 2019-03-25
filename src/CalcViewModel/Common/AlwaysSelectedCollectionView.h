@@ -3,9 +3,9 @@
 
 #pragma once
 
-namespace CalculatorApp { namespace Common 
+namespace CalculatorApp { namespace Common
 {
-    ref class AlwaysSelectedCollectionView sealed: 
+    ref class AlwaysSelectedCollectionView sealed:
         public Windows::UI::Xaml::DependencyObject,
         public Windows::UI::Xaml::Data::ICollectionView
     {
@@ -14,11 +14,11 @@ namespace CalculatorApp { namespace Common
             m_currentPosition(-1)
         {
             m_source = source;
-            
+
             Windows::UI::Xaml::Interop::IBindableObservableVector^ observable = dynamic_cast<Windows::UI::Xaml::Interop::IBindableObservableVector^>(source);
             if (observable)
             {
-                observable->VectorChanged += 
+                observable->VectorChanged +=
                     ref new Windows::UI::Xaml::Interop::BindableVectorChangedEventHandler(this, &AlwaysSelectedCollectionView::OnSourceBindableVectorChanged);
             }
         }
@@ -53,7 +53,7 @@ namespace CalculatorApp { namespace Common
                 return ref new Platform::Collections::Vector<Platform::Object^>();
             }
         }
-        property bool HasMoreItems 
+        property bool HasMoreItems
         {
             virtual bool get() = Windows::UI::Xaml::Data::ICollectionView::HasMoreItems::get
             {
@@ -77,7 +77,7 @@ namespace CalculatorApp { namespace Common
             }
 
             // The item is not in the collection
-            // We're going to schedule a call back later so we 
+            // We're going to schedule a call back later so we
             // restore the selection to the way we wanted it to begin with
             if (m_currentPosition >= 0 && m_currentPosition < static_cast<int>(m_source->Size))
             {
@@ -161,7 +161,7 @@ namespace CalculatorApp { namespace Common
                 m_currentChanging -= token;
             }
         }
-        
+
         // IVector<Object^>
           // Not implemented methods
         virtual void Append(Platform::Object^ /*item*/) = Windows::Foundation::Collections::IVector<Platform::Object^>::Append
@@ -219,7 +219,7 @@ namespace CalculatorApp { namespace Common
                 return m_source->Size;
             }
         }
-    
+
         // IObservableVector<Object^>
         event Windows::Foundation::Collections::VectorChangedEventHandler<Platform::Object^>^ VectorChanged
         {
@@ -262,9 +262,9 @@ namespace CalculatorApp { namespace Common
 
     private:
         virtual Platform::Object^ Convert(
-            Platform::Object^ value, 
-            Windows::UI::Xaml::Interop::TypeName /*targetType*/, 
-            Platform::Object^ /*parameter*/, 
+            Platform::Object^ value,
+            Windows::UI::Xaml::Interop::TypeName /*targetType*/,
+            Platform::Object^ /*parameter*/,
             Platform::String^ /*language*/) = Windows::UI::Xaml::Data::IValueConverter::Convert
         {
             auto result = dynamic_cast<Windows::UI::Xaml::Interop::IBindableVector^>(value);
@@ -276,9 +276,9 @@ namespace CalculatorApp { namespace Common
         }
 
         virtual Platform::Object^ ConvertBack(
-            Platform::Object^ /*value*/, 
-            Windows::UI::Xaml::Interop::TypeName /*targetType*/, 
-            Platform::Object^ /*parameter*/, 
+            Platform::Object^ /*value*/,
+            Windows::UI::Xaml::Interop::TypeName /*targetType*/,
+            Platform::Object^ /*parameter*/,
             Platform::String^ /*language*/) = Windows::UI::Xaml::Data::IValueConverter::ConvertBack
         {
             return Windows::UI::Xaml::DependencyProperty::UnsetValue;

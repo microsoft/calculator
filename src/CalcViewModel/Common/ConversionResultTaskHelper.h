@@ -12,7 +12,7 @@ namespace CalculatorApp
         public:
             ConversionResultTaskHelper(unsigned int delay, const std::function<void()> functionToRun);
             ~ConversionResultTaskHelper();
-            
+
         private:
             concurrency::task<void> CompleteAfter(unsigned int timeout);
 

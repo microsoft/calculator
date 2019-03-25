@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -20,6 +20,8 @@ namespace CalculatorApp::Common::Automation
         StringReference CategoryNameChanged(L"CategoryNameChanged");
         StringReference UpdateCurrencyRates(L"UpdateCurrencyRates");
         StringReference DisplayCopied(L"DisplayCopied");
+        StringReference OpenParenthesisCountChanged(L"OpenParenthesisCountChanged");
+        StringReference NoParenthesisAdded(L"NoParenthesisAdded");
     }
 }
 
@@ -139,6 +141,24 @@ NarratorAnnouncement^ CalculatorAnnouncement::GetDisplayCopiedAnnouncement(Strin
     return ref new NarratorAnnouncement(
         announcement,
         CalculatorActivityIds::DisplayCopied,
+        AutomationNotificationKind::ActionCompleted,
+        AutomationNotificationProcessing::ImportantMostRecent);
+}
+
+NarratorAnnouncement^ CalculatorAnnouncement::GetOpenParenthesisCountChangedAnnouncement(String^ announcement)
+{
+    return ref new NarratorAnnouncement(
+        announcement,
+        CalculatorActivityIds::OpenParenthesisCountChanged,
+        AutomationNotificationKind::ActionCompleted,
+        AutomationNotificationProcessing::ImportantMostRecent);
+}
+
+NarratorAnnouncement^ CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(String^ announcement)
+{
+    return ref new NarratorAnnouncement(
+        announcement,
+        CalculatorActivityIds::NoParenthesisAdded,
         AutomationNotificationKind::ActionCompleted,
         AutomationNotificationProcessing::ImportantMostRecent);
 }

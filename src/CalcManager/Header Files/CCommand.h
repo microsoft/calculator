@@ -45,7 +45,7 @@
 
 
 // Key IDs:
-// These id's must be consecutive from IDC_FIRSTCONTROL to IDC_LASTCONTROL. 
+// These id's must be consecutive from IDC_FIRSTCONTROL to IDC_LASTCONTROL.
 // The actual values don't matter but the order and sequence are very important.
 // Also, the order of the controls must match the order of the control names
 // in the string table.
@@ -97,7 +97,7 @@
 #define IDC_FAC         113
 #define IDC_REC         114
 #define IDC_DMS         115
-#define IDC_CUBEROOT 116  //x ^ 1/3
+#define IDC_CUBEROOT 116  // x ^ 1/3
 #define IDC_POW10 117  // 10 ^ x
 #define IDC_PERCENT     118
 #define IDC_UNARYLAST IDC_PERCENT

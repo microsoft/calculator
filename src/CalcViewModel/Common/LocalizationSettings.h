@@ -4,6 +4,8 @@
 #pragma once
 #include "LocalizationService.h"
 
+#include <iterator>
+
 namespace CalculatorApp
 {
     namespace Common
@@ -26,8 +28,9 @@ namespace CalculatorApp
                     m_digitSymbols.at(i) = formatter->FormatUInt(i)->Data()[0];
                 }
 
+                wchar_t resolvedName[LOCALE_NAME_MAX_LENGTH];
                 result = ResolveLocaleName(formatter->ResolvedLanguage->Data(),
-                    m_resolvedName,
+                    resolvedName,
                     LOCALE_NAME_MAX_LENGTH);
                 if (result == 0)
                 {
@@ -35,31 +38,32 @@ namespace CalculatorApp
                 }
                 else
                 {
+                    m_resolvedName = resolvedName;
                     wchar_t decimalString[LocaleSettingBufferSize] = L"";
-                    result = GetLocaleInfoEx(m_resolvedName,
+                    result = GetLocaleInfoEx(m_resolvedName.c_str(),
                         LOCALE_SDECIMAL,
                         decimalString,
-                        ARRAYSIZE(decimalString));
+                        static_cast<int>(std::size(decimalString)));
                     if (result == 0)
                     {
                         throw std::runtime_error("Unexpected error while getting locale info");
                     }
 
                     wchar_t groupingSymbolString[LocaleSettingBufferSize] = L"";
-                    result = GetLocaleInfoEx(m_resolvedName,
+                    result = GetLocaleInfoEx(m_resolvedName.c_str(),
                         LOCALE_STHOUSAND,
                         groupingSymbolString,
-                        ARRAYSIZE(groupingSymbolString));
+                        static_cast<int>(std::size(groupingSymbolString)));
                     if (result == 0)
                     {
                         throw std::runtime_error("Unexpected error while getting locale info");
                     }
 
                     wchar_t numberGroupingString[LocaleSettingBufferSize] = L"";
-                    result = GetLocaleInfoEx(m_resolvedName,
+                    result = GetLocaleInfoEx(m_resolvedName.c_str(),
                         LOCALE_SGROUPING,
                         numberGroupingString,
-                        ARRAYSIZE(numberGroupingString));
+                        static_cast<int>(std::size(numberGroupingString)));
                     if (result == 0)
                     {
                         throw std::runtime_error("Unexpected error while getting locale info");
@@ -70,14 +74,14 @@ namespace CalculatorApp
                     result = ::GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT,
                         LOCALE_SLIST,
                         listSeparatorString,
-                        ARRAYSIZE(listSeparatorString)); // Max length of the expected return value is 4
+                        static_cast<int>(std::size(listSeparatorString))); // Max length of the expected return value is 4
                     if (result == 0)
                     {
                         throw std::runtime_error("Unexpected error while getting locale info");
                     }
 
                     int currencyTrailingDigits = 0;
-                    result = GetLocaleInfoEx(m_resolvedName,
+                    result = GetLocaleInfoEx(m_resolvedName.c_str(),
                         LOCALE_ICURRDIGITS | LOCALE_RETURN_NUMBER,
                         (LPWSTR)&currencyTrailingDigits,
                         sizeof(currencyTrailingDigits) / sizeof(WCHAR));
@@ -120,7 +124,7 @@ namespace CalculatorApp
                 ::GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT,
                     LOCALE_IFIRSTDAYOFWEEK,                     // The first day in a week
                     reinterpret_cast<PWSTR>(day),               // Argument is of type PWSTR
-                    ARRAYSIZE(day));                            // Max return size are 80 characters
+                    static_cast<int>(std::size(day)));                            // Max return size are 80 characters
 
                 // The LOCALE_IFIRSTDAYOFWEEK integer value varies from 0, 1, .. 6 for Monday, Tuesday, ... Sunday
                 // DayOfWeek enum value varies from 0, 1, .. 6 for Sunday, Monday, ... Saturday
@@ -147,7 +151,7 @@ namespace CalculatorApp
 
             Platform::String^ GetLocaleName() const
             {
-                return ref new Platform::String(m_resolvedName);
+                return ref new Platform::String(m_resolvedName.c_str());
             }
 
             bool IsDigitEnUsSetting() const
@@ -377,7 +381,7 @@ namespace CalculatorApp
             Platform::String^ m_calendarIdentifier;
             Windows::Globalization::DayOfWeek m_firstDayOfWeek;
             int m_currencySymbolPrecedence;
-            wchar_t m_resolvedName[LOCALE_NAME_MAX_LENGTH];
+            std::wstring m_resolvedName;
             int m_currencyTrailingDigits;
             static const unsigned int LocaleSettingBufferSize = 16;
         };
