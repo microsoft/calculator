@@ -13,15 +13,15 @@ namespace CalculatorUnitTests
 
 namespace CalculatorApp
 {
-
-#define QwordType 1
-#define DwordType 2
-#define WordType 3
-#define ByteType 4
-#define HexBase 5
-#define DecBase 6
-#define OctBase 7
-#define BinBase 8
+    // TODO: Could be made into an enum : unsigned ?
+    constexpr auto QwordType = 1;
+    constexpr auto DwordType = 2;
+    constexpr auto WordType = 3;
+    constexpr auto ByteType = 4;
+    constexpr auto HexBase = 5;
+    constexpr auto DecBase = 6;
+    constexpr auto OctBase = 7;
+    constexpr auto BinBase = 8;
 
     class CopyPasteManager
     {

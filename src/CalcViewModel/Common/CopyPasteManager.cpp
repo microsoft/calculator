@@ -15,8 +15,6 @@ using namespace Windows::Foundation;
 using namespace Windows::System;
 using namespace Windows::ApplicationModel::DataTransfer;
 
-unsigned long long maxOperandNumber;
-
 String^ CopyPasteManager::supportedFormats[] =
 {
     StandardDataFormats::Text
