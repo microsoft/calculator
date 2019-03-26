@@ -127,8 +127,8 @@ extern PRAT rat_max_exp;
 extern PRAT rat_min_exp;
 extern PRAT rat_max_fact;
 extern PRAT rat_min_fact;
-extern PRAT rat_max_long;
-extern PRAT rat_min_long;
+extern PRAT rat_max_i32;
+extern PRAT rat_min_i32;
 
 // DUPNUM Duplicates a number taking care of allocation and internals
 #define DUPNUM(a,b) destroynum(a);createnum( a, (b)->cdigit );_dupnum(a, b);
@@ -246,8 +246,8 @@ memmove( (x)->pp->mant, &((x)->pp->mant[trim]), sizeof(MANTTYPE)*((x)->pp->cdigi
     DUPRAT(xx,*px); \
     mulrat(&xx,*px, precision); \
     createrat(pret); \
-    pret->pp=longtonum( 0L, BASEX ); \
-    pret->pq=longtonum( 0L, BASEX );
+    pret->pp=i32tonum( 0L, BASEX ); \
+    pret->pq=i32tonum( 0L, BASEX );
 
 #define DESTROYTAYLOR() destroynum( n2 ); \
     destroyrat( xx );\
@@ -321,9 +321,9 @@ extern PNUMBER RatToNumber(_In_ PRAT prat, uint32_t radix, int32_t precision);
 // flattens a PRAT by converting it to a PNUMBER and back to a PRAT
 extern void flatrat(_Inout_ PRAT& prat, uint32_t radix, int32_t precision);
 
-extern int32_t numtolong(_In_ PNUMBER pnum, uint32_t radix );
-extern int32_t rattolong(_In_ PRAT prat, uint32_t radix, int32_t precision);
-uint64_t rattoUlonglong(_In_ PRAT prat, uint32_t radix, int32_t precision);
+extern int32_t numtoi32(_In_ PNUMBER pnum, uint32_t radix );
+extern int32_t rattoi32(_In_ PRAT prat, uint32_t radix, int32_t precision);
+uint64_t rattoUi64(_In_ PRAT prat, uint32_t radix, int32_t precision);
 extern PNUMBER _createnum(_In_ uint32_t size ); // returns an empty number structure with size digits
 extern PNUMBER nRadixxtonum(_In_ PNUMBER a, uint32_t radix, int32_t precision);
 extern PNUMBER gcd(_In_ PNUMBER a, _In_ PNUMBER b );
@@ -332,10 +332,10 @@ extern PNUMBER StringToNumber(std::wstring_view numberString, uint32_t radix, in
 // takes a text representation of a number as a mantissa with sign and an exponent with sign.
 extern PRAT StringToRat(bool mantissaIsNegative, std::wstring_view mantissa, bool exponentIsNegative, std::wstring_view exponent, uint32_t radix, int32_t precision);
 
-extern PNUMBER longfactnum(int32_t inlong, uint32_t radix);
-extern PNUMBER longprodnum(int32_t start, int32_t stop, uint32_t radix);
-extern PNUMBER longtonum(int32_t inlong, uint32_t radix);
-extern PNUMBER Ulongtonum(uint32_t inlong, uint32_t radix);
+extern PNUMBER i32factnum(int32_t ini32, uint32_t radix);
+extern PNUMBER i32prodnum(int32_t start, int32_t stop, uint32_t radix);
+extern PNUMBER i32tonum(int32_t ini32, uint32_t radix);
+extern PNUMBER Ui32tonum(uint32_t ini32, uint32_t radix);
 extern PNUMBER numtonRadixx(PNUMBER a, uint32_t radix);
 
 // creates a empty/undefined rational representation (p/q)
@@ -393,8 +393,8 @@ extern void log10rat( _Inout_ PRAT *px, int32_t precision);
 // returns a new rat structure with the natural log of x->p/x->q
 extern void lograt( _Inout_ PRAT *px, int32_t precision);
 
-extern PRAT longtorat( int32_t inlong );
-extern PRAT Ulongtorat( uint32_t inulong );
+extern PRAT i32torat( int32_t ini32 );
+extern PRAT Ui32torat( uint32_t inui32 );
 extern PRAT numtorat( _In_ PNUMBER pin, uint32_t radix);
 
 extern void sinhrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision);
@@ -429,13 +429,13 @@ extern void intrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision);
 extern void mulnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix);
 extern void mulnumx( _Inout_ PNUMBER *pa, _In_ PNUMBER b );
 extern void mulrat( _Inout_ PRAT *pa, _In_ PRAT b, int32_t precision);
-extern void numpowlong( _Inout_ PNUMBER *proot, int32_t power, uint32_t radix, int32_t precision);
-extern void numpowlongx( _Inout_ PNUMBER *proot, int32_t power );
+extern void numpowi32( _Inout_ PNUMBER *proot, int32_t power, uint32_t radix, int32_t precision);
+extern void numpowi32x( _Inout_ PNUMBER *proot, int32_t power );
 extern void orrat( _Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision);
 extern void powrat( _Inout_ PRAT *pa, _In_ PRAT b , uint32_t radix, int32_t precision);
 extern void powratNumeratorDenominator(_Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision);
 extern void powratcomp(_Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision);
-extern void ratpowlong( _Inout_ PRAT *proot, int32_t power, int32_t precision);
+extern void ratpowi32( _Inout_ PRAT *proot, int32_t power, int32_t precision);
 extern void remnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix);
 extern void rootrat( _Inout_ PRAT *pa, _In_ PRAT b , uint32_t radix, int32_t precision);
 extern void scale2pi( _Inout_ PRAT *px, uint32_t radix, int32_t precision);

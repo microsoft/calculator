@@ -186,8 +186,8 @@ void _acosrat( PRAT *px, int32_t precision)
     CREATETAYLOR();
 
     createrat(thisterm);
-    thisterm->pp=longtonum( 1L, BASEX );
-    thisterm->pq=longtonum( 1L, BASEX );
+    thisterm->pp=i32tonum( 1L, BASEX );
+    thisterm->pq=i32tonum( 1L, BASEX );
 
     DUPNUM(n2,num_one);
 

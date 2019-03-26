@@ -33,9 +33,9 @@ void lshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
             // Don't attempt lsh of anything big
             throw( CALC_E_DOMAIN );
             }
-        intb = rattolong(b, radix, precision);
+        intb = rattoi32(b, radix, precision);
         DUPRAT(pwr,rat_two);
-        ratpowlong(&pwr, intb, precision);
+        ratpowi32(&pwr, intb, precision);
         mulrat(pa, pwr, precision);
         destroyrat(pwr);
         }
@@ -56,9 +56,9 @@ void rshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
             // Don't attempt rsh of anything big and negative.
             throw( CALC_E_DOMAIN );
             }
-        intb = rattolong(b, radix, precision);
+        intb = rattoi32(b, radix, precision);
         DUPRAT(pwr,rat_two);
-        ratpowlong(&pwr, intb, precision);
+        ratpowi32(&pwr, intb, precision);
         divrat(pa, pwr, precision);
         destroyrat(pwr);
        }

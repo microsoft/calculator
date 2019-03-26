@@ -334,7 +334,7 @@ void remnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
             }
 
         destroynum( lasttmp );
-        lasttmp=longtonum( 0, radix);
+        lasttmp=i32tonum( 0, radix);
 
         while ( lessnum( tmp, *pa ) )
             {
@@ -420,7 +420,7 @@ void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
 
     // Build a table of multiplications of the divisor, this is quicker for
     // more than radix 'digits'
-    list<PNUMBER> numberList{ longtonum(0L, radix) };
+    list<PNUMBER> numberList{ i32tonum(0L, radix) };
     for (uint32_t i = 1; i < radix; i++)
     {
         PNUMBER newValue = nullptr;

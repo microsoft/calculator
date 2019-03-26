@@ -45,8 +45,8 @@ static int cbitsofprecision = 0;
 DUPNUM((v)->pq,(&(init_q_##v)));
 #define READRAWNUM(v) DUPNUM(v,(&(init_##v)))
 
-#define INIT_AND_DUMP_RAW_NUM_IF_NULL(r, v) if (r == nullptr) { r = longtonum(v, BASEX); DUMPRAWNUM(v); }
-#define INIT_AND_DUMP_RAW_RAT_IF_NULL(r, v) if (r == nullptr) { r = longtorat(v); DUMPRAWRAT(v); }
+#define INIT_AND_DUMP_RAW_NUM_IF_NULL(r, v) if (r == nullptr) { r = i32tonum(v, BASEX); DUMPRAWNUM(v); }
+#define INIT_AND_DUMP_RAW_RAT_IF_NULL(r, v) if (r == nullptr) { r = i32torat(v); DUMPRAWRAT(v); }
 
 static constexpr int RATIO_FOR_DECIMAL = 9;
 static constexpr int DECIMAL = 10;
@@ -87,7 +87,7 @@ PRAT rat_exp= nullptr;
 PRAT rad_to_deg= nullptr;
 PRAT rad_to_grad= nullptr;
 PRAT rat_qword= nullptr;
-PRAT rat_dword= nullptr; // unsigned max ulong
+PRAT rat_dword= nullptr; // unsigned max ui32
 PRAT rat_word= nullptr;
 PRAT rat_byte= nullptr;
 PRAT rat_360= nullptr;
@@ -101,8 +101,8 @@ PRAT rat_max_exp= nullptr;
 PRAT rat_min_exp= nullptr;
 PRAT rat_max_fact = nullptr;
 PRAT rat_min_fact = nullptr;
-PRAT rat_min_long= nullptr; // min signed long
-PRAT rat_max_long= nullptr; // max signed long
+PRAT rat_min_i32= nullptr; // min signed i32
+PRAT rat_max_i32= nullptr; // max signed i32
 
 //----------------------------------------------------------------------------
 //
@@ -132,7 +132,7 @@ void ChangeConstants(uint32_t radix, int32_t precision)
     g_ratio += !g_ratio;
 
     destroyrat(rat_nRadix);
-    rat_nRadix=longtorat( radix );
+    rat_nRadix=i32torat( radix );
 
     // Check to see what we have to recalculate and what we don't
     if (cbitsofprecision < (g_ratio * static_cast<int32_t>(radix) * precision))
@@ -166,7 +166,7 @@ void ChangeConstants(uint32_t radix, int32_t precision)
         INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_min_fact, -1000);
 
         DUPRAT(rat_smallest, rat_nRadix);
-        ratpowlong(&rat_smallest, -precision, precision);
+        ratpowi32(&rat_smallest, -precision, precision);
         DUPRAT(rat_negsmallest, rat_smallest);
         rat_negsmallest->pp->sign = -1;
         DUMPRAWRAT(rat_smallest);
@@ -183,29 +183,29 @@ void ChangeConstants(uint32_t radix, int32_t precision)
         if (pt_eight_five == nullptr)
         {
             createrat(pt_eight_five);
-            pt_eight_five->pp = longtonum(85L, BASEX);
-            pt_eight_five->pq = longtonum(100L, BASEX);
+            pt_eight_five->pp = i32tonum(85L, BASEX);
+            pt_eight_five->pq = i32tonum(100L, BASEX);
             DUMPRAWRAT(pt_eight_five);
         }
 
         DUPRAT(rat_qword, rat_two);
-        numpowlong(&(rat_qword->pp), 64, BASEX, precision);
+        numpowi32(&(rat_qword->pp), 64, BASEX, precision);
         subrat(&rat_qword, rat_one, precision);
         DUMPRAWRAT(rat_qword);
 
         DUPRAT(rat_dword, rat_two);
-        numpowlong(&(rat_dword->pp), 32, BASEX, precision);
+        numpowi32(&(rat_dword->pp), 32, BASEX, precision);
         subrat(&rat_dword, rat_one, precision);
         DUMPRAWRAT(rat_dword);
 
-        DUPRAT(rat_max_long, rat_two);
-        numpowlong(&(rat_max_long->pp), 31, BASEX, precision);
-        DUPRAT(rat_min_long, rat_max_long);
-        subrat(&rat_max_long, rat_one, precision); // rat_max_long = 2^31 -1
-        DUMPRAWRAT(rat_max_long);
+        DUPRAT(rat_max_i32, rat_two);
+        numpowi32(&(rat_max_i32->pp), 31, BASEX, precision);
+        DUPRAT(rat_min_i32, rat_max_i32);
+        subrat(&rat_max_i32, rat_one, precision); // rat_max_i32 = 2^31 -1
+        DUMPRAWRAT(rat_max_i32);
 
-        rat_min_long->pp->sign *= -1; // rat_min_long = -2^31
-        DUMPRAWRAT(rat_min_long);
+        rat_min_i32->pp->sign *= -1; // rat_min_i32 = -2^31
+        DUMPRAWRAT(rat_min_i32);
 
         DUPRAT(rat_min_exp, rat_max_exp);
         rat_min_exp->pp->sign *= -1;
@@ -253,12 +253,12 @@ void ChangeConstants(uint32_t radix, int32_t precision)
 
 
         destroyrat(rad_to_deg);
-        rad_to_deg = longtorat(180L);
+        rad_to_deg = i32torat(180L);
         divrat(&rad_to_deg, pi, extraPrecision);
         DUMPRAWRAT(rad_to_deg);
 
         destroyrat(rad_to_grad);
-        rad_to_grad = longtorat(200L);
+        rad_to_grad = i32torat(200L);
         divrat(&rad_to_grad, pi, extraPrecision);
         DUMPRAWRAT(rad_to_grad);
     }
@@ -267,7 +267,7 @@ void ChangeConstants(uint32_t radix, int32_t precision)
         _readconstants();
 
         DUPRAT(rat_smallest, rat_nRadix);
-        ratpowlong(&rat_smallest, -precision, precision);
+        ratpowi32(&rat_smallest, -precision, precision);
         DUPRAT(rat_negsmallest, rat_smallest);
         rat_negsmallest->pp->sign = -1;
     }
@@ -652,8 +652,8 @@ void _readconstants( void )
     READRAWRAT(rat_min_exp);
     READRAWRAT(rat_max_fact);
     READRAWRAT(rat_min_fact);
-    READRAWRAT(rat_min_long);
-    READRAWRAT(rat_max_long);
+    READRAWRAT(rat_min_i32);
+    READRAWRAT(rat_max_i32);
 }
 
 //---------------------------------------------------------------------------

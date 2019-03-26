@@ -31,7 +31,7 @@ namespace CalcEngine
 
     Rational::Rational(int32_t i)
     {
-        PRAT pr = longtorat(static_cast<int32_t>(i));
+        PRAT pr = i32torat(static_cast<int32_t>(i));
 
         m_p = Number{ pr->pp };
         m_q = Number{ pr->pq };
@@ -41,7 +41,7 @@ namespace CalcEngine
 
     Rational::Rational(uint32_t ui)
     {
-        PRAT pr = Ulongtorat(static_cast<uint32_t>(ui));
+        PRAT pr = Ui32torat(static_cast<uint32_t>(ui));
 
         m_p = Number{ pr->pp };
         m_q = Number{ pr->pq };
@@ -470,7 +470,7 @@ namespace CalcEngine
         uint64_t result;
         try
         {
-            result = rattoUlonglong(rat, RATIONAL_BASE, RATIONAL_PRECISION);
+            result = rattoUi64(rat, RATIONAL_BASE, RATIONAL_PRECISION);
         }
         catch (uint32_t error)
         {

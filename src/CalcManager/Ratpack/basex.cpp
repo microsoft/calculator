@@ -160,7 +160,7 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
 }
 //-----------------------------------------------------------------------------
 //
-//    FUNCTION: numpowlongx
+//    FUNCTION: numpowi32x
 //
 //    ARGUMENTS: root as number power as int32_t
 //               number.
@@ -174,10 +174,10 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
 //
 //-----------------------------------------------------------------------------
 
-void numpowlongx( _Inout_ PNUMBER *proot, _In_ int32_t power )
+void numpowi32x( _Inout_ PNUMBER *proot, _In_ int32_t power )
 
 {
-    PNUMBER lret = longtonum( 1, BASEX );
+    PNUMBER lret = i32tonum( 1, BASEX );
 
     // Once the power remaining is zero we are done.
     while ( power > 0 )
@@ -308,7 +308,7 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
             digit = 1;
             DUPNUM( tmp, b );
             destroynum( lasttmp );
-            lasttmp=longtonum( 0, BASEX );
+            lasttmp=i32tonum( 0, BASEX );
             while ( lessnum( tmp, rem ) )
                 {
                 destroynum( lasttmp );
