@@ -340,14 +340,16 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
 
 pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, int bitLengthType)
 {
+    constexpr size_t defaultMaxOperandLength = 0;
+    constexpr uint64_t defaultMaxValue = 0;
     
     if (mode == ViewMode::Standard)
     {
-        return make_pair(MaxStandardOperandLength, 0);
+        return make_pair(MaxStandardOperandLength, defaultMaxValue);
     }
     else if (mode == ViewMode::Scientific)
     {
-        return make_pair(MaxScientificOperandLength, 0);
+        return make_pair(MaxScientificOperandLength, defaultMaxValue);
     }
     else if (mode == ViewMode::Programmer)
     {
@@ -394,10 +396,10 @@ pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mo
     }
     else if (modeType == CategoryGroupType::Converter)
     {
-        return make_pair(MaxConverterInputLength, 0);
+        return make_pair(MaxConverterInputLength, defaultMaxValue);
     }
 
-    return make_pair(0, 0);
+    return make_pair(defaultMaxOperandLength, defaultMaxValue);
 }
 
 wstring CopyPasteManager::SanitizeOperand(const wstring& operand)
