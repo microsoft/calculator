@@ -340,16 +340,14 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
 
 pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, int bitLengthType)
 {
-    size_t maxLength = 0;
-    uint64_t maxValue = 0;
-
+    
     if (mode == ViewMode::Standard)
     {
-        maxLength = MaxStandardOperandLength;
+        return make_pair(MaxStandardOperandLength, 0);
     }
     else if (mode == ViewMode::Scientific)
     {
-        maxLength = MaxScientificOperandLength;
+        return make_pair(MaxScientificOperandLength, 0);
     }
     else if (mode == ViewMode::Programmer)
     {
@@ -389,15 +387,17 @@ pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mo
 
         unsigned int signBit = (programmerNumberBase == DecBase) ? 1 : 0;
 
-        maxLength = static_cast<size_t>(ceil((bitLength - signBit) / bitsPerDigit));
-        maxValue = UINT64_MAX >> (MaxProgrammerBitLength - (bitLength - signBit));
+        const auto maxLength = static_cast<size_t>(ceil((bitLength - signBit) / bitsPerDigit));
+        const uint64_t maxValue = UINT64_MAX >> (MaxProgrammerBitLength - (bitLength - signBit));
+
+        return make_pair(maxLength, maxValue);
     }
     else if (modeType == CategoryGroupType::Converter)
     {
-        maxLength = MaxConverterInputLength;
+        return make_pair(MaxConverterInputLength, 0);
     }
 
-    return make_pair(maxLength, maxValue);
+    return make_pair(0, 0);
 }
 
 wstring CopyPasteManager::SanitizeOperand(const wstring& operand)
