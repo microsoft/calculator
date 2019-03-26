@@ -72,14 +72,14 @@ void _gamma( PRAT *pn, uint32_t radix, int32_t precision)
     PRAT mpy= nullptr;
     PRAT ratprec = nullptr;
     PRAT ratRadix = nullptr;
-    long oldprec;
+    int32_t oldprec;
 
     // Set up constants and initial conditions
     oldprec = precision;
-    ratprec = longtorat( oldprec );
+    ratprec = i32torat( oldprec );
 
     // Find the best 'A' for convergence to the required precision.
-    a=longtorat( radix );
+    a=i32torat( radix );
     lograt(&a, precision);
     mulrat(&a, ratprec, precision);
 
@@ -96,7 +96,7 @@ void _gamma( PRAT *pn, uint32_t radix, int32_t precision)
     // The following code is equivalent to
     // precision += ln(exp(a)*pow(a,n+1.5))-ln(radix));
     DUPRAT(tmp,*pn);
-    one_pt_five=longtorat( 3L );
+    one_pt_five=i32torat( 3L );
     divrat( &one_pt_five, rat_two, precision);
     addrat( &tmp, one_pt_five, precision);
     DUPRAT(term,a);
@@ -105,15 +105,15 @@ void _gamma( PRAT *pn, uint32_t radix, int32_t precision)
     exprat( &tmp, radix, precision);
     mulrat( &term, tmp, precision);
     lograt( &term, precision);
-    ratRadix = longtorat(radix);
+    ratRadix = i32torat(radix);
     DUPRAT(tmp,ratRadix);
     lograt( &tmp, precision);
     subrat( &term, tmp, precision);
-    precision += rattolong( term, radix, precision);
+    precision += rattoi32( term, radix, precision);
 
     // Set up initial terms for series, refer to series in above comment block.
     DUPRAT(factorial,rat_one); // Start factorial out with one
-    count = longtonum( 0L, BASEX );
+    count = i32tonum( 0L, BASEX );
 
     DUPRAT(mpy,a);
     powratcomp(&mpy,*pn, radix, precision);

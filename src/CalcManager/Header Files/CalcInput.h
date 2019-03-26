@@ -47,7 +47,7 @@ namespace CalcEngine
 
         void Clear();
         bool TryToggleSign(bool isIntegerMode, std::wstring_view maxNumStr);
-        bool TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, std::wstring_view maxNumStr, long wordBitWidth, int maxDigits);
+        bool TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, std::wstring_view maxNumStr, int32_t wordBitWidth, int maxDigits);
         bool TryAddDecimalPt();
         bool HasDecimalPt();
         bool TryBeginExponent();
