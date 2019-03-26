@@ -429,7 +429,7 @@ bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, u
     case BinBase:
         intBase = 2;
         break;
-    case DecBase:
+    case DecBase: // Unneeded as the default is already 10?
         intBase = 10;
         break;
     }
@@ -445,6 +445,10 @@ bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, u
         // Do nothing
     }
     catch (out_of_range)
+    {
+        // Do nothing
+    }
+    catch(...)
     {
         // Do nothing
     }
@@ -472,13 +476,13 @@ size_t CopyPasteManager::OperandLength(wstring operand, ViewMode mode, CategoryG
 
 size_t CopyPasteManager::StandardScientificOperandLength(wstring operand)
 {
+    // Loop until a decimal is found or if the end is reached
     bool hasDecimal = false;
-    for (size_t i = 0; i < operand.length(); i++)
+    for (size_t i = 0; i < operand.length() && !hasDecimal; i++)
     {
         if (operand[i] == L'.')
         {
             hasDecimal = true;
-            break;
         }
     }
 
