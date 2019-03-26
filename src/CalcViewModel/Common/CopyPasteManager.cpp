@@ -23,20 +23,23 @@ String^ CopyPasteManager::supportedFormats[] =
 };
 
 constexpr wstring_view c_validCharacterSet{ L"0123456789()+-*/.abcdefABCDEF" };
+
+// The below values can not be "constexpr"-ed,
+// as both wstring_view and wchar[] can not be concatenated
 // [\s\x85] means white-space characters
 static const wstring c_wspc = L"[\\s\\x85]*";
-static const wstring c_wspcLParens = c_wspc + L"[(]*" + c_wspc;
-static const wstring c_wspcLParenSigned = c_wspc + L"([-+]?[(])*" + c_wspc;
-static const wstring c_wspcRParens = c_wspc + L"[)]*" + c_wspc;
-static const wstring c_signedDecFloat = L"[-+]?\\d*(\\d|[.])\\d*";
+static const auto c_wspcLParens = c_wspc + L"[(]*" + c_wspc;
+static const auto c_wspcLParenSigned = c_wspc + L"([-+]?[(])*" + c_wspc;
+static const auto c_wspcRParens = c_wspc + L"[)]*" + c_wspc;
+static const auto c_signedDecFloat = L"[-+]?\\d*(\\d|[.])\\d*";
 
 // Programmer Mode Integer patterns
 // Support digit separators ` (WinDbg/MASM), ' (C++), and _ (C# and other languages)
-static const wstring c_hexProgrammerChars = L"([a-f]|[A-F]|\\d)+((_|'|`)([a-f]|[A-F]|\\d)+)*";
-static const wstring c_decProgrammerChars = L"\\d+((_|'|`)\\d+)*";
-static const wstring c_octProgrammerChars = L"[0-7]+((_|'|`)[0-7]+)*";
-static const wstring c_binProgrammerChars = L"[0-1]+((_|'|`)[0-1]+)*";
-static const wstring c_uIntSuffixes = L"[uU]?[lL]{0,2}";
+static constexpr auto c_hexProgrammerChars = L"([a-f]|[A-F]|\\d)+((_|'|`)([a-f]|[A-F]|\\d)+)*";
+static constexpr auto c_decProgrammerChars = L"\\d+((_|'|`)\\d+)*";
+static constexpr auto c_octProgrammerChars = L"[0-7]+((_|'|`)[0-7]+)*";
+static constexpr auto c_binProgrammerChars = L"[0-1]+((_|'|`)[0-1]+)*";
+static constexpr auto c_uIntSuffixes = L"[uU]?[lL]{0,2}";
 
 // RegEx Patterns used by various modes
 static const array<wregex, 1> standardModePatterns =
@@ -271,6 +274,7 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
     bool expMatched = true;
     vector<wregex> patterns{};
 
+    // Could this be auto?
     pair<size_t, uint64_t> operandLimits = GetMaxOperandLengthAndValue(mode, modeType, programmerNumberBase, bitLengthType);
     size_t maxOperandLength = operandLimits.first;
     uint64_t maxOperandValue = operandLimits.second;
@@ -292,11 +296,11 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
         patterns.assign(unitConverterPatterns.begin(), unitConverterPatterns.end());
     }
 
-    for (const wstring& operand : operands)
+    for (const auto& operand : operands)
     {
         // Each operand only needs to match one of the available patterns.
         bool operandMatched = false;
-        for (const wregex& pattern : patterns)
+        for (const auto& pattern : patterns)
         {
             operandMatched = operandMatched || regex_match(operand, pattern);
         }
@@ -305,7 +309,7 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
         {
             // Remove characters that are valid in the expression but we do not want to include in length calculations
             // or which will break conversion from string-to-ULL.
-            wstring operandValue = SanitizeOperand(operand);
+            const wstring operandValue = SanitizeOperand(operand);
 
             // If an operand exceeds the maximum length allowed, break and return.
             if (OperandLength(operandValue, mode, modeType, programmerNumberBase) > maxOperandLength)
