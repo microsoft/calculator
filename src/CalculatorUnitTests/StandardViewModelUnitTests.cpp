@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -76,7 +76,6 @@ namespace CalculatorUnitTests
             viewModel->ButtonPressed->Execute(NumbersAndOperatorsEnum::Clear);
             viewModel->ButtonPressed->Execute(NumbersAndOperatorsEnum::ClearEntry);
             viewModel->ClearMemoryCommand->Execute(nullptr);
-            viewModel->Deserialize(ref new Platform::Array<unsigned char>(0));
         }
 
         TESTITEM* currentItem = item;

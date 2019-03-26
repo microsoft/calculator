@@ -244,8 +244,6 @@ namespace CalculationManager
             {
                 m_savedCommands.push_back(MapCommandForSerialize(command));
             }
-            this->SerializePrimaryDisplay();
-            this->SerializeMemory();
             m_savedDegreeMode = m_currentDegreeMode;
             return;
         }
@@ -331,90 +329,12 @@ namespace CalculationManager
     }
 
     /// <summary>
-    /// Return saved degree mode which is saved when last time the expression was cleared.
-    /// </summary>
-    Command CalculatorManager::SerializeSavedDegreeMode()
-    {
-        return m_savedDegreeMode;
-    }
-
-    void CalculatorManager::SerializePrimaryDisplay()
-    {
-        m_savedPrimaryValue.clear();
-        m_currentCalculatorEngine->ProcessCommand(IDC_STORE);
-        auto memoryObject = m_currentCalculatorEngine->PersistedMemObject();
-        if (memoryObject != nullptr)
-        {
-            m_savedPrimaryValue = SerializeRational(*memoryObject);
-        }
-    }
-
-    /// <summary>
-    /// Return serialized primary display that is saved when the expression line was cleared.
-    /// </summary>
-    vector<long> CalculatorManager::GetSerializedPrimaryDisplay()
-    {
-        return m_savedPrimaryValue;
-    }
-
-    /// <summary>
-    /// DeSerialize the primary display from vector of long
-    /// </summary>
-    /// <param name = "serializedPrimaryDisplay">Serialized Rational of primary display</param>
-    void CalculatorManager::DeSerializePrimaryDisplay(const vector<long> &serializedPrimaryDisplay)
-    {
-        if (serializedPrimaryDisplay.empty())
-        {
-            return;
-        }
-        m_persistedPrimaryValue = DeSerializeRational(serializedPrimaryDisplay.begin());
-        this->LoadPersistedPrimaryValue();
-    }
-
-    /// <summary>
     /// Load the persisted value that is saved in memory of CalcEngine
     /// </summary>
     void CalculatorManager::LoadPersistedPrimaryValue()
     {
         m_currentCalculatorEngine->PersistedMemObject(m_persistedPrimaryValue);
         m_currentCalculatorEngine->ProcessCommand(IDC_RECALL);
-    }
-
-    /// <summary>
-    /// Serialize the Memory to vector of long
-    /// </summary>
-    /// <return type = "std::vector<long>">Serialized Rational of memory</return>
-    void CalculatorManager::SerializeMemory()
-    {
-        m_serializedMemory.clear();
-
-        for (auto const& memoryItem : m_memorizedNumbers)
-        {
-            auto serialMem = SerializeRational(memoryItem);
-            m_serializedMemory.insert(m_serializedMemory.end(), serialMem.begin(), serialMem.end());
-        }
-    }
-
-    vector<long> CalculatorManager::GetSerializedMemory()
-    {
-        return m_serializedMemory;
-    }
-
-    /// <summary>
-    /// DeSerialize the Memory from vector of long
-    /// </summary>
-    /// <param name = "serializedMemory">Serialized Rational of memory</param>
-    void CalculatorManager::DeSerializeMemory(const vector<long> &serializedMemory)
-    {
-        vector<long>::const_iterator itr = serializedMemory.begin();
-        while (itr != serializedMemory.end())
-        {
-            Rational memoryItem = DeSerializeRational(itr);
-            auto lengthMemoryItem = (2 * SERIALIZED_NUMBER_MINSIZE) + memoryItem.P().Mantissa().size() + memoryItem.Q().Mantissa().size();
-            m_memorizedNumbers.push_back(memoryItem);
-            itr += lengthMemoryItem;
-        }
-        this->SetMemorizedNumbersString();
     }
 
     /// <summary>
