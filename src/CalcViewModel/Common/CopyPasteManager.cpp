@@ -459,34 +459,27 @@ bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, u
 }
 
 size_t CopyPasteManager::OperandLength(wstring operand, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase)
-{
-    if (mode == ViewMode::Standard || mode == ViewMode::Scientific)
-    {
-        return StandardScientificOperandLength(operand);
-    }
-    else if (mode == ViewMode::Programmer)
-    {
-        return ProgrammerOperandLength(operand, programmerNumberBase);
-    }
-    else if (modeType == CategoryGroupType::Converter)
-    {
+{      
+    if(modeType == CategoryGroupType::Converter) {
         return operand.length();
     }
 
-    return 0;
+    switch(mode) {
+        case ViewMode::Standard:
+        case ViewMode::Scientific:
+            return StandardScientificOperandLength(operand);
+
+        case ViewMode::Programmer:
+            return ProgrammerOperandLength(operand, programmerNumberBase);
+
+        default:
+            return 0;
+    }
 }
 
 size_t CopyPasteManager::StandardScientificOperandLength(wstring operand)
-{
-    // Loop until a decimal is found or if the end is reached
-    bool hasDecimal = false;
-    for (size_t i = 0; i < operand.length() && !hasDecimal; i++)
-    {
-        if (operand[i] == L'.')
-        {
-            hasDecimal = true;
-        }
-    }
+{   
+    const bool hasDecimal = operand.find('.') != std::wstring::npos;
 
     if (hasDecimal)
     {
