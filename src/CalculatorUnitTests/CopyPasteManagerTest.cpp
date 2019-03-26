@@ -184,7 +184,11 @@ namespace CalculatorUnitTests
         {
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"((1234"), L"1234");
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"1234))"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"1234))"), L"1234");
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"-1234"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"+1234"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"-(1234)"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"+(1234)"), L"1234");
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"12-34"), L"1234");
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"((((1234))))"), L"1234");
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"1'2'3'4"), L"1234");
@@ -488,7 +492,7 @@ namespace CalculatorUnitTests
 
     void CopyPasteManagerTest::ValidateScientificPasteExpressionTest()
     {
-        String^ positiveInput[] = { L"123", L"+123", L"-133", L"123+456", L"12345e+023", L"1,234", L"1.23", L"-.123", L".1234", L"012.012", L"123+-234", L"123*-345", L"123*4*-3", L"123*+4*-3", L"1 2 3", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85", L"\n 1+\n2 ", L"1\"2", L"1.2e+023", L"12345e-23", L"(123)+(456)", L"12345678912345678123456789012345", L"(123)+(456)=", L"2+2=   " };
+        String^ positiveInput[] = { L"123", L"+123", L"-133", L"123+456", L"12345e+023", L"1,234", L"1.23", L"-.123", L".1234", L"012.012", L"123+-234", L"123*-345", L"123*4*-3", L"123*+4*-3", L"1 2 3", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85", L"\n 1+\n2 ", L"1\"2", L"1.2e+023", L"12345e-23", L"(123)+(456)", L"12345678912345678123456789012345", L"(123)+(456)=", L"2+2=   ", "-(43)", "+(41213)", "-(432+3232)" , "-(+(-3213)+(-2312))", "-(-(432+3232))" };
         String^ negativeInput[] = { L"1.2e23"/*unsigned exponent*/, L"abcdef", L"xyz", L"ABab", L"e+234", L"123456789123456781234567890123456"/*boundary condition: greater than 32 digits*/, L"SIN(2)", L"2+2==", L"2=+2" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateScientificPasteExpression, positiveInput);
