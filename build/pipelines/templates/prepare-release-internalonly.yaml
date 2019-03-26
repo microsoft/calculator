@@ -17,6 +17,8 @@ jobs:
     name: Package ES Lab E
   workspace:
     clean: outputs
+  variables:
+    skipComponentGovernanceDetection: true
   steps:
   - checkout: self
     clean: true
