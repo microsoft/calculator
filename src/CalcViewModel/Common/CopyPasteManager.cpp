@@ -106,19 +106,16 @@ task<String^> CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupTyp
 
 int CopyPasteManager::ClipboardTextFormat()
 {
-    int result = -1;
-
-    auto dataPackageView = Clipboard::GetContent();
+    const auto dataPackageView = Clipboard::GetContent();
 
     for (int i = 0; i < RTL_NUMBER_OF(supportedFormats); i++)
     {
         if (dataPackageView->Contains(supportedFormats[i]))
         {
-            result = i;
-            break;
+            return i;
         }
     }
-    return result;
+    return -1;
 }
 
 String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode mode, int programmerNumberBase, int bitLengthType)
@@ -394,7 +391,7 @@ pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mo
 
         unsigned int signBit = (programmerNumberBase == DecBase) ? 1 : 0;
 
-        maxLength = (size_t)ceil((bitLength - signBit) / bitsPerDigit);
+        maxLength = static_cast<size_t>(ceil((bitLength - signBit) / bitsPerDigit));
         maxValue = UINT64_MAX >> (MaxProgrammerBitLength - (bitLength - signBit));
     }
     else if (modeType == CategoryGroupType::Converter)
@@ -459,21 +456,20 @@ bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, u
 
 size_t CopyPasteManager::OperandLength(wstring operand, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase)
 {
-    size_t len = 0;
     if (mode == ViewMode::Standard || mode == ViewMode::Scientific)
     {
-        len = StandardScientificOperandLength(operand);
+        return StandardScientificOperandLength(operand);
     }
     else if (mode == ViewMode::Programmer)
     {
-        len = ProgrammerOperandLength(operand, programmerNumberBase);
+        return ProgrammerOperandLength(operand, programmerNumberBase);
     }
     else if (modeType == CategoryGroupType::Converter)
     {
-        len = operand.length();
+        return operand.length();
     }
 
-    return len;
+    return 0;
 }
 
 size_t CopyPasteManager::StandardScientificOperandLength(wstring operand)
@@ -484,6 +480,7 @@ size_t CopyPasteManager::StandardScientificOperandLength(wstring operand)
         if (operand[i] == L'.')
         {
             hasDecimal = true;
+            break;
         }
     }
 
@@ -541,7 +538,7 @@ size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int num
 
     // Detect if there is a suffix and subtract its length
     // Check suffixes first to allow e.g. "0b" to result in length 1 (value 0), rather than length 0 (no value).
-    for (const wstring& suffix : suffixes)
+    for (const auto& suffix : suffixes)
     {
         if (len < suffix.length())
         {
@@ -556,7 +553,7 @@ size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int num
     }
 
     // Detect if there is a prefix and subtract its length
-    for (const wstring& prefix : prefixes)
+    for (const auto& prefix : prefixes)
     {
         if (len < prefix.length())
         {
