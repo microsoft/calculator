@@ -21,10 +21,10 @@ namespace CalculatorApp
 
         private:
 
-            // Explicit, and private, implementation of ICommand, this way of programming makes it so 
+            // Explicit, and private, implementation of ICommand, this way of programming makes it so
             // the ICommand methods will only be available if the ICommand interface is requested via a dynamic_cast
             // The ICommand interface is meant to be consumed by Xaml and not by the app, this is a defensive measure against
-            // code in the app calling Execute. 
+            // code in the app calling Execute.
             virtual void ExecuteImpl(Platform::Object^ parameter) sealed = Windows::UI::Xaml::Input::ICommand::Execute
             {
                 TTarget^ target = m_weakTarget.Resolve<TTarget>();

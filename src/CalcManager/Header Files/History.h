@@ -10,8 +10,8 @@
 // maximum depth you can get by precedence. It is just an array's size limit.
 static constexpr size_t MAXPRECDEPTH = 25;
 
-// Helper class really a internal class to CCalcEngine, to accumulate each history line of text by collecting the 
-// operands, operator, unary operator etc. Since it is a separate entity, it can be unit tested on its own but does 
+// Helper class really a internal class to CCalcEngine, to accumulate each history line of text by collecting the
+// operands, operator, unary operator etc. Since it is a separate entity, it can be unit tested on its own but does
 // rely on CCalcEngine calling it in appropriate order.
 class CHistoryCollector {
 public:
@@ -39,13 +39,13 @@ private:
     ICalcDisplay *m_pCalcDisplay;
 
     int m_iCurLineHistStart; // index of the beginning of the current equation
-    // a sort of state, set to the index before 2 after 2 in the expression 2 + 3 say. Useful for auto correct portion of history and for 
+    // a sort of state, set to the index before 2 after 2 in the expression 2 + 3 say. Useful for auto correct portion of history and for
     // attaching the unary op around the last operand
     int m_lastOpStartIndex; // index of the beginning of the last operand added to the history
     int m_lastBinOpStartIndex; // index of the beginning of the last binary operator added to the history
     std::array<int, MAXPRECDEPTH> m_operandIndices; // Stack of index of opnd's beginning for each '('. A parallel array to m_hnoParNum, but abstracted independently of that
     int m_curOperandIndex; // Stack index for the above stack
-    bool m_bLastOpndBrace;    // iff the last opnd in history is already braced so we can avoid putting another one for unary operator 
+    bool m_bLastOpndBrace;    // iff the last opnd in history is already braced so we can avoid putting another one for unary operator
     wchar_t m_decimalSymbol;
     std::shared_ptr<CalculatorVector <std::pair<std::wstring, int>>> m_spTokens;
     std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> m_spCommands;

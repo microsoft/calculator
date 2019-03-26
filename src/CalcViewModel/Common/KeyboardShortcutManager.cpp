@@ -56,7 +56,7 @@ namespace CalculatorApp
     {
         // Lights up all of the buttons in the given range
         // The range is defined by a pair of iterators
-        template <typename T> 
+        template <typename T>
         void LightUpButtons(const T& buttons)
         {
             auto iterator = buttons.first;
@@ -72,14 +72,14 @@ namespace CalculatorApp
 
         void LightUpButton(ButtonBase^ button)
         {
-            // If the button is a toggle button then we don't need 
+            // If the button is a toggle button then we don't need
             // to change the UI of the button
             if (dynamic_cast<ToggleButton^>(button))
             {
                 return;
             }
 
-            // The button will go into the visual Pressed state with this call 
+            // The button will go into the visual Pressed state with this call
             VisualStateManager::GoToState(button, "Pressed", true);
 
             // This timer will fire after lightUpTime and make the button
@@ -89,7 +89,7 @@ namespace CalculatorApp
             TimeSpan lightUpTime{};
             lightUpTime.Duration = 500000L; // Half second (in 100-ns units)
             timer->Interval = lightUpTime;
-    
+
             WeakReference timerWeakReference(timer);
             WeakReference buttonWeakReference(button);
             timer->Tick += ref new EventHandler<Object^>(
@@ -206,7 +206,7 @@ void KeyboardShortcutManager::HonorEscape()
 }
 
 void KeyboardShortcutManager::OnCharacterPropertyChanged(
-    DependencyObject^ target, 
+    DependencyObject^ target,
     String^ oldValue,
     String^ newValue)
 {
@@ -263,10 +263,10 @@ void KeyboardShortcutManager::OnVirtualKeyPropertyChanged(
     reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
     auto button = static_cast<ButtonBase^>(target);
-    
+
     int viewId = Utils::GetWindowId();
     auto iterViewMap = s_VirtualKeysForButtons.find(viewId);
-    
+
     // Check if the View Id has already been registered
     if (iterViewMap != s_VirtualKeysForButtons.end())
     {
@@ -281,7 +281,7 @@ void KeyboardShortcutManager::OnVirtualKeyPropertyChanged(
 }
 
 void KeyboardShortcutManager::OnVirtualKeyControlChordPropertyChanged(
-    DependencyObject^ target, 
+    DependencyObject^ target,
     MyVirtualKey /*oldValue*/,
     MyVirtualKey newValue)
 {
@@ -537,7 +537,7 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow^ sender, KeyEventArgs^
 
         // Handle Ctrl + E for DateCalculator
         if ((key == VirtualKey::E) &&
-            isControlKeyPressed && 
+            isControlKeyPressed &&
             !isShiftKeyPressed)
         {
             const auto& lookupMap = GetCurrentKeyDictionary(static_cast<MyVirtualKey>(key));
@@ -710,7 +710,7 @@ void KeyboardShortcutManager::OnAcceleratorKeyActivated(CoreDispatcher^, Acceler
     {
         int viewId = Utils::GetWindowId();
         auto iterViewMap = s_AboutFlyout.find(viewId);
-        
+
         if ((iterViewMap != s_AboutFlyout.end()) && (iterViewMap->second != nullptr))
         {
             iterViewMap->second->Hide();
@@ -721,9 +721,9 @@ void KeyboardShortcutManager::OnAcceleratorKeyActivated(CoreDispatcher^, Acceler
 void KeyboardShortcutManager::Initialize()
 {
     auto coreWindow = Window::Current->CoreWindow;
-    coreWindow->CharacterReceived += 
+    coreWindow->CharacterReceived +=
         ref new TypedEventHandler<CoreWindow^, CharacterReceivedEventArgs^>(&KeyboardShortcutManager::OnCharacterReceivedHandler);
-    coreWindow->KeyDown += 
+    coreWindow->KeyDown +=
         ref new TypedEventHandler<CoreWindow^, KeyEventArgs^>(&KeyboardShortcutManager::OnKeyDownHandler);
     coreWindow->KeyUp +=
         ref new TypedEventHandler<CoreWindow^, KeyEventArgs^>(&KeyboardShortcutManager::OnKeyUpHandler);
@@ -758,7 +758,7 @@ void KeyboardShortcutManager::UpdateDropDownState(bool isOpen)
 void KeyboardShortcutManager::UpdateDropDownState(Flyout^ aboutPageFlyout)
 {
     int viewId = Utils::GetWindowId();
-    
+
     if (s_AboutFlyout.find(viewId) != s_AboutFlyout.end())
     {
         s_AboutFlyout.erase(viewId);
@@ -803,7 +803,7 @@ void KeyboardShortcutManager::RegisterNewAppViewId()
     {
         s_CharacterForButtons.insert(std::make_pair(appViewId, std::multimap<wchar_t, WeakReference>()));
     }
-    
+
     if (s_VirtualKeysForButtons.find(appViewId) == s_VirtualKeysForButtons.end())
     {
         s_VirtualKeysForButtons.insert(std::make_pair(appViewId, std::multimap<MyVirtualKey, WeakReference>()));
@@ -823,17 +823,17 @@ void KeyboardShortcutManager::RegisterNewAppViewId()
     {
         s_VirtualKeyAltChordsForButtons.insert(std::make_pair(appViewId, std::multimap<MyVirtualKey, WeakReference>()));
     }
-    
+
     if (s_VirtualKeyControlShiftChordsForButtons.find(appViewId) == s_VirtualKeyControlShiftChordsForButtons.end())
     {
         s_VirtualKeyControlShiftChordsForButtons.insert(std::make_pair(appViewId, std::multimap<MyVirtualKey, WeakReference>()));
     }
-    
+
     if (s_VirtualKeyInverseChordsForButtons.find(appViewId) == s_VirtualKeyInverseChordsForButtons.end())
     {
         s_VirtualKeyInverseChordsForButtons.insert(std::make_pair(appViewId, std::multimap<MyVirtualKey, WeakReference>()));
     }
-    
+
     if (s_VirtualKeyControlInverseChordsForButtons.find(appViewId) == s_VirtualKeyControlInverseChordsForButtons.end())
     {
         s_VirtualKeyControlInverseChordsForButtons.insert(std::make_pair(appViewId, std::multimap<MyVirtualKey, WeakReference>()));

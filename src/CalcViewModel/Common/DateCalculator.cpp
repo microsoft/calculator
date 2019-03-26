@@ -12,10 +12,11 @@ using namespace CalculatorApp::Common::DateCalculation;
 DateCalculationEngine::DateCalculationEngine(_In_ String^ calendarIdentifier)
 {
     m_calendar = ref new Calendar();
+    m_calendar->ChangeTimeZone("UTC");
     m_calendar->ChangeCalendarSystem(calendarIdentifier);
 }
 
-// Adding Duration to a Date 
+// Adding Duration to a Date
 // Returns: True if function succeeds to calculate the date else returns False
 bool DateCalculationEngine::AddDuration(_In_ DateTime startDate, _In_ const DateDifference& duration, _Out_ DateTime *endDate)
 {
@@ -52,7 +53,7 @@ bool DateCalculationEngine::AddDuration(_In_ DateTime startDate, _In_ const Date
 bool DateCalculationEngine::SubtractDuration(_In_ DateTime startDate, _In_ const DateDifference& duration, _Out_ DateTime *endDate)
 {
     // For Subtract the Algorithm is different than Add. Here the smaller units are subtracted first
-    // and then the larger units. 
+    // and then the larger units.
     try
     {
         m_calendar->SetDateTime(startDate);

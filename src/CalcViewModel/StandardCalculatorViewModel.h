@@ -31,12 +31,6 @@ namespace CalculatorApp
 #define ASCII_0 48
         public delegate void HideMemoryClickedHandler();
         public delegate void ProgModeRadixChangeHandler();
-        namespace CalculatorViewModelProperties
-        {
-            extern Platform::StringReference IsMemoryEmpty;
-            extern Platform::StringReference IsInError;
-            extern Platform::StringReference BinaryDisplayValue;
-        }
 
         [Windows::UI::Xaml::Data::Bindable]
         public ref class StandardCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
@@ -51,14 +45,14 @@ namespace CalculatorApp
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
             OBSERVABLE_PROPERTY_RW(Platform::String^, DisplayValue);
             OBSERVABLE_PROPERTY_RW(HistoryViewModel^, HistoryVM);
-            OBSERVABLE_PROPERTY_RW(bool, IsInError);
+            OBSERVABLE_NAMED_PROPERTY_RW(bool, IsInError);
             OBSERVABLE_PROPERTY_RW(bool, IsOperatorCommand);
             OBSERVABLE_PROPERTY_RW(Platform::String^, DisplayStringExpression);
             OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IVector<Common::DisplayExpressionToken^>^, ExpressionTokens);
             OBSERVABLE_PROPERTY_RW(Platform::String^, DecimalDisplayValue);
             OBSERVABLE_PROPERTY_RW(Platform::String^, HexDisplayValue);
             OBSERVABLE_PROPERTY_RW(Platform::String^, OctalDisplayValue);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, BinaryDisplayValue);
+            OBSERVABLE_NAMED_PROPERTY_RW(Platform::String^, BinaryDisplayValue);
             OBSERVABLE_PROPERTY_RW(Platform::String^, HexDisplayValue_AutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String^, DecDisplayValue_AutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String^, OctDisplayValue_AutomationName);
@@ -69,19 +63,19 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, IsDecimalEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsCurrentViewPinned);
             OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IVector<MemoryItemViewModel^>^, MemorizedNumbers);
-            OBSERVABLE_PROPERTY_RW(bool, IsMemoryEmpty);
+            OBSERVABLE_NAMED_PROPERTY_RW(bool, IsMemoryEmpty);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEChecked);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsHyperbolicChecked);
             OBSERVABLE_PROPERTY_RW(bool, AreHEXButtonsEnabled);
-            NAMED_OBSERVABLE_PROPERTY_RW(Platform::String^, CalculationResultAutomationName);
-            NAMED_OBSERVABLE_PROPERTY_RW(Platform::String^, CalculationExpressionAutomationName);
+            OBSERVABLE_PROPERTY_RW(Platform::String^, CalculationResultAutomationName);
+            OBSERVABLE_PROPERTY_RW(Platform::String^, CalculationExpressionAutomationName);
             OBSERVABLE_PROPERTY_RW(bool, IsShiftProgrammerChecked);
             OBSERVABLE_PROPERTY_RW(bool, IsQwordEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsDwordEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsWordEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsByteEnabled);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, OpenParenthesisCount);
+            OBSERVABLE_NAMED_PROPERTY_RW(Platform::String^, OpenParenthesisCount);
             OBSERVABLE_PROPERTY_RW(int, CurrentRadixType);
             OBSERVABLE_PROPERTY_RW(bool, AreTokensUpdated);
             OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
@@ -263,7 +257,7 @@ namespace CalculatorApp
 
             property Platform::String^ LeftParenthesisAutomationName
             {
-                Platform::String^ get() 
+                Platform::String^ get()
                 {
                     return GetLeftParenthesisAutomationName();
                 }
@@ -276,7 +270,7 @@ namespace CalculatorApp
 
             NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
 
-            //Memory feature related methods. They are internal because they need to called from the MainPage code-behind
+            // Memory feature related methods. They are internal because they need to called from the MainPage code-behind
             void OnMemoryButtonPressed();
             void OnMemoryItemPressed(Platform::Object^ memoryItemPosition);
             void OnMemoryAdd(Platform::Object^ memoryItemPosition);
@@ -290,6 +284,9 @@ namespace CalculatorApp
             void SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &commands);
             void SetHistoryExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector <std::shared_ptr<IExpressionCommand>>> const &commands);
             void SetParenthesisCount(_In_ const std::wstring& parenthesisCount);
+            void SetOpenParenthesisCountNarratorAnnouncement();
+            void OnNoRightParenAdded();
+            void SetNoParenAddedNarratorAnnouncement();
             void OnMaxDigitsReached();
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
@@ -337,6 +334,8 @@ namespace CalculatorApp
             Platform::String^ m_localizedMemoryItemChangedAutomationFormat;
             Platform::String^ m_localizedMemoryItemClearedAutomationFormat;
             Platform::String^ m_localizedMemoryCleared;
+            Platform::String^ m_localizedOpenParenthesisCountChangedAutomationFormat;
+            Platform::String^ m_localizedNoRightParenthesisAddedFormat;
 
             bool m_pinned;
             bool m_isOperandEnabled;

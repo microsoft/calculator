@@ -389,11 +389,11 @@ void Calculator::EnsureProgrammer()
 void Calculator::OnCalcPropertyChanged(_In_ Object^ sender, _In_ PropertyChangedEventArgs^ e)
 {
     String^ prop = e->PropertyName;
-    if (e->PropertyName->Equals(CalculatorViewModelProperties::IsMemoryEmpty))
+    if (prop == StandardCalculatorViewModel::IsMemoryEmptyPropertyName)
     {
         UpdateMemoryState();
     }
-    else if (e->PropertyName->Equals(CalculatorViewModelProperties::IsInError))
+    else if (prop == StandardCalculatorViewModel::IsInErrorPropertyName)
     {
         OnIsInErrorPropertyChanged();
     }
@@ -415,7 +415,7 @@ void Calculator::UpdateHistoryState()
         SetChildAsHistory();
         HistoryButton->Visibility = ::Visibility::Collapsed;
 
-        if (m_IsLastFlyoutHistory)
+        if (!IsProgrammer && m_IsLastFlyoutHistory)
         {
             DockPivot->SelectedIndex = 0;
         }
@@ -522,7 +522,7 @@ void Calculator::HistoryFlyout_Closed(_In_ Object ^sender, _In_ Object ^args)
     AutomationProperties::SetName(HistoryButton, m_openHistoryFlyoutAutomationName);
     m_fIsHistoryFlyoutOpen = false;
     EnableControls(true);
-    if (HistoryButton->IsEnabled)
+    if (HistoryButton->IsEnabled && HistoryButton->Visibility == ::Visibility::Visible)
     {
         HistoryButton->Focus(::FocusState::Programmatic);
     }

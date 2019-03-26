@@ -25,30 +25,17 @@ namespace CalculatorUnitTests
 
 #define ASSERT_POSITIVE_TESTCASES(func, dataSet) \
 {\
-    int size = sizeof(dataSet)/sizeof(*dataSet);\
-    while(--size)\
+    for(auto data : dataSet)\
     {\
-        VERIFY_ARE_EQUAL(func(dataSet[size]), dataSet[size]);\
+        VERIFY_ARE_EQUAL(func(data), data);\
     }\
 }
 
 #define ASSERT_NEGATIVE_TESTCASES(func, dataSet) \
 {\
-    int size = sizeof(dataSet)/sizeof(*dataSet);\
-    while(--size)\
+    for(auto data : dataSet)\
     {\
-        VERIFY_ARE_EQUAL(func(dataSet[size]), StringReference(L"NoOp"));\
-    }\
-}
-
-// returns a iterator from end
-#define START_LOOP(dataSet)\
-{\
-    int size = sizeof(dataSet)/sizeof(*dataSet);\
-    while(--size)\
-    {
-
-#define END_LOOP\
+        VERIFY_ARE_EQUAL(func(data), StringReference(L"NoOp"));\
     }\
 }
 
@@ -197,13 +184,44 @@ namespace CalculatorUnitTests
         {
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"((1234"), L"1234");
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"1234))"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"1234))"), L"1234");
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"-1234"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"+1234"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"-(1234)"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"+(1234)"), L"1234");
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"12-34"), L"1234");
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"((((1234))))"), L"1234");
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"1'2'3'4"), L"1234");
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"'''''1234''''"), L"1234");
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"1_2_3_4"), L"1234");
             VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"______1234___"), L"1234");
+        };
+
+        // Using unicode literals here until the encoding issues get figured out
+        TEST_METHOD(ValidatePrefixCurrencySymbols)
+        {
+            // ¥5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u00A5\u0035"), L"5");
+            // ¤5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u00A4\u0035"), L"5");
+            // ₵5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20B5\u0035"), L"5");
+            // $5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u0024\u0035"), L"5");
+            // ₡5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20A1\u0035"), L"5");
+            // ₩5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20A9\u0035"), L"5");
+            // ₪5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20AA\u0035"), L"5");
+            // ₦5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20A6\u0035"), L"5");
+            // ₹5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20B9\u0035"), L"5");
+            // £5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u00A3\u0035"), L"5");
+            // €5
+            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20AC\u0035"), L"5");
         };
 
         TEST_METHOD(ValidateTryOperandToULL)
@@ -450,15 +468,16 @@ namespace CalculatorUnitTests
         // Doesn't have test where converter is involved. Will add such a test later.
         StandardCalculatorViewModel^ scvm = ref new StandardCalculatorViewModel();
         scvm->IsStandard = true;
-        String^ input[] = { L"123", L"12345", L"123+456", L"1,234", L"1 2 3", L"\n\r1,234\n", L"\n 1+\n2 ", L"1\"2" };
+        String^ inputs[] = { L"123", L"12345", L"123+456", L"1,234", L"1 2 3", L"\n\r1,234\n", L"\n 1+\n2 ", L"1\"2" };
 
-        START_LOOP(input)
+        for (String^ &input : inputs)
+        {
             // paste number in standard mode and then validate the pastability of displayed number for other modes
-            scvm->OnPaste(input[size], ViewMode::Standard);
+            scvm->OnPaste(input, ViewMode::Standard);
             VERIFY_ARE_EQUAL(ValidateStandardPasteExpression(scvm->DisplayValue), scvm->DisplayValue);
             VERIFY_ARE_EQUAL(ValidateScientificPasteExpression(scvm->DisplayValue), scvm->DisplayValue);
             VERIFY_ARE_EQUAL(ValidateProgrammerHexQwordPasteExpression(scvm->DisplayValue), scvm->DisplayValue);
-        END_LOOP
+        }
     }
 
 
@@ -473,7 +492,7 @@ namespace CalculatorUnitTests
 
     void CopyPasteManagerTest::ValidateScientificPasteExpressionTest()
     {
-        String^ positiveInput[] = { L"123", L"+123", L"-133", L"123+456", L"12345e+023", L"1,234", L"1.23", L"-.123", L".1234", L"012.012", L"123+-234", L"123*-345", L"123*4*-3", L"123*+4*-3", L"1 2 3", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85", L"\n 1+\n2 ", L"1\"2", L"1.2e+023", L"12345e-23", L"(123)+(456)", L"12345678912345678123456789012345", L"(123)+(456)=", L"2+2=   " };
+        String^ positiveInput[] = { L"123", L"+123", L"-133", L"123+456", L"12345e+023", L"1,234", L"1.23", L"-.123", L".1234", L"012.012", L"123+-234", L"123*-345", L"123*4*-3", L"123*+4*-3", L"1 2 3", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85", L"\n 1+\n2 ", L"1\"2", L"1.2e+023", L"12345e-23", L"(123)+(456)", L"12345678912345678123456789012345", L"(123)+(456)=", L"2+2=   ", "-(43)", "+(41213)", "-(432+3232)" , "-(+(-3213)+(-2312))", "-(-(432+3232))" };
         String^ negativeInput[] = { L"1.2e23"/*unsigned exponent*/, L"abcdef", L"xyz", L"ABab", L"e+234", L"123456789123456781234567890123456"/*boundary condition: greater than 32 digits*/, L"SIN(2)", L"2+2==", L"2=+2" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateScientificPasteExpression, positiveInput);

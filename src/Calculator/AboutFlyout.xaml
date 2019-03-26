@@ -38,7 +38,7 @@
                 <Paragraph>
                     <Run x:Name="AboutFlyoutVersion"/>
                     <LineBreak/>
-                    <Run x:Uid="AboutControlCopyright"/>
+                    <Run x:Name="AboutControlCopyrightRun"/>
                 </Paragraph>
             </RichTextBlock>
             <HyperlinkButton x:Name="AboutFlyoutEULA"

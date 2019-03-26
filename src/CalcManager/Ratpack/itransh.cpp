@@ -60,7 +60,7 @@ void asinhrat( PRAT *px, uint32_t radix, int32_t precision)
     if ( rat_gt( *px, pt_eight_five, precision) || rat_lt( *px, neg_pt_eight_five, precision) )
         {
         PRAT ptmp = nullptr;
-        DUPRAT(ptmp,(*px)); 
+        DUPRAT(ptmp,(*px));
         mulrat(&ptmp, *px, precision);
         addrat(&ptmp, rat_one, precision);
         rootrat(&ptmp, rat_two, radix, precision);
@@ -73,14 +73,14 @@ void asinhrat( PRAT *px, uint32_t radix, int32_t precision)
         CREATETAYLOR();
         xx->pp->sign *= -1;
 
-        DUPRAT(pret,(*px)); 
+        DUPRAT(pret,(*px));
         DUPRAT(thisterm,(*px));
 
         DUPNUM(n2,num_one);
 
         do
             {
-            NEXTTERM(xx,MULNUM(n2) MULNUM(n2) 
+            NEXTTERM(xx,MULNUM(n2) MULNUM(n2)
                 INC(n2) DIVNUM(n2) INC(n2) DIVNUM(n2), precision);
             }
         while ( !SMALL_ENOUGH_RAT( thisterm, precision) );
@@ -99,7 +99,7 @@ void asinhrat( PRAT *px, uint32_t radix, int32_t precision)
 //    hyperbolic cose of
 //  RETURN: acosh of x in PRAT form.
 //
-//  EXPLANATION: This uses 
+//  EXPLANATION: This uses
 //
 //   acosh(x)=ln(x+sqrt(x^2-1))
 //
@@ -117,7 +117,7 @@ void acoshrat( PRAT *px, uint32_t radix, int32_t precision)
     else
         {
         PRAT ptmp = nullptr;
-        DUPRAT(ptmp,(*px)); 
+        DUPRAT(ptmp,(*px));
         mulrat(&ptmp, *px, precision);
         subrat(&ptmp, rat_one, precision);
         rootrat(&ptmp,rat_two, radix, precision);
@@ -148,7 +148,7 @@ void atanhrat( PRAT *px, int32_t precision)
 
 {
     PRAT ptmp = nullptr;
-    DUPRAT(ptmp,(*px)); 
+    DUPRAT(ptmp,(*px));
     subrat(&ptmp, rat_one, precision);
     addrat(px, rat_one, precision);
     divrat(px, ptmp, precision);

@@ -20,7 +20,7 @@ namespace CalculatorUnitTests
         TEST_METHOD_INITIALIZE(CommonSetup)
         {
             m_resourceProvider = make_shared<EngineResourceProvider>();
-            m_history = make_shared<CalculatorHistory>(CM_STD, MAX_HISTORY_SIZE);
+            m_history = make_shared<CalculatorHistory>(MAX_HISTORY_SIZE);
             CCalcEngine::InitialOneTimeOnlySetup(*(m_resourceProvider.get()));
             m_calcEngine = make_unique<CCalcEngine>(false /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider.get(), nullptr, m_history);
         }

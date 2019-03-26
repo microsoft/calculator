@@ -34,22 +34,22 @@ void OverflowTextBlock::OnApplyTemplate()
 
     m_expressionContainer = safe_cast<ScrollViewer^>(GetTemplateChild("expressionContainer"));
     m_expressionContainer->ChangeView(m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth, nullptr, nullptr);
-        
+
     m_scrollLeft = safe_cast<Button^>(GetTemplateChild("scrollLeft"));
     m_scrollRight = safe_cast<Button^>(GetTemplateChild("scrollRight"));
-        
+
     m_scrollLeftClickEventToken = m_scrollLeft->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollClick);
     m_scrollRightClickEventToken = m_scrollRight->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollClick);
 
     m_scrollingLeft = false;
     m_scrollingRight = false;
-    
+
     auto borderContainer = safe_cast<Border^>(GetTemplateChild("expressionborder"));
     m_pointerEnteredEventToken = borderContainer->PointerEntered += ref new PointerEventHandler(this, &OverflowTextBlock::OnPointerEntered);
     m_pointerExitedEventToken = borderContainer->PointerExited += ref new PointerEventHandler(this, &OverflowTextBlock::OnPointerExited);
 
     m_listView = safe_cast<ListView^>(GetTemplateChild("TokenList"));
-    
+
     UpdateAllState();
 }
 
