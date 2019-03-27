@@ -26,3 +26,6 @@
 #include <unordered_map>
 #include <array>
 #include <ppltasks.h>
+
+#define LODWORD(qw) ((DWORD)(qw))
+#define HIDWORD(qw) ((DWORD)(((qw) >> 32) & 0xffffffff))
