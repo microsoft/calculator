@@ -21,6 +21,7 @@
 #include <memory>
 #include <vector>
 #include <limits>
+#include <list>
 #include <regex>
 #include <unordered_map>
 #include <intsafe.h>

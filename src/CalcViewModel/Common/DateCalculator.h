@@ -3,11 +3,11 @@
 
 #pragma once
 
-const ULONGLONG c_millisecond = 10000;
-const ULONGLONG c_second = 1000 * c_millisecond;
-const ULONGLONG c_minute = 60 * c_second;
-const ULONGLONG c_hour = 60 * c_minute;
-const ULONGLONG c_day = 24 * c_hour;
+const uint64_t c_millisecond = 10000;
+const uint64_t c_second = 1000 * c_millisecond;
+const uint64_t c_minute = 60 * c_second;
+const uint64_t c_hour = 60 * c_minute;
+const uint64_t c_day = 24 * c_hour;
 
 const int c_unitsOfDate = 4;                 // Units Year,Month,Week,Day
 const int c_unitsGreaterThanDays = 3;        // Units Greater than Days (Year/Month/Week) 3

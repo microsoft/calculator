@@ -15,7 +15,7 @@ using namespace CalcEngine;
 
 static constexpr int DEFAULT_MAX_DIGITS = 32;
 static constexpr int DEFAULT_PRECISION = 32;
-static constexpr long DEFAULT_RADIX = 10;
+static constexpr int32_t DEFAULT_RADIX = 10;
 
 static constexpr wchar_t DEFAULT_DEC_SEPARATOR = L'.';
 static constexpr wchar_t DEFAULT_GRP_SEPARATOR = L',';

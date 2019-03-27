@@ -308,6 +308,9 @@
     <ClCompile Include="Common\AppLifecycleLogger.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="Controls\HorizontalNoOverflowStackPanel.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -406,6 +409,9 @@
     </ClInclude>
     <ClInclude Include="Common\AppLifecycleLogger.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\HorizontalNoOverflowStackPanel.h">
+      <Filter>Controls</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

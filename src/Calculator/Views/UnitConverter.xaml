@@ -1,4 +1,4 @@
-<UserControl x:Class="CalculatorApp.UnitConverter"
+﻿<UserControl x:Class="CalculatorApp.UnitConverter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:automation="using:CalculatorApp.Common.Automation"
@@ -459,8 +459,8 @@
                 <VisualState x:Name="CurrencySymbolLeftState"/>
                 <VisualState x:Name="CurrencySymbolRightState">
                     <VisualState.Setters>
-                        <Setter Target="Value1Container.Padding" Value="0,0,12,0"/>
-                        <Setter Target="Value2Container.Padding" Value="0,0,12,0"/>
+                        <Setter Target="CurrencySymbol1Block.Padding" Value="0,0,12,0"/>
+                        <Setter Target="CurrencySymbol2Block.Padding" Value="0,0,12,0"/>
                         <Setter Target="CurrencySymbol1Block.(Grid.Column)" Value="2"/>
                         <Setter Target="CurrencySymbol2Block.(Grid.Column)" Value="2"/>
                     </VisualState.Setters>
@@ -492,7 +492,6 @@
         <Grid x:Name="Value1Container"
               Grid.Row="1"
               Grid.Column="1"
-              Padding="12,0,0,0"
               HorizontalAlignment="Left"
               Style="{ThemeResource ValueContainerStyle}"
               FlowDirection="{x:Bind LayoutDirection}"
@@ -504,6 +503,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="CurrencySymbol1Block"
                        Grid.Column="0"
+                       Padding="12,0,0,0"
                        Style="{ThemeResource CurrencySymbolMediumStyle}"
                        AutomationProperties.AccessibilityView="Raw"
                        Text="{x:Bind Model.CurrencySymbol1, Mode=OneWay}"
@@ -544,7 +544,6 @@
         <Grid x:Name="Value2Container"
               Grid.Row="3"
               Grid.Column="1"
-              Padding="12,0,0,0"
               HorizontalAlignment="Left"
               Style="{ThemeResource ValueContainerStyle}"
               FlowDirection="{x:Bind LayoutDirection}"
@@ -556,6 +555,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="CurrencySymbol2Block"
                        Grid.Column="0"
+                       Padding="12,0,0,0"
                        Style="{ThemeResource CurrencySymbolMediumStyle}"
                        AutomationProperties.AccessibilityView="Raw"
                        Text="{x:Bind Model.CurrencySymbol2, Mode=OneWay}"
@@ -593,15 +593,20 @@
                   TabIndex="4"
                   Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
 
-        <Grid x:Name="SupplementaryResultsPanelInGrid"
-              Grid.Row="5"
-              Grid.Column="1"
-              Margin="12,0,12,0"
-              FlowDirection="{x:Bind LayoutDirection}"
-              Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+        <StackPanel x:Name="SupplementaryResultsPanelInGrid"
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    MinHeight="48"
+                    Margin="12,0,6,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    FlowDirection="{x:Bind LayoutDirection}"
+                    SizeChanged="SupplementaryResultsPanelInGrid_SizeChanged"
+                    Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
             <local:SupplementaryResults x:Name="SupplementaryResults"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
+                                        Results="{x:Bind Model.SupplementaryResults, Mode=OneWay}"
                                         Visibility="{x:Bind Model.SupplementaryVisibility, Mode=OneWay}"/>
             <StackPanel Visibility="{x:Bind Model.IsCurrencyCurrentCategory, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <!-- Currency Ratio Equality -->
@@ -651,7 +656,7 @@
                     </TextBlock>
                 </ContentControl>
             </StackPanel>
-        </Grid>
+        </StackPanel>
 
         <Grid x:Name="ConverterNumPad"
               Grid.Row="6"

@@ -14,6 +14,7 @@
 #include "CalcViewModel/Common/LocalizationService.h"
 #include "CalcViewModel/Common/LocalizationSettings.h"
 
+using namespace std;
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Controls;
@@ -375,4 +376,11 @@ void UnitConverter::HideProgressRing()
     }
 
     CurrencyLoadingProgressRing->IsActive = false;
+}
+
+// The function will make sure the UI will have enough space to display supplementary results and currency information
+void CalculatorApp::UnitConverter::SupplementaryResultsPanelInGrid_SizeChanged(Platform::Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e)
+{
+    //We add 0.01 to be sure to not create an infinite loop with SizeChanged events cascading due to float approximation 
+    RowDltrUnits->MinHeight = max(48.0, e->NewSize.Height + 0.01);
 }

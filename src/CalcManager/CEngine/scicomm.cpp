@@ -31,9 +31,9 @@ namespace {
     //
     // returns a virtual number for precedence for the operator. We expect binary operator only, otherwise the lowest number
     // 0 is returned. Higher the number, higher the precedence of the operator.
-    INT NPrecedenceOfOp(int nopCode)
+    int NPrecedenceOfOp(int nopCode)
     {
-        static BYTE    rgbPrec[] = { 0,0,  IDC_OR,0, IDC_XOR,0,  IDC_AND,1,
+        static uint8_t rgbPrec[] = { 0,0,  IDC_OR,0, IDC_XOR,0,  IDC_AND,1,
             IDC_ADD,2, IDC_SUB,2,    IDC_RSHF,3, IDC_LSHF,3,
             IDC_MOD,3, IDC_DIV,3, IDC_MUL,3,  IDC_PWR,4,   IDC_ROOT, 4 };
         unsigned int iPrec;
@@ -56,7 +56,7 @@ namespace {
 //
 // When it is discovered by the state machine that at this point the input is not valid (eg. "1+)"), we want to proceed as though this input never
 // occurred and may be some feedback to user like Beep. The rest of input can then continue by just ignoring this command.
-void CCalcEngine::HandleErrorCommand(WPARAM idc)
+void CCalcEngine::HandleErrorCommand(OpCode idc)
 {
     if (!IsGuiSettingOpCode(idc))
     {
@@ -83,7 +83,7 @@ void CCalcEngine::ClearTemporaryValues()
     m_bError = false;
 }
 
-void CCalcEngine::ProcessCommand(WPARAM wParam)
+void CCalcEngine::ProcessCommand(OpCode wParam)
 {
     if (wParam == IDC_SET_RESULT)
     {
@@ -94,9 +94,9 @@ void CCalcEngine::ProcessCommand(WPARAM wParam)
     ProcessCommandWorker(wParam);
 }
 
-void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
+void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 {
-    INT            nx, ni;
+    int            nx, ni;
 
     // Save the last command.  Some commands are not saved in this manor, these
     // commands are:
@@ -107,7 +107,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     if (!IsGuiSettingOpCode(wParam))
     {
         m_nLastCom = m_nTempCom;
-        m_nTempCom = (INT)wParam;
+        m_nTempCom = (int)wParam;
     }
 
     if (m_bError)
@@ -185,10 +185,10 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         // Change the operation if last input was operation.
         if (IsBinOpCode(m_nLastCom))
         {
-            INT nPrev;
+            int nPrev;
             bool fPrecInvToHigher = false; // Is Precedence Inversion from lower to higher precedence happening ??
 
-            m_nOpCode = (INT)wParam;
+            m_nOpCode = (int)wParam;
 
             // Check to see if by changing this binop, a Precedence inversion is happening.
             // Eg. 1 * 2  + and + is getting changed to ^. The previous precedence rules would have already computed
@@ -285,7 +285,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         DisplayAnnounceBinaryOperator();
 
         m_lastVal = m_currentVal;
-        m_nOpCode = (INT)wParam;
+        m_nOpCode = (int)wParam;
         m_HistoryCollector.AddBinOpToHistory(m_nOpCode);
         m_bNoPrevEqu = m_bChangeOp = true;
         return;
@@ -313,7 +313,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
                 m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
             }
 
-            m_HistoryCollector.AddUnaryOpToHistory((INT)wParam, m_bInv, m_angletype);
+            m_HistoryCollector.AddUnaryOpToHistory((int)wParam, m_bInv, m_angletype);
         }
 
         if ((wParam == IDC_SIN) || (wParam == IDC_COS) || (wParam == IDC_TAN) || (wParam == IDC_SINH) || (wParam == IDC_COSH) || (wParam == IDC_TANH))
@@ -326,7 +326,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             }
         }
 
-        m_currentVal = SciCalcFunctions(m_currentVal, (DWORD)wParam);
+        m_currentVal = SciCalcFunctions(m_currentVal, (uint32_t)wParam);
 
         if (m_bError)
             return;
@@ -366,7 +366,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
 
         CheckAndAddLastBinOpToHistory();
 
-        if (TryToggleBit(m_currentVal, (DWORD)wParam - IDC_BINEDITSTART))
+        if (TryToggleBit(m_currentVal, (uint32_t)wParam - IDC_BINEDITSTART))
         {
             DisplayNum();
         }
@@ -442,7 +442,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             m_nTempCom = m_nLastCom; // Put back this last saved command to the prev state so ) can be handled properly
             ProcessCommand(IDC_CLOSEP);
             m_nLastCom = m_nTempCom; // Actually this is IDC_CLOSEP
-            m_nTempCom = (INT)wParam; // put back in the state where last op seen was IDC_CLOSEP, and current op is IDC_EQU
+            m_nTempCom = (int)wParam; // put back in the state where last op seen was IDC_CLOSEP, and current op is IDC_EQU
         }
 
         if (!m_bNoPrevEqu)
@@ -1060,7 +1060,7 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
 
             result = tempRat.ToString(radix, m_nFE, m_precision);
         }
-        catch (DWORD)
+        catch (uint32_t)
         {
         }
     }
