@@ -1,4 +1,6 @@
 #pragma once
 
-#define LODWORD(qw) ((DWORD)(qw))
-#define HIDWORD(qw) ((DWORD)(((qw) >> 32) & 0xffffffff))
+#include <cstdint>
+
+#define LODWORD(qw) ((uint32_t)(qw))
+#define HIDWORD(qw) ((uint32_t)(((qw) >> 32) & 0xffffffff))
