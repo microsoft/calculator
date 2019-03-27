@@ -24,6 +24,5 @@
 #include <list>
 #include <regex>
 #include <unordered_map>
-#include <intsafe.h>
 #include <array>
 #include <ppltasks.h>
