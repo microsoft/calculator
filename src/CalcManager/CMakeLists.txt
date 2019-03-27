@@ -13,3 +13,19 @@ add_library(CEngine
 	CEngine/sciset.cpp
 )
 target_include_directories(CEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_library(Ratpack
+	Ratpack/basex.cpp
+	Ratpack/conv.cpp
+	Ratpack/exp.cpp
+	Ratpack/fact.cpp
+	Ratpack/itrans.cpp
+	Ratpack/itransh.cpp
+	Ratpack/logic.cpp
+	Ratpack/num.cpp
+	Ratpack/rat.cpp
+	Ratpack/support.cpp
+	Ratpack/trans.cpp
+	Ratpack/transh.cpp
+)
+target_include_directories(Ratpack PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
