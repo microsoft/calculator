@@ -19,8 +19,6 @@
 #include "pch.h"
 #include "ratpak.h"
 
-
-
 //-----------------------------------------------------------------------------
 //
 //  FUNCTION: asinhrat
@@ -50,46 +48,41 @@
 //
 //-----------------------------------------------------------------------------
 
-void asinhrat( PRAT *px, uint32_t radix, int32_t precision)
+void asinhrat(PRAT *px, uint32_t radix, int32_t precision)
 
 {
-    PRAT neg_pt_eight_five = nullptr;
+  PRAT neg_pt_eight_five = nullptr;
 
-    DUPRAT(neg_pt_eight_five,pt_eight_five);
-    neg_pt_eight_five->pp->sign *= -1;
-    if ( rat_gt( *px, pt_eight_five, precision) || rat_lt( *px, neg_pt_eight_five, precision) )
-        {
-        PRAT ptmp = nullptr;
-        DUPRAT(ptmp,(*px));
-        mulrat(&ptmp, *px, precision);
-        addrat(&ptmp, rat_one, precision);
-        rootrat(&ptmp, rat_two, radix, precision);
-        addrat(px, ptmp, precision);
-        lograt(px, precision);
-        destroyrat(ptmp);
-        }
-    else
-        {
-        CREATETAYLOR();
-        xx->pp->sign *= -1;
+  DUPRAT(neg_pt_eight_five, pt_eight_five);
+  neg_pt_eight_five->pp->sign *= -1;
+  if (rat_gt(*px, pt_eight_five, precision) ||
+      rat_lt(*px, neg_pt_eight_five, precision)) {
+    PRAT ptmp = nullptr;
+    DUPRAT(ptmp, (*px));
+    mulrat(&ptmp, *px, precision);
+    addrat(&ptmp, rat_one, precision);
+    rootrat(&ptmp, rat_two, radix, precision);
+    addrat(px, ptmp, precision);
+    lograt(px, precision);
+    destroyrat(ptmp);
+  } else {
+    CREATETAYLOR();
+    xx->pp->sign *= -1;
 
-        DUPRAT(pret,(*px));
-        DUPRAT(thisterm,(*px));
+    DUPRAT(pret, (*px));
+    DUPRAT(thisterm, (*px));
 
-        DUPNUM(n2,num_one);
+    DUPNUM(n2, num_one);
 
-        do
-            {
-            NEXTTERM(xx,MULNUM(n2) MULNUM(n2)
-                INC(n2) DIVNUM(n2) INC(n2) DIVNUM(n2), precision);
-            }
-        while ( !SMALL_ENOUGH_RAT( thisterm, precision) );
+    do {
+      NEXTTERM(xx, MULNUM(n2) MULNUM(n2) INC(n2) DIVNUM(n2) INC(n2) DIVNUM(n2),
+               precision);
+    } while (!SMALL_ENOUGH_RAT(thisterm, precision));
 
-        DESTROYTAYLOR();
-        }
-    destroyrat(neg_pt_eight_five);
+    DESTROYTAYLOR();
+  }
+  destroyrat(neg_pt_eight_five);
 }
-
 
 //-----------------------------------------------------------------------------
 //
@@ -107,24 +100,21 @@ void asinhrat( PRAT *px, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void acoshrat( PRAT *px, uint32_t radix, int32_t precision)
+void acoshrat(PRAT *px, uint32_t radix, int32_t precision)
 
 {
-    if ( rat_lt( *px, rat_one, precision) )
-        {
-        throw CALC_E_DOMAIN;
-        }
-    else
-        {
-        PRAT ptmp = nullptr;
-        DUPRAT(ptmp,(*px));
-        mulrat(&ptmp, *px, precision);
-        subrat(&ptmp, rat_one, precision);
-        rootrat(&ptmp,rat_two, radix, precision);
-        addrat(px, ptmp, precision);
-        lograt(px, precision);
-        destroyrat(ptmp);
-        }
+  if (rat_lt(*px, rat_one, precision)) {
+    throw CALC_E_DOMAIN;
+  } else {
+    PRAT ptmp = nullptr;
+    DUPRAT(ptmp, (*px));
+    mulrat(&ptmp, *px, precision);
+    subrat(&ptmp, rat_one, precision);
+    rootrat(&ptmp, rat_two, radix, precision);
+    addrat(px, ptmp, precision);
+    lograt(px, precision);
+    destroyrat(ptmp);
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -144,17 +134,16 @@ void acoshrat( PRAT *px, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void atanhrat( PRAT *px, int32_t precision)
+void atanhrat(PRAT *px, int32_t precision)
 
 {
-    PRAT ptmp = nullptr;
-    DUPRAT(ptmp,(*px));
-    subrat(&ptmp, rat_one, precision);
-    addrat(px, rat_one, precision);
-    divrat(px, ptmp, precision);
-    (*px)->pp->sign *= -1;
-    lograt(px, precision);
-    divrat(px, rat_two, precision);
-    destroyrat(ptmp);
+  PRAT ptmp = nullptr;
+  DUPRAT(ptmp, (*px));
+  subrat(&ptmp, rat_one, precision);
+  addrat(px, rat_one, precision);
+  divrat(px, ptmp, precision);
+  (*px)->pp->sign *= -1;
+  lograt(px, precision);
+  divrat(px, rat_two, precision);
+  destroyrat(ptmp);
 }
-

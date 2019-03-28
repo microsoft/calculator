@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "OperatorTextBox.h"
+#include "pch.h"
 #include "regex"
 
 using namespace CalculatorApp;
@@ -22,38 +22,33 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-void OperatorTextBox::OnApplyTemplate()
-{
-    this->IsEnabled = false;
-    this->IsHitTestVisible = false;
-    this->IsTapEnabled = false;
-    this->MaxLength = 50;
-    this->IsReadOnly = true;
-    this->IsRightTapEnabled = false;
-    this->IsTabStop = false;
-    auto parent = VisualTreeHelper::GetParent(this);
-    ListViewItem^ listViewItem;
-    ListView^ listView;
-    while (parent != nullptr)
-    {
-        if (listViewItem == nullptr)
-        {
-            listViewItem = dynamic_cast<ListViewItem^>(parent);
-        }
-
-        listView = dynamic_cast<ListView^>(parent);
-        if (listView != nullptr)
-        {
-            break;
-        }
-        parent = VisualTreeHelper::GetParent(parent);
+void OperatorTextBox::OnApplyTemplate() {
+  this->IsEnabled = false;
+  this->IsHitTestVisible = false;
+  this->IsTapEnabled = false;
+  this->MaxLength = 50;
+  this->IsReadOnly = true;
+  this->IsRightTapEnabled = false;
+  this->IsTabStop = false;
+  auto parent = VisualTreeHelper::GetParent(this);
+  ListViewItem ^ listViewItem;
+  ListView ^ listView;
+  while (parent != nullptr) {
+    if (listViewItem == nullptr) {
+      listViewItem = dynamic_cast<ListViewItem ^>(parent);
     }
 
-    if (listView != nullptr)
-    {
-        listViewItem->IsEnabled = false;
-        listViewItem->IsHitTestVisible = false;
-        listViewItem->IsTapEnabled = false;
+    listView = dynamic_cast<ListView ^>(parent);
+    if (listView != nullptr) {
+      break;
     }
-    TextBox::OnApplyTemplate();
+    parent = VisualTreeHelper::GetParent(parent);
+  }
+
+  if (listView != nullptr) {
+    listViewItem->IsEnabled = false;
+    listViewItem->IsHitTestVisible = false;
+    listViewItem->IsTapEnabled = false;
+  }
+  TextBox::OnApplyTemplate();
 }

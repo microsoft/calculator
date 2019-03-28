@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "CalculatorButton.h"
 #include "CalcViewModel/Common/CalculatorButtonPressedEventArgs.h"
+#include "pch.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -22,47 +22,40 @@ DEPENDENCY_PROPERTY_INITIALIZATION(CalculatorButton, HoverForeground);
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculatorButton, PressBackground);
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculatorButton, PressForeground);
 
-CalculatorButton::CalculatorButton()
-{
-    // Set the default bindings for this button, these can be overwritten by Xaml if needed
-    // These are a replacement for binding in styles
-    Binding^ commandBinding = ref new Binding();
-    commandBinding->Path = ref new PropertyPath("ButtonPressed");
-    this->SetBinding(Button::CommandProperty, commandBinding);
+CalculatorButton::CalculatorButton() {
+  // Set the default bindings for this button, these can be overwritten by Xaml
+  // if needed These are a replacement for binding in styles
+  Binding ^ commandBinding = ref new Binding();
+  commandBinding->Path = ref new PropertyPath("ButtonPressed");
+  this->SetBinding(Button::CommandProperty, commandBinding);
 }
 
-void CalculatorButton::OnKeyDown(KeyRoutedEventArgs^ e)
-{
-    // Ignore the Enter key
-    if (e->Key == VirtualKey::Enter)
-    {
-        return;
-    }
+void CalculatorButton::OnKeyDown(KeyRoutedEventArgs ^ e) {
+  // Ignore the Enter key
+  if (e->Key == VirtualKey::Enter) {
+    return;
+  }
 
-    Button::OnKeyDown(e);
+  Button::OnKeyDown(e);
 }
 
-void CalculatorButton::OnKeyUp(KeyRoutedEventArgs^ e)
-{
-    // Ignore the Enter key
-    if (e->Key == VirtualKey::Enter)
-    {
-        return;
-    }
+void CalculatorButton::OnKeyUp(KeyRoutedEventArgs ^ e) {
+  // Ignore the Enter key
+  if (e->Key == VirtualKey::Enter) {
+    return;
+  }
 
-    Button::OnKeyUp(e);
+  Button::OnKeyUp(e);
 }
 
 void CalculatorButton::OnButtonIdPropertyChanged(
-    NumbersAndOperatorsEnum /*oldValue*/,
-    NumbersAndOperatorsEnum newValue)
-{
-    this->CommandParameter = ref new CalculatorButtonPressedEventArgs(AuditoryFeedback, newValue);
+    NumbersAndOperatorsEnum /*oldValue*/, NumbersAndOperatorsEnum newValue) {
+  this->CommandParameter =
+      ref new CalculatorButtonPressedEventArgs(AuditoryFeedback, newValue);
 }
 
-void CalculatorButton::OnAuditoryFeedbackPropertyChanged(
-    String^ /*oldValue*/,
-    String^ newValue)
-{
-    this->CommandParameter = ref new CalculatorButtonPressedEventArgs(newValue, ButtonId);
+void CalculatorButton::OnAuditoryFeedbackPropertyChanged(String ^ /*oldValue*/,
+                                                         String ^ newValue) {
+  this->CommandParameter =
+      ref new CalculatorButtonPressedEventArgs(newValue, ButtonId);
 }

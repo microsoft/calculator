@@ -1,126 +1,118 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "Header Files/CalcEngine.h"
+#include "pch.h"
 
 using namespace CalcEngine;
 using namespace CalcEngine::RationalMath;
 using namespace std;
 
-// To be called when either the radix or num width changes. You can use -1 in either of these values to mean
-// dont change that.
-void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwidth)
-{
-    // When in integer mode, the number is represented in 2's complement form. When a bit width is changing, we can
-    // change the number representation back to sign, abs num form in ratpak. Soon when display sees this, it will
-    // convert to 2's complement form, but this time all high bits will be propagated. Eg. -127, in byte mode is
-    // represented as 1000,0001. This puts it back as sign=-1, 01111111 . But DisplayNum will see this and convert it
-    // back to 1111,1111,1000,0001 when in Word mode.
-    if (m_fIntegerMode)
-    {
-        uint64_t w64Bits = m_currentVal.ToUInt64_t();
-        bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1; // make sure you use the old width
+// To be called when either the radix or num width changes. You can use -1 in
+// either of these values to mean dont change that.
+void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype,
+                                          NUM_WIDTH numwidth) {
+  // When in integer mode, the number is represented in 2's complement form.
+  // When a bit width is changing, we can change the number representation back
+  // to sign, abs num form in ratpak. Soon when display sees this, it will
+  // convert to 2's complement form, but this time all high bits will be
+  // propagated. Eg. -127, in byte mode is represented as 1000,0001. This puts
+  // it back as sign=-1, 01111111 . But DisplayNum will see this and convert it
+  // back to 1111,1111,1000,0001 when in Word mode.
+  if (m_fIntegerMode) {
+    uint64_t w64Bits = m_currentVal.ToUInt64_t();
+    bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) &
+                1; // make sure you use the old width
 
-        if (fMsb)
-        {
-            // If high bit is set, then get the decimal number in -ve 2'scompl form.
-            auto tempResult = m_currentVal ^ m_chopNumbers[m_numwidth];
+    if (fMsb) {
+      // If high bit is set, then get the decimal number in -ve 2'scompl form.
+      auto tempResult = m_currentVal ^ m_chopNumbers[m_numwidth];
 
-            m_currentVal = -(tempResult + 1);
-        }
+      m_currentVal = -(tempResult + 1);
     }
+  }
 
-    if (radixtype >= HEX_RADIX && radixtype <= BIN_RADIX)
-    {
-        m_radix = NRadixFromRadixType(radixtype);
-        // radixtype is not even saved
-    }
+  if (radixtype >= HEX_RADIX && radixtype <= BIN_RADIX) {
+    m_radix = NRadixFromRadixType(radixtype);
+    // radixtype is not even saved
+  }
 
-    if (numwidth >= QWORD_WIDTH && numwidth <= BYTE_WIDTH)
-    {
-        m_numwidth = numwidth;
-        m_dwWordBitWidth = DwWordBitWidthFromeNumWidth(numwidth);
-    }
+  if (numwidth >= QWORD_WIDTH && numwidth <= BYTE_WIDTH) {
+    m_numwidth = numwidth;
+    m_dwWordBitWidth = DwWordBitWidthFromeNumWidth(numwidth);
+  }
 
-    // inform ratpak that a change in base or precision has occurred
-    BaseOrPrecisionChanged();
+  // inform ratpak that a change in base or precision has occurred
+  BaseOrPrecisionChanged();
 
-    // display the correct number for the new state (ie convert displayed
-    //  number to correct base)
-    DisplayNum();
+  // display the correct number for the new state (ie convert displayed
+  //  number to correct base)
+  DisplayNum();
 }
 
-int32_t CCalcEngine::DwWordBitWidthFromeNumWidth(NUM_WIDTH /*numwidth*/)
-{
-    static constexpr int nBitMax[] = { 64, 32, 16, 8 };
-    int32_t wmax = nBitMax[0];
+int32_t CCalcEngine::DwWordBitWidthFromeNumWidth(NUM_WIDTH /*numwidth*/) {
+  static constexpr int nBitMax[] = {64, 32, 16, 8};
+  int32_t wmax = nBitMax[0];
 
-    if (m_numwidth >= 0 && (size_t)m_numwidth < size(nBitMax))
-    {
-        wmax = nBitMax[m_numwidth];
-    }
-    return wmax;
+  if (m_numwidth >= 0 && (size_t)m_numwidth < size(nBitMax)) {
+    wmax = nBitMax[m_numwidth];
+  }
+  return wmax;
 }
 
-uint32_t CCalcEngine::NRadixFromRadixType(RADIX_TYPE radixtype)
-{
-    static constexpr uint32_t rgnRadish[4] = { 16, 10, 8, 2 };  /* Number bases in the same order as radixtype */
-    uint32_t radix = 10;
+uint32_t CCalcEngine::NRadixFromRadixType(RADIX_TYPE radixtype) {
+  static constexpr uint32_t rgnRadish[4] = {
+      16, 10, 8, 2}; /* Number bases in the same order as radixtype */
+  uint32_t radix = 10;
 
-    // convert special bases into symbolic values
-    if (radixtype >= 0 && (size_t)radixtype < size(rgnRadish))
-    {
-        radix = rgnRadish[radixtype];
-    }
-    return radix;
+  // convert special bases into symbolic values
+  if (radixtype >= 0 && (size_t)radixtype < size(rgnRadish)) {
+    radix = rgnRadish[radixtype];
+  }
+  return radix;
 }
 
-//  Toggles a given bit into the number representation. returns true if it changed it actually.
-bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno)
-{
-    uint32_t wmax = DwWordBitWidthFromeNumWidth(m_numwidth);
-    if (wbitno >= wmax)
-    {
-        return false; // ignore error cant happen
-    }
+//  Toggles a given bit into the number representation. returns true if it
+//  changed it actually.
+bool CCalcEngine::TryToggleBit(CalcEngine::Rational &rat, uint32_t wbitno) {
+  uint32_t wmax = DwWordBitWidthFromeNumWidth(m_numwidth);
+  if (wbitno >= wmax) {
+    return false; // ignore error cant happen
+  }
 
-    Rational result = Integer(rat);
+  Rational result = Integer(rat);
 
-    // Remove any variance in how 0 could be represented in rat e.g. -0, 0/n, etc.
-    result = (result != 0 ? result : 0);
+  // Remove any variance in how 0 could be represented in rat e.g. -0, 0/n, etc.
+  result = (result != 0 ? result : 0);
 
-    // XOR the result with 2^wbitno power
-    rat = result ^ Pow(2, static_cast<int32_t>(wbitno));
+  // XOR the result with 2^wbitno power
+  rat = result ^ Pow(2, static_cast<int32_t>(wbitno));
 
-    return true;
+  return true;
 }
 
 // Returns the nearest power of two
-int CCalcEngine::QuickLog2(int iNum)
-{
-    int iRes = 0;
+int CCalcEngine::QuickLog2(int iNum) {
+  int iRes = 0;
 
-    // while first digit is a zero
-    while (!(iNum & 1))
-    {
-        iRes++;
-        iNum >>= 1;
-    }
+  // while first digit is a zero
+  while (!(iNum & 1)) {
+    iRes++;
+    iNum >>= 1;
+  }
 
-    // if our number isn't a perfect square
-    iNum = iNum >> 1;
-    if (iNum)
-    {
-        // find the largest digit
-        for (iNum = iNum >> 1; iNum; iNum = iNum >> 1)
-            ++iRes;
+  // if our number isn't a perfect square
+  iNum = iNum >> 1;
+  if (iNum) {
+    // find the largest digit
+    for (iNum = iNum >> 1; iNum; iNum = iNum >> 1)
+      ++iRes;
 
-        // and then add two
-        iRes += 2;
-    }
+    // and then add two
+    iRes += 2;
+  }
 
-    return iRes;
+  return iRes;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -129,52 +121,46 @@ int CCalcEngine::QuickLog2(int iNum)
 //
 // determine the maximum number of digits needed for the current precision,
 // word size, and base.  This number is conservative towards the small side
-// such that there may be some extra bits left over. For example, base 8 requires 3 bits per digit.
-// A word size of 32 bits allows for 10 digits with a remainder of two bits.  Bases
-// that require variable number of bits (non-power-of-two bases) are approximated
-// by the next highest power-of-two base (again, to be conservative and guarantee
-// there will be no over flow verse the current word size for numbers entered).
-// Base 10 is a special case and always uses the base 10 precision (m_nPrecisionSav).
-void CCalcEngine::UpdateMaxIntDigits()
-{
-    if (m_radix == 10)
-    {
-        // if in integer mode you still have to honor the max digits you can enter based on bit width
-        if (m_fIntegerMode)
-        {
-            m_cIntDigitsSav = static_cast<int>(m_maxDecimalValueStrings[m_numwidth].length()) - 1;
-            // This is the max digits you can enter a decimal in fixed width mode aka integer mode -1. The last digit
-            // has to be checked separately
-        }
-        else
-        {
-            m_cIntDigitsSav = m_precision;
-        }
+// such that there may be some extra bits left over. For example, base 8
+// requires 3 bits per digit. A word size of 32 bits allows for 10 digits with a
+// remainder of two bits.  Bases that require variable number of bits
+// (non-power-of-two bases) are approximated by the next highest power-of-two
+// base (again, to be conservative and guarantee there will be no over flow
+// verse the current word size for numbers entered). Base 10 is a special case
+// and always uses the base 10 precision (m_nPrecisionSav).
+void CCalcEngine::UpdateMaxIntDigits() {
+  if (m_radix == 10) {
+    // if in integer mode you still have to honor the max digits you can enter
+    // based on bit width
+    if (m_fIntegerMode) {
+      m_cIntDigitsSav =
+          static_cast<int>(m_maxDecimalValueStrings[m_numwidth].length()) - 1;
+      // This is the max digits you can enter a decimal in fixed width mode aka
+      // integer mode -1. The last digit has to be checked separately
+    } else {
+      m_cIntDigitsSav = m_precision;
     }
-    else
-    {
-        m_cIntDigitsSav = m_dwWordBitWidth / CCalcEngine::QuickLog2(m_radix);
-    }
+  } else {
+    m_cIntDigitsSav = m_dwWordBitWidth / CCalcEngine::QuickLog2(m_radix);
+  }
 }
 
-void CCalcEngine::ChangeBaseConstants(uint32_t radix, int maxIntDigits, int32_t precision)
-{
-    if (10 == radix)
-    {
-        ChangeConstants(radix, precision); // Base 10 precision for internal computing still needs to be 32, to
-        // take care of decimals precisely. For eg. to get the HI word of a qword, we do a rsh, which depends on getting
-        // 18446744073709551615 / 4294967296 = 4294967295.9999917... This is important it works this and doesn't reduce
-        // the precision to number of digits allowed to enter. In other words, precision and # of allowed digits to be
-        // entered are different.
-    }
-    else
-    {
-        ChangeConstants(radix, maxIntDigits + 1);
-    }
+void CCalcEngine::ChangeBaseConstants(uint32_t radix, int maxIntDigits,
+                                      int32_t precision) {
+  if (10 == radix) {
+    ChangeConstants(radix, precision); // Base 10 precision for internal
+                                       // computing still needs to be 32, to
+    // take care of decimals precisely. For eg. to get the HI word of a qword,
+    // we do a rsh, which depends on getting 18446744073709551615 / 4294967296 =
+    // 4294967295.9999917... This is important it works this and doesn't reduce
+    // the precision to number of digits allowed to enter. In other words,
+    // precision and # of allowed digits to be entered are different.
+  } else {
+    ChangeConstants(radix, maxIntDigits + 1);
+  }
 }
 
-void CCalcEngine::BaseOrPrecisionChanged()
-{
-    UpdateMaxIntDigits();
-    CCalcEngine::ChangeBaseConstants(m_radix, m_cIntDigitsSav, m_precision);
+void CCalcEngine::BaseOrPrecisionChanged() {
+  UpdateMaxIntDigits();
+  CCalcEngine::ChangeBaseConstants(m_radix, m_cIntDigitsSav, m_precision);
 }

@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "MemoryItemViewModel.h"
 #include "StandardCalculatorViewModel.h"
+#include "pch.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -17,17 +17,10 @@ using namespace Windows::Storage::Streams;
 using namespace Windows::Security::Cryptography;
 using namespace Windows::Foundation::Collections;
 
-void MemoryItemViewModel::Clear()
-{
-    m_calcVM->OnMemoryClear(Position);
-};
+void MemoryItemViewModel::Clear() { m_calcVM->OnMemoryClear(Position); };
 
-void MemoryItemViewModel::MemoryAdd()
-{
-    m_calcVM->OnMemoryAdd(Position);
-};
+void MemoryItemViewModel::MemoryAdd() { m_calcVM->OnMemoryAdd(Position); };
 
-void MemoryItemViewModel::MemorySubtract()
-{
-    m_calcVM->OnMemorySubtract(Position);
+void MemoryItemViewModel::MemorySubtract() {
+  m_calcVM->OnMemorySubtract(Position);
 };

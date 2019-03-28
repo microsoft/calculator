@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "MemoryListItem.xaml.h"
 #include "Controls/CalculatorButton.h"
+#include "pch.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -26,56 +26,55 @@ using namespace Windows::UI::ViewManagement;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(MemoryListItem, Model);
 
-MemoryListItem::MemoryListItem()
-{
-    InitializeComponent();
+MemoryListItem::MemoryListItem() { InitializeComponent(); }
+
+void MemoryListItem::OnPointerEntered(
+    Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e) {
+  Control::OnPointerEntered(e);
+
+  // Only show hover buttons when the user is using mouse or pen.
+  if (e->Pointer->PointerDeviceType ==
+          Windows::Devices::Input::PointerDeviceType::Mouse ||
+      e->Pointer->PointerDeviceType ==
+          Windows::Devices::Input::PointerDeviceType::Pen) {
+    VisualStateManager::GoToState(this, "MemoryButtonsVisible", true);
+  }
 }
 
-void MemoryListItem::OnPointerEntered(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e)
-{
-    Control::OnPointerEntered(e);
+void MemoryListItem::OnPointerExited(
+    Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e) {
+  Control::OnPointerExited(e);
 
-    // Only show hover buttons when the user is using mouse or pen.
-    if (e->Pointer->PointerDeviceType == Windows::Devices::Input::PointerDeviceType::Mouse || e->Pointer->PointerDeviceType == Windows::Devices::Input::PointerDeviceType::Pen)
-    {
-        VisualStateManager::GoToState(this, "MemoryButtonsVisible", true);
-    }
+  VisualStateManager::GoToState(this, "MemoryButtonsHidden", true);
 }
 
-void MemoryListItem::OnPointerExited(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e)
-{
-    Control::OnPointerExited(e);
-
-    VisualStateManager::GoToState(this, "MemoryButtonsHidden", true);
+void MemoryListItem::OnClearButtonClicked(_In_ Object ^ sender,
+                                          _In_ RoutedEventArgs ^ e) {
+  Model->Clear();
 }
 
-void MemoryListItem::OnClearButtonClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
-{
-    Model->Clear();
+void MemoryListItem::OnMemoryAddButtonClicked(_In_ Object ^ sender,
+                                              _In_ RoutedEventArgs ^ e) {
+  Model->MemoryAdd();
 }
 
-void MemoryListItem::OnMemoryAddButtonClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
-{
-    Model->MemoryAdd();
+void MemoryListItem::OnMemorySubtractButtonClicked(_In_ Object ^ sender,
+                                                   _In_ RoutedEventArgs ^ e) {
+  Model->MemorySubtract();
 }
 
-void MemoryListItem::OnMemorySubtractButtonClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
-{
-    Model->MemorySubtract();
+void MemoryListItem::OnClearSwipeInvoked(_In_ SwipeItem ^ sender,
+                                         SwipeItemInvokedEventArgs ^ e) {
+  Model->Clear();
 }
 
-void MemoryListItem::OnClearSwipeInvoked(_In_ SwipeItem^ sender, SwipeItemInvokedEventArgs^ e)
-{
-    Model->Clear();
+void MemoryListItem::OnMemoryAddSwipeInvoked(_In_ SwipeItem ^ sender,
+                                             SwipeItemInvokedEventArgs ^ e) {
+  Model->MemoryAdd();
 }
 
-void MemoryListItem::OnMemoryAddSwipeInvoked(_In_ SwipeItem^ sender, SwipeItemInvokedEventArgs^ e)
-{
-    Model->MemoryAdd();
+void MemoryListItem::OnMemorySubtractSwipeInvoked(_In_ SwipeItem ^ sender,
+                                                  SwipeItemInvokedEventArgs ^
+                                                      e) {
+  Model->MemorySubtract();
 }
-
-void MemoryListItem::OnMemorySubtractSwipeInvoked(_In_ SwipeItem^ sender, SwipeItemInvokedEventArgs^ e)
-{
-    Model->MemorySubtract();
-}
-

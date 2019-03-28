@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "SupplementaryItemsControl.h"
 #include "CalcViewModel/UnitConverterViewModel.h"
+#include "pch.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Controls;
@@ -18,23 +18,21 @@ using namespace Platform;
 using namespace Windows::Foundation::Collections;
 using namespace std;
 
-DependencyObject^ SupplementaryItemsControl::GetContainerForItemOverride()
-{
-    return ref new SupplementaryContentPresenter();
+DependencyObject ^ SupplementaryItemsControl::GetContainerForItemOverride() {
+  return ref new SupplementaryContentPresenter();
 }
 
-void SupplementaryItemsControl::PrepareContainerForItemOverride(DependencyObject^ element, Object^ item)
-{
-    ItemsControl::PrepareContainerForItemOverride(element, item);
+void SupplementaryItemsControl::PrepareContainerForItemOverride(
+    DependencyObject ^ element, Object ^ item) {
+  ItemsControl::PrepareContainerForItemOverride(element, item);
 
-    auto supplementaryResult = dynamic_cast<SupplementaryResult^>(item);
-    if (supplementaryResult)
-    {
-        AutomationProperties::SetName(element, supplementaryResult->GetLocalizedAutomationName());
-    }
+  auto supplementaryResult = dynamic_cast<SupplementaryResult ^>(item);
+  if (supplementaryResult) {
+    AutomationProperties::SetName(
+        element, supplementaryResult->GetLocalizedAutomationName());
+  }
 }
 
- AutomationPeer^ SupplementaryContentPresenter::OnCreateAutomationPeer()
- {
-     return ref new SupplementaryContentPresenterAP(this);
- }
+AutomationPeer ^ SupplementaryContentPresenter::OnCreateAutomationPeer() {
+  return ref new SupplementaryContentPresenterAP(this);
+}

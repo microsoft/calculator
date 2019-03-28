@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "FlipButtons.h"
+#include "pch.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Controls;
@@ -19,33 +19,25 @@ DEPENDENCY_PROPERTY_INITIALIZATION(FlipButtons, HoverForeground);
 DEPENDENCY_PROPERTY_INITIALIZATION(FlipButtons, PressBackground);
 DEPENDENCY_PROPERTY_INITIALIZATION(FlipButtons, PressForeground);
 
+void FlipButtons::OnKeyDown(KeyRoutedEventArgs ^ e) {
+  // Ignore the Enter key
+  if (e->Key == VirtualKey::Enter) {
+    return;
+  }
 
-void FlipButtons::OnKeyDown(KeyRoutedEventArgs^ e)
-{
-    // Ignore the Enter key
-    if (e->Key == VirtualKey::Enter)
-    {
-        return;
-    }
-
-    ToggleButton::OnKeyDown(e);
+  ToggleButton::OnKeyDown(e);
 }
 
-void FlipButtons::OnKeyUp(KeyRoutedEventArgs^ e)
-{
-    // Ignore the Enter key
-    if (e->Key == VirtualKey::Enter)
-    {
-        return;
-    }
+void FlipButtons::OnKeyUp(KeyRoutedEventArgs ^ e) {
+  // Ignore the Enter key
+  if (e->Key == VirtualKey::Enter) {
+    return;
+  }
 
-    ToggleButton::OnKeyUp(e);
+  ToggleButton::OnKeyUp(e);
 }
 
 void FlipButtons::OnButtonIdPropertyChanged(
-    NumbersAndOperatorsEnum /*oldValue*/,
-    NumbersAndOperatorsEnum newValue)
-{
-    this->CommandParameter = newValue;
+    NumbersAndOperatorsEnum /*oldValue*/, NumbersAndOperatorsEnum newValue) {
+  this->CommandParameter = newValue;
 }
-
