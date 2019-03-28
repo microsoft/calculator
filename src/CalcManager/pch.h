@@ -25,6 +25,8 @@
 #include <array>
 #include <string_view>
 
+#include "win_data_types_cross_platform.h"
+
 #if defined(_WIN32) && defined(_MSC_VER)
 
 #include <windows.h>
@@ -34,7 +36,6 @@
 #else
 
 #include "winerror_cross_platform.h"
-#include "win_data_types_cross_platform.h"
 #include "sal_cross_platform.h"
 
 #ifdef __GNUC__
