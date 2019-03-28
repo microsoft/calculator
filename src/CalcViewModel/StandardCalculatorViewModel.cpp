@@ -355,24 +355,25 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<CalculatorVector<
             }
 
             auto currentTokenString = ref new String(currentToken.first.c_str());
-            auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
             if (i < m_ExpressionTokens->Size)
             {
                 auto existingItem = m_ExpressionTokens->GetAt(i);
-                if (type == existingItem->Type && expressionToken->Token->Equals(currentTokenString))
+                if (type == existingItem->Type && existingItem->Token->Equals(currentTokenString))
                 {
                     existingItem->TokenPosition = i;
                     existingItem->IsTokenEditable = isEditable;
-                    existingItem->CommandIndex = expressionToken->CommandIndex;
+                    existingItem->CommandIndex = 0;
                 }
                 else
                 {
+                    auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
                     m_ExpressionTokens->InsertAt(i, expressionToken);
                 }
                 
             }
             else
             {
+                auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
                 m_ExpressionTokens->Append(expressionToken);
             }
         }
