@@ -36,14 +36,17 @@ wchar_t g_decimalSeparator = L'.';
 // The following defines and Calc_ULong* functions were taken from
 // https://github.com/dotnet/coreclr/blob/8b1595b74c943b33fa794e63e440e6f4c9679478/src/pal/inc/rt/intsafe.h
 // under MIT License
+// See also
+// * https://docs.microsoft.com/en-us/cpp/preprocessor/predefined-macros
+// * https://sourceforge.net/p/predef/wiki/Architectures/
 #if defined(MIDL_PASS) || defined(RC_INVOKED) || defined(_M_CEE_PURE) \
-    || defined(_M_AMD64) || defined(__ARM_ARCH) || defined(__x86_64__)
+    || defined(_M_AMD64) || defined(__ARM_ARCH) || defined(__x86_64__) || defined(_M_ARM64)
 
 #ifndef Calc_UInt32x32To64
 #define Calc_UInt32x32To64(a, b) ((uint64_t)((uint32_t)(a)) * (uint64_t)((uint32_t)(b)))
 #endif
 
-#elif defined(_M_IX86) || defined(__i386__)
+#elif defined(_M_IX86) || defined(__i386__) || defined(_M_ARM)
 
 #ifndef Calc_UInt32x32To64
 #define Calc_UInt32x32To64(a, b) (uint64_t)((uint64_t)(uint32_t)(a) * (uint32_t)(b))
