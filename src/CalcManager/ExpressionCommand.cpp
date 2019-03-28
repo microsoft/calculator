@@ -75,19 +75,19 @@ void CUnaryCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
 CBinaryCommand::CBinaryCommand(int command) :m_command(command)
 {}
 
-void CBinaryCommand::SetCommand(int command) 
-{ 
-    m_command = command; 
+void CBinaryCommand::SetCommand(int command)
+{
+    m_command = command;
 }
 
 int CBinaryCommand::GetCommand() const
-{ 
-    return m_command; 
+{
+    return m_command;
 }
 
 CalculationManager::CommandType CBinaryCommand::GetCommandType() const
-{ 
-    return CalculationManager::CommandType::BinaryCommand; 
+{
+    return CalculationManager::CommandType::BinaryCommand;
 }
 
 void CBinaryCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
@@ -98,8 +98,8 @@ void CBinaryCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
 COpndCommand::COpndCommand(shared_ptr<CalculatorVector<int>> const &commands, bool fNegative, bool fDecimal, bool fSciFmt) :
     m_commands(commands),
     m_fNegative(fNegative),
-    m_fDecimal(fDecimal),
     m_fSciFmt(fSciFmt),
+    m_fDecimal(fDecimal),
     m_fInitialized(false),
     m_value{}
 {}
@@ -111,8 +111,8 @@ void COpndCommand::Initialize(Rational const& rat)
 }
 
 const shared_ptr<CalculatorVector<int>> & COpndCommand::GetCommands() const
-{ 
-    return m_commands; 
+{
+    return m_commands;
 }
 
 void COpndCommand::SetCommands(shared_ptr<CalculatorVector<int>> const& commands)
@@ -166,7 +166,7 @@ void COpndCommand::RemoveFromEnd()
     {
         unsigned int nCommands;
         m_commands->GetSize(&nCommands);
-        
+
         if (nCommands == 1)
         {
             ClearAllAndAppendCommand(CalculationManager::Command::Command0);
@@ -185,8 +185,8 @@ void COpndCommand::RemoveFromEnd()
 }
 
 bool COpndCommand::IsNegative() const
-{ 
-    return m_fNegative; 
+{
+    return m_fNegative;
 }
 
 bool COpndCommand::IsSciFmt() const
@@ -195,13 +195,13 @@ bool COpndCommand::IsSciFmt() const
 }
 
 bool COpndCommand::IsDecimalPresent() const
-{ 
-    return m_fDecimal; 
+{
+    return m_fDecimal;
 }
 
 CalculationManager::CommandType COpndCommand::GetCommandType() const
-{ 
-    return CalculationManager::CommandType::OperandCommand; 
+{
+    return CalculationManager::CommandType::OperandCommand;
 }
 
 void COpndCommand::ClearAllAndAppendCommand(CalculationManager::Command command)
@@ -283,7 +283,7 @@ const wstring & COpndCommand::GetToken(wchar_t decimalSymbol)
         m_token.clear();
         m_token.append(&chZero);
     }
-    
+
     return m_token;
 }
 

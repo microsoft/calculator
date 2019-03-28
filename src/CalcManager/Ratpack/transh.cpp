@@ -80,7 +80,7 @@ void _sinhrat( PRAT *px, int32_t precision)
 
     CREATETAYLOR();
 
-    DUPRAT(pret,*px); 
+    DUPRAT(pret,*px);
     DUPRAT(thisterm,pret);
 
     DUPNUM(n2,num_one);
@@ -159,12 +159,12 @@ void _coshrat( PRAT *px, uint32_t radix, int32_t precision)
 
     CREATETAYLOR();
 
-    pret->pp=longtonum( 1L, radix);
-    pret->pq=longtonum( 1L, radix);
+    pret->pp=i32tonum( 1L, radix);
+    pret->pq=i32tonum( 1L, radix);
 
     DUPRAT(thisterm,pret)
 
-    n2=longtonum(0L, radix);
+    n2=i32tonum(0L, radix);
 
     do    {
         NEXTTERM(xx,INC(n2) DIVNUM(n2) INC(n2) DIVNUM(n2), precision);
@@ -194,7 +194,7 @@ void coshrat( PRAT *px, uint32_t radix, int32_t precision)
         {
         _coshrat( px, radix, precision);
         }
-    // Since *px might be epsilon below 1 due to TRIMIT 
+    // Since *px might be epsilon below 1 due to TRIMIT
     // we need this trick here.
     if ( rat_lt(*px, rat_one, precision) )
         {

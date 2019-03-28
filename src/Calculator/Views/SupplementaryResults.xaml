@@ -80,7 +80,7 @@
             <Setter Property="ItemsPanel">
                 <Setter.Value>
                     <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
+                        <local:SupplementaryResultNoOverflowStackPanel/>
                     </ItemsPanelTemplate>
                 </Setter.Value>
             </Setter>
@@ -102,6 +102,6 @@
                                             Style="{ThemeResource SupplementaryValuesStyle}"
                                             IsTextScaleFactorEnabled="False"
                                             ItemTemplateSelector="{StaticResource ResultTemplateSelector}"
-                                            LayoutUpdated="OnSupplementaryValuesLayoutUpdated"/>
+                                            ItemsSource="{x:Bind Results, Mode=OneWay}"/>
     </StackPanel>
 </UserControl>

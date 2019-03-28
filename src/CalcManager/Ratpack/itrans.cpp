@@ -69,13 +69,13 @@ void _asinrat( PRAT *px, int32_t precision)
 
 {
     CREATETAYLOR();
-    DUPRAT(pret,*px); 
+    DUPRAT(pret,*px);
     DUPRAT(thisterm,*px);
     DUPNUM(n2,num_one);
 
     do
         {
-        NEXTTERM(xx,MULNUM(n2) MULNUM(n2) 
+        NEXTTERM(xx,MULNUM(n2) MULNUM(n2)
             INC(n2) DIVNUM(n2) INC(n2) DIVNUM(n2), precision);
         }
     while ( !SMALL_ENOUGH_RAT( thisterm, precision) );
@@ -92,7 +92,7 @@ void asinanglerat( _Inout_ PRAT *pa, ANGLE_TYPE angletype, uint32_t radix, int32
 void asinrat( PRAT *px, uint32_t radix, int32_t precision)
 
 {
-    long sgn;
+    int32_t sgn;
     PRAT pret= nullptr;
     PRAT phack= nullptr;
 
@@ -100,7 +100,7 @@ void asinrat( PRAT *px, uint32_t radix, int32_t precision)
 
     (*px)->pp->sign = 1;
     (*px)->pq->sign = 1;
-    
+
     // Avoid the really bad part of the asin curve near +/-1.
     DUPRAT(phack,*px);
     subrat(&phack, rat_one, precision);
@@ -185,15 +185,15 @@ void _acosrat( PRAT *px, int32_t precision)
 {
     CREATETAYLOR();
 
-    createrat(thisterm); 
-    thisterm->pp=longtonum( 1L, BASEX );
-    thisterm->pq=longtonum( 1L, BASEX ); 
+    createrat(thisterm);
+    thisterm->pp=i32tonum( 1L, BASEX );
+    thisterm->pq=i32tonum( 1L, BASEX );
 
     DUPNUM(n2,num_one);
 
     do
         {
-        NEXTTERM(xx,MULNUM(n2) MULNUM(n2) 
+        NEXTTERM(xx,MULNUM(n2) MULNUM(n2)
             INC(n2) DIVNUM(n2) INC(n2) DIVNUM(n2), precision);
         }
     while ( !SMALL_ENOUGH_RAT( thisterm, precision) );
@@ -204,13 +204,13 @@ void _acosrat( PRAT *px, int32_t precision)
 void acosrat( PRAT *px, uint32_t radix, int32_t precision)
 
 {
-    long sgn;
+    int32_t sgn;
 
     sgn = (*px)->pp->sign*(*px)->pq->sign;
 
     (*px)->pp->sign = 1;
     (*px)->pq->sign = 1;
-    
+
     if ( rat_equ( *px, rat_one, precision) )
         {
         if ( sgn == -1 )
@@ -274,7 +274,7 @@ void _atanrat( PRAT *px, int32_t precision)
 {
     CREATETAYLOR();
 
-    DUPRAT(pret,*px); 
+    DUPRAT(pret,*px);
     DUPRAT(thisterm,*px);
 
     DUPNUM(n2,num_one);
@@ -291,14 +291,14 @@ void _atanrat( PRAT *px, int32_t precision)
 void atanrat( PRAT *px, uint32_t radix, int32_t precision)
 
 {
-    long sgn;
+    int32_t sgn;
     PRAT tmpx= nullptr;
 
     sgn = (*px)->pp->sign * (*px)->pq->sign;
 
     (*px)->pp->sign = 1;
     (*px)->pq->sign = 1;
-    
+
     if ( rat_gt( (*px), pt_eight_five, precision) )
         {
         if ( rat_gt( (*px), rat_two, precision) )
@@ -314,7 +314,7 @@ void atanrat( PRAT *px, uint32_t radix, int32_t precision)
             subrat(px, tmpx, precision);
             destroyrat( tmpx );
             }
-        else 
+        else
             {
             (*px)->pp->sign = sgn;
             DUPRAT(tmpx,*px);

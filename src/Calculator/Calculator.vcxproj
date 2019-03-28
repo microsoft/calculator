@@ -15,6 +15,10 @@
     <AppxOSMaxVersionTestedReplaceManifestVersion>false</AppxOSMaxVersionTestedReplaceManifestVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <AppxDefaultResourceQualifierUAP_Contrast>black</AppxDefaultResourceQualifierUAP_Contrast>
+    <AppxBundle>Always</AppxBundle>
+    <PackageCertificateKeyFile>TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <!-- This has to be exactly in this place for this to work -->
@@ -126,16 +130,6 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Condition="Exists('TemporaryKey.pfx')">
-    <PackageCertificateKeyFile>TemporaryKey.pfx</PackageCertificateKeyFile>
-    <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
-  </PropertyGroup>
-  <PropertyGroup Condition="!Exists('TemporaryKey.pfx')">
-    <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
-    <AppxBundle>Never</AppxBundle>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /await /std:c++17 </AdditionalOptions>
@@ -257,6 +251,7 @@
     <ClInclude Include="Converters\ItemSizeToVisibilityConverter.h" />
     <ClInclude Include="Converters\RadixToStringConverter.h" />
     <ClInclude Include="Converters\VisibilityNegationConverter.h" />
+    <ClInclude Include="Controls\HorizontalNoOverflowStackPanel.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -360,7 +355,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup Condition="Exists('TemporaryKey.pfx')">
+  <ItemGroup>
     <None Include="TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -390,6 +385,7 @@
     <ClCompile Include="Converters\ItemSizeToVisibilityConverter.cpp" />
     <ClCompile Include="Converters\RadixToStringConverter.cpp" />
     <ClCompile Include="Converters\VisibilityNegationConverter.cpp" />
+    <ClCompile Include="Controls\HorizontalNoOverflowStackPanel.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -459,142 +455,138 @@
     <ClCompile Include="WindowFrameService.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Resources\af-ZA\CEngineStrings.resw" Condition="Exists('Resources\af-ZA\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\af-ZA\Resources.resw" Condition="Exists('Resources\af-ZA\Resources.resw')" />
-    <PRIResource Include="Resources\am-et\CEngineStrings.resw" Condition="Exists('Resources\am-et\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\am-et\Resources.resw" Condition="Exists('Resources\am-et\Resources.resw')" />
-    <PRIResource Include="Resources\ar-sa\CEngineStrings.resw" Condition="Exists('Resources\ar-sa\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\ar-sa\Resources.resw" Condition="Exists('Resources\ar-sa\Resources.resw')" />
-    <PRIResource Include="Resources\az-Latn-AZ\CEngineStrings.resw" Condition="Exists('Resources\az-Latn-AZ\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\az-Latn-AZ\Resources.resw" Condition="Exists('Resources\az-Latn-AZ\Resources.resw')" />
-    <PRIResource Include="Resources\be-BY\CEngineStrings.resw" Condition="Exists('Resources\be-BY\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\be-BY\Resources.resw" Condition="Exists('Resources\be-BY\Resources.resw')" />
-    <PRIResource Include="Resources\bg-BG\CEngineStrings.resw" Condition="Exists('Resources\bg-BG\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\bg-BG\Resources.resw" Condition="Exists('Resources\bg-BG\Resources.resw')" />
-    <PRIResource Include="Resources\bn-BD\CEngineStrings.resw" Condition="Exists('Resources\bn-BD\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\bn-BD\Resources.resw" Condition="Exists('Resources\bn-BD\Resources.resw')" />
-    <PRIResource Include="Resources\ca-es\CEngineStrings.resw" Condition="Exists('Resources\ca-es\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\ca-es\Resources.resw" Condition="Exists('Resources\ca-es\Resources.resw')" />
-    <PRIResource Include="Resources\cs-cz\CEngineStrings.resw" Condition="Exists('Resources\cs-cz\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\cs-cz\Resources.resw" Condition="Exists('Resources\cs-cz\Resources.resw')" />
-    <PRIResource Include="Resources\da-DK\CEngineStrings.resw" Condition="Exists('Resources\da-DK\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\da-DK\Resources.resw" Condition="Exists('Resources\da-DK\Resources.resw')" />
-    <PRIResource Include="Resources\de-de\CEngineStrings.resw" Condition="Exists('Resources\de-de\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\de-de\Resources.resw" Condition="Exists('Resources\de-de\Resources.resw')" />
-    <PRIResource Include="Resources\el-GR\CEngineStrings.resw" Condition="Exists('Resources\el-GR\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\el-GR\Resources.resw" Condition="Exists('Resources\el-GR\Resources.resw')" />
-    <PRIResource Include="Resources\en-gb\CEngineStrings.resw" Condition="Exists('Resources\en-gb\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\en-gb\Resources.resw" Condition="Exists('Resources\en-gb\Resources.resw')" />
+    <PRIResource Include="Resources\af-ZA\CEngineStrings.resw" />
+    <PRIResource Include="Resources\af-ZA\Resources.resw" />
+    <PRIResource Include="Resources\am-et\CEngineStrings.resw" />
+    <PRIResource Include="Resources\am-et\Resources.resw" />
+    <PRIResource Include="Resources\ar-sa\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ar-sa\Resources.resw" />
+    <PRIResource Include="Resources\az-Latn-AZ\CEngineStrings.resw" />
+    <PRIResource Include="Resources\az-Latn-AZ\Resources.resw" />
+    <PRIResource Include="Resources\be-BY\CEngineStrings.resw" />
+    <PRIResource Include="Resources\be-BY\Resources.resw" />
+    <PRIResource Include="Resources\bg-BG\CEngineStrings.resw" />
+    <PRIResource Include="Resources\bg-BG\Resources.resw" />
+    <PRIResource Include="Resources\bn-BD\CEngineStrings.resw" />
+    <PRIResource Include="Resources\bn-BD\Resources.resw" />
+    <PRIResource Include="Resources\ca-es\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ca-es\Resources.resw" />
+    <PRIResource Include="Resources\cs-cz\CEngineStrings.resw" />
+    <PRIResource Include="Resources\cs-cz\Resources.resw" />
+    <PRIResource Include="Resources\da-DK\CEngineStrings.resw" />
+    <PRIResource Include="Resources\da-DK\Resources.resw" />
+    <PRIResource Include="Resources\de-de\CEngineStrings.resw" />
+    <PRIResource Include="Resources\de-de\Resources.resw" />
+    <PRIResource Include="Resources\el-GR\CEngineStrings.resw" />
+    <PRIResource Include="Resources\el-GR\Resources.resw" />
+    <PRIResource Include="Resources\en-gb\CEngineStrings.resw" />
+    <PRIResource Include="Resources\en-gb\Resources.resw" />
     <PRIResource Include="Resources\en-US\CEngineStrings.resw" />
     <PRIResource Include="Resources\en-US\Resources.resw">
       <SubType>Designer</SubType>
     </PRIResource>
-    <PRIResource Include="Resources\es-es\CEngineStrings.resw" Condition="Exists('Resources\es-es\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\es-es\Resources.resw" Condition="Exists('Resources\es-es\Resources.resw')" />
-    <PRIResource Include="Resources\es-mx\CEngineStrings.resw" Condition="Exists('Resources\es-mx\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\es-mx\resources.resw" Condition="Exists('Resources\es-mx\Resources.resw')" />
-    <PRIResource Include="Resources\et-EE\CEngineStrings.resw" Condition="Exists('Resources\et-EE\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\et-EE\Resources.resw" Condition="Exists('Resources\et-EE\Resources.resw')" />
-    <PRIResource Include="Resources\eu-ES\CEngineStrings.resw" Condition="Exists('Resources\eu-ES\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\eu-ES\Resources.resw" Condition="Exists('Resources\eu-ES\Resources.resw')" />
-    <PRIResource Include="Resources\fa-IR\CEngineStrings.resw" Condition="Exists('Resources\fa-IR\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\fa-IR\Resources.resw" Condition="Exists('Resources\fa-IR\Resources.resw')" />
-    <PRIResource Include="Resources\fi-fi\CEngineStrings.resw" Condition="Exists('Resources\fi-fi\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\fi-fi\Resources.resw" Condition="Exists('Resources\fi-fi\Resources.resw')" />
-    <PRIResource Include="Resources\fil-PH\CEngineStrings.resw" Condition="Exists('Resources\fil-PH\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\fil-PH\Resources.resw" Condition="Exists('Resources\fil-PH\Resources.resw')" />
-    <PRIResource Include="Resources\fr-ca\CEngineStrings.resw" Condition="Exists('Resources\fr-ca\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\fr-ca\resources.resw" Condition="Exists('Resources\fr-ca\Resources.resw')" />
-    <PRIResource Include="Resources\fr-fr\CEngineStrings.resw" Condition="Exists('Resources\fr-fr\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\fr-fr\Resources.resw" Condition="Exists('Resources\fr-fr\Resources.resw')" />
-    <PRIResource Include="Resources\gl-ES\CEngineStrings.resw" Condition="Exists('Resources\gl-ES\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\gl-ES\Resources.resw" Condition="Exists('Resources\gl-ES\Resources.resw')" />
-    <PRIResource Include="Resources\ha-Latn-NG\CEngineStrings.resw" Condition="Exists('Resources\ha-Latn-NG\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\ha-Latn-NG\Resources.resw" Condition="Exists('Resources\ha-Latn-NG\Resources.resw')" />
-    <PRIResource Include="Resources\he-IL\CEngineStrings.resw" Condition="Exists('Resources\he-IL\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\he-IL\Resources.resw" Condition="Exists('Resources\he-IL\Resources.resw')" />
-    <PRIResource Include="Resources\hi-in\CEngineStrings.resw" Condition="Exists('Resources\hi-in\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\hi-in\Resources.resw" Condition="Exists('Resources\hi-in\Resources.resw')" />
-    <PRIResource Include="Resources\hr-HR\CEngineStrings.resw" Condition="Exists('Resources\hr-HR\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\hr-HR\Resources.resw" Condition="Exists('Resources\hr-HR\Resources.resw')" />
-    <PRIResource Include="Resources\hu-HU\CEngineStrings.resw" Condition="Exists('Resources\hu-HU\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\hu-HU\Resources.resw" Condition="Exists('Resources\hu-HU\Resources.resw')" />
-    <PRIResource Include="Resources\id-ID\CEngineStrings.resw" Condition="Exists('Resources\id-ID\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\id-ID\Resources.resw" Condition="Exists('Resources\id-ID\Resources.resw')" />
-    <PRIResource Include="Resources\is-IS\CEngineStrings.resw" Condition="Exists('Resources\is-IS\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\is-IS\Resources.resw" Condition="Exists('Resources\is-IS\Resources.resw')" />
-    <PRIResource Include="Resources\it-it\CEngineStrings.resw" Condition="Exists('Resources\it-it\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\it-it\Resources.resw" Condition="Exists('Resources\it-it\Resources.resw')" />
-    <PRIResource Include="Resources\ja-jp\CEngineStrings.resw" Condition="Exists('Resources\ja-jp\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\ja-jp\Resources.resw" Condition="Exists('Resources\ja-jp\Resources.resw')" />
-    <PRIResource Include="Resources\kk-KZ\CEngineStrings.resw" Condition="Exists('Resources\kk-KZ\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\kk-KZ\Resources.resw" Condition="Exists('Resources\kk-KZ\Resources.resw')" />
-    <PRIResource Include="Resources\km-KH\CEngineStrings.resw" Condition="Exists('Resources\km-KH\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\km-KH\Resources.resw" Condition="Exists('Resources\km-KH\Resources.resw')" />
-    <PRIResource Include="Resources\kn-IN\CEngineStrings.resw" Condition="Exists('Resources\kn-IN\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\kn-IN\Resources.resw" Condition="Exists('Resources\kn-IN\Resources.resw')" />
-    <PRIResource Include="Resources\ko-kr\CEngineStrings.resw" Condition="Exists('Resources\ko-kr\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\ko-kr\Resources.resw" Condition="Exists('Resources\ko-kr\Resources.resw')" />
-    <PRIResource Include="Resources\lo-LA\CEngineStrings.resw" Condition="Exists('Resources\lo-LA\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\lo-LA\Resources.resw" Condition="Exists('Resources\lo-LA\Resources.resw')" />
-    <PRIResource Include="Resources\lt-LT\CEngineStrings.resw" Condition="Exists('Resources\lt-LT\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\lt-LT\Resources.resw" Condition="Exists('Resources\lt-LT\Resources.resw')" />
-    <PRIResource Include="Resources\lv-LV\CEngineStrings.resw" Condition="Exists('Resources\lv-LV\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\lv-LV\Resources.resw" Condition="Exists('Resources\lv-LV\Resources.resw')" />
-    <PRIResource Include="Resources\mk-MK\CEngineStrings.resw" Condition="Exists('Resources\mk-MK\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\mk-MK\Resources.resw" Condition="Exists('Resources\mk-MK\Resources.resw')" />
-    <PRIResource Include="Resources\ml-IN\CEngineStrings.resw" Condition="Exists('Resources\ml-IN\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\ml-IN\Resources.resw" Condition="Exists('Resources\ml-IN\Resources.resw')" />
-    <PRIResource Include="Resources\ms-MY\CEngineStrings.resw" Condition="Exists('Resources\ms-MY\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\ms-MY\Resources.resw" Condition="Exists('Resources\ms-MY\Resources.resw')" />
-    <PRIResource Include="Resources\nb-NO\CEngineStrings.resw" Condition="Exists('Resources\nb-NO\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\nb-NO\Resources.resw" Condition="Exists('Resources\nb-NO\Resources.resw')" />
-    <PRIResource Include="Resources\nl-nl\CEngineStrings.resw" Condition="Exists('Resources\nl-nl\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\nl-nl\Resources.resw" Condition="Exists('Resources\nl-nl\Resources.resw')" />
-    <PRIResource Include="Resources\pl-pl\CEngineStrings.resw" Condition="Exists('Resources\pl-pl\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\pl-pl\Resources.resw" Condition="Exists('Resources\pl-pl\Resources.resw')" />
-    <PRIResource Include="Resources\pt-br\CEngineStrings.resw" Condition="Exists('Resources\pt-br\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\pt-br\Resources.resw" Condition="Exists('Resources\pt-br\Resources.resw')" />
-    <PRIResource Include="Resources\pt-PT\CEngineStrings.resw" Condition="Exists('Resources\pt-PT\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\pt-PT\Resources.resw" Condition="Exists('Resources\pt-PT\Resources.resw')" />
-    <PRIResource Include="Resources\qps-plocm\CEngineStrings.resw" Condition="Exists('Resources\qps-plocm\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\qps-plocm\Resources.resw" Condition="Exists('Resources\qps-plocm\Resources.resw')" />
-    <PRIResource Include="Resources\qps-ploc\CEngineStrings.resw" Condition="Exists('Resources\qps-ploc\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\qps-ploc\Resources.resw" Condition="Exists('Resources\qps-ploc\Resources.resw')" />
-    <PRIResource Include="Resources\ro-RO\CEngineStrings.resw" Condition="Exists('Resources\ro-RO\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\ro-RO\Resources.resw" Condition="Exists('Resources\ro-RO\Resources.resw')" />
-    <PRIResource Include="Resources\ru-ru\CEngineStrings.resw" Condition="Exists('Resources\ru-ru\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\ru-ru\Resources.resw" Condition="Exists('Resources\ru-ru\Resources.resw')" />
-    <PRIResource Include="Resources\sk-SK\CEngineStrings.resw" Condition="Exists('Resources\sk-SK\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\sk-SK\Resources.resw" Condition="Exists('Resources\sk-SK\Resources.resw')" />
-    <PRIResource Include="Resources\sl-SI\CEngineStrings.resw" Condition="Exists('Resources\sl-SI\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\sl-SI\Resources.resw" Condition="Exists('Resources\sl-SI\Resources.resw')" />
-    <PRIResource Include="Resources\sq-AL\CEngineStrings.resw" Condition="Exists('Resources\sq-AL\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\sq-AL\Resources.resw" Condition="Exists('Resources\sq-AL\Resources.resw')" />
-    <PRIResource Include="Resources\sr-Latn-RS\CEngineStrings.resw" Condition="Exists('Resources\sr-Latn-RS\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\sr-Latn-RS\Resources.resw" Condition="Exists('Resources\sr-Latn-RS\Resources.resw')" />
-    <PRIResource Include="Resources\sv-se\CEngineStrings.resw" Condition="Exists('Resources\sv-se\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\sv-se\Resources.resw" Condition="Exists('Resources\sv-se\Resources.resw')" />
-    <PRIResource Include="Resources\sw-KE\CEngineStrings.resw" Condition="Exists('Resources\sw-KE\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\sw-KE\Resources.resw" Condition="Exists('Resources\sw-KE\Resources.resw')" />
-    <PRIResource Include="Resources\ta-IN\CEngineStrings.resw" Condition="Exists('Resources\ta-IN\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\ta-IN\Resources.resw" Condition="Exists('Resources\ta-IN\Resources.resw')" />
-    <PRIResource Include="Resources\te-IN\CEngineStrings.resw" Condition="Exists('Resources\te-IN\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\te-IN\Resources.resw" Condition="Exists('Resources\te-IN\Resources.resw')" />
-    <PRIResource Include="Resources\th-th\CEngineStrings.resw" Condition="Exists('Resources\th-th\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\th-th\Resources.resw" Condition="Exists('Resources\th-th\Resources.resw')" />
-    <PRIResource Include="Resources\tr-tr\CEngineStrings.resw" Condition="Exists('Resources\tr-tr\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\tr-tr\Resources.resw" Condition="Exists('Resources\tr-tr\Resources.resw')" />
-    <PRIResource Include="Resources\uk-UA\CEngineStrings.resw" Condition="Exists('Resources\uk-UA\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\uk-UA\Resources.resw" Condition="Exists('Resources\uk-UA\Resources.resw')" />
-    <PRIResource Include="Resources\uz-Latn-UZ\CEngineStrings.resw" Condition="Exists('Resources\uz-Latn-UZ\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\uz-Latn-UZ\Resources.resw" Condition="Exists('Resources\uz-Latn-UZ\Resources.resw')" />
-    <PRIResource Include="Resources\vi-vn\CEngineStrings.resw" Condition="Exists('Resources\vi-vn\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\vi-vn\Resources.resw" Condition="Exists('Resources\vi-vn\Resources.resw')" />
-    <PRIResource Include="Resources\zh-cn\CEngineStrings.resw" Condition="Exists('Resources\zh-cn\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\zh-cn\Resources.resw" Condition="Exists('Resources\zh-cn\Resources.resw')" />
-    <PRIResource Include="Resources\zh-tw\CEngineStrings.resw" Condition="Exists('Resources\zh-tw\CEngineStrings.resw')" />
-    <PRIResource Include="Resources\zh-tw\Resources.resw" Condition="Exists('Resources\zh-tw\Resources.resw')" />
+    <PRIResource Include="Resources\es-es\CEngineStrings.resw" />
+    <PRIResource Include="Resources\es-es\Resources.resw" />
+    <PRIResource Include="Resources\es-mx\CEngineStrings.resw" />
+    <PRIResource Include="Resources\es-mx\resources.resw" />
+    <PRIResource Include="Resources\et-EE\CEngineStrings.resw" />
+    <PRIResource Include="Resources\et-EE\Resources.resw" />
+    <PRIResource Include="Resources\eu-ES\CEngineStrings.resw" />
+    <PRIResource Include="Resources\eu-ES\Resources.resw" />
+    <PRIResource Include="Resources\fa-IR\CEngineStrings.resw" />
+    <PRIResource Include="Resources\fa-IR\Resources.resw" />
+    <PRIResource Include="Resources\fi-fi\CEngineStrings.resw" />
+    <PRIResource Include="Resources\fi-fi\Resources.resw" />
+    <PRIResource Include="Resources\fil-PH\CEngineStrings.resw" />
+    <PRIResource Include="Resources\fil-PH\Resources.resw" />
+    <PRIResource Include="Resources\fr-ca\CEngineStrings.resw" />
+    <PRIResource Include="Resources\fr-ca\resources.resw" />
+    <PRIResource Include="Resources\fr-fr\CEngineStrings.resw" />
+    <PRIResource Include="Resources\fr-fr\Resources.resw" />
+    <PRIResource Include="Resources\gl-ES\CEngineStrings.resw" />
+    <PRIResource Include="Resources\gl-ES\Resources.resw" />
+    <PRIResource Include="Resources\ha-Latn-NG\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ha-Latn-NG\Resources.resw" />
+    <PRIResource Include="Resources\he-IL\CEngineStrings.resw" />
+    <PRIResource Include="Resources\he-IL\Resources.resw" />
+    <PRIResource Include="Resources\hi-in\CEngineStrings.resw" />
+    <PRIResource Include="Resources\hi-in\Resources.resw" />
+    <PRIResource Include="Resources\hr-HR\CEngineStrings.resw" />
+    <PRIResource Include="Resources\hr-HR\Resources.resw" />
+    <PRIResource Include="Resources\hu-HU\CEngineStrings.resw" />
+    <PRIResource Include="Resources\hu-HU\Resources.resw" />
+    <PRIResource Include="Resources\id-ID\CEngineStrings.resw" />
+    <PRIResource Include="Resources\id-ID\Resources.resw" />
+    <PRIResource Include="Resources\is-IS\CEngineStrings.resw" />
+    <PRIResource Include="Resources\is-IS\Resources.resw" />
+    <PRIResource Include="Resources\it-it\CEngineStrings.resw" />
+    <PRIResource Include="Resources\it-it\Resources.resw" />
+    <PRIResource Include="Resources\ja-jp\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ja-jp\Resources.resw" />
+    <PRIResource Include="Resources\kk-KZ\CEngineStrings.resw" />
+    <PRIResource Include="Resources\kk-KZ\Resources.resw" />
+    <PRIResource Include="Resources\km-KH\CEngineStrings.resw" />
+    <PRIResource Include="Resources\km-KH\Resources.resw" />
+    <PRIResource Include="Resources\kn-IN\CEngineStrings.resw" />
+    <PRIResource Include="Resources\kn-IN\Resources.resw" />
+    <PRIResource Include="Resources\ko-kr\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ko-kr\Resources.resw" />
+    <PRIResource Include="Resources\lo-LA\CEngineStrings.resw" />
+    <PRIResource Include="Resources\lo-LA\Resources.resw" />
+    <PRIResource Include="Resources\lt-LT\CEngineStrings.resw" />
+    <PRIResource Include="Resources\lt-LT\Resources.resw" />
+    <PRIResource Include="Resources\lv-LV\CEngineStrings.resw" />
+    <PRIResource Include="Resources\lv-LV\Resources.resw" />
+    <PRIResource Include="Resources\mk-MK\CEngineStrings.resw" />
+    <PRIResource Include="Resources\mk-MK\Resources.resw" />
+    <PRIResource Include="Resources\ml-IN\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ml-IN\Resources.resw" />
+    <PRIResource Include="Resources\ms-MY\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ms-MY\Resources.resw" />
+    <PRIResource Include="Resources\nb-NO\CEngineStrings.resw" />
+    <PRIResource Include="Resources\nb-NO\Resources.resw" />
+    <PRIResource Include="Resources\nl-nl\CEngineStrings.resw" />
+    <PRIResource Include="Resources\nl-nl\Resources.resw" />
+    <PRIResource Include="Resources\pl-pl\CEngineStrings.resw" />
+    <PRIResource Include="Resources\pl-pl\Resources.resw" />
+    <PRIResource Include="Resources\pt-br\CEngineStrings.resw" />
+    <PRIResource Include="Resources\pt-br\Resources.resw" />
+    <PRIResource Include="Resources\pt-PT\CEngineStrings.resw" />
+    <PRIResource Include="Resources\pt-PT\Resources.resw" />
+    <PRIResource Include="Resources\ro-RO\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ro-RO\Resources.resw" />
+    <PRIResource Include="Resources\ru-ru\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ru-ru\Resources.resw" />
+    <PRIResource Include="Resources\sk-SK\CEngineStrings.resw" />
+    <PRIResource Include="Resources\sk-SK\Resources.resw" />
+    <PRIResource Include="Resources\sl-SI\CEngineStrings.resw" />
+    <PRIResource Include="Resources\sl-SI\Resources.resw" />
+    <PRIResource Include="Resources\sq-AL\CEngineStrings.resw" />
+    <PRIResource Include="Resources\sq-AL\Resources.resw" />
+    <PRIResource Include="Resources\sr-Latn-RS\CEngineStrings.resw" />
+    <PRIResource Include="Resources\sr-Latn-RS\Resources.resw" />
+    <PRIResource Include="Resources\sv-se\CEngineStrings.resw" />
+    <PRIResource Include="Resources\sv-se\Resources.resw" />
+    <PRIResource Include="Resources\sw-KE\CEngineStrings.resw" />
+    <PRIResource Include="Resources\sw-KE\Resources.resw" />
+    <PRIResource Include="Resources\ta-IN\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ta-IN\Resources.resw" />
+    <PRIResource Include="Resources\te-IN\CEngineStrings.resw" />
+    <PRIResource Include="Resources\te-IN\Resources.resw" />
+    <PRIResource Include="Resources\th-th\CEngineStrings.resw" />
+    <PRIResource Include="Resources\th-th\Resources.resw" />
+    <PRIResource Include="Resources\tr-tr\CEngineStrings.resw" />
+    <PRIResource Include="Resources\tr-tr\Resources.resw" />
+    <PRIResource Include="Resources\uk-UA\CEngineStrings.resw" />
+    <PRIResource Include="Resources\uk-UA\Resources.resw" />
+    <PRIResource Include="Resources\uz-Latn-UZ\CEngineStrings.resw" />
+    <PRIResource Include="Resources\uz-Latn-UZ\Resources.resw" />
+    <PRIResource Include="Resources\vi-vn\CEngineStrings.resw" />
+    <PRIResource Include="Resources\vi-vn\Resources.resw" />
+    <PRIResource Include="Resources\zh-cn\CEngineStrings.resw" />
+    <PRIResource Include="Resources\zh-cn\Resources.resw" />
+    <PRIResource Include="Resources\zh-tw\CEngineStrings.resw" />
+    <PRIResource Include="Resources\zh-tw\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\CalculatorAppList.contrast-black_scale-100.png" />
