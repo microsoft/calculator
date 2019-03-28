@@ -18,6 +18,10 @@ jobs:
   parameters:
     platform: x64
 
+- template: ./templates/clang-format.yaml
+  parameters:
+    platform: x64
+
 - template: ./templates/build-app-public.yaml
   parameters:
     platform: x86

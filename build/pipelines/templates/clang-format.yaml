@@ -1,0 +1,37 @@
+# Job for running clang-format on sources.
+
+parameters:
+  platform: ''
+  condition: ''
+
+jobs:
+- job: Format${{ parameters.platform }}
+  displayName: clang-format
+  pool:
+    vmImage: 'Ubuntu-16.04'
+
+  steps:
+  - script: |
+      # Download a recent, static build of clang-format. Be quiet, but don't hide errors.
+      wget --no-verbose https://github.com/angular/clang-format/raw/master/bin/linux_x64/clang-format
+      chmod a+x clang-format
+      # Make sure it identifies itself
+      ./clang-format --version
+      # Parse full lines
+      export IFS=$'\n'
+      # For each file in repository with name ending with ".cpp" ...
+      for file in $(git ls-files | grep \\.cpp$); do
+          # ... print its name, in case clang-format throws some errors ...
+          echo Formatting "$file"
+          # ... and format it in place, so git can pick it up.
+          ./clang-format -style=file -i "$file"
+      done
+      # Just some visual separation
+      echo -e "\\n\\n\\n\\tChecking diff...\\n\\n\\n"
+      # Set error mode. Makes bash bail on first non-zero exit code
+      set -e
+      # Print diff, if any and report with exit code.
+      git diff --exit-code
+      # When no diff present, provide status.
+      echo -e "\\tStyle is fine"
+    displayName: 'clang-format'
