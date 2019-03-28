@@ -34,7 +34,7 @@ void OverflowTextBlock::OnApplyTemplate()
 
     m_expressionContainer = safe_cast<ScrollViewer^>(GetTemplateChild("expressionContainer"));
     m_expressionContainer->ChangeView(m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth, nullptr, nullptr);
-
+    m_expressionContainer->ViewChanged += ref new Windows::Foundation::EventHandler<Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs ^>(this, &CalculatorApp::Controls::OverflowTextBlock::OnViewChanged);
     m_scrollLeft = safe_cast<Button^>(GetTemplateChild("scrollLeft"));
     m_scrollRight = safe_cast<Button^>(GetTemplateChild("scrollRight"));
 
@@ -44,12 +44,7 @@ void OverflowTextBlock::OnApplyTemplate()
     m_scrollingLeft = false;
     m_scrollingRight = false;
 
-    auto borderContainer = safe_cast<Border^>(GetTemplateChild("expressionborder"));
-    m_pointerEnteredEventToken = borderContainer->PointerEntered += ref new PointerEventHandler(this, &OverflowTextBlock::OnPointerEntered);
-    m_pointerExitedEventToken = borderContainer->PointerExited += ref new PointerEventHandler(this, &OverflowTextBlock::OnPointerExited);
-
-    m_listView = safe_cast<ListView^>(GetTemplateChild("TokenList"));
-
+    m_itemsControl = safe_cast<ItemsControl^>(GetTemplateChild("TokenList"));
     UpdateAllState();
 }
 
@@ -60,18 +55,19 @@ AutomationPeer^ OverflowTextBlock::OnCreateAutomationPeer()
 
 void OverflowTextBlock::OnTokensUpdatedPropertyChanged(bool /*oldValue*/, bool newValue)
 {
-    if ((m_listView != nullptr) && (newValue))
+    if ((m_expressionContainer != nullptr) && (newValue))
     {
-        unsigned int tokenCount = m_listView->Items->Size;
-        if (tokenCount > 0)
-        {
-            m_listView->UpdateLayout();
-            m_listView->ScrollIntoView(m_listView->Items->GetAt(tokenCount - 1));
-            m_expressionContainer->ChangeView(m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth, nullptr, nullptr);
-        }
+        m_expressionContainer->UpdateLayout();
+        m_expressionContainer->ChangeView(m_expressionContainer->ScrollableWidth, nullptr, nullptr, true);
     }
-    AutomationProperties::SetAccessibilityView(this,
-        m_listView != nullptr && m_listView->Items->Size > 0 ? AccessibilityView::Control : AccessibilityView::Raw);
+    auto newIsAccessibilityViewControl = m_itemsControl != nullptr && m_itemsControl->Items->Size > 0;
+    if (m_isAccessibilityViewControl != newIsAccessibilityViewControl)
+    {
+        m_isAccessibilityViewControl = newIsAccessibilityViewControl;
+        AutomationProperties::SetAccessibilityView(this,
+            newIsAccessibilityViewControl ? AccessibilityView::Control : AccessibilityView::Raw);
+    }
+    UpdateScrollButtons();
 }
 
 void OverflowTextBlock::UpdateAllState()
@@ -128,26 +124,15 @@ void OverflowTextBlock::OnScrollClick(_In_ Object^ sender, _In_ RoutedEventArgs^
     }
 }
 
-void OverflowTextBlock::OnPointerEntered(_In_ Object^, _In_ PointerRoutedEventArgs^ e)
-{
-    if (e->Pointer->PointerDeviceType == PointerDeviceType::Mouse)
-    {
-        UpdateScrollButtons();
-    }
-}
-
-void OverflowTextBlock::OnPointerExited(_In_ Object^, _In_ PointerRoutedEventArgs^ e)
-{
-    if (e->Pointer->PointerDeviceType == PointerDeviceType::Mouse)
-    {
-        UpdateScrollButtons();
-    }
-}
-
 void OverflowTextBlock::UpdateScrollButtons()
 {
+    if (m_itemsControl == nullptr && m_expressionContainer == nullptr)
+    {
+        return;
+    }
+
     // When the width is smaller than the container, don't show any
-    if (m_listView->ActualWidth <= m_expressionContainer->ActualWidth)
+    if (m_itemsControl->ActualWidth <= m_expressionContainer->ActualWidth)
     {
         ShowHideScrollButtons(::Visibility::Collapsed, ::Visibility::Collapsed);
     }
@@ -163,7 +148,10 @@ void OverflowTextBlock::UpdateScrollButtons()
         if (m_scrollingLeft)
         {
             m_scrollingLeft = false;
-            m_scrollRight->Focus(::FocusState::Programmatic);
+            if (m_scrollRight != nullptr)
+            {
+                m_scrollRight->Focus(::FocusState::Programmatic);
+            }
         }
     }
     else // Width is larger than the container and right most part of the number is shown. Should be able to scroll left.
@@ -172,7 +160,10 @@ void OverflowTextBlock::UpdateScrollButtons()
         if (m_scrollingRight)
         {
             m_scrollingRight = false;
-            m_scrollLeft->Focus(::FocusState::Programmatic);
+            if (m_scrollLeft != nullptr)
+            {
+                m_scrollLeft->Focus(::FocusState::Programmatic);
+            }
         }
     }
 }
@@ -198,13 +189,10 @@ void OverflowTextBlock::UnregisterEventHandlers()
     {
         m_scrollRight->Click -= m_scrollRightClickEventToken;
     }
+}
 
-    auto borderContainer = safe_cast<Border^>(GetTemplateChild("expressionborder"));
 
-    // Adding an extra check, in case the returned template is null
-    if (borderContainer != nullptr)
-    {
-        borderContainer->PointerEntered -= m_pointerEnteredEventToken;
-        borderContainer->PointerExited -= m_pointerExitedEventToken;
-    }
+void CalculatorApp::Controls::OverflowTextBlock::OnViewChanged(Platform::Object ^sender, Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs ^args)
+{
+    UpdateScrollButtons();
 }

@@ -44,15 +44,15 @@ namespace CalculatorApp
             double scrollRatio = 0.7;
             bool m_scrollingLeft;
             bool m_scrollingRight;
-            Windows::UI::Xaml::Controls::ListView^ m_listView;
+            bool m_isAccessibilityViewControl;
+            Windows::UI::Xaml::Controls::ItemsControl^ m_itemsControl;
             Windows::UI::Xaml::Controls::ScrollViewer^ m_expressionContainer;
             Windows::UI::Xaml::Controls::Button^ m_scrollLeft;
             Windows::UI::Xaml::Controls::Button^ m_scrollRight;
 
             Windows::Foundation::EventRegistrationToken m_scrollLeftClickEventToken;
             Windows::Foundation::EventRegistrationToken m_scrollRightClickEventToken;
-            Windows::Foundation::EventRegistrationToken m_pointerEnteredEventToken;
-            Windows::Foundation::EventRegistrationToken m_pointerExitedEventToken;
+            void OnViewChanged(Platform::Object ^sender, Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs ^args);
         };
     }
 }

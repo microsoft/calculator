@@ -129,6 +129,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     AreHistoryShortcutsEnabled = true;
     AreProgrammerRadixOperatorsEnabled = false;
 
+    m_ExpressionTokens = ref new Vector<DisplayExpressionToken^>();
     m_tokenPosition = -1;
     m_isLastOperationHistoryLoad = false;
 }
@@ -321,58 +322,65 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<CalculatorVector<
 {
     AreTokensUpdated = false;
 
-    if (m_ExpressionTokens == nullptr)
-    {
-        m_ExpressionTokens = ref new Vector<DisplayExpressionToken^>();
-    }
-    else
-    {
-        m_ExpressionTokens->Clear();
-    }
-
     unsigned int nTokens = 0;
     tokens->GetSize(&nTokens);
+
+    if (nTokens == 0)
+    {
+        m_ExpressionTokens->Clear();
+        return;
+    }
+
     pair <wstring, int> currentToken;
     const auto& localizer = LocalizationSettings::GetInstance();
 
+    const wstring separator = L" ";
     for (unsigned int i = 0; i < nTokens; ++i)
     {
         if (SUCCEEDED(tokens->GetAt(i, &currentToken)))
         {
             Common::TokenType type;
-            const wstring separator = L" ";
             bool isEditable = (currentToken.second == -1) ? false : true;
             localizer.LocalizeDisplayValue(&(currentToken.first));
 
             if (!isEditable)
             {
-                if (currentToken.first == separator)
-                {
-                    type = TokenType::Separator;
-                }
-                else
-                {
-                    type = TokenType::Operator;
-                }
+                type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
             }
-
             else
             {
                 shared_ptr<IExpressionCommand> command;
                 IFTPlatformException(m_commands->GetAt(static_cast<unsigned int>(currentToken.second), &command));
+                type = command->GetCommandType() == CommandType::OperandCommand ? TokenType::Operand : TokenType::Operator;
+            }
 
-                if (command->GetCommandType() == CommandType::OperandCommand)
+            auto currentTokenString = ref new String(currentToken.first.c_str());
+            auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
+            if (i < m_ExpressionTokens->Size)
+            {
+                auto existingItem = m_ExpressionTokens->GetAt(i);
+                if (type == existingItem->Type && expressionToken->Token->Equals(currentTokenString))
                 {
-                    type = TokenType::Operand;
+                    existingItem->TokenPosition = i;
+                    existingItem->IsTokenEditable = isEditable;
+                    existingItem->CommandIndex = expressionToken->CommandIndex;
                 }
                 else
                 {
-                    type = TokenType::Operator;
+                    m_ExpressionTokens->InsertAt(i, expressionToken);
                 }
+                
             }
-            DisplayExpressionToken^ expressionToken = ref new DisplayExpressionToken(ref new String(currentToken.first.c_str()), i, isEditable, type);
-            m_ExpressionTokens->Append(expressionToken);
+            else
+            {
+                m_ExpressionTokens->Append(expressionToken);
+            }
         }
+    }
+
+    while (m_ExpressionTokens->Size != nTokens)
+    {
+        m_ExpressionTokens->RemoveAtEnd();
     }
 }
 
@@ -531,7 +539,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
         {
             if (commandIndex == 0)
             {
-                delete [] temp;
+                delete[] temp;
                 return;
             }
 
@@ -552,7 +560,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
             length = m_selectedExpressionLastData->Length() + 1;
             if (length > 50)
             {
-                delete [] temp;
+                delete[] temp;
                 return;
             }
             for (; i < length; ++i)
@@ -1422,29 +1430,29 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
 
         switch (nOpCode)
         {
-        case static_cast<int>(Command::CommandASIN) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSIN), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandACOS) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOS), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandATAN) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTAN), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandASINH) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSINH), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandACOSH) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOSH), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandATANH) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTANH), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandPOWE) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandLN), true, angleType);
-            break;
-        default:
-            updatedToken = CCalcEngine::OpCodeToUnaryString(nOpCode, false, angleType);
+            case static_cast<int>(Command::CommandASIN) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSIN), true, angleType);
+                break;
+                case static_cast<int>(Command::CommandACOS) :
+                    updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOS), true, angleType);
+                    break;
+                    case static_cast<int>(Command::CommandATAN) :
+                        updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTAN), true, angleType);
+                        break;
+                        case static_cast<int>(Command::CommandASINH) :
+                            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSINH), true, angleType);
+                            break;
+                            case static_cast<int>(Command::CommandACOSH) :
+                                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOSH), true, angleType);
+                                break;
+                                case static_cast<int>(Command::CommandATANH) :
+                                    updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTANH), true, angleType);
+                                    break;
+                                    case static_cast<int>(Command::CommandPOWE) :
+                                        updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandLN), true, angleType);
+                                        break;
+                                    default:
+                                        updatedToken = CCalcEngine::OpCodeToUnaryString(nOpCode, false, angleType);
         }
         if ((token.first.length() > 0) && (token.first[token.first.length() - 1] == L'('))
         {
