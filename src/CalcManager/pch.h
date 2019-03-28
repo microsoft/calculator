@@ -29,13 +29,9 @@
 
 #include <windows.h>
 #include <winerror.h>
-#include <intsafe.h>
 #include <ppltasks.h>
 
 #else
-
-// #include <intsafe.h>
-// #include <ppltasks.h>
 
 #include "winerror_cross_platform.h"
 #include "win_data_types_cross_platform.h"
