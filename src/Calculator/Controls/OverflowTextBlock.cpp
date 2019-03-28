@@ -55,7 +55,7 @@ AutomationPeer^ OverflowTextBlock::OnCreateAutomationPeer()
 
 void OverflowTextBlock::OnTokensUpdatedPropertyChanged(bool /*oldValue*/, bool newValue)
 {
-    if ((m_expressionContainer != nullptr) && (newValue))
+    if (m_expressionContainer != nullptr && newValue)
     {
         m_expressionContainer->UpdateLayout();
         m_expressionContainer->ChangeView(m_expressionContainer->ScrollableWidth, nullptr, nullptr, true);
@@ -126,7 +126,7 @@ void OverflowTextBlock::OnScrollClick(_In_ Object^ sender, _In_ RoutedEventArgs^
 
 void OverflowTextBlock::UpdateScrollButtons()
 {
-    if (m_itemsControl == nullptr && m_expressionContainer == nullptr)
+    if (m_itemsControl == nullptr || m_expressionContainer == nullptr)
     {
         return;
     }
