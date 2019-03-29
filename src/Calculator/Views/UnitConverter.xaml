@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="CalculatorApp.UnitConverter"
+<UserControl x:Class="CalculatorApp.UnitConverter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:automation="using:CalculatorApp.Common.Automation"
@@ -492,9 +492,8 @@
         <Grid x:Name="Value1Container"
               Grid.Row="1"
               Grid.Column="1"
-              HorizontalAlignment="Left"
+              HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
               Style="{ThemeResource ValueContainerStyle}"
-              FlowDirection="{x:Bind LayoutDirection}"
               Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -517,7 +516,6 @@
                                         ContextRequested="OnContextRequested"
                                         DisplayValue="{x:Bind Model.Value1, Mode=OneWay}"
                                         ExpressionVisibility="Collapsed"
-                                        FlowDirection="{x:Bind LayoutDirection}"
                                         IsActive="{Binding Value1Active, Mode=TwoWay}"
                                         KeyDown="OnValueKeyDown"
                                         Selected="OnValueSelected"
@@ -527,6 +525,7 @@
         <ComboBox x:Name="Units1"
                   Grid.Row="2"
                   Grid.Column="1"
+                  HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
                   Style="{ThemeResource ComboStyle}"
                   AutomationProperties.AutomationId="Units1"
                   AutomationProperties.Name="{x:Bind Model.Unit1AutomationName, Mode=OneWay}"
@@ -544,9 +543,8 @@
         <Grid x:Name="Value2Container"
               Grid.Row="3"
               Grid.Column="1"
-              HorizontalAlignment="Left"
+              HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
               Style="{ThemeResource ValueContainerStyle}"
-              FlowDirection="{x:Bind LayoutDirection}"
               Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -570,7 +568,6 @@
                                         ContextRequested="OnContextRequested"
                                         DisplayValue="{x:Bind Model.Value2, Mode=OneWay}"
                                         ExpressionVisibility="Collapsed"
-                                        FlowDirection="{x:Bind LayoutDirection}"
                                         IsActive="{Binding Value2Active, Mode=TwoWay}"
                                         KeyDown="OnValueKeyDown"
                                         Selected="OnValueSelected"
@@ -580,6 +577,7 @@
         <ComboBox x:Name="Units2"
                   Grid.Row="4"
                   Grid.Column="1"
+                  HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
                   Style="{ThemeResource ComboStyle}"
                   AutomationProperties.AutomationId="Units2"
                   AutomationProperties.Name="{x:Bind Model.Unit2AutomationName, Mode=OneWay}"
@@ -598,7 +596,7 @@
                     Grid.Column="1"
                     MinHeight="48"
                     Margin="12,0,6,0"
-                    HorizontalAlignment="Left"
+                    HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
                     VerticalAlignment="Top"
                     FlowDirection="{x:Bind LayoutDirection}"
                     SizeChanged="SupplementaryResultsPanelInGrid_SizeChanged"

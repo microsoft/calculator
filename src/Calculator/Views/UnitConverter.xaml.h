@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 // UnitConverter.xaml.h
@@ -40,6 +40,14 @@ namespace CalculatorApp
             }
         }
 
+        property Windows::UI::Xaml::HorizontalAlignment FlowDirectionHorizontalAlignment
+        {
+            Windows::UI::Xaml::HorizontalAlignment get()
+            {
+                return m_FlowDirectionHorizontalAlignment;
+            }
+        }
+
         void SetDefaultFocus();
 
     private:
@@ -76,6 +84,7 @@ namespace CalculatorApp
         void HideProgressRing();
 
     private:
+        Windows::UI::Xaml::HorizontalAlignment m_FlowDirectionHorizontalAlignment;
         Windows::UI::Xaml::FlowDirection m_layoutDirection;
         Windows::Foundation::EventRegistrationToken m_propertyChangedToken;
         Windows::UI::Xaml::Controls::MenuFlyout^ m_resultsFlyout;
