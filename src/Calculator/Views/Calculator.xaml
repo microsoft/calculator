@@ -193,39 +193,6 @@
             </Setter>
         </Style>
 
-        <!-- ListViewItem Styles -->
-
-        <Style x:Key="ExpressionBaseContainerStyle" TargetType="ListViewItem">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="MinWidth" Value="0"/>
-            <Setter Property="MinHeight" Value="0"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListViewItem">
-                        <ListViewItemPresenter Padding="0"
-                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                               ContentMargin="0"
-                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-                                               PointerOverBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}"
-                                               PointerOverBackgroundMargin="0"
-                                               SelectedBackground="{ThemeResource SystemControlBackgroundAccentBrush}"
-                                               SelectedBorderThickness="0"
-                                               SelectedForeground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"
-                                               SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}"
-                                               SelectedPointerOverBorderBrush="Transparent"
-                                               SelectionCheckMarkVisualEnabled="False"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
         <!-- Calculation Result Styles -->
 
         <Style x:Key="ResultsStyleL"
