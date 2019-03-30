@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //-----------------------------------------------------------------------------
@@ -216,7 +216,7 @@ void factrat( PRAT *px, uint32_t radix, int32_t precision)
 
     // Check for negative integers and throw an error.
     if ( ( zerrat(frac) || ( LOGRATRADIX(frac) <= -precision) ) &&
-        ( (*px)->pp->sign * (*px)->pq->sign == -1 ) )
+        ( SIGN(*px) == -1 ) )
         {
         throw CALC_E_DOMAIN;
         }

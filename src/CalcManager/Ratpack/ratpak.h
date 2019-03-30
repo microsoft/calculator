@@ -148,6 +148,9 @@ extern PRAT rat_min_i32;
 #define LOGNUM2(pnum) ((pnum)->cdigit+(pnum)->exp)
 #define LOGRAT2(prat) (LOGNUM2((prat)->pp)-LOGNUM2((prat)->pq))
 
+// SIGN returns the sign of the rational
+#define SIGN(prat) ((prat)->pp->sign*(prat)->pq->sign)
+
 #if defined( DEBUG_RATPAK )
 //-----------------------------------------------------------------------------
 //
@@ -423,7 +426,8 @@ extern void divnumx( _Inout_ PNUMBER *pa, _In_ PNUMBER b, int32_t precision);
 extern void divrat( _Inout_ PRAT *pa, _In_ PRAT b, int32_t precision);
 extern void fracrat( _Inout_ PRAT *pa , uint32_t radix, int32_t precision);
 extern void factrat( _Inout_ PRAT *pa, uint32_t radix, int32_t precision);
-extern void modrat( _Inout_ PRAT *pa, _In_ PRAT b );
+extern void remrat(_Inout_ PRAT *pa, _In_ PRAT b);
+extern void modrat(_Inout_ PRAT *pa, _In_ PRAT b);
 extern void gcdrat( _Inout_ PRAT *pa, int32_t precision);
 extern void intrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision);
 extern void mulnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix);

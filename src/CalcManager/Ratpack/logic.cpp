@@ -185,34 +185,77 @@ void boolnum( PNUMBER *pa, PNUMBER b, int func )
 
 //-----------------------------------------------------------------------------
 //
+//    FUNCTION: remrat
+//
+//    ARGUMENTS: pointer to a rational a second rational.
+//
+//    RETURN: None, changes pointer.
+//
+//    DESCRIPTION: Calculate the remainder of *pa / b, equivalent of 'pa % b' in C;
+//    NOTE: produces a result that is either zero or has the same sign as the dividend.
+//
+//-----------------------------------------------------------------------------
+
+void remrat(PRAT *pa, PRAT b)
+
+{
+    if (zerrat(b))
+    {
+        throw CALC_E_INDEFINITE;
+    }
+
+    PRAT tmp = nullptr;
+    DUPRAT(tmp, b);
+
+    mulnumx(&((*pa)->pp), tmp->pq);
+    mulnumx(&(tmp->pp), (*pa)->pq);
+    remnum(&((*pa)->pp), tmp->pp, BASEX);
+    mulnumx(&((*pa)->pq), tmp->pq);
+
+    // Get *pa back in the integer over integer form.
+    RENORMALIZE(*pa);
+
+    destroyrat(tmp);
+}
+
+//-----------------------------------------------------------------------------
+//
 //    FUNCTION: modrat
 //
 //    ARGUMENTS: pointer to a rational a second rational.
 //
 //    RETURN: None, changes pointer.
 //
-//    DESCRIPTION: Does the rational equivalent of frac(*pa);
+//    DESCRIPTION: Calculate the remainder of *pa / b, equivalent of 'pa modulo b' in arithmetic
+//    NOTE: produces a result that is either zero or has the same sign as the divisor.
 //
 //-----------------------------------------------------------------------------
 
-void modrat( PRAT *pa, PRAT b )
-
+void modrat(PRAT *pa, PRAT b)
 {
+    //contrary to remrat, modrat(a, 0) must return a
+    if (zerrat(b))
+    {
+        return;
+    }
+
     PRAT tmp = nullptr;
+    DUPRAT(tmp, b);
 
-    if ( zerrat( b ) )
-        {
-        throw CALC_E_INDEFINITE;
-        }
-    DUPRAT(tmp,b);
+    auto needAdjust = (SIGN(*pa) == -1 ? (SIGN(b) == 1) : (SIGN(b) == -1));
 
-    mulnumx( &((*pa)->pp), tmp->pq );
-    mulnumx( &(tmp->pp), (*pa)->pq );
-    remnum( &((*pa)->pp), tmp->pp, BASEX );
-    mulnumx( &((*pa)->pq), tmp->pq );
+    mulnumx(&((*pa)->pp), tmp->pq);
+    mulnumx(&(tmp->pp), (*pa)->pq);
+    remnum(&((*pa)->pp), tmp->pp, BASEX);
+    mulnumx(&((*pa)->pq), tmp->pq);
+
+    if (needAdjust)
+    {
+        addrat(pa, b, BASEX);
+    }
 
     // Get *pa back in the integer over integer form.
     RENORMALIZE(*pa);
 
-    destroyrat( tmp );
+    destroyrat(tmp);
 }

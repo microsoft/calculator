@@ -112,8 +112,17 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             }
             else
             {
-                iFinalSign = iNumeratorSign;
-                result %= temp;
+                if (m_fIntegerMode)
+                {
+                    // Programmer mode
+                    iFinalSign = iNumeratorSign;
+                    result %= temp;
+                }
+                else
+                {
+                    iFinalSign = iDenominatorSign;
+                    result = Mod(result, temp);
+                }
             }
 
             if (m_fIntegerMode && iFinalSign == -1)

@@ -189,7 +189,7 @@ namespace CalcEngine
 
         try
         {
-            modrat(&lhsRat, rhsRat);
+            remrat(&lhsRat, rhsRat);
             destroyrat(rhsRat);
         }
         catch (uint32_t error)

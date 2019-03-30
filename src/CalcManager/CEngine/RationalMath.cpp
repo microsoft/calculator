@@ -387,3 +387,26 @@ Rational RationalMath::ATanh(Rational const& rat)
 
     return result;
 }
+
+
+Rational RationalMath::Mod(Rational const& base, Rational const& n)
+{
+    PRAT prat = base.ToPRAT();
+    PRAT pn = n.ToPRAT();
+
+    try
+    {
+        modrat(&prat, pn);
+        destroyrat(pn);
+    }
+    catch (uint32_t error)
+    {
+        destroyrat(prat);
+        destroyrat(pn);
+        throw(error);
+    }
+
+    auto res = Rational{ prat };
+    destroyrat(prat);
+    return res;
+}
