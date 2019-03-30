@@ -10,7 +10,7 @@ using namespace CalcEngine;
 using namespace CalcEngine::RationalMath;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace RationalTests
+namespace CalculatorManagerTest
 {
     TEST_CLASS(RationalTest)
     {
@@ -44,6 +44,10 @@ namespace RationalTests
             VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 128), L"-8113");
             res = Mod(Rational(-643), Rational(-8756));
             VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 128), L"-643");
+
+            //Test with Zero
+            res = Mod(Rational(343654332), Rational(0));
+            VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 128), L"343654332");
         }
 
         TEST_METHOD(RemainderTest)
@@ -71,6 +75,24 @@ namespace RationalTests
             VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 128), L"643");
             res = Rational(-643) % Rational(-8756);
             VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 128), L"-643");
+
+            //Test with Zero
+            try
+            {
+                res = Rational(343654332) % Rational(0);
+                Assert::Fail();
+            }
+            catch (uint32_t t)
+            {
+                if (t != CALC_E_INDEFINITE)
+                {
+                    Assert::Fail();
+                }
+            }
+            catch (...)
+            {
+                Assert::Fail();
+            }
         }
     };
 }
