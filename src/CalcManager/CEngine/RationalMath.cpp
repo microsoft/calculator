@@ -388,11 +388,16 @@ Rational RationalMath::ATanh(Rational const& rat)
     return result;
 }
 
-
-Rational RationalMath::Mod(Rational const& base, Rational const& n)
+/// <summary>
+/// Calculate the modulus after division, the sign of the result will match the sign of b.
+/// </summary>
+/// <remarks>
+/// When one of the operand is negative, the result will differ from the C/C++ operator '%', use <see cref="Rational::operator%"/> instead to calculate the remainder after division.
+/// </remarks>
+Rational RationalMath::Mod(Rational const& a, Rational const& b)
 {
-    PRAT prat = base.ToPRAT();
-    PRAT pn = n.ToPRAT();
+    PRAT prat = a.ToPRAT();
+    PRAT pn = b.ToPRAT();
 
     try
     {

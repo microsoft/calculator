@@ -18,54 +18,54 @@
 
 using namespace std;
 
-void lshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void lshrat(PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
 
 {
-    PRAT pwr= nullptr;
+    PRAT pwr = nullptr;
     int32_t intb;
 
     intrat(pa, radix, precision);
-    if ( !zernum( (*pa)->pp ) )
-        {
+    if (!zernum((*pa)->pp))
+    {
         // If input is zero we're done.
-        if ( rat_gt( b, rat_max_exp, precision) )
-            {
+        if (rat_gt(b, rat_max_exp, precision))
+        {
             // Don't attempt lsh of anything big
-            throw( CALC_E_DOMAIN );
-            }
+            throw(CALC_E_DOMAIN);
+        }
         intb = rattoi32(b, radix, precision);
-        DUPRAT(pwr,rat_two);
+        DUPRAT(pwr, rat_two);
         ratpowi32(&pwr, intb, precision);
         mulrat(pa, pwr, precision);
         destroyrat(pwr);
-        }
+    }
 }
 
-void rshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void rshrat(PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
 
 {
-    PRAT pwr= nullptr;
+    PRAT pwr = nullptr;
     int32_t intb;
 
     intrat(pa, radix, precision);
-    if ( !zernum( (*pa)->pp ) )
-        {
+    if (!zernum((*pa)->pp))
+    {
         // If input is zero we're done.
-        if ( rat_lt( b, rat_min_exp, precision) )
-            {
+        if (rat_lt(b, rat_min_exp, precision))
+        {
             // Don't attempt rsh of anything big and negative.
-            throw( CALC_E_DOMAIN );
-            }
+            throw(CALC_E_DOMAIN);
+        }
         intb = rattoi32(b, radix, precision);
-        DUPRAT(pwr,rat_two);
+        DUPRAT(pwr, rat_two);
         ratpowi32(&pwr, intb, precision);
         divrat(pa, pwr, precision);
         destroyrat(pwr);
-       }
+    }
 }
 
-void boolrat( PRAT *pa, PRAT b, int func, uint32_t radix, int32_t precision);
-void boolnum( PNUMBER *pa, PNUMBER b, int func );
+void boolrat(PRAT *pa, PRAT b, int func, uint32_t radix, int32_t precision);
+void boolnum(PNUMBER *pa, PNUMBER b, int func);
 
 
 enum {
@@ -74,22 +74,22 @@ enum {
     FUNC_XOR
 } BOOL_FUNCS;
 
-void andrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void andrat(PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
 
 {
-    boolrat( pa, b, FUNC_AND, radix, precision);
+    boolrat(pa, b, FUNC_AND, radix, precision);
 }
 
-void orrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void orrat(PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
 
 {
-    boolrat( pa, b, FUNC_OR, radix, precision);
+    boolrat(pa, b, FUNC_OR, radix, precision);
 }
 
-void xorrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void xorrat(PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
 
 {
-    boolrat( pa, b, FUNC_XOR, radix, precision);
+    boolrat(pa, b, FUNC_XOR, radix, precision);
 }
 
 //---------------------------------------------------------------------------
@@ -104,15 +104,15 @@ void xorrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-void boolrat( PRAT *pa, PRAT b, int func, uint32_t radix, int32_t precision)
+void boolrat(PRAT *pa, PRAT b, int func, uint32_t radix, int32_t precision)
 
 {
-    PRAT tmp= nullptr;
-    intrat( pa, radix, precision);
-    DUPRAT(tmp,b);
-    intrat( &tmp, radix, precision);
+    PRAT tmp = nullptr;
+    intrat(pa, radix, precision);
+    DUPRAT(tmp, b);
+    intrat(&tmp, radix, precision);
 
-    boolnum( &((*pa)->pp), tmp->pp, func );
+    boolnum(&((*pa)->pp), tmp->pp, func);
     destroyrat(tmp);
 }
 
@@ -130,11 +130,11 @@ void boolrat( PRAT *pa, PRAT b, int func, uint32_t radix, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-void boolnum( PNUMBER *pa, PNUMBER b, int func )
+void boolnum(PNUMBER *pa, PNUMBER b, int func)
 
 {
-    PNUMBER c= nullptr;
-    PNUMBER a= nullptr;
+    PNUMBER c = nullptr;
+    PNUMBER a = nullptr;
     MANTTYPE *pcha;
     MANTTYPE *pchb;
     MANTTYPE *pchc;
@@ -143,26 +143,26 @@ void boolnum( PNUMBER *pa, PNUMBER b, int func )
     MANTTYPE da;
     MANTTYPE db;
 
-    a=*pa;
-    cdigits = max( a->cdigit+a->exp, b->cdigit+b->exp ) -
-            min( a->exp, b->exp );
-    createnum( c, cdigits );
-    c->exp = min( a->exp, b->exp );
+    a = *pa;
+    cdigits = max(a->cdigit + a->exp, b->cdigit + b->exp) -
+        min(a->exp, b->exp);
+    createnum(c, cdigits);
+    c->exp = min(a->exp, b->exp);
     mexp = c->exp;
     c->cdigit = cdigits;
     pcha = a->mant;
     pchb = b->mant;
     pchc = c->mant;
-    for ( ;cdigits > 0; cdigits--, mexp++ )
+    for (; cdigits > 0; cdigits--, mexp++)
+    {
+        da = (((mexp >= a->exp) && (cdigits + a->exp - c->exp >
+            (c->cdigit - a->cdigit))) ?
+            *pcha++ : 0);
+        db = (((mexp >= b->exp) && (cdigits + b->exp - c->exp >
+            (c->cdigit - b->cdigit))) ?
+            *pchb++ : 0);
+        switch (func)
         {
-        da = ( ( ( mexp >= a->exp ) && ( cdigits + a->exp - c->exp >
-                    (c->cdigit - a->cdigit) ) ) ?
-                    *pcha++ : 0 );
-        db = ( ( ( mexp >= b->exp ) && ( cdigits + b->exp - c->exp >
-                    (c->cdigit - b->cdigit) ) ) ?
-                    *pchb++ : 0 );
-        switch ( func )
-            {
         case FUNC_AND:
             *pchc++ = da & db;
             break;
@@ -172,15 +172,15 @@ void boolnum( PNUMBER *pa, PNUMBER b, int func )
         case FUNC_XOR:
             *pchc++ = da ^ db;
             break;
-            }
         }
+    }
     c->sign = a->sign;
-    while ( c->cdigit > 1 && *(--pchc) == 0 )
-        {
+    while (c->cdigit > 1 && *(--pchc) == 0)
+    {
         c->cdigit--;
-        }
-    destroynum( *pa );
-    *pa=c;
+    }
+    destroynum(*pa);
+    *pa = c;
 }
 
 //-----------------------------------------------------------------------------
@@ -191,8 +191,9 @@ void boolnum( PNUMBER *pa, PNUMBER b, int func )
 //
 //    RETURN: None, changes pointer.
 //
-//    DESCRIPTION: Calculate the remainder of *pa / b, equivalent of 'pa % b' in C;
-//    NOTE: produces a result that is either zero or has the same sign as the dividend.
+//    DESCRIPTION: Calculate the remainder of *pa / b,
+//                 equivalent of 'pa % b' in C/C++ and produces a result
+//                 that is either zero or has the same sign as the dividend.
 //
 //-----------------------------------------------------------------------------
 
@@ -226,8 +227,10 @@ void remrat(PRAT *pa, PRAT b)
 //
 //    RETURN: None, changes pointer.
 //
-//    DESCRIPTION: Calculate the remainder of *pa / b, equivalent of 'pa modulo b' in arithmetic
-//    NOTE: produces a result that is either zero or has the same sign as the divisor.
+//    DESCRIPTION: Calculate the remainder of *pa / b, with the sign of the result
+//                 either zero or has the same sign as the divisor. 
+//    NOTE: When *pa or b are negative, the result won't be the same as
+//          the C/C++ operator %, use remrat if it's the behavior you expect. 
 //
 //-----------------------------------------------------------------------------
 
@@ -249,7 +252,7 @@ void modrat(PRAT *pa, PRAT b)
     remnum(&((*pa)->pp), tmp->pp, BASEX);
     mulnumx(&((*pa)->pq), tmp->pq);
 
-    if (needAdjust)
+    if (needAdjust && !zerrat(*pa))
     {
         addrat(pa, b, BASEX);
     }

@@ -182,6 +182,12 @@ namespace CalcEngine
         return *this;
     }
 
+    /// <summary>
+    /// Calculate the remainder after division, the sign of the result will match the sign of the current object.
+    /// </summary>
+    /// <remarks>
+    /// This function has the same behavior than the standard C/C++ operator '%', to calculate the modulus after division instead, use <see cref="Rational::operator%"/> instead.
+    /// </remarks>
     Rational& Rational::operator%=(Rational const& rhs)
     {
         PRAT lhsRat = this->ToPRAT();
@@ -342,6 +348,12 @@ namespace CalcEngine
         return lhs;
     }
 
+    /// <summary>
+    /// Calculate the remainder after division, the sign of the result will match the sign of a.
+    /// </summary>
+    /// <remarks>
+    /// This function has the same behavior than the standard C/C++ operator '%', to calculate the modulus after division instead, use <see cref="Rational::operator%"/> instead.
+    /// </remarks>
     Rational operator%(Rational lhs, Rational const& rhs)
     {
         lhs %= rhs;
