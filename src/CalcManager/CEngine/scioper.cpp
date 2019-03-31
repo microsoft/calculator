@@ -114,12 +114,13 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             {
                 if (m_fIntegerMode)
                 {
-                    // Programmer mode
+                    // Programmer mode, use remrat (remainder after division)
                     iFinalSign = iNumeratorSign;
                     result %= temp;
                 }
                 else
                 {
+                    //other modes, use modrat (modulus after division)
                     iFinalSign = iDenominatorSign;
                     result = Mod(result, temp);
                 }

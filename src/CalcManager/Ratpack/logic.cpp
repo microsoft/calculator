@@ -236,7 +236,7 @@ void remrat(PRAT *pa, PRAT b)
 
 void modrat(PRAT *pa, PRAT b)
 {
-    //contrary to remrat, modrat(a, 0) must return a
+    //contrary to remrat(X, 0) returning 0, modrat(X, 0) must return X
     if (zerrat(b))
     {
         return;
