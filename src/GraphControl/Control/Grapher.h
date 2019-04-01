@@ -100,6 +100,8 @@ namespace GraphControl
         }
         #pragma endregion
 
+        void ScaleRange(double centerX, double centerY, double scale);
+
     protected:
         #pragma region Control Overrides
         void OnApplyTemplate() override;

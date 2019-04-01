@@ -66,6 +66,20 @@ namespace GraphControl
         }
     }
 
+    void Grapher::ScaleRange(double centerX, double centerY, double scale)
+    {
+        if (m_graph)
+        {
+            if (auto renderer = m_graph->GetRenderer())
+            {
+                if (SUCCEEDED(renderer->ScaleRange(centerX, centerY, scale)))
+                {
+                    m_renderMain->RunRenderPass();
+                }
+            }
+        }
+    }
+
     void Grapher::OnApplyTemplate()
     {
         auto swapChainPanel = dynamic_cast<SwapChainPanel^>(GetTemplateChild(StringReference(s_templateKey_SwapChainPanel)));

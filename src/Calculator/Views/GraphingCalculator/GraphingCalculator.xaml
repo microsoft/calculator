@@ -25,7 +25,8 @@
               Grid.Row="1"
               Grid.Column="0">
 
-            <graphControl:Grapher Grid.Row="0"
+            <graphControl:Grapher x:Name="Graph"
+                                  Grid.Row="0"
                                   Margin="4,7,4,4"
                                   EquationsSource="{x:Bind ViewModel.Equations, Mode=OneWay}"
                                   ForceProportionalAxes="True"
@@ -49,13 +50,38 @@
               Margin="4,0,4,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
 
             <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
 
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <TextBlock Text="Scale Range"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox x:Name="CenterXTextBox"
+                             Grid.Column="0"
+                             KeyDown="ScaleRangeTextBox_KeyDown"
+                             PlaceholderText="CenterX"/>
+                    <TextBox x:Name="CenterYTextBox"
+                             Grid.Column="1"
+                             KeyDown="ScaleRangeTextBox_KeyDown"
+                             PlaceholderText="CenterY"/>
+                    <TextBox x:Name="ScaleTextBox"
+                             Grid.Column="2"
+                             KeyDown="ScaleRangeTextBox_KeyDown"
+                             PlaceholderText="Scale"/>
+                </Grid>
+            </StackPanel>
+
             <Grid x:Name="ButtonContainerGrid"
-                  Grid.Row="1"
+                  Grid.Row="2"
                   Margin="3,0,3,3"
                   UseLayoutRounding="False">
                 <Grid.RowDefinitions>
