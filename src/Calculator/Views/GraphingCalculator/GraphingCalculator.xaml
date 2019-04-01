@@ -57,6 +57,23 @@
             <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
 
             <StackPanel Grid.Row="1" Orientation="Vertical">
+                <TextBlock Text="Move Range By Ratio"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox x:Name="RatioXTextBox"
+                             Grid.Column="0"
+                             KeyDown="MoveRangeByRatioTextBox_KeyDown"
+                             PlaceholderText="RatioX"/>
+                    <TextBox x:Name="RatioYTextBox"
+                             Grid.Column="1"
+                             KeyDown="MoveRangeByRatioTextBox_KeyDown"
+                             PlaceholderText="RatioY"/>
+                </Grid>
+
                 <TextBlock Text="Scale Range"/>
                 <Grid>
                     <Grid.ColumnDefinitions>

@@ -80,6 +80,20 @@ namespace GraphControl
         }
     }
 
+    void Grapher::MoveRangeByRatio(double ratioX, double ratioY)
+    {
+        if (m_graph)
+        {
+            if (auto renderer = m_graph->GetRenderer())
+            {
+                if (SUCCEEDED(renderer->MoveRangeByRatio(ratioX, ratioY)))
+                {
+                    m_renderMain->RunRenderPass();
+                }
+            }
+        }
+    }
+
     void Grapher::OnApplyTemplate()
     {
         auto swapChainPanel = dynamic_cast<SwapChainPanel^>(GetTemplateChild(StringReference(s_templateKey_SwapChainPanel)));

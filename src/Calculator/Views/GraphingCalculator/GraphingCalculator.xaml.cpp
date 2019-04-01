@@ -24,7 +24,15 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
 
-constexpr auto sc_ViewModelPropertyName = L"ViewModel";
+namespace
+{
+    constexpr auto sc_ViewModelPropertyName = L"ViewModel";
+
+    double valFromTB(TextBox^ tb)
+    {
+        return stod(tb->Text->Data());
+    };
+}
 
 GraphingCalculator::GraphingCalculator()
 {
@@ -56,17 +64,24 @@ void GraphingCalculator::ScaleRangeTextBox_KeyDown(Object^ sender, KeyRoutedEven
 {
     if (e->Key == VirtualKey::Enter)
     {
-        auto valFromTB = [](TextBox^ tb)
-        {
-            wstring text = tb->Text->Data();
-            return stod(text);
-        };
-
         double centerX = valFromTB(CenterXTextBox);
         double centerY = valFromTB(CenterYTextBox);
         double scale = valFromTB(ScaleTextBox);
 
         Graph->ScaleRange(centerX, centerY, scale);
+
+        e->Handled = true;
+    }
+}
+
+void GraphingCalculator::MoveRangeByRatioTextBox_KeyDown(Object^ sender, KeyRoutedEventArgs^ e)
+{
+    if (e->Key == VirtualKey::Enter)
+    {
+        double ratioX = valFromTB(RatioXTextBox);
+        double ratioY = valFromTB(RatioYTextBox);
+
+        Graph->MoveRangeByRatio(ratioX, ratioY);
 
         e->Handled = true;
     }

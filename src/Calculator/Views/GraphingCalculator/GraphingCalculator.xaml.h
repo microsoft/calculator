@@ -23,6 +23,7 @@ namespace CalculatorApp
         void GraphingCalculator_DataContextChanged(Windows::UI::Xaml::FrameworkElement^ sender, Windows::UI::Xaml::DataContextChangedEventArgs^ args);
 
         void ScaleRangeTextBox_KeyDown(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e);
+        void MoveRangeByRatioTextBox_KeyDown(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e);
 
     private:
         CalculatorApp::ViewModel::GraphingCalculatorViewModel^ m_viewModel;

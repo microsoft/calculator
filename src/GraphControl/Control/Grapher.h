@@ -101,6 +101,7 @@ namespace GraphControl
         #pragma endregion
 
         void ScaleRange(double centerX, double centerY, double scale);
+        void MoveRangeByRatio(double ratioX, double ratioY);
 
     protected:
         #pragma region Control Overrides
