@@ -100,7 +100,6 @@ void fracrat( _Inout_ PRAT *pa , uint32_t radix, int32_t precision)
 //-----------------------------------------------------------------------------
 
 void mulrat( _Inout_ PRAT *pa, _In_ PRAT b, int32_t precision)
-    
     {
     // Only do the multiply if it isn't zero.
     if ( !zernum( (*pa)->pp ) )
