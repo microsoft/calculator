@@ -1,0 +1,173 @@
+# This template contains steps to (1) Build the app for the defined architecture and (2) run the WinAppDriver UI tests on a hosted agent.
+# The job containing these steps must set the variables 'Parameters.Configuration'. The BuildConfiguration must be set to 'Release' for WAD tests to work.
+
+#parameters:
+#  platform: ''
+
+resources:
+- repo: self
+
+variables:
+#   Parameters.configuration: ${{ parameters.platform }}
+    Parameters.configuration: x86
+    BuildConfiguration: Release
+    
+jobs:
+
+- job: Job_1
+  displayName: Build Deployment
+  condition: succeeded()
+  pool:
+    name: Hosted VS2017
+    demands:
+    - msbuild
+    - visualstudio
+
+  steps:
+  - task: NuGetToolInstaller@0
+    displayName: 'Use NuGet 4.9.4'
+    inputs:
+      versionSpec: 4.9.4
+      checkLatest: true
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore (src/nuget.config)'
+    inputs:
+      restoreSolution: src/Calculator.sln
+      feedsToUse: config
+      nugetConfigPath: src/nuget.config
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore (nuget.config)'
+    inputs:
+      restoreSolution: src/Calculator.sln
+      feedsToUse: config
+      nugetConfigPath: nuget.config
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore (WinAppDriver)'
+    inputs:
+      restoreSolution: src/CalculatorWADTests/CalculatorTest.sln
+      feedsToUse: config
+
+  - task: VSBuild@1
+    displayName: 'Build WinAppDriverTests'
+    inputs:
+      solution: src/CalculatorWADTests/CalculatorTest.sln
+      platform: Any CPU
+      configuration: '$(BuildConfiguration)'
+    continueOnError: true
+
+  - task: VSBuild@1
+    displayName: 'Build solution Calculator'
+    inputs:
+      solution: src/Calculator.sln
+      msbuildArgs: '/p:Configuration=Deploy /p:AppxPackageDir="$(Build.ArtifactStagingDirectory)\AppxPackages\\" /p:UapAppxPackageBuildMode=CI/p:AppxBundlePlatforms="x64" /p:AppxBundle=Always'
+      platform: x86
+      configuration: '$(BuildConfiguration)'
+
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)\AppxPackages'
+    inputs:
+      SourceFolder: '$(system.defaultworkingdirectory)'
+      Contents: '**\bin\$(BuildConfiguration)\**'
+      TargetFolder: '$(build.artifactstagingdirectory)\AppxPackages'
+
+  - task: PublishSymbols@2
+    displayName: 'Publish symbols path'
+    inputs:
+      SearchPattern: '**\bin\**\*.pdb'
+      PublishSymbols: false
+    continueOnError: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: drop'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)\AppxPackages\'
+
+
+- job: Job_2
+  displayName: Test Automation
+  dependsOn: Job_1
+  condition: succeeded()
+  pool:
+    name: Hosted Windows 2019 with VS2019
+    demands: DotNetFramework
+
+  steps:
+  - task: PowerShell@1
+    displayName: 'Set Resolution'
+    inputs:
+      scriptType: inlineScript
+      arguments: '-NonInteractive -Force:$true  -Verb RunAs'
+      inlineScript: 'Set-DisplayResolution -Width 1920 -Height 1080 -Force'
+    continueOnError: true
+
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download Build Artifacts'
+    inputs:
+      artifactName: drop
+      downloadPath: '$(build.artifactstagingdirectory)\AppxPackages'
+
+  - task: DotNetCoreInstaller@0
+    displayName: 'Use .NET Core sdk 1.0.4'
+
+  - task: VisualStudioTestPlatformInstaller@1
+    displayName: 'Visual Studio Test Platform Installer'
+
+  - task: PowerShell@1
+    displayName: 'Install Cert (release)'
+    inputs:
+      scriptType: inlineScript
+      arguments: '-NonInteractive -Verb RunAs'
+      inlineScript: |  
+       $file = ( Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\AppxPackages\drop\Calculator_0.0.0.0_Test\Calculator_0.0.0.0_x86.cer )
+       $file | Import-Certificate -CertStoreLocation cert:\LocalMachine\Root
+    continueOnError: true
+    condition: succeededOrFailed()
+
+  - task: PowerShell@1
+    displayName: 'Normal Add-AppDevPackage.ps1 (release)'
+    inputs:
+      scriptName: '$(Build.ArtifactStagingDirectory)\AppxPackages\drop\Calculator_0.0.0.0_Test\Add-AppDevPackage.ps1'
+      arguments: '-NonInteractive -Force:$true  -Verb RunAs'
+    continueOnError: true
+    condition: succeededOrFailed()
+
+  - task: PowerShell@1
+    displayName: 'Start WinAppDriver'
+    inputs:
+      scriptType: inlineScript
+      inlineScript: 'Start-Process -FilePath "C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe" -Verb RunAs '
+    continueOnError: true
+
+  - task: VSTest@2
+    displayName: 'VsTest - testAssemblies'
+    inputs:
+      testAssemblyVer2: |  
+       $(Build.ArtifactStagingDirectory)\AppxPackages\drop\src\CalculatorWADTests\bin\$(BuildConfiguration)\CalculatorTest.dll
+       !**\obj\**
+      vsTestVersion: toolsInstaller
+      runSettingsFile: src/CalculatorWADTests/TestSettings1.runsettings
+      platform: '$(BuildPlatform)'
+      configuration: '$(BuildConfiguration)'
+    continueOnError: true
+
+  - task: PowerShell@1
+    displayName: 'Install Cert'
+    inputs:
+      scriptType: inlineScript
+      arguments: '-NonInteractive -Verb RunAs'
+      inlineScript: |  
+       $file = ( Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\AppxPackages\drop\Calculator_$(Build.BuildNumber)_$(BuildConfiguration)_Test\Calculator_$(Build.BuildNumber)_x86_$(BuildConfiguration).cer )
+       $file | Import-Certificate -CertStoreLocation cert:\LocalMachine\Root
+    enabled: false
+    continueOnError: true
+
+  - task: PowerShell@1
+    displayName: 'Normal Add-AppDevPackage.ps1'
+    inputs:
+      scriptName: '$(Build.ArtifactStagingDirectory)\AppxPackages\drop\Calculator_0.0.0.0_$(BuildConfiguration)_Test\Add-AppDevPackage.ps1'
+      arguments: '-NonInteractive -Force:$true  -Verb RunAs'
+    enabled: false
+    continueOnError: true
