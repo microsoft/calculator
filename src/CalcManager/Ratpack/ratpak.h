@@ -336,7 +336,7 @@ extern PNUMBER i32factnum(int32_t ini32, uint32_t radix);
 extern PNUMBER i32prodnum(int32_t start, int32_t stop, uint32_t radix);
 extern PNUMBER i32tonum(int32_t ini32, uint32_t radix);
 extern PNUMBER Ui32tonum(uint32_t ini32, uint32_t radix);
-extern PNUMBER numtonRadixx(PNUMBER a, uint32_t radix);
+extern PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix);
 
 // creates a empty/undefined rational representation (p/q)
 extern PRAT _createrat( void );

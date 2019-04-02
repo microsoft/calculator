@@ -192,7 +192,7 @@ void _addnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix)
 //
 //----------------------------------------------------------------------------
 
-void _mulnum( _Inout_ PNUMBER *pa, _In_ _Const_ PNUMBER b, uint32_t radix);
+void _mulnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix);
 
 void __inline mulnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix)
 
@@ -216,7 +216,7 @@ void __inline mulnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix)
         }
 }
 
-void _mulnum( _Inout_ PNUMBER *pa, _In_ _Const_ PNUMBER b, uint32_t radix)
+void _mulnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix)
 
 {
     PNUMBER c= nullptr;         // c will contain the result.

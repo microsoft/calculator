@@ -373,7 +373,7 @@ PNUMBER nRadixxtonum( _In_ PNUMBER a, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-PNUMBER numtonRadixx(PNUMBER a, uint32_t radix)
+PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix)
 {
     PNUMBER pnumret = i32tonum(0, BASEX); // pnumret is the number in internal form.
     PNUMBER num_radix = i32tonum(radix, BASEX);
@@ -789,7 +789,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
 //
 //-----------------------------------------------------------------------------
 
-PRAT i32torat( _In_ int32_t ini32 )
+PRAT i32torat( int32_t ini32 )
 
 {
     PRAT pratret= nullptr;
@@ -813,7 +813,7 @@ PRAT i32torat( _In_ int32_t ini32 )
 //
 //-----------------------------------------------------------------------------
 
-PRAT Ui32torat( _In_ uint32_t inui32 )
+PRAT Ui32torat( uint32_t inui32 )
 
 {
     PRAT pratret= nullptr;

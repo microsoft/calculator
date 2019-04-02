@@ -174,7 +174,7 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
 //
 //-----------------------------------------------------------------------------
 
-void numpowi32x( _Inout_ PNUMBER *proot, _In_ int32_t power )
+void numpowi32x( _Inout_ PNUMBER *proot, int32_t power )
 
 {
     PNUMBER lret = i32tonum( 1, BASEX );
