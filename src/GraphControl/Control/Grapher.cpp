@@ -417,4 +417,32 @@ namespace GraphControl
             e->Handled = true;
         }
     }
+
+    void Grapher::OnPointerWheelChanged(PointerRoutedEventArgs^ args)
+    {
+        PointerPoint^ currentPointer = args->GetCurrentPoint(/*relative to*/ this);
+
+        double delta = currentPointer->Properties->MouseWheelDelta;
+
+        // The maximum delta is 120 according to:
+        // https://docs.microsoft.com/en-us/uwp/api/windows.ui.input.pointerpointproperties.mousewheeldelta#Windows_UI_Input_PointerPointProperties_MouseWheelDelta
+        // Apply a dampening effect so that small mouse movements have a smoother zoom.
+        constexpr double scrollDamper = 0.15;
+        double scale = 1.0 + (abs(delta) / WHEEL_DELTA) * scrollDamper;
+
+        // positive delta if wheel scrolled away from the user
+        if (delta >= 0)
+        {
+            scale = 1.0 / scale;
+        }
+
+        // For scaling, the graphing engine interprets x,y position between the range [-1, 1].
+        // Translate the pointer position to the [-1, 1] bounds.
+        double centerX = (currentPointer->Position.X - ActualWidth / 2) / (ActualWidth / 2);
+        double centerY = (ActualHeight / 2 - currentPointer->Position.Y) / (ActualHeight / 2);
+
+        ScaleRange(centerX, centerY, scale);
+
+        args->Handled = true;
+    }
 }

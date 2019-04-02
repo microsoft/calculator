@@ -110,6 +110,7 @@ namespace GraphControl
         void OnPointerEntered(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
         void OnPointerMoved(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
         void OnPointerExited(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+        void OnPointerWheelChanged(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
         #pragma endregion
 
     private:
@@ -125,6 +126,7 @@ namespace GraphControl
         void OnDataSourceChanged(GraphControl::InspectingDataSource^ sender, GraphControl::DataSourceChangedEventArgs args);
 
         void OnEquationsChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ args);
+        void OnEquationsVectorChanged(Windows::Foundation::Collections::IObservableVector<GraphControl::Equation ^> ^sender, Windows::Foundation::Collections::IVectorChangedEventArgs ^event);
         void OnEquationChanged();
 
         void UpdateGraph();
@@ -158,6 +160,5 @@ namespace GraphControl
 
         const std::unique_ptr<Graphing::IMathSolver> m_solver;
         const std::shared_ptr<Graphing::IGraph> m_graph;
-        void OnEquationsVectorChanged(Windows::Foundation::Collections::IObservableVector<GraphControl::Equation ^> ^sender, Windows::Foundation::Collections::IVectorChangedEventArgs ^event);
-};
+    };
 }
