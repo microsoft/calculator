@@ -74,7 +74,7 @@ let us know if your pull request needs to be merged as separate commits.
 
 ## Review Process
 After submitting a pull request, members of the calculator team will review your code. We will
-assign the request to an appropriate reviewer within two days. Any member of the community may
+assign the request to an appropriate reviewer. Any member of the community may
 participate in the review, but at least one member of the Calculator team will ultimately approve
 the request.
 
