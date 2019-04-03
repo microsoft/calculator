@@ -38,6 +38,4 @@ audience’s needs? If there are business goals or metrics, how does this improv
 why. -->
 
 **Low-Fidelity Concept**
-<!-- Show as much of the experience as needed to explain the idea. This can be as simple as a
-napkin drawing but can also be a code prototype, a PowerPoint walkthrough, or a design
-comp. -->
+<!-- Show as much of the experience as needed to explain the idea. This can be as simple as a napkin drawing but can also be a code prototype, or a design comp. Keep it simple at this stage, as it can be refined later during the pre-production stage. -->
