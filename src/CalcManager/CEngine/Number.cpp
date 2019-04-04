@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-#include "pch.h"
+#include <algorithm>
 #include "Header Files/Number.h"
 
 using namespace std;

@@ -17,6 +17,8 @@
 //
 //-----------------------------------------------------------------------------
 
+#include <algorithm>
+#include <string>
 #include "CalcErr.h"
 
 static constexpr uint32_t BASEXPWR = 31L;// Internal log2(BASEX)

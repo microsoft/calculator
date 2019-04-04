@@ -3,27 +3,15 @@
 
 #pragma once
 
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN
-#endif
-
-// Windows headers define min/max macros.
-// Disable it for project code.
-#define NOMINMAX
-
-#include <assert.h>
-#include <windows.h>
-#include <winerror.h>
-#include <sstream>
-#include <iostream>
-#include <iterator>
-#include <string>
-#include <memory>
-#include <vector>
-#include <limits>
-#include <list>
-#include <regex>
-#include <unordered_map>
-#include <intsafe.h>
+#include <algorithm>
 #include <array>
+#include <assert.h>
+#include <intsafe.h>
+#include <list>
 #include <ppltasks.h>
+#include <regex>
+#include <sstream>
+#include <string>
+#include <unordered_map>
+#include <vector>
+#include <winerror.h>

@@ -17,7 +17,9 @@
 //
 //---------------------------------------------------------------------------
 
-#include "pch.h"
+#include <algorithm>
+#include <winerror.h>
+#include <sstream>
 #include "ratpak.h"
 
 using namespace std;

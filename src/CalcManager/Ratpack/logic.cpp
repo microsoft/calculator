@@ -13,7 +13,6 @@
 //     Contains routines for and, or, xor, not and other support
 //
 //---------------------------------------------------------------------------
-#include "pch.h"
 #include "ratpak.h"
 
 using namespace std;
