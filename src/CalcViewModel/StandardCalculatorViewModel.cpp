@@ -217,7 +217,9 @@ void StandardCalculatorViewModel::DisplayPasteError()
 void StandardCalculatorViewModel::SetParenthesisCount(_In_ unsigned int parenthesisCount)
 {
     if (m_OpenParenthesisCount == parenthesisCount)
+    {
         return;
+    }
 
     OpenParenthesisCount = parenthesisCount;
     if (IsProgrammer || IsScientific)

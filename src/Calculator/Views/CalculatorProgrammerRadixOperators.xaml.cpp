@@ -99,11 +99,11 @@ void CalculatorProgrammerRadixOperators::IsErrorVisualState::set(bool value)
 }
 
 String^ CalculatorProgrammerRadixOperators::ParenthesisCountToString(unsigned int count) {
-    return count == 0 ? ref new String(L"") : ref new String(to_wstring(count).data());
+    return (count == 0) ? ref new String() : ref new String(to_wstring(count).data());
 }
 
 
-void CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators::OpenParenthesisButton_GotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators::OpenParenthesisButton_GotFocus(Object^ sender, RoutedEventArgs^ e)
 {
     Model->SetOpenParenthesisCountNarratorAnnouncement();
 }

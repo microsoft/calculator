@@ -99,11 +99,11 @@ void CalculatorScientificOperators::SetOperatorRowVisibility()
     InvRow2->Visibility = invRowVis;
 }
 
-void CalculatorScientificOperators::OpenParenthesisButton_GotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void CalculatorScientificOperators::OpenParenthesisButton_GotFocus(Object^ sender, RoutedEventArgs^ e)
 {
     Model->SetOpenParenthesisCountNarratorAnnouncement();
 }
 
 String^ CalculatorScientificOperators::ParenthesisCountToString(unsigned int count) {
-    return count == 0 ? ref new String(L"") : ref new String(to_wstring(count).data());
+    return (count == 0) ? ref new String() : ref new String(to_wstring(count).data());
 }
