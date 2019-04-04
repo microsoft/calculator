@@ -25,13 +25,13 @@ Feature pitches are submitted as issues on GitHub using the [Feature Request tem
 We review pitches regularly, and will approve or close issues based on whether they broadly aligns with the [Calculator roadmap](https://github.com/Microsoft/calculator/blob/master/docs/Roadmap.md). Approved pitches are moved into [pre-production](https://github.com/Microsoft/calculator/projects/1) on the feature tracking board.
 
 ## Step 2: Pre-production
-For most features, the output of this phase is a specification which describes how the feature will work, supported by design renderings and code prototypes as needed. The original issue will continue to track the overall progress of the feature, but we will create and iterate on spec documentation in the [Calcualtor Spec repo](http://www.microsoft.com). Sometimes we'll learn new things about a feature proposal during pre-production, and we'll edit or close the original pitch.
+For most features, the output of this phase is a specification which describes how the feature will work, supported by design renderings and code prototypes as needed. The original issue will continue to track the overall progress of the feature, but we will create and iterate on spec documentation in the [Calcualtor Spec repo](https://github.com/Microsoft/calculator-specs). Sometimes we'll learn new things about a feature proposal during pre-production, and we'll edit or close the original pitch.
 
 We welcome community participation throughout pre-production. The best ideas often come from trying many ideas during the pre-production phase. To enable rapid
 experimentation, we encourage developing and sharing rough ideas&mdash;maybe even with pencil and
 paper&mdash;before making designs pixel-perfect or making code robust and maintainable.
 
-After the [spec review](http://www.microsoft.com) is completed, we will move the issue into [production](https://github.com/Microsoft/calculator/projects/1) on the feature tracking board. In _some_ cases all of the details of an idea can be captured concisely in original feature pitch. When that happens, we may move ideas directly into production.
+After the [spec review](https://github.com/Microsoft/calculator-specs#spec-review) is completed, we will move the issue into [production](https://github.com/Microsoft/calculator/projects/1) on the feature tracking board. In _some_ cases all of the details of an idea can be captured concisely in original feature pitch. When that happens, we may move ideas directly into production.
 
 ## Step 3: Production
 A feature can be implemented by the original submitter, a Microsoft team member, or by other
