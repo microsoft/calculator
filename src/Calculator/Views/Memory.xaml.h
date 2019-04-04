@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -37,14 +37,11 @@ namespace CalculatorApp
         }
 
     private:
-        Windows::UI::Xaml::Controls::MenuFlyout^ m_memoryItemFlyout;
         Windows::Foundation::Rect m_visibleBounds;
         Windows::Foundation::Rect m_coreBounds;
         bool m_isErrorVisualState;
 
         void MemoryListItemClick(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Controls::ItemClickEventArgs^ e);
-        void OnContextRequested(Windows::UI::Xaml::UIElement^ sender, Windows::UI::Xaml::Input::ContextRequestedEventArgs^ e);
-        void OnContextCanceled(Windows::UI::Xaml::UIElement^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void OnClearMenuItemClicked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
         void OnMemoryAddMenuItemClicked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
         void OnMemorySubtractMenuItemClicked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);

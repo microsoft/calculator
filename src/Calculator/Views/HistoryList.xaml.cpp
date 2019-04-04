@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -67,9 +67,13 @@ void HistoryList::ListView_ItemClick(_In_ Object^ sender, _In_ ItemClickEventArg
 
 void HistoryList::OnDeleteMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
 {
-    auto clickedItem = safe_cast<HistoryItemViewModel^>(safe_cast<FrameworkElement^>(sender)->DataContext);
+    auto listViewItem = HistoryContextMenu->Target;
+    auto itemViewModel = safe_cast<HistoryItemViewModel^>(HistoryListView->ItemFromContainer(listViewItem));
 
-    Model->DeleteItem(clickedItem);
+    if (itemViewModel != nullptr)
+    {
+        Model->DeleteItem(itemViewModel);
+    }
 }
 
 void HistoryList::OnDeleteSwipeInvoked(_In_ MUXC::SwipeItem^ sender, _In_ MUXC::SwipeItemInvokedEventArgs^ e)

@@ -19,7 +19,7 @@
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
 
-        <MenuFlyout x:Key="MemoryContextMenu">
+        <MenuFlyout x:Name="MemoryContextMenu">
             <MenuFlyoutItem x:Uid="ClearMemoryMenuItem" Click="OnClearMenuItemClicked">
                 <MenuFlyoutItem.Icon>
                     <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xf754;"/>
@@ -44,6 +44,7 @@
                BasedOn="{StaticResource HistoryMemoryItemContainerStyle}"
                TargetType="ListViewItem">
             <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="ContextFlyout" Value="{StaticResource MemoryContextMenu}"/>
         </Style>
     </UserControl.Resources>
 
@@ -107,8 +108,6 @@
             <ListView x:Name="MemoryListView"
                       Padding="0,12,0,0"
                       HorizontalAlignment="Stretch"
-                      ContextCanceled="OnContextCanceled"
-                      ContextRequested="OnContextRequested"
                       IsItemClickEnabled="true"
                       ItemClick="MemoryListItemClick"
                       ItemContainerStyle="{ThemeResource MemoryItemContainerStyle}"
