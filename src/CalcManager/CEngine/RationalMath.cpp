@@ -14,7 +14,7 @@ Rational RationalMath::Frac(Rational const& rat)
     {
         fracrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -33,7 +33,7 @@ Rational RationalMath::Integer(Rational const& rat)
     {
         intrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -55,7 +55,7 @@ Rational RationalMath::Pow(Rational const& base, Rational const& pow)
         powrat(&baseRat, powRat, RATIONAL_BASE, RATIONAL_PRECISION);
         destroyrat(powRat);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(baseRat);
         destroyrat(powRat);
@@ -81,7 +81,7 @@ Rational RationalMath::Fact(Rational const& rat)
     {
         factrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -101,7 +101,7 @@ Rational RationalMath::Exp(Rational const& rat)
     {
         exprat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -121,7 +121,7 @@ Rational RationalMath::Log(Rational const& rat)
     {
         lograt(&prat, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -156,7 +156,7 @@ Rational RationalMath::Sin(Rational const& rat, ANGLE_TYPE angletype)
     {
         sinanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -176,7 +176,7 @@ Rational RationalMath::Cos(Rational const& rat, ANGLE_TYPE angletype)
     {
         cosanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -196,7 +196,7 @@ Rational RationalMath::Tan(Rational const& rat, ANGLE_TYPE angletype)
     {
         tananglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -216,7 +216,7 @@ Rational RationalMath::ASin(Rational const& rat, ANGLE_TYPE angletype)
     {
         asinanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -236,7 +236,7 @@ Rational RationalMath::ACos(Rational const& rat, ANGLE_TYPE angletype)
     {
         acosanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -256,7 +256,7 @@ Rational RationalMath::ATan(Rational const& rat, ANGLE_TYPE angletype)
     {
         atananglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -276,7 +276,7 @@ Rational RationalMath::Sinh(Rational const& rat)
     {
         sinhrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -296,7 +296,7 @@ Rational RationalMath::Cosh(Rational const& rat)
     {
         coshrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -316,7 +316,7 @@ Rational RationalMath::Tanh(Rational const& rat)
     {
         tanhrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -336,7 +336,7 @@ Rational RationalMath::ASinh(Rational const& rat)
     {
         asinhrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -356,7 +356,7 @@ Rational RationalMath::ACosh(Rational const& rat)
     {
         acoshrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -376,7 +376,7 @@ Rational RationalMath::ATanh(Rational const& rat)
     {
         atanhrat(&prat, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);

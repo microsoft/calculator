@@ -12,7 +12,7 @@ namespace CalculatorApp
         public ref class OverflowTextBlock sealed : public Windows::UI::Xaml::Controls::Control
         {
         public:
-            OverflowTextBlock() 
+            OverflowTextBlock()
             {
             }
 

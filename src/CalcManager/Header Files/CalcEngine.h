@@ -22,6 +22,7 @@
 #include "RadixType.h"
 #include "History.h"  // for History Collector
 #include "CalcInput.h"
+#include "CalcUtils.h"
 #include "ICalcDisplay.h"
 #include "Rational.h"
 #include "RationalMath.h"
@@ -52,8 +53,8 @@ namespace CalculatorUnitTests
 class CCalcEngine {
 public:
     CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager::IResourceProvider* const pResourceProvider, __in_opt ICalcDisplay *pCalcDisplay, __in_opt std::shared_ptr<IHistoryDisplay> pHistoryDisplay);
-    void ProcessCommand(WPARAM wID);
-    void DisplayError (DWORD   nError);
+    void ProcessCommand(OpCode wID);
+    void DisplayError (uint32_t   nError);
     std::unique_ptr<CalcEngine::Rational> PersistedMemObject();
     void PersistedMemObject(CalcEngine::Rational const& memObject);
     bool FInErrorState() { return m_bError; }
@@ -85,7 +86,7 @@ private:
     // if it hasn't yet been computed
     bool m_bChangeOp; /* Flag for changing operation.       */
     bool m_bRecord;   // Global mode: recording or displaying
-    bool m_bSetCalcState;  //Flag for setting the engine result state
+    bool m_bSetCalcState;  // Flag for setting the engine result state
     CalcEngine::CalcInput m_input; // Global calc input object for decimal strings
     eNUMOBJ_FMT m_nFE;    /* Scientific notation conversion flag.       */
     CalcEngine::Rational m_maxTrigonometricNum;
@@ -116,7 +117,7 @@ private:
     int m_nLastCom;   // Last command entered.
     ANGLE_TYPE m_angletype;  // Current Angle type when in dec mode. one of deg, rad or grad
     NUM_WIDTH m_numwidth;  // one of qword, dword, word or byte mode.
-    LONG m_dwWordBitWidth; // # of bits in currently selected word size
+    int32_t m_dwWordBitWidth; // # of bits in currently selected word size
 
     CHistoryCollector m_HistoryCollector; // Accumulator of each line of history as various commands are processed
 
@@ -127,8 +128,8 @@ private:
     wchar_t m_groupSeparator;
 
 private:
-    void ProcessCommandWorker(WPARAM wParam);
-    void HandleErrorCommand(WPARAM idc);
+    void ProcessCommandWorker(OpCode wParam);
+    void HandleErrorCommand(OpCode idc);
     void HandleMaxDigitsReached();
     void DisplayNum(void);
     int IsNumberInvalid(const std::wstring& numberString, int iMaxExp, int iMaxMantissa, uint32_t radix) const;
@@ -136,13 +137,13 @@ private:
     void SetPrimaryDisplay(const std::wstring& szText, bool isError = false);
     void ClearTemporaryValues();
     CalcEngine::Rational TruncateNumForIntMath(CalcEngine::Rational const& rat);
-    CalcEngine::Rational SciCalcFunctions(CalcEngine::Rational const& rat, DWORD op);
+    CalcEngine::Rational SciCalcFunctions(CalcEngine::Rational const& rat, uint32_t op);
     CalcEngine::Rational DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs);
     void SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwidth);
-    LONG DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
+    int32_t DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
     uint32_t NRadixFromRadixType( RADIX_TYPE radixtype);
 
-    bool TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno);
+    bool TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno);
     void CheckAndAddLastBinOpToHistory(bool addToHistory = true);
     int IdcSetAngleTypeDecMode(int idc);
 

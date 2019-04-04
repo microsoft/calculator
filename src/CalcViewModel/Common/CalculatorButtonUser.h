@@ -80,7 +80,7 @@ namespace CalculatorApp
         D = (int) CM::Command::CommandD,
         E = (int) CM::Command::CommandE,
         F = (int) CM::Command::CommandF,
-        Memory, // This is the memory button. Doesn't have a direct mapping to the CalcEngine.        
+        Memory, // This is the memory button. Doesn't have a direct mapping to the CalcEngine.
         Sinh = (int) CM::Command::CommandSINH,
         Cosh = (int) CM::Command::CommandCOSH,
         Tanh = (int) CM::Command::CommandTANH,

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -234,7 +234,7 @@ namespace CalculatorUnitTests
         return wstring(L"");
     }
 
-    void UnitConverterMock::DeSerialize(const wstring& serializedData)
+    void UnitConverterMock::DeSerialize(const wstring& /*serializedData*/)
     {
         m_deSerializeCallCount++;
     }
@@ -244,7 +244,7 @@ namespace CalculatorUnitTests
         return L"TEST";
     };
 
-    void UnitConverterMock::RestoreUserPreferences(_In_ const std::wstring& userPreferences)
+    void UnitConverterMock::RestoreUserPreferences(_In_ const std::wstring& /*userPreferences*/)
     {
     };
 
@@ -286,7 +286,7 @@ namespace CalculatorUnitTests
             VM::UnitConverterViewModel^ vm = ref new UnitConverterViewModel(make_shared<UnitConversionManager::UnitConverter>(make_shared<UnitConverterDataLoader>(ref new GeographicRegion()), nullptr));
             IObservableVector<Category^>^ categoryList = vm->Categories;
             ResourceLoader^ m_resLoader = ResourceLoader::GetForViewIndependentUse("Test");
-            double epsilon = 0.1; //Could be more precise like 0.001 except atm to pascal conversion
+            double epsilon = 0.1; // Could be more precise like 0.001 except atm to pascal conversion
 
             for (unsigned int k = 0; k < categoryList->Size; k++)
             {
@@ -302,7 +302,7 @@ namespace CalculatorUnitTests
                         vm->Value1Active = false;
                         vm->Unit2 = unitList->GetAt(j);
                         wstring unit2Name = vm->Unit2->Name->Data();
-                        //change value2 as 1.
+                        // Change value2 as 1.
                         vm->ButtonPressed->Execute(NumbersAndOperatorsEnum::One);
                         String^ expectedResult = m_resLoader->GetString(ref new String((unit1Name + L"-" + unit2Name).c_str()));
 
@@ -315,10 +315,10 @@ namespace CalculatorUnitTests
                             double actualConversion = GetDoubleFromWstring(GetStringValue(vm->Value1)->Data());
                             double diff = abs(expectedConversion - actualConversion);
 
-                            // assert for diff less than epsilonth fraction of expected conversion result
+                            // Assert for diff less than epsilonth fraction of expected conversion result
                             VERIFY_IS_LESS_THAN_OR_EQUAL(diff, epsilon*expectedConversion);
                         }
-                        //clearing the value1
+                        // Clearing the value1
                         vm->ButtonPressed->Execute(NumbersAndOperatorsEnum::Clear);
                     }
                 }
@@ -356,7 +356,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL((UINT)1, mock->m_setVMCallbackCallCount);
         }
 
-        // Test that we've set up all categories on load and that the first 
+        // Test that we've set up all categories on load and that the first
         // category is selected.
         TEST_METHOD(TestUnitConverterLoadSetsUpCategories)
         {
@@ -393,7 +393,7 @@ namespace CalculatorUnitTests
             shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
             VM::UnitConverterViewModel vm(mock);
             vm.Unit1 = vm.Units->GetAt(1);  // Change from u4 to u5
-                                            // count will be 2 here since it was already called once at init
+                                            // Count will be 2 here since it was already called once at init
             VERIFY_ARE_EQUAL((UINT)2, mock->m_setCurUnitTypesCallCount);
             VERIFY_IS_TRUE(UNIT5 == mock->m_curFrom);
             VERIFY_IS_TRUE(UNIT6 == mock->m_curTo);
@@ -409,7 +409,7 @@ namespace CalculatorUnitTests
             shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
             VM::UnitConverterViewModel vm(mock);
             vm.CurrentCategory = vm.Categories->GetAt(2);   // Change from cat1 to cat3
-                                                            // counts will be 2 here since the first call should have happened during init
+                                                            // Counts will be 2 here since the first call should have happened during init
             VERIFY_IS_GREATER_THAN_OR_EQUAL(2u, mock->m_setCurrentCategoryCallCount);
             VERIFY_ARE_EQUAL((UINT)3, vm.Units->Size);
             VERIFY_IS_TRUE(UNIT7 == vm.Units->GetAt(0)->GetModelUnit());
@@ -424,7 +424,7 @@ namespace CalculatorUnitTests
             shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
             VM::UnitConverterViewModel vm(mock);
             vm.CurrentCategory = vm.Categories->GetAt(2);   // Change from cat1 to cat3
-                                                            // counts will be 2 here since the first call should have happened during init
+                                                            // Counts will be 2 here since the first call should have happened during init
             VERIFY_IS_GREATER_THAN_OR_EQUAL(2u, mock->m_setCurrentCategoryCallCount);
             VERIFY_IS_TRUE(UNIT9 == vm.Unit1->GetModelUnit());
             VERIFY_IS_TRUE(UNIT7 == vm.Unit2->GetModelUnit());
@@ -451,7 +451,7 @@ namespace CalculatorUnitTests
             shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
             VM::UnitConverterViewModel vm(mock);
 
-            // Call count is being set to 1 because we send 'CE' command as the first call 
+            // Call count is being set to 1 because we send 'CE' command as the first call
             UINT callCount = 1;
 
             vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Zero);
@@ -1045,7 +1045,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL((UCM::EMPTY_UNIT).id, (vm.Units->GetAt(0)->GetModelUnit()).id);
         }
 
-        // Test that a valid model unit list vuilds 
+        // Test that a valid model unit list vuilds
         TEST_METHOD(TestUnitsListBuildsFromValidModelUnitList)
         {
             shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();

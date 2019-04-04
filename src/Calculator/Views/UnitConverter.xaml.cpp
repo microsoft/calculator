@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 // UnitConverter.xaml.cpp
@@ -14,6 +14,7 @@
 #include "CalcViewModel/Common/LocalizationService.h"
 #include "CalcViewModel/Common/LocalizationSettings.h"
 
+using namespace std;
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Controls;
@@ -51,7 +52,7 @@ UnitConverter::UnitConverter() :
 {
     InitializeComponent();
 
-    //adding ESC key shortcut binding to clear button
+    // adding ESC key shortcut binding to clear button
     clearEntryButtonPos0->SetValue(Common::KeyboardShortcutManager::VirtualKeyProperty, Common::MyVirtualKey::Escape);
 
     m_layoutDirection = LocalizationService::GetInstance()->GetFlowDirection();
@@ -63,15 +64,7 @@ UnitConverter::UnitConverter() :
 
     // Is currency symbol preference set to right side
     bool preferRight = LocalizationSettings::GetInstance().GetCurrencySymbolPrecedence() == 0;
-    if (preferRight)
-    {
-        // Currency symbol should appear on the right. Reverse the order of children.
-        Grid::SetColumn(Value1, 0);
-        Grid::SetColumn(CurrencySymbol1Block, 1);
-        
-        Grid::SetColumn(Value2, 0);
-        Grid::SetColumn(CurrencySymbol2Block, 1);
-    }
+    VisualStateManager::GoToState(this, preferRight ? "CurrencySymbolRightState" : "CurrencySymbolLeftState", false);
 
     auto userSettings = ref new UISettings();
     m_isAnimationEnabled = userSettings->AnimationsEnabled;
@@ -90,16 +83,16 @@ UnitConverter::UnitConverter() :
 void UnitConverter::OnPropertyChanged(_In_ Object^ sender, _In_ PropertyChangedEventArgs^ e)
 {
     String^ propertyName = e->PropertyName;
-    if (propertyName->Equals(UnitConverterViewModelProperties::NetworkBehavior) ||
-        propertyName->Equals(UnitConverterViewModelProperties::CurrencyDataLoadFailed))
+    if (propertyName == UnitConverterViewModel::NetworkBehaviorPropertyName ||
+        propertyName == UnitConverterViewModel::CurrencyDataLoadFailedPropertyName)
     {
         OnNetworkBehaviorChanged();
     }
-    else if (propertyName->Equals(UnitConverterViewModelProperties::CurrencyDataIsWeekOld))
+    else if (propertyName == UnitConverterViewModel::CurrencyDataIsWeekOldPropertyName)
     {
         SetCurrencyTimestampFontWeight();
     }
-    else if (propertyName->Equals(UnitConverterViewModelProperties::IsCurrencyLoadingVisible))
+    else if (propertyName == UnitConverterViewModel::IsCurrencyLoadingVisiblePropertyName)
     {
         OnIsDisplayVisibleChanged();
     }
@@ -268,7 +261,6 @@ void UnitConverter::OnPasteMenuItemClicked(_In_ Object^ sender, _In_ RoutedEvent
 
 void UnitConverter::AnimateConverter()
 {
-    
     if (App::IsAnimationEnabled())
     {
         AnimationStory->Begin();
@@ -278,7 +270,7 @@ void UnitConverter::AnimateConverter()
 void UnitConverter::OnValueSelected(_In_ Platform::Object^ sender)
 {
     auto value = safe_cast<CalculationResult^>(sender);
-    //update the font size since the font is changed to bold
+    // update the font size since the font is changed to bold
     value->UpdateTextState();
     safe_cast<UnitConverterViewModel^>(this->DataContext)->OnValueActivated(AsActivatable(value));
 }
@@ -384,4 +376,11 @@ void UnitConverter::HideProgressRing()
     }
 
     CurrencyLoadingProgressRing->IsActive = false;
+}
+
+// The function will make sure the UI will have enough space to display supplementary results and currency information
+void CalculatorApp::UnitConverter::SupplementaryResultsPanelInGrid_SizeChanged(Platform::Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e)
+{
+    //We add 0.01 to be sure to not create an infinite loop with SizeChanged events cascading due to float approximation 
+    RowDltrUnits->MinHeight = max(48.0, e->NewSize.Height + 0.01);
 }

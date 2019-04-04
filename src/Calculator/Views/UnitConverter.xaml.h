@@ -88,5 +88,6 @@ namespace CalculatorApp
         Windows::UI::Xaml::DispatcherTimer^ m_delayTimer;
 
         bool m_isAnimationEnabled;
+        void SupplementaryResultsPanelInGrid_SizeChanged(Platform::Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e);
     };
 }

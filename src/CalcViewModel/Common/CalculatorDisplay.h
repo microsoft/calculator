@@ -22,6 +22,7 @@ namespace CalculatorApp
         void SetMemorizedNumbers(_In_ const std::vector<std::wstring>& memorizedNumbers) override;
         void OnHistoryItemAdded(_In_ unsigned int addedItemIndex) override;
         void SetParenDisplayText(_In_ const std::wstring& parenthesisCount) override;
+        void OnNoRightParenAdded() override;
         void MaxDigitsReached() override;
         void BinaryOperatorReceived() override;
         void MemoryItemChanged(unsigned int indexOfMemory) override;

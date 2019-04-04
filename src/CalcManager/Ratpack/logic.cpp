@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //---------------------------------------------------------------------------
@@ -16,13 +16,13 @@
 #include "pch.h"
 #include "ratpak.h"
 
-
+using namespace std;
 
 void lshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
 
 {
     PRAT pwr= nullptr;
-    long intb;
+    int32_t intb;
 
     intrat(pa, radix, precision);
     if ( !zernum( (*pa)->pp ) )
@@ -33,9 +33,9 @@ void lshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
             // Don't attempt lsh of anything big
             throw( CALC_E_DOMAIN );
             }
-        intb = rattolong(b, radix, precision);
+        intb = rattoi32(b, radix, precision);
         DUPRAT(pwr,rat_two);
-        ratpowlong(&pwr, intb, precision);
+        ratpowi32(&pwr, intb, precision);
         mulrat(pa, pwr, precision);
         destroyrat(pwr);
         }
@@ -45,20 +45,20 @@ void rshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
 
 {
     PRAT pwr= nullptr;
-    long intb;
+    int32_t intb;
 
     intrat(pa, radix, precision);
     if ( !zernum( (*pa)->pp ) )
-        { 
+        {
         // If input is zero we're done.
         if ( rat_lt( b, rat_min_exp, precision) )
             {
             // Don't attempt rsh of anything big and negative.
             throw( CALC_E_DOMAIN );
             }
-        intb = rattolong(b, radix, precision);
+        intb = rattoi32(b, radix, precision);
         DUPRAT(pwr,rat_two);
-        ratpowlong(&pwr, intb, precision);
+        ratpowi32(&pwr, intb, precision);
         divrat(pa, pwr, precision);
         destroyrat(pwr);
        }
@@ -138,8 +138,8 @@ void boolnum( PNUMBER *pa, PNUMBER b, int func )
     MANTTYPE *pcha;
     MANTTYPE *pchb;
     MANTTYPE *pchc;
-    long cdigits;
-    long mexp;
+    int32_t cdigits;
+    int32_t mexp;
     MANTTYPE da;
     MANTTYPE db;
 
@@ -155,11 +155,11 @@ void boolnum( PNUMBER *pa, PNUMBER b, int func )
     pchc = c->mant;
     for ( ;cdigits > 0; cdigits--, mexp++ )
         {
-        da = ( ( ( mexp >= a->exp ) && ( cdigits + a->exp - c->exp > 
-                    (c->cdigit - a->cdigit) ) ) ? 
+        da = ( ( ( mexp >= a->exp ) && ( cdigits + a->exp - c->exp >
+                    (c->cdigit - a->cdigit) ) ) ?
                     *pcha++ : 0 );
-        db = ( ( ( mexp >= b->exp ) && ( cdigits + b->exp - c->exp > 
-                    (c->cdigit - b->cdigit) ) ) ? 
+        db = ( ( ( mexp >= b->exp ) && ( cdigits + b->exp - c->exp >
+                    (c->cdigit - b->cdigit) ) ) ?
                     *pchb++ : 0 );
         switch ( func )
             {
@@ -205,15 +205,14 @@ void modrat( PRAT *pa, PRAT b )
         throw CALC_E_INDEFINITE;
         }
     DUPRAT(tmp,b);
-    
+
     mulnumx( &((*pa)->pp), tmp->pq );
     mulnumx( &(tmp->pp), (*pa)->pq );
     remnum( &((*pa)->pp), tmp->pp, BASEX );
     mulnumx( &((*pa)->pq), tmp->pq );
-    
-    //Get *pa back in the integer over integer form.
+
+    // Get *pa back in the integer over integer form.
     RENORMALIZE(*pa);
 
     destroyrat( tmp );
 }
-

@@ -39,7 +39,7 @@ typedef struct {
     Rational value;
     int32_t precision;
     uint32_t radix;
-    INT         nFE;
+    int         nFE;
     NUM_WIDTH   numwidth;
     bool        fIntMath;
     bool        bRecord;
@@ -104,7 +104,7 @@ void CCalcEngine::DisplayNum(void)
         if (m_bRecord)
         {
             // Display the string and return.
-            m_numberString = m_input.ToString(m_radix, m_fIntegerMode);
+            m_numberString = m_input.ToString(m_radix);
         }
         else
         {

@@ -46,7 +46,7 @@ DateCalculator::DateCalculator()
 
     // Set Calendar Identifier
     DateDiff_FromDate->CalendarIdentifier = localizationSettings.GetCalendarIdentifier();
-    DateDiff_ToDate->CalendarIdentifier = localizationSettings.GetCalendarIdentifier();;
+    DateDiff_ToDate->CalendarIdentifier = localizationSettings.GetCalendarIdentifier();
 
     // Setting the FirstDayofWeek
     DateDiff_FromDate->FirstDayOfWeek = localizationSettings.GetFirstDayOfWeek();

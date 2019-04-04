@@ -2,17 +2,17 @@
 // Licensed under the MIT License.
 
 //-----------------------------------------------------------------------------
-//  Package Title  ratpak                                                   
-//  File           basex.c                                                            
-//  Copyright      (C) 1995-97 Microsoft                                    
-//  Date           03-14-97                                                 
-//                                                                          
-//                                                                          
-//  Description                                                             
-//                                                                          
-//     Contains number routines for internal base computations, these assume   
-//  internal base is a power of 2.                                          
-//                                                                          
+//  Package Title  ratpak
+//  File           basex.c
+//  Copyright      (C) 1995-97 Microsoft
+//  Date           03-14-97
+//
+//
+//  Description
+//
+//     Contains number routines for internal base computations, these assume
+//  internal base is a power of 2.
+//
 //-----------------------------------------------------------------------------
 #include "pch.h"
 #include "ratpak.h"
@@ -41,14 +41,14 @@ void __inline mulnumx( PNUMBER *pa, PNUMBER b )
         {
         // If b is not one we multiply
         if ( (*pa)->cdigit > 1 || (*pa)->mant[0] != 1 || (*pa)->exp != 0 )
-            { 
+            {
             // pa and b are both non-one.
             _mulnumx( pa, b );
             }
         else
             {
             // if pa is one and b isn't just copy b. and adjust the sign.
-            long sign = (*pa)->sign;
+            int32_t sign = (*pa)->sign;
             DUPNUM(*pa,b);
             (*pa)->sign *= sign;
             }
@@ -86,14 +86,14 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
     MANTTYPE *ptrc;         // ptrc is a pointer to the mantissa of c.
     MANTTYPE *ptrcoffset;   // ptrcoffset, is the anchor location of the next
                             // single digit multiply partial result.
-    long iadigit=0;         // Index of digit being used in the first number.
-    long ibdigit=0;         // Index of digit being used in the second number.
+    int32_t iadigit=0;         // Index of digit being used in the first number.
+    int32_t ibdigit=0;         // Index of digit being used in the second number.
     MANTTYPE      da=0;     // da is the digit from the fist number.
     TWO_MANTTYPE  cy=0;     // cy is the carry resulting from the addition of
                             // a multiplied row into the result.
-    TWO_MANTTYPE  mcy=0;    // mcy is the resultant from a single 
+    TWO_MANTTYPE  mcy=0;    // mcy is the resultant from a single
                             // multiply, AND the carry of that multiply.
-    long  icdigit=0;        // Index of digit being calculated in final result.
+    int32_t  icdigit=0;        // Index of digit being calculated in final result.
 
     a=*pa;
 
@@ -110,14 +110,14 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
     {
         da =  *ptra++;
         ptrb = b->mant;
-        
-        // Shift ptrc, and ptrcoffset, one for each digit 
+
+        // Shift ptrc, and ptrcoffset, one for each digit
         ptrc = ptrcoffset++;
 
         for ( ibdigit = b->cdigit; ibdigit > 0; ibdigit-- )
         {
             cy = 0;
-            mcy = (DWORDLONG)da * (*ptrb);
+            mcy = (uint64_t)da * (*ptrb);
             if ( mcy )
             {
                 icdigit = 0;
@@ -126,28 +126,28 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
                     c->cdigit++;
                 }
             }
-            
+
             // If result is nonzero, or while result of carry is nonzero...
             while ( mcy || cy )
             {
-                
+
                 // update carry from addition(s) and multiply.
-                cy += (TWO_MANTTYPE)ptrc[icdigit]+((DWORD)mcy&((DWORD)~BASEX));
-                
-                // update result digit from 
-                ptrc[icdigit++]=(MANTTYPE)((DWORD)cy&((DWORD)~BASEX));
-                
+                cy += (TWO_MANTTYPE)ptrc[icdigit]+((uint32_t)mcy&((uint32_t)~BASEX));
+
+                // update result digit from
+                ptrc[icdigit++]=(MANTTYPE)((uint32_t)cy&((uint32_t)~BASEX));
+
                 // update carries from
                 mcy >>= BASEXPWR;
                 cy >>= BASEXPWR;
             }
-            
+
             ptrb++;
             ptrc++;
-            
+
         }
     }
-    
+
     // prevent different kinds of zeros, by stripping leading duplicate zeros.
     // digits are in order of increasing significance.
     while ( c->cdigit > 1 && c->mant[c->cdigit-1] == 0 )
@@ -160,9 +160,9 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
 }
 //-----------------------------------------------------------------------------
 //
-//    FUNCTION: numpowlongx
+//    FUNCTION: numpowi32x
 //
-//    ARGUMENTS: root as number power as long
+//    ARGUMENTS: root as number power as int32_t
 //               number.
 //
 //    RETURN: None root is changed.
@@ -174,10 +174,10 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
 //
 //-----------------------------------------------------------------------------
 
-void numpowlongx( _Inout_ PNUMBER *proot, _In_ long power )
+void numpowi32x( _Inout_ PNUMBER *proot, _In_ int32_t power )
 
 {
-    PNUMBER lret = longtonum( 1, BASEX );
+    PNUMBER lret = i32tonum( 1, BASEX );
 
     // Once the power remaining is zero we are done.
     while ( power > 0 )
@@ -198,7 +198,7 @@ void numpowlongx( _Inout_ PNUMBER *proot, _In_ long power )
         }
     destroynum( *proot );
     *proot=lret;
-    
+
 }
 
 void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision);
@@ -232,7 +232,7 @@ void __inline divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
         else
             {
             // if pa is one and b is not one, just copy b, and adjust the sign.
-            long sign = (*pa)->sign;
+            int32_t sign = (*pa)->sign;
             DUPNUM(*pa,b);
             (*pa)->sign *= sign;
             }
@@ -266,23 +266,23 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
                             // guesses one bit too far.
     PNUMBER tmp = nullptr;     // current guess being worked on for divide.
     PNUMBER rem = nullptr;     // remainder after applying guess.
-    long cdigits;           // count of digits for answer.
+    int32_t cdigits;           // count of digits for answer.
     MANTTYPE *ptrc;         // ptrc is a pointer to the mantissa of c.
 
-    long thismax = precision + g_ratio; // set a maximum number of internal digits
+    int32_t thismax = precision + g_ratio; // set a maximum number of internal digits
                                  // to shoot for in the divide.
 
     a=*pa;
     if ( thismax < a->cdigit )
         {
-        // a has more digits than precision specified, bump up digits to shoot 
+        // a has more digits than precision specified, bump up digits to shoot
         // for.
         thismax = a->cdigit;
         }
 
     if ( thismax < b->cdigit )
         {
-        // b has more digits than precision specified, bump up digits to shoot 
+        // b has more digits than precision specified, bump up digits to shoot
         // for.
         thismax = b->cdigit;
         }
@@ -301,14 +301,14 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
 
     while ( cdigits++ < thismax && !zernum(rem) )
         {
-        long digit = 0;
+        int32_t digit = 0;
         *ptrc = 0;
         while ( !lessnum( rem, b ) )
             {
             digit = 1;
             DUPNUM( tmp, b );
             destroynum( lasttmp );
-            lasttmp=longtonum( 0, BASEX );
+            lasttmp=i32tonum( 0, BASEX );
             while ( lessnum( tmp, rem ) )
                 {
                 destroynum( lasttmp );
@@ -317,7 +317,7 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
                 digit *= 2;
                 }
             if ( lessnum( rem, tmp ) )
-                {    
+                {
                 // too far, back up...
                 destroynum( tmp );
                 digit /= 2;
@@ -326,7 +326,7 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
                 }
 
             tmp->sign *= -1;
-            addnum( &rem, tmp, BASEX ); 
+            addnum( &rem, tmp, BASEX );
             destroynum( tmp );
             destroynum( lasttmp );
             *ptrc |= digit;
@@ -341,7 +341,7 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
         }
 
     if ( !cdigits )
-        {   
+        {
         // A zero, make sure no weird exponents creep in
         c->exp = 0;
         c->cdigit = 1;
@@ -350,7 +350,7 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
         {
         c->cdigit = cdigits;
         c->exp -= cdigits;
-        // prevent different kinds of zeros, by stripping leading duplicate 
+        // prevent different kinds of zeros, by stripping leading duplicate
         // zeros. digits are in order of increasing significance.
         while ( c->cdigit > 1 && c->mant[c->cdigit-1] == 0 )
             {

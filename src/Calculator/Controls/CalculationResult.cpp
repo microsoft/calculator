@@ -76,7 +76,7 @@ void CalculationResult::OnApplyTemplate()
     if (m_textContainer)
     {
         m_textContainer->SizeChanged += ref new SizeChangedEventHandler(this, &CalculationResult::TextContainerSizeChanged);
-        // We want to know when the size of the container changes so 
+        // We want to know when the size of the container changes so
         // we can rescale the textbox
         m_textContainerLayoutChangedToken = m_textContainer->LayoutUpdated += ref new EventHandler<Object^>(this, &CalculationResult::OnTextContainerLayoutUpdated);
 
@@ -117,17 +117,17 @@ void CalculationResult::OnTextContainerLayoutUpdated(Object^ /*sender*/, Object^
     }
 }
 
-void CalculationResult::TextContainerSizeChanged(Object^ sender, SizeChangedEventArgs^ /*e*/)
+void CalculationResult::TextContainerSizeChanged(Object^ /*sender*/, SizeChangedEventArgs^ /*e*/)
 {
     UpdateTextState();
 }
 
-void CalculationResult::OnIsActivePropertyChanged(bool /*oldValue*/, bool newValue)
+void CalculationResult::OnIsActivePropertyChanged(bool /*oldValue*/, bool /*newValue */)
 {
     UpdateVisualState();
 }
 
-void CalculationResult::OnAccentColorPropertyChanged(Brush^ oldValue, Brush^ newValue)
+void CalculationResult::OnAccentColorPropertyChanged(Brush^ /*oldValue*/, Brush^ /*newValue*/)
 {
     // Force the "Active" transition to happen again
     if (IsActive)
@@ -163,15 +163,15 @@ void CalculationResult::OnIsInErrorPropertyChanged(bool /*oldValue*/, bool newVa
     if (newValue)
     {
         // If there's an error message we need to override the normal display font
-        // with the font appropriate for this language. This is because the error 
+        // with the font appropriate for this language. This is because the error
         // message is localized and therefore can contain characters that are not
-        // available in the normal font. 
+        // available in the normal font.
         // We use UIText as the font type because this is the most common font type to use
         m_textBlock->FontFamily = LocalizationService::GetInstance()->GetLanguageFontFamilyForType(LanguageFontType::UIText);
     }
     else
     {
-        // The error result is no longer an error so we will restore the 
+        // The error result is no longer an error so we will restore the
         // value to FontFamily property to the value provided in the style
         // for the TextBlock in the template.
         m_textBlock->ClearValue(TextBlock::FontFamilyProperty);
@@ -201,8 +201,8 @@ void CalculationResult::UpdateTextState()
     String^ oldText = m_textBlock->Text;
     String^ newText =  Utils::LRO + DisplayValue + Utils::PDF;
 
-    //Initiate the scaling operation
-    //UpdateLayout will keep calling us until we make it through the below 2 if-statements
+    // Initiate the scaling operation
+    // UpdateLayout will keep calling us until we make it through the below 2 if-statements
     if (!m_isScalingText || oldText != newText)
     {
         m_textBlock->Text = newText;
@@ -219,7 +219,7 @@ void CalculationResult::UpdateTextState()
 
         if (widthDiff > WIDTHCUTOFF)
         {
-            fontSizeChange = min(max(floor(WIDTHTOFONTSCALAR * widthDiff) - WIDTHTOFONTOFFSET, INCREMENTOFFSET), MAXFONTINCREMENT);
+            fontSizeChange = min<double>(max<double>(floor(WIDTHTOFONTSCALAR * widthDiff) - WIDTHTOFONTOFFSET, INCREMENTOFFSET), MAXFONTINCREMENT);
         }
         if (m_textBlock->ActualWidth < containerSize && abs(m_textBlock->FontSize - MaxFontSize) > FONTTOLERANCE && !m_haveCalculatedMax)
         {

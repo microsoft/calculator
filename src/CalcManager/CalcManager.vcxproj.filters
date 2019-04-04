@@ -119,7 +119,6 @@
     <ClInclude Include="Ratpack\ratpak.h">
       <Filter>RatPack</Filter>
     </ClInclude>
-    <ClInclude Include="CalcException.h" />
     <ClInclude Include="CalculatorVector.h" />
     <ClInclude Include="Header Files\CalcEngine.h">
       <Filter>Header Files</Filter>
@@ -134,9 +133,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\History.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\scimath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UnitConverter.h" />

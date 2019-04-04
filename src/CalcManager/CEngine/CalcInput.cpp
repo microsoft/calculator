@@ -56,7 +56,7 @@ bool CalcInput::TryToggleSign(bool isIntegerMode, wstring_view maxNumStr)
     return true;
 }
 
-bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, wstring_view maxNumStr, long wordBitWidth, int maxDigits)
+bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, wstring_view maxNumStr, int32_t wordBitWidth, int maxDigits)
 {
     // Convert from an integer into a character
     // This includes both normal digits and alpha 'digits' for radixes > 10
@@ -261,7 +261,7 @@ void CalcInput::SetDecimalSymbol(wchar_t decSymbol)
     }
 }
 
-wstring CalcInput::ToString(uint32_t radix, bool isIntegerMode)
+wstring CalcInput::ToString(uint32_t radix)
 {
     // In theory both the base and exponent could be C_NUM_MAX_DIGITS long.
     wstringstream resStream;
