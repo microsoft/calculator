@@ -34,7 +34,11 @@
                                        FallbackColor="Transparent"
                                        TargetTheme="Dark"
                                        Color="Transparent"/>
-                    <RevealBackgroundBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
+                    <RevealBackgroundBrush x:Key="AppControlHighlightAccentRevealBackgroundBrush"
+                                           FallbackColor="{ThemeResource SystemAccentColor}"
+                                           TargetTheme="Dark"
+                                           Color="{ThemeResource SystemAccentColor}"/>
+                    <RevealBackgroundBrush x:Key="AppControlBackgroundListAccentHighRevealBackgroundBrush"
                                            FallbackColor="{ThemeResource SystemAccentColorDark3}"
                                            TargetTheme="Dark"
                                            Color="{ThemeResource SystemAccentColorDark3}"/>
@@ -66,7 +70,11 @@
                                        FallbackColor="Transparent"
                                        TargetTheme="Light"
                                        Color="Transparent"/>
-                    <RevealBackgroundBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
+                    <RevealBackgroundBrush x:Key="AppControlHighlightAccentRevealBackgroundBrush"
+                                           FallbackColor="{ThemeResource SystemAccentColor}"
+                                           TargetTheme="Light"
+                                           Color="{ThemeResource SystemAccentColor}"/>
+                    <RevealBackgroundBrush x:Key="AppControlBackgroundListAccentHighRevealBackgroundBrush"
                                            FallbackColor="{ThemeResource SystemAccentColorLight3}"
                                            TargetTheme="Light"
                                            Color="{ThemeResource SystemAccentColorLight3}"/>
@@ -93,7 +101,8 @@
                     <SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextRedColorBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
                     <SolidColorBrush x:Key="AppControlForegroundTransparentRevealBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
-                    <SolidColorBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush" Color="{ThemeResource SystemColorHighlightTextColor}"/>
+                    <SolidColorBrush x:Key="AppControlHighlightAccentRevealBackgroundBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
+                    <SolidColorBrush x:Key="AppControlBackgroundListAccentHighRevealBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="AppControlListLowRevealHighlightBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush" Color="{ThemeResource SystemColorWindowColor}"/>
                 </ResourceDictionary>
@@ -326,9 +335,9 @@
             <Style x:Key="AccentCalcButtonStyle"
                    BasedOn="{StaticResource SymbolOperatorButtonStyle}"
                    TargetType="Controls:CalculatorButton">
-                <Setter Property="HoverBackground" Value="{ThemeResource SystemControlHighlightAccentRevealBackgroundBrush}"/>
+                <Setter Property="HoverBackground" Value="{ThemeResource AppControlHighlightAccentRevealBackgroundBrush}"/>
                 <Setter Property="HoverForeground" Value="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
-                <Setter Property="PressBackground" Value="{ThemeResource AppControlHighlightAltListAccentHighRevealBackgroundBrush}"/>
+                <Setter Property="PressBackground" Value="{ThemeResource AppControlBackgroundListAccentHighRevealBackgroundBrush}"/>
                 <Setter Property="PressForeground" Value="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
             </Style>
 
@@ -701,7 +710,7 @@
                                         <VisualState x:Name="Pressed">
                                             <VisualState.Setters>
                                                 <Setter Target="RootGrid.(RevealBrush.State)" Value="Pressed"/>
-                                                <Setter Target="RootGrid.Background" Value="{ThemeResource AppControlHighlightAltListAccentHighRevealBackgroundBrush}"/>
+                                                <Setter Target="RootGrid.Background" Value="{ThemeResource AppControlBackgroundListAccentHighRevealBackgroundBrush}"/>
                                                 <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
                                             </VisualState.Setters>
                                         </VisualState>
