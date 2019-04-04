@@ -42,10 +42,10 @@ DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsScientific);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsProgrammer);
 
 Calculator::Calculator() :
-    m_doAnimate(false),
-    m_isLastAnimatedInScientific(false),
-    m_isLastAnimatedInProgrammer(false),
-    m_resultAnimate(false)
+m_doAnimate(false),
+m_isLastAnimatedInScientific(false),
+m_isLastAnimatedInProgrammer(false),
+m_resultAnimate(false)
 {
     SetFontSizeResources();
     InitializeComponent();
@@ -192,7 +192,7 @@ void Calculator::UpdateViewState()
         state = L"Scientific";
         Model->IsDecimalEnabled = true;
         ResultsMVisualStateTrigger->MinWindowHeight = 544;
-  }
+    }
     else
     {
         state = L"Standard";
@@ -633,7 +633,6 @@ void Calculator::EnableMemoryControls(bool enable)
 void Calculator::EnableControls(bool enable)
 {
     OpsPanel->IsEnabled = enable;
-
     EnableMemoryControls(enable);
 }
 
