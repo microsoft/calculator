@@ -44,6 +44,12 @@ the code. Please attempt to match the style of surrounding code as much as possi
 components, prefer the patterns described in the [C++ core guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
 and the [modern C++/WinRT language projections](https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/).
 
+The projects in this codebase typically make use of precompiled headers (pch.h). When it is necessary to include a
+system header, please include it in the pch.h for the relevant project. For the CalcManager project specifically,
+the project should be able to be compiled with or without a precompiled header in-order to support other toolsets
+besides MSVC.  For this project, make sure that the relevant source file includes all headers it needs, but then also
+add the system headers to the pch so that MSVC users see the performance benefit.
+
 ### Testing
 Your change should include tests to verify new functionality wherever possible. Code should be
 structured so that it can be unit tested independently of the UI. [Manual test cases](docs/ManualTests.md)
