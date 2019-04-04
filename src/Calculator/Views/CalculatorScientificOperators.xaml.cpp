@@ -35,7 +35,7 @@ CalculatorScientificOperators::CalculatorScientificOperators()
 {
     InitializeComponent();
 
-    expButton->SetValue(Common::KeyboardShortcutManager::VirtualKeyProperty, Common::MyVirtualKey::E);
+    ExpButton->SetValue(Common::KeyboardShortcutManager::VirtualKeyProperty, Common::MyVirtualKey::E);
     Common::KeyboardShortcutManager::ShiftButtonChecked(false);
 }
 
@@ -62,7 +62,7 @@ void CalculatorScientificOperators::OnIsErrorVisualStatePropertyChanged(bool /*o
 
 void CalculatorScientificOperators::shiftButton_Check(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
 {
-    bool isChecked = shiftButton->IsChecked->Value;
+    bool isChecked = ShiftButton->IsChecked->Value;
     Model->IsShiftChecked = isChecked;
     Common::KeyboardShortcutManager::ShiftButtonChecked(isChecked);
     SetOperatorRowVisibility();
@@ -71,7 +71,7 @@ void CalculatorScientificOperators::shiftButton_Check(_In_ Platform::Object^ /*s
 void CalculatorScientificOperators::shiftButton_IsEnabledChanged(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ /*e*/)
 {
     SetOperatorRowVisibility();
-    Common::KeyboardShortcutManager::ShiftButtonChecked(shiftButton->IsEnabled && shiftButton->IsChecked->Value);
+    Common::KeyboardShortcutManager::ShiftButtonChecked(ShiftButton->IsEnabled && ShiftButton->IsChecked->Value);
 }
 
 void CalculatorScientificOperators::SetOperatorRowVisibility()
@@ -82,7 +82,7 @@ void CalculatorScientificOperators::SetOperatorRowVisibility()
         rowVis = ::Visibility::Visible;
         invRowVis = ::Visibility::Visible;
     }
-    else if (shiftButton->IsChecked->Value)
+    else if (ShiftButton->IsChecked->Value)
     {
         rowVis = ::Visibility::Collapsed;
         invRowVis = ::Visibility::Visible;

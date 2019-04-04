@@ -72,7 +72,7 @@ void CalculationResult::OnApplyTemplate()
     {
         m_textContainer->LayoutUpdated -= m_textContainerLayoutChangedToken;
     }
-    m_textContainer = dynamic_cast<ScrollViewer^>(GetTemplateChild("textContainer"));
+    m_textContainer = dynamic_cast<ScrollViewer^>(GetTemplateChild("TextContainer"));
     if (m_textContainer)
     {
         m_textContainer->SizeChanged += ref new SizeChangedEventHandler(this, &CalculationResult::TextContainerSizeChanged);
@@ -81,9 +81,9 @@ void CalculationResult::OnApplyTemplate()
         m_textContainerLayoutChangedToken = m_textContainer->LayoutUpdated += ref new EventHandler<Object^>(this, &CalculationResult::OnTextContainerLayoutUpdated);
 
         m_textContainer->ChangeView(m_textContainer->ExtentWidth - m_textContainer->ViewportWidth,nullptr,nullptr);
-        m_scrollLeft = dynamic_cast<HyperlinkButton^>(GetTemplateChild("scrollLeft"));
-        m_scrollRight = dynamic_cast<HyperlinkButton^>(GetTemplateChild("scrollRight"));
-        auto borderContainer = dynamic_cast<UIElement^>(GetTemplateChild("border"));
+        m_scrollLeft = dynamic_cast<HyperlinkButton^>(GetTemplateChild("ScrollLeft"));
+        m_scrollRight = dynamic_cast<HyperlinkButton^>(GetTemplateChild("ScrollRight"));
+        auto borderContainer = dynamic_cast<UIElement^>(GetTemplateChild("Border"));
         if (m_scrollLeft && m_scrollRight)
         {
             m_scrollLeft->Click += ref new RoutedEventHandler(this, &CalculationResult::OnScrollClick);
@@ -91,7 +91,7 @@ void CalculationResult::OnApplyTemplate()
             borderContainer->PointerEntered += ref new PointerEventHandler(this, &CalculationResult::OnPointerEntered);
             borderContainer->PointerExited += ref new PointerEventHandler(this, &CalculationResult::OnPointerExited);
         }
-        m_textBlock = dynamic_cast<TextBlock^>(m_textContainer->FindName("normalOutput"));
+        m_textBlock = dynamic_cast<TextBlock^>(m_textContainer->FindName("NormalOutput"));
         if (m_textBlock)
         {
             m_textBlock->Visibility = ::Visibility::Visible;

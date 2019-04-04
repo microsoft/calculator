@@ -10,7 +10,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       xmlns:vm="using:CalculatorApp.ViewModel"
-      x:Name="pageRoot"
+      x:Name="PageRoot"
       Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
       Loaded="OnPageLoaded"
       Unloaded="OnPageUnLoaded"
@@ -75,16 +75,16 @@
                 These buttons are only here to serve as the target for copy/paste commands
                 they are not to be shown, only to have the command and shortcut assigned to them.
             -->
-            <Button x:Name="copyButton"
+            <Button x:Name="CopyButton"
                     x:Uid="copyButton"
                     Command="{x:Bind Model.CopyCommand}"/>
-            <Button x:Name="pasteButton"
+            <Button x:Name="PasteButton"
                     x:Uid="pasteButton"
                     Command="{x:Bind Model.PasteCommand}"/>
-            <Button x:Name="copyButtonAlternate"
+            <Button x:Name="CopyButtonAlternate"
                     x:Uid="copyButtonAlternate"
                     Command="{x:Bind Model.CopyCommand}"/>
-            <Button x:Name="pasteButtonAlternate"
+            <Button x:Name="PasteButtonAlternate"
                     x:Uid="pasteButtonAlternate"
                     Command="{x:Bind Model.PasteCommand}"/>
         </StackPanel>

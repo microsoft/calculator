@@ -32,11 +32,11 @@ void OverflowTextBlock::OnApplyTemplate()
 {
     assert(((m_scrollLeft == nullptr) && (m_scrollRight == nullptr)) || ((m_scrollLeft != nullptr) && (m_scrollRight != nullptr)));
 
-    m_expressionContainer = safe_cast<ScrollViewer^>(GetTemplateChild("expressionContainer"));
+    m_expressionContainer = safe_cast<ScrollViewer^>(GetTemplateChild("ExpressionContainer"));
     m_expressionContainer->ChangeView(m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth, nullptr, nullptr);
 
-    m_scrollLeft = safe_cast<Button^>(GetTemplateChild("scrollLeft"));
-    m_scrollRight = safe_cast<Button^>(GetTemplateChild("scrollRight"));
+    m_scrollLeft = safe_cast<Button^>(GetTemplateChild("ScrollLeft"));
+    m_scrollRight = safe_cast<Button^>(GetTemplateChild("ScrollRight"));
 
     m_scrollLeftClickEventToken = m_scrollLeft->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollClick);
     m_scrollRightClickEventToken = m_scrollRight->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollClick);
@@ -44,7 +44,7 @@ void OverflowTextBlock::OnApplyTemplate()
     m_scrollingLeft = false;
     m_scrollingRight = false;
 
-    auto borderContainer = safe_cast<Border^>(GetTemplateChild("expressionborder"));
+    auto borderContainer = safe_cast<Border^>(GetTemplateChild("ExpressionBorder"));
     m_pointerEnteredEventToken = borderContainer->PointerEntered += ref new PointerEventHandler(this, &OverflowTextBlock::OnPointerEntered);
     m_pointerExitedEventToken = borderContainer->PointerExited += ref new PointerEventHandler(this, &OverflowTextBlock::OnPointerExited);
 
@@ -199,7 +199,7 @@ void OverflowTextBlock::UnregisterEventHandlers()
         m_scrollRight->Click -= m_scrollRightClickEventToken;
     }
 
-    auto borderContainer = safe_cast<Border^>(GetTemplateChild("expressionborder"));
+    auto borderContainer = safe_cast<Border^>(GetTemplateChild("ExpressionBorder"));
 
     // Adding an extra check, in case the returned template is null
     if (borderContainer != nullptr)
