@@ -909,6 +909,14 @@
     <value>Desna zagrada</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
   </data>
+  <data name="Format_OpenParenthesisCountAutomationNamePrefix" xml:space="preserve">
+    <value>Broj otvorenih zagrada %1</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific and programmer operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
+  </data>
+  <data name="NoRightParenthesisAdded_Announcement" xml:space="preserve">
+    <value>Nema otvorenih zagrada koje se mogu zatvoriti.</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator when the ")" button on the scientific and programmer operator keypad cannot be added to the equation. e.g. "1+)".</comment>
+  </data>
   <data name="ftoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Naučni način zapisivanja</value>
     <comment>Screen reader prompt for the Calculator F-E the scientific operator keypad</comment>
@@ -2452,13 +2460,13 @@
     <value>dan</value>
   </data>
   <data name="Date_Days" xml:space="preserve">
-    <value>dani</value>
+    <value>dan/dana</value>
   </data>
   <data name="Date_Month" xml:space="preserve">
     <value>mesec</value>
   </data>
   <data name="Date_Months" xml:space="preserve">
-    <value>meseci</value>
+    <value>mesec/meseca/meseci</value>
   </data>
   <data name="Date_SameDates" xml:space="preserve">
     <value>Isti datumi</value>
@@ -2467,13 +2475,13 @@
     <value>sedmica</value>
   </data>
   <data name="Date_Weeks" xml:space="preserve">
-    <value>sedmice</value>
+    <value>sedmica/sedmice</value>
   </data>
   <data name="Date_Year" xml:space="preserve">
     <value>godina</value>
   </data>
   <data name="Date_Years" xml:space="preserve">
-    <value>godine</value>
+    <value>godina/godine</value>
   </data>
   <data name="Date_DifferenceResultAutomationName" xml:space="preserve">
     <value>Razlika %1</value>
