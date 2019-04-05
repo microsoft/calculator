@@ -230,7 +230,7 @@ namespace UnitConversionManager
         bool CheckLoad();
         double Convert(double value, ConversionData conversionData);
         std::vector<std::tuple<std::wstring, Unit>> CalculateSuggested();
-        void Reset();
+        void ResetCategoriesAndRatios();
         void ClearValues();
         void Calculate();
         void TrimString(std::wstring& input);

@@ -64,7 +64,7 @@ UnitConverter::UnitConverter(_In_ const shared_ptr<IConverterDataLoader>& dataLo
     unquoteConversions[L"{lb}"] = LEFTESCAPECHAR;
     unquoteConversions[L"{rb}"] = RIGHTESCAPECHAR;
     ClearValues();
-    Reset();
+    ResetCategoriesAndRatios();
 }
 
 void UnitConverter::Initialize()
@@ -76,7 +76,7 @@ bool UnitConverter::CheckLoad()
 {
     if (m_categories.empty())
     {
-        Reset();
+        ResetCategoriesAndRatios();
     }
     return !m_categories.empty();
 }
@@ -337,7 +337,7 @@ wstring UnitConverter::Serialize()
 /// <param name="serializedData">wstring holding the serialized data. If it does not have expected number of parameters, we will ignore it</param>
 void UnitConverter::DeSerialize(const wstring& serializedData)
 {
-    Reset();
+    ResetCategoriesAndRatios();
 
     if (serializedData.empty())
     {
@@ -616,7 +616,7 @@ void UnitConverter::SendCommand(Command command)
         clearFront = false;
         clearBack = false;
         ClearValues();
-        Reset();
+        ResetCategoriesAndRatios();
         break;
 
     default:
@@ -825,15 +825,13 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         returnVector.push_back(whimsicalReturnVector.at(0));
     }
 
-    //
-
     return returnVector;
 }
 
 /// <summary>
-/// Resets the converter to its initial state
+/// Resets categories and ratios
 /// </summary>
-void UnitConverter::Reset()
+void UnitConverter::ResetCategoriesAndRatios()
 {
     m_categories = m_dataLoader->LoadOrderedCategories();
 
@@ -1088,7 +1086,7 @@ void UnitConverter::UpdateViewModel()
 
 void UnitConverter::ResetCategoriesAndRatio()
 {
-    Reset();
+    ResetCategoriesAndRatios();
     Calculate();
     UpdateViewModel();
 }
