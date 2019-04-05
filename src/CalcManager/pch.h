@@ -24,6 +24,7 @@
 #include <unordered_map>
 #include <array>
 #include <string_view>
+#include <future>
 
 #include "win_data_types_cross_platform.h"
 
