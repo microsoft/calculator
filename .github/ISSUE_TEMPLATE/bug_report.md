@@ -43,7 +43,7 @@ Run the following commands in Powershell and copy/paste the output.
 " - Architecture: $((Get-AppxPackage -Name Microsoft.WindowsCalculator).Architecture)"
 " - Application Version: $((Get-AppxPackage -Name Microsoft.WindowsCalculator).Version)"
 " - Region: $((Get-Culture).Name)"
-" - Dev Version Installed: $(!((Get-AppxPackage -Name Microsoft.WindowsCalculator.Dev) -eq $null))"
+" - Dev Version Installed: $($null -ne (Get-AppxPackage -Name Microsoft.WindowsCalculator.Dev))"
 -->
 
 **Additional context**
