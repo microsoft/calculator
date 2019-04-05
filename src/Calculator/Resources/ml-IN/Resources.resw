@@ -909,6 +909,14 @@
     <value>വലത് ബ്രാക്കറ്റ്</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
   </data>
+  <data name="Format_OpenParenthesisCountAutomationNamePrefix" xml:space="preserve">
+    <value>തുറന്ന പാരന്തെസിസ് കൗണ്ട് %1</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific and programmer operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
+  </data>
+  <data name="NoRightParenthesisAdded_Announcement" xml:space="preserve">
+    <value>അടയ്ക്കുന്നതിന് തുറന്ന പാരന്തെസിസ് ഇല്ല.</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator when the ")" button on the scientific and programmer operator keypad cannot be added to the equation. e.g. "1+)".</comment>
+  </data>
   <data name="ftoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>സയന്റിഫിക് നൊട്ടേഷൻ</value>
     <comment>Screen reader prompt for the Calculator F-E the scientific operator keypad</comment>
@@ -2278,7 +2286,7 @@
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
   </data>
   <data name="AboutControlCopyright" xml:space="preserve">
-    <value>© %1 Microsoft. എല്ലാ അവകാശങ്ങളും സംവരണം ചെയ്തിരിക്കുന്നു.</value>
+    <value>© %1 Microsoft. എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">

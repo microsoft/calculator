@@ -909,6 +909,14 @@
     <value>Desni oklepaj</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
   </data>
+  <data name="Format_OpenParenthesisCountAutomationNamePrefix" xml:space="preserve">
+    <value>Število začetnih oklepajev: %1</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific and programmer operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
+  </data>
+  <data name="NoRightParenthesisAdded_Announcement" xml:space="preserve">
+    <value>Ni začetnih oklepajev, ki bi potrebovali končnega.</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator when the ")" button on the scientific and programmer operator keypad cannot be added to the equation. e.g. "1+)".</comment>
+  </data>
   <data name="ftoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Znanstveni zapis</value>
     <comment>Screen reader prompt for the Calculator F-E the scientific operator keypad</comment>
