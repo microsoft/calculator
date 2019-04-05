@@ -727,7 +727,7 @@ void UnitConverterViewModel::RefreshCurrencyRatios()
     String^ announcement = AppResourceProvider::GetInstance().GetResourceString(UnitConverterResourceKeys::UpdatingCurrencyRates);
     Announcement = CalculatorAnnouncement::GetUpdateCurrencyRatesAnnouncement(announcement);
 
-    auto refreshTask = create_task(m_model->RefreshCurrencyRatios());
+    auto refreshTask = create_task([this] { return m_model->RefreshCurrencyRatios().get(); });
     refreshTask.then([this](const pair<bool, wstring>& refreshResult)
     {
         bool didLoad = refreshResult.first;

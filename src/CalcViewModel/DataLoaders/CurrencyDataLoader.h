@@ -72,9 +72,9 @@ namespace CalculatorApp
             std::pair<std::wstring, std::wstring> GetCurrencyRatioEquality(_In_ const UnitConversionManager::Unit& unit1, _In_ const UnitConversionManager::Unit& unit2) override;
             std::wstring GetCurrencyTimestamp() override;
 
-            concurrency::task<bool> TryLoadDataFromCacheAsync() override;
-            concurrency::task<bool> TryLoadDataFromWebAsync() override;
-            concurrency::task<bool> TryLoadDataFromWebOverrideAsync() override;
+            std::future<bool> TryLoadDataFromCacheAsync() override;
+            std::future<bool> TryLoadDataFromWebAsync() override;
+            std::future<bool> TryLoadDataFromWebOverrideAsync() override;
             // ICurrencyConverterDataLoader
 
             void OnNetworkBehaviorChanged(CalculatorApp::NetworkAccessBehavior newBehavior);
