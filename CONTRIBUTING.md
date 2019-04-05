@@ -3,7 +3,8 @@ The Calculator team encourages community feedback and contributions. Thank you f
 making Calculator better! There are several ways you can get involved.
 
 ## Reporting issues and suggesting new features
-If Calculator is not working properly, please file a report in the [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130&newFeedback=True).
+If Calculator is not working properly, please file a report in the 
+[Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130&newFeedback=True).
 Feedback Hub reports automatically include diagnostic data, such as the version of Calculator
 you're using.
 
@@ -20,7 +21,9 @@ Looking for something to work on?
 Issues marked [``good first issue``](https://github.com/Microsoft/calculator/labels/good%20first%20issue)
 are a good place to start.
 
-You can also check the [``help wanted``](https://github.com/Microsoft/calculator/labels/help%20wanted) tag to find other issues to help with. If you're interested in working on a fix, leave a comment to let everyone know and to help avoid duplicated effort from others.
+You can also check the [``help wanted``](https://github.com/Microsoft/calculator/labels/help%20wanted) tag to find 
+other issues to help with. If you're interested in working on a fix, leave a comment to let everyone know and to help
+ avoid duplicated effort from others.
 
 ## Contributions we accept
 We welcome your contributions to the Calculator project, especially to fix bugs and to make
@@ -30,9 +33,13 @@ improvements which address the top issues reported by Calculator users. Some gen
 * **DO** follow our [Coding and Style](#style-guidelines) guidelines, and keep code changes as small as possible.
 * **DO** include corresponding tests whenever possible.
 * **DO** check for additional occurrences of the same problem in other parts of the codebase before submitting your PR.
-* **DO** [link the issue](https://github.com/blog/957-introducing-issue-mentions) you are addressing in the pull request.
-* **DO** write a good description for your pull request. More detail is better. Describe *why* the change is being made and *why* you have chosen a particular solution. Describe any manual testing you performed to validate your change.
-* **DO NOT** submit a PR unless it is linked to an Issue marked [`triage approved`](https://github.com/Microsoft/calculator/issues?q=is%3Aissue+is%3Aopen+label%3A%22Triage%3A+Approved%22). This enables us to have a discussion on the idea before anyone invests time in an implementation.
+* **DO** [link the issue](https://github.com/blog/957-introducing-issue-mentions) you are addressing in the 
+pull request.
+* **DO** write a good description for your pull request. More detail is better. Describe *why* the change is being 
+made and *why* you have chosen a particular solution. Describe any manual testing you performed to validate your change.
+* **DO NOT** submit a PR unless it is linked to an Issue marked 
+[`triage approved`](https://github.com/Microsoft/calculator/issues?q=is%3Aissue+is%3Aopen+label%3A%22Triage%3A+Approved%22). 
+This enables us to have a discussion on the idea before anyone invests time in an implementation.
 * **DO NOT** merge multiple changes into one PR unless they have the same root cause.
 * **DO NOT** submit pure formatting/typo changes to code that has not been modified otherwise.
 
@@ -52,7 +59,8 @@ To learn how to build the code and run tests, follow the instructions in the [RE
 ### Style guidelines
 The code in this project uses several different coding styles, depending on the age and history of
 the code. Please attempt to match the style of surrounding code as much as possible. In new
-components, prefer the patterns described in the [C++ core guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
+components, prefer the patterns described in the 
+[C++ core guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
 and the [modern C++/WinRT language projections](https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/).
 
 ### Testing
