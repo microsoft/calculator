@@ -31,6 +31,8 @@
 #include <concrt.h>
 #include <regex>
 #include <iterator>
+#include <future>
+
 // C++\WinRT Headers
 #include "winrt/base.h"
 #include "winrt/Windows.Foundation.Diagnostics.h"
