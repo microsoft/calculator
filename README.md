@@ -19,15 +19,6 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 
 ## Getting started
 
-### On macOS
-Prerequisites:
-- CMake
-- macOS
-
-- Create a new directory named `cmake_build` in the repository folder
-- Run `cmake .. -GXcode` from `cmake_build`
-- Run `cmake --build cmake_build` from the repository folder to build the project
-
 ### On Windows
 Prerequisites:
 - Your computer must be running Windows 10, version 1803 or newer.
@@ -46,6 +37,14 @@ Prerequisites:
 
 - Open [src\Calculator.sln](/src/Calculator.sln) in Visual Studio to build and run the Calculator app.
 - For a general description of the Calculator project architecture see [ApplicationArchitecture.md](docs/ApplicationArchitecture.md).
+
+### On macOS/Linux
+Prerequisites:
+- CMake 3.8 or newer
+
+- Create a new directory named `cmake_build` in the repository folder
+- Run `cmake ..` from `cmake_build`
+- Run `cmake --build cmake_build` from the repository folder to build the project
 
 ## Contributing
 Want to contribute? The team encourages community feedback and contributions. Please follow our [contributing guidelines](CONTRIBUTING.md).
