@@ -36,7 +36,7 @@ improvements which address the top issues reported by Calculator users. Some gen
 * **DO** [link the issue](https://github.com/blog/957-introducing-issue-mentions) you are addressing in the 
    pull request.
 * **DO** write a good description for your pull request. More detail is better. Describe *why* the change is being 
-made and *why* you have chosen a particular solution. Describe any manual testing you performed to validate your change.
+   made and *why* you have chosen a particular solution. Describe any manual testing you performed to validate your change.
 * **DO NOT** submit a PR unless it is linked to an Issue marked 
 [`triage approved`](https://github.com/Microsoft/calculator/issues?q=is%3Aissue+is%3Aopen+label%3A%22Triage%3A+Approved%22). 
 This enables us to have a discussion on the idea before anyone invests time in an implementation.
