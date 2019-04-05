@@ -34,7 +34,7 @@ improvements which address the top issues reported by Calculator users. Some gen
 * **DO** include corresponding tests whenever possible.
 * **DO** check for additional occurrences of the same problem in other parts of the codebase before submitting your PR.
 * **DO** [link the issue](https://github.com/blog/957-introducing-issue-mentions) you are addressing in the 
-pull request.
+   pull request.
 * **DO** write a good description for your pull request. More detail is better. Describe *why* the change is being 
 made and *why* you have chosen a particular solution. Describe any manual testing you performed to validate your change.
 * **DO NOT** submit a PR unless it is linked to an Issue marked 
