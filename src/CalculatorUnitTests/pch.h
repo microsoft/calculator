@@ -40,6 +40,7 @@
 #include <locale>
 #include <sal.h>
 #include <sstream>
+#include <future>
 
 // C++\WinRT Headers
 #include "winrt/base.h"
