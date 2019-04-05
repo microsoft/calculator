@@ -29,7 +29,7 @@ How will the solution/feature help us solve the problem? How will it meet the ta
 **Goals**
 <!--
 What you want to accomplish with this feature. Typical examples include
-“User Can *perform some task*”
+"User Can *perform some task*"
 -->
 
 **Non-Goals**
