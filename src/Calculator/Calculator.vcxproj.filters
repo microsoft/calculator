@@ -271,12 +271,6 @@
     <ClCompile Include="Views\NumberPad.xaml.cpp" />
     <ClCompile Include="Views\SupplementaryResults.xaml.cpp" />
     <ClCompile Include="Views\UnitConverter.xaml.cpp" />
-    <ClCompile Include="Controls\OperandTextBox.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="Controls\OperatorTextBox.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="Controls\FlipButtons.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -320,9 +314,6 @@
     </ClInclude>
     <ClInclude Include="Common\BindableBase.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Controls\AppBar.h">
-      <Filter>Controls</Filter>
     </ClInclude>
     <ClInclude Include="Controls\CalculationResult.h">
       <Filter>Controls</Filter>
@@ -370,12 +361,6 @@
     <ClInclude Include="Views\NumberPad.xaml.h" />
     <ClInclude Include="Views\SupplementaryResults.xaml.h" />
     <ClInclude Include="Views\UnitConverter.xaml.h" />
-    <ClInclude Include="Controls\OperandTextBox.h">
-      <Filter>Controls</Filter>
-    </ClInclude>
-    <ClInclude Include="Controls\OperatorTextBox.h">
-      <Filter>Controls</Filter>
-    </ClInclude>
     <ClInclude Include="Controls\FlipButtons.h">
       <Filter>Controls</Filter>
     </ClInclude>

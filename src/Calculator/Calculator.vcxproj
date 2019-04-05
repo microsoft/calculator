@@ -234,12 +234,9 @@
     <ClInclude Include="Controls\OverflowTextBlockAutomationPeer.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h" />
     <ClInclude Include="Common\BindableBase.h" />
-    <ClInclude Include="Controls\AppBar.h" />
     <ClInclude Include="Controls\CalculationResult.h" />
     <ClInclude Include="Controls\CalculatorButton.h" />
     <ClInclude Include="Controls\FlipButtons.h" />
-    <ClInclude Include="Controls\OperandTextBox.h" />
-    <ClInclude Include="Controls\OperatorTextBox.h" />
     <ClInclude Include="Controls\OverflowTextBlock.h" />
     <ClInclude Include="Controls\RadixButton.h" />
     <ClInclude Include="Controls\SupplementaryItemsControl.h" />
@@ -372,8 +369,6 @@
     <ClCompile Include="Controls\CalculationResult.cpp" />
     <ClCompile Include="Controls\CalculatorButton.cpp" />
     <ClCompile Include="Controls\FlipButtons.cpp" />
-    <ClCompile Include="Controls\OperandTextBox.cpp" />
-    <ClCompile Include="Controls\OperatorTextBox.cpp" />
     <ClCompile Include="Controls\OverflowTextBlock.cpp" />
     <ClCompile Include="Controls\RadixButton.cpp" />
     <ClCompile Include="Controls\SupplementaryItemsControl.cpp" />
