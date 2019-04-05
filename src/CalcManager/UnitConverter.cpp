@@ -220,7 +220,7 @@ Category UnitConverter::StringToCategory(const wstring& w)
     vector<wstring> tokenList = StringToVector(w, L";");
     assert(tokenList.size() == EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT);
     Category serializedCategory;
-    serializedCategory.id = _wtoi(Unquote(tokenList[0]).c_str());
+    serializedCategory.id = wcstol(Unquote(tokenList[0]).c_str(), 0, 10);
     serializedCategory.supportsNegative = (tokenList[1].compare(L"1") == 0);
     serializedCategory.name = Unquote(tokenList[2]);
     return serializedCategory;
@@ -238,7 +238,7 @@ Unit UnitConverter::StringToUnit(const wstring& w)
     vector<wstring> tokenList = StringToVector(w, L";");
     assert(tokenList.size() == EXPECTEDSERIALIZEDUNITTOKENCOUNT);
     Unit serializedUnit;
-    serializedUnit.id = _wtoi(Unquote(tokenList[0]).c_str());
+    serializedUnit.id = wcstol(Unquote(tokenList[0]).c_str(), 0, 10);
     serializedUnit.name = Unquote(tokenList[1]);
     serializedUnit.accessibleName = serializedUnit.name;
     serializedUnit.abbreviation = Unquote(tokenList[2]);
