@@ -1,7 +1,8 @@
 # New feature process
 
 ## Where do I submit my idea for a new feature?
-The easiest way to submit new feature requests is through [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130).
+The easiest way to submit new feature requests is through 
+[Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130).
 In Feedback Hub, any Windows user (even if they aren't on GitHub) can upvote suggestions. The
 Calculator team reviews these suggestions regularly, and when we're ready to work on an idea we
 create [feature pitch issues here on GitHub](https://github.com/Microsoft/calculator/issues?q=is%3Aissue+is%3Aopen+project%3AMicrosoft%2Fcalculator%2F1).
@@ -13,29 +14,44 @@ all the features we're working on and where they're at in the process.
 
 ## Do I need to follow this process? Can I just start coding and submit a PR?
 You **do not** need to follow this process for bug fixes, performance improvements, or changes to the
-development tools. To contribute these changes, [discuss the proposed change in an issue](https://github.com/Microsoft/calculator/issues/new)
+development tools. To contribute these changes, 
+[discuss the proposed change in an issue](https://github.com/Microsoft/calculator/issues/new)
 and then submit a pull request.
 
 You **do** need to follow this process for any change which "users will notice". This applies
 especially to new features and major visual changes.
 
 ## Step 1: Feature pitch
-Feature pitches are submitted as issues on GitHub using the [Feature Request template](https://github.com/Microsoft/calculator/issues/new?assignees=&labels=&template=feature_request.md&title=). We encourage discussion on open issues, and as discussion progresses we will edit the issue description to refine the idea until it is ready for review.
+Feature pitches are submitted as issues on GitHub using the 
+[Feature Request template](https://github.com/Microsoft/calculator/issues/new?assignees=&labels=&template=feature_request.md&title=). 
+We encourage discussion on open issues, and as discussion progresses we will edit the issue description to refine the 
+idea until it is ready for review.
 
-We review pitches regularly, and will approve or close issues based on whether they broadly align with the [Calculator roadmap](https://github.com/Microsoft/calculator/blob/master/docs/Roadmap.md). Approved pitches are moved into [pre-production](https://github.com/Microsoft/calculator/projects/1) on the feature tracking board.
+We review pitches regularly, and will approve or close issues based on whether they broadly align with the 
+[Calculator roadmap](https://github.com/Microsoft/calculator/blob/master/docs/Roadmap.md). Approved pitches are moved 
+into [pre-production](https://github.com/Microsoft/calculator/projects/1) on the feature tracking board.
 
 ## Step 2: Pre-production
-For most features, the output of this phase is a specification which describes how the feature will work, supported by design renderings and code prototypes as needed. The original issue will continue to track the overall progress of the feature, but we will create and iterate on spec documentation in the [Calculator Spec repo](https://github.com/Microsoft/calculator-specs). Sometimes we'll learn new things about a feature proposal during pre-production, and we'll edit or close the original pitch.
+For most features, the output of this phase is a specification which describes how the feature will work, supported by 
+design renderings and code prototypes as needed. The original issue will continue to track the overall progress of the 
+feature, but we will create and iterate on spec documentation in the 
+[Calculator Spec repo](https://github.com/Microsoft/calculator-specs). Sometimes we'll learn new things about a feature 
+proposal during pre-production, and we'll edit or close the original pitch.
 
-We welcome community participation throughout pre-production. The best ideas often come from trying many ideas during the pre-production phase. To enable rapid
+We welcome community participation throughout pre-production. The best ideas often come from trying many ideas during 
+the pre-production phase. To enable rapid
 experimentation, we encourage developing and sharing rough ideas&mdash;maybe even with pencil and
 paper&mdash;before making designs pixel-perfect or making code robust and maintainable.
 
-After the [spec review](https://github.com/Microsoft/calculator-specs#spec-review) is completed, we will move the issue into [production](https://github.com/Microsoft/calculator/projects/1) on the feature tracking board. In _some_ cases, all of the details of an idea can be captured concisely in original feature pitch. When that happens, we may move ideas directly into production.
+After the [spec review](https://github.com/Microsoft/calculator-specs#spec-review) is completed, we will move the issue 
+into [production](https://github.com/Microsoft/calculator/projects/1) on the feature tracking board. In _some_ cases, 
+all of the details of an idea can be captured concisely in original feature pitch. When that happens, we may move ideas
+directly into production.
 
 ## Step 3: Production
 A feature can be implemented by the original submitter, a Microsoft team member, or by other
-community members. Code contributions and testing help are greatly appreciated. Please let everyone know if you're actively working on a feature to help avoid duplicated efforts from others.
+community members. Code contributions and testing help are greatly appreciated. Please let everyone know if you're 
+actively working on a feature to help avoid duplicated efforts from others.
 
 You might be able to reuse code written during the prototype process, although there will typically
 be more work required to make the solution robust. Once the code is ready, you can begin
@@ -79,7 +95,8 @@ new features, the Microsoft team considers at least these items:
     - [ ] Run the perf tests to measure any increase in startup time. Move work out of the startup
       path if possible.
 - [ ] If the change adds additional logging:
-    - [ ] All logging should use [TraceLogging](https://docs.microsoft.com/en-us/windows/desktop/tracelogging/trace-logging-about).
+    - [ ] All logging should use 
+    [TraceLogging](https://docs.microsoft.com/en-us/windows/desktop/tracelogging/trace-logging-about).
     - [ ] Unnecessary log events should be removed, or configured so that they are collected only when
       needed to debug issues or measure feature usage.
 - [ ] If the change reads user data from files or app settings:
