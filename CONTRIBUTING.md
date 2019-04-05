@@ -39,7 +39,7 @@ improvements which address the top issues reported by Calculator users. Some gen
    made and *why* you have chosen a particular solution. Describe any manual testing you performed to validate your change.
 * **DO NOT** submit a PR unless it is linked to an Issue marked 
    [`triage approved`](https://github.com/Microsoft/calculator/issues?q=is%3Aissue+is%3Aopen+label%3A%22Triage%3A+Approved%22). 
-This enables us to have a discussion on the idea before anyone invests time in an implementation.
+   This enables us to have a discussion on the idea before anyone invests time in an implementation.
 * **DO NOT** merge multiple changes into one PR unless they have the same root cause.
 * **DO NOT** submit pure formatting/typo changes to code that has not been modified otherwise.
 
