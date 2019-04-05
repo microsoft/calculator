@@ -31,7 +31,7 @@ We welcome community participation throughout pre-production. The best ideas oft
 experimentation, we encourage developing and sharing rough ideas&mdash;maybe even with pencil and
 paper&mdash;before making designs pixel-perfect or making code robust and maintainable.
 
-After the [spec review](https://github.com/Microsoft/calculator-specs#spec-review) is completed, we will move the issue into [production](https://github.com/Microsoft/calculator/projects/1) on the feature tracking board. In _some_ cases all of the details of an idea can be captured concisely in original feature pitch. When that happens, we may move ideas directly into production.
+After the [spec review](https://github.com/Microsoft/calculator-specs#spec-review) is completed, we will move the issue into [production](https://github.com/Microsoft/calculator/projects/1) on the feature tracking board. In _some_ cases, all of the details of an idea can be captured concisely in original feature pitch. When that happens, we may move ideas directly into production.
 
 ## Step 3: Production
 A feature can be implemented by the original submitter, a Microsoft team member, or by other
