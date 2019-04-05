@@ -5,7 +5,7 @@
 
 #include <algorithm>
 #include <array>
-#include <assert.h>
+#include <cassert>
 #include <intsafe.h>
 #include <list>
 #include <ppltasks.h>

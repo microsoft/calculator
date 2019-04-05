@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include <assert.h>
+#include <cassert>
 #include <sstream>
 #include "Command.h"
 #include "UnitConverter.h"
