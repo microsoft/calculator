@@ -22,7 +22,7 @@ especially to new features and major visual changes.
 ## Step 1: Feature pitch
 Feature pitches are submitted as issues on GitHub using the [Feature Request template](https://raw.githubusercontent.com/Microsoft/calculator/master/.github/ISSUE_TEMPLATE/feature_request.md). We encourage discussion on open issues, and as discussion progresses we will edit the issue description to refine the idea until it is ready for review.
 
-We review pitches regularly, and will approve or close issues based on whether they broadly aligns with the [Calculator roadmap](https://github.com/Microsoft/calculator/blob/master/docs/Roadmap.md). Approved pitches are moved into [pre-production](https://github.com/Microsoft/calculator/projects/1) on the feature tracking board.
+We review pitches regularly, and will approve or close issues based on whether they broadly align with the [Calculator roadmap](https://github.com/Microsoft/calculator/blob/master/docs/Roadmap.md). Approved pitches are moved into [pre-production](https://github.com/Microsoft/calculator/projects/1) on the feature tracking board.
 
 ## Step 2: Pre-production
 For most features, the output of this phase is a specification which describes how the feature will work, supported by design renderings and code prototypes as needed. The original issue will continue to track the overall progress of the feature, but we will create and iterate on spec documentation in the [Calcualtor Spec repo](https://github.com/Microsoft/calculator-specs). Sometimes we'll learn new things about a feature proposal during pre-production, and we'll edit or close the original pitch.
