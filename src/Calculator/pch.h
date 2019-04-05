@@ -26,6 +26,7 @@
 #include <concrt.h>
 #include <regex>
 #include <string>
+#include <future>
 
 // C++\WinRT Headers
 #include "winrt/base.h"
