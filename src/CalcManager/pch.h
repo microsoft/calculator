@@ -37,5 +37,6 @@
 
 #include "winerror_cross_platform.h"
 #include "sal_cross_platform.h"
+#include "preprocessor_cross_platform.h"
 
 #endif
