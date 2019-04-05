@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -195,6 +195,7 @@ namespace UnitConversionManager
         virtual void SetViewModelCallback(_In_ const std::shared_ptr<IUnitConverterVMCallback>& newCallback) = 0;
         virtual void SetViewModelCurrencyCallback(_In_ const std::shared_ptr<IViewModelCurrencyCallback>& newCallback) = 0;
         virtual concurrency::task<std::pair<bool, std::wstring>> RefreshCurrencyRatios() = 0;
+        virtual void ResetCategoriesAndRatio() = 0;
     };
 
     class UnitConverter : public IUnitConverter, public std::enable_shared_from_this<UnitConverter>
@@ -220,6 +221,7 @@ namespace UnitConversionManager
         concurrency::task<std::pair<bool, std::wstring>> RefreshCurrencyRatios() override;
         // IUnitConverter
 
+        void ResetCategoriesAndRatio();
         static std::vector<std::wstring> StringToVector(const std::wstring& w, const wchar_t * delimiter, bool addRemainder = false);
         static std::wstring Quote(const std::wstring& s);
         static std::wstring Unquote(const std::wstring& s);

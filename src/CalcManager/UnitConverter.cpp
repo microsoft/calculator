@@ -63,6 +63,7 @@ UnitConverter::UnitConverter(_In_ const shared_ptr<IConverterDataLoader>& dataLo
     unquoteConversions[L"{sc}"] = L';';
     unquoteConversions[L"{lb}"] = LEFTESCAPECHAR;
     unquoteConversions[L"{rb}"] = RIGHTESCAPECHAR;
+    ClearValues();
     Reset();
 }
 
@@ -836,7 +837,6 @@ void UnitConverter::Reset()
 {
     m_categories = m_dataLoader->LoadOrderedCategories();
 
-    ClearValues();
     m_switchedActive = false;
 
     if (m_categories.empty())
@@ -881,7 +881,6 @@ void UnitConverter::Reset()
     }
 
     InitializeSelectedUnits();
-    Calculate();
 }
 
 /// <summary>
@@ -972,11 +971,20 @@ bool UnitConverter::AnyUnitIsEmpty()
 /// </summary>
 void UnitConverter::Calculate()
 {
-    unordered_map<Unit, ConversionData, UnitHash> conversionTable = m_ratioMap[m_fromType];
-    double returnValue = stod(m_currentDisplay);
-    if (AnyUnitIsEmpty() || (conversionTable[m_toType].ratio == 1.0 && conversionTable[m_toType].offset == 0.0))
+    if (AnyUnitIsEmpty())
     {
         m_returnDisplay = m_currentDisplay;
+        m_returnHasDecimal = m_currentHasDecimal;
+        TrimString(m_returnDisplay);
+        return;
+    }
+
+    unordered_map<Unit, ConversionData, UnitHash> conversionTable = m_ratioMap[m_fromType];
+    double returnValue = stod(m_currentDisplay);
+    if (conversionTable[m_toType].ratio == 1.0 && conversionTable[m_toType].offset == 0.0)
+    {
+        m_returnDisplay = m_currentDisplay;
+        m_returnHasDecimal = m_currentHasDecimal;
         TrimString(m_returnDisplay);
     }
     else
@@ -1015,9 +1023,8 @@ void UnitConverter::Calculate()
             m_returnDisplay = returnString;
             TrimString(m_returnDisplay);
         }
+        m_returnHasDecimal = (m_returnDisplay.find(L'.') != m_returnDisplay.npos);
     }
-
-    m_returnHasDecimal = (m_returnDisplay.find(L'.') != m_returnDisplay.npos);
 }
 
 /// <summary>
@@ -1077,4 +1084,11 @@ void UnitConverter::UpdateViewModel()
 {
     m_vmCallback->DisplayCallback(m_currentDisplay, m_returnDisplay);
     m_vmCallback->SuggestedValueCallback(CalculateSuggested());
+}
+
+void UnitConverter::ResetCategoriesAndRatio()
+{
+    Reset();
+    Calculate();
+    UpdateViewModel();
 }
