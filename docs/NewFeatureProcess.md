@@ -96,7 +96,7 @@ new features, the Microsoft team considers at least these items:
       path if possible.
 - [ ] If the change adds additional logging:
     - [ ] All logging should use 
-    [TraceLogging](https://docs.microsoft.com/en-us/windows/desktop/tracelogging/trace-logging-about).
+      [TraceLogging](https://docs.microsoft.com/en-us/windows/desktop/tracelogging/trace-logging-about).
     - [ ] Unnecessary log events should be removed, or configured so that they are collected only when
       needed to debug issues or measure feature usage.
 - [ ] If the change reads user data from files or app settings:
