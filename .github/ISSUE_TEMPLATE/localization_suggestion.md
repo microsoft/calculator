@@ -35,12 +35,16 @@ Steps to reproduce the behavior:
  - OS Build:
  - Architecture:
  - Application Version:
-
+ - Region: 
+ - Dev Version Installed: 
+ 
 <!--
 Run the following commands in Powershell and copy/paste the output.
 " - OS Build: $([Environment]::OSVersion.Version)"
 " - Architecture: $((Get-AppxPackage -Name Microsoft.WindowsCalculator).Architecture)"
 " - Application Version: $((Get-AppxPackage -Name Microsoft.WindowsCalculator).Version)"
+" - Region: $((Get-Culture).Name)"
+" - Dev Version Installed: $(!((Get-AppxPackage -Name Microsoft.WindowsCalculator.Dev) -eq $null))"
 -->
 
 **Additional context**
