@@ -186,7 +186,8 @@ namespace CalcEngine
     /// Calculate the remainder after division, the sign of a result will match the sign of the current object.
     /// </summary>
     /// <remarks>
-    /// This function has the same behavior as the standard C/C++ operator '%', to calculate the modulus after division instead, use <see cref="Rational::operator%"/> instead.
+    /// This function has the same behavior as the standard C/C++ operator '%'
+    /// to calculate the modulus after division instead, use <see cref="RationalMath::Mod"/> instead.
     /// </remarks>
     Rational& Rational::operator%=(Rational const& rhs)
     {

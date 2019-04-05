@@ -392,7 +392,9 @@ Rational RationalMath::ATanh(Rational const& rat)
 /// Calculate the modulus after division, the sign of the result will match the sign of b.
 /// </summary>
 /// <remarks>
-/// When one of the operand is negative, the result will differ from the C/C++ operator '%', use <see cref="Rational::operator%"/> instead to calculate the remainder after division.
+/// When one of the operand is negative
+/// the result will differ from the C/C++ operator '%'
+/// use <see cref="Rational::operator%"/> instead to calculate the remainder after division.
 /// </remarks>
 Rational RationalMath::Mod(Rational const& a, Rational const& b)
 {
