@@ -27,16 +27,12 @@
 #include <future>
 
 #include "win_data_types_cross_platform.h"
+#include "winerror_cross_platform.h"
+#include "sal_cross_platform.h"
+#include "preprocessor_cross_platform.h"
 
 #if defined(_WIN32) && defined(_MSC_VER)
 
 #include <windows.h>
-#include <winerror.h>
-
-#else
-
-#include "winerror_cross_platform.h"
-#include "sal_cross_platform.h"
-#include "preprocessor_cross_platform.h"
 
 #endif

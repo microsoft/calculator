@@ -1,5 +1,11 @@
 #pragma once
 
+#if defined(_WIN32) && defined(_MSC_VER)
+
+#include <winerror.h>
+
+#else
+
 #include "CalcErr.h"
 
 #define E_ACCESSDENIED 0x80070005
@@ -15,3 +21,5 @@
 #define SUCCEEDED(hr) (((ResultCode)(hr)) >= 0)
 #define FAILED(hr) (((ResultCode)(hr)) < 0)
 #define SCODE_CODE(sc) ((sc) & 0xFFFF)
+
+#endif

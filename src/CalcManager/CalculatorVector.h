@@ -7,10 +7,8 @@
 #include <string>
 #include <vector>
 
-#ifndef _WIN32
 #include "winerror_cross_platform.h"
 #include "sal_cross_platform.h"
-#endif
 
 template <typename TType>
 class CalculatorVector
