@@ -14,7 +14,6 @@
 *
 \****************************************************************************/
 
-#include "win_data_types_cross_platform.h"
 #include "sal_cross_platform.h"
 
 #include "CCommand.h"

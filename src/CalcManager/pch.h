@@ -26,7 +26,6 @@
 #include <string_view>
 #include <future>
 
-#include "win_data_types_cross_platform.h"
 #include "winerror_cross_platform.h"
 #include "sal_cross_platform.h"
 #include "preprocessor_cross_platform.h"
