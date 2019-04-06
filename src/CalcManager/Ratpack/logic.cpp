@@ -135,9 +135,9 @@ void boolnum( PNUMBER *pa, PNUMBER b, int func )
 {
     PNUMBER c= nullptr;
     PNUMBER a= nullptr;
-    MANTTYPE *pcha;
-    MANTTYPE *pchb;
-    MANTTYPE *pchc;
+    vector<MANTTYPE>::iterator pcha;
+    vector<MANTTYPE>::iterator pchb;
+    vector<MANTTYPE>::iterator pchc;
     int32_t cdigits;
     int32_t mexp;
     MANTTYPE da;
@@ -150,9 +150,9 @@ void boolnum( PNUMBER *pa, PNUMBER b, int func )
     c->exp = min( a->exp, b->exp );
     mexp = c->exp;
     c->cdigit = cdigits;
-    pcha = a->mant;
-    pchb = b->mant;
-    pchc = c->mant;
+    pcha = a->mant.begin();
+    pchb = b->mant.begin();
+    pchc = c->mant.begin();
     for ( ;cdigits > 0; cdigits--, mexp++ )
         {
         da = ( ( ( mexp >= a->exp ) && ( cdigits + a->exp - c->exp >
