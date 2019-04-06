@@ -216,6 +216,8 @@ PNUMBER _createnum( _In_ uint32_t size )
         {
             throw( CALC_E_OUTOFMEMORY );
         }
+        // Fill mantissa vector with zeros
+        pnumret->mant.insert(pnumret->mant.end(), size, 0);
     }
     else
     {
