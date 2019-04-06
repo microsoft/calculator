@@ -158,7 +158,7 @@ void _destroynum( _In_ PNUMBER pnum )
 {
     if ( pnum != nullptr)
         {
-        free( pnum );
+        delete pnum;
         }
 }
 
@@ -183,7 +183,7 @@ void _destroyrat( _In_ PRAT prat )
         {
         destroynum( prat->pp );
         destroynum( prat->pq );
-        free( prat );
+        delete prat;
         }
 }
 
@@ -206,13 +206,13 @@ PNUMBER _createnum( _In_ uint32_t size )
     PNUMBER pnumret= nullptr;
     uint32_t cbAlloc;
 
-    // sizeof( MANTTYPE ) is the size of a 'digit'
-    if (SUCCEEDED(Calc_ULongAdd(size, 1, &cbAlloc)) &&
-        SUCCEEDED(Calc_ULongMult(cbAlloc, sizeof(MANTTYPE), &cbAlloc)) &&
-        SUCCEEDED(Calc_ULongAdd(cbAlloc, sizeof(NUMBER), &cbAlloc)))
+    if (SUCCEEDED(Calc_ULongAdd(cbAlloc, sizeof(NUMBER), &cbAlloc)))
     {
-        pnumret = (PNUMBER)zmalloc( cbAlloc );
-        if ( pnumret == nullptr)
+        try
+        {
+            pnumret = new NUMBER();
+        }
+        catch (const bad_alloc&)
         {
             throw( CALC_E_OUTOFMEMORY );
         }
@@ -246,9 +246,10 @@ PRAT _createrat( void )
 {
     PRAT prat= nullptr;
 
-    prat = (PRAT)zmalloc( sizeof( RAT ) );
-
-    if ( prat == nullptr)
+    try {
+        prat = new RAT();
+    }
+    catch (const bad_alloc&)
     {
         throw( CALC_E_OUTOFMEMORY );
     }
@@ -862,7 +863,8 @@ PNUMBER i32tonum( int32_t ini32, uint32_t radix)
         }
 
     do    {
-        *pmant++ = (MANTTYPE)(ini32 % radix);
+        *pmant = (MANTTYPE)(ini32 % radix);
+        ++pmant;
         ini32 /= radix;
         pnumret->cdigit++;
         } while ( ini32 );
