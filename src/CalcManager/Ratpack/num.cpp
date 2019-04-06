@@ -61,11 +61,11 @@ void __inline addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 
 {
-    PNUMBER c= nullptr;     // c will contain the result.
-    PNUMBER a= nullptr;     // a is the dereferenced number pointer from *pa
-    MANTTYPE *pcha;     // pcha is a pointer to the mantissa of a.
-    MANTTYPE *pchb;     // pchb is a pointer to the mantissa of b.
-    MANTTYPE *pchc;     // pchc is a pointer to the mantissa of c.
+    PNUMBER c= nullptr;              // c will contain the result.
+    PNUMBER a= nullptr;              // a is the dereferenced number pointer from *pa
+    vector<MANTTYPE>::iterator pcha; // pcha is an iterator pointing to the mantissa of a.
+    vector<MANTTYPE>::iterator pchb; // pchb is an iterator pointing to the mantissa of b.
+    vector<MANTTYPE>::iterator pchc; // pchc is an iterator pointing to the mantissa of c.
     int32_t cdigits;       // cdigits is the max count of the digits results
                         // used as a counter.
     int32_t mexp;          // mexp is the exponent of the result.
@@ -87,9 +87,9 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
     c->exp = min( a->exp, b->exp );
     mexp = c->exp;
     c->cdigit = cdigits;
-    pcha = a->mant;
-    pchb = b->mant;
-    pchc = c->mant;
+    pcha = a->mant.begin();
+    pchb = b->mant.begin();
+    pchc = c->mant.begin();
 
     // Figure out the sign of the numbers
     if ( a->sign != b->sign )
@@ -156,7 +156,7 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
             // slower on average.
             c->sign = -1;
             cy = 1;
-            for ( ( cdigits = c->cdigit ), (pchc = c->mant);
+            for ( ( cdigits = c->cdigit ), (pchc = c->mant.begin());
                 cdigits > 0;
                 cdigits-- )
                 {
@@ -219,12 +219,12 @@ void __inline mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 
 {
-    PNUMBER c= nullptr;         // c will contain the result.
-    PNUMBER a= nullptr;         // a is the dereferenced number pointer from *pa
-    MANTTYPE *pcha;         // pcha is a pointer to the mantissa of a.
-    MANTTYPE *pchb;         // pchb is a pointer to the mantissa of b.
-    MANTTYPE *pchc;         // pchc is a pointer to the mantissa of c.
-    MANTTYPE *pchcoffset;   // pchcoffset, is the anchor location of the next
+    PNUMBER c= nullptr;                    // c will contain the result.
+    PNUMBER a= nullptr;                    // a is the dereferenced number pointer from *pa
+    vector<MANTTYPE>::iterator pcha;       // pcha is an iterator pointing to the mantissa of a.
+    vector<MANTTYPE>::iterator pchb;       // pchb is an iterator pointing to the mantissa of b.
+    vector<MANTTYPE>::iterator pchc;       // pchc is an iterator pointing to the mantissa of c.
+    vector<MANTTYPE>::iterator pchcoffset; // pchcoffset, is the anchor location of the next
                             // single digit multiply partial result.
     int32_t iadigit = 0;       // Index of digit being used in the first number.
     int32_t ibdigit = 0;       // Index of digit being used in the second number.
@@ -242,13 +242,13 @@ void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
     c->sign = a->sign * b->sign;
 
     c->exp = a->exp + b->exp;
-    pcha = a->mant;
-    pchcoffset = c->mant;
+    pcha = a->mant.begin();
+    pchcoffset = c->mant.begin();
 
     for (  iadigit = a->cdigit; iadigit > 0; iadigit-- )
         {
         da =  *pcha++;
-        pchb = b->mant;
+        pchb = b->mant.begin();
 
         // Shift pchc, and pchcoffset, one for each digit
         pchc = pchcoffset++;
@@ -410,7 +410,7 @@ void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
     c->exp = (a->cdigit + a->exp) - (b->cdigit + b->exp) + 1;
     c->sign = a->sign * b->sign;
 
-    MANTTYPE *ptrc = c->mant + thismax;
+    vector<MANTTYPE>::iterator ptrc = c->mant.begin() + thismax;
     PNUMBER rem = nullptr;
     PNUMBER tmp = nullptr;
     DUPNUM(rem, a);
@@ -457,9 +457,9 @@ void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
     }
     cdigits--;
 
-    if (c->mant != ++ptrc)
+    if (c->mant.begin() != ++ptrc)
     {
-        memmove(c->mant, ptrc, (int)(cdigits * sizeof(MANTTYPE)));
+        copy(ptrc, c->mant.begin(), cdigits);
     }
 
     // Cleanup table structure
@@ -506,8 +506,8 @@ bool equnum( PNUMBER a, PNUMBER b )
 
 {
     int32_t diff;
-    MANTTYPE *pa;
-    MANTTYPE *pb;
+    vector<MANTTYPE>::iterator pa;
+    vector<MANTTYPE>::iterator pb;
     int32_t cdigits;
     int32_t ccdigits;
     MANTTYPE  da;
@@ -529,8 +529,8 @@ bool equnum( PNUMBER a, PNUMBER b )
         else
             {
             // OK the exponents match.
-            pa = a->mant;
-            pb = b->mant;
+            pa = a->mant.begin();
+            pb = b->mant.begin();
             pa += a->cdigit - 1;
             pb += b->cdigit - 1;
             cdigits = max( a->cdigit, b->cdigit );
@@ -574,8 +574,8 @@ bool lessnum( PNUMBER a, PNUMBER b )
 
 {
     int32_t diff;
-    MANTTYPE *pa;
-    MANTTYPE *pb;
+    vector<MANTTYPE>::iterator pa;
+    vector<MANTTYPE>::iterator pb;
     int32_t cdigits;
     int32_t ccdigits;
     MANTTYPE  da;
@@ -596,8 +596,8 @@ bool lessnum( PNUMBER a, PNUMBER b )
             }
         else
             {
-            pa = a->mant;
-            pb = b->mant;
+            pa = a->mant.begin();
+            pb = b->mant.begin();
             pa += a->cdigit - 1;
             pb += b->cdigit - 1;
             cdigits = max( a->cdigit, b->cdigit );
@@ -636,9 +636,9 @@ bool zernum( PNUMBER a )
 
 {
     int32_t length;
-    MANTTYPE *pcha;
+    vector<MANTTYPE>::iterator pcha;
     length = a->cdigit;
-    pcha = a->mant;
+    pcha = a->mant.begin();
 
     // loop over all the digits until you find a nonzero or until you run
     // out of digits
