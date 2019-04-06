@@ -761,11 +761,12 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 // Helper function to resolve one item on the precedence stack.
 void CCalcEngine::ResolveHighestPrecedenceOperation()
 {
-    if (m_nOpCode) /* Is there a valid operation around?        */
+    // Is there a valid operation around?
+    if (m_nOpCode)
     {
-        /* If this is the first EQU in a string, set m_holdVal=m_currentVal */
-        /* Otherwise let m_currentVal=m_holdVal.  This keeps m_currentVal constant */
-        /* through all EQUs in a row.                     */
+        // If this is the first EQU in a string, set m_holdVal=m_currentVal 
+        // Otherwise let m_currentVal=m_holdVal.  This keeps m_currentVal constant 
+        // through all EQUs in a row.
         if (m_bNoPrevEqu)
         {
             m_holdVal = m_currentVal;
@@ -783,12 +784,14 @@ void CCalcEngine::ResolveHighestPrecedenceOperation()
         m_nPrevOpCode = m_nOpCode;
         m_lastVal = m_currentVal;
 
-        /* Check for errors.  If this wasn't done, DisplayNum */
-        /* would immediately overwrite any error message.     */
+        // Check for errors.  If this wasn't done, DisplayNum
+        // would immediately overwrite any error message.
         if (!m_bError)
+        {
             DisplayNum();
+        }
 
-        /* No longer the first EQU.                       */
+        // No longer the first EQU.
         m_bNoPrevEqu = false;
     }
     else if (!m_bError)
