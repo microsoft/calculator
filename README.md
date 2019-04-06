@@ -10,7 +10,7 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 
 ## Features
 - Standard Calculator functionality which offers basic operations and evaluates commands immediately as they are entered.
-- Scientific Calculator functionality which offers expanded operations and evaluates commands using order of operations.
+- Scientific Calculator functionality which offers expanded operations and evaluates commands using the order of operations.
 - Programmer Calculator functionality which offers common mathematical operations for developers including conversion between common bases.
 - Date Calculation functionality which offers the difference between two dates, as well as the ability to add/subtract years, months and/or days to/from a given input date.
 - Calculation history and memory capabilities.
@@ -22,7 +22,7 @@ Prerequisites:
 - Your computer must be running Windows 10, version 1803 or newer.
 - Install the latest version of [Visual Studio](https://developer.microsoft.com/en-us/windows/downloads) (the free community edition is sufficient).
   - Install the "Universal Windows Platform Development" workload.
-  - Install the optional "C++ Universal Windows Platform tools" component.
+  - Install the optional "C++ Universal Windows Platform-tools" component.
   - Install the latest Windows 10 SDK.
 
   ![Visual Studio Installation Screenshot](docs/Images/VSInstallationScreenshot.png)
@@ -39,7 +39,7 @@ Prerequisites:
 ## Contributing
 Want to contribute? The team encourages community feedback and contributions. Please follow our [contributing guidelines](CONTRIBUTING.md).
 
-If Calculator is not working properly, please file a report in the [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130).
+If the Calculator is not working properly, please file a report in the [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130).
 We also welcome [issues submitted on GitHub](https://github.com/Microsoft/calculator/issues).
 
 ## Roadmap
