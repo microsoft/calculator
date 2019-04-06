@@ -153,7 +153,6 @@ void UnitConverter::SetCurrentUnitTypes(const Unit& fromType, const Unit& toType
     Calculate();
 
     UpdateCurrencySymbols();
-    UpdateViewModel();
 }
 
 /// <summary>
@@ -337,6 +336,7 @@ wstring UnitConverter::Serialize()
 /// <param name="serializedData">wstring holding the serialized data. If it does not have expected number of parameters, we will ignore it</param>
 void UnitConverter::DeSerialize(const wstring& serializedData)
 {
+    ClearValues();
     ResetCategoriesAndRatios();
 
     if (serializedData.empty())
@@ -635,8 +635,6 @@ void UnitConverter::SendCommand(Command command)
     }
 
     Calculate();
-
-    UpdateViewModel();
 }
 
 /// <summary>
@@ -974,6 +972,7 @@ void UnitConverter::Calculate()
         m_returnDisplay = m_currentDisplay;
         m_returnHasDecimal = m_currentHasDecimal;
         TrimString(m_returnDisplay);
+        UpdateViewModel();
         return;
     }
 
@@ -1023,6 +1022,7 @@ void UnitConverter::Calculate()
         }
         m_returnHasDecimal = (m_returnDisplay.find(L'.') != m_returnDisplay.npos);
     }
+    UpdateViewModel();
 }
 
 /// <summary>
@@ -1082,11 +1082,4 @@ void UnitConverter::UpdateViewModel()
 {
     m_vmCallback->DisplayCallback(m_currentDisplay, m_returnDisplay);
     m_vmCallback->SuggestedValueCallback(CalculateSuggested());
-}
-
-void UnitConverter::ResetCategoriesAndRatio()
-{
-    ResetCategoriesAndRatios();
-    Calculate();
-    UpdateViewModel();
 }

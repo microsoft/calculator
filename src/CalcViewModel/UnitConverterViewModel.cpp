@@ -720,7 +720,8 @@ void UnitConverterViewModel::OnCurrencyDataLoadFinished(bool didLoad)
 {
     m_isCurrencyDataLoaded = true;
     CurrencyDataLoadFailed = !didLoad;
-    m_model->ResetCategoriesAndRatio();
+    m_model->ResetCategoriesAndRatios();
+    m_model->Calculate();
     ResetCategory();
 
     StringReference key = didLoad ? UnitConverterResourceKeys::CurrencyRatesUpdated : UnitConverterResourceKeys::CurrencyRatesUpdateFailed;
