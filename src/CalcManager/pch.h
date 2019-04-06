@@ -32,7 +32,6 @@
 
 #include <windows.h>
 #include <winerror.h>
-#include <ppltasks.h>
 
 #else
 
