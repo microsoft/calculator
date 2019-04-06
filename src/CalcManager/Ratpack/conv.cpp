@@ -653,7 +653,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
     pnumret->sign = 1L;
     pnumret->cdigit = 0;
     pnumret->exp = 0;
-    vector<MANTTYPE>::iterator pmant = pnumret->mant.begin() + numberString.length() - 1;
+    int32_t imant = static_cast<int32_t>(numberString.length() - 1);
 
     uint8_t state = START; // state is the state of the input state machine.
     wchar_t curChar;
@@ -726,7 +726,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
                 size_t pos = DIGITS.find(curChar);
                 if (pos != wstring_view::npos && pos < static_cast<size_t>(radix))
                 {
-                    *pmant-- = static_cast<MANTTYPE>(pos);
+                    pnumret->mant[imant--] = static_cast<MANTTYPE>(pos);
                     pnumret->exp--;
                     pnumret->cdigit++;
                 }
