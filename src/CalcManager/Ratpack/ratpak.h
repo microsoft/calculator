@@ -211,7 +211,7 @@ _destroynum(x),(x)=nullptr
         int32_t trim = (x)->cdigit - precision-g_ratio;\
             if ( trim > 1 ) \
                 { \
-std::copy(&((x)->mant.begin() + trim), (x)->mant.begin(), (x)->cdigit-trim);\
+std::copy((x)->mant.begin() + trim, (x)->mant.begin(), (x)->cdigit-trim);\
                 (x)->cdigit -= trim; \
                 (x)->exp += trim; \
                 } \
@@ -221,7 +221,7 @@ std::copy(&((x)->mant.begin() + trim), (x)->mant.begin(), (x)->cdigit-trim);\
         int32_t trim = (x)->pp->cdigit - (precision/g_ratio) - 2;\
             if ( trim > 1 ) \
                 { \
-std::copy(&((x)->pp->mant[trim]), (x)->pp->mant, ((x)->pp->cdigit-trim)); \
+std::copy((x)->pp->mant.begin() + trim, (x)->pp->mant.begin(), ((x)->pp->cdigit-trim)); \
                 (x)->pp->cdigit -= trim; \
                 (x)->pp->exp += trim; \
                 } \
