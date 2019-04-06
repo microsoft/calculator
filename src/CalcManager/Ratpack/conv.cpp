@@ -207,25 +207,16 @@ PNUMBER _createnum( _In_ uint32_t size )
 
 {
     PNUMBER pnumret= nullptr;
-    uint32_t cbAlloc;
-
-    if (SUCCEEDED(Calc_ULongAdd(cbAlloc, sizeof(NUMBER), &cbAlloc)))
+    try
     {
-        try
-        {
-            pnumret = new NUMBER();
-        }
-        catch (const bad_alloc&)
-        {
-            throw( CALC_E_OUTOFMEMORY );
-        }
-        // Fill mantissa vector with zeros
-        pnumret->mant.insert(pnumret->mant.end(), size, 0);
+        pnumret = new NUMBER();
     }
-    else
+    catch (const bad_alloc&)
     {
-        throw( CALC_E_INVALIDRANGE );
+        throw( CALC_E_OUTOFMEMORY );
     }
+    // Fill mantissa vector with zeros
+    pnumret->mant.insert(pnumret->mant.end(), size, 0);
     return( pnumret );
 }
 
