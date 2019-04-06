@@ -379,7 +379,7 @@ PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix)
     PNUMBER num_radix = i32tonum(radix, BASEX);
     
     // Digits are in reverse order, back over them LSD first.
-    vector<MANTTYPE>::iterator ptrdigit = a->mant.end(); // iterator pointing to digit being worked on.
+    vector<MANTTYPE>::iterator ptrdigit = a->mant.begin() + a->cdigit; // iterator pointing to digit being worked on.
 
     PNUMBER thisdigit = nullptr;      // thisdigit holds the current digit of a
                                    // being summed into result.

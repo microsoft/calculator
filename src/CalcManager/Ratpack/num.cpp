@@ -506,8 +506,8 @@ bool equnum( PNUMBER a, PNUMBER b )
 
 {
     int32_t diff;
-    vector<MANTTYPE>::iterator pa;
-    vector<MANTTYPE>::iterator pb;
+    int32_t ia;
+    int32_t ib;
     int32_t cdigits;
     int32_t ccdigits;
     MANTTYPE  da;
@@ -529,10 +529,8 @@ bool equnum( PNUMBER a, PNUMBER b )
         else
             {
             // OK the exponents match.
-            pa = a->mant.begin();
-            pb = b->mant.begin();
-            pa += a->cdigit - 1;
-            pb += b->cdigit - 1;
+            ia = a->cdigit - 1;
+            ib = b->cdigit - 1;
             cdigits = max( a->cdigit, b->cdigit );
             ccdigits = cdigits;
 
@@ -541,9 +539,9 @@ bool equnum( PNUMBER a, PNUMBER b )
             for ( ;cdigits > 0; cdigits-- )
                 {
                 da = ( (cdigits > (ccdigits - a->cdigit) ) ?
-                    *pa-- : 0 );
+                    a->mant[ia--] : 0 );
                 db = ( (cdigits > (ccdigits - b->cdigit) ) ?
-                    *pb-- : 0 );
+                    b->mant[ib--] : 0 );
                 if ( da != db )
                     {
                     return false;
@@ -574,8 +572,8 @@ bool lessnum( PNUMBER a, PNUMBER b )
 
 {
     int32_t diff;
-    vector<MANTTYPE>::iterator pa;
-    vector<MANTTYPE>::iterator pb;
+    int32_t ia;
+    int32_t ib;
     int32_t cdigits;
     int32_t ccdigits;
     MANTTYPE  da;
@@ -596,16 +594,16 @@ bool lessnum( PNUMBER a, PNUMBER b )
             }
         else
             {
-            pa = a->mant.end();
-            pb = b->mant.end();
+            ia = a->cdigit - 1;
+            ib = b->cdigit - 1;
             cdigits = max( a->cdigit, b->cdigit );
             ccdigits = cdigits;
             for ( ;cdigits > 0; cdigits-- )
                 {
                 da = ( (cdigits > (ccdigits - a->cdigit) ) ?
-                    *(--pa) : 0 );
+                    a->mant[ia--] : 0 );
                 db = ( (cdigits > (ccdigits - b->cdigit) ) ?
-                    *(--pb) : 0 );
+                    b->mant[ib--] : 0 );
                 diff = da-db;
                 if ( diff )
                     {
