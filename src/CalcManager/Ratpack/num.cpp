@@ -635,16 +635,11 @@ bool lessnum( PNUMBER a, PNUMBER b )
 bool zernum( PNUMBER a )
 
 {
-    int32_t length;
-    vector<MANTTYPE>::iterator pcha;
-    length = a->cdigit;
-    pcha = a->mant.begin();
-
     // loop over all the digits until you find a nonzero or until you run
     // out of digits
-    while ( length-- > 0 )
+    for ( MANTTYPE digit : a->mant )
         {
-        if ( *pcha++ )
+        if ( digit )
             {
             // One of the digits isn't zero, therefore the number isn't zero
             return false;
