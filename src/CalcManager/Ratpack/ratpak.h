@@ -211,7 +211,7 @@ _destroynum(x),(x)=nullptr
         int32_t trim = (x)->cdigit - precision-g_ratio;\
             if ( trim > 1 ) \
                 { \
-memmove( (x)->mant, &((x)->mant[trim]), sizeof(MANTTYPE)*((x)->cdigit-trim) ); \
+std::copy(&((x)->mant.begin() + trim), (x)->mant.begin(), (x)->cdigit-trim);\
                 (x)->cdigit -= trim; \
                 (x)->exp += trim; \
                 } \
@@ -221,7 +221,7 @@ memmove( (x)->mant, &((x)->mant[trim]), sizeof(MANTTYPE)*((x)->cdigit-trim) ); \
         int32_t trim = (x)->pp->cdigit - (precision/g_ratio) - 2;\
             if ( trim > 1 ) \
                 { \
-memmove( (x)->pp->mant, &((x)->pp->mant[trim]), sizeof(MANTTYPE)*((x)->pp->cdigit-trim) ); \
+std::copy(&((x)->pp->mant[trim]), (x)->pp->mant, ((x)->pp->cdigit-trim)); \
                 (x)->pp->cdigit -= trim; \
                 (x)->pp->exp += trim; \
                 } \
