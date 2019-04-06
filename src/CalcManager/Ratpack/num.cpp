@@ -596,18 +596,16 @@ bool lessnum( PNUMBER a, PNUMBER b )
             }
         else
             {
-            pa = a->mant.begin();
-            pb = b->mant.begin();
-            pa += a->cdigit - 1;
-            pb += b->cdigit - 1;
+            pa = a->mant.end();
+            pb = b->mant.end();
             cdigits = max( a->cdigit, b->cdigit );
             ccdigits = cdigits;
             for ( ;cdigits > 0; cdigits-- )
                 {
                 da = ( (cdigits > (ccdigits - a->cdigit) ) ?
-                    *pa-- : 0 );
+                    *(--pa) : 0 );
                 db = ( (cdigits > (ccdigits - b->cdigit) ) ?
-                    *pb-- : 0 );
+                    *(--pb) : 0 );
                 diff = da-db;
                 if ( diff )
                     {

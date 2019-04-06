@@ -377,10 +377,9 @@ PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix)
 {
     PNUMBER pnumret = i32tonum(0, BASEX); // pnumret is the number in internal form.
     PNUMBER num_radix = i32tonum(radix, BASEX);
-    vector<MANTTYPE>::iterator ptrdigit = a->mant.begin(); // iterator pointing to digit being worked on.
-
+    
     // Digits are in reverse order, back over them LSD first.
-    ptrdigit += a->cdigit-1;
+    vector<MANTTYPE>::iterator ptrdigit = a->mant.end(); // iterator pointing to digit being worked on.
 
     PNUMBER thisdigit = nullptr;      // thisdigit holds the current digit of a
                                    // being summed into result.
@@ -391,7 +390,7 @@ PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix)
         // WARNING:
         // This should just smack in each digit into a 'special' thisdigit.
         // and not do the overhead of recreating the number type each time.
-        thisdigit = i32tonum( *ptrdigit--, BASEX );
+        thisdigit = i32tonum( *(--ptrdigit), BASEX );
         addnum( &pnumret, thisdigit, BASEX );
         destroynum( thisdigit );
         }
