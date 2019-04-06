@@ -506,8 +506,8 @@ bool equnum( PNUMBER a, PNUMBER b )
 
 {
     int32_t diff;
-    MANTTYPE *pa;
-    MANTTYPE *pb;
+    vector<MANTTYPE>::iterator pa;
+    vector<MANTTYPE>::iterator pb;
     int32_t cdigits;
     int32_t ccdigits;
     MANTTYPE  da;
@@ -529,8 +529,8 @@ bool equnum( PNUMBER a, PNUMBER b )
         else
             {
             // OK the exponents match.
-            pa = a->mant.data();
-            pb = b->mant.data();
+            pa = a->mant.begin();
+            pb = b->mant.begin();
             pa += a->cdigit - 1;
             pb += b->cdigit - 1;
             cdigits = max( a->cdigit, b->cdigit );
@@ -574,8 +574,8 @@ bool lessnum( PNUMBER a, PNUMBER b )
 
 {
     int32_t diff;
-    MANTTYPE *pa;
-    MANTTYPE *pb;
+    vector<MANTTYPE>::iterator pa;
+    vector<MANTTYPE>::iterator pb;
     int32_t cdigits;
     int32_t ccdigits;
     MANTTYPE  da;
@@ -596,8 +596,8 @@ bool lessnum( PNUMBER a, PNUMBER b )
             }
         else
             {
-            pa = a->mant.data();
-            pb = b->mant.data();
+            pa = a->mant.begin();
+            pb = b->mant.begin();
             pa += a->cdigit - 1;
             pb += b->cdigit - 1;
             cdigits = max( a->cdigit, b->cdigit );
