@@ -4,6 +4,8 @@
 
 // Empty macro definitions for Windows-specific preprocessor directives
 
+#ifndef __pragma
 #define __pragma(x)
+#endif
 
 #endif
