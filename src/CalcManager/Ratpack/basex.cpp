@@ -17,6 +17,8 @@
 #include "pch.h"
 #include "ratpak.h"
 
+using namespace std;
+
 void _mulnumx( PNUMBER *pa, PNUMBER b );
 
 //----------------------------------------------------------------------------
@@ -79,20 +81,20 @@ void __inline mulnumx( PNUMBER *pa, PNUMBER b )
 void _mulnumx( PNUMBER *pa, PNUMBER b )
 
 {
-    PNUMBER c= nullptr;         // c will contain the result.
-    PNUMBER a= nullptr;         // a is the dereferenced number pointer from *pa
-    MANTTYPE *ptra;         // ptra is a pointer to the mantissa of a.
-    MANTTYPE *ptrb;         // ptrb is a pointer to the mantissa of b.
-    MANTTYPE *ptrc;         // ptrc is a pointer to the mantissa of c.
-    MANTTYPE *ptrcoffset;   // ptrcoffset, is the anchor location of the next
-                            // single digit multiply partial result.
+    PNUMBER c= nullptr;                    // c will contain the result.
+    PNUMBER a= nullptr;                    // a is the dereferenced number pointer from *pa
+    vector<MANTTYPE>::iterator ptra;       // ptra is an iterator pointing to the mantissa of a.
+    vector<MANTTYPE>::iterator ptrb;       // ptrb is an iterator pointing to the mantissa of b.
+    vector<MANTTYPE>::iterator ptrc;       // ptrc is an iterator pointing to the mantissa of c.
+    vector<MANTTYPE>::iterator ptrcoffset; // ptrcoffset, is the anchor location of the next
+                                           // single digit multiply partial result.
     int32_t iadigit=0;         // Index of digit being used in the first number.
     int32_t ibdigit=0;         // Index of digit being used in the second number.
-    MANTTYPE      da=0;     // da is the digit from the fist number.
-    TWO_MANTTYPE  cy=0;     // cy is the carry resulting from the addition of
-                            // a multiplied row into the result.
-    TWO_MANTTYPE  mcy=0;    // mcy is the resultant from a single
-                            // multiply, AND the carry of that multiply.
+    MANTTYPE      da=0;        // da is the digit from the fist number.
+    TWO_MANTTYPE  cy=0;        // cy is the carry resulting from the addition of
+                               // a multiplied row into the result.
+    TWO_MANTTYPE  mcy=0;       // mcy is the resultant from a single
+                               // multiply, AND the carry of that multiply.
     int32_t  icdigit=0;        // Index of digit being calculated in final result.
 
     a=*pa;
@@ -103,13 +105,13 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
     c->sign = a->sign * b->sign;
 
     c->exp = a->exp + b->exp;
-    ptra = a->mant;
-    ptrcoffset = c->mant;
+    ptra = a->mant.begin();
+    ptrcoffset = c->mant.begin();
 
     for (  iadigit = a->cdigit; iadigit > 0; iadigit-- )
     {
         da =  *ptra++;
-        ptrb = b->mant;
+        ptrb = b->mant.begin();
 
         // Shift ptrc, and ptrcoffset, one for each digit
         ptrc = ptrcoffset++;
@@ -267,7 +269,7 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
     PNUMBER tmp = nullptr;     // current guess being worked on for divide.
     PNUMBER rem = nullptr;     // remainder after applying guess.
     int32_t cdigits;           // count of digits for answer.
-    MANTTYPE *ptrc;         // ptrc is a pointer to the mantissa of c.
+    vector<MANTTYPE>::iterator ptrc; // ptrc is an iterator pointing to the mantissa of c.
 
     int32_t thismax = precision + g_ratio; // set a maximum number of internal digits
                                  // to shoot for in the divide.
@@ -292,7 +294,7 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
     c->exp = (a->cdigit+a->exp) - (b->cdigit+b->exp) + 1;
     c->sign = a->sign * b->sign;
 
-    ptrc = c->mant + thismax;
+    ptrc = c->mant.begin() + thismax;
     cdigits = 0;
 
     DUPNUM( rem, a );
@@ -335,9 +337,9 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
         ptrc--;
         }
     cdigits--;
-    if ( c->mant != ++ptrc )
+    if ( c->mant.begin() != ++ptrc )
         {
-        memmove( c->mant, ptrc, (int)(cdigits*sizeof(MANTTYPE)) );
+        copy(ptrc, ptrc + cdigits, c->mant.begin());
         }
 
     if ( !cdigits )
