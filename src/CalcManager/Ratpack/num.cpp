@@ -631,11 +631,14 @@ bool lessnum( PNUMBER a, PNUMBER b )
 bool zernum( PNUMBER a )
 
 {
+    int32_t length = a->cdigit;
+    int32_t index = 0;
+    
     // loop over all the digits until you find a nonzero or until you run
     // out of digits
-    for ( MANTTYPE digit : a->mant )
+    while ( length-- > 0 )
         {
-        if ( digit )
+        if ( a->mant[index++] )
             {
             // One of the digits isn't zero, therefore the number isn't zero
             return false;
