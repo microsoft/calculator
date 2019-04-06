@@ -1199,7 +1199,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
     // Set up all the post rounding stuff.
     bool useSciForm = false;
     int32_t eout = exponent - 1; // Displayed exponent.
-    vector<MANTTYPE>::iterator pmant = pnum->mant.begin() + pnum->cdigit - 1;
+    int32_t imant = pnum->cdigit - 1;
     // Case where too many digits are to the left of the decimal or
     // FMT_SCIENTIFIC or FMT_ENGINEERING was specified.
     if ((format == FMT_SCIENTIFIC) || (format == FMT_ENGINEERING))
@@ -1256,7 +1256,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
     while (length > 0)
     {
         exponent--;
-        resultStream << DIGITS[*pmant--];
+        resultStream << DIGITS[pnum->mant[imant--]];
         length--;
 
         // Be more regular in using a decimal point.
