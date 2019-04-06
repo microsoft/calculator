@@ -1,14 +1,14 @@
-target_sources(CalcManager PUBLIC
-	Ratpack/basex.cpp
-	Ratpack/conv.cpp
-	Ratpack/exp.cpp
-	Ratpack/fact.cpp
-	Ratpack/itrans.cpp
-	Ratpack/itransh.cpp
-	Ratpack/logic.cpp
-	Ratpack/num.cpp
-	Ratpack/rat.cpp
-	Ratpack/support.cpp
-	Ratpack/trans.cpp
-	Ratpack/transh.cpp
+target_sources(CalcManager PRIVATE
+	basex.cpp
+	conv.cpp
+	exp.cpp
+	fact.cpp
+	itrans.cpp
+	itransh.cpp
+	logic.cpp
+	num.cpp
+	rat.cpp
+	support.cpp
+	trans.cpp
+	transh.cpp
 )

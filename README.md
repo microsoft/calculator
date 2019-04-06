@@ -40,7 +40,7 @@ Prerequisites:
 
 ### On macOS/Linux
 Prerequisites:
-- CMake 3.8 or newer
+- CMake 3.13 or newer
 - C++17-compatible compiler, e.g. GCC 7 or Clang 4
 
 - Create a new directory named `cmake_build` in the repository folder

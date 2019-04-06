@@ -1,14 +1,14 @@
-target_sources(CalcManager PUBLIC
-	CEngine/calc.cpp
-	CEngine/CalcInput.cpp
-	CEngine/CalcUtils.cpp
-	CEngine/History.cpp
-	CEngine/Number.cpp
-	CEngine/Rational.cpp
-	CEngine/RationalMath.cpp
-	CEngine/scicomm.cpp
-	CEngine/scidisp.cpp
-	CEngine/scifunc.cpp
-	CEngine/scioper.cpp
-	CEngine/sciset.cpp
+target_sources(CalcManager PRIVATE
+	calc.cpp
+	CalcInput.cpp
+	CalcUtils.cpp
+	History.cpp
+	Number.cpp
+	Rational.cpp
+	RationalMath.cpp
+	scicomm.cpp
+	scidisp.cpp
+	scifunc.cpp
+	scioper.cpp
+	sciset.cpp
 )
