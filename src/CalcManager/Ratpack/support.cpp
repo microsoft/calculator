@@ -695,7 +695,7 @@ void trimit( PRAT *px, int32_t precision)
                 }
             else
                 {
-                copy(pp->mant.begin() + (trim-pp->exp), pp->mant.begin(), pp->cdigit-trim+pp->exp);
+                copy(pp->mant.begin() + (trim-pp->exp), pp->mant.begin() + pp->cdigit, pp->mant.begin());
                 pp->cdigit -= trim-pp->exp;
                 pp->exp = 0;
                 }
@@ -706,7 +706,7 @@ void trimit( PRAT *px, int32_t precision)
                 }
             else
                 {
-                copy(pq->mant.begin() + (trim-pq->exp), pq->mant.begin(), pq->cdigit-trim+pq->exp);
+                copy(pq->mant.begin() + (trim-pq->exp), pq->mant.begin() + pq->cdigit, pq->mant.begin());
                 pq->cdigit -= trim-pq->exp;
                 pq->exp = 0;
                 }

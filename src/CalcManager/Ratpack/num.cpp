@@ -459,7 +459,7 @@ void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
 
     if (c->mant.begin() != ++ptrc)
     {
-        copy(ptrc, c->mant.begin(), cdigits);
+        copy(ptrc, ptrc + cdigits, c->mant.begin());
     }
 
     // Cleanup table structure

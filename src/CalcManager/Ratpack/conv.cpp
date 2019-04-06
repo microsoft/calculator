@@ -1091,7 +1091,7 @@ bool stripzeroesnum(_Inout_ PNUMBER pnum, int32_t starting)
     if ( fstrip )
         {
         // Remove them.
-        copy(pmant, pnum->mant.begin(), cdigits);
+        copy(pmant, pmant + cdigits, pnum->mant.begin());
         // And adjust exponent and digit count accordingly.
         pnum->exp += ( pnum->cdigit - cdigits );
         pnum->cdigit = cdigits;
