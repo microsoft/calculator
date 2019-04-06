@@ -20,8 +20,11 @@ namespace CalcEngine
     Number::Number(PNUMBER p) noexcept :
         m_sign{ p->sign },
         m_exp{ p->exp },
-        m_mantissa{ p->mant }
-    {}
+        m_mantissa{}
+    {
+        m_mantissa.reserve(p->cdigit);
+        copy(p->mant.begin(), p->mant.begin() + p->cdigit, back_inserter(m_mantissa));
+    }
 
     PNUMBER Number::ToPNUMBER() const
     {
