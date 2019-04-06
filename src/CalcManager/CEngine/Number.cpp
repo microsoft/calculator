@@ -23,7 +23,7 @@ namespace CalcEngine
         m_mantissa{}
     {
         m_mantissa.reserve(p->cdigit);
-        copy(p->mant, p->mant + p->cdigit, back_inserter(m_mantissa));
+        copy(p->mant.begin(), p->mant.begin() + p->cdigit, back_inserter(m_mantissa));
     }
 
     PNUMBER Number::ToPNUMBER() const
@@ -32,13 +32,7 @@ namespace CalcEngine
         ret->sign = this->Sign();
         ret->exp = this->Exp();
         ret->cdigit = static_cast<int32_t>(this->Mantissa().size());
-
-        MANTTYPE *ptrRet = ret->mant;
-        for (auto const& digit : this->Mantissa())
-        {
-            *ptrRet++ = digit;
-        }
-
+        ret->mant = this->Mantissa();
         return ret;
     }
 
