@@ -386,7 +386,7 @@ PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix)
 {
     PNUMBER pnumret = i32tonum(0, BASEX); // pnumret is the number in internal form.
     PNUMBER num_radix = i32tonum(radix, BASEX);
-    vector<MANTTYPE>::iterator ptrdigit = a->mant.begin(); // iterator pointing to digit being worked on.
+    MANTTYPE *ptrdigit = a->mant.data(); // pointer to digit being worked on.
 
     // Digits are in reverse order, back over them LSD first.
     ptrdigit += a->cdigit-1;
@@ -1037,7 +1037,7 @@ int32_t numtoi32( _In_ PNUMBER pnum, uint32_t radix )
 {
     int32_t lret = 0;
 
-    vector<MANTTYPE>::iterator pmant = pnum->mant.begin();
+    MANTTYPE *pmant = pnum->mant.data();
     pmant += pnum->cdigit - 1;
 
     int32_t expt = pnum->exp;
@@ -1209,7 +1209,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
     // Set up all the post rounding stuff.
     bool useSciForm = false;
     int32_t eout = exponent - 1; // Displayed exponent.
-    vector<MANTTYPE>::iterator pmant = pnum->mant.begin() + pnum->cdigit - 1;
+    MANTTYPE *pmant = pnum->mant.data() + pnum->cdigit - 1;
     // Case where too many digits are to the left of the decimal or
     // FMT_SCIENTIFIC or FMT_ENGINEERING was specified.
     if ((format == FMT_SCIENTIFIC) || (format == FMT_ENGINEERING))
