@@ -1027,14 +1027,13 @@ int32_t numtoi32( _In_ PNUMBER pnum, uint32_t radix )
 {
     int32_t lret = 0;
 
-    vector<MANTTYPE>::iterator pmant = pnum->mant.begin();
-    pmant += pnum->cdigit - 1;
+    int32_t imant = pnum->cdigit - 1;
 
     int32_t expt = pnum->exp;
     for (int32_t length = pnum->cdigit; length > 0 && length + expt > 0; length--)
     {
         lret *= radix;
-        lret += *(pmant--);
+        lret += pnum->mant[imant--];
     }
 
     while (expt-- > 0)
