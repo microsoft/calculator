@@ -303,6 +303,10 @@
     <ClInclude Include="Ratpack\ratconst.h" />
     <ClInclude Include="Ratpack\ratpak.h" />
     <ClInclude Include="UnitConverter.h" />
+    <ClInclude Include="preprocessor_cross_platform.h" />
+    <ClInclude Include="sal_cross_platform.h" />
+    <ClInclude Include="win_data_types_cross_platform.h" />
+    <ClInclude Include="winerror_cross_platform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CalculatorHistory.cpp" />

@@ -160,5 +160,9 @@
     <ClInclude Include="Header Files\RationalMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="preprocessor_cross_platform.h" />
+    <ClInclude Include="sal_cross_platform.h" />
+    <ClInclude Include="win_data_types_cross_platform.h" />
+    <ClInclude Include="winerror_cross_platform.h" />
   </ItemGroup>
 </Project>
