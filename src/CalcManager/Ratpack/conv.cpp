@@ -138,7 +138,10 @@ void* zmalloc(size_t a)
 
 void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER * const src)
 {
-    memcpy(dest, src, (int)(sizeof(NUMBER) + ((src)->cdigit)*(sizeof(MANTTYPE))));
+    dest->sign = src->sign;
+    dest->exp = src->exp;
+    dest->cdigit = src->cdigit;
+    dest->mant = src->mant;
 }
 
 //-----------------------------------------------------------------------------
