@@ -55,8 +55,6 @@ typedef enum eANGLE_TYPE ANGLE_TYPE;
 //
 //-----------------------------------------------------------------------------
 
-#pragma warning(push)
-#pragma warning(disable:4200)   // nonstandard extension used : zero-sized array in struct/union
 typedef struct _number
 {
     int32_t sign;        // The sign of the mantissa, +1, or -1
@@ -64,11 +62,8 @@ typedef struct _number
                     // radix being used.
     int32_t exp;       // The offset of digits from the radix point
                     // (decimal point in radix 10)
-    MANTTYPE mant[];
-                    // This is actually allocated as a continuation of the
-                    // NUMBER structure.
+    std::vector<MANTTYPE> mant;
 } NUMBER, *PNUMBER, **PPNUMBER;
-#pragma warning(pop)
 
 
 //-----------------------------------------------------------------------------
