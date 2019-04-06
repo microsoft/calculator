@@ -6,6 +6,8 @@
 #include "CalculatorManager.h"
 #include "CalculatorResource.h"
 
+#include <climits>
+
 using namespace std;
 using namespace CalcEngine;
 

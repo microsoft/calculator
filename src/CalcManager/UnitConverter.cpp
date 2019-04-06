@@ -5,6 +5,8 @@
 #include "Command.h"
 #include "UnitConverter.h"
 
+#include <cmath>
+
 using namespace std;
 using namespace UnitConversionManager;
 
