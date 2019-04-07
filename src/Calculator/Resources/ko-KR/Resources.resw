@@ -2907,12 +2907,4 @@
     <value>Microsoft 서비스 계약</value>
     <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
   </data>
-  <data name="UnitAbbreviation_Pyeong" xml:space="preserve">
-    <value>평</value>
-    <comment>An abbreviation for a measurement unit of area.</comment>
-  </data>
-  <data name="UnitName_Pyeong" xml:space="preserve">
-    <value>평</value>
-    <comment>A measurement unit for area.</comment>
-  </data>
 </root>
