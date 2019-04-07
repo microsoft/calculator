@@ -28,7 +28,8 @@ typedef uint32_t MANTTYPE;
 typedef uint64_t TWO_MANTTYPE;
 
 enum eNUMOBJ_FMT {
-    FMT_FLOAT,        // returns floating point, or exponential if number is too big
+    FMT_FLOAT,         // always returns floating point
+    FMT_AUTOSCIENTIFIC,// returns floating point, or exponential if number is too big
     FMT_SCIENTIFIC,    // always returns scientific notation
     FMT_ENGINEERING    // always returns engineering notation such that exponent is a multiple of 3
 

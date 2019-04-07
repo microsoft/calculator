@@ -70,6 +70,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_MemorizedNumbers(ref new Vector<MemoryItemViewModel^>()),
     m_IsMemoryEmpty(true),
     m_IsFToEChecked(false),
+    m_IsFToEAuto(false),
     m_isShiftChecked(false),
     m_IsShiftProgrammerChecked(false),
     m_IsQwordEnabled(true),
@@ -202,6 +203,21 @@ void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ wstring const &displayS
     m_CalculationResultAutomationName = CalculateNarratorDisplayValue(displayStringValue, localizedDisplayStringValue, isError);
 
     DisplayValue = localizedDisplayStringValue;
+
+    if (!IsFToEAuto && !IsFToEChecked && displayStringValue.find(L"e") != std::wstring::npos)
+    {
+        IsFToEAuto = true;
+        IsFToEChecked = true;
+    }
+    else if (IsFToEAuto && IsFToEChecked && displayStringValue.find(L"e") == std::wstring::npos)
+    {
+        IsFToEChecked = false;
+        IsFToEAuto = false;
+    }
+    else if (IsFToEAuto && !IsFToEChecked)
+    {
+        IsFToEAuto = false;
+    }
 
     IsInError = isError;
 
@@ -1167,6 +1183,7 @@ Array<unsigned char>^ StandardCalculatorViewModel::Serialize()
     DataWriter^ writer = ref new DataWriter();
     writer->WriteUInt32(static_cast<UINT32>(m_CurrentAngleType));
     writer->WriteBoolean(IsFToEChecked);
+    writer->WriteBoolean(IsFToEAuto);
     writer->WriteBoolean(IsCurrentViewPinned);
     writer->WriteUInt32(static_cast<UINT32>(m_standardCalculatorManager.SerializeSavedDegreeMode()));
 
@@ -1225,6 +1242,7 @@ void StandardCalculatorViewModel::Deserialize(Array<unsigned char>^ state)
         m_CurrentAngleType = ConvertIntegerToNumbersAndOperatorsEnum(reader->ReadUInt32());
 
         IsFToEChecked = reader->ReadBoolean();
+        IsFToEAuto = reader->ReadBoolean();
         IsCurrentViewPinned = reader->ReadBoolean();
         Command serializedDegreeMode = static_cast<Command>(reader->ReadUInt32());
 
