@@ -398,7 +398,7 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
             { ViewMode::Area, UnitConverterUnits::Area_Paper, 0.06032246 },
             { ViewMode::Area, UnitConverterUnits::Area_SoccerField, 10869.66 },
             { ViewMode::Area, UnitConverterUnits::Area_Castle, 100000 },
-            { ViewMode::Area, UnitConverterUnits::Area_Pyeong, 3.305785 }, // apprx of 400/121
+            { ViewMode::Area, UnitConverterUnits::Area_Pyeong, 400.0 / 121.0 },
 
             { ViewMode::Data, UnitConverterUnits::Data_Bit, 0.000000125 },
             { ViewMode::Data, UnitConverterUnits::Data_Byte, 0.000001 },
