@@ -276,8 +276,8 @@ namespace CalculatorUnitTests
 
             // Scientific Mode 2: Expression Cos(pi radians)
             TESTITEM scientificModeTestItems2[] = {
-                { NumbersAndOperatorsEnum::Pi, L"3.1415926535897932384626433832795e+0", L"" },
-                { NumbersAndOperatorsEnum::Cos, L"-1.e+0", L"" },
+                { NumbersAndOperatorsEnum::Pi, L"3.1415926535897932384626433832795", L"" },
+                { NumbersAndOperatorsEnum::Cos, L"-1", L"" },
                 { NumbersAndOperatorsEnum::None, L"", L"" }
             };
             ValidateViewModelByCommands(scientificViewModel2, scientificModeTestItems2, true);
