@@ -601,3 +601,17 @@ void MainPage::AnnounceCategoryName()
     NarratorAnnouncement^ announcement = CalculatorAnnouncement::GetCategoryNameChangedAnnouncement(categoryName);
     NarratorNotifier->Announce(announcement);
 }
+
+void MainPage::OnNavItemInvoked(_In_ Microsoft::UI::Xaml::Controls::NavigationView^ sender, _In_ Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs^ e)
+{
+    auto item = dynamic_cast<MUXC::NavigationViewItem^>(e->InvokedItemContainer);
+    if (item != nullptr)
+    {
+        auto selectedItem = static_cast<NavCategory^>(item->DataContext);
+
+        if (selectedItem->Mode == Model->Mode)
+        {
+            NavView->IsPaneOpen = false;
+        }
+    }
+}
