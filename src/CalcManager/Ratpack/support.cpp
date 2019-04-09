@@ -573,7 +573,7 @@ void _dumprawrat( const wchar_t *varname, PRAT rat, wostream& out)
 //
 //---------------------------------------------------------------------------
 
-void _dumprawnum(const wchar_t *varname, NUMBER num, wostream& out)
+void _dumprawnum(const wchar_t *varname, const NUMBER &num, wostream& out)
 
 {
     int i;
