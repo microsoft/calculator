@@ -6,7 +6,10 @@ labels: 'Area: World-Readiness'
 assignees: ''
 ---
 <!--
-Please note:  We cannot _accept_ any change to our localized resources files. These files are automatically generated from an internal localization process.
+PLEASE NOTE: 
+We cannot _merge_ any suggested localization changes to our localized resources files. These files are automatically generated from an internal localization process.  Any suggestion submitted this way will be duplicated into our internal localization system, and then closed here.
+
+Alternatively, you can launch feedback-hub://, click on the "Language Community" tab on the left-side of the app, and follow the steps to submit a localization suggestion that way.  (The "Language Community" tab currently will only be visible if your system is running a non-English language).
 
 Before filing a bug
 - Ensure the bug reproduces on the latest version of the app.
