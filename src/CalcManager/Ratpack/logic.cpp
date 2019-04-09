@@ -65,7 +65,7 @@ void rshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
 }
 
 void boolrat( PRAT *pa, PRAT b, int func, uint32_t radix, int32_t precision);
-void boolnum( PNUMBER *pa, PNUMBER b, int func );
+void boolnum( NUMBER *pa, NUMBER b, int func );
 
 
 enum {
@@ -130,11 +130,11 @@ void boolrat( PRAT *pa, PRAT b, int func, uint32_t radix, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-void boolnum( PNUMBER *pa, PNUMBER b, int func )
+void boolnum( NUMBER *pa, NUMBER b, int func )
 
 {
-    PNUMBER c= nullptr;
-    PNUMBER a= nullptr;
+    NUMBER c;
+    NUMBER a;
     vector<MANTTYPE>::iterator pcha;
     vector<MANTTYPE>::iterator pchb;
     vector<MANTTYPE>::iterator pchc;
@@ -144,22 +144,22 @@ void boolnum( PNUMBER *pa, PNUMBER b, int func )
     MANTTYPE db;
 
     a=*pa;
-    cdigits = max( a->cdigit+a->exp, b->cdigit+b->exp ) -
-            min( a->exp, b->exp );
+    cdigits = max( a.cdigit+a.exp, b.cdigit+b.exp ) -
+            min( a.exp, b.exp );
     createnum( c, cdigits );
-    c->exp = min( a->exp, b->exp );
-    mexp = c->exp;
-    c->cdigit = cdigits;
-    pcha = a->mant.begin();
-    pchb = b->mant.begin();
-    pchc = c->mant.begin();
+    c.exp = min( a.exp, b.exp );
+    mexp = c.exp;
+    c.cdigit = cdigits;
+    pcha = a.mant.begin();
+    pchb = b.mant.begin();
+    pchc = c.mant.begin();
     for ( ;cdigits > 0; cdigits--, mexp++ )
         {
-        da = ( ( ( mexp >= a->exp ) && ( cdigits + a->exp - c->exp >
-                    (c->cdigit - a->cdigit) ) ) ?
+        da = ( ( ( mexp >= a.exp ) && ( cdigits + a.exp - c.exp >
+                    (c.cdigit - a.cdigit) ) ) ?
                     *pcha++ : 0 );
-        db = ( ( ( mexp >= b->exp ) && ( cdigits + b->exp - c->exp >
-                    (c->cdigit - b->cdigit) ) ) ?
+        db = ( ( ( mexp >= b.exp ) && ( cdigits + b.exp - c.exp >
+                    (c.cdigit - b.cdigit) ) ) ?
                     *pchb++ : 0 );
         switch ( func )
             {
@@ -174,12 +174,11 @@ void boolnum( PNUMBER *pa, PNUMBER b, int func )
             break;
             }
         }
-    c->sign = a->sign;
-    while ( c->cdigit > 1 && *(--pchc) == 0 )
+    c.sign = a.sign;
+    while ( c.cdigit > 1 && *(--pchc) == 0 )
         {
-        c->cdigit--;
+        c.cdigit--;
         }
-    destroynum( *pa );
     *pa=c;
 }
 

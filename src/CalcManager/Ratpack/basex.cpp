@@ -19,7 +19,7 @@
 
 using namespace std;
 
-void _mulnumx( PNUMBER *pa, PNUMBER b );
+void _mulnumx( NUMBER *pa, NUMBER b );
 
 //----------------------------------------------------------------------------
 //
@@ -36,13 +36,13 @@ void _mulnumx( PNUMBER *pa, PNUMBER b );
 //
 //----------------------------------------------------------------------------
 
-void __inline mulnumx( PNUMBER *pa, PNUMBER b )
+void __inline mulnumx( NUMBER *pa, NUMBER b )
 
 {
-    if ( b->cdigit > 1 || b->mant[0] != 1 || b->exp != 0 )
+    if ( b.cdigit > 1 || b.mant[0] != 1 || b.exp != 0 )
         {
         // If b is not one we multiply
-        if ( (*pa)->cdigit > 1 || (*pa)->mant[0] != 1 || (*pa)->exp != 0 )
+        if ( (*pa).cdigit > 1 || (*pa).mant[0] != 1 || (*pa).exp != 0 )
             {
             // pa and b are both non-one.
             _mulnumx( pa, b );
@@ -50,15 +50,15 @@ void __inline mulnumx( PNUMBER *pa, PNUMBER b )
         else
             {
             // if pa is one and b isn't just copy b. and adjust the sign.
-            int32_t sign = (*pa)->sign;
+            int32_t sign = (*pa).sign;
             DUPNUM(*pa,b);
-            (*pa)->sign *= sign;
+            (*pa).sign *= sign;
             }
         }
     else
         {
         // B is +/- 1, But we do have to set the sign.
-        (*pa)->sign *= b->sign;
+        (*pa).sign *= b.sign;
         }
 }
 
@@ -78,11 +78,11 @@ void __inline mulnumx( PNUMBER *pa, PNUMBER b )
 //
 //----------------------------------------------------------------------------
 
-void _mulnumx( PNUMBER *pa, PNUMBER b )
+void _mulnumx( NUMBER *pa, NUMBER b )
 
 {
-    PNUMBER c= nullptr;                    // c will contain the result.
-    PNUMBER a= nullptr;                    // a is the dereferenced number pointer from *pa
+    NUMBER c;                    // c will contain the result.
+    NUMBER a;                    // a is the dereferenced number pointer from *pa
     vector<MANTTYPE>::iterator ptra;       // ptra is an iterator pointing to the mantissa of a.
     vector<MANTTYPE>::iterator ptrb;       // ptrb is an iterator pointing to the mantissa of b.
     vector<MANTTYPE>::iterator ptrc;       // ptrc is an iterator pointing to the mantissa of c.
@@ -99,24 +99,24 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
 
     a=*pa;
 
-    ibdigit = a->cdigit + b->cdigit - 1;
+    ibdigit = a.cdigit + b.cdigit - 1;
     createnum( c,  ibdigit + 1 );
-    c->cdigit = ibdigit;
-    c->sign = a->sign * b->sign;
+    c.cdigit = ibdigit;
+    c.sign = a.sign * b.sign;
 
-    c->exp = a->exp + b->exp;
-    ptra = a->mant.begin();
-    ptrcoffset = c->mant.begin();
+    c.exp = a.exp + b.exp;
+    ptra = a.mant.begin();
+    ptrcoffset = c.mant.begin();
 
-    for (  iadigit = a->cdigit; iadigit > 0; iadigit-- )
+    for (  iadigit = a.cdigit; iadigit > 0; iadigit-- )
     {
         da =  *ptra++;
-        ptrb = b->mant.begin();
+        ptrb = b.mant.begin();
 
         // Shift ptrc, and ptrcoffset, one for each digit
         ptrc = ptrcoffset++;
 
-        for ( ibdigit = b->cdigit; ibdigit > 0; ibdigit-- )
+        for ( ibdigit = b.cdigit; ibdigit > 0; ibdigit-- )
         {
             cy = 0;
             mcy = (uint64_t)da * (*ptrb);
@@ -125,7 +125,7 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
                 icdigit = 0;
                 if ( ibdigit == 1 && iadigit == 1 )
                 {
-                    c->cdigit++;
+                    c.cdigit++;
                 }
             }
 
@@ -152,12 +152,11 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
 
     // prevent different kinds of zeros, by stripping leading duplicate zeros.
     // digits are in order of increasing significance.
-    while ( c->cdigit > 1 && c->mant[c->cdigit-1] == 0 )
+    while ( c.cdigit > 1 && c.mant[c.cdigit-1] == 0 )
         {
-        c->cdigit--;
+        c.cdigit--;
         }
 
-    destroynum( *pa );
     *pa=c;
 }
 //-----------------------------------------------------------------------------
@@ -176,10 +175,10 @@ void _mulnumx( PNUMBER *pa, PNUMBER b )
 //
 //-----------------------------------------------------------------------------
 
-void numpowi32x( _Inout_ PNUMBER *proot, _In_ int32_t power )
+void numpowi32x( _Inout_ NUMBER *proot, _In_ int32_t power )
 
 {
-    PNUMBER lret = i32tonum( 1, BASEX );
+    NUMBER lret = i32tonum( 1, BASEX );
 
     // Once the power remaining is zero we are done.
     while ( power > 0 )
@@ -198,12 +197,11 @@ void numpowi32x( _Inout_ PNUMBER *proot, _In_ int32_t power )
         // move the next bit of the power into place.
         power >>= 1;
         }
-    destroynum( *proot );
     *proot=lret;
 
 }
 
-void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision);
+void _divnumx( NUMBER *pa, NUMBER b, int32_t precision);
 
 //----------------------------------------------------------------------------
 //
@@ -220,13 +218,13 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision);
 //
 //----------------------------------------------------------------------------
 
-void __inline divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
+void __inline divnumx( NUMBER *pa, NUMBER b, int32_t precision)
 
 {
-    if ( b->cdigit > 1 || b->mant[0] != 1 || b->exp != 0 )
+    if ( b.cdigit > 1 || b.mant[0] != 1 || b.exp != 0 )
         {
         // b is not one.
-        if ( (*pa)->cdigit > 1 || (*pa)->mant[0] != 1 || (*pa)->exp != 0 )
+        if ( (*pa).cdigit > 1 || (*pa).mant[0] != 1 || (*pa).exp != 0 )
             {
             // pa and b are both not one.
             _divnumx( pa, b, precision);
@@ -234,15 +232,15 @@ void __inline divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
         else
             {
             // if pa is one and b is not one, just copy b, and adjust the sign.
-            int32_t sign = (*pa)->sign;
+            int32_t sign = (*pa).sign;
             DUPNUM(*pa,b);
-            (*pa)->sign *= sign;
+            (*pa).sign *= sign;
             }
         }
     else
         {
         // b is one so don't divide, but set the sign.
-        (*pa)->sign *= b->sign;
+        (*pa).sign *= b.sign;
         }
 }
 
@@ -259,15 +257,15 @@ void __inline divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
 //
 //----------------------------------------------------------------------------
 
-void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
+void _divnumx( NUMBER *pa, NUMBER b, int32_t precision)
 
 {
-    PNUMBER a= nullptr;         // a is the dereferenced number pointer from *pa
-    PNUMBER c= nullptr;         // c will contain the result.
-    PNUMBER lasttmp = nullptr; // lasttmp allows a backup when the algorithm
+    NUMBER a;         // a is the dereferenced number pointer from *pa
+    NUMBER c;         // c will contain the result.
+    NUMBER lasttmp; // lasttmp allows a backup when the algorithm
                             // guesses one bit too far.
-    PNUMBER tmp = nullptr;     // current guess being worked on for divide.
-    PNUMBER rem = nullptr;     // remainder after applying guess.
+    NUMBER tmp;     // current guess being worked on for divide.
+    NUMBER rem;     // remainder after applying guess.
     int32_t cdigits;           // count of digits for answer.
     vector<MANTTYPE>::iterator ptrc; // ptrc is an iterator pointing to the mantissa of c.
 
@@ -275,31 +273,31 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
                                  // to shoot for in the divide.
 
     a=*pa;
-    if ( thismax < a->cdigit )
+    if ( thismax < a.cdigit )
         {
         // a has more digits than precision specified, bump up digits to shoot
         // for.
-        thismax = a->cdigit;
+        thismax = a.cdigit;
         }
 
-    if ( thismax < b->cdigit )
+    if ( thismax < b.cdigit )
         {
         // b has more digits than precision specified, bump up digits to shoot
         // for.
-        thismax = b->cdigit;
+        thismax = b.cdigit;
         }
 
     // Create c (the divide answer) and set up exponent and sign.
     createnum( c, thismax + 1 );
-    c->exp = (a->cdigit+a->exp) - (b->cdigit+b->exp) + 1;
-    c->sign = a->sign * b->sign;
+    c.exp = (a.cdigit+a.exp) - (b.cdigit+b.exp) + 1;
+    c.sign = a.sign * b.sign;
 
-    ptrc = c->mant.begin() + thismax;
+    ptrc = c.mant.begin() + thismax;
     cdigits = 0;
 
     DUPNUM( rem, a );
-    rem->sign = b->sign;
-    rem->exp = b->cdigit + b->exp - rem->cdigit;
+    rem.sign = b.sign;
+    rem.exp = b.cdigit + b.exp - rem.cdigit;
 
     while ( cdigits++ < thismax && !zernum(rem) )
         {
@@ -309,11 +307,9 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
             {
             digit = 1;
             DUPNUM( tmp, b );
-            destroynum( lasttmp );
             lasttmp=i32tonum( 0, BASEX );
             while ( lessnum( tmp, rem ) )
                 {
-                destroynum( lasttmp );
                 DUPNUM(lasttmp,tmp);
                 addnum( &tmp, tmp, BASEX );
                 digit *= 2;
@@ -321,48 +317,43 @@ void _divnumx( PNUMBER *pa, PNUMBER b, int32_t precision)
             if ( lessnum( rem, tmp ) )
                 {
                 // too far, back up...
-                destroynum( tmp );
                 digit /= 2;
                 tmp=lasttmp;
                 lasttmp= nullptr;
                 }
 
-            tmp->sign *= -1;
+            tmp.sign *= -1;
             addnum( &rem, tmp, BASEX );
-            destroynum( tmp );
-            destroynum( lasttmp );
             *ptrc |= digit;
             }
-        rem->exp++;
+        rem.exp++;
         ptrc--;
         }
     cdigits--;
-    if ( c->mant.begin() != ++ptrc )
+    if ( c.mant.begin() != ++ptrc )
         {
-        copy(ptrc, ptrc + cdigits, c->mant.begin());
+        copy(ptrc, ptrc + cdigits, c.mant.begin());
         }
 
     if ( !cdigits )
         {
         // A zero, make sure no weird exponents creep in
-        c->exp = 0;
-        c->cdigit = 1;
+        c.exp = 0;
+        c.cdigit = 1;
         }
     else
         {
-        c->cdigit = cdigits;
-        c->exp -= cdigits;
+        c.cdigit = cdigits;
+        c.exp -= cdigits;
         // prevent different kinds of zeros, by stripping leading duplicate
         // zeros. digits are in order of increasing significance.
-        while ( c->cdigit > 1 && c->mant[c->cdigit-1] == 0 )
+        while ( c.cdigit > 1 && c.mant[c.cdigit-1] == 0 )
             {
-            c->cdigit--;
+            c.cdigit--;
             }
         }
 
-    destroynum( rem );
 
-    destroynum( *pa );
     *pa=c;
 }
 

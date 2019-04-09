@@ -40,14 +40,14 @@ using namespace std;
 //
 //----------------------------------------------------------------------------
 
-void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix);
+void _addnum( NUMBER *pa, NUMBER b, uint32_t radix);
 
-void __inline addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
+void __inline addnum( NUMBER *pa, NUMBER b, uint32_t radix)
 
 {
-    if ( b->cdigit > 1 || b->mant[0] != 0 )
+    if ( b.cdigit > 1 || b.mant[0] != 0 )
         {    // If b is zero we are done.
-        if ( (*pa)->cdigit > 1 || (*pa)->mant[0] != 0 )
+        if ( (*pa).cdigit > 1 || (*pa).mant[0] != 0 )
             { // pa and b are both nonzero.
             _addnum( pa, b, radix);
             }
@@ -58,11 +58,11 @@ void __inline addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
         }
 }
 
-void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
+void _addnum( NUMBER *pa, NUMBER b, uint32_t radix)
 
 {
-    PNUMBER c= nullptr;              // c will contain the result.
-    PNUMBER a= nullptr;              // a is the dereferenced number pointer from *pa
+    NUMBER c;              // c will contain the result.
+    NUMBER a;              // a is the dereferenced number pointer from *pa
     vector<MANTTYPE>::iterator pcha; // pcha is an iterator pointing to the mantissa of a.
     vector<MANTTYPE>::iterator pchb; // pchb is an iterator pointing to the mantissa of b.
     vector<MANTTYPE>::iterator pchc; // pchc is an iterator pointing to the mantissa of c.
@@ -80,23 +80,23 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 
     // Calculate the overlap of the numbers after alignment, this includes
     // necessary padding 0's
-    cdigits = max( a->cdigit+a->exp, b->cdigit+b->exp ) -
-            min( a->exp, b->exp );
+    cdigits = max( a.cdigit+a.exp, b.cdigit+b.exp ) -
+            min( a.exp, b.exp );
 
     createnum( c, cdigits + 1 );
-    c->exp = min( a->exp, b->exp );
-    mexp = c->exp;
-    c->cdigit = cdigits;
-    pcha = a->mant.begin();
-    pchb = b->mant.begin();
-    pchc = c->mant.begin();
+    c.exp = min( a.exp, b.exp );
+    mexp = c.exp;
+    c.cdigit = cdigits;
+    pcha = a.mant.begin();
+    pchb = b.mant.begin();
+    pchc = c.mant.begin();
 
     // Figure out the sign of the numbers
-    if ( a->sign != b->sign )
+    if ( a.sign != b.sign )
         {
         cy = 1;
-        fcompla = ( a->sign == -1 );
-        fcomplb = ( b->sign == -1 );
+        fcompla = ( a.sign == -1 );
+        fcomplb = ( b.sign == -1 );
         }
 
     // Loop over all the digits, real and 0 padded. Here we know a and b are
@@ -105,12 +105,12 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
         {
 
         // Get digit from a, taking padding into account.
-        da = ( ( ( mexp >= a->exp ) && ( cdigits + a->exp - c->exp >
-                    (c->cdigit - a->cdigit) ) ) ?
+        da = ( ( ( mexp >= a.exp ) && ( cdigits + a.exp - c.exp >
+                    (c.cdigit - a.cdigit) ) ) ?
                     *pcha++ : 0 );
         // Get digit from b, taking padding into account.
-        db = ( ( ( mexp >= b->exp ) && ( cdigits + b->exp - c->exp >
-                    (c->cdigit - b->cdigit) ) ) ?
+        db = ( ( ( mexp >= b.exp ) && ( cdigits + b.exp - c.exp >
+                    (c.cdigit - b.cdigit) ) ) ?
                     *pchb++ : 0 );
 
         // Handle complementing for a and b digit. Might be a better way, but
@@ -134,19 +134,19 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
     if ( cy && !(fcompla || fcomplb) )
         {
         *pchc++ = cy;
-        c->cdigit++;
+        c.cdigit++;
         }
 
     // Compute sign of result
     if ( !(fcompla || fcomplb) )
         {
-        c->sign = a->sign;
+        c.sign = a.sign;
         }
     else
         {
         if ( cy )
             {
-            c->sign = 1;
+            c.sign = 1;
             }
         else
             {
@@ -154,9 +154,9 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
             // and all the digits need to be complemented, at one time an
             // attempt to handle this above was made, it turned out to be much
             // slower on average.
-            c->sign = -1;
+            c.sign = -1;
             cy = 1;
-            for ( ( cdigits = c->cdigit ), (pchc = c->mant.begin());
+            for ( ( cdigits = c.cdigit ), (pchc = c.mant.begin());
                 cdigits > 0;
                 cdigits-- )
                 {
@@ -169,11 +169,10 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 
     // Remove leading zeros, remember digits are in order of
     // increasing significance. i.e. 100 would be 0,0,1
-    while ( c->cdigit > 1 && *(--pchc) == 0 )
+    while ( c.cdigit > 1 && *(--pchc) == 0 )
         {
-        c->cdigit--;
+        c.cdigit--;
         }
-    destroynum( *pa );
     *pa=c;
 }
 
@@ -192,35 +191,35 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 //
 //----------------------------------------------------------------------------
 
-void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix);
+void _mulnum( NUMBER *pa, NUMBER b, uint32_t radix);
 
-void __inline mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
+void __inline mulnum( NUMBER *pa, NUMBER b, uint32_t radix)
 
 {
-    if ( b->cdigit > 1 || b->mant[0] != 1 || b->exp != 0 )
+    if ( b.cdigit > 1 || b.mant[0] != 1 || b.exp != 0 )
         {    // If b is one we don't multiply exactly.
-        if ( (*pa)->cdigit > 1 || (*pa)->mant[0] != 1 || (*pa)->exp != 0 )
+        if ( (*pa).cdigit > 1 || (*pa).mant[0] != 1 || (*pa).exp != 0 )
             { // pa and b are both non-one.
             _mulnum( pa, b, radix);
             }
         else
             { // if pa is one and b isn't just copy b, and adjust the sign.
-            int32_t sign = (*pa)->sign;
+            int32_t sign = (*pa).sign;
             DUPNUM(*pa,b);
-            (*pa)->sign *= sign;
+            (*pa).sign *= sign;
             }
         }
     else
         {    // But we do have to set the sign.
-        (*pa)->sign *= b->sign;
+        (*pa).sign *= b.sign;
         }
 }
 
-void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
+void _mulnum( NUMBER *pa, NUMBER b, uint32_t radix)
 
 {
-    PNUMBER c= nullptr;                    // c will contain the result.
-    PNUMBER a= nullptr;                    // a is the dereferenced number pointer from *pa
+    NUMBER c;                    // c will contain the result.
+    NUMBER a;                    // a is the dereferenced number pointer from *pa
     vector<MANTTYPE>::iterator pcha;       // pcha is an iterator pointing to the mantissa of a.
     vector<MANTTYPE>::iterator pchb;       // pchb is an iterator pointing to the mantissa of b.
     vector<MANTTYPE>::iterator pchc;       // pchc is an iterator pointing to the mantissa of c.
@@ -236,24 +235,24 @@ void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
     int32_t  icdigit = 0;      // Index of digit being calculated in final result.
 
     a=*pa;
-    ibdigit = a->cdigit + b->cdigit - 1;
+    ibdigit = a.cdigit + b.cdigit - 1;
     createnum( c,  ibdigit + 1 );
-    c->cdigit = ibdigit;
-    c->sign = a->sign * b->sign;
+    c.cdigit = ibdigit;
+    c.sign = a.sign * b.sign;
 
-    c->exp = a->exp + b->exp;
-    pcha = a->mant.begin();
-    pchcoffset = c->mant.begin();
+    c.exp = a.exp + b.exp;
+    pcha = a.mant.begin();
+    pchcoffset = c.mant.begin();
 
-    for (  iadigit = a->cdigit; iadigit > 0; iadigit-- )
+    for (  iadigit = a.cdigit; iadigit > 0; iadigit-- )
         {
         da =  *pcha++;
-        pchb = b->mant.begin();
+        pchb = b.mant.begin();
 
         // Shift pchc, and pchcoffset, one for each digit
         pchc = pchcoffset++;
 
-        for ( ibdigit = b->cdigit; ibdigit > 0; ibdigit-- )
+        for ( ibdigit = b.cdigit; ibdigit > 0; ibdigit-- )
             {
             cy = 0;
             mcy = (TWO_MANTTYPE)da * *pchb;
@@ -262,7 +261,7 @@ void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
                 icdigit = 0;
                 if ( ibdigit == 1 && iadigit == 1 )
                     {
-                    c->cdigit++;
+                    c.cdigit++;
                     }
                 }
             // If result is nonzero, or while result of carry is nonzero...
@@ -287,12 +286,11 @@ void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 
     // prevent different kinds of zeros, by stripping leading duplicate zeros.
     // digits are in order of increasing significance.
-    while ( c->cdigit > 1 && c->mant[c->cdigit-1] == 0 )
+    while ( c.cdigit > 1 && c.mant[c.cdigit-1] == 0 )
         {
-        c->cdigit--;
+        c.cdigit--;
         }
 
-    destroynum( *pa );
     *pa=c;
 }
 
@@ -312,11 +310,11 @@ void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 //
 //----------------------------------------------------------------------------
 
-void remnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
+void remnum( NUMBER *pa, NUMBER b, uint32_t radix)
 
 {
-    PNUMBER tmp = nullptr;     // tmp is the working remainder.
-    PNUMBER lasttmp = nullptr; // lasttmp is the last remainder which worked.
+    NUMBER tmp;     // tmp is the working remainder.
+    NUMBER lasttmp; // lasttmp is the last remainder which worked.
 
     // Once *pa is less than b, *pa is the remainder.
     while ( !lessnum( *pa, b ) )
@@ -325,15 +323,14 @@ void remnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
         if ( lessnum( tmp, *pa ) )
             {
             // Start off close to the right answer for subtraction.
-            tmp->exp = (*pa)->cdigit+(*pa)->exp - tmp->cdigit;
+            tmp.exp = (*pa).cdigit+(*pa).exp - tmp.cdigit;
             if ( MSD(*pa) <= MSD(tmp) )
                 {
                 // Don't take the chance that the numbers are equal.
-                tmp->exp--;
+                tmp.exp--;
                 }
             }
 
-        destroynum( lasttmp );
         lasttmp=i32tonum( 0, radix);
 
         while ( lessnum( tmp, *pa ) )
@@ -345,17 +342,14 @@ void remnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
         if ( lessnum( *pa, tmp ) )
             {
             // too far, back up...
-            destroynum( tmp );
             tmp=lasttmp;
             lasttmp= nullptr;
             }
 
         // Subtract the working remainder from the remainder holder.
-        tmp->sign = -1*(*pa)->sign;
+        tmp.sign = -1*(*pa).sign;
         addnum( pa, tmp, radix);
 
-        destroynum( tmp );
-        destroynum( lasttmp );
 
         }
 }
@@ -375,68 +369,67 @@ void remnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
 //
 //---------------------------------------------------------------------------
 
-void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision);
+void _divnum( NUMBER *pa, NUMBER b, uint32_t radix, int32_t precision);
 
-void __inline divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
+void __inline divnum( NUMBER *pa, NUMBER b, uint32_t radix, int32_t precision)
 
 {
-    if ( b->cdigit > 1 || b->mant[0] != 1 || b->exp != 0 )
+    if ( b.cdigit > 1 || b.mant[0] != 1 || b.exp != 0 )
         {
         // b is not one
         _divnum( pa, b, radix, precision);
         }
     else
         {    // But we do have to set the sign.
-        (*pa)->sign *= b->sign;
+        (*pa).sign *= b.sign;
         }
 }
 
-void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
+void _divnum( NUMBER *pa, NUMBER b, uint32_t radix, int32_t precision)
 {
-    PNUMBER a = *pa;
+    NUMBER a = *pa;
     int32_t thismax = precision + 2;
-    if (thismax < a->cdigit)
+    if (thismax < a.cdigit)
     {
-        thismax = a->cdigit;
+        thismax = a.cdigit;
     }
 
-    if (thismax < b->cdigit)
+    if (thismax < b.cdigit)
     {
-        thismax = b->cdigit;
+        thismax = b.cdigit;
     }
 
-    PNUMBER c = nullptr;
+    NUMBER c;
     createnum(c, thismax + 1);
-    c->exp = (a->cdigit + a->exp) - (b->cdigit + b->exp) + 1;
-    c->sign = a->sign * b->sign;
+    c.exp = (a.cdigit + a.exp) - (b.cdigit + b.exp) + 1;
+    c.sign = a.sign * b.sign;
 
-    vector<MANTTYPE>::iterator ptrc = c->mant.begin() + thismax;
-    PNUMBER rem = nullptr;
-    PNUMBER tmp = nullptr;
+    vector<MANTTYPE>::iterator ptrc = c.mant.begin() + thismax;
+    NUMBER rem;
+    NUMBER tmp;
     DUPNUM(rem, a);
     DUPNUM(tmp, b);
-    tmp->sign = a->sign;
-    rem->exp = b->cdigit + b->exp - rem->cdigit;
+    tmp.sign = a.sign;
+    rem.exp = b.cdigit + b.exp - rem.cdigit;
 
     // Build a table of multiplications of the divisor, this is quicker for
     // more than radix 'digits'
-    list<PNUMBER> numberList{ i32tonum(0L, radix) };
+    list<NUMBER> numberList{ i32tonum(0L, radix) };
     for (uint32_t i = 1; i < radix; i++)
     {
-        PNUMBER newValue = nullptr;
+        NUMBER newValue;
         DUPNUM(newValue, numberList.front());
         addnum(&newValue, tmp, radix);
 
         numberList.emplace_front(newValue);
     }
-    destroynum(tmp);
 
     int32_t digit;
     int32_t cdigits = 0;
     while (cdigits++ < thismax && !zernum(rem))
     {
         digit = radix - 1;
-        PNUMBER multiple = nullptr;
+        NUMBER multiple;
         for (const auto& num : numberList)
         {
             if (!lessnum(rem, num) || !--digit)
@@ -448,43 +441,40 @@ void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
 
         if (digit)
         {
-            multiple->sign *= -1;
+            multiple.sign *= -1;
             addnum(&rem, multiple, radix);
-            multiple->sign *= -1;
+            multiple.sign *= -1;
         }
-        rem->exp++;
+        rem.exp++;
         *ptrc-- = (MANTTYPE)digit;
     }
     cdigits--;
 
-    if (c->mant.begin() != ++ptrc)
+    if (c.mant.begin() != ++ptrc)
     {
-        copy(ptrc, ptrc + cdigits, c->mant.begin());
+        copy(ptrc, ptrc + cdigits, c.mant.begin());
     }
 
     // Cleanup table structure
     for (auto& num : numberList)
     {
-        destroynum(num);
     }
 
     if (!cdigits)
     {
-        c->cdigit = 1;
-        c->exp = 0;
+        c.cdigit = 1;
+        c.exp = 0;
     }
     else
     {
-        c->cdigit = cdigits;
-        c->exp -= cdigits;
-        while (c->cdigit > 1 && c->mant[c->cdigit - 1] == 0)
+        c.cdigit = cdigits;
+        c.exp -= cdigits;
+        while (c.cdigit > 1 && c.mant[c.cdigit - 1] == 0)
         {
-            c->cdigit--;
+            c.cdigit--;
         }
     }
-    destroynum(rem);
 
-    destroynum(*pa);
     *pa = c;
 }
 
@@ -502,7 +492,7 @@ void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-bool equnum( PNUMBER a, PNUMBER b )
+bool equnum( NUMBER a, NUMBER b )
 
 {
     int32_t diff;
@@ -513,7 +503,7 @@ bool equnum( PNUMBER a, PNUMBER b )
     MANTTYPE  da;
     MANTTYPE  db;
 
-    diff = ( a->cdigit + a->exp ) - ( b->cdigit + b->exp );
+    diff = ( a.cdigit + a.exp ) - ( b.cdigit + b.exp );
     if ( diff < 0 )
         {
         // If the exponents are different, these are different numbers.
@@ -529,19 +519,19 @@ bool equnum( PNUMBER a, PNUMBER b )
         else
             {
             // OK the exponents match.
-            ia = a->cdigit - 1;
-            ib = b->cdigit - 1;
-            cdigits = max( a->cdigit, b->cdigit );
+            ia = a.cdigit - 1;
+            ib = b.cdigit - 1;
+            cdigits = max( a.cdigit, b.cdigit );
             ccdigits = cdigits;
 
             // Loop over all digits until we run out of digits or there is a
             // difference in the digits.
             for ( ;cdigits > 0; cdigits-- )
                 {
-                da = ( (cdigits > (ccdigits - a->cdigit) ) ?
-                    a->mant[ia--] : 0 );
-                db = ( (cdigits > (ccdigits - b->cdigit) ) ?
-                    b->mant[ib--] : 0 );
+                da = ( (cdigits > (ccdigits - a.cdigit) ) ?
+                    a.mant[ia--] : 0 );
+                db = ( (cdigits > (ccdigits - b.cdigit) ) ?
+                    b.mant[ib--] : 0 );
                 if ( da != db )
                     {
                     return false;
@@ -568,7 +558,7 @@ bool equnum( PNUMBER a, PNUMBER b )
 //
 //---------------------------------------------------------------------------
 
-bool lessnum( PNUMBER a, PNUMBER b )
+bool lessnum( NUMBER a, NUMBER b )
 
 {
     int32_t diff;
@@ -580,7 +570,7 @@ bool lessnum( PNUMBER a, PNUMBER b )
     MANTTYPE  db;
 
 
-    diff = ( a->cdigit + a->exp ) - ( b->cdigit + b->exp );
+    diff = ( a.cdigit + a.exp ) - ( b.cdigit + b.exp );
     if ( diff < 0 )
         {
         // The exponent of a is less than b
@@ -594,16 +584,16 @@ bool lessnum( PNUMBER a, PNUMBER b )
             }
         else
             {
-            ia = a->cdigit - 1;
-            ib = b->cdigit - 1;
-            cdigits = max( a->cdigit, b->cdigit );
+            ia = a.cdigit - 1;
+            ib = b.cdigit - 1;
+            cdigits = max( a.cdigit, b.cdigit );
             ccdigits = cdigits;
             for ( ;cdigits > 0; cdigits-- )
                 {
-                da = ( (cdigits > (ccdigits - a->cdigit) ) ?
-                    a->mant[ia--] : 0 );
-                db = ( (cdigits > (ccdigits - b->cdigit) ) ?
-                    b->mant[ib--] : 0 );
+                da = ( (cdigits > (ccdigits - a.cdigit) ) ?
+                    a.mant[ia--] : 0 );
+                db = ( (cdigits > (ccdigits - b.cdigit) ) ?
+                    b.mant[ib--] : 0 );
                 diff = da-db;
                 if ( diff )
                     {
@@ -628,17 +618,17 @@ bool lessnum( PNUMBER a, PNUMBER b )
 //
 //----------------------------------------------------------------------------
 
-bool zernum( PNUMBER a )
+bool zernum( NUMBER a )
 
 {
-    int32_t length = a->cdigit;
+    int32_t length = a.cdigit;
     int32_t index = 0;
     
     // loop over all the digits until you find a nonzero or until you run
     // out of digits
     while ( length-- > 0 )
         {
-        if ( a->mant[index++] )
+        if ( a.mant[index++] )
             {
             // One of the digits isn't zero, therefore the number isn't zero
             return false;

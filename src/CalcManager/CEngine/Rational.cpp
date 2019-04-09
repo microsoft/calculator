@@ -69,8 +69,8 @@ namespace CalcEngine
     {
         PRAT ret = _createrat();
 
-        ret->pp = this->P().ToPNUMBER();
-        ret->pq = this->Q().ToPNUMBER();
+        ret->pp = this->P().ToNUMBER();
+        ret->pq = this->Q().ToNUMBER();
 
         return ret;
     }

@@ -13,8 +13,8 @@ namespace CalcEngine
         Number() noexcept;
         Number(int32_t sign, int32_t exp, std::vector<uint32_t> const& mantissa) noexcept;
 
-        explicit Number(PNUMBER p) noexcept;
-        PNUMBER ToPNUMBER() const;
+        explicit Number(NUMBER p) noexcept;
+        NUMBER ToNUMBER() const;
 
         int32_t const& Sign() const;
         int32_t const& Exp() const;

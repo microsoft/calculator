@@ -101,7 +101,7 @@ void sinhrat( PRAT *px, uint32_t radix, int32_t precision)
         {
         DUPRAT(tmpx,*px);
         exprat(px, radix, precision);
-        tmpx->pp->sign *= -1;
+        tmpx->pp.sign *= -1;
         exprat(&tmpx, radix, precision);
         subrat( px, tmpx, precision);
         divrat( px, rat_two, precision);
@@ -178,13 +178,13 @@ void coshrat( PRAT *px, uint32_t radix, int32_t precision)
 {
     PRAT tmpx= nullptr;
 
-    (*px)->pp->sign = 1;
-    (*px)->pq->sign = 1;
+    (*px)->pp.sign = 1;
+    (*px)->pq.sign = 1;
     if ( rat_ge( *px, rat_one, precision) )
         {
         DUPRAT(tmpx,*px);
         exprat(px, radix, precision);
-        tmpx->pp->sign *= -1;
+        tmpx->pp.sign *= -1;
         exprat(&tmpx, radix, precision);
         addrat( px, tmpx, precision);
         divrat( px, rat_two, precision);

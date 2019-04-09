@@ -56,7 +56,7 @@ void asinhrat( PRAT *px, uint32_t radix, int32_t precision)
     PRAT neg_pt_eight_five = nullptr;
 
     DUPRAT(neg_pt_eight_five,pt_eight_five);
-    neg_pt_eight_five->pp->sign *= -1;
+    neg_pt_eight_five->pp.sign *= -1;
     if ( rat_gt( *px, pt_eight_five, precision) || rat_lt( *px, neg_pt_eight_five, precision) )
         {
         PRAT ptmp = nullptr;
@@ -71,7 +71,7 @@ void asinhrat( PRAT *px, uint32_t radix, int32_t precision)
     else
         {
         CREATETAYLOR();
-        xx->pp->sign *= -1;
+        xx->pp.sign *= -1;
 
         DUPRAT(pret,(*px));
         DUPRAT(thisterm,(*px));
@@ -152,7 +152,7 @@ void atanhrat( PRAT *px, int32_t precision)
     subrat(&ptmp, rat_one, precision);
     addrat(px, rat_one, precision);
     divrat(px, ptmp, precision);
-    (*px)->pp->sign *= -1;
+    (*px)->pp.sign *= -1;
     lograt(px, precision);
     divrat(px, rat_two, precision);
     destroyrat(ptmp);
