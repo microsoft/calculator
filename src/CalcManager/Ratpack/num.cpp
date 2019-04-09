@@ -40,9 +40,9 @@ using namespace std;
 //
 //----------------------------------------------------------------------------
 
-void _addnum( NUMBER *pa, NUMBER b, uint32_t radix);
+void _addnum( NUMBER *pa, const NUMBER &b, uint32_t radix);
 
-void __inline addnum( NUMBER *pa, NUMBER b, uint32_t radix)
+void __inline addnum( NUMBER *pa, const NUMBER &b, uint32_t radix)
 
 {
     if ( b.cdigit > 1 || b.mant[0] != 0 )
@@ -58,14 +58,14 @@ void __inline addnum( NUMBER *pa, NUMBER b, uint32_t radix)
         }
 }
 
-void _addnum( NUMBER *pa, NUMBER b, uint32_t radix)
+void _addnum( NUMBER *pa, const NUMBER &b, uint32_t radix)
 
 {
     NUMBER c;              // c will contain the result.
     NUMBER a;              // a is the dereferenced number pointer from *pa
-    vector<MANTTYPE>::iterator pcha; // pcha is an iterator pointing to the mantissa of a.
-    vector<MANTTYPE>::iterator pchb; // pchb is an iterator pointing to the mantissa of b.
-    vector<MANTTYPE>::iterator pchc; // pchc is an iterator pointing to the mantissa of c.
+    vector<MANTTYPE>::iterator pcha;       // pcha is an iterator pointing to the mantissa of a.
+    vector<MANTTYPE>::const_iterator pchb; // pchb is an iterator pointing to the mantissa of b.
+    vector<MANTTYPE>::iterator pchc;       // pchc is an iterator pointing to the mantissa of c.
     int32_t cdigits;       // cdigits is the max count of the digits results
                         // used as a counter.
     int32_t mexp;          // mexp is the exponent of the result.
@@ -191,9 +191,9 @@ void _addnum( NUMBER *pa, NUMBER b, uint32_t radix)
 //
 //----------------------------------------------------------------------------
 
-void _mulnum( NUMBER *pa, NUMBER b, uint32_t radix);
+void _mulnum( NUMBER *pa, const NUMBER &b, uint32_t radix);
 
-void __inline mulnum( NUMBER *pa, NUMBER b, uint32_t radix)
+void __inline mulnum( NUMBER *pa, const NUMBER &b, uint32_t radix)
 
 {
     if ( b.cdigit > 1 || b.mant[0] != 1 || b.exp != 0 )
@@ -215,13 +215,13 @@ void __inline mulnum( NUMBER *pa, NUMBER b, uint32_t radix)
         }
 }
 
-void _mulnum( NUMBER *pa, NUMBER b, uint32_t radix)
+void _mulnum( NUMBER *pa, const NUMBER &b, uint32_t radix)
 
 {
     NUMBER c;                    // c will contain the result.
     NUMBER a;                    // a is the dereferenced number pointer from *pa
     vector<MANTTYPE>::iterator pcha;       // pcha is an iterator pointing to the mantissa of a.
-    vector<MANTTYPE>::iterator pchb;       // pchb is an iterator pointing to the mantissa of b.
+    vector<MANTTYPE>::const_iterator pchb; // pchb is an iterator pointing to the mantissa of b.
     vector<MANTTYPE>::iterator pchc;       // pchc is an iterator pointing to the mantissa of c.
     vector<MANTTYPE>::iterator pchcoffset; // pchcoffset, is the anchor location of the next
                             // single digit multiply partial result.
@@ -310,7 +310,7 @@ void _mulnum( NUMBER *pa, NUMBER b, uint32_t radix)
 //
 //----------------------------------------------------------------------------
 
-void remnum( NUMBER *pa, NUMBER b, uint32_t radix)
+void remnum( NUMBER *pa, const NUMBER &b, uint32_t radix)
 
 {
     optional<NUMBER> tmp;     // tmp is the working remainder.
@@ -367,9 +367,9 @@ void remnum( NUMBER *pa, NUMBER b, uint32_t radix)
 //
 //---------------------------------------------------------------------------
 
-void _divnum( NUMBER *pa, NUMBER b, uint32_t radix, int32_t precision);
+void _divnum( NUMBER *pa, const NUMBER &b, uint32_t radix, int32_t precision);
 
-void __inline divnum( NUMBER *pa, NUMBER b, uint32_t radix, int32_t precision)
+void __inline divnum( NUMBER *pa, const NUMBER &b, uint32_t radix, int32_t precision)
 
 {
     if ( b.cdigit > 1 || b.mant[0] != 1 || b.exp != 0 )
@@ -383,7 +383,7 @@ void __inline divnum( NUMBER *pa, NUMBER b, uint32_t radix, int32_t precision)
         }
 }
 
-void _divnum( NUMBER *pa, NUMBER b, uint32_t radix, int32_t precision)
+void _divnum( NUMBER *pa, const NUMBER &b, uint32_t radix, int32_t precision)
 {
     NUMBER a = *pa;
     int32_t thismax = precision + 2;
@@ -485,7 +485,7 @@ void _divnum( NUMBER *pa, NUMBER b, uint32_t radix, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-bool equnum( NUMBER a, NUMBER b )
+bool equnum( const NUMBER &a, const NUMBER &b )
 
 {
     int32_t diff;
@@ -551,7 +551,7 @@ bool equnum( NUMBER a, NUMBER b )
 //
 //---------------------------------------------------------------------------
 
-bool lessnum( NUMBER a, NUMBER b )
+bool lessnum( const NUMBER &a, const NUMBER &b )
 
 {
     int32_t diff;
@@ -611,7 +611,7 @@ bool lessnum( NUMBER a, NUMBER b )
 //
 //----------------------------------------------------------------------------
 
-bool zernum( NUMBER a )
+bool zernum( const NUMBER &a )
 
 {
     int32_t length = a.cdigit;

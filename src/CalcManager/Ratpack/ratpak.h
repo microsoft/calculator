@@ -130,7 +130,7 @@ extern PRAT rat_max_i32;
 extern PRAT rat_min_i32;
 
 // DUPNUM Duplicates a number taking care of allocation and internals
-#define DUPNUM(a,b) createnum( a, (b).cdigit );_dupnum(a, &b);
+#define DUPNUM(a,b) (a) = (b);
 
 // DUPRAT Duplicates a rational taking care of allocation and internals
 #define DUPRAT(a,b) destroyrat(a);createrat(a);DUPNUM((a)->pp,(b)->pp);DUPNUM((a)->pq,(b)->pq);
@@ -302,9 +302,9 @@ extern void SetDecimalSeparator(wchar_t decimalSeparator);
 // Call whenever either radix or precision changes, is smarter about recalculating constants.
 extern void ChangeConstants(uint32_t radix, int32_t precision);
 
-extern bool equnum(_In_ NUMBER a, _In_ NUMBER b );     // returns true of a == b
-extern bool lessnum(_In_ NUMBER a, _In_ NUMBER b );    // returns true of a < b
-extern bool zernum(_In_ NUMBER a );                // returns true of a == 0
+extern bool equnum(_In_ const NUMBER &a, _In_ const NUMBER &b );     // returns true of a == b
+extern bool lessnum(_In_ const NUMBER &a, _In_ const NUMBER &b );    // returns true of a < b
+extern bool zernum(_In_ const NUMBER &a );                // returns true of a == 0
 extern bool zerrat(_In_ PRAT a );                   // returns true if a == 0/q
 extern std::wstring NumberToString(_Inout_ NUMBER& pnum, int format, uint32_t radix, int32_t precision);
 
@@ -315,12 +315,12 @@ extern NUMBER RatToNumber(_In_ PRAT prat, uint32_t radix, int32_t precision);
 // flattens a PRAT by converting it to a NUMBER and back to a PRAT
 extern void flatrat(_Inout_ PRAT& prat, uint32_t radix, int32_t precision);
 
-extern int32_t numtoi32(_In_ NUMBER pnum, uint32_t radix );
+extern int32_t numtoi32(_In_ const NUMBER &pnum, uint32_t radix );
 extern int32_t rattoi32(_In_ PRAT prat, uint32_t radix, int32_t precision);
 uint64_t rattoUi64(_In_ PRAT prat, uint32_t radix, int32_t precision);
 extern NUMBER _createnum(_In_ uint32_t size ); // returns an empty number structure with size digits
-extern NUMBER nRadixxtonum(_In_ NUMBER a, uint32_t radix, int32_t precision);
-extern NUMBER gcd(_In_ NUMBER a, _In_ NUMBER b );
+extern NUMBER nRadixxtonum(_In_ const NUMBER &a, uint32_t radix, int32_t precision);
+extern NUMBER gcd(_In_ const NUMBER &a, _In_ const NUMBER &b );
 extern std::optional<NUMBER> StringToNumber(std::wstring_view numberString, uint32_t radix, int32_t precision); // takes a text representation of a number and returns a number.
 
 // takes a text representation of a number as a mantissa with sign and an exponent with sign.
@@ -330,7 +330,7 @@ extern NUMBER i32factnum(int32_t ini32, uint32_t radix);
 extern NUMBER i32prodnum(int32_t start, int32_t stop, uint32_t radix);
 extern NUMBER i32tonum(int32_t ini32, uint32_t radix);
 extern NUMBER Ui32tonum(uint32_t ini32, uint32_t radix);
-extern NUMBER numtonRadixx(NUMBER a, uint32_t radix);
+extern NUMBER numtonRadixx(const NUMBER &a, uint32_t radix);
 
 // creates a empty/undefined rational representation (p/q)
 extern PRAT _createrat( void );
@@ -389,7 +389,7 @@ extern void lograt( _Inout_ PRAT *px, int32_t precision);
 
 extern PRAT i32torat( int32_t ini32 );
 extern PRAT Ui32torat( uint32_t inui32 );
-extern PRAT numtorat( _In_ NUMBER pin, uint32_t radix);
+extern PRAT numtorat( _In_ const NUMBER &pin, uint32_t radix);
 
 extern void sinhrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision);
 extern void sinrat( _Inout_ PRAT *px );
@@ -405,22 +405,22 @@ extern void tanrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision);
 // angle type
 extern void tananglerat( _Inout_ PRAT *px, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
 
-extern void _dupnum(_In_ NUMBER dest, _In_ const NUMBER * const src);
+extern void _dupnum(_In_ const NUMBER &dest, _In_ const NUMBER * const src);
 
 extern void _destroyrat( _In_ PRAT prat );
-extern void addnum( _Inout_ NUMBER *pa, _In_ NUMBER b, uint32_t radix);
+extern void addnum( _Inout_ NUMBER *pa, _In_ const NUMBER &b, uint32_t radix);
 extern void addrat( _Inout_ PRAT *pa, _In_ PRAT b, int32_t precision);
 extern void andrat( _Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision);
-extern void divnum( _Inout_ NUMBER *pa, _In_ NUMBER b, uint32_t radix, int32_t precision);
-extern void divnumx( _Inout_ NUMBER *pa, _In_ NUMBER b, int32_t precision);
+extern void divnum( _Inout_ NUMBER *pa, _In_ const NUMBER &b, uint32_t radix, int32_t precision);
+extern void divnumx( _Inout_ NUMBER *pa, _In_ const NUMBER &b, int32_t precision);
 extern void divrat( _Inout_ PRAT *pa, _In_ PRAT b, int32_t precision);
 extern void fracrat( _Inout_ PRAT *pa , uint32_t radix, int32_t precision);
 extern void factrat( _Inout_ PRAT *pa, uint32_t radix, int32_t precision);
 extern void modrat( _Inout_ PRAT *pa, _In_ PRAT b );
 extern void gcdrat( _Inout_ PRAT *pa, int32_t precision);
 extern void intrat( _Inout_ PRAT *px, uint32_t radix, int32_t precision);
-extern void mulnum( _Inout_ NUMBER *pa, _In_ NUMBER b, uint32_t radix);
-extern void mulnumx( _Inout_ NUMBER *pa, _In_ NUMBER b );
+extern void mulnum( _Inout_ NUMBER *pa, _In_ const NUMBER &b, uint32_t radix);
+extern void mulnumx( _Inout_ NUMBER *pa, _In_ const NUMBER &b );
 extern void mulrat( _Inout_ PRAT *pa, _In_ PRAT b, int32_t precision);
 extern void numpowi32( _Inout_ NUMBER *proot, int32_t power, uint32_t radix, int32_t precision);
 extern void numpowi32x( _Inout_ NUMBER *proot, int32_t power );
@@ -429,7 +429,7 @@ extern void powrat( _Inout_ PRAT *pa, _In_ PRAT b , uint32_t radix, int32_t prec
 extern void powratNumeratorDenominator(_Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision);
 extern void powratcomp(_Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision);
 extern void ratpowi32( _Inout_ PRAT *proot, int32_t power, int32_t precision);
-extern void remnum( _Inout_ NUMBER *pa, _In_ NUMBER b, uint32_t radix);
+extern void remnum( _Inout_ NUMBER *pa, _In_ const NUMBER &b, uint32_t radix);
 extern void rootrat( _Inout_ PRAT *pa, _In_ PRAT b , uint32_t radix, int32_t precision);
 extern void scale2pi( _Inout_ PRAT *px, uint32_t radix, int32_t precision);
 extern void scale( _Inout_ PRAT *px, _In_ PRAT scalefact, uint32_t radix, int32_t precision);
@@ -446,4 +446,4 @@ extern bool rat_le( _In_ PRAT a, _In_ PRAT b, int32_t precision);
 extern void inbetween( _In_ PRAT *px, _In_ PRAT range, int32_t precision);
 extern void trimit( _Inout_ PRAT *px, int32_t precision);
 extern void _dumprawrat(_In_ const wchar_t *varname, _In_ PRAT rat, std::wostream& out);
-extern void _dumprawnum(_In_ const wchar_t *varname, _In_ NUMBER num, std::wostream& out);
+extern void _dumprawnum(_In_ const wchar_t *varname, _In_ const NUMBER &num, std::wostream& out);

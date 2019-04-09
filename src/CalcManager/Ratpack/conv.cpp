@@ -136,12 +136,12 @@ void* zmalloc(size_t a)
 //
 //-----------------------------------------------------------------------------
 
-void _dupnum(_In_ NUMBER dest, _In_ const NUMBER * const src)
+void _dupnum(_In_ NUMBER *dest, _In_ const NUMBER * const src)
 {
-    dest.sign = src->sign;
-    dest.exp = src->exp;
-    dest.cdigit = src->cdigit;
-    dest.mant = src->mant;
+    dest->sign = src->sign;
+    dest->exp = src->exp;
+    dest->cdigit = src->cdigit;
+    dest->mant = src->mant;
 }
 
 
@@ -236,7 +236,7 @@ PRAT _createrat( void )
 //
 //-----------------------------------------------------------------------------
 
-PRAT numtorat( _In_ NUMBER pin, uint32_t radix)
+PRAT numtorat( _In_ const NUMBER &pin, uint32_t radix)
 
 {
     NUMBER pnRadixn;
@@ -279,12 +279,12 @@ PRAT numtorat( _In_ NUMBER pin, uint32_t radix)
 //
 //----------------------------------------------------------------------------
 
-NUMBER nRadixxtonum( _In_ NUMBER a, uint32_t radix, int32_t precision)
+NUMBER nRadixxtonum( _In_ const NUMBER &a, uint32_t radix, int32_t precision)
 
 {
     uint32_t bitmask;
     uint32_t cdigits;
-    MANTTYPE *ptr;
+    const MANTTYPE *ptr;
 
     NUMBER sum = i32tonum( 0, radix );
     NUMBER powofnRadix = i32tonum( BASEX, radix );
@@ -337,13 +337,13 @@ NUMBER nRadixxtonum( _In_ NUMBER a, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-NUMBER numtonRadixx(_In_ NUMBER a, uint32_t radix)
+NUMBER numtonRadixx(_In_ const NUMBER &a, uint32_t radix)
 {
     NUMBER numret = i32tonum(0, BASEX); // numret is the number in internal form.
     NUMBER num_radix = i32tonum(radix, BASEX);
     
     // Digits are in reverse order, back over them LSD first.
-    vector<MANTTYPE>::iterator ptrdigit = a.mant.begin() + a.cdigit; // iterator pointing to digit being worked on.
+    vector<MANTTYPE>::const_iterator ptrdigit = a.mant.begin() + a.cdigit; // iterator pointing to digit being worked on.
 
     NUMBER thisdigit;      // thisdigit holds the current digit of a
                                    // being summed into result.
@@ -984,7 +984,7 @@ uint64_t rattoUi64( _In_ PRAT prat, uint32_t radix, int32_t precision)
 //    base   claimed.
 //
 //-----------------------------------------------------------------------------
-int32_t numtoi32( _In_ NUMBER pnum, uint32_t radix )
+int32_t numtoi32( _In_ const NUMBER &pnum, uint32_t radix )
 {
     int32_t lret = 0;
 
@@ -1347,7 +1347,7 @@ void flatrat(_Inout_ PRAT& prat, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-NUMBER gcd( _In_ NUMBER a, _In_ NUMBER b)
+NUMBER gcd( _In_ const NUMBER &a, _In_ const NUMBER &b)
 {
     NUMBER r;
     NUMBER larger;

@@ -36,7 +36,7 @@ void _mulnumx( NUMBER *pa, NUMBER b );
 //
 //----------------------------------------------------------------------------
 
-void __inline mulnumx( NUMBER *pa, NUMBER b )
+void __inline mulnumx( NUMBER *pa, const NUMBER &b )
 
 {
     if ( b.cdigit > 1 || b.mant[0] != 1 || b.exp != 0 )
