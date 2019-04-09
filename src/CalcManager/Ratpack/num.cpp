@@ -453,11 +453,6 @@ void _divnum( NUMBER *pa, NUMBER b, uint32_t radix, int32_t precision)
         copy(ptrc, ptrc + cdigits, c.mant.begin());
     }
 
-    // Cleanup table structure
-    for (auto& num : numberList)
-    {
-    }
-
     if (!cdigits)
     {
         c.cdigit = 1;
