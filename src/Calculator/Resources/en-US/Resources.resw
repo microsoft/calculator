@@ -562,7 +562,7 @@
     <comment>Sub-string used in automation name for each bit in bit flip</comment>
   </data>
   <data name="63" xml:space="preserve">
-    <value>63rd </value>
+    <value>most significant</value>
     <comment>Sub-string used in automation name for 63 bit in bit flip</comment>
   </data>
   <data name="62" xml:space="preserve">
@@ -814,7 +814,7 @@
     <comment>Sub-string used in automation name for 1 bit in bit flip</comment>
   </data>
   <data name="0" xml:space="preserve">
-    <value>0th </value>
+    <value>least significant</value>
     <comment>Sub-string used in automation name for 0 bit in bit flip</comment>
   </data>
   <data name="MemoryButton_Open" xml:space="preserve">
