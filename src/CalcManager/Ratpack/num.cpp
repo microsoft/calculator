@@ -313,42 +313,40 @@ void _mulnum( NUMBER *pa, NUMBER b, uint32_t radix)
 void remnum( NUMBER *pa, NUMBER b, uint32_t radix)
 
 {
-    NUMBER tmp;     // tmp is the working remainder.
-    NUMBER lasttmp; // lasttmp is the last remainder which worked.
+    optional<NUMBER> tmp;     // tmp is the working remainder.
+    optional<NUMBER> lasttmp; // lasttmp is the last remainder which worked.
 
     // Once *pa is less than b, *pa is the remainder.
     while ( !lessnum( *pa, b ) )
         {
-        DUPNUM( tmp, b );
-        if ( lessnum( tmp, *pa ) )
+        if ( lessnum( *tmp, *pa ) )
             {
             // Start off close to the right answer for subtraction.
-            tmp.exp = (*pa).cdigit+(*pa).exp - tmp.cdigit;
-            if ( MSD(*pa) <= MSD(tmp) )
+            tmp->exp = (*pa).cdigit+(*pa).exp - tmp->cdigit;
+            if ( MSD(*pa) <= MSD(*tmp) )
                 {
                 // Don't take the chance that the numbers are equal.
-                tmp.exp--;
+                tmp->exp--;
                 }
             }
 
         lasttmp=i32tonum( 0, radix);
 
-        while ( lessnum( tmp, *pa ) )
+        while ( lessnum( *tmp, *pa ) )
             {
-            DUPNUM( lasttmp, tmp );
-            addnum( &tmp, tmp, radix);
+            addnum( &*tmp, *tmp, radix);
             }
 
-        if ( lessnum( *pa, tmp ) )
+        if ( lessnum( *pa, *tmp ) )
             {
             // too far, back up...
             tmp=lasttmp;
-            lasttmp= nullptr;
+            lasttmp= optional<NUMBER>();
             }
 
         // Subtract the working remainder from the remainder holder.
-        tmp.sign = -1*(*pa).sign;
-        addnum( pa, tmp, radix);
+        tmp->sign = -1*(*pa).sign;
+        addnum( pa, *tmp, radix);
 
 
         }

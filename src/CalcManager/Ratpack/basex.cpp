@@ -262,9 +262,9 @@ void _divnumx( NUMBER *pa, NUMBER b, int32_t precision)
 {
     NUMBER a;         // a is the dereferenced number pointer from *pa
     NUMBER c;         // c will contain the result.
-    NUMBER lasttmp; // lasttmp allows a backup when the algorithm
+    optional<NUMBER> lasttmp; // lasttmp allows a backup when the algorithm
                             // guesses one bit too far.
-    NUMBER tmp;     // current guess being worked on for divide.
+    optional<NUMBER> tmp;     // current guess being worked on for divide.
     NUMBER rem;     // remainder after applying guess.
     int32_t cdigits;           // count of digits for answer.
     vector<MANTTYPE>::iterator ptrc; // ptrc is an iterator pointing to the mantissa of c.
@@ -306,24 +306,22 @@ void _divnumx( NUMBER *pa, NUMBER b, int32_t precision)
         while ( !lessnum( rem, b ) )
             {
             digit = 1;
-            DUPNUM( tmp, b );
             lasttmp=i32tonum( 0, BASEX );
-            while ( lessnum( tmp, rem ) )
+            while ( lessnum( *tmp, rem ) )
                 {
-                DUPNUM(lasttmp,tmp);
-                addnum( &tmp, tmp, BASEX );
+                addnum( &*tmp, *tmp, BASEX );
                 digit *= 2;
                 }
-            if ( lessnum( rem, tmp ) )
+            if ( lessnum( rem, *tmp ) )
                 {
                 // too far, back up...
                 digit /= 2;
                 tmp=lasttmp;
-                lasttmp= nullptr;
+                lasttmp= optional<NUMBER>();
                 }
 
-            tmp.sign *= -1;
-            addnum( &rem, tmp, BASEX );
+            tmp->sign *= -1;
+            addnum( &rem, *tmp, BASEX );
             *ptrc |= digit;
             }
         rem.exp++;

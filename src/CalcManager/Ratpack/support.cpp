@@ -41,8 +41,7 @@ static int cbitsofprecision = 0;
 
 #define DUMPRAWRAT(v)
 #define DUMPRAWNUM(v)
-#define READRAWRAT(v) createrat(v); DUPNUM((v)->pp,(&(init_p_##v))); \
-DUPNUM((v)->pq,(&(init_q_##v)));
+#define READRAWRAT(v) createrat(v);
 #define READRAWNUM(v) DUPNUM(v,(&(init_##v)))
 
 #define INIT_AND_DUMP_RAW_NUM_IF_NULL(r, v) if (r == nullptr) { r = i32tonum(v, BASEX); DUMPRAWNUM(v); }
@@ -138,25 +137,6 @@ void ChangeConstants(uint32_t radix, int32_t precision)
     if (cbitsofprecision < (g_ratio * static_cast<int32_t>(radix) * precision))
     {
         g_ftrueinfinite = false;
-
-        INIT_AND_DUMP_RAW_NUM_IF_NULL(num_one, 1L);
-        INIT_AND_DUMP_RAW_NUM_IF_NULL(num_two, 2L);
-        INIT_AND_DUMP_RAW_NUM_IF_NULL(num_five, 5L);
-        INIT_AND_DUMP_RAW_NUM_IF_NULL(num_six, 6L);
-        INIT_AND_DUMP_RAW_NUM_IF_NULL(num_ten, 10L);
-        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_six, 6L);
-        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_two, 2L);
-        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_zero, 0L);
-        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_one, 1L);
-        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_neg_one, -1L);
-        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_ten, 10L);
-        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_word, 0xffff);
-        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_word, 0xff);
-        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_400, 400);
-        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_360, 360);
-        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_200, 200);
-        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_180, 180);
-        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_max_exp, 100000);
 
         // 3248, is the max number for which calc is able to compute factorial, after that it is unable to compute due to overflow.
         // Hence restricted factorial range as at most 3248.Beyond that calc will throw overflow error immediately.
@@ -615,11 +595,6 @@ void _dumprawnum(const wchar_t *varname, NUMBER num, wostream& out)
 void _readconstants( void )
 
 {
-    READRAWNUM(num_one);
-    READRAWNUM(num_two);
-    READRAWNUM(num_five);
-    READRAWNUM(num_six);
-    READRAWNUM(num_ten);
     READRAWRAT(pt_eight_five);
     READRAWRAT(rat_six);
     READRAWRAT(rat_two);

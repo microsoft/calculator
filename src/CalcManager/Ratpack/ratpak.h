@@ -244,8 +244,7 @@ std::copy((x)->pp.mant.begin() + trim, (x)->pp.mant.begin() + (x)->pp.cdigit, (x
     pret->pp=i32tonum( 0L, BASEX ); \
     pret->pq=i32tonum( 0L, BASEX );
 
-#define DESTROYTAYLOR() destroynum( n2 ); \
-    destroyrat( xx );\
+#define DESTROYTAYLOR() destroyrat( xx );\
     destroyrat( thisterm );\
     destroyrat( *px );\
     trimit(&pret, precision);\
@@ -322,7 +321,7 @@ uint64_t rattoUi64(_In_ PRAT prat, uint32_t radix, int32_t precision);
 extern NUMBER _createnum(_In_ uint32_t size ); // returns an empty number structure with size digits
 extern NUMBER nRadixxtonum(_In_ NUMBER a, uint32_t radix, int32_t precision);
 extern NUMBER gcd(_In_ NUMBER a, _In_ NUMBER b );
-extern NUMBER StringToNumber(std::wstring_view numberString, uint32_t radix, int32_t precision); // takes a text representation of a number and returns a number.
+extern std::optional<NUMBER> StringToNumber(std::wstring_view numberString, uint32_t radix, int32_t precision); // takes a text representation of a number and returns a number.
 
 // takes a text representation of a number as a mantissa with sign and an exponent with sign.
 extern PRAT StringToRat(bool mantissaIsNegative, std::wstring_view mantissa, bool exponentIsNegative, std::wstring_view exponent, uint32_t radix, int32_t precision);

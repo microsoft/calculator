@@ -25,6 +25,7 @@
 #include <array>
 #include <string_view>
 #include <future>
+#include <optional>
 
 #include "winerror_cross_platform.h"
 #include "sal_cross_platform.h"
