@@ -129,6 +129,7 @@ private:
 
 private:
     void ProcessCommandWorker(OpCode wParam);
+    void ResolveHighestPrecedenceOperation();
     void HandleErrorCommand(OpCode idc);
     void HandleMaxDigitsReached();
     void DisplayNum(void);
