@@ -61,7 +61,7 @@ typedef struct _number
                     // radix being used.
     int32_t exp;       // The offset of digits from the radix point
                     // (decimal point in radix 10)
-    std::vector<MANTTYPE> mant;
+    std::vector<MANTTYPE> mant = {0};
 } NUMBER;
 
 
