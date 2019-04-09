@@ -607,11 +607,6 @@ void MainPage::OnNavItemInvoked(_In_ Microsoft::UI::Xaml::Controls::NavigationVi
     auto item = dynamic_cast<MUXC::NavigationViewItem^>(e->InvokedItemContainer);
     if (item != nullptr)
     {
-        auto selectedItem = static_cast<NavCategory^>(item->DataContext);
-
-        if (selectedItem->Mode == Model->Mode)
-        {
-            NavView->IsPaneOpen = false;
-        }
+        NavView->IsPaneOpen = false;
     }
 }
