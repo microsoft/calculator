@@ -566,7 +566,7 @@ void _dumprawrat( const wchar_t *varname, PRAT rat, wostream& out)
 //
 //  FUNCTION: _dumprawnum
 //
-//  ARGUMENTS:  const wchar *name of variable, NUMBER num, output stream out
+//  ARGUMENTS:  const wchar *name of variable, const NUMBER &num, output stream out
 //
 //  RETURN: none, prints the results of a dump of the internal structures
 //          of a NUMBER, suitable for READRAWNUM to stderr.

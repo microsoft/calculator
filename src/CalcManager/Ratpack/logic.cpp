@@ -65,7 +65,7 @@ void rshrat( PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
 }
 
 void boolrat( PRAT *pa, PRAT b, int func, uint32_t radix, int32_t precision);
-void boolnum( NUMBER *pa, NUMBER b, int func );
+void boolnum( NUMBER *pa, const NUMBER &b, int func );
 
 
 enum {
@@ -130,13 +130,13 @@ void boolrat( PRAT *pa, PRAT b, int func, uint32_t radix, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-void boolnum( NUMBER *pa, NUMBER b, int func )
+void boolnum( NUMBER *pa, const NUMBER &b, int func )
 
 {
     NUMBER c;
     NUMBER a;
     vector<MANTTYPE>::iterator pcha;
-    vector<MANTTYPE>::iterator pchb;
+    vector<MANTTYPE>::const_iterator pchb;
     vector<MANTTYPE>::iterator pchc;
     int32_t cdigits;
     int32_t mexp;

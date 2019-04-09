@@ -19,7 +19,7 @@
 
 using namespace std;
 
-void _mulnumx( NUMBER *pa, NUMBER b );
+void _mulnumx( NUMBER *pa, const NUMBER &b );
 
 //----------------------------------------------------------------------------
 //
@@ -78,13 +78,13 @@ void __inline mulnumx( NUMBER *pa, const NUMBER &b )
 //
 //----------------------------------------------------------------------------
 
-void _mulnumx( NUMBER *pa, NUMBER b )
+void _mulnumx( NUMBER *pa, const NUMBER &b )
 
 {
     NUMBER c;                    // c will contain the result.
     NUMBER a;                    // a is the dereferenced number pointer from *pa
     vector<MANTTYPE>::iterator ptra;       // ptra is an iterator pointing to the mantissa of a.
-    vector<MANTTYPE>::iterator ptrb;       // ptrb is an iterator pointing to the mantissa of b.
+    vector<MANTTYPE>::const_iterator ptrb; // ptrb is an iterator pointing to the mantissa of b.
     vector<MANTTYPE>::iterator ptrc;       // ptrc is an iterator pointing to the mantissa of c.
     vector<MANTTYPE>::iterator ptrcoffset; // ptrcoffset, is the anchor location of the next
                                            // single digit multiply partial result.
@@ -201,7 +201,7 @@ void numpowi32x( _Inout_ NUMBER *proot, _In_ int32_t power )
 
 }
 
-void _divnumx( NUMBER *pa, NUMBER b, int32_t precision);
+void _divnumx( NUMBER *pa, const NUMBER &b, int32_t precision);
 
 //----------------------------------------------------------------------------
 //
@@ -218,7 +218,7 @@ void _divnumx( NUMBER *pa, NUMBER b, int32_t precision);
 //
 //----------------------------------------------------------------------------
 
-void __inline divnumx( NUMBER *pa, NUMBER b, int32_t precision)
+void __inline divnumx( NUMBER *pa, const NUMBER &b, int32_t precision)
 
 {
     if ( b.cdigit > 1 || b.mant[0] != 1 || b.exp != 0 )
@@ -257,7 +257,7 @@ void __inline divnumx( NUMBER *pa, NUMBER b, int32_t precision)
 //
 //----------------------------------------------------------------------------
 
-void _divnumx( NUMBER *pa, NUMBER b, int32_t precision)
+void _divnumx( NUMBER *pa, const NUMBER &b, int32_t precision)
 
 {
     NUMBER a;         // a is the dereferenced number pointer from *pa
