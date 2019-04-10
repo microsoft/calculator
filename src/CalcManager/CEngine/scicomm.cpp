@@ -863,14 +863,14 @@ void CCalcEngine::DisplayAnnounceBinaryOperator()
 // we have this separate table to get its localized name and for its Inv function if it exists.
 typedef struct
 {
-    wstring degreeString;    // index of string for the unary op function. Can be empty string, in which case it same as button name
-    wstring inverseDegreeString; // index of string for Inv of unary op. Can be empty string, in case it is same as idsFunc
+    wstring degreeString; // Used by default if there are no rad or grad specific strings.
+    wstring inverseDegreeString; // Will fall back to degreeString if empty
 
-    wstring radString;    // index of string for the unary op function in rads. Can be empty string, in which case it same as button name
-    wstring inverseRadString; // index of string for Inv of unary op in rads. Can be empty string, in case it is same as idsFunc
+    wstring radString;
+    wstring inverseRadString; // Will fall back to radString if empty
 
-    wstring gradString;    // index of string for the unary op function in grads. Can be empty string, in which case it same as button name
-    wstring inverseGradString; // index of string for Inv of unary op in grads. Can be empty string, in case it is same as idsFunc
+    wstring gradString;
+    wstring inverseGradString; // Will fall back to gradString if empty
 
     bool hasAngleStrings = ((!radString.empty()) || (!inverseRadString.empty()) || (!gradString.empty()) || (!inverseGradString.empty()));
 } UFNE;
@@ -947,7 +947,7 @@ wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE
         return GetString(ids);
     }
 
-    return GetString(IdStrFromCmdId(nOpCode));
+    return OpCodeToString(nOpCode);
 }
 
 bool CCalcEngine::IsCurrentTooBigForTrig()
