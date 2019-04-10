@@ -111,6 +111,9 @@ namespace GraphControl
         void OnPointerMoved(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
         void OnPointerExited(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
         void OnPointerWheelChanged(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+        void OnPointerPressed(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+        void OnPointerReleased(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+        void OnPointerCanceled(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
         #pragma endregion
 
     private:
@@ -141,6 +144,8 @@ namespace GraphControl
         void OnItemsAdded(int index, int count);
         void OnItemsRemoved(int index, int count);
 
+        void OnGestureManipulationUpdated(Windows::UI::Input::GestureRecognizer ^sender, Windows::UI::Input::ManipulationUpdatedEventArgs ^args);
+
     private:
         DX::RenderMain^ m_renderMain = nullptr;
 
@@ -160,5 +165,7 @@ namespace GraphControl
 
         const std::unique_ptr<Graphing::IMathSolver> m_solver;
         const std::shared_ptr<Graphing::IGraph> m_graph;
+
+        Windows::UI::Input::GestureRecognizer^ m_gestureRecognizer = ref new Windows::UI::Input::GestureRecognizer();
     };
 }

@@ -7,8 +7,10 @@ using namespace GraphControl::DX;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace std;
+using namespace Windows::Devices::Input;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::System;
 using namespace Windows::UI;
 using namespace Windows::UI::Input;
 using namespace Windows::UI::Xaml;
@@ -45,6 +47,11 @@ namespace GraphControl
 
         this->Loaded += ref new RoutedEventHandler(this, &Grapher::OnLoaded);
         this->Unloaded += ref new RoutedEventHandler(this, &Grapher::OnUnloaded);
+
+        m_gestureRecognizer->GestureSettings =
+            GestureSettings::ManipulationScale;
+
+        m_gestureRecognizer->ManipulationUpdated += ref new TypedEventHandler<GestureRecognizer^, ManipulationUpdatedEventArgs^>(this, &Grapher::OnGestureManipulationUpdated);
     }
 
     void Grapher::OnLoaded(Object^ sender, RoutedEventArgs^ args)
@@ -405,6 +412,8 @@ namespace GraphControl
             PointerPoint^ currPoint = e->GetCurrentPoint(/* relativeTo */ this);
             m_renderMain->PointerLocation = currPoint->Position;
 
+            m_gestureRecognizer->ProcessMoveEvents(e->GetIntermediatePoints(/*relativeTo*/ this));
+
             e->Handled = true;
         }
     }
@@ -422,27 +431,62 @@ namespace GraphControl
     {
         PointerPoint^ currentPointer = args->GetCurrentPoint(/*relative to*/ this);
 
-        double delta = currentPointer->Properties->MouseWheelDelta;
+        VirtualKeyModifiers vkmod = args->KeyModifiers;
+        m_gestureRecognizer->ProcessMouseWheelEvent(
+            currentPointer,
+            static_cast<bool>(vkmod & VirtualKeyModifiers::Shift),
+            // Usually we would detect if Control key is pressed. Ctrl+MWHEELUP/DOWN is
+            // considered a Scale manipulation. In this case, we want a basic MWHEELUP/DOWN
+            // to trigger zoom, so we'll trick the gesture recognizer by always saying Ctrl
+            // is pressed for the MouseWheelEvent.
+            true);
+    }
 
-        // The maximum delta is 120 according to:
-        // https://docs.microsoft.com/en-us/uwp/api/windows.ui.input.pointerpointproperties.mousewheeldelta#Windows_UI_Input_PointerPointProperties_MouseWheelDelta
-        // Apply a dampening effect so that small mouse movements have a smoother zoom.
-        constexpr double scrollDamper = 0.15;
-        double scale = 1.0 + (abs(delta) / WHEEL_DELTA) * scrollDamper;
+    void Grapher::OnPointerPressed(PointerRoutedEventArgs^ e)
+	{
+        // Set the pointer capture to the element being interacted with so that only it
+        // will fire pointer-related events
+        CapturePointer(e->Pointer);
+        // Feed the current point into the gesture recognizer as a down event
+        m_gestureRecognizer->ProcessDownEvent(e->GetCurrentPoint(/*relativeTo*/ this));
+	}
 
-        // positive delta if wheel scrolled away from the user
-        if (delta >= 0)
+    void Grapher::OnPointerReleased(PointerRoutedEventArgs^ e)
+	{
+        // Feed the current point into the gesture recognizer as an up event
+        m_gestureRecognizer->ProcessUpEvent(e->GetCurrentPoint(/*relativeTo*/ this));
+        // Release the pointer
+        ReleasePointerCapture(e->Pointer);
+	}
+
+    void Grapher::OnPointerCanceled(PointerRoutedEventArgs^ e)
+    {
+        m_gestureRecognizer->CompleteGesture();
+        ReleasePointerCapture(e->Pointer);
+    }
+
+    void Grapher::OnGestureManipulationUpdated(GestureRecognizer^ sender, ManipulationUpdatedEventArgs^ args)
+    {
+        const double width = ActualWidth;
+        const double height = ActualHeight;
+
+        if (double scale = args->Delta.Scale; scale != 1.0)
         {
+            // The graphing engine interprets scale amounts as the inverse of the value retrieved
+            // from the ManipulationUpdatedEventArgs. Invert the scale amount for the engine.
             scale = 1.0 / scale;
+
+            // Add a minor amplification effect to the scale gesture.
+            constexpr double amplification = 1.05;
+            scale *= (scale > 1) ? amplification : 1.0 / amplification;
+
+            // The graphing engine interprets x,y position between the range [-1, 1].
+            // Translate the pointer position to the [-1, 1] bounds.
+            const auto& pos = args->Position;
+            double centerX = 2 * pos.X / width - 1;
+            double centerY = 1 - 2 * pos.Y / height;
+
+            ScaleRange(centerX, centerY, scale);
         }
-
-        // For scaling, the graphing engine interprets x,y position between the range [-1, 1].
-        // Translate the pointer position to the [-1, 1] bounds.
-        double centerX = (currentPointer->Position.X - ActualWidth / 2) / (ActualWidth / 2);
-        double centerY = (ActualHeight / 2 - currentPointer->Position.Y) / (ActualHeight / 2);
-
-        ScaleRange(centerX, centerY, scale);
-
-        args->Handled = true;
     }
 }
