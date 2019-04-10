@@ -463,45 +463,12 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
         }
 
-        do {
-
-            if (m_nOpCode) /* Is there a valid operation around?        */
-            {
-                /* If this is the first EQU in a string, set m_holdVal=m_currentVal */
-                /* Otherwise let m_currentVal=m_holdVal.  This keeps m_currentVal constant */
-                /* through all EQUs in a row.                     */
-                if (m_bNoPrevEqu)
-                {
-                    m_holdVal = m_currentVal;
-                }
-                else
-                {
-                    m_currentVal = m_holdVal;
-                    DisplayNum(); // to update the m_numberString
-                    m_HistoryCollector.AddBinOpToHistory(m_nOpCode, false);
-                    m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal); // Adding the repeated last op to history
-                }
-
-                // Do the current or last operation.
-                m_currentVal = DoOperation(m_nOpCode, m_currentVal, m_lastVal);
-                m_nPrevOpCode = m_nOpCode;
-                m_lastVal = m_currentVal;
-
-                /* Check for errors.  If this wasn't done, DisplayNum */
-                /* would immediately overwrite any error message.     */
-                if (!m_bError)
-                    DisplayNum();
-
-                /* No longer the first EQU.                       */
-                m_bNoPrevEqu = false;
-            }
-            else if (!m_bError)
-                DisplayNum();
-
-            if (m_precedenceOpCount == 0 || !m_fPrecedence)
-                break;
-
-            m_nOpCode = m_nPrecOp[--m_precedenceOpCount];
+        // Evaluate the precedence stack.
+        ResolveHighestPrecedenceOperation();
+        while (m_fPrecedence && m_precedenceOpCount > 0)
+        {
+            m_precedenceOpCount--;
+            m_nOpCode = m_nPrecOp[m_precedenceOpCount];
             m_lastVal = m_precedenceVals[m_precedenceOpCount];
 
             // Precedence Inversion check
@@ -514,7 +481,9 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             m_HistoryCollector.PopLastOpndStart();
 
             m_bNoPrevEqu = true;
-        } while (m_precedenceOpCount >= 0);
+
+            ResolveHighestPrecedenceOperation();
+        }
 
         if (!m_bError)
         {
@@ -787,6 +756,48 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         break;
     }
 
+}
+
+// Helper function to resolve one item on the precedence stack.
+void CCalcEngine::ResolveHighestPrecedenceOperation()
+{
+    // Is there a valid operation around?
+    if (m_nOpCode)
+    {
+        // If this is the first EQU in a string, set m_holdVal=m_currentVal 
+        // Otherwise let m_currentVal=m_holdVal.  This keeps m_currentVal constant 
+        // through all EQUs in a row.
+        if (m_bNoPrevEqu)
+        {
+            m_holdVal = m_currentVal;
+        }
+        else
+        {
+            m_currentVal = m_holdVal;
+            DisplayNum(); // to update the m_numberString
+            m_HistoryCollector.AddBinOpToHistory(m_nOpCode, false);
+            m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal); // Adding the repeated last op to history
+        }
+
+        // Do the current or last operation.
+        m_currentVal = DoOperation(m_nOpCode, m_currentVal, m_lastVal);
+        m_nPrevOpCode = m_nOpCode;
+        m_lastVal = m_currentVal;
+
+        // Check for errors.  If this wasn't done, DisplayNum
+        // would immediately overwrite any error message.
+        if (!m_bError)
+        {
+            DisplayNum();
+        }
+
+        // No longer the first EQU.
+        m_bNoPrevEqu = false;
+    }
+    else if (!m_bError)
+    {
+        DisplayNum();
+    }
 }
 
 // CheckAndAddLastBinOpToHistory
