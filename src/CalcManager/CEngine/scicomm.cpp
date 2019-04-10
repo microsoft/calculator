@@ -892,7 +892,7 @@ static const std::unordered_map<int, UFNE> unaryOperatorStringTable =
     { IDC_SQR, { SIDS_SQR } },
     { IDC_CUB, { SIDS_CUBE } },
     { IDC_FAC, { SIDS_FACT } },
-    { IDC_REC, { SIDS_RECIPROCAL } },
+    { IDC_REC, { SIDS_RECIPROC } },
     { IDC_DMS, { L"", SIDS_DEGREES } },
     { IDC_SIGN, { SIDS_NEGATE } },
     { IDC_DEGREES, { SIDS_DEGREES } }
