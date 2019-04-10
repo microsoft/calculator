@@ -13,56 +13,7 @@
 * Created: 13-Feb-2008
 *
 \****************************************************************************/
-#define IDS_FIRSTENGSTR     IDS_ENGINESTR_FIRST
-
-#define IDS_DECIMAL     4
-
-// All unary op function names for easy history reading
-// This is where the first string after all the commands in order have been placed, should be placed
-// keeping in consecutive helps us to allocate 1 string table and index them
-#define IDS_FNSZFIRST   (IDC_F -IDC_FIRSTCONTROL)+1
-
-#define IDS_FRAC        IDS_FNSZFIRST
-
-#define IDS_SIND        IDS_FNSZFIRST+1
-#define IDS_COSD        IDS_FNSZFIRST+2
-#define IDS_TAND        IDS_FNSZFIRST+3
-#define IDS_ASIND       IDS_FNSZFIRST+4
-#define IDS_ACOSD       IDS_FNSZFIRST+5
-#define IDS_ATAND       IDS_FNSZFIRST+6
-
-#define IDS_SINR        IDS_FNSZFIRST+7
-#define IDS_COSR        IDS_FNSZFIRST+8
-#define IDS_TANR        IDS_FNSZFIRST+9
-#define IDS_ASINR       IDS_FNSZFIRST+10
-#define IDS_ACOSR       IDS_FNSZFIRST+11
-#define IDS_ATANR       IDS_FNSZFIRST+12
-
-#define IDS_SING        IDS_FNSZFIRST+13
-#define IDS_COSG        IDS_FNSZFIRST+14
-#define IDS_TANG        IDS_FNSZFIRST+15
-#define IDS_ASING       IDS_FNSZFIRST+16
-#define IDS_ACOSG       IDS_FNSZFIRST+17
-#define IDS_ATANG       IDS_FNSZFIRST+18
-
-#define IDS_ASINH       IDS_FNSZFIRST+19
-#define IDS_ACOSH       IDS_FNSZFIRST+20
-#define IDS_ATANH       IDS_FNSZFIRST+21
-#define IDS_POWE        IDS_FNSZFIRST+22
-#define IDS_POW10       IDS_FNSZFIRST+23
-#define IDS_SQRT        IDS_FNSZFIRST+24
-#define IDS_SQR         IDS_FNSZFIRST+25
-#define IDS_CUBE        IDS_FNSZFIRST+26
-#define IDS_CUBERT      IDS_FNSZFIRST+27
-#define IDS_FACT        IDS_FNSZFIRST+28
-#define IDS_REC         IDS_FNSZFIRST+29
-#define IDS_DEGREES     IDS_FNSZFIRST+30
-#define IDS_NEGATE      IDS_FNSZFIRST+31
-#define IDS_RSH         IDS_FNSZFIRST+32
-
-#define IDS_FNSZLAST    IDS_RSH
-
-#define IDS_ERRORS_FIRST     IDS_FNSZLAST+1
+#define IDS_ERRORS_FIRST     99
 
 // This is the list of error strings corresponding to SCERR_DIVIDEZERO..
 
@@ -91,7 +42,7 @@
 #define IDS_ERR_INPUT_OVERFLOW   CSTRINGSENGMAX+9
 #define IDS_ERR_OUTPUT_OVERFLOW  CSTRINGSENGMAX+10
 
-
+// Resource keys for CEngineStrings.resw
 #define SIDS_PLUS_MINUS L"0"
 #define SIDS_CLEAR L"1"
 #define SIDS_CE L"2"
@@ -214,7 +165,8 @@
 #define SIDS_ERR_INPUT_OVERFLOW L"119"
 #define SIDS_ERR_OUTPUT_OVERFLOW L"120"
 
-__declspec(selectany) std::wstring g_sids[] =
+// Include the resource key ID from above into this vector to load it into memory for the engine to use
+__declspec(selectany) std::vector<std::wstring> g_sids =
 {
     std::wstring(SIDS_PLUS_MINUS),
     std::wstring(SIDS_C),
