@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -42,6 +42,7 @@ namespace
 ApplicationViewModel::ApplicationViewModel() :
     m_CalculatorViewModel(nullptr),
     m_DateCalcViewModel(nullptr),
+    m_GraphingCalcViewModel(nullptr),
     m_ConverterViewModel(nullptr),
     m_PreviousMode(ViewMode::None),
     m_mode(ViewMode::None),
@@ -131,6 +132,13 @@ void ApplicationViewModel::OnModeChanged()
             m_CalculatorViewModel = ref new StandardCalculatorViewModel();
         }
         m_CalculatorViewModel->SetCalculatorType(m_mode);
+    }
+    else if (NavCategory::IsGraphingCalculatorViewMode(m_mode))
+    {
+        if (!m_GraphingCalcViewModel)
+        {
+            m_GraphingCalcViewModel = ref new GraphingCalculatorViewModel();
+        }
     }
     else if (NavCategory::IsDateCalculatorViewMode(m_mode))
     {

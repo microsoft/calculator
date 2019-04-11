@@ -10,6 +10,9 @@
     <Filter Include="DataLoaders">
       <UniqueIdentifier>{0184f727-b8aa-4af8-a699-63f1b56e7853}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GraphingCalculator">
+      <UniqueIdentifier>{f7519cec-2ebd-432b-9d59-9647de131d50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -92,6 +95,12 @@
     </ClCompile>
     <ClCompile Include="DataLoaders\UnitConverterDataLoader.cpp">
       <Filter>DataLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphingCalculator\EquationViewModel.cpp">
+      <Filter>GraphingCalculator</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphingCalculator\GraphingCalculatorViewModel.cpp">
+      <Filter>GraphingCalculator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +221,12 @@
     </ClInclude>
     <ClInclude Include="Common\TraceActivity.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculator\EquationViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculator\GraphingCalculatorViewModel.h">
+      <Filter>GraphingCalculator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

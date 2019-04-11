@@ -154,6 +154,9 @@
                 <Border x:Name="DateCalcHolder">
                     <!-- PLACEHOLDER!!!! This is where the date calculator goes when it is delay loaded -->
                 </Border>
+                <Border x:Name="GraphingCalcHolder" Grid.Row="1">
+                    <!-- PLACEHOLDER!!!! This is where the graphing calculator goes when it is delay loaded -->
+                </Border>
                 <Border x:Name="ConverterHolder">
                     <!-- PLACEHOLDER!!!! This is where the converter goes when it is delay loaded -->
                 </Border>

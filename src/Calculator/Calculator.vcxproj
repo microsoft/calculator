@@ -130,6 +130,9 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup>
+    <Import Project="$(SolutionDir)\GraphControl\GraphingImplOverrides.props" Condition="Exists('$(SolutionDir)\GraphControl\GraphingImplOverrides.props')" />
+  </ImportGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /await /std:c++17 </AdditionalOptions>
@@ -281,6 +284,12 @@
     <ClInclude Include="Views\CalculatorStandardOperators.xaml.h">
       <DependentUpon>Views\CalculatorStandardOperators.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\EquationInputArea.xaml.h">
+      <DependentUpon>Views\GraphingCalculator\EquationInputArea.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\GraphingCalculator.xaml.h">
+      <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="Views\HistoryList.xaml.h">
       <DependentUpon>Views\HistoryList.xaml</DependentUpon>
     </ClInclude>
@@ -336,6 +345,8 @@
     </Page>
     <Page Include="Views\CalculatorStandardOperators.xaml" />
     <Page Include="Views\DelighterUnitStyles.xaml" />
+    <Page Include="Views\GraphingCalculator\EquationInputArea.xaml" />
+    <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml" />
     <Page Include="Views\HistoryList.xaml" />
     <Page Include="Views\MainPage.xaml" />
     <Page Include="Views\Memory.xaml" />
@@ -420,6 +431,12 @@
     </ClCompile>
     <ClCompile Include="Views\CalculatorStandardOperators.xaml.cpp">
       <DependentUpon>Views\CalculatorStandardOperators.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\EquationInputArea.xaml.cpp">
+      <DependentUpon>Views\GraphingCalculator\EquationInputArea.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\GraphingCalculator.xaml.cpp">
+      <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Views\HistoryList.xaml.cpp">
       <DependentUpon>Views\HistoryList.xaml</DependentUpon>
@@ -828,6 +845,9 @@
   <ItemGroup>
     <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">
       <Project>{90e9761d-9262-4773-942d-caeae75d7140}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphControl\GraphControl.vcxproj">
+      <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

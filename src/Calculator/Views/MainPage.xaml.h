@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -6,6 +6,7 @@
 #include "Views/Calculator.xaml.h"
 #include "Views/MainPage.g.h"
 #include "Views/DateCalculator.xaml.h"
+#include "Views/GraphingCalculator/GraphingCalculator.xaml.h"
 #include "Views/UnitConverter.xaml.h"
 #include "CalcViewModel/ApplicationViewModel.h"
 #include "Views/TitleBar.xaml.h"
@@ -24,9 +25,9 @@ namespace CalculatorApp
     {
     public:
         MainPage();
-        property CalculatorApp::ViewModel::ApplicationViewModel^ Model
+        property ViewModel::ApplicationViewModel^ Model
         {
-            CalculatorApp::ViewModel::ApplicationViewModel^ get(){
+            ViewModel::ApplicationViewModel^ get(){
                 return m_model;
             }
         }
@@ -36,7 +37,7 @@ namespace CalculatorApp
         void SetDefaultFocus();
         void SetHeaderAutomationName();
 
-        Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ CreateUIElementsForCategories(_In_ Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup^>^ categories);
+        Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ CreateUIElementsForCategories(_In_ Windows::Foundation::Collections::IObservableVector<Common::NavCategoryGroup^>^ categories);
 
     protected:
         void OnNavigatedTo(_In_ Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
@@ -57,13 +58,13 @@ namespace CalculatorApp
         void OnAboutFlyoutOpened(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
         void OnAboutFlyoutClosed(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
 
-        Microsoft::UI::Xaml::Controls::NavigationViewItemHeader^ CreateNavViewHeaderFromGroup(CalculatorApp::Common::NavCategoryGroup^ group);
-        Microsoft::UI::Xaml::Controls::NavigationViewItem^ CreateNavViewItemFromCategory(CalculatorApp::Common::NavCategory^ category);
+        Microsoft::UI::Xaml::Controls::NavigationViewItemHeader^ CreateNavViewHeaderFromGroup(Common::NavCategoryGroup^ group);
+        Microsoft::UI::Xaml::Controls::NavigationViewItem^ CreateNavViewItemFromCategory(Common::NavCategory^ category);
         
         Windows::Foundation::EventRegistrationToken m_fullscreenFlyoutClosedToken;
         void OnFullscreenFlyoutClosed();
         
-        void ShowHideControls(CalculatorApp::Common::ViewMode mode);
+        void ShowHideControls(Common::ViewMode mode);
         void UpdateViewState();
         void UpdatePanelViewState();
 
@@ -73,21 +74,23 @@ namespace CalculatorApp
         void PinUnpinAppBarButtonOnClicked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
 
         void EnsureCalculator();
-        void EnsureConverter();
         void EnsureDateCalculator();
+        void EnsureGraphingCalculator();
+        void EnsureConverter();
         void ShowAboutPage();
 
         void AnnounceCategoryName();
 
-        CalculatorApp::Calculator^ m_calculator;
-        CalculatorApp::UnitConverter^ m_converter;
-        CalculatorApp::DateCalculator^ m_dateCalculator;
+        Calculator^ m_calculator;
+        GraphingCalculator^ m_graphingCalculator;
+        UnitConverter^ m_converter;
+        DateCalculator^ m_dateCalculator;
         Windows::Foundation::EventRegistrationToken _windowSizeEventToken;
         Windows::Foundation::EventRegistrationToken m_hardwareButtonsBackPressedToken;
         Windows::Foundation::EventRegistrationToken m_colorValuesChangedToken;
-        CalculatorApp::ViewModel::ApplicationViewModel^ m_model;
+        ViewModel::ApplicationViewModel^ m_model;
         Windows::UI::ViewManagement::UISettings^ m_uiSettings;
 
-        std::unique_ptr<CalculatorApp::Common::TitleBarHelper> m_titleBarHelper;
+        std::unique_ptr<Common::TitleBarHelper> m_titleBarHelper;
     };
 }

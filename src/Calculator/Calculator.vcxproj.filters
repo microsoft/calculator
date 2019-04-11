@@ -218,6 +218,9 @@
     <Filter Include="Views\StateTriggers">
       <UniqueIdentifier>{0120c344-0bc0-4a1d-b82c-df7945f46189}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Views\GraphingCalculator">
+      <UniqueIdentifier>{e23e2a6e-491b-4200-9bf7-d355a1ee695b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -479,6 +482,12 @@
     </Page>
     <Page Include="Views\OperatorsPanel.xaml">
       <Filter>Views</Filter>
+    </Page>
+    <Page Include="Views\GraphingCalculator\EquationInputArea.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
+    </Page>
+    <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
     </Page>
   </ItemGroup>
   <ItemGroup>
