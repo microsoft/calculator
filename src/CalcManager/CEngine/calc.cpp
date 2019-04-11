@@ -29,8 +29,9 @@ unordered_map<wstring, wstring> CCalcEngine::s_engineStrings;
 
 void CCalcEngine::LoadEngineStrings(CalculationManager::IResourceProvider& resourceProvider)
 {
-    for (const auto& locKey : g_sids)
+    for (const auto& sid : g_sids)
     {
+        auto locKey = wstring{ sid };
         auto locString = resourceProvider.GetCEngineString(locKey);
         if (!locString.empty())
         {
