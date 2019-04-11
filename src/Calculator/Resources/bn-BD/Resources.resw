@@ -909,6 +909,14 @@
     <value>ডান বন্ধনী</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
   </data>
+  <data name="Format_OpenParenthesisCountAutomationNamePrefix" xml:space="preserve">
+    <value>বন্ধনী গণনা খুলুন %1</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific and programmer operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
+  </data>
+  <data name="NoRightParenthesisAdded_Announcement" xml:space="preserve">
+    <value>বন্ধ করার জন্য এখানে কোনো খোলা বন্ধনী নেই।</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator when the ")" button on the scientific and programmer operator keypad cannot be added to the equation. e.g. "1+)".</comment>
+  </data>
   <data name="ftoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>বৈজ্ঞানিক নোটেশন</value>
     <comment>Screen reader prompt for the Calculator F-E the scientific operator keypad</comment>
@@ -2278,7 +2286,7 @@
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
   </data>
   <data name="AboutControlCopyright" xml:space="preserve">
-    <value>© %1 Microsoft. সর্বস্বত্ব সংরক্ষিত।</value>
+    <value>© %1 Microsoft। সর্বস্বত্ব সংরক্ষিত।</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">

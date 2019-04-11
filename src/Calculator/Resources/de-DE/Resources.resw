@@ -434,7 +434,7 @@
     <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
   </data>
   <data name="MemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Arbeitsspeicher</value>
+    <value>Speicher</value>
     <comment>This is the tool tip automation name for the memory button.</comment>
   </data>
   <data name="HistoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -454,7 +454,7 @@
     <comment>This is the tool tip automation name for the Clear Memory (MC) button.</comment>
   </data>
   <data name="MemoryLabel.Text" xml:space="preserve">
-    <value>Arbeitsspeicher</value>
+    <value>Speicher</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryPivotItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -562,7 +562,7 @@
     <comment>Screen reader prompt for the history flyout</comment>
   </data>
   <data name="MemoryPane" xml:space="preserve">
-    <value>Arbeitsspeicher</value>
+    <value>Speicher</value>
     <comment>Screen reader prompt for the memory flyout</comment>
   </data>
   <data name="Format_HexButtonValue" xml:space="preserve">
@@ -606,7 +606,7 @@
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Gespeicherten Wert speichern (STRG+M)</value>
+    <value>Speicher (STRG+M)</value>
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -909,6 +909,14 @@
     <value>Schließende Klammer</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
   </data>
+  <data name="Format_OpenParenthesisCountAutomationNamePrefix" xml:space="preserve">
+    <value>Anzahl geöffneter Klammern %1</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific and programmer operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
+  </data>
+  <data name="NoRightParenthesisAdded_Announcement" xml:space="preserve">
+    <value>Es sind keine zu schließenden Klammern vorhanden.</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator when the ")" button on the scientific and programmer operator keypad cannot be added to the equation. e.g. "1+)".</comment>
+  </data>
   <data name="ftoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Wissenschaftliche Schreibweise</value>
     <comment>Screen reader prompt for the Calculator F-E the scientific operator keypad</comment>
@@ -1162,7 +1170,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Liter" xml:space="preserve">
-    <value>L</value>
+    <value>l</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Milliliter" xml:space="preserve">
@@ -1170,7 +1178,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Milliliter" xml:space="preserve">
-    <value>mL</value>
+    <value>ml</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_PintUK" xml:space="preserve">
@@ -1506,7 +1514,7 @@
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Week" xml:space="preserve">
-    <value>wo</value>
+    <value>w</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Yard" xml:space="preserve">
