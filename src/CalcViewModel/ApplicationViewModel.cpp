@@ -36,7 +36,6 @@ namespace
 {
     StringReference CategoriesPropertyName(L"Categories");
     StringReference ClearMemoryVisibilityPropertyName(L"ClearMemoryVisibility");
-    StringReference AppBarVisibilityPropertyName(L"AppBarVisibility");
 }
 
 ApplicationViewModel::ApplicationViewModel() :
