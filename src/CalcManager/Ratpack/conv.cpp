@@ -185,7 +185,7 @@ NUMBER _createnum( _In_ uint32_t size )
 {
     NUMBER num = NUMBER();
     // Fill mantissa vector with zeros
-    num.mant.insert(num.mant.end(), size - 1, 0);
+    num.mant.insert(num.mant.end(), size, 0);
     return( num );
 }
 

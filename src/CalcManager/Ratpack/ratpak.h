@@ -56,11 +56,11 @@ typedef enum eANGLE_TYPE ANGLE_TYPE;
 
 typedef struct _number
 {
-    int32_t sign;        // The sign of the mantissa, +1, or -1
-    int32_t cdigit;    // The number of digits, or what passes for digits in the
-                    // radix being used.
-    int32_t exp;       // The offset of digits from the radix point
-                    // (decimal point in radix 10)
+    int32_t sign = 1;    // The sign of the mantissa, +1, or -1
+    int32_t cdigit = 0;  // The number of digits, or what passes for digits in the
+                         // radix being used.
+    int32_t exp = 0;     // The offset of digits from the radix point
+                         // (decimal point in radix 10)
     std::vector<MANTTYPE> mant;
 } NUMBER;
 
