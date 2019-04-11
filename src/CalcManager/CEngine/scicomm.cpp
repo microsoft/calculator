@@ -861,7 +861,7 @@ void CCalcEngine::DisplayAnnounceBinaryOperator()
 // Unary operator Function Name table Element
 // since unary operators button names aren't exactly friendly for history purpose,
 // we have this separate table to get its localized name and for its Inv function if it exists.
-typedef struct
+struct FunctionNameElement
 {
     wstring degreeString; // Used by default if there are no rad or grad specific strings.
     wstring inverseDegreeString; // Will fall back to degreeString if empty
@@ -873,10 +873,10 @@ typedef struct
     wstring inverseGradString; // Will fall back to gradString if empty
 
     bool hasAngleStrings = ((!radString.empty()) || (!inverseRadString.empty()) || (!gradString.empty()) || (!inverseGradString.empty()));
-} UFNE;
+};
 
 // Table for each unary operator
-static const std::unordered_map<int, UFNE> unaryOperatorStringTable =
+static const std::unordered_map<int, FunctionNameElement> unaryOperatorStringTable =
 {
     { IDC_CHOP, { L"", SIDS_FRAC} },
 
@@ -902,51 +902,52 @@ wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE
 {
     // Try to lookup the ID in the UFNE table
     wstring ids = L"";
-    auto pair = unaryOperatorStringTable.find(nOpCode);
-    if (pair != unaryOperatorStringTable.end())
+
+    if (auto pair = unaryOperatorStringTable.find(nOpCode); pair != unaryOperatorStringTable.end())
     {
-        if (!pair->second.hasAngleStrings || ANGLE_DEG == angletype)
+        const FunctionNameElement& element = pair->second;
+        if (!element.hasAngleStrings || ANGLE_DEG == angletype)
         {
             if (fInv)
             {
-                ids = pair->second.inverseDegreeString;
+                ids = element.inverseDegreeString;
             }
 
             if (ids.empty())
             {
-                ids = pair->second.degreeString;
+                ids = element.degreeString;
             }
         }
         else if (ANGLE_RAD == angletype)
         {
             if (fInv)
             {
-                ids = pair->second.inverseRadString;
+                ids = element.inverseRadString;
             }
             if (ids.empty())
             {
-                ids = pair->second.radString;
+                ids = element.radString;
             }
         }
         else if (ANGLE_GRAD == angletype)
         {
             if (fInv)
             {
-                ids = pair->second.inverseGradString;
+                ids = element.inverseGradString;
             }
             if (ids.empty())
             {
-                ids = pair->second.gradString;
+                ids = element.gradString;
             }
         }
     }
 
-    // If we didn't find an ID in the table, use the op code.
     if (!ids.empty())
     {
         return GetString(ids);
     }
 
+    // If we didn't find an ID in the table, use the op code.
     return OpCodeToString(nOpCode);
 }
 
