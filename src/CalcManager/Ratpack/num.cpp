@@ -427,21 +427,21 @@ void _divnum( NUMBER *pa, const NUMBER &b, uint32_t radix, int32_t precision)
     while (cdigits++ < thismax && !zernum(rem))
     {
         digit = radix - 1;
-        NUMBER multiple;
-        for (const auto& num : numberList)
+        NUMBER* multiple;
+        for (auto& num : numberList)
         {
             if (!lessnum(rem, num) || !--digit)
             {
-                multiple = num;
+                multiple = &num;
                 break;
             }
         }
 
         if (digit)
         {
-            multiple.sign *= -1;
-            addnum(&rem, multiple, radix);
-            multiple.sign *= -1;
+            multiple->sign *= -1;
+            addnum(&rem, *multiple, radix);
+            multiple->sign *= -1;
         }
         rem.exp++;
         *ptrc-- = (MANTTYPE)digit;

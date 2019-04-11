@@ -657,8 +657,8 @@ void trimit( PRAT *px, int32_t precision)
     if ( !g_ftrueinfinite )
         {
         int32_t trim;
-        NUMBER pp=(*px)->pp;
-        NUMBER pq=(*px)->pq;
+        NUMBER& pp=(*px)->pp;
+        NUMBER& pq=(*px)->pq;
         trim = g_ratio * (min((pp.cdigit+pp.exp),(pq.cdigit+pq.exp))-1) - precision;
         if ( trim > g_ratio )
             {
