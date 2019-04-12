@@ -203,7 +203,7 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
     areaUnits.push_back(OrderedUnit{ UnitConverterUnits::Area_Castle, GetLocalizedStringName(L"UnitName_Castle"), GetLocalizedStringName(L"UnitAbbreviation_Castle"), 14, false, false, true });
     if (usePyeong)
     {
-        areaUnits.push_back(OrderedUnit{ UnitConverterUnits::Area_Pyeong, GetLocalizedStringName(L"UnitName_PYeong"), GetLocalizedStringName(L"UnitAbbreviation_Pyeong"), 15, false, false, false });
+        areaUnits.push_back(OrderedUnit{ UnitConverterUnits::Area_Pyeong, GetLocalizedStringName(L"UnitName_Pyeong"), GetLocalizedStringName(L"UnitAbbreviation_Pyeong"), 15, false, false, false });
     }
     unitMap.emplace(ViewMode::Area, areaUnits);
 
