@@ -38,7 +38,7 @@ namespace CalculationManager
         void ClearHistory();
         unsigned int AddItem(_In_ std::shared_ptr<HISTORYITEM> const &spHistoryItem);
         bool RemoveItem(unsigned int uIdx);
-        const size_t MaxHistorySize() const { return m_maxHistorySize; }
+        size_t MaxHistorySize() const { return m_maxHistorySize; }
         ~CalculatorHistory(void);
 
     private:
