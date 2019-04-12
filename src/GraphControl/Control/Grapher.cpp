@@ -49,7 +49,11 @@ namespace GraphControl
         this->Unloaded += ref new RoutedEventHandler(this, &Grapher::OnUnloaded);
 
         m_gestureRecognizer->GestureSettings =
-            GestureSettings::ManipulationScale;
+            GestureSettings::ManipulationTranslateX |
+            GestureSettings::ManipulationTranslateY |
+            GestureSettings::ManipulationTranslateInertia |
+            GestureSettings::ManipulationScale |
+            GestureSettings::ManipulationScaleInertia;
 
         m_gestureRecognizer->ManipulationUpdated += ref new TypedEventHandler<GestureRecognizer^, ManipulationUpdatedEventArgs^>(this, &Grapher::OnGestureManipulationUpdated);
     }
@@ -467,26 +471,50 @@ namespace GraphControl
 
     void Grapher::OnGestureManipulationUpdated(GestureRecognizer^ sender, ManipulationUpdatedEventArgs^ args)
     {
-        const double width = ActualWidth;
-        const double height = ActualHeight;
-
-        if (double scale = args->Delta.Scale; scale != 1.0)
+        if (m_graph)
         {
-            // The graphing engine interprets scale amounts as the inverse of the value retrieved
-            // from the ManipulationUpdatedEventArgs. Invert the scale amount for the engine.
-            scale = 1.0 / scale;
+            if (auto renderer = m_graph->GetRenderer())
+            {
+                const double width = ActualWidth;
+                const double height = ActualHeight;
 
-            // Add a minor amplification effect to the scale gesture.
-            constexpr double amplification = 1.05;
-            scale *= (scale > 1) ? amplification : 1.0 / amplification;
+                const auto& translation = args->Delta.Translation;;
+                double translationX = translation.X;
+                double translationY = translation.Y;
+                if (translationX != 0 || translation.Y != 0)
+                {
+                    // The graphing engine pans the graph according to a ratio for x and y.
+                    // A value of +1 means move a half screen in the positive direction for the given axis.
+                    // Convert the manipulation's translation values to ratios for the engine.
+                    translationX /= -width;
+                    translationY /= height;
 
-            // The graphing engine interprets x,y position between the range [-1, 1].
-            // Translate the pointer position to the [-1, 1] bounds.
-            const auto& pos = args->Position;
-            double centerX = 2 * pos.X / width - 1;
-            double centerY = 1 - 2 * pos.Y / height;
+                    if (FAILED(renderer->MoveRangeByRatio(translationX, translationY)))
+                    {
+                        return;
+                    }
+                }
 
-            ScaleRange(centerX, centerY, scale);
+                if (double scale = args->Delta.Scale; scale != 1.0)
+                {
+                    // The graphing engine interprets scale amounts as the inverse of the value retrieved
+                    // from the ManipulationUpdatedEventArgs. Invert the scale amount for the engine.
+                    scale = 1.0 / scale;
+
+                    // The graphing engine interprets x,y position between the range [-1, 1].
+                    // Translate the pointer position to the [-1, 1] bounds.
+                    const auto& pos = args->Position;
+                    double centerX = 2 * pos.X / width - 1;
+                    double centerY = 1 - 2 * pos.Y / height;
+
+                    if (FAILED(renderer->ScaleRange(centerX, centerY, scale)))
+                    {
+                        return;
+                    }
+                }
+
+                m_renderMain->RunRenderPass();
+            }
         }
     }
 }
