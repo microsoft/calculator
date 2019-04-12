@@ -118,18 +118,19 @@ void UnitConverterDataLoader::LoadData()
                 unordered_map<int, double> unitConversions = categoryToUnitConversionDataMap.at(categoryViewMode);
                 double unitFactor = unitConversions[unit.id];
 
-                for (auto itr = unitConversions.begin(); itr != unitConversions.end(); ++itr)
+                 for (const auto&[id, conversionFactor] : unitConversions)
                 {
-                    if (idToUnit.find(itr->first) == idToUnit.end())
+                    if (idToUnit.find(id) == idToUnit.end())
                     {
                         // Optional units will not be in idToUnit but can be in unitConversions.
                         // For optional units that did not make it to the current set of units, just continue.
                         continue;
                     }
+
                     UCM::ConversionData parsedData = { 1.0, 0.0, false };
-                    assert(itr->second > 0); // divide by zero assert
-                    parsedData.ratio = unitFactor / itr->second;
-                    conversions.insert(pair<UCM::Unit, UCM::ConversionData>(idToUnit.at(itr->first), parsedData));
+                    assert(conversionFactor > 0); // divide by zero assert
+                    parsedData.ratio = unitFactor / conversionFactor;
+                    conversions.insert(pair<UCM::Unit, UCM::ConversionData>(idToUnit.at(id), parsedData));
                 }
             }
             else

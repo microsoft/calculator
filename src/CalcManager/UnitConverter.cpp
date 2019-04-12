@@ -407,6 +407,7 @@ void UnitConverter::RestoreUserPreferences(const wstring& userPreferences)
     {
         return;
     }
+
     auto fromType = StringToUnit(outerTokens[0]);
     auto toType = StringToUnit(outerTokens[1]);
     m_currentCategory = StringToCategory(outerTokens[2]);
@@ -415,7 +416,7 @@ void UnitConverter::RestoreUserPreferences(const wstring& userPreferences)
     auto itr = m_categoryToUnits.find(m_currentCategory);
     if (itr != m_categoryToUnits.end())
     {
-        auto curUnits = itr->second;
+        const auto& curUnits = itr->second;
         if (find(curUnits.begin(), curUnits.end(), fromType) != curUnits.end())
         {
             m_fromType = fromType;
