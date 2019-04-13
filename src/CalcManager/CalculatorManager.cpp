@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -24,15 +24,15 @@ namespace CalculationManager
 {
     CalculatorManager::CalculatorManager(_In_ ICalcDisplay* displayCallback, _In_ IResourceProvider* resourceProvider) :
         m_displayCallback(displayCallback),
+        m_currentCalculatorEngine(nullptr),
         m_resourceProvider(resourceProvider),
+        m_inHistoryItemLoadMode(false),
+        m_persistedPrimaryValue(),
+        m_isExponentialFormat(false),
         m_currentDegreeMode(Command::CommandNULL),
         m_savedDegreeMode(Command::CommandDEG),
-        m_isExponentialFormat(false),
-        m_persistedPrimaryValue(),
-        m_currentCalculatorEngine(nullptr),
-        m_pStdHistory(new CalculatorHistory(CM_STD, MAX_HISTORY_ITEMS)),
-        m_pSciHistory(new CalculatorHistory(CM_SCI, MAX_HISTORY_ITEMS)),
-        m_inHistoryItemLoadMode(false)
+        m_pStdHistory(new CalculatorHistory(MAX_HISTORY_ITEMS)),
+        m_pSciHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
     {
         CCalcEngine::InitialOneTimeOnlySetup(*m_resourceProvider);
     }
@@ -212,7 +212,7 @@ namespace CalculationManager
 
     /// <summary>
     /// Send command to the Calc Engine
-    /// Cast Command Enum to WPARAM.
+    /// Cast Command Enum to OpCode.
     /// Handle special commands such as mode change and combination of two commands.
     /// </summary>
     /// <param name="command">Enum Command</command>
@@ -235,7 +235,7 @@ namespace CalculationManager
                 this->SetProgrammerMode();
                 break;
             default:
-                m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(command));
+                m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(command));
             }
 
             m_savedCommands.clear(); // Clear the previous command history
@@ -263,38 +263,38 @@ namespace CalculationManager
         switch (command)
         {
         case Command::CommandASIN:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandSIN));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandSIN));
             break;
         case Command::CommandACOS:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandCOS));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandCOS));
             break;
         case Command::CommandATAN:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandTAN));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandTAN));
             break;
         case Command::CommandPOWE:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandLN));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandLN));
             break;
         case Command::CommandASINH:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandSINH));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandSINH));
             break;
         case Command::CommandACOSH:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandCOSH));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandCOSH));
             break;
         case Command::CommandATANH:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandTANH));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandTANH));
             break;
         case Command::CommandFE:
             m_isExponentialFormat = !m_isExponentialFormat;
-            // fall through
+            [[fallthrough]];
         default:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(command));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(command));
             break;
         }
     }
@@ -308,7 +308,10 @@ namespace CalculationManager
     unsigned char CalculatorManager::MapCommandForSerialize(Command command)
     {
         unsigned int commandToSave = static_cast<unsigned int>(command);
-        commandToSave > UCHAR_MAX ? commandToSave -= UCHAR_MAX : commandToSave;
+        if (commandToSave > UCHAR_MAX)
+        {
+            commandToSave -= UCHAR_MAX;
+        }
         return static_cast<unsigned char>(commandToSave);
     }
 
@@ -360,7 +363,7 @@ namespace CalculationManager
     /// <param name = "serializedPrimaryDisplay">Serialized Rational of primary display</param>
     void CalculatorManager::DeSerializePrimaryDisplay(const vector<long> &serializedPrimaryDisplay)
     {
-        if (serializedPrimaryDisplay.size() == 0)
+        if (serializedPrimaryDisplay.empty())
         {
             return;
         }

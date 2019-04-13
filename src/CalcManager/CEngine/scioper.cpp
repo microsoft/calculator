@@ -133,7 +133,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             break;
         }
     }
-    catch (DWORD dwErrCode)
+    catch (uint32_t dwErrCode)
     {
         DisplayError(dwErrCode);
 

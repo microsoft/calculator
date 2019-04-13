@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -6,6 +6,10 @@
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
+
+// Windows headers define min/max macros.
+// Disable it for project code.
+#define NOMINMAX
 
 #include <assert.h>
 #include <windows.h>
@@ -17,6 +21,7 @@
 #include <memory>
 #include <vector>
 #include <limits>
+#include <list>
 #include <regex>
 #include <unordered_map>
 #include <intsafe.h>

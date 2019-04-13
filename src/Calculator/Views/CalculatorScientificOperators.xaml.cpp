@@ -109,7 +109,7 @@ void CalculatorScientificOperators::SetOperatorRowVisibility()
 
 void CalculatorScientificOperators::OnViewModelPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 {
-    if (e->PropertyName == CalculatorViewModelProperties::OpenParenthesisCount && closeParenthesisButton->FocusState != ::FocusState::Unfocused)
+    if (e->PropertyName == StandardCalculatorViewModel::OpenParenthesisCountPropertyName && closeParenthesisButton->FocusState != ::FocusState::Unfocused)
     {
         Model->SetOpenParenthesisCountNarratorAnnouncement();
     }

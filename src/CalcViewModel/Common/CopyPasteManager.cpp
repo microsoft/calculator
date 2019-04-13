@@ -26,6 +26,7 @@ constexpr wstring_view c_validCharacterSet{ L"0123456789()+-*/.abcdefABCDEF" };
 // [\s\x85] means white-space characters
 static const wstring c_wspc = L"[\\s\\x85]*";
 static const wstring c_wspcLParens = c_wspc + L"[(]*" + c_wspc;
+static const wstring c_wspcLParenSigned = c_wspc + L"([-+]?[(])*" + c_wspc;
 static const wstring c_wspcRParens = c_wspc + L"[)]*" + c_wspc;
 static const wstring c_signedDecFloat = L"[-+]?\\d*(\\d|[.])\\d*";
 
@@ -44,8 +45,8 @@ static const array<wregex, 1> standardModePatterns =
 };
 static const array<wregex, 2> scientificModePatterns =
 {
-    wregex(c_wspcLParens + c_signedDecFloat + c_wspcRParens),
-    wregex(c_wspcLParens + c_signedDecFloat + L"[e]([+]|[-])+\\d+" + c_wspcRParens)
+    wregex(L"(" + c_wspc + L"[-+]?)|(" + c_wspcLParenSigned + L")" + c_signedDecFloat + c_wspcRParens),
+    wregex(L"(" + c_wspc + L"[-+]?)|(" + c_wspcLParenSigned + L")" + c_signedDecFloat + L"[e]([+]|[-])+\\d+" + c_wspcRParens)
 };
 static const array<array<wregex, 5>, 4> programmerModePatterns =
 { {
@@ -402,7 +403,7 @@ pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mo
 
 wstring CopyPasteManager::SanitizeOperand(const wstring& operand)
 {
-    wchar_t unWantedChars[] = { L'\'', L'_', L'`', L'(', L')', L'-' };
+    wchar_t unWantedChars[] = { L'\'', L'_', L'`', L'(', L')', L'-', L'+' };
 
     return Utils::RemoveUnwantedCharsFromWstring(operand, unWantedChars, static_cast<int>(size(unWantedChars)));
 }

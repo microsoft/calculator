@@ -102,7 +102,7 @@ void CalculatorProgrammerRadixOperators::IsErrorVisualState::set(bool value)
 
 void CalculatorProgrammerRadixOperators::OnViewModelPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 {
-    if (e->PropertyName == CalculatorViewModelProperties::OpenParenthesisCount && closeParenthesisButton->FocusState != ::FocusState::Unfocused)
+    if (e->PropertyName == StandardCalculatorViewModel::OpenParenthesisCountPropertyName && closeParenthesisButton->FocusState != ::FocusState::Unfocused)
     {
         Model->SetOpenParenthesisCountNarratorAnnouncement();
     }

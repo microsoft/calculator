@@ -180,46 +180,30 @@
             </Setter>
         </Style>
 
-        <Style x:Key="ValueLargeStyle"
-               BasedOn="{StaticResource CalculationResultStyleL}"
+        <Style x:Key="ValueBaseStyle"
+               BasedOn="{StaticResource CalculationResultStyle}"
                TargetType="controls:CalculationResult">
             <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="VerticalContentAlignment" Value="Bottom"/>
-            <Setter Property="FontSize" Value="46"/>
-            <Setter Property="MinFontSize" Value="{ThemeResource BodyFontSize}"/>
             <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="MinFontSize" Value="{ThemeResource BodyFontSize}"/>
+        </Style>
+        <Style x:Key="ValueLargeStyle"
+               BasedOn="{StaticResource ValueBaseStyle}"
+               TargetType="controls:CalculationResult">
+            <Setter Property="MaxFontSize" Value="46"/>
             <Setter Property="Margin" Value="-2,0,0,0"/>
             <Setter Property="DisplayMargin" Value="0,0,0,12"/>
         </Style>
         <Style x:Key="ValueMediumStyle"
-               BasedOn="{StaticResource CalculationResultStyleM}"
+               BasedOn="{StaticResource ValueBaseStyle}"
                TargetType="controls:CalculationResult">
-            <Setter Property="FontSize" Value="34"/>
-            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
-            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
-            <Setter Property="MinFontSize" Value="{ThemeResource BodyFontSize}"/>
-            <Setter Property="FontWeight" Value="Light"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+            <Setter Property="MaxFontSize" Value="34"/>
             <Setter Property="Margin" Value="0,0,0,0"/>
             <Setter Property="DisplayMargin" Value="0,0,0,4"/>
         </Style>
-        <Style x:Key="ValueSmallStyle"
-               BasedOn="{StaticResource CalculationResultStyleS}"
-               TargetType="controls:CalculationResult">
-            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
-            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="MinFontSize" Value="{ThemeResource BodyFontSize}"/>
-            <Setter Property="FontWeight" Value="Light"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
-            <Setter Property="Margin" Value="0,0,0,0"/>
-            <Setter Property="DisplayMargin" Value="0,0,0,4"/>
-        </Style>
-
         <Style x:Key="CurrencySymbolBaseStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Light"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -459,8 +443,8 @@
                 <VisualState x:Name="CurrencySymbolLeftState"/>
                 <VisualState x:Name="CurrencySymbolRightState">
                     <VisualState.Setters>
-                        <Setter Target="Value1Container.Padding" Value="0,0,12,0"/>
-                        <Setter Target="Value2Container.Padding" Value="0,0,12,0"/>
+                        <Setter Target="CurrencySymbol1Block.Padding" Value="0,0,12,0"/>
+                        <Setter Target="CurrencySymbol2Block.Padding" Value="0,0,12,0"/>
                         <Setter Target="CurrencySymbol1Block.(Grid.Column)" Value="2"/>
                         <Setter Target="CurrencySymbol2Block.(Grid.Column)" Value="2"/>
                     </VisualState.Setters>
@@ -492,7 +476,6 @@
         <Grid x:Name="Value1Container"
               Grid.Row="1"
               Grid.Column="1"
-              Padding="12,0,0,0"
               HorizontalAlignment="Left"
               Style="{ThemeResource ValueContainerStyle}"
               FlowDirection="{x:Bind LayoutDirection}"
@@ -504,6 +487,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="CurrencySymbol1Block"
                        Grid.Column="0"
+                       Padding="12,0,0,0"
                        Style="{ThemeResource CurrencySymbolMediumStyle}"
                        AutomationProperties.AccessibilityView="Raw"
                        Text="{x:Bind Model.CurrencySymbol1, Mode=OneWay}"
@@ -544,7 +528,6 @@
         <Grid x:Name="Value2Container"
               Grid.Row="3"
               Grid.Column="1"
-              Padding="12,0,0,0"
               HorizontalAlignment="Left"
               Style="{ThemeResource ValueContainerStyle}"
               FlowDirection="{x:Bind LayoutDirection}"
@@ -556,6 +539,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="CurrencySymbol2Block"
                        Grid.Column="0"
+                       Padding="12,0,0,0"
                        Style="{ThemeResource CurrencySymbolMediumStyle}"
                        AutomationProperties.AccessibilityView="Raw"
                        Text="{x:Bind Model.CurrencySymbol2, Mode=OneWay}"
@@ -593,15 +577,20 @@
                   TabIndex="4"
                   Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
 
-        <Grid x:Name="SupplementaryResultsPanelInGrid"
-              Grid.Row="5"
-              Grid.Column="1"
-              Margin="12,0,12,0"
-              FlowDirection="{x:Bind LayoutDirection}"
-              Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+        <StackPanel x:Name="SupplementaryResultsPanelInGrid"
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    MinHeight="48"
+                    Margin="12,0,6,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    FlowDirection="{x:Bind LayoutDirection}"
+                    SizeChanged="SupplementaryResultsPanelInGrid_SizeChanged"
+                    Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
             <local:SupplementaryResults x:Name="SupplementaryResults"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
+                                        Results="{x:Bind Model.SupplementaryResults, Mode=OneWay}"
                                         Visibility="{x:Bind Model.SupplementaryVisibility, Mode=OneWay}"/>
             <StackPanel Visibility="{x:Bind Model.IsCurrencyCurrentCategory, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <!-- Currency Ratio Equality -->
@@ -651,7 +640,7 @@
                     </TextBlock>
                 </ContentControl>
             </StackPanel>
-        </Grid>
+        </StackPanel>
 
         <Grid x:Name="ConverterNumPad"
               Grid.Row="6"

@@ -8,6 +8,7 @@
 #include "CalcViewModel/Common/LocalizationStringUtil.h"
 #include "CalcViewModel/Common/TraceLogger.h"
 
+using namespace std;
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace Platform;
@@ -18,6 +19,10 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Data;
+
+#ifndef BUILD_YEAR
+#define BUILD_YEAR 2019
+#endif
 
 AboutFlyout::AboutFlyout()
 {
@@ -31,6 +36,10 @@ AboutFlyout::AboutFlyout()
     this->SetVersionString();
 
     Header->Text = resourceLoader.GetResourceString("AboutButton/Content");
+
+    auto copyrightText = LocalizationStringUtil::GetLocalizedString(resourceLoader.GetResourceString("AboutControlCopyright")->Data(), to_wstring(BUILD_YEAR).c_str());
+    AboutControlCopyrightRun->Text = ref new String(copyrightText.c_str());
+
 }
 
 void AboutFlyout::FeedbackButton_Click(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
