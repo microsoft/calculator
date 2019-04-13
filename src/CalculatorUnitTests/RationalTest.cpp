@@ -104,7 +104,7 @@ namespace CalculatorEngineTests
             VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"-0.32");
         }
 
-        TEST_METHOD(TestRemainerOperandsNotModified)
+        TEST_METHOD(TestRemainderOperandsNotModified)
         {
             //Verify results but also check that operands are not modified
             Rational rat25(25);
@@ -129,7 +129,7 @@ namespace CalculatorEngineTests
             VERIFY_ARE_EQUAL(rat4, 4);
         }
 
-        TEST_METHOD(TestRemainerInteger)
+        TEST_METHOD(TestRemainderInteger)
         {
             // Check with integers
             auto res = Rational(426) % Rational(56478);
@@ -148,7 +148,7 @@ namespace CalculatorEngineTests
             VERIFY_ARE_EQUAL(res, 0);
         }
 
-        TEST_METHOD(TestRemainerZero)
+        TEST_METHOD(TestRemainderZero)
         {
             // Test with Zero
             auto res = Rational(0) % Rational(3654);
@@ -193,7 +193,7 @@ namespace CalculatorEngineTests
             }
         }
 
-        TEST_METHOD(TestRemainerRational)
+        TEST_METHOD(TestRemainderRational)
         {
             //Test with rational numbers
             auto res = Rational(Number(1, 0, { 250 }), Number(1, 0, { 100 })) % Rational(89);
@@ -211,7 +211,6 @@ namespace CalculatorEngineTests
             res = Rational(Number(1, 0, { 1000 }), Number(1, 0, { 3 })) % Rational(1);
             VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"0.33333333");
             res = Rational(Number(1, 0, { 1000 }), Number(1, 0, { 3 })) % Rational(-10);
-            auto sdsdas = res.ToString(10, FMT_FLOAT, 8);
             VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"3.3333333");
             res = Rational(Number(-1, 0, { 1000 }), Number(1, 0, { 3 })) % Rational(-10);
             VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"-3.3333333");
