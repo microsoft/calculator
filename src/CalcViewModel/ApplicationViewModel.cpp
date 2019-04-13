@@ -189,7 +189,7 @@ void ApplicationViewModel::OnPasteCommand(Object^ parameter)
     {
         ConverterViewModel->OnPasteCommand(parameter);
     }
-    else  if(NavCategory::IsCalculatorViewMode(m_mode))
+    else if (NavCategory::IsCalculatorViewMode(m_mode))
     {
         CalculatorViewModel->OnPasteCommand(parameter);
     }
