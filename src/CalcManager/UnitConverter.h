@@ -220,6 +220,8 @@ namespace UnitConversionManager
         void SetViewModelCallback(_In_ const std::shared_ptr<IUnitConverterVMCallback>& newCallback) override;
         void SetViewModelCurrencyCallback(_In_ const std::shared_ptr<IViewModelCurrencyCallback>& newCallback) override;
         concurrency::task<std::pair<bool, std::wstring>> RefreshCurrencyRatios() override;
+        void Calculate() override;
+        void ResetCategoriesAndRatios() override;
         // IUnitConverter
 
         static std::vector<std::wstring> StringToVector(const std::wstring& w, const wchar_t * delimiter, bool addRemainder = false);
@@ -230,9 +232,7 @@ namespace UnitConversionManager
         bool CheckLoad();
         double Convert(double value, ConversionData conversionData);
         std::vector<std::tuple<std::wstring, Unit>> CalculateSuggested();
-        void ResetCategoriesAndRatios();
         void ClearValues();
-        void Calculate();
         void TrimString(std::wstring& input);
         void InitializeSelectedUnits();
         std::wstring RoundSignificant(double num, int numSignificant);
