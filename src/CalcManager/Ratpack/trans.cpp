@@ -47,8 +47,8 @@ void scalerat( _Inout_ PRAT *pa, ANGLE_TYPE angletype, uint32_t radix, int32_t p
 //  EXPLANATION: This uses Taylor series
 //
 //    n
-//   ___          2j+1  
-//   \  ]   j    X     
+//   ___          2j+1
+//   \  ]   j    X
 //    \   -1  * ---------
 //    /          (2j+1)!
 //   /__]
@@ -73,7 +73,7 @@ void _sinrat( PRAT *px, int32_t precision)
 {
     CREATETAYLOR();
 
-    DUPRAT(pret,*px); 
+    DUPRAT(pret,*px);
     DUPRAT(thisterm,*px);
 
     DUPNUM(n2,num_one);
@@ -84,11 +84,11 @@ void _sinrat( PRAT *px, int32_t precision)
         } while ( !SMALL_ENOUGH_RAT( thisterm, precision) );
 
     DESTROYTAYLOR();
-    
-    // Since *px might be epsilon above 1 or below -1, due to TRIMIT we need 
+
+    // Since *px might be epsilon above 1 or below -1, due to TRIMIT we need
     // this trick here.
     inbetween(px, rat_one, precision);
-    
+
     // Since *px might be epsilon near zero we must set it to zero.
     if ( rat_le(*px, rat_smallest, precision) && rat_ge(*px, rat_negsmallest, precision) )
         {
@@ -166,14 +166,14 @@ void _cosrat( PRAT *px, uint32_t radix, int32_t precision)
     CREATETAYLOR();
 
     destroynum(pret->pp);
-    destroynum(pret->pq);    
+    destroynum(pret->pq);
 
-    pret->pp=longtonum( 1L, radix);
-    pret->pq=longtonum( 1L, radix);
+    pret->pp=i32tonum( 1L, radix);
+    pret->pq=i32tonum( 1L, radix);
 
     DUPRAT(thisterm,pret)
-    
-    n2=longtonum(0L, radix);
+
+    n2=i32tonum(0L, radix);
     xx->pp->sign *= -1;
 
     do    {
@@ -181,7 +181,7 @@ void _cosrat( PRAT *px, uint32_t radix, int32_t precision)
         } while ( !SMALL_ENOUGH_RAT( thisterm, precision) );
 
     DESTROYTAYLOR();
-    // Since *px might be epsilon above 1 or below -1, due to TRIMIT we need 
+    // Since *px might be epsilon above 1 or below -1, due to TRIMIT we need
     // this trick here.
     inbetween(px, rat_one, precision);
     // Since *px might be epsilon near zero we must set it to zero.

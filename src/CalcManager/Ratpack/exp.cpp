@@ -46,11 +46,11 @@ void _exprat( PRAT *px, int32_t precision)
 {
     CREATETAYLOR();
 
-    addnum(&(pret->pp),num_one, BASEX); 
-    addnum(&(pret->pq),num_one, BASEX); 
+    addnum(&(pret->pp),num_one, BASEX);
+    addnum(&(pret->pq),num_one, BASEX);
     DUPRAT(thisterm,pret);
 
-    n2=longtonum(0L, BASEX);
+    n2=i32tonum(0L, BASEX);
 
     do    {
         NEXTTERM(*px, INC(n2) DIVNUM(n2), precision);
@@ -64,7 +64,7 @@ void exprat( PRAT *px, uint32_t radix, int32_t precision)
 {
     PRAT pwr= nullptr;
     PRAT pint= nullptr;
-    long intpwr;
+    int32_t intpwr;
 
     if ( rat_gt( *px, rat_max_exp, precision) || rat_lt( *px, rat_min_exp, precision) )
         {
@@ -77,11 +77,11 @@ void exprat( PRAT *px, uint32_t radix, int32_t precision)
 
     intrat(&pint, radix, precision);
 
-    intpwr = rattolong(pint, radix, precision);
-    ratpowlong( &pwr, intpwr, precision);
+    intpwr = rattoi32(pint, radix, precision);
+    ratpowi32( &pwr, intpwr, precision);
 
     subrat(px, pint, precision);
-    
+
     // It just so happens to be an integral power of e.
     if ( rat_gt( *px, rat_negsmallest, precision) && rat_lt( *px, rat_smallest, precision) )
         {
@@ -131,7 +131,7 @@ void _lograt( PRAT *px, int32_t precision)
     CREATETAYLOR();
 
     createrat(thisterm);
-    
+
     // sub one from x
     (*px)->pq->sign *= -1;
     addnum(&((*px)->pp),(*px)->pq, BASEX);
@@ -140,7 +140,7 @@ void _lograt( PRAT *px, int32_t precision)
     DUPRAT(pret,*px);
     DUPRAT(thisterm,*px);
 
-    n2=longtonum(1L, BASEX);
+    n2=i32tonum(1L, BASEX);
     (*px)->pp->sign *= -1;
 
     do    {
@@ -158,14 +158,14 @@ void lograt( PRAT *px, int32_t precision)
     bool fneglog;
     PRAT pwr = nullptr;            // pwr is the large scaling factor.
     PRAT offset = nullptr;        // offset is the incremental scaling factor.
-    
-    
+
+
     // Check for someone taking the log of zero or a negative number.
     if ( rat_le( *px, rat_zero, precision) )
         {
         throw( CALC_E_DOMAIN );
         }
-    
+
     // Get number > 1, for scaling
     fneglog = rat_lt( *px, rat_one, precision);
     if ( fneglog )
@@ -176,17 +176,17 @@ void lograt( PRAT *px, int32_t precision)
         (*px)->pp = (*px)->pq;
         (*px)->pq = pnumtemp;
         }
-    
+
     // Scale the number within BASEX factor of 1, for the large scale.
     // log(x*2^(BASEXPWR*k)) = BASEXPWR*k*log(2)+log(x)
     if ( LOGRAT2(*px) > 1 )
         {
-        // Take advantage of px's base BASEX to scale quickly down to 
+        // Take advantage of px's base BASEX to scale quickly down to
         // a reasonable range.
-        long intpwr;
+        int32_t intpwr;
         intpwr=LOGRAT2(*px)-1;
         (*px)->pq->exp += intpwr;
-        pwr=longtorat(intpwr*BASEXPWR);
+        pwr=i32torat(intpwr*BASEXPWR);
         mulrat(&pwr, ln_two, precision);
         // ln(x+e)-ln(x) looks close to e when x is close to one using some
         // expansions.  This means we can trim past precision digits+1.
@@ -206,17 +206,17 @@ void lograt( PRAT *px, int32_t precision)
         }
 
     _lograt(px, precision);
-    
+
     // Add the large and small scaling factors, take into account
     // small scaling was done in e_to_one_half chunks.
     divrat(&offset, rat_two, precision);
     addrat(&pwr, offset, precision);
-    
+
     // And add the resulting scaling factor to the answer.
     addrat(px, pwr, precision);
 
     trimit(px, precision);
-    
+
     // If number started out < 1 rescale answer to negative.
     if ( fneglog )
         {
@@ -224,9 +224,9 @@ void lograt( PRAT *px, int32_t precision)
         }
 
     destroyrat(offset);
-    destroyrat(pwr);    
+    destroyrat(pwr);
 }
-    
+
 void log10rat( PRAT *px, int32_t precision)
 
 {
@@ -235,7 +235,7 @@ void log10rat( PRAT *px, int32_t precision)
 }
 
 //
-// return if the given x is even number. The assumption here is its denominator is 1 and we are testing the numerator is 
+// return if the given x is even number. The assumption here is its denominator is 1 and we are testing the numerator is
 // even or not
 bool IsEven(PRAT x, uint32_t radix, int32_t precision)
 {
@@ -309,7 +309,7 @@ void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precis
 
     // Calculate the following use the Powers of Powers rule:
     // px ^ (yNum/yDenom) == px ^ yNum ^ (1/yDenom)
-    // 1. For px ^ yNum, we call powratcomp directly which will call ratpowlong
+    // 1. For px ^ yNum, we call powratcomp directly which will call ratpowi32
     //    and store the result in pxPowNum
     // 2. For pxPowNum ^ (1/yDenom), we call powratcomp
     // 3. Validate the result of 2 by adding/subtracting 0.5, flooring and call powratcomp with yDenom
@@ -318,7 +318,7 @@ void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precis
     // 1. Initialize result.
     PRAT pxPow = nullptr;
     DUPRAT(pxPow, *px);
-    
+
     // 2. Calculate pxPow = px ^ yNumerator
     // if yNumerator is not 1
     if (!rat_equ(yNumerator, rat_one, precision))
@@ -341,7 +341,7 @@ void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precis
         PRAT originalResult = nullptr;
         DUPRAT(originalResult, pxPow);
         powratcomp(&originalResult, oneoveryDenom, radix, precision);
-                
+
         // ##################################
         // Round the originalResult to roundedResult
         // ##################################
@@ -375,7 +375,7 @@ void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precis
         else
         {
             DUPRAT(*px, originalResult);
-        }        
+        }
 
         destroyrat(oneoveryDenom);
         destroyrat(originalResult);
@@ -408,7 +408,7 @@ void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precis
 //---------------------------------------------------------------------------
 void powratcomp(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
 {
-    long sign = ((*px)->pp->sign * (*px)->pq->sign);
+    int32_t sign = ((*px)->pp->sign * (*px)->pq->sign);
 
     // Take the absolute value
     (*px)->pp->sign = 1;
@@ -429,7 +429,7 @@ void powratcomp(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
             sign = 1;
             }
         }
-    else 
+    else
         {
         PRAT pxint= nullptr;
         DUPRAT(pxint,*px);
@@ -451,12 +451,12 @@ void powratcomp(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
             fracrat(&podd, radix, precision);
             if ( rat_gt( podd, rat_negsmallest, precision) && rat_lt( podd, rat_smallest, precision) )
                 {
-                // If power is an integer let ratpowlong deal with it.
+                // If power is an integer let ratpowi32 deal with it.
                 PRAT iy = nullptr;
-                long inty;
+                int32_t inty;
                 DUPRAT(iy,y);
                 subrat(&iy, podd, precision);
-                inty = rattolong(iy, radix, precision);
+                inty = rattoi32(iy, radix, precision);
 
                 PRAT plnx = nullptr;
                 DUPRAT(plnx,*px);
@@ -472,7 +472,7 @@ void powratcomp(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
                     throw( CALC_E_DOMAIN );
                     }
                 destroyrat(plnx);
-                ratpowlong(px, inty, precision);
+                ratpowi32(px, inty, precision);
                 if ( ( inty & 1 ) == 0 )
                     {
                     sign=1;
@@ -491,7 +491,7 @@ void powratcomp(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
                     PRAT pNumerator = nullptr;
                     PRAT pDenominator = nullptr;
                     bool fBadExponent = false;
-                    
+
                     // Get the numbers in arbitrary precision rational number format
                     DUPRAT(pNumerator, rat_zero); // pNumerator->pq is 1 one
                     DUPRAT(pDenominator, rat_zero); // pDenominator->pq is 1 one
@@ -516,7 +516,7 @@ void powratcomp(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
                         }
                     destroyrat(pNumerator);
                     destroyrat(pDenominator);
-                    
+
                     if (fBadExponent)
                         {
                         throw( CALC_E_DOMAIN );

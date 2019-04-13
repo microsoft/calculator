@@ -3,13 +3,15 @@
 
 #pragma once
 
+#include "Ratpack/CalcErr.h"
+
 template <typename TType>
-class CalculatorVector 
+class CalculatorVector
 {
 public:
-    HRESULT GetAt(_In_opt_ unsigned int index, _Out_ TType *item)
+    ResultCode GetAt(_In_opt_ unsigned int index, _Out_ TType *item)
     {
-        HRESULT hr = S_OK;
+        ResultCode hr = S_OK;
         try
         {
             *item = m_vector.at(index);
@@ -21,15 +23,15 @@ public:
         return hr;
     }
 
-    HRESULT GetSize(_Out_ unsigned int *size)
+    ResultCode GetSize(_Out_ unsigned int *size)
     {
         *size = static_cast<unsigned>(m_vector.size());
         return S_OK;
     }
 
-    HRESULT SetAt(_In_ unsigned int index, _In_opt_ TType item)
+    ResultCode SetAt(_In_ unsigned int index, _In_opt_ TType item)
     {
-        HRESULT hr = S_OK;
+        ResultCode hr = S_OK;
         try
         {
             m_vector[index] = item;
@@ -41,9 +43,9 @@ public:
         return hr;
     }
 
-    HRESULT RemoveAt(_In_ unsigned int index)
+    ResultCode RemoveAt(_In_ unsigned int index)
     {
-        HRESULT hr = S_OK;
+        ResultCode hr = S_OK;
         if (index < m_vector.size())
         {
             m_vector.erase(m_vector.begin() + index);
@@ -55,9 +57,9 @@ public:
         return hr;
     }
 
-    HRESULT InsertAt(_In_ unsigned int index, _In_ TType item)
+    ResultCode InsertAt(_In_ unsigned int index, _In_ TType item)
     {
-        HRESULT hr = S_OK;
+        ResultCode hr = S_OK;
         try
         {
             auto iter = m_vector.begin() + index;
@@ -70,9 +72,9 @@ public:
         return hr;
     }
 
-    HRESULT Truncate(_In_ unsigned int index)
+    ResultCode Truncate(_In_ unsigned int index)
     {
-        HRESULT hr = S_OK;
+        ResultCode hr = S_OK;
         if (index < m_vector.size())
         {
             auto startIter = m_vector.begin() + index;
@@ -85,9 +87,9 @@ public:
         return hr;
     }
 
-    HRESULT Append(_In_opt_ TType item)
+    ResultCode Append(_In_opt_ TType item)
     {
-        HRESULT hr = S_OK;
+        ResultCode hr = S_OK;
         try
         {
             m_vector.push_back(item);
@@ -99,21 +101,21 @@ public:
         return hr;
     }
 
-    HRESULT RemoveAtEnd()
+    ResultCode RemoveAtEnd()
     {
         m_vector.erase(--(m_vector.end()));
         return S_OK;
     }
 
-    HRESULT Clear()
+    ResultCode Clear()
     {
         m_vector.clear();
         return S_OK;
     }
 
-    HRESULT GetString(_Out_ std::wstring* expression)
+    ResultCode GetString(_Out_ std::wstring* expression)
     {
-        HRESULT hr = S_OK;
+        ResultCode hr = S_OK;
         unsigned int nTokens = 0;
         std::pair <std::wstring, int> currentPair;
         hr = this->GetSize(&nTokens);
@@ -144,7 +146,7 @@ public:
         return hr;
     }
 
-    HRESULT GetExpressionSuffix(_Out_ std::wstring* suffix)
+    ResultCode GetExpressionSuffix(_Out_ std::wstring* suffix)
     {
         *suffix = L" =";
         return S_OK;

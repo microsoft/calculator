@@ -7,8 +7,7 @@
 using namespace std;
 using namespace CalculationManager;
 
-CalculatorHistory::CalculatorHistory(CALCULATOR_MODE eMode, size_t maxSize) :
-    m_mode(eMode),
+CalculatorHistory::CalculatorHistory(size_t maxSize) :
     m_maxHistorySize(maxSize)
 {}
 
@@ -23,7 +22,7 @@ unsigned int CalculatorHistory::AddToHistory(_In_ shared_ptr<CalculatorVector <p
 
     // to be changed when pszexp is back
     tokens->GetString(&generatedExpression);
-    // Prefixing and suffixing the special Unicode markers to ensure that the expression 
+    // Prefixing and suffixing the special Unicode markers to ensure that the expression
     // in the history doesn't get broken for RTL languages
     spHistoryItem->historyItemVector.expression = L'\u202d' + generatedExpression + L'\u202c';
     spHistoryItem->historyItemVector.result = wstring(result);
@@ -35,15 +34,13 @@ unsigned int CalculatorHistory::AddToHistory(_In_ shared_ptr<CalculatorVector <p
 
 unsigned int CalculatorHistory::AddItem(_In_ shared_ptr<HISTORYITEM> const &spHistoryItem)
 {
-    int lastIndex;
-
     if (m_historyItems.size() >= m_maxHistorySize)
     {
         m_historyItems.erase(m_historyItems.begin());
     }
 
     m_historyItems.push_back(spHistoryItem);
-    lastIndex = static_cast<unsigned>(m_historyItems.size() - 1);
+    unsigned int lastIndex = static_cast<unsigned>(m_historyItems.size() - 1);
     return lastIndex;
 }
 

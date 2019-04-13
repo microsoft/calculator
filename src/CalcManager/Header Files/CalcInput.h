@@ -6,7 +6,7 @@
 #include "Rational.h"
 
 // Space to hold enough digits for a quadword binary number (64) plus digit separator strings for that number (20)
-constexpr int MAX_STRLEN = 84; 
+constexpr int MAX_STRLEN = 84;
 
 namespace CalcEngine
 {
@@ -47,7 +47,7 @@ namespace CalcEngine
 
         void Clear();
         bool TryToggleSign(bool isIntegerMode, std::wstring_view maxNumStr);
-        bool TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, std::wstring_view maxNumStr, long wordBitWidth, int maxDigits);
+        bool TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, std::wstring_view maxNumStr, int32_t wordBitWidth, int maxDigits);
         bool TryAddDecimalPt();
         bool HasDecimalPt();
         bool TryBeginExponent();

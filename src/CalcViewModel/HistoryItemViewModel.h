@@ -17,18 +17,18 @@ namespace CalculatorApp
         internal:
 
             HistoryItemViewModel(Platform::String^ expression,
-                Platform::String^ result, 
+                Platform::String^ result,
                 _In_ std::shared_ptr<CalculatorVector <std::pair<std::wstring, int>>> const &spTokens,
                 _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &spCommands);
 
             std::shared_ptr<CalculatorVector <std::pair<std::wstring, int>>> const& GetTokens()
             {
-                return m_spTokens; 
+                return m_spTokens;
             }
 
             std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& GetCommands()
-            { 
-                return m_spCommands; 
+            {
+                return m_spCommands;
             }
 
         public:

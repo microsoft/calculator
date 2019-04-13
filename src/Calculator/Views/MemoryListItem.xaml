@@ -56,9 +56,11 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock Margin="0,2,14,0"
+                       HorizontalAlignment="Right"
                        Style="{ThemeResource TitleTextBlockStyle}"
                        FontWeight="SemiBold"
                        FlowDirection="LeftToRight"
+                       IsTextSelectionEnabled="True"
                        Text="{x:Bind Model.Value, Mode=OneWay}"
                        TextAlignment="Right"
                        TextReadingOrder="DetectFromContent"

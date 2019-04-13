@@ -11,6 +11,8 @@
              x:Name="ControlRoot"
              d:DesignHeight="400"
              d:DesignWidth="315"
+             Loaded="OnLoaded"
+             Unloaded="OnUnloaded"
              mc:Ignorable="d">
     <UserControl.Resources>
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>

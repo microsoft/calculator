@@ -82,7 +82,7 @@ namespace CalculatorApp
         assert(frame->BackStackDepth == 0);
         m_frame = frame;
     }
-    
+
     void WindowFrameService::RegisterOnWindowClosingHandler(function<void()> onWindowClosingHandler)
     {
         m_onWindowClosingHandlers.push_back(onWindowClosingHandler);
