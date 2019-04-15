@@ -924,8 +924,8 @@ void UnitConverter::InitializeSelectedUnits()
     {
         // Units may already have been initialized through UnitConverter::RestoreUserPreferences().
         // Check if they have been, and if so, do not override restored units.
-        bool isFromUnitValid = find(curUnits.begin(), curUnits.end(), m_fromType) != curUnits.end();
-        bool isToUnitValid = find(curUnits.begin(), curUnits.end(), m_toType) != curUnits.end();
+        bool isFromUnitValid = m_fromType != EMPTY_UNIT && find(curUnits.begin(), curUnits.end(), m_fromType) != curUnits.end();
+        bool isToUnitValid = m_toType != EMPTY_UNIT && find(curUnits.begin(), curUnits.end(), m_toType) != curUnits.end();
 
         if (isFromUnitValid && isToUnitValid)
         {
