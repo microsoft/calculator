@@ -18,23 +18,31 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 
-namespace GraphControl
+namespace
 {
     constexpr auto s_defaultStyleKey = L"GraphControl.Grapher";
     constexpr auto s_templateKey_SwapChainPanel = L"GraphSurface";
 
-    DependencyProperty^ Grapher::s_equationTemplateProperty;
     constexpr auto s_propertyName_EquationTemplate = L"EquationTemplate";
-
-    DependencyProperty^ Grapher::s_equationsProperty;
     constexpr auto s_propertyName_Equations = L"Equations";
-
-    DependencyProperty^ Grapher::s_equationsSourceProperty;
     constexpr auto s_propertyName_EquationsSource = L"EquationsSource";
-
-    DependencyProperty^ Grapher::s_forceProportionalAxesTemplateProperty;
     constexpr auto s_propertyName_ForceProportionalAxes = L"ForceProportionalAxes";
 
+    // Helper function for converting a pointer position to a position that the graphing engine will understand.
+    // posX/posY are the pointer position elements and width,height are the dimensions of the graph surface.
+    __inline pair<double, double> PointerPositionToGraphPosition(double posX, double posY, double width, double height)
+    {
+        return make_pair(2 * posX / width - 1, 1 - 2 * posY / height);
+    }
+}
+
+namespace GraphControl
+{
+    DependencyProperty^ Grapher::s_equationTemplateProperty;
+    DependencyProperty^ Grapher::s_equationsProperty;
+    DependencyProperty^ Grapher::s_equationsSourceProperty;
+    DependencyProperty^ Grapher::s_forceProportionalAxesTemplateProperty;
+    
     Grapher::Grapher()
         : m_solver{ IMathSolver::CreateMathSolver() }
         , m_graph{ m_solver->CreateGrapher() }
@@ -48,14 +56,12 @@ namespace GraphControl
         this->Loaded += ref new RoutedEventHandler(this, &Grapher::OnLoaded);
         this->Unloaded += ref new RoutedEventHandler(this, &Grapher::OnUnloaded);
 
-        m_gestureRecognizer->GestureSettings =
-            GestureSettings::ManipulationTranslateX |
-            GestureSettings::ManipulationTranslateY |
-            GestureSettings::ManipulationTranslateInertia |
-            GestureSettings::ManipulationScale |
-            GestureSettings::ManipulationScaleInertia;
-
-        m_gestureRecognizer->ManipulationUpdated += ref new TypedEventHandler<GestureRecognizer^, ManipulationUpdatedEventArgs^>(this, &Grapher::OnGestureManipulationUpdated);
+        this->ManipulationMode =
+            ManipulationModes::TranslateX |
+            ManipulationModes::TranslateY |
+            ManipulationModes::TranslateInertia |
+            ManipulationModes::Scale |
+            ManipulationModes::ScaleInertia;
     }
 
     void Grapher::OnLoaded(Object^ sender, RoutedEventArgs^ args)
@@ -416,8 +422,6 @@ namespace GraphControl
             PointerPoint^ currPoint = e->GetCurrentPoint(/* relativeTo */ this);
             m_renderMain->PointerLocation = currPoint->Position;
 
-            m_gestureRecognizer->ProcessMoveEvents(e->GetIntermediatePoints(/*relativeTo*/ this));
-
             e->Handled = true;
         }
     }
@@ -435,15 +439,28 @@ namespace GraphControl
     {
         PointerPoint^ currentPointer = args->GetCurrentPoint(/*relative to*/ this);
 
-        VirtualKeyModifiers vkmod = args->KeyModifiers;
-        m_gestureRecognizer->ProcessMouseWheelEvent(
-            currentPointer,
-            static_cast<bool>(vkmod & VirtualKeyModifiers::Shift),
-            // Usually we would detect if Control key is pressed. Ctrl+MWHEELUP/DOWN is
-            // considered a Scale manipulation. In this case, we want a basic MWHEELUP/DOWN
-            // to trigger zoom, so we'll trick the gesture recognizer by always saying Ctrl
-            // is pressed for the MouseWheelEvent.
-            true);
+        double delta = currentPointer->Properties->MouseWheelDelta;
+
+        // The maximum delta is 120 according to:
+        // https://docs.microsoft.com/en-us/uwp/api/windows.ui.input.pointerpointproperties.mousewheeldelta#Windows_UI_Input_PointerPointProperties_MouseWheelDelta
+        // Apply a dampening effect so that small mouse movements have a smoother zoom.
+        constexpr double scrollDamper = 0.15;
+        double scale = 1.0 + (abs(delta) / WHEEL_DELTA) * scrollDamper;
+
+        // positive delta if wheel scrolled away from the user
+        if (delta >= 0)
+        {
+            scale = 1.0 / scale;
+        }
+
+        // For scaling, the graphing engine interprets x,y position between the range [-1, 1].
+        // Translate the pointer position to the [-1, 1] bounds.
+        const auto& pos = currentPointer->Position;
+        const auto[centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, ActualWidth, ActualHeight);
+
+        ScaleRange(centerX, centerY, scale);
+
+        args->Handled = true;
     }
 
     void Grapher::OnPointerPressed(PointerRoutedEventArgs^ e)
@@ -451,25 +468,20 @@ namespace GraphControl
         // Set the pointer capture to the element being interacted with so that only it
         // will fire pointer-related events
         CapturePointer(e->Pointer);
-        // Feed the current point into the gesture recognizer as a down event
-        m_gestureRecognizer->ProcessDownEvent(e->GetCurrentPoint(/*relativeTo*/ this));
 	}
 
     void Grapher::OnPointerReleased(PointerRoutedEventArgs^ e)
 	{
-        // Feed the current point into the gesture recognizer as an up event
-        m_gestureRecognizer->ProcessUpEvent(e->GetCurrentPoint(/*relativeTo*/ this));
         // Release the pointer
         ReleasePointerCapture(e->Pointer);
 	}
 
     void Grapher::OnPointerCanceled(PointerRoutedEventArgs^ e)
     {
-        m_gestureRecognizer->CompleteGesture();
         ReleasePointerCapture(e->Pointer);
     }
 
-    void Grapher::OnGestureManipulationUpdated(GestureRecognizer^ sender, ManipulationUpdatedEventArgs^ args)
+    void Grapher::OnManipulationDelta(ManipulationDeltaRoutedEventArgs^ args)
     {
         if (m_graph)
         {
@@ -478,7 +490,7 @@ namespace GraphControl
                 const double width = ActualWidth;
                 const double height = ActualHeight;
 
-                const auto& translation = args->Delta.Translation;;
+                const auto& translation = args->Delta.Translation;
                 double translationX = translation.X;
                 double translationY = translation.Y;
                 if (translationX != 0 || translation.Y != 0)
@@ -504,8 +516,7 @@ namespace GraphControl
                     // The graphing engine interprets x,y position between the range [-1, 1].
                     // Translate the pointer position to the [-1, 1] bounds.
                     const auto& pos = args->Position;
-                    double centerX = 2 * pos.X / width - 1;
-                    double centerY = 1 - 2 * pos.Y / height;
+                    const auto[centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, width, height);
 
                     if (FAILED(renderer->ScaleRange(centerX, centerY, scale)))
                     {
