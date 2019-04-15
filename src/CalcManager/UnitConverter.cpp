@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <sstream>
+#include <algorithm> // for std::sort
 #include "Command.h"
 #include "UnitConverter.h"
 
