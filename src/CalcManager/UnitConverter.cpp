@@ -922,10 +922,12 @@ void UnitConverter::InitializeSelectedUnits()
     vector<Unit> curUnits = itr->second;
     if (!curUnits.empty())
     {
-        bool isFromRestored = find(curUnits.begin(), curUnits.end(), m_fromType) != curUnits.end();
-        bool isToRestored = find(curUnits.begin(), curUnits.end(), m_toType) != curUnits.end();
+        // Units may already have been initialized through UnitConverter::RestoreUserPreferences().
+        // Check if they have been, and if so, do not override restored units.
+        bool isFromUnitValid = find(curUnits.begin(), curUnits.end(), m_fromType) != curUnits.end();
+        bool isToUnitValid = find(curUnits.begin(), curUnits.end(), m_toType) != curUnits.end();
 
-        if (isFromRestored && isToRestored)
+        if (isFromUnitValid && isToUnitValid)
         {
             return;
         }
@@ -934,13 +936,13 @@ void UnitConverter::InitializeSelectedUnits()
         bool conversionTargetSet = false;
         for (const Unit& cur : curUnits)
         {
-            if (!conversionSourceSet && cur.isConversionSource && !isFromRestored)
+            if (!conversionSourceSet && cur.isConversionSource && !isFromUnitValid)
             {
                 m_fromType = cur;
                 conversionSourceSet = true;
             }
 
-            if (!conversionTargetSet && cur.isConversionTarget && !isToRestored)
+            if (!conversionTargetSet && cur.isConversionTarget && !isToUnitValid)
             {
                 m_toType = cur;
                 conversionTargetSet = true;
