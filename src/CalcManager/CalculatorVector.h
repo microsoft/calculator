@@ -7,6 +7,8 @@
 #include <vector>
 #include <winerror.h>
 #include "Ratpack/CalcErr.h"
+#include <stdexcept> // for std::out_of_range
+#include <sal.h> // for SAL
 
 template <typename TType>
 class CalculatorVector

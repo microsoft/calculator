@@ -15,6 +15,7 @@
 //
 //-----------------------------------------------------------------------------
 #include "ratpak.h"
+#include <cstring> // for memmove
 
 void _mulnumx( PNUMBER *pa, PNUMBER b );
 
