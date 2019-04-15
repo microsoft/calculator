@@ -19,6 +19,8 @@
 //----------------------------------------------------------------------------
 
 #include <string>
+#include <cstring> // for memmove
+#include <iostream> // for wostream
 #include "ratpak.h"
 
 using namespace std;
