@@ -12,8 +12,8 @@
 #include "Converters/BooleanToVisibilityConverter.h"
 #include "Views/NumberPad.xaml.h"
 
+using namespace std;
 using namespace CalculatorApp;
-
 using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace Windows::UI::Xaml;
@@ -35,12 +35,10 @@ CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators() :
 void CalculatorProgrammerRadixOperators::OnLoaded(Object^, RoutedEventArgs^)
 {
     m_progModeRadixChangeToken = Model->ProgModeRadixChange += ref new ProgModeRadixChangeHandler(this, &CalculatorProgrammerRadixOperators::ProgModeRadixChange);
-    m_propertyChangedToken = Model->PropertyChanged += ref new PropertyChangedEventHandler(this, &CalculatorProgrammerRadixOperators::OnViewModelPropertyChanged);
 }
 void CalculatorProgrammerRadixOperators::OnUnloaded(Object^, RoutedEventArgs^)
 {
     Model->ProgModeRadixChange -= m_progModeRadixChangeToken;
-    Model->PropertyChanged -=  m_propertyChangedToken;
 }
 
 void CalculatorProgrammerRadixOperators::Shift_Clicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
@@ -100,10 +98,12 @@ void CalculatorProgrammerRadixOperators::IsErrorVisualState::set(bool value)
     }
 }
 
-void CalculatorProgrammerRadixOperators::OnViewModelPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+String^ CalculatorProgrammerRadixOperators::ParenthesisCountToString(unsigned int count) {
+    return (count == 0) ? ref new String() : ref new String(to_wstring(count).data());
+}
+
+
+void CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators::OpenParenthesisButton_GotFocus(Object^ sender, RoutedEventArgs^ e)
 {
-    if (e->PropertyName == StandardCalculatorViewModel::OpenParenthesisCountPropertyName && closeParenthesisButton->FocusState != ::FocusState::Unfocused)
-    {
-        Model->SetOpenParenthesisCountNarratorAnnouncement();
-    }
+    Model->SetOpenParenthesisCountNarratorAnnouncement();
 }

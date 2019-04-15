@@ -390,7 +390,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         cleared for CENTR */
         if (nullptr != m_pCalcDisplay)
         {
-            m_pCalcDisplay->SetParenDisplayText(L"");
+            m_pCalcDisplay->SetParenthesisNumber(0);
             m_pCalcDisplay->SetExpressionDisplay(make_shared<CalculatorVector<pair<wstring, int>>>(), make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>());
         }
 
@@ -594,7 +594,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         // Set the "(=xx" indicator.
         if (nullptr != m_pCalcDisplay)
         {
-            m_pCalcDisplay->SetParenDisplayText(m_openParenCount ? to_wstring(m_openParenCount) : L"");
+            m_pCalcDisplay->SetParenthesisNumber(m_openParenCount >= 0 ? static_cast<unsigned int>(m_openParenCount) : 0);
         }
 
         if (!m_bError)

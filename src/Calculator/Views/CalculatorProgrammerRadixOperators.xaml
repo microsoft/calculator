@@ -409,10 +409,10 @@
                                    Style="{StaticResource ParenthesisCalcButtonStyle}"
                                    FontSize="18"
                                    AutomationProperties.AutomationId="openParenthesisButton"
-                                   AutomationProperties.Name="{Binding LeftParenthesisAutomationName}"
                                    ButtonId="OpenParenthesis"
                                    Content="("
-                                   Tag="{x:Bind Model.OpenParenthesisCount, Mode=OneWay}"/>
+                                   GotFocus="OpenParenthesisButton_GotFocus"
+                                   Tag="{x:Bind ParenthesisCountToString(Model.OpenParenthesisCount), Mode=OneWay}"/>
         <controls:CalculatorButton x:Name="closeParenthesisButton"
                                    x:Uid="closeParenthesisButton"
                                    Grid.Row="5"

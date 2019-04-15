@@ -16,6 +16,7 @@ using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::ViewModel;
 
+using namespace std;
 using namespace Platform;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
@@ -36,15 +37,6 @@ CalculatorScientificOperators::CalculatorScientificOperators()
 
     expButton->SetValue(Common::KeyboardShortcutManager::VirtualKeyProperty, Common::MyVirtualKey::E);
     Common::KeyboardShortcutManager::ShiftButtonChecked(false);
-}
-
-void CalculatorScientificOperators::OnLoaded(Object^, RoutedEventArgs^)
-{
-    m_propertyChangedToken = Model->PropertyChanged += ref new PropertyChangedEventHandler(this, &CalculatorScientificOperators::OnViewModelPropertyChanged);
-}
-void CalculatorScientificOperators::OnUnloaded(Object^, RoutedEventArgs^)
-{
-    Model->PropertyChanged -= m_propertyChangedToken;
 }
 
 void CalculatorScientificOperators::ShortLayout_Completed(_In_ Platform::Object^ /*sender*/, _In_ Platform::Object^ /*e*/)
@@ -107,10 +99,11 @@ void CalculatorScientificOperators::SetOperatorRowVisibility()
     InvRow2->Visibility = invRowVis;
 }
 
-void CalculatorScientificOperators::OnViewModelPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+void CalculatorScientificOperators::OpenParenthesisButton_GotFocus(Object^ sender, RoutedEventArgs^ e)
 {
-    if (e->PropertyName == StandardCalculatorViewModel::OpenParenthesisCountPropertyName && closeParenthesisButton->FocusState != ::FocusState::Unfocused)
-    {
-        Model->SetOpenParenthesisCountNarratorAnnouncement();
-    }
+    Model->SetOpenParenthesisCountNarratorAnnouncement();
+}
+
+String^ CalculatorScientificOperators::ParenthesisCountToString(unsigned int count) {
+    return (count == 0) ? ref new String() : ref new String(to_wstring(count).data());
 }
