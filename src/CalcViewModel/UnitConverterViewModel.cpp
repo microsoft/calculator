@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -147,7 +147,6 @@ UnitConverterViewModel::UnitConverterViewModel(const shared_ptr<UCM::IUnitConver
     Unit2AutomationName = m_localizedOutputUnitName;
     IsDecimalEnabled = true;
 
-    m_IsFirstTime = true;
     m_model->Initialize();
     PopulateData();
 }
@@ -155,7 +154,6 @@ UnitConverterViewModel::UnitConverterViewModel(const shared_ptr<UCM::IUnitConver
 void UnitConverterViewModel::ResetView()
 {
     m_model->SendCommand(UCM::Command::Reset);
-    m_IsFirstTime = true;
     OnCategoryChanged(nullptr);
 }
 
@@ -234,15 +232,8 @@ void UnitConverterViewModel::OnUnitChanged(Object^ parameter)
         // End timer to show results immediately
         m_supplementaryResultsTimer->Cancel();
     }
-    if (!m_IsFirstTime)
-    {
-        SaveUserPreferences();
-    }
-    else
-    {
-        RestoreUserPreferences();
-        m_IsFirstTime = false;
-    }
+
+    SaveUserPreferences();
 }
 
 void UnitConverterViewModel::OnSwitchActive(Platform::Object^ unused)
