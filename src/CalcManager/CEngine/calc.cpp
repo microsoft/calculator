@@ -24,13 +24,18 @@ static constexpr wstring_view DEFAULT_NUMBER_STR = L"0";
 // Read strings for keys, errors, trig types, etc.
 // These will be copied from the resources to local memory.
 
-array<wstring, CSTRINGSENGMAX> CCalcEngine::s_engineStrings;
+unordered_map<wstring, wstring> CCalcEngine::s_engineStrings;
 
 void CCalcEngine::LoadEngineStrings(CalculationManager::IResourceProvider& resourceProvider)
 {
-    for (size_t i = 0; i < s_engineStrings.size(); i++)
+    for (const auto& sid : g_sids)
     {
-        s_engineStrings[i] = resourceProvider.GetCEngineString(g_sids[i]);
+        auto locKey = wstring{ sid };
+        auto locString = resourceProvider.GetCEngineString(locKey);
+        if (!locString.empty())
+        {
+            s_engineStrings[locKey] = locString;
+        }
     }
 }
 
@@ -167,7 +172,7 @@ void CCalcEngine::SettingsChanged()
         m_HistoryCollector.SetDecimalSymbol(m_decimalSeparator);
 
         // put the new decimal symbol into the table used to draw the decimal key
-        s_engineStrings[IDS_DECIMAL] = m_decimalSeparator;
+        s_engineStrings[SIDS_DECIMAL_SEPARATOR] = m_decimalSeparator;
 
         // we need to redraw to update the decimal point button
         numChanged = true;

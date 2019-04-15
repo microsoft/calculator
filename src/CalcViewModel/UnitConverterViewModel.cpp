@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -394,7 +394,7 @@ String^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& str
 
 void UnitConverterViewModel::DisplayPasteError()
 {
-    String^ errorMsg = AppResourceProvider::GetInstance().GetCEngineString(SIDS_DOMAIN); /*SIDS_DOMAIN is for "invalid input"*/
+    String^ errorMsg = AppResourceProvider::GetInstance().GetCEngineString(StringReference(SIDS_DOMAIN)); /*SIDS_DOMAIN is for "invalid input"*/
     Value1 = errorMsg;
     Value2 = errorMsg;
     m_relocalizeStringOnSwitch = false;

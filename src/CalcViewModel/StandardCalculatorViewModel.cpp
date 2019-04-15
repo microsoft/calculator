@@ -48,7 +48,6 @@ namespace CalculatorResourceKeys
     StringReference DecButton(L"Format_DecButtonValue");
     StringReference OctButton(L"Format_OctButtonValue");
     StringReference BinButton(L"Format_BinButtonValue");
-    StringReference LeftParenthesisAutomationFormat(L"Format_OpenParenthesisAutomationNamePrefix");
     StringReference OpenParenthesisCountAutomationFormat(L"Format_OpenParenthesisCountAutomationNamePrefix");
     StringReference NoParenthesisAdded(L"NoRightParenthesisAdded_Announcement");
     StringReference MaxDigitsReachedFormat(L"Format_MaxDigitsReached");
@@ -80,8 +79,8 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_isBinaryBitFlippingEnabled(false),
     m_CurrentRadixType(RADIX_TYPE::DEC_RADIX),
     m_CurrentAngleType(NumbersAndOperatorsEnum::Degree),
-    m_OpenParenthesisCount(L""),
     m_Announcement(nullptr),
+    m_OpenParenthesisCount(0),
     m_feedbackForButtonPress(nullptr),
     m_isRtlLanguage(false),
     m_localizedMaxDigitsReachedAutomationFormat(nullptr),
@@ -102,7 +101,6 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_localizedDecimalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::DecButton);
     m_localizedOctalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::OctButton);
     m_localizedBinaryAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::BinButton);
-    m_leftParenthesisAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::LeftParenthesisAutomationFormat);
 
     // Initialize the Automation Name
     CalculationResultAutomationName = GetLocalizedStringFormat(m_localizedCalculationResultAutomationFormat, m_DisplayValue);
@@ -216,19 +214,23 @@ void StandardCalculatorViewModel::DisplayPasteError()
     m_standardCalculatorManager.DisplayPasteError();
 }
 
-void StandardCalculatorViewModel::SetParenthesisCount(_In_ const wstring& parenthesisCount)
+void StandardCalculatorViewModel::SetParenthesisCount(_In_ unsigned int parenthesisCount)
 {
+    if (m_OpenParenthesisCount == parenthesisCount)
+    {
+        return;
+    }
+
+    OpenParenthesisCount = parenthesisCount;
     if (IsProgrammer || IsScientific)
     {
-        OpenParenthesisCount = ref new String(parenthesisCount.c_str());
-        RaisePropertyChanged("LeftParenthesisAutomationName");
+        SetOpenParenthesisCountNarratorAnnouncement();
     }
 }
 
 void StandardCalculatorViewModel::SetOpenParenthesisCountNarratorAnnouncement()
 {
-    String^ parenthesisCount = ((m_OpenParenthesisCount == nullptr) ? "0" : m_OpenParenthesisCount);
-    wstring localizedParenthesisCount = parenthesisCount->Data();
+    wstring localizedParenthesisCount = to_wstring(m_OpenParenthesisCount).c_str();
     LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
 
     String^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
@@ -279,15 +281,6 @@ void StandardCalculatorViewModel::DisableButtons(CommandType selectedExpressionC
         IsNegateEnabled = true;
         IsDecimalEnabled = false;
     }
-}
-
-String ^ StandardCalculatorViewModel::GetLeftParenthesisAutomationName()
-{
-    String^ parenthesisCount = ((m_OpenParenthesisCount == nullptr) ? "0" : m_OpenParenthesisCount);
-    wstring localizedParenthesisCount = std::wstring(parenthesisCount->Data());
-    LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
-
-    return GetLocalizedStringFormat(m_leftParenthesisAutomationFormat, ref new String(localizedParenthesisCount.c_str()));
 }
 
 void StandardCalculatorViewModel::SetExpressionDisplay(_Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const &tokens, _Inout_ shared_ptr<CalculatorVector <shared_ptr<IExpressionCommand>>> const &commands)
@@ -1422,29 +1415,29 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
 
         switch (nOpCode)
         {
-        case static_cast<int>(Command::CommandASIN) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSIN), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandACOS) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOS), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandATAN) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTAN), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandASINH) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSINH), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandACOSH) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOSH), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandATANH) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTANH), true, angleType);
-            break;
-        case static_cast<int>(Command::CommandPOWE) :
-            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandLN), true, angleType);
-            break;
-        default:
-            updatedToken = CCalcEngine::OpCodeToUnaryString(nOpCode, false, angleType);
+            case static_cast<int>(Command::CommandASIN) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSIN), true, angleType);
+                break;
+            case static_cast<int>(Command::CommandACOS) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOS), true, angleType);
+                break;
+            case static_cast<int>(Command::CommandATAN) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTAN), true, angleType);
+                break;
+            case static_cast<int>(Command::CommandASINH) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSINH), true, angleType);
+                break;
+            case static_cast<int>(Command::CommandACOSH) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOSH), true, angleType);
+                break;
+            case static_cast<int>(Command::CommandATANH) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTANH), true, angleType);
+                break;
+            case static_cast<int>(Command::CommandPOWE) :
+                updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandLN), true, angleType);
+                break;
+            default:
+                updatedToken = CCalcEngine::OpCodeToUnaryString(nOpCode, false, angleType);
         }
         if ((token.first.length() > 0) && (token.first[token.first.length() - 1] == L'('))
         {
