@@ -63,7 +63,8 @@ UnitConverter::UnitConverter(_In_ const shared_ptr<IConverterDataLoader>& dataLo
     unquoteConversions[L"{sc}"] = L';';
     unquoteConversions[L"{lb}"] = LEFTESCAPECHAR;
     unquoteConversions[L"{rb}"] = RIGHTESCAPECHAR;
-    Reset();
+    ClearValues();
+    ResetCategoriesAndRatios();
 }
 
 void UnitConverter::Initialize()
@@ -75,7 +76,7 @@ bool UnitConverter::CheckLoad()
 {
     if (m_categories.empty())
     {
-        Reset();
+        ResetCategoriesAndRatios();
     }
     return !m_categories.empty();
 }
@@ -152,7 +153,6 @@ void UnitConverter::SetCurrentUnitTypes(const Unit& fromType, const Unit& toType
     Calculate();
 
     UpdateCurrencySymbols();
-    UpdateViewModel();
 }
 
 /// <summary>
@@ -336,7 +336,8 @@ wstring UnitConverter::Serialize()
 /// <param name="serializedData">wstring holding the serialized data. If it does not have expected number of parameters, we will ignore it</param>
 void UnitConverter::DeSerialize(const wstring& serializedData)
 {
-    Reset();
+    ClearValues();
+    ResetCategoriesAndRatios();
 
     if (serializedData.empty())
     {
@@ -615,7 +616,7 @@ void UnitConverter::SendCommand(Command command)
         clearFront = false;
         clearBack = false;
         ClearValues();
-        Reset();
+        ResetCategoriesAndRatios();
         break;
 
     default:
@@ -634,8 +635,6 @@ void UnitConverter::SendCommand(Command command)
     }
 
     Calculate();
-
-    UpdateViewModel();
 }
 
 /// <summary>
@@ -824,19 +823,16 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         returnVector.push_back(whimsicalReturnVector.at(0));
     }
 
-    //
-
     return returnVector;
 }
 
 /// <summary>
-/// Resets the converter to its initial state
+/// Resets categories and ratios
 /// </summary>
-void UnitConverter::Reset()
+void UnitConverter::ResetCategoriesAndRatios()
 {
     m_categories = m_dataLoader->LoadOrderedCategories();
 
-    ClearValues();
     m_switchedActive = false;
 
     if (m_categories.empty())
@@ -881,7 +877,6 @@ void UnitConverter::Reset()
     }
 
     InitializeSelectedUnits();
-    Calculate();
 }
 
 /// <summary>
@@ -972,11 +967,21 @@ bool UnitConverter::AnyUnitIsEmpty()
 /// </summary>
 void UnitConverter::Calculate()
 {
-    unordered_map<Unit, ConversionData, UnitHash> conversionTable = m_ratioMap[m_fromType];
-    double returnValue = stod(m_currentDisplay);
-    if (AnyUnitIsEmpty() || (conversionTable[m_toType].ratio == 1.0 && conversionTable[m_toType].offset == 0.0))
+    if (AnyUnitIsEmpty())
     {
         m_returnDisplay = m_currentDisplay;
+        m_returnHasDecimal = m_currentHasDecimal;
+        TrimString(m_returnDisplay);
+        UpdateViewModel();
+        return;
+    }
+
+    unordered_map<Unit, ConversionData, UnitHash> conversionTable = m_ratioMap[m_fromType];
+    double returnValue = stod(m_currentDisplay);
+    if (conversionTable[m_toType].ratio == 1.0 && conversionTable[m_toType].offset == 0.0)
+    {
+        m_returnDisplay = m_currentDisplay;
+        m_returnHasDecimal = m_currentHasDecimal;
         TrimString(m_returnDisplay);
     }
     else
@@ -1015,9 +1020,9 @@ void UnitConverter::Calculate()
             m_returnDisplay = returnString;
             TrimString(m_returnDisplay);
         }
+        m_returnHasDecimal = (m_returnDisplay.find(L'.') != m_returnDisplay.npos);
     }
-
-    m_returnHasDecimal = (m_returnDisplay.find(L'.') != m_returnDisplay.npos);
+    UpdateViewModel();
 }
 
 /// <summary>
