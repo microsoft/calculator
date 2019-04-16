@@ -1,0 +1,74 @@
+# The BuildConfiguration must be set to 'Release' for UI tests to work.
+
+#parameters:
+#  platform: ''
+
+variables:
+#   Parameters.configuration: ${{ parameters.platform }}
+    Parameters.configuration: x86
+    BuildConfiguration: Release
+    
+jobs:
+
+- job: UITests
+  displayName: Test Automation
+  condition: succeeded()
+  pool:
+    name: Hosted Windows 2019 with VS2019
+    demands: DotNetFramework
+
+  steps:
+  - task: PowerShell@1
+    displayName: 'Set Resolution'
+    inputs:
+      scriptType: inlineScript
+      arguments: '-NonInteractive -Force:$true -Verb RunAs'
+      inlineScript: 'Set-DisplayResolution -Width 1920 -Height 1080 -Force'
+    continueOnError: true
+
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download Build Artifacts'
+    inputs:
+      buildType: specific
+      project: '96681257-9d83-44bf-a018-305e019cc129'
+      pipeline: 18
+      artifactName: drop
+      downloadPath: '$(build.artifactstagingdirectory)\AppxPackages'
+
+  - task: VisualStudioTestPlatformInstaller@1
+    displayName: 'Visual Studio Test Platform Installer'
+
+  - task: PowerShell@1
+    displayName: 'Install Cert (release)'
+    inputs:
+      scriptType: inlineScript
+      arguments: '-NonInteractive -Verb RunAs'
+      inlineScript: |  
+       $file = ( Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\AppxPackages\drop\Calculator_0.0.0.0_Test\Calculator_0.0.0.0_x86.cer )
+       $file | Import-Certificate -CertStoreLocation cert:\LocalMachine\Root
+    condition: succeededOrFailed()
+
+  - task: PowerShell@1
+    displayName: 'Normal Add-AppDevPackage.ps1 (release)'
+    inputs:
+      scriptName: '$(Build.ArtifactStagingDirectory)\AppxPackages\drop\Calculator_0.0.0.0_Test\Add-AppDevPackage.ps1'
+      arguments: '-NonInteractive -Force:$true  -Verb RunAs'
+    condition: succeededOrFailed()
+
+  - task: PowerShell@1
+    displayName: 'Start WinAppDriver'
+    inputs:
+      scriptType: inlineScript
+      inlineScript: 'Start-Process -FilePath "C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe" -Verb RunAs '
+
+  - task: VSTest@2
+    displayName: 'VsTest - Execute WinAppDriver Tests'
+    inputs:
+      testAssemblyVer2: |  
+       $(Build.ArtifactStagingDirectory)\AppxPackages\drop\src\CalculatorWADTests\bin\$(BuildConfiguration)\CalculatorTest.dll
+       !**\obj\**
+      vsTestVersion: toolsInstaller
+      runSettingsFile: src/CalculatorWADTests/TestSettings1.runsettings
+      platform: '$(BuildPlatform)'
+      configuration: '$(BuildConfiguration)'
+    continueOnError: true
