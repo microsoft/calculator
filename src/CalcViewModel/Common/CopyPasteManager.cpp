@@ -453,7 +453,7 @@ bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, u
 
 size_t CopyPasteManager::OperandLength(wstring operand, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase)
 {      
-    if(modeType == CategoryGroupType::Converter) {
+    if (modeType == CategoryGroupType::Converter) {
         return operand.length();
     }
 
@@ -516,7 +516,7 @@ size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int num
         break;
     default:
         // No defined prefixes/suffixes
-        break;
+      return 0;
     }
 
     // UInt suffixes are common across all modes
