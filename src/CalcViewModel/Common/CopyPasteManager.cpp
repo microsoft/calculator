@@ -477,9 +477,9 @@ size_t CopyPasteManager::OperandLength(wstring operand, ViewMode mode, CategoryG
     }
 }
 
-size_t CopyPasteManager::StandardScientificOperandLength(wstring operand)
+size_t CopyPasteManager::StandardScientificOperandLength(const wstring& operand)
 {   
-    const bool hasDecimal = operand.find('.') != std::wstring::npos;
+    const bool hasDecimal = operand.find('.') != wstring::npos;
 
     if (hasDecimal)
     {
