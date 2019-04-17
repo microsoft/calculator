@@ -602,7 +602,7 @@ void MainPage::AnnounceCategoryName()
     NarratorNotifier->Announce(announcement);
 }
 
-void MainPage::OnNavItemInvoked(_In_ Microsoft::UI::Xaml::Controls::NavigationView^ sender, _In_ Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs^ e)
+void MainPage::OnNavItemInvoked(MUXC::NavigationView^ /*sender*/, _In_ MUXC::NavigationViewItemInvokedEventArgs^ e)
 {
     auto item = dynamic_cast<MUXC::NavigationViewItem^>(e->InvokedItemContainer);
     if (item != nullptr)
