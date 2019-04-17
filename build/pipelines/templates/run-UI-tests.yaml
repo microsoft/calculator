@@ -1,4 +1,4 @@
-# The BuildConfiguration must be set to 'Release' for UI tests to work.
+# The Build.Configuration must be set to 'Release' for UI tests to work.
 
 #parameters:
 #  platform: ''
@@ -6,7 +6,9 @@
 variables:
 #   Parameters.configuration: ${{ parameters.platform }}
     Parameters.configuration: x86
-    BuildConfiguration: Release
+    Build.Configuration: Release
+    Calc.ArtifactsName: drop
+    Calc.BuildVersion: 0.0.0.0
     
 jobs:
 
@@ -32,11 +34,8 @@ jobs:
       buildType: specific
       project: '96681257-9d83-44bf-a018-305e019cc129'
       pipeline: 18
-      artifactName: drop
-      downloadPath: '$(build.artifactstagingdirectory)\AppxPackages'
-
-  - task: VisualStudioTestPlatformInstaller@1
-    displayName: 'Visual Studio Test Platform Installer'
+      artifactName: $(Calc.ArtifactsName)
+      downloadPath: '$(build.ArtifactStagingDirectory)\AppxPackages'
 
   - task: PowerShell@1
     displayName: 'Install Cert (release)'
@@ -44,14 +43,14 @@ jobs:
       scriptType: inlineScript
       arguments: '-NonInteractive -Verb RunAs'
       inlineScript: |  
-       $file = ( Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\AppxPackages\drop\Calculator_0.0.0.0_Test\Calculator_0.0.0.0_x86.cer )
+       $file = ( Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\AppxPackages\$(Calc.ArtifactsName)\Calculator_$(Calc.BuildVersion)_Test\Calculator_$(Calc.BuildVersion)_x86.cer )
        $file | Import-Certificate -CertStoreLocation cert:\LocalMachine\Root
     condition: succeededOrFailed()
 
   - task: PowerShell@1
     displayName: 'Normal Add-AppDevPackage.ps1 (release)'
     inputs:
-      scriptName: '$(Build.ArtifactStagingDirectory)\AppxPackages\drop\Calculator_0.0.0.0_Test\Add-AppDevPackage.ps1'
+      scriptName: '$(Build.ArtifactStagingDirectory)\AppxPackages\$(Calc.ArtifactsName)\Calculator_$(Calc.BuildVersion)_Test\Add-AppDevPackage.ps1'
       arguments: '-NonInteractive -Force:$true  -Verb RunAs'
     condition: succeededOrFailed()
 
@@ -65,10 +64,10 @@ jobs:
     displayName: 'VsTest - Execute WinAppDriver Tests'
     inputs:
       testAssemblyVer2: |  
-       $(Build.ArtifactStagingDirectory)\AppxPackages\drop\src\CalculatorWADTests\bin\$(BuildConfiguration)\CalculatorTest.dll
+       $(Build.ArtifactStagingDirectory)\AppxPackages\$(Calc.ArtifactsName)\src\CalculatorWADTests\bin\$(Build.Configuration)\CalculatorTest.dll
        !**\obj\**
-      vsTestVersion: toolsInstaller
+      vsTestVersion: 16.0
       runSettingsFile: src/CalculatorWADTests/TestSettings1.runsettings
       platform: '$(BuildPlatform)'
-      configuration: '$(BuildConfiguration)'
+      configuration: '$(Build.Configuration)'
     continueOnError: true
