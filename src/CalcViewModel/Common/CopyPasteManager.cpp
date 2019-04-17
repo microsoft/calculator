@@ -266,11 +266,8 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
         return false;
     }
 
-    bool expMatched = true;
     vector<wregex> patterns{};
-
-    const auto [maxOperandLength, maxOperandValue] = GetMaxOperandLengthAndValue(mode, modeType, programmerNumberBase, bitLengthType);
-
+    
     if (mode == ViewMode::Standard)
     {
         patterns.assign(standardModePatterns.begin(), standardModePatterns.end());
@@ -287,6 +284,9 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
     {
         patterns.assign(unitConverterPatterns.begin(), unitConverterPatterns.end());
     }
+
+    const auto [maxOperandLength, maxOperandValue] = GetMaxOperandLengthAndValue(mode, modeType, programmerNumberBase, bitLengthType);
+    bool expMatched = true;
 
     for (const auto& operand : operands)
     {
@@ -494,8 +494,7 @@ size_t CopyPasteManager::StandardScientificOperandLength(const wstring& operand)
 
 size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int numberBase)
 {
-    size_t len = operand.length();
-
+   
     vector<wstring> prefixes{};
     vector<wstring> suffixes{};
     switch (numberBase)
@@ -525,6 +524,8 @@ size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int num
 
     wstring operandUpper = operand;
     transform(operandUpper.begin(), operandUpper.end(), operandUpper.begin(), towupper);
+
+    size_t len = operand.length();
 
     // Detect if there is a suffix and subtract its length
     // Check suffixes first to allow e.g. "0b" to result in length 1 (value 0), rather than length 0 (no value).
