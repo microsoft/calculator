@@ -107,7 +107,7 @@ void OverflowTextBlock::UpdateVisualState()
 
 void OverflowTextBlock::ScrollLeft()
 {
-    if (m_expressionContainer->HorizontalOffset > 0)
+    if (m_expressionContainer != nullptr && m_expressionContainer->HorizontalOffset > 0)
     {
         m_scrollingLeft = true;
         double offset = m_expressionContainer->HorizontalOffset - (scrollRatio * m_expressionContainer->ViewportWidth);
@@ -119,7 +119,7 @@ void OverflowTextBlock::ScrollLeft()
 
 void OverflowTextBlock::ScrollRight()
 {
-    if (m_expressionContainer->HorizontalOffset < m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth)
+    if (m_expressionContainer != nullptr && m_expressionContainer->HorizontalOffset < m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth)
     {
         m_scrollingRight = true;
         double offset = m_expressionContainer->HorizontalOffset + (scrollRatio * m_expressionContainer->ViewportWidth);
