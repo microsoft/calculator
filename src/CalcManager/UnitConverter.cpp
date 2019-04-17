@@ -404,12 +404,30 @@ void UnitConverter::RestoreUserPreferences(const wstring& userPreferences)
     }
 
     vector<wstring> outerTokens = StringToVector(userPreferences, L"|");
-    if (outerTokens.size() == 3)
+    if (outerTokens.size() != 3)
     {
-        m_fromType = StringToUnit(outerTokens[0]);
-        m_toType = StringToUnit(outerTokens[1]);
-        m_currentCategory = StringToCategory(outerTokens[2]);
+        return;
     }
+
+    auto fromType = StringToUnit(outerTokens[0]);
+    auto toType = StringToUnit(outerTokens[1]);
+    m_currentCategory = StringToCategory(outerTokens[2]);
+
+    // Only restore from the saved units if they are valid in the current available units.
+    auto itr = m_categoryToUnits.find(m_currentCategory);
+    if (itr != m_categoryToUnits.end())
+    {
+        const auto& curUnits = itr->second;
+        if (find(curUnits.begin(), curUnits.end(), fromType) != curUnits.end())
+        {
+            m_fromType = fromType;
+        }
+        if (find(curUnits.begin(), curUnits.end(), toType) != curUnits.end())
+        {
+            m_toType = toType;
+        }
+    }
+
 }
 
 /// <summary>
