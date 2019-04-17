@@ -20,7 +20,7 @@ String^ CopyPasteManager::supportedFormats[] =
     StandardDataFormats::Text
 };
 
-constexpr wstring_view c_validCharacterSet{ L"0123456789()+-*/.abcdefABCDEF" };
+static constexpr wstring_view c_validCharacterSet{ L"0123456789()+-*/.abcdefABCDEF" };
 
 // The below values can not be "constexpr"-ed,
 // as both wstring_view and wchar[] can not be concatenated
@@ -269,10 +269,7 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
     bool expMatched = true;
     vector<wregex> patterns{};
 
-    // Could this be auto?
-    pair<size_t, uint64_t> operandLimits = GetMaxOperandLengthAndValue(mode, modeType, programmerNumberBase, bitLengthType);
-    size_t maxOperandLength = operandLimits.first;
-    uint64_t maxOperandValue = operandLimits.second;
+    const auto [maxOperandLength, maxOperandValue] = GetMaxOperandLengthAndValue(mode, modeType, programmerNumberBase, bitLengthType);
 
     if (mode == ViewMode::Standard)
     {
@@ -442,15 +439,11 @@ bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, u
         result = stoull(operand, &size, intBase);
         return true;
     }
-    catch (invalid_argument)
+    catch (const invalid_argument&)
     {
         // Do nothing
     }
-    catch (out_of_range)
-    {
-        // Do nothing
-    }
-    catch(...)
+    catch (const out_of_range&)
     {
         // Do nothing
     }
