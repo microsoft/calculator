@@ -32,12 +32,12 @@ namespace CalculationManager
 
     public:
         CalculatorHistory(const size_t maxSize);
-        unsigned int AddToHistory(_In_ std::shared_ptr<CalculatorVector <std::pair<std::wstring, int>>> const &spTokens, _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &spCommands, std::wstring_view result);
+        unsigned int AddToHistory(_In_ std::shared_ptr<CalculatorVector <std::pair<std::wstring, int>>> const &spTokens, _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &spCommands, _In_ std::wstring_view result);
         std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistory();
-        std::shared_ptr<HISTORYITEM> const& GetHistoryItem(unsigned int uIdx);
+        std::shared_ptr<HISTORYITEM> const& GetHistoryItem(_In_ unsigned int uIdx);
         void ClearHistory();
         unsigned int AddItem(_In_ std::shared_ptr<HISTORYITEM> const &spHistoryItem);
-        bool RemoveItem(unsigned int uIdx);
+        bool RemoveItem(_In_ unsigned int uIdx);
         size_t MaxHistorySize() const { return m_maxHistorySize; }
         ~CalculatorHistory(void);
 
