@@ -34,6 +34,7 @@ namespace CalculatorApp
             void OnPointerExited(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e);
             void ShowHideScrollButtons(Windows::UI::Xaml::Visibility vLeft, Windows::UI::Xaml::Visibility vRight);
             void OnTokensUpdatedPropertyChanged(bool oldValue, bool newValue);
+            void OnViewChanged(_In_opt_ Platform::Object ^sender, _In_opt_ Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs ^args);
 
             void UpdateVisualState();
             void UpdateExpressionState();
@@ -52,7 +53,7 @@ namespace CalculatorApp
 
             Windows::Foundation::EventRegistrationToken m_scrollLeftClickEventToken;
             Windows::Foundation::EventRegistrationToken m_scrollRightClickEventToken;
-            void OnViewChanged(Platform::Object ^sender, Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs ^args);
+            Windows::Foundation::EventRegistrationToken m_containerViewChangedToken;
         };
     }
 }

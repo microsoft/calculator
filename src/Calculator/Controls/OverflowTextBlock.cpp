@@ -30,21 +30,39 @@ DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, TokensUpdated);
 
 void OverflowTextBlock::OnApplyTemplate()
 {
-    assert(((m_scrollLeft == nullptr) && (m_scrollRight == nullptr)) || ((m_scrollLeft != nullptr) && (m_scrollRight != nullptr)));
+    UnregisterEventHandlers();
 
-    m_expressionContainer = safe_cast<ScrollViewer^>(GetTemplateChild("expressionContainer"));
-    m_expressionContainer->ChangeView(m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth, nullptr, nullptr);
-    m_expressionContainer->ViewChanged += ref new Windows::Foundation::EventHandler<Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs ^>(this, &CalculatorApp::Controls::OverflowTextBlock::OnViewChanged);
-    m_scrollLeft = safe_cast<Button^>(GetTemplateChild("scrollLeft"));
-    m_scrollRight = safe_cast<Button^>(GetTemplateChild("scrollRight"));
+    auto uiElement = GetTemplateChild("expressionContainer");
+    if (uiElement != nullptr)
+    {
+        m_expressionContainer = safe_cast<ScrollViewer^>(uiElement);
+        m_expressionContainer->ChangeView(m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth, nullptr, nullptr);
+        m_containerViewChangedToken = m_expressionContainer->ViewChanged += ref new EventHandler<ScrollViewerViewChangedEventArgs ^>(this, &OverflowTextBlock::OnViewChanged);
+    }
 
-    m_scrollLeftClickEventToken = m_scrollLeft->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollClick);
-    m_scrollRightClickEventToken = m_scrollRight->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollClick);
+    uiElement = GetTemplateChild("scrollLeft");
+    if (uiElement != nullptr)
+    {
+        m_scrollLeft = safe_cast<Button^>(uiElement);
+        m_scrollLeftClickEventToken = m_scrollLeft->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollClick);
+    }
+
+    uiElement = GetTemplateChild("scrollRight");
+    if (uiElement != nullptr)
+    {
+        m_scrollRight = safe_cast<Button^>(GetTemplateChild("scrollRight"));
+        m_scrollRightClickEventToken = m_scrollRight->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollClick);
+    }
 
     m_scrollingLeft = false;
     m_scrollingRight = false;
 
-    m_itemsControl = safe_cast<ItemsControl^>(GetTemplateChild("TokenList"));
+    uiElement = GetTemplateChild("TokenList");
+    if (uiElement != nullptr)
+    {
+        m_itemsControl = safe_cast<ItemsControl^>(uiElement);
+    }
+
     UpdateAllState();
 }
 
@@ -189,10 +207,14 @@ void OverflowTextBlock::UnregisterEventHandlers()
     {
         m_scrollRight->Click -= m_scrollRightClickEventToken;
     }
+
+    if (m_expressionContainer != nullptr)
+    {
+        m_expressionContainer->ViewChanged -= m_containerViewChangedToken;
+    }
 }
 
-
-void CalculatorApp::Controls::OverflowTextBlock::OnViewChanged(Platform::Object ^sender, Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs ^args)
+void OverflowTextBlock::OnViewChanged(_In_opt_ Object^ /*sender*/, _In_opt_ ScrollViewerViewChangedEventArgs^ /*args*/)
 {
     UpdateScrollButtons();
 }
