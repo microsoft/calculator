@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //-----------------------------------------------------------------------------
@@ -92,11 +92,9 @@ void asinanglerat( _Inout_ PRAT *pa, ANGLE_TYPE angletype, uint32_t radix, int32
 void asinrat( PRAT *px, uint32_t radix, int32_t precision)
 
 {
-    int32_t sgn;
     PRAT pret= nullptr;
     PRAT phack= nullptr;
-
-    sgn = (*px)->pp->sign* (*px)->pq->sign;
+    int32_t sgn = SIGN(*px);
 
     (*px)->pp->sign = 1;
     (*px)->pq->sign = 1;
@@ -204,9 +202,7 @@ void _acosrat( PRAT *px, int32_t precision)
 void acosrat( PRAT *px, uint32_t radix, int32_t precision)
 
 {
-    int32_t sgn;
-
-    sgn = (*px)->pp->sign*(*px)->pq->sign;
+    int32_t sgn = SIGN(*px);
 
     (*px)->pp->sign = 1;
     (*px)->pq->sign = 1;
@@ -291,10 +287,8 @@ void _atanrat( PRAT *px, int32_t precision)
 void atanrat( PRAT *px, uint32_t radix, int32_t precision)
 
 {
-    int32_t sgn;
     PRAT tmpx= nullptr;
-
-    sgn = (*px)->pp->sign * (*px)->pq->sign;
+    int32_t sgn = SIGN(*px);
 
     (*px)->pp->sign = 1;
     (*px)->pq->sign = 1;

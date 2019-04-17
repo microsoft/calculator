@@ -45,7 +45,7 @@ namespace CalculationManager
     class IResourceProvider;
 }
 
-namespace CalculatorUnitTests
+namespace CalculatorEngineTests
 {
     class CalcEngineTests;
 }
@@ -160,5 +160,5 @@ private:
     static void ChangeBaseConstants(uint32_t radix, int maxIntDigits, int32_t precision);
     void BaseOrPrecisionChanged();
 
-    friend class CalculatorUnitTests::CalcEngineTests;
+    friend class CalculatorEngineTests::CalcEngineTests;
 };

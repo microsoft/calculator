@@ -387,3 +387,33 @@ Rational RationalMath::ATanh(Rational const& rat)
 
     return result;
 }
+
+/// <summary>
+/// Calculate the modulus after division, the sign of the result will match the sign of b.
+/// </summary>
+/// <remarks>
+/// When one of the operand is negative
+/// the result will differ from the C/C++ operator '%'
+/// use <see cref="Rational::operator%"/> instead to calculate the remainder after division.
+/// </remarks>
+Rational RationalMath::Mod(Rational const& a, Rational const& b)
+{
+    PRAT prat = a.ToPRAT();
+    PRAT pn = b.ToPRAT();
+
+    try
+    {
+        modrat(&prat, pn);
+        destroyrat(pn);
+    }
+    catch (uint32_t error)
+    {
+        destroyrat(prat);
+        destroyrat(pn);
+        throw(error);
+    }
+
+    auto res = Rational{ prat };
+    destroyrat(prat);
+    return res;
+}
