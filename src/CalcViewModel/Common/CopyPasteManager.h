@@ -54,7 +54,7 @@ namespace CalculatorApp
         static std::pair<size_t, uint64_t> GetMaxOperandLengthAndValue(CalculatorApp::Common::ViewMode mode, CalculatorApp::Common::CategoryGroupType modeType, int programmerNumberBase = -1, int bitLengthType = -1);
         static std::wstring SanitizeOperand(const std::wstring& operand);
         static bool TryOperandToULL(const std::wstring& operand, int numberBase, unsigned long long int& result);
-        static size_t OperandLength(std::wstring operand, CalculatorApp::Common::ViewMode mode, CalculatorApp::Common::CategoryGroupType modeType, int programmerNumberBase = -1);
+        static size_t OperandLength(const std::wstring& operand, CalculatorApp::Common::ViewMode mode, CalculatorApp::Common::CategoryGroupType modeType, int programmerNumberBase = -1);
         static size_t StandardScientificOperandLength(const std::wstring& operand);
         static size_t ProgrammerOperandLength(const std::wstring& operand, int numberBase);
         static std::wstring RemoveUnwantedCharsFromWstring(const std::wstring& input);

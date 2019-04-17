@@ -451,7 +451,7 @@ bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, u
     return false;
 }
 
-size_t CopyPasteManager::OperandLength(wstring operand, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase)
+size_t CopyPasteManager::OperandLength(const wstring& operand, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase)
 {      
     if (modeType == CategoryGroupType::Converter) {
         return operand.length();
