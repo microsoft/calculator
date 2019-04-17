@@ -356,9 +356,6 @@
                 <Setter Property="ZoomMode" Value="Disabled"/>
             </Style>
 
-<<<<<<< HEAD
-            <Style x:Key="CalculationResultStyle" TargetType="Controls:CalculationResult">
-=======
             <Style x:Key="CalculationResultStyleL" TargetType="Controls:CalculationResult">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
@@ -534,7 +531,9 @@
                 </Setter>
             </Style>
             <Style x:Key="CalculationResultStyleS" TargetType="Controls:CalculationResult">
->>>>>>> f6848a5... Completed View (Calculator.xaml)
+
+            <Style x:Key="CalculationResultStyle"
+                   TargetType="Controls:CalculationResult">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
