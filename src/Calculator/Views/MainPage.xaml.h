@@ -70,8 +70,6 @@ namespace CalculatorApp
         void OnPageLoaded(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
         void OnPageUnLoaded(_In_ Platform::Object^, _In_ Windows::UI::Xaml::RoutedEventArgs^);
 
-        void PinUnpinAppBarButtonOnClicked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-
         void EnsureCalculator();
         void EnsureConverter();
         void EnsureDateCalculator();

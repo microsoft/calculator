@@ -36,7 +36,6 @@ namespace
 {
     StringReference CategoriesPropertyName(L"Categories");
     StringReference ClearMemoryVisibilityPropertyName(L"ClearMemoryVisibility");
-    StringReference AppBarVisibilityPropertyName(L"AppBarVisibility");
 }
 
 ApplicationViewModel::ApplicationViewModel() :
@@ -164,7 +163,6 @@ void ApplicationViewModel::OnModeChanged()
 
     TraceLogger::GetInstance().LogModeChangeEnd(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
     RaisePropertyChanged(ClearMemoryVisibilityPropertyName);
-    RaisePropertyChanged(AppBarVisibilityPropertyName);
 }
 
 void ApplicationViewModel::OnCopyCommand(Object^ parameter)
