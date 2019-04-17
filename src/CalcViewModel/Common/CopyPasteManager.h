@@ -13,7 +13,6 @@ namespace CalculatorUnitTests
 
 namespace CalculatorApp
 {
-    // TODO: Could be made into an enum : unsigned ?
     constexpr auto QwordType = 1;
     constexpr auto DwordType = 2;
     constexpr auto WordType = 3;

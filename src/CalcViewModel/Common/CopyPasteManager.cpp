@@ -418,8 +418,7 @@ bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, u
         return false;
     }
 
-    // Default to base10
-    int intBase = 10;
+    int intBase;
     switch (numberBase)
     {
     case HexBase:
@@ -431,7 +430,8 @@ bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, u
     case BinBase:
         intBase = 2;
         break;
-    case DecBase: // Unneeded as the default is already 10?
+    default:
+    case DecBase:
         intBase = 10;
         break;
     }
