@@ -35,19 +35,19 @@
         </DataTemplate>
 
         <!-- TextBox Styles -->
-       
+               
         <Style TargetType="controls:OverflowTextBlock">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="controls:OverflowTextBlock">
-                        <Grid x:Name="tokenContainer" Background="{TemplateBinding Background}">
+                        <Grid x:Name="TokenContainer" Background="{TemplateBinding Background}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="12"/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="12"/>
                             </Grid.ColumnDefinitions>
-                            <ScrollViewer x:Name="expressionContainer"
+                            <ScrollViewer x:Name="ExpressionContainer"
                                           Grid.Column="1"
                                           Padding="0,0,0,0"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -70,7 +70,7 @@
                                     </ItemsControl.ItemsPanel>
                                 </ItemsControl>
                             </ScrollViewer>
-                            <Button x:Name="scrollLeft"
+                            <Button x:Name="ScrollLeft"
                                     x:Uid="scrollLeft"
                                     Grid.Column="0"
                                     Margin="-4,3,-4,0"
@@ -79,7 +79,7 @@
                                           FontSize="12"
                                           Glyph="&#xE26C;"/>
                             </Button>
-                            <Button x:Name="scrollRight"
+                            <Button x:Name="ScrollRight"
                                     x:Uid="scrollRight"
                                     Grid.Column="2"
                                     Margin="0,3,-9,0"
@@ -289,7 +289,7 @@
                         <Setter Target="MemRecall.IsEnabled" Value="False"/>
                         <Setter Target="MemPlus.IsEnabled" Value="False"/>
                         <Setter Target="MemMinus.IsEnabled" Value="False"/>
-                        <Setter Target="memButton.IsEnabled" Value="False"/>
+                        <Setter Target="MemButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
                     <Storyboard Completed="OnErrorLayoutCompleted"/>
                 </VisualState>
@@ -316,7 +316,7 @@
                         <Setter Target="M4.MaxWidth" Value="99999"/>
                         <Setter Target="M5.Width" Value="1*"/>
                         <Setter Target="M5.MaxWidth" Value="80"/>
-                        <Setter Target="memButton.(Grid.Column)" Value="5"/>
+                        <Setter Target="MemButton.(Grid.Column)" Value="5"/>
                         <Setter Target="MemoryButton.(Grid.Column)" Value="6"/>
                         <Setter Target="HistoryButton.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
@@ -376,7 +376,7 @@
                         <Setter Target="MemRecall.Style" Value="{StaticResource CaptionButtonStyle}"/>
                         <Setter Target="MemPlus.Style" Value="{StaticResource CaptionButtonStyle}"/>
                         <Setter Target="MemMinus.Style" Value="{StaticResource CaptionButtonStyle}"/>
-                        <Setter Target="memButton.Style" Value="{StaticResource CaptionButtonStyle}"/>
+                        <Setter Target="MemButton.Style" Value="{StaticResource CaptionButtonStyle}"/>
                         <Setter Target="MemoryButton.MinHeight" Value="0"/>
                     </VisualState.Setters>
                     <Storyboard Completed="OnLayoutStateChanged"/>
@@ -454,7 +454,7 @@
                                         IsInError="{x:Bind Model.IsInError, Mode=OneWay}"
                                         IsOperatorCommand="{x:Bind Model.IsOperatorCommand, Mode=OneWay}"
                                         TabIndex="1"/>
-            <controls:OverflowTextBlock x:Name="expressionText"
+            <controls:OverflowTextBlock x:Name="ExpressionText"
                                         Grid.Row="1"
                                         Margin="6,0,6,0"
                                         VerticalAlignment="Bottom"
@@ -563,7 +563,7 @@
                                            Content="M-"
                                            TabIndex="13"
                                            Visibility="{Binding IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
-                <controls:CalculatorButton x:Name="memButton"
+                <controls:CalculatorButton x:Name="MemButton"
                                            x:Uid="memButton"
                                            Grid.Column="4"
                                            Style="{StaticResource CaptionButtonStyle}"

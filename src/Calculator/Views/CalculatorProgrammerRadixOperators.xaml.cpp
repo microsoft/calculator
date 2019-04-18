@@ -47,25 +47,25 @@ void CalculatorProgrammerRadixOperators::Shift_Clicked(Platform::Object^ sender,
     auto scvm = safe_cast<StandardCalculatorViewModel^>(this->DataContext);
     scvm->IsShiftProgrammerChecked = isShiftChecked;
 
-    if (rolButton == nullptr)
+    if (RolButton == nullptr)
     {
-        FindName("rolButton");
-        FindName("rorButton");
+        FindName("RolButton");
+        FindName("RorButton");
     }
 
     if (isShiftChecked)
     {
-        rolButton->Visibility = ::Visibility::Visible;
-        rorButton->Visibility = ::Visibility::Visible;
-        lshButton->Visibility = ::Visibility::Collapsed;
-        rshButton->Visibility = ::Visibility::Collapsed;
+        RolButton->Visibility = ::Visibility::Visible;
+        RorButton->Visibility = ::Visibility::Visible;
+        LshButton->Visibility = ::Visibility::Collapsed;
+        RshButton->Visibility = ::Visibility::Collapsed;
     }
     else
     {
-        rolButton->Visibility = ::Visibility::Collapsed;
-        rorButton->Visibility = ::Visibility::Collapsed;
-        lshButton->Visibility = ::Visibility::Visible;
-        rshButton->Visibility = ::Visibility::Visible;
+        RolButton->Visibility = ::Visibility::Collapsed;
+        RorButton->Visibility = ::Visibility::Collapsed;
+        LshButton->Visibility = ::Visibility::Visible;
+        RshButton->Visibility = ::Visibility::Visible;
     }
 }
 

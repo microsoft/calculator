@@ -32,7 +32,7 @@ void OverflowTextBlock::OnApplyTemplate()
 {
     UnregisterEventHandlers();
 
-    auto uiElement = GetTemplateChild("expressionContainer");
+    auto uiElement = GetTemplateChild("ExpressionContainer");
     if (uiElement != nullptr)
     {
         m_expressionContainer = safe_cast<ScrollViewer^>(uiElement);
@@ -40,17 +40,17 @@ void OverflowTextBlock::OnApplyTemplate()
         m_containerViewChangedToken = m_expressionContainer->ViewChanged += ref new EventHandler<ScrollViewerViewChangedEventArgs ^>(this, &OverflowTextBlock::OnViewChanged);
     }
 
-    uiElement = GetTemplateChild("scrollLeft");
+    uiElement = GetTemplateChild("ScrollLeft");
     if (uiElement != nullptr)
     {
         m_scrollLeft = safe_cast<Button^>(uiElement);
         m_scrollLeftClickEventToken = m_scrollLeft->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollClick);
     }
 
-    uiElement = GetTemplateChild("scrollRight");
+    uiElement = GetTemplateChild("ScrollRight");
     if (uiElement != nullptr)
     {
-        m_scrollRight = safe_cast<Button^>(GetTemplateChild("scrollRight"));
+        m_scrollRight = safe_cast<Button^>(uiElement);
         m_scrollRightClickEventToken = m_scrollRight->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollClick);
     }
 

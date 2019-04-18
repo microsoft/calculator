@@ -53,7 +53,7 @@ UnitConverter::UnitConverter() :
     InitializeComponent();
 
     // adding ESC key shortcut binding to clear button
-    clearEntryButtonPos0->SetValue(Common::KeyboardShortcutManager::VirtualKeyProperty, Common::MyVirtualKey::Escape);
+    ClearEntryButtonPos0->SetValue(Common::KeyboardShortcutManager::VirtualKeyProperty, Common::MyVirtualKey::Escape);
 
     m_layoutDirection = LocalizationService::GetInstance()->GetFlowDirection();
     if (m_layoutDirection == ::FlowDirection::RightToLeft)
@@ -291,7 +291,7 @@ void UnitConverter::SetDefaultFocus()
         Value1,
         CurrencyRefreshBlockControl,
         OfflineBlock,
-        clearEntryButtonPos0
+        ClearEntryButtonPos0
     };
 
     for (Control^ control : focusPrecedence)

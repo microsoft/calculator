@@ -620,7 +620,7 @@ void Calculator::OnHideMemoryClicked()
 
 void Calculator::EnableMemoryControls(bool enable)
 {
-    memButton->IsEnabled = enable;
+    MemButton->IsEnabled = enable;
     MemMinus->IsEnabled = enable;
     MemPlus->IsEnabled = enable;
     if (!Model->IsMemoryEmpty)
@@ -695,7 +695,7 @@ void Calculator::DockPanelTapped(_In_ TappedRoutedEventArgs^ e)
 
 void Calculator::UnregisterEventHandlers()
 {
-    expressionText->UnregisterEventHandlers();
+    ExpressionText->UnregisterEventHandlers();
 }
 
 void Calculator::OnErrorLayoutCompleted(_In_ Object^ sender, _In_ Object^ e)
