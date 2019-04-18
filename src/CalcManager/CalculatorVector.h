@@ -1,9 +1,14 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
 
+#include <string>
+#include <vector>
+#include <winerror.h>
 #include "Ratpack/CalcErr.h"
+#include <stdexcept> // for std::out_of_range
+#include <sal.h> // for SAL
 
 template <typename TType>
 class CalculatorVector

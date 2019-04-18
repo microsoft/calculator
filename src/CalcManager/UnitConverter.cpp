@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
+#include <cassert>
+#include <sstream>
+#include <algorithm> // for std::sort
 #include "Command.h"
 #include "UnitConverter.h"
 

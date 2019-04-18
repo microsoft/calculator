@@ -12,7 +12,8 @@
 *
 * Author:
 \****************************************************************************/
-#include "pch.h"
+
+#include <string>
 #include "Header Files/CalcEngine.h"
 #include "Header Files/CalcUtils.h"
 
