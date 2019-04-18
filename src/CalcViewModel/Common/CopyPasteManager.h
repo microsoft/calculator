@@ -13,14 +13,14 @@ namespace CalculatorUnitTests
 
 namespace CalculatorApp
 {
-    constexpr auto QwordType = 1;
-    constexpr auto DwordType = 2;
-    constexpr auto WordType = 3;
-    constexpr auto ByteType = 4;
-    constexpr auto HexBase = 5;
-    constexpr auto DecBase = 6;
-    constexpr auto OctBase = 7;
-    constexpr auto BinBase = 8;
+    inline constexpr auto QwordType = 1;
+    inline constexpr auto DwordType = 2;
+    inline constexpr auto WordType = 3;
+    inline constexpr auto ByteType = 4;
+    inline constexpr auto HexBase = 5;
+    inline constexpr auto DecBase = 6;
+    inline constexpr auto OctBase = 7;
+    inline constexpr auto BinBase = 8;
 
     class CopyPasteManager
     {
@@ -32,7 +32,7 @@ namespace CalculatorApp
             return ClipboardTextFormat() >= 0;
         }
 
-        static constexpr auto PasteErrorString = L"NoOp";
+        inline static constexpr auto PasteErrorString = L"NoOp";
 
     private:
         static int ClipboardTextFormat();
