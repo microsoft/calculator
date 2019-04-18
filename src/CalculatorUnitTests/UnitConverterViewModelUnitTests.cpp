@@ -454,57 +454,189 @@ namespace CalculatorUnitTests
             // Call count is being set to 1 because we send 'CE' command as the first call
             UINT callCount = 1;
 
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Zero);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Zero);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Zero == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::One);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::One);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::One == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Two);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Two);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Two == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Three);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Three);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Three == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Four);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Four);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Four == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Five);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Five);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Five == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Six);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Six);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Six == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Seven);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Seven);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Seven == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Eight);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Eight);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Eight == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Nine);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Nine);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Nine == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Decimal);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Decimal);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Decimal == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Negate);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Negate);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Negate == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Backspace);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Backspace);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Backspace == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Clear);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Clear);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Clear == mock->m_lastCommand);
 
-            for (NumbersAndOperatorsEnum button = NumbersAndOperatorsEnum::Add; button <= NumbersAndOperatorsEnum::None; button++)
+            const NumbersAndOperatorsEnum buttons[] = {
+                NumbersAndOperatorsEnum::Add,
+                NumbersAndOperatorsEnum::Subtract,
+                NumbersAndOperatorsEnum::Multiply,
+                NumbersAndOperatorsEnum::Divide,
+                NumbersAndOperatorsEnum::Invert,
+                NumbersAndOperatorsEnum::Equals,
+                NumbersAndOperatorsEnum::Sqrt,
+                NumbersAndOperatorsEnum::Percent,
+                NumbersAndOperatorsEnum::ClearEntry,
+                NumbersAndOperatorsEnum::Degree,
+                NumbersAndOperatorsEnum::Radians,
+                NumbersAndOperatorsEnum::Grads,
+                NumbersAndOperatorsEnum::Degrees,
+                NumbersAndOperatorsEnum::OpenParenthesis,
+                NumbersAndOperatorsEnum::CloseParenthesis,
+                NumbersAndOperatorsEnum::Pi,
+                NumbersAndOperatorsEnum::Sin,
+                NumbersAndOperatorsEnum::Cos,
+                NumbersAndOperatorsEnum::Tan,
+                NumbersAndOperatorsEnum::Factorial,
+                NumbersAndOperatorsEnum::XPower2,
+                NumbersAndOperatorsEnum::Mod,
+                NumbersAndOperatorsEnum::FToE,
+                NumbersAndOperatorsEnum::LogBaseE,
+                NumbersAndOperatorsEnum::InvSin,
+                NumbersAndOperatorsEnum::InvCos,
+                NumbersAndOperatorsEnum::InvTan,
+                NumbersAndOperatorsEnum::LogBase10,
+                NumbersAndOperatorsEnum::XPowerY,
+                NumbersAndOperatorsEnum::YRootX,
+                NumbersAndOperatorsEnum::TenPowerX,
+                NumbersAndOperatorsEnum::EPowerX,
+                NumbersAndOperatorsEnum::Exp,
+                NumbersAndOperatorsEnum::IsScientificMode,
+                NumbersAndOperatorsEnum::IsStandardMode,
+                NumbersAndOperatorsEnum::None,
+                NumbersAndOperatorsEnum::IsProgrammerMode,
+                NumbersAndOperatorsEnum::DecButton,
+                NumbersAndOperatorsEnum::OctButton,
+                NumbersAndOperatorsEnum::HexButton,
+                NumbersAndOperatorsEnum::BinButton,
+                NumbersAndOperatorsEnum::And,
+                NumbersAndOperatorsEnum::Ror,
+                NumbersAndOperatorsEnum::Rol,
+                NumbersAndOperatorsEnum::Or,
+                NumbersAndOperatorsEnum::Lsh,
+                NumbersAndOperatorsEnum::Rsh,
+                NumbersAndOperatorsEnum::Xor,
+                NumbersAndOperatorsEnum::Not,
+                NumbersAndOperatorsEnum::A,
+                NumbersAndOperatorsEnum::B,
+                NumbersAndOperatorsEnum::C,
+                NumbersAndOperatorsEnum::D,
+                NumbersAndOperatorsEnum::E,
+                NumbersAndOperatorsEnum::F,
+                NumbersAndOperatorsEnum::Memory,
+                NumbersAndOperatorsEnum::Sinh,
+                NumbersAndOperatorsEnum::Cosh,
+                NumbersAndOperatorsEnum::Tanh,
+                NumbersAndOperatorsEnum::InvSinh,
+                NumbersAndOperatorsEnum::InvCosh,
+                NumbersAndOperatorsEnum::InvTanh,
+                NumbersAndOperatorsEnum::Qword,
+                NumbersAndOperatorsEnum::Dword,
+                NumbersAndOperatorsEnum::Word,
+                NumbersAndOperatorsEnum::Byte,
+                NumbersAndOperatorsEnum::Cube,
+                NumbersAndOperatorsEnum::DMS,
+                NumbersAndOperatorsEnum::BINSTART,
+                NumbersAndOperatorsEnum::BINPOS0,
+                NumbersAndOperatorsEnum::BINPOS1,
+                NumbersAndOperatorsEnum::BINPOS2,
+                NumbersAndOperatorsEnum::BINPOS3,
+                NumbersAndOperatorsEnum::BINPOS4,
+                NumbersAndOperatorsEnum::BINPOS5,
+                NumbersAndOperatorsEnum::BINPOS6,
+                NumbersAndOperatorsEnum::BINPOS7,
+                NumbersAndOperatorsEnum::BINPOS8,
+                NumbersAndOperatorsEnum::BINPOS9,
+                NumbersAndOperatorsEnum::BINPOS10,
+                NumbersAndOperatorsEnum::BINPOS11,
+                NumbersAndOperatorsEnum::BINPOS12,
+                NumbersAndOperatorsEnum::BINPOS13,
+                NumbersAndOperatorsEnum::BINPOS14,
+                NumbersAndOperatorsEnum::BINPOS15,
+                NumbersAndOperatorsEnum::BINPOS16,
+                NumbersAndOperatorsEnum::BINPOS17,
+                NumbersAndOperatorsEnum::BINPOS18,
+                NumbersAndOperatorsEnum::BINPOS19,
+                NumbersAndOperatorsEnum::BINPOS20,
+                NumbersAndOperatorsEnum::BINPOS21,
+                NumbersAndOperatorsEnum::BINPOS22,
+                NumbersAndOperatorsEnum::BINPOS23,
+                NumbersAndOperatorsEnum::BINPOS24,
+                NumbersAndOperatorsEnum::BINPOS25,
+                NumbersAndOperatorsEnum::BINPOS26,
+                NumbersAndOperatorsEnum::BINPOS27,
+                NumbersAndOperatorsEnum::BINPOS28,
+                NumbersAndOperatorsEnum::BINPOS29,
+                NumbersAndOperatorsEnum::BINPOS30,
+                NumbersAndOperatorsEnum::BINPOS31,
+                NumbersAndOperatorsEnum::BINPOS32,
+                NumbersAndOperatorsEnum::BINPOS33,
+                NumbersAndOperatorsEnum::BINPOS34,
+                NumbersAndOperatorsEnum::BINPOS35,
+                NumbersAndOperatorsEnum::BINPOS36,
+                NumbersAndOperatorsEnum::BINPOS37,
+                NumbersAndOperatorsEnum::BINPOS38,
+                NumbersAndOperatorsEnum::BINPOS39,
+                NumbersAndOperatorsEnum::BINPOS40,
+                NumbersAndOperatorsEnum::BINPOS41,
+                NumbersAndOperatorsEnum::BINPOS42,
+                NumbersAndOperatorsEnum::BINPOS43,
+                NumbersAndOperatorsEnum::BINPOS44,
+                NumbersAndOperatorsEnum::BINPOS45,
+                NumbersAndOperatorsEnum::BINPOS46,
+                NumbersAndOperatorsEnum::BINPOS47,
+                NumbersAndOperatorsEnum::BINPOS48,
+                NumbersAndOperatorsEnum::BINPOS49,
+                NumbersAndOperatorsEnum::BINPOS50,
+                NumbersAndOperatorsEnum::BINPOS51,
+                NumbersAndOperatorsEnum::BINPOS52,
+                NumbersAndOperatorsEnum::BINPOS53,
+                NumbersAndOperatorsEnum::BINPOS54,
+                NumbersAndOperatorsEnum::BINPOS55,
+                NumbersAndOperatorsEnum::BINPOS56,
+                NumbersAndOperatorsEnum::BINPOS57,
+                NumbersAndOperatorsEnum::BINPOS58,
+                NumbersAndOperatorsEnum::BINPOS59,
+                NumbersAndOperatorsEnum::BINPOS60,
+                NumbersAndOperatorsEnum::BINPOS61,
+                NumbersAndOperatorsEnum::BINPOS62,
+                NumbersAndOperatorsEnum::BINPOS63,
+                NumbersAndOperatorsEnum::BINEND,
+                NumbersAndOperatorsEnum::Hyp
+            };
+
+            for (const auto& button : buttons)
             {
-                if (button == NumbersAndOperatorsEnum::Decimal ||
-                    button == NumbersAndOperatorsEnum::Negate ||
-                    button == NumbersAndOperatorsEnum::Backspace)
-                {
-                    continue;
-                }
                 vm.ButtonPressed->Execute(button);
                 VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
                 VERIFY_IS_TRUE(UCM::Command::None == mock->m_lastCommand);
