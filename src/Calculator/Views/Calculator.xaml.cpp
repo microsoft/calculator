@@ -659,11 +659,6 @@ void Calculator::OnHistoryFlyOutTapped(_In_ Object^ sender, _In_ TappedRoutedEve
     }
 }
 
-void Calculator::expressionContainer_LayoutUpdated(_In_ Object^ sender, _In_ Object^ e)
-{
-    expressionText->UpdateScrollButtons();
-}
-
 bool Calculator::IsValidRegularExpression(std::wstring str)
 {
     bool result = false;

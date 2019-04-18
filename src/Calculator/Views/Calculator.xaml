@@ -8,7 +8,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:model="using:CalculatorApp.ViewModel"
              Loaded="OnLoaded"
              mc:Ignorable="d">
 
@@ -19,20 +18,20 @@
             <TextBlock Margin="2,0,0,0"
                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
                        IsTextScaleFactorEnabled="False"
-                       Text="{Binding Token, Mode=OneWay}"/>
+                       Text="{x:Bind Token, Mode=OneWay}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="Operator" x:DataType="common:DisplayExpressionToken">
             <TextBlock Margin="2,0,0,0"
                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
                        IsTextScaleFactorEnabled="False"
-                       Text="{Binding Token, Mode=OneWay}"/>
+                       Text="{x:Bind Token, Mode=OneWay}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="Separator" x:DataType="common:DisplayExpressionToken">
             <TextBlock x:Name="MainText"
                        IsTextScaleFactorEnabled="False"
-                       Text="{Binding Token, Mode=OneWay}"/>
+                       Text="{x:Bind Token, Mode=OneWay}"/>
         </DataTemplate>
 
         <!-- TextBox Styles -->
@@ -42,117 +41,57 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="controls:OverflowTextBlock">
-                        <Border x:Name="expressionborder" Background="Transparent">
-                            <Grid x:Name="tokenContainer" Background="{TemplateBinding Background}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="12"/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="12"/>
-                                </Grid.ColumnDefinitions>
-                                <ScrollViewer x:Name="expressionContainer"
-                                              Grid.Column="1"
-                                              Padding="0,0,0,0"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              Style="{StaticResource ResultsScrollerSnapped}"
-                                              AutomationProperties.AccessibilityView="Raw"
-                                              LayoutUpdated="expressionContainer_LayoutUpdated">
-                                    <ListView x:Name="TokenList"
+                        <Grid x:Name="tokenContainer" Background="{TemplateBinding Background}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="12"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="12"/>
+                            </Grid.ColumnDefinitions>
+                            <ScrollViewer x:Name="expressionContainer"
+                                          Grid.Column="1"
+                                          Padding="0,0,0,0"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Style="{StaticResource ResultsScrollerSnapped}"
+                                          AutomationProperties.AccessibilityView="Raw">
+                                <ItemsControl x:Name="TokenList"
                                               Padding="0"
                                               VerticalAlignment="Stretch"
                                               HorizontalContentAlignment="Right"
                                               VerticalContentAlignment="Stretch"
                                               IsTabStop="False"
-                                              ItemContainerStyleSelector="{StaticResource ExpressionItemContainerStyle}"
                                               ItemTemplateSelector="{StaticResource ExpressionItemTemplateSelector}"
-                                              ItemsSource="{Binding ExpressionTokens}"
-                                              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                              ScrollViewer.HorizontalScrollMode="Enabled"
-                                              ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                              ScrollViewer.VerticalScrollMode="Disabled"
-                                              SelectionMode="None">
-                                        <ListView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel HorizontalAlignment="Right"
-                                                            VerticalAlignment="Stretch"
-                                                            Orientation="Horizontal"/>
-                                            </ItemsPanelTemplate>
-                                        </ListView.ItemsPanel>
-                                        <ListView.ItemContainerTransitions>
-                                            <TransitionCollection/>
-                                        </ListView.ItemContainerTransitions>
-                                    </ListView>
-                                </ScrollViewer>
-                                <Button x:Name="scrollLeft"
-                                        x:Uid="scrollLeft"
-                                        Grid.Column="0"
-                                        Margin="-4,3,-4,0"
-                                        Style="{StaticResource ScrollButtonStyle}">
-                                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                              FontSize="12"
-                                              Glyph="&#xE26C;"/>
-                                </Button>
-                                <Button x:Name="scrollRight"
-                                        x:Uid="scrollRight"
-                                        Grid.Column="2"
-                                        Margin="0,3,-9,0"
-                                        Style="{StaticResource ScrollButtonStyle}">
-                                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                              FontSize="12"
-                                              Glyph="&#xE26B;"/>
-                                </Button>
-                            </Grid>
-                        </Border>
+                                              ItemsSource="{Binding ExpressionTokens}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <ItemsStackPanel HorizontalAlignment="Right"
+                                                             VerticalAlignment="Stretch"
+                                                             Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </ScrollViewer>
+                            <Button x:Name="scrollLeft"
+                                    x:Uid="scrollLeft"
+                                    Grid.Column="0"
+                                    Margin="-4,3,-4,0"
+                                    Style="{StaticResource ScrollButtonStyle}">
+                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                          FontSize="12"
+                                          Glyph="&#xE26C;"/>
+                            </Button>
+                            <Button x:Name="scrollRight"
+                                    x:Uid="scrollRight"
+                                    Grid.Column="2"
+                                    Margin="0,3,-9,0"
+                                    Style="{StaticResource ScrollButtonStyle}">
+                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                          FontSize="12"
+                                          Glyph="&#xE26B;"/>
+                            </Button>
+                        </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
-
-        <!-- ListViewItem Styles -->
-
-        <Style x:Key="ExpressionBaseContainerStyle" TargetType="ListViewItem">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="MinWidth" Value="0"/>
-            <Setter Property="MinHeight" Value="0"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListViewItem">
-                        <ListViewItemPresenter Padding="0"
-                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                               ContentMargin="0"
-                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-                                               PointerOverBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}"
-                                               PointerOverBackgroundMargin="0"
-                                               SelectedBackground="{ThemeResource SystemControlBackgroundAccentBrush}"
-                                               SelectedBorderThickness="0"
-                                               SelectedForeground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"
-                                               SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}"
-                                               SelectedPointerOverBorderBrush="Transparent"
-                                               SelectionCheckMarkVisualEnabled="False"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="NonEditableOperatorContainerStyle"
-               BasedOn="{StaticResource ExpressionBaseContainerStyle}"
-               TargetType="ListViewItem">
-            <Setter Property="IsHitTestVisible" Value="False"/>
-            <Setter Property="IsTabStop" Value="False"/>
-            <Setter Property="MinWidth" Value="4"/>
-        </Style>
-
-        <Style x:Key="EditableOperatorContainerStyle"
-               BasedOn="{StaticResource ExpressionBaseContainerStyle}"
-               TargetType="ListViewItem">
-            <Setter Property="IsHitTestVisible" Value="True"/>
-            <Setter Property="MinWidth" Value="32"/>
         </Style>
 
         <!-- Calculation Result Styles -->
@@ -312,12 +251,6 @@
                                                    OperandTemplate="{StaticResource Operand}"
                                                    OperatorTemplate="{StaticResource Operator}"
                                                    SeparatorTemplate="{StaticResource Separator}"/>
-
-        <converters:ExpressionItemContainerStyle x:Key="ExpressionItemContainerStyle"
-                                                 EditableOperatorStyle="{StaticResource NonEditableOperatorContainerStyle}"
-                                                 NonEditableOperatorStyle="{StaticResource NonEditableOperatorContainerStyle}"
-                                                 OperandStyle="{StaticResource NonEditableOperatorContainerStyle}"
-                                                 SeparatorStyle="{StaticResource NonEditableOperatorContainerStyle}"/>
 
         <!-- Miscellaneous Resources -->
 
@@ -528,7 +461,7 @@
                                         AutomationProperties.AutomationId="CalculatorExpression"
                                         AutomationProperties.Name="{x:Bind Model.CalculationExpressionAutomationName, Mode=OneWay}"
                                         IsTabStop="False"
-                                        TokensUpdated="{Binding AreTokensUpdated, Mode=OneWay}"/>
+                                        TokensUpdated="{x:Bind Model.AreTokensUpdated, Mode=OneWay}"/>
 
             <!-- Programmer display panel controls -->
             <local:CalculatorProgrammerOperators x:Name="ProgrammerOperators"

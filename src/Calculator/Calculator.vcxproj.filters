@@ -243,9 +243,6 @@
     <ClCompile Include="Converters\BooleanToVisibilityConverter.cpp">
       <Filter>Converters</Filter>
     </ClCompile>
-    <ClCompile Include="Converters\ExpressionItemContainerStyle.cpp">
-      <Filter>Converters</Filter>
-    </ClCompile>
     <ClCompile Include="Converters\ExpressionItemTemplateSelector.cpp">
       <Filter>Converters</Filter>
     </ClCompile>
@@ -331,9 +328,6 @@
       <Filter>Converters</Filter>
     </ClInclude>
     <ClInclude Include="Converters\BooleanToVisibilityConverter.h">
-      <Filter>Converters</Filter>
-    </ClInclude>
-    <ClInclude Include="Converters\ExpressionItemContainerStyle.h">
       <Filter>Converters</Filter>
     </ClInclude>
     <ClInclude Include="Converters\ExpressionItemTemplateSelector.h">

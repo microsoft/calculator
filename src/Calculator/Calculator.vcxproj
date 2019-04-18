@@ -243,7 +243,6 @@
     <ClInclude Include="Converters\BitFlipAutomationNameConverter.h" />
     <ClInclude Include="Converters\BooleanNegationConverter.h" />
     <ClInclude Include="Converters\BooleanToVisibilityConverter.h" />
-    <ClInclude Include="Converters\ExpressionItemContainerStyle.h" />
     <ClInclude Include="Converters\ExpressionItemTemplateSelector.h" />
     <ClInclude Include="Converters\ItemSizeToVisibilityConverter.h" />
     <ClInclude Include="Converters\RadixToStringConverter.h" />
@@ -375,7 +374,6 @@
     <ClCompile Include="Converters\BitFlipAutomationNameConverter.cpp" />
     <ClCompile Include="Converters\BooleanNegationConverter.cpp" />
     <ClCompile Include="Converters\BooleanToVisibilityConverter.cpp" />
-    <ClCompile Include="Converters\ExpressionItemContainerStyle.cpp" />
     <ClCompile Include="Converters\ExpressionItemTemplateSelector.cpp" />
     <ClCompile Include="Converters\ItemSizeToVisibilityConverter.cpp" />
     <ClCompile Include="Converters\RadixToStringConverter.cpp" />

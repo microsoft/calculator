@@ -66,6 +66,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_BinaryDisplayValue(L"0"),
     m_OctalDisplayValue(L"0"),
     m_standardCalculatorManager(&m_calculatorDisplay, &m_resourceProvider),
+    m_ExpressionTokens(ref new Vector<DisplayExpressionToken^>()),
     m_MemorizedNumbers(ref new Vector<MemoryItemViewModel^>()),
     m_IsMemoryEmpty(true),
     m_IsFToEChecked(false),
@@ -314,58 +315,66 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<CalculatorVector<
 {
     AreTokensUpdated = false;
 
-    if (m_ExpressionTokens == nullptr)
-    {
-        m_ExpressionTokens = ref new Vector<DisplayExpressionToken^>();
-    }
-    else
-    {
-        m_ExpressionTokens->Clear();
-    }
-
     unsigned int nTokens = 0;
     tokens->GetSize(&nTokens);
+
+    if (nTokens == 0)
+    {
+        m_ExpressionTokens->Clear();
+        return;
+    }
+
     pair <wstring, int> currentToken;
     const auto& localizer = LocalizationSettings::GetInstance();
 
+    const wstring separator = L" ";
     for (unsigned int i = 0; i < nTokens; ++i)
     {
         if (SUCCEEDED(tokens->GetAt(i, &currentToken)))
         {
             Common::TokenType type;
-            const wstring separator = L" ";
             bool isEditable = (currentToken.second == -1) ? false : true;
             localizer.LocalizeDisplayValue(&(currentToken.first));
 
             if (!isEditable)
             {
-                if (currentToken.first == separator)
-                {
-                    type = TokenType::Separator;
-                }
-                else
-                {
-                    type = TokenType::Operator;
-                }
+                type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
             }
-
             else
             {
                 shared_ptr<IExpressionCommand> command;
                 IFTPlatformException(m_commands->GetAt(static_cast<unsigned int>(currentToken.second), &command));
+                type = command->GetCommandType() == CommandType::OperandCommand ? TokenType::Operand : TokenType::Operator;
+            }
 
-                if (command->GetCommandType() == CommandType::OperandCommand)
+            auto currentTokenString = ref new String(currentToken.first.c_str());
+            if (i < m_ExpressionTokens->Size)
+            {
+                auto existingItem = m_ExpressionTokens->GetAt(i);
+                if (type == existingItem->Type && existingItem->Token->Equals(currentTokenString))
                 {
-                    type = TokenType::Operand;
+                    existingItem->TokenPosition = i;
+                    existingItem->IsTokenEditable = isEditable;
+                    existingItem->CommandIndex = 0;
                 }
                 else
                 {
-                    type = TokenType::Operator;
+                    auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
+                    m_ExpressionTokens->InsertAt(i, expressionToken);
                 }
+                
             }
-            DisplayExpressionToken^ expressionToken = ref new DisplayExpressionToken(ref new String(currentToken.first.c_str()), i, isEditable, type);
-            m_ExpressionTokens->Append(expressionToken);
+            else
+            {
+                auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
+                m_ExpressionTokens->Append(expressionToken);
+            }
         }
+    }
+
+    while (m_ExpressionTokens->Size != nTokens)
+    {
+        m_ExpressionTokens->RemoveAtEnd();
     }
 }
 
@@ -524,7 +533,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
         {
             if (commandIndex == 0)
             {
-                delete [] temp;
+                delete[] temp;
                 return;
             }
 
@@ -545,7 +554,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
             length = m_selectedExpressionLastData->Length() + 1;
             if (length > 50)
             {
-                delete [] temp;
+                delete[] temp;
                 return;
             }
             for (; i < length; ++i)

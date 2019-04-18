@@ -5,7 +5,6 @@
 
 #include "Views/Calculator.g.h"
 #include "Converters/BooleanNegationConverter.h"
-#include "Converters/ExpressionItemContainerStyle.h"
 #include "Converters/ExpressionItemTemplateSelector.h"
 #include "Converters/VisibilityNegationConverter.h"
 #include "CalcViewModel/Common/Automation/NarratorNotifier.h"
@@ -130,7 +129,6 @@ namespace CalculatorApp
         void EnableMemoryControls(bool enable);
         void OnMemoryFlyOutTapped(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
         void OnHistoryFlyOutTapped(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
-        void expressionContainer_LayoutUpdated(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
         bool IsValidRegularExpression(std::wstring str);
         void DockPanelTapped(_In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
         void OnErrorLayoutCompleted(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
