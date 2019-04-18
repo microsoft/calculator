@@ -17,7 +17,10 @@
 //
 //---------------------------------------------------------------------------
 
-#include "pch.h"
+#include <algorithm>
+#include <winerror.h>
+#include <sstream>
+#include <cstring> // for memmove, memcpy
 #include "ratpak.h"
 
 using namespace std;

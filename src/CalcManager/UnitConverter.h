@@ -3,6 +3,12 @@
 
 #pragma once
 
+#include <vector>
+#include <unordered_map>
+#include <ppltasks.h>
+#include <sal.h> // for SAL
+#include <memory> // for std::shared_ptr
+
 namespace UnitConversionManager
 {
     enum class Command;

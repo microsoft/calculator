@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-#include "pch.h"
+#include <intsafe.h>
 #include "Header Files/Rational.h"
 
 using namespace std;

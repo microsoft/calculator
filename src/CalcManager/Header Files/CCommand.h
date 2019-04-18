@@ -13,6 +13,8 @@
 *
 \****************************************************************************/
 
+#pragma once
+
 // The following are the valid id's which can be passed to CCalcEngine::ProcessCommand
 
 #define IDM_HEX           313

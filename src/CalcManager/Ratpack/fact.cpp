@@ -13,7 +13,6 @@
 //     Contains fact(orial) and supporting _gamma functions.
 //
 //-----------------------------------------------------------------------------
-#include "pch.h"
 #include "ratpak.h"
 
 
