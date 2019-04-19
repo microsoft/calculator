@@ -428,14 +428,21 @@
                 </VisualState>
             </VisualStateGroup>
             <VisualStateGroup x:Name="CurrencySecondaryStatusStates">
+                <VisualState x:Name="NormalCurrencyStatus">
+                    <VisualState.Setters>
+                        <Setter Target="CurrencySecondaryStatusBlock.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
                 <VisualState x:Name="ChargesMayApplyCurrencyStatus">
                     <VisualState.Setters>
                         <Setter Target="CurrencySecondaryStatus.Foreground" Value="{ThemeResource AppControlPageTextBaseHighColorBrush}"/>
+                        <Setter Target="CurrencySecondaryStatusBlock.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="FailedCurrencyStatus">
                     <VisualState.Setters>
                         <Setter Target="CurrencySecondaryStatus.Foreground" Value="{ThemeResource AppControlPageTextRedColorBrush}"/>
+                        <Setter Target="CurrencySecondaryStatusBlock.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -615,7 +622,8 @@
                                          x:Uid="RefreshButtonText"
                                          Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}"
                                          Click="CurrencyRefreshButton_Click"/>
-                        <TextBlock Margin="0,7,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
+                        <TextBlock x:Name="CurrencySecondaryStatusBlock" Margin="0,7,0,0"
+                                   Style="{ThemeResource CaptionTextBlockStyle}">
                             <Run x:Name="Spacing" Text="&#x200A;"/>
                             <Run x:Name="CurrencySecondaryStatus"
                                  FontWeight="SemiBold"

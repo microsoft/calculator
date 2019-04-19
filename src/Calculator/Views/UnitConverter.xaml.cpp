@@ -152,6 +152,7 @@ void UnitConverter::OnOfflineNetworkAccess()
 
 void UnitConverter::SetNormalCurrencyStatus()
 {
+    VisualStateManager::GoToState(this, L"NormalCurrencyStatus", false);
     CurrencySecondaryStatus->Text = L"";
 }
 
