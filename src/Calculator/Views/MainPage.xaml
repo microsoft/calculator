@@ -13,7 +13,6 @@
       x:Name="PageRoot"
       Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
       Loaded="OnPageLoaded"
-      Unloaded="OnPageUnLoaded"
       mc:Ignorable="d">
 
     <Page.Resources>
@@ -38,11 +37,6 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!--
-                This row is padding for the SystemFocusVisuals,
-                otherwise the focus rectangles render under the title bar controls.
-            -->
-            <RowDefinition x:Name="FocusVisualMargin" Height="3"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -89,14 +83,11 @@
                     Command="{x:Bind Model.PasteCommand}"/>
         </StackPanel>
 
-        <!-- Title Bar -->
-        <local:TitleBar x:Name="CustomTitleBar"
-                        Grid.Row="0"
-                        Visibility="Collapsed"/>
+        <local:TitleBar x:Name="CustomTitleBar" Grid.Row="0"/>
 
         <muxc:NavigationView x:Name="NavView"
                              x:Uid="NavView"
-                             Grid.Row="2"
+                             Grid.Row="1"
                              CompactModeThresholdWidth="Infinity"
                              DataContext="{x:Bind Model}"
                              ExpandedModeThresholdWidth="Infinity"

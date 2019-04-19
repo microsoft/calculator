@@ -120,19 +120,6 @@ void Memory::IsErrorVisualState::set(bool value)
     }
 }
 
-void Memory::MemoryList_Loaded(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
-{
-    // When transitioning between docked and undocked view states, the memory list is
-    // unloaded and then loaded, so we attempt to create the titlebarhelper every time
-    // we are loaded, letting the util function check if we are docked or not.
-    m_titleBarHelper = TitleBarHelper::CreateTitleBarHelperIfNotDocked(CustomTitleBar);
-}
-
-void Memory::MemoryList_Unloaded(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
-{
-    m_titleBarHelper = nullptr;
-}
-
 MemoryItemViewModel^ Memory::GetMemoryItemForCurrentFlyout()
 {
     auto listViewItem = m_memoryItemFlyout->Target;
