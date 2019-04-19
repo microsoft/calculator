@@ -55,7 +55,7 @@ UnitConverter::UnitConverter() :
     InitializeComponent();
 
     // adding ESC key shortcut binding to clear button
-    clearEntryButtonPos0->SetValue(Common::KeyboardShortcutManager::VirtualKeyProperty, Common::MyVirtualKey::Escape);
+    ClearEntryButtonPos0->SetValue(Common::KeyboardShortcutManager::VirtualKeyProperty, Common::MyVirtualKey::Escape);
 
     // Is currency symbol preference set to right side
     bool preferRight = LocalizationSettings::GetInstance().GetCurrencySymbolPrecedence() == 0;
@@ -286,7 +286,7 @@ void UnitConverter::SetDefaultFocus()
         Value1,
         CurrencyRefreshBlockControl,
         OfflineBlock,
-        clearEntryButtonPos0
+        ClearEntryButtonPos0
     };
 
     for (Control^ control : focusPrecedence)

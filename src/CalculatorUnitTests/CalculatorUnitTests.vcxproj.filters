@@ -29,6 +29,7 @@
     <ClCompile Include="Mocks\CurrencyHttpClient.cpp">
       <Filter>Mocks</Filter>
     </ClCompile>
+    <ClCompile Include="RationalTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AsyncHelper.h" />

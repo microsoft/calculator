@@ -16,7 +16,6 @@
 /***                                                                    ***/
 /***                                                                    ***/
 /**************************************************************************/
-#include "pch.h"
 #include "Header Files/CalcEngine.h"
 
 using namespace std;

@@ -57,7 +57,7 @@ namespace CalculatorManagerTest
             m_memorizedNumberStrings = numbers;
         }
 
-        void SetParenDisplayText(const std::wstring& parenthesisCount) override
+        void SetParenthesisNumber(unsigned int parenthesisCount) override
         {
             m_parenDisplay = parenthesisCount;
         }
@@ -115,7 +115,7 @@ namespace CalculatorManagerTest
     private:
         wstring m_primaryDisplay;
         wstring m_expression;
-        wstring m_parenDisplay;
+        unsigned int m_parenDisplay;
         bool m_isError;
         vector<wstring> m_memorizedNumberStrings;
         int m_maxDigitsCalledCount;

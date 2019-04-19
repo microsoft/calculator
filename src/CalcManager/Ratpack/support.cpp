@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //----------------------------------------------------------------------------
@@ -18,7 +18,9 @@
 //
 //----------------------------------------------------------------------------
 
-#include "pch.h"
+#include <string>
+#include <cstring> // for memmove
+#include <iostream> // for wostream
 #include "ratpak.h"
 
 using namespace std;
@@ -296,7 +298,7 @@ void intrat( PRAT *px, uint32_t radix, int32_t precision)
         // Subtract the fractional part of the rational
         PRAT pret = nullptr;
         DUPRAT(pret,*px);
-        modrat( &pret, rat_one );
+        remrat( &pret, rat_one );
 
         subrat( px, pret, precision);
         destroyrat( pret );
@@ -348,8 +350,7 @@ bool rat_ge( PRAT a, PRAT b, int32_t precision)
     b->pp->sign *= -1;
     addrat( &rattmp, b, precision);
     b->pp->sign *= -1;
-    bool bret = ( zernum( rattmp->pp ) ||
-        rattmp->pp->sign * rattmp->pq->sign == 1 );
+    bool bret = ( zernum( rattmp->pp ) || SIGN(rattmp) == 1 );
     destroyrat( rattmp );
     return( bret );
 }
@@ -374,8 +375,7 @@ bool rat_gt( PRAT a, PRAT b, int32_t precision)
     b->pp->sign *= -1;
     addrat( &rattmp, b, precision);
     b->pp->sign *= -1;
-    bool bret = ( !zernum( rattmp->pp ) &&
-        rattmp->pp->sign * rattmp->pq->sign == 1 );
+    bool bret = ( !zernum( rattmp->pp ) && SIGN(rattmp) == 1 );
     destroyrat( rattmp );
     return( bret );
 }
@@ -400,8 +400,7 @@ bool rat_le( PRAT a, PRAT b, int32_t precision)
     b->pp->sign *= -1;
     addrat( &rattmp, b, precision);
     b->pp->sign *= -1;
-    bool bret = ( zernum( rattmp->pp ) ||
-        rattmp->pp->sign * rattmp->pq->sign == -1 );
+    bool bret = ( zernum( rattmp->pp ) || SIGN(rattmp) == -1 );
     destroyrat( rattmp );
     return( bret );
 }
@@ -426,8 +425,7 @@ bool rat_lt( PRAT a, PRAT b, int32_t precision)
     b->pp->sign *= -1;
     addrat( &rattmp, b, precision);
     b->pp->sign *= -1;
-    bool bret = ( !zernum( rattmp->pp ) &&
-        rattmp->pp->sign * rattmp->pq->sign == -1 );
+    bool bret = ( !zernum( rattmp->pp ) && SIGN(rattmp) == -1 );
     destroyrat( rattmp );
     return( bret );
 }

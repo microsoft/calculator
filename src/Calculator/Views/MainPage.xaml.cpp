@@ -275,13 +275,6 @@ void MainPage::OnPageUnLoaded(_In_ Object^, _In_ RoutedEventArgs^)
     // On closing the instance of a window, On Window Consolidate gets fired.
 }
 
-void MainPage::PinUnpinAppBarButtonOnClicked(
-    _In_ Object^ sender,
-    _In_ RoutedEventArgs^ e)
-{
-     m_model->CalculatorViewModel->OnPinUnpinCommand(sender);
-}
-
 void MainPage::SetDefaultFocus()
 {
     if (m_calculator != nullptr && m_calculator->Visibility == ::Visibility::Visible)

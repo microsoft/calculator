@@ -223,6 +223,7 @@ namespace CalculatorApp
             void UpdateValue2AutomationName();
             Platform::String^ Serialize();
             void Deserialize(Platform::String^ state);
+            void ResetCategoriesAndRatio();
 
             // Saving And Restoring User Preferences of Category and Associated-Units across Sessions.
             void SaveUserPreferences();
@@ -263,6 +264,7 @@ namespace CalculatorApp
             void RefreshSupplementaryResults();
             void UpdateInputBlocked(_In_ const std::wstring& currencyInput);
             bool UnitsAreValid();
+            void ResetCategory();
 
             void OnButtonPressed(Platform::Object^ parameter);
             Platform::String^ ConvertToLocalizedString(const std::wstring& stringToLocalize, bool allowPartialStrings);

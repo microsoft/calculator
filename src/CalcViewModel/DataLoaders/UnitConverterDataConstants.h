@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 namespace CalculatorApp
@@ -162,7 +162,8 @@ namespace CalculatorApp
             Data_Zebibytes = UnitStart + 162,
             Data_Zetabits = UnitStart + 163,
             Data_Zetabytes = UnitStart + 164,
-            UnitEnd = Data_Zetabytes
+            Area_Pyeong = UnitStart + 165,
+            UnitEnd = Area_Pyeong
         };
     }
 }

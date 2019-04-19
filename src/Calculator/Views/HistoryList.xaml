@@ -62,7 +62,7 @@
                     <StackPanel Margin="0,6,4,6"
                                 Background="Transparent"
                                 ContextFlyout="{StaticResource HistoryContextMenu}">
-                        <TextBlock x:Name="exprTextBlock"
+                        <TextBlock x:Name="ExprTextBlock"
                                    Margin="0,0,0,4"
                                    HorizontalAlignment="Right"
                                    Style="{ThemeResource BodyTextBlockMediumStyle}"
@@ -71,7 +71,7 @@
                                    Text="{x:Bind Expression}"
                                    TextAlignment="Right"
                                    TextWrapping="Wrap"/>
-                        <TextBlock x:Name="resultTextBlock"
+                        <TextBlock x:Name="ResultTextBlock"
                                    HorizontalAlignment="Right"
                                    Style="{ThemeResource TitleTextBlockStyle}"
                                    FontWeight="SemiBold"
