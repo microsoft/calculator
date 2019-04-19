@@ -428,11 +428,7 @@
                 </VisualState>
             </VisualStateGroup>
             <VisualStateGroup x:Name="CurrencySecondaryStatusStates">
-                <VisualState x:Name="NormalCurrencyStatus">
-                    <VisualState.Setters>
-                        <Setter Target="CurrencySecondaryStatusTextBlock.Visibility" Value="Collapsed"/>
-                    </VisualState.Setters>
-                </VisualState>
+                <VisualState x:Name="NormalCurrencyStatus"/>
                 <VisualState x:Name="ChargesMayApplyCurrencyStatus">
                     <VisualState.Setters>
                         <Setter Target="CurrencySecondaryStatus.Foreground" Value="{ThemeResource AppControlPageTextBaseHighColorBrush}"/>
@@ -622,8 +618,10 @@
                                          x:Uid="RefreshButtonText"
                                          Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}"
                                          Click="CurrencyRefreshButton_Click"/>
-                        <TextBlock x:Name="CurrencySecondaryStatusTextBlock" Margin="0,7,0,0"
-                                   Style="{ThemeResource CaptionTextBlockStyle}">
+                        <TextBlock x:Name="CurrencySecondaryStatusTextBlock"
+                                   Margin="0,7,0,0"
+                                   Style="{ThemeResource CaptionTextBlockStyle}"
+                                   Visibility="Collapsed">
                             <Run x:Name="Spacing" Text="&#x200A;"/>
                             <Run x:Name="CurrencySecondaryStatus"
                                  FontWeight="SemiBold"

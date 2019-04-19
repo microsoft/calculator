@@ -157,14 +157,14 @@ void UnitConverter::SetNormalCurrencyStatus()
 
 void UnitConverter::SetChargesMayApplyStatus()
 {
-    VisualStateManager::GoToState(this, ChargesMayApplyCurrencyStatus->Name, false);
     CurrencySecondaryStatus->Text = m_chargesMayApplyText;
+    VisualStateManager::GoToState(this, ChargesMayApplyCurrencyStatus->Name, false);
 }
 
 void UnitConverter::SetFailedToRefreshStatus()
 {
-    VisualStateManager::GoToState(this, FailedCurrencyStatus->Name, false);
     CurrencySecondaryStatus->Text = m_failedToRefreshText;
+    VisualStateManager::GoToState(this, FailedCurrencyStatus->Name, false);
 }
 
 void UnitConverter::InitializeOfflineStatusTextBlock()
