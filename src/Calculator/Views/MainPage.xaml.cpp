@@ -604,9 +604,5 @@ void MainPage::AnnounceCategoryName()
 
 void MainPage::OnNavItemInvoked(MUXC::NavigationView^ /*sender*/, _In_ MUXC::NavigationViewItemInvokedEventArgs^ e)
 {
-    auto item = dynamic_cast<MUXC::NavigationViewItem^>(e->InvokedItemContainer);
-    if (item != nullptr)
-    {
-        NavView->IsPaneOpen = false;
-    }
+    NavView->IsPaneOpen = false;
 }
