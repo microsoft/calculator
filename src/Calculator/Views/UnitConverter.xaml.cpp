@@ -152,19 +152,18 @@ void UnitConverter::OnOfflineNetworkAccess()
 
 void UnitConverter::SetNormalCurrencyStatus()
 {
-    VisualStateManager::GoToState(this, L"NormalCurrencyStatus", false);
-    CurrencySecondaryStatus->Text = L"";
+    VisualStateManager::GoToState(this, NormalCurrencyStatus->Name, false);
 }
 
 void UnitConverter::SetChargesMayApplyStatus()
 {
-    VisualStateManager::GoToState(this, L"ChargesMayApplyCurrencyStatus", false);
+    VisualStateManager::GoToState(this, ChargesMayApplyCurrencyStatus->Name, false);
     CurrencySecondaryStatus->Text = m_chargesMayApplyText;
 }
 
 void UnitConverter::SetFailedToRefreshStatus()
 {
-    VisualStateManager::GoToState(this, L"FailedCurrencyStatus", false);
+    VisualStateManager::GoToState(this, FailedCurrencyStatus->Name, false);
     CurrencySecondaryStatus->Text = m_failedToRefreshText;
 }
 
