@@ -524,3 +524,8 @@ void MainPage::AnnounceCategoryName()
     NarratorAnnouncement^ announcement = CalculatorAnnouncement::GetCategoryNameChangedAnnouncement(categoryName);
     NarratorNotifier->Announce(announcement);
 }
+
+void MainPage::OnNavItemInvoked(MUXC::NavigationView^ /*sender*/, _In_ MUXC::NavigationViewItemInvokedEventArgs^ e)
+{
+    NavView->IsPaneOpen = false;
+}

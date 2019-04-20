@@ -49,6 +49,7 @@ namespace CalculatorApp
         void OnNavPaneOpened(_In_ Microsoft::UI::Xaml::Controls::NavigationView^ sender, _In_ Platform::Object^ args);
         void OnNavPaneClosed(_In_ Microsoft::UI::Xaml::Controls::NavigationView^ sender, _In_ Platform::Object^ args);
         void OnNavSelectionChanged(_In_ Platform::Object^ sender, _In_ Microsoft::UI::Xaml::Controls::NavigationViewSelectionChangedEventArgs^ e);
+        void OnNavItemInvoked(Microsoft::UI::Xaml::Controls::NavigationView^ /*sender*/, _In_ Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs^ e);
 
         void OnAboutButtonClick(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Controls::ItemClickEventArgs^ e);
         void OnAboutFlyoutOpened(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
