@@ -8,7 +8,6 @@
 #include "Views/DateCalculator.xaml.h"
 #include "Views/UnitConverter.xaml.h"
 #include "CalcViewModel/ApplicationViewModel.h"
-#include "Views/TitleBar.xaml.h"
 
 namespace CalculatorApp
 {
@@ -44,8 +43,6 @@ namespace CalculatorApp
     private:
         void WindowSizeChanged(_In_ Platform::Object^ sender, _In_ Windows::UI::Core::WindowSizeChangedEventArgs^ e);
         void OnAppPropertyChanged(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Data::PropertyChangedEventArgs^ e);
-        void SetTitleBarControlColors();
-        void ColorValuesChanged(_In_ Windows::UI::ViewManagement::UISettings^ sender, _In_ Platform::Object^ e);
 
         void OnNavLoaded(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
         void OnNavPaneOpening(_In_ Microsoft::UI::Xaml::Controls::NavigationView^ sender, _In_ Platform::Object^ args);
@@ -59,16 +56,12 @@ namespace CalculatorApp
 
         Microsoft::UI::Xaml::Controls::NavigationViewItemHeader^ CreateNavViewHeaderFromGroup(CalculatorApp::Common::NavCategoryGroup^ group);
         Microsoft::UI::Xaml::Controls::NavigationViewItem^ CreateNavViewItemFromCategory(CalculatorApp::Common::NavCategory^ category);
-        
-        Windows::Foundation::EventRegistrationToken m_fullscreenFlyoutClosedToken;
-        void OnFullscreenFlyoutClosed();
-        
+                
         void ShowHideControls(CalculatorApp::Common::ViewMode mode);
         void UpdateViewState();
         void UpdatePanelViewState();
 
         void OnPageLoaded(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OnPageUnLoaded(_In_ Platform::Object^, _In_ Windows::UI::Xaml::RoutedEventArgs^);
 
         void EnsureCalculator();
         void EnsureConverter();
@@ -80,12 +73,7 @@ namespace CalculatorApp
         CalculatorApp::Calculator^ m_calculator;
         CalculatorApp::UnitConverter^ m_converter;
         CalculatorApp::DateCalculator^ m_dateCalculator;
-        Windows::Foundation::EventRegistrationToken _windowSizeEventToken;
-        Windows::Foundation::EventRegistrationToken m_hardwareButtonsBackPressedToken;
-        Windows::Foundation::EventRegistrationToken m_colorValuesChangedToken;
+        Windows::Foundation::EventRegistrationToken m_windowSizeEventToken;
         CalculatorApp::ViewModel::ApplicationViewModel^ m_model;
-        Windows::UI::ViewManagement::UISettings^ m_uiSettings;
-
-        std::unique_ptr<CalculatorApp::Common::TitleBarHelper> m_titleBarHelper;
     };
 }

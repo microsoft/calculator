@@ -252,7 +252,6 @@
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="Common\TitleBarHelper.h" />
     <ClInclude Include="Views\Calculator.xaml.h">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
     </ClInclude>
@@ -389,7 +388,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Common\TitleBarHelper.cpp" />
     <ClCompile Include="Views\Calculator.xaml.cpp">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
     </ClCompile>

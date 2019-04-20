@@ -172,11 +172,6 @@
                                               Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               ContentTransitions="{TemplateBinding ContentTransitions}"/>
-
-                            <Border x:Name="CustomTitleBar"
-                                    Height="32"
-                                    HorizontalAlignment="Stretch"
-                                    Background="{ThemeResource TitleBarBackgroundTransparentBrush}"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
