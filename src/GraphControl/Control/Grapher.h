@@ -100,21 +100,18 @@ namespace GraphControl
         }
         #pragma endregion
 
-        void ScaleRange(double centerX, double centerY, double scale);
-        void MoveRangeByRatio(double ratioX, double ratioY);
-
     protected:
         #pragma region Control Overrides
         void OnApplyTemplate() override;
 
-        void OnPointerEntered(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
-        void OnPointerMoved(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
-        void OnPointerExited(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
-        void OnPointerWheelChanged(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
-        void OnPointerPressed(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
-        void OnPointerReleased(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
-        void OnPointerCanceled(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
-        void OnManipulationDelta(Windows::UI::Xaml::Input::ManipulationDeltaRoutedEventArgs^ e) override;
+        void OnPointerEntered(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args) override;
+        void OnPointerMoved(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args) override;
+        void OnPointerExited(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args) override;
+        void OnPointerWheelChanged(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args) override;
+        void OnPointerPressed(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args) override;
+        void OnPointerReleased(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args) override;
+        void OnPointerCanceled(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args) override;
+        void OnManipulationDelta(Windows::UI::Xaml::Input::ManipulationDeltaRoutedEventArgs^ args) override;
         #pragma endregion
 
     private:
@@ -144,6 +141,8 @@ namespace GraphControl
         void SyncEquationsWithItemsSource();
         void OnItemsAdded(int index, int count);
         void OnItemsRemoved(int index, int count);
+
+        void ScaleRange(double centerX, double centerY, double scale);
 
     private:
         DX::RenderMain^ m_renderMain = nullptr;

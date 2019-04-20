@@ -30,9 +30,11 @@ namespace
 
     // Helper function for converting a pointer position to a position that the graphing engine will understand.
     // posX/posY are the pointer position elements and width,height are the dimensions of the graph surface.
+    // The graphing engine interprets x,y position between the range [-1, 1].
+    // Translate the pointer position to the [-1, 1] bounds.
     __inline pair<double, double> PointerPositionToGraphPosition(double posX, double posY, double width, double height)
     {
-        return make_pair(2 * posX / width - 1, 1 - 2 * posY / height);
+        return make_pair(( 2 * posX / width - 1 ), ( 1 - 2 * posY / height ));
     }
 }
 
@@ -85,25 +87,11 @@ namespace GraphControl
 
     void Grapher::ScaleRange(double centerX, double centerY, double scale)
     {
-        if (m_graph)
+        if (m_graph != nullptr && m_renderMain != nullptr)
         {
             if (auto renderer = m_graph->GetRenderer())
             {
                 if (SUCCEEDED(renderer->ScaleRange(centerX, centerY, scale)))
-                {
-                    m_renderMain->RunRenderPass();
-                }
-            }
-        }
-    }
-
-    void Grapher::MoveRangeByRatio(double ratioX, double ratioY)
-    {
-        if (m_graph)
-        {
-            if (auto renderer = m_graph->GetRenderer())
-            {
-                if (SUCCEEDED(renderer->MoveRangeByRatio(ratioX, ratioY)))
                 {
                     m_renderMain->RunRenderPass();
                 }
@@ -404,34 +392,34 @@ namespace GraphControl
         }
     }
 
-    void Grapher::OnPointerEntered(PointerRoutedEventArgs^ e)
+    void Grapher::OnPointerEntered(PointerRoutedEventArgs^ args)
     {
         if (m_renderMain)
         {
-            OnPointerMoved(e);
+            OnPointerMoved(args);
             m_renderMain->DrawNearestPoint = true;
 
-            e->Handled = true;
+            args->Handled = true;
         }
     }
 
-    void Grapher::OnPointerMoved(PointerRoutedEventArgs^ e)
+    void Grapher::OnPointerMoved(PointerRoutedEventArgs^ args)
     {
         if (m_renderMain)
         {
-            PointerPoint^ currPoint = e->GetCurrentPoint(/* relativeTo */ this);
+            PointerPoint^ currPoint = args->GetCurrentPoint(/* relativeTo */ this);
             m_renderMain->PointerLocation = currPoint->Position;
 
-            e->Handled = true;
+            args->Handled = true;
         }
     }
 
-    void Grapher::OnPointerExited(PointerRoutedEventArgs^ e)
+    void Grapher::OnPointerExited(PointerRoutedEventArgs^ args)
     {
         if (m_renderMain)
         {
             m_renderMain->DrawNearestPoint = false;
-            e->Handled = true;
+            args->Handled = true;
         }
     }
 
@@ -463,37 +451,39 @@ namespace GraphControl
         args->Handled = true;
     }
 
-    void Grapher::OnPointerPressed(PointerRoutedEventArgs^ e)
+    void Grapher::OnPointerPressed(PointerRoutedEventArgs^ args)
 	{
         // Set the pointer capture to the element being interacted with so that only it
         // will fire pointer-related events
-        CapturePointer(e->Pointer);
+        CapturePointer(args->Pointer);
 	}
 
-    void Grapher::OnPointerReleased(PointerRoutedEventArgs^ e)
+    void Grapher::OnPointerReleased(PointerRoutedEventArgs^ args)
 	{
-        // Release the pointer
-        ReleasePointerCapture(e->Pointer);
+        ReleasePointerCapture(args->Pointer);
 	}
 
-    void Grapher::OnPointerCanceled(PointerRoutedEventArgs^ e)
+    void Grapher::OnPointerCanceled(PointerRoutedEventArgs^ args)
     {
-        ReleasePointerCapture(e->Pointer);
+        ReleasePointerCapture(args->Pointer);
     }
 
     void Grapher::OnManipulationDelta(ManipulationDeltaRoutedEventArgs^ args)
     {
-        if (m_graph)
+        if (m_renderMain != nullptr && m_graph != nullptr)
         {
             if (auto renderer = m_graph->GetRenderer())
             {
+                // Only call for a render pass if we actually scaled or translated.
+                bool needsRenderPass = false;
+
                 const double width = ActualWidth;
                 const double height = ActualHeight;
 
                 const auto& translation = args->Delta.Translation;
                 double translationX = translation.X;
                 double translationY = translation.Y;
-                if (translationX != 0 || translation.Y != 0)
+                if (translationX != 0 || translationY != 0)
                 {
                     // The graphing engine pans the graph according to a ratio for x and y.
                     // A value of +1 means move a half screen in the positive direction for the given axis.
@@ -505,6 +495,8 @@ namespace GraphControl
                     {
                         return;
                     }
+
+                    needsRenderPass = true;
                 }
 
                 if (double scale = args->Delta.Scale; scale != 1.0)
@@ -513,8 +505,7 @@ namespace GraphControl
                     // from the ManipulationUpdatedEventArgs. Invert the scale amount for the engine.
                     scale = 1.0 / scale;
 
-                    // The graphing engine interprets x,y position between the range [-1, 1].
-                    // Translate the pointer position to the [-1, 1] bounds.
+                    // Convert from PointerPosition to graph position.
                     const auto& pos = args->Position;
                     const auto[centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, width, height);
 
@@ -522,9 +513,14 @@ namespace GraphControl
                     {
                         return;
                     }
+
+                    needsRenderPass = true;
                 }
 
-                m_renderMain->RunRenderPass();
+                if (needsRenderPass)
+                {
+                    m_renderMain->RunRenderPass();
+                }
             }
         }
     }
