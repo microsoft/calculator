@@ -11,23 +11,18 @@ using namespace CalculatorApp::ViewModel;
 using namespace concurrency;
 using namespace GraphControl;
 using namespace Platform;
-using namespace std;
 using namespace std::chrono;
 using namespace Utils;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage::Streams;
 using namespace Windows::System;
 using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
 
-namespace
-{
-    constexpr auto sc_ViewModelPropertyName = L"ViewModel";
-}
+constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 
 GraphingCalculator::GraphingCalculator()
 {
