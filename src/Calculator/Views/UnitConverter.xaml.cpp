@@ -46,21 +46,16 @@ using namespace Windows::UI::ViewManagement;
 static const long long DURATION_500_MS = 10000 * 500;
 
 UnitConverter::UnitConverter() :
-    m_layoutDirection(::FlowDirection::LeftToRight),
     m_meteredConnectionOverride(false),
     m_isAnimationEnabled(false)
 {
+    m_layoutDirection = LocalizationService::GetInstance()->GetFlowDirection();
+    m_FlowDirectionHorizontalAlignment = m_layoutDirection == ::FlowDirection::RightToLeft ? ::HorizontalAlignment::Right : ::HorizontalAlignment::Left;
+
     InitializeComponent();
 
     // adding ESC key shortcut binding to clear button
     ClearEntryButtonPos0->SetValue(Common::KeyboardShortcutManager::VirtualKeyProperty, Common::MyVirtualKey::Escape);
-
-    m_layoutDirection = LocalizationService::GetInstance()->GetFlowDirection();
-    if (m_layoutDirection == ::FlowDirection::RightToLeft)
-    {
-        Units1->HorizontalContentAlignment = ::HorizontalAlignment::Right;
-        Units2->HorizontalContentAlignment = ::HorizontalAlignment::Right;
-    }
 
     // Is currency symbol preference set to right side
     bool preferRight = LocalizationSettings::GetInstance().GetCurrencySymbolPrecedence() == 0;
