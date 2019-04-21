@@ -2,7 +2,7 @@
 The Calculator team encourages community feedback and contributions. Thank you for your interest in
 making Calculator better! There are several ways you can get involved.
 
-## Reporting issues and suggesting new features
+### Reporting issues and suggesting new features
 If Calculator is not working properly, please file a report in the 
 [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130&newFeedback=True).
 Feedback Hub reports automatically include diagnostic data, such as the version of Calculator
@@ -16,7 +16,7 @@ We always look at upvoted items in Feedback Hub when we decide what to work on n
 comments in both Feedback Hub and GitHub, and we look forward to hearing your input. Remember that
 all community interactions must abide by the [Code of Conduct](CODE_OF_CONDUCT.md).
 
-## Finding issues you can help with
+### Finding issues you can help with
 Looking for something to work on?
 Issues marked [``good first issue``](https://github.com/Microsoft/calculator/labels/good%20first%20issue)
 are a good place to start.
@@ -25,7 +25,7 @@ You can also check the [``help wanted``](https://github.com/Microsoft/calculator
 other issues to help with. If you're interested in working on a fix, leave a comment to let everyone know and to help
 avoid duplicated effort from others.
 
-## Contributions we accept
+### Contributions we accept
 We welcome your contributions to the Calculator project, especially to fix bugs and to make
 improvements which address the top issues reported by Calculator users. Some general guidelines:
 
@@ -51,24 +51,24 @@ the process.
 > The change must meet our high bar for code quality, architecture, and performance, as well as
 > [other requirements](#docs/NewFeatureProcess.md#technical-review).
 
-## Making changes to the code
+### Making changes to the code
 
-### Preparing your development environment
+#### Preparing your development environment
 To learn how to build the code and run tests, follow the instructions in the [README](README.md).
 
-### Style guidelines
+#### Style guidelines
 The code in this project uses several different coding styles, depending on the age and history of
 the code. Please attempt to match the style of surrounding code as much as possible. In new
 components, prefer the patterns described in the 
 [C++ core guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
 and the [modern C++/WinRT language projections](https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/).
 
-### Testing
+#### Testing
 Your change should include tests to verify new functionality wherever possible. Code should be
 structured so that it can be unit tested independently of the UI. [Manual test cases](docs/ManualTests.md)
 should be used where automated testing is not feasible.
 
-### Git workflow
+#### Git workflow
 Calculator uses the [GitHub flow](https://guides.github.com/introduction/flow/) where most
 development happens directly on the `master` branch. The `master` branch should always be in a
 healthy state which is ready for release.
@@ -80,7 +80,7 @@ to group your changes into a small number of commits which we can review one at 
 When completing a pull request, we will generally squash your changes into a single commit. Please
 let us know if your pull request needs to be merged as separate commits.
 
-## Review Process
+### Review Process
 After submitting a pull request, members of the calculator team will review your code. We will
 assign the request to an appropriate reviewer. Any member of the community may
 participate in the review, but at least one member of the Calculator team will ultimately approve
@@ -90,7 +90,7 @@ Often, multiple iterations will be needed to responding to feedback from reviewe
 [past pull requests](https://github.com/Microsoft/calculator/pulls?q=is%3Apr+is%3Aclosed) to see
 what the experience might be like.
 
-## Contributor License Agreement
+### Contributor License Agreement
 Before we can review and accept a pull request from you, you'll need to sign a Contributor License
 Agreement (CLA). The CLA ensures that the community is free to use your contributions. More
 information about the agreement is available on the [Microsoft web site](https://cla.opensource.microsoft.com/).
