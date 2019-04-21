@@ -42,8 +42,7 @@ Object ^ BitFlipAutomationNameConverter::Convert(_In_ Object ^ value, TypeName t
         unsigned int binaryLength = 0;
 
         // remove all the characters except 0 and 1 from the array.
-        for
-            each(wchar_t bit in binaryDisplay)
+        for (wchar_t bit : binaryDisplay)
             {
                 if ((bit == ch1) || (bit == ch0))
                 {
