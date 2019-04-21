@@ -15,7 +15,8 @@
 
 namespace CalculatorApp
 {
-    public ref class DelighterUnitToStyleConverter sealed : public Windows::UI::Xaml::Data::IValueConverter
+public
+    ref class DelighterUnitToStyleConverter sealed : public Windows::UI::Xaml::Data::IValueConverter
     {
     public:
         DelighterUnitToStyleConverter()
@@ -24,18 +25,24 @@ namespace CalculatorApp
             m_delighters->Source = ref new Windows::Foundation::Uri(L"ms-appx:///Views/DelighterUnitStyles.xaml");
         }
 
-    internal:
-        virtual Platform::Object^ Convert(Platform::Object^ value, Windows::UI::Xaml::Interop::TypeName targetType, Platform::Object^ parameter, Platform::String^ language) = Windows::UI::Xaml::Data::IValueConverter::Convert;
-        virtual Platform::Object^ ConvertBack(Platform::Object^ value, Windows::UI::Xaml::Interop::TypeName targetType, Platform::Object^ parameter, Platform::String^ language) = Windows::UI::Xaml::Data::IValueConverter::ConvertBack;
+        internal : virtual Platform::Object
+                   ^ Convert(Platform::Object ^ value, Windows::UI::Xaml::Interop::TypeName targetType, Platform::Object ^ parameter,
+                             Platform::String ^ language) = Windows::UI::Xaml::Data::IValueConverter::Convert;
+        virtual Platform::Object
+            ^ ConvertBack(Platform::Object ^ value, Windows::UI::Xaml::Interop::TypeName targetType, Platform::Object ^ parameter,
+                          Platform::String ^ language) = Windows::UI::Xaml::Data::IValueConverter::ConvertBack;
 
     private:
-        Windows::UI::Xaml::ResourceDictionary^ m_delighters;
+        Windows::UI::Xaml::ResourceDictionary ^ m_delighters;
     };
 
-    public ref class SupplementaryResultDataTemplateSelector sealed : public Windows::UI::Xaml::Controls::DataTemplateSelector
+public
+    ref class SupplementaryResultDataTemplateSelector sealed : public Windows::UI::Xaml::Controls::DataTemplateSelector
     {
     public:
-        SupplementaryResultDataTemplateSelector() {}
+        SupplementaryResultDataTemplateSelector()
+        {
+        }
 
         property Windows::UI::Xaml::DataTemplate^ RegularTemplate
         {
@@ -53,22 +60,22 @@ namespace CalculatorApp
         virtual Windows::UI::Xaml::DataTemplate^ SelectTemplateCore(Platform::Object^ item, Windows::UI::Xaml::DependencyObject^ container) override;
 
     private:
-        Windows::UI::Xaml::DataTemplate^ m_regularTemplate;
-        Windows::UI::Xaml::DataTemplate^ m_delighterTemplate;
+        Windows::UI::Xaml::DataTemplate ^ m_regularTemplate;
+        Windows::UI::Xaml::DataTemplate ^ m_delighterTemplate;
     };
 
-    public ref class SupplementaryResultNoOverflowStackPanel sealed: public CalculatorApp::Controls::HorizontalNoOverflowStackPanel
+public
+    ref class SupplementaryResultNoOverflowStackPanel sealed : public CalculatorApp::Controls::HorizontalNoOverflowStackPanel
     {
     protected:
         virtual bool ShouldPrioritizeLastItem() override;
     };
 
-    [Windows::Foundation::Metadata::WebHostHidden]
-    public ref class SupplementaryResults sealed
+    [Windows::Foundation::Metadata::WebHostHidden] public ref class SupplementaryResults sealed
     {
     public:
         SupplementaryResults();
         DEPENDENCY_PROPERTY_OWNER(SupplementaryResults);
-        DEPENDENCY_PROPERTY_WITH_DEFAULT(Windows::Foundation::Collections::IIterable<ViewModel::SupplementaryResult^>^, Results, nullptr);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT(Windows::Foundation::Collections::IIterable<ViewModel::SupplementaryResult ^> ^, Results, nullptr);
     };
 }

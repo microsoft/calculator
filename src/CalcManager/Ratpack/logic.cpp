@@ -17,7 +17,7 @@
 
 using namespace std;
 
-void lshrat(PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void lshrat(PRAT* pa, PRAT b, uint32_t radix, int32_t precision)
 
 {
     PRAT pwr = nullptr;
@@ -40,7 +40,7 @@ void lshrat(PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
     }
 }
 
-void rshrat(PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void rshrat(PRAT* pa, PRAT b, uint32_t radix, int32_t precision)
 
 {
     PRAT pwr = nullptr;
@@ -63,29 +63,29 @@ void rshrat(PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
     }
 }
 
-void boolrat(PRAT *pa, PRAT b, int func, uint32_t radix, int32_t precision);
-void boolnum(PNUMBER *pa, PNUMBER b, int func);
+void boolrat(PRAT* pa, PRAT b, int func, uint32_t radix, int32_t precision);
+void boolnum(PNUMBER* pa, PNUMBER b, int func);
 
-
-enum {
+enum
+{
     FUNC_AND,
     FUNC_OR,
     FUNC_XOR
 } BOOL_FUNCS;
 
-void andrat(PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void andrat(PRAT* pa, PRAT b, uint32_t radix, int32_t precision)
 
 {
     boolrat(pa, b, FUNC_AND, radix, precision);
 }
 
-void orrat(PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void orrat(PRAT* pa, PRAT b, uint32_t radix, int32_t precision)
 
 {
     boolrat(pa, b, FUNC_OR, radix, precision);
 }
 
-void xorrat(PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
+void xorrat(PRAT* pa, PRAT b, uint32_t radix, int32_t precision)
 
 {
     boolrat(pa, b, FUNC_XOR, radix, precision);
@@ -103,7 +103,7 @@ void xorrat(PRAT *pa, PRAT b, uint32_t radix, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-void boolrat(PRAT *pa, PRAT b, int func, uint32_t radix, int32_t precision)
+void boolrat(PRAT* pa, PRAT b, int func, uint32_t radix, int32_t precision)
 
 {
     PRAT tmp = nullptr;
@@ -129,22 +129,21 @@ void boolrat(PRAT *pa, PRAT b, int func, uint32_t radix, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-void boolnum(PNUMBER *pa, PNUMBER b, int func)
+void boolnum(PNUMBER* pa, PNUMBER b, int func)
 
 {
     PNUMBER c = nullptr;
     PNUMBER a = nullptr;
-    MANTTYPE *pcha;
-    MANTTYPE *pchb;
-    MANTTYPE *pchc;
+    MANTTYPE* pcha;
+    MANTTYPE* pchb;
+    MANTTYPE* pchc;
     int32_t cdigits;
     int32_t mexp;
     MANTTYPE da;
     MANTTYPE db;
 
     a = *pa;
-    cdigits = max(a->cdigit + a->exp, b->cdigit + b->exp) -
-        min(a->exp, b->exp);
+    cdigits = max(a->cdigit + a->exp, b->cdigit + b->exp) - min(a->exp, b->exp);
     createnum(c, cdigits);
     c->exp = min(a->exp, b->exp);
     mexp = c->exp;
@@ -154,12 +153,8 @@ void boolnum(PNUMBER *pa, PNUMBER b, int func)
     pchc = c->mant;
     for (; cdigits > 0; cdigits--, mexp++)
     {
-        da = (((mexp >= a->exp) && (cdigits + a->exp - c->exp >
-            (c->cdigit - a->cdigit))) ?
-            *pcha++ : 0);
-        db = (((mexp >= b->exp) && (cdigits + b->exp - c->exp >
-            (c->cdigit - b->cdigit))) ?
-            *pchb++ : 0);
+        da = (((mexp >= a->exp) && (cdigits + a->exp - c->exp > (c->cdigit - a->cdigit))) ? *pcha++ : 0);
+        db = (((mexp >= b->exp) && (cdigits + b->exp - c->exp > (c->cdigit - b->cdigit))) ? *pchb++ : 0);
         switch (func)
         {
         case FUNC_AND:
@@ -196,7 +191,7 @@ void boolnum(PNUMBER *pa, PNUMBER b, int func)
 //
 //-----------------------------------------------------------------------------
 
-void remrat(PRAT *pa, PRAT b)
+void remrat(PRAT* pa, PRAT b)
 
 {
     if (zerrat(b))
@@ -227,15 +222,15 @@ void remrat(PRAT *pa, PRAT b)
 //    RETURN: None, changes pointer.
 //
 //    DESCRIPTION: Calculate the remainder of *pa / b, with the sign of the result
-//                 either zero or has the same sign as the divisor. 
+//                 either zero or has the same sign as the divisor.
 //    NOTE: When *pa or b are negative, the result won't be the same as
-//          the C/C++ operator %, use remrat if it's the behavior you expect. 
+//          the C/C++ operator %, use remrat if it's the behavior you expect.
 //
 //-----------------------------------------------------------------------------
 
-void modrat(PRAT *pa, PRAT b)
+void modrat(PRAT* pa, PRAT b)
 {
-    //contrary to remrat(X, 0) returning 0, modrat(X, 0) must return X
+    // contrary to remrat(X, 0) returning 0, modrat(X, 0) must return X
     if (zerrat(b))
     {
         return;

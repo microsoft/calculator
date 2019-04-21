@@ -35,18 +35,17 @@ using namespace Windows::UI::ViewManagement;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(Memory, RowHeight);
 
-Memory::Memory() :
-    m_isErrorVisualState(false)
+Memory::Memory() : m_isErrorVisualState(false)
 {
     InitializeComponent();
-    m_memoryItemFlyout = safe_cast<MenuFlyout^>(Resources->Lookup("MemoryContextMenu"));
+    m_memoryItemFlyout = safe_cast<MenuFlyout ^>(Resources->Lookup("MemoryContextMenu"));
 
     MemoryPaneEmpty->FlowDirection = LocalizationService::GetInstance()->GetFlowDirection();
 }
 
-void Memory::MemoryListItemClick(_In_ Object^ sender, _In_ ItemClickEventArgs^ e)
+void Memory::MemoryListItemClick(_In_ Object ^ sender, _In_ ItemClickEventArgs ^ e)
 {
-    MemoryItemViewModel^ memorySlot = safe_cast<MemoryItemViewModel^>(e->ClickedItem);
+    MemoryItemViewModel ^ memorySlot = safe_cast<MemoryItemViewModel ^>(e->ClickedItem);
 
     // In case the memory list is clicked and enter is pressed,
     // On Item clicked event gets fired and e->ClickedItem is Null.
@@ -56,20 +55,20 @@ void Memory::MemoryListItemClick(_In_ Object^ sender, _In_ ItemClickEventArgs^ e
     }
 }
 
-void Memory::OnContextRequested(Windows::UI::Xaml::UIElement^ sender, Windows::UI::Xaml::Input::ContextRequestedEventArgs^ e)
+void Memory::OnContextRequested(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::ContextRequestedEventArgs ^ e)
 {
     // Walk up the tree to find the ListViewItem.
     // There may not be one if the click wasn't on an item.
-    auto requestedElement = safe_cast<FrameworkElement^>(e->OriginalSource);
-    while ((requestedElement != sender) && !dynamic_cast<ListViewItem^>(requestedElement))
+    auto requestedElement = safe_cast<FrameworkElement ^>(e->OriginalSource);
+    while ((requestedElement != sender) && !dynamic_cast<ListViewItem ^>(requestedElement))
     {
-        requestedElement = safe_cast<FrameworkElement^>(VisualTreeHelper::GetParent(requestedElement));
+        requestedElement = safe_cast<FrameworkElement ^>(VisualTreeHelper::GetParent(requestedElement));
     }
 
     if (requestedElement != sender)
     {
         // The context menu request was for a ListViewItem.
-        auto memorySlot = safe_cast<MemoryItemViewModel^>(MemoryListView->ItemFromContainer(requestedElement));
+        auto memorySlot = safe_cast<MemoryItemViewModel ^>(MemoryListView->ItemFromContainer(requestedElement));
         Point point;
         if (e->TryGetPosition(requestedElement, &point))
         {
@@ -85,22 +84,22 @@ void Memory::OnContextRequested(Windows::UI::Xaml::UIElement^ sender, Windows::U
     }
 }
 
-void Memory::OnContextCanceled(Windows::UI::Xaml::UIElement^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void Memory::OnContextCanceled(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     m_memoryItemFlyout->Hide();
 }
 
-void Memory::OnClearMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void Memory::OnClearMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     GetMemoryItemForCurrentFlyout()->Clear();
 }
 
-void Memory::OnMemoryAddMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void Memory::OnMemoryAddMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     GetMemoryItemForCurrentFlyout()->MemoryAdd();
 }
 
-void Memory::OnMemorySubtractMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void Memory::OnMemorySubtractMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     GetMemoryItemForCurrentFlyout()->MemorySubtract();
 }
@@ -115,14 +114,14 @@ void Memory::IsErrorVisualState::set(bool value)
     if (m_isErrorVisualState != value)
     {
         m_isErrorVisualState = value;
-        String^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
+        String ^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
         VisualStateManager::GoToState(this, newState, false);
     }
 }
 
-MemoryItemViewModel^ Memory::GetMemoryItemForCurrentFlyout()
+MemoryItemViewModel ^ Memory::GetMemoryItemForCurrentFlyout()
 {
     auto listViewItem = m_memoryItemFlyout->Target;
 
-    return safe_cast<MemoryItemViewModel^>(MemoryListView->ItemFromContainer(listViewItem));
+    return safe_cast<MemoryItemViewModel ^>(MemoryListView->ItemFromContainer(listViewItem));
 }

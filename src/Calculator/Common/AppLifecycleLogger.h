@@ -9,7 +9,7 @@ namespace CalculatorApp
     {
     public:
         AppLifecycleLogger(AppLifecycleLogger const&) = delete;
-        AppLifecycleLogger const & operator= (AppLifecycleLogger const&) = delete;
+        AppLifecycleLogger const& operator=(AppLifecycleLogger const&) = delete;
         ~AppLifecycleLogger();
         static AppLifecycleLogger& GetInstance();
         bool GetTraceLoggingProviderEnabled() const;
@@ -29,10 +29,10 @@ namespace CalculatorApp
         AppLifecycleLogger();
 
         // Any new Log method should
-        // a) Decide the level of logging. This will help us in limiting recording of events only up to a certain level. See this link for guidance https://msdn.microsoft.com/en-us/library/windows/desktop/aa363742(v=vs.85).aspx
-        // We're using Verbose level for events that are called frequently and needed only for debugging or capturing perf for specific scenarios
-        // b) Should decide whether or not to log to  telemetry and pass TraceLoggingKeyword(MICROSOFT_KEYWORD_TELEMETRY) accordingly
-        // c) Should accept a variable number of additional data arguments if needed
+        // a) Decide the level of logging. This will help us in limiting recording of events only up to a certain level. See this link for guidance
+        // https://msdn.microsoft.com/en-us/library/windows/desktop/aa363742(v=vs.85).aspx We're using Verbose level for events that are called frequently and
+        // needed only for debugging or capturing perf for specific scenarios b) Should decide whether or not to log to  telemetry and pass
+        // TraceLoggingKeyword(MICROSOFT_KEYWORD_TELEMETRY) accordingly c) Should accept a variable number of additional data arguments if needed
         void LogAppLifecycleEvent(winrt::hstring const& eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields const& fields) const;
         void PopulateAppInfo(winrt::Windows::Foundation::Diagnostics::LoggingFields& fields) const;
 

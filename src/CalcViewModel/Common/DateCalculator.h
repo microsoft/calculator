@@ -9,8 +9,8 @@ const uint64_t c_minute = 60 * c_second;
 const uint64_t c_hour = 60 * c_minute;
 const uint64_t c_day = 24 * c_hour;
 
-const int c_unitsOfDate = 4;                 // Units Year,Month,Week,Day
-const int c_unitsGreaterThanDays = 3;        // Units Greater than Days (Year/Month/Week) 3
+const int c_unitsOfDate = 4;          // Units Year,Month,Week,Day
+const int c_unitsGreaterThanDays = 3; // Units Greater than Days (Year/Month/Week) 3
 const int c_daysInWeek = 7;
 
 namespace CalculatorApp
@@ -19,7 +19,8 @@ namespace CalculatorApp
     {
         namespace DateCalculation
         {
-            public enum class _Enum_is_bitflag_ DateUnit
+        public
+            enum class _Enum_is_bitflag_ DateUnit
             {
                 Year = 0x01,
                 Month = 0x02,
@@ -40,16 +41,19 @@ namespace CalculatorApp
             {
             public:
                 // Constructor
-                DateCalculationEngine(_In_ Platform::String^ calendarIdentifier);
+                DateCalculationEngine(_In_ Platform::String ^ calendarIdentifier);
 
                 // Public Methods
-                bool __nothrow AddDuration(_In_ Windows::Foundation::DateTime startDate, _In_ const DateDifference& duration, _Out_ Windows::Foundation::DateTime *endDate);
-                bool __nothrow SubtractDuration(_In_ Windows::Foundation::DateTime startDate, _In_ const DateDifference& duration, _Out_ Windows::Foundation::DateTime *endDate);
-                void __nothrow GetDateDifference(_In_ Windows::Foundation::DateTime date1, _In_ Windows::Foundation::DateTime date2, _In_ DateUnit outputFormat, _Out_ DateDifference *difference);
+                bool __nothrow AddDuration(_In_ Windows::Foundation::DateTime startDate, _In_ const DateDifference& duration,
+                                           _Out_ Windows::Foundation::DateTime* endDate);
+                bool __nothrow SubtractDuration(_In_ Windows::Foundation::DateTime startDate, _In_ const DateDifference& duration,
+                                                _Out_ Windows::Foundation::DateTime* endDate);
+                void __nothrow GetDateDifference(_In_ Windows::Foundation::DateTime date1, _In_ Windows::Foundation::DateTime date2, _In_ DateUnit outputFormat,
+                                                 _Out_ DateDifference* difference);
 
             private:
                 // Private Variables
-                Windows::Globalization::Calendar^ m_calendar;
+                Windows::Globalization::Calendar ^ m_calendar;
 
                 // Private Methods
                 int GetDifferenceInDays(Windows::Foundation::DateTime date1, Windows::Foundation::DateTime date2);

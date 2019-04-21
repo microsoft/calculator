@@ -9,8 +9,7 @@
 
 namespace CalculatorApp
 {
-    [Windows::Foundation::Metadata::WebHostHidden]
-    public ref class CalculatorProgrammerOperators sealed
+    [Windows::Foundation::Metadata::WebHostHidden] public ref class CalculatorProgrammerOperators sealed
     {
     public:
         CalculatorProgrammerOperators();
@@ -23,16 +22,15 @@ namespace CalculatorApp
 
         DEPENDENCY_PROPERTY_OWNER(CalculatorProgrammerOperators);
 
-        DEPENDENCY_PROPERTY(_In_ Windows::UI::Xaml::Style^, SymbolButtonStyle);
+        DEPENDENCY_PROPERTY(_In_ Windows::UI::Xaml::Style ^, SymbolButtonStyle);
 
-    internal:
-        void SetRadixButton(RADIX_TYPE radixType);
+        internal : void SetRadixButton(RADIX_TYPE radixType);
 
     private:
-        void DecButtonChecked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void HexButtonChecked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void BinButtonChecked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OctButtonChecked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OnCopyMenuItemClicked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
+        void DecButtonChecked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void HexButtonChecked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void BinButtonChecked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OctButtonChecked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnCopyMenuItemClicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }

@@ -31,13 +31,12 @@ using namespace CalculatorApp::Common;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(NumberPad, ButtonStyle);
 
-NumberPad::NumberPad() :
-    m_isErrorVisualState(false)
+NumberPad::NumberPad() : m_isErrorVisualState(false)
 {
     InitializeComponent();
 
     const auto& localizationSettings = LocalizationSettings::GetInstance();
-    
+
     this->DecimalSeparatorButton->Content = localizationSettings.GetDecimalSeparator();
     this->Num0Button->Content = localizationSettings.GetDigitSymbolFromEnUsDigit('0');
     this->Num1Button->Content = localizationSettings.GetDigitSymbolFromEnUsDigit('1');
@@ -64,7 +63,7 @@ void NumberPad::ProgModeRadixChange()
     Num8Button->IsEnabled = true;
     Num9Button->IsEnabled = true;
 
-    auto vm = safe_cast<StandardCalculatorViewModel^>(this->DataContext);
+    auto vm = safe_cast<StandardCalculatorViewModel ^>(this->DataContext);
     RADIX_TYPE radixType = vm->GetCurrentRadixType();
 
     if (radixType == RADIX_TYPE::BIN_RADIX)
@@ -95,7 +94,7 @@ void NumberPad::IsErrorVisualState::set(bool value)
     if (m_isErrorVisualState != value)
     {
         m_isErrorVisualState = value;
-        String^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
+        String ^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
         VisualStateManager::GoToState(this, newState, false);
     }
 }

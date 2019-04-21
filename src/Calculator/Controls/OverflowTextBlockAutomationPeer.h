@@ -9,13 +9,14 @@ namespace CalculatorApp
 {
     namespace Controls
     {
-        public ref class OverflowTextBlockAutomationPeer sealed : Windows::UI::Xaml::Automation::Peers::FrameworkElementAutomationPeer
+    public
+        ref class OverflowTextBlockAutomationPeer sealed : Windows::UI::Xaml::Automation::Peers::FrameworkElementAutomationPeer
         {
         public:
-            OverflowTextBlockAutomationPeer(OverflowTextBlock^ owner);
+            OverflowTextBlockAutomationPeer(OverflowTextBlock ^ owner);
 
             virtual Windows::UI::Xaml::Automation::Peers::AutomationControlType GetAutomationControlTypeCore() override;
-            virtual Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Automation::Peers::AutomationPeer^>^ GetChildrenCore() override;
+            virtual Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Automation::Peers::AutomationPeer ^> ^ GetChildrenCore() override;
         };
     }
 }

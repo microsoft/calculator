@@ -10,9 +10,8 @@ using namespace Windows::Networking::Connectivity;
 
 NetworkManager::NetworkManager()
 {
-    m_NetworkStatusChangedToken =
-        NetworkInformation::NetworkStatusChanged += ref new NetworkStatusChangedEventHandler(
-            this, &NetworkManager::OnNetworkStatusChange, CallbackContext::Same);
+    m_NetworkStatusChangedToken = NetworkInformation::NetworkStatusChanged +=
+        ref new NetworkStatusChangedEventHandler(this, &NetworkManager::OnNetworkStatusChange, CallbackContext::Same);
 }
 
 NetworkManager::~NetworkManager()
@@ -23,14 +22,13 @@ NetworkManager::~NetworkManager()
 NetworkAccessBehavior NetworkManager::GetNetworkAccessBehavior()
 {
     NetworkAccessBehavior behavior = NetworkAccessBehavior::Offline;
-    ConnectionProfile^ connectionProfile = NetworkInformation::GetInternetConnectionProfile();
+    ConnectionProfile ^ connectionProfile = NetworkInformation::GetInternetConnectionProfile();
     if (connectionProfile != nullptr)
     {
         NetworkConnectivityLevel connectivityLevel = connectionProfile->GetNetworkConnectivityLevel();
-        if (connectivityLevel == NetworkConnectivityLevel::InternetAccess
-            || connectivityLevel == NetworkConnectivityLevel::ConstrainedInternetAccess)
+        if (connectivityLevel == NetworkConnectivityLevel::InternetAccess || connectivityLevel == NetworkConnectivityLevel::ConstrainedInternetAccess)
         {
-            ConnectionCost^ connectionCost = connectionProfile->GetConnectionCost();
+            ConnectionCost ^ connectionCost = connectionProfile->GetConnectionCost();
             behavior = ConvertCostInfoToBehavior(connectionCost);
         }
     }
@@ -38,16 +36,15 @@ NetworkAccessBehavior NetworkManager::GetNetworkAccessBehavior()
     return behavior;
 }
 
-void NetworkManager::OnNetworkStatusChange(_In_ Object^ /*sender*/)
+void NetworkManager::OnNetworkStatusChange(_In_ Object ^ /*sender*/)
 {
     NetworkBehaviorChanged(GetNetworkAccessBehavior());
 }
 
 // See app behavior guidelines at https://msdn.microsoft.com/en-us/library/windows/apps/xaml/jj835821(v=win.10).aspx
-NetworkAccessBehavior NetworkManager::ConvertCostInfoToBehavior(_In_ ConnectionCost^ connectionCost)
+NetworkAccessBehavior NetworkManager::ConvertCostInfoToBehavior(_In_ ConnectionCost ^ connectionCost)
 {
-    if (connectionCost->Roaming || connectionCost->OverDataLimit
-        || connectionCost->NetworkCostType == NetworkCostType::Variable
+    if (connectionCost->Roaming || connectionCost->OverDataLimit || connectionCost->NetworkCostType == NetworkCostType::Variable
         || connectionCost->NetworkCostType == NetworkCostType::Fixed)
     {
         return NetworkAccessBehavior::OptIn;

@@ -20,21 +20,20 @@ using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Core;
 
-CalculatorProgrammerDisplayPanel::CalculatorProgrammerDisplayPanel() :
-    m_isErrorVisualState(false)
+CalculatorProgrammerDisplayPanel::CalculatorProgrammerDisplayPanel() : m_isErrorVisualState(false)
 {
     InitializeComponent();
 }
 
-void CalculatorProgrammerDisplayPanel::ShowBitFlip(Object^ sender, RoutedEventArgs^ e)
+void CalculatorProgrammerDisplayPanel::ShowBitFlip(Object ^ sender, RoutedEventArgs ^ e)
 {
     TraceLogger::GetInstance().LogBitFlipPaneClicked();
 }
 
-void CalculatorProgrammerDisplayPanel::OnBitLengthButtonPressed(Object^ parameter)
+void CalculatorProgrammerDisplayPanel::OnBitLengthButtonPressed(Object ^ parameter)
 {
     TraceLogger::GetInstance().LogBitLengthButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
-    String^ buttonId = parameter->ToString();
+    String ^ buttonId = parameter->ToString();
 
     QwordButton->Visibility = ::Visibility::Collapsed;
     DwordButton->Visibility = ::Visibility::Collapsed;
@@ -90,7 +89,7 @@ void CalculatorProgrammerDisplayPanel::IsErrorVisualState::set(bool value)
     if (m_isErrorVisualState != value)
     {
         m_isErrorVisualState = value;
-        String^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
+        String ^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
         VisualStateManager::GoToState(this, newState, false);
     }
 }

@@ -6,7 +6,7 @@
 #include <vector>
 #include <unordered_map>
 #include <ppltasks.h>
-#include <sal.h> // for SAL
+#include <sal.h>  // for SAL
 #include <memory> // for std::shared_ptr
 
 namespace UnitConversionManager
@@ -15,13 +15,22 @@ namespace UnitConversionManager
 
     struct Unit
     {
-        Unit(){}
+        Unit()
+        {
+        }
         Unit(int id, std::wstring name, std::wstring abbreviation, bool isConversionSource, bool isConversionTarget, bool isWhimsical)
-            : id(id), name(name), accessibleName(name), abbreviation(abbreviation), isConversionSource(isConversionSource), isConversionTarget(isConversionTarget), isWhimsical(isWhimsical)
+            : id(id)
+            , name(name)
+            , accessibleName(name)
+            , abbreviation(abbreviation)
+            , isConversionSource(isConversionSource)
+            , isConversionTarget(isConversionTarget)
+            , isWhimsical(isWhimsical)
         {
         }
 
-        Unit(int id, std::wstring currencyName, std::wstring countryName, std::wstring abbreviation, bool isRtlLanguage, bool isConversionSource, bool isConversionTarget)
+        Unit(int id, std::wstring currencyName, std::wstring countryName, std::wstring abbreviation, bool isRtlLanguage, bool isConversionSource,
+             bool isConversionTarget)
             : id(id), abbreviation(abbreviation), isConversionSource(isConversionSource), isConversionTarget(isConversionTarget), isWhimsical(false)
         {
             std::wstring nameValue1 = isRtlLanguage ? currencyName : countryName;
@@ -31,7 +40,9 @@ namespace UnitConversionManager
             accessibleName = nameValue1 + L" " + nameValue2;
         }
 
-        virtual ~Unit() {}
+        virtual ~Unit()
+        {
+        }
 
         int id;
         std::wstring name;
@@ -41,12 +52,12 @@ namespace UnitConversionManager
         bool isConversionTarget;
         bool isWhimsical;
 
-        bool operator!= (const Unit& that) const
+        bool operator!=(const Unit& that) const
         {
             return that.id != id;
         }
 
-        bool operator== (const Unit& that) const
+        bool operator==(const Unit& that) const
         {
             return that.id == id;
         }
@@ -61,7 +72,9 @@ namespace UnitConversionManager
 
     struct Category
     {
-        Category(){}
+        Category()
+        {
+        }
 
         Category(int id, std::wstring name, bool supportsNegative) : id(id), name(name), supportsNegative(supportsNegative)
         {
@@ -71,12 +84,12 @@ namespace UnitConversionManager
         std::wstring name;
         bool supportsNegative;
 
-        bool operator!= (const Category& that) const
+        bool operator!=(const Category& that) const
         {
             return that.id != id;
         }
 
-        bool operator== (const Category& that) const
+        bool operator==(const Category& that) const
         {
             return that.id == id;
         }
@@ -85,7 +98,8 @@ namespace UnitConversionManager
     class UnitHash
     {
     public:
-        size_t operator() (const Unit & x) const {
+        size_t operator()(const Unit& x) const
+        {
             return x.id;
         }
     };
@@ -93,7 +107,8 @@ namespace UnitConversionManager
     class CategoryHash
     {
     public:
-        size_t operator() (const Category & x) const {
+        size_t operator()(const Category& x) const
+        {
             return x.id;
         }
     };
@@ -107,12 +122,16 @@ namespace UnitConversionManager
 
     struct ConversionData
     {
-        ConversionData(){}
+        ConversionData()
+        {
+        }
         ConversionData(double ratio, double offset, bool offsetFirst) : ratio(ratio), offset(offset), offsetFirst(offsetFirst)
         {
         }
 
-        virtual ~ConversionData() {}
+        virtual ~ConversionData()
+        {
+        }
 
         double ratio;
         double offset;
@@ -136,13 +155,17 @@ namespace UnitConversionManager
     };
 
     typedef std::tuple<std::vector<UnitConversionManager::Unit>, UnitConversionManager::Unit, UnitConversionManager::Unit> CategorySelectionInitializer;
-    typedef std::unordered_map<UnitConversionManager::Unit, std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash>, UnitConversionManager::UnitHash> UnitToUnitToConversionDataMap;
-    typedef std::unordered_map<UnitConversionManager::Category, std::vector<UnitConversionManager::Unit>, UnitConversionManager::CategoryHash> CategoryToUnitVectorMap;
+    typedef std::unordered_map<UnitConversionManager::Unit,
+                               std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash>,
+                               UnitConversionManager::UnitHash>
+        UnitToUnitToConversionDataMap;
+    typedef std::unordered_map<UnitConversionManager::Category, std::vector<UnitConversionManager::Unit>, UnitConversionManager::CategoryHash>
+        CategoryToUnitVectorMap;
 
     class IViewModelCurrencyCallback
     {
     public:
-        virtual ~IViewModelCurrencyCallback() { };
+        virtual ~IViewModelCurrencyCallback(){};
         virtual void CurrencyDataLoadFinished(bool didLoad) = 0;
         virtual void CurrencySymbolsCallback(_In_ const std::wstring& fromSymbol, _In_ const std::wstring& toSymbol) = 0;
         virtual void CurrencyRatiosCallback(_In_ const std::wstring& ratioEquality, _In_ const std::wstring& accRatioEquality) = 0;
@@ -153,8 +176,8 @@ namespace UnitConversionManager
     class IConverterDataLoader
     {
     public:
-        virtual ~IConverterDataLoader() { };
-        virtual void LoadData() = 0;    // prepare data if necessary before calling other functions
+        virtual ~IConverterDataLoader(){};
+        virtual void LoadData() = 0; // prepare data if necessary before calling other functions
         virtual std::vector<Category> LoadOrderedCategories() = 0;
         virtual std::vector<Unit> LoadOrderedUnits(const Category& c) = 0;
         virtual std::unordered_map<Unit, ConversionData, UnitHash> LoadOrderedRatios(const Unit& u) = 0;
@@ -165,8 +188,10 @@ namespace UnitConversionManager
     {
     public:
         virtual void SetViewModelCallback(const std::shared_ptr<UnitConversionManager::IViewModelCurrencyCallback>& callback) = 0;
-        virtual std::pair<std::wstring, std::wstring> GetCurrencySymbols(_In_ const UnitConversionManager::Unit& unit1, _In_ const UnitConversionManager::Unit& unit2) = 0;
-        virtual std::pair<std::wstring, std::wstring> GetCurrencyRatioEquality(_In_ const UnitConversionManager::Unit& unit1, _In_ const UnitConversionManager::Unit& unit2) = 0;
+        virtual std::pair<std::wstring, std::wstring> GetCurrencySymbols(_In_ const UnitConversionManager::Unit& unit1,
+                                                                         _In_ const UnitConversionManager::Unit& unit2) = 0;
+        virtual std::pair<std::wstring, std::wstring> GetCurrencyRatioEquality(_In_ const UnitConversionManager::Unit& unit1,
+                                                                               _In_ const UnitConversionManager::Unit& unit2) = 0;
         virtual std::wstring GetCurrencyTimestamp() = 0;
 
         virtual concurrency::task<bool> TryLoadDataFromCacheAsync() = 0;
@@ -177,7 +202,7 @@ namespace UnitConversionManager
     class IUnitConverterVMCallback
     {
     public:
-        virtual ~IUnitConverterVMCallback() { };
+        virtual ~IUnitConverterVMCallback(){};
         virtual void DisplayCallback(const std::wstring& from, const std::wstring& to) = 0;
         virtual void SuggestedValueCallback(const std::vector<std::tuple<std::wstring, Unit>>& suggestedValues) = 0;
         virtual void MaxDigitsReached() = 0;
@@ -186,8 +211,10 @@ namespace UnitConversionManager
     class IUnitConverter
     {
     public:
-        virtual ~IUnitConverter() { }
-        virtual void Initialize() = 0;  // Use to initialize first time, use deserialize instead to rehydrate
+        virtual ~IUnitConverter()
+        {
+        }
+        virtual void Initialize() = 0; // Use to initialize first time, use deserialize instead to rehydrate
         virtual std::vector<Category> GetCategories() = 0;
         virtual CategorySelectionInitializer SetCurrentCategory(const Category& input) = 0;
         virtual Category GetCurrentCategory() = 0;
@@ -230,7 +257,7 @@ namespace UnitConversionManager
         void ResetCategoriesAndRatios() override;
         // IUnitConverter
 
-        static std::vector<std::wstring> StringToVector(const std::wstring& w, const wchar_t * delimiter, bool addRemainder = false);
+        static std::vector<std::wstring> StringToVector(const std::wstring& w, const wchar_t* delimiter, bool addRemainder = false);
         static std::wstring Quote(const std::wstring& s);
         static std::wstring Unquote(const std::wstring& s);
 
@@ -243,11 +270,11 @@ namespace UnitConversionManager
         void InitializeSelectedUnits();
         std::wstring RoundSignificant(double num, int numSignificant);
         Category StringToCategory(const std::wstring& w);
-        std::wstring CategoryToString(const Category& c, const wchar_t * delimiter);
-        std::wstring UnitToString(const Unit& u, const wchar_t * delimiter);
+        std::wstring CategoryToString(const Category& c, const wchar_t* delimiter);
+        std::wstring UnitToString(const Unit& u, const wchar_t* delimiter);
         Unit StringToUnit(const std::wstring& w);
         ConversionData StringToConversionData(const std::wstring& w);
-        std::wstring ConversionDataToString(ConversionData d, const wchar_t * delimiter);
+        std::wstring ConversionDataToString(ConversionData d, const wchar_t* delimiter);
         void UpdateCurrencySymbols();
         void UpdateViewModel();
         bool AnyUnitIsEmpty();
