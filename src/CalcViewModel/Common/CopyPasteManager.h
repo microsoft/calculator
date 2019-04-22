@@ -27,7 +27,7 @@ namespace CalculatorApp
     public:
         static void CopyToClipboard(Platform::String^ stringToCopy);
         static concurrency::task<Platform::String^> GetStringToPaste(CalculatorApp::Common::ViewMode mode, CalculatorApp::Common::CategoryGroupType modeType, int programmerNumberBase = -1, int bitLengthType = -1);
-        inline static bool HasStringToPaste()
+        static bool HasStringToPaste()
         {
             return ClipboardTextFormat() >= 0;
         }
