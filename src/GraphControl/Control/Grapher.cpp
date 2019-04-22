@@ -392,40 +392,40 @@ namespace GraphControl
         }
     }
 
-    void Grapher::OnPointerEntered(PointerRoutedEventArgs^ args)
+    void Grapher::OnPointerEntered(PointerRoutedEventArgs^ e)
     {
         if (m_renderMain)
         {
-            OnPointerMoved(args);
+            OnPointerMoved(e);
             m_renderMain->DrawNearestPoint = true;
 
-            args->Handled = true;
+            e->Handled = true;
         }
     }
 
-    void Grapher::OnPointerMoved(PointerRoutedEventArgs^ args)
+    void Grapher::OnPointerMoved(PointerRoutedEventArgs^ e)
     {
         if (m_renderMain)
         {
-            PointerPoint^ currPoint = args->GetCurrentPoint(/* relativeTo */ this);
+            PointerPoint^ currPoint = e->GetCurrentPoint(/* relativeTo */ this);
             m_renderMain->PointerLocation = currPoint->Position;
 
-            args->Handled = true;
+            e->Handled = true;
         }
     }
 
-    void Grapher::OnPointerExited(PointerRoutedEventArgs^ args)
+    void Grapher::OnPointerExited(PointerRoutedEventArgs^ e)
     {
         if (m_renderMain)
         {
             m_renderMain->DrawNearestPoint = false;
-            args->Handled = true;
+            e->Handled = true;
         }
     }
 
-    void Grapher::OnPointerWheelChanged(PointerRoutedEventArgs^ args)
+    void Grapher::OnPointerWheelChanged(PointerRoutedEventArgs^ e)
     {
-        PointerPoint^ currentPointer = args->GetCurrentPoint(/*relative to*/ this);
+        PointerPoint^ currentPointer = e->GetCurrentPoint(/*relative to*/ this);
 
         double delta = currentPointer->Properties->MouseWheelDelta;
 
@@ -448,27 +448,27 @@ namespace GraphControl
 
         ScaleRange(centerX, centerY, scale);
 
-        args->Handled = true;
+        e->Handled = true;
     }
 
-    void Grapher::OnPointerPressed(PointerRoutedEventArgs^ args)
+    void Grapher::OnPointerPressed(PointerRoutedEventArgs^ e)
 	{
         // Set the pointer capture to the element being interacted with so that only it
         // will fire pointer-related events
-        CapturePointer(args->Pointer);
+        CapturePointer(e->Pointer);
 	}
 
-    void Grapher::OnPointerReleased(PointerRoutedEventArgs^ args)
+    void Grapher::OnPointerReleased(PointerRoutedEventArgs^ e)
 	{
-        ReleasePointerCapture(args->Pointer);
+        ReleasePointerCapture(e->Pointer);
 	}
 
-    void Grapher::OnPointerCanceled(PointerRoutedEventArgs^ args)
+    void Grapher::OnPointerCanceled(PointerRoutedEventArgs^ e)
     {
-        ReleasePointerCapture(args->Pointer);
+        ReleasePointerCapture(e->Pointer);
     }
 
-    void Grapher::OnManipulationDelta(ManipulationDeltaRoutedEventArgs^ args)
+    void Grapher::OnManipulationDelta(ManipulationDeltaRoutedEventArgs^ e)
     {
         if (m_renderMain != nullptr && m_graph != nullptr)
         {
@@ -480,7 +480,7 @@ namespace GraphControl
                 const double width = ActualWidth;
                 const double height = ActualHeight;
 
-                const auto& translation = args->Delta.Translation;
+                const auto& translation = e->Delta.Translation;
                 double translationX = translation.X;
                 double translationY = translation.Y;
                 if (translationX != 0 || translationY != 0)
@@ -499,14 +499,14 @@ namespace GraphControl
                     needsRenderPass = true;
                 }
 
-                if (double scale = args->Delta.Scale; scale != 1.0)
+                if (double scale = e->Delta.Scale; scale != 1.0)
                 {
                     // The graphing engine interprets scale amounts as the inverse of the value retrieved
                     // from the ManipulationUpdatedEventArgs. Invert the scale amount for the engine.
                     scale = 1.0 / scale;
 
                     // Convert from PointerPosition to graph position.
-                    const auto& pos = args->Position;
+                    const auto& pos = e->Position;
                     const auto[centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, width, height);
 
                     if (FAILED(renderer->ScaleRange(centerX, centerY, scale)))

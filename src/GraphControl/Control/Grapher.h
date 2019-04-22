@@ -104,14 +104,14 @@ namespace GraphControl
         #pragma region Control Overrides
         void OnApplyTemplate() override;
 
-        void OnPointerEntered(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args) override;
-        void OnPointerMoved(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args) override;
-        void OnPointerExited(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args) override;
-        void OnPointerWheelChanged(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args) override;
-        void OnPointerPressed(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args) override;
-        void OnPointerReleased(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args) override;
-        void OnPointerCanceled(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args) override;
-        void OnManipulationDelta(Windows::UI::Xaml::Input::ManipulationDeltaRoutedEventArgs^ args) override;
+        void OnPointerEntered(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+        void OnPointerMoved(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+        void OnPointerExited(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+        void OnPointerWheelChanged(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+        void OnPointerPressed(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+        void OnPointerReleased(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+        void OnPointerCanceled(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+        void OnManipulationDelta(Windows::UI::Xaml::Input::ManipulationDeltaRoutedEventArgs^ e) override;
         #pragma endregion
 
     private:
