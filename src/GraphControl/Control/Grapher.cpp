@@ -7,8 +7,10 @@ using namespace GraphControl::DX;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace std;
+using namespace Windows::Devices::Input;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::System;
 using namespace Windows::UI;
 using namespace Windows::UI::Input;
 using namespace Windows::UI::Xaml;
@@ -16,23 +18,33 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 
-namespace GraphControl
+namespace
 {
     constexpr auto s_defaultStyleKey = L"GraphControl.Grapher";
     constexpr auto s_templateKey_SwapChainPanel = L"GraphSurface";
 
-    DependencyProperty^ Grapher::s_equationTemplateProperty;
     constexpr auto s_propertyName_EquationTemplate = L"EquationTemplate";
-
-    DependencyProperty^ Grapher::s_equationsProperty;
     constexpr auto s_propertyName_Equations = L"Equations";
-
-    DependencyProperty^ Grapher::s_equationsSourceProperty;
     constexpr auto s_propertyName_EquationsSource = L"EquationsSource";
-
-    DependencyProperty^ Grapher::s_forceProportionalAxesTemplateProperty;
     constexpr auto s_propertyName_ForceProportionalAxes = L"ForceProportionalAxes";
 
+    // Helper function for converting a pointer position to a position that the graphing engine will understand.
+    // posX/posY are the pointer position elements and width,height are the dimensions of the graph surface.
+    // The graphing engine interprets x,y position between the range [-1, 1].
+    // Translate the pointer position to the [-1, 1] bounds.
+    __inline pair<double, double> PointerPositionToGraphPosition(double posX, double posY, double width, double height)
+    {
+        return make_pair(( 2 * posX / width - 1 ), ( 1 - 2 * posY / height ));
+    }
+}
+
+namespace GraphControl
+{
+    DependencyProperty^ Grapher::s_equationTemplateProperty;
+    DependencyProperty^ Grapher::s_equationsProperty;
+    DependencyProperty^ Grapher::s_equationsSourceProperty;
+    DependencyProperty^ Grapher::s_forceProportionalAxesTemplateProperty;
+    
     Grapher::Grapher()
         : m_solver{ IMathSolver::CreateMathSolver() }
         , m_graph{ m_solver->CreateGrapher() }
@@ -45,6 +57,13 @@ namespace GraphControl
 
         this->Loaded += ref new RoutedEventHandler(this, &Grapher::OnLoaded);
         this->Unloaded += ref new RoutedEventHandler(this, &Grapher::OnUnloaded);
+
+        this->ManipulationMode =
+            ManipulationModes::TranslateX |
+            ManipulationModes::TranslateY |
+            ManipulationModes::TranslateInertia |
+            ManipulationModes::Scale |
+            ManipulationModes::ScaleInertia;
     }
 
     void Grapher::OnLoaded(Object^ sender, RoutedEventArgs^ args)
@@ -63,6 +82,20 @@ namespace GraphControl
         if (auto backgroundBrush = safe_cast<SolidColorBrush^>(this->Background))
         {
             this->UnregisterPropertyChangedCallback(BackgroundProperty, m_tokenBackgroundColorChanged.Value);
+        }
+    }
+
+    void Grapher::ScaleRange(double centerX, double centerY, double scale)
+    {
+        if (m_graph != nullptr && m_renderMain != nullptr)
+        {
+            if (auto renderer = m_graph->GetRenderer())
+            {
+                if (SUCCEEDED(renderer->ScaleRange(centerX, centerY, scale)))
+                {
+                    m_renderMain->RunRenderPass();
+                }
+            }
         }
     }
 
@@ -387,6 +420,108 @@ namespace GraphControl
         {
             m_renderMain->DrawNearestPoint = false;
             e->Handled = true;
+        }
+    }
+
+    void Grapher::OnPointerWheelChanged(PointerRoutedEventArgs^ e)
+    {
+        PointerPoint^ currentPointer = e->GetCurrentPoint(/*relative to*/ this);
+
+        double delta = currentPointer->Properties->MouseWheelDelta;
+
+        // The maximum delta is 120 according to:
+        // https://docs.microsoft.com/en-us/uwp/api/windows.ui.input.pointerpointproperties.mousewheeldelta#Windows_UI_Input_PointerPointProperties_MouseWheelDelta
+        // Apply a dampening effect so that small mouse movements have a smoother zoom.
+        constexpr double scrollDamper = 0.15;
+        double scale = 1.0 + (abs(delta) / WHEEL_DELTA) * scrollDamper;
+
+        // positive delta if wheel scrolled away from the user
+        if (delta >= 0)
+        {
+            scale = 1.0 / scale;
+        }
+
+        // For scaling, the graphing engine interprets x,y position between the range [-1, 1].
+        // Translate the pointer position to the [-1, 1] bounds.
+        const auto& pos = currentPointer->Position;
+        const auto[centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, ActualWidth, ActualHeight);
+
+        ScaleRange(centerX, centerY, scale);
+
+        e->Handled = true;
+    }
+
+    void Grapher::OnPointerPressed(PointerRoutedEventArgs^ e)
+	{
+        // Set the pointer capture to the element being interacted with so that only it
+        // will fire pointer-related events
+        CapturePointer(e->Pointer);
+	}
+
+    void Grapher::OnPointerReleased(PointerRoutedEventArgs^ e)
+	{
+        ReleasePointerCapture(e->Pointer);
+	}
+
+    void Grapher::OnPointerCanceled(PointerRoutedEventArgs^ e)
+    {
+        ReleasePointerCapture(e->Pointer);
+    }
+
+    void Grapher::OnManipulationDelta(ManipulationDeltaRoutedEventArgs^ e)
+    {
+        if (m_renderMain != nullptr && m_graph != nullptr)
+        {
+            if (auto renderer = m_graph->GetRenderer())
+            {
+                // Only call for a render pass if we actually scaled or translated.
+                bool needsRenderPass = false;
+
+                const double width = ActualWidth;
+                const double height = ActualHeight;
+
+                const auto& translation = e->Delta.Translation;
+                double translationX = translation.X;
+                double translationY = translation.Y;
+                if (translationX != 0 || translationY != 0)
+                {
+                    // The graphing engine pans the graph according to a ratio for x and y.
+                    // A value of +1 means move a half screen in the positive direction for the given axis.
+                    // Convert the manipulation's translation values to ratios for the engine.
+                    translationX /= -width;
+                    translationY /= height;
+
+                    if (FAILED(renderer->MoveRangeByRatio(translationX, translationY)))
+                    {
+                        return;
+                    }
+
+                    needsRenderPass = true;
+                }
+
+                if (double scale = e->Delta.Scale; scale != 1.0)
+                {
+                    // The graphing engine interprets scale amounts as the inverse of the value retrieved
+                    // from the ManipulationUpdatedEventArgs. Invert the scale amount for the engine.
+                    scale = 1.0 / scale;
+
+                    // Convert from PointerPosition to graph position.
+                    const auto& pos = e->Position;
+                    const auto[centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, width, height);
+
+                    if (FAILED(renderer->ScaleRange(centerX, centerY, scale)))
+                    {
+                        return;
+                    }
+
+                    needsRenderPass = true;
+                }
+
+                if (needsRenderPass)
+                {
+                    m_renderMain->RunRenderPass();
+                }
+            }
         }
     }
 }
