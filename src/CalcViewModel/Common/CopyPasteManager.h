@@ -32,7 +32,7 @@ namespace CalculatorApp
             return ClipboardTextFormat() >= 0;
         }
 
-        inline static constexpr auto PasteErrorString = L"NoOp";
+        static constexpr auto PasteErrorString = L"NoOp";
 
     private:
         static int ClipboardTextFormat();
