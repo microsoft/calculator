@@ -16,6 +16,7 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 - Calculation history and memory capabilities.
 - Conversion between many units of measurement.
 - Currency conversion based on data retrieved from [Bing](https://www.bing.com).
+- Infinite precision for basic arithmetic operations (addition, subtraction, multiplication, division) so that calculations never lose precision.
 
 ## Getting started
 Prerequisites:
