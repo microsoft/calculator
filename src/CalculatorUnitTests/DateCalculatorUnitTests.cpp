@@ -664,5 +664,57 @@ namespace DateCalculationUnitTests
                 VERIFY_IS_TRUE(actualValue.find(expectedValue) != wstring::npos, message.c_str());
             }
         }
+
+        TEST_METHOD(JaEraTransitionAddition)
+        {
+            auto viewModel = make_unique<DateCalculationEngine>(CalendarIdentifiers::Japanese);
+            auto cal = ref new Calendar();
+
+            // Showa period ended in Jan 1989.
+            cal->Year = 1989;
+            cal->Month = 1;
+            cal->Day = 1;
+            auto startTime = cal->GetDateTime();
+
+            cal->Year = 1990;
+            cal->Month = 1;
+            cal->Day = 1;
+
+            // Expect that adding a year across boundaries adds the equivalent in the Gregorian calendar.
+            auto expectedResult = cal->GetDateTime();
+            DateDifference duration;
+            duration.year = 1;
+
+            DateTime actualResult;
+            viewModel->AddDuration(startTime, duration, &actualResult);
+
+            VERIFY_ARE_EQUAL(expectedResult.UniversalTime, actualResult.UniversalTime);
+        }
+
+        TEST_METHOD(JaEraTransitionSubtraction)
+        {
+            auto viewModel = make_unique<DateCalculationEngine>(CalendarIdentifiers::Japanese);
+            auto cal = ref new Calendar();
+
+            // Showa period ended in Jan 1989.
+            cal->Year = 1990;
+            cal->Month = 1;
+            cal->Day = 1;
+            auto startTime = cal->GetDateTime();
+
+            cal->Year = 1989;
+            cal->Month = 1;
+            cal->Day = 1;
+
+            // Expect that adding a year across boundaries adds the equivalent in the Gregorian calendar.
+            auto expectedResult = cal->GetDateTime();
+            DateDifference duration;
+            duration.year = 1;
+
+            DateTime actualResult;
+            viewModel->SubtractDuration(startTime, duration, &actualResult);
+
+            VERIFY_ARE_EQUAL(expectedResult.UniversalTime, actualResult.UniversalTime);
+        }
     };
 }

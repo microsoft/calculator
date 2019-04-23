@@ -20,13 +20,27 @@ DateCalculationEngine::DateCalculationEngine(_In_ String^ calendarIdentifier)
 // Returns: True if function succeeds to calculate the date else returns False
 bool DateCalculationEngine::AddDuration(_In_ DateTime startDate, _In_ const DateDifference& duration, _Out_ DateTime *endDate)
 {
+    auto currentCalendarSystem = m_calendar->GetCalendarSystem();
+
     try
     {
         m_calendar->SetDateTime(startDate);
 
         if (duration.year != 0)
         {
+            // The Japanese Era system can have multiple year partitions within the same year.
+            // For example, April 30, 2019 is denoted April 30, Heisei 31; May 1, 2019 is denoted as May 1, Reiwa 1.
+            // The Calendar treats Heisei 31 and Reiwa 1 as separate years, which results in some unexpected behaviors where subtracting a year from Reiwa 1 results in a date in Heisei 31.
+            // To provide the expected result across era boundaries, we first convert the Japanese era system to a Gregorian system, do date math, and then convert back to the Japanese era system.
+            // This works because the Japanese era system maintains the same year/month boundaries and durations as the Gregorian system and is only different in display value.
+            if (currentCalendarSystem == CalendarIdentifiers::Japanese)
+            {
+                m_calendar->ChangeCalendarSystem(CalendarIdentifiers::Gregorian);
+            }
+
             m_calendar->AddYears(duration.year);
+
+            m_calendar->ChangeCalendarSystem(currentCalendarSystem);
         }
         if (duration.month != 0)
         {
@@ -41,6 +55,9 @@ bool DateCalculationEngine::AddDuration(_In_ DateTime startDate, _In_ const Date
     }
     catch (Platform::InvalidArgumentException^ ex)
     {
+        // ensure that we revert to the correct calendar system
+        m_calendar->ChangeCalendarSystem(currentCalendarSystem);
+
         // Do nothing
         return false;
     }
@@ -52,6 +69,8 @@ bool DateCalculationEngine::AddDuration(_In_ DateTime startDate, _In_ const Date
 // Returns: True if function succeeds to calculate the date else returns False
 bool DateCalculationEngine::SubtractDuration(_In_ DateTime startDate, _In_ const DateDifference& duration, _Out_ DateTime *endDate)
 {
+    auto currentCalendarSystem = m_calendar->GetCalendarSystem();
+
     // For Subtract the Algorithm is different than Add. Here the smaller units are subtracted first
     // and then the larger units.
     try
@@ -68,13 +87,28 @@ bool DateCalculationEngine::SubtractDuration(_In_ DateTime startDate, _In_ const
         }
         if (duration.year != 0)
         {
+            // The Japanese Era system can have multiple year partitions within the same year.
+            // For example, April 30, 2019 is denoted April 30, Heisei 31; May 1, 2019 is denoted as May 1, Reiwa 1.
+            // The Calendar treats Heisei 31 and Reiwa 1 as separate years, which results in some unexpected behaviors where subtracting a year from Reiwa 1 results in a date in Heisei 31.
+            // To provide the expected result across era boundaries, we first convert the Japanese era system to a Gregorian system, do date math, and then convert back to the Japanese era system.
+            // This works because the Japanese era system maintains the same year/month boundaries and durations as the Gregorian system and is only different in display value.
+            if (currentCalendarSystem == CalendarIdentifiers::Japanese)
+            {
+                m_calendar->ChangeCalendarSystem(CalendarIdentifiers::Gregorian);
+            }
+
             m_calendar->AddYears(-duration.year);
+
+            m_calendar->ChangeCalendarSystem(currentCalendarSystem);
         }
 
         *endDate = m_calendar->GetDateTime();
     }
     catch (Platform::InvalidArgumentException^ ex)
     {
+        // ensure that we revert to the correct calendar system
+        m_calendar->ChangeCalendarSystem(currentCalendarSystem);
+
         // Do nothing
         return false;
     }
