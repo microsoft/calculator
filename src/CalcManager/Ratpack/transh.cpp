@@ -14,7 +14,6 @@
 //
 //
 //-----------------------------------------------------------------------------
-#include "pch.h"
 #include "ratpak.h"
 
 
@@ -159,12 +158,12 @@ void _coshrat( PRAT *px, uint32_t radix, int32_t precision)
 
     CREATETAYLOR();
 
-    pret->pp=longtonum( 1L, radix);
-    pret->pq=longtonum( 1L, radix);
+    pret->pp=i32tonum( 1L, radix);
+    pret->pq=i32tonum( 1L, radix);
 
     DUPRAT(thisterm,pret)
 
-    n2=longtonum(0L, radix);
+    n2=i32tonum(0L, radix);
 
     do    {
         NEXTTERM(xx,INC(n2) DIVNUM(n2) INC(n2) DIVNUM(n2), precision);

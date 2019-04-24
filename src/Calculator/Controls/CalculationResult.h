@@ -19,7 +19,8 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY_OWNER(CalculationResult);
 
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Visibility, ExpressionVisibility);
-            DEPENDENCY_PROPERTY(double, MinFontSize);
+            DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(double, MinFontSize, 0.0);
+            DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(double, MaxFontSize, 30.0);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Thickness, DisplayMargin);
             DEPENDENCY_PROPERTY(int, MaxExpressionHistoryCharacters);
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, IsActive);
@@ -52,6 +53,8 @@ namespace CalculatorApp
             void OnAccentColorPropertyChanged(Windows::UI::Xaml::Media::Brush^ oldValue, Windows::UI::Xaml::Media::Brush^ newValue);
             void OnDisplayValuePropertyChanged(Platform::String^ oldValue, Platform::String^ newValue);
             void OnIsInErrorPropertyChanged(bool oldValue, bool newValue);
+            void OnMinFontSizePropertyChanged(double oldValue, double newValue);
+            void OnMaxFontSizePropertyChanged(double oldValue, double newValue);
             void TextContainerSizeChanged(Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e);
             void OnTextContainerLayoutUpdated(Object^ sender, Object^ e);
             void UpdateVisualState();
@@ -74,7 +77,6 @@ namespace CalculatorApp
             Windows::UI::Xaml::Controls::TextBlock^ m_textBlock;
             Windows::UI::Xaml::Controls::HyperlinkButton^ m_scrollLeft;
             Windows::UI::Xaml::Controls::HyperlinkButton^ m_scrollRight;
-            double m_startingFontSize;
             double scrollRatio = 0.7;
             bool m_isScalingText;
             bool m_haveCalculatedMax;

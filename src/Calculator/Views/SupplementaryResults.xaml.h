@@ -10,8 +10,7 @@
 
 #include "Views/SupplementaryResults.g.h"
 #include "Controls/SupplementaryItemsControl.h"
-#include "Controls/OperandTextBox.h"
-#include "Controls/OperatorTextBox.h"
+#include "Controls/HorizontalNoOverflowStackPanel.h"
 #include "CalcViewModel/UnitConverterViewModel.h"
 
 namespace CalculatorApp
@@ -58,18 +57,18 @@ namespace CalculatorApp
         Windows::UI::Xaml::DataTemplate^ m_delighterTemplate;
     };
 
+    public ref class SupplementaryResultNoOverflowStackPanel sealed: public CalculatorApp::Controls::HorizontalNoOverflowStackPanel
+    {
+    protected:
+        virtual bool ShouldPrioritizeLastItem() override;
+    };
+
     [Windows::Foundation::Metadata::WebHostHidden]
     public ref class SupplementaryResults sealed
     {
     public:
         SupplementaryResults();
-
-    private:
-        void RefreshData();
-        void OnLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OnConverterPropertyChanged(Platform::Object^ sender, Windows::UI::Xaml::Data::PropertyChangedEventArgs^ e);
-        void OnSupplementaryValuesLayoutUpdated(Platform::Object^ sender, Platform::Object^ e);
-        void OnWindowSizeChanged(Platform::Object^ sender, Windows::UI::Core::WindowSizeChangedEventArgs^ e);
-        Windows::Foundation::Collections::IObservableVector<ViewModel::SupplementaryResult^>^ m_data;
+        DEPENDENCY_PROPERTY_OWNER(SupplementaryResults);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT(Windows::Foundation::Collections::IIterable<ViewModel::SupplementaryResult^>^, Results, nullptr);
     };
 }

@@ -22,6 +22,7 @@
 #include "RadixType.h"
 #include "History.h"  // for History Collector
 #include "CalcInput.h"
+#include "CalcUtils.h"
 #include "ICalcDisplay.h"
 #include "Rational.h"
 #include "RationalMath.h"
@@ -44,7 +45,7 @@ namespace CalculationManager
     class IResourceProvider;
 }
 
-namespace CalculatorUnitTests
+namespace CalculatorEngineTests
 {
     class CalcEngineTests;
 }
@@ -52,8 +53,8 @@ namespace CalculatorUnitTests
 class CCalcEngine {
 public:
     CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager::IResourceProvider* const pResourceProvider, __in_opt ICalcDisplay *pCalcDisplay, __in_opt std::shared_ptr<IHistoryDisplay> pHistoryDisplay);
-    void ProcessCommand(WPARAM wID);
-    void DisplayError (DWORD   nError);
+    void ProcessCommand(OpCode wID);
+    void DisplayError (uint32_t   nError);
     std::unique_ptr<CalcEngine::Rational> PersistedMemObject();
     void PersistedMemObject(CalcEngine::Rational const& memObject);
     bool FInErrorState() { return m_bError; }
@@ -71,7 +72,8 @@ public:
     // Static methods for the instance
     static void InitialOneTimeOnlySetup(CalculationManager::IResourceProvider& resourceProvider); // Once per load time to call to initialize all shared global variables
     // returns the ptr to string representing the operator. Mostly same as the button, but few special cases for x^y etc.
-    static std::wstring_view GetString(int ids) { return s_engineStrings[ids]; }
+    static std::wstring_view GetString(int ids) { return s_engineStrings[std::to_wstring(ids)]; }
+    static std::wstring_view GetString(std::wstring ids) { return s_engineStrings[ids]; }
     static std::wstring_view OpCodeToString(int nOpCode) { return GetString(IdStrFromCmdId(nOpCode)); }
     static std::wstring_view OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE angletype);
 
@@ -116,19 +118,20 @@ private:
     int m_nLastCom;   // Last command entered.
     ANGLE_TYPE m_angletype;  // Current Angle type when in dec mode. one of deg, rad or grad
     NUM_WIDTH m_numwidth;  // one of qword, dword, word or byte mode.
-    LONG m_dwWordBitWidth; // # of bits in currently selected word size
+    int32_t m_dwWordBitWidth; // # of bits in currently selected word size
 
     CHistoryCollector m_HistoryCollector; // Accumulator of each line of history as various commands are processed
 
     std::array<CalcEngine::Rational, NUM_WIDTH_LENGTH> m_chopNumbers; // word size enforcement
     std::array<std::wstring, NUM_WIDTH_LENGTH> m_maxDecimalValueStrings; // maximum values represented by a given word width based off m_chopNumbers
-    static std::array<std::wstring, CSTRINGSENGMAX> s_engineStrings; // the string table shared across all instances
+    static std::unordered_map<std::wstring, std::wstring> s_engineStrings; // the string table shared across all instances
     wchar_t m_decimalSeparator;
     wchar_t m_groupSeparator;
 
 private:
-    void ProcessCommandWorker(WPARAM wParam);
-    void HandleErrorCommand(WPARAM idc);
+    void ProcessCommandWorker(OpCode wParam);
+    void ResolveHighestPrecedenceOperation();
+    void HandleErrorCommand(OpCode idc);
     void HandleMaxDigitsReached();
     void DisplayNum(void);
     int IsNumberInvalid(const std::wstring& numberString, int iMaxExp, int iMaxMantissa, uint32_t radix) const;
@@ -136,20 +139,19 @@ private:
     void SetPrimaryDisplay(const std::wstring& szText, bool isError = false);
     void ClearTemporaryValues();
     CalcEngine::Rational TruncateNumForIntMath(CalcEngine::Rational const& rat);
-    CalcEngine::Rational SciCalcFunctions(CalcEngine::Rational const& rat, DWORD op);
+    CalcEngine::Rational SciCalcFunctions(CalcEngine::Rational const& rat, uint32_t op);
     CalcEngine::Rational DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs);
     void SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwidth);
-    LONG DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
+    int32_t DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
     uint32_t NRadixFromRadixType( RADIX_TYPE radixtype);
 
-    bool TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno);
+    bool TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno);
     void CheckAndAddLastBinOpToHistory(bool addToHistory = true);
-    int IdcSetAngleTypeDecMode(int idc);
 
     void InitChopNumbers();
 
     static void LoadEngineStrings(CalculationManager::IResourceProvider& resourceProvider);
-    static int IdStrFromCmdId(int id) { return id - IDC_FIRSTCONTROL + IDS_FIRSTENGSTR; }
+    static int IdStrFromCmdId(int id) { return id - IDC_FIRSTCONTROL + IDS_ENGINESTR_FIRST; }
 
     static std::vector<uint32_t> DigitGroupingStringToGroupingVector(std::wstring_view groupingString);
     std::wstring GroupDigits(std::wstring_view delimiter, std::vector<uint32_t> const& grouping, std::wstring_view displayString, bool isNumNegative = false);
@@ -158,5 +160,5 @@ private:
     static void ChangeBaseConstants(uint32_t radix, int maxIntDigits, int32_t precision);
     void BaseOrPrecisionChanged();
 
-    friend class CalculatorUnitTests::CalcEngineTests;
+    friend class CalculatorEngineTests::CalcEngineTests;
 };

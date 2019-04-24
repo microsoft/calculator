@@ -30,40 +30,33 @@ constexpr int StandardModePrecision = 16;
 constexpr int ScientificModePrecision = 32;
 constexpr int ProgrammerModePrecision = 64;
 
-namespace CalculatorApp::ViewModel
+namespace
 {
-    namespace CalculatorViewModelProperties
-    {
-        StringReference IsMemoryEmpty(L"IsMemoryEmpty");
-        StringReference IsScientific(L"IsScientific");
-        StringReference IsStandard(L"IsStandard");
-        StringReference IsProgrammer(L"IsProgrammer");
-        StringReference DisplayValue(L"DisplayValue");
-        StringReference IsInError(L"IsInError");
-        StringReference BinaryDisplayValue(L"BinaryDisplayValue");
-        StringReference OpenParenthesisCount(L"OpenParenthesisCount");
-    }
+    StringReference IsStandardPropertyName(L"IsStandard");
+    StringReference IsScientificPropertyName(L"IsScientific");
+    StringReference IsProgrammerPropertyName(L"IsProgrammer");
+    StringReference DisplayValuePropertyName(L"DisplayValue");
+    StringReference CalculationResultAutomationNamePropertyName(L"CalculationResultAutomationName");
+}
 
-    namespace CalculatorResourceKeys
-    {
-        StringReference CalculatorExpression(L"Format_CalculatorExpression");
-        StringReference CalculatorResults(L"Format_CalculatorResults");
-        StringReference CalculatorResults_DecimalSeparator_Announced(L"Format_CalculatorResults_Decimal");
-        StringReference HexButton(L"Format_HexButtonValue");
-        StringReference DecButton(L"Format_DecButtonValue");
-        StringReference OctButton(L"Format_OctButtonValue");
-        StringReference BinButton(L"Format_BinButtonValue");
-        StringReference LeftParenthesisAutomationFormat(L"Format_OpenParenthesisAutomationNamePrefix");
-        StringReference OpenParenthesisCountAutomationFormat(L"Format_OpenParenthesisCountAutomationNamePrefix");
-        StringReference NoParenthesisAdded(L"NoRightParenthesisAdded_Announcement");
-        StringReference MaxDigitsReachedFormat(L"Format_MaxDigitsReached");
-        StringReference ButtonPressFeedbackFormat(L"Format_ButtonPressAuditoryFeedback");
-        StringReference MemorySave(L"Format_MemorySave");
-        StringReference MemoryItemChanged(L"Format_MemorySlotChanged");
-        StringReference MemoryItemCleared(L"Format_MemorySlotCleared");
-        StringReference MemoryCleared(L"Memory_Cleared");
-        StringReference DisplayCopied(L"Display_Copied");
-    }
+namespace CalculatorResourceKeys
+{
+    StringReference CalculatorExpression(L"Format_CalculatorExpression");
+    StringReference CalculatorResults(L"Format_CalculatorResults");
+    StringReference CalculatorResults_DecimalSeparator_Announced(L"Format_CalculatorResults_Decimal");
+    StringReference HexButton(L"Format_HexButtonValue");
+    StringReference DecButton(L"Format_DecButtonValue");
+    StringReference OctButton(L"Format_OctButtonValue");
+    StringReference BinButton(L"Format_BinButtonValue");
+    StringReference OpenParenthesisCountAutomationFormat(L"Format_OpenParenthesisCountAutomationNamePrefix");
+    StringReference NoParenthesisAdded(L"NoRightParenthesisAdded_Announcement");
+    StringReference MaxDigitsReachedFormat(L"Format_MaxDigitsReached");
+    StringReference ButtonPressFeedbackFormat(L"Format_ButtonPressAuditoryFeedback");
+    StringReference MemorySave(L"Format_MemorySave");
+    StringReference MemoryItemChanged(L"Format_MemorySlotChanged");
+    StringReference MemoryItemCleared(L"Format_MemorySlotCleared");
+    StringReference MemoryCleared(L"Memory_Cleared");
+    StringReference DisplayCopied(L"Display_Copied");
 }
 
 StandardCalculatorViewModel::StandardCalculatorViewModel() :
@@ -73,6 +66,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_BinaryDisplayValue(L"0"),
     m_OctalDisplayValue(L"0"),
     m_standardCalculatorManager(&m_calculatorDisplay, &m_resourceProvider),
+    m_ExpressionTokens(ref new Vector<DisplayExpressionToken^>()),
     m_MemorizedNumbers(ref new Vector<MemoryItemViewModel^>()),
     m_IsMemoryEmpty(true),
     m_IsFToEChecked(false),
@@ -86,8 +80,8 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_isBinaryBitFlippingEnabled(false),
     m_CurrentRadixType(RADIX_TYPE::DEC_RADIX),
     m_CurrentAngleType(NumbersAndOperatorsEnum::Degree),
-    m_OpenParenthesisCount(L""),
     m_Announcement(nullptr),
+    m_OpenParenthesisCount(0),
     m_feedbackForButtonPress(nullptr),
     m_isRtlLanguage(false),
     m_localizedMaxDigitsReachedAutomationFormat(nullptr),
@@ -108,7 +102,6 @@ StandardCalculatorViewModel::StandardCalculatorViewModel() :
     m_localizedDecimalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::DecButton);
     m_localizedOctalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::OctButton);
     m_localizedBinaryAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::BinButton);
-    m_leftParenthesisAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::LeftParenthesisAutomationFormat);
 
     // Initialize the Automation Name
     CalculationResultAutomationName = GetLocalizedStringFormat(m_localizedCalculationResultAutomationFormat, m_DisplayValue);
@@ -222,19 +215,23 @@ void StandardCalculatorViewModel::DisplayPasteError()
     m_standardCalculatorManager.DisplayPasteError();
 }
 
-void StandardCalculatorViewModel::SetParenthesisCount(_In_ const wstring& parenthesisCount)
+void StandardCalculatorViewModel::SetParenthesisCount(_In_ unsigned int parenthesisCount)
 {
+    if (m_OpenParenthesisCount == parenthesisCount)
+    {
+        return;
+    }
+
+    OpenParenthesisCount = parenthesisCount;
     if (IsProgrammer || IsScientific)
     {
-        OpenParenthesisCount = ref new String(parenthesisCount.c_str());
-        RaisePropertyChanged("LeftParenthesisAutomationName");
+        SetOpenParenthesisCountNarratorAnnouncement();
     }
 }
 
 void StandardCalculatorViewModel::SetOpenParenthesisCountNarratorAnnouncement()
 {
-    String^ parenthesisCount = ((m_OpenParenthesisCount == nullptr) ? "0" : m_OpenParenthesisCount);
-    wstring localizedParenthesisCount = parenthesisCount->Data();
+    wstring localizedParenthesisCount = to_wstring(m_OpenParenthesisCount).c_str();
     LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
 
     String^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
@@ -287,15 +284,6 @@ void StandardCalculatorViewModel::DisableButtons(CommandType selectedExpressionC
     }
 }
 
-String ^ StandardCalculatorViewModel::GetLeftParenthesisAutomationName()
-{
-    String^ parenthesisCount = ((m_OpenParenthesisCount == nullptr) ? "0" : m_OpenParenthesisCount);
-    wstring localizedParenthesisCount = std::wstring(parenthesisCount->Data());
-    LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
-
-    return GetLocalizedStringFormat(m_leftParenthesisAutomationFormat, ref new String(localizedParenthesisCount.c_str()));
-}
-
 void StandardCalculatorViewModel::SetExpressionDisplay(_Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const &tokens, _Inout_ shared_ptr<CalculatorVector <shared_ptr<IExpressionCommand>>> const &commands)
 {
     m_tokens = tokens;
@@ -327,58 +315,66 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<CalculatorVector<
 {
     AreTokensUpdated = false;
 
-    if (m_ExpressionTokens == nullptr)
-    {
-        m_ExpressionTokens = ref new Vector<DisplayExpressionToken^>();
-    }
-    else
-    {
-        m_ExpressionTokens->Clear();
-    }
-
     unsigned int nTokens = 0;
     tokens->GetSize(&nTokens);
+
+    if (nTokens == 0)
+    {
+        m_ExpressionTokens->Clear();
+        return;
+    }
+
     pair <wstring, int> currentToken;
     const auto& localizer = LocalizationSettings::GetInstance();
 
+    const wstring separator = L" ";
     for (unsigned int i = 0; i < nTokens; ++i)
     {
         if (SUCCEEDED(tokens->GetAt(i, &currentToken)))
         {
             Common::TokenType type;
-            const wstring separator = L" ";
             bool isEditable = (currentToken.second == -1) ? false : true;
             localizer.LocalizeDisplayValue(&(currentToken.first));
 
             if (!isEditable)
             {
-                if (currentToken.first == separator)
-                {
-                    type = TokenType::Separator;
-                }
-                else
-                {
-                    type = TokenType::Operator;
-                }
+                type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
             }
-
             else
             {
                 shared_ptr<IExpressionCommand> command;
                 IFTPlatformException(m_commands->GetAt(static_cast<unsigned int>(currentToken.second), &command));
+                type = command->GetCommandType() == CommandType::OperandCommand ? TokenType::Operand : TokenType::Operator;
+            }
 
-                if (command->GetCommandType() == CommandType::OperandCommand)
+            auto currentTokenString = ref new String(currentToken.first.c_str());
+            if (i < m_ExpressionTokens->Size)
+            {
+                auto existingItem = m_ExpressionTokens->GetAt(i);
+                if (type == existingItem->Type && existingItem->Token->Equals(currentTokenString))
                 {
-                    type = TokenType::Operand;
+                    existingItem->TokenPosition = i;
+                    existingItem->IsTokenEditable = isEditable;
+                    existingItem->CommandIndex = 0;
                 }
                 else
                 {
-                    type = TokenType::Operator;
+                    auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
+                    m_ExpressionTokens->InsertAt(i, expressionToken);
                 }
+                
             }
-            DisplayExpressionToken^ expressionToken = ref new DisplayExpressionToken(ref new String(currentToken.first.c_str()), i, isEditable, type);
-            m_ExpressionTokens->Append(expressionToken);
+            else
+            {
+                auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
+                m_ExpressionTokens->Append(expressionToken);
+            }
         }
+    }
+
+    while (m_ExpressionTokens->Size != nTokens)
+    {
+        m_ExpressionTokens->RemoveAtEnd();
     }
 }
 
@@ -537,7 +533,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
         {
             if (commandIndex == 0)
             {
-                delete [] temp;
+                delete[] temp;
                 return;
             }
 
@@ -558,7 +554,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
             length = m_selectedExpressionLastData->Length() + 1;
             if (length > 50)
             {
-                delete [] temp;
+                delete[] temp;
                 return;
             }
             for (; i < length; ++i)
@@ -584,8 +580,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
 
 bool StandardCalculatorViewModel::IsOperator(Command cmdenum)
 {
-    if ((cmdenum == Command::Command0) || (cmdenum == Command::Command1) || (cmdenum == Command::Command2) || (cmdenum == Command::Command3) || (cmdenum == Command::Command4) || (cmdenum == Command::Command5)
-        || (cmdenum == Command::Command6) || (cmdenum == Command::Command7) || (cmdenum == Command::Command8) || (cmdenum == Command::Command9) || (cmdenum == Command::CommandPNT) || (cmdenum == Command::CommandBACK)
+    if ((cmdenum >= Command::Command0 && cmdenum <= Command::Command9) || (cmdenum == Command::CommandPNT) || (cmdenum == Command::CommandBACK)
         || (cmdenum == Command::CommandEXP) || (cmdenum == Command::CommandFE) || (cmdenum == Command::ModeBasic) || (cmdenum == Command::ModeProgrammer) || (cmdenum == Command::ModeScientific)
         || (cmdenum == Command::CommandINV) || (cmdenum == Command::CommandCENTR) || (cmdenum == Command::CommandDEG) || (cmdenum == Command::CommandRAD) || (cmdenum == Command::CommandGRAD)
         || ((cmdenum >= Command::CommandBINEDITSTART) && (cmdenum <= Command::CommandBINEDITEND)))
@@ -658,8 +653,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object^ parameter)
             {
                 m_CurrentAngleType = numOpEnum;
             }
-            if ((cmdenum == Command::Command0) || (cmdenum == Command::Command1) || (cmdenum == Command::Command2) || (cmdenum == Command::Command3) || (cmdenum == Command::Command4) || (cmdenum == Command::Command5)
-                || (cmdenum == Command::Command6) || (cmdenum == Command::Command7) || (cmdenum == Command::Command8) || (cmdenum == Command::Command9) || (cmdenum == Command::CommandPNT) || (cmdenum == Command::CommandBACK) || (cmdenum == Command::CommandEXP))
+            if ((cmdenum >= Command::Command0 && cmdenum <= Command::Command9) || (cmdenum == Command::CommandPNT) || (cmdenum == Command::CommandBACK) || (cmdenum == Command::CommandEXP))
             {
                 IsOperatorCommand = false;
             }
@@ -1279,30 +1273,30 @@ void StandardCalculatorViewModel::Deserialize(Array<unsigned char>^ state)
 
 void StandardCalculatorViewModel::OnPropertyChanged(String^ propertyname)
 {
-    if (propertyname == CalculatorViewModelProperties::IsScientific)
+    if (propertyname == IsScientificPropertyName)
     {
         if (IsScientific)
         {
             OnButtonPressed(NumbersAndOperatorsEnum::IsScientificMode);
         }
     }
-    else if (propertyname == CalculatorViewModelProperties::IsProgrammer)
+    else if (propertyname == IsProgrammerPropertyName)
     {
         if (IsProgrammer)
         {
             OnButtonPressed(NumbersAndOperatorsEnum::IsProgrammerMode);
         }
     }
-    else if (propertyname == CalculatorViewModelProperties::IsStandard)
+    else if (propertyname == IsStandardPropertyName)
     {
         if (IsStandard)
         {
             OnButtonPressed(NumbersAndOperatorsEnum::IsStandardMode);
         }
     }
-    else if (propertyname == CalculatorViewModelProperties::DisplayValue)
+    else if (propertyname == DisplayValuePropertyName)
     {
-        RaisePropertyChanged(CalculationResultAutomationName_PropertyName);
+        RaisePropertyChanged(CalculationResultAutomationNamePropertyName);
         Announcement = GetDisplayUpdatedNarratorAnnouncement();
     }
 }

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
+#include <sstream>
 #include "Header Files/CalcEngine.h"
 
 using namespace std;
@@ -56,7 +56,7 @@ bool CalcInput::TryToggleSign(bool isIntegerMode, wstring_view maxNumStr)
     return true;
 }
 
-bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, wstring_view maxNumStr, long wordBitWidth, int maxDigits)
+bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, wstring_view maxNumStr, int32_t wordBitWidth, int maxDigits)
 {
     // Convert from an integer into a character
     // This includes both normal digits and alpha 'digits' for radixes > 10

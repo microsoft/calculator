@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "Header Files/CalcEngine.h"
 
 using namespace CalcEngine;
@@ -51,10 +50,10 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwid
     DisplayNum();
 }
 
-LONG CCalcEngine::DwWordBitWidthFromeNumWidth(NUM_WIDTH /*numwidth*/)
+int32_t CCalcEngine::DwWordBitWidthFromeNumWidth(NUM_WIDTH /*numwidth*/)
 {
     static constexpr int nBitMax[] = { 64, 32, 16, 8 };
-    LONG wmax = nBitMax[0];
+    int32_t wmax = nBitMax[0];
 
     if (m_numwidth >= 0 && (size_t)m_numwidth < size(nBitMax))
     {
@@ -77,9 +76,9 @@ uint32_t CCalcEngine::NRadixFromRadixType(RADIX_TYPE radixtype)
 }
 
 //  Toggles a given bit into the number representation. returns true if it changed it actually.
-bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, DWORD wbitno)
+bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno)
 {
-    DWORD wmax = DwWordBitWidthFromeNumWidth(m_numwidth);
+    uint32_t wmax = DwWordBitWidthFromeNumWidth(m_numwidth);
     if (wbitno >= wmax)
     {
         return false; // ignore error cant happen

@@ -12,16 +12,10 @@
 *
 * Author:
 \****************************************************************************/
-#include "pch.h"
+
+#include <string>
 #include "Header Files/CalcEngine.h"
 #include "Header Files/CalcUtils.h"
-
-#define IDC_RADSIN  IDC_UNARYLAST+1
-#define IDC_RADCOS  IDC_UNARYLAST+2
-#define IDC_RADTAN  IDC_UNARYLAST+3
-#define IDC_GRADSIN IDC_UNARYLAST+4
-#define IDC_GRADCOS IDC_UNARYLAST+5
-#define IDC_GRADTAN IDC_UNARYLAST+6
 
 using namespace std;
 using namespace CalcEngine;
@@ -31,9 +25,9 @@ namespace {
     //
     // returns a virtual number for precedence for the operator. We expect binary operator only, otherwise the lowest number
     // 0 is returned. Higher the number, higher the precedence of the operator.
-    INT NPrecedenceOfOp(int nopCode)
+    int NPrecedenceOfOp(int nopCode)
     {
-        static BYTE    rgbPrec[] = { 0,0,  IDC_OR,0, IDC_XOR,0,  IDC_AND,1,
+        static uint8_t rgbPrec[] = { 0,0,  IDC_OR,0, IDC_XOR,0,  IDC_AND,1,
             IDC_ADD,2, IDC_SUB,2,    IDC_RSHF,3, IDC_LSHF,3,
             IDC_MOD,3, IDC_DIV,3, IDC_MUL,3,  IDC_PWR,4,   IDC_ROOT, 4 };
         unsigned int iPrec;
@@ -56,7 +50,7 @@ namespace {
 //
 // When it is discovered by the state machine that at this point the input is not valid (eg. "1+)"), we want to proceed as though this input never
 // occurred and may be some feedback to user like Beep. The rest of input can then continue by just ignoring this command.
-void CCalcEngine::HandleErrorCommand(WPARAM idc)
+void CCalcEngine::HandleErrorCommand(OpCode idc)
 {
     if (!IsGuiSettingOpCode(idc))
     {
@@ -83,7 +77,7 @@ void CCalcEngine::ClearTemporaryValues()
     m_bError = false;
 }
 
-void CCalcEngine::ProcessCommand(WPARAM wParam)
+void CCalcEngine::ProcessCommand(OpCode wParam)
 {
     if (wParam == IDC_SET_RESULT)
     {
@@ -94,9 +88,9 @@ void CCalcEngine::ProcessCommand(WPARAM wParam)
     ProcessCommandWorker(wParam);
 }
 
-void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
+void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 {
-    INT            nx, ni;
+    int            nx, ni;
 
     // Save the last command.  Some commands are not saved in this manor, these
     // commands are:
@@ -107,7 +101,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
     if (!IsGuiSettingOpCode(wParam))
     {
         m_nLastCom = m_nTempCom;
-        m_nTempCom = (INT)wParam;
+        m_nTempCom = (int)wParam;
     }
 
     if (m_bError)
@@ -185,10 +179,10 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         // Change the operation if last input was operation.
         if (IsBinOpCode(m_nLastCom))
         {
-            INT nPrev;
+            int nPrev;
             bool fPrecInvToHigher = false; // Is Precedence Inversion from lower to higher precedence happening ??
 
-            m_nOpCode = (INT)wParam;
+            m_nOpCode = (int)wParam;
 
             // Check to see if by changing this binop, a Precedence inversion is happening.
             // Eg. 1 * 2  + and + is getting changed to ^. The previous precedence rules would have already computed
@@ -285,7 +279,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         DisplayAnnounceBinaryOperator();
 
         m_lastVal = m_currentVal;
-        m_nOpCode = (INT)wParam;
+        m_nOpCode = (int)wParam;
         m_HistoryCollector.AddBinOpToHistory(m_nOpCode);
         m_bNoPrevEqu = m_bChangeOp = true;
         return;
@@ -313,7 +307,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
                 m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
             }
 
-            m_HistoryCollector.AddUnaryOpToHistory((INT)wParam, m_bInv, m_angletype);
+            m_HistoryCollector.AddUnaryOpToHistory((int)wParam, m_bInv, m_angletype);
         }
 
         if ((wParam == IDC_SIN) || (wParam == IDC_COS) || (wParam == IDC_TAN) || (wParam == IDC_SINH) || (wParam == IDC_COSH) || (wParam == IDC_TANH))
@@ -326,7 +320,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             }
         }
 
-        m_currentVal = SciCalcFunctions(m_currentVal, (DWORD)wParam);
+        m_currentVal = SciCalcFunctions(m_currentVal, (uint32_t)wParam);
 
         if (m_bError)
             return;
@@ -366,7 +360,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
 
         CheckAndAddLastBinOpToHistory();
 
-        if (TryToggleBit(m_currentVal, (DWORD)wParam - IDC_BINEDITSTART))
+        if (TryToggleBit(m_currentVal, (uint32_t)wParam - IDC_BINEDITSTART))
         {
             DisplayNum();
         }
@@ -397,7 +391,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         cleared for CENTR */
         if (nullptr != m_pCalcDisplay)
         {
-            m_pCalcDisplay->SetParenDisplayText(L"");
+            m_pCalcDisplay->SetParenthesisNumber(0);
             m_pCalcDisplay->SetExpressionDisplay(make_shared<CalculatorVector<pair<wstring, int>>>(), make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>());
         }
 
@@ -442,7 +436,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             m_nTempCom = m_nLastCom; // Put back this last saved command to the prev state so ) can be handled properly
             ProcessCommand(IDC_CLOSEP);
             m_nLastCom = m_nTempCom; // Actually this is IDC_CLOSEP
-            m_nTempCom = (INT)wParam; // put back in the state where last op seen was IDC_CLOSEP, and current op is IDC_EQU
+            m_nTempCom = (int)wParam; // put back in the state where last op seen was IDC_CLOSEP, and current op is IDC_EQU
         }
 
         if (!m_bNoPrevEqu)
@@ -463,45 +457,12 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
         }
 
-        do {
-
-            if (m_nOpCode) /* Is there a valid operation around?        */
-            {
-                /* If this is the first EQU in a string, set m_holdVal=m_currentVal */
-                /* Otherwise let m_currentVal=m_holdVal.  This keeps m_currentVal constant */
-                /* through all EQUs in a row.                     */
-                if (m_bNoPrevEqu)
-                {
-                    m_holdVal = m_currentVal;
-                }
-                else
-                {
-                    m_currentVal = m_holdVal;
-                    DisplayNum(); // to update the m_numberString
-                    m_HistoryCollector.AddBinOpToHistory(m_nOpCode, false);
-                    m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal); // Adding the repeated last op to history
-                }
-
-                // Do the current or last operation.
-                m_currentVal = DoOperation(m_nOpCode, m_currentVal, m_lastVal);
-                m_nPrevOpCode = m_nOpCode;
-                m_lastVal = m_currentVal;
-
-                /* Check for errors.  If this wasn't done, DisplayNum */
-                /* would immediately overwrite any error message.     */
-                if (!m_bError)
-                    DisplayNum();
-
-                /* No longer the first EQU.                       */
-                m_bNoPrevEqu = false;
-            }
-            else if (!m_bError)
-                DisplayNum();
-
-            if (m_precedenceOpCount == 0 || !m_fPrecedence)
-                break;
-
-            m_nOpCode = m_nPrecOp[--m_precedenceOpCount];
+        // Evaluate the precedence stack.
+        ResolveHighestPrecedenceOperation();
+        while (m_fPrecedence && m_precedenceOpCount > 0)
+        {
+            m_precedenceOpCount--;
+            m_nOpCode = m_nPrecOp[m_precedenceOpCount];
             m_lastVal = m_precedenceVals[m_precedenceOpCount];
 
             // Precedence Inversion check
@@ -514,7 +475,9 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
             m_HistoryCollector.PopLastOpndStart();
 
             m_bNoPrevEqu = true;
-        } while (m_precedenceOpCount >= 0);
+
+            ResolveHighestPrecedenceOperation();
+        }
 
         if (!m_bError)
         {
@@ -632,7 +595,7 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
         // Set the "(=xx" indicator.
         if (nullptr != m_pCalcDisplay)
         {
-            m_pCalcDisplay->SetParenDisplayText(m_openParenCount ? to_wstring(m_openParenCount) : L"");
+            m_pCalcDisplay->SetParenthesisNumber(m_openParenCount >= 0 ? static_cast<unsigned int>(m_openParenCount) : 0);
         }
 
         if (!m_bError)
@@ -789,6 +752,48 @@ void CCalcEngine::ProcessCommandWorker(WPARAM wParam)
 
 }
 
+// Helper function to resolve one item on the precedence stack.
+void CCalcEngine::ResolveHighestPrecedenceOperation()
+{
+    // Is there a valid operation around?
+    if (m_nOpCode)
+    {
+        // If this is the first EQU in a string, set m_holdVal=m_currentVal 
+        // Otherwise let m_currentVal=m_holdVal.  This keeps m_currentVal constant 
+        // through all EQUs in a row.
+        if (m_bNoPrevEqu)
+        {
+            m_holdVal = m_currentVal;
+        }
+        else
+        {
+            m_currentVal = m_holdVal;
+            DisplayNum(); // to update the m_numberString
+            m_HistoryCollector.AddBinOpToHistory(m_nOpCode, false);
+            m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal); // Adding the repeated last op to history
+        }
+
+        // Do the current or last operation.
+        m_currentVal = DoOperation(m_nOpCode, m_currentVal, m_lastVal);
+        m_nPrevOpCode = m_nOpCode;
+        m_lastVal = m_currentVal;
+
+        // Check for errors.  If this wasn't done, DisplayNum
+        // would immediately overwrite any error message.
+        if (!m_bError)
+        {
+            DisplayNum();
+        }
+
+        // No longer the first EQU.
+        m_bNoPrevEqu = false;
+    }
+    else if (!m_bError)
+    {
+        DisplayNum();
+    }
+}
+
 // CheckAndAddLastBinOpToHistory
 //
 //  This is a very confusing helper routine to add the last entered binary operator to the history. This is expected to
@@ -857,155 +862,94 @@ void CCalcEngine::DisplayAnnounceBinaryOperator()
 // Unary operator Function Name table Element
 // since unary operators button names aren't exactly friendly for history purpose,
 // we have this separate table to get its localized name and for its Inv function if it exists.
-typedef struct
+struct FunctionNameElement
 {
-    int idsFunc;    // index of string for the unary op function. Can be NULL, in which case it same as button name
-    int idsFuncInv; // index of string for Inv of unary op. Can be NULL, in case it is same as idsFunc
-    bool fDontUseInExpEval;  // true if this cant be used in reverse direction as well, ie. during expression evaluation
-} UFNE;
+    wstring degreeString; // Used by default if there are no rad or grad specific strings.
+    wstring inverseDegreeString; // Will fall back to degreeString if empty
+
+    wstring radString;
+    wstring inverseRadString; // Will fall back to radString if empty
+
+    wstring gradString;
+    wstring inverseGradString; // Will fall back to gradString if empty
+
+    bool hasAngleStrings = ((!radString.empty()) || (!inverseRadString.empty()) || (!gradString.empty()) || (!inverseGradString.empty()));
+};
 
 // Table for each unary operator
-static const UFNE rgUfne[] =
+static const std::unordered_map<int, FunctionNameElement> unaryOperatorStringTable =
 {
-    /* IDC_CHOP  */{ 0, IDS_FRAC, false },
-    /* IDC_ROL   */{ 0, 0, true },
-    /* IDC_ROR   */{ 0, 0, true },
+    { IDC_CHOP, { L"", SIDS_FRAC} },
 
-    /* IDC_COM   */{ 0, 0, true },
-    /* IDC_SIN    */{ IDS_SIND, IDS_ASIND, false },   // default in this table is degrees for sin,cos & tan
-    /* IDC_COS   */{ IDS_COSD, IDS_ACOSD, false },
-    /* IDC_TAN   */{ IDS_TAND, IDS_ATAND, false },
+    { IDC_SIN, { SIDS_SIND, SIDS_ASIND, SIDS_SINR, SIDS_ASINR, SIDS_SING, SIDS_ASING } },
+    { IDC_COS, { SIDS_COSD, SIDS_ACOSD, SIDS_COSR, SIDS_ACOSR, SIDS_COSG, SIDS_ACOSG } },
+    { IDC_TAN, { SIDS_TAND, SIDS_ATAND, SIDS_TANR, SIDS_ATANR, SIDS_TANG, SIDS_ATANG } },
 
-    /* IDC_SINH    */{ 0, IDS_ASINH, false },
-    /* IDC_COSH   */{ 0, IDS_ACOSH, false },
-    /* IDC_TANH   */{ 0, IDS_ATANH, false },
+    { IDC_SINH, { L"", SIDS_ASINH } },
+    { IDC_COSH, { L"", SIDS_ACOSH } },
+    { IDC_TANH, { L"", SIDS_ATANH } },
 
-    /* IDC_LN     */{ 0, IDS_POWE, false },
-    /* IDC_LOG   */{ 0, 0, false },
-    /* IDC_SQRT */{ 0, 0, false },
-    /* IDC_SQR   */{ IDS_SQR, 0, false },
-    /* IDC_CUB   */{ IDS_CUBE, 0, false },
-    /* IDC_FAC   */{ IDS_FACT, 0, false },
-    /* IDC_REC   */{ IDS_REC, 0, false },
-    /* IDC_DMS  */{ 0, IDS_DEGREES, false },
-    /* IDC_CUBEROOT  */{ 0, 0, false },
-    /* IDC_POW10  */{ 0, 0, false },
-    /* IDC_PERCENT  */{ 0, 0, false },
-
-    /* IDC_RADSIN  */{ IDS_SINR, IDS_ASINR, false },
-    /* IDC_RADCOS  */{ IDS_COSR, IDS_ACOSR, false },
-    /* IDC_RADTAN  */{ IDS_TANR, IDS_ATANR, false },
-    /* IDC_GRADCOS  */{ IDS_SING, IDS_ASING, false },
-    /* IDC_GRADCOS  */{ IDS_COSG, IDS_ACOSG, false },
-    /* IDC_GRADTAN  */{ IDS_TANG, IDS_ATANG, false },
+    { IDC_LN , { L"", SIDS_POWE } },
+    { IDC_SQR, { SIDS_SQR } },
+    { IDC_CUB, { SIDS_CUBE } },
+    { IDC_FAC, { SIDS_FACT } },
+    { IDC_REC, { SIDS_RECIPROC } },
+    { IDC_DMS, { L"", SIDS_DEGREES } },
+    { IDC_SIGN, { SIDS_NEGATE } },
+    { IDC_DEGREES, { SIDS_DEGREES } }
 };
 
 wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE angletype)
 {
-    // Special cases for Sign and Degrees
-    if (IDC_SIGN == nOpCode)
-    {
-        return GetString(IDS_NEGATE);
-    }
-    if (IDC_DEGREES == nOpCode)
-    {
-        return GetString(IDS_DEGREES);
-    }
-
-    // Correct the trigonometric functions with type of angle argument they take
-    if (ANGLE_RAD == angletype)
-    {
-        switch (nOpCode)
-        {
-        case IDC_SIN:
-            nOpCode = IDC_RADSIN;
-            break;
-        case IDC_COS:
-            nOpCode = IDC_RADCOS;
-            break;
-        case IDC_TAN:
-            nOpCode = IDC_RADTAN;
-            break;
-        }
-    }
-    else if (ANGLE_GRAD == angletype)
-    {
-        switch (nOpCode)
-        {
-        case IDC_SIN:
-            nOpCode = IDC_GRADSIN;
-            break;
-        case IDC_COS:
-            nOpCode = IDC_GRADCOS;
-            break;
-        case IDC_TAN:
-            nOpCode = IDC_GRADTAN;
-            break;
-        }
-    }
-
     // Try to lookup the ID in the UFNE table
-    int ids = 0;
-    int iufne = nOpCode - IDC_UNARYFIRST;
-    if (iufne >= 0 && (size_t)iufne < size(rgUfne))
+    wstring ids = L"";
+
+    if (auto pair = unaryOperatorStringTable.find(nOpCode); pair != unaryOperatorStringTable.end())
     {
-        if (fInv)
+        const FunctionNameElement& element = pair->second;
+        if (!element.hasAngleStrings || ANGLE_DEG == angletype)
         {
-            ids = rgUfne[iufne].idsFuncInv;
+            if (fInv)
+            {
+                ids = element.inverseDegreeString;
+            }
+
+            if (ids.empty())
+            {
+                ids = element.degreeString;
+            }
         }
-        if (0 == ids)
+        else if (ANGLE_RAD == angletype)
         {
-            ids = rgUfne[iufne].idsFunc;
+            if (fInv)
+            {
+                ids = element.inverseRadString;
+            }
+            if (ids.empty())
+            {
+                ids = element.radString;
+            }
         }
+        else if (ANGLE_GRAD == angletype)
+        {
+            if (fInv)
+            {
+                ids = element.inverseGradString;
+            }
+            if (ids.empty())
+            {
+                ids = element.gradString;
+            }
+        }
+    }
+
+    if (!ids.empty())
+    {
+        return GetString(ids);
     }
 
     // If we didn't find an ID in the table, use the op code.
-    if (0 == ids)
-    {
-        ids = IdStrFromCmdId(nOpCode);
-    }
-
-    return GetString(ids);
-}
-
-//
-// Sets the Angle Mode for special unary op IDC's which are used to index to the table rgUfne
-// and returns the equivalent plain IDC for trigonometric function. If it isn't a trigonometric function
-// returns the passed in idc itself.
-int CCalcEngine::IdcSetAngleTypeDecMode(int idc)
-{
-    int idcAngleCmd = IDM_DEG;
-
-    switch (idc)
-    {
-    case IDC_RADSIN:
-        idcAngleCmd = IDM_RAD;
-        idc = IDC_SIN;
-        break;
-    case IDC_RADCOS:
-        idcAngleCmd = IDM_RAD;
-        idc = IDC_COS;
-        break;
-    case IDC_RADTAN:
-        idcAngleCmd = IDM_RAD;
-        idc = IDC_TAN;
-        break;
-    case IDC_GRADSIN:
-        idcAngleCmd = IDM_GRAD;
-        idc = IDC_SIN;
-        break;
-    case IDC_GRADCOS:
-        idcAngleCmd = IDM_GRAD;
-        idc = IDC_COS;
-        break;
-    case IDC_GRADTAN:
-        idcAngleCmd = IDM_GRAD;
-        idc = IDC_TAN;
-        break;
-    }
-    ProcessCommand(idcAngleCmd);
-    return idc;
-
+    return OpCodeToString(nOpCode);
 }
 
 bool CCalcEngine::IsCurrentTooBigForTrig()
@@ -1060,7 +1004,7 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
 
             result = tempRat.ToString(radix, m_nFE, m_precision);
         }
-        catch (DWORD)
+        catch (uint32_t)
         {
         }
     }

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
+#include <string>
 #include "Header Files/CCommand.h"
 #include "CalculatorVector.h"
 #include "ExpressionCommand.h"
@@ -98,8 +98,8 @@ void CBinaryCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
 COpndCommand::COpndCommand(shared_ptr<CalculatorVector<int>> const &commands, bool fNegative, bool fDecimal, bool fSciFmt) :
     m_commands(commands),
     m_fNegative(fNegative),
-    m_fDecimal(fDecimal),
     m_fSciFmt(fSciFmt),
+    m_fDecimal(fDecimal),
     m_fInitialized(false),
     m_value{}
 {}

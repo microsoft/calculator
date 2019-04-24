@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //-----------------------------------------------------------------------------
@@ -15,7 +15,6 @@
 //  Special Information
 //
 //-----------------------------------------------------------------------------
-#include "pch.h"
 #include "ratpak.h"
 
 
@@ -92,11 +91,9 @@ void asinanglerat( _Inout_ PRAT *pa, ANGLE_TYPE angletype, uint32_t radix, int32
 void asinrat( PRAT *px, uint32_t radix, int32_t precision)
 
 {
-    long sgn;
     PRAT pret= nullptr;
     PRAT phack= nullptr;
-
-    sgn = (*px)->pp->sign* (*px)->pq->sign;
+    int32_t sgn = SIGN(*px);
 
     (*px)->pp->sign = 1;
     (*px)->pq->sign = 1;
@@ -186,8 +183,8 @@ void _acosrat( PRAT *px, int32_t precision)
     CREATETAYLOR();
 
     createrat(thisterm);
-    thisterm->pp=longtonum( 1L, BASEX );
-    thisterm->pq=longtonum( 1L, BASEX );
+    thisterm->pp=i32tonum( 1L, BASEX );
+    thisterm->pq=i32tonum( 1L, BASEX );
 
     DUPNUM(n2,num_one);
 
@@ -204,9 +201,7 @@ void _acosrat( PRAT *px, int32_t precision)
 void acosrat( PRAT *px, uint32_t radix, int32_t precision)
 
 {
-    long sgn;
-
-    sgn = (*px)->pp->sign*(*px)->pq->sign;
+    int32_t sgn = SIGN(*px);
 
     (*px)->pp->sign = 1;
     (*px)->pq->sign = 1;
@@ -291,10 +286,8 @@ void _atanrat( PRAT *px, int32_t precision)
 void atanrat( PRAT *px, uint32_t radix, int32_t precision)
 
 {
-    long sgn;
     PRAT tmpx= nullptr;
-
-    sgn = (*px)->pp->sign * (*px)->pq->sign;
+    int32_t sgn = SIGN(*px);
 
     (*px)->pp->sign = 1;
     (*px)->pq->sign = 1;

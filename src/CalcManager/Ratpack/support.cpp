@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //----------------------------------------------------------------------------
@@ -18,7 +18,9 @@
 //
 //----------------------------------------------------------------------------
 
-#include "pch.h"
+#include <string>
+#include <cstring> // for memmove
+#include <iostream> // for wostream
 #include "ratpak.h"
 
 using namespace std;
@@ -45,8 +47,8 @@ static int cbitsofprecision = 0;
 DUPNUM((v)->pq,(&(init_q_##v)));
 #define READRAWNUM(v) DUPNUM(v,(&(init_##v)))
 
-#define INIT_AND_DUMP_RAW_NUM_IF_NULL(r, v) if (r == nullptr) { r = longtonum(v, BASEX); DUMPRAWNUM(v); }
-#define INIT_AND_DUMP_RAW_RAT_IF_NULL(r, v) if (r == nullptr) { r = longtorat(v); DUMPRAWRAT(v); }
+#define INIT_AND_DUMP_RAW_NUM_IF_NULL(r, v) if (r == nullptr) { r = i32tonum(v, BASEX); DUMPRAWNUM(v); }
+#define INIT_AND_DUMP_RAW_RAT_IF_NULL(r, v) if (r == nullptr) { r = i32torat(v); DUMPRAWRAT(v); }
 
 static constexpr int RATIO_FOR_DECIMAL = 9;
 static constexpr int DECIMAL = 10;
@@ -87,7 +89,7 @@ PRAT rat_exp= nullptr;
 PRAT rad_to_deg= nullptr;
 PRAT rad_to_grad= nullptr;
 PRAT rat_qword= nullptr;
-PRAT rat_dword= nullptr; // unsigned max ulong
+PRAT rat_dword= nullptr; // unsigned max ui32
 PRAT rat_word= nullptr;
 PRAT rat_byte= nullptr;
 PRAT rat_360= nullptr;
@@ -101,8 +103,8 @@ PRAT rat_max_exp= nullptr;
 PRAT rat_min_exp= nullptr;
 PRAT rat_max_fact = nullptr;
 PRAT rat_min_fact = nullptr;
-PRAT rat_min_long= nullptr; // min signed long
-PRAT rat_max_long= nullptr; // max signed long
+PRAT rat_min_i32= nullptr; // min signed i32
+PRAT rat_max_i32= nullptr; // max signed i32
 
 //----------------------------------------------------------------------------
 //
@@ -132,7 +134,7 @@ void ChangeConstants(uint32_t radix, int32_t precision)
     g_ratio += !g_ratio;
 
     destroyrat(rat_nRadix);
-    rat_nRadix=longtorat( radix );
+    rat_nRadix=i32torat( radix );
 
     // Check to see what we have to recalculate and what we don't
     if (cbitsofprecision < (g_ratio * static_cast<int32_t>(radix) * precision))
@@ -166,7 +168,7 @@ void ChangeConstants(uint32_t radix, int32_t precision)
         INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_min_fact, -1000);
 
         DUPRAT(rat_smallest, rat_nRadix);
-        ratpowlong(&rat_smallest, -precision, precision);
+        ratpowi32(&rat_smallest, -precision, precision);
         DUPRAT(rat_negsmallest, rat_smallest);
         rat_negsmallest->pp->sign = -1;
         DUMPRAWRAT(rat_smallest);
@@ -183,29 +185,29 @@ void ChangeConstants(uint32_t radix, int32_t precision)
         if (pt_eight_five == nullptr)
         {
             createrat(pt_eight_five);
-            pt_eight_five->pp = longtonum(85L, BASEX);
-            pt_eight_five->pq = longtonum(100L, BASEX);
+            pt_eight_five->pp = i32tonum(85L, BASEX);
+            pt_eight_five->pq = i32tonum(100L, BASEX);
             DUMPRAWRAT(pt_eight_five);
         }
 
         DUPRAT(rat_qword, rat_two);
-        numpowlong(&(rat_qword->pp), 64, BASEX, precision);
+        numpowi32(&(rat_qword->pp), 64, BASEX, precision);
         subrat(&rat_qword, rat_one, precision);
         DUMPRAWRAT(rat_qword);
 
         DUPRAT(rat_dword, rat_two);
-        numpowlong(&(rat_dword->pp), 32, BASEX, precision);
+        numpowi32(&(rat_dword->pp), 32, BASEX, precision);
         subrat(&rat_dword, rat_one, precision);
         DUMPRAWRAT(rat_dword);
 
-        DUPRAT(rat_max_long, rat_two);
-        numpowlong(&(rat_max_long->pp), 31, BASEX, precision);
-        DUPRAT(rat_min_long, rat_max_long);
-        subrat(&rat_max_long, rat_one, precision); // rat_max_long = 2^31 -1
-        DUMPRAWRAT(rat_max_long);
+        DUPRAT(rat_max_i32, rat_two);
+        numpowi32(&(rat_max_i32->pp), 31, BASEX, precision);
+        DUPRAT(rat_min_i32, rat_max_i32);
+        subrat(&rat_max_i32, rat_one, precision); // rat_max_i32 = 2^31 -1
+        DUMPRAWRAT(rat_max_i32);
 
-        rat_min_long->pp->sign *= -1; // rat_min_long = -2^31
-        DUMPRAWRAT(rat_min_long);
+        rat_min_i32->pp->sign *= -1; // rat_min_i32 = -2^31
+        DUMPRAWRAT(rat_min_i32);
 
         DUPRAT(rat_min_exp, rat_max_exp);
         rat_min_exp->pp->sign *= -1;
@@ -215,7 +217,7 @@ void ChangeConstants(uint32_t radix, int32_t precision)
 
         // Apparently when dividing 180 by pi, another (internal) digit of
         // precision is needed.
-        long extraPrecision = precision + g_ratio;
+        int32_t extraPrecision = precision + g_ratio;
         DUPRAT(pi, rat_half);
         asinrat(&pi, radix, extraPrecision);
         mulrat(&pi, rat_six, extraPrecision);
@@ -253,12 +255,12 @@ void ChangeConstants(uint32_t radix, int32_t precision)
 
 
         destroyrat(rad_to_deg);
-        rad_to_deg = longtorat(180L);
+        rad_to_deg = i32torat(180L);
         divrat(&rad_to_deg, pi, extraPrecision);
         DUMPRAWRAT(rad_to_deg);
 
         destroyrat(rad_to_grad);
-        rad_to_grad = longtorat(200L);
+        rad_to_grad = i32torat(200L);
         divrat(&rad_to_grad, pi, extraPrecision);
         DUMPRAWRAT(rad_to_grad);
     }
@@ -267,7 +269,7 @@ void ChangeConstants(uint32_t radix, int32_t precision)
         _readconstants();
 
         DUPRAT(rat_smallest, rat_nRadix);
-        ratpowlong(&rat_smallest, -precision, precision);
+        ratpowi32(&rat_smallest, -precision, precision);
         DUPRAT(rat_negsmallest, rat_smallest);
         rat_negsmallest->pp->sign = -1;
     }
@@ -296,7 +298,7 @@ void intrat( PRAT *px, uint32_t radix, int32_t precision)
         // Subtract the fractional part of the rational
         PRAT pret = nullptr;
         DUPRAT(pret,*px);
-        modrat( &pret, rat_one );
+        remrat( &pret, rat_one );
 
         subrat( px, pret, precision);
         destroyrat( pret );
@@ -333,7 +335,7 @@ bool rat_equ( PRAT a, PRAT b, int32_t precision)
 //
 //  FUNCTION: rat_ge
 //
-//  ARGUMENTS:  PRAT a, PRAT b and long precision
+//  ARGUMENTS:  PRAT a, PRAT b and int32_t precision
 //
 //  RETURN: true if a is greater than or equal to b
 //
@@ -348,8 +350,7 @@ bool rat_ge( PRAT a, PRAT b, int32_t precision)
     b->pp->sign *= -1;
     addrat( &rattmp, b, precision);
     b->pp->sign *= -1;
-    bool bret = ( zernum( rattmp->pp ) ||
-        rattmp->pp->sign * rattmp->pq->sign == 1 );
+    bool bret = ( zernum( rattmp->pp ) || SIGN(rattmp) == 1 );
     destroyrat( rattmp );
     return( bret );
 }
@@ -374,8 +375,7 @@ bool rat_gt( PRAT a, PRAT b, int32_t precision)
     b->pp->sign *= -1;
     addrat( &rattmp, b, precision);
     b->pp->sign *= -1;
-    bool bret = ( !zernum( rattmp->pp ) &&
-        rattmp->pp->sign * rattmp->pq->sign == 1 );
+    bool bret = ( !zernum( rattmp->pp ) && SIGN(rattmp) == 1 );
     destroyrat( rattmp );
     return( bret );
 }
@@ -384,7 +384,7 @@ bool rat_gt( PRAT a, PRAT b, int32_t precision)
 //
 //  FUNCTION: rat_le
 //
-//  ARGUMENTS:  PRAT a, PRAT b and long precision
+//  ARGUMENTS:  PRAT a, PRAT b and int32_t precision
 //
 //  RETURN: true if a is less than or equal to b
 //
@@ -400,8 +400,7 @@ bool rat_le( PRAT a, PRAT b, int32_t precision)
     b->pp->sign *= -1;
     addrat( &rattmp, b, precision);
     b->pp->sign *= -1;
-    bool bret = ( zernum( rattmp->pp ) ||
-        rattmp->pp->sign * rattmp->pq->sign == -1 );
+    bool bret = ( zernum( rattmp->pp ) || SIGN(rattmp) == -1 );
     destroyrat( rattmp );
     return( bret );
 }
@@ -411,7 +410,7 @@ bool rat_le( PRAT a, PRAT b, int32_t precision)
 //
 //  FUNCTION: rat_lt
 //
-//  ARGUMENTS:  PRAT a, PRAT b and long precision
+//  ARGUMENTS:  PRAT a, PRAT b and int32_t precision
 //
 //  RETURN: true if a is less than b
 //
@@ -426,8 +425,7 @@ bool rat_lt( PRAT a, PRAT b, int32_t precision)
     b->pp->sign *= -1;
     addrat( &rattmp, b, precision);
     b->pp->sign *= -1;
-    bool bret = ( !zernum( rattmp->pp ) &&
-        rattmp->pp->sign * rattmp->pq->sign == -1 );
+    bool bret = ( !zernum( rattmp->pp ) && SIGN(rattmp) == -1 );
     destroyrat( rattmp );
     return( bret );
 }
@@ -475,7 +473,7 @@ void scale( PRAT *px, PRAT scalefact, uint32_t radix, int32_t precision )
 
     // Logscale is a quick way to tell how much extra precision is needed for
     // scaling by scalefact.
-    long logscale = g_ratio * ( (pret->pp->cdigit+pret->pp->exp) -
+    int32_t logscale = g_ratio * ( (pret->pp->cdigit+pret->pp->exp) -
             (pret->pq->cdigit+pret->pq->exp) );
     if ( logscale > 0 )
     {
@@ -510,7 +508,7 @@ void scale2pi( PRAT *px, uint32_t radix, int32_t precision )
 
     // Logscale is a quick way to tell how much extra precision is needed for
     // scaling by 2 pi.
-    long logscale = g_ratio * ( (pret->pp->cdigit+pret->pp->exp) -
+    int32_t logscale = g_ratio * ( (pret->pp->cdigit+pret->pp->exp) -
             (pret->pq->cdigit+pret->pq->exp) );
     if ( logscale > 0 )
     {
@@ -652,15 +650,15 @@ void _readconstants( void )
     READRAWRAT(rat_min_exp);
     READRAWRAT(rat_max_fact);
     READRAWRAT(rat_min_fact);
-    READRAWRAT(rat_min_long);
-    READRAWRAT(rat_max_long);
+    READRAWRAT(rat_min_i32);
+    READRAWRAT(rat_max_i32);
 }
 
 //---------------------------------------------------------------------------
 //
 //  FUNCTION: trimit
 //
-//  ARGUMENTS:  PRAT *px, long precision
+//  ARGUMENTS:  PRAT *px, int32_t precision
 //
 //
 //  DESCRIPTION: Chops off digits from rational numbers to avoid time
@@ -681,7 +679,7 @@ void trimit( PRAT *px, int32_t precision)
 {
     if ( !g_ftrueinfinite )
         {
-        long trim;
+        int32_t trim;
         PNUMBER pp=(*px)->pp;
         PNUMBER pq=(*px)->pq;
         trim = g_ratio * (min((pp->cdigit+pp->exp),(pq->cdigit+pq->exp))-1) - precision;

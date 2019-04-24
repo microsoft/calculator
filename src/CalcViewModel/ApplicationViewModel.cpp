@@ -32,14 +32,10 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 
-namespace CalculatorApp::ViewModel::ApplicationViewModelProperties
+namespace
 {
-    StringReference Mode(L"Mode");
-    StringReference PreviousMode(L"PreviousMode");
-    StringReference ClearMemoryVisibility(L"ClearMemoryVisibility");
-    StringReference AppBarVisibility(L"AppBarVisibility");
-    StringReference CategoryName(L"CategoryName");
-    StringReference Categories(L"Categories");
+    StringReference CategoriesPropertyName(L"Categories");
+    StringReference ClearMemoryVisibilityPropertyName(L"ClearMemoryVisibility");
 }
 
 ApplicationViewModel::ApplicationViewModel() :
@@ -60,7 +56,7 @@ void ApplicationViewModel::Mode::set(ViewMode value)
         PreviousMode = m_mode;
         m_mode = value;
         OnModeChanged();
-        RaisePropertyChanged(ApplicationViewModelProperties::Mode);
+        RaisePropertyChanged(ModePropertyName);
     }
 }
 
@@ -69,7 +65,7 @@ void ApplicationViewModel::Categories::set(IObservableVector<NavCategoryGroup^>^
     if (m_categories != value)
     {
         m_categories = value;
-        RaisePropertyChanged(ApplicationViewModelProperties::Categories);
+        RaisePropertyChanged(CategoriesPropertyName);
     }
 }
 
@@ -163,11 +159,10 @@ void ApplicationViewModel::OnModeChanged()
     //
     // Save the changed mode, so that the new window launches in this mode.
     // Don't save until after we have adjusted to the new mode, so we don't save a mode that fails to load.
-    ApplicationData::Current->LocalSettings->Values->Insert(ApplicationViewModelProperties::Mode, NavCategory::Serialize(m_mode));
+    ApplicationData::Current->LocalSettings->Values->Insert(ModePropertyName, NavCategory::Serialize(m_mode));
 
     TraceLogger::GetInstance().LogModeChangeEnd(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
-    RaisePropertyChanged(ApplicationViewModelProperties::ClearMemoryVisibility);
-    RaisePropertyChanged(ApplicationViewModelProperties::AppBarVisibility);
+    RaisePropertyChanged(ClearMemoryVisibilityPropertyName);
 }
 
 void ApplicationViewModel::OnCopyCommand(Object^ parameter)
@@ -192,7 +187,7 @@ void ApplicationViewModel::OnPasteCommand(Object^ parameter)
     {
         ConverterViewModel->OnPasteCommand(parameter);
     }
-    else
+    else if (NavCategory::IsCalculatorViewMode(m_mode))
     {
         CalculatorViewModel->OnPasteCommand(parameter);
     }

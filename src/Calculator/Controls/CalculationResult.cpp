@@ -28,6 +28,7 @@ using namespace std;
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, IsActive);
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, AccentColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, MinFontSize);
+DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, MaxFontSize);
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, DisplayMargin);
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, MaxExpressionHistoryCharacters);
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, ExpressionVisibility);
@@ -50,7 +51,6 @@ StringReference CalculationResult::s_FocusedState(L"Focused");
 StringReference CalculationResult::s_UnfocusedState(L"Unfocused");
 
 CalculationResult::CalculationResult():
-    m_startingFontSize(0.0),
     m_isScalingText(false),
     m_haveCalculatedMax(false)
 {
@@ -72,7 +72,7 @@ void CalculationResult::OnApplyTemplate()
     {
         m_textContainer->LayoutUpdated -= m_textContainerLayoutChangedToken;
     }
-    m_textContainer = dynamic_cast<ScrollViewer^>(GetTemplateChild("textContainer"));
+    m_textContainer = dynamic_cast<ScrollViewer^>(GetTemplateChild("TextContainer"));
     if (m_textContainer)
     {
         m_textContainer->SizeChanged += ref new SizeChangedEventHandler(this, &CalculationResult::TextContainerSizeChanged);
@@ -81,9 +81,9 @@ void CalculationResult::OnApplyTemplate()
         m_textContainerLayoutChangedToken = m_textContainer->LayoutUpdated += ref new EventHandler<Object^>(this, &CalculationResult::OnTextContainerLayoutUpdated);
 
         m_textContainer->ChangeView(m_textContainer->ExtentWidth - m_textContainer->ViewportWidth,nullptr,nullptr);
-        m_scrollLeft = dynamic_cast<HyperlinkButton^>(GetTemplateChild("scrollLeft"));
-        m_scrollRight = dynamic_cast<HyperlinkButton^>(GetTemplateChild("scrollRight"));
-        auto borderContainer = dynamic_cast<UIElement^>(GetTemplateChild("border"));
+        m_scrollLeft = dynamic_cast<HyperlinkButton^>(GetTemplateChild("ScrollLeft"));
+        m_scrollRight = dynamic_cast<HyperlinkButton^>(GetTemplateChild("ScrollRight"));
+        auto borderContainer = dynamic_cast<UIElement^>(GetTemplateChild("Border"));
         if (m_scrollLeft && m_scrollRight)
         {
             m_scrollLeft->Click += ref new RoutedEventHandler(this, &CalculationResult::OnScrollClick);
@@ -91,11 +91,10 @@ void CalculationResult::OnApplyTemplate()
             borderContainer->PointerEntered += ref new PointerEventHandler(this, &CalculationResult::OnPointerEntered);
             borderContainer->PointerExited += ref new PointerEventHandler(this, &CalculationResult::OnPointerExited);
         }
-        m_textBlock = dynamic_cast<TextBlock^>(m_textContainer->FindName("normalOutput"));
+        m_textBlock = dynamic_cast<TextBlock^>(m_textContainer->FindName("NormalOutput"));
         if (m_textBlock)
         {
             m_textBlock->Visibility = ::Visibility::Visible;
-            m_startingFontSize = m_textBlock->FontSize;
         }
     }
     UpdateAllState();
@@ -139,6 +138,16 @@ void CalculationResult::OnAccentColorPropertyChanged(Brush^ /*oldValue*/, Brush^
 }
 
 void CalculationResult::OnDisplayValuePropertyChanged(String^ /*oldValue*/, String^ /*newValue*/)
+{
+    UpdateTextState();
+}
+
+void CalculationResult::OnMinFontSizePropertyChanged(double /*oldValue*/, double /*newValue*/)
+{
+    UpdateTextState();
+}
+
+void CalculationResult::OnMaxFontSizePropertyChanged(double /*oldValue*/, double /*newValue*/)
 {
     UpdateTextState();
 }
@@ -210,9 +219,9 @@ void CalculationResult::UpdateTextState()
 
         if (widthDiff > WIDTHCUTOFF)
         {
-            fontSizeChange = min(max(floor(WIDTHTOFONTSCALAR * widthDiff) - WIDTHTOFONTOFFSET, INCREMENTOFFSET), MAXFONTINCREMENT);
+            fontSizeChange = min<double>(max<double>(floor(WIDTHTOFONTSCALAR * widthDiff) - WIDTHTOFONTOFFSET, INCREMENTOFFSET), MAXFONTINCREMENT);
         }
-        if (m_textBlock->ActualWidth < containerSize && abs(m_textBlock->FontSize - m_startingFontSize) > FONTTOLERANCE && !m_haveCalculatedMax)
+        if (m_textBlock->ActualWidth < containerSize && abs(m_textBlock->FontSize - MaxFontSize) > FONTTOLERANCE && !m_haveCalculatedMax)
         {
             ModifyFontAndMargin(m_textBlock, fontSizeChange);
             m_textBlock->InvalidateArrange();
@@ -228,7 +237,7 @@ void CalculationResult::UpdateTextState()
             m_textBlock->InvalidateArrange();
             return;
         }
-        assert(m_textBlock->FontSize >= MinFontSize && m_textBlock->FontSize <= m_startingFontSize);
+        assert(m_textBlock->FontSize >= MinFontSize && m_textBlock->FontSize <= MaxFontSize);
         m_isScalingText = false;
         if (IsOperatorCommand)
         {
@@ -361,24 +370,15 @@ void CalculationResult::ModifyFontAndMargin(TextBlock^ textBox, double fontChang
 {
     double cur = textBox->FontSize;
     double newFontSize = 0.0;
-    Thickness t = textBox->Margin;
     double scaleFactor = SCALEFACTOR;
     if (m_textContainer->ActualHeight <= HEIGHTCUTOFF)
     {
         scaleFactor = SMALLHEIGHTSCALEFACTOR;
     }
-    if (fontChange < 0)
-    {
-        newFontSize = max(cur + fontChange, MinFontSize);
-        t.Bottom += scaleFactor * abs(cur - newFontSize);
-    }
-    else
-    {
-        newFontSize = min(cur + fontChange, m_startingFontSize);
-        t.Bottom -= scaleFactor * abs(cur - newFontSize);
-    }
+
+    newFontSize = min(max(cur + fontChange, MinFontSize), MaxFontSize);
+    m_textContainer->Padding = Thickness(0, 0, 0, scaleFactor * abs(cur - newFontSize));
     textBox->FontSize = newFontSize;
-    textBox->Margin = t;
 }
 
 void CalculationResult::UpdateAllState()

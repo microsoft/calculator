@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -38,19 +38,6 @@ HistoryList::HistoryList()
     InitializeComponent();
 
     HistoryEmpty->FlowDirection = LocalizationService::GetInstance()->GetFlowDirection();
-}
-
-void HistoryList::HistoryList_Loaded(Object^ sender, RoutedEventArgs^ e)
-{
-    // When transitioning between docked and undocked view states, the history list is
-    // unloaded and then loaded, so we attempt to create the titlebarhelper every time
-    // we are loaded, letting the util function check if we are docked or not.
-    m_titleBarHelper = TitleBarHelper::CreateTitleBarHelperIfNotDocked(CustomTitleBar);
-}
-
-void HistoryList::HistoryList_Unloaded(Object^ sender, RoutedEventArgs^ e)
-{
-    m_titleBarHelper = nullptr;
 }
 
 void HistoryList::ListView_ItemClick(_In_ Object^ sender, _In_ ItemClickEventArgs^ e)

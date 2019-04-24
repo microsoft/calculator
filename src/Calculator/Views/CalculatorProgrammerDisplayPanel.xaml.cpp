@@ -36,15 +36,15 @@ void CalculatorProgrammerDisplayPanel::OnBitLengthButtonPressed(Object^ paramete
     TraceLogger::GetInstance().LogBitLengthButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
     String^ buttonId = parameter->ToString();
 
-    qwordButton->Visibility = ::Visibility::Collapsed;
-    dwordButton->Visibility = ::Visibility::Collapsed;
-    wordButton->Visibility = ::Visibility::Collapsed;
-    byteButton->Visibility = ::Visibility::Collapsed;
+    QwordButton->Visibility = ::Visibility::Collapsed;
+    DwordButton->Visibility = ::Visibility::Collapsed;
+    WordButton->Visibility = ::Visibility::Collapsed;
+    ByteButton->Visibility = ::Visibility::Collapsed;
     if (buttonId == "0")
     {
         Model->ButtonPressed->Execute(NumbersAndOperatorsEnum::Dword);
-        dwordButton->Visibility = ::Visibility::Visible;
-        dwordButton->Focus(::FocusState::Programmatic);
+        DwordButton->Visibility = ::Visibility::Visible;
+        DwordButton->Focus(::FocusState::Programmatic);
         Model->IsQwordEnabled = false;
         Model->IsDwordEnabled = true;
         Model->IsWordEnabled = true;
@@ -52,8 +52,8 @@ void CalculatorProgrammerDisplayPanel::OnBitLengthButtonPressed(Object^ paramete
     else if (buttonId == "1")
     {
         Model->ButtonPressed->Execute(NumbersAndOperatorsEnum::Word);
-        wordButton->Visibility = ::Visibility::Visible;
-        wordButton->Focus(::FocusState::Programmatic);
+        WordButton->Visibility = ::Visibility::Visible;
+        WordButton->Focus(::FocusState::Programmatic);
         Model->IsQwordEnabled = false;
         Model->IsDwordEnabled = false;
         Model->IsWordEnabled = true;
@@ -61,8 +61,8 @@ void CalculatorProgrammerDisplayPanel::OnBitLengthButtonPressed(Object^ paramete
     else if (buttonId == "2")
     {
         Model->ButtonPressed->Execute(NumbersAndOperatorsEnum::Byte);
-        byteButton->Visibility = ::Visibility::Visible;
-        byteButton->Focus(::FocusState::Programmatic);
+        ByteButton->Visibility = ::Visibility::Visible;
+        ByteButton->Focus(::FocusState::Programmatic);
         Model->IsQwordEnabled = false;
         Model->IsDwordEnabled = false;
         Model->IsWordEnabled = false;
@@ -70,8 +70,8 @@ void CalculatorProgrammerDisplayPanel::OnBitLengthButtonPressed(Object^ paramete
     else if (buttonId == "3")
     {
         Model->ButtonPressed->Execute(NumbersAndOperatorsEnum::Qword);
-        qwordButton->Visibility = ::Visibility::Visible;
-        qwordButton->Focus(::FocusState::Programmatic);
+        QwordButton->Visibility = ::Visibility::Visible;
+        QwordButton->Focus(::FocusState::Programmatic);
         Model->IsQwordEnabled = true;
         Model->IsDwordEnabled = true;
         Model->IsWordEnabled = true;

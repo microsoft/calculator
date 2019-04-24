@@ -14,7 +14,6 @@
 //
 //
 //-----------------------------------------------------------------------------
-#include "pch.h"
 #include "ratpak.h"
 
 
@@ -50,7 +49,7 @@ void _exprat( PRAT *px, int32_t precision)
     addnum(&(pret->pq),num_one, BASEX);
     DUPRAT(thisterm,pret);
 
-    n2=longtonum(0L, BASEX);
+    n2=i32tonum(0L, BASEX);
 
     do    {
         NEXTTERM(*px, INC(n2) DIVNUM(n2), precision);
@@ -64,7 +63,7 @@ void exprat( PRAT *px, uint32_t radix, int32_t precision)
 {
     PRAT pwr= nullptr;
     PRAT pint= nullptr;
-    long intpwr;
+    int32_t intpwr;
 
     if ( rat_gt( *px, rat_max_exp, precision) || rat_lt( *px, rat_min_exp, precision) )
         {
@@ -77,8 +76,8 @@ void exprat( PRAT *px, uint32_t radix, int32_t precision)
 
     intrat(&pint, radix, precision);
 
-    intpwr = rattolong(pint, radix, precision);
-    ratpowlong( &pwr, intpwr, precision);
+    intpwr = rattoi32(pint, radix, precision);
+    ratpowi32( &pwr, intpwr, precision);
 
     subrat(px, pint, precision);
 
@@ -140,7 +139,7 @@ void _lograt( PRAT *px, int32_t precision)
     DUPRAT(pret,*px);
     DUPRAT(thisterm,*px);
 
-    n2=longtonum(1L, BASEX);
+    n2=i32tonum(1L, BASEX);
     (*px)->pp->sign *= -1;
 
     do    {
@@ -183,10 +182,10 @@ void lograt( PRAT *px, int32_t precision)
         {
         // Take advantage of px's base BASEX to scale quickly down to
         // a reasonable range.
-        long intpwr;
+        int32_t intpwr;
         intpwr=LOGRAT2(*px)-1;
         (*px)->pq->exp += intpwr;
-        pwr=longtorat(intpwr*BASEXPWR);
+        pwr=i32torat(intpwr*BASEXPWR);
         mulrat(&pwr, ln_two, precision);
         // ln(x+e)-ln(x) looks close to e when x is close to one using some
         // expansions.  This means we can trim past precision digits+1.
@@ -309,7 +308,7 @@ void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precis
 
     // Calculate the following use the Powers of Powers rule:
     // px ^ (yNum/yDenom) == px ^ yNum ^ (1/yDenom)
-    // 1. For px ^ yNum, we call powratcomp directly which will call ratpowlong
+    // 1. For px ^ yNum, we call powratcomp directly which will call ratpowi32
     //    and store the result in pxPowNum
     // 2. For pxPowNum ^ (1/yDenom), we call powratcomp
     // 3. Validate the result of 2 by adding/subtracting 0.5, flooring and call powratcomp with yDenom
@@ -408,7 +407,7 @@ void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precis
 //---------------------------------------------------------------------------
 void powratcomp(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
 {
-    long sign = ((*px)->pp->sign * (*px)->pq->sign);
+    int32_t sign = SIGN(*px);
 
     // Take the absolute value
     (*px)->pp->sign = 1;
@@ -451,12 +450,12 @@ void powratcomp(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
             fracrat(&podd, radix, precision);
             if ( rat_gt( podd, rat_negsmallest, precision) && rat_lt( podd, rat_smallest, precision) )
                 {
-                // If power is an integer let ratpowlong deal with it.
+                // If power is an integer let ratpowi32 deal with it.
                 PRAT iy = nullptr;
-                long inty;
+                int32_t inty;
                 DUPRAT(iy,y);
                 subrat(&iy, podd, precision);
-                inty = rattolong(iy, radix, precision);
+                inty = rattoi32(iy, radix, precision);
 
                 PRAT plnx = nullptr;
                 DUPRAT(plnx,*px);
@@ -472,7 +471,7 @@ void powratcomp(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
                     throw( CALC_E_DOMAIN );
                     }
                 destroyrat(plnx);
-                ratpowlong(px, inty, precision);
+                ratpowi32(px, inty, precision);
                 if ( ( inty & 1 ) == 0 )
                     {
                     sign=1;

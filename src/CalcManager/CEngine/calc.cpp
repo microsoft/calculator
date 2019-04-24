@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
+#include <cassert>
 #include "Header Files/CalcEngine.h"
-
 #include "CalculatorResource.h"
 
 using namespace std;
@@ -15,7 +14,7 @@ using namespace CalcEngine;
 
 static constexpr int DEFAULT_MAX_DIGITS = 32;
 static constexpr int DEFAULT_PRECISION = 32;
-static constexpr long DEFAULT_RADIX = 10;
+static constexpr int32_t DEFAULT_RADIX = 10;
 
 static constexpr wchar_t DEFAULT_DEC_SEPARATOR = L'.';
 static constexpr wchar_t DEFAULT_GRP_SEPARATOR = L',';
@@ -25,13 +24,18 @@ static constexpr wstring_view DEFAULT_NUMBER_STR = L"0";
 // Read strings for keys, errors, trig types, etc.
 // These will be copied from the resources to local memory.
 
-array<wstring, CSTRINGSENGMAX> CCalcEngine::s_engineStrings;
+unordered_map<wstring, wstring> CCalcEngine::s_engineStrings;
 
 void CCalcEngine::LoadEngineStrings(CalculationManager::IResourceProvider& resourceProvider)
 {
-    for (size_t i = 0; i < s_engineStrings.size(); i++)
+    for (const auto& sid : g_sids)
     {
-        s_engineStrings[i] = resourceProvider.GetCEngineString(g_sids[i]);
+        auto locKey = wstring{ sid };
+        auto locString = resourceProvider.GetCEngineString(locKey);
+        if (!locString.empty())
+        {
+            s_engineStrings[locKey] = locString;
+        }
     }
 }
 
@@ -168,7 +172,7 @@ void CCalcEngine::SettingsChanged()
         m_HistoryCollector.SetDecimalSymbol(m_decimalSeparator);
 
         // put the new decimal symbol into the table used to draw the decimal key
-        s_engineStrings[IDS_DECIMAL] = m_decimalSeparator;
+        s_engineStrings[SIDS_DECIMAL_SEPARATOR] = m_decimalSeparator;
 
         // we need to redraw to update the decimal point button
         numChanged = true;

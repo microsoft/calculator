@@ -12,7 +12,9 @@
 *
 * Author:
 \****************************************************************************/
-#include "pch.h"
+
+#include <sstream>
+#include <regex>
 #include "Header Files/CalcEngine.h"
 
 using namespace std;
@@ -39,7 +41,7 @@ typedef struct {
     Rational value;
     int32_t precision;
     uint32_t radix;
-    INT         nFE;
+    int         nFE;
     NUM_WIDTH   numwidth;
     bool        fIntMath;
     bool        bRecord;

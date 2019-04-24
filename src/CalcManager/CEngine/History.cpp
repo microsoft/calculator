@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "Header Files/CalcEngine.h"
 #include "Command.h"
 #include "CalculatorVector.h"
@@ -13,7 +12,7 @@ using namespace std;
 using namespace CalcEngine;
 
 namespace {
-    void IFT(HRESULT hr)
+    void IFT(ResultCode hr)
     {
         if (FAILED(hr))
         {

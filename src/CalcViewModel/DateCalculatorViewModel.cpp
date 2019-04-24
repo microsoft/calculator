@@ -22,14 +22,14 @@ using namespace Windows::Globalization;
 using namespace Windows::Globalization::DateTimeFormatting;
 using namespace Windows::System::UserProfile;
 
-namespace CalculatorApp::ViewModel::DateCalculatorViewModelProperties
+namespace
 {
-    StringReference StrDateDiffResult(L"StrDateDiffResult");
-    StringReference StrDateDiffResultAutomationName(L"StrDateDiffResultAutomationName");
-    StringReference StrDateDiffResultInDays(L"StrDateDiffResultInDays");
-    StringReference StrDateResult(L"StrDateResult");
-    StringReference StrDateResultAutomationName(L"StrDateResultAutomationName");
-    StringReference IsDiffInDays(L"IsDiffInDays");
+    StringReference StrDateDiffResultPropertyName(L"StrDateDiffResult");
+    StringReference StrDateDiffResultAutomationNamePropertyName(L"StrDateDiffResultAutomationName");
+    StringReference StrDateDiffResultInDaysPropertyName(L"StrDateDiffResultInDays");
+    StringReference StrDateResultPropertyName(L"StrDateResult");
+    StringReference StrDateResultAutomationNamePropertyName(L"StrDateResultAutomationName");
+    StringReference IsDiffInDaysPropertyName(L"IsDiffInDays");
 }
 
 DateCalculatorViewModel::DateCalculatorViewModel() :
@@ -97,18 +97,18 @@ DateCalculatorViewModel::DateCalculatorViewModel() :
 
 void DateCalculatorViewModel::OnPropertyChanged(_In_ String^ prop)
 {
-    if (prop == DateCalculatorViewModelProperties::StrDateDiffResult)
+    if (prop == StrDateDiffResultPropertyName)
     {
         UpdateStrDateDiffResultAutomationName();
     }
-    else if (prop == DateCalculatorViewModelProperties::StrDateResult)
+    else if (prop == StrDateResultPropertyName)
     {
         UpdateStrDateResultAutomationName();
     }
-    else if (prop != DateCalculatorViewModelProperties::StrDateDiffResultAutomationName
-        && prop != DateCalculatorViewModelProperties::StrDateDiffResultInDays
-        && prop != DateCalculatorViewModelProperties::StrDateResultAutomationName
-        && prop != DateCalculatorViewModelProperties::IsDiffInDays)
+    else if (prop != StrDateDiffResultAutomationNamePropertyName
+        && prop != StrDateDiffResultInDaysPropertyName
+        && prop != StrDateResultAutomationNamePropertyName
+        && prop != IsDiffInDaysPropertyName)
     {
         OnInputsChanged();
     }

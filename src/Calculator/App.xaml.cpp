@@ -233,12 +233,14 @@ void App::OnAppLaunch(IActivatedEventArgs^ args, String^ argument)
 
     TraceLogger::GetInstance().LogOnAppLaunch(previousExecutionState.ToString()->Data());
 
-#if _DEBUG
-    if (IsDebuggerPresent())
-    {
-        DebugSettings->EnableFrameRateCounter = true;
-    }
-#endif
+    // Uncomment the following lines to display frame-rate and per-frame CPU usage info.
+    //#if _DEBUG
+    //    if (IsDebuggerPresent())
+    //    {
+    //        DebugSettings->EnableFrameRateCounter = true;
+    //    }
+    //#endif
+
     auto userSettings = ref new Windows::UI::ViewManagement::UISettings();
     m_isAnimationEnabled = userSettings->AnimationsEnabled;
 

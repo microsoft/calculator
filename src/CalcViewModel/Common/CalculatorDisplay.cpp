@@ -36,7 +36,7 @@ void CalculatorDisplay::SetPrimaryDisplay(_In_ const wstring& displayStringValue
     }
 }
 
-void CalculatorDisplay::SetParenDisplayText(_In_ const std::wstring& parenthesisCount)
+void CalculatorDisplay::SetParenthesisNumber(_In_ unsigned int parenthesisCount)
 {
     if (m_callbackReference != nullptr)
     {

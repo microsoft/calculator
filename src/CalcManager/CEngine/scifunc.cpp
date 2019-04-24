@@ -16,7 +16,6 @@
 /***                                                                    ***/
 /***                                                                    ***/
 /**************************************************************************/
-#include "pch.h"
 #include "Header Files/CalcEngine.h"
 
 using namespace std;
@@ -24,7 +23,7 @@ using namespace CalcEngine;
 using namespace CalcEngine::RationalMath;
 
 /* Routines for more complex mathematical functions/error checking. */
-CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& rat, DWORD op)
+CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& rat, uint32_t op)
 {
     Rational result{};
     try
@@ -205,7 +204,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
         }
         }   // end switch( op )
     }
-    catch (DWORD nErrCode)
+    catch (uint32_t nErrCode)
     {
         DisplayError(nErrCode);
         result = rat;
@@ -215,9 +214,9 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
 }
 
 /* Routine to display error messages and set m_bError flag.  Errors are */
-/* called with DisplayError (n), where n is a DWORD   between 0 and 5. */
+/* called with DisplayError (n), where n is a uint32_t   between 0 and 5. */
 
-void CCalcEngine::DisplayError(DWORD nError)
+void CCalcEngine::DisplayError(uint32_t nError)
 {
     wstring errorString{ GetString(IDS_ERRORS_FIRST + SCODE_CODE(nError)) };
 

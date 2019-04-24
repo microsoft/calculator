@@ -20,6 +20,8 @@ jobs:
     vmImage: vs2017-win2016
   workspace:
     clean: outputs
+  variables:
+    skipComponentGovernanceDetection: true
   steps:
   - checkout: self
     clean: true

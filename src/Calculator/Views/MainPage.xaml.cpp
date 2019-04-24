@@ -11,7 +11,6 @@
 #include "Views/Memory.xaml.h"
 #include "Converters/BooleanToVisibilityConverter.h"
 #include "Common/AppLifecycleLogger.h"
-
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Common::Automation;
@@ -69,8 +68,6 @@ MainPage::MainPage() :
 {
     InitializeComponent();
 
-    m_uiSettings = ref new UISettings();
-
     KeyboardShortcutManager::Initialize();
 
     m_model->PropertyChanged += ref new PropertyChangedEventHandler(this, &MainPage::OnAppPropertyChanged);
@@ -83,7 +80,7 @@ MainPage::MainPage() :
         {
             DisplayInformation::AutoRotationPreferences = DisplayOrientations::Portrait | DisplayOrientations::PortraitFlipped;
         }
-    }    
+    }
 }
 
 void MainPage::OnNavigatedTo(NavigationEventArgs^ e)
@@ -105,9 +102,9 @@ void MainPage::OnNavigatedTo(NavigationEventArgs^ e)
     else
     {
         ApplicationDataContainer^ localSettings = ApplicationData::Current->LocalSettings;
-        if (localSettings->Values->HasKey(ApplicationViewModelProperties::Mode))
+        if (localSettings->Values->HasKey(ApplicationViewModel::ModePropertyName))
         {
-            initialMode = NavCategory::Deserialize(localSettings->Values->Lookup(ApplicationViewModelProperties::Mode));
+            initialMode = NavCategory::Deserialize(localSettings->Values->Lookup(ApplicationViewModel::ModePropertyName));
         }
     }
 
@@ -122,7 +119,8 @@ void MainPage::WindowSizeChanged(_In_ Platform::Object^ /*sender*/, _In_ Windows
 
 void MainPage::OnAppPropertyChanged(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Data::PropertyChangedEventArgs^ e)
 {
-    if (e->PropertyName->Equals(ApplicationViewModelProperties::Mode))
+    String^ propertyName = e->PropertyName;
+    if (propertyName == ApplicationViewModel::ModePropertyName)
     {
         ViewMode newValue = m_model->Mode;
         ViewMode previousMode = m_model->PreviousMode;
@@ -183,10 +181,9 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object^ sender, _In_ Windows:
         ShowHideControls(newValue);
 
         UpdateViewState();
-        SetTitleBarControlColors();
         SetDefaultFocus();
     }
-    else if (e->PropertyName->Equals(ApplicationViewModelProperties::CategoryName))
+    else if (propertyName == ApplicationViewModel::CategoryNamePropertyName)
     {
         SetHeaderAutomationName();
         AnnounceCategoryName();
@@ -198,7 +195,7 @@ void MainPage::ShowHideControls(ViewMode mode)
     auto isCalcViewMode = NavCategory::IsCalculatorViewMode(mode);
     auto isDateCalcViewMode = NavCategory::IsDateCalculatorViewMode(mode);
     auto isConverterViewMode = NavCategory::IsConverterViewMode(mode);
-    
+
     if (m_calculator)
     {
         m_calculator->Visibility = BooleanToVisibilityConverter::Convert(isCalcViewMode);
@@ -245,13 +242,8 @@ void MainPage::OnPageLoaded(_In_ Object^, _In_ RoutedEventArgs^ args)
         m_model->CalculatorViewModel->IsStandard = true;
     }
 
-    _windowSizeEventToken = Window::Current->SizeChanged += ref new WindowSizeChangedEventHandler(this, &MainPage::WindowSizeChanged);
+    m_windowSizeEventToken = Window::Current->SizeChanged += ref new WindowSizeChangedEventHandler(this, &MainPage::WindowSizeChanged);
     UpdateViewState();
-
-    // Set custom XAML Title Bar window caption control button brushes
-    m_uiSettings->ColorValuesChanged -= m_colorValuesChangedToken;
-    m_colorValuesChangedToken = m_uiSettings->ColorValuesChanged += ref new TypedEventHandler<UISettings^, Object^>(this, &MainPage::ColorValuesChanged);
-    SetTitleBarControlColors();
 
     SetHeaderAutomationName();
     SetDefaultFocus();
@@ -266,19 +258,6 @@ void MainPage::OnPageLoaded(_In_ Object^, _In_ RoutedEventArgs^ args)
             AppLifecycleLogger::GetInstance().LaunchVisibleComplete();
         }
     }));
-}
-
-void MainPage::OnPageUnLoaded(_In_ Object^, _In_ RoutedEventArgs^)
-{
-    // OnPageUnloaded Event Handler does not get fired when the calc window is closed.
-    // On closing the instance of a window, On Window Consolidate gets fired.
-}
-
-void MainPage::PinUnpinAppBarButtonOnClicked(
-    _In_ Object^ sender,
-    _In_ RoutedEventArgs^ e)
-{
-     m_model->CalculatorViewModel->OnPinUnpinCommand(sender);
 }
 
 void MainPage::SetDefaultFocus()
@@ -315,9 +294,6 @@ void MainPage::EnsureCalculator()
         isProgramerBinding->Path = ref new PropertyPath(L"IsProgrammer");
         m_calculator->SetBinding(m_calculator->IsProgrammerProperty, isProgramerBinding);
         m_calculator->Style = CalculatorBaseStyle;
-
-        m_fullscreenFlyoutClosedToken =
-            m_calculator->FullscreenFlyoutClosed += ref new FullscreenFlyoutClosedEventHandler(this, &MainPage::OnFullscreenFlyoutClosed);
 
         CalcHolder->Child = m_calculator;
 
@@ -499,62 +475,15 @@ void MainPage::ShowAboutPage()
     FlyoutBase::ShowAttachedFlyout(AboutButton);
 }
 
-void MainPage::ColorValuesChanged(_In_ UISettings^ sender, _In_ Object^ e)
-{
-    WeakReference weakThis(this);
-    RunOnUIThreadNonblocking([weakThis]()
-    { 
-        auto refThis = weakThis.Resolve<MainPage>();
-        if (refThis != nullptr)
-        {
-            refThis->SetTitleBarControlColors();
-        }
-    }, this->Dispatcher);
-}
-
-void MainPage::SetTitleBarControlColors()
-{
-    auto applicationView = ApplicationView::GetForCurrentView();
-    if (applicationView == nullptr) { return; }
-
-    auto applicationTitleBar = applicationView->TitleBar;
-    if (applicationTitleBar == nullptr) { return; }
-
-    auto bgbrush = safe_cast<SolidColorBrush^>(Application::Current->Resources->Lookup("SystemControlBackgroundTransparentBrush"));
-    auto fgbrush = safe_cast<SolidColorBrush^>(Application::Current->Resources->Lookup("SystemControlPageTextBaseHighBrush"));
-    auto inactivefgbrush = safe_cast<SolidColorBrush^>(Application::Current->Resources->Lookup("SystemControlForegroundChromeDisabledLowBrush"));
-    auto hoverbgbrush = safe_cast<SolidColorBrush^>(Application::Current->Resources->Lookup("SystemControlBackgroundListLowBrush"));
-    auto hoverfgbrush = safe_cast<SolidColorBrush^>(Application::Current->Resources->Lookup("SystemControlForegroundBaseHighBrush"));
-    auto pressedbgbrush = safe_cast<SolidColorBrush^>(Application::Current->Resources->Lookup("SystemControlBackgroundListMediumBrush"));
-    auto pressedfgbrush = safe_cast<SolidColorBrush^>(Application::Current->Resources->Lookup("SystemControlForegroundBaseHighBrush"));
-
-    applicationTitleBar->ButtonBackgroundColor = bgbrush->Color;
-    applicationTitleBar->ButtonForegroundColor = fgbrush->Color;
-    applicationTitleBar->ButtonInactiveBackgroundColor = bgbrush->Color;
-    applicationTitleBar->ButtonInactiveForegroundColor = inactivefgbrush->Color;
-    applicationTitleBar->ButtonHoverBackgroundColor = hoverbgbrush->Color;
-    applicationTitleBar->ButtonHoverForegroundColor = hoverfgbrush->Color;
-    applicationTitleBar->ButtonPressedBackgroundColor = pressedbgbrush->Color;
-    applicationTitleBar->ButtonPressedForegroundColor = pressedfgbrush->Color;
-}
-
 void MainPage::UnregisterEventHandlers()
 {
-    m_uiSettings->ColorValuesChanged -= m_colorValuesChangedToken;
-    m_colorValuesChangedToken.Value = 0;
-
-    Window::Current->SizeChanged -= _windowSizeEventToken;
-    _windowSizeEventToken.Value = 0;
+    Window::Current->SizeChanged -= m_windowSizeEventToken;
+    m_windowSizeEventToken.Value = 0;
 
     if (m_calculator != nullptr)
     {
-        m_calculator->FullscreenFlyoutClosed -= m_fullscreenFlyoutClosedToken;
-        m_fullscreenFlyoutClosedToken.Value = 0;
-
         m_calculator->UnregisterEventHandlers();
     }
-
-    m_titleBarHelper = nullptr;
 }
 
 void MainPage::SetHeaderAutomationName()
@@ -578,7 +507,7 @@ void MainPage::SetHeaderAutomationName()
         {
             full = resProvider.GetResourceString(L"HeaderAutomationName_Converter")->Data();
         }
-        
+
         string::size_type found = full.find(L"%1");
         wstring strMode = m_model->CategoryName->Data();
         full = full.replace(found, 2, strMode);
@@ -589,14 +518,14 @@ void MainPage::SetHeaderAutomationName()
     AutomationProperties::SetName(Header, name);
 }
 
-void MainPage::OnFullscreenFlyoutClosed()
-{
-    this->CustomTitleBar->SetTitleBar();
-}
-
 void MainPage::AnnounceCategoryName()
 {
     String^ categoryName = AutomationProperties::GetName(Header);
     NarratorAnnouncement^ announcement = CalculatorAnnouncement::GetCategoryNameChangedAnnouncement(categoryName);
     NarratorNotifier->Announce(announcement);
+}
+
+void MainPage::OnNavItemInvoked(MUXC::NavigationView^ /*sender*/, _In_ MUXC::NavigationViewItemInvokedEventArgs^ e)
+{
+    NavView->IsPaneOpen = false;
 }

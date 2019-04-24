@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -11,16 +11,6 @@ namespace CalculatorApp
 {
     namespace ViewModel
     {
-        namespace ApplicationViewModelProperties
-        {
-            extern Platform::StringReference Mode;
-            extern Platform::StringReference PreviousMode;
-            extern Platform::StringReference ClearMemoryVisibility;
-            extern Platform::StringReference AppBarVisibility;
-            extern Platform::StringReference CategoryName;
-            extern Platform::StringReference Categories;
-        }
-
         [Windows::UI::Xaml::Data::Bindable]
         public ref class ApplicationViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
@@ -32,9 +22,9 @@ namespace CalculatorApp
             OBSERVABLE_OBJECT();
             OBSERVABLE_PROPERTY_RW(StandardCalculatorViewModel^, CalculatorViewModel);
             OBSERVABLE_PROPERTY_RW(DateCalculatorViewModel^, DateCalcViewModel);
-            OBSERVABLE_PROPERTY_RW(CalculatorApp::ViewModel::UnitConverterViewModel^, ConverterViewModel);
+            OBSERVABLE_PROPERTY_RW(UnitConverterViewModel^, ConverterViewModel);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::ViewMode, PreviousMode);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, CategoryName);
+            OBSERVABLE_NAMED_PROPERTY_RW(Platform::String^, CategoryName);
 
             COMMAND_FOR_METHOD(CopyCommand, ApplicationViewModel::OnCopyCommand);
             COMMAND_FOR_METHOD(PasteCommand, ApplicationViewModel::OnPasteCommand);
@@ -48,6 +38,13 @@ namespace CalculatorApp
 
                 void set(CalculatorApp::Common::ViewMode value);
             }
+            static property Platform::String^ ModePropertyName
+            {
+                Platform::String^ get()
+                {
+                    return Platform::StringReference(L"Mode");
+                }
+            }
 
             property Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup^>^ Categories
             {
@@ -60,16 +57,6 @@ namespace CalculatorApp
             }
 
             property Windows::UI::Xaml::Visibility ClearMemoryVisibility
-            {
-                Windows::UI::Xaml::Visibility get()
-                {
-                    return CalculatorApp::Common::NavCategory::IsCalculatorViewMode(Mode)
-                        ? Windows::UI::Xaml::Visibility::Visible
-                        : Windows::UI::Xaml::Visibility::Collapsed;
-                }
-            }
-
-            property Windows::UI::Xaml::Visibility AppBarVisibility
             {
                 Windows::UI::Xaml::Visibility get()
                 {

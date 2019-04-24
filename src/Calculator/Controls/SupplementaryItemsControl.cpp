@@ -38,5 +38,3 @@ void SupplementaryItemsControl::PrepareContainerForItemOverride(DependencyObject
  {
      return ref new SupplementaryContentPresenterAP(this);
  }
-
-

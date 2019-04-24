@@ -17,7 +17,8 @@
 //
 //
 //-----------------------------------------------------------------------------
-#include "pch.h"
+#include <list>
+#include <cstring> // for memmove
 #include "ratpak.h"
 
 using namespace std;
@@ -66,14 +67,14 @@ void _addnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
     MANTTYPE *pcha;     // pcha is a pointer to the mantissa of a.
     MANTTYPE *pchb;     // pchb is a pointer to the mantissa of b.
     MANTTYPE *pchc;     // pchc is a pointer to the mantissa of c.
-    long cdigits;       // cdigits is the max count of the digits results
+    int32_t cdigits;       // cdigits is the max count of the digits results
                         // used as a counter.
-    long mexp;          // mexp is the exponent of the result.
+    int32_t mexp;          // mexp is the exponent of the result.
     MANTTYPE  da;       // da is a single 'digit' after possible padding.
     MANTTYPE  db;       // db is a single 'digit' after possible padding.
     MANTTYPE  cy=0;     // cy is the value of a carry after adding two 'digits'
-    long  fcompla = 0;  // fcompla is a flag to signal a is negative.
-    long  fcomplb = 0;  // fcomplb is a flag to signal b is negative.
+    int32_t  fcompla = 0;  // fcompla is a flag to signal a is negative.
+    int32_t  fcomplb = 0;  // fcomplb is a flag to signal b is negative.
 
     a=*pa;
 
@@ -205,7 +206,7 @@ void __inline mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
             }
         else
             { // if pa is one and b isn't just copy b, and adjust the sign.
-            long sign = (*pa)->sign;
+            int32_t sign = (*pa)->sign;
             DUPNUM(*pa,b);
             (*pa)->sign *= sign;
             }
@@ -226,14 +227,14 @@ void _mulnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
     MANTTYPE *pchc;         // pchc is a pointer to the mantissa of c.
     MANTTYPE *pchcoffset;   // pchcoffset, is the anchor location of the next
                             // single digit multiply partial result.
-    long iadigit = 0;       // Index of digit being used in the first number.
-    long ibdigit = 0;       // Index of digit being used in the second number.
+    int32_t iadigit = 0;       // Index of digit being used in the first number.
+    int32_t ibdigit = 0;       // Index of digit being used in the second number.
     MANTTYPE  da = 0;       // da is the digit from the fist number.
     TWO_MANTTYPE  cy = 0;   // cy is the carry resulting from the addition of
                             // a multiplied row into the result.
     TWO_MANTTYPE  mcy = 0;  // mcy is the resultant from a single
                             // multiply, AND the carry of that multiply.
-    long  icdigit = 0;      // Index of digit being calculated in final result.
+    int32_t  icdigit = 0;      // Index of digit being calculated in final result.
 
     a=*pa;
     ibdigit = a->cdigit + b->cdigit - 1;
@@ -334,7 +335,7 @@ void remnum( PNUMBER *pa, PNUMBER b, uint32_t radix)
             }
 
         destroynum( lasttmp );
-        lasttmp=longtonum( 0, radix);
+        lasttmp=i32tonum( 0, radix);
 
         while ( lessnum( tmp, *pa ) )
             {
@@ -394,7 +395,7 @@ void __inline divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
 void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
 {
     PNUMBER a = *pa;
-    long thismax = precision + 2;
+    int32_t thismax = precision + 2;
     if (thismax < a->cdigit)
     {
         thismax = a->cdigit;
@@ -420,8 +421,8 @@ void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
 
     // Build a table of multiplications of the divisor, this is quicker for
     // more than radix 'digits'
-    list<PNUMBER> numberList{ longtonum(0L, radix) };
-    for (unsigned long i = 1; i < radix; i++)
+    list<PNUMBER> numberList{ i32tonum(0L, radix) };
+    for (uint32_t i = 1; i < radix; i++)
     {
         PNUMBER newValue = nullptr;
         DUPNUM(newValue, numberList.front());
@@ -431,8 +432,8 @@ void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
     }
     destroynum(tmp);
 
-    long digit;
-    long cdigits = 0;
+    int32_t digit;
+    int32_t cdigits = 0;
     while (cdigits++ < thismax && !zernum(rem))
     {
         digit = radix - 1;
@@ -505,11 +506,11 @@ void _divnum( PNUMBER *pa, PNUMBER b, uint32_t radix, int32_t precision)
 bool equnum( PNUMBER a, PNUMBER b )
 
 {
-    long diff;
+    int32_t diff;
     MANTTYPE *pa;
     MANTTYPE *pb;
-    long cdigits;
-    long ccdigits;
+    int32_t cdigits;
+    int32_t ccdigits;
     MANTTYPE  da;
     MANTTYPE  db;
 
@@ -573,11 +574,11 @@ bool equnum( PNUMBER a, PNUMBER b )
 bool lessnum( PNUMBER a, PNUMBER b )
 
 {
-    long diff;
+    int32_t diff;
     MANTTYPE *pa;
     MANTTYPE *pb;
-    long cdigits;
-    long ccdigits;
+    int32_t cdigits;
+    int32_t ccdigits;
     MANTTYPE  da;
     MANTTYPE  db;
 
@@ -635,7 +636,7 @@ bool lessnum( PNUMBER a, PNUMBER b )
 bool zernum( PNUMBER a )
 
 {
-    long length;
+    int32_t length;
     MANTTYPE *pcha;
     length = a->cdigit;
     pcha = a->mant;

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-#include "pch.h"
+#include <algorithm>
 #include "Header Files/Number.h"
 
 using namespace std;
@@ -28,10 +28,10 @@ namespace CalcEngine
 
     PNUMBER Number::ToPNUMBER() const
     {
-        PNUMBER ret = _createnum(static_cast<ULONG>(this->Mantissa().size()) + 1);
+        PNUMBER ret = _createnum(static_cast<uint32_t>(this->Mantissa().size()) + 1);
         ret->sign = this->Sign();
         ret->exp = this->Exp();
-        ret->cdigit = static_cast<long>(this->Mantissa().size());
+        ret->cdigit = static_cast<int32_t>(this->Mantissa().size());
 
         MANTTYPE *ptrRet = ret->mant;
         for (auto const& digit : this->Mantissa())
