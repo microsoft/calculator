@@ -17,7 +17,7 @@ namespace CalculatorUITests
         [TestMethod]
         public void Addition()
         {
-            // Find the buttons by their names and click them in sequence to peform 1 + 7 = 8
+            // Find the buttons by their names and click them in sequence to perform 1 + 7 = 8
             session.FindElementByName("One").Click();
             session.FindElementByName("Plus").Click();
             session.FindElementByName("Seven").Click();
@@ -73,7 +73,7 @@ namespace CalculatorUITests
             catch
             {
                 header = session.FindElementByAccessibilityId("ContentPresenter");
-            }            
+            }
 
             // Ensure that calculator is in standard mode
             if (!header.Text.Equals("Standard", StringComparison.OrdinalIgnoreCase))
@@ -85,6 +85,7 @@ namespace CalculatorUITests
                 Thread.Sleep(TimeSpan.FromSeconds(1));
                 Assert.IsTrue(header.Text.Equals("Standard", StringComparison.OrdinalIgnoreCase));
             }
+
             // Locate the calculatorResult element
             calculatorResult = session.FindElementByAccessibilityId("CalculatorResults");
             Assert.IsNotNull(calculatorResult);
