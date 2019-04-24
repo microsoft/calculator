@@ -118,12 +118,19 @@ void UnitConverterDataLoader::LoadData()
                 unordered_map<int, double> unitConversions = categoryToUnitConversionDataMap.at(categoryViewMode);
                 double unitFactor = unitConversions[unit.id];
 
-                for (auto itr = unitConversions.begin(); itr != unitConversions.end(); ++itr)
+                 for (const auto&[id, conversionFactor] : unitConversions)
                 {
+                    if (idToUnit.find(id) == idToUnit.end())
+                    {
+                        // Optional units will not be in idToUnit but can be in unitConversions.
+                        // For optional units that did not make it to the current set of units, just continue.
+                        continue;
+                    }
+
                     UCM::ConversionData parsedData = { 1.0, 0.0, false };
-                    assert(itr->second > 0); // divide by zero assert
-                    parsedData.ratio = unitFactor / itr->second;
-                    conversions.insert(pair<UCM::Unit, UCM::ConversionData>(idToUnit.at(itr->first), parsedData));
+                    assert(conversionFactor > 0); // divide by zero assert
+                    parsedData.ratio = unitFactor / conversionFactor;
+                    conversions.insert(pair<UCM::Unit, UCM::ConversionData>(idToUnit.at(id), parsedData));
                 }
             }
             else
@@ -175,6 +182,10 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
 
     bool useWattInsteadOfKilowatt = m_currentRegionCode == "GB";
 
+    // Use Pyeong, a Korean floorspace unit.
+    // https://en.wikipedia.org/wiki/Korean_units_of_measurement#Area
+    bool usePyeong = m_currentRegionCode == L"KP" || m_currentRegionCode == L"KR";
+    
     vector<OrderedUnit> areaUnits;
     areaUnits.push_back(OrderedUnit{ UnitConverterUnits::Area_Acre, GetLocalizedStringName(L"UnitName_Acre"), GetLocalizedStringName(L"UnitAbbreviation_Acre"), 9 });
     areaUnits.push_back(OrderedUnit{ UnitConverterUnits::Area_Hectare, GetLocalizedStringName(L"UnitName_Hectare"), GetLocalizedStringName(L"UnitAbbreviation_Hectare"), 4 });
@@ -190,6 +201,10 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
     areaUnits.push_back(OrderedUnit{ UnitConverterUnits::Area_Paper, GetLocalizedStringName(L"UnitName_Paper"), GetLocalizedStringName(L"UnitAbbreviation_Paper"), 12, false, false, true });
     areaUnits.push_back(OrderedUnit{ UnitConverterUnits::Area_SoccerField, GetLocalizedStringName(L"UnitName_SoccerField"), GetLocalizedStringName(L"UnitAbbreviation_SoccerField"),13, false, false, true });
     areaUnits.push_back(OrderedUnit{ UnitConverterUnits::Area_Castle, GetLocalizedStringName(L"UnitName_Castle"), GetLocalizedStringName(L"UnitAbbreviation_Castle"), 14, false, false, true });
+    if (usePyeong)
+    {
+        areaUnits.push_back(OrderedUnit{ UnitConverterUnits::Area_Pyeong, GetLocalizedStringName(L"UnitName_Pyeong"), GetLocalizedStringName(L"UnitAbbreviation_Pyeong"), 15, false, false, false });
+    }
     unitMap.emplace(ViewMode::Area, areaUnits);
 
     vector<OrderedUnit> dataUnits;
@@ -384,6 +399,7 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
             { ViewMode::Area, UnitConverterUnits::Area_Paper, 0.06032246 },
             { ViewMode::Area, UnitConverterUnits::Area_SoccerField, 10869.66 },
             { ViewMode::Area, UnitConverterUnits::Area_Castle, 100000 },
+            { ViewMode::Area, UnitConverterUnits::Area_Pyeong, 400.0 / 121.0 },
 
             { ViewMode::Data, UnitConverterUnits::Data_Bit, 0.000000125 },
             { ViewMode::Data, UnitConverterUnits::Data_Byte, 0.000001 },

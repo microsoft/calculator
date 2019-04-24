@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <array>
 #include "ICalcDisplay.h"
 #include "IHistoryDisplay.h"
 #include "Rational.h"

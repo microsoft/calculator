@@ -8,7 +8,7 @@ using namespace std;
 using namespace CalculationManager;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace CalculatorUnitTests
+namespace CalculatorEngineTests
 {
     TEST_CLASS(CalcInputTest)
     {

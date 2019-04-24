@@ -12,7 +12,9 @@
 *
 * Author:
 \****************************************************************************/
-#include "pch.h"
+
+#include <sstream>
+#include <regex>
 #include "Header Files/CalcEngine.h"
 
 using namespace std;

@@ -14,8 +14,8 @@
 //  internal base is a power of 2.
 //
 //-----------------------------------------------------------------------------
-#include "pch.h"
 #include "ratpak.h"
+#include <cstring> // for memmove
 
 void _mulnumx( PNUMBER *pa, PNUMBER b );
 

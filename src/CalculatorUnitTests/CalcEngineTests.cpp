@@ -13,7 +13,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 static constexpr size_t MAX_HISTORY_SIZE = 20;
 
-namespace CalculatorUnitTests
+namespace CalculatorEngineTests
 {
     TEST_CLASS(CalcEngineTests)
     {

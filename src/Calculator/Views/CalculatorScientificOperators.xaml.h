@@ -33,7 +33,8 @@ namespace CalculatorApp
         DEPENDENCY_PROPERTY_WITH_DEFAULT(bool, IsWideLayout, false);
 
         bool IsShiftEnabled(bool isWideLayout, bool isErrorState) { return !(isWideLayout || isErrorState); }
-
+        void OpenParenthesisButton_GotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        Platform::String^ ParenthesisCountToString(unsigned int count);
     private:
         void ShortLayout_Completed(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
         void WideLayout_Completed(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
@@ -41,10 +42,5 @@ namespace CalculatorApp
         void shiftButton_Check(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
         void shiftButton_IsEnabledChanged(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
         void SetOperatorRowVisibility();
-        void OnViewModelPropertyChanged(Platform::Object^ sender, Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e);
-        void OnLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OnUnloaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-
-        Windows::Foundation::EventRegistrationToken m_propertyChangedToken;
     };
 }

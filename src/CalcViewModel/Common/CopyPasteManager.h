@@ -13,15 +13,14 @@ namespace CalculatorUnitTests
 
 namespace CalculatorApp
 {
-
-#define QwordType 1
-#define DwordType 2
-#define WordType 3
-#define ByteType 4
-#define HexBase 5
-#define DecBase 6
-#define OctBase 7
-#define BinBase 8
+    inline constexpr auto QwordType = 1;
+    inline constexpr auto DwordType = 2;
+    inline constexpr auto WordType = 3;
+    inline constexpr auto ByteType = 4;
+    inline constexpr auto HexBase = 5;
+    inline constexpr auto DecBase = 6;
+    inline constexpr auto OctBase = 7;
+    inline constexpr auto BinBase = 8;
 
     class CopyPasteManager
     {
@@ -55,8 +54,8 @@ namespace CalculatorApp
         static std::pair<size_t, uint64_t> GetMaxOperandLengthAndValue(CalculatorApp::Common::ViewMode mode, CalculatorApp::Common::CategoryGroupType modeType, int programmerNumberBase = -1, int bitLengthType = -1);
         static std::wstring SanitizeOperand(const std::wstring& operand);
         static bool TryOperandToULL(const std::wstring& operand, int numberBase, unsigned long long int& result);
-        static size_t OperandLength(std::wstring operand, CalculatorApp::Common::ViewMode mode, CalculatorApp::Common::CategoryGroupType modeType, int programmerNumberBase = -1);
-        static size_t StandardScientificOperandLength(std::wstring operand);
+        static size_t OperandLength(const std::wstring& operand, CalculatorApp::Common::ViewMode mode, CalculatorApp::Common::CategoryGroupType modeType, int programmerNumberBase = -1);
+        static size_t StandardScientificOperandLength(const std::wstring& operand);
         static size_t ProgrammerOperandLength(const std::wstring& operand, int numberBase);
         static std::wstring RemoveUnwantedCharsFromWstring(const std::wstring& input);
 
