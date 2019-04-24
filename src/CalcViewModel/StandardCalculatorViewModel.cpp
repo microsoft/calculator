@@ -1330,7 +1330,7 @@ void StandardCalculatorViewModel::SetCalculatorType(ViewMode targetState)
 
 String^ StandardCalculatorViewModel::GetRawDisplayValue()
 {
-    if (m_IsInError)
+    if (IsInError)
     {
         return DisplayValue;
     }
