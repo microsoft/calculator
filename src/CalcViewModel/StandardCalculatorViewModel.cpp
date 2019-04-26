@@ -790,6 +790,12 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
 
         NumbersAndOperatorsEnum mappedNumOp = MapCharacterToButtonId(*it, canSendNegate);
 
+        if (mappedNumOp == NumbersAndOperatorsEnum::None)
+        {
+            ++it;
+            continue;
+        }
+
         if (isFirstLegalChar || isPreviousOperator)
         {
             isFirstLegalChar = false;
@@ -811,74 +817,71 @@ void StandardCalculatorViewModel::OnPaste(String^ pastedString, ViewMode mode)
             }
         }
 
-        if (mappedNumOp != NumbersAndOperatorsEnum::None)
+        switch (mappedNumOp)
         {
-            switch (mappedNumOp)
+            // Opening parenthesis starts a new expression and pushes negation state onto the stack
+        case NumbersAndOperatorsEnum::OpenParenthesis:
+            negateStack.push_back(sendNegate);
+            sendNegate = false;
+            break;
+
+            // Closing parenthesis pops the negation state off the stack and sends it down to the calc engine
+        case NumbersAndOperatorsEnum::CloseParenthesis:
+            if (!negateStack.empty())
             {
-                // Opening parenthesis starts a new expression and pushes negation state onto the stack
-            case NumbersAndOperatorsEnum::OpenParenthesis:
-                negateStack.push_back(sendNegate);
-                sendNegate = false;
-                break;
-
-                // Closing parenthesis pops the negation state off the stack and sends it down to the calc engine
-            case NumbersAndOperatorsEnum::CloseParenthesis:
-                if (!negateStack.empty())
-                {
-                    sendNegate = negateStack.back();
-                    negateStack.pop_back();
-                    canSendNegate = true;
-                }
-                else
-                {
-                    // Don't send a closing parenthesis if a matching opening parenthesis hasn't been sent already
-                    sendCommand = false;
-                }
-                break;
-
-            case NumbersAndOperatorsEnum::Zero:
-            case NumbersAndOperatorsEnum::One:
-            case NumbersAndOperatorsEnum::Two:
-            case NumbersAndOperatorsEnum::Three:
-            case NumbersAndOperatorsEnum::Four:
-            case NumbersAndOperatorsEnum::Five:
-            case NumbersAndOperatorsEnum::Six:
-            case NumbersAndOperatorsEnum::Seven:
-            case NumbersAndOperatorsEnum::Eight:
-            case NumbersAndOperatorsEnum::Nine:
-                processedDigit = true;
-                break;
-
-            case NumbersAndOperatorsEnum::Add:
-            case NumbersAndOperatorsEnum::Subtract:
-            case NumbersAndOperatorsEnum::Multiply:
-            case NumbersAndOperatorsEnum::Divide:
-                isPreviousOperator = true;
-                break;
+                sendNegate = negateStack.back();
+                negateStack.pop_back();
+                canSendNegate = true;
             }
-
-            if (sendCommand)
+            else
             {
-                sentEquals = (mappedNumOp == NumbersAndOperatorsEnum::Equals);
-                Command cmdenum = ConvertToOperatorsEnum(mappedNumOp);
-                m_standardCalculatorManager.SendCommand(cmdenum);
+                // Don't send a closing parenthesis if a matching opening parenthesis hasn't been sent already
+                sendCommand = false;
+            }
+            break;
 
-                // The CalcEngine state machine won't allow the negate command to be sent before any
-                // other digits, so instead a flag is set and the command is sent after the first appropriate
-                // command.
-                if (sendNegate)
+        case NumbersAndOperatorsEnum::Zero:
+        case NumbersAndOperatorsEnum::One:
+        case NumbersAndOperatorsEnum::Two:
+        case NumbersAndOperatorsEnum::Three:
+        case NumbersAndOperatorsEnum::Four:
+        case NumbersAndOperatorsEnum::Five:
+        case NumbersAndOperatorsEnum::Six:
+        case NumbersAndOperatorsEnum::Seven:
+        case NumbersAndOperatorsEnum::Eight:
+        case NumbersAndOperatorsEnum::Nine:
+            processedDigit = true;
+            break;
+
+        case NumbersAndOperatorsEnum::Add:
+        case NumbersAndOperatorsEnum::Subtract:
+        case NumbersAndOperatorsEnum::Multiply:
+        case NumbersAndOperatorsEnum::Divide:
+            isPreviousOperator = true;
+            break;
+        }
+
+        if (sendCommand)
+        {
+            sentEquals = (mappedNumOp == NumbersAndOperatorsEnum::Equals);
+            Command cmdenum = ConvertToOperatorsEnum(mappedNumOp);
+            m_standardCalculatorManager.SendCommand(cmdenum);
+
+            // The CalcEngine state machine won't allow the negate command to be sent before any
+            // other digits, so instead a flag is set and the command is sent after the first appropriate
+            // command.
+            if (sendNegate)
+            {
+                if (canSendNegate)
                 {
-                    if (canSendNegate)
-                    {
-                        Command cmdNegate = ConvertToOperatorsEnum(NumbersAndOperatorsEnum::Negate);
-                        m_standardCalculatorManager.SendCommand(cmdNegate);
-                    }
+                    Command cmdNegate = ConvertToOperatorsEnum(NumbersAndOperatorsEnum::Negate);
+                    m_standardCalculatorManager.SendCommand(cmdNegate);
+                }
 
-                    // Can't send negate on a leading zero, so wait until the appropriate time to send it.
-                    if (NumbersAndOperatorsEnum::Zero != mappedNumOp && NumbersAndOperatorsEnum::Decimal != mappedNumOp)
-                    {
-                        sendNegate = false;
-                    }
+                // Can't send negate on a leading zero, so wait until the appropriate time to send it.
+                if (NumbersAndOperatorsEnum::Zero != mappedNumOp && NumbersAndOperatorsEnum::Decimal != mappedNumOp)
+                {
+                    sendNegate = false;
                 }
             }
         }
