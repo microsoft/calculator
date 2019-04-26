@@ -1,4 +1,4 @@
-# Calculator
+# Calculator ![Calculator Icon](docs/Images/CalculatorIcon.png)
 The Windows Calculator app is a modern Windows app written in C++ that ships pre-installed with Windows.
 The app provides standard, scientific, and programmer calculator functionality, as well as a set of converters between various units of measurement and currencies.
 
@@ -6,7 +6,9 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 
 [![Build Status](https://dev.azure.com/ms/calculator/_apis/build/status/Calculator-CI?branchName=master)](https://dev.azure.com/ms/calculator/_build/latest?definitionId=57&branchName=master)
 
-  ![Calculator Screenshot](docs/Images/CalculatorScreenshot.png)
+<p align="center">
+  <img src="docs/Images/CalculatorScreenshot.png">
+</p>
 
 ## Features
 - Standard Calculator functionality which offers basic operations and evaluates commands immediately as they are entered.
