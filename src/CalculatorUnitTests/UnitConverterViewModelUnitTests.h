@@ -42,10 +42,13 @@ namespace CalculatorUnitTests
             void SendCommand(UCM::Command command) override;
             void SetViewModelCallback(const std::shared_ptr<UCM::IUnitConverterVMCallback>& newCallback) override;
             void SetViewModelCurrencyCallback(_In_ const std::shared_ptr<UCM::IViewModelCurrencyCallback>& /*newCallback*/) override {}
+            void Calculate() override {}
+            void ResetCategoriesAndRatios() override{}
             concurrency::task<std::pair<bool, std::wstring>> RefreshCurrencyRatios() override
             {
-                co_return std::make_pair(L"", L"");
+                co_return std::make_pair(true, L"");
             }
+
 
             UINT m_initCallCount;
             UINT m_getCategoriesCallCount;

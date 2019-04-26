@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 // UnitConverter.xaml.h
@@ -22,6 +22,7 @@ namespace CalculatorApp
     public:
         UnitConverter();
         DEPENDENCY_PROPERTY_OWNER(UnitConverter);
+        PROPERTY_R(Windows::UI::Xaml::HorizontalAlignment, FlowDirectionHorizontalAlignment);
 
         void AnimateConverter();
 

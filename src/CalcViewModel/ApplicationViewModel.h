@@ -66,16 +66,6 @@ namespace CalculatorApp
                 }
             }
 
-            property Windows::UI::Xaml::Visibility AppBarVisibility
-            {
-                Windows::UI::Xaml::Visibility get()
-                {
-                    return CalculatorApp::Common::NavCategory::IsCalculatorViewMode(Mode)
-                        ? Windows::UI::Xaml::Visibility::Visible
-                        : Windows::UI::Xaml::Visibility::Collapsed;
-                }
-            }
-
         private:
             bool TryRecoverFromNavigationModeFailure();
 

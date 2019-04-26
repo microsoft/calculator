@@ -78,22 +78,22 @@ void CalculatorProgrammerOperators::SetRadixButton(RADIX_TYPE radixType)
     {
     case RADIX_TYPE::DEC_RADIX:
     {
-        decimalButton->IsChecked = true;
+        DecimalButton->IsChecked = true;
         break;
     }
     case RADIX_TYPE::HEX_RADIX:
     {
-        hexButton->IsChecked = true;
+        HexButton->IsChecked = true;
         break;
     }
     case RADIX_TYPE::OCT_RADIX:
     {
-        octButton->IsChecked = true;
+        OctButton->IsChecked = true;
         break;
     }
     case RADIX_TYPE::BIN_RADIX:
     {
-        binaryButton->IsChecked = true;
+        BinaryButton->IsChecked = true;
         break;
     }
     default:

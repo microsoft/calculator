@@ -17,7 +17,8 @@
 //
 //
 //-----------------------------------------------------------------------------
-#include "pch.h"
+#include <list>
+#include <cstring> // for memmove
 #include "ratpak.h"
 
 using namespace std;

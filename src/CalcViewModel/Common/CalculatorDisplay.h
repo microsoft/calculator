@@ -21,7 +21,7 @@ namespace CalculatorApp
         void SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &commands) override;
         void SetMemorizedNumbers(_In_ const std::vector<std::wstring>& memorizedNumbers) override;
         void OnHistoryItemAdded(_In_ unsigned int addedItemIndex) override;
-        void SetParenDisplayText(_In_ const std::wstring& parenthesisCount) override;
+        void SetParenthesisNumber(_In_ unsigned int parenthesisCount) override;
         void OnNoRightParenAdded() override;
         void MaxDigitsReached() override;
         void BinaryOperatorReceived() override;

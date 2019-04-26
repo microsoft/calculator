@@ -10,8 +10,6 @@
 
 #include "Views/SupplementaryResults.g.h"
 #include "Controls/SupplementaryItemsControl.h"
-#include "Controls/OperandTextBox.h"
-#include "Controls/OperatorTextBox.h"
 #include "Controls/HorizontalNoOverflowStackPanel.h"
 #include "CalcViewModel/UnitConverterViewModel.h"
 

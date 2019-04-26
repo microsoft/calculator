@@ -166,10 +166,14 @@ void UnitConverterViewModel::PopulateData()
 
 void UnitConverterViewModel::OnCategoryChanged(Object^ parameter)
 {
+    m_model->SendCommand(UCM::Command::Clear);
+    ResetCategory();
+}
+
+void UnitConverterViewModel::ResetCategory()
+{
     UCM::Category currentCategory = CurrentCategory->GetModelCategory();
     IsCurrencyCurrentCategory = currentCategory.id == NavCategory::Serialize(ViewMode::Currency);
-
-    m_model->SendCommand(UCM::Command::Clear);
 
     m_isInputBlocked = false;
     SetSelectedUnits();
@@ -706,7 +710,9 @@ void UnitConverterViewModel::OnCurrencyDataLoadFinished(bool didLoad)
 {
     m_isCurrencyDataLoaded = true;
     CurrencyDataLoadFailed = !didLoad;
-    ResetView();
+    m_model->ResetCategoriesAndRatios();
+    m_model->Calculate();
+    ResetCategory();
 
     StringReference key = didLoad ? UnitConverterResourceKeys::CurrencyRatesUpdated : UnitConverterResourceKeys::CurrencyRatesUpdateFailed;
     String^ announcement = AppResourceProvider::GetInstance().GetResourceString(key);

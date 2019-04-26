@@ -15,14 +15,15 @@ using namespace Windows::Foundation;
 using namespace Windows::System;
 using namespace Windows::ApplicationModel::DataTransfer;
 
-unsigned long long maxOperandNumber;
-
 String^ CopyPasteManager::supportedFormats[] =
 {
     StandardDataFormats::Text
 };
 
-constexpr wstring_view c_validCharacterSet{ L"0123456789()+-*/.abcdefABCDEF" };
+static constexpr wstring_view c_validCharacterSet{ L"0123456789()+-*/.abcdefABCDEF" };
+
+// The below values can not be "constexpr"-ed,
+// as both wstring_view and wchar[] can not be concatenated
 // [\s\x85] means white-space characters
 static const wstring c_wspc = L"[\\s\\x85]*";
 static const wstring c_wspcLParens = c_wspc + L"[(]*" + c_wspc;
@@ -103,19 +104,16 @@ task<String^> CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupTyp
 
 int CopyPasteManager::ClipboardTextFormat()
 {
-    int result = -1;
-
-    auto dataPackageView = Clipboard::GetContent();
+    const auto dataPackageView = Clipboard::GetContent();
 
     for (int i = 0; i < RTL_NUMBER_OF(supportedFormats); i++)
     {
         if (dataPackageView->Contains(supportedFormats[i]))
         {
-            result = i;
-            break;
+            return i;
         }
     }
-    return result;
+    return -1;
 }
 
 String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode mode, int programmerNumberBase, int bitLengthType)
@@ -268,13 +266,8 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
         return false;
     }
 
-    bool expMatched = true;
     vector<wregex> patterns{};
-
-    pair<size_t, uint64_t> operandLimits = GetMaxOperandLengthAndValue(mode, modeType, programmerNumberBase, bitLengthType);
-    size_t maxOperandLength = operandLimits.first;
-    uint64_t maxOperandValue = operandLimits.second;
-
+    
     if (mode == ViewMode::Standard)
     {
         patterns.assign(standardModePatterns.begin(), standardModePatterns.end());
@@ -292,11 +285,14 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
         patterns.assign(unitConverterPatterns.begin(), unitConverterPatterns.end());
     }
 
-    for (const wstring& operand : operands)
+    const auto [maxOperandLength, maxOperandValue] = GetMaxOperandLengthAndValue(mode, modeType, programmerNumberBase, bitLengthType);
+    bool expMatched = true;
+
+    for (const auto& operand : operands)
     {
         // Each operand only needs to match one of the available patterns.
         bool operandMatched = false;
-        for (const wregex& pattern : patterns)
+        for (const auto& pattern : patterns)
         {
             operandMatched = operandMatched || regex_match(operand, pattern);
         }
@@ -305,7 +301,7 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
         {
             // Remove characters that are valid in the expression but we do not want to include in length calculations
             // or which will break conversion from string-to-ULL.
-            wstring operandValue = SanitizeOperand(operand);
+            const wstring operandValue = SanitizeOperand(operand);
 
             // If an operand exceeds the maximum length allowed, break and return.
             if (OperandLength(operandValue, mode, modeType, programmerNumberBase) > maxOperandLength)
@@ -341,16 +337,16 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
 
 pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, int bitLengthType)
 {
-    size_t maxLength = 0;
-    uint64_t maxValue = 0;
-
+    constexpr size_t defaultMaxOperandLength = 0;
+    constexpr uint64_t defaultMaxValue = 0;
+    
     if (mode == ViewMode::Standard)
     {
-        maxLength = MaxStandardOperandLength;
+        return make_pair(MaxStandardOperandLength, defaultMaxValue);
     }
     else if (mode == ViewMode::Scientific)
     {
-        maxLength = MaxScientificOperandLength;
+        return make_pair(MaxScientificOperandLength, defaultMaxValue);
     }
     else if (mode == ViewMode::Programmer)
     {
@@ -390,15 +386,17 @@ pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mo
 
         unsigned int signBit = (programmerNumberBase == DecBase) ? 1 : 0;
 
-        maxLength = (size_t)ceil((bitLength - signBit) / bitsPerDigit);
-        maxValue = UINT64_MAX >> (MaxProgrammerBitLength - (bitLength - signBit));
+        const auto maxLength = static_cast<size_t>(ceil((bitLength - signBit) / bitsPerDigit));
+        const uint64_t maxValue = UINT64_MAX >> (MaxProgrammerBitLength - (bitLength - signBit));
+
+        return make_pair(maxLength, maxValue);
     }
     else if (modeType == CategoryGroupType::Converter)
     {
-        maxLength = MaxConverterInputLength;
+        return make_pair(MaxConverterInputLength, defaultMaxValue);
     }
 
-    return make_pair(maxLength, maxValue);
+    return make_pair(defaultMaxOperandLength, defaultMaxValue);
 }
 
 wstring CopyPasteManager::SanitizeOperand(const wstring& operand)
@@ -417,8 +415,7 @@ bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, u
         return false;
     }
 
-    // Default to base10
-    int intBase = 10;
+    int intBase;
     switch (numberBase)
     {
     case HexBase:
@@ -430,6 +427,7 @@ bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, u
     case BinBase:
         intBase = 2;
         break;
+    default:
     case DecBase:
         intBase = 10;
         break;
@@ -441,11 +439,11 @@ bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, u
         result = stoull(operand, &size, intBase);
         return true;
     }
-    catch (invalid_argument)
+    catch (const invalid_argument&)
     {
         // Do nothing
     }
-    catch (out_of_range)
+    catch (const out_of_range&)
     {
         // Do nothing
     }
@@ -453,35 +451,28 @@ bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, u
     return false;
 }
 
-size_t CopyPasteManager::OperandLength(wstring operand, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase)
-{
-    size_t len = 0;
-    if (mode == ViewMode::Standard || mode == ViewMode::Scientific)
-    {
-        len = StandardScientificOperandLength(operand);
-    }
-    else if (mode == ViewMode::Programmer)
-    {
-        len = ProgrammerOperandLength(operand, programmerNumberBase);
-    }
-    else if (modeType == CategoryGroupType::Converter)
-    {
-        len = operand.length();
+size_t CopyPasteManager::OperandLength(const wstring& operand, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase)
+{      
+    if (modeType == CategoryGroupType::Converter) {
+        return operand.length();
     }
 
-    return len;
+    switch(mode) {
+        case ViewMode::Standard:
+        case ViewMode::Scientific:
+            return StandardScientificOperandLength(operand);
+
+        case ViewMode::Programmer:
+            return ProgrammerOperandLength(operand, programmerNumberBase);
+
+        default:
+            return 0;
+    }
 }
 
-size_t CopyPasteManager::StandardScientificOperandLength(wstring operand)
-{
-    bool hasDecimal = false;
-    for (size_t i = 0; i < operand.length(); i++)
-    {
-        if (operand[i] == L'.')
-        {
-            hasDecimal = true;
-        }
-    }
+size_t CopyPasteManager::StandardScientificOperandLength(const wstring& operand)
+{   
+    const bool hasDecimal = operand.find('.') != wstring::npos;
 
     if (hasDecimal)
     {
@@ -503,8 +494,7 @@ size_t CopyPasteManager::StandardScientificOperandLength(wstring operand)
 
 size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int numberBase)
 {
-    size_t len = operand.length();
-
+   
     vector<wstring> prefixes{};
     vector<wstring> suffixes{};
     switch (numberBase)
@@ -525,7 +515,7 @@ size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int num
         break;
     default:
         // No defined prefixes/suffixes
-        break;
+      return 0;
     }
 
     // UInt suffixes are common across all modes
@@ -535,9 +525,11 @@ size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int num
     wstring operandUpper = operand;
     transform(operandUpper.begin(), operandUpper.end(), operandUpper.begin(), towupper);
 
+    size_t len = operand.length();
+
     // Detect if there is a suffix and subtract its length
     // Check suffixes first to allow e.g. "0b" to result in length 1 (value 0), rather than length 0 (no value).
-    for (const wstring& suffix : suffixes)
+    for (const auto& suffix : suffixes)
     {
         if (len < suffix.length())
         {
@@ -552,7 +544,7 @@ size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int num
     }
 
     // Detect if there is a prefix and subtract its length
-    for (const wstring& prefix : prefixes)
+    for (const auto& prefix : prefixes)
     {
         if (len < prefix.length())
         {

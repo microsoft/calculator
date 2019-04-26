@@ -454,61 +454,48 @@ namespace CalculatorUnitTests
             // Call count is being set to 1 because we send 'CE' command as the first call
             UINT callCount = 1;
 
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Zero);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Zero);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Zero == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::One);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::One);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::One == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Two);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Two);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Two == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Three);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Three);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Three == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Four);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Four);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Four == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Five);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Five);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Five == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Six);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Six);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Six == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Seven);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Seven);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Seven == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Eight);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Eight);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Eight == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Nine);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Nine);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Nine == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Decimal);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Decimal);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Decimal == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Negate);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Negate);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Negate == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Backspace);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Backspace);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Backspace == mock->m_lastCommand);
-            vm.ButtonPressed->Execute(CalculatorApp::NumbersAndOperatorsEnum::Clear);
+            vm.ButtonPressed->Execute(NumbersAndOperatorsEnum::Clear);
             VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
             VERIFY_IS_TRUE(UCM::Command::Clear == mock->m_lastCommand);
-
-            for (NumbersAndOperatorsEnum button = NumbersAndOperatorsEnum::Add; button <= NumbersAndOperatorsEnum::None; button++)
-            {
-                if (button == NumbersAndOperatorsEnum::Decimal ||
-                    button == NumbersAndOperatorsEnum::Negate ||
-                    button == NumbersAndOperatorsEnum::Backspace)
-                {
-                    continue;
-                }
-                vm.ButtonPressed->Execute(button);
-                VERIFY_ARE_EQUAL(++callCount, mock->m_sendCommandCallCount);
-                VERIFY_IS_TRUE(UCM::Command::None == mock->m_lastCommand);
-            }
         }
 
         // Tests that when we fire the OnGotFocus, it activates the given control
