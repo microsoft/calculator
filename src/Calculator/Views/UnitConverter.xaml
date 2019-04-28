@@ -615,8 +615,7 @@
                                          x:Uid="RefreshButtonText"
                                          Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}"
                                          Click="CurrencyRefreshButton_Click"/>
-                        <TextBlock Margin="0,7,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
-                            <Run x:Name="Spacing" Text="&#x200A;"/>
+                        <TextBlock Margin="3,7,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
                             <Run x:Name="CurrencySecondaryStatus"
                                  FontWeight="SemiBold"
                                  Text=""/>
