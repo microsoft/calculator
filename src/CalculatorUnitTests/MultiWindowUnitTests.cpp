@@ -632,9 +632,9 @@ TEST_METHOD(MultipleDateCalculatorTest)
     //// Diff in viewModels[0]
     // SYSTEMTIME date1, date2, resultDate;
     ///* 01-10-2015 */ date1.wDay = 1; date1.wMonth = 10; date1.wYear = 2015; date1.wDayOfWeek = 4; date1.wHour = 0; date1.wMinute = 0; date1.wSecond = 0;
-    ///date1.wMilliseconds = 0;
+    /// date1.wMilliseconds = 0;
     ///* 15-02-2016 */ date2.wDay = 15; date2.wMonth = 2; date2.wYear = 2016; date2.wDayOfWeek = 1; date2.wHour = 0; date2.wMinute = 0; date2.wSecond = 0;
-    ///date2.wMilliseconds = 0;
+    /// date2.wMilliseconds = 0;
 
     // viewModels[0]->FromDate = DateUtils::SystemTimeToDateTime(date1);
     // viewModels[0]->ToDate = DateUtils::SystemTimeToDateTime(date2);

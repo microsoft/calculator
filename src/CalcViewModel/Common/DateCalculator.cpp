@@ -30,9 +30,10 @@ bool DateCalculationEngine::AddDuration(_In_ DateTime startDate, _In_ const Date
         {
             // The Japanese Era system can have multiple year partitions within the same year.
             // For example, April 30, 2019 is denoted April 30, Heisei 31; May 1, 2019 is denoted as May 1, Reiwa 1.
-            // The Calendar treats Heisei 31 and Reiwa 1 as separate years, which results in some unexpected behaviors where subtracting a year from Reiwa 1 results in a date in Heisei 31.
-            // To provide the expected result across era boundaries, we first convert the Japanese era system to a Gregorian system, do date math, and then convert back to the Japanese era system.
-            // This works because the Japanese era system maintains the same year/month boundaries and durations as the Gregorian system and is only different in display value.
+            // The Calendar treats Heisei 31 and Reiwa 1 as separate years, which results in some unexpected behaviors where subtracting a year from Reiwa 1
+            // results in a date in Heisei 31. To provide the expected result across era boundaries, we first convert the Japanese era system to a Gregorian
+            // system, do date math, and then convert back to the Japanese era system. This works because the Japanese era system maintains the same year/month
+            // boundaries and durations as the Gregorian system and is only different in display value.
             if (currentCalendarSystem == CalendarIdentifiers::Japanese)
             {
                 m_calendar->ChangeCalendarSystem(CalendarIdentifiers::Gregorian);
@@ -89,9 +90,10 @@ bool DateCalculationEngine::SubtractDuration(_In_ DateTime startDate, _In_ const
         {
             // The Japanese Era system can have multiple year partitions within the same year.
             // For example, April 30, 2019 is denoted April 30, Heisei 31; May 1, 2019 is denoted as May 1, Reiwa 1.
-            // The Calendar treats Heisei 31 and Reiwa 1 as separate years, which results in some unexpected behaviors where subtracting a year from Reiwa 1 results in a date in Heisei 31.
-            // To provide the expected result across era boundaries, we first convert the Japanese era system to a Gregorian system, do date math, and then convert back to the Japanese era system.
-            // This works because the Japanese era system maintains the same year/month boundaries and durations as the Gregorian system and is only different in display value.
+            // The Calendar treats Heisei 31 and Reiwa 1 as separate years, which results in some unexpected behaviors where subtracting a year from Reiwa 1
+            // results in a date in Heisei 31. To provide the expected result across era boundaries, we first convert the Japanese era system to a Gregorian
+            // system, do date math, and then convert back to the Japanese era system. This works because the Japanese era system maintains the same year/month
+            // boundaries and durations as the Gregorian system and is only different in display value.
             if (currentCalendarSystem == CalendarIdentifiers::Japanese)
             {
                 m_calendar->ChangeCalendarSystem(CalendarIdentifiers::Gregorian);

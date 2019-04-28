@@ -43,16 +43,16 @@ Object ^ BitFlipAutomationNameConverter::Convert(_In_ Object ^ value, TypeName t
 
         // remove all the characters except 0 and 1 from the array.
         for (wchar_t bit : binaryDisplay)
+        {
+            if ((bit == ch1) || (bit == ch0))
             {
-                if ((bit == ch1) || (bit == ch0))
-                {
-                    updatedBinaryDisplay[binaryLength++] = bit;
-                }
-                if (binaryLength == 63)
-                {
-                    break;
-                }
+                updatedBinaryDisplay[binaryLength++] = bit;
             }
+            if (binaryLength == 63)
+            {
+                break;
+            }
+        }
 
         // return if binaryDisplay is empty
         if (binaryLength == 0)
