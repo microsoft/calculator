@@ -670,7 +670,7 @@ namespace DateCalculationUnitTests
             auto viewModel = make_unique<DateCalculationEngine>(CalendarIdentifiers::Japanese);
             auto cal = ref new Calendar();
 
-            // Showa period ended in Jan 1989.
+            // The Showa period ended in Jan 1989.
             cal->Year = 1989;
             cal->Month = 1;
             cal->Day = 1;
@@ -681,14 +681,28 @@ namespace DateCalculationUnitTests
             cal->Day = 1;
 
             // Expect that adding a year across boundaries adds the equivalent in the Gregorian calendar.
-            auto expectedResult = cal->GetDateTime();
-            DateDifference duration;
-            duration.year = 1;
+            auto expectedYearResult = cal->GetDateTime();
+            DateDifference yearDuration;
+            yearDuration.year = 1;
 
-            DateTime actualResult;
-            viewModel->AddDuration(startTime, duration, &actualResult);
+            DateTime actualYearResult;
+            viewModel->AddDuration(startTime, yearDuration, &actualYearResult);
 
-            VERIFY_ARE_EQUAL(expectedResult.UniversalTime, actualResult.UniversalTime);
+            VERIFY_ARE_EQUAL(expectedYearResult.UniversalTime, actualYearResult.UniversalTime);
+
+            cal->Year = 1989;
+            cal->Month = 2;
+            cal->Day = 1;
+
+            // Expect that adding a month across boundaries adds the equivalent in the Gregorian calendar.
+            auto expectedMonthResult = cal->GetDateTime();
+            DateDifference monthDuration;
+            monthDuration.month = 1;
+
+            DateTime actualMonthResult;
+            viewModel->AddDuration(startTime, monthDuration, &actualMonthResult);
+
+            VERIFY_ARE_EQUAL(expectedMonthResult.UniversalTime, actualMonthResult.UniversalTime);
         }
 
         TEST_METHOD(JaEraTransitionSubtraction)
@@ -696,25 +710,61 @@ namespace DateCalculationUnitTests
             auto viewModel = make_unique<DateCalculationEngine>(CalendarIdentifiers::Japanese);
             auto cal = ref new Calendar();
 
-            // Showa period ended in Jan 1989.
-            cal->Year = 1990;
+            // The Showa period ended in Jan 1989.
+            cal->Year = 1989;
+            cal->Month = 2;
+            cal->Day = 1;
+            auto startTime = cal->GetDateTime();
+
+            cal->Year = 1988;
+            cal->Month = 2;
+            cal->Day = 1;
+
+            // Expect that adding a year across boundaries adds the equivalent in the Gregorian calendar.
+            auto expectedYearResult = cal->GetDateTime();
+            DateDifference yearDuration;
+            yearDuration.year = 1;
+
+            DateTime actualYearResult;
+            viewModel->SubtractDuration(startTime, yearDuration, &actualYearResult);
+
+            VERIFY_ARE_EQUAL(expectedYearResult.UniversalTime, actualYearResult.UniversalTime);
+
+            cal->Year = 1989;
+            cal->Month = 1;
+            cal->Day = 1;
+
+            // Expect that adding a month across boundaries adds the equivalent in the Gregorian calendar.
+            auto expectedMonthResult = cal->GetDateTime();
+            DateDifference monthDuration;
+            monthDuration.month = 1;
+
+            DateTime actualMonthResult;
+            viewModel->SubtractDuration(startTime, monthDuration, &actualMonthResult);
+
+            VERIFY_ARE_EQUAL(expectedMonthResult.UniversalTime, actualMonthResult.UniversalTime);
+        }
+
+        TEST_METHOD(JaEraTransitionDifference)
+        {
+            auto viewModel = make_unique<DateCalculationEngine>(CalendarIdentifiers::Japanese);
+            auto cal = ref new Calendar();
+
+            // The Showa period ended in Jan 8, 1989.  Pick 2 days across that boundary
+            cal->Year = 1989;
             cal->Month = 1;
             cal->Day = 1;
             auto startTime = cal->GetDateTime();
 
             cal->Year = 1989;
             cal->Month = 1;
-            cal->Day = 1;
+            cal->Day = 20;
+            auto endTime = cal->GetDateTime();
 
-            // Expect that adding a year across boundaries adds the equivalent in the Gregorian calendar.
-            auto expectedResult = cal->GetDateTime();
-            DateDifference duration;
-            duration.year = 1;
+            DateDifference diff;
+            viewModel->GetDateDifference(startTime, endTime, DateUnit::Day, &diff);
 
-            DateTime actualResult;
-            viewModel->SubtractDuration(startTime, duration, &actualResult);
-
-            VERIFY_ARE_EQUAL(expectedResult.UniversalTime, actualResult.UniversalTime);
+            VERIFY_ARE_EQUAL(diff.day, 19);
         }
     };
 }
