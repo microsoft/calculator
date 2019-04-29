@@ -36,7 +36,7 @@ jobs:
       arguments: -Force
 
   - task: WinAppDriver.winappdriver-pipelines-task.winappdriver-pipelines-task.Windows Application Driver@0
-    displayName: 'Start - WinAppDriver'
+    displayName: 'WinAppDriver - Start'
     inputs:
       AgentResolution: 1080p
 
@@ -50,6 +50,6 @@ jobs:
       configuration: Release
  
   - task: WinAppDriver.winappdriver-pipelines-task.winappdriver-pipelines-task.Windows Application Driver@0
-    displayName: 'Stop - WinAppDriver'
+    displayName: 'WinAppDriver - Stop'
     inputs:
       OperationType: Stop
