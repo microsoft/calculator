@@ -1,17 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
 #include "CurrencyHttpClient.h"
+#include "DataLoaderConstants.h"
 
 using namespace CalculatorApp::DataLoaders;
 using namespace Platform;
 using namespace std;
 using namespace Windows::Foundation;
 using namespace Windows::Web::Http;
-
-static constexpr auto sc_MetadataUriLocalizeFor = L"https://go.microsoft.com/fwlink/?linkid=2041093&localizeFor=";
-static constexpr auto sc_RatiosUriRelativeTo = L"https://go.microsoft.com/fwlink/?linkid=2041339&localCurrency=";
 
 CurrencyHttpClient::CurrencyHttpClient() :
     m_client(ref new HttpClient()),

@@ -344,6 +344,7 @@
     <ClInclude Include="Common\TraceLogger.h" />
     <ClInclude Include="Common\Utils.h" />
     <ClInclude Include="Common\ValidatingConverters.h" />
+    <ClInclude Include="DataLoaders\DataLoaderConstants.h" />
     <ClInclude Include="DataLoaders\CurrencyDataLoader.h" />
     <ClInclude Include="DataLoaders\CurrencyHttpClient.h" />
     <ClInclude Include="DataLoaders\ICurrencyHttpClient.h" />
