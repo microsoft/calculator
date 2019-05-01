@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
+#include <string>
 #include "Header Files/CCommand.h"
 #include "CalculatorVector.h"
 #include "ExpressionCommand.h"

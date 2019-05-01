@@ -45,7 +45,7 @@ namespace CalculationManager
     class IResourceProvider;
 }
 
-namespace CalculatorUnitTests
+namespace CalculatorEngineTests
 {
     class CalcEngineTests;
 }
@@ -72,7 +72,8 @@ public:
     // Static methods for the instance
     static void InitialOneTimeOnlySetup(CalculationManager::IResourceProvider& resourceProvider); // Once per load time to call to initialize all shared global variables
     // returns the ptr to string representing the operator. Mostly same as the button, but few special cases for x^y etc.
-    static std::wstring_view GetString(int ids) { return s_engineStrings[ids]; }
+    static std::wstring_view GetString(int ids) { return s_engineStrings[std::to_wstring(ids)]; }
+    static std::wstring_view GetString(std::wstring ids) { return s_engineStrings[ids]; }
     static std::wstring_view OpCodeToString(int nOpCode) { return GetString(IdStrFromCmdId(nOpCode)); }
     static std::wstring_view OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE angletype);
 
@@ -123,12 +124,13 @@ private:
 
     std::array<CalcEngine::Rational, NUM_WIDTH_LENGTH> m_chopNumbers; // word size enforcement
     std::array<std::wstring, NUM_WIDTH_LENGTH> m_maxDecimalValueStrings; // maximum values represented by a given word width based off m_chopNumbers
-    static std::array<std::wstring, CSTRINGSENGMAX> s_engineStrings; // the string table shared across all instances
+    static std::unordered_map<std::wstring, std::wstring> s_engineStrings; // the string table shared across all instances
     wchar_t m_decimalSeparator;
     wchar_t m_groupSeparator;
 
 private:
     void ProcessCommandWorker(OpCode wParam);
+    void ResolveHighestPrecedenceOperation();
     void HandleErrorCommand(OpCode idc);
     void HandleMaxDigitsReached();
     void DisplayNum(void);
@@ -145,12 +147,11 @@ private:
 
     bool TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno);
     void CheckAndAddLastBinOpToHistory(bool addToHistory = true);
-    int IdcSetAngleTypeDecMode(int idc);
 
     void InitChopNumbers();
 
     static void LoadEngineStrings(CalculationManager::IResourceProvider& resourceProvider);
-    static int IdStrFromCmdId(int id) { return id - IDC_FIRSTCONTROL + IDS_FIRSTENGSTR; }
+    static int IdStrFromCmdId(int id) { return id - IDC_FIRSTCONTROL + IDS_ENGINESTR_FIRST; }
 
     static std::vector<uint32_t> DigitGroupingStringToGroupingVector(std::wstring_view groupingString);
     std::wstring GroupDigits(std::wstring_view delimiter, std::vector<uint32_t> const& grouping, std::wstring_view displayString, bool isNumNegative = false);
@@ -159,5 +160,5 @@ private:
     static void ChangeBaseConstants(uint32_t radix, int maxIntDigits, int32_t precision);
     void BaseOrPrecisionChanged();
 
-    friend class CalculatorUnitTests::CalcEngineTests;
+    friend class CalculatorEngineTests::CalcEngineTests;
 };

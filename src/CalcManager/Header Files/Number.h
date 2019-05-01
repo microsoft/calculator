@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <vector>
 #include "Ratpack/ratpak.h"
 
 namespace CalcEngine

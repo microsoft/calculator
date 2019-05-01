@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="CalculatorApp.UnitConverter"
+<UserControl x:Class="CalculatorApp.UnitConverter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:automation="using:CalculatorApp.Common.Automation"
@@ -180,46 +180,30 @@
             </Setter>
         </Style>
 
-        <Style x:Key="ValueLargeStyle"
-               BasedOn="{StaticResource CalculationResultStyleL}"
+        <Style x:Key="ValueBaseStyle"
+               BasedOn="{StaticResource CalculationResultStyle}"
                TargetType="controls:CalculationResult">
             <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="VerticalContentAlignment" Value="Bottom"/>
-            <Setter Property="FontSize" Value="46"/>
-            <Setter Property="MinFontSize" Value="{ThemeResource BodyFontSize}"/>
             <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="MinFontSize" Value="{ThemeResource BodyFontSize}"/>
+        </Style>
+        <Style x:Key="ValueLargeStyle"
+               BasedOn="{StaticResource ValueBaseStyle}"
+               TargetType="controls:CalculationResult">
+            <Setter Property="MaxFontSize" Value="46"/>
             <Setter Property="Margin" Value="-2,0,0,0"/>
             <Setter Property="DisplayMargin" Value="0,0,0,12"/>
         </Style>
         <Style x:Key="ValueMediumStyle"
-               BasedOn="{StaticResource CalculationResultStyleM}"
+               BasedOn="{StaticResource ValueBaseStyle}"
                TargetType="controls:CalculationResult">
-            <Setter Property="FontSize" Value="34"/>
-            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
-            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
-            <Setter Property="MinFontSize" Value="{ThemeResource BodyFontSize}"/>
-            <Setter Property="FontWeight" Value="Light"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+            <Setter Property="MaxFontSize" Value="34"/>
             <Setter Property="Margin" Value="0,0,0,0"/>
             <Setter Property="DisplayMargin" Value="0,0,0,4"/>
         </Style>
-        <Style x:Key="ValueSmallStyle"
-               BasedOn="{StaticResource CalculationResultStyleS}"
-               TargetType="controls:CalculationResult">
-            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
-            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="MinFontSize" Value="{ThemeResource BodyFontSize}"/>
-            <Setter Property="FontWeight" Value="Light"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
-            <Setter Property="Margin" Value="0,0,0,0"/>
-            <Setter Property="DisplayMargin" Value="0,0,0,4"/>
-        </Style>
-
         <Style x:Key="CurrencySymbolBaseStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Light"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -371,10 +355,10 @@
                         <Setter Target="CurrencySymbol2Block.Style" Value="{ThemeResource CurrencySymbolLargeStyle}"/>
                         <Setter Target="Units1.Height" Value="44"/>
                         <Setter Target="Units2.Height" Value="44"/>
-                        <Setter Target="converterNegateButton.FontSize" Value="24"/>
-                        <Setter Target="clearEntryButtonPos0.FontSize" Value="24"/>
-                        <Setter Target="backSpaceButtonSmall.FontSize" Value="24"/>
-                        <Setter Target="numberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle46}"/>
+                        <Setter Target="ConverterNegateButton.FontSize" Value="24"/>
+                        <Setter Target="ClearEntryButtonPos0.FontSize" Value="24"/>
+                        <Setter Target="BackSpaceButtonSmall.FontSize" Value="24"/>
+                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle46}"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Portrait">
@@ -389,9 +373,9 @@
                         <Setter Target="CurrencySymbol2Block.Style" Value="{ThemeResource CurrencySymbolLargeStyle}"/>
                         <Setter Target="Units1.Height" Value="44"/>
                         <Setter Target="Units2.Height" Value="44"/>
-                        <Setter Target="converterNegateButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
-                        <Setter Target="clearEntryButtonPos0.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
-                        <Setter Target="numberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle34}"/>
+                        <Setter Target="ConverterNegateButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
+                        <Setter Target="ClearEntryButtonPos0.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
+                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle34}"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Wide640">
@@ -405,10 +389,10 @@
                         <Setter Target="CurrencySymbol2Block.Style" Value="{ThemeResource CurrencySymbolLargeStyle}"/>
                         <Setter Target="Units1.Height" Value="44"/>
                         <Setter Target="Units2.Height" Value="44"/>
-                        <Setter Target="converterNegateButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
-                        <Setter Target="clearEntryButtonPos0.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
-                        <Setter Target="backSpaceButtonSmall.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
-                        <Setter Target="numberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle34}"/>
+                        <Setter Target="ConverterNegateButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
+                        <Setter Target="ClearEntryButtonPos0.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
+                        <Setter Target="BackSpaceButtonSmall.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
+                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle34}"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="MinSizeLayout">
@@ -421,11 +405,11 @@
                         <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="clearEntryButtonPos0.Margin" Value="1"/>
-                        <Setter Target="backSpaceButtonSmall.Margin" Value="1"/>
-                        <Setter Target="converterNegateButton.Margin" Value="1"/>
+                        <Setter Target="ClearEntryButtonPos0.Margin" Value="1"/>
+                        <Setter Target="BackSpaceButtonSmall.Margin" Value="1"/>
+                        <Setter Target="ConverterNegateButton.Margin" Value="1"/>
 
-                        <Setter Target="numberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle18}"/>
+                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle18}"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -492,9 +476,8 @@
         <Grid x:Name="Value1Container"
               Grid.Row="1"
               Grid.Column="1"
-              HorizontalAlignment="Left"
+              HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
               Style="{ThemeResource ValueContainerStyle}"
-              FlowDirection="{x:Bind LayoutDirection}"
               Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -527,6 +510,7 @@
         <ComboBox x:Name="Units1"
                   Grid.Row="2"
                   Grid.Column="1"
+                  HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
                   Style="{ThemeResource ComboStyle}"
                   AutomationProperties.AutomationId="Units1"
                   AutomationProperties.Name="{x:Bind Model.Unit1AutomationName, Mode=OneWay}"
@@ -544,9 +528,8 @@
         <Grid x:Name="Value2Container"
               Grid.Row="3"
               Grid.Column="1"
-              HorizontalAlignment="Left"
+              HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
               Style="{ThemeResource ValueContainerStyle}"
-              FlowDirection="{x:Bind LayoutDirection}"
               Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -580,6 +563,7 @@
         <ComboBox x:Name="Units2"
                   Grid.Row="4"
                   Grid.Column="1"
+                  HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
                   Style="{ThemeResource ComboStyle}"
                   AutomationProperties.AutomationId="Units2"
                   AutomationProperties.Name="{x:Bind Model.Unit2AutomationName, Mode=OneWay}"
@@ -597,8 +581,8 @@
                     Grid.Row="5"
                     Grid.Column="1"
                     MinHeight="48"
-                    Margin="12,0,6,0"
-                    HorizontalAlignment="Left"
+                    Padding="12,0,6,0"
+                    HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
                     VerticalAlignment="Top"
                     FlowDirection="{x:Bind LayoutDirection}"
                     SizeChanged="SupplementaryResultsPanelInGrid_SizeChanged"
@@ -631,8 +615,7 @@
                                          x:Uid="RefreshButtonText"
                                          Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}"
                                          Click="CurrencyRefreshButton_Click"/>
-                        <TextBlock Margin="0,7,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
-                            <Run x:Name="Spacing" Text="&#x200A;"/>
+                        <TextBlock Margin="3,7,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
                             <Run x:Name="CurrencySecondaryStatus"
                                  FontWeight="SemiBold"
                                  Text=""/>
@@ -692,7 +675,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <controls:CalculatorButton x:Name="clearEntryButtonPos0"
+                <controls:CalculatorButton x:Name="ClearEntryButtonPos0"
                                            x:Uid="clearEntryButton"
                                            HorizontalAlignment="Stretch"
                                            Style="{StaticResource OperatorButtonStyle}"
@@ -700,7 +683,7 @@
                                            ButtonId="Clear"
                                            Content="CE"
                                            TabIndex="7"/>
-                <controls:CalculatorButton x:Name="backSpaceButtonSmall"
+                <controls:CalculatorButton x:Name="BackSpaceButtonSmall"
                                            x:Uid="backSpaceButton"
                                            Grid.Column="1"
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
@@ -711,7 +694,7 @@
                                            TabIndex="8"/>
             </Grid>
 
-            <local:NumberPad x:Name="numberPad"
+            <local:NumberPad x:Name="NumberPad"
                              x:Uid="NumberPad"
                              Grid.Row="2"
                              Grid.RowSpan="4"
@@ -722,7 +705,7 @@
                              ButtonStyle="{StaticResource NumericButtonStyle24}"
                              TabIndex="10"
                              TabNavigation="Local"/>
-            <controls:CalculatorButton x:Name="converterNegateButton"
+            <controls:CalculatorButton x:Name="ConverterNegateButton"
                                        x:Uid="converterNegateButton"
                                        Grid.Row="5"
                                        Grid.Column="1"

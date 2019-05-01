@@ -14,7 +14,6 @@
 //
 //
 //-----------------------------------------------------------------------------
-#include "pch.h"
 #include "ratpak.h"
 
 
@@ -408,7 +407,7 @@ void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precis
 //---------------------------------------------------------------------------
 void powratcomp(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
 {
-    int32_t sign = ((*px)->pp->sign * (*px)->pq->sign);
+    int32_t sign = SIGN(*px);
 
     // Take the absolute value
     (*px)->pp->sign = 1;

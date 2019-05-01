@@ -23,6 +23,7 @@
 #include <locale>
 #include <sal.h>
 #include <sstream>
+#include <string>
 #include <concrt.h>
 #include <regex>
 #include <string>

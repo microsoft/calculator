@@ -1,7 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
+#include <climits> // for UCHAR_MAX
 #include "Header Files/CalcEngine.h"
 #include "CalculatorManager.h"
 #include "CalculatorResource.h"
@@ -111,9 +111,9 @@ namespace CalculationManager
     /// Callback from the engine
     /// </summary>
     /// <param name="parenthesisCount">string containing the parenthesis count</param>
-    void CalculatorManager::SetParenDisplayText(const wstring& parenthesisCount)
+    void CalculatorManager::SetParenthesisNumber(_In_ unsigned int parenthesisCount)
     {
-        m_displayCallback->SetParenDisplayText(parenthesisCount);
+        m_displayCallback->SetParenthesisNumber(parenthesisCount);
     }
 
     /// <summary>

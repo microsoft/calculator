@@ -243,9 +243,6 @@
     <ClCompile Include="Converters\BooleanToVisibilityConverter.cpp">
       <Filter>Converters</Filter>
     </ClCompile>
-    <ClCompile Include="Converters\ExpressionItemContainerStyle.cpp">
-      <Filter>Converters</Filter>
-    </ClCompile>
     <ClCompile Include="Converters\ExpressionItemTemplateSelector.cpp">
       <Filter>Converters</Filter>
     </ClCompile>
@@ -271,12 +268,6 @@
     <ClCompile Include="Views\NumberPad.xaml.cpp" />
     <ClCompile Include="Views\SupplementaryResults.xaml.cpp" />
     <ClCompile Include="Views\UnitConverter.xaml.cpp" />
-    <ClCompile Include="Controls\OperandTextBox.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="Controls\OperatorTextBox.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="Controls\FlipButtons.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -287,9 +278,6 @@
     </ClCompile>
     <ClCompile Include="WindowFrameService.cpp" />
     <ClCompile Include="Views\DateCalculator.xaml.cpp" />
-    <ClCompile Include="Common\TitleBarHelper.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="Controls\CalculationResultAutomationPeer.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -299,7 +287,6 @@
     <ClCompile Include="Views\StateTriggers\AspectRatioTrigger.cpp">
       <Filter>Views\StateTriggers</Filter>
     </ClCompile>
-    <ClCompile Include="Views\TitleBar.xaml.cpp" />
     <ClCompile Include="Views\MemoryListItem.xaml.cpp" />
     <ClCompile Include="Views\OperatorsPanel.xaml.cpp" />
     <ClCompile Include="Controls\SupplementaryItemsControl.cpp">
@@ -311,6 +298,7 @@
     <ClCompile Include="Controls\HorizontalNoOverflowStackPanel.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
+    <ClCompile Include="Views\TitleBar.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -320,9 +308,6 @@
     </ClInclude>
     <ClInclude Include="Common\BindableBase.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Controls\AppBar.h">
-      <Filter>Controls</Filter>
     </ClInclude>
     <ClInclude Include="Controls\CalculationResult.h">
       <Filter>Controls</Filter>
@@ -340,9 +325,6 @@
       <Filter>Converters</Filter>
     </ClInclude>
     <ClInclude Include="Converters\BooleanToVisibilityConverter.h">
-      <Filter>Converters</Filter>
-    </ClInclude>
-    <ClInclude Include="Converters\ExpressionItemContainerStyle.h">
       <Filter>Converters</Filter>
     </ClInclude>
     <ClInclude Include="Converters\ExpressionItemTemplateSelector.h">
@@ -370,12 +352,6 @@
     <ClInclude Include="Views\NumberPad.xaml.h" />
     <ClInclude Include="Views\SupplementaryResults.xaml.h" />
     <ClInclude Include="Views\UnitConverter.xaml.h" />
-    <ClInclude Include="Controls\OperandTextBox.h">
-      <Filter>Controls</Filter>
-    </ClInclude>
-    <ClInclude Include="Controls\OperatorTextBox.h">
-      <Filter>Controls</Filter>
-    </ClInclude>
     <ClInclude Include="Controls\FlipButtons.h">
       <Filter>Controls</Filter>
     </ClInclude>
@@ -389,9 +365,6 @@
     <ClInclude Include="Converters\BitFlipAutomationNameConverter.h">
       <Filter>Converters</Filter>
     </ClInclude>
-    <ClInclude Include="Common\TitleBarHelper.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Controls\CalculationResultAutomationPeer.h">
       <Filter>Controls</Filter>
     </ClInclude>
@@ -401,7 +374,6 @@
     <ClInclude Include="Views\StateTriggers\AspectRatioTrigger.h">
       <Filter>Views\StateTriggers</Filter>
     </ClInclude>
-    <ClInclude Include="Views\TitleBar.xaml.h" />
     <ClInclude Include="Views\MemoryListItem.xaml.h" />
     <ClInclude Include="Views\OperatorsPanel.xaml.h" />
     <ClInclude Include="Controls\SupplementaryItemsControl.h">
@@ -413,6 +385,7 @@
     <ClInclude Include="Controls\HorizontalNoOverflowStackPanel.h">
       <Filter>Controls</Filter>
     </ClInclude>
+    <ClInclude Include="Views\TitleBar.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -471,13 +444,13 @@
     <Page Include="Views\DateCalculator.xaml">
       <Filter>Views</Filter>
     </Page>
-    <Page Include="Views\TitleBar.xaml">
-      <Filter>Views</Filter>
-    </Page>
     <Page Include="Views\MemoryListItem.xaml">
       <Filter>Views</Filter>
     </Page>
     <Page Include="Views\OperatorsPanel.xaml">
+      <Filter>Views</Filter>
+    </Page>
+    <Page Include="Views\TitleBar.xaml">
       <Filter>Views</Filter>
     </Page>
   </ItemGroup>
