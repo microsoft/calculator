@@ -100,5 +100,5 @@ void Memory::IsErrorVisualState::set(bool value)
 MemoryItemViewModel^ Memory::GetMemoryItemForCurrentFlyout()
 {
     auto listViewItem = MemoryContextMenu->Target;
-    return safe_cast<MemoryItemViewModel^>(MemoryListView->ItemFromContainer(listViewItem));
+    return dynamic_cast<MemoryItemViewModel^>(MemoryListView->ItemFromContainer(listViewItem));
 }

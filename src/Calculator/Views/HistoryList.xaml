@@ -57,8 +57,7 @@
 
             <DataTemplate x:Key="HistoryItemTemplate" x:DataType="model:HistoryItemViewModel">
                 <muxc:SwipeControl RightItems="{StaticResource HistorySwipeItems}">
-                    <StackPanel Margin="0,6,4,6"
-                                Background="Transparent">
+                    <StackPanel Margin="0,6,4,6" Background="Transparent">
                         <TextBlock x:Name="ExprTextBlock"
                                    Margin="0,0,0,4"
                                    HorizontalAlignment="Right"
