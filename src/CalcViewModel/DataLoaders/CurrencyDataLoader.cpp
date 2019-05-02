@@ -685,6 +685,18 @@ void CurrencyDataLoader::GuaranteeSelectedUnits()
             isConversionTargetSet = true;
         }
     }
+
+    // If still not set for either source or target, just select the first currency in the list
+
+    if (!isConversionSourceSet && !m_currencyUnits.empty())
+    {
+        m_currencyUnits[0].isConversionSource = true;
+    }
+
+    if (!isConversionTargetSet && !m_currencyUnits.empty())
+    {
+        m_currencyUnits[0].isConversionTarget = true;
+    }
 }
 
 void CurrencyDataLoader::NotifyDataLoadFinished(bool didLoad)
