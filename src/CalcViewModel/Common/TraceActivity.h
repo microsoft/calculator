@@ -16,7 +16,8 @@ namespace CalculatorApp
         }
 
         TraceActivity(
-            winrt::Windows::Foundation::Diagnostics::LoggingChannel channel, std::wstring_view activityName,
+            winrt::Windows::Foundation::Diagnostics::LoggingChannel channel,
+            std::wstring_view activityName,
             winrt::Windows::Foundation::Diagnostics::LoggingFields fields)
             : m_channel(channel), m_activityName(activityName), m_fields(fields), m_activity(nullptr)
         {
@@ -24,7 +25,9 @@ namespace CalculatorApp
             // or level for START and STOP events because they always use the activity's
             // keyword and level.
             m_activity = m_channel.StartActivity(
-                m_activityName, m_fields, winrt::Windows::Foundation::Diagnostics::LoggingLevel::Verbose,
+                m_activityName,
+                m_fields,
+                winrt::Windows::Foundation::Diagnostics::LoggingLevel::Verbose,
                 winrt::Windows::Foundation::Diagnostics::LoggingOptions(WINEVENT_KEYWORD_RESPONSE_TIME));
         }
 

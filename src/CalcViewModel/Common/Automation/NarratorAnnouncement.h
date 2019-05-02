@@ -59,7 +59,10 @@ public
         friend class CalculatorAnnouncement;
 
         NarratorAnnouncement(
-            Platform::String ^ announcement, Platform::String ^ activityId, AutomationNotificationKind kind, AutomationNotificationProcessing processing);
+            Platform::String ^ announcement,
+            Platform::String ^ activityId,
+            AutomationNotificationKind kind,
+            AutomationNotificationProcessing processing);
 
         Platform::String ^ m_announcement;
         Platform::String ^ m_activityId;

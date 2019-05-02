@@ -357,7 +357,9 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
                                 if ((activatedEventArgs != nullptr) && (activatedEventArgs->CurrentlyShownApplicationViewId != 0))
                                 {
                                     create_task(ApplicationViewSwitcher::TryShowAsStandaloneAsync(
-                                                    frameService->GetViewId(), ViewSizePreference::Default, activatedEventArgs->CurrentlyShownApplicationViewId,
+                                                    frameService->GetViewId(),
+                                                    ViewSizePreference::Default,
+                                                    activatedEventArgs->CurrentlyShownApplicationViewId,
                                                     ViewSizePreference::Default))
                                         .then(
                                             [safeFrameServiceCreation](bool viewShown) {

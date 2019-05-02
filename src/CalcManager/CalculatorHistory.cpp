@@ -12,7 +12,8 @@ CalculatorHistory::CalculatorHistory(size_t maxSize) : m_maxHistorySize(maxSize)
 }
 
 unsigned int CalculatorHistory::AddToHistory(
-    _In_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens, _In_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands,
+    _In_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
+    _In_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands,
     _In_ wstring_view result)
 {
     unsigned int addedIndex;

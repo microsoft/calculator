@@ -46,8 +46,10 @@ static constexpr auto CACHE_LANGCODE_KEY = L"CURRENCY_CONVERTER_LANGCODE";
 static constexpr auto CACHE_DELIMITER = L"%";
 
 static constexpr auto STATIC_DATA_FILENAME = L"CURRENCY_CONVERTER_STATIC_DATA.txt";
-static constexpr array<wstring_view, 5> STATIC_DATA_PROPERTIES = { wstring_view{ L"CountryCode", 11 }, wstring_view{ L"CountryName", 11 },
-                                                                   wstring_view{ L"CurrencyCode", 12 }, wstring_view{ L"CurrencyName", 12 },
+static constexpr array<wstring_view, 5> STATIC_DATA_PROPERTIES = { wstring_view{ L"CountryCode", 11 },
+                                                                   wstring_view{ L"CountryName", 11 },
+                                                                   wstring_view{ L"CurrencyCode", 12 },
+                                                                   wstring_view{ L"CurrencyName", 12 },
                                                                    wstring_view{ L"CurrencySymbol", 14 } };
 
 static constexpr auto ALL_RATIOS_DATA_FILENAME = L"CURRENCY_CONVERTER_ALL_RATIOS_DATA.txt";
@@ -460,7 +462,10 @@ task<bool> CurrencyDataLoader::TryLoadDataFromWebOverrideAsync()
 #pragma optimize("", on)
 
 bool CurrencyDataLoader::TryParseWebResponses(
-    _In_ String ^ staticDataJson, _In_ String ^ allRatiosJson, _Inout_ vector<UCM::CurrencyStaticData>& staticData, _Inout_ CurrencyRatioMap& allRatiosData)
+    _In_ String ^ staticDataJson,
+    _In_ String ^ allRatiosJson,
+    _Inout_ vector<UCM::CurrencyStaticData>& staticData,
+    _Inout_ CurrencyRatioMap& allRatiosData)
 {
     return TryParseStaticData(staticDataJson, staticData) && TryParseAllRatiosData(allRatiosJson, allRatiosData);
 }

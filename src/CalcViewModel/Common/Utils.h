@@ -386,7 +386,8 @@ namespace Utils
     void RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Windows::UI::Core::CoreDispatcher ^ currentDispatcher);
     void SerializeCommandsAndTokens(
         _In_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
-        _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands, Windows::Storage::Streams::DataWriter ^ writer);
+        _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands,
+        Windows::Storage::Streams::DataWriter ^ writer);
 
     const std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> DeserializeCommands(Windows::Storage::Streams::DataReader ^ reader);
     const std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> DeserializeTokens(Windows::Storage::Streams::DataReader ^ reader);
@@ -395,7 +396,9 @@ namespace Utils
     bool IsDateTimeOlderThan(Windows::Foundation::DateTime dateTime, const long long duration);
 
     concurrency::task<void> WriteFileToFolder(
-        Windows::Storage::IStorageFolder ^ folder, Platform::String ^ fileName, Platform::String ^ contents,
+        Windows::Storage::IStorageFolder ^ folder,
+        Platform::String ^ fileName,
+        Platform::String ^ contents,
         Windows::Storage::CreationCollisionOption collisionOption);
     concurrency::task<Platform::String ^> ReadFileFromFolder(Windows::Storage::IStorageFolder ^ folder, Platform::String ^ fileName);
 }

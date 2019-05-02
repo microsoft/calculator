@@ -357,7 +357,8 @@ extern PNUMBER _createnum(_In_ uint32_t size); // returns an empty number struct
 extern PNUMBER nRadixxtonum(_In_ PNUMBER a, uint32_t radix, int32_t precision);
 extern PNUMBER gcd(_In_ PNUMBER a, _In_ PNUMBER b);
 extern PNUMBER StringToNumber(
-    std::wstring_view numberString, uint32_t radix,
+    std::wstring_view numberString,
+    uint32_t radix,
     int32_t precision); // takes a text representation of a number and returns a number.
 
 // takes a text representation of a number as a mantissa with sign and an exponent with sign.

@@ -61,7 +61,9 @@ namespace CalculatorApp
                     // Get locale info for List Separator, eg. comma is used in many locales
                     wchar_t listSeparatorString[4] = L"";
                     result = ::GetLocaleInfoEx(
-                        LOCALE_NAME_USER_DEFAULT, LOCALE_SLIST, listSeparatorString,
+                        LOCALE_NAME_USER_DEFAULT,
+                        LOCALE_SLIST,
+                        listSeparatorString,
                         static_cast<int>(std::size(listSeparatorString))); // Max length of the expected return value is 4
                     if (result == 0)
                     {
@@ -70,7 +72,9 @@ namespace CalculatorApp
 
                     int currencyTrailingDigits = 0;
                     result = GetLocaleInfoEx(
-                        m_resolvedName.c_str(), LOCALE_ICURRDIGITS | LOCALE_RETURN_NUMBER, (LPWSTR)&currencyTrailingDigits,
+                        m_resolvedName.c_str(),
+                        LOCALE_ICURRDIGITS | LOCALE_RETURN_NUMBER,
+                        (LPWSTR)&currencyTrailingDigits,
                         sizeof(currencyTrailingDigits) / sizeof(WCHAR));
                     if (result == 0)
                     {
@@ -81,7 +85,9 @@ namespace CalculatorApp
                     // A value of 0 indicates the symbol follows the currency value.
                     int currencySymbolPrecedence = 1;
                     result = GetLocaleInfoEx(
-                        LOCALE_NAME_USER_DEFAULT, LOCALE_IPOSSYMPRECEDES | LOCALE_RETURN_NUMBER, (LPWSTR)&currencySymbolPrecedence,
+                        LOCALE_NAME_USER_DEFAULT,
+                        LOCALE_IPOSSYMPRECEDES | LOCALE_RETURN_NUMBER,
+                        (LPWSTR)&currencySymbolPrecedence,
                         sizeof(currencySymbolPrecedence) / sizeof(WCHAR));
 
                     // As CalcEngine only supports the first character of the decimal separator,

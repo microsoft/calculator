@@ -70,7 +70,9 @@ void HistoryViewModel::ReloadHistory(_In_ ViewMode currentMode)
             localizer.LocalizeDisplayValue(&result);
 
             auto item = ref new HistoryItemViewModel(
-                ref new Platform::String(expression.c_str()), ref new Platform::String(result.c_str()), (*ritr)->historyItemVector.spTokens,
+                ref new Platform::String(expression.c_str()),
+                ref new Platform::String(result.c_str()),
+                (*ritr)->historyItemVector.spTokens,
                 (*ritr)->historyItemVector.spCommands);
             historyListVM->Append(item);
         }
@@ -89,7 +91,9 @@ void HistoryViewModel::OnHistoryItemAdded(_In_ unsigned int addedItemIndex)
     localizer.LocalizeDisplayValue(&expression);
     localizer.LocalizeDisplayValue(&result);
     auto item = ref new HistoryItemViewModel(
-        ref new Platform::String(expression.c_str()), ref new Platform::String(result.c_str()), newItem->historyItemVector.spTokens,
+        ref new Platform::String(expression.c_str()),
+        ref new Platform::String(result.c_str()),
+        newItem->historyItemVector.spTokens,
         newItem->historyItemVector.spCommands);
 
     // check if we have not hit the max items

@@ -89,7 +89,9 @@ namespace CalculatorApp
             concurrency::task<bool> TryFinishLoadFromCacheAsync();
 
             bool TryParseWebResponses(
-                _In_ Platform::String ^ staticDataJson, _In_ Platform::String ^ allRatiosJson, _Inout_ std::vector<UCM::CurrencyStaticData>& staticData,
+                _In_ Platform::String ^ staticDataJson,
+                _In_ Platform::String ^ allRatiosJson,
+                _Inout_ std::vector<UCM::CurrencyStaticData>& staticData,
                 _Inout_ CurrencyRatioMap& allRatiosData);
             bool TryParseStaticData(_In_ Platform::String ^ rawJson, _Inout_ std::vector<UCM::CurrencyStaticData>& staticData);
             bool TryParseAllRatiosData(_In_ Platform::String ^ rawJson, _Inout_ CurrencyRatioMap& allRatiosData);

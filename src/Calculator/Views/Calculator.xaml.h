@@ -110,7 +110,8 @@ public
         Memory ^ m_memory;
         void HistoryFlyout_Opened(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ args);
         void HistoryFlyout_Closing(
-            _In_ Windows::UI::Xaml::Controls::Primitives::FlyoutBase ^ sender, _In_ Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs ^ args);
+            _In_ Windows::UI::Xaml::Controls::Primitives::FlyoutBase ^ sender,
+            _In_ Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs ^ args);
         void HistoryFlyout_Closed(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ args);
         void OnHideHistoryClicked();
         void OnHideMemoryClicked();
@@ -122,7 +123,8 @@ public
         bool m_fIsMemoryFlyoutOpen;
         void OnMemoryFlyoutOpened(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ args);
         void OnMemoryFlyoutClosing(
-            _In_ Windows::UI::Xaml::Controls::Primitives::FlyoutBase ^ sender, _In_ Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs ^ args);
+            _In_ Windows::UI::Xaml::Controls::Primitives::FlyoutBase ^ sender,
+            _In_ Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs ^ args);
         void OnMemoryFlyoutClosed(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ args);
         void SetChildAsMemory();
         void SetChildAsHistory();

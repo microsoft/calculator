@@ -35,7 +35,9 @@ void NotificationHost::Announce(NarratorAnnouncement ^ announcement)
     if (peer != nullptr)
     {
         peer->RaiseNotificationEvent(
-            GetWindowsNotificationKind(announcement->Kind), GetWindowsNotificationProcessing(announcement->Processing), announcement->Announcement,
+            GetWindowsNotificationKind(announcement->Kind),
+            GetWindowsNotificationProcessing(announcement->Processing),
+            announcement->Announcement,
             announcement->ActivityId);
     }
 }

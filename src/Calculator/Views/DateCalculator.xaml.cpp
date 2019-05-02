@@ -80,7 +80,8 @@ DateCalculator::DateCalculator()
 
     // Set the PlaceHolderText for CalendarDatePicker
     DateTimeFormatter ^ dateTimeFormatter = LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(
-        L"day month year", localizationSettings.GetCalendarIdentifier(),
+        L"day month year",
+        localizationSettings.GetCalendarIdentifier(),
         ClockIdentifiers::TwentyFourHour); // Clock Identifier is not used
 
     DateDiff_FromDate->DateFormat = L"day month year";

@@ -60,22 +60,27 @@ namespace CalculatorUnitTests
             }
             VERIFY_ARE_EQUAL(
                 m_CopyPasteManager.ValidatePasteExpression(StringReference(exp_TooLong.c_str()), ViewMode::Standard, CategoryGroupType::Calculator, -1, -1),
-                StringReference(exp_TooLong.c_str()), L"Verify ValidatePasteExpression handles expressions up to max length");
+                StringReference(exp_TooLong.c_str()),
+                L"Verify ValidatePasteExpression handles expressions up to max length");
             exp_TooLong += L"1";
             VERIFY_ARE_EQUAL(
                 m_CopyPasteManager.ValidatePasteExpression(StringReference(exp_TooLong.c_str()), ViewMode::Standard, CategoryGroupType::Calculator, -1, -1),
-                StringReference(L"NoOp"), L"Verify ValidatePasteExpression returns NoOp for strings over max length");
+                StringReference(L"NoOp"),
+                L"Verify ValidatePasteExpression returns NoOp for strings over max length");
 
             VERIFY_ARE_EQUAL(
                 m_CopyPasteManager.ValidatePasteExpression(StringReference(L""), ViewMode::Standard, CategoryGroupType::Calculator, -1, -1),
-                StringReference(L"NoOp"), L"Verify empty string is invalid");
+                StringReference(L"NoOp"),
+                L"Verify empty string is invalid");
 
             VERIFY_ARE_EQUAL(
                 m_CopyPasteManager.ValidatePasteExpression(StringReference(L"123e456"), ViewMode::Standard, CategoryGroupType::Calculator, -1, -1),
-                StringReference(L"NoOp"), L"Verify pasting unsupported strings for the current mode is invalid");
+                StringReference(L"NoOp"),
+                L"Verify pasting unsupported strings for the current mode is invalid");
 
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.ValidatePasteExpression(StringReference(L"123"), ViewMode::None, CategoryGroupType::None, -1, -1), StringReference(L"NoOp"),
+                m_CopyPasteManager.ValidatePasteExpression(StringReference(L"123"), ViewMode::None, CategoryGroupType::None, -1, -1),
+                StringReference(L"NoOp"),
                 L"Verify pasting without a ViewMode or Category is invalid");
         };
 
@@ -111,18 +116,21 @@ namespace CalculatorUnitTests
                 exp_OperandLimit += L"+1";
             }
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.ExtractOperands(exp_OperandLimit, ViewMode::Standard).size(), 100,
+                m_CopyPasteManager.ExtractOperands(exp_OperandLimit, ViewMode::Standard).size(),
+                100,
                 L"Verify ExtractOperands handles up to MaxOperandCount operands");
 
             exp_OperandLimit += L"+1";
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.ExtractOperands(exp_OperandLimit, ViewMode::Standard).size(), 0,
+                m_CopyPasteManager.ExtractOperands(exp_OperandLimit, ViewMode::Standard).size(),
+                0,
                 L"Verify ExtractOperands returns empty vector on too many operands");
 
             VERIFY_ARE_EQUAL(
                 m_CopyPasteManager.ExtractOperands(L"12e9999", ViewMode::Standard).size(), 1, L"Verify ExtractOperands handles up to 4 digit exponents");
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.ExtractOperands(L"12e10000", ViewMode::Standard).size(), 0,
+                m_CopyPasteManager.ExtractOperands(L"12e10000", ViewMode::Standard).size(),
+                0,
                 L"Verify ExtractOperands returns empty vector when the exponent is too long");
         };
 
@@ -152,8 +160,11 @@ namespace CalculatorUnitTests
             VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(
                 vector<wstring>{ L"11111111111111111111111" }, ViewMode::Programmer, CategoryGroupType::Calculator, OctBase, QwordType));
             VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(
-                vector<wstring>{ L"10000000000000000000000000000000000000000000000000000000000000000" }, ViewMode::Programmer, CategoryGroupType::Calculator,
-                BinBase, QwordType));
+                vector<wstring>{ L"10000000000000000000000000000000000000000000000000000000000000000" },
+                ViewMode::Programmer,
+                CategoryGroupType::Calculator,
+                BinBase,
+                QwordType));
 
             VERIFY_IS_FALSE(
                 m_CopyPasteManager.ExpressionRegExMatch(
@@ -195,13 +206,16 @@ namespace CalculatorUnitTests
             pair<size_t, unsigned long long int> scientificModeMaximums = make_pair(m_CopyPasteManager.MaxScientificOperandLength, 0);
             pair<size_t, unsigned long long int> converterModeMaximums = make_pair(m_CopyPasteManager.MaxConverterInputLength, 0);
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Standard, CategoryGroupType::None, -1, -1), standardModeMaximums,
+                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Standard, CategoryGroupType::None, -1, -1),
+                standardModeMaximums,
                 L"Verify Standard mode maximum values");
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Scientific, CategoryGroupType::None, -1, -1), scientificModeMaximums,
+                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Scientific, CategoryGroupType::None, -1, -1),
+                scientificModeMaximums,
                 L"Verify Scientific mode maximum values");
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::None, CategoryGroupType::Converter, -1, -1), converterModeMaximums,
+                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::None, CategoryGroupType::Converter, -1, -1),
+                converterModeMaximums,
                 L"Verify Converter mode maximum values");
 
             unsigned long long int ullQwordMax = UINT64_MAX;
