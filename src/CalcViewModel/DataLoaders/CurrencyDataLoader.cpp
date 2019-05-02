@@ -275,8 +275,8 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencyRatioEquality(_In_ const U
                 wstring digitSymbol = wstring{ LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit(L'1') };
                 wstring roundedFormat = m_ratioFormatter->Format(rounded)->Data();
 
-                wstring ratioString = LocalizationStringUtil::GetLocalizedString(m_ratioFormat.c_str(), digitSymbol.c_str(), unit1.abbreviation.c_str(),
-                                                                                 roundedFormat.c_str(), unit2.abbreviation.c_str());
+                wstring ratioString = LocalizationStringUtil::GetLocalizedString(
+                    m_ratioFormat.c_str(), digitSymbol.c_str(), unit1.abbreviation.c_str(), roundedFormat.c_str(), unit2.abbreviation.c_str());
 
                 wstring accessibleRatioString = LocalizationStringUtil::GetLocalizedString(
                     m_ratioFormat.c_str(), digitSymbol.c_str(), unit1.accessibleName.c_str(), roundedFormat.c_str(), unit2.accessibleName.c_str());
@@ -459,8 +459,8 @@ task<bool> CurrencyDataLoader::TryLoadDataFromWebOverrideAsync()
 };
 #pragma optimize("", on)
 
-bool CurrencyDataLoader::TryParseWebResponses(_In_ String ^ staticDataJson, _In_ String ^ allRatiosJson, _Inout_ vector<UCM::CurrencyStaticData>& staticData,
-                                              _Inout_ CurrencyRatioMap& allRatiosData)
+bool CurrencyDataLoader::TryParseWebResponses(
+    _In_ String ^ staticDataJson, _In_ String ^ allRatiosJson, _Inout_ vector<UCM::CurrencyStaticData>& staticData, _Inout_ CurrencyRatioMap& allRatiosData)
 {
     return TryParseStaticData(staticDataJson, staticData) && TryParseAllRatiosData(allRatiosJson, allRatiosData);
 }

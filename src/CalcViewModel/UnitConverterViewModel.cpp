@@ -1010,12 +1010,13 @@ String ^ UnitConverterViewModel::GetLocalizedAutomationName(_In_ String ^ displa
 }
 
 String
-    ^ UnitConverterViewModel::GetLocalizedConversionResultStringFormat(_In_ String ^ fromValue, _In_ String ^ fromUnit, _In_ String ^ toValue,
-                                                                       _In_ String ^ toUnit)
+    ^ UnitConverterViewModel::GetLocalizedConversionResultStringFormat(
+        _In_ String ^ fromValue, _In_ String ^ fromUnit, _In_ String ^ toValue, _In_ String ^ toUnit)
 {
-    String ^ localizedString = ref new String(LocalizationStringUtil::GetLocalizedString(m_localizedConversionResultFormat->Data(), fromValue->Data(),
-                                                                                         fromUnit->Data(), toValue->Data(), toUnit->Data())
-                                                  .c_str());
+    String ^ localizedString =
+        ref new String(LocalizationStringUtil::GetLocalizedString(
+                           m_localizedConversionResultFormat->Data(), fromValue->Data(), fromUnit->Data(), toValue->Data(), toUnit->Data())
+                           .c_str());
     return localizedString;
 }
 

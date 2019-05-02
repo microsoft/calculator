@@ -34,8 +34,9 @@ void NotificationHost::Announce(NarratorAnnouncement ^ announcement)
     auto peer = FrameworkElementAutomationPeer::FromElement(m_host);
     if (peer != nullptr)
     {
-        peer->RaiseNotificationEvent(GetWindowsNotificationKind(announcement->Kind), GetWindowsNotificationProcessing(announcement->Processing),
-                                     announcement->Announcement, announcement->ActivityId);
+        peer->RaiseNotificationEvent(
+            GetWindowsNotificationKind(announcement->Kind), GetWindowsNotificationProcessing(announcement->Processing), announcement->Announcement,
+            announcement->ActivityId);
     }
 }
 

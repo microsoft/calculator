@@ -207,8 +207,8 @@ namespace CalculatorApp
             Platform::String
                 ^ GetLocalizedAutomationName(_In_ Platform::String ^ displayvalue, _In_ Platform::String ^ unitname, _In_ Platform::String ^ format);
             Platform::String
-                ^ GetLocalizedConversionResultStringFormat(_In_ Platform::String ^ fromValue, _In_ Platform::String ^ fromUnit, _In_ Platform::String ^ toValue,
-                                                           _In_ Platform::String ^ toUnit);
+                ^ GetLocalizedConversionResultStringFormat(
+                    _In_ Platform::String ^ fromValue, _In_ Platform::String ^ fromUnit, _In_ Platform::String ^ toValue, _In_ Platform::String ^ toUnit);
             void UpdateValue1AutomationName();
             void UpdateValue2AutomationName();
             Platform::String ^ Serialize();

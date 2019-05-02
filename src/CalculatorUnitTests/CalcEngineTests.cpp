@@ -22,8 +22,8 @@ namespace CalculatorEngineTests
             m_resourceProvider = make_shared<EngineResourceProvider>();
             m_history = make_shared<CalculatorHistory>(MAX_HISTORY_SIZE);
             CCalcEngine::InitialOneTimeOnlySetup(*(m_resourceProvider.get()));
-            m_calcEngine = make_unique<CCalcEngine>(false /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider.get(), nullptr,
-                                                    m_history);
+            m_calcEngine = make_unique<CCalcEngine>(
+                false /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider.get(), nullptr, m_history);
         }
         TEST_METHOD_CLEANUP(Cleanup)
         {
@@ -52,8 +52,8 @@ namespace CalculatorEngineTests
             VERIFY_ARE_EQUAL(L"1,234,567,890", m_calcEngine->GroupDigitsPerRadix(L"1234567890", 10), L"Verify grouping in base10.");
             VERIFY_ARE_EQUAL(L"1,234,567.89", m_calcEngine->GroupDigitsPerRadix(L"1234567.89", 10), L"Verify grouping in base10 with decimal.");
             VERIFY_ARE_EQUAL(L"1,234,567e89", m_calcEngine->GroupDigitsPerRadix(L"1234567e89", 10), L"Verify grouping in base10 with exponent.");
-            VERIFY_ARE_EQUAL(L"1,234,567.89e5", m_calcEngine->GroupDigitsPerRadix(L"1234567.89e5", 10),
-                             L"Verify grouping in base10 with decimal and exponent.");
+            VERIFY_ARE_EQUAL(
+                L"1,234,567.89e5", m_calcEngine->GroupDigitsPerRadix(L"1234567.89e5", 10), L"Verify grouping in base10 with decimal and exponent.");
             VERIFY_ARE_EQUAL(L"-123,456,789", m_calcEngine->GroupDigitsPerRadix(L"-123456789", 10), L"Verify grouping in base10 with negative.");
         }
 
@@ -204,16 +204,17 @@ namespace CalculatorEngineTests
             VERIFY_ARE_EQUAL(result, m_calcEngine->GroupDigits(L",", { 3, 0, 0 }, L"1234567890123456", false), L"Verify expanded form non-repeating grouping.");
 
             result = L"12,34,56,78,901,23456";
-            VERIFY_ARE_EQUAL(result, m_calcEngine->GroupDigits(L",", { 5, 3, 2, 0 }, L"1234567890123456", false),
-                             L"Verify multigroup with repeating grouping.");
+            VERIFY_ARE_EQUAL(
+                result, m_calcEngine->GroupDigits(L",", { 5, 3, 2, 0 }, L"1234567890123456", false), L"Verify multigroup with repeating grouping.");
 
             result = L"1234,5678,9012,3456";
             VERIFY_ARE_EQUAL(result, m_calcEngine->GroupDigits(L",", { 4, 0 }, L"1234567890123456", false), L"Verify repeating non-standard grouping.");
 
             result = L"123456,78,901,23456";
             VERIFY_ARE_EQUAL(result, m_calcEngine->GroupDigits(L",", { 5, 3, 2 }, L"1234567890123456", false), L"Verify multigroup non-repeating grouping.");
-            VERIFY_ARE_EQUAL(result, m_calcEngine->GroupDigits(L",", { 5, 3, 2, 0, 0 }, L"1234567890123456", false),
-                             L"Verify expanded form multigroup non-repeating grouping.");
+            VERIFY_ARE_EQUAL(
+                result, m_calcEngine->GroupDigits(L",", { 5, 3, 2, 0, 0 }, L"1234567890123456", false),
+                L"Verify expanded form multigroup non-repeating grouping.");
         }
 
     private:

@@ -607,8 +607,8 @@ namespace CalculatorApp
         }
     }
 
-    void TraceLogger::LogMemoryUsed(int windowId, unsigned int slotPosition, bool isStandard, bool isScientific, bool isProgrammer,
-                                    unsigned int memorySize) const
+    void
+    TraceLogger::LogMemoryUsed(int windowId, unsigned int slotPosition, bool isStandard, bool isScientific, bool isProgrammer, unsigned int memorySize) const
     {
         if (!GetTraceLoggingProviderEnabled())
             return;

@@ -96,8 +96,8 @@ namespace CalculatorApp
         // Trace methods for Date Calculator usage
         void LogDateDifferenceModeUsed(int windowId);
         void LogDateAddSubtractModeUsed(int windowId, bool isAddMode);
-        void LogDateClippedTimeDifferenceFound(winrt::Windows::Globalization::Calendar const& today,
-                                               winrt::Windows::Foundation::DateTime const& clippedTime) const;
+        void
+        LogDateClippedTimeDifferenceFound(winrt::Windows::Globalization::Calendar const& today, winrt::Windows::Foundation::DateTime const& clippedTime) const;
 
         void LogStandardException(std::wstring_view functionName, _In_ const std::exception& e) const;
         void LogWinRTException(std::wstring_view functionName, _In_ winrt::hresult_error const& e) const;

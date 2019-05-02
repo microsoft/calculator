@@ -40,8 +40,9 @@ namespace CalculatorManagerTest
         {
             m_isError = isError;
         }
-        void SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
-                                  _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& /*commands*/)
+        void SetExpressionDisplay(
+            _Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
+            _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& /*commands*/)
         {
             m_expression.clear();
             unsigned int nTokens = 0;
