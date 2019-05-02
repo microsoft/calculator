@@ -26,12 +26,12 @@ CalculatorButton::CalculatorButton()
 {
     // Set the default bindings for this button, these can be overwritten by Xaml if needed
     // These are a replacement for binding in styles
-    Binding^ commandBinding = ref new Binding();
+    Binding ^ commandBinding = ref new Binding();
     commandBinding->Path = ref new PropertyPath("ButtonPressed");
     this->SetBinding(Button::CommandProperty, commandBinding);
 }
 
-void CalculatorButton::OnKeyDown(KeyRoutedEventArgs^ e)
+void CalculatorButton::OnKeyDown(KeyRoutedEventArgs ^ e)
 {
     // Ignore the Enter key
     if (e->Key == VirtualKey::Enter)
@@ -42,7 +42,7 @@ void CalculatorButton::OnKeyDown(KeyRoutedEventArgs^ e)
     Button::OnKeyDown(e);
 }
 
-void CalculatorButton::OnKeyUp(KeyRoutedEventArgs^ e)
+void CalculatorButton::OnKeyUp(KeyRoutedEventArgs ^ e)
 {
     // Ignore the Enter key
     if (e->Key == VirtualKey::Enter)
@@ -53,16 +53,12 @@ void CalculatorButton::OnKeyUp(KeyRoutedEventArgs^ e)
     Button::OnKeyUp(e);
 }
 
-void CalculatorButton::OnButtonIdPropertyChanged(
-    NumbersAndOperatorsEnum /*oldValue*/,
-    NumbersAndOperatorsEnum newValue)
+void CalculatorButton::OnButtonIdPropertyChanged(NumbersAndOperatorsEnum /*oldValue*/, NumbersAndOperatorsEnum newValue)
 {
     this->CommandParameter = ref new CalculatorButtonPressedEventArgs(AuditoryFeedback, newValue);
 }
 
-void CalculatorButton::OnAuditoryFeedbackPropertyChanged(
-    String^ /*oldValue*/,
-    String^ newValue)
+void CalculatorButton::OnAuditoryFeedbackPropertyChanged(String ^ /*oldValue*/, String ^ newValue)
 {
     this->CommandParameter = ref new CalculatorButtonPressedEventArgs(newValue, ButtonId);
 }

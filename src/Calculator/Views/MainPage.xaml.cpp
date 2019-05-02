@@ -63,8 +63,7 @@ namespace CalculatorApp::VisualStates
     }
 }
 
-MainPage::MainPage() :
-    m_model(ref new ApplicationViewModel())
+MainPage::MainPage() : m_model(ref new ApplicationViewModel())
 {
     InitializeComponent();
 
@@ -83,7 +82,7 @@ MainPage::MainPage() :
     }
 }
 
-void MainPage::OnNavigatedTo(NavigationEventArgs^ e)
+void MainPage::OnNavigatedTo(NavigationEventArgs ^ e)
 {
     if (m_model->CalculatorViewModel)
     {
@@ -93,7 +92,7 @@ void MainPage::OnNavigatedTo(NavigationEventArgs^ e)
     ViewMode initialMode = ViewMode::Standard;
     if (e->Parameter != nullptr)
     {
-        String^ stringParameter = dynamic_cast<String^>(e->Parameter);
+        String ^ stringParameter = dynamic_cast<String ^>(e->Parameter);
         if (stringParameter != nullptr)
         {
             initialMode = (ViewMode)stoi(stringParameter->Data());
@@ -101,7 +100,7 @@ void MainPage::OnNavigatedTo(NavigationEventArgs^ e)
     }
     else
     {
-        ApplicationDataContainer^ localSettings = ApplicationData::Current->LocalSettings;
+        ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
         if (localSettings->Values->HasKey(ApplicationViewModel::ModePropertyName))
         {
             initialMode = NavCategory::Deserialize(localSettings->Values->Lookup(ApplicationViewModel::ModePropertyName));
@@ -111,15 +110,15 @@ void MainPage::OnNavigatedTo(NavigationEventArgs^ e)
     m_model->Initialize(initialMode);
 }
 
-void MainPage::WindowSizeChanged(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Core::WindowSizeChangedEventArgs^ e)
+void MainPage::WindowSizeChanged(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Core::WindowSizeChangedEventArgs ^ e)
 {
     // We don't use layout aware page's view states, we have our own
     UpdateViewState();
 }
 
-void MainPage::OnAppPropertyChanged(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Data::PropertyChangedEventArgs^ e)
+void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e)
 {
-    String^ propertyName = e->PropertyName;
+    String ^ propertyName = e->PropertyName;
     if (propertyName == ApplicationViewModel::ModePropertyName)
     {
         ViewMode newValue = m_model->Mode;
@@ -233,7 +232,7 @@ void MainPage::UpdatePanelViewState()
     }
 }
 
-void MainPage::OnPageLoaded(_In_ Object^, _In_ RoutedEventArgs^ args)
+void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
 {
     if (!m_converter && !m_calculator && !m_dateCalculator)
     {
@@ -249,15 +248,15 @@ void MainPage::OnPageLoaded(_In_ Object^, _In_ RoutedEventArgs^ args)
     SetDefaultFocus();
 
     // Delay load things later when we get a chance.
-    this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([]()
-    {
-        if (TraceLogger::GetInstance().UpdateWindowIdLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
-        {
-            TraceLogger::GetInstance().LogAppLaunchComplete();
-            AppLifecycleLogger::GetInstance().LaunchUIResponsive();
-            AppLifecycleLogger::GetInstance().LaunchVisibleComplete();
-        }
-    }));
+    this->Dispatcher->RunAsync(
+        CoreDispatcherPriority::Normal, ref new DispatchedHandler([]() {
+            if (TraceLogger::GetInstance().UpdateWindowIdLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
+            {
+                TraceLogger::GetInstance().LogAppLaunchComplete();
+                AppLifecycleLogger::GetInstance().LaunchUIResponsive();
+                AppLifecycleLogger::GetInstance().LaunchVisibleComplete();
+            }
+        }));
 }
 
 void MainPage::SetDefaultFocus()
@@ -284,13 +283,13 @@ void MainPage::EnsureCalculator()
         m_calculator = ref new Calculator();
         m_calculator->Name = L"Calculator";
         m_calculator->DataContext = m_model->CalculatorViewModel;
-        Binding^ isStandardBinding = ref new Binding();
+        Binding ^ isStandardBinding = ref new Binding();
         isStandardBinding->Path = ref new PropertyPath(L"IsStandard");
         m_calculator->SetBinding(m_calculator->IsStandardProperty, isStandardBinding);
-        Binding^ isScientificBinding = ref new Binding();
+        Binding ^ isScientificBinding = ref new Binding();
         isScientificBinding->Path = ref new PropertyPath(L"IsScientific");
         m_calculator->SetBinding(m_calculator->IsScientificProperty, isScientificBinding);
-        Binding^ isProgramerBinding = ref new Binding();
+        Binding ^ isProgramerBinding = ref new Binding();
         isProgramerBinding->Path = ref new PropertyPath(L"IsProgrammer");
         m_calculator->SetBinding(m_calculator->IsProgrammerProperty, isProgramerBinding);
         m_calculator->Style = CalculatorBaseStyle;
@@ -307,7 +306,6 @@ void MainPage::EnsureCalculator()
     {
         m_dateCalculator->CloseCalendarFlyout();
     }
-
 }
 
 void MainPage::EnsureDateCalculator()
@@ -342,11 +340,11 @@ void MainPage::EnsureConverter()
     }
 }
 
-void MainPage::OnNavLoaded(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void MainPage::OnNavLoaded(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     if (NavView->SelectedItem == nullptr)
     {
-        auto menuItems = static_cast<IObservableVector<Object^>^>(NavView->MenuItemsSource);
+        auto menuItems = static_cast<IObservableVector<Object ^> ^>(NavView->MenuItemsSource);
         auto itemCount = static_cast<int>(menuItems->Size);
         auto flatIndex = NavCategory::GetFlatIndex(Model->Mode);
 
@@ -365,7 +363,7 @@ void MainPage::OnNavLoaded(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
     NavView->SetValue(Common::KeyboardShortcutManager::VirtualKeyControlChordProperty, Common::MyVirtualKey::E);
 }
 
-void MainPage::OnNavPaneOpening(_In_ MUXC::NavigationView^ sender, _In_ Object^ args)
+void MainPage::OnNavPaneOpening(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
 {
     if (!NavFooter)
     {
@@ -373,24 +371,24 @@ void MainPage::OnNavPaneOpening(_In_ MUXC::NavigationView^ sender, _In_ Object^ 
     }
 }
 
-void MainPage::OnNavPaneOpened(_In_ MUXC::NavigationView^ sender, _In_ Object^ args)
+void MainPage::OnNavPaneOpened(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
 {
     KeyboardShortcutManager::HonorShortcuts(false);
     TraceLogger::GetInstance().LogNavBarOpened();
 }
 
-void MainPage::OnNavPaneClosed(_In_ MUXC::NavigationView^ sender, _In_ Object^ args)
+void MainPage::OnNavPaneClosed(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
 {
     KeyboardShortcutManager::HonorShortcuts(true);
     this->SetDefaultFocus();
 }
 
-void MainPage::OnAboutButtonClick(Object^ sender, ItemClickEventArgs^ e)
+void MainPage::OnAboutButtonClick(Object ^ sender, ItemClickEventArgs ^ e)
 {
     ShowAboutPage();
 }
 
-void MainPage::OnAboutFlyoutOpened(_In_ Object^ sender, _In_ Object^ e)
+void MainPage::OnAboutFlyoutOpened(_In_ Object ^ sender, _In_ Object ^ e)
 {
     // Keep Ignoring Escape till the About page flyout is opened
     KeyboardShortcutManager::IgnoreEscape(false);
@@ -398,7 +396,7 @@ void MainPage::OnAboutFlyoutOpened(_In_ Object^ sender, _In_ Object^ e)
     KeyboardShortcutManager::UpdateDropDownState(this->AboutPageFlyout);
 }
 
-void MainPage::OnAboutFlyoutClosed(_In_ Object^ sender, _In_ Object^ e)
+void MainPage::OnAboutFlyoutClosed(_In_ Object ^ sender, _In_ Object ^ e)
 {
     // Start Honoring Escape once the About page flyout is closed
     KeyboardShortcutManager::HonorEscape();
@@ -406,19 +404,19 @@ void MainPage::OnAboutFlyoutClosed(_In_ Object^ sender, _In_ Object^ e)
     KeyboardShortcutManager::UpdateDropDownState(nullptr);
 }
 
-void MainPage::OnNavSelectionChanged(_In_ Object^ sender, _In_ MUXC::NavigationViewSelectionChangedEventArgs^ e)
+void MainPage::OnNavSelectionChanged(_In_ Object ^ sender, _In_ MUXC::NavigationViewSelectionChangedEventArgs ^ e)
 {
-    auto item = dynamic_cast<MUXC::NavigationViewItem^>(e->SelectedItemContainer);
+    auto item = dynamic_cast<MUXC::NavigationViewItem ^>(e->SelectedItemContainer);
     if (item != nullptr)
     {
-        auto selectedItem = static_cast<NavCategory^>(item->DataContext);
+        auto selectedItem = static_cast<NavCategory ^>(item->DataContext);
         Model->Mode = selectedItem->Mode;
     }
 }
 
-IObservableVector<Object^>^ MainPage::CreateUIElementsForCategories(_In_ IObservableVector<NavCategoryGroup^>^ categories)
+IObservableVector<Object ^> ^ MainPage::CreateUIElementsForCategories(_In_ IObservableVector<NavCategoryGroup ^> ^ categories)
 {
-    auto menuCategories = ref new Vector<Object^>();
+    auto menuCategories = ref new Vector<Object ^>();
 
     for (auto group : categories)
     {
@@ -433,7 +431,7 @@ IObservableVector<Object^>^ MainPage::CreateUIElementsForCategories(_In_ IObserv
     return menuCategories;
 }
 
-MUXC::NavigationViewItemHeader^ MainPage::CreateNavViewHeaderFromGroup(NavCategoryGroup^ group)
+MUXC::NavigationViewItemHeader ^ MainPage::CreateNavViewHeaderFromGroup(NavCategoryGroup ^ group)
 {
     auto header = ref new MUXC::NavigationViewItemHeader();
     header->DataContext = group;
@@ -445,19 +443,19 @@ MUXC::NavigationViewItemHeader^ MainPage::CreateNavViewHeaderFromGroup(NavCatego
     return header;
 }
 
-MUXC::NavigationViewItem^ MainPage::CreateNavViewItemFromCategory(NavCategory^ category)
+MUXC::NavigationViewItem ^ MainPage::CreateNavViewItemFromCategory(NavCategory ^ category)
 {
     auto item = ref new MUXC::NavigationViewItem();
     item->DataContext = category;
 
     auto icon = ref new FontIcon();
-    icon->FontFamily = static_cast<Windows::UI::Xaml::Media::FontFamily^>(App::Current->Resources->Lookup(L"CalculatorFontFamily"));
+    icon->FontFamily = static_cast<Windows::UI::Xaml::Media::FontFamily ^>(App::Current->Resources->Lookup(L"CalculatorFontFamily"));
     icon->Glyph = category->Glyph;
     item->Icon = icon;
 
     item->Content = category->Name;
     item->AccessKey = category->AccessKey;
-    item->Style = static_cast<Windows::UI::Xaml::Style^>(Resources->Lookup(L"NavViewItemStyle"));
+    item->Style = static_cast<Windows::UI::Xaml::Style ^>(Resources->Lookup(L"NavViewItemStyle"));
 
     AutomationProperties::SetName(item, category->AutomationName);
     AutomationProperties::SetAutomationId(item, category->AutomationId);
@@ -491,7 +489,7 @@ void MainPage::SetHeaderAutomationName()
     ViewMode mode = m_model->Mode;
     auto resProvider = AppResourceProvider::GetInstance();
 
-    String^ name;
+    String ^ name;
     if (NavCategory::IsDateCalculatorViewMode(mode))
     {
         name = resProvider.GetResourceString(L"HeaderAutomationName_Date");
@@ -520,12 +518,12 @@ void MainPage::SetHeaderAutomationName()
 
 void MainPage::AnnounceCategoryName()
 {
-    String^ categoryName = AutomationProperties::GetName(Header);
-    NarratorAnnouncement^ announcement = CalculatorAnnouncement::GetCategoryNameChangedAnnouncement(categoryName);
+    String ^ categoryName = AutomationProperties::GetName(Header);
+    NarratorAnnouncement ^ announcement = CalculatorAnnouncement::GetCategoryNameChangedAnnouncement(categoryName);
     NarratorNotifier->Announce(announcement);
 }
 
-void MainPage::OnNavItemInvoked(MUXC::NavigationView^ /*sender*/, _In_ MUXC::NavigationViewItemInvokedEventArgs^ e)
+void MainPage::OnNavItemInvoked(MUXC::NavigationView ^ /*sender*/, _In_ MUXC::NavigationViewItemInvokedEventArgs ^ e)
 {
     NavView->IsPaneOpen = false;
 }

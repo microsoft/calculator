@@ -8,13 +8,13 @@
 #include <winerror.h>
 #include "Ratpack/CalcErr.h"
 #include <stdexcept> // for std::out_of_range
-#include <sal.h> // for SAL
+#include <sal.h>     // for SAL
 
 template <typename TType>
 class CalculatorVector
 {
 public:
-    ResultCode GetAt(_In_opt_ unsigned int index, _Out_ TType *item)
+    ResultCode GetAt(_In_opt_ unsigned int index, _Out_ TType* item)
     {
         ResultCode hr = S_OK;
         try
@@ -28,7 +28,7 @@ public:
         return hr;
     }
 
-    ResultCode GetSize(_Out_ unsigned int *size)
+    ResultCode GetSize(_Out_ unsigned int* size)
     {
         *size = static_cast<unsigned>(m_vector.size());
         return S_OK;
@@ -122,7 +122,7 @@ public:
     {
         ResultCode hr = S_OK;
         unsigned int nTokens = 0;
-        std::pair <std::wstring, int> currentPair;
+        std::pair<std::wstring, int> currentPair;
         hr = this->GetSize(&nTokens);
         if (SUCCEEDED(hr))
         {

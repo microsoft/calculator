@@ -58,42 +58,43 @@ void CCalcEngine::InitialOneTimeOnlySetup(CalculationManager::IResourceProvider&
 // CCalcEngine::CCalcEngine
 //
 //////////////////////////////////////////////////
-CCalcEngine::CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager::IResourceProvider* const pResourceProvider, __in_opt ICalcDisplay *pCalcDisplay, __in_opt shared_ptr<IHistoryDisplay> pHistoryDisplay) :
-    m_fPrecedence(fPrecedence),
-    m_fIntegerMode(fIntegerMode),
-    m_pCalcDisplay(pCalcDisplay),
-    m_resourceProvider(pResourceProvider),
-    m_nOpCode(0),
-    m_nPrevOpCode(0),
-    m_bChangeOp(false),
-    m_bRecord(false),
-    m_bSetCalcState(false),
-    m_input(DEFAULT_DEC_SEPARATOR),
-    m_nFE(FMT_FLOAT),
-    m_memoryValue{ make_unique<Rational>() },
-    m_holdVal{},
-    m_currentVal{},
-    m_lastVal{},
-    m_parenVals{},
-    m_precedenceVals{},
-    m_bError(false),
-    m_bInv(false),
-    m_bNoPrevEqu(true),
-    m_radix(DEFAULT_RADIX),
-    m_precision(DEFAULT_PRECISION),
-    m_cIntDigitsSav(DEFAULT_MAX_DIGITS),
-    m_decGrouping(),
-    m_numberString(DEFAULT_NUMBER_STR),
-    m_nTempCom(0),
-    m_openParenCount(0),
-    m_nOp(),
-    m_nPrecOp(),
-    m_precedenceOpCount(0),
-    m_nLastCom(0),
-    m_angletype(ANGLE_DEG),
-    m_numwidth(QWORD_WIDTH),
-    m_HistoryCollector(pCalcDisplay, pHistoryDisplay, DEFAULT_DEC_SEPARATOR),
-    m_groupSeparator(DEFAULT_GRP_SEPARATOR)
+CCalcEngine::CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager::IResourceProvider* const pResourceProvider,
+                         __in_opt ICalcDisplay* pCalcDisplay, __in_opt shared_ptr<IHistoryDisplay> pHistoryDisplay)
+    : m_fPrecedence(fPrecedence)
+    , m_fIntegerMode(fIntegerMode)
+    , m_pCalcDisplay(pCalcDisplay)
+    , m_resourceProvider(pResourceProvider)
+    , m_nOpCode(0)
+    , m_nPrevOpCode(0)
+    , m_bChangeOp(false)
+    , m_bRecord(false)
+    , m_bSetCalcState(false)
+    , m_input(DEFAULT_DEC_SEPARATOR)
+    , m_nFE(FMT_FLOAT)
+    , m_memoryValue{ make_unique<Rational>() }
+    , m_holdVal{}
+    , m_currentVal{}
+    , m_lastVal{}
+    , m_parenVals{}
+    , m_precedenceVals{}
+    , m_bError(false)
+    , m_bInv(false)
+    , m_bNoPrevEqu(true)
+    , m_radix(DEFAULT_RADIX)
+    , m_precision(DEFAULT_PRECISION)
+    , m_cIntDigitsSav(DEFAULT_MAX_DIGITS)
+    , m_decGrouping()
+    , m_numberString(DEFAULT_NUMBER_STR)
+    , m_nTempCom(0)
+    , m_openParenCount(0)
+    , m_nOp()
+    , m_nPrecOp()
+    , m_precedenceOpCount(0)
+    , m_nLastCom(0)
+    , m_angletype(ANGLE_DEG)
+    , m_numwidth(QWORD_WIDTH)
+    , m_HistoryCollector(pCalcDisplay, pHistoryDisplay, DEFAULT_DEC_SEPARATOR)
+    , m_groupSeparator(DEFAULT_GRP_SEPARATOR)
 {
     InitChopNumbers();
 

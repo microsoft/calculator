@@ -50,13 +50,11 @@ DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, DisplayStringExpression);
 StringReference CalculationResult::s_FocusedState(L"Focused");
 StringReference CalculationResult::s_UnfocusedState(L"Unfocused");
 
-CalculationResult::CalculationResult():
-    m_isScalingText(false),
-    m_haveCalculatedMax(false)
+CalculationResult::CalculationResult() : m_isScalingText(false), m_haveCalculatedMax(false)
 {
 }
 
-Platform::String^ CalculationResult::GetRawDisplayValue()
+Platform::String ^ CalculationResult::GetRawDisplayValue()
 {
     std::wstring rawValue;
 
@@ -72,18 +70,19 @@ void CalculationResult::OnApplyTemplate()
     {
         m_textContainer->LayoutUpdated -= m_textContainerLayoutChangedToken;
     }
-    m_textContainer = dynamic_cast<ScrollViewer^>(GetTemplateChild("TextContainer"));
+    m_textContainer = dynamic_cast<ScrollViewer ^>(GetTemplateChild("TextContainer"));
     if (m_textContainer)
     {
         m_textContainer->SizeChanged += ref new SizeChangedEventHandler(this, &CalculationResult::TextContainerSizeChanged);
         // We want to know when the size of the container changes so
         // we can rescale the textbox
-        m_textContainerLayoutChangedToken = m_textContainer->LayoutUpdated += ref new EventHandler<Object^>(this, &CalculationResult::OnTextContainerLayoutUpdated);
+        m_textContainerLayoutChangedToken = m_textContainer->LayoutUpdated +=
+            ref new EventHandler<Object ^>(this, &CalculationResult::OnTextContainerLayoutUpdated);
 
-        m_textContainer->ChangeView(m_textContainer->ExtentWidth - m_textContainer->ViewportWidth,nullptr,nullptr);
-        m_scrollLeft = dynamic_cast<HyperlinkButton^>(GetTemplateChild("ScrollLeft"));
-        m_scrollRight = dynamic_cast<HyperlinkButton^>(GetTemplateChild("ScrollRight"));
-        auto borderContainer = dynamic_cast<UIElement^>(GetTemplateChild("Border"));
+        m_textContainer->ChangeView(m_textContainer->ExtentWidth - m_textContainer->ViewportWidth, nullptr, nullptr);
+        m_scrollLeft = dynamic_cast<HyperlinkButton ^>(GetTemplateChild("ScrollLeft"));
+        m_scrollRight = dynamic_cast<HyperlinkButton ^>(GetTemplateChild("ScrollRight"));
+        auto borderContainer = dynamic_cast<UIElement ^>(GetTemplateChild("Border"));
         if (m_scrollLeft && m_scrollRight)
         {
             m_scrollLeft->Click += ref new RoutedEventHandler(this, &CalculationResult::OnScrollClick);
@@ -91,7 +90,7 @@ void CalculationResult::OnApplyTemplate()
             borderContainer->PointerEntered += ref new PointerEventHandler(this, &CalculationResult::OnPointerEntered);
             borderContainer->PointerExited += ref new PointerEventHandler(this, &CalculationResult::OnPointerExited);
         }
-        m_textBlock = dynamic_cast<TextBlock^>(m_textContainer->FindName("NormalOutput"));
+        m_textBlock = dynamic_cast<TextBlock ^>(m_textContainer->FindName("NormalOutput"));
         if (m_textBlock)
         {
             m_textBlock->Visibility = ::Visibility::Visible;
@@ -101,7 +100,7 @@ void CalculationResult::OnApplyTemplate()
     VisualStateManager::GoToState(this, s_UnfocusedState, false);
 }
 
-void CalculationResult::OnPointerPressed(PointerRoutedEventArgs^ e)
+void CalculationResult::OnPointerPressed(PointerRoutedEventArgs ^ e)
 {
     if (m_scrollLeft && m_scrollRight && e->Pointer->PointerDeviceType == PointerDeviceType::Touch)
     {
@@ -109,7 +108,7 @@ void CalculationResult::OnPointerPressed(PointerRoutedEventArgs^ e)
     }
 }
 
-void CalculationResult::OnTextContainerLayoutUpdated(Object^ /*sender*/, Object^ /*e*/)
+void CalculationResult::OnTextContainerLayoutUpdated(Object ^ /*sender*/, Object ^ /*e*/)
 {
     if (m_isScalingText)
     {
@@ -117,7 +116,7 @@ void CalculationResult::OnTextContainerLayoutUpdated(Object^ /*sender*/, Object^
     }
 }
 
-void CalculationResult::TextContainerSizeChanged(Object^ /*sender*/, SizeChangedEventArgs^ /*e*/)
+void CalculationResult::TextContainerSizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ /*e*/)
 {
     UpdateTextState();
 }
@@ -127,7 +126,7 @@ void CalculationResult::OnIsActivePropertyChanged(bool /*oldValue*/, bool /*newV
     UpdateVisualState();
 }
 
-void CalculationResult::OnAccentColorPropertyChanged(Brush^ /*oldValue*/, Brush^ /*newValue*/)
+void CalculationResult::OnAccentColorPropertyChanged(Brush ^ /*oldValue*/, Brush ^ /*newValue*/)
 {
     // Force the "Active" transition to happen again
     if (IsActive)
@@ -137,7 +136,7 @@ void CalculationResult::OnAccentColorPropertyChanged(Brush^ /*oldValue*/, Brush^
     }
 }
 
-void CalculationResult::OnDisplayValuePropertyChanged(String^ /*oldValue*/, String^ /*newValue*/)
+void CalculationResult::OnDisplayValuePropertyChanged(String ^ /*oldValue*/, String ^ /*newValue*/)
 {
     UpdateTextState();
 }
@@ -198,8 +197,8 @@ void CalculationResult::UpdateTextState()
     }
 
     auto containerSize = m_textContainer->ActualWidth;
-    String^ oldText = m_textBlock->Text;
-    String^ newText =  Utils::LRO + DisplayValue + Utils::PDF;
+    String ^ oldText = m_textBlock->Text;
+    String ^ newText = Utils::LRO + DisplayValue + Utils::PDF;
 
     // Initiate the scaling operation
     // UpdateLayout will keep calling us until we make it through the below 2 if-statements
@@ -241,11 +240,11 @@ void CalculationResult::UpdateTextState()
         m_isScalingText = false;
         if (IsOperatorCommand)
         {
-            m_textContainer->ChangeView(0.0,nullptr,nullptr);
+            m_textContainer->ChangeView(0.0, nullptr, nullptr);
         }
         else
         {
-            m_textContainer->ChangeView(m_textContainer->ExtentWidth - m_textContainer->ViewportWidth,nullptr,nullptr);
+            m_textContainer->ChangeView(m_textContainer->ExtentWidth - m_textContainer->ViewportWidth, nullptr, nullptr);
         }
 
         if (m_scrollLeft && m_scrollRight)
@@ -292,7 +291,7 @@ void CalculationResult::ScrollRight()
     }
 }
 
-void CalculationResult::OnKeyDown(KeyRoutedEventArgs^ e)
+void CalculationResult::OnKeyDown(KeyRoutedEventArgs ^ e)
 {
     if (m_scrollLeft != nullptr && m_scrollRight != nullptr)
     {
@@ -308,9 +307,9 @@ void CalculationResult::OnKeyDown(KeyRoutedEventArgs^ e)
     }
 }
 
-void CalculationResult::OnScrollClick(Object^ sender, RoutedEventArgs^ /*e*/)
+void CalculationResult::OnScrollClick(Object ^ sender, RoutedEventArgs ^ /*e*/)
 {
-    auto clicked = dynamic_cast<HyperlinkButton^>(sender);
+    auto clicked = dynamic_cast<HyperlinkButton ^>(sender);
     if (clicked == m_scrollLeft)
     {
         this->ScrollLeft();
@@ -321,7 +320,7 @@ void CalculationResult::OnScrollClick(Object^ sender, RoutedEventArgs^ /*e*/)
     }
 }
 
-void CalculationResult::OnPointerEntered(Platform::Object^ sender,  PointerRoutedEventArgs^ e)
+void CalculationResult::OnPointerEntered(Platform::Object ^ sender, PointerRoutedEventArgs ^ e)
 {
     if (e->Pointer->PointerDeviceType == PointerDeviceType::Mouse && m_textBlock->ActualWidth >= m_textContainer->ActualWidth)
     {
@@ -358,7 +357,7 @@ void CalculationResult::UpdateScrollButtons()
     }
 }
 
-void CalculationResult::OnPointerExited(Platform::Object^ sender, PointerRoutedEventArgs^ e)
+void CalculationResult::OnPointerExited(Platform::Object ^ sender, PointerRoutedEventArgs ^ e)
 {
     if (e->Pointer->PointerDeviceType == PointerDeviceType::Mouse)
     {
@@ -366,7 +365,7 @@ void CalculationResult::OnPointerExited(Platform::Object^ sender, PointerRoutedE
     }
 }
 
-void CalculationResult::ModifyFontAndMargin(TextBlock^ textBox, double fontChange)
+void CalculationResult::ModifyFontAndMargin(TextBlock ^ textBox, double fontChange)
 {
     double cur = textBox->FontSize;
     double newFontSize = 0.0;
@@ -387,18 +386,18 @@ void CalculationResult::UpdateAllState()
     UpdateTextState();
 }
 
-void CalculationResult::OnTapped(TappedRoutedEventArgs^ e)
+void CalculationResult::OnTapped(TappedRoutedEventArgs ^ e)
 {
     this->Focus(::FocusState::Programmatic);
     RaiseSelectedEvent();
 }
 
-void CalculationResult::OnRightTapped(RightTappedRoutedEventArgs^ e)
+void CalculationResult::OnRightTapped(RightTappedRoutedEventArgs ^ e)
 {
     this->Focus(::FocusState::Programmatic);
 }
 
-void CalculationResult::OnGotFocus(RoutedEventArgs^ e)
+void CalculationResult::OnGotFocus(RoutedEventArgs ^ e)
 {
     if (this->FocusState == ::FocusState::Keyboard)
     {
@@ -406,12 +405,12 @@ void CalculationResult::OnGotFocus(RoutedEventArgs^ e)
     }
 }
 
-void CalculationResult::OnLostFocus(RoutedEventArgs^ e)
+void CalculationResult::OnLostFocus(RoutedEventArgs ^ e)
 {
     VisualStateManager::GoToState(this, s_UnfocusedState, true);
 }
 
-AutomationPeer^ CalculationResult::OnCreateAutomationPeer()
+AutomationPeer ^ CalculationResult::OnCreateAutomationPeer()
 {
     return ref new CalculationResultAutomationPeer(this);
 }

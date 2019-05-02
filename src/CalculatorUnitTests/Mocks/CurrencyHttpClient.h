@@ -14,23 +14,28 @@ namespace CalculatorApp
         public:
             CurrencyHttpClient();
 
-            static Platform::String^ GetRawStaticDataResponse();
-            static Platform::String^ GetRawAllRatiosDataResponse();
+            static Platform::String ^ GetRawStaticDataResponse();
+            static Platform::String ^ GetRawAllRatiosDataResponse();
 
             // ICurrencyHttpClient
-            void SetSourceCurrencyCode(Platform::String^ sourceCurrencyCode) override {}
-            void SetResponseLanguage(Platform::String^ responseLanguage) override {}
+            void SetSourceCurrencyCode(Platform::String ^ sourceCurrencyCode) override
+            {
+            }
+            void SetResponseLanguage(Platform::String ^ responseLanguage) override
+            {
+            }
 
-            virtual Windows::Foundation::IAsyncOperationWithProgress<Platform::String^, Windows::Web::Http::HttpProgress>^ GetCurrencyMetadata() override;
-            virtual Windows::Foundation::IAsyncOperationWithProgress<Platform::String^, Windows::Web::Http::HttpProgress>^ GetCurrencyRatios() override;
+            virtual Windows::Foundation::IAsyncOperationWithProgress<Platform::String ^, Windows::Web::Http::HttpProgress> ^ GetCurrencyMetadata() override;
+            virtual Windows::Foundation::IAsyncOperationWithProgress<Platform::String ^, Windows::Web::Http::HttpProgress> ^ GetCurrencyRatios() override;
             // ICurrencyHttpClient
         };
 
-        public ref class MockAsyncOperationWithProgress sealed :
-            public Windows::Foundation::IAsyncOperationWithProgress<Platform::String^, Windows::Web::Http::HttpProgress>
+    public
+        ref class MockAsyncOperationWithProgress sealed
+            : public Windows::Foundation::IAsyncOperationWithProgress<Platform::String ^, Windows::Web::Http::HttpProgress>
         {
         public:
-            MockAsyncOperationWithProgress(Platform::String^ result);
+            MockAsyncOperationWithProgress(Platform::String ^ result);
 
             // IAsyncInfo
             virtual property Windows::Foundation::HResult ErrorCode
@@ -40,16 +45,26 @@ namespace CalculatorApp
 
             virtual property unsigned int Id
             {
-                unsigned int get() { return 128u; }
+                unsigned int get()
+                {
+                    return 128u;
+                }
             }
 
             virtual property Windows::Foundation::AsyncStatus Status
             {
-                Windows::Foundation::AsyncStatus get() { return Windows::Foundation::AsyncStatus::Completed; }
+                Windows::Foundation::AsyncStatus get()
+                {
+                    return Windows::Foundation::AsyncStatus::Completed;
+                }
             }
 
-            virtual void Cancel() {}
-            virtual void Close() {}
+            virtual void Cancel()
+            {
+            }
+            virtual void Close()
+            {
+            }
             // IAsyncInfo
 
             // IAsyncOperationWithProgress

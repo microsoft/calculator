@@ -13,22 +13,17 @@ namespace CalculatorApp
         static void RunOnUIThread(std::function<void()>&& action, DWORD timeout = INFINITE);
         static void Delay(DWORD milliseconds);
 
-        template<typename T>
+        template <typename T>
         static void RunOnUIThread(std::function<concurrency::task<T>()>&& action, DWORD timeout = INFINITE)
         {
             concurrency::task<T> t;
-            concurrency::task<void> uiTask = RunOnUIThreadAsync([&t, action]()
-            {
-                t = action();
-            }).then([&t]()
-            {
-                t.wait();
-            }, concurrency::task_continuation_context::use_arbitrary());
+            concurrency::task<void> uiTask =
+                RunOnUIThreadAsync([&t, action]() { t = action(); }).then([&t]() { t.wait(); }, concurrency::task_continuation_context::use_arbitrary());
 
             WaitForTask<void>(uiTask, timeout);
         }
 
-        template<typename T>
+        template <typename T>
         static bool WaitForTask(concurrency::task<T>& t, DWORD timeout = INFINITE)
         {
             Microsoft::WRL::Wrappers::Event event(CreateEventEx(nullptr, nullptr, CREATE_EVENT_MANUAL_RESET, EVENT_ALL_ACCESS));
@@ -37,25 +32,26 @@ namespace CalculatorApp
                 throw std::bad_alloc();
             }
 
-            Platform::Exception^ ex;
-            t.then([&event, &ex](concurrency::task<T> prevTask)
-            {
-                try
-                {
-                    prevTask.get();
-                }
-                catch (Platform::Exception^ e)
-                {
-                    ex = e;
-                }
+            Platform::Exception ^ ex;
+            t.then(
+                [&event, &ex](concurrency::task<T> prevTask) {
+                    try
+                    {
+                        prevTask.get();
+                    }
+                    catch (Platform::Exception ^ e)
+                    {
+                        ex = e;
+                    }
 
-                if (event.IsValid())
-                {
-                    SetEvent(event.Get());
-                }
-            }, concurrency::task_continuation_context::use_arbitrary());
+                    if (event.IsValid())
+                    {
+                        SetEvent(event.Get());
+                    }
+                },
+                concurrency::task_continuation_context::use_arbitrary());
 
-            DWORD waitResult;// = STATUS_PENDING;
+            DWORD waitResult; // = STATUS_PENDING;
             waitResult = WaitForSingleObjectEx(event.Get(), timeout, true);
             event.Close();
 
@@ -71,6 +67,7 @@ namespace CalculatorApp
 
             return waitResult == WAIT_OBJECT_0;
         }
+
     private:
         static void Sleep(DWORD milliseconds);
     };

@@ -14,18 +14,20 @@ namespace CalculatorApp::Common::Automation
     class NarratorAnnouncementHostFactory
     {
     public:
-        static INarratorAnnouncementHost^ MakeHost();
+        static INarratorAnnouncementHost ^ MakeHost();
 
     private:
-        NarratorAnnouncementHostFactory() {}
+        NarratorAnnouncementHostFactory()
+        {
+        }
 
         static int Initialize();
         static void RegisterHosts();
-        static INarratorAnnouncementHost^ GetHostProducer();
+        static INarratorAnnouncementHost ^ GetHostProducer();
 
     private:
         static int s_init;
-        static INarratorAnnouncementHost^ s_hostProducer;
-        static std::vector<INarratorAnnouncementHost^> s_hosts;
+        static INarratorAnnouncementHost ^ s_hostProducer;
+        static std::vector<INarratorAnnouncementHost ^> s_hosts;
     };
 }

@@ -19,50 +19,51 @@ namespace CalculatorApp
     /// <summary>
     /// A basic page that provides characteristics common to most applications.
     /// </summary>
-    public ref class MainPage sealed
+public
+    ref class MainPage sealed
     {
     public:
         MainPage();
-        property CalculatorApp::ViewModel::ApplicationViewModel^ Model
-        {
-            CalculatorApp::ViewModel::ApplicationViewModel^ get(){
-                return m_model;
-            }
-        }
+        property CalculatorApp::ViewModel::ApplicationViewModel
+            ^ Model { CalculatorApp::ViewModel::ApplicationViewModel ^ get() { return m_model; } }
 
-        void UnregisterEventHandlers();
+            void
+            UnregisterEventHandlers();
 
         void SetDefaultFocus();
         void SetHeaderAutomationName();
 
-        Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ CreateUIElementsForCategories(_In_ Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup^>^ categories);
+        Windows::Foundation::Collections::IObservableVector<
+            Platform::Object
+            ^> ^ CreateUIElementsForCategories(_In_ Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup ^> ^ categories);
 
     protected:
-        void OnNavigatedTo(_In_ Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
+        void OnNavigatedTo(_In_ Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e) override;
 
     private:
-        void WindowSizeChanged(_In_ Platform::Object^ sender, _In_ Windows::UI::Core::WindowSizeChangedEventArgs^ e);
-        void OnAppPropertyChanged(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Data::PropertyChangedEventArgs^ e);
+        void WindowSizeChanged(_In_ Platform::Object ^ sender, _In_ Windows::UI::Core::WindowSizeChangedEventArgs ^ e);
+        void OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e);
 
-        void OnNavLoaded(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OnNavPaneOpening(_In_ Microsoft::UI::Xaml::Controls::NavigationView^ sender, _In_ Platform::Object^ args);
-        void OnNavPaneOpened(_In_ Microsoft::UI::Xaml::Controls::NavigationView^ sender, _In_ Platform::Object^ args);
-        void OnNavPaneClosed(_In_ Microsoft::UI::Xaml::Controls::NavigationView^ sender, _In_ Platform::Object^ args);
-        void OnNavSelectionChanged(_In_ Platform::Object^ sender, _In_ Microsoft::UI::Xaml::Controls::NavigationViewSelectionChangedEventArgs^ e);
-        void OnNavItemInvoked(Microsoft::UI::Xaml::Controls::NavigationView^ /*sender*/, _In_ Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs^ e);
+        void OnNavLoaded(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnNavPaneOpening(_In_ Microsoft::UI::Xaml::Controls::NavigationView ^ sender, _In_ Platform::Object ^ args);
+        void OnNavPaneOpened(_In_ Microsoft::UI::Xaml::Controls::NavigationView ^ sender, _In_ Platform::Object ^ args);
+        void OnNavPaneClosed(_In_ Microsoft::UI::Xaml::Controls::NavigationView ^ sender, _In_ Platform::Object ^ args);
+        void OnNavSelectionChanged(_In_ Platform::Object ^ sender, _In_ Microsoft::UI::Xaml::Controls::NavigationViewSelectionChangedEventArgs ^ e);
+        void OnNavItemInvoked(Microsoft::UI::Xaml::Controls::NavigationView ^ /*sender*/,
+                              _In_ Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs ^ e);
 
-        void OnAboutButtonClick(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Controls::ItemClickEventArgs^ e);
-        void OnAboutFlyoutOpened(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
-        void OnAboutFlyoutClosed(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
+        void OnAboutButtonClick(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Controls::ItemClickEventArgs ^ e);
+        void OnAboutFlyoutOpened(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
+        void OnAboutFlyoutClosed(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
 
-        Microsoft::UI::Xaml::Controls::NavigationViewItemHeader^ CreateNavViewHeaderFromGroup(CalculatorApp::Common::NavCategoryGroup^ group);
-        Microsoft::UI::Xaml::Controls::NavigationViewItem^ CreateNavViewItemFromCategory(CalculatorApp::Common::NavCategory^ category);
-                
+        Microsoft::UI::Xaml::Controls::NavigationViewItemHeader ^ CreateNavViewHeaderFromGroup(CalculatorApp::Common::NavCategoryGroup ^ group);
+        Microsoft::UI::Xaml::Controls::NavigationViewItem ^ CreateNavViewItemFromCategory(CalculatorApp::Common::NavCategory ^ category);
+
         void ShowHideControls(CalculatorApp::Common::ViewMode mode);
         void UpdateViewState();
         void UpdatePanelViewState();
 
-        void OnPageLoaded(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
+        void OnPageLoaded(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
 
         void EnsureCalculator();
         void EnsureConverter();
@@ -71,10 +72,10 @@ namespace CalculatorApp
 
         void AnnounceCategoryName();
 
-        CalculatorApp::Calculator^ m_calculator;
-        CalculatorApp::UnitConverter^ m_converter;
-        CalculatorApp::DateCalculator^ m_dateCalculator;
+        CalculatorApp::Calculator ^ m_calculator;
+        CalculatorApp::UnitConverter ^ m_converter;
+        CalculatorApp::DateCalculator ^ m_dateCalculator;
         Windows::Foundation::EventRegistrationToken m_windowSizeEventToken;
-        CalculatorApp::ViewModel::ApplicationViewModel^ m_model;
+        CalculatorApp::ViewModel::ApplicationViewModel ^ m_model;
     };
 }

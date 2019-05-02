@@ -839,7 +839,7 @@
   </Target>
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets" Condition="Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" />
-    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.0.181018004\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.0.181018004\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -847,6 +847,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.0.181018004\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.0.181018004\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets'))" />
   </Target>
 </Project>

@@ -7,11 +7,12 @@
 using namespace std;
 using namespace CalculationManager;
 
-CalculatorHistory::CalculatorHistory(size_t maxSize) :
-    m_maxHistorySize(maxSize)
-{}
+CalculatorHistory::CalculatorHistory(size_t maxSize) : m_maxHistorySize(maxSize)
+{
+}
 
-unsigned int CalculatorHistory::AddToHistory(_In_ shared_ptr<CalculatorVector <pair<wstring, int>>> const &tokens, _In_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const &commands, _In_ wstring_view result)
+unsigned int CalculatorHistory::AddToHistory(_In_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
+                                             _In_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands, _In_ wstring_view result)
 {
     unsigned int addedIndex;
     wstring generatedExpression;
@@ -31,8 +32,7 @@ unsigned int CalculatorHistory::AddToHistory(_In_ shared_ptr<CalculatorVector <p
     return addedIndex;
 }
 
-
-unsigned int CalculatorHistory::AddItem(_In_ shared_ptr<HISTORYITEM> const &spHistoryItem)
+unsigned int CalculatorHistory::AddItem(_In_ shared_ptr<HISTORYITEM> const& spHistoryItem)
 {
     if (m_historyItems.size() >= m_maxHistorySize)
     {

@@ -123,7 +123,7 @@
             <AppxPackageTestDir>@(AppxBundleOutput->'%(RootDir)%(Directory)')</AppxPackageTestDir>
             <UniversalTestCustomMacros Condition="'$(Configuration)'=='Debug'">$(UniversalTestCustomMacros)AppxPackageVCLibsDependency=$(AppxPackageTestDir)Dependencies\$(PlatformTarget)\Microsoft.VCLibs.$(PlatformTarget).Debug.14.00.appx;</UniversalTestCustomMacros>
             <UniversalTestCustomMacros Condition="'$(Configuration)'=='Release'">$(UniversalTestCustomMacros)AppxPackageVCLibsDependency=$(AppxPackageTestDir)Dependencies\$(PlatformTarget)\Microsoft.VCLibs.$(PlatformTarget).14.00.appx;</UniversalTestCustomMacros>
-            <UniversalTestCustomMacros>$(UniversalTestCustomMacros)AppxPackageWinUIDependency=$(AppxPackageTestDir)Dependencies\$(PlatformTarget)\Microsoft.UI.Xaml.2.0.appx;</UniversalTestCustomMacros>
+            <UniversalTestCustomMacros>$(UniversalTestCustomMacros)AppxPackageWinUIDependency=$(AppxPackageTestDir)Dependencies\$(PlatformTarget)\Microsoft.UI.Xaml.2.1.appx;</UniversalTestCustomMacros>
             <UniversalTestCustomMacros>$(UniversalTestCustomMacros)AppxPackagePublicKeyFile=@(AppxPackagePublicKeyFile->'%(FullPath)');AppxBundleOutput=@(AppxBundleOutput->'%(FullPath)');</UniversalTestCustomMacros>
         </PropertyGroup>
     </Target>
