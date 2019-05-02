@@ -12,11 +12,11 @@ namespace CalculatorApp
         class CommandDeserializer
         {
         public:
-            CommandDeserializer(_In_ Windows::Storage::Streams::DataReader^ dataReader);
+            CommandDeserializer(_In_ Windows::Storage::Streams::DataReader ^ dataReader);
             std::shared_ptr<IExpressionCommand> Deserialize(_In_ CalculationManager::CommandType cmdType);
 
         private:
-            Windows::Storage::Streams::DataReader^ m_dataReader;
+            Windows::Storage::Streams::DataReader ^ m_dataReader;
             COpndCommand DeserializeOperand();
             CParentheses DeserializeParentheses();
             CUnaryCommand DeserializeUnary();

@@ -69,11 +69,12 @@ void CalculatorDisplay::SetIsInError(bool isError)
     }
 }
 
-void CalculatorDisplay::SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector <std::shared_ptr<IExpressionCommand>>> const &commands)
+void CalculatorDisplay::SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
+                                             _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands)
 {
     if (m_callbackReference != nullptr)
     {
-        if(auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
+        if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
         {
             calcVM->SetExpressionDisplay(tokens, commands);
         }

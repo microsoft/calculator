@@ -20,8 +20,7 @@ using namespace Windows::Foundation::Collections;
 
 namespace CalculatorApp
 {
-    TitleBar::TitleBar() :
-        m_coreTitleBar(CoreApplication::GetCurrentView()->TitleBar)
+    TitleBar::TitleBar() : m_coreTitleBar(CoreApplication::GetCurrentView()->TitleBar)
     {
         m_uiSettings = ref new UISettings();
         m_accessibilitySettings = ref new AccessibilitySettings();
@@ -33,24 +32,23 @@ namespace CalculatorApp
         AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
     }
 
-    void TitleBar::OnLoaded(_In_ Object^ /*sender*/, _In_ RoutedEventArgs^ /*e*/)
+    void TitleBar::OnLoaded(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
     {
-        //Register events
-        m_visibilityChangedToken = m_coreTitleBar->IsVisibleChanged += ref new TypedEventHandler<CoreApplicationViewTitleBar^, Object^>([this](CoreApplicationViewTitleBar^ cTitleBar, Object^)
-        {
-            this->SetTitleBarVisibility();
-        });
-        m_layoutChangedToken = m_coreTitleBar->LayoutMetricsChanged += ref new TypedEventHandler<CoreApplicationViewTitleBar^, Object^>(
-            [this](CoreApplicationViewTitleBar^ cTitleBar, Object^)
-        {
-            this->LayoutRoot->Height = cTitleBar->Height;
-            this->SetTitleBarPadding();
-        });
+        // Register events
+        m_visibilityChangedToken = m_coreTitleBar->IsVisibleChanged += ref new TypedEventHandler<CoreApplicationViewTitleBar ^, Object ^>(
+            [this](CoreApplicationViewTitleBar ^ cTitleBar, Object ^) { this->SetTitleBarVisibility(); });
+        m_layoutChangedToken = m_coreTitleBar->LayoutMetricsChanged +=
+            ref new TypedEventHandler<CoreApplicationViewTitleBar ^, Object ^>([this](CoreApplicationViewTitleBar ^ cTitleBar, Object ^) {
+                this->LayoutRoot->Height = cTitleBar->Height;
+                this->SetTitleBarPadding();
+            });
 
-        m_colorValuesChangedToken = m_uiSettings->ColorValuesChanged += ref new TypedEventHandler<UISettings^, Object^>(this, &TitleBar::ColorValuesChanged);
-        m_accessibilitySettingsToken = m_accessibilitySettings->HighContrastChanged += ref new Windows::Foundation::TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &CalculatorApp::TitleBar::OnHighContrastChanged);
-        m_windowActivatedToken = Window::Current->Activated += ref new Windows::UI::Xaml::WindowActivatedEventHandler(this, &CalculatorApp::TitleBar::OnWindowActivated);
-        //Set properties
+        m_colorValuesChangedToken = m_uiSettings->ColorValuesChanged += ref new TypedEventHandler<UISettings ^, Object ^>(this, &TitleBar::ColorValuesChanged);
+        m_accessibilitySettingsToken = m_accessibilitySettings->HighContrastChanged +=
+            ref new Windows::Foundation::TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &CalculatorApp::TitleBar::OnHighContrastChanged);
+        m_windowActivatedToken = Window::Current->Activated +=
+            ref new Windows::UI::Xaml::WindowActivatedEventHandler(this, &CalculatorApp::TitleBar::OnWindowActivated);
+        // Set properties
         LayoutRoot->Height = m_coreTitleBar->Height;
         SetTitleBarControlColors();
         SetTitleBarExtendView();
@@ -58,9 +56,9 @@ namespace CalculatorApp
         SetTitleBarPadding();
     }
 
-    void TitleBar::OnUnloaded(_In_ Object^ /*sender*/, _In_ RoutedEventArgs^ /*e*/)
+    void TitleBar::OnUnloaded(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
     {
-        //Unregister events
+        // Unregister events
         m_coreTitleBar->LayoutMetricsChanged -= m_layoutChangedToken;
         m_layoutChangedToken.Value = 0;
         m_coreTitleBar->IsVisibleChanged -= m_visibilityChangedToken;
@@ -102,24 +100,28 @@ namespace CalculatorApp
         this->LayoutRoot->Padding = Thickness(leftAddition, 0, rightAddition, 0);
     }
 
-    void TitleBar::ColorValuesChanged(_In_ UISettings^ /*sender*/, _In_ Object^ /*e*/)
+    void TitleBar::ColorValuesChanged(_In_ UISettings ^ /*sender*/, _In_ Object ^ /*e*/)
     {
-        Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]() {
-            SetTitleBarControlColors();
-        }));
+        Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]() { SetTitleBarControlColors(); }));
     }
 
     void TitleBar::SetTitleBarControlColors()
     {
         auto applicationView = ApplicationView::GetForCurrentView();
-        if (applicationView == nullptr) { return; }
+        if (applicationView == nullptr)
+        {
+            return;
+        }
 
         auto applicationTitleBar = applicationView->TitleBar;
-        if (applicationTitleBar == nullptr) { return; }
+        if (applicationTitleBar == nullptr)
+        {
+            return;
+        }
 
         if (m_accessibilitySettings->HighContrast)
         {
-            //Reset to use default colors.
+            // Reset to use default colors.
             applicationTitleBar->ButtonBackgroundColor = nullptr;
             applicationTitleBar->ButtonForegroundColor = nullptr;
             applicationTitleBar->ButtonInactiveBackgroundColor = nullptr;
@@ -132,12 +134,13 @@ namespace CalculatorApp
         else
         {
             Color bgColor = Colors::Transparent;
-            Color fgColor = safe_cast<SolidColorBrush^>(Application::Current->Resources->Lookup("SystemControlPageTextBaseHighBrush"))->Color;
-            Color inactivefgColor = safe_cast<SolidColorBrush^>(Application::Current->Resources->Lookup("SystemControlForegroundChromeDisabledLowBrush"))->Color;
-            Color hoverbgColor = safe_cast<SolidColorBrush^>(Application::Current->Resources->Lookup("SystemControlBackgroundListLowBrush"))->Color;
-            Color hoverfgColor = safe_cast<SolidColorBrush^>(Application::Current->Resources->Lookup("SystemControlForegroundBaseHighBrush"))->Color;
-            Color pressedbgColor = safe_cast<SolidColorBrush^>(Application::Current->Resources->Lookup("SystemControlBackgroundListMediumBrush"))->Color;
-            Color pressedfgCoolor = safe_cast<SolidColorBrush^>(Application::Current->Resources->Lookup("SystemControlForegroundBaseHighBrush"))->Color;
+            Color fgColor = safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup("SystemControlPageTextBaseHighBrush"))->Color;
+            Color inactivefgColor =
+                safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup("SystemControlForegroundChromeDisabledLowBrush"))->Color;
+            Color hoverbgColor = safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup("SystemControlBackgroundListLowBrush"))->Color;
+            Color hoverfgColor = safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup("SystemControlForegroundBaseHighBrush"))->Color;
+            Color pressedbgColor = safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup("SystemControlBackgroundListMediumBrush"))->Color;
+            Color pressedfgCoolor = safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup("SystemControlForegroundBaseHighBrush"))->Color;
             applicationTitleBar->ButtonBackgroundColor = bgColor;
             applicationTitleBar->ButtonForegroundColor = fgColor;
             applicationTitleBar->ButtonInactiveBackgroundColor = bgColor;
@@ -152,14 +155,15 @@ namespace CalculatorApp
     void TitleBar::OnHighContrastChanged(_In_ AccessibilitySettings ^ /*sender*/, _In_ Object ^ /*args*/)
     {
         Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]() {
-            SetTitleBarControlColors();
-            SetTitleBarExtendView();
-            SetTitleBarVisibility();
-        }));
+                                 SetTitleBarControlColors();
+                                 SetTitleBarExtendView();
+                                 SetTitleBarVisibility();
+                             }));
     }
 
-    void TitleBar::OnWindowActivated(_In_ Object ^ /*sender*/, _In_ WindowActivatedEventArgs ^e)
+    void TitleBar::OnWindowActivated(_In_ Object ^ /*sender*/, _In_ WindowActivatedEventArgs ^ e)
     {
-        VisualStateManager::GoToState(this, e->WindowActivationState == CoreWindowActivationState::Deactivated ? WindowNotFocused->Name : WindowFocused->Name, false);
+        VisualStateManager::GoToState(this, e->WindowActivationState == CoreWindowActivationState::Deactivated ? WindowNotFocused->Name : WindowFocused->Name,
+                                      false);
     }
 }

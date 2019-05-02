@@ -55,16 +55,15 @@ Size HorizontalNoOverflowStackPanel::ArrangeOverride(Size finalSize)
         float itemWidth = item->DesiredSize.Width;
         if (widthAvailable > 0 && itemWidth <= widthAvailable)
         {
-            //stack the items horizontally (left to right)
+            // stack the items horizontally (left to right)
             item->Arrange(Rect(posX, 0, itemWidth, finalSize.Height));
             posX += item->RenderSize.Width;
         }
         else
         {
-            //Not display the item
+            // Not display the item
             item->Arrange(Rect(0, 0, 0, 0));
         }
     }
     return finalSize;
 }
-

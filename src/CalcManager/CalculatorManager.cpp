@@ -14,25 +14,21 @@ static constexpr size_t SERIALIZED_NUMBER_MINSIZE = 3;
 
 // Converts Memory Command enum value to unsigned char,
 // while ignoring Warning C4309: 'conversion' : truncation of constant value
-#define MEMORY_COMMAND_TO_UNSIGNED_CHAR(c)\
-    __pragma(warning(push))\
-    __pragma(warning(disable: 4309))\
-        static_cast<unsigned char>(c)\
-    __pragma(warning(pop))
+#define MEMORY_COMMAND_TO_UNSIGNED_CHAR(c) __pragma(warning(push)) __pragma(warning(disable : 4309)) static_cast<unsigned char>(c) __pragma(warning(pop))
 
 namespace CalculationManager
 {
-    CalculatorManager::CalculatorManager(_In_ ICalcDisplay* displayCallback, _In_ IResourceProvider* resourceProvider) :
-        m_displayCallback(displayCallback),
-        m_currentCalculatorEngine(nullptr),
-        m_resourceProvider(resourceProvider),
-        m_inHistoryItemLoadMode(false),
-        m_persistedPrimaryValue(),
-        m_isExponentialFormat(false),
-        m_currentDegreeMode(Command::CommandNULL),
-        m_savedDegreeMode(Command::CommandDEG),
-        m_pStdHistory(new CalculatorHistory(MAX_HISTORY_ITEMS)),
-        m_pSciHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
+    CalculatorManager::CalculatorManager(_In_ ICalcDisplay* displayCallback, _In_ IResourceProvider* resourceProvider)
+        : m_displayCallback(displayCallback)
+        , m_currentCalculatorEngine(nullptr)
+        , m_resourceProvider(resourceProvider)
+        , m_inHistoryItemLoadMode(false)
+        , m_persistedPrimaryValue()
+        , m_isExponentialFormat(false)
+        , m_currentDegreeMode(Command::CommandNULL)
+        , m_savedDegreeMode(Command::CommandDEG)
+        , m_pStdHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
+        , m_pSciHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
     {
         CCalcEngine::InitialOneTimeOnlySetup(*m_resourceProvider);
     }
@@ -89,7 +85,8 @@ namespace CalculationManager
     /// Used to set the expression display value on ViewModel
     /// </summary>
     /// <param name="expressionString">wstring representing expression to be displayed</param>
-    void CalculatorManager::SetExpressionDisplay(_Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const &tokens, _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const &commands)
+    void CalculatorManager::SetExpressionDisplay(_Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
+                                                 _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
     {
         if (!m_inHistoryItemLoadMode)
         {
@@ -165,7 +162,8 @@ namespace CalculationManager
     {
         if (!m_standardCalculatorEngine)
         {
-            m_standardCalculatorEngine = make_unique<CCalcEngine>(false /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider, this, m_pStdHistory);
+            m_standardCalculatorEngine =
+                make_unique<CCalcEngine>(false /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider, this, m_pStdHistory);
         }
 
         m_currentCalculatorEngine = m_standardCalculatorEngine.get();
@@ -183,7 +181,8 @@ namespace CalculationManager
     {
         if (!m_scientificCalculatorEngine)
         {
-            m_scientificCalculatorEngine = make_unique<CCalcEngine>(true /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider, this, m_pSciHistory);
+            m_scientificCalculatorEngine =
+                make_unique<CCalcEngine>(true /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider, this, m_pSciHistory);
         }
 
         m_currentCalculatorEngine = m_scientificCalculatorEngine.get();
@@ -198,9 +197,10 @@ namespace CalculationManager
     /// </summary>
     void CalculatorManager::SetProgrammerMode()
     {
-        if(!m_programmerCalculatorEngine)
+        if (!m_programmerCalculatorEngine)
         {
-            m_programmerCalculatorEngine = make_unique<CCalcEngine>(true /* Respect Order of Operations */, true /* Set to Integer Mode */, m_resourceProvider, this, nullptr);
+            m_programmerCalculatorEngine =
+                make_unique<CCalcEngine>(true /* Respect Order of Operations */, true /* Set to Integer Mode */, m_resourceProvider, this, nullptr);
         }
 
         m_currentCalculatorEngine = m_programmerCalculatorEngine.get();
@@ -208,7 +208,6 @@ namespace CalculationManager
         m_currentCalculatorEngine->ProcessCommand(IDC_CLEAR);
         m_currentCalculatorEngine->ChangePrecision(static_cast<int>(CalculatorPrecision::ProgrammerModePrecision));
     }
-
 
     /// <summary>
     /// Send command to the Calc Engine
@@ -220,8 +219,8 @@ namespace CalculationManager
     {
         // When the expression line is cleared, we save the current state, which includes,
         // primary display, memory, and degree mode
-        if (command == Command::CommandCLEAR || command == Command::CommandEQU
-            || command == Command::ModeBasic || command == Command::ModeScientific || command == Command::ModeProgrammer)
+        if (command == Command::CommandCLEAR || command == Command::CommandEQU || command == Command::ModeBasic || command == Command::ModeScientific
+            || command == Command::ModeProgrammer)
         {
             switch (command)
             {
@@ -361,7 +360,7 @@ namespace CalculationManager
     /// DeSerialize the primary display from vector of long
     /// </summary>
     /// <param name = "serializedPrimaryDisplay">Serialized Rational of primary display</param>
-    void CalculatorManager::DeSerializePrimaryDisplay(const vector<long> &serializedPrimaryDisplay)
+    void CalculatorManager::DeSerializePrimaryDisplay(const vector<long>& serializedPrimaryDisplay)
     {
         if (serializedPrimaryDisplay.empty())
         {
@@ -404,7 +403,7 @@ namespace CalculationManager
     /// DeSerialize the Memory from vector of long
     /// </summary>
     /// <param name = "serializedMemory">Serialized Rational of memory</param>
-    void CalculatorManager::DeSerializeMemory(const vector<long> &serializedMemory)
+    void CalculatorManager::DeSerializeMemory(const vector<long>& serializedMemory)
     {
         vector<long>::const_iterator itr = serializedMemory.begin();
         while (itr != serializedMemory.end())
@@ -435,8 +434,8 @@ namespace CalculationManager
 
         for (auto commandItr = serializedData.begin(); commandItr != serializedData.end(); ++commandItr)
         {
-            if (*commandItr >= MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizeNumber) &&
-                *commandItr <= MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizedNumberClearAll))
+            if (*commandItr >= MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizeNumber)
+                && *commandItr <= MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizedNumberClearAll))
             {
                 // MemoryCommands(which have values above 255) are pushed on m_savedCommands upon casting to unsigned char.
                 // SerializeCommands uses m_savedCommands, which is then used in DeSerializeCommands.
@@ -622,10 +621,10 @@ namespace CalculationManager
     }
 
     /// <summary>
-/// Helper function that selects a memory from the vector and set it to CCalcEngine
-/// Saved RAT number needs to be copied and passed in, as CCalcEngine destroyed the passed in RAT
-/// </summary>
-/// <param name="indexOfMemory">Index of the target memory</param>
+    /// Helper function that selects a memory from the vector and set it to CCalcEngine
+    /// Saved RAT number needs to be copied and passed in, as CCalcEngine destroyed the passed in RAT
+    /// </summary>
+    /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberSelect(_In_ unsigned int indexOfMemory)
     {
         if (m_currentCalculatorEngine->FInErrorState())
@@ -673,9 +672,7 @@ namespace CalculationManager
 
     vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems(_In_ CALCULATOR_MODE mode)
     {
-        return (mode == CM_STD) ?
-            m_pStdHistory->GetHistory() :
-            m_pSciHistory->GetHistory();
+        return (mode == CM_STD) ? m_pStdHistory->GetHistory() : m_pSciHistory->GetHistory();
     }
 
     shared_ptr<HISTORYITEM> const& CalculatorManager::GetHistoryItem(_In_ unsigned int uIdx)

@@ -35,22 +35,23 @@ void OverflowTextBlock::OnApplyTemplate()
     auto uiElement = GetTemplateChild("ExpressionContainer");
     if (uiElement != nullptr)
     {
-        m_expressionContainer = safe_cast<ScrollViewer^>(uiElement);
+        m_expressionContainer = safe_cast<ScrollViewer ^>(uiElement);
         m_expressionContainer->ChangeView(m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth, nullptr, nullptr);
-        m_containerViewChangedToken = m_expressionContainer->ViewChanged += ref new EventHandler<ScrollViewerViewChangedEventArgs ^>(this, &OverflowTextBlock::OnViewChanged);
+        m_containerViewChangedToken = m_expressionContainer->ViewChanged +=
+            ref new EventHandler<ScrollViewerViewChangedEventArgs ^>(this, &OverflowTextBlock::OnViewChanged);
     }
 
     uiElement = GetTemplateChild("ScrollLeft");
     if (uiElement != nullptr)
     {
-        m_scrollLeft = safe_cast<Button^>(uiElement);
+        m_scrollLeft = safe_cast<Button ^>(uiElement);
         m_scrollLeftClickEventToken = m_scrollLeft->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollClick);
     }
 
     uiElement = GetTemplateChild("ScrollRight");
     if (uiElement != nullptr)
     {
-        m_scrollRight = safe_cast<Button^>(uiElement);
+        m_scrollRight = safe_cast<Button ^>(uiElement);
         m_scrollRightClickEventToken = m_scrollRight->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollClick);
     }
 
@@ -60,13 +61,13 @@ void OverflowTextBlock::OnApplyTemplate()
     uiElement = GetTemplateChild("TokenList");
     if (uiElement != nullptr)
     {
-        m_itemsControl = safe_cast<ItemsControl^>(uiElement);
+        m_itemsControl = safe_cast<ItemsControl ^>(uiElement);
     }
 
     UpdateAllState();
 }
 
-AutomationPeer^ OverflowTextBlock::OnCreateAutomationPeer()
+AutomationPeer ^ OverflowTextBlock::OnCreateAutomationPeer()
 {
     return ref new OverflowTextBlockAutomationPeer(this);
 }
@@ -82,8 +83,7 @@ void OverflowTextBlock::OnTokensUpdatedPropertyChanged(bool /*oldValue*/, bool n
     if (m_isAccessibilityViewControl != newIsAccessibilityViewControl)
     {
         m_isAccessibilityViewControl = newIsAccessibilityViewControl;
-        AutomationProperties::SetAccessibilityView(this,
-            newIsAccessibilityViewControl ? AccessibilityView::Control : AccessibilityView::Raw);
+        AutomationProperties::SetAccessibilityView(this, newIsAccessibilityViewControl ? AccessibilityView::Control : AccessibilityView::Raw);
     }
     UpdateScrollButtons();
 }
@@ -129,9 +129,9 @@ void OverflowTextBlock::ScrollRight()
     }
 }
 
-void OverflowTextBlock::OnScrollClick(_In_ Object^ sender, _In_ RoutedEventArgs^)
+void OverflowTextBlock::OnScrollClick(_In_ Object ^ sender, _In_ RoutedEventArgs ^)
 {
-    auto clicked = safe_cast<Button^>(sender);
+    auto clicked = safe_cast<Button ^>(sender);
     if (clicked == m_scrollLeft)
     {
         ScrollLeft();
@@ -155,7 +155,8 @@ void OverflowTextBlock::UpdateScrollButtons()
         ShowHideScrollButtons(::Visibility::Collapsed, ::Visibility::Collapsed);
     }
     // We have more number on both side. Show both arrows
-    else if ((m_expressionContainer->HorizontalOffset > 0) && (m_expressionContainer->HorizontalOffset < (m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth)))
+    else if ((m_expressionContainer->HorizontalOffset > 0)
+             && (m_expressionContainer->HorizontalOffset < (m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth)))
     {
         ShowHideScrollButtons(::Visibility::Visible, ::Visibility::Visible);
     }
@@ -214,7 +215,7 @@ void OverflowTextBlock::UnregisterEventHandlers()
     }
 }
 
-void OverflowTextBlock::OnViewChanged(_In_opt_ Object^ /*sender*/, _In_opt_ ScrollViewerViewChangedEventArgs^ /*args*/)
+void OverflowTextBlock::OnViewChanged(_In_opt_ Object ^ /*sender*/, _In_opt_ ScrollViewerViewChangedEventArgs ^ /*args*/)
 {
     UpdateScrollButtons();
 }

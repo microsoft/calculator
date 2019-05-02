@@ -9,8 +9,8 @@
 using namespace CalculatorApp::Common::Automation;
 using namespace std;
 
-INarratorAnnouncementHost^ NarratorAnnouncementHostFactory::s_hostProducer;
-vector<INarratorAnnouncementHost^> NarratorAnnouncementHostFactory::s_hosts;
+INarratorAnnouncementHost ^ NarratorAnnouncementHostFactory::s_hostProducer;
+vector<INarratorAnnouncementHost ^> NarratorAnnouncementHostFactory::s_hosts;
 
 // This static variable is used only to call the initialization function, to initialize the other static variables.
 int NarratorAnnouncementHostFactory::s_init = NarratorAnnouncementHostFactory::Initialize();
@@ -32,15 +32,12 @@ void NarratorAnnouncementHostFactory::RegisterHosts()
 {
     // The host that will be used is the first available host,
     // therefore, order of hosts is important here.
-    NarratorAnnouncementHostFactory::s_hosts = {
-        ref new NotificationHost(),
-        ref new LiveRegionHost()
-    };
+    NarratorAnnouncementHostFactory::s_hosts = { ref new NotificationHost(), ref new LiveRegionHost() };
 }
 
-INarratorAnnouncementHost^ NarratorAnnouncementHostFactory::GetHostProducer()
+INarratorAnnouncementHost ^ NarratorAnnouncementHostFactory::GetHostProducer()
 {
-    for (INarratorAnnouncementHost^ host : NarratorAnnouncementHostFactory::s_hosts)
+    for (INarratorAnnouncementHost ^ host : NarratorAnnouncementHostFactory::s_hosts)
     {
         if (host->IsHostAvailable())
         {
@@ -52,7 +49,7 @@ INarratorAnnouncementHost^ NarratorAnnouncementHostFactory::GetHostProducer()
     return nullptr;
 }
 
-INarratorAnnouncementHost^ NarratorAnnouncementHostFactory::MakeHost()
+INarratorAnnouncementHost ^ NarratorAnnouncementHostFactory::MakeHost()
 {
     if (NarratorAnnouncementHostFactory::s_hostProducer == nullptr)
     {
