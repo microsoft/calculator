@@ -79,9 +79,10 @@ DateCalculator::DateCalculator()
     DateDiff_ToDate->MaxDate = maxYear;
 
     // Set the PlaceHolderText for CalendarDatePicker
-    DateTimeFormatter ^ dateTimeFormatter =
-        LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(L"day month year", localizationSettings.GetCalendarIdentifier(),
-                                                                       ClockIdentifiers::TwentyFourHour); // Clock Identifier is not used
+    DateTimeFormatter ^ dateTimeFormatter = LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(
+        L"day month year",
+        localizationSettings.GetCalendarIdentifier(),
+        ClockIdentifiers::TwentyFourHour); // Clock Identifier is not used
 
     DateDiff_FromDate->DateFormat = L"day month year";
     DateDiff_ToDate->DateFormat = L"day month year";
@@ -130,8 +131,8 @@ void DateCalculator::AddSubtract_DateChanged(_In_ CalendarDatePicker ^ sender, _
     {
         auto dateCalcViewModel = safe_cast<DateCalculatorViewModel ^>(this->DataContext);
         dateCalcViewModel->StartDate = e->NewDate->Value;
-        TraceLogger::GetInstance().LogDateAddSubtractModeUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()),
-                                                              dateCalcViewModel->IsAddMode);
+        TraceLogger::GetInstance().LogDateAddSubtractModeUsed(
+            ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()), dateCalcViewModel->IsAddMode);
     }
     else
     {
@@ -142,8 +143,8 @@ void DateCalculator::AddSubtract_DateChanged(_In_ CalendarDatePicker ^ sender, _
 void CalculatorApp::DateCalculator::OffsetValue_Changed(_In_ Platform::Object ^ sender, _In_ SelectionChangedEventArgs ^ e)
 {
     auto dateCalcViewModel = safe_cast<DateCalculatorViewModel ^>(this->DataContext);
-    TraceLogger::GetInstance().LogDateAddSubtractModeUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()),
-                                                          dateCalcViewModel->IsAddMode);
+    TraceLogger::GetInstance().LogDateAddSubtractModeUsed(
+        ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()), dateCalcViewModel->IsAddMode);
 }
 
 void DateCalculator::OnCopyMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)

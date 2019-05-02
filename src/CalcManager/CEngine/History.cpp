@@ -40,7 +40,10 @@ void CHistoryCollector::ReinitHistory()
 // Constructor
 // Can throw Out of memory error
 CHistoryCollector::CHistoryCollector(ICalcDisplay* pCalcDisplay, std::shared_ptr<IHistoryDisplay> pHistoryDisplay, wchar_t decimalSymbol)
-    : m_pHistoryDisplay(pHistoryDisplay), m_pCalcDisplay(pCalcDisplay), m_iCurLineHistStart(-1), m_decimalSymbol(decimalSymbol)
+    : m_pHistoryDisplay(pHistoryDisplay)
+    , m_pCalcDisplay(pCalcDisplay)
+    , m_iCurLineHistStart(-1)
+    , m_decimalSymbol(decimalSymbol)
 {
     ReinitHistory();
 }
@@ -300,8 +303,8 @@ void CHistoryCollector::CompleteHistoryLine(wstring_view numStr)
 {
     if (nullptr != m_pCalcDisplay)
     {
-        m_pCalcDisplay->SetExpressionDisplay(std::make_shared<CalculatorVector<std::pair<std::wstring, int>>>(),
-                                             std::make_shared<CalculatorVector<std::shared_ptr<IExpressionCommand>>>());
+        m_pCalcDisplay->SetExpressionDisplay(
+            std::make_shared<CalculatorVector<std::pair<std::wstring, int>>>(), std::make_shared<CalculatorVector<std::shared_ptr<IExpressionCommand>>>());
     }
 
     if (nullptr != m_pHistoryDisplay)
@@ -322,8 +325,8 @@ void CHistoryCollector::ClearHistoryLine(wstring_view errStr)
     {
         if (nullptr != m_pCalcDisplay)
         {
-            m_pCalcDisplay->SetExpressionDisplay(std::make_shared<CalculatorVector<std::pair<std::wstring, int>>>(),
-                                                 std::make_shared<CalculatorVector<std::shared_ptr<IExpressionCommand>>>());
+            m_pCalcDisplay->SetExpressionDisplay(
+                std::make_shared<CalculatorVector<std::pair<std::wstring, int>>>(), std::make_shared<CalculatorVector<std::shared_ptr<IExpressionCommand>>>());
         }
         m_iCurLineHistStart = -1; // It will get recomputed at the first Opnd
         ReinitHistory();

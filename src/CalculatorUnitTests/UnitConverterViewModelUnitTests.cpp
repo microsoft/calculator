@@ -262,7 +262,8 @@ private:
     bool m_active;
 
 public:
-    MockActivatable(bool active) : m_active(active)
+    MockActivatable(bool active)
+        : m_active(active)
     {
     }
 

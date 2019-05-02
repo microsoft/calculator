@@ -105,8 +105,9 @@ void DateCalculatorViewModel::OnPropertyChanged(_In_ String ^ prop)
     {
         UpdateStrDateResultAutomationName();
     }
-    else if (prop != StrDateDiffResultAutomationNamePropertyName && prop != StrDateDiffResultInDaysPropertyName
-             && prop != StrDateResultAutomationNamePropertyName && prop != IsDiffInDaysPropertyName)
+    else if (
+        prop != StrDateDiffResultAutomationNamePropertyName && prop != StrDateDiffResultInDaysPropertyName && prop != StrDateResultAutomationNamePropertyName
+        && prop != IsDiffInDaysPropertyName)
     {
         OnInputsChanged();
     }
@@ -216,8 +217,10 @@ void DateCalculatorViewModel::UpdateStrDateResultAutomationName()
 void DateCalculatorViewModel::InitializeDateOutputFormats(_In_ String ^ calendarIdentifier)
 {
     // Format for Add/Subtract days
-    m_dateTimeFormatter = LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(L"longdate", calendarIdentifier,
-                                                                                         ClockIdentifiers::TwentyFourHour); // Clock Identifier is not used
+    m_dateTimeFormatter = LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(
+        L"longdate",
+        calendarIdentifier,
+        ClockIdentifiers::TwentyFourHour); // Clock Identifier is not used
 
     // Format for Date Difference
     m_allDateUnitsOutputFormat = DateUnit::Year | DateUnit::Month | DateUnit::Week | DateUnit::Day;

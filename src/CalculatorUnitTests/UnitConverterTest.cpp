@@ -38,7 +38,8 @@ namespace UnitConverterUnitTests
     class TestUnitConverterConfigLoader : public IConverterDataLoader
     {
     public:
-        TestUnitConverterConfigLoader() : m_loadDataCallCount(0)
+        TestUnitConverterConfigLoader()
+            : m_loadDataCallCount(0)
         {
             Category c1, c2;
             SetCategoryParams(&c1, 1, L"Length", true);
@@ -492,8 +493,21 @@ namespace UnitConverterUnitTests
 
     void UnitConverterTest::UnitConverterTestMaxDigitsReached()
     {
-        ExecuteCommands({ Command::One, Command::Two, Command::Three, Command::Four, Command::Five, Command::Six, Command::Seven, Command::Eight, Command::Nine,
-                          Command::One, Command::Zero, Command::One, Command::One, Command::One, Command::Two });
+        ExecuteCommands({ Command::One,
+                          Command::Two,
+                          Command::Three,
+                          Command::Four,
+                          Command::Five,
+                          Command::Six,
+                          Command::Seven,
+                          Command::Eight,
+                          Command::Nine,
+                          Command::One,
+                          Command::Zero,
+                          Command::One,
+                          Command::One,
+                          Command::One,
+                          Command::Two });
 
         VERIFY_ARE_EQUAL(0, s_testVMCallback->GetMaxDigitsReachedCallCount());
 
@@ -504,8 +518,22 @@ namespace UnitConverterUnitTests
 
     void UnitConverterTest::UnitConverterTestMaxDigitsReached_LeadingDecimal()
     {
-        ExecuteCommands({ Command::Zero, Command::Decimal, Command::One, Command::Two, Command::Three, Command::Four, Command::Five, Command::Six,
-                          Command::Seven, Command::Eight, Command::Nine, Command::One, Command::Zero, Command::One, Command::One, Command::One });
+        ExecuteCommands({ Command::Zero,
+                          Command::Decimal,
+                          Command::One,
+                          Command::Two,
+                          Command::Three,
+                          Command::Four,
+                          Command::Five,
+                          Command::Six,
+                          Command::Seven,
+                          Command::Eight,
+                          Command::Nine,
+                          Command::One,
+                          Command::Zero,
+                          Command::One,
+                          Command::One,
+                          Command::One });
 
         VERIFY_ARE_EQUAL(0, s_testVMCallback->GetMaxDigitsReachedCallCount());
 
@@ -516,8 +544,22 @@ namespace UnitConverterUnitTests
 
     void UnitConverterTest::UnitConverterTestMaxDigitsReached_TrailingDecimal()
     {
-        ExecuteCommands({ Command::One, Command::Two, Command::Three, Command::Four, Command::Five, Command::Six, Command::Seven, Command::Eight, Command::Nine,
-                          Command::One, Command::Zero, Command::One, Command::One, Command::One, Command::Two, Command::Decimal });
+        ExecuteCommands({ Command::One,
+                          Command::Two,
+                          Command::Three,
+                          Command::Four,
+                          Command::Five,
+                          Command::Six,
+                          Command::Seven,
+                          Command::Eight,
+                          Command::Nine,
+                          Command::One,
+                          Command::Zero,
+                          Command::One,
+                          Command::One,
+                          Command::One,
+                          Command::Two,
+                          Command::Decimal });
 
         VERIFY_ARE_EQUAL(0, s_testVMCallback->GetMaxDigitsReachedCallCount());
 
@@ -528,8 +570,21 @@ namespace UnitConverterUnitTests
 
     void UnitConverterTest::UnitConverterTestMaxDigitsReached_MultipleTimes()
     {
-        ExecuteCommands({ Command::One, Command::Two, Command::Three, Command::Four, Command::Five, Command::Six, Command::Seven, Command::Eight, Command::Nine,
-                          Command::One, Command::Zero, Command::One, Command::One, Command::One, Command::Two });
+        ExecuteCommands({ Command::One,
+                          Command::Two,
+                          Command::Three,
+                          Command::Four,
+                          Command::Five,
+                          Command::Six,
+                          Command::Seven,
+                          Command::Eight,
+                          Command::Nine,
+                          Command::One,
+                          Command::Zero,
+                          Command::One,
+                          Command::One,
+                          Command::One,
+                          Command::Two });
 
         VERIFY_ARE_EQUAL(0, s_testVMCallback->GetMaxDigitsReachedCallCount());
 

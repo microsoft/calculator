@@ -34,7 +34,8 @@ unordered_map<wstring, wchar_t> unquoteConversions;
 /// Constructor, sets up all the variables and requires a configLoader
 /// </summary>
 /// <param name="dataLoader">An instance of the IConverterDataLoader interface which we use to read in category/unit names and conversion data</param>
-UnitConverter::UnitConverter(_In_ const shared_ptr<IConverterDataLoader>& dataLoader) : UnitConverter::UnitConverter(dataLoader, nullptr)
+UnitConverter::UnitConverter(_In_ const shared_ptr<IConverterDataLoader>& dataLoader)
+    : UnitConverter::UnitConverter(dataLoader, nullptr)
 {
 }
 

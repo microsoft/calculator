@@ -31,8 +31,8 @@ public
             ^ AnnouncementProperty { Windows::UI::Xaml::DependencyProperty ^ get() { return s_announcementProperty; } }
 
             static NarratorAnnouncement
-            ^ GetAnnouncement(Windows::UI::Xaml::DependencyObject
-                              ^ element) { return safe_cast<NarratorAnnouncement ^>(element->GetValue(s_announcementProperty)); }
+            ^ GetAnnouncement(
+                Windows::UI::Xaml::DependencyObject ^ element) { return safe_cast<NarratorAnnouncement ^>(element->GetValue(s_announcementProperty)); }
 
             static void SetAnnouncement(Windows::UI::Xaml::DependencyObject ^ element, NarratorAnnouncement ^ value)
         {
@@ -40,8 +40,9 @@ public
         }
 
     private:
-        static void OnAnnouncementChanged(_In_ Windows::UI::Xaml::DependencyObject ^ dependencyObject,
-                                          _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ eventArgs);
+        static void OnAnnouncementChanged(
+            _In_ Windows::UI::Xaml::DependencyObject ^ dependencyObject,
+            _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ eventArgs);
 
         static Windows::UI::Xaml::DependencyProperty ^ s_announcementProperty;
 

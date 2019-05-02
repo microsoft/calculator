@@ -43,7 +43,8 @@ namespace CalculatorApp
 
         struct CurrencyUnitMetadata
         {
-            CurrencyUnitMetadata(const std::wstring& s) : symbol(s)
+            CurrencyUnitMetadata(const std::wstring& s)
+                : symbol(s)
             {
             }
 
@@ -71,8 +72,8 @@ namespace CalculatorApp
             // ICurrencyConverterDataLoader
             void SetViewModelCallback(const std::shared_ptr<UCM::IViewModelCurrencyCallback>& callback) override;
             std::pair<std::wstring, std::wstring> GetCurrencySymbols(const UCM::Unit& unit1, const UCM::Unit& unit2) override;
-            std::pair<std::wstring, std::wstring> GetCurrencyRatioEquality(_In_ const UnitConversionManager::Unit& unit1,
-                                                                           _In_ const UnitConversionManager::Unit& unit2) override;
+            std::pair<std::wstring, std::wstring>
+            GetCurrencyRatioEquality(_In_ const UnitConversionManager::Unit& unit1, _In_ const UnitConversionManager::Unit& unit2) override;
             std::wstring GetCurrencyTimestamp() override;
 
             concurrency::task<bool> TryLoadDataFromCacheAsync() override;
@@ -88,8 +89,11 @@ namespace CalculatorApp
 
             concurrency::task<bool> TryFinishLoadFromCacheAsync();
 
-            bool TryParseWebResponses(_In_ Platform::String ^ staticDataJson, _In_ Platform::String ^ allRatiosJson,
-                                      _Inout_ std::vector<UCM::CurrencyStaticData>& staticData, _Inout_ CurrencyRatioMap& allRatiosData);
+            bool TryParseWebResponses(
+                _In_ Platform::String ^ staticDataJson,
+                _In_ Platform::String ^ allRatiosJson,
+                _Inout_ std::vector<UCM::CurrencyStaticData>& staticData,
+                _Inout_ CurrencyRatioMap& allRatiosData);
             bool TryParseStaticData(_In_ Platform::String ^ rawJson, _Inout_ std::vector<UCM::CurrencyStaticData>& staticData);
             bool TryParseAllRatiosData(_In_ Platform::String ^ rawJson, _Inout_ CurrencyRatioMap& allRatiosData);
             concurrency::task<void> FinalizeUnits(_In_ const std::vector<UCM::CurrencyStaticData>& staticData, _In_ const CurrencyRatioMap& ratioMap);

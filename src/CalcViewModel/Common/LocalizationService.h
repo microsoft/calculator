@@ -44,8 +44,10 @@ namespace CalculatorApp
             static Windows::Globalization::NumberFormatting::DecimalFormatter ^ GetRegionalSettingsAwareDecimalFormatter();
             static Windows::Globalization::DateTimeFormatting::DateTimeFormatter ^ GetRegionalSettingsAwareDateTimeFormatter(_In_ Platform::String ^ format);
             static Windows::Globalization::DateTimeFormatting::DateTimeFormatter
-                ^ GetRegionalSettingsAwareDateTimeFormatter(_In_ Platform::String ^ format, _In_ Platform::String ^ calendarIdentifier,
-                                                            _In_ Platform::String ^ clockIdentifier);
+                ^ GetRegionalSettingsAwareDateTimeFormatter(
+                    _In_ Platform::String ^ format,
+                    _In_ Platform::String ^ calendarIdentifier,
+                    _In_ Platform::String ^ clockIdentifier);
 
             static Windows::Globalization::NumberFormatting::CurrencyFormatter ^ GetRegionalSettingsAwareCurrencyFormatter();
 
@@ -60,8 +62,10 @@ namespace CalculatorApp
 
             // Attached property callbacks
             static void OnFontTypePropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, LanguageFontType oldValue, LanguageFontType newValue);
-            static void OnFontWeightPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, Windows::UI::Text::FontWeight oldValue,
-                                                    Windows::UI::Text::FontWeight newValue);
+            static void OnFontWeightPropertyChanged(
+                Windows::UI::Xaml::DependencyObject ^ target,
+                Windows::UI::Text::FontWeight oldValue,
+                Windows::UI::Text::FontWeight newValue);
             static void OnFontSizePropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, double oldValue, double newValue);
 
             static void UpdateFontFamilyAndSize(Windows::UI::Xaml::DependencyObject ^ target);

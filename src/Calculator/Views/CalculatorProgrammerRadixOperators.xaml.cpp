@@ -23,7 +23,8 @@ using namespace Windows::UI::Xaml::Data;
 using namespace CalculatorApp::Common;
 using namespace Windows::UI::Xaml::Media;
 
-CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators() : m_isErrorVisualState(false)
+CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators()
+    : m_isErrorVisualState(false)
 {
     InitializeComponent();
 

@@ -35,7 +35,8 @@ using namespace Windows::UI::ViewManagement;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(Memory, RowHeight);
 
-Memory::Memory() : m_isErrorVisualState(false)
+Memory::Memory()
+    : m_isErrorVisualState(false)
 {
     InitializeComponent();
     m_memoryItemFlyout = safe_cast<MenuFlyout ^>(Resources->Lookup("MemoryContextMenu"));

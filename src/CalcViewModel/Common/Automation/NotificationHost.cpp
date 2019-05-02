@@ -10,7 +10,8 @@ using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Windows::UI::Xaml::Controls;
 
-NotificationHost::NotificationHost() : m_host(nullptr)
+NotificationHost::NotificationHost()
+    : m_host(nullptr)
 {
 }
 
@@ -34,8 +35,11 @@ void NotificationHost::Announce(NarratorAnnouncement ^ announcement)
     auto peer = FrameworkElementAutomationPeer::FromElement(m_host);
     if (peer != nullptr)
     {
-        peer->RaiseNotificationEvent(GetWindowsNotificationKind(announcement->Kind), GetWindowsNotificationProcessing(announcement->Processing),
-                                     announcement->Announcement, announcement->ActivityId);
+        peer->RaiseNotificationEvent(
+            GetWindowsNotificationKind(announcement->Kind),
+            GetWindowsNotificationProcessing(announcement->Processing),
+            announcement->Announcement,
+            announcement->ActivityId);
     }
 }
 

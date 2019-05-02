@@ -58,8 +58,8 @@ namespace CalculatorApp
 #pragma region Tracing methods
     void AppLifecycleLogger::LogAppLifecycleEvent(hstring const& eventName, LoggingFields const& fields) const
     {
-        m_appLifecycleProvider.LogEvent(eventName, fields, LoggingLevel::Information,
-                                        LoggingOptions(MICROSOFT_KEYWORD_TELEMETRY | WINEVENT_KEYWORD_RESPONSE_TIME));
+        m_appLifecycleProvider.LogEvent(
+            eventName, fields, LoggingLevel::Information, LoggingOptions(MICROSOFT_KEYWORD_TELEMETRY | WINEVENT_KEYWORD_RESPONSE_TIME));
     }
 #pragma endregion
 

@@ -13,7 +13,8 @@ constexpr wchar_t chNegate = L'-';
 constexpr wchar_t chExp = L'e';
 constexpr wchar_t chPlus = L'+';
 
-CParentheses::CParentheses(_In_ int command) : m_command(command)
+CParentheses::CParentheses(_In_ int command)
+    : m_command(command)
 {
 }
 
@@ -73,7 +74,8 @@ void CUnaryCommand::Accept(_In_ ISerializeCommandVisitor& commandVisitor)
     commandVisitor.Visit(*this);
 }
 
-CBinaryCommand::CBinaryCommand(int command) : m_command(command)
+CBinaryCommand::CBinaryCommand(int command)
+    : m_command(command)
 {
 }
 
@@ -98,7 +100,12 @@ void CBinaryCommand::Accept(_In_ ISerializeCommandVisitor& commandVisitor)
 }
 
 COpndCommand::COpndCommand(shared_ptr<CalculatorVector<int>> const& commands, bool fNegative, bool fDecimal, bool fSciFmt)
-    : m_commands(commands), m_fNegative(fNegative), m_fSciFmt(fSciFmt), m_fDecimal(fDecimal), m_fInitialized(false), m_value{}
+    : m_commands(commands)
+    , m_fNegative(fNegative)
+    , m_fSciFmt(fSciFmt)
+    , m_fDecimal(fDecimal)
+    , m_fInitialized(false)
+    , m_value{}
 {
 }
 

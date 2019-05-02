@@ -235,9 +235,10 @@ void StandardCalculatorViewModel::SetOpenParenthesisCountNarratorAnnouncement()
     wstring localizedParenthesisCount = to_wstring(m_OpenParenthesisCount).c_str();
     LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
 
-    String ^ announcement =
-        LocalizationStringUtil::GetLocalizedNarratorAnnouncement(CalculatorResourceKeys::OpenParenthesisCountAutomationFormat,
-                                                                 m_localizedOpenParenthesisCountChangedAutomationFormat, localizedParenthesisCount.c_str());
+    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
+        CalculatorResourceKeys::OpenParenthesisCountAutomationFormat,
+        m_localizedOpenParenthesisCountChangedAutomationFormat,
+        localizedParenthesisCount.c_str());
 
     Announcement = CalculatorAnnouncement::GetOpenParenthesisCountChangedAnnouncement(announcement);
 }
@@ -283,8 +284,9 @@ void StandardCalculatorViewModel::DisableButtons(CommandType selectedExpressionC
     }
 }
 
-void StandardCalculatorViewModel::SetExpressionDisplay(_Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
-                                                       _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
+void StandardCalculatorViewModel::SetExpressionDisplay(
+    _Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
+    _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
 {
     m_tokens = tokens;
     m_commands = commands;
@@ -298,8 +300,9 @@ void StandardCalculatorViewModel::SetExpressionDisplay(_Inout_ shared_ptr<Calcul
     AreTokensUpdated = true;
 }
 
-void StandardCalculatorViewModel::SetHistoryExpressionDisplay(_Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
-                                                              _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
+void StandardCalculatorViewModel::SetHistoryExpressionDisplay(
+    _Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
+    _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
 {
     m_tokens = make_shared<CalculatorVector<pair<wstring, int>>>(*tokens);
     m_commands = make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>(*commands);
@@ -1035,8 +1038,8 @@ void StandardCalculatorViewModel::OnMemoryButtonPressed()
     int windowId = Utils::GetWindowId();
     TraceLogger::GetInstance().InsertIntoMemoryMap(windowId, IsStandard, IsScientific, IsProgrammer);
 
-    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(CalculatorResourceKeys::MemorySave, m_localizedMemorySavedAutomationFormat,
-                                                                                     m_DisplayValue->Data());
+    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
+        CalculatorResourceKeys::MemorySave, m_localizedMemorySavedAutomationFormat, m_DisplayValue->Data());
 
     Announcement = CalculatorAnnouncement::GetMemoryItemAddedAnnouncement(announcement);
 }
@@ -1957,9 +1960,11 @@ NarratorAnnouncement ^ StandardCalculatorViewModel::GetDisplayUpdatedNarratorAnn
     }
     else
     {
-        announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(CalculatorResourceKeys::ButtonPressFeedbackFormat,
-                                                                                m_localizedButtonPressFeedbackAutomationFormat,
-                                                                                m_CalculationResultAutomationName->Data(), m_feedbackForButtonPress->Data());
+        announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
+            CalculatorResourceKeys::ButtonPressFeedbackFormat,
+            m_localizedButtonPressFeedbackAutomationFormat,
+            m_CalculationResultAutomationName->Data(),
+            m_feedbackForButtonPress->Data());
     }
 
     // Make sure we don't accidentally repeat an announcement.

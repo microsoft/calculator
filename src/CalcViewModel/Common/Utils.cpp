@@ -92,8 +92,10 @@ wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, wchar_t* unwantedCh
     return input;
 }
 
-void Utils::SerializeCommandsAndTokens(_In_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
-                                       _In_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands, DataWriter ^ writer)
+void Utils::SerializeCommandsAndTokens(
+    _In_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
+    _In_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands,
+    DataWriter ^ writer)
 {
     unsigned int commandsSize;
     IFTPlatformException(commands->GetSize(&commandsSize));

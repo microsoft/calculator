@@ -43,8 +43,8 @@ public
         WindowFrameService(_In_ Windows::UI::Xaml::Controls::Frame ^ viewFrame, Platform::WeakReference parent);
         void InitializeFrameService(bool createdByUs);
 
-        void OnConsolidated(_In_ Windows::UI::ViewManagement::ApplicationView ^ sender,
-                            _In_ Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs ^ e);
+        void
+        OnConsolidated(_In_ Windows::UI::ViewManagement::ApplicationView ^ sender, _In_ Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs ^ e);
         void OnClosed(_In_ Windows::UI::Core::CoreWindow ^ sender, _In_ Windows::UI::Core::CoreWindowEventArgs ^ args);
 
         void LogOnViewClosed(_In_ Windows::UI::Core::CoreWindow ^ coreWindow);

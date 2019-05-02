@@ -270,7 +270,8 @@ namespace CalculatorUnitTests
                                  { NumbersAndOperatorsEnum::Five, L"7" + std::wstring(m_decimalSeparator->Data()) + L"5", L"" },
                                  { NumbersAndOperatorsEnum::Five, L"7" + std::wstring(m_decimalSeparator->Data()) + L"55", L"" },
                                  { NumbersAndOperatorsEnum::Five, L"7" + std::wstring(m_decimalSeparator->Data()) + L"555", L"" },
-                                 { NumbersAndOperatorsEnum::Multiply, L"7" + std::wstring(m_decimalSeparator->Data()) + L"555",
+                                 { NumbersAndOperatorsEnum::Multiply,
+                                   L"7" + std::wstring(m_decimalSeparator->Data()) + L"555",
                                    L"7" + std::wstring(m_decimalSeparator->Data()) + L"555 * " },
                                  { NumbersAndOperatorsEnum::Three, L"3", L"7" + std::wstring(m_decimalSeparator->Data()) + L"555 * " },
                                  { NumbersAndOperatorsEnum::Equals, L"22" + std::wstring(m_decimalSeparator->Data()) + L"665", L"" },
@@ -549,8 +550,9 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->HexDisplayValue), StringReference(L"FFFF FFFF FFFF FFFE"));
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->DecimalDisplayValue), StringReference(L"-2"));
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->OctalDisplayValue), StringReference(L"1 777 777 777 777 777 777 776"));
-            VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->BinaryDisplayValue),
-                             StringReference(L"1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1110"));
+            VERIFY_ARE_EQUAL(
+                Utils::GetStringValue(m_viewModel->BinaryDisplayValue),
+                StringReference(L"1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1110"));
             VERIFY_ARE_EQUAL(m_viewModel->DisplayValue, StringReference(L"-2"));
         }
 

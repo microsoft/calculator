@@ -17,7 +17,8 @@ namespace CalculatorApp
     {
         [Windows::UI::Xaml::Data::Bindable] public ref class Category sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
-            internal : Category(const UnitConversionManager::Category& category) : m_original(category)
+            internal : Category(const UnitConversionManager::Category& category)
+                : m_original(category)
             {
             }
 
@@ -46,7 +47,8 @@ namespace CalculatorApp
 
         [Windows::UI::Xaml::Data::Bindable] public ref class Unit sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
-            internal : Unit(const UnitConversionManager::Unit& unit) : m_original(unit)
+            internal : Unit(const UnitConversionManager::Unit& unit)
+                : m_original(unit)
             {
             }
 
@@ -80,7 +82,9 @@ namespace CalculatorApp
 
         [Windows::UI::Xaml::Data::Bindable] public ref class SupplementaryResult sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
-            internal : SupplementaryResult(Platform::String ^ value, Unit ^ unit) : m_Value(value), m_Unit(unit)
+            internal : SupplementaryResult(Platform::String ^ value, Unit ^ unit)
+                : m_Value(value)
+                , m_Unit(unit)
             {
             }
 
@@ -110,7 +114,8 @@ namespace CalculatorApp
             TActivatable m_activatable;
 
         public:
-            Activatable(TActivatable activatable) : m_activatable(activatable)
+            Activatable(TActivatable activatable)
+                : m_activatable(activatable)
             {
             }
 
@@ -207,8 +212,11 @@ namespace CalculatorApp
             Platform::String
                 ^ GetLocalizedAutomationName(_In_ Platform::String ^ displayvalue, _In_ Platform::String ^ unitname, _In_ Platform::String ^ format);
             Platform::String
-                ^ GetLocalizedConversionResultStringFormat(_In_ Platform::String ^ fromValue, _In_ Platform::String ^ fromUnit, _In_ Platform::String ^ toValue,
-                                                           _In_ Platform::String ^ toUnit);
+                ^ GetLocalizedConversionResultStringFormat(
+                    _In_ Platform::String ^ fromValue,
+                    _In_ Platform::String ^ fromUnit,
+                    _In_ Platform::String ^ toValue,
+                    _In_ Platform::String ^ toUnit);
             void UpdateValue1AutomationName();
             void UpdateValue2AutomationName();
             Platform::String ^ Serialize();
@@ -330,7 +338,8 @@ namespace CalculatorApp
         class UnitConverterVMCallback : public UnitConversionManager::IUnitConverterVMCallback
         {
         public:
-            UnitConverterVMCallback(UnitConverterViewModel ^ viewModel) : m_viewModel(viewModel)
+            UnitConverterVMCallback(UnitConverterViewModel ^ viewModel)
+                : m_viewModel(viewModel)
             {
             }
 
@@ -356,7 +365,8 @@ namespace CalculatorApp
         class ViewModelCurrencyCallback : public UnitConversionManager::IViewModelCurrencyCallback
         {
         public:
-            ViewModelCurrencyCallback(UnitConverterViewModel ^ viewModel) : m_viewModel(viewModel)
+            ViewModelCurrencyCallback(UnitConverterViewModel ^ viewModel)
+                : m_viewModel(viewModel)
             {
             }
 
