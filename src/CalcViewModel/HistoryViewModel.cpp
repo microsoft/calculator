@@ -27,7 +27,8 @@ namespace CalculatorApp::ViewModel::HistoryResourceKeys
 }
 
 HistoryViewModel::HistoryViewModel(_In_ CalculationManager::CalculatorManager* calculatorManager)
-    : m_calculatorManager(calculatorManager), m_localizedHistoryCleared(nullptr)
+    : m_calculatorManager(calculatorManager)
+    , m_localizedHistoryCleared(nullptr)
 {
     AreHistoryShortcutsEnabled = true;
 

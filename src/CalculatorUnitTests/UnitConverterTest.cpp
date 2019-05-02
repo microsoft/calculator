@@ -38,7 +38,8 @@ namespace UnitConverterUnitTests
     class TestUnitConverterConfigLoader : public IConverterDataLoader
     {
     public:
-        TestUnitConverterConfigLoader() : m_loadDataCallCount(0)
+        TestUnitConverterConfigLoader()
+            : m_loadDataCallCount(0)
         {
             Category c1, c2;
             SetCategoryParams(&c1, 1, L"Length", true);

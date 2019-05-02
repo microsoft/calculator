@@ -41,7 +41,11 @@ DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsStandard);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsScientific);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsProgrammer);
 
-Calculator::Calculator() : m_doAnimate(false), m_isLastAnimatedInScientific(false), m_isLastAnimatedInProgrammer(false), m_resultAnimate(false)
+Calculator::Calculator()
+    : m_doAnimate(false)
+    , m_isLastAnimatedInScientific(false)
+    , m_isLastAnimatedInProgrammer(false)
+    , m_resultAnimate(false)
 {
     SetFontSizeResources();
     InitializeComponent();

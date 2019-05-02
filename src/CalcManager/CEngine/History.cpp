@@ -40,7 +40,10 @@ void CHistoryCollector::ReinitHistory()
 // Constructor
 // Can throw Out of memory error
 CHistoryCollector::CHistoryCollector(ICalcDisplay* pCalcDisplay, std::shared_ptr<IHistoryDisplay> pHistoryDisplay, wchar_t decimalSymbol)
-    : m_pHistoryDisplay(pHistoryDisplay), m_pCalcDisplay(pCalcDisplay), m_iCurLineHistStart(-1), m_decimalSymbol(decimalSymbol)
+    : m_pHistoryDisplay(pHistoryDisplay)
+    , m_pCalcDisplay(pCalcDisplay)
+    , m_iCurLineHistStart(-1)
+    , m_decimalSymbol(decimalSymbol)
 {
     ReinitHistory();
 }

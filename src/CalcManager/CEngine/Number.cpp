@@ -7,15 +7,22 @@ using namespace std;
 
 namespace CalcEngine
 {
-    Number::Number() noexcept : Number(1, 0, { 0 })
+    Number::Number() noexcept
+        : Number(1, 0, { 0 })
     {
     }
 
-    Number::Number(int32_t sign, int32_t exp, vector<uint32_t> const& mantissa) noexcept : m_sign{ sign }, m_exp{ exp }, m_mantissa{ mantissa }
+    Number::Number(int32_t sign, int32_t exp, vector<uint32_t> const& mantissa) noexcept
+        : m_sign{ sign }
+        , m_exp{ exp }
+        , m_mantissa{ mantissa }
     {
     }
 
-    Number::Number(PNUMBER p) noexcept : m_sign{ p->sign }, m_exp{ p->exp }, m_mantissa{}
+    Number::Number(PNUMBER p) noexcept
+        : m_sign{ p->sign }
+        , m_exp{ p->exp }
+        , m_mantissa{}
     {
         m_mantissa.reserve(p->cdigit);
         copy(p->mant, p->mant + p->cdigit, back_inserter(m_mantissa));

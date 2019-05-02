@@ -18,7 +18,12 @@ public
     [Windows::UI::Xaml::Data::Bindable] public ref class DisplayExpressionToken sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
     {
         internal : DisplayExpressionToken(Platform::String ^ token, int tokenPosition, bool fEditable, TokenType type)
-            : m_Token(token), m_TokenPosition(tokenPosition), m_IsTokenEditable(fEditable), m_Type(type), m_OriginalToken(token), m_InEditMode(false)
+            : m_Token(token)
+            , m_TokenPosition(tokenPosition)
+            , m_IsTokenEditable(fEditable)
+            , m_Type(type)
+            , m_OriginalToken(token)
+            , m_InEditMode(false)
         {
         }
 

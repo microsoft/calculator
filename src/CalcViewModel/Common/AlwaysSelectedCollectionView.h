@@ -9,7 +9,8 @@ namespace CalculatorApp
     {
         ref class AlwaysSelectedCollectionView sealed : public Windows::UI::Xaml::DependencyObject, public Windows::UI::Xaml::Data::ICollectionView
         {
-            internal : AlwaysSelectedCollectionView(Windows::UI::Xaml::Interop::IBindableVector ^ source) : m_currentPosition(-1)
+            internal : AlwaysSelectedCollectionView(Windows::UI::Xaml::Interop::IBindableVector ^ source)
+                : m_currentPosition(-1)
             {
                 m_source = source;
 

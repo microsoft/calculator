@@ -47,7 +47,9 @@ namespace CalculatorApp
         {
         public:
             SafeFrameWindowCreation(_In_ WindowFrameService ^ frameService, App ^ parent)
-                : m_frameService(frameService), m_frameOpenedInWindow(false), m_parent(parent)
+                : m_frameService(frameService)
+                , m_frameOpenedInWindow(false)
+                , m_parent(parent)
             {
             }
 

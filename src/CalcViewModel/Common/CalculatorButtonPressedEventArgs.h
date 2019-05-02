@@ -18,7 +18,8 @@ namespace CalculatorApp
             PROPERTY_R(CalculatorApp::NumbersAndOperatorsEnum, Operation);
 
             CalculatorButtonPressedEventArgs(Platform::String ^ feedback, CalculatorApp::NumbersAndOperatorsEnum operation)
-                : m_AuditoryFeedback(feedback), m_Operation(operation)
+                : m_AuditoryFeedback(feedback)
+                , m_Operation(operation)
             {
             }
 

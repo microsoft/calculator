@@ -92,7 +92,10 @@ namespace CalculatorApp
         struct NavCategoryGroupInitializer
         {
             constexpr NavCategoryGroupInitializer(CategoryGroupType t, wchar_t const* h, wchar_t const* n, wchar_t const* a)
-                : type(t), headerResourceKey(h), modeResourceKey(n), automationResourceKey(a)
+                : type(t)
+                , headerResourceKey(h)
+                , modeResourceKey(n)
+                , automationResourceKey(a)
             {
             }
 

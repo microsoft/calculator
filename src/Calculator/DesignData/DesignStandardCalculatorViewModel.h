@@ -13,7 +13,9 @@ namespace Numbers
         ref class MemorySlot sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         public:
-            MemorySlot(int slotPosition, Platform::String ^ value) : m_SlotPosition(slotPosition), m_SlotValue(value)
+            MemorySlot(int slotPosition, Platform::String ^ value)
+                : m_SlotPosition(slotPosition)
+                , m_SlotValue(value)
             {
             }
 
@@ -35,7 +37,10 @@ namespace Numbers
         {
         public:
             StandardCalculatorViewModel()
-                : m_DisplayValue("1234569"), m_DisplayStringExpression("14560 x 1890"), m_DegreeButtonContent("Deg"), m_IsMemoryEmpty(false)
+                : m_DisplayValue("1234569")
+                , m_DisplayStringExpression("14560 x 1890")
+                , m_DegreeButtonContent("Deg")
+                , m_IsMemoryEmpty(false)
             {
                 m_MemorizedNumbers = ref new Platform::Collections::Vector<MemorySlot ^>();
                 for (int i = 1000; i < 1100; i++)

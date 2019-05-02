@@ -29,7 +29,8 @@ using namespace Windows::UI::Core;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-CalculatorScientificAngleButtons::CalculatorScientificAngleButtons() : m_isErrorVisualState(false)
+CalculatorScientificAngleButtons::CalculatorScientificAngleButtons()
+    : m_isErrorVisualState(false)
 {
     InitializeComponent();
 }

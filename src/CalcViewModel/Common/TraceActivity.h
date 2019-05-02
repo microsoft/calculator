@@ -11,7 +11,10 @@ namespace CalculatorApp
     class TraceActivity
     {
     public:
-        TraceActivity() : m_channel(nullptr), m_activity(nullptr), m_fields(nullptr)
+        TraceActivity()
+            : m_channel(nullptr)
+            , m_activity(nullptr)
+            , m_fields(nullptr)
         {
         }
 
@@ -19,7 +22,10 @@ namespace CalculatorApp
             winrt::Windows::Foundation::Diagnostics::LoggingChannel channel,
             std::wstring_view activityName,
             winrt::Windows::Foundation::Diagnostics::LoggingFields fields)
-            : m_channel(channel), m_activityName(activityName), m_fields(fields), m_activity(nullptr)
+            : m_channel(channel)
+            , m_activityName(activityName)
+            , m_fields(fields)
+            , m_activity(nullptr)
         {
             // Write the activity's START event. Note that you must not specify keyword
             // or level for START and STOP events because they always use the activity's

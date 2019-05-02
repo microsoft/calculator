@@ -18,7 +18,8 @@ using namespace Windows::Globalization;
 
 static constexpr bool CONVERT_WITH_OFFSET_FIRST = true;
 
-UnitConverterDataLoader::UnitConverterDataLoader(GeographicRegion ^ region) : m_currentRegionCode(region->CodeTwoLetter)
+UnitConverterDataLoader::UnitConverterDataLoader(GeographicRegion ^ region)
+    : m_currentRegionCode(region->CodeTwoLetter)
 {
     m_categoryList = make_shared<vector<UCM::Category>>();
     m_categoryToUnits = make_shared<UCM::CategoryToUnitVectorMap>();

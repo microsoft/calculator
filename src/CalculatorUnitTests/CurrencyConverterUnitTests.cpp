@@ -29,7 +29,8 @@ namespace CalculatorApp
         {
         public:
             MockCurrencyHttpClientWithResult(String ^ staticResponse, String ^ allRatiosResponse)
-                : m_staticResponse(staticResponse), m_allRatiosResponse(allRatiosResponse)
+                : m_staticResponse(staticResponse)
+                , m_allRatiosResponse(allRatiosResponse)
             {
             }
 
@@ -71,7 +72,8 @@ namespace CalculatorApp
 class DataLoadedCallback : public UnitConversionManager::IViewModelCurrencyCallback
 {
 public:
-    DataLoadedCallback(task_completion_event<void> tce) : m_task_completion_event{ tce }
+    DataLoadedCallback(task_completion_event<void> tce)
+        : m_task_completion_event{ tce }
     {
     }
 

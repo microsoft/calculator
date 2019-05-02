@@ -43,7 +43,8 @@ namespace CalculatorApp
 
         struct CurrencyUnitMetadata
         {
-            CurrencyUnitMetadata(const std::wstring& s) : symbol(s)
+            CurrencyUnitMetadata(const std::wstring& s)
+                : symbol(s)
             {
             }
 

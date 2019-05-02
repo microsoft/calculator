@@ -50,7 +50,9 @@ DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, DisplayStringExpression);
 StringReference CalculationResult::s_FocusedState(L"Focused");
 StringReference CalculationResult::s_UnfocusedState(L"Unfocused");
 
-CalculationResult::CalculationResult() : m_isScalingText(false), m_haveCalculatedMax(false)
+CalculationResult::CalculationResult()
+    : m_isScalingText(false)
+    , m_haveCalculatedMax(false)
 {
 }
 

@@ -30,7 +30,10 @@ NarratorAnnouncement::NarratorAnnouncement(
     String ^ activityId,
     AutomationNotificationKind kind,
     AutomationNotificationProcessing processing)
-    : m_announcement(announcement), m_activityId(activityId), m_kind(kind), m_processing(processing)
+    : m_announcement(announcement)
+    , m_activityId(activityId)
+    , m_kind(kind)
+    , m_processing(processing)
 {
 }
 

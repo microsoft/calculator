@@ -37,7 +37,11 @@ namespace UnitConversionManager
             bool isRtlLanguage,
             bool isConversionSource,
             bool isConversionTarget)
-            : id(id), abbreviation(abbreviation), isConversionSource(isConversionSource), isConversionTarget(isConversionTarget), isWhimsical(false)
+            : id(id)
+            , abbreviation(abbreviation)
+            , isConversionSource(isConversionSource)
+            , isConversionTarget(isConversionTarget)
+            , isWhimsical(false)
         {
             std::wstring nameValue1 = isRtlLanguage ? currencyName : countryName;
             std::wstring nameValue2 = isRtlLanguage ? countryName : currencyName;
@@ -82,7 +86,10 @@ namespace UnitConversionManager
         {
         }
 
-        Category(int id, std::wstring name, bool supportsNegative) : id(id), name(name), supportsNegative(supportsNegative)
+        Category(int id, std::wstring name, bool supportsNegative)
+            : id(id)
+            , name(name)
+            , supportsNegative(supportsNegative)
         {
         }
 
@@ -131,7 +138,10 @@ namespace UnitConversionManager
         ConversionData()
         {
         }
-        ConversionData(double ratio, double offset, bool offsetFirst) : ratio(ratio), offset(offset), offsetFirst(offsetFirst)
+        ConversionData(double ratio, double offset, bool offsetFirst)
+            : ratio(ratio)
+            , offset(offset)
+            , offsetFirst(offsetFirst)
         {
         }
 
