@@ -45,9 +45,7 @@ using namespace Windows::UI::ViewManagement;
 // There are 10,000 intervals in 1 ms.
 static const long long DURATION_500_MS = 10000 * 500;
 
-UnitConverter::UnitConverter() :
-    m_meteredConnectionOverride(false),
-    m_isAnimationEnabled(false)
+UnitConverter::UnitConverter() : m_meteredConnectionOverride(false), m_isAnimationEnabled(false)
 {
     m_layoutDirection = LocalizationService::GetInstance()->GetFlowDirection();
     m_FlowDirectionHorizontalAlignment = m_layoutDirection == ::FlowDirection::RightToLeft ? ::HorizontalAlignment::Right : ::HorizontalAlignment::Left;
@@ -70,16 +68,15 @@ UnitConverter::UnitConverter() :
 
     InitializeOfflineStatusTextBlock();
 
-    m_resultsFlyout = static_cast<MenuFlyout^>(Resources->Lookup(L"CalculationResultContextMenu"));
+    m_resultsFlyout = static_cast<MenuFlyout ^>(Resources->Lookup(L"CalculationResultContextMenu"));
     CopyMenuItem->Text = resLoader.GetResourceString(L"copyMenuItem");
     PasteMenuItem->Text = resLoader.GetResourceString(L"pasteMenuItem");
 }
 
-void UnitConverter::OnPropertyChanged(_In_ Object^ sender, _In_ PropertyChangedEventArgs^ e)
+void UnitConverter::OnPropertyChanged(_In_ Object ^ sender, _In_ PropertyChangedEventArgs ^ e)
 {
-    String^ propertyName = e->PropertyName;
-    if (propertyName == UnitConverterViewModel::NetworkBehaviorPropertyName ||
-        propertyName == UnitConverterViewModel::CurrencyDataLoadFailedPropertyName)
+    String ^ propertyName = e->PropertyName;
+    if (propertyName == UnitConverterViewModel::NetworkBehaviorPropertyName || propertyName == UnitConverterViewModel::CurrencyDataLoadFailedPropertyName)
     {
         OnNetworkBehaviorChanged();
     }
@@ -165,7 +162,7 @@ void UnitConverter::SetFailedToRefreshStatus()
 void UnitConverter::InitializeOfflineStatusTextBlock()
 {
     auto resProvider = AppResourceProvider::GetInstance();
-    std::wstring offlineStatusHyperlinkText = static_cast<String^>(resProvider.GetResourceString(L"OfflineStatusHyperlinkText"))->Data();
+    std::wstring offlineStatusHyperlinkText = static_cast<String ^>(resProvider.GetResourceString(L"OfflineStatusHyperlinkText"))->Data();
 
     // The resource string has the 'NetworkSettings' hyperlink wrapped with '%HL%'.
     // Break the string and assign pieces appropriately.
@@ -188,10 +185,7 @@ void UnitConverter::InitializeOfflineStatusTextBlock()
     OfflineRunLink->Text = offlineStatusTextLink;
     OfflineRunAfterLink->Text = offlineStatusTextAfterHyperlink;
 
-    AutomationProperties::SetName(OfflineBlock,
-        offlineStatusTextBeforeHyperlink + L" " +
-        offlineStatusTextLink + L" " +
-        offlineStatusTextAfterHyperlink);
+    AutomationProperties::SetName(OfflineBlock, offlineStatusTextBeforeHyperlink + L" " + offlineStatusTextLink + L" " + offlineStatusTextAfterHyperlink);
 }
 
 void UnitConverter::SetCurrencyTimestampFontWeight()
@@ -206,7 +200,7 @@ void UnitConverter::SetCurrencyTimestampFontWeight()
     }
 }
 
-void UnitConverter::OnValueKeyDown(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e)
+void UnitConverter::OnValueKeyDown(Platform::Object ^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e)
 {
     if (e->Key == VirtualKey::Space)
     {
@@ -214,10 +208,10 @@ void UnitConverter::OnValueKeyDown(Platform::Object^ sender, Windows::UI::Xaml::
     }
 }
 
-void UnitConverter::OnContextRequested(UIElement^ sender, ContextRequestedEventArgs^ e)
+void UnitConverter::OnContextRequested(UIElement ^ sender, ContextRequestedEventArgs ^ e)
 {
     OnValueSelected(sender);
-    auto requestedElement = safe_cast<FrameworkElement^>(sender);
+    auto requestedElement = safe_cast<FrameworkElement ^>(sender);
 
     PasteMenuItem->IsEnabled = CopyPasteManager::HasStringToPaste();
 
@@ -235,21 +229,20 @@ void UnitConverter::OnContextRequested(UIElement^ sender, ContextRequestedEventA
     e->Handled = true;
 }
 
-void UnitConverter::OnContextCanceled(UIElement^ sender, RoutedEventArgs^ e)
+void UnitConverter::OnContextCanceled(UIElement ^ sender, RoutedEventArgs ^ e)
 {
     m_resultsFlyout->Hide();
 }
 
-void UnitConverter::OnCopyMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void UnitConverter::OnCopyMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    auto calcResult = safe_cast<CalculationResult^>(m_resultsFlyout->Target);
+    auto calcResult = safe_cast<CalculationResult ^>(m_resultsFlyout->Target);
     CopyPasteManager::CopyToClipboard(calcResult->GetRawDisplayValue());
 }
 
-void UnitConverter::OnPasteMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void UnitConverter::OnPasteMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    CopyPasteManager::GetStringToPaste(Model->Mode, CategoryGroupType::Converter).then([this](String^ pastedString)
-    {
+    CopyPasteManager::GetStringToPaste(Model->Mode, CategoryGroupType::Converter).then([this](String ^ pastedString) {
         Model->OnPaste(pastedString, Model->Mode);
     });
 }
@@ -262,34 +255,29 @@ void UnitConverter::AnimateConverter()
     }
 }
 
-void UnitConverter::OnValueSelected(_In_ Platform::Object^ sender)
+void UnitConverter::OnValueSelected(_In_ Platform::Object ^ sender)
 {
-    auto value = safe_cast<CalculationResult^>(sender);
+    auto value = safe_cast<CalculationResult ^>(sender);
     // update the font size since the font is changed to bold
     value->UpdateTextState();
-    safe_cast<UnitConverterViewModel^>(this->DataContext)->OnValueActivated(AsActivatable(value));
+    safe_cast<UnitConverterViewModel ^>(this->DataContext)->OnValueActivated(AsActivatable(value));
 }
 
-void UnitConverter::UpdateDropDownState(_In_ Platform::Object^ sender, _In_ Platform::Object^ e)
+void UnitConverter::UpdateDropDownState(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e)
 {
-    safe_cast<UnitConverterViewModel^>(this->DataContext)->IsDropDownOpen = (Units1->IsDropDownOpen) || (Units2->IsDropDownOpen);
+    safe_cast<UnitConverterViewModel ^>(this->DataContext)->IsDropDownOpen = (Units1->IsDropDownOpen) || (Units2->IsDropDownOpen);
     KeyboardShortcutManager::UpdateDropDownState((Units1->IsDropDownOpen) || (Units2->IsDropDownOpen));
 }
 
-void UnitConverter::OnLoaded(_In_ Object^, _In_ RoutedEventArgs^)
+void UnitConverter::OnLoaded(_In_ Object ^, _In_ RoutedEventArgs ^)
 {
 }
 
 void UnitConverter::SetDefaultFocus()
 {
-    const std::vector<Control^> focusPrecedence = {
-        Value1,
-        CurrencyRefreshBlockControl,
-        OfflineBlock,
-        ClearEntryButtonPos0
-    };
+    const std::vector<Control ^> focusPrecedence = { Value1, CurrencyRefreshBlockControl, OfflineBlock, ClearEntryButtonPos0 };
 
-    for (Control^ control : focusPrecedence)
+    for (Control ^ control : focusPrecedence)
     {
         if (control->Focus(::FocusState::Programmatic))
         {
@@ -298,7 +286,7 @@ void UnitConverter::SetDefaultFocus()
     }
 }
 
-void UnitConverter::CurrencyRefreshButton_Click(_In_ Object^ /*sender*/, _In_ RoutedEventArgs^ /*e*/)
+void UnitConverter::CurrencyRefreshButton_Click(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
 {
     if (Model->NetworkBehavior == NetworkAccessBehavior::OptIn)
     {
@@ -308,17 +296,16 @@ void UnitConverter::CurrencyRefreshButton_Click(_In_ Object^ /*sender*/, _In_ Ro
     Model->RefreshCurrencyRatios();
 }
 
-void UnitConverter::OnDataContextChanged(_In_ FrameworkElement^ sender, _In_ DataContextChangedEventArgs^ args)
+void UnitConverter::OnDataContextChanged(_In_ FrameworkElement ^ sender, _In_ DataContextChangedEventArgs ^ args)
 {
     Model->PropertyChanged -= m_propertyChangedToken;
 
-    m_propertyChangedToken =
-        Model->PropertyChanged += ref new PropertyChangedEventHandler(this, &UnitConverter::OnPropertyChanged);
+    m_propertyChangedToken = Model->PropertyChanged += ref new PropertyChangedEventHandler(this, &UnitConverter::OnPropertyChanged);
 
     OnNetworkBehaviorChanged();
 }
 
-void UnitConverter::Units1_IsEnabledChanged(Object^ sender, DependencyPropertyChangedEventArgs^ e)
+void UnitConverter::Units1_IsEnabledChanged(Object ^ sender, DependencyPropertyChangedEventArgs ^ e)
 {
     if ((Units1->Visibility == ::Visibility::Visible) && Units1->IsEnabled)
     {
@@ -352,12 +339,12 @@ void UnitConverter::StartProgressRingWithDelay()
 
     m_delayTimer = ref new DispatcherTimer();
     m_delayTimer->Interval = delay;
-    m_delayTimer->Tick += ref new EventHandler<Object^>(this, &UnitConverter::OnDelayTimerTick);
+    m_delayTimer->Tick += ref new EventHandler<Object ^>(this, &UnitConverter::OnDelayTimerTick);
 
     m_delayTimer->Start();
 }
 
-void UnitConverter::OnDelayTimerTick(Object^ /*sender*/, Object^ /*e*/)
+void UnitConverter::OnDelayTimerTick(Object ^ /*sender*/, Object ^ /*e*/)
 {
     CurrencyLoadingProgressRing->IsActive = true;
     m_delayTimer->Stop();
@@ -374,8 +361,8 @@ void UnitConverter::HideProgressRing()
 }
 
 // The function will make sure the UI will have enough space to display supplementary results and currency information
-void CalculatorApp::UnitConverter::SupplementaryResultsPanelInGrid_SizeChanged(Platform::Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e)
+void CalculatorApp::UnitConverter::SupplementaryResultsPanelInGrid_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e)
 {
-    //We add 0.01 to be sure to not create an infinite loop with SizeChanged events cascading due to float approximation 
+    // We add 0.01 to be sure to not create an infinite loop with SizeChanged events cascading due to float approximation
     RowDltrUnits->MinHeight = max(48.0, e->NewSize.Height + 0.01);
 }

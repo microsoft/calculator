@@ -126,7 +126,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
                 }
                 else
                 {
-                    //other modes, use modrat (modulus after division)
+                    // other modes, use modrat (modulus after division)
                     result = Mod(result, temp);
                 }
             }

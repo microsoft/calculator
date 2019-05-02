@@ -7,7 +7,8 @@ namespace CalculatorApp
 {
     namespace Common
     {
-        public enum class MyVirtualKey
+    public
+        enum class MyVirtualKey
         {
             None = 0,
             LeftButton = 1,

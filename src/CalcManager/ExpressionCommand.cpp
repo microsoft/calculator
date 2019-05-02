@@ -13,8 +13,9 @@ constexpr wchar_t chNegate = L'-';
 constexpr wchar_t chExp = L'e';
 constexpr wchar_t chPlus = L'+';
 
-CParentheses::CParentheses(_In_ int command) :m_command(command)
-{}
+CParentheses::CParentheses(_In_ int command) : m_command(command)
+{
+}
 
 int CParentheses::GetCommand() const
 {
@@ -26,7 +27,7 @@ CalculationManager::CommandType CParentheses::GetCommandType() const
     return CalculationManager::CommandType::Parentheses;
 }
 
-void CParentheses::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
+void CParentheses::Accept(_In_ ISerializeCommandVisitor& commandVisitor)
 {
     commandVisitor.Visit(*this);
 }
@@ -44,7 +45,7 @@ CUnaryCommand::CUnaryCommand(int command1, int command2)
     m_command->Append(command2);
 }
 
-const shared_ptr<CalculatorVector<int>> & CUnaryCommand::GetCommands() const
+const shared_ptr<CalculatorVector<int>>& CUnaryCommand::GetCommands() const
 {
     return m_command;
 }
@@ -67,13 +68,14 @@ void CUnaryCommand::SetCommands(int command1, int command2)
     m_command->Append(command2);
 }
 
-void CUnaryCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
+void CUnaryCommand::Accept(_In_ ISerializeCommandVisitor& commandVisitor)
 {
     commandVisitor.Visit(*this);
 }
 
-CBinaryCommand::CBinaryCommand(int command) :m_command(command)
-{}
+CBinaryCommand::CBinaryCommand(int command) : m_command(command)
+{
+}
 
 void CBinaryCommand::SetCommand(int command)
 {
@@ -90,19 +92,15 @@ CalculationManager::CommandType CBinaryCommand::GetCommandType() const
     return CalculationManager::CommandType::BinaryCommand;
 }
 
-void CBinaryCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
+void CBinaryCommand::Accept(_In_ ISerializeCommandVisitor& commandVisitor)
 {
     commandVisitor.Visit(*this);
 }
 
-COpndCommand::COpndCommand(shared_ptr<CalculatorVector<int>> const &commands, bool fNegative, bool fDecimal, bool fSciFmt) :
-    m_commands(commands),
-    m_fNegative(fNegative),
-    m_fSciFmt(fSciFmt),
-    m_fDecimal(fDecimal),
-    m_fInitialized(false),
-    m_value{}
-{}
+COpndCommand::COpndCommand(shared_ptr<CalculatorVector<int>> const& commands, bool fNegative, bool fDecimal, bool fSciFmt)
+    : m_commands(commands), m_fNegative(fNegative), m_fSciFmt(fSciFmt), m_fDecimal(fDecimal), m_fInitialized(false), m_value{}
+{
+}
 
 void COpndCommand::Initialize(Rational const& rat)
 {
@@ -110,7 +108,7 @@ void COpndCommand::Initialize(Rational const& rat)
     m_fInitialized = true;
 }
 
-const shared_ptr<CalculatorVector<int>> & COpndCommand::GetCommands() const
+const shared_ptr<CalculatorVector<int>>& COpndCommand::GetCommands() const
 {
     return m_commands;
 }
@@ -213,7 +211,7 @@ void COpndCommand::ClearAllAndAppendCommand(CalculationManager::Command command)
     m_fDecimal = false;
 }
 
-const wstring & COpndCommand::GetToken(wchar_t decimalSymbol)
+const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
 {
     static const wchar_t chZero = L'0';
 
@@ -299,7 +297,7 @@ wstring COpndCommand::GetString(uint32_t radix, int32_t precision)
     return result;
 }
 
-void COpndCommand::Accept(_In_ ISerializeCommandVisitor &commandVisitor)
+void COpndCommand::Accept(_In_ ISerializeCommandVisitor& commandVisitor)
 {
     commandVisitor.Visit(*this);
 }

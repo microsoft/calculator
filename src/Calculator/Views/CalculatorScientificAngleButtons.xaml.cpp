@@ -29,27 +29,26 @@ using namespace Windows::UI::Core;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-CalculatorScientificAngleButtons::CalculatorScientificAngleButtons() :
-    m_isErrorVisualState(false)
+CalculatorScientificAngleButtons::CalculatorScientificAngleButtons() : m_isErrorVisualState(false)
 {
     InitializeComponent();
 }
 
-void CalculatorScientificAngleButtons::HypButton_Toggled(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void CalculatorScientificAngleButtons::HypButton_Toggled(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     TraceLogger::GetInstance().LogHypButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
 }
 
-void CalculatorScientificAngleButtons::FToEButton_Toggled(_In_ Object^ sender,_In_ RoutedEventArgs^ e)
+void CalculatorScientificAngleButtons::FToEButton_Toggled(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    auto viewModel = safe_cast<StandardCalculatorViewModel^>(this->DataContext);
+    auto viewModel = safe_cast<StandardCalculatorViewModel ^>(this->DataContext);
     viewModel->FtoEButtonToggled();
 }
 
-void CalculatorApp::CalculatorScientificAngleButtons::OnAngleButtonPressed(_In_ Object^ commandParameter)
+void CalculatorApp::CalculatorScientificAngleButtons::OnAngleButtonPressed(_In_ Object ^ commandParameter)
 {
     TraceLogger::GetInstance().LogAngleButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
-    String^ buttonId = static_cast<String^>(commandParameter);
+    String ^ buttonId = static_cast<String ^>(commandParameter);
 
     DegreeButton->Visibility = ::Visibility::Collapsed;
     RadianButton->Visibility = ::Visibility::Collapsed;
@@ -85,7 +84,7 @@ void CalculatorScientificAngleButtons::IsErrorVisualState::set(bool value)
     if (m_isErrorVisualState != value)
     {
         m_isErrorVisualState = value;
-        String^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
+        String ^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
         VisualStateManager::GoToState(this, newState, false);
     }
 }

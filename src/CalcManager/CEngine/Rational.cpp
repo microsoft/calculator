@@ -7,10 +7,9 @@ using namespace std;
 
 namespace CalcEngine
 {
-    Rational::Rational() noexcept :
-        m_p{},
-        m_q{ 1, 0, { 1 } }
-    {}
+    Rational::Rational() noexcept : m_p{}, m_q{ 1, 0, { 1 } }
+    {
+    }
 
     Rational::Rational(Number const& n) noexcept
     {
@@ -24,10 +23,9 @@ namespace CalcEngine
         m_q = Number(1, qExp, { 1 });
     }
 
-    Rational::Rational(Number const& p, Number const& q) noexcept :
-        m_p{ p },
-        m_q{ q }
-    {}
+    Rational::Rational(Number const& p, Number const& q) noexcept : m_p{ p }, m_q{ q }
+    {
+    }
 
     Rational::Rational(int32_t i)
     {
@@ -60,10 +58,9 @@ namespace CalcEngine
         m_q = Number{ temp.Q() };
     }
 
-    Rational::Rational(PRAT prat) noexcept :
-        m_p{ Number{prat->pp} },
-        m_q{ Number{prat->pq} }
-    {}
+    Rational::Rational(PRAT prat) noexcept : m_p{ Number{ prat->pp } }, m_q{ Number{ prat->pq } }
+    {
+    }
 
     PRAT Rational::ToPRAT() const
     {
@@ -353,7 +350,8 @@ namespace CalcEngine
     /// Calculate the remainder after division, the sign of a result will match the sign of lhs.
     /// </summary>
     /// <remarks>
-    /// This function has the same behavior as the standard C/C++ operator '%', to calculate the modulus after division instead, use <see cref="Rational::operator%"/> instead.
+    /// This function has the same behavior as the standard C/C++ operator '%', to calculate the modulus after division instead, use <see
+    /// cref="Rational::operator%"/> instead.
     /// </remarks>
     Rational operator%(Rational lhs, Rational const& rhs)
     {

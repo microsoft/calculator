@@ -11,16 +11,17 @@
 
 namespace CalculatorApp::Common::Automation
 {
-    public interface class INarratorAnnouncementHost
+public
+    interface class INarratorAnnouncementHost
     {
     public:
         // Is the host available on this OS.
         bool IsHostAvailable();
 
         // Make a new instance of a concrete host.
-        INarratorAnnouncementHost^ MakeHost();
+        INarratorAnnouncementHost ^ MakeHost();
 
         // Make an announcement using the concrete host's preferred method.
-        void Announce(NarratorAnnouncement^ announcement);
+        void Announce(NarratorAnnouncement ^ announcement);
     };
 }

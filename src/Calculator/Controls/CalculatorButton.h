@@ -10,29 +10,27 @@ namespace CalculatorApp
 {
     namespace Controls
     {
-        public ref class CalculatorButton sealed: Windows::UI::Xaml::Controls::Button
+    public
+        ref class CalculatorButton sealed : Windows::UI::Xaml::Controls::Button
         {
         public:
-
             CalculatorButton();
             DEPENDENCY_PROPERTY_OWNER(CalculatorButton);
 
             DEPENDENCY_PROPERTY_WITH_CALLBACK(NumbersAndOperatorsEnum, ButtonId);
-            DEPENDENCY_PROPERTY_WITH_CALLBACK(Platform::String^, AuditoryFeedback);
-            DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::Brush^, HoverBackground);
-            DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::Brush^, HoverForeground);
-            DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::Brush^, PressBackground);
-            DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::Brush^, PressForeground);
+            DEPENDENCY_PROPERTY_WITH_CALLBACK(Platform::String ^, AuditoryFeedback);
+            DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::Brush ^, HoverBackground);
+            DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::Brush ^, HoverForeground);
+            DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::Brush ^, PressBackground);
+            DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::Brush ^, PressForeground);
 
         protected:
-
-            virtual void OnKeyDown(Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e) override;
-            virtual void OnKeyUp(Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e) override;
+            virtual void OnKeyDown(Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e) override;
+            virtual void OnKeyUp(Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e) override;
 
         private:
-
             void OnButtonIdPropertyChanged(NumbersAndOperatorsEnum oldValue, NumbersAndOperatorsEnum newValue);
-            void OnAuditoryFeedbackPropertyChanged(Platform::String^ oldValue, Platform::String^ newValue);
+            void OnAuditoryFeedbackPropertyChanged(Platform::String ^ oldValue, Platform::String ^ newValue);
         };
     }
 }

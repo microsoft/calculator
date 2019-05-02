@@ -13,16 +13,24 @@ namespace CalcEngine
     class CalcNumSec
     {
     public:
-        CalcNumSec() :
-            value(),
-            m_isNegative(false)
-        {}
+        CalcNumSec() : value(), m_isNegative(false)
+        {
+        }
 
         void Clear();
-        bool IsEmpty() { return value.empty(); }
+        bool IsEmpty()
+        {
+            return value.empty();
+        }
 
-        bool IsNegative() { return m_isNegative; }
-        void IsNegative(bool isNegative) { m_isNegative = isNegative; }
+        bool IsNegative()
+        {
+            return m_isNegative;
+        }
+        void IsNegative(bool isNegative)
+        {
+            m_isNegative = isNegative;
+        }
 
         std::wstring value;
 
@@ -34,16 +42,12 @@ namespace CalcEngine
     {
     public:
         CalcInput() : CalcInput(L'.')
-        {}
+        {
+        }
 
-        CalcInput(wchar_t decSymbol) :
-            m_hasExponent(false),
-            m_hasDecimal(false),
-            m_decPtIndex(0),
-            m_decSymbol(decSymbol),
-            m_base(),
-            m_exponent()
-        {}
+        CalcInput(wchar_t decSymbol) : m_hasExponent(false), m_hasDecimal(false), m_decPtIndex(0), m_decSymbol(decSymbol), m_base(), m_exponent()
+        {
+        }
 
         void Clear();
         bool TryToggleSign(bool isIntegerMode, std::wstring_view maxNumStr);
