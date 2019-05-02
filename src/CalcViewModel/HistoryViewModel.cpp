@@ -69,8 +69,9 @@ void HistoryViewModel::ReloadHistory(_In_ ViewMode currentMode)
             localizer.LocalizeDisplayValue(&expression);
             localizer.LocalizeDisplayValue(&result);
 
-            auto item = ref new HistoryItemViewModel(ref new Platform::String(expression.c_str()), ref new Platform::String(result.c_str()),
-                                                     (*ritr)->historyItemVector.spTokens, (*ritr)->historyItemVector.spCommands);
+            auto item = ref new HistoryItemViewModel(
+                ref new Platform::String(expression.c_str()), ref new Platform::String(result.c_str()), (*ritr)->historyItemVector.spTokens,
+                (*ritr)->historyItemVector.spCommands);
             historyListVM->Append(item);
         }
     }
@@ -87,8 +88,9 @@ void HistoryViewModel::OnHistoryItemAdded(_In_ unsigned int addedItemIndex)
     wstring result = newItem->historyItemVector.result;
     localizer.LocalizeDisplayValue(&expression);
     localizer.LocalizeDisplayValue(&result);
-    auto item = ref new HistoryItemViewModel(ref new Platform::String(expression.c_str()), ref new Platform::String(result.c_str()),
-                                             newItem->historyItemVector.spTokens, newItem->historyItemVector.spCommands);
+    auto item = ref new HistoryItemViewModel(
+        ref new Platform::String(expression.c_str()), ref new Platform::String(result.c_str()), newItem->historyItemVector.spTokens,
+        newItem->historyItemVector.spCommands);
 
     // check if we have not hit the max items
     if (Items->Size >= m_calculatorManager->MaxHistorySize())
@@ -310,8 +312,8 @@ Platform::String ^ HistoryViewModel::SerializeHistoryItem(_In_ std::shared_ptr<C
     return CryptographicBuffer::EncodeToBase64String(buffer);
 }
 
-CalculationManager::HISTORYITEM HistoryViewModel::DeserializeHistoryItem(_In_ Platform::String ^ historyItemKey,
-                                                                         _In_ ApplicationDataContainer ^ historyContainer)
+CalculationManager::HISTORYITEM
+HistoryViewModel::DeserializeHistoryItem(_In_ Platform::String ^ historyItemKey, _In_ ApplicationDataContainer ^ historyContainer)
 {
     CalculationManager::HISTORYITEM historyItem;
     if (historyContainer->Values->HasKey(historyItemKey))
@@ -352,8 +354,9 @@ CalculationManager::HISTORYITEM HistoryViewModel::DeserializeHistoryItem(_In_ Pl
 
 bool HistoryViewModel::IsValid(_In_ CalculationManager::HISTORYITEM item)
 {
-    return (!item.historyItemVector.expression.empty() && !item.historyItemVector.result.empty() && (bool)item.historyItemVector.spCommands
-            && (bool)item.historyItemVector.spTokens);
+    return (
+        !item.historyItemVector.expression.empty() && !item.historyItemVector.result.empty() && (bool)item.historyItemVector.spCommands
+        && (bool)item.historyItemVector.spTokens);
 }
 
 void HistoryViewModel::UpdateItemSize()

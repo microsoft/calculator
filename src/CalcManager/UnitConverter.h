@@ -29,8 +29,9 @@ namespace UnitConversionManager
         {
         }
 
-        Unit(int id, std::wstring currencyName, std::wstring countryName, std::wstring abbreviation, bool isRtlLanguage, bool isConversionSource,
-             bool isConversionTarget)
+        Unit(
+            int id, std::wstring currencyName, std::wstring countryName, std::wstring abbreviation, bool isRtlLanguage, bool isConversionSource,
+            bool isConversionTarget)
             : id(id), abbreviation(abbreviation), isConversionSource(isConversionSource), isConversionTarget(isConversionTarget), isWhimsical(false)
         {
             std::wstring nameValue1 = isRtlLanguage ? currencyName : countryName;
@@ -155,9 +156,9 @@ namespace UnitConversionManager
     };
 
     typedef std::tuple<std::vector<UnitConversionManager::Unit>, UnitConversionManager::Unit, UnitConversionManager::Unit> CategorySelectionInitializer;
-    typedef std::unordered_map<UnitConversionManager::Unit,
-                               std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash>,
-                               UnitConversionManager::UnitHash>
+    typedef std::unordered_map<
+        UnitConversionManager::Unit, std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash>,
+        UnitConversionManager::UnitHash>
         UnitToUnitToConversionDataMap;
     typedef std::unordered_map<UnitConversionManager::Category, std::vector<UnitConversionManager::Unit>, UnitConversionManager::CategoryHash>
         CategoryToUnitVectorMap;
@@ -188,10 +189,10 @@ namespace UnitConversionManager
     {
     public:
         virtual void SetViewModelCallback(const std::shared_ptr<UnitConversionManager::IViewModelCurrencyCallback>& callback) = 0;
-        virtual std::pair<std::wstring, std::wstring> GetCurrencySymbols(_In_ const UnitConversionManager::Unit& unit1,
-                                                                         _In_ const UnitConversionManager::Unit& unit2) = 0;
-        virtual std::pair<std::wstring, std::wstring> GetCurrencyRatioEquality(_In_ const UnitConversionManager::Unit& unit1,
-                                                                               _In_ const UnitConversionManager::Unit& unit2) = 0;
+        virtual std::pair<std::wstring, std::wstring>
+        GetCurrencySymbols(_In_ const UnitConversionManager::Unit& unit1, _In_ const UnitConversionManager::Unit& unit2) = 0;
+        virtual std::pair<std::wstring, std::wstring>
+        GetCurrencyRatioEquality(_In_ const UnitConversionManager::Unit& unit1, _In_ const UnitConversionManager::Unit& unit2) = 0;
         virtual std::wstring GetCurrencyTimestamp() = 0;
 
         virtual concurrency::task<bool> TryLoadDataFromCacheAsync() = 0;

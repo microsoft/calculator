@@ -38,9 +38,10 @@ static const wstring c_uIntSuffixes = L"[uU]?[lL]{0,2}";
 
 // RegEx Patterns used by various modes
 static const array<wregex, 1> standardModePatterns = { wregex(c_wspc + c_signedDecFloat + c_wspc) };
-static const array<wregex, 2> scientificModePatterns = { wregex(L"(" + c_wspc + L"[-+]?)|(" + c_wspcLParenSigned + L")" + c_signedDecFloat + c_wspcRParens),
-                                                         wregex(L"(" + c_wspc + L"[-+]?)|(" + c_wspcLParenSigned + L")" + c_signedDecFloat
-                                                                + L"[e]([+]|[-])+\\d+" + c_wspcRParens) };
+static const array<wregex, 2> scientificModePatterns = {
+    wregex(L"(" + c_wspc + L"[-+]?)|(" + c_wspcLParenSigned + L")" + c_signedDecFloat + c_wspcRParens),
+    wregex(L"(" + c_wspc + L"[-+]?)|(" + c_wspcLParenSigned + L")" + c_signedDecFloat + L"[e]([+]|[-])+\\d+" + c_wspcRParens)
+};
 static const array<array<wregex, 5>, 4> programmerModePatterns = {
     { // Hex numbers like 5F, 4A0C, 0xa9, 0xFFull, 47CDh
       { wregex(c_wspcLParens + L"(0[xX])?" + c_hexProgrammerChars + c_uIntSuffixes + c_wspcRParens),
@@ -75,9 +76,11 @@ task<String ^> CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupTy
     //-- add support to allow pasting for expressions like 1.3e12(as of now we allow 1.3e+12)
 
     return create_task((dataPackageView->GetTextAsync(::StandardDataFormats::Text)))
-        .then([mode, modeType, programmerNumberBase,
-               bitLengthType](String ^ pastedText) { return ValidatePasteExpression(pastedText, mode, modeType, programmerNumberBase, bitLengthType); },
-              task_continuation_context::use_arbitrary());
+        .then(
+            [mode, modeType, programmerNumberBase, bitLengthType](String ^ pastedText) {
+                return ValidatePasteExpression(pastedText, mode, modeType, programmerNumberBase, bitLengthType);
+            },
+            task_continuation_context::use_arbitrary());
 }
 
 int CopyPasteManager::ClipboardTextFormat()

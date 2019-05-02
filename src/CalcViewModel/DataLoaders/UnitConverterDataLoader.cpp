@@ -53,8 +53,9 @@ bool UnitConverterDataLoader::SupportsCategory(const UCM::Category& target)
     }
 
     static int currencyId = NavCategory::Serialize(ViewMode::Currency);
-    auto itr = find_if(supportedCategories->begin(), supportedCategories->end(),
-                       [&](const UCM::Category& category) { return currencyId != category.id && target.id == category.id; });
+    auto itr = find_if(supportedCategories->begin(), supportedCategories->end(), [&](const UCM::Category& category) {
+        return currencyId != category.id && target.id == category.id;
+    });
 
     return itr != supportedCategories->end();
 }

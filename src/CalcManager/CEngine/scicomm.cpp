@@ -382,8 +382,8 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         if (nullptr != m_pCalcDisplay)
         {
             m_pCalcDisplay->SetParenthesisNumber(0);
-            m_pCalcDisplay->SetExpressionDisplay(make_shared<CalculatorVector<pair<wstring, int>>>(),
-                                                 make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>());
+            m_pCalcDisplay->SetExpressionDisplay(
+                make_shared<CalculatorVector<pair<wstring, int>>>(), make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>());
         }
 
         m_HistoryCollector.ClearHistoryLine(wstring());
@@ -476,8 +476,8 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             m_HistoryCollector.CompleteHistoryLine(groupedString);
             if (nullptr != m_pCalcDisplay)
             {
-                m_pCalcDisplay->SetExpressionDisplay(make_shared<CalculatorVector<pair<wstring, int>>>(),
-                                                     make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>());
+                m_pCalcDisplay->SetExpressionDisplay(
+                    make_shared<CalculatorVector<pair<wstring, int>>>(), make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>());
             }
         }
 

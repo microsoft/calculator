@@ -23,8 +23,10 @@
             m_##n = value;                                                                                                                                     \
         }                                                                                                                                                      \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 private:                                                                                                                                                       \
     t m_##n;                                                                                                                                                   \
+                                                                                                                                                               \
 public:
 
 #define PROPERTY_RW(t, n)                                                                                                                                      \
@@ -39,8 +41,10 @@ public:
             m_##n = value;                                                                                                                                     \
         }                                                                                                                                                      \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 private:                                                                                                                                                       \
     t m_##n;                                                                                                                                                   \
+                                                                                                                                                               \
 public:
 
 #define OBSERVABLE_PROPERTY_R(t, n)                                                                                                                            \
@@ -61,8 +65,10 @@ public:
             }                                                                                                                                                  \
         }                                                                                                                                                      \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 private:                                                                                                                                                       \
     t m_##n;                                                                                                                                                   \
+                                                                                                                                                               \
 public:
 
 #define OBSERVABLE_PROPERTY_RW(t, n)                                                                                                                           \
@@ -81,8 +87,10 @@ public:
             }                                                                                                                                                  \
         }                                                                                                                                                      \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 private:                                                                                                                                                       \
     t m_##n;                                                                                                                                                   \
+                                                                                                                                                               \
 public:
 
 #define OBSERVABLE_NAMED_PROPERTY_R(t, n)                                                                                                                      \
@@ -92,6 +100,7 @@ public:
     {                                                                                                                                                          \
         Platform::String ^ get() { return Platform::StringReference(L#n); }                                                                                    \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 public:
 
 #define OBSERVABLE_NAMED_PROPERTY_RW(t, n)                                                                                                                     \
@@ -101,6 +110,7 @@ public:
     {                                                                                                                                                          \
         Platform::String ^ get() { return Platform::StringReference(L#n); }                                                                                    \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 public:
 
 #define OBSERVABLE_PROPERTY_FIELD(n) m_##n
@@ -114,6 +124,7 @@ public:
     {                                                                                                                                                          \
         PropertyChanged(this, ref new Windows::UI::Xaml::Data::PropertyChangedEventArgs(p));                                                                   \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 public:
 #else
 #define OBSERVABLE_OBJECT()                                                                                                                                    \
@@ -122,6 +133,7 @@ public:
     void RaisePropertyChanged(Platform::String ^ p)                                                                                                            \
     {                                                                                                                                                          \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 public:
 #endif
 
@@ -136,6 +148,7 @@ public:
         PropertyChanged(this, ref new Windows::UI::Xaml::Data::PropertyChangedEventArgs(p));                                                                   \
         c(p);                                                                                                                                                  \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 public:
 #else
 #define OBSERVABLE_OBJECT_CALLBACK(c)                                                                                                                          \
@@ -145,6 +158,7 @@ public:
     {                                                                                                                                                          \
         c(p);                                                                                                                                                  \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 public:
 #endif
 
@@ -156,6 +170,7 @@ public:
     if (!donotuse_##p) {\
     donotuse_##p = CalculatorApp::Common::MakeDelegate(this, &m);\
     } return donotuse_##p; }} private: Windows::UI::Xaml::Input::ICommand^ donotuse_##p;                                                                                                         \
+                                                                                                                                                               \
 public:
 
 #define DEPENDENCY_PROPERTY_DECLARATION(t, n)                                                                                                                  \
@@ -173,6 +188,7 @@ public:
                                                                                                                                                                \
 private:                                                                                                                                                       \
     static Windows::UI::Xaml::DependencyProperty ^ s_##n##Property;                                                                                            \
+                                                                                                                                                               \
 public:
 
 // Utilities for DependencyProperties
@@ -368,9 +384,9 @@ namespace Utils
     double GetDoubleFromWstring(std::wstring input);
     int GetWindowId();
     void RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Windows::UI::Core::CoreDispatcher ^ currentDispatcher);
-    void SerializeCommandsAndTokens(_In_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
-                                    _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands,
-                                    Windows::Storage::Streams::DataWriter ^ writer);
+    void SerializeCommandsAndTokens(
+        _In_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
+        _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands, Windows::Storage::Streams::DataWriter ^ writer);
 
     const std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> DeserializeCommands(Windows::Storage::Streams::DataReader ^ reader);
     const std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> DeserializeTokens(Windows::Storage::Streams::DataReader ^ reader);
@@ -378,8 +394,9 @@ namespace Utils
     Windows::Foundation::DateTime GetUniversalSystemTime();
     bool IsDateTimeOlderThan(Windows::Foundation::DateTime dateTime, const long long duration);
 
-    concurrency::task<void> WriteFileToFolder(Windows::Storage::IStorageFolder ^ folder, Platform::String ^ fileName, Platform::String ^ contents,
-                                              Windows::Storage::CreationCollisionOption collisionOption);
+    concurrency::task<void> WriteFileToFolder(
+        Windows::Storage::IStorageFolder ^ folder, Platform::String ^ fileName, Platform::String ^ contents,
+        Windows::Storage::CreationCollisionOption collisionOption);
     concurrency::task<Platform::String ^> ReadFileFromFolder(Windows::Storage::IStorageFolder ^ folder, Platform::String ^ fileName);
 }
 
@@ -387,6 +404,7 @@ namespace Utils
 #define DEPENDENCY_PROPERTY_OWNER(owner)                                                                                                                       \
 private:                                                                                                                                                       \
     typedef owner DependencyPropertiesOwner;                                                                                                                   \
+                                                                                                                                                               \
 public:
 
 // Normal DependencyProperty
@@ -402,6 +420,7 @@ public:
             SetValue(s_##name##Property, value);                                                                                                               \
         }                                                                                                                                                      \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 private:                                                                                                                                                       \
     static Windows::UI::Xaml::DependencyProperty ^ s_##name##Property;                                                                                         \
                                                                                                                                                                \
@@ -419,6 +438,7 @@ private:                                                                        
     {                                                                                                                                                          \
         return Utils::RegisterDependencyProperty<DependencyPropertiesOwner, type>(L#name);                                                                     \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 public:
 
 #define DEPENDENCY_PROPERTY_WITH_DEFAULT(type, name, defaultValue)                                                                                             \
@@ -433,6 +453,7 @@ public:
             SetValue(s_##name##Property, value);                                                                                                               \
         }                                                                                                                                                      \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 private:                                                                                                                                                       \
     static Windows::UI::Xaml::DependencyProperty ^ s_##name##Property;                                                                                         \
                                                                                                                                                                \
@@ -450,6 +471,7 @@ private:                                                                        
     {                                                                                                                                                          \
         return Utils::RegisterDependencyProperty<DependencyPropertiesOwner, type>(L#name, defaultValue);                                                       \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 public:
 
 #define DEPENDENCY_PROPERTY_WITH_CALLBACK(type, name)                                                                                                          \
@@ -464,6 +486,7 @@ public:
             SetValue(s_##name##Property, value);                                                                                                               \
         }                                                                                                                                                      \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 private:                                                                                                                                                       \
     static Windows::UI::Xaml::DependencyProperty ^ s_##name##Property;                                                                                         \
                                                                                                                                                                \
@@ -486,6 +509,7 @@ private:                                                                        
         auto self = safe_cast<DependencyPropertiesOwner ^>(sender);                                                                                            \
         self->On##name##PropertyChanged(safe_cast<type>(args->OldValue), safe_cast<type>(args->NewValue));                                                     \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 public:
 
 #define DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(type, name, defaultValue)                                                                                \
@@ -500,6 +524,7 @@ public:
             SetValue(s_##name##Property, value);                                                                                                               \
         }                                                                                                                                                      \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 private:                                                                                                                                                       \
     static Windows::UI::Xaml::DependencyProperty ^ s_##name##Property;                                                                                         \
                                                                                                                                                                \
@@ -522,6 +547,7 @@ private:                                                                        
         auto self = safe_cast<DependencyPropertiesOwner ^>(sender);                                                                                            \
         self->On##name##PropertyChanged(safe_cast<type>(args->OldValue), safe_cast<type>(args->NewValue));                                                     \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 public:
 
 // Attached DependencyProperty
@@ -552,6 +578,7 @@ private:                                                                        
     {                                                                                                                                                          \
         return Utils::RegisterDependencyPropertyAttached<DependencyPropertiesOwner, type>(L#name);                                                             \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 public:
 
 #define DEPENDENCY_PROPERTY_ATTACHED_WITH_DEFAULT(type, name, defaultValue)                                                                                    \
@@ -581,6 +608,7 @@ private:                                                                        
     {                                                                                                                                                          \
         return Utils::RegisterDependencyPropertyAttached<DependencyPropertiesOwner, type>(L#name, defaultValue);                                               \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 public:
 
 #define DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(type, name)                                                                                                 \
@@ -614,6 +642,7 @@ private:                                                                        
     {                                                                                                                                                          \
         On##name##PropertyChanged(sender, safe_cast<type>(args->OldValue), safe_cast<type>(args->NewValue));                                                   \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 public:
 
 #define DEPENDENCY_PROPERTY_ATTACHED_WITH_DEFAULT_AND_CALLBACK(type, name, defaultValue)                                                                       \
@@ -647,6 +676,7 @@ private:                                                                        
     {                                                                                                                                                          \
         On##name##PropertyChanged(sender, safe_cast<type>(args->OldValue), safe_cast<type>(args->NewValue));                                                   \
     }                                                                                                                                                          \
+                                                                                                                                                               \
 public:
 
 // This goes into the cpp to initialize the static variable

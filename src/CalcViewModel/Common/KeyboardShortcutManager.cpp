@@ -446,8 +446,9 @@ const std::multimap<MyVirtualKey, WeakReference>& GetCurrentKeyDictionary(MyVirt
     {
         return s_VirtualKeyAltChordsForButtons.find(viewId)->second;
     }
-    else if ((s_ShiftKeyPressed.find(viewId)->second)
-             && ((Window::Current->CoreWindow->GetKeyState(VirtualKey::Control) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down))
+    else if (
+        (s_ShiftKeyPressed.find(viewId)->second)
+        && ((Window::Current->CoreWindow->GetKeyState(VirtualKey::Control) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down))
     {
         return s_VirtualKeyControlShiftChordsForButtons.find(viewId)->second;
     }
