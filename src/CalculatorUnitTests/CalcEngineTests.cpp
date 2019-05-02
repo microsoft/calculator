@@ -118,18 +118,29 @@ namespace CalculatorEngineTests
             // Regex matching (descriptions taken from CalcUtils.cpp)
             // Use 100 for exp/mantissa length as they are tested above
             vector<wstring> validDecStrs{ // Start with an optional + or -
-                                          L"+1", L"-1", L"1",
+                                          L"+1",
+                                          L"-1",
+                                          L"1",
                                           // Followed by zero or more digits
-                                          L"-", L"", L"1234567890",
+                                          L"-",
+                                          L"",
+                                          L"1234567890",
                                           // Followed by an optional decimal point
-                                          L"1.0", L"-.", L"1.",
+                                          L"1.0",
+                                          L"-.",
+                                          L"1.",
                                           // Followed by zero or more digits
-                                          L"0.0", L"0.123456",
+                                          L"0.0",
+                                          L"0.123456",
                                           // Followed by an optional exponent ('e')
-                                          L"1e", L"1.e", L"-e",
+                                          L"1e",
+                                          L"1.e",
+                                          L"-e",
                                           // If there's an exponent, its optionally followed by + or -
                                           // and followed by zero or more digits
-                                          L"1e+12345", L"1e-12345", L"1e123",
+                                          L"1e+12345",
+                                          L"1e-12345",
+                                          L"1e123",
                                           // All together
                                           L"-123.456e+789"
             };
@@ -213,7 +224,8 @@ namespace CalculatorEngineTests
             result = L"123456,78,901,23456";
             VERIFY_ARE_EQUAL(result, m_calcEngine->GroupDigits(L",", { 5, 3, 2 }, L"1234567890123456", false), L"Verify multigroup non-repeating grouping.");
             VERIFY_ARE_EQUAL(
-                result, m_calcEngine->GroupDigits(L",", { 5, 3, 2, 0, 0 }, L"1234567890123456", false),
+                result,
+                m_calcEngine->GroupDigits(L",", { 5, 3, 2, 0, 0 }, L"1234567890123456", false),
                 L"Verify expanded form multigroup non-repeating grouping.");
         }
 

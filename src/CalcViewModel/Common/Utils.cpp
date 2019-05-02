@@ -93,7 +93,8 @@ wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, wchar_t* unwantedCh
 }
 
 void Utils::SerializeCommandsAndTokens(
-    _In_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens, _In_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands,
+    _In_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
+    _In_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands,
     DataWriter ^ writer)
 {
     unsigned int commandsSize;

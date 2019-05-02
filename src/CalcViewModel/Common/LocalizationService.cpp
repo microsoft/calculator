@@ -434,28 +434,41 @@ unordered_map<wstring, wstring> LocalizationService::GetTokenToReadableNameMap()
     // change given that the engine heavily relies on perfect ordering of certain elements.
     // To compromise, we'll declare a map from engine resource key to automation name from the
     // standard project resources.
-    static vector<pair<wstring, wstring>> s_parenEngineKeyResourceMap = {
-        // Sine permutations
-        make_pair<wstring, wstring>(L"67", L"SineDegrees"), make_pair<wstring, wstring>(L"73", L"SineRadians"),
-        make_pair<wstring, wstring>(L"79", L"SineGradians"), make_pair<wstring, wstring>(L"70", L"InverseSineDegrees"),
-        make_pair<wstring, wstring>(L"76", L"InverseSineRadians"), make_pair<wstring, wstring>(L"82", L"InverseSineGradians"),
-        make_pair<wstring, wstring>(L"25", L"HyperbolicSine"), make_pair<wstring, wstring>(L"85", L"InverseHyperbolicSine"),
+    static vector<pair<wstring, wstring>> s_parenEngineKeyResourceMap = { // Sine permutations
+                                                                          make_pair<wstring, wstring>(L"67", L"SineDegrees"),
+                                                                          make_pair<wstring, wstring>(L"73", L"SineRadians"),
+                                                                          make_pair<wstring, wstring>(L"79", L"SineGradians"),
+                                                                          make_pair<wstring, wstring>(L"70", L"InverseSineDegrees"),
+                                                                          make_pair<wstring, wstring>(L"76", L"InverseSineRadians"),
+                                                                          make_pair<wstring, wstring>(L"82", L"InverseSineGradians"),
+                                                                          make_pair<wstring, wstring>(L"25", L"HyperbolicSine"),
+                                                                          make_pair<wstring, wstring>(L"85", L"InverseHyperbolicSine"),
 
-        // Cosine permutations
-        make_pair<wstring, wstring>(L"68", L"CosineDegrees"), make_pair<wstring, wstring>(L"74", L"CosineRadians"),
-        make_pair<wstring, wstring>(L"80", L"CosineGradians"), make_pair<wstring, wstring>(L"71", L"InverseCosineDegrees"),
-        make_pair<wstring, wstring>(L"77", L"InverseCosineRadians"), make_pair<wstring, wstring>(L"83", L"InverseCosineGradians"),
-        make_pair<wstring, wstring>(L"26", L"HyperbolicCosine"), make_pair<wstring, wstring>(L"86", L"InverseHyperbolicCosine"),
+                                                                          // Cosine permutations
+                                                                          make_pair<wstring, wstring>(L"68", L"CosineDegrees"),
+                                                                          make_pair<wstring, wstring>(L"74", L"CosineRadians"),
+                                                                          make_pair<wstring, wstring>(L"80", L"CosineGradians"),
+                                                                          make_pair<wstring, wstring>(L"71", L"InverseCosineDegrees"),
+                                                                          make_pair<wstring, wstring>(L"77", L"InverseCosineRadians"),
+                                                                          make_pair<wstring, wstring>(L"83", L"InverseCosineGradians"),
+                                                                          make_pair<wstring, wstring>(L"26", L"HyperbolicCosine"),
+                                                                          make_pair<wstring, wstring>(L"86", L"InverseHyperbolicCosine"),
 
-        // Tangent permutations
-        make_pair<wstring, wstring>(L"69", L"TangentDegrees"), make_pair<wstring, wstring>(L"75", L"TangentRadians"),
-        make_pair<wstring, wstring>(L"81", L"TangentGradians"), make_pair<wstring, wstring>(L"72", L"InverseTangentDegrees"),
-        make_pair<wstring, wstring>(L"78", L"InverseTangentRadians"), make_pair<wstring, wstring>(L"84", L"InverseTangentGradians"),
-        make_pair<wstring, wstring>(L"27", L"HyperbolicTangent"), make_pair<wstring, wstring>(L"87", L"InverseHyperbolicTangent"),
+                                                                          // Tangent permutations
+                                                                          make_pair<wstring, wstring>(L"69", L"TangentDegrees"),
+                                                                          make_pair<wstring, wstring>(L"75", L"TangentRadians"),
+                                                                          make_pair<wstring, wstring>(L"81", L"TangentGradians"),
+                                                                          make_pair<wstring, wstring>(L"72", L"InverseTangentDegrees"),
+                                                                          make_pair<wstring, wstring>(L"78", L"InverseTangentRadians"),
+                                                                          make_pair<wstring, wstring>(L"84", L"InverseTangentGradians"),
+                                                                          make_pair<wstring, wstring>(L"27", L"HyperbolicTangent"),
+                                                                          make_pair<wstring, wstring>(L"87", L"InverseHyperbolicTangent"),
 
-        // Miscellaneous Scientific functions
-        make_pair<wstring, wstring>(L"94", L"Factorial"), make_pair<wstring, wstring>(L"35", L"DegreeMinuteSecond"),
-        make_pair<wstring, wstring>(L"28", L"NaturalLog"), make_pair<wstring, wstring>(L"91", L"Square")
+                                                                          // Miscellaneous Scientific functions
+                                                                          make_pair<wstring, wstring>(L"94", L"Factorial"),
+                                                                          make_pair<wstring, wstring>(L"35", L"DegreeMinuteSecond"),
+                                                                          make_pair<wstring, wstring>(L"28", L"NaturalLog"),
+                                                                          make_pair<wstring, wstring>(L"91", L"Square")
     };
 
     static vector<pair<wstring, wstring>> s_noParenEngineKeyResourceMap = { // Programmer mode functions

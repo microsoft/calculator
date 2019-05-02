@@ -35,7 +35,9 @@ namespace CalculatorApp
         void AssignFlipButtons();
 
         void SetVisibilityBinding(
-            _In_ Windows::UI::Xaml::FrameworkElement ^ element, _In_ Platform::String ^ path, _In_ Windows::UI::Xaml::Data::IValueConverter ^ converter);
+            _In_ Windows::UI::Xaml::FrameworkElement ^ element,
+            _In_ Platform::String ^ path,
+            _In_ Windows::UI::Xaml::Data::IValueConverter ^ converter);
         void OnBitToggled(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
         void UpdateCheckedStates();
 

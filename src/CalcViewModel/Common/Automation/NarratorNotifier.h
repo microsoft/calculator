@@ -41,7 +41,8 @@ public
 
     private:
         static void OnAnnouncementChanged(
-            _In_ Windows::UI::Xaml::DependencyObject ^ dependencyObject, _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ eventArgs);
+            _In_ Windows::UI::Xaml::DependencyObject ^ dependencyObject,
+            _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ eventArgs);
 
         static Windows::UI::Xaml::DependencyProperty ^ s_announcementProperty;
 

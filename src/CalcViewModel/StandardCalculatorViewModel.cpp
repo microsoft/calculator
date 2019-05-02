@@ -236,7 +236,8 @@ void StandardCalculatorViewModel::SetOpenParenthesisCountNarratorAnnouncement()
     LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
 
     String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
-        CalculatorResourceKeys::OpenParenthesisCountAutomationFormat, m_localizedOpenParenthesisCountChangedAutomationFormat,
+        CalculatorResourceKeys::OpenParenthesisCountAutomationFormat,
+        m_localizedOpenParenthesisCountChangedAutomationFormat,
         localizedParenthesisCount.c_str());
 
     Announcement = CalculatorAnnouncement::GetOpenParenthesisCountChangedAnnouncement(announcement);
@@ -1960,7 +1961,9 @@ NarratorAnnouncement ^ StandardCalculatorViewModel::GetDisplayUpdatedNarratorAnn
     else
     {
         announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
-            CalculatorResourceKeys::ButtonPressFeedbackFormat, m_localizedButtonPressFeedbackAutomationFormat, m_CalculationResultAutomationName->Data(),
+            CalculatorResourceKeys::ButtonPressFeedbackFormat,
+            m_localizedButtonPressFeedbackAutomationFormat,
+            m_CalculationResultAutomationName->Data(),
             m_feedbackForButtonPress->Data());
     }
 

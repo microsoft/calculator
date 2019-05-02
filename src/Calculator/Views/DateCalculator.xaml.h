@@ -30,11 +30,14 @@ namespace CalculatorApp
 
     private:
         void FromDate_DateChanged(
-            _In_ Windows::UI::Xaml::Controls::CalendarDatePicker ^ sender, _In_ Windows::UI::Xaml::Controls::CalendarDatePickerDateChangedEventArgs ^ e);
+            _In_ Windows::UI::Xaml::Controls::CalendarDatePicker ^ sender,
+            _In_ Windows::UI::Xaml::Controls::CalendarDatePickerDateChangedEventArgs ^ e);
         void ToDate_DateChanged(
-            _In_ Windows::UI::Xaml::Controls::CalendarDatePicker ^ sender, _In_ Windows::UI::Xaml::Controls::CalendarDatePickerDateChangedEventArgs ^ e);
+            _In_ Windows::UI::Xaml::Controls::CalendarDatePicker ^ sender,
+            _In_ Windows::UI::Xaml::Controls::CalendarDatePickerDateChangedEventArgs ^ e);
         void AddSubtract_DateChanged(
-            _In_ Windows::UI::Xaml::Controls::CalendarDatePicker ^ sender, _In_ Windows::UI::Xaml::Controls::CalendarDatePickerDateChangedEventArgs ^ e);
+            _In_ Windows::UI::Xaml::Controls::CalendarDatePicker ^ sender,
+            _In_ Windows::UI::Xaml::Controls::CalendarDatePickerDateChangedEventArgs ^ e);
         void OffsetValue_Changed(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e);
         void OnCopyMenuItemClicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnLoaded(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);

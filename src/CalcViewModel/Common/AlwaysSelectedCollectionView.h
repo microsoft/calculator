@@ -265,7 +265,9 @@ namespace CalculatorApp
         private:
             virtual Platform::Object
                 ^ Convert(
-                    Platform::Object ^ value, Windows::UI::Xaml::Interop::TypeName /*targetType*/, Platform::Object ^ /*parameter*/,
+                    Platform::Object ^ value,
+                    Windows::UI::Xaml::Interop::TypeName /*targetType*/,
+                    Platform::Object ^ /*parameter*/,
                     Platform::String ^ /*language*/) = Windows::UI::Xaml::Data::IValueConverter::Convert
             {
                 auto result = dynamic_cast<Windows::UI::Xaml::Interop::IBindableVector ^>(value);
@@ -278,7 +280,9 @@ namespace CalculatorApp
 
             virtual Platform::Object
                 ^ ConvertBack(
-                    Platform::Object ^ /*value*/, Windows::UI::Xaml::Interop::TypeName /*targetType*/, Platform::Object ^ /*parameter*/,
+                    Platform::Object ^ /*value*/,
+                    Windows::UI::Xaml::Interop::TypeName /*targetType*/,
+                    Platform::Object ^ /*parameter*/,
                     Platform::String ^ /*language*/) = Windows::UI::Xaml::Data::IValueConverter::ConvertBack
             {
                 return Windows::UI::Xaml::DependencyProperty::UnsetValue;

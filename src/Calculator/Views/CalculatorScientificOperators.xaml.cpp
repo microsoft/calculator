@@ -69,7 +69,8 @@ void CalculatorScientificOperators::shiftButton_Check(_In_ Platform::Object ^ /*
 }
 
 void CalculatorScientificOperators::shiftButton_IsEnabledChanged(
-    _In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ /*e*/)
+    _In_ Platform::Object ^ /*sender*/,
+    _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ /*e*/)
 {
     SetOperatorRowVisibility();
     Common::KeyboardShortcutManager::ShiftButtonChecked(ShiftButton->IsEnabled && ShiftButton->IsChecked->Value);

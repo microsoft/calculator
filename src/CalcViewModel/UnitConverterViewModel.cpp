@@ -463,7 +463,8 @@ void UnitConverterViewModel::UpdateSupplementaryResults(const std::vector<std::t
 
     // Schedule the timer
     m_supplementaryResultsTimer = ThreadPoolTimer::CreateTimer(
-        ref new TimerElapsedHandler(this, &UnitConverterViewModel::SupplementaryResultsTimerTick, TIMER_CALLBACK_CONTEXT), SUPPLEMENTARY_VALUES_INTERVAL,
+        ref new TimerElapsedHandler(this, &UnitConverterViewModel::SupplementaryResultsTimerTick, TIMER_CALLBACK_CONTEXT),
+        SUPPLEMENTARY_VALUES_INTERVAL,
         ref new TimerDestroyedHandler(this, &UnitConverterViewModel::SupplementaryResultsTimerCancel, TIMER_CALLBACK_CONTEXT));
 }
 
@@ -1011,7 +1012,10 @@ String ^ UnitConverterViewModel::GetLocalizedAutomationName(_In_ String ^ displa
 
 String
     ^ UnitConverterViewModel::GetLocalizedConversionResultStringFormat(
-        _In_ String ^ fromValue, _In_ String ^ fromUnit, _In_ String ^ toValue, _In_ String ^ toUnit)
+        _In_ String ^ fromValue,
+        _In_ String ^ fromUnit,
+        _In_ String ^ toValue,
+        _In_ String ^ toUnit)
 {
     String ^ localizedString =
         ref new String(LocalizationStringUtil::GetLocalizedString(

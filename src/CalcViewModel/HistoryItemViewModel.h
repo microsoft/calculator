@@ -15,7 +15,8 @@ namespace CalculatorApp
             internal :
 
                 HistoryItemViewModel(
-                    Platform::String ^ expression, Platform::String ^ result,
+                    Platform::String ^ expression,
+                    Platform::String ^ result,
                     _In_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& spTokens,
                     _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& spCommands);
 
@@ -61,7 +62,8 @@ namespace CalculatorApp
 
                 private : static Platform::String
                           ^ GetAccessibleExpressionFromTokens(
-                              _In_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& spTokens, _In_ Platform::String ^ fallbackExpression);
+                              _In_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& spTokens,
+                              _In_ Platform::String ^ fallbackExpression);
 
         private:
             Platform::String ^ m_expression;

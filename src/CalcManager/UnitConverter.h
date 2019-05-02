@@ -30,7 +30,12 @@ namespace UnitConversionManager
         }
 
         Unit(
-            int id, std::wstring currencyName, std::wstring countryName, std::wstring abbreviation, bool isRtlLanguage, bool isConversionSource,
+            int id,
+            std::wstring currencyName,
+            std::wstring countryName,
+            std::wstring abbreviation,
+            bool isRtlLanguage,
+            bool isConversionSource,
             bool isConversionTarget)
             : id(id), abbreviation(abbreviation), isConversionSource(isConversionSource), isConversionTarget(isConversionTarget), isWhimsical(false)
         {
@@ -157,7 +162,8 @@ namespace UnitConversionManager
 
     typedef std::tuple<std::vector<UnitConversionManager::Unit>, UnitConversionManager::Unit, UnitConversionManager::Unit> CategorySelectionInitializer;
     typedef std::unordered_map<
-        UnitConversionManager::Unit, std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash>,
+        UnitConversionManager::Unit,
+        std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash>,
         UnitConversionManager::UnitHash>
         UnitToUnitToConversionDataMap;
     typedef std::unordered_map<UnitConversionManager::Category, std::vector<UnitConversionManager::Unit>, UnitConversionManager::CategoryHash>

@@ -26,7 +26,10 @@ namespace CalculatorApp::Common::Automation
 }
 
 NarratorAnnouncement::NarratorAnnouncement(
-    String ^ announcement, String ^ activityId, AutomationNotificationKind kind, AutomationNotificationProcessing processing)
+    String ^ announcement,
+    String ^ activityId,
+    AutomationNotificationKind kind,
+    AutomationNotificationProcessing processing)
     : m_announcement(announcement), m_activityId(activityId), m_kind(kind), m_processing(processing)
 {
 }
@@ -95,14 +98,18 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetHistoryClearedAnnouncement(Str
 NarratorAnnouncement ^ CalculatorAnnouncement::GetCategoryNameChangedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
-        announcement, CalculatorActivityIds::CategoryNameChanged, AutomationNotificationKind::ActionCompleted,
+        announcement,
+        CalculatorActivityIds::CategoryNameChanged,
+        AutomationNotificationKind::ActionCompleted,
         AutomationNotificationProcessing::ImportantMostRecent);
 }
 
 NarratorAnnouncement ^ CalculatorAnnouncement::GetUpdateCurrencyRatesAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
-        announcement, CalculatorActivityIds::UpdateCurrencyRates, AutomationNotificationKind::ActionCompleted,
+        announcement,
+        CalculatorActivityIds::UpdateCurrencyRates,
+        AutomationNotificationKind::ActionCompleted,
         AutomationNotificationProcessing::ImportantMostRecent);
 }
 
@@ -115,13 +122,17 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetDisplayCopiedAnnouncement(Stri
 NarratorAnnouncement ^ CalculatorAnnouncement::GetOpenParenthesisCountChangedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
-        announcement, CalculatorActivityIds::OpenParenthesisCountChanged, AutomationNotificationKind::ActionCompleted,
+        announcement,
+        CalculatorActivityIds::OpenParenthesisCountChanged,
+        AutomationNotificationKind::ActionCompleted,
         AutomationNotificationProcessing::ImportantMostRecent);
 }
 
 NarratorAnnouncement ^ CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
-        announcement, CalculatorActivityIds::NoParenthesisAdded, AutomationNotificationKind::ActionCompleted,
+        announcement,
+        CalculatorActivityIds::NoParenthesisAdded,
+        AutomationNotificationKind::ActionCompleted,
         AutomationNotificationProcessing::ImportantMostRecent);
 }
