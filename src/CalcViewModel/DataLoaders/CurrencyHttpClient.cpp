@@ -13,7 +13,9 @@ using namespace Windows::Web::Http;
 static constexpr auto sc_MetadataUriLocalizeFor = L"https://go.microsoft.com/fwlink/?linkid=2041093&localizeFor=";
 static constexpr auto sc_RatiosUriRelativeTo = L"https://go.microsoft.com/fwlink/?linkid=2041339&localCurrency=";
 
-CurrencyHttpClient::CurrencyHttpClient() : m_client(ref new HttpClient()), m_responseLanguage(L"en-US")
+CurrencyHttpClient::CurrencyHttpClient()
+    : m_client(ref new HttpClient())
+    , m_responseLanguage(L"en-US")
 {
 }
 

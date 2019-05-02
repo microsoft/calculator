@@ -42,7 +42,8 @@ IAsyncOperationWithProgress<String ^, HttpProgress> ^ CurrencyHttpClient::GetCur
     return ref new MockAsyncOperationWithProgress(StringReference(ALL_RATIOS_RESPONSE));
 }
 
-MockAsyncOperationWithProgress::MockAsyncOperationWithProgress(String ^ result) : m_result(result)
+MockAsyncOperationWithProgress::MockAsyncOperationWithProgress(String ^ result)
+    : m_result(result)
 {
 }
 

@@ -15,7 +15,10 @@ HistoryItemViewModel::HistoryItemViewModel(
     String ^ result,
     _In_ const shared_ptr<CalculatorVector<pair<wstring, int>>>& spTokens,
     _In_ const shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>>& spCommands)
-    : m_expression(expression), m_result(result), m_spTokens(spTokens), m_spCommands(spCommands)
+    : m_expression(expression)
+    , m_result(result)
+    , m_spTokens(spTokens)
+    , m_spCommands(spCommands)
 {
     // updating accessibility names for expression and result
     m_accExpression = HistoryItemViewModel::GetAccessibleExpressionFromTokens(spTokens, m_expression);

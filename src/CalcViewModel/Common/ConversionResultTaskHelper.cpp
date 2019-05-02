@@ -9,7 +9,8 @@ using namespace concurrency;
 using namespace std;
 
 ConversionResultTaskHelper::ConversionResultTaskHelper(unsigned int delay, const function<void()> functionToRun)
-    : m_delay{ delay }, m_storedFunction{ functionToRun }
+    : m_delay{ delay }
+    , m_storedFunction{ functionToRun }
 {
     auto token = m_cts.get_token();
     auto delayTask = CompleteAfter(delay);

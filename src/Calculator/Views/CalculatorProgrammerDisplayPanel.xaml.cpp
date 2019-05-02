@@ -20,7 +20,8 @@ using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Core;
 
-CalculatorProgrammerDisplayPanel::CalculatorProgrammerDisplayPanel() : m_isErrorVisualState(false)
+CalculatorProgrammerDisplayPanel::CalculatorProgrammerDisplayPanel()
+    : m_isErrorVisualState(false)
 {
     InitializeComponent();
 }

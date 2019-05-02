@@ -63,7 +63,8 @@ namespace CalculatorApp::VisualStates
     }
 }
 
-MainPage::MainPage() : m_model(ref new ApplicationViewModel())
+MainPage::MainPage()
+    : m_model(ref new ApplicationViewModel())
 {
     InitializeComponent();
 

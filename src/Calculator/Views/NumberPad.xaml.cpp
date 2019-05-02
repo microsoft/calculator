@@ -31,7 +31,8 @@ using namespace CalculatorApp::Common;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(NumberPad, ButtonStyle);
 
-NumberPad::NumberPad() : m_isErrorVisualState(false)
+NumberPad::NumberPad()
+    : m_isErrorVisualState(false)
 {
     InitializeComponent();
 

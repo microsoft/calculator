@@ -7,7 +7,8 @@
 using namespace CalculatorApp::Common;
 using namespace Windows::Storage::Streams;
 
-SerializeCommandVisitor::SerializeCommandVisitor(_In_ DataWriter ^ dataWriter) : m_dataWriter(dataWriter)
+SerializeCommandVisitor::SerializeCommandVisitor(_In_ DataWriter ^ dataWriter)
+    : m_dataWriter(dataWriter)
 {
 }
 

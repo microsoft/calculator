@@ -24,7 +24,8 @@ using namespace Windows::UI::Xaml::Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-CalculatorStandardOperators::CalculatorStandardOperators() : m_isErrorVisualState(false)
+CalculatorStandardOperators::CalculatorStandardOperators()
+    : m_isErrorVisualState(false)
 {
     InitializeComponent();
 }

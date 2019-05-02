@@ -25,7 +25,8 @@ using namespace Windows::UI::Xaml::Input;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-CalculatorProgrammerBitFlipPanel::CalculatorProgrammerBitFlipPanel() : m_updatingCheckedStates(false)
+CalculatorProgrammerBitFlipPanel::CalculatorProgrammerBitFlipPanel()
+    : m_updatingCheckedStates(false)
 {
     InitializeComponent();
     auto booleanToVisibilityConverter = ref new Converters::BooleanToVisibilityConverter;

@@ -10,7 +10,8 @@ using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Windows::UI::Xaml::Controls;
 
-NotificationHost::NotificationHost() : m_host(nullptr)
+NotificationHost::NotificationHost()
+    : m_host(nullptr)
 {
 }
 

@@ -14,7 +14,9 @@ namespace CalculatorApp
 
                 typedef void (TTarget::*CommandHandlerFunc)(Platform::Object ^);
 
-            DelegateCommand(TTarget ^ target, CommandHandlerFunc func) : m_weakTarget(target), m_function(func)
+            DelegateCommand(TTarget ^ target, CommandHandlerFunc func)
+                : m_weakTarget(target)
+                , m_function(func)
             {
             }
 

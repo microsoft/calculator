@@ -362,7 +362,8 @@ vector<MyVirtualKey> NavCategory::GetCategoryAcceleratorKeys()
     return accelerators;
 }
 
-NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupInitializer) : m_Categories(ref new Vector<NavCategory ^>())
+NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupInitializer)
+    : m_Categories(ref new Vector<NavCategory ^>())
 {
     m_GroupType = groupInitializer.type;
 

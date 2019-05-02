@@ -18,7 +18,9 @@ namespace CalculatorApp
                                                                                           Windows::UI::Xaml::Data::ICustomPropertyProvider
         {
         public:
-            MemoryItemViewModel(StandardCalculatorViewModel ^ calcVM) : m_Position(-1), m_calcVM(calcVM)
+            MemoryItemViewModel(StandardCalculatorViewModel ^ calcVM)
+                : m_Position(-1)
+                , m_calcVM(calcVM)
             {
             }
             OBSERVABLE_OBJECT();

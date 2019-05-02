@@ -24,7 +24,8 @@ namespace CalculatorApp
                 bool isConversionSource = false,
                 bool isConversionTarget = false,
                 bool isWhimsical = false)
-                : UnitConversionManager::Unit(id, name, abbreviation, isConversionSource, isConversionTarget, isWhimsical), order(order)
+                : UnitConversionManager::Unit(id, name, abbreviation, isConversionSource, isConversionTarget, isWhimsical)
+                , order(order)
             {
             }
 
@@ -50,7 +51,10 @@ namespace CalculatorApp
                 double ratio,
                 double offset,
                 bool offsetFirst = false)
-                : categoryId(categoryId), parentUnitId(parentUnitId), unitId(unitId), UnitConversionManager::ConversionData(ratio, offset, offsetFirst)
+                : categoryId(categoryId)
+                , parentUnitId(parentUnitId)
+                , unitId(unitId)
+                , UnitConversionManager::ConversionData(ratio, offset, offsetFirst)
             {
             }
 
