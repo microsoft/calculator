@@ -344,7 +344,6 @@
     <ClInclude Include="Common\TraceLogger.h" />
     <ClInclude Include="Common\Utils.h" />
     <ClInclude Include="Common\ValidatingConverters.h" />
-    <ClInclude Include="DataLoaders\DataLoaderConstants.h" />
     <ClInclude Include="DataLoaders\CurrencyDataLoader.h" />
     <ClInclude Include="DataLoaders\CurrencyHttpClient.h" />
     <ClInclude Include="DataLoaders\ICurrencyHttpClient.h" />
@@ -408,6 +407,17 @@
     <ProjectReference Include="..\CalcManager\CalcManager.vcxproj">
       <Project>{311e866d-8b93-4609-a691-265941fee101}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemDefinitionGroup Condition="!Exists('DataLoaders\DataLoaderConstants.h')">
+    <ClCompile>
+      <AdditionalOptions>/DUSE_MOCK_DATA %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup Condition="!Exists('DataLoaders\DataLoaderConstants.h')">
+	<ClInclude Include="DataLoaders\DataLoaderMockConstants.h" />
+  </ItemGroup>
+  <ItemGroup Condition="Exists('DataLoaders\DataLoaderConstants.h')">
+	<ClInclude Include="DataLoaders\DataLoaderConstants.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DataLoaders\DefaultFromToCurrency.json" />

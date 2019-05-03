@@ -3,7 +3,12 @@
 
 #include "pch.h"
 #include "CurrencyHttpClient.h"
+
+#ifdef USE_MOCK_DATA
+#include "DataLoaderMockConstants.h"
+#else
 #include "DataLoaderConstants.h"
+#endif
 
 using namespace CalculatorApp::DataLoaders;
 using namespace Platform;
