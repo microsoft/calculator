@@ -274,7 +274,7 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
     {
         // Each operand only needs to match one of the available patterns.
         bool operandMatched = false;
-        for (const wregex& pattern : patterns)
+        for (const auto& pattern : patterns)
         {
             operandMatched = operandMatched || regex_match(operand, pattern);
         }
@@ -283,7 +283,7 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
         {
             // Remove characters that are valid in the expression but we do not want to include in length calculations
             // or which will break conversion from string-to-ULL.
-            wstring operandValue = SanitizeOperand(operand);
+            const wstring operandValue = SanitizeOperand(operand);
 
             // If an operand exceeds the maximum length allowed, break and return.
             if (OperandLength(operandValue, mode, modeType, programmerNumberBase) > maxOperandLength)
