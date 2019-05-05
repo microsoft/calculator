@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -9,16 +9,15 @@ class CalculatorVector
 public:
     HRESULT GetAt(_In_opt_ unsigned int index, _Out_ TType *item)
     {
-        HRESULT hr = S_OK;
         try
         {
             *item = m_vector.at(index);
         }
         catch (const std::out_of_range& /*ex*/)
         {
-            hr = E_BOUNDS;
+            return E_BOUNDS;
         }
-        return hr;
+        return S_OK;
     }
 
     HRESULT GetSize(_Out_ unsigned int *size)
@@ -29,35 +28,32 @@ public:
 
     HRESULT SetAt(_In_ unsigned int index, _In_opt_ TType item)
     {
-        HRESULT hr = S_OK;
         try
         {
             m_vector[index] = item;
         }
         catch (const std::out_of_range& /*ex*/)
         {
-            hr = E_BOUNDS;
+            return E_BOUNDS;
         }
-        return hr;
+        return S_OK;
     }
 
     HRESULT RemoveAt(_In_ unsigned int index)
     {
-        HRESULT hr = S_OK;
         if (index < m_vector.size())
         {
             m_vector.erase(m_vector.begin() + index);
         }
         else
         {
-            hr = E_BOUNDS;
+            return E_BOUNDS;
         }
-        return hr;
+        return S_OK;
     }
 
     HRESULT InsertAt(_In_ unsigned int index, _In_ TType item)
     {
-        HRESULT hr = S_OK;
         try
         {
             auto iter = m_vector.begin() + index;
@@ -65,14 +61,13 @@ public:
         }
         catch (const std::bad_alloc& /*ex*/)
         {
-            hr = E_OUTOFMEMORY;
+            return E_OUTOFMEMORY;
         }
-        return hr;
+        return S_OK;
     }
 
     HRESULT Truncate(_In_ unsigned int index)
     {
-        HRESULT hr = S_OK;
         if (index < m_vector.size())
         {
             auto startIter = m_vector.begin() + index;
@@ -80,23 +75,22 @@ public:
         }
         else
         {
-            hr = E_BOUNDS;
+            return E_BOUNDS;
         }
-        return hr;
+        return S_OK;
     }
 
     HRESULT Append(_In_opt_ TType item)
     {
-        HRESULT hr = S_OK;
         try
         {
             m_vector.push_back(item);
         }
         catch (const std::bad_alloc& /*ex*/)
         {
-            hr = E_OUTOFMEMORY;
+            return E_OUTOFMEMORY;
         }
-        return hr;
+        return S_OK;
     }
 
     HRESULT RemoveAtEnd()
