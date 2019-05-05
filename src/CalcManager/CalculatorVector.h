@@ -107,12 +107,12 @@ public:
 
     HRESULT GetString(_Out_ std::wstring* expression)
     {
-        HRESULT hr = S_OK;
         unsigned int nTokens = 0;
-        std::pair <std::wstring, int> currentPair;
-        hr = this->GetSize(&nTokens);
+        auto hr = this->GetSize(&nTokens);
         if (SUCCEEDED(hr))
         {
+
+            std::pair<std::wstring, int> currentPair;
             for (unsigned int i = 0; i < nTokens; i++)
             {
                 hr = this->GetAt(i, &currentPair);
@@ -128,7 +128,7 @@ public:
             }
 
             std::wstring expressionSuffix{};
-            hr = GetExpressionSuffix(&expressionSuffix);
+            hr = GetExpressionSuffix(&expressionSuffix); // Will always return S_OK
             if (SUCCEEDED(hr))
             {
                 expression->append(expressionSuffix);
