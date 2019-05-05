@@ -8,19 +8,20 @@ using namespace CalculatorApp::Common;
 using namespace concurrency;
 using namespace std;
 
-ConversionResultTaskHelper::ConversionResultTaskHelper(unsigned int delay, const function<void()> functionToRun) :
-    m_delay{ delay },
-    m_storedFunction{ functionToRun }
+ConversionResultTaskHelper::ConversionResultTaskHelper(unsigned int delay, const function<void()> functionToRun)
+    : m_delay{ delay }
+    , m_storedFunction{ functionToRun }
 {
     auto token = m_cts.get_token();
     auto delayTask = CompleteAfter(delay);
-    delayTask.then([this, token]()
-    {
-        if (!token.is_canceled())
-        {
-            m_storedFunction();
-        }
-    }, task_continuation_context::use_current());
+    delayTask.then(
+        [this, token]() {
+            if (!token.is_canceled())
+            {
+                m_storedFunction();
+            }
+        },
+        task_continuation_context::use_current());
 }
 
 ConversionResultTaskHelper::~ConversionResultTaskHelper()

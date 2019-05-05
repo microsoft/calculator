@@ -14,16 +14,16 @@ namespace CalculatorApp
         public:
             CurrencyHttpClient();
 
-            void SetSourceCurrencyCode(Platform::String^ sourceCurrencyCode) override;
-            void SetResponseLanguage(Platform::String^ responseLanguage) override;
+            void SetSourceCurrencyCode(Platform::String ^ sourceCurrencyCode) override;
+            void SetResponseLanguage(Platform::String ^ responseLanguage) override;
 
-            Windows::Foundation::IAsyncOperationWithProgress<Platform::String^, Windows::Web::Http::HttpProgress>^ GetCurrencyMetadata() override;
-            Windows::Foundation::IAsyncOperationWithProgress<Platform::String^, Windows::Web::Http::HttpProgress>^ GetCurrencyRatios() override;
+            Windows::Foundation::IAsyncOperationWithProgress<Platform::String ^, Windows::Web::Http::HttpProgress> ^ GetCurrencyMetadata() override;
+            Windows::Foundation::IAsyncOperationWithProgress<Platform::String ^, Windows::Web::Http::HttpProgress> ^ GetCurrencyRatios() override;
 
         private:
-            Windows::Web::Http::HttpClient^ m_client;
-            Platform::String^ m_responseLanguage;
-            Platform::String^ m_sourceCurrencyCode;
+            Windows::Web::Http::HttpClient ^ m_client;
+            Platform::String ^ m_responseLanguage;
+            Platform::String ^ m_sourceCurrencyCode;
         };
     }
 }

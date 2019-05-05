@@ -248,6 +248,7 @@
     <ClCompile Include="Module.cpp" />
     <ClCompile Include="MultiWindowUnitTests.cpp" />
     <ClCompile Include="NavCategoryUnitTests.cpp" />
+    <ClCompile Include="RationalTest.cpp" />
     <ClCompile Include="StandardViewModelUnitTests.cpp" />
     <ClCompile Include="UnitConverterTest.cpp" />
     <ClCompile Include="UnitConverterViewModelUnitTests.cpp" />

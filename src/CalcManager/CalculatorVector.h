@@ -3,11 +3,18 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+#include <winerror.h>
+#include "Ratpack/CalcErr.h"
+#include <stdexcept> // for std::out_of_range
+#include <sal.h>     // for SAL
+
 template <typename TType>
 class CalculatorVector
 {
 public:
-    HRESULT GetAt(_In_opt_ unsigned int index, _Out_ TType *item)
+    ResultCode GetAt(_In_opt_ unsigned int index, _Out_ TType* item)
     {
         try
         {
@@ -20,13 +27,13 @@ public:
         return S_OK;
     }
 
-    HRESULT GetSize(_Out_ unsigned int *size)
+    ResultCode GetSize(_Out_ unsigned int* size)
     {
         *size = static_cast<unsigned>(m_vector.size());
         return S_OK;
     }
 
-    HRESULT SetAt(_In_ unsigned int index, _In_opt_ TType item)
+    ResultCode SetAt(_In_ unsigned int index, _In_opt_ TType item)
     {
         try
         {
@@ -39,7 +46,7 @@ public:
         return S_OK;
     }
 
-    HRESULT RemoveAt(_In_ unsigned int index)
+    ResultCode RemoveAt(_In_ unsigned int index)
     {
         if (index < m_vector.size())
         {
@@ -52,7 +59,7 @@ public:
         return S_OK;
     }
 
-    HRESULT InsertAt(_In_ unsigned int index, _In_ TType item)
+    ResultCode InsertAt(_In_ unsigned int index, _In_ TType item)
     {
         try
         {
@@ -66,7 +73,7 @@ public:
         return S_OK;
     }
 
-    HRESULT Truncate(_In_ unsigned int index)
+    ResultCode Truncate(_In_ unsigned int index)
     {
         if (index < m_vector.size())
         {
@@ -80,7 +87,7 @@ public:
         return S_OK;
     }
 
-    HRESULT Append(_In_opt_ TType item)
+    ResultCode Append(_In_opt_ TType item)
     {
         try
         {
@@ -93,19 +100,19 @@ public:
         return S_OK;
     }
 
-    HRESULT RemoveAtEnd()
+    ResultCode RemoveAtEnd()
     {
         m_vector.erase(--(m_vector.end()));
         return S_OK;
     }
 
-    HRESULT Clear()
+    ResultCode Clear()
     {
         m_vector.clear();
         return S_OK;
     }
 
-    HRESULT GetString(_Out_ std::wstring* expression)
+    ResultCode GetString(_Out_ std::wstring* expression)
     {
         unsigned int nTokens = 0;
         auto hr = this->GetSize(&nTokens);
@@ -138,7 +145,7 @@ public:
         return hr;
     }
 
-    HRESULT GetExpressionSuffix(_Out_ std::wstring* suffix)
+    ResultCode GetExpressionSuffix(_Out_ std::wstring* suffix)
     {
         *suffix = L" =";
         return S_OK;

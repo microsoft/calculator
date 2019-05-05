@@ -8,33 +8,33 @@ namespace CalculatorApp
     namespace Common
     {
         template <typename TTarget>
-        ref class DelegateCommand: public Windows::UI::Xaml::Input::ICommand
+        ref class DelegateCommand : public Windows::UI::Xaml::Input::ICommand
         {
-        internal:
+            internal :
 
-            typedef void (TTarget::*CommandHandlerFunc)(Platform::Object^);
+                typedef void (TTarget::*CommandHandlerFunc)(Platform::Object ^);
 
-            DelegateCommand(TTarget^ target, CommandHandlerFunc func):
-                m_weakTarget(target),
-                m_function(func)
-            { }
+            DelegateCommand(TTarget ^ target, CommandHandlerFunc func)
+                : m_weakTarget(target)
+                , m_function(func)
+            {
+            }
 
         private:
-
             // Explicit, and private, implementation of ICommand, this way of programming makes it so
             // the ICommand methods will only be available if the ICommand interface is requested via a dynamic_cast
             // The ICommand interface is meant to be consumed by Xaml and not by the app, this is a defensive measure against
             // code in the app calling Execute.
-            virtual void ExecuteImpl(Platform::Object^ parameter) sealed = Windows::UI::Xaml::Input::ICommand::Execute
+            virtual void ExecuteImpl(Platform::Object ^ parameter) sealed = Windows::UI::Xaml::Input::ICommand::Execute
             {
-                TTarget^ target = m_weakTarget.Resolve<TTarget>();
+                TTarget ^ target = m_weakTarget.Resolve<TTarget>();
                 if (target)
                 {
                     (target->*m_function)(parameter);
                 }
             }
 
-            virtual bool CanExecuteImpl(Platform::Object^ parameter) sealed = Windows::UI::Xaml::Input::ICommand::CanExecute
+            virtual bool CanExecuteImpl(Platform::Object ^ parameter) sealed = Windows::UI::Xaml::Input::ICommand::CanExecute
             {
                 return true;
             }
@@ -57,14 +57,12 @@ namespace CalculatorApp
 
             CommandHandlerFunc m_function;
             Platform::WeakReference m_weakTarget;
-
         };
 
         template <typename TTarget, typename TFuncPtr>
-        DelegateCommand<TTarget>^ MakeDelegate(TTarget^ target, TFuncPtr&& function)
-        {
-            return ref new DelegateCommand<TTarget>(target, std::forward<TFuncPtr>(function));
-        }
+            DelegateCommand<TTarget> ^ MakeDelegate(TTarget ^ target, TFuncPtr&& function) {
+                return ref new DelegateCommand<TTarget>(target, std::forward<TFuncPtr>(function));
+            }
 
     }
 }

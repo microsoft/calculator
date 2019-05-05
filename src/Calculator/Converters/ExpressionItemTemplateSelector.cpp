@@ -11,9 +11,10 @@ namespace CalculatorApp
 {
     namespace Converters
     {
-        Windows::UI::Xaml::DataTemplate^ ExpressionItemTemplateSelector::SelectTemplateCore(Platform::Object^ item, Windows::UI::Xaml::DependencyObject^ container)
+        Windows::UI::Xaml::DataTemplate
+            ^ ExpressionItemTemplateSelector::SelectTemplateCore(Platform::Object ^ item, Windows::UI::Xaml::DependencyObject ^ container)
         {
-            DisplayExpressionToken^ token = dynamic_cast<DisplayExpressionToken^>(item);
+            DisplayExpressionToken ^ token = dynamic_cast<DisplayExpressionToken ^>(item);
             if (token != nullptr)
             {
                 Common::TokenType type = token->Type;

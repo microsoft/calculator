@@ -7,12 +7,12 @@ namespace CalculatorApp
 {
     namespace Controls
     {
-        public ref class RadixButton sealed : public Windows::UI::Xaml::Controls::RadioButton
+    public
+        ref class RadixButton sealed : public Windows::UI::Xaml::Controls::RadioButton
         {
         public:
-            RadixButton() {};
-        internal:
-            Platform::String^ GetRawDisplayValue();
+            RadixButton(){};
+            internal : Platform::String ^ GetRawDisplayValue();
         };
     }
 }

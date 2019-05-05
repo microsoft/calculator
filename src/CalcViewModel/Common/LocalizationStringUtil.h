@@ -19,13 +19,7 @@ namespace CalculatorApp
                 std::unique_ptr<wchar_t[]> spBuffer = std::unique_ptr<wchar_t[]>(new wchar_t[length]);
                 va_list args = NULL;
                 va_start(args, pMessage);
-                DWORD fmtReturnVal = FormatMessage(FORMAT_MESSAGE_FROM_STRING,
-                                                   pMessage,
-                                                   0,
-                                                   0,
-                                                   spBuffer.get(),
-                                                   length,
-                                                   &args);
+                DWORD fmtReturnVal = FormatMessage(FORMAT_MESSAGE_FROM_STRING, pMessage, 0, 0, spBuffer.get(), length, &args);
                 va_end(args);
 
                 if (fmtReturnVal != 0)
