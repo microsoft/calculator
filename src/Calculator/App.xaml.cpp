@@ -139,14 +139,6 @@ void App::RemoveWindowFromMap(int viewId)
     m_secondaryWindows.erase(viewId);
 }
 
-void App::RemoveWindow(_In_ WindowFrameService ^ frameService)
-{
-    // Shell does not allow killing the main window.
-    if (m_mainViewId != frameService->GetViewId())
-    {
-        HandleViewReleaseAndRemoveWindowFromMap(frameService);
-    }
-}
 
 task<void> App::HandleViewReleaseAndRemoveWindowFromMap(_In_ WindowFrameService ^ frameService)
 {
