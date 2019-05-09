@@ -901,13 +901,18 @@
     <value>Lewy nawias</value>
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
-  <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
-    <value>Lewy nawias, liczba otwartych nawiasów: %1</value>
-    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
-  </data>
+  
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Prawy nawias</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
+  </data>
+  <data name="Format_OpenParenthesisCountAutomationNamePrefix" xml:space="preserve">
+    <value>Liczba nawiasów otwierających: %1</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific and programmer operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
+  </data>
+  <data name="NoRightParenthesisAdded_Announcement" xml:space="preserve">
+    <value>Brak otwartych nawiasów do zamknięcia.</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator when the ")" button on the scientific and programmer operator keypad cannot be added to the equation. e.g. "1+)".</comment>
   </data>
   <data name="ftoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Notacja naukowa</value>
@@ -2277,9 +2282,9 @@
     <value>Zasady zachowania poufności informacji firmy Microsoft</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
   </data>
-  <data name="AboutControlCopyright.Text" xml:space="preserve">
-    <value>© 2018 Microsoft. Wszelkie prawa zastrzeżone.</value>
-    <comment>Copyright statement, displayed on the About panel</comment>
+  <data name="AboutControlCopyright" xml:space="preserve">
+    <value>© %1 Microsoft. Wszelkie prawa zastrzeżone.</value>
+    <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Informacje</value>

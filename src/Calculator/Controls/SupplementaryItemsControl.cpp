@@ -18,25 +18,23 @@ using namespace Platform;
 using namespace Windows::Foundation::Collections;
 using namespace std;
 
-DependencyObject^ SupplementaryItemsControl::GetContainerForItemOverride()
+DependencyObject ^ SupplementaryItemsControl::GetContainerForItemOverride()
 {
     return ref new SupplementaryContentPresenter();
 }
 
-void SupplementaryItemsControl::PrepareContainerForItemOverride(DependencyObject^ element, Object^ item)
+void SupplementaryItemsControl::PrepareContainerForItemOverride(DependencyObject ^ element, Object ^ item)
 {
     ItemsControl::PrepareContainerForItemOverride(element, item);
 
-    auto supplementaryResult = dynamic_cast<SupplementaryResult^>(item);
+    auto supplementaryResult = dynamic_cast<SupplementaryResult ^>(item);
     if (supplementaryResult)
     {
         AutomationProperties::SetName(element, supplementaryResult->GetLocalizedAutomationName());
     }
 }
 
- AutomationPeer^ SupplementaryContentPresenter::OnCreateAutomationPeer()
- {
-     return ref new SupplementaryContentPresenterAP(this);
- }
-
-
+AutomationPeer ^ SupplementaryContentPresenter::OnCreateAutomationPeer()
+{
+    return ref new SupplementaryContentPresenterAP(this);
+}

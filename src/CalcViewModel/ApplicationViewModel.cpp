@@ -36,16 +36,15 @@ namespace
 {
     StringReference CategoriesPropertyName(L"Categories");
     StringReference ClearMemoryVisibilityPropertyName(L"ClearMemoryVisibility");
-    StringReference AppBarVisibilityPropertyName(L"AppBarVisibility");
 }
 
-ApplicationViewModel::ApplicationViewModel() :
-    m_CalculatorViewModel(nullptr),
-    m_DateCalcViewModel(nullptr),
-    m_ConverterViewModel(nullptr),
-    m_PreviousMode(ViewMode::None),
-    m_mode(ViewMode::None),
-    m_categories(nullptr)
+ApplicationViewModel::ApplicationViewModel()
+    : m_CalculatorViewModel(nullptr)
+    , m_DateCalcViewModel(nullptr)
+    , m_ConverterViewModel(nullptr)
+    , m_PreviousMode(ViewMode::None)
+    , m_mode(ViewMode::None)
+    , m_categories(nullptr)
 {
     SetMenuCategories();
 }
@@ -61,7 +60,7 @@ void ApplicationViewModel::Mode::set(ViewMode value)
     }
 }
 
-void ApplicationViewModel::Categories::set(IObservableVector<NavCategoryGroup^>^ value)
+void ApplicationViewModel::Categories::set(IObservableVector<NavCategoryGroup ^> ^ value)
 {
     if (m_categories != value)
     {
@@ -91,7 +90,7 @@ void ApplicationViewModel::Initialize(ViewMode mode)
             throw;
         }
     }
-    catch (Exception^ e)
+    catch (Exception ^ e)
     {
         TraceLogger::GetInstance().LogPlatformException(__FUNCTIONW__, e);
         if (!TryRecoverFromNavigationModeFailure())
@@ -164,10 +163,9 @@ void ApplicationViewModel::OnModeChanged()
 
     TraceLogger::GetInstance().LogModeChangeEnd(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
     RaisePropertyChanged(ClearMemoryVisibilityPropertyName);
-    RaisePropertyChanged(AppBarVisibilityPropertyName);
 }
 
-void ApplicationViewModel::OnCopyCommand(Object^ parameter)
+void ApplicationViewModel::OnCopyCommand(Object ^ parameter)
 {
     if (NavCategory::IsConverterViewMode(m_mode))
     {
@@ -183,13 +181,13 @@ void ApplicationViewModel::OnCopyCommand(Object^ parameter)
     }
 }
 
-void ApplicationViewModel::OnPasteCommand(Object^ parameter)
+void ApplicationViewModel::OnPasteCommand(Object ^ parameter)
 {
     if (NavCategory::IsConverterViewMode(m_mode))
     {
         ConverterViewModel->OnPasteCommand(parameter);
     }
-    else
+    else if (NavCategory::IsCalculatorViewMode(m_mode))
     {
         CalculatorViewModel->OnPasteCommand(parameter);
     }

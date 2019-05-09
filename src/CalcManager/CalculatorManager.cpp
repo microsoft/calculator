@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
+#include <climits> // for UCHAR_MAX
 #include "Header Files/CalcEngine.h"
 #include "CalculatorManager.h"
 #include "CalculatorResource.h"
@@ -14,25 +14,21 @@ static constexpr size_t SERIALIZED_NUMBER_MINSIZE = 3;
 
 // Converts Memory Command enum value to unsigned char,
 // while ignoring Warning C4309: 'conversion' : truncation of constant value
-#define MEMORY_COMMAND_TO_UNSIGNED_CHAR(c)\
-    __pragma(warning(push))\
-    __pragma(warning(disable: 4309))\
-        static_cast<unsigned char>(c)\
-    __pragma(warning(pop))
+#define MEMORY_COMMAND_TO_UNSIGNED_CHAR(c) __pragma(warning(push)) __pragma(warning(disable : 4309)) static_cast<unsigned char>(c) __pragma(warning(pop))
 
 namespace CalculationManager
 {
-    CalculatorManager::CalculatorManager(_In_ ICalcDisplay* displayCallback, _In_ IResourceProvider* resourceProvider) :
-        m_displayCallback(displayCallback),
-        m_currentCalculatorEngine(nullptr),
-        m_resourceProvider(resourceProvider),
-        m_inHistoryItemLoadMode(false),
-        m_persistedPrimaryValue(),
-        m_isExponentialFormat(false),
-        m_currentDegreeMode(Command::CommandNULL),
-        m_savedDegreeMode(Command::CommandDEG),
-        m_pStdHistory(new CalculatorHistory(MAX_HISTORY_ITEMS)),
-        m_pSciHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
+    CalculatorManager::CalculatorManager(_In_ ICalcDisplay* displayCallback, _In_ IResourceProvider* resourceProvider)
+        : m_displayCallback(displayCallback)
+        , m_currentCalculatorEngine(nullptr)
+        , m_resourceProvider(resourceProvider)
+        , m_inHistoryItemLoadMode(false)
+        , m_persistedPrimaryValue()
+        , m_isExponentialFormat(false)
+        , m_currentDegreeMode(Command::CommandNULL)
+        , m_savedDegreeMode(Command::CommandDEG)
+        , m_pStdHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
+        , m_pSciHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
     {
         CCalcEngine::InitialOneTimeOnlySetup(*m_resourceProvider);
     }
@@ -89,7 +85,9 @@ namespace CalculationManager
     /// Used to set the expression display value on ViewModel
     /// </summary>
     /// <param name="expressionString">wstring representing expression to be displayed</param>
-    void CalculatorManager::SetExpressionDisplay(_Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const &tokens, _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const &commands)
+    void CalculatorManager::SetExpressionDisplay(
+        _Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
+        _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
     {
         if (!m_inHistoryItemLoadMode)
         {
@@ -111,9 +109,9 @@ namespace CalculationManager
     /// Callback from the engine
     /// </summary>
     /// <param name="parenthesisCount">string containing the parenthesis count</param>
-    void CalculatorManager::SetParenDisplayText(const wstring& parenthesisCount)
+    void CalculatorManager::SetParenthesisNumber(_In_ unsigned int parenthesisCount)
     {
-        m_displayCallback->SetParenDisplayText(parenthesisCount);
+        m_displayCallback->SetParenthesisNumber(parenthesisCount);
     }
 
     /// <summary>
@@ -165,7 +163,8 @@ namespace CalculationManager
     {
         if (!m_standardCalculatorEngine)
         {
-            m_standardCalculatorEngine = make_unique<CCalcEngine>(false /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider, this, m_pStdHistory);
+            m_standardCalculatorEngine =
+                make_unique<CCalcEngine>(false /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider, this, m_pStdHistory);
         }
 
         m_currentCalculatorEngine = m_standardCalculatorEngine.get();
@@ -183,7 +182,8 @@ namespace CalculationManager
     {
         if (!m_scientificCalculatorEngine)
         {
-            m_scientificCalculatorEngine = make_unique<CCalcEngine>(true /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider, this, m_pSciHistory);
+            m_scientificCalculatorEngine =
+                make_unique<CCalcEngine>(true /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider, this, m_pSciHistory);
         }
 
         m_currentCalculatorEngine = m_scientificCalculatorEngine.get();
@@ -198,9 +198,10 @@ namespace CalculationManager
     /// </summary>
     void CalculatorManager::SetProgrammerMode()
     {
-        if(!m_programmerCalculatorEngine)
+        if (!m_programmerCalculatorEngine)
         {
-            m_programmerCalculatorEngine = make_unique<CCalcEngine>(true /* Respect Order of Operations */, true /* Set to Integer Mode */, m_resourceProvider, this, nullptr);
+            m_programmerCalculatorEngine =
+                make_unique<CCalcEngine>(true /* Respect Order of Operations */, true /* Set to Integer Mode */, m_resourceProvider, this, nullptr);
         }
 
         m_currentCalculatorEngine = m_programmerCalculatorEngine.get();
@@ -209,10 +210,9 @@ namespace CalculationManager
         m_currentCalculatorEngine->ChangePrecision(static_cast<int>(CalculatorPrecision::ProgrammerModePrecision));
     }
 
-
     /// <summary>
     /// Send command to the Calc Engine
-    /// Cast Command Enum to WPARAM.
+    /// Cast Command Enum to OpCode.
     /// Handle special commands such as mode change and combination of two commands.
     /// </summary>
     /// <param name="command">Enum Command</command>
@@ -220,8 +220,8 @@ namespace CalculationManager
     {
         // When the expression line is cleared, we save the current state, which includes,
         // primary display, memory, and degree mode
-        if (command == Command::CommandCLEAR || command == Command::CommandEQU
-            || command == Command::ModeBasic || command == Command::ModeScientific || command == Command::ModeProgrammer)
+        if (command == Command::CommandCLEAR || command == Command::CommandEQU || command == Command::ModeBasic || command == Command::ModeScientific
+            || command == Command::ModeProgrammer)
         {
             switch (command)
             {
@@ -235,7 +235,7 @@ namespace CalculationManager
                 this->SetProgrammerMode();
                 break;
             default:
-                m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(command));
+                m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(command));
             }
 
             m_savedCommands.clear(); // Clear the previous command history
@@ -261,38 +261,38 @@ namespace CalculationManager
         switch (command)
         {
         case Command::CommandASIN:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandSIN));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandSIN));
             break;
         case Command::CommandACOS:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandCOS));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandCOS));
             break;
         case Command::CommandATAN:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandTAN));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandTAN));
             break;
         case Command::CommandPOWE:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandLN));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandLN));
             break;
         case Command::CommandASINH:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandSINH));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandSINH));
             break;
         case Command::CommandACOSH:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandCOSH));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandCOSH));
             break;
         case Command::CommandATANH:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandINV));
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(Command::CommandTANH));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandTANH));
             break;
         case Command::CommandFE:
             m_isExponentialFormat = !m_isExponentialFormat;
             [[fallthrough]];
         default:
-            m_currentCalculatorEngine->ProcessCommand(static_cast<WPARAM>(command));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(command));
             break;
         }
     }
@@ -473,10 +473,10 @@ namespace CalculationManager
     }
 
     /// <summary>
-/// Helper function that selects a memory from the vector and set it to CCalcEngine
-/// Saved RAT number needs to be copied and passed in, as CCalcEngine destroyed the passed in RAT
-/// </summary>
-/// <param name="indexOfMemory">Index of the target memory</param>
+    /// Helper function that selects a memory from the vector and set it to CCalcEngine
+    /// Saved RAT number needs to be copied and passed in, as CCalcEngine destroyed the passed in RAT
+    /// </summary>
+    /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberSelect(_In_ unsigned int indexOfMemory)
     {
         if (m_currentCalculatorEngine->FInErrorState())
@@ -524,9 +524,7 @@ namespace CalculationManager
 
     vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems(_In_ CALCULATOR_MODE mode)
     {
-        return (mode == CM_STD) ?
-            m_pStdHistory->GetHistory() :
-            m_pSciHistory->GetHistory();
+        return (mode == CM_STD) ? m_pStdHistory->GetHistory() : m_pSciHistory->GetHistory();
     }
 
     shared_ptr<HISTORYITEM> const& CalculatorManager::GetHistoryItem(_In_ unsigned int uIdx)

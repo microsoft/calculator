@@ -901,13 +901,18 @@
     <value>ఎడమ కుండలీకరణం</value>
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
-  <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
-    <value>ఎడమ కుండలీకరణం, కుండలీకరణ గణనను %1 తెరవు</value>
-    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
-  </data>
+  
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>కుడి కుండలీకరణం</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
+  </data>
+  <data name="Format_OpenParenthesisCountAutomationNamePrefix" xml:space="preserve">
+    <value>వృత్తార్ధము గణనను %1 తెరువు</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific and programmer operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
+  </data>
+  <data name="NoRightParenthesisAdded_Announcement" xml:space="preserve">
+    <value>మూసేయడానికి తెరచి ఉన్న ఏ వృత్తార్ధాలు లేవు.</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator when the ")" button on the scientific and programmer operator keypad cannot be added to the equation. e.g. "1+)".</comment>
   </data>
   <data name="ftoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>సైంటిఫిక్ నొటేషన్</value>
@@ -2277,9 +2282,9 @@
     <value>Microsoft గోప్యతా ప్రకటన</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
   </data>
-  <data name="AboutControlCopyright.Text" xml:space="preserve">
-    <value>© 2018 Microsoft. అన్ని హక్కులు ప్రత్యేకించినవి.</value>
-    <comment>Copyright statement, displayed on the About panel</comment>
+  <data name="AboutControlCopyright" xml:space="preserve">
+    <value>© %1 Microsoft. అన్ని హక్కులు ప్రత్యేకించినవి.</value>
+    <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>గురించి</value>

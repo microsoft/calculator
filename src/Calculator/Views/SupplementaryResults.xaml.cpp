@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -27,9 +27,11 @@ using namespace Windows::UI::Xaml::Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-Object^ DelighterUnitToStyleConverter::Convert(Object^ value, TypeName /*targetType*/, Object^ /*parameter*/, String^ /*language*/)
+DEPENDENCY_PROPERTY_INITIALIZATION(SupplementaryResults, Results);
+
+Object ^ DelighterUnitToStyleConverter::Convert(Object ^ value, TypeName /*targetType*/, Object ^ /*parameter*/, String ^ /*language*/)
 {
-    Unit^ unit = safe_cast<Unit^>(value);
+    Unit ^ unit = safe_cast<Unit ^>(value);
 
     assert(unit->GetModelUnit().isWhimsical);
     if (!unit->GetModelUnit().isWhimsical)
@@ -39,19 +41,19 @@ Object^ DelighterUnitToStyleConverter::Convert(Object^ value, TypeName /*targetT
 
     std::wstring key = L"Unit_";
     key.append(std::to_wstring(unit->GetModelUnit().id));
-    return safe_cast<IStyle^>(m_delighters->Lookup(ref new String(key.c_str())));
+    return safe_cast<IStyle ^>(m_delighters->Lookup(ref new String(key.c_str())));
 }
 
-Object^ DelighterUnitToStyleConverter::ConvertBack(Object^ /*value*/, TypeName /*targetType*/, Object^ /*parameter*/, String^ /*language*/)
+Object ^ DelighterUnitToStyleConverter::ConvertBack(Object ^ /*value*/, TypeName /*targetType*/, Object ^ /*parameter*/, String ^ /*language*/)
 {
     // We never use convert back, only one way binding supported
     assert(false);
     return nullptr;
 }
 
-Windows::UI::Xaml::DataTemplate^ SupplementaryResultDataTemplateSelector::SelectTemplateCore(Object^ item, DependencyObject^ /*container*/)
+Windows::UI::Xaml::DataTemplate ^ SupplementaryResultDataTemplateSelector::SelectTemplateCore(Object ^ item, DependencyObject ^ /*container*/)
 {
-    SupplementaryResult^ result = safe_cast<SupplementaryResult^>(item);
+    SupplementaryResult ^ result = safe_cast<SupplementaryResult ^>(item);
     if (result->IsWhimsical())
     {
         return DelighterTemplate;
@@ -62,74 +64,22 @@ Windows::UI::Xaml::DataTemplate^ SupplementaryResultDataTemplateSelector::Select
     }
 }
 
-SupplementaryResults::SupplementaryResults() :
-    m_data(ref new Vector<SupplementaryResult^>)
+SupplementaryResults::SupplementaryResults()
 {
     InitializeComponent();
-
-    this->Loaded += ref new RoutedEventHandler(this, &SupplementaryResults::OnLoaded);
 }
 
-void SupplementaryResults::RefreshData()
+bool SupplementaryResultNoOverflowStackPanel::ShouldPrioritizeLastItem()
 {
-    // Copy the list so that when we chop stuff off, we don't modify the original
-    // complete list.
-    m_data->Clear();
-    for(SupplementaryResult^ sr : safe_cast<UnitConverterViewModel^>(this->DataContext)->SupplementaryResults)
+    if (Children->Size == 0)
     {
-        m_data->Append(sr);
+        return false;
     }
-
-    // Set as source
-    SupplementaryValues->ItemsSource = m_data;
-}
-
-void SupplementaryResults::OnLoaded(Object^ sender, RoutedEventArgs^ e)
-{
-    UnitConverterViewModel^ vm = safe_cast<UnitConverterViewModel^>(this->DataContext);
-    vm->PropertyChanged += ref new PropertyChangedEventHandler(this, &SupplementaryResults::OnConverterPropertyChanged);
-    Window::Current->SizeChanged += ref new WindowSizeChangedEventHandler(this, &SupplementaryResults::OnWindowSizeChanged);
-    // We may be loaded into a state where we need to render (like rehydrate), so prepare data
-    RefreshData();
-}
-
-void SupplementaryResults::OnConverterPropertyChanged(Object^ /*sender*/, PropertyChangedEventArgs^ e)
-{
-    if (e->PropertyName == UnitConverterViewModel::SupplementaryResultsPropertyName)
+    auto lastChild = dynamic_cast<FrameworkElement ^>(Children->GetAt(Children->Size - 1));
+    if (lastChild == nullptr)
     {
-        RefreshData();
+        return false;
     }
-}
-
-void SupplementaryResults::OnWindowSizeChanged(Platform::Object^ sender, Windows::UI::Core::WindowSizeChangedEventArgs^ e)
-{
-    // to reload supplementary results every time the window is resized
-    RefreshData();
-}
-
-void SupplementaryResults::OnSupplementaryValuesLayoutUpdated(Platform::Object^ sender, Platform::Object^ e)
-{
-    // This means we overflowed and are cutting off, or in a very rare case we fit exactly. Unfortunately
-    // the fitting exactly case will still have an item removed, as there is no other way for us to
-    // detect that we need to trim.
-    Grid^ parentGrid = dynamic_cast<Grid^>(VisualTreeHelper::GetParent(this));
-    if (parentGrid != nullptr)
-    {
-        double parentWidth = parentGrid->ActualWidth;
-        if (SupplementaryValues && SupplementaryValues->ActualWidth >= parentWidth)
-        {
-            if (m_data->Size > 0)
-            {
-                SupplementaryResult^ last = m_data->GetAt(m_data->Size - 1);
-                if (!last->IsWhimsical() || m_data->Size <= 2)
-                {
-                    m_data->RemoveAtEnd();
-                }
-                else
-                {
-                    m_data->RemoveAt(m_data->Size - 2);
-                }
-            }
-        }
-    }
+    auto suppResult = dynamic_cast<SupplementaryResult ^>(lastChild->DataContext);
+    return suppResult == nullptr ? false : suppResult->IsWhimsical();
 }

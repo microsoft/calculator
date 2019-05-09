@@ -7,11 +7,12 @@
 using namespace CalculatorApp::Common;
 using namespace Windows::Storage::Streams;
 
-SerializeCommandVisitor::SerializeCommandVisitor(_In_ DataWriter^ dataWriter) :m_dataWriter(dataWriter)
+SerializeCommandVisitor::SerializeCommandVisitor(_In_ DataWriter ^ dataWriter)
+    : m_dataWriter(dataWriter)
 {
 }
 
-void SerializeCommandVisitor::Visit(_In_ COpndCommand &opndCmd)
+void SerializeCommandVisitor::Visit(_In_ COpndCommand& opndCmd)
 {
     m_dataWriter->WriteBoolean(opndCmd.IsNegative());
     m_dataWriter->WriteBoolean(opndCmd.IsDecimalPresent());
@@ -29,7 +30,7 @@ void SerializeCommandVisitor::Visit(_In_ COpndCommand &opndCmd)
     }
 }
 
-void SerializeCommandVisitor::Visit(_In_ CUnaryCommand &unaryCmd)
+void SerializeCommandVisitor::Visit(_In_ CUnaryCommand& unaryCmd)
 {
     auto cmds = unaryCmd.GetCommands();
     unsigned int cmdSize;
@@ -43,13 +44,13 @@ void SerializeCommandVisitor::Visit(_In_ CUnaryCommand &unaryCmd)
     }
 }
 
-void SerializeCommandVisitor::Visit(_In_ CBinaryCommand &binaryCmd)
+void SerializeCommandVisitor::Visit(_In_ CBinaryCommand& binaryCmd)
 {
     int cmd = binaryCmd.GetCommand();
     m_dataWriter->WriteInt32(cmd);
 }
 
-void SerializeCommandVisitor::Visit(_In_ CParentheses &paraCmd)
+void SerializeCommandVisitor::Visit(_In_ CParentheses& paraCmd)
 {
     int parenthesisCmd = paraCmd.GetCommand();
     m_dataWriter->WriteInt32(parenthesisCmd);
