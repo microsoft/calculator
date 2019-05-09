@@ -40,7 +40,7 @@ static const wstring c_uIntSuffixes = L"[uU]?[lL]{0,2}";
 static const array<wregex, 1> standardModePatterns = { wregex(c_wspc + c_signedDecFloat + c_wspc) };
 static const array<wregex, 2> scientificModePatterns = {
     wregex(L"(" + c_wspc + L"[-+]?)|(" + c_wspcLParenSigned + L")" + c_signedDecFloat + c_wspcRParens),
-    wregex(L"(" + c_wspc + L"[-+]?)|(" + c_wspcLParenSigned + L")" + c_signedDecFloat + L"[e]([+]|[-])+\\d+" + c_wspcRParens)
+    wregex(L"(" + c_wspc + L"[-+]?)|(" + c_wspcLParenSigned + L")" + c_signedDecFloat + L"e[+-]?\\d+" + c_wspcRParens)
 };
 static const array<array<wregex, 5>, 4> programmerModePatterns = {
     { // Hex numbers like 5F, 4A0C, 0xa9, 0xFFull, 47CDh

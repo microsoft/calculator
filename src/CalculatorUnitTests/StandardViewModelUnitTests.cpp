@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -419,6 +419,12 @@ namespace CalculatorUnitTests
             m_viewModel->OnPaste("1.23e+10", ViewMode::Scientific);
             ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e+10", "");
 
+            m_viewModel->OnPaste("1.23e10", ViewMode::Scientific);
+            ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e+10", "");
+
+            m_viewModel->OnPaste("135e10", ViewMode::Scientific);
+            ValidateViewModelValueAndExpression("135" + m_decimalSeparator + "e+10", "");
+
             //// Negative exponent
             m_viewModel->OnPaste("1.23e-10", ViewMode::Scientific);
             ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e-10", "");
@@ -426,6 +432,9 @@ namespace CalculatorUnitTests
             //// Uppercase E (for exponent)
             m_viewModel->OnPaste("1.23E-10", ViewMode::Scientific);
             ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e-10", "");
+
+            m_viewModel->OnPaste("135E10", ViewMode::Scientific);
+            ValidateViewModelValueAndExpression("135" + m_decimalSeparator + "e+10", "");
         }
 
         // Verify Calculator CalculationResultAutomationName is set correctly

@@ -881,14 +881,25 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString, ViewMode mode)
             }
         }
 
-        // Handle exponent and exponent sign (...e+... or ...e-...)
+        // Handle exponent and exponent sign (...e+... or ...e-... or ...e...)
         if (mappedNumOp == NumbersAndOperatorsEnum::Exp)
         {
-            ++it;
-            if (!(MapCharacterToButtonId(*it, canSendNegate) == NumbersAndOperatorsEnum::Add))
+            //Check the following item
+            switch (MapCharacterToButtonId(*(it + 1), canSendNegate))
+            {
+            case NumbersAndOperatorsEnum::Subtract:
             {
                 Command cmdNegate = ConvertToOperatorsEnum(NumbersAndOperatorsEnum::Negate);
                 m_standardCalculatorManager.SendCommand(cmdNegate);
+                ++it;
+            }
+            break;
+            case NumbersAndOperatorsEnum::Add:
+            {
+                //Nothing to do, skip to the next item
+                ++it;
+            }
+            break;
             }
         }
 
