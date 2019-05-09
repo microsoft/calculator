@@ -8,6 +8,10 @@
 
 #pragma once
 
+// Windows headers define min/max macros.
+// Disable it for project code.
+#define NOMINMAX
+
 #include <collection.h>
 #include <unordered_map>
 #include <map>
@@ -19,8 +23,10 @@
 #include <locale>
 #include <sal.h>
 #include <sstream>
+#include <string>
 #include <concrt.h>
 #include <regex>
+#include <string>
 
 // C++\WinRT Headers
 #include "winrt/base.h"
@@ -39,7 +45,9 @@
 // Once the app switches to min version RS3, the namespaces can be removed.
 // TODO - MSFT 12735088
 namespace StandardPeers = Windows::UI::Xaml::Automation::Peers;
-namespace CalculatorApp::Common::Automation {}
+namespace CalculatorApp::Common::Automation
+{
+}
 namespace CustomPeers = CalculatorApp::Common::Automation;
 
 // Project Headers

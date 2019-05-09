@@ -19,7 +19,6 @@
                     <Color x:Key="ChromeMediumLowColor">#FF2B2B2B</Color>
                     <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="{StaticResource AltHighColor}"/>
                     <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush" Color="{StaticResource ChromeMediumLowColor}"/>
-                    <SolidColorBrush x:Key="TitleBarBackgroundTransparentBrush" Color="Transparent"/>
                     <SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush" Color="{StaticResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="SystemControlBackgroundTransparentBrush" Color="Transparent"/>
                     <SolidColorBrush x:Key="SystemControlHighlightTransparentBrush" Color="Transparent"/>
@@ -34,7 +33,11 @@
                                        FallbackColor="Transparent"
                                        TargetTheme="Dark"
                                        Color="Transparent"/>
-                    <RevealBackgroundBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
+                    <RevealBackgroundBrush x:Key="AppControlHighlightAccentRevealBackgroundBrush"
+                                           FallbackColor="{ThemeResource SystemAccentColor}"
+                                           TargetTheme="Dark"
+                                           Color="{ThemeResource SystemAccentColor}"/>
+                    <RevealBackgroundBrush x:Key="AppControlBackgroundListAccentHighRevealBackgroundBrush"
                                            FallbackColor="{ThemeResource SystemAccentColorDark3}"
                                            TargetTheme="Dark"
                                            Color="{ThemeResource SystemAccentColorDark3}"/>
@@ -51,7 +54,6 @@
                     <Color x:Key="ChromeMediumLowColor">#FFE0E0E0</Color>
                     <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="{StaticResource SystemAltHighColor}"/>
                     <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush" Color="{StaticResource ChromeMediumLowColor}"/>
-                    <SolidColorBrush x:Key="TitleBarBackgroundTransparentBrush" Color="Transparent"/>
                     <SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush" Color="{StaticResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="SystemControlBackgroundTransparentBrush" Color="Transparent"/>
                     <SolidColorBrush x:Key="SystemControlHighlightTransparentBrush" Color="Transparent"/>
@@ -66,7 +68,11 @@
                                        FallbackColor="Transparent"
                                        TargetTheme="Light"
                                        Color="Transparent"/>
-                    <RevealBackgroundBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
+                    <RevealBackgroundBrush x:Key="AppControlHighlightAccentRevealBackgroundBrush"
+                                           FallbackColor="{ThemeResource SystemAccentColor}"
+                                           TargetTheme="Light"
+                                           Color="{ThemeResource SystemAccentColor}"/>
+                    <RevealBackgroundBrush x:Key="AppControlBackgroundListAccentHighRevealBackgroundBrush"
                                            FallbackColor="{ThemeResource SystemAccentColorLight3}"
                                            TargetTheme="Light"
                                            Color="{ThemeResource SystemAccentColorLight3}"/>
@@ -81,7 +87,6 @@
                     <x:Double x:Key="HighContrastStrokeThickness">2</x:Double>
                     <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
-                    <SolidColorBrush x:Key="TitleBarBackgroundTransparentBrush" Color="{ThemeResource SystemColorActiveCaptionColor}"/>
                     <SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush" Color="{ThemeResource SystemColorCaptionTextColor}"/>
                     <SolidColorBrush x:Key="SystemControlBackgroundTransparentBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="SystemControlHighlightTransparentBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
@@ -93,7 +98,8 @@
                     <SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextRedColorBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
                     <SolidColorBrush x:Key="AppControlForegroundTransparentRevealBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
-                    <SolidColorBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush" Color="{ThemeResource SystemColorHighlightTextColor}"/>
+                    <SolidColorBrush x:Key="AppControlHighlightAccentRevealBackgroundBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
+                    <SolidColorBrush x:Key="AppControlBackgroundListAccentHighRevealBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="AppControlListLowRevealHighlightBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush" Color="{ThemeResource SystemColorWindowColor}"/>
                 </ResourceDictionary>
@@ -124,10 +130,6 @@
             <x:Double x:Key="CalcStandardOperatorCaptionSize">20</x:Double>
             <!-- Standard Operators Standard/Scientific in Fill/Full -->
             <x:Double x:Key="CalcOperatorCaptionSize">15</x:Double>
-
-            <x:Double x:Key="CalcResultFontSizeL">72</x:Double>
-            <x:Double x:Key="CalcResultFontSizeM">46</x:Double>
-            <x:Double x:Key="CalcResultFontSizeS">28</x:Double>
 
             <!-- Base style for calc buttons -->
             <Style x:Key="CalcButtonStyle" TargetType="Controls:CalculatorButton">
@@ -326,9 +328,9 @@
             <Style x:Key="AccentCalcButtonStyle"
                    BasedOn="{StaticResource SymbolOperatorButtonStyle}"
                    TargetType="Controls:CalculatorButton">
-                <Setter Property="HoverBackground" Value="{ThemeResource SystemControlHighlightAccentRevealBackgroundBrush}"/>
+                <Setter Property="HoverBackground" Value="{ThemeResource AppControlHighlightAccentRevealBackgroundBrush}"/>
                 <Setter Property="HoverForeground" Value="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
-                <Setter Property="PressBackground" Value="{ThemeResource AppControlHighlightAltListAccentHighRevealBackgroundBrush}"/>
+                <Setter Property="PressBackground" Value="{ThemeResource AppControlBackgroundListAccentHighRevealBackgroundBrush}"/>
                 <Setter Property="PressForeground" Value="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
             </Style>
 
@@ -351,7 +353,8 @@
                 <Setter Property="ZoomMode" Value="Disabled"/>
             </Style>
 
-            <Style x:Key="CalculationResultStyleL" TargetType="Controls:CalculationResult">
+            <Style x:Key="CalculationResultStyle"
+                   TargetType="Controls:CalculationResult">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -363,7 +366,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Controls:CalculationResult">
-                            <Grid x:Name="border" Background="{TemplateBinding Background}">
+                            <Grid x:Name="Border" Background="{TemplateBinding Background}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="12"/>
                                     <ColumnDefinition/>
@@ -371,32 +374,33 @@
                                 </Grid.ColumnDefinitions>
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="ActiveStates">
-                                        <VisualState x:Name="Active"/>
-                                        <VisualState x:Name="Normal">
+                                        <VisualState x:Name="Active">
                                             <VisualState.Setters>
-                                                <Setter Target="normalOutput.FontWeight" Value="Light"/>
+                                                <Setter Target="NormalOutput.FontWeight" Value="SemiBold"/>
+                                                <Setter Target="NormalOutput.IsTextSelectionEnabled" Value="True"/>
                                             </VisualState.Setters>
                                         </VisualState>
+                                        <VisualState x:Name="Normal"/>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
-                                <ScrollViewer x:Name="textContainer"
+                                <ScrollViewer x:Name="TextContainer"
                                               Grid.Column="1"
                                               Padding="0,0,0,0"
                                               Style="{ThemeResource ResultsScrollerSnapped}"
                                               AutomationProperties.AccessibilityView="Raw">
-                                    <TextBlock x:Name="normalOutput"
+                                    <TextBlock x:Name="NormalOutput"
                                                Margin="{TemplateBinding DisplayMargin}"
                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                Foreground="{TemplateBinding Foreground}"
                                                FontSize="{TemplateBinding FontSize}"
-                                               FontWeight="SemiBold"
+                                               FontWeight="Light"
                                                AutomationProperties.AccessibilityView="Raw"
                                                Text="{TemplateBinding DisplayValue}"
                                                TextAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                TextWrapping="NoWrap"/>
                                 </ScrollViewer>
-                                <HyperlinkButton x:Name="scrollLeft"
+                                <HyperlinkButton x:Name="ScrollLeft"
                                                  Grid.Column="0"
                                                  Width="20"
                                                  MinWidth="20"
@@ -409,12 +413,12 @@
                                                  Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
                                                  BorderThickness="0"
                                                  Visibility="Collapsed">
-                                    <FontIcon x:Name="scrollLeftText"
+                                    <FontIcon x:Name="ScrollLeftText"
                                               FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                               FontSize="12"
                                               Glyph="&#xE26C;"/>
                                 </HyperlinkButton>
-                                <HyperlinkButton x:Name="scrollRight"
+                                <HyperlinkButton x:Name="ScrollRight"
                                                  Grid.Column="2"
                                                  Width="20"
                                                  MinWidth="20"
@@ -427,180 +431,7 @@
                                                  Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
                                                  BorderThickness="0"
                                                  Visibility="Collapsed">
-                                    <FontIcon x:Name="scrollRightText"
-                                              FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                              FontSize="12"
-                                              Glyph="&#xE26B;"/>
-                                </HyperlinkButton>
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-            <Style x:Key="CalculationResultStyleM" TargetType="Controls:CalculationResult">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Foreground" Value="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
-                <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                <Setter Property="VerticalAlignment" Value="Stretch"/>
-                <Setter Property="HorizontalContentAlignment" Value="Right"/>
-                <Setter Property="VerticalContentAlignment" Value="Top"/>
-                <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
-                <Setter Property="UseSystemFocusVisuals" Value="True"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Controls:CalculationResult">
-                            <Grid x:Name="border" Background="{TemplateBinding Background}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="12"/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="12"/>
-                                </Grid.ColumnDefinitions>
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="ActiveStates">
-                                        <VisualState x:Name="Active"/>
-                                        <VisualState x:Name="Normal">
-                                            <VisualState.Setters>
-                                                <Setter Target="normalOutput.FontWeight" Value="Light"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-                                <ScrollViewer x:Name="textContainer"
-                                              Grid.Column="1"
-                                              Padding="0,0,0,0"
-                                              Style="{ThemeResource ResultsScrollerSnapped}"
-                                              AutomationProperties.AccessibilityView="Raw">
-                                    <TextBlock x:Name="normalOutput"
-                                               Margin="{TemplateBinding DisplayMargin}"
-                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                               Foreground="{TemplateBinding Foreground}"
-                                               FontSize="{TemplateBinding FontSize}"
-                                               FontWeight="SemiBold"
-                                               AutomationProperties.AccessibilityView="Raw"
-                                               Text="{TemplateBinding DisplayValue}"
-                                               TextAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                               TextWrapping="NoWrap"/>
-                                </ScrollViewer>
-                                <HyperlinkButton x:Name="scrollLeft"
-                                                 Grid.Column="0"
-                                                 Width="20"
-                                                 MinWidth="20"
-                                                 MinHeight="24"
-                                                 Margin="-4,0,-4,0"
-                                                 Padding="0,-3,0,4"
-                                                 VerticalAlignment="Top"
-                                                 HorizontalContentAlignment="Center"
-                                                 VerticalContentAlignment="Center"
-                                                 Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
-                                                 BorderThickness="0"
-                                                 Visibility="Collapsed">
-                                    <FontIcon x:Name="scrollLeftText"
-                                              FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                              FontSize="12"
-                                              Glyph="&#xE26C;"/>
-                                </HyperlinkButton>
-                                <HyperlinkButton x:Name="scrollRight"
-                                                 Grid.Column="2"
-                                                 Width="20"
-                                                 MinWidth="20"
-                                                 MinHeight="24"
-                                                 Margin="-4,0,-4,0"
-                                                 Padding="0,-3,0,4"
-                                                 VerticalAlignment="Top"
-                                                 HorizontalContentAlignment="Center"
-                                                 VerticalContentAlignment="Center"
-                                                 Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
-                                                 BorderThickness="0"
-                                                 Visibility="Collapsed">
-                                    <FontIcon x:Name="scrollRightText"
-                                              FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                              FontSize="12"
-                                              Glyph="&#xE26B;"/>
-                                </HyperlinkButton>
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-            <Style x:Key="CalculationResultStyleS" TargetType="Controls:CalculationResult">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Foreground" Value="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
-                <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                <Setter Property="VerticalAlignment" Value="Stretch"/>
-                <Setter Property="HorizontalContentAlignment" Value="Right"/>
-                <Setter Property="VerticalContentAlignment" Value="Top"/>
-                <Setter Property="MinHeight" Value="12"/>
-                <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
-                <Setter Property="UseSystemFocusVisuals" Value="True"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Controls:CalculationResult">
-                            <Grid x:Name="border" Background="{TemplateBinding Background}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="12"/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="12"/>
-                                </Grid.ColumnDefinitions>
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="ActiveStates">
-                                        <VisualState x:Name="Active"/>
-                                        <VisualState x:Name="Normal">
-                                            <VisualState.Setters>
-                                                <Setter Target="normalOutput.FontWeight" Value="Light"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-                                <ScrollViewer x:Name="textContainer"
-                                              Grid.Column="1"
-                                              Padding="0,0,0,0"
-                                              Style="{ThemeResource ResultsScrollerSnapped}"
-                                              AutomationProperties.AccessibilityView="Raw">
-                                    <TextBlock x:Name="normalOutput"
-                                               Margin="{TemplateBinding DisplayMargin}"
-                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                               Foreground="{TemplateBinding Foreground}"
-                                               FontSize="{TemplateBinding FontSize}"
-                                               FontWeight="SemiBold"
-                                               AutomationProperties.AccessibilityView="Raw"
-                                               Text="{TemplateBinding DisplayValue}"
-                                               TextAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                               TextWrapping="NoWrap"/>
-                                </ScrollViewer>
-                                <HyperlinkButton x:Name="scrollLeft"
-                                                 Grid.Column="0"
-                                                 Width="20"
-                                                 MinWidth="20"
-                                                 MinHeight="24"
-                                                 Margin="-4,0,-4,0"
-                                                 Padding="0,-3,0,4"
-                                                 VerticalAlignment="Top"
-                                                 HorizontalContentAlignment="Center"
-                                                 VerticalContentAlignment="Center"
-                                                 Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
-                                                 BorderThickness="0"
-                                                 Visibility="Collapsed">
-                                    <FontIcon x:Name="scrollLeftText"
-                                              FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                              FontSize="12"
-                                              Glyph="&#xE26C;"/>
-                                </HyperlinkButton>
-                                <HyperlinkButton x:Name="scrollRight"
-                                                 Grid.Column="2"
-                                                 Width="20"
-                                                 MinWidth="20"
-                                                 MinHeight="24"
-                                                 Margin="-4,0,-4,0"
-                                                 Padding="0,-3,0,4"
-                                                 VerticalAlignment="Top"
-                                                 HorizontalContentAlignment="Center"
-                                                 VerticalContentAlignment="Center"
-                                                 Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
-                                                 BorderThickness="0"
-                                                 Visibility="Collapsed">
-                                    <FontIcon x:Name="scrollRightText"
+                                    <FontIcon x:Name="ScrollRightText"
                                               FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                               FontSize="12"
                                               Glyph="&#xE26B;"/>
@@ -698,7 +529,7 @@
                                         <VisualState x:Name="Pressed">
                                             <VisualState.Setters>
                                                 <Setter Target="RootGrid.(RevealBrush.State)" Value="Pressed"/>
-                                                <Setter Target="RootGrid.Background" Value="{ThemeResource AppControlHighlightAltListAccentHighRevealBackgroundBrush}"/>
+                                                <Setter Target="RootGrid.Background" Value="{ThemeResource AppControlBackgroundListAccentHighRevealBackgroundBrush}"/>
                                                 <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
                                             </VisualState.Setters>
                                         </VisualState>

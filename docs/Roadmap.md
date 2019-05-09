@@ -9,6 +9,7 @@ In 2019, the Windows Calculator team is focused on:
 * Iterating upon the existing app design based on the latest [Fluent Design guidelines](https://developer.microsoft.com/en-us/windows/apps/design)
 * Improving testing and diagnostics within the project
 * Investigating new features with a focus on addressing top user feedback, including:
+  * Adding graphing mode
   * Adding the ability for users to pin Calculator on top of other windows
   * Providing additional customization options
   * [Your feature idea here] - please review our [new feature development process](https://github.com/Microsoft/calculator/blob/master/docs/NewFeatureProcess.md) to get started!

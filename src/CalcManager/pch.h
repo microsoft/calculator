@@ -1,23 +1,22 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
 
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN
-#endif
+// The CalcManager project should be able to be compiled with or without a precompiled header
+// in - order to support other toolchains besides MSVC. When adding new system headers, make sure
+// that the relevant source file includes all headers it needs, but then also add the system headers
+// here so that MSVC users see the performance benefit.
 
-#include <assert.h>
-#include <windows.h>
-#include <winerror.h>
-#include <sstream>
-#include <iostream>
-#include <string>
-#include <memory>
-#include <vector>
-#include <limits>
-#include <regex>
-#include <unordered_map>
-#include <intsafe.h>
+#include <algorithm>
 #include <array>
+#include <cassert>
+#include <intsafe.h>
+#include <list>
 #include <ppltasks.h>
+#include <regex>
+#include <sstream>
+#include <string>
+#include <unordered_map>
+#include <vector>
+#include <winerror.h>

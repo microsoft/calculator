@@ -15,7 +15,7 @@ using namespace Windows::Foundation;
 using namespace Windows::UI::Xaml::Interop;
 
 // returns automationName in form "Nth bit Value zero/one" depending if bit is set/unset at corresponding index of binary display
-Object^ BitFlipAutomationNameConverter::Convert(_In_ Object^ value, TypeName targetType, _In_ Object^ parameter, _In_ String^ language)
+Object ^ BitFlipAutomationNameConverter::Convert(_In_ Object ^ value, TypeName targetType, _In_ Object ^ parameter, _In_ String ^ language)
 {
     auto resourceLoader = AppResourceProvider::GetInstance();
 
@@ -26,15 +26,15 @@ Object^ BitFlipAutomationNameConverter::Convert(_In_ Object^ value, TypeName tar
     wchar_t ch0 = localizationSettings.GetDigitSymbolFromEnUsDigit('0');
     wchar_t ch1 = localizationSettings.GetDigitSymbolFromEnUsDigit('1');
 
-    String^ indexName = resourceLoader.GetResourceString(static_cast<String^>(parameter));
-    String^ bitName = resourceLoader.GetResourceString(L"BitAutomationName");
-    String^ valueName = resourceLoader.GetResourceString(L"ValueAutomationName");
-    String^ zero = resourceLoader.GetResourceString(L"BinaryZeroValueAutomationName");
-    String^ one = resourceLoader.GetResourceString(L"BinaryOneValueAutomationName");
+    String ^ indexName = resourceLoader.GetResourceString(static_cast<String ^>(parameter));
+    String ^ bitName = resourceLoader.GetResourceString(L"BitAutomationName");
+    String ^ valueName = resourceLoader.GetResourceString(L"ValueAutomationName");
+    String ^ zero = resourceLoader.GetResourceString(L"BinaryZeroValueAutomationName");
+    String ^ one = resourceLoader.GetResourceString(L"BinaryOneValueAutomationName");
     if ((value != nullptr) && (parameter != nullptr))
     {
-        wstring binaryDisplay = (static_cast<String^>(value))->Data();
-        wstring indexString = (static_cast<String^>(parameter))->Data();
+        wstring binaryDisplay = (static_cast<String ^>(value))->Data();
+        wstring indexString = (static_cast<String ^>(parameter))->Data();
         wstringstream converter;
         converter << indexString;
         unsigned int index;
@@ -42,7 +42,7 @@ Object^ BitFlipAutomationNameConverter::Convert(_In_ Object^ value, TypeName tar
         unsigned int binaryLength = 0;
 
         // remove all the characters except 0 and 1 from the array.
-        for each (wchar_t bit in binaryDisplay)
+        for (wchar_t bit : binaryDisplay)
         {
             if ((bit == ch1) || (bit == ch0))
             {
@@ -74,7 +74,7 @@ Object^ BitFlipAutomationNameConverter::Convert(_In_ Object^ value, TypeName tar
     return (indexName + bitName + valueName + zero);
 }
 
-Object^ BitFlipAutomationNameConverter::ConvertBack(_In_ Object^ value, TypeName targetType, _In_ Object^ parameter, _In_ String^ language)
+Object ^ BitFlipAutomationNameConverter::ConvertBack(_In_ Object ^ value, TypeName targetType, _In_ Object ^ parameter, _In_ String ^ language)
 {
     return value;
 }

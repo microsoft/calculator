@@ -44,12 +44,12 @@
                         <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="degreeButton.Style" Value="{StaticResource CaptionButtonSmallStyle}"/>
-                        <Setter Target="radianButton.Style" Value="{StaticResource CaptionButtonSmallStyle}"/>
-                        <Setter Target="gradsButton.Style" Value="{StaticResource CaptionButtonSmallStyle}"/>
+                        <Setter Target="DegreeButton.Style" Value="{StaticResource CaptionButtonSmallStyle}"/>
+                        <Setter Target="RadianButton.Style" Value="{StaticResource CaptionButtonSmallStyle}"/>
+                        <Setter Target="GradsButton.Style" Value="{StaticResource CaptionButtonSmallStyle}"/>
 
-                        <Setter Target="hyperbolicButton.Style" Value="{StaticResource CaptionToggleButtonSmallStyle}"/>
-                        <Setter Target="ftoeButton.Style" Value="{StaticResource CaptionToggleButtonSmallStyle}"/>
+                        <Setter Target="HyperbolicButton.Style" Value="{StaticResource CaptionToggleButtonSmallStyle}"/>
+                        <Setter Target="FtoeButton.Style" Value="{StaticResource CaptionToggleButtonSmallStyle}"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -57,23 +57,23 @@
                 <VisualState x:Name="NoErrorLayout"/>
                 <VisualState x:Name="ErrorLayout">
                     <VisualState.Setters>
-                        <Setter Target="degreeButton.IsEnabled" Value="False"/>
-                        <Setter Target="radianButton.IsEnabled" Value="False"/>
-                        <Setter Target="gradsButton.IsEnabled" Value="False"/>
-                        <Setter Target="hyperbolicButton.IsEnabled" Value="False"/>
-                        <Setter Target="ftoeButton.IsEnabled" Value="False"/>
+                        <Setter Target="DegreeButton.IsEnabled" Value="False"/>
+                        <Setter Target="RadianButton.IsEnabled" Value="False"/>
+                        <Setter Target="GradsButton.IsEnabled" Value="False"/>
+                        <Setter Target="HyperbolicButton.IsEnabled" Value="False"/>
+                        <Setter Target="FtoeButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Button x:Name="degreeButton"
+        <Button x:Name="DegreeButton"
                 x:Uid="degButton"
                 Style="{StaticResource CaptionButtonStyle}"
                 AutomationProperties.AutomationId="degButton"
                 Command="{x:Bind ButtonPressed}"
                 CommandParameter="0"
                 Content="DEG"/>
-        <Button x:Name="radianButton"
+        <Button x:Name="RadianButton"
                 x:Uid="radButton"
                 Style="{StaticResource CaptionButtonStyle}"
                 AutomationProperties.AutomationId="radButton"
@@ -81,7 +81,7 @@
                 CommandParameter="1"
                 Content="RAD"
                 Visibility="Collapsed"/>
-        <Button x:Name="gradsButton"
+        <Button x:Name="GradsButton"
                 x:Uid="gradButton"
                 Style="{StaticResource CaptionButtonStyle}"
                 AutomationProperties.AutomationId="gradButton"
@@ -89,7 +89,7 @@
                 CommandParameter="2"
                 Content="GRAD"
                 Visibility="Collapsed"/>
-        <ToggleButton x:Name="hyperbolicButton"
+        <ToggleButton x:Name="HyperbolicButton"
                       x:Uid="hyperbolicButton"
                       Grid.Column="1"
                       Style="{StaticResource CaptionToggleButtonStyle}"
@@ -100,7 +100,7 @@
                       Content="HYP"
                       IsChecked="{Binding IsHyperbolicChecked, Mode=TwoWay}"
                       Unchecked="HypButton_Toggled"/>
-        <ToggleButton x:Name="ftoeButton"
+        <ToggleButton x:Name="FtoeButton"
                       x:Uid="ftoeButton"
                       Grid.Column="2"
                       Style="{StaticResource CaptionToggleButtonStyle}"

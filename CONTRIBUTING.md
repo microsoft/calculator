@@ -3,7 +3,8 @@ The Calculator team encourages community feedback and contributions. Thank you f
 making Calculator better! There are several ways you can get involved.
 
 ## Reporting issues and suggesting new features
-If Calculator is not working properly, please file a report in the [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130&newFeedback=True).
+If Calculator is not working properly, please file a report in the 
+[Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130&newFeedback=True).
 Feedback Hub reports automatically include diagnostic data, such as the version of Calculator
 you're using.
 
@@ -17,21 +18,38 @@ all community interactions must abide by the [Code of Conduct](CODE_OF_CONDUCT.m
 
 ## Finding issues you can help with
 Looking for something to work on?
-[Issues marked *good first issue*](https://github.com/Microsoft/calculator/labels/good%20first%20issue)
+Issues marked [``good first issue``](https://github.com/Microsoft/calculator/labels/good%20first%20issue)
 are a good place to start.
 
-You can also check [the *help wanted* tag](https://github.com/Microsoft/calculator/labels/help%20wanted)
-to find other issues to help with.
+You can also check the [``help wanted``](https://github.com/Microsoft/calculator/labels/help%20wanted) tag to find 
+other issues to help with. If you're interested in working on a fix, leave a comment to let everyone know and to help
+avoid duplicated effort from others.
 
 ## Contributions we accept
 We welcome your contributions to the Calculator project, especially to fix bugs and to make
-improvements which address the top issues reported by Calculator users.
+improvements which address the top issues reported by Calculator users. Some general guidelines:
 
-We have a high bar for new features and changes to the user experience. We prefer to evaluate
-*prototypes* to ensure that the design meets users' needs before we start discussing implementation
-details and reviewing code. We follow a [user-centered process for developing features](docs/NewFeatureProcess.md).
-New features need sponsorship from the Calculator team, but we welcome community contributions at
-many stages of the process.
+* **DO** create one pull request per Issue, and ensure that the Issue is linked in the pull request.
+* **DO** follow our [Coding and Style](#style-guidelines) guidelines, and keep code changes as small as possible.
+* **DO** include corresponding tests whenever possible.
+* **DO** check for additional occurrences of the same problem in other parts of the codebase before submitting your PR.
+* **DO** [link the issue](https://github.com/blog/957-introducing-issue-mentions) you are addressing in the 
+   pull request.
+* **DO** write a good description for your pull request. More detail is better. Describe *why* the change is being 
+   made and *why* you have chosen a particular solution. Describe any manual testing you performed to validate your change.
+* **DO NOT** submit a PR unless it is linked to an Issue marked 
+   [`triage approved`](https://github.com/Microsoft/calculator/issues?q=is%3Aissue+is%3Aopen+label%3A%22Triage%3A+Approved%22). 
+   This enables us to have a discussion on the idea before anyone invests time in an implementation.
+* **DO NOT** merge multiple changes into one PR unless they have the same root cause.
+* **DO NOT** submit pure formatting/typo changes to code that has not been modified otherwise.
+
+We follow a [user-centered process for developing features](docs/NewFeatureProcess.md). New features
+need sponsorship from the Calculator team, but we welcome community contributions at many stages of
+the process.
+
+> Submitting a pull request for an approved Issue is not a guarantee it will be approved.
+> The change must meet our high bar for code quality, architecture, and performance, as well as
+> [other requirements](#docs/NewFeatureProcess.md#technical-review).
 
 ## Making changes to the code
 
@@ -41,7 +59,8 @@ To learn how to build the code and run tests, follow the instructions in the [RE
 ### Style guidelines
 The code in this project uses several different coding styles, depending on the age and history of
 the code. Please attempt to match the style of surrounding code as much as possible. In new
-components, prefer the patterns described in the [C++ core guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
+components, prefer the patterns described in the 
+[C++ core guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
 and the [modern C++/WinRT language projections](https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/).
 
 ### Testing
@@ -61,18 +80,9 @@ to group your changes into a small number of commits which we can review one at 
 When completing a pull request, we will generally squash your changes into a single commit. Please
 let us know if your pull request needs to be merged as separate commits.
 
-## Submitting a pull request and participating in code review
-Writing a good description for your pull request is crucial to help reviewers and future
-maintainers understand your change. More detail is better.
-- [Link the issue you're addressing in the pull request](https://github.com/blog/957-introducing-issue-mentions).
-- Describe *why* the change is being made and *why* you've chosen a particular solution.
-- Describe any manual testing you performed to validate your change.
-
-Please submit one pull request per issue. Large pull requests which have unrelated changes can be
-difficult to review.
-
+## Review Process
 After submitting a pull request, members of the calculator team will review your code. We will
-assign the request to an appropriate reviewer within two days. Any member of the community may
+assign the request to an appropriate reviewer. Any member of the community may
 participate in the review, but at least one member of the Calculator team will ultimately approve
 the request.
 
