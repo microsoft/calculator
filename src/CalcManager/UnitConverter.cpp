@@ -215,7 +215,7 @@ vector<wstring> UnitConverter::StringToVector(const wstring& w, const wchar_t* d
     }
     return serializedTokens;
 }
-wstring UnitConverter::UnitToString(const Unit& u, const wchar_t * delimiter)
+wstring UnitConverter::UnitToString(const Unit& u, const wchar_t* delimiter)
 {
     wstringstream out(wstringstream::out);
     out << Quote(std::to_wstring(u.id)) << delimiter << Quote(u.name) << delimiter << Quote(u.abbreviation) << delimiter

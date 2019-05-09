@@ -833,22 +833,22 @@ TEST_METHOD(TestSupplementaryResultsWhimsicalUnits)
     suggestedList.push_back(tuple<wstring, UCM::Unit>(L"", unitWhimSubsequent));
     suggestedList.push_back(tuple<wstring, UCM::Unit>(L"", unit));
 
-            vm.UpdateSupplementaryResults(suggestedList);
-            WaitForSingleObjectEx(GetCurrentThread(), 1100, FALSE);
-            VERIFY_ARE_EQUAL((UINT)6, vm.SupplementaryResults->Size);
-            while (vm.SupplementaryResults->Size > 1)
-            {
-                VERIFY_IS_FALSE(vm.SupplementaryResults->GetAt(0)->IsWhimsical());
-                vm.SupplementaryResults->RemoveAt(0);
-            }
-            // Last item
-            VERIFY_IS_TRUE(vm.SupplementaryResults->GetAt(0)->Unit->GetModelUnit() == UNITWHIMSY);
-        }
+    vm.UpdateSupplementaryResults(suggestedList);
+    WaitForSingleObjectEx(GetCurrentThread(), 1100, FALSE);
+    VERIFY_ARE_EQUAL((UINT)6, vm.SupplementaryResults->Size);
+    while (vm.SupplementaryResults->Size > 1)
+    {
+        VERIFY_IS_FALSE(vm.SupplementaryResults->GetAt(0)->IsWhimsical());
+        vm.SupplementaryResults->RemoveAt(0);
+    }
+    // Last item
+    VERIFY_IS_TRUE(vm.SupplementaryResults->GetAt(0)->Unit->GetModelUnit() == UNITWHIMSY);
+}
 
-        TEST_METHOD(TestOnPaste)
-        {
-            shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
-            VM::UnitConverterViewModel vm(mock);
+TEST_METHOD(TestOnPaste)
+{
+    shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
+    VM::UnitConverterViewModel vm(mock);
 
     // Call count is being set to 1 because we send 'CE' command as the first call in OnPaste method of the ViewModel
     UINT callCount = 1;

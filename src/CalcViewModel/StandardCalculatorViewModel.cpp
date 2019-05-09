@@ -1152,7 +1152,7 @@ void StandardCalculatorViewModel::OnMemoryClear(_In_ Object ^ memoryItemPosition
     }
 }
 
-void StandardCalculatorViewModel::OnPropertyChanged(String^ propertyname)
+void StandardCalculatorViewModel::OnPropertyChanged(String ^ propertyname)
 {
     if (propertyname == IsScientificPropertyName)
     {

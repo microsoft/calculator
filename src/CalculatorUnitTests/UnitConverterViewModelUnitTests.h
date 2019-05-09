@@ -60,7 +60,6 @@ namespace CalculatorUnitTests
         UINT m_sendCommandCallCount;
         UINT m_setVMCallbackCallCount;
 
-
         UCM::Category m_curCategory;
         UCM::Unit m_curFrom;
         UCM::Unit m_curTo;
