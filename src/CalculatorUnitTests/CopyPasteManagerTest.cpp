@@ -187,13 +187,13 @@ namespace CalculatorUnitTests
                 m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"123", L"1e23" }, ViewMode::Standard, CategoryGroupType::Calculator, -1, -1));
 
             VERIFY_IS_TRUE(
-				m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"1.23e+456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
-            VERIFY_IS_TRUE(
-				m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"123e-456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
-            VERIFY_IS_TRUE(
-				m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"123e-456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
-            VERIFY_IS_TRUE(
-				m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{ L"12323e456" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, -1), L"Verify operand only needs to match one pattern.");
+                m_CopyPasteManager.ExpressionRegExMatch(
+                    vector<wstring>{ L"1.23e+456", L"1.23e456", L".23e+456", L"123e-456", L"12e2", L"12e+2", L"12e-2", L"-12e2", L"-12e+2", L"-12e-2" },
+                    ViewMode::Scientific,
+                    CategoryGroupType::Calculator,
+                    -1,
+                    -1),
+                L"Verify exponents are accepted in scientific mode.");
 
             VERIFY_IS_FALSE(
                 m_CopyPasteManager.ExpressionRegExMatch(
@@ -654,8 +654,7 @@ namespace CalculatorUnitTests
                                      "-(+(-3213)+(-2312))",
                                      "-(-(432+3232))",
 									 L"1.2e23"/*unsigned exponent*/ };
-        String ^ negativeInput[] = { L"1.2e23" /*unsigned exponent*/,
-                                     L"abcdef",
+        String ^ negativeInput[] = { L"abcdef",
                                      L"xyz",
                                      L"ABab",
                                      L"e+234",
