@@ -345,7 +345,7 @@ void LocalizationService::UpdateFontFamilyAndSize(DependencyObject ^ target)
 
 // If successful, returns a formatter that respects the user's regional format settings,
 // as configured by running intl.cpl.
-DecimalFormatter^ LocalizationService::GetRegionalSettingsAwareDecimalFormatter() const
+DecimalFormatter ^ LocalizationService::GetRegionalSettingsAwareDecimalFormatter() const
 {
     IIterable<String ^> ^ languageIdentifiers = LocalizationService::GetLanguageIdentifiers();
     if (languageIdentifiers != nullptr)
@@ -360,7 +360,7 @@ DecimalFormatter^ LocalizationService::GetRegionalSettingsAwareDecimalFormatter(
 // as configured by running intl.cpl.
 //
 // This helper function creates a DateTimeFormatter with a TwentyFour hour clock
-DateTimeFormatter^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String^ format) const
+DateTimeFormatter ^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String^ format) const
 {
     IIterable<String ^> ^ languageIdentifiers = LocalizationService::GetLanguageIdentifiers();
     if (languageIdentifiers == nullptr)
@@ -373,8 +373,7 @@ DateTimeFormatter^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatte
 
 // If successful, returns a formatter that respects the user's regional format settings,
 // as configured by running intl.cpl.
-DateTimeFormatter
-    ^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String ^ format, _In_ String ^ calendarIdentifier, _In_ String ^ clockIdentifier) const
+DateTimeFormatter^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String ^ format, _In_ String ^ calendarIdentifier, _In_ String ^ clockIdentifier) const
 {
     IIterable<String ^> ^ languageIdentifiers = LocalizationService::GetLanguageIdentifiers();
     if (languageIdentifiers == nullptr)
@@ -385,12 +384,12 @@ DateTimeFormatter
     return ref new DateTimeFormatter(format, languageIdentifiers, GlobalizationPreferences::HomeGeographicRegion, calendarIdentifier, clockIdentifier);
 }
 
-CurrencyFormatter^ LocalizationService::GetRegionalSettingsAwareCurrencyFormatter() const
+CurrencyFormatter ^ LocalizationService::GetRegionalSettingsAwareCurrencyFormatter() const
 {
     String ^ userCurrency =
         (GlobalizationPreferences::Currencies->Size > 0) ? GlobalizationPreferences::Currencies->GetAt(0) : StringReference(DefaultCurrencyCode.data());
 
-    IIterable<String^>^ languageIdentifiers = GetLanguageIdentifiers();
+    IIterable<String ^> ^ languageIdentifiers = GetLanguageIdentifiers();
     if (languageIdentifiers == nullptr)
     {
         languageIdentifiers = ApplicationLanguages::Languages;
@@ -406,7 +405,6 @@ CurrencyFormatter^ LocalizationService::GetRegionalSettingsAwareCurrencyFormatte
 
 IIterable<String ^> ^ LocalizationService::GetLanguageIdentifiers() const
 {
-
     WCHAR currentLocale[LOCALE_NAME_MAX_LENGTH] = {};
     int result = GetUserDefaultLocaleName(currentLocale, LOCALE_NAME_MAX_LENGTH);
 
