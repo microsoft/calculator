@@ -612,52 +612,6 @@ void UnitConverterViewModel::OnPropertyChanged(Platform::String ^ prop)
     }
 }
 
-String ^ UnitConverterViewModel::Serialize()
-{
-    wstringstream out(wstringstream::out);
-    const wchar_t* delimiter = L"[;;;]";
-    out << std::to_wstring(m_resettingTimer) << delimiter;
-    out << std::to_wstring(static_cast<int>(m_value1cp)) << delimiter;
-    out << m_Value1Active << delimiter << m_Value2Active << delimiter;
-    out << m_Value1->Data() << delimiter << m_Value2->Data() << delimiter;
-    out << m_valueFromUnlocalized << delimiter << m_valueToUnlocalized << delimiter << L"[###]";
-    wstring unitConverterSerializedData = m_model->Serialize();
-
-    if (!unitConverterSerializedData.empty())
-    {
-        out << m_model->Serialize() << L"[###]";
-        String ^ serializedData = ref new String(wstring(out.str()).c_str());
-        return serializedData;
-    }
-
-    return nullptr;
-}
-
-void UnitConverterViewModel::Deserialize(Platform::String ^ state)
-{
-    wstring serializedData = wstring(state->Data());
-    vector<wstring> tokens = UCM::UnitConverter::StringToVector(serializedData, L"[###]");
-    assert(tokens.size() >= 2);
-    vector<wstring> viewModelData = UCM::UnitConverter::StringToVector(tokens[0], L"[;;;]");
-    assert(viewModelData.size() == EXPECTEDVIEWMODELDATATOKENS);
-    m_resettingTimer = (viewModelData[0].compare(L"1") == 0);
-    m_value1cp = (ConversionParameter)_wtoi(viewModelData[1].c_str());
-    m_Value1Active = (viewModelData[2].compare(L"1") == 0);
-    m_Value2Active = (viewModelData[3].compare(L"1") == 0);
-    m_Value1 = ref new String(viewModelData[4].c_str());
-    m_Value2 = ref new String(viewModelData[5].c_str());
-    m_valueFromUnlocalized = viewModelData[6];
-    m_valueToUnlocalized = viewModelData[7];
-    wstringstream modelData(wstringstream::out);
-    for (unsigned int i = 1; i < tokens.size(); i++)
-    {
-        modelData << tokens[i] << L"[###]";
-    }
-    m_model->DeSerialize(modelData.str());
-    InitializeView();
-    RaisePropertyChanged(nullptr); // Update since all props have been updated.
-}
-
 // Saving User Preferences of Category and Associated-Units across Sessions.
 void UnitConverterViewModel::SaveUserPreferences()
 {

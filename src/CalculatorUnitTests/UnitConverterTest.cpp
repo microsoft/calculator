@@ -199,8 +199,6 @@ namespace UnitConverterUnitTests
         TEST_METHOD(UnitConverterTestGetters);
         TEST_METHOD(UnitConverterTestGetCategory);
         TEST_METHOD(UnitConverterTestUnitTypeSwitching);
-        TEST_METHOD(UnitConverterTestSerialization);
-        TEST_METHOD(UnitConverterTestDeSerialization);
         TEST_METHOD(UnitConverterTestQuote);
         TEST_METHOD(UnitConverterTestUnquote);
         TEST_METHOD(UnitConverterTestBackspace);
@@ -253,7 +251,7 @@ namespace UnitConverterUnitTests
     // Resets calculator state to start state after each test
     void UnitConverterTest::Cleanup()
     {
-        s_unitConverter->DeSerialize(wstring());
+        s_unitConverter->SendCommand(Command::Reset);
         s_testVMCallback->Reset();
     }
 
@@ -325,22 +323,6 @@ namespace UnitConverterUnitTests
         VERIFY_IS_TRUE(s_testVMCallback->CheckSuggestedValues(vector<tuple<wstring, Unit>>()));
     }
 
-    // Test serialization
-    void UnitConverterTest::UnitConverterTestSerialization()
-    {
-        wstring test1 = wstring(L"4;Kilograms;Kg;0;0;0;|3;Pounds;Lb;1;1;0;|2;0;Weight;|1;1;0;52.8;116.4039;|1;1;Length;,2;0;Weight;,|1;1;Length;[1;Inches;In;1;"
-                                L"1;0;,2;Feet;Ft;0;0;0;,[]2;0;Weight;[3;Pounds;Lb;1;1;0;,4;Kilograms;Kg;0;0;0;,[]|1;Inches;In;1;1;0;[1;Inches;In;1;1;0;:1;0;0;:"
-                                L",2;Feet;Ft;0;0;0;:0.08333333333333332870740406406185;0;0;:,[]2;Feet;Ft;0;0;0;[1;Inches;In;1;1;0;:12;0;0;:,2;Feet;Ft;0;0;0;:1;"
-                                L"0;0;:,[]3;Pounds;Lb;1;1;0;[3;Pounds;Lb;1;1;0;:1;0;0;:,4;Kilograms;Kg;0;0;0;:0.45359199999999999519673110626172;0;0;:,[]4;"
-                                L"Kilograms;Kg;0;0;0;[3;Pounds;Lb;1;1;0;:2.20461999999999980204279381723609;0;0;:,4;Kilograms;Kg;0;0;0;:1;0;0;:,[]|");
-        s_unitConverter->SendCommand(Command::Five);
-        s_unitConverter->SendCommand(Command::Two);
-        s_unitConverter->SendCommand(Command::Decimal);
-        s_unitConverter->SendCommand(Command::Eight);
-        s_unitConverter->SetCurrentCategory(s_testWeight);
-        s_unitConverter->SetCurrentUnitTypes(s_testKilograms, s_testPounds);
-        VERIFY_IS_TRUE(s_unitConverter->Serialize().compare(test1) == 0);
-    }
 
     // Test input escaping
     void UnitConverterTest::UnitConverterTestQuote()
@@ -366,19 +348,6 @@ namespace UnitConverterUnitTests
         VERIFY_IS_TRUE(UnitConverter::Unquote(UnitConverter::Quote(input1)) == input1);
         VERIFY_IS_TRUE(UnitConverter::Unquote(UnitConverter::Quote(input2)) == input2);
         VERIFY_IS_TRUE(UnitConverter::Unquote(UnitConverter::Quote(input3)) == input3);
-    }
-
-    // Test de-serialization
-    void UnitConverterTest::UnitConverterTestDeSerialization()
-    {
-        wstring test1 = wstring(L"4;Kilograms;Kg;0;0;0;|3;Pounds;Lb;1;1;0;|2;0;Weight;|1;1;0;52.8;116.4039;|1;1;Length;,2;0;Weight;,|1;1;Length;[1;Inches;In;1;"
-                                L"1;0;,2;Feet;Ft;0;0;0;,[]2;0;Weight;[3;Pounds;Lb;1;1;0;,4;Kilograms;Kg;0;0;0;,[]|1;Inches;In;1;1;0;[1;Inches;In;1;1;0;:1;0;0;:"
-                                L",2;Feet;Ft;0;0;0;:0.08333333333333332870740406406185;0;0;:,[]2;Feet;Ft;0;0;0;[1;Inches;In;1;1;0;:12;0;0;:,2;Feet;Ft;0;0;0;:1;"
-                                L"0;0;:,[]3;Pounds;Lb;1;1;0;[3;Pounds;Lb;1;1;0;:1;0;0;:,4;Kilograms;Kg;0;0;0;:0.45359199999999999519673110626172;0;0;:,[]4;"
-                                L"Kilograms;Kg;0;0;0;[3;Pounds;Lb;1;1;0;:2.20461999999999980204279381723609;0;0;:,4;Kilograms;Kg;0;0;0;:1;0;0;:,[]|");
-        s_unitConverter->DeSerialize(test1);
-        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"52.8"), wstring(L"116.4039")));
-        VERIFY_IS_TRUE(s_testVMCallback->CheckSuggestedValues(vector<tuple<wstring, Unit>>()));
     }
 
     // Test backspace commands

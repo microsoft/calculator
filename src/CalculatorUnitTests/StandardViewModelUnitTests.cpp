@@ -75,7 +75,6 @@ namespace CalculatorUnitTests
             viewModel->ButtonPressed->Execute(NumbersAndOperatorsEnum::Clear);
             viewModel->ButtonPressed->Execute(NumbersAndOperatorsEnum::ClearEntry);
             viewModel->ClearMemoryCommand->Execute(nullptr);
-            viewModel->Deserialize(ref new Platform::Array<unsigned char>(0));
         }
 
         TESTITEM* currentItem = item;

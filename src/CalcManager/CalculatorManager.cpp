@@ -244,8 +244,6 @@ namespace CalculationManager
             {
                 m_savedCommands.push_back(MapCommandForSerialize(command));
             }
-            this->SerializePrimaryDisplay();
-            this->SerializeMemory();
             m_savedDegreeMode = m_currentDegreeMode;
             return;
         }
@@ -331,159 +329,12 @@ namespace CalculationManager
     }
 
     /// <summary>
-    /// Return saved degree mode which is saved when last time the expression was cleared.
-    /// </summary>
-    Command CalculatorManager::SerializeSavedDegreeMode()
-    {
-        return m_savedDegreeMode;
-    }
-
-    void CalculatorManager::SerializePrimaryDisplay()
-    {
-        m_savedPrimaryValue.clear();
-        m_currentCalculatorEngine->ProcessCommand(IDC_STORE);
-        auto memoryObject = m_currentCalculatorEngine->PersistedMemObject();
-        if (memoryObject != nullptr)
-        {
-            m_savedPrimaryValue = SerializeRational(*memoryObject);
-        }
-    }
-
-    /// <summary>
-    /// Return serialized primary display that is saved when the expression line was cleared.
-    /// </summary>
-    vector<long> CalculatorManager::GetSerializedPrimaryDisplay()
-    {
-        return m_savedPrimaryValue;
-    }
-
-    /// <summary>
-    /// DeSerialize the primary display from vector of long
-    /// </summary>
-    /// <param name = "serializedPrimaryDisplay">Serialized Rational of primary display</param>
-    void CalculatorManager::DeSerializePrimaryDisplay(const vector<long>& serializedPrimaryDisplay)
-    {
-        if (serializedPrimaryDisplay.empty())
-        {
-            return;
-        }
-        m_persistedPrimaryValue = DeSerializeRational(serializedPrimaryDisplay.begin());
-        this->LoadPersistedPrimaryValue();
-    }
-
-    /// <summary>
     /// Load the persisted value that is saved in memory of CalcEngine
     /// </summary>
     void CalculatorManager::LoadPersistedPrimaryValue()
     {
         m_currentCalculatorEngine->PersistedMemObject(m_persistedPrimaryValue);
         m_currentCalculatorEngine->ProcessCommand(IDC_RECALL);
-    }
-
-    /// <summary>
-    /// Serialize the Memory to vector of long
-    /// </summary>
-    /// <return type = "std::vector<long>">Serialized Rational of memory</return>
-    void CalculatorManager::SerializeMemory()
-    {
-        m_serializedMemory.clear();
-
-        for (auto const& memoryItem : m_memorizedNumbers)
-        {
-            auto serialMem = SerializeRational(memoryItem);
-            m_serializedMemory.insert(m_serializedMemory.end(), serialMem.begin(), serialMem.end());
-        }
-    }
-
-    vector<long> CalculatorManager::GetSerializedMemory()
-    {
-        return m_serializedMemory;
-    }
-
-    /// <summary>
-    /// DeSerialize the Memory from vector of long
-    /// </summary>
-    /// <param name = "serializedMemory">Serialized Rational of memory</param>
-    void CalculatorManager::DeSerializeMemory(const vector<long>& serializedMemory)
-    {
-        vector<long>::const_iterator itr = serializedMemory.begin();
-        while (itr != serializedMemory.end())
-        {
-            Rational memoryItem = DeSerializeRational(itr);
-            auto lengthMemoryItem = (2 * SERIALIZED_NUMBER_MINSIZE) + memoryItem.P().Mantissa().size() + memoryItem.Q().Mantissa().size();
-            m_memorizedNumbers.push_back(memoryItem);
-            itr += lengthMemoryItem;
-        }
-        this->SetMemorizedNumbersString();
-    }
-
-    /// <summary>
-    /// Return the commands saved since the expression has been cleared.
-    /// </summary>
-    vector<unsigned char> CalculatorManager::SerializeCommands()
-    {
-        return m_savedCommands;
-    }
-
-    /// <summary>
-    /// Replay the serialized commands
-    /// </summary>
-    /// <param name = "serializedData">Serialized commands</param>
-    void CalculatorManager::DeSerializeCommands(_In_ const vector<unsigned char>& serializedData)
-    {
-        m_savedCommands.clear();
-
-        for (auto commandItr = serializedData.begin(); commandItr != serializedData.end(); ++commandItr)
-        {
-            if (*commandItr >= MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizeNumber)
-                && *commandItr <= MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizedNumberClearAll))
-            {
-                // MemoryCommands(which have values above 255) are pushed on m_savedCommands upon casting to unsigned char.
-                // SerializeCommands uses m_savedCommands, which is then used in DeSerializeCommands.
-                // Hence, a simple cast to MemoryCommand is not sufficient.
-                MemoryCommand memoryCommand = static_cast<MemoryCommand>(*commandItr + UCHAR_MAX + 1);
-                unsigned int indexOfMemory = 0;
-                switch (memoryCommand)
-                {
-                case MemoryCommand::MemorizeNumber:
-                    this->MemorizeNumber();
-                    break;
-                case MemoryCommand::MemorizedNumberLoad:
-                    if (commandItr + 1 == serializedData.end())
-                    {
-                        throw out_of_range("Expecting index of memory, data ended prematurely");
-                    }
-                    indexOfMemory = *(++commandItr);
-                    this->MemorizedNumberLoad(indexOfMemory);
-                    break;
-                case MemoryCommand::MemorizedNumberAdd:
-                    if (commandItr + 1 == serializedData.end())
-                    {
-                        throw out_of_range("Expecting index of memory, data ended prematurely");
-                    }
-                    indexOfMemory = *(++commandItr);
-                    this->MemorizedNumberAdd(indexOfMemory);
-                    break;
-                case MemoryCommand::MemorizedNumberSubtract:
-                    if (commandItr + 1 == serializedData.end())
-                    {
-                        throw out_of_range("Expecting index of memory, data ended prematurely");
-                    }
-                    indexOfMemory = *(++commandItr);
-                    this->MemorizedNumberSubtract(indexOfMemory);
-                    break;
-                case MemoryCommand::MemorizedNumberClearAll:
-                    this->MemorizedNumberClearAll();
-                    break;
-                default:
-                    break;
-                }
-            }
-            else
-            {
-                this->SendCommand(static_cast<Command>(MapCommandForDeSerialize(*commandItr)));
-            }
-        }
     }
 
     /// <summary>

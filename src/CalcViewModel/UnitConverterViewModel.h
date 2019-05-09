@@ -219,9 +219,6 @@ namespace CalculatorApp
                     _In_ Platform::String ^ toUnit);
             void UpdateValue1AutomationName();
             void UpdateValue2AutomationName();
-            Platform::String ^ Serialize();
-            void Deserialize(Platform::String ^ state);
-            void ResetCategoriesAndRatio();
 
             // Saving And Restoring User Preferences of Category and Associated-Units across Sessions.
             void SaveUserPreferences();

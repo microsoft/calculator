@@ -63,7 +63,6 @@ namespace CalculationManager
         // For persistence
         std::vector<unsigned char> m_savedCommands;
         std::vector<long> m_savedPrimaryValue;
-        std::vector<long> m_serializedMemory;
         std::vector<long> m_currentSerializedMemory;
         Command m_currentDegreeMode;
         Command m_savedDegreeMode;
@@ -111,15 +110,6 @@ namespace CalculationManager
         void SetScientificMode();
         void SetProgrammerMode();
         void SendCommand(_In_ Command command);
-        std::vector<unsigned char> SerializeCommands();
-        void DeSerializeCommands(_In_ const std::vector<unsigned char>& serializedData);
-        void SerializeMemory();
-        std::vector<long> GetSerializedMemory();
-        void DeSerializeMemory(const std::vector<long>& serializedMemory);
-        void SerializePrimaryDisplay();
-        std::vector<long> GetSerializedPrimaryDisplay();
-        void DeSerializePrimaryDisplay(const std::vector<long>& serializedPrimaryDisplay);
-        Command SerializeSavedDegreeMode();
 
         void MemorizeNumber();
         void MemorizedNumberLoad(_In_ unsigned int);

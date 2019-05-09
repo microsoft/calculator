@@ -11,8 +11,6 @@ using namespace concurrency;
 using namespace std;
 using namespace UnitConversionManager;
 
-static constexpr uint32_t EXPECTEDSERIALIZEDTOKENCOUNT = 7;
-static constexpr uint32_t EXPECTEDSERIALIZEDCONVERSIONDATATOKENCOUNT = 3;
 static constexpr uint32_t EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT = 3;
 static constexpr uint32_t EXPECTEDSERIALIZEDUNITTOKENCOUNT = 6;
 static constexpr uint32_t EXPECTEDSTATEDATATOKENCOUNT = 5;
@@ -217,18 +215,6 @@ vector<wstring> UnitConverter::StringToVector(const wstring& w, const wchar_t* d
     }
     return serializedTokens;
 }
-
-Category UnitConverter::StringToCategory(const wstring& w)
-{
-    vector<wstring> tokenList = StringToVector(w, L";");
-    assert(tokenList.size() == EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT);
-    Category serializedCategory;
-    serializedCategory.id = _wtoi(Unquote(tokenList[0]).c_str());
-    serializedCategory.supportsNegative = (tokenList[1].compare(L"1") == 0);
-    serializedCategory.name = Unquote(tokenList[2]);
-    return serializedCategory;
-}
-
 wstring UnitConverter::UnitToString(const Unit& u, const wchar_t* delimiter)
 {
     wstringstream out(wstringstream::out);
@@ -253,150 +239,15 @@ Unit UnitConverter::StringToUnit(const wstring& w)
     return serializedUnit;
 }
 
-ConversionData UnitConverter::StringToConversionData(const wstring& w)
+Category UnitConverter::StringToCategory(const wstring& w)
 {
     vector<wstring> tokenList = StringToVector(w, L";");
-    assert(tokenList.size() == EXPECTEDSERIALIZEDCONVERSIONDATATOKENCOUNT);
-    ConversionData serializedConversionData;
-    serializedConversionData.ratio = stod(Unquote(tokenList[0]).c_str());
-    serializedConversionData.offset = stod(Unquote(tokenList[1]).c_str());
-    serializedConversionData.offsetFirst = (tokenList[2].compare(L"1") == 0);
-    return serializedConversionData;
-}
-
-wstring UnitConverter::ConversionDataToString(ConversionData d, const wchar_t* delimiter)
-{
-    wstringstream out(wstringstream::out);
-    out.precision(32);
-    out << fixed << d.ratio;
-    wstring ratio = out.str();
-    out.str(L"");
-    out << fixed << d.offset;
-    wstring offset = out.str();
-    out.str(L"");
-    TrimString(ratio);
-    TrimString(offset);
-    out << Quote(ratio) << delimiter << Quote(offset) << delimiter << std::to_wstring(d.offsetFirst) << delimiter;
-    return out.str();
-}
-
-/// <summary>
-/// Serializes the data in the converter and returns it as a string
-/// </summary>
-wstring UnitConverter::Serialize()
-{
-    if (!CheckLoad())
-    {
-        return wstring();
-    }
-
-    wstringstream out(wstringstream::out);
-    const wchar_t* delimiter = L";";
-
-    out << UnitToString(m_fromType, delimiter) << "|";
-    out << UnitToString(m_toType, delimiter) << "|";
-    out << CategoryToString(m_currentCategory, delimiter) << "|";
-    out << std::to_wstring(m_currentHasDecimal) << delimiter << std::to_wstring(m_returnHasDecimal) << delimiter << std::to_wstring(m_switchedActive)
-        << delimiter;
-    out << m_currentDisplay << delimiter << m_returnDisplay << delimiter << "|";
-    wstringstream categoryString(wstringstream::out);
-    wstringstream categoryToUnitString(wstringstream::out);
-    wstringstream unitToUnitToDoubleString(wstringstream::out);
-    for (const Category& c : m_categories)
-    {
-        categoryString << CategoryToString(c, delimiter) << ",";
-    }
-
-    for (const auto& cur : m_categoryToUnits)
-    {
-        categoryToUnitString << CategoryToString(cur.first, delimiter) << "[";
-        for (const Unit& u : cur.second)
-        {
-            categoryToUnitString << UnitToString(u, delimiter) << ",";
-        }
-        categoryToUnitString << "["
-                             << "]";
-    }
-
-    for (const auto& cur : m_ratioMap)
-    {
-        unitToUnitToDoubleString << UnitToString(cur.first, delimiter) << "[";
-        for (const auto& curConversion : cur.second)
-        {
-            unitToUnitToDoubleString << UnitToString(curConversion.first, delimiter) << ":";
-            unitToUnitToDoubleString << ConversionDataToString(curConversion.second, delimiter) << ":,";
-        }
-        unitToUnitToDoubleString << "["
-                                 << "]";
-    }
-
-    out << categoryString.str() << "|";
-    out << categoryToUnitString.str() << "|";
-    out << unitToUnitToDoubleString.str() << "|";
-    wstring test = out.str();
-    return test;
-}
-
-/// <summary>
-/// De-Serializes the data in the converter from a string
-/// </summary>
-/// <param name="serializedData">wstring holding the serialized data. If it does not have expected number of parameters, we will ignore it</param>
-void UnitConverter::DeSerialize(const wstring& serializedData)
-{
-    ClearValues();
-    ResetCategoriesAndRatios();
-
-    if (serializedData.empty())
-    {
-        return;
-    }
-
-    vector<wstring> outerTokens = StringToVector(serializedData, L"|");
-    assert(outerTokens.size() == EXPECTEDSERIALIZEDTOKENCOUNT);
-    m_fromType = StringToUnit(outerTokens[0]);
-    m_toType = StringToUnit(outerTokens[1]);
-    m_currentCategory = StringToCategory(outerTokens[2]);
-    vector<wstring> stateDataTokens = StringToVector(outerTokens[3], L";");
-    assert(stateDataTokens.size() == EXPECTEDSTATEDATATOKENCOUNT);
-    m_currentHasDecimal = (stateDataTokens[0].compare(L"1") == 0);
-    m_returnHasDecimal = (stateDataTokens[1].compare(L"1") == 0);
-    m_switchedActive = (stateDataTokens[2].compare(L"1") == 0);
-    m_currentDisplay = stateDataTokens[3];
-    m_returnDisplay = stateDataTokens[4];
-    vector<wstring> categoryListTokens = StringToVector(outerTokens[4], L",");
-    for (wstring token : categoryListTokens)
-    {
-        m_categories.push_back(StringToCategory(token));
-    }
-    vector<wstring> unitVectorTokens = StringToVector(outerTokens[5], L"]");
-    for (wstring unitVector : unitVectorTokens)
-    {
-        vector<wstring> mapcomponents = StringToVector(unitVector, L"[");
-        assert(mapcomponents.size() == EXPECTEDMAPCOMPONENTTOKENCOUNT);
-        Category key = StringToCategory(mapcomponents[0]);
-        vector<wstring> units = StringToVector(mapcomponents[1], L",");
-        for (wstring unit : units)
-        {
-            m_categoryToUnits[key].push_back(StringToUnit(unit));
-        }
-    }
-    vector<wstring> ratioMapTokens = StringToVector(outerTokens[6], L"]");
-    for (wstring token : ratioMapTokens)
-    {
-        vector<wstring> ratioMapComponentTokens = StringToVector(token, L"[");
-        assert(ratioMapComponentTokens.size() == EXPECTEDMAPCOMPONENTTOKENCOUNT);
-        Unit key = StringToUnit(ratioMapComponentTokens[0]);
-        vector<wstring> ratioMapList = StringToVector(ratioMapComponentTokens[1], L",");
-        for (wstring subtoken : ratioMapList)
-        {
-            vector<wstring> ratioMapSubComponentTokens = StringToVector(subtoken, L":");
-            assert(ratioMapSubComponentTokens.size() == EXPECTEDMAPCOMPONENTTOKENCOUNT);
-            Unit subkey = StringToUnit(ratioMapSubComponentTokens[0]);
-            ConversionData conversion = StringToConversionData(ratioMapSubComponentTokens[1]);
-            m_ratioMap[key][subkey] = conversion;
-        }
-    }
-    UpdateViewModel();
+    assert(tokenList.size() == EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT);
+    Category serializedCategory;
+    serializedCategory.id = _wtoi(Unquote(tokenList[0]).c_str());
+    serializedCategory.supportsNegative = (tokenList[1].compare(L"1") == 0);
+    serializedCategory.name = Unquote(tokenList[2]);
+    return serializedCategory;
 }
 
 /// <summary>

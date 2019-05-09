@@ -129,8 +129,6 @@ UnitConverterMock::UnitConverterMock()
     , m_switchActiveCallCount(0)
     , m_sendCommandCallCount(0)
     , m_setVMCallbackCallCount(0)
-    , m_serializeCallCount(0)
-    , m_deSerializeCallCount(0)
 {
 }
 
@@ -224,21 +222,10 @@ void UnitConverterMock::SwitchActive(const std::wstring& newValue)
     m_curValue = newValue;
 }
 
-wstring UnitConverterMock::Serialize()
-{
-    m_serializeCallCount++;
-    return wstring(L"");
-}
-
-void UnitConverterMock::DeSerialize(const wstring& /*serializedData*/)
-{
-    m_deSerializeCallCount++;
-}
-
-std::wstring UnitConverterMock::SaveUserPreferences()
-{
-    return L"TEST";
-};
+    std::wstring UnitConverterMock::SaveUserPreferences()
+    {
+        return L"TEST";
+    };
 
 void UnitConverterMock::RestoreUserPreferences(_In_ const std::wstring& /*userPreferences*/){};
 
@@ -857,37 +844,6 @@ TEST_METHOD(TestSupplementaryResultsWhimsicalUnits)
     // Last item
     VERIFY_IS_TRUE(vm.SupplementaryResults->GetAt(0)->Unit->GetModelUnit() == UNITWHIMSY);
 }
-
-// Test deserialization
-TEST_METHOD(TestUnitConverterViewModelDeserialization)
-{
-    String ^ serializedTest = L"0[;;;]0[;;;]0[;;;]1[;;;]1.5[;;;]25[;;;]1.5[;;;]25[;;;][###][###]";
-    shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
-    VM::UnitConverterViewModel vm(mock);
-    vm.Deserialize(serializedTest);
-    VERIFY_IS_TRUE(vm.Value1 == L"1.5");
-    VERIFY_IS_TRUE(vm.Value2 == L"25");
-    VERIFY_IS_TRUE(vm.GetValueFromUnlocalized() == L"1.5");
-    VERIFY_IS_TRUE(vm.GetValueToUnlocalized() == L"25");
-    VERIFY_ARE_EQUAL(vm.Value1Active, false);
-    VERIFY_ARE_EQUAL(vm.Value2Active, true);
-    VERIFY_IS_TRUE(mock->m_deSerializeCallCount == 1);
-}
-
-// Test serialization
-/*TEST_METHOD(TestUnitConverterViewModelSerialization)
-{
-    String ^ serializedTest = L"0[;;;]0[;;;]0[;;;]1[;;;];;;]1.5[;;;[;;;]25[###[;;;]0[;;;]0[;;;][###][###]";
-    shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
-    VM::UnitConverterViewModel vm(mock);
-    vm.Value1 = L";;;]1.5[;;;";
-    vm.Value2 = L"25[###";
-    vm.Value1Active = false;
-    vm.Value2Active = true;
-    String ^ test = vm.Serialize();
-    VERIFY_IS_TRUE(serializedTest == test);
-    VERIFY_IS_TRUE(mock->m_serializeCallCount == 1);
-}*/
 
 TEST_METHOD(TestOnPaste)
 {

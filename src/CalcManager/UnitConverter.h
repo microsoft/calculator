@@ -237,8 +237,6 @@ namespace UnitConversionManager
         virtual Category GetCurrentCategory() = 0;
         virtual void SetCurrentUnitTypes(const Unit& fromType, const Unit& toType) = 0;
         virtual void SwitchActive(const std::wstring& newValue) = 0;
-        virtual std::wstring Serialize() = 0;
-        virtual void DeSerialize(const std::wstring& serializedData) = 0;
         virtual std::wstring SaveUserPreferences() = 0;
         virtual void RestoreUserPreferences(_In_ const std::wstring& userPreferences) = 0;
         virtual void SendCommand(Command command) = 0;
@@ -262,8 +260,6 @@ namespace UnitConversionManager
         Category GetCurrentCategory() override;
         void SetCurrentUnitTypes(const Unit& fromType, const Unit& toType) override;
         void SwitchActive(const std::wstring& newValue) override;
-        std::wstring Serialize() override;
-        void DeSerialize(const std::wstring& serializedData) override;
         std::wstring SaveUserPreferences() override;
         void RestoreUserPreferences(const std::wstring& userPreference) override;
         void SendCommand(Command command) override;
@@ -290,8 +286,6 @@ namespace UnitConversionManager
         std::wstring CategoryToString(const Category& c, const wchar_t* delimiter);
         std::wstring UnitToString(const Unit& u, const wchar_t* delimiter);
         Unit StringToUnit(const std::wstring& w);
-        ConversionData StringToConversionData(const std::wstring& w);
-        std::wstring ConversionDataToString(ConversionData d, const wchar_t* delimiter);
         void UpdateCurrencySymbols();
         void UpdateViewModel();
         bool AnyUnitIsEmpty();

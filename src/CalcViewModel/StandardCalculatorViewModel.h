@@ -348,8 +348,6 @@ namespace CalculatorApp
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
 
-            Platform::Array<unsigned char> ^ Serialize();
-            void Deserialize(Platform::Array<unsigned char> ^ state);
 
             Platform::String ^ GetLocalizedStringFormat(Platform::String ^ format, Platform::String ^ displayValue);
             void OnPropertyChanged(Platform::String ^ propertyname);
