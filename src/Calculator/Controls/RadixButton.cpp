@@ -16,10 +16,10 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Data;
 
-String^ RadixButton::GetRawDisplayValue()
+String ^ RadixButton::GetRawDisplayValue()
 {
     wstring rawValue;
-    String^ radixContent = Content->ToString();
+    String ^ radixContent = Content->ToString();
     LocalizationSettings::GetInstance().RemoveGroupSeparators(radixContent->Data(), radixContent->Length(), &rawValue);
     return ref new String(rawValue.c_str());
 }
