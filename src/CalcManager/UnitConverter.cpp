@@ -848,8 +848,7 @@ void UnitConverter::Calculate()
     }
 
     unordered_map<Unit, ConversionData, UnitHash> conversionTable = m_ratioMap[m_fromType];
-    double returnValue = stod(m_currentDisplay);
-    if (conversionTable[m_toType].ratio == 1.0 && conversionTable[m_toType].offset == 0.0)
+	if (AnyUnitIsEmpty() || (conversionTable[m_toType].ratio == 1.0 && conversionTable[m_toType].offset == 0.0))
     {
         m_returnDisplay = m_currentDisplay;
         m_returnHasDecimal = m_currentHasDecimal;
@@ -857,7 +856,8 @@ void UnitConverter::Calculate()
     }
     else
     {
-        returnValue = Convert(returnValue, conversionTable[m_toType]);
+        double currentValue = stod(m_currentDisplay);
+        double returnValue = Convert(currentValue, conversionTable[m_toType]);
         m_returnDisplay = RoundSignificant(returnValue, MAXIMUMDIGITSALLOWED);
         TrimString(m_returnDisplay);
         int numPreDecimal = (int)m_returnDisplay.size();
@@ -879,16 +879,26 @@ void UnitConverter::Calculate()
         else
         {
             returnValue = stod(m_returnDisplay);
-            wstring returnString;
-            if (m_currentDisplay.size() <= OPTIMALDIGITSALLOWED && abs(returnValue) >= OPTIMALDECIMALALLOWED)
+
+            auto currentDisplayTrimmed = m_currentDisplay;
+            TrimString(currentDisplayTrimmed);
+            int currentNumberSignificantDigits = currentDisplayTrimmed.size();
+            if (currentDisplayTrimmed.find(L'.') != currentDisplayTrimmed.npos)
+                --currentNumberSignificantDigits;
+            if (currentValue < 0)
+                --currentNumberSignificantDigits;
+
+            int precision = 0;
+            if (abs(returnValue) < OPTIMALDECIMALALLOWED)
             {
-                returnString = RoundSignificant(returnValue, OPTIMALDIGITSALLOWED - min(numPreDecimal, OPTIMALDIGITSALLOWED));
+                precision = MAXIMUMDIGITSALLOWED;
             }
             else
             {
-                returnString = RoundSignificant(returnValue, MAXIMUMDIGITSALLOWED - min(numPreDecimal, MAXIMUMDIGITSALLOWED));
+                precision = max(0, max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits)) - numPreDecimal);
             }
-            m_returnDisplay = returnString;
+       
+            m_returnDisplay = RoundSignificant(returnValue, precision);
             TrimString(m_returnDisplay);
         }
         m_returnHasDecimal = (m_returnDisplay.find(L'.') != m_returnDisplay.npos);
