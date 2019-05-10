@@ -882,7 +882,7 @@ void UnitConverter::Calculate()
 
             auto currentDisplayTrimmed = m_currentDisplay;
             TrimString(currentDisplayTrimmed);
-            int currentNumberSignificantDigits = currentDisplayTrimmed.size();
+            int currentNumberSignificantDigits = static_cast<int>(currentDisplayTrimmed.size());
             if (currentDisplayTrimmed.find(L'.') != currentDisplayTrimmed.npos)
                 --currentNumberSignificantDigits;
             if (currentValue < 0)
