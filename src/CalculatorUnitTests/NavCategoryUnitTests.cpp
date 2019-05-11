@@ -251,25 +251,10 @@ namespace CalculatorUnitTests
     void NavCategoryUnitTests::GetIndex()
     {
         // Index is the 0-based ordering of modes
-        vector<ViewMode> orderedModes = {
-            ViewMode::Standard,
-            ViewMode::Scientific,
-            ViewMode::Programmer,
-            ViewMode::Date,
-            ViewMode::Currency,
-            ViewMode::Volume,
-            ViewMode::Length,
-            ViewMode::Weight,
-            ViewMode::Temperature,
-            ViewMode::Energy,
-            ViewMode::Area,
-            ViewMode::Speed,
-            ViewMode::Time,
-            ViewMode::Power,
-            ViewMode::Data,
-            ViewMode::Pressure,
-            ViewMode::Angle
-        };
+        vector<ViewMode> orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Programmer, ViewMode::Date,        ViewMode::Currency,
+                                          ViewMode::Volume,   ViewMode::Length,     ViewMode::Weight,     ViewMode::Temperature, ViewMode::Energy,
+                                          ViewMode::Area,     ViewMode::Speed,      ViewMode::Time,       ViewMode::Power,       ViewMode::Data,
+                                          ViewMode::Pressure, ViewMode::Angle };
 
         for (size_t index = 0; index < orderedModes.size(); index++)
         {
@@ -283,25 +268,10 @@ namespace CalculatorUnitTests
     void NavCategoryUnitTests::GetPosition()
     {
         // Position is the 1-based ordering of modes
-        vector<ViewMode> orderedModes = {
-            ViewMode::Standard,
-            ViewMode::Scientific,
-            ViewMode::Programmer,
-            ViewMode::Date,
-            ViewMode::Currency,
-            ViewMode::Volume,
-            ViewMode::Length,
-            ViewMode::Weight,
-            ViewMode::Temperature,
-            ViewMode::Energy,
-            ViewMode::Area,
-            ViewMode::Speed,
-            ViewMode::Time,
-            ViewMode::Power,
-            ViewMode::Data,
-            ViewMode::Pressure,
-            ViewMode::Angle
-        };
+        vector<ViewMode> orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Programmer, ViewMode::Date,        ViewMode::Currency,
+                                          ViewMode::Volume,   ViewMode::Length,     ViewMode::Weight,     ViewMode::Temperature, ViewMode::Energy,
+                                          ViewMode::Area,     ViewMode::Speed,      ViewMode::Time,       ViewMode::Power,       ViewMode::Data,
+                                          ViewMode::Pressure, ViewMode::Angle };
 
         for (size_t pos = 1; pos <= orderedModes.size(); pos++)
         {
@@ -359,12 +329,12 @@ namespace CalculatorUnitTests
         TEST_METHOD(CreateNavCategoryGroup);
 
     private:
-        void ValidateNavCategory(IObservableVector<NavCategory^>^ categories, unsigned int index, ViewMode expectedMode, int expectedPosition)
+        void ValidateNavCategory(IObservableVector<NavCategory ^> ^ categories, unsigned int index, ViewMode expectedMode, int expectedPosition)
         {
             VERIFY_IS_LESS_THAN(0u, categories->Size);
             VERIFY_IS_GREATER_THAN(categories->Size, index);
 
-            NavCategory^ category = categories->GetAt(index);
+            NavCategory ^ category = categories->GetAt(index);
             VERIFY_ARE_EQUAL(expectedMode, category->Mode);
             VERIFY_ARE_EQUAL(expectedPosition, category->Position);
         }
@@ -372,24 +342,24 @@ namespace CalculatorUnitTests
 
     void NavCategoryGroupUnitTests::CreateNavCategoryGroup()
     {
-        IObservableVector<NavCategoryGroup^>^ menuOptions = NavCategoryGroup::CreateMenuOptions();
+        IObservableVector<NavCategoryGroup ^> ^ menuOptions = NavCategoryGroup::CreateMenuOptions();
 
         VERIFY_ARE_EQUAL(2, menuOptions->Size);
 
-        NavCategoryGroup^ calculatorGroup = menuOptions->GetAt(0);
+        NavCategoryGroup ^ calculatorGroup = menuOptions->GetAt(0);
         VERIFY_ARE_EQUAL(CategoryGroupType::Calculator, calculatorGroup->GroupType);
 
-        IObservableVector<NavCategory^>^ calculatorCategories = calculatorGroup->Categories;
+        IObservableVector<NavCategory ^> ^ calculatorCategories = calculatorGroup->Categories;
         VERIFY_ARE_EQUAL(4, calculatorCategories->Size);
         ValidateNavCategory(calculatorCategories, 0u, ViewMode::Standard, 1);
         ValidateNavCategory(calculatorCategories, 1u, ViewMode::Scientific, 2);
         ValidateNavCategory(calculatorCategories, 2u, ViewMode::Programmer, 3);
         ValidateNavCategory(calculatorCategories, 3u, ViewMode::Date, 4);
 
-        NavCategoryGroup^ converterGroup = menuOptions->GetAt(1);
+        NavCategoryGroup ^ converterGroup = menuOptions->GetAt(1);
         VERIFY_ARE_EQUAL(CategoryGroupType::Converter, converterGroup->GroupType);
 
-        IObservableVector<NavCategory^>^ converterCategories = converterGroup->Categories;
+        IObservableVector<NavCategory ^> ^ converterCategories = converterGroup->Categories;
         VERIFY_ARE_EQUAL(13, converterCategories->Size);
         ValidateNavCategory(converterCategories, 0u, ViewMode::Currency, 5);
         ValidateNavCategory(converterCategories, 1u, ViewMode::Volume, 6);

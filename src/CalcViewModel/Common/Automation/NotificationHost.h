@@ -10,25 +10,25 @@
 
 namespace CalculatorApp::Common::Automation
 {
-    public ref class NotificationHost sealed : public INarratorAnnouncementHost
+public
+    ref class NotificationHost sealed : public INarratorAnnouncementHost
     {
     public:
         NotificationHost();
 
         virtual bool IsHostAvailable();
-        virtual INarratorAnnouncementHost^ MakeHost();
+        virtual INarratorAnnouncementHost ^ MakeHost();
 
-        virtual void Announce(NarratorAnnouncement^ announcement);
-
-    private:
-        static Windows::UI::Xaml::Automation::Peers::AutomationNotificationKind GetWindowsNotificationKind(
-            CalculatorApp::Common::Automation::AutomationNotificationKind customKindType);
-
-        static Windows::UI::Xaml::Automation::Peers::AutomationNotificationProcessing GetWindowsNotificationProcessing(
-            CalculatorApp::Common::Automation::AutomationNotificationProcessing customProcessingType);
+        virtual void Announce(NarratorAnnouncement ^ announcement);
 
     private:
-        Windows::UI::Xaml::UIElement^ m_host;
+        static Windows::UI::Xaml::Automation::Peers::AutomationNotificationKind
+        GetWindowsNotificationKind(CalculatorApp::Common::Automation::AutomationNotificationKind customKindType);
+
+        static Windows::UI::Xaml::Automation::Peers::AutomationNotificationProcessing
+        GetWindowsNotificationProcessing(CalculatorApp::Common::Automation::AutomationNotificationProcessing customProcessingType);
+
+    private:
+        Windows::UI::Xaml::UIElement ^ m_host;
     };
 }
-

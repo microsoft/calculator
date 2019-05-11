@@ -8,7 +8,9 @@ namespace CalculationManager
     class IResourceProvider
     {
     public:
-        virtual ~IResourceProvider() { }
+        virtual ~IResourceProvider()
+        {
+        }
 
         // Should return a string from the resource table for strings used
         // by the calculation engine. The strings that must be defined

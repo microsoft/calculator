@@ -13,8 +13,7 @@
 
 namespace CalculatorApp
 {
-    [Windows::Foundation::Metadata::WebHostHidden]
-    public ref class CalculatorStandardOperators sealed
+    [Windows::Foundation::Metadata::WebHostHidden] public ref class CalculatorStandardOperators sealed
     {
     public:
         CalculatorStandardOperators();

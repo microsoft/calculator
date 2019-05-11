@@ -9,8 +9,7 @@
 
 namespace CalculatorApp
 {
-    [Windows::Foundation::Metadata::WebHostHidden]
-    public ref class CalculatorProgrammerRadixOperators sealed
+    [Windows::Foundation::Metadata::WebHostHidden] public ref class CalculatorProgrammerRadixOperators sealed
     {
     public:
         CalculatorProgrammerRadixOperators();
@@ -22,23 +21,24 @@ namespace CalculatorApp
             }
         }
 
-        property bool IsErrorVisualState {
+        property bool IsErrorVisualState
+        {
             bool get();
             void set(bool value);
         }
-        Platform::String^ ParenthesisCountToString(unsigned int count);
+        Platform::String ^ ParenthesisCountToString(unsigned int count);
 
         DEPENDENCY_PROPERTY_OWNER(CalculatorProgrammerRadixOperators);
 
     private:
-        void Shift_Clicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void SetVisibilityBinding(Windows::UI::Xaml::FrameworkElement^ element, Platform::String^ path, Windows::UI::Xaml::Data::IValueConverter^ converter);
-        void OnLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OnUnloaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void Shift_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void SetVisibilityBinding(Windows::UI::Xaml::FrameworkElement ^ element, Platform::String ^ path, Windows::UI::Xaml::Data::IValueConverter ^ converter);
+        void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnUnloaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void ProgModeRadixChange();
 
         bool m_isErrorVisualState;
         Windows::Foundation::EventRegistrationToken m_progModeRadixChangeToken;
-        void OpenParenthesisButton_GotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void OpenParenthesisButton_GotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }

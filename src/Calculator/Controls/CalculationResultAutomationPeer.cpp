@@ -9,16 +9,17 @@ using namespace Windows::UI::Xaml::Automation::Peers;
 
 namespace CalculatorApp::Controls
 {
-    CalculationResultAutomationPeer::CalculationResultAutomationPeer(FrameworkElement^ owner) :
-        FrameworkElementAutomationPeer(owner)
-    { }
+    CalculationResultAutomationPeer::CalculationResultAutomationPeer(FrameworkElement ^ owner)
+        : FrameworkElementAutomationPeer(owner)
+    {
+    }
 
     AutomationControlType CalculationResultAutomationPeer::GetAutomationControlTypeCore()
     {
         return AutomationControlType::Text;
     }
 
-    Platform::Object^ CalculationResultAutomationPeer::GetPatternCore(PatternInterface pattern)
+    Platform::Object ^ CalculationResultAutomationPeer::GetPatternCore(PatternInterface pattern)
     {
         if (pattern == PatternInterface::Invoke)
         {
@@ -30,7 +31,7 @@ namespace CalculatorApp::Controls
 
     void CalculationResultAutomationPeer::Invoke()
     {
-        auto owner = static_cast<CalculationResult^>(this->Owner);
+        auto owner = static_cast<CalculationResult ^>(this->Owner);
         owner->ProgrammaticSelect();
     }
 }

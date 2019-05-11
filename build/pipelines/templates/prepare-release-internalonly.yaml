@@ -1,5 +1,5 @@
 # This template contains a job which builds artifacts needed to release the app to the store and to
-# Windows using Microsoft-internal systems. It relies Microsoft-internal resources and will not
+# Windows using Microsoft-internal systems. It relies on Microsoft-internal resources and will not
 # work outside of Microsoft.
 # Specifically, this job:
 # - Signs the bundle using a secure system. If you want to build your own, use SignTool following

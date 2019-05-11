@@ -30,7 +30,7 @@ steps:
     inputs:
       solution: src/Calculator.sln
       vsVersion: 15.0
-      msbuildArgs: /bl:$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator.binlog /p:OutDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\ /p:GenerateProjectSpecificOutputFolder=true /p:AppVersion=$(Build.BuildNumber) ${{ parameters.extraMsBuildArgs }}
+      msbuildArgs: /bl:$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator.binlog /p:OutDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\ /p:GenerateProjectSpecificOutputFolder=true /p:AppVersion=$(Build.BuildNumber) /t:Publish /p:PublishDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\publish\ ${{ parameters.extraMsBuildArgs }}
       platform: $(BuildPlatform)
       configuration: $(BuildConfiguration)
       clean: true
