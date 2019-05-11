@@ -14,6 +14,6 @@ namespace CalculatorApp
         virtual std::wstring GetCEngineString(const std::wstring& id) override;
 
     private:
-        Windows::ApplicationModel::Resources::ResourceLoader^ m_resLoader;
+        Windows::ApplicationModel::Resources::ResourceLoader ^ m_resLoader;
     };
 }

@@ -8,9 +8,9 @@ using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace Platform;
 
-NumbersAndOperatorsEnum CalculatorButtonPressedEventArgs::GetOperationFromCommandParameter(_In_ Object^ commandParameter)
+NumbersAndOperatorsEnum CalculatorButtonPressedEventArgs::GetOperationFromCommandParameter(_In_ Object ^ commandParameter)
 {
-    auto eventArgs = dynamic_cast<CalculatorButtonPressedEventArgs^>(commandParameter);
+    auto eventArgs = dynamic_cast<CalculatorButtonPressedEventArgs ^>(commandParameter);
     if (eventArgs != nullptr)
     {
         return eventArgs->Operation;
@@ -21,9 +21,9 @@ NumbersAndOperatorsEnum CalculatorButtonPressedEventArgs::GetOperationFromComman
     }
 }
 
-String^ CalculatorButtonPressedEventArgs::GetAuditoryFeedbackFromCommandParameter(_In_ Object^ commandParameter)
+String ^ CalculatorButtonPressedEventArgs::GetAuditoryFeedbackFromCommandParameter(_In_ Object ^ commandParameter)
 {
-    auto eventArgs = dynamic_cast<CalculatorButtonPressedEventArgs^>(commandParameter);
+    auto eventArgs = dynamic_cast<CalculatorButtonPressedEventArgs ^>(commandParameter);
     if (eventArgs != nullptr)
     {
         return eventArgs->AuditoryFeedback;
@@ -33,4 +33,3 @@ String^ CalculatorButtonPressedEventArgs::GetAuditoryFeedbackFromCommandParamete
         return nullptr;
     }
 }
-

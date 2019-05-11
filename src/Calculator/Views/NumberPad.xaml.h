@@ -13,14 +13,13 @@
 
 namespace CalculatorApp
 {
-    [Windows::Foundation::Metadata::WebHostHidden]
-    public ref class NumberPad sealed
+    [Windows::Foundation::Metadata::WebHostHidden] public ref class NumberPad sealed
     {
     public:
         NumberPad();
         DEPENDENCY_PROPERTY_OWNER(NumberPad);
 
-        DEPENDENCY_PROPERTY(Windows::UI::Xaml::Style^, ButtonStyle);
+        DEPENDENCY_PROPERTY(Windows::UI::Xaml::Style ^, ButtonStyle);
 
         property bool IsErrorVisualState
         {

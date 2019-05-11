@@ -10,6 +10,6 @@ namespace CalculatorApp
         extern Platform::StringReference Snap;
         extern Platform::StringReference DockedView;
 
-        bool IsValidViewState(Platform::String^ viewState);
+        bool IsValidViewState(Platform::String ^ viewState);
     }
 }

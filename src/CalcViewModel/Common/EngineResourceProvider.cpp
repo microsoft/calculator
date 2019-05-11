@@ -44,7 +44,7 @@ namespace CalculatorApp
         }
 
         StringReference idRef(id.c_str());
-        String^ str = m_resLoader->GetString(idRef);
+        String ^ str = m_resLoader->GetString(idRef);
         return str->Begin();
     }
 }

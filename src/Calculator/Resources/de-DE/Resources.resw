@@ -119,15 +119,27 @@
   </resheader>
   <data name="AppName" xml:space="preserve">
     <value>Rechner</value>
-    <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"}</comment>
+    <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the title of the official application when published through Windows Store.</comment>
+  </data>
+  <data name="DevAppName" xml:space="preserve">
+    <value>Rechner [Dev]</value>
+    <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the name of the application when built by a user via GitHub. We use a different name to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="AppStoreName" xml:space="preserve">
     <value>Windows-Rechner</value>
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps.</comment>
   </data>
+  <data name="DevAppStoreName" xml:space="preserve">
+    <value>Windows-Rechner [Dev]</value>
+    <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps. This is the the version of the name used when the app is built by a user via GitHub.</comment>
+  </data>
   <data name="AppDescription" xml:space="preserve">
     <value>Rechner</value>
-    <comment>{@Appx_Description@}</comment>
+    <comment>{@Appx_Description@} This description is used for the official application when published through Windows Store.</comment>
+  </data>
+  <data name="DevAppDescription" xml:space="preserve">
+    <value>Rechner [Dev]</value>
+    <comment>{@Appx_Description@} This is the description of the application when built by a user via GitHub. We use a different description to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="copyMenuItem" xml:space="preserve">
     <value>Kopieren</value>
@@ -422,7 +434,7 @@
     <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
   </data>
   <data name="MemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Arbeitsspeicher</value>
+    <value>Speicher</value>
     <comment>This is the tool tip automation name for the memory button.</comment>
   </data>
   <data name="HistoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -442,11 +454,11 @@
     <comment>This is the tool tip automation name for the Clear Memory (MC) button.</comment>
   </data>
   <data name="MemoryLabel.Text" xml:space="preserve">
-    <value>Arbeitsspeicher</value>
+    <value>Speicher</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryPivotItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Speicher</value>
+    <value>Arbeitsspeicher</value>
     <comment>The automation name for the Memory pivot item that is shown when Calculator is in wide layout.</comment>
   </data>
   <data name="HistoryLabel.Text" xml:space="preserve">
@@ -550,7 +562,7 @@
     <comment>Screen reader prompt for the history flyout</comment>
   </data>
   <data name="MemoryPane" xml:space="preserve">
-    <value>Arbeitsspeicher</value>
+    <value>Speicher</value>
     <comment>Screen reader prompt for the memory flyout</comment>
   </data>
   <data name="Format_HexButtonValue" xml:space="preserve">
@@ -594,7 +606,7 @@
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Gespeicherten Wert speichern (STRG+M)</value>
+    <value>Speicher (STRG+M)</value>
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -770,23 +782,23 @@
     <comment>Screen reader prompt for the Calculator number "F" button</comment>
   </data>
   <data name="andButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>And</value>
+    <value>UND</value>
     <comment>Screen reader prompt for the Calculator And button</comment>
   </data>
   <data name="orButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Or</value>
+    <value>ODER</value>
     <comment>Screen reader prompt for the Calculator Or button</comment>
   </data>
   <data name="notButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Not</value>
+    <value>NICHT</value>
     <comment>Screen reader prompt for the Calculator Not button</comment>
   </data>
   <data name="rolButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Nach links drehen</value>
+    <value>Nach links verschieben</value>
     <comment>Screen reader prompt for the Calculator ROL button</comment>
   </data>
   <data name="rorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Nach rechts drehen</value>
+    <value>Nach rechts verschieben</value>
     <comment>Screen reader prompt for the Calculator ROR button</comment>
   </data>
   <data name="lshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -889,13 +901,18 @@
     <value>Öffnende Klammer</value>
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
-  <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
-    <value>Runde Klammer links, Anzahl der öffnenden Klammern: %1</value>
-    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
-  </data>
+  
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Schließende Klammer</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
+  </data>
+  <data name="Format_OpenParenthesisCountAutomationNamePrefix" xml:space="preserve">
+    <value>Anzahl geöffneter Klammern %1</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific and programmer operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
+  </data>
+  <data name="NoRightParenthesisAdded_Announcement" xml:space="preserve">
+    <value>Es sind keine zu schließenden Klammern vorhanden.</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator when the ")" button on the scientific and programmer operator keypad cannot be added to the equation. e.g. "1+)".</comment>
   </data>
   <data name="ftoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Wissenschaftliche Schreibweise</value>
@@ -918,7 +935,7 @@
     <comment>Screen reader prompt for the Calculator cos button  on the scientific operator keypad</comment>
   </data>
   <data name="tanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Tagens</value>
+    <value>Tangens</value>
     <comment>Screen reader prompt for the Calculator tan button  on the scientific operator keypad</comment>
   </data>
   <data name="sinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -938,19 +955,19 @@
     <comment>Screen reader prompt for the x squared on the scientific operator keypad. </comment>
   </data>
   <data name="xpower3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Würfel</value>
+    <value>Kubik</value>
     <comment>Screen reader prompt for the x cubed on the scientific operator keypad. </comment>
   </data>
   <data name="invsinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Arcussinus</value>
+    <value>Arkussinus</value>
     <comment>Screen reader prompt for the inverted sin on the scientific operator keypad.</comment>
   </data>
   <data name="invcosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Arcuscosinus</value>
+    <value>Arkuskosinus</value>
     <comment>Screen reader prompt for the inverted cos on the scientific operator keypad.</comment>
   </data>
   <data name="invtanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Arcustangens</value>
+    <value>Arkustangens</value>
     <comment>Screen reader prompt for the inverted tan on the scientific operator keypad.</comment>
   </data>
   <data name="invsinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1150,7 +1167,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Liter" xml:space="preserve">
-    <value>L</value>
+    <value>l</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Milliliter" xml:space="preserve">
@@ -1158,7 +1175,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Milliliter" xml:space="preserve">
-    <value>mL</value>
+    <value>ml</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_PintUK" xml:space="preserve">
@@ -1494,7 +1511,7 @@
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Week" xml:space="preserve">
-    <value>wo</value>
+    <value>w</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Yard" xml:space="preserve">
@@ -1866,7 +1883,7 @@
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Carat" xml:space="preserve">
-    <value>cd</value>
+    <value>kt</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Degree" xml:space="preserve">
@@ -2265,9 +2282,9 @@
     <value>Datenschutzbestimmungen von Microsoft</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
   </data>
-  <data name="AboutControlCopyright.Text" xml:space="preserve">
-    <value>© 2018 Microsoft. Alle Rechte vorbehalten.</value>
-    <comment>Copyright statement, displayed on the About panel</comment>
+  <data name="AboutControlCopyright" xml:space="preserve">
+    <value>© %1 Microsoft. Alle Rechte vorbehalten.</value>
+    <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Info</value>
@@ -2601,7 +2618,7 @@
   </data>
   <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>x oder</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronounciation.</comment>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
   </data>
   <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>und</value>

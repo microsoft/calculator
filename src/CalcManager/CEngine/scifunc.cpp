@@ -16,7 +16,6 @@
 /***                                                                    ***/
 /***                                                                    ***/
 /**************************************************************************/
-#include "pch.h"
 #include "Header Files/CalcEngine.h"
 
 using namespace std;
@@ -24,7 +23,7 @@ using namespace CalcEngine;
 using namespace CalcEngine::RationalMath;
 
 /* Routines for more complex mathematical functions/error checking. */
-CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& rat, DWORD op)
+CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& rat, uint32_t op)
 {
     Rational result{};
     try
@@ -55,7 +54,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
 
                 uint64_t w64Bits = result.ToUInt64_t();
                 uint64_t msb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
-                w64Bits <<= 1; // LShift by 1
+                w64Bits <<= 1;  // LShift by 1
                 w64Bits |= msb; // Set the prev Msb as the current Lsb
 
                 result = w64Bits;
@@ -70,7 +69,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
 
                 uint64_t w64Bits = result.ToUInt64_t();
                 uint64_t lsb = ((w64Bits & 0x01) == 1) ? 1 : 0;
-                w64Bits >>= 1; //RShift by 1
+                w64Bits >>= 1; // RShift by 1
                 w64Bits |= (lsb << (m_dwWordBitWidth - 1));
 
                 result = w64Bits;
@@ -169,9 +168,9 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
 
         case IDC_DEGREES:
             ProcessCommand(IDC_INV);
-            // This case falls through to IDC_DMS case because in the old Win32 Calc, 
+            // This case falls through to IDC_DMS case because in the old Win32 Calc,
             // the degrees functionality was achieved as 'Inv' of 'dms' operation,
-            // so setting the IDC_INV command first and then performing 'dms' operation as global variables m_bInv, m_bRecord 
+            // so setting the IDC_INV command first and then performing 'dms' operation as global variables m_bInv, m_bRecord
             // are set properly through ProcessCommand(IDC_INV)
             [[fallthrough]];
         case IDC_DMS:
@@ -203,9 +202,9 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             }
             break;
         }
-        }   // end switch( op )
+        } // end switch( op )
     }
-    catch (DWORD nErrCode)
+    catch (uint32_t nErrCode)
     {
         DisplayError(nErrCode);
         result = rat;
@@ -215,9 +214,9 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
 }
 
 /* Routine to display error messages and set m_bError flag.  Errors are */
-/* called with DisplayError (n), where n is a DWORD   between 0 and 5. */
+/* called with DisplayError (n), where n is a uint32_t   between 0 and 5. */
 
-void CCalcEngine::DisplayError(DWORD nError)
+void CCalcEngine::DisplayError(uint32_t nError)
 {
     wstring errorString{ GetString(IDS_ERRORS_FIRST + SCODE_CODE(nError)) };
 
@@ -227,4 +226,3 @@ void CCalcEngine::DisplayError(DWORD nError)
 
     m_HistoryCollector.ClearHistoryLine(errorString);
 }
-

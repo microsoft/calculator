@@ -15,30 +15,33 @@ name: $(BuildDefinitionName)_$(date:yyMM).$(date:dd)$(rev:rrr)
 jobs:
 - job: Localize
   pool:
-    name: Package ES Custom Demands Lab A
-    demands:
-    - ClientAlias -equals PKGESUTILAPPS
-  workspace:
-    clean: outputs
+    vmImage: vs2017-win2016
+  variables:
+    skipComponentGovernanceDetection: true
   steps:
-  - checkout: self
-    clean: true
 
-  - task: PkgESSetupBuild@10
-    displayName: Initialize Package ES
+  - task: MicrosoftTDBuild.tdbuild-task.tdbuild-task.TouchdownBuildTask@1
+    displayName: Send resources to Touchdown Build
     inputs:
-      productName: Calculator
-      branchVersion: true
+      teamId: 86
+      authId: d3dd8113-65b3-4526-bdca-a00a7d1c37ba
+      authKey: $(LocServiceKey)
+      isPreview: false
+      relativePathRoot: src/Calculator/Resources/en-US/
+      resourceFilePath: '*.resw'
+      outputDirectoryRoot: src/Calculator/Resources/
 
-  - task: PkgESTouchdownLocService@10
-    displayName: Package ES Touchdown Loc Service
+  - script: |
+      cd $(Build.SourcesDirectory)
+      git add -A
+      git diff --cached --exit-code
+      echo ##vso[task.setvariable variable=hasChanges]%errorlevel%
+      git diff --cached > $(Build.ArtifactStagingDirectory)\LocalizedStrings.patch
+    displayName: Check for changes and create patch file
+
+  - task: PublishPipelineArtifact@0
+    displayName: Publish patch file as artifact
+    condition: eq(variables['hasChanges'], '1')
     inputs:
-      IsCallToServiceStepSelected: true
-      IsCheckedInFileSelected: true
-      CheckinFilesAtOriginFilePath: true
-      GitLocPath: Loc/Resources
-      LocConfigFile: build/config/LocConfigPackageEs.xml
-      AuthenticationMode: OAuth
-      ClientApplicationID: d3dd8113-65b3-4526-bdca-a00a7d1c37ba
-      ApplicationKeyID: $(LocServiceKey)
-      SendToLoc: true
+      artifactName: Patch
+      targetPath: $(Build.ArtifactStagingDirectory)

@@ -43,9 +43,8 @@ App::App()
 /// will be used such as when the application is launched to open a specific file.
 /// </summary>
 /// <param name="e">Details about the launch request and process.</param>
-void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs^ e)
+void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs ^ e)
 {
-
 #if _DEBUG
     // Show graphics profiling information while debugging.
     if (IsDebuggerPresent())
@@ -55,7 +54,7 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
     }
 #endif
 
-    auto rootFrame = dynamic_cast<Frame^>(Window::Current->Content);
+    auto rootFrame = dynamic_cast<Frame ^>(Window::Current->Content);
 
     // Do not repeat app initialization when the Window already has content,
     // just ensure that the window is active
@@ -71,13 +70,12 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
         {
             // TODO: Restore the saved session state only when appropriate, scheduling the
             // final launch steps after the restore is complete
-
         }
 
         // Place the frame in the current Window
         Window::Current->Content = rootFrame;
     }
-        
+
     Microsoft::VisualStudio::TestPlatform::TestExecutor::WinRTCore::UnitTestClient::CreateDefaultUI();
 
     Window::Current->Activate();
@@ -95,12 +93,12 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 /// </summary>
 /// <param name="sender">The source of the suspend request.</param>
 /// <param name="e">Details about the suspend request.</param>
-void App::OnSuspending(Object^ sender, SuspendingEventArgs^ e)
+void App::OnSuspending(Object ^ sender, SuspendingEventArgs ^ e)
 {
-    (void) sender; // Unused parameter
-    (void) e; // Unused parameter
+    (void)sender; // Unused parameter
+    (void)e;      // Unused parameter
 
-    //TODO: Save application state and stop any background activity
+    // TODO: Save application state and stop any background activity
 }
 
 /// <summary>
@@ -108,7 +106,7 @@ void App::OnSuspending(Object^ sender, SuspendingEventArgs^ e)
 /// </summary>
 /// <param name="sender">The Frame which failed navigation</param>
 /// <param name="e">Details about the navigation failure</param>
-void App::OnNavigationFailed(Platform::Object ^sender, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs ^e)
+void App::OnNavigationFailed(Platform::Object ^ sender, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs ^ e)
 {
     throw ref new FailureException("Failed to load Page " + e->SourcePageType.Name);
 }
