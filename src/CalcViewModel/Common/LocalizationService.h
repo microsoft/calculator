@@ -56,6 +56,7 @@ namespace CalculatorApp
             static Platform::String ^ GetNarratorReadableString(Platform::String ^ rawString);
 
         private:
+            LocalizationService(_In_ const wchar_t* const overridedLanguage);
             Windows::Globalization::Fonts::LanguageFont ^ GetLanguageFont(LanguageFontType fontType);
             Windows::UI::Text::FontWeight ParseFontWeight(Platform::String ^ fontWeight);
 
@@ -72,8 +73,6 @@ namespace CalculatorApp
             static void UpdateFontFamilyAndSize(Windows::UI::Xaml::DependencyObject ^ target);
 
             static std::unordered_map<std::wstring, std::wstring> GetTokenToReadableNameMap();
-
-        LocalizationService(_In_ const wchar_t * const overridedLanguage);
 
             static LocalizationService ^ s_singletonInstance;
 
