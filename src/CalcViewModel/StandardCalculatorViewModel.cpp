@@ -1223,13 +1223,18 @@ void StandardCalculatorViewModel::SetCalculatorType(ViewMode targetState)
     }
 }
 
-Platform::String ^ StandardCalculatorViewModel::GetRawDisplayValue()
+String^ StandardCalculatorViewModel::GetRawDisplayValue()
 {
-    wstring rawValue;
-
-    LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue->Data(), DisplayValue->Length(), &rawValue);
-
-    return ref new Platform::String(rawValue.c_str());
+    if (IsInError)
+    {
+        return DisplayValue;
+    }
+    else
+    {
+        wstring rawValue;
+        LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue->Data(), DisplayValue->Length(), &rawValue);
+        return ref new String(rawValue.c_str());
+    }
 }
 
 // Given a format string, returns a string with the input display value inserted.
