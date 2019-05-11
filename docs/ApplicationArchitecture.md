@@ -201,4 +201,5 @@ instead of regular floating point arithmetic). The interface to this layer is de
 [CalcManager folder]:                 ../src/CalcManager
 [CalculatorManager.h]:                ../src/CalcManager/CalculatorManager.h
 [CalcEngine.h]:                       ../src/CalcManager/Header&#32;Files/CalcEngine.h
+[Infinite Precision]:                 https://en.wikipedia.org/wiki/Arbitrary-precision_arithmetic
 [ratpak.h]:                           ../src/CalcManager/Ratpack/ratpak.h
