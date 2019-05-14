@@ -83,16 +83,15 @@ namespace CalculatorApp
 #ifdef SEND_TELEMETRY
     // c.f. WINEVENT_KEYWORD_RESERVED_63-56 0xFF00000000000000 // Bits 63-56 - channel keywords
     // c.f. WINEVENT_KEYWORD_*              0x00FF000000000000 // Bits 55-48 - system-reserved keywords
-    constexpr int64_t MICROSOFT_KEYWORD_CRITICAL_DATA = 0x0000800000000000; // Bit 47
-    constexpr int64_t MICROSOFT_KEYWORD_MEASURES = 0x0000400000000000;      // Bit 46
-    constexpr int64_t MICROSOFT_KEYWORD_TELEMETRY = 0x0000200000000000;     // Bit 45
-    constexpr int64_t MICROSOFT_KEYWORD_RESERVED_44 = 0x0000100000000000;   // Bit 44 (reserved for future assignment)
+    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_1 = 0x0000800000000000; // Bit 47
+    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_2 = 0x0000400000000000;      // Bit 46
+    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_3 = 0x0000200000000000;     // Bit 45
 #else
     // define all Keyword options as 0 when we do not want to upload app telemetry
-    constexpr int64_t MICROSOFT_KEYWORD_CRITICAL_DATA = 0;
-    constexpr int64_t MICROSOFT_KEYWORD_MEASURES = 0;
-    constexpr int64_t MICROSOFT_KEYWORD_TELEMETRY = 0;
-    constexpr int64_t MICROSOFT_KEYWORD_RESERVED_44 = 0;
+    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_1 = 0;
+    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_2 = 0;
+    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_3 = 0;
+
 #endif
 
 #pragma region TraceLogger setup and cleanup
@@ -127,17 +126,17 @@ namespace CalculatorApp
 #pragma region Tracing methods
     void TraceLogger::LogTelemetryEvent(wstring_view eventName, LoggingFields fields) const
     {
-        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_TELEMETRY));
+        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_3));
     }
 
     void TraceLogger::LogMeasureEvent(wstring_view eventName, LoggingFields fields) const
     {
-        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_MEASURES));
+        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_2));
     }
 
     void TraceLogger::LogCriticalDataEvent(wstring_view eventName, LoggingFields fields) const
     {
-        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_CRITICAL_DATA));
+        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_1));
     }
 
     void TraceLogger::LogPerformanceEvent(wstring_view eventName, LoggingFields fields) const
@@ -342,7 +341,7 @@ namespace CalculatorApp
         if (!isAppLaunchBeginLogged)
         {
             m_appLaunchActivity =
-                g_calculatorProvider.StartActivity(EVENT_NAME_APP_LAUNCH_BEGIN, nullptr, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_TELEMETRY));
+                g_calculatorProvider.StartActivity(EVENT_NAME_APP_LAUNCH_BEGIN, nullptr, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_3));
 
             isAppLaunchBeginLogged = true;
         }
