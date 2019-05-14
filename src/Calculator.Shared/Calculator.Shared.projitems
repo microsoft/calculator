@@ -1,0 +1,379 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>6279c845-92f8-4333-ab99-3d213163593c</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>CalculatorApp</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)CalcManager\CalculatorList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CalcManager\CalculatorManager.Interop.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CalcManager\CalculatorManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CalcManager\CalculatorMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CalcManager\CCalcEngine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CalcManager\CCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CalcManager\Command.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CalcManager\EngineStrings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CalcManager\ExpressionCommandInterface.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CalcManager\RadixType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CalcManager\RatPak.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CalcManager\UnitConversionManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\AlwaysSelectedCollectionView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\AppLifecycleLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\AppResourceProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Automation\NarratorAnnouncement.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\BindableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\CalculatorButtonPressedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\CalculatorButtonUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\CalculatorDisplay.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\CopyPasteManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\DelegateCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\DisplayExpressionToken.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\EngineResourceProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\LocalizationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\LocalizationSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\LocalizationStringUtil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\MyVirtualKey.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\NavCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\TitleBarHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Utils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CalculationResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CalculationResultAutomationPeer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CalculatorButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\FlipButtons.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\KeyboardShortcutManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\OperandTextBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\OperatorTextBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\OverflowTextBlock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\OverflowTextBlockAutomationPeer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\RadixButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SupplementaryItemsControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\AlwaysSelectedCollectionViewConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BitFlipAutomationNameConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanNegationConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\DelighterUnitToSyleConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ExpressionItemContainerStyle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ExpressionItemTemplateSelector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ItemSizeToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\RadixToStringConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibilityNegationConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DateCalculatorViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\HistoryItemViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\HistoryViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MemoryItemViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\StandardCalculatorViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\UnitConverterViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AboutFlyout.xaml.cs">
+      <DependentUpon>AboutFlyout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Calculator.xaml.cs">
+      <DependentUpon>Calculator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CalculatorProgrammerBitFlipPanel.xaml.cs">
+      <DependentUpon>CalculatorProgrammerBitFlipPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CalculatorProgrammerDisplayPanel.xaml.cs">
+      <DependentUpon>CalculatorProgrammerDisplayPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CalculatorProgrammerOperators.xaml.cs">
+      <DependentUpon>CalculatorProgrammerOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CalculatorProgrammerRadixOperators.xaml.cs">
+      <DependentUpon>CalculatorProgrammerRadixOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CalculatorScientificAngleButtons.xaml.cs">
+      <DependentUpon>CalculatorScientificAngleButtons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CalculatorScientificOperators.xaml.cs">
+      <DependentUpon>CalculatorScientificOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CalculatorStandardOperators.xaml.cs">
+      <DependentUpon>CalculatorStandardOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DateCalculator.xaml.cs">
+      <DependentUpon>DateCalculator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\HistoryList.xaml.cs">
+      <DependentUpon>HistoryList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Memory.xaml.cs">
+      <DependentUpon>Memory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MemoryListItem.xaml.cs">
+      <DependentUpon>MemoryListItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\NumberPad.xaml.cs">
+      <DependentUpon>NumberPad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\OperatorsPanel.xaml.cs">
+      <DependentUpon>OperatorsPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\StateTriggers\AspectRatioTrigger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SupplementaryResults.xaml.cs">
+      <DependentUpon>SupplementaryResults.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TitleBar.xaml.cs">
+      <DependentUpon>TitleBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UnitConverter.xaml.cs">
+      <DependentUpon>UnitConverter.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\AboutFlyout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Calculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\CalculatorProgrammerBitFlipPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\CalculatorProgrammerDisplayPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\CalculatorProgrammerOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\CalculatorProgrammerRadixOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\CalculatorScientificAngleButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\CalculatorScientificOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\CalculatorStandardOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\DateCalculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\DelighterUnitStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\HistoryList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Memory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\MemoryListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\NumberPad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\OperatorsPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\SupplementaryResults.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\TitleBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UnitConverter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalcMDL2.ttf" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorAppList.targetsize-96.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorLargeTile.contrast-white_scale-400.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorMedTile.contrast-white_scale-400.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorSmallTile.contrast-white_scale-400.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorSplashScreen.contrast-white_scale-400.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorStoreLogo.contrast-white_scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorWideTile.contrast-white_scale-400.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Date.targetsize-64_contrast-white.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Programmer.targetsize-64_contrast-white.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Scientific.targetsize-64_contrast-white.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\SplashScreen.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Standard.targetsize-64_contrast-white.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\StoreLogo.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\af-ZA\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\af-ZA\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\am-ET\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\am-ET\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ar-SA\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ar-SA\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\az-Latn-AZ\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\az-Latn-AZ\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\be-BY\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\be-BY\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\bg-BG\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\bg-BG\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\bn-BD\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\bn-BD\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ca-ES\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ca-ES\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\cs-CZ\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\cs-CZ\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\da-DK\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\da-DK\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\de-DE\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\de-DE\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\el-GR\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\el-GR\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\en-GB\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\en-GB\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\en-US\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\en-US\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\es-ES\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\es-ES\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\es-MX\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\es-MX\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\et-EE\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\et-EE\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\eu-ES\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\eu-ES\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\fa-IR\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\fa-IR\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\fi-FI\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\fi-FI\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\fil-PH\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\fil-PH\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\fr-CA\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\fr-CA\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\fr-FR\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\fr-FR\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\gl-ES\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\gl-ES\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ha-Latn-NG\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ha-Latn-NG\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\he-IL\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\he-IL\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\hi-IN\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\hi-IN\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\hr-HR\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\hr-HR\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\hu-HU\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\hu-HU\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\id-ID\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\id-ID\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\is-IS\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\is-IS\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\it-IT\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\it-IT\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ja-JP\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ja-JP\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\kk-KZ\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\kk-KZ\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\km-KH\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\km-KH\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\kn-IN\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\kn-IN\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ko-KR\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ko-KR\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\lo-LA\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\lo-LA\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\lt-LT\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\lt-LT\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\lv-LV\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\lv-LV\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\mk-MK\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\mk-MK\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ml-IN\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ml-IN\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ms-MY\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ms-MY\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\nb-NO\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\nb-NO\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\nl-NL\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\nl-NL\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\pl-PL\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\pl-PL\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\pt-BR\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\pt-BR\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\pt-PT\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\pt-PT\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ro-RO\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ro-RO\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ru-RU\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ru-RU\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\sk-SK\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\sk-SK\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\sl-SI\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\sl-SI\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\sq-AL\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\sq-AL\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\sr-Latn-RS\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\sr-Latn-RS\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\sv-SE\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\sv-SE\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\sw-KE\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\sw-KE\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ta-IN\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\ta-IN\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\te-IN\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\te-IN\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\th-TH\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\th-TH\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\tr-TR\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\tr-TR\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\uk-UA\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\uk-UA\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\uz-Latn-UZ\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\uz-Latn-UZ\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\vi-VN\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\vi-VN\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\zh-CN\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\zh-CN\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\zh-TW\CEngineStrings.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\zh-TW\Resources.resw" />
+  </ItemGroup>
+</Project>

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include <string>
-#include "Header Files/CCommand.h"
+#include "headers/CCommand.h"
 #include "CalculatorVector.h"
 #include "ExpressionCommand.h"
 

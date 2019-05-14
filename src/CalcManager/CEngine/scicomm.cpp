@@ -14,8 +14,8 @@
 \****************************************************************************/
 
 #include <string>
-#include "Header Files/CalcEngine.h"
-#include "Header Files/CalcUtils.h"
+#include "headers/CalcEngine.h"
+#include "headers/CalcUtils.h"
 
 using namespace std;
 using namespace CalcEngine;

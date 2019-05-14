@@ -3,7 +3,7 @@
 
 #pragma once
 #include "ExpressionCommandInterface.h"
-#include "Header Files/IHistoryDisplay.h"
+#include "headers/IHistoryDisplay.h"
 
 namespace CalculationManager
 {

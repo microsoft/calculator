@@ -1,0 +1,974 @@
+﻿<UserControl x:Class="CalculatorApp.UnitConverter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:automation="using:CalculatorApp.Common.Automation"
+             xmlns:common="using:CalculatorApp.Common"
+             xmlns:controls="using:CalculatorApp.Controls"
+             xmlns:converters="using:CalculatorApp.Converters"
+             xmlns:local="using:CalculatorApp.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:triggers="using:CalculatorApp.Views.StateTriggers"
+             xmlns:vm="using:CalculatorApp.ViewModel"
+             FlowDirection="LeftToRight"
+             mc:Ignorable="">
+    
+             <!--UNO TODO
+                Loaded="OnLoaded"
+            DataContextChanged="OnDataContextChanged"
+                -->
+
+    <!--UNO TODO <UserControl.Resources>
+		
+		<common:VisibilityNegationConverter x:Name="VisibilityNegationConverter" />
+		<common:AlwaysSelectedCollectionViewConverter x:Name="AlwaysSelectedConverter" />
+		<common:ValidSelectedItemConverter x:Name="ValidSelectedItemConverter" />
+		<converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
+		<converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter" />
+		<automation:NarratorNotifier x:Name="NarratorNotifier"
+																 Announcement="{x:Bind Model.Announcement, Mode=OneWay}" />
+
+		<DataTemplate x:Key="UnitTemplate"
+									x:DataType="vm:Unit">
+			<TextBlock Style="{ThemeResource BodyTextBlockStyle}"
+								 AutomationProperties.Name="{x:Bind AccessibleName}"
+								 Text="{x:Bind Name}"
+								 TextWrapping="NoWrap" />
+		</DataTemplate>
+
+		<DataTemplate x:Key="SelectedUnitTemplate"
+									x:DataType="vm:Unit">
+			<TextBlock Style="{ThemeResource BodyTextBlockStyle}"
+								 FontWeight="SemiBold"
+								 AutomationProperties.Name="{x:Bind AccessibleName}"
+								 Text="{x:Bind Name}"
+								 TextWrapping="NoWrap" />
+		</DataTemplate>
+
+		<Style x:Key="ComboStyle"
+					 TargetType="ComboBox">
+			
+			<Setter Property="Padding"
+							Value="12,0,0,0" />
+			<Setter Property="MinHeight"
+							Value="32" />
+			<Setter Property="Foreground"
+							Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+			<Setter Property="Background"
+							Value="{ThemeResource SystemControlBackgroundTransparentBrush}" />
+			<Setter Property="BorderBrush"
+							Value="{ThemeResource SystemControlForegroundBaseMediumLowBrush}" />
+			<Setter Property="BorderThickness"
+							Value="0" />
+			<Setter Property="TabNavigation"
+							Value="Once" />
+			<Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
+							Value="Disabled" />
+			<Setter Property="ScrollViewer.VerticalScrollBarVisibility"
+							Value="Auto" />
+			<Setter Property="ScrollViewer.HorizontalScrollMode"
+							Value="Disabled" />
+			<Setter Property="ScrollViewer.VerticalScrollMode"
+							Value="Auto" />
+			<Setter Property="ScrollViewer.IsVerticalRailEnabled"
+							Value="True" />
+			<Setter Property="ScrollViewer.IsDeferredScrollingEnabled"
+							Value="False" />
+			<Setter Property="ScrollViewer.BringIntoViewOnFocusChange"
+							Value="True" />
+			<Setter Property="HorizontalContentAlignment"
+							Value="Left" />
+			<Setter Property="HorizontalAlignment"
+							Value="Stretch" />
+			<Setter Property="VerticalAlignment"
+							Value="Top" />
+			<Setter Property="VerticalContentAlignment"
+							Value="Center" />
+			<Setter Property="IsTextScaleFactorEnabled"
+							Value="True" />
+			<Setter Property="UseSystemFocusVisuals"
+							Value="True" />
+			
+			<Setter Property="ItemsPanel">
+				<Setter.Value>
+					<ItemsPanelTemplate>
+						<CarouselPanel />
+					</ItemsPanelTemplate>
+				</Setter.Value>
+			</Setter>
+			
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ComboBox">
+						
+						<Grid>
+							
+							<VisualStateManager.VisualStateGroups>
+								
+								<VisualStateGroup x:Name="CommonStates">
+									
+									<VisualState x:Name="Normal" />
+									
+									<VisualState x:Name="PointerOver">
+										<VisualState.Setters>
+											<Setter Target="BackgroundElement.Background"
+															Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+											<Setter Target="SelectedContentPresenter.Foreground"
+															Value="{ThemeResource SystemControlHighlightAltBaseMediumHighBrush}" />
+											<Setter Target="DropDownGlyph.Foreground"
+															Value="{ThemeResource SystemControlHighlightAltBaseMediumHighBrush}" />
+										</VisualState.Setters>
+									</VisualState>
+									
+									<VisualState x:Name="Pressed">
+										<VisualState.Setters>
+											<Setter Target="BackgroundElement.Background"
+															Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+											<Setter Target="SelectedContentPresenter.Foreground"
+															Value="{ThemeResource SystemControlHighlightAltBaseMediumBrush}" />
+											<Setter Target="DropDownGlyph.Foreground"
+															Value="{ThemeResource SystemControlHighlightAltBaseMediumBrush}" />
+										</VisualState.Setters>
+									</VisualState>
+									<VisualState x:Name="Disabled" />
+								</VisualStateGroup>
+								
+								<VisualStateGroup x:Name="DropDownStates">
+									
+									<VisualState x:Name="Opened">
+										<Storyboard>
+											<SplitOpenThemeAnimation ClosedTargetName="SelectedContentPresenter"
+																							 OffsetFromCenter="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.DropDownOffset}"
+																							 OpenedLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.DropDownOpenedHeight}"
+																							 OpenedTargetName="PopupBorder" />
+										</Storyboard>
+									</VisualState>
+									
+									<VisualState x:Name="Closed">
+										<Storyboard>
+											<SplitCloseThemeAnimation ClosedTargetName="SelectedContentPresenter"
+																								OffsetFromCenter="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.DropDownOffset}"
+																								OpenedLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.DropDownOpenedHeight}"
+																								OpenedTargetName="PopupBorder" />
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							
+							<Grid>
+								
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								
+								<Border x:Name="BackgroundElement"
+												Grid.ColumnSpan="2"
+												Background="{TemplateBinding Background}"
+												BorderBrush="{TemplateBinding BorderBrush}"
+												BorderThickness="{TemplateBinding BorderThickness}" />
+								--><!--
+                    This first ContentPresenter must be named "ContentPresenter" because
+                    XAML expects it in the template and has dependencies. It is not used
+                    because we want to style the selected item differently than the items
+                    list but XAML forces the same style.  Do not remove
+                    this element.
+                --><!--
+								<ContentPresenter x:Name="ContentPresenter"
+																	Opacity="0" />
+								
+								<ContentPresenter x:Name="SelectedContentPresenter"
+																	Margin="{TemplateBinding Padding}"
+																	HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+																	VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+																	AutomationProperties.AccessibilityView="Raw"
+																	Content="{TemplateBinding SelectedItem}"
+																	ContentTemplate="{StaticResource SelectedUnitTemplate}"
+																	FlowDirection="{TemplateBinding FlowDirection}" />
+								
+								<TextBlock x:Name="DropDownGlyph"
+													 Grid.Column="1"
+													 Margin="8,3,12,0"
+													 HorizontalAlignment="Left"
+													 VerticalAlignment="Center"
+													 Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+													 FontFamily="{ThemeResource SymbolThemeFontFamily}"
+													 FontSize="12"
+													 AutomationProperties.AccessibilityView="Raw"
+													 IsHitTestVisible="False"
+													 Text="&#xE0E5;" />
+								
+								<Popup x:Name="Popup">
+									
+									<Border x:Name="PopupBorder"
+													Margin="0,-1,0,-1"
+													HorizontalAlignment="Stretch"
+													Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+													BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
+													BorderThickness="{ThemeResource ComboBoxDropdownBorderThickness}">
+										
+										<ScrollViewer x:Name="ScrollViewer"
+																	MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.DropDownContentMinWidth}"
+																	Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+																	AutomationProperties.AccessibilityView="Raw"
+																	BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
+																	HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+																	HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+																	IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+																	IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+																	IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+																	VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+																	VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+																	VerticalSnapPointsAlignment="Near"
+																	VerticalSnapPointsType="OptionalSingle"
+																	ZoomMode="Disabled">
+											<ItemsPresenter />
+										</ScrollViewer>
+									</Border>
+								</Popup>
+							</Grid>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<Style x:Key="ValueLargeStyle"
+					 BasedOn="{StaticResource CalculationResultStyleL}"
+					 TargetType="controls:CalculationResult">
+			
+			<Setter Property="Background"
+							Value="{ThemeResource SystemControlBackgroundTransparentBrush}" />
+			<Setter Property="Foreground"
+							Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+			<Setter Property="HorizontalContentAlignment"
+							Value="Left" />
+			<Setter Property="VerticalContentAlignment"
+							Value="Bottom" />
+			<Setter Property="FontSize"
+							Value="46" />
+			<Setter Property="MinFontSize"
+							Value="{ThemeResource BodyFontSize}" />
+			<Setter Property="FontWeight"
+							Value="Light" />
+			<Setter Property="Margin"
+							Value="-2,0,0,0" />
+			<Setter Property="DisplayMargin"
+							Value="0,0,0,12" />
+		</Style>
+		
+		<Style x:Key="ValueMediumStyle"
+					 BasedOn="{StaticResource CalculationResultStyleM}"
+					 TargetType="controls:CalculationResult">
+			
+			<Setter Property="FontSize"
+							Value="34" />
+			<Setter Property="Background"
+							Value="{ThemeResource SystemControlBackgroundTransparentBrush}" />
+			<Setter Property="Foreground"
+							Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+			<Setter Property="MinFontSize"
+							Value="{ThemeResource BodyFontSize}" />
+			<Setter Property="FontWeight"
+							Value="Light" />
+			<Setter Property="HorizontalContentAlignment"
+							Value="Left" />
+			<Setter Property="VerticalContentAlignment"
+							Value="Bottom" />
+			<Setter Property="Margin"
+							Value="0,0,0,0" />
+			<Setter Property="DisplayMargin"
+							Value="0,0,0,4" />
+		</Style>
+		
+		<Style x:Key="ValueSmallStyle"
+					 BasedOn="{StaticResource CalculationResultStyleS}"
+					 TargetType="controls:CalculationResult">
+			
+			<Setter Property="Background"
+							Value="{ThemeResource SystemControlBackgroundTransparentBrush}" />
+			<Setter Property="Foreground"
+							Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+			<Setter Property="FontSize"
+							Value="24" />
+			<Setter Property="MinFontSize"
+							Value="{ThemeResource BodyFontSize}" />
+			<Setter Property="FontWeight"
+							Value="Light" />
+			<Setter Property="HorizontalContentAlignment"
+							Value="Left" />
+			<Setter Property="VerticalContentAlignment"
+							Value="Bottom" />
+			<Setter Property="Margin"
+							Value="0,0,0,0" />
+			<Setter Property="DisplayMargin"
+							Value="0,0,0,4" />
+		</Style>
+
+		<Style x:Key="CurrencySymbolBaseStyle"
+					 TargetType="TextBlock">
+			
+			<Setter Property="FontWeight"
+							Value="Light" />
+			<Setter Property="HorizontalAlignment"
+							Value="Left" />
+			<Setter Property="VerticalAlignment"
+							Value="Bottom" />
+			<Setter Property="Foreground"
+							Value="{ThemeResource SystemControlPageTextBaseHighBrush}" />
+		</Style>
+		
+		<Style x:Key="CurrencySymbolLargeStyle"
+					 BasedOn="{StaticResource CurrencySymbolBaseStyle}"
+					 TargetType="TextBlock">
+			
+			<Setter Property="FontSize"
+							Value="32" />
+			<Setter Property="Margin"
+							Value="12,0,0,17" />
+		</Style>
+		
+		<Style x:Key="CurrencySymbolMediumStyle"
+					 BasedOn="{StaticResource CurrencySymbolBaseStyle}"
+					 TargetType="TextBlock">
+			
+			<Setter Property="FontSize"
+							Value="24" />
+			<Setter Property="Margin"
+							Value="12,0,0,8" />
+		</Style>
+		
+		<Style x:Key="CurrencySymbolSmallStyle"
+					 BasedOn="{StaticResource CurrencySymbolBaseStyle}"
+					 TargetType="TextBlock">
+			<Setter Property="FontSize"
+							Value="17" />
+			<Setter Property="Margin"
+							Value="12,0,0,7" />
+		</Style>
+
+		<Style x:Key="ValueContainerStyle"
+					 TargetType="Grid">
+			
+			<Setter Property="AutomationProperties.AccessibilityView"
+							Value="Raw" />
+		</Style>
+
+		<Storyboard x:Name="AnimationStory">
+			
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetName="ConverterNumPad"
+																		 Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)">
+				
+				<EasingDoubleKeyFrame KeyTime="0"
+															Value="0.92">
+					<EasingDoubleKeyFrame.EasingFunction>
+						<ExponentialEase EasingMode="EaseOut"
+														 Exponent="5" />
+					</EasingDoubleKeyFrame.EasingFunction>
+				</EasingDoubleKeyFrame>
+				
+				<EasingDoubleKeyFrame KeyTime="0:0:0.367"
+															Value="1">
+					<EasingDoubleKeyFrame.EasingFunction>
+						<ExponentialEase EasingMode="EaseOut"
+														 Exponent="5" />
+					</EasingDoubleKeyFrame.EasingFunction>
+				</EasingDoubleKeyFrame>
+			</DoubleAnimationUsingKeyFrames>
+			
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetName="ConverterNumPad"
+																		 Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)">
+				
+				<EasingDoubleKeyFrame KeyTime="0"
+															Value="0.92">
+					<EasingDoubleKeyFrame.EasingFunction>
+						<ExponentialEase EasingMode="EaseOut"
+														 Exponent="5" />
+					</EasingDoubleKeyFrame.EasingFunction>
+				</EasingDoubleKeyFrame>
+				
+				<EasingDoubleKeyFrame KeyTime="0:0:0.367"
+															Value="1">
+					<EasingDoubleKeyFrame.EasingFunction>
+						<ExponentialEase EasingMode="EaseOut"
+														 Exponent="5" />
+					</EasingDoubleKeyFrame.EasingFunction>
+				</EasingDoubleKeyFrame>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+
+		<Storyboard x:Name="TimestampFadeInAnimation">
+			
+			<DoubleAnimation Duration="0:0:1"
+											 From="0"
+											 Storyboard.TargetName="CurrencyTimestampTextBlock"
+											 Storyboard.TargetProperty="Opacity"
+											 To="1" />
+		</Storyboard>
+
+		<MenuFlyout x:Key="CalculationResultContextMenu">
+			
+			<MenuFlyoutItem x:Name="CopyMenuItem"
+											x:Uid="CopyMenuItem"
+											Click="OnCopyMenuItemClicked"
+											Icon="Copy" />
+			
+			<MenuFlyoutItem x:Name="PasteMenuItem"
+											x:Uid="PasteMenuItem"
+											Click="OnPasteMenuItemClicked"
+											Icon="Paste" />
+		</MenuFlyout>
+	</UserControl.Resources>
+
+	<Grid x:Name="UnitConverterRootGrid"
+				HorizontalAlignment="Stretch"
+				AutomationProperties.LandmarkType="Main">
+		
+		<Grid.RowDefinitions>
+			<RowDefinition x:Name="RowTopNav"
+										 Height="{StaticResource HamburgerHeightGridLength}" />
+			<RowDefinition x:Name="RowDisplay1"
+										 Height="56*"
+										 MinHeight="56" />
+			<RowDefinition x:Name="RowUnit1"
+										 Height="32*"
+										 MinHeight="32" />
+			<RowDefinition x:Name="RowDisplay2"
+										 Height="56*"
+										 MinHeight="56" />
+			<RowDefinition x:Name="RowUnit2"
+										 Height="32*"
+										 MinHeight="32" />
+			<RowDefinition x:Name="RowDltrUnits"
+										 Height="Auto"
+										 MinHeight="48" />
+			<RowDefinition x:Name="RowNumPad"
+										 Height="272*" />
+		</Grid.RowDefinitions>
+		
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition x:Name="GutterLeft"
+												Width="0" />
+			<ColumnDefinition x:Name="ColumnLeft"
+												Width="1*" />
+			<ColumnDefinition x:Name="ColumnRight"
+												Width="0" />
+			<ColumnDefinition x:Name="GutterRight"
+												Width="0" />
+		</Grid.ColumnDefinitions>
+		--><!-- End ConverterNumPad --><!--
+
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="Layout">
+				<VisualState x:Name="PortraitLayout" />
+				<VisualState x:Name="LandscapeLayout">
+					<VisualState.StateTriggers>
+						<triggers:AspectRatioTrigger ActiveIfEqual="True"
+																				 NumeratorAspect="Width"
+																				 Source="{x:Bind}"
+																				 Threshold="1" />
+					</VisualState.StateTriggers>
+					
+					<VisualState.Setters>
+						<Setter Target="GutterTop.Height"
+										Value="0.5*" />
+						<Setter Target="GutterBottom.Height"
+										Value="0.5*" />
+						<Setter Target="GutterLeft.Width"
+										Value="48" />
+						<Setter Target="GutterRight.Width"
+										Value="48" />
+						<Setter Target="ColumnLeft.Width"
+										Value="1*" />
+						<Setter Target="ColumnRight.Width"
+										Value="1*" />
+						<Setter Target="RowDisplay1.Height"
+										Value="4*" />
+						<Setter Target="RowUnit1.Height"
+										Value="2*" />
+						<Setter Target="RowDisplay2.Height"
+										Value="4*" />
+						<Setter Target="RowUnit2.Height"
+										Value="2*" />
+						<Setter Target="RowDltrUnits.Height"
+										Value="2*" />
+						<Setter Target="CurrencyLoadingGrid.(Grid.ColumnSpan)"
+										Value="2" />
+						<Setter Target="ConverterNumPad.(Grid.Row)"
+										Value="1" />
+						<Setter Target="ConverterNumPad.(Grid.RowSpan)"
+										Value="5" />
+						<Setter Target="ConverterNumPad.(Grid.Column)"
+										Value="2" />
+						<Setter Target="ConverterNumPad.(Grid.ColumnSpan)"
+										Value="2" />
+						<Setter Target="SupplementaryResults.VerticalAlignment"
+										Value="Top" />
+						<Setter Target="RowNumPad.MinHeight"
+										Value="0" />
+						<Setter Target="RowNumPad.Height"
+										Value="0" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+			
+			<VisualStateGroup x:Name="Sizing">
+				<VisualState x:Name="Wide">
+					
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowHeight="768"
+														 MinWindowWidth="1280" />
+					</VisualState.StateTriggers>
+					
+					<VisualState.Setters>
+						<Setter Target="Value1.Style"
+										Value="{ThemeResource ValueLargeStyle}" />
+						<Setter Target="Value2.Style"
+										Value="{ThemeResource ValueLargeStyle}" />
+						<Setter Target="CurrencySymbol1Block.Style"
+										Value="{ThemeResource CurrencySymbolLargeStyle}" />
+						<Setter Target="CurrencySymbol2Block.Style"
+										Value="{ThemeResource CurrencySymbolLargeStyle}" />
+						<Setter Target="Units1.Height"
+										Value="44" />
+						<Setter Target="Units2.Height"
+										Value="44" />
+						<Setter Target="converterNegateButton.FontSize"
+										Value="24" />
+						<Setter Target="clearEntryButtonPos0.FontSize"
+										Value="24" />
+						<Setter Target="backSpaceButtonSmall.FontSize"
+										Value="24" />
+						<Setter Target="numberPad.ButtonStyle"
+										Value="{StaticResource NumericButtonStyle46}" />
+					</VisualState.Setters>
+				</VisualState>
+				
+				<VisualState x:Name="Portrait">
+					
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowHeight="1024"
+														 MinWindowWidth="640" />
+					</VisualState.StateTriggers>
+					
+					<VisualState.Setters>
+						<Setter Target="SupplementaryResults.VerticalAlignment"
+										Value="Top" />
+						<Setter Target="Value1.Style"
+										Value="{ThemeResource ValueLargeStyle}" />
+						<Setter Target="Value2.Style"
+										Value="{ThemeResource ValueLargeStyle}" />
+						<Setter Target="CurrencySymbol1Block.Style"
+										Value="{ThemeResource CurrencySymbolLargeStyle}" />
+						<Setter Target="CurrencySymbol2Block.Style"
+										Value="{ThemeResource CurrencySymbolLargeStyle}" />
+						<Setter Target="Units1.Height"
+										Value="44" />
+						<Setter Target="Units2.Height"
+										Value="44" />
+						<Setter Target="converterNegateButton.FontSize"
+										Value="{StaticResource CalcStandardOperatorCaptionSize}" />
+						<Setter Target="clearEntryButtonPos0.FontSize"
+										Value="{StaticResource CalcStandardOperatorCaptionSize}" />
+						<Setter Target="numberPad.ButtonStyle"
+										Value="{StaticResource NumericButtonStyle34}" />
+					</VisualState.Setters>
+				</VisualState>
+				
+				<VisualState x:Name="Wide640">
+					
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowHeight="0"
+														 MinWindowWidth="640" />
+					</VisualState.StateTriggers>
+					
+					<VisualState.Setters>
+						<Setter Target="Value1.Style"
+										Value="{ThemeResource ValueLargeStyle}" />
+						<Setter Target="Value2.Style"
+										Value="{ThemeResource ValueLargeStyle}" />
+						<Setter Target="CurrencySymbol1Block.Style"
+										Value="{ThemeResource CurrencySymbolLargeStyle}" />
+						<Setter Target="CurrencySymbol2Block.Style"
+										Value="{ThemeResource CurrencySymbolLargeStyle}" />
+						<Setter Target="Units1.Height"
+										Value="44" />
+						<Setter Target="Units2.Height"
+										Value="44" />
+						<Setter Target="converterNegateButton.FontSize"
+										Value="{StaticResource CalcStandardOperatorCaptionSize}" />
+						<Setter Target="clearEntryButtonPos0.FontSize"
+										Value="{StaticResource CalcStandardOperatorCaptionSize}" />
+						<Setter Target="backSpaceButtonSmall.FontSize"
+										Value="{StaticResource CalcStandardOperatorCaptionSize}" />
+						<Setter Target="numberPad.ButtonStyle"
+										Value="{StaticResource NumericButtonStyle34}" />
+					</VisualState.Setters>
+				</VisualState>
+				
+				<VisualState x:Name="MinSizeLayout">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}"
+														 MinWindowWidth="{StaticResource AppMinWindowWidth}" />
+					</VisualState.StateTriggers>
+				</VisualState>
+				
+				<VisualState x:Name="DefaultLayout">
+					
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowHeight="0"
+														 MinWindowWidth="0" />
+					</VisualState.StateTriggers>
+					
+					<VisualState.Setters>
+						<Setter Target="clearEntryButtonPos0.Margin"
+										Value="1" />
+						<Setter Target="backSpaceButtonSmall.Margin"
+										Value="1" />
+						<Setter Target="converterNegateButton.Margin"
+										Value="1" />
+
+						<Setter Target="numberPad.ButtonStyle"
+										Value="{StaticResource NumericButtonStyle18}" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+			
+			<VisualStateGroup x:Name="CurrencyTimestampStates">
+				
+				<VisualState x:Name="DefaultTimestamp">
+					<VisualState.Setters>
+						<Setter Target="CurrencyTimestampTextBlock.Foreground"
+										Value="{ThemeResource SystemControlPageTextBaseHighBrush}" />
+						<Setter Target="CurrencyTimestampTextBlock.FontWeight"
+										Value="Normal" />
+					</VisualState.Setters>
+				</VisualState>
+				
+				<VisualState x:Name="WeekOldTimestamp">
+					<VisualState.Setters>
+						<Setter Target="CurrencyTimestampTextBlock.Foreground"
+										Value="{ThemeResource AppControlPageTextRedColorBrush}" />
+						<Setter Target="CurrencyTimestampTextBlock.FontWeight"
+										Value="SemiBold" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+			
+			<VisualStateGroup x:Name="CurrencySecondaryStatusStates">
+				
+				<VisualState x:Name="ChargesMayApplyCurrencyStatus">
+					<VisualState.Setters>
+						<Setter Target="CurrencySecondaryStatus.Foreground"
+										Value="{ThemeResource AppControlPageTextBaseHighColorBrush}" />
+					</VisualState.Setters>
+				</VisualState>
+				
+				<VisualState x:Name="FailedCurrencyStatus">
+					<VisualState.Setters>
+						<Setter Target="CurrencySecondaryStatus.Foreground"
+										Value="{ThemeResource AppControlPageTextRedColorBrush}" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+
+		<Grid x:Name="CurrencyLoadingGrid"
+					Grid.Row="1"
+					Grid.RowSpan="5"
+					Grid.Column="0"
+					Grid.ColumnSpan="4"
+					Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+			
+			<Grid.RowDefinitions>
+				<RowDefinition Height="10*" />
+				<RowDefinition Height="7*" />
+				<RowDefinition Height="10*" />
+			</Grid.RowDefinitions>
+			
+			<ProgressRing x:Name="CurrencyLoadingProgressRing"
+										Grid.Row="1"
+										Grid.Column="1"
+										MaxWidth="140"
+										MaxHeight="140"
+										HorizontalAlignment="Stretch"
+										VerticalAlignment="Stretch"
+										IsActive="False" />
+		</Grid>
+
+		<Grid x:Name="Value1Container"
+					Grid.Row="1"
+					Grid.Column="1"
+					Style="{ThemeResource ValueContainerStyle}"
+					FlowDirection="{x:Bind LayoutDirection}"
+					Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+			
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			
+			<TextBlock x:Name="CurrencySymbol1Block"
+								 Grid.Column="0"
+								 Style="{ThemeResource CurrencySymbolMediumStyle}"
+								 AutomationProperties.AccessibilityView="Raw"
+								 Text="{x:Bind Model.CurrencySymbol1, Mode=OneWay}"
+								 Visibility="{x:Bind Model.CurrencySymbolVisibility, Mode=OneWay}" />
+			
+			<controls:CalculationResult x:Name="Value1"
+																	Grid.Column="1"
+																	Style="{ThemeResource ValueMediumStyle}"
+																	AutomationProperties.AutomationId="Value1"
+																	AutomationProperties.Name="{x:Bind Model.Value1AutomationName, Mode=OneWay}"
+																	ContextCanceled="OnContextCanceled"
+																	ContextRequested="OnContextRequested"
+																	DisplayValue="{x:Bind Model.Value1, Mode=OneWay}"
+																	ExpressionVisibility="Collapsed"
+																	FlowDirection="{x:Bind LayoutDirection}"
+																	IsActive="{Binding Value1Active, Mode=TwoWay}"
+																	KeyDown="OnValueKeyDown"
+																	RenderTransformOrigin="0.5,0.5"
+																	Selected="OnValueSelected"
+																	TabIndex="1">
+				<controls:CalculationResult.RenderTransform>
+					<CompositeTransform />
+				</controls:CalculationResult.RenderTransform>
+			</controls:CalculationResult>
+		</Grid>
+
+		<ComboBox x:Name="Units1"
+							Grid.Row="2"
+							Grid.Column="1"
+							Style="{ThemeResource ComboStyle}"
+							AutomationProperties.AutomationId="Units1"
+							AutomationProperties.Name="{x:Bind Model.Unit1AutomationName, Mode=OneWay}"
+							DropDownClosed="UpdateDropDownState"
+							DropDownOpened="UpdateDropDownState"
+							FlowDirection="{x:Bind LayoutDirection}"
+							IsEnabled="{Binding IsDropDownEnabled}"
+							IsEnabledChanged="Units1_IsEnabledChanged"
+							ItemTemplate="{StaticResource UnitTemplate}"
+							ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
+							SelectedItem="{Binding Unit1, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
+							TabIndex="2"
+							Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}" />
+
+		<Grid x:Name="Value2Container"
+					Grid.Row="3"
+					Grid.Column="1"
+					Style="{ThemeResource ValueContainerStyle}"
+					FlowDirection="{x:Bind LayoutDirection}"
+					Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+			
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			
+			<TextBlock x:Name="CurrencySymbol2Block"
+								 Grid.Column="0"
+								 Style="{ThemeResource CurrencySymbolMediumStyle}"
+								 AutomationProperties.AccessibilityView="Raw"
+								 Text="{x:Bind Model.CurrencySymbol2, Mode=OneWay}"
+								 Visibility="{x:Bind Model.CurrencySymbolVisibility, Mode=OneWay}" />
+			
+			<controls:CalculationResult x:Name="Value2"
+																	Grid.Column="1"
+																	Style="{ThemeResource ValueMediumStyle}"
+																	AutomationProperties.AutomationId="Value2"
+																	AutomationProperties.LiveSetting="Polite"
+																	AutomationProperties.Name="{x:Bind Model.Value2AutomationName, Mode=OneWay}"
+																	ContextCanceled="OnContextCanceled"
+																	ContextRequested="OnContextRequested"
+																	DisplayValue="{x:Bind Model.Value2, Mode=OneWay}"
+																	ExpressionVisibility="Collapsed"
+																	FlowDirection="{x:Bind LayoutDirection}"
+																	IsActive="{Binding Value2Active, Mode=TwoWay}"
+																	KeyDown="OnValueKeyDown"
+																	RenderTransformOrigin="0.5,0.5"
+																	Selected="OnValueSelected"
+																	TabIndex="3">
+				<controls:CalculationResult.RenderTransform>
+					<CompositeTransform />
+				</controls:CalculationResult.RenderTransform>
+			</controls:CalculationResult>
+		</Grid>
+
+		<ComboBox x:Name="Units2"
+							Grid.Row="4"
+							Grid.Column="1"
+							Style="{ThemeResource ComboStyle}"
+							AutomationProperties.AutomationId="Units2"
+							AutomationProperties.Name="{x:Bind Model.Unit2AutomationName, Mode=OneWay}"
+							DropDownClosed="UpdateDropDownState"
+							DropDownOpened="UpdateDropDownState"
+							FlowDirection="{x:Bind LayoutDirection}"
+							IsEnabled="{Binding IsDropDownEnabled}"
+							ItemTemplate="{StaticResource UnitTemplate}"
+							ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
+							SelectedItem="{Binding Unit2, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
+							TabIndex="4"
+							Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}" />
+
+		<Grid x:Name="SupplementaryResultsPanelInGrid"
+					Grid.Row="5"
+					Grid.Column="1"
+					Margin="12,0,12,0"
+					FlowDirection="{x:Bind LayoutDirection}"
+					Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+			
+			<local:SupplementaryResults x:Name="SupplementaryResults"
+																	HorizontalAlignment="Left"
+																	VerticalAlignment="Center"
+																	Visibility="{x:Bind Model.SupplementaryVisibility, Mode=OneWay}" />
+			
+			<StackPanel Visibility="{x:Bind Model.IsCurrencyCurrentCategory, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+				
+				--><!-- Currency Ratio Equality --><!--
+				<TextBlock x:Name="CurrencyRatioEqualityBlock"
+									 Style="{ThemeResource CaptionTextBlockStyle}"
+									 Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+									 AutomationProperties.Name="{x:Bind Model.CurrencyRatioEqualityAutomationName, Mode=OneWay}"
+									 Text="{x:Bind Model.CurrencyRatioEquality, Mode=OneWay}" />
+
+				--><!-- Currency Timestamp --><!--
+				<TextBlock x:Name="CurrencyTimestampTextBlock"
+									 Style="{ThemeResource CaptionTextBlockStyle}"
+									 Text="{x:Bind Model.CurrencyTimestamp, Mode=OneWay}" />
+
+				--><!-- Currency Refresh button and additional status text --><!--
+				<ContentControl x:Name="CurrencyRefreshBlockControl"
+												IsTabStop="False"
+												TabIndex="5"
+												Visibility="Collapsed">
+					
+					<StackPanel Orientation="Horizontal">
+						
+						<HyperlinkButton x:Name="CurrencyRefreshBlock"
+														 Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}"
+														 Click="CurrencyRefreshButton_Click"
+														 x:Uid="RefreshButtonText" />
+						
+						<TextBlock Style="{ThemeResource CaptionTextBlockStyle}"
+											 Margin="0, 7, 0, 0">
+							
+							<Run x:Name="Spacing"
+									 Text="&#x200A;" />
+							
+							<Run x:Name="CurrencySecondaryStatus"
+									 FontWeight="SemiBold"
+									 Text="" />
+						</TextBlock>
+					</StackPanel>
+				</ContentControl>
+
+				--><!-- Offline TextBlock --><!--
+				<ContentControl x:Name="OfflineBlock"
+												IsTabStop="False"
+												TabIndex="5"
+												Visibility="Collapsed">
+					
+					<TextBlock Style="{ThemeResource CaptionTextBlockStyle}"
+										 Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+										 AutomationProperties.AccessibilityView="Raw">
+						
+						<Run x:Name="OfflineRunBeforeLink" />
+						
+						<Hyperlink NavigateUri="ms-settings:network-status">
+							<Run x:Name="OfflineRunLink" />
+						</Hyperlink>
+						
+						<Run x:Name="OfflineRunAfterLink" />
+					</TextBlock>
+				</ContentControl>
+			</StackPanel>
+		</Grid>
+
+		<Grid x:Name="ConverterNumPad"
+					Grid.Row="6"
+					Grid.Column="1"
+					Margin="0,0,0,6"
+					FlowDirection="LeftToRight"
+					RenderTransformOrigin="0.5,0.5">
+			
+			<Grid.RenderTransform>
+				<CompositeTransform />
+			</Grid.RenderTransform>
+			
+			<Grid.RowDefinitions>
+				<RowDefinition x:Name="GutterTop"
+											 Height="0" />
+				<RowDefinition Height="1*" />
+				<RowDefinition Height="1*" />
+				<RowDefinition Height="1*" />
+				<RowDefinition Height="1*" />
+				<RowDefinition Height="1*" />
+				<RowDefinition x:Name="GutterBottom"
+											 Height="0" />
+			</Grid.RowDefinitions>
+			
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="0.25*" />
+				<ColumnDefinition Width="1*" />
+				<ColumnDefinition Width="1*" />
+				<ColumnDefinition Width="1*" />
+				<ColumnDefinition Width="0.25*" />
+			</Grid.ColumnDefinitions>
+			
+			<Grid x:Uid="DisplayControls"
+						Grid.Row="1"
+						Grid.Column="2"
+						Grid.ColumnSpan="2"
+						AutomationProperties.HeadingLevel="Level1">
+				
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				
+				<controls:CalculatorButton x:Name="clearEntryButtonPos0"
+																	 x:Uid="clearEntryButton"
+																	 HorizontalAlignment="Stretch"
+																	 Style="{StaticResource OperatorButtonStyle}"
+																	 FontSize="16"
+																	 ButtonId="Clear"
+																	 Content="CE"
+																	 TabIndex="7" />
+				
+				<controls:CalculatorButton x:Name="backSpaceButtonSmall"
+																	 x:Uid="backSpaceButton"
+																	 Grid.Column="1"
+																	 Style="{StaticResource SymbolOperatorButtonStyle}"
+																	 FontFamily="{ThemeResource SymbolThemeFontFamily}"
+																	 FontSize="16"
+																	 ButtonId="Backspace"
+																	 Content="&#xE750;"
+																	 TabIndex="8" />
+			</Grid>
+
+			<local:NumberPad x:Name="numberPad"
+											 x:Uid="NumberPad"
+											 Grid.Row="2"
+											 Grid.RowSpan="4"
+											 Grid.Column="1"
+											 Grid.ColumnSpan="3"
+											 VerticalAlignment="Stretch"
+											 AutomationProperties.HeadingLevel="Level1"
+											 ButtonStyle="{StaticResource NumericButtonStyle24}"
+											 TabIndex="10"
+											 TabNavigation="Local" />
+			
+			<controls:CalculatorButton x:Name="converterNegateButton"
+																 x:Uid="converterNegateButton"
+																 Grid.Row="5"
+																 Grid.Column="1"
+																 Style="{StaticResource SymbolOperatorButtonStyle}"
+																 FontSize="16"
+																 ButtonId="Negate"
+																 Content="&#xe94d;"
+																 TabIndex="6"
+																 Visibility="{x:Bind Model.CurrentCategory.NegateVisibility, Mode=OneWay}" />
+		</Grid>
+		
+		--><!-- End ConverterNumPad --><!--
+	</Grid>-->
+</UserControl>

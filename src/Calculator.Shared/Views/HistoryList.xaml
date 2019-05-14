@@ -1,0 +1,220 @@
+﻿<UserControl x:Class="CalculatorApp.HistoryList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:automation="using:CalculatorApp.Common.Automation"
+             xmlns:controls="using:CalculatorApp.Controls"
+             xmlns:converters="using:CalculatorApp.Converters"
+             xmlns:local="using:CalculatorApp.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="using:CalculatorApp.ViewModel"
+             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+             AutomationProperties.AutomationId="HistoryList"
+             FlowDirection="LeftToRight"
+             mc:Ignorable="">
+  
+    <!--UNO TODO
+    x:Name="HistoryList"          
+    Loaded="HistoryList_Loaded"
+    Unloaded="HistoryList_Unloaded"
+    -->
+
+	<!--<UserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.ThemeDictionaries>
+				
+				<ResourceDictionary x:Key="Default">
+					<Style x:Key="BodyTextBlockMediumStyle"
+								 BasedOn="{StaticResource BodyTextBlockStyle}"
+								 TargetType="TextBlock">
+						<Setter Property="Foreground"
+										Value="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+					</Style>
+				</ResourceDictionary>
+				
+				<ResourceDictionary x:Key="Light">
+					<Style x:Key="BodyTextBlockMediumStyle"
+								 BasedOn="{StaticResource BodyTextBlockStyle}"
+								 TargetType="TextBlock">
+						<Setter Property="Foreground"
+										Value="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+					</Style>
+				</ResourceDictionary>
+				
+				<ResourceDictionary x:Key="HighContrast">
+					<Style x:Key="BodyTextBlockMediumStyle"
+								 BasedOn="{StaticResource BodyTextBlockStyle}"
+								 TargetType="TextBlock" />
+				</ResourceDictionary>
+			</ResourceDictionary.ThemeDictionaries>
+			
+			<converters:ItemSizeToVisibilityNegationConverter x:Key="ItemSizeToVisibilityNegationConverter" />
+			
+			<converters:ItemSizeToVisibilityConverter x:Key="ItemSizeToVisibilityConverter" />
+			
+			--><!--
+      UNO TODO
+      <automation:NarratorNotifier x:Name="NarratorNotifier"
+																	 Announcement="{x:Bind Model.HistoryAnnouncement, Mode=OneWay}" />
+                                   --><!--
+
+			--><!--
+      UNO TODO
+      <muxc:SymbolIconSource x:Key="DeleteSymbol"
+														 Symbol="Delete" />
+
+			<muxc:SwipeItems x:Key="HistorySwipeItems"
+											 Mode="Execute">
+				<muxc:SwipeItem x:Uid="DeleteHistorySwipeItem"
+												IconSource="{StaticResource DeleteSymbol}"
+												Invoked="OnDeleteSwipeInvoked" />
+			</muxc:SwipeItems>
+      --><!--
+
+			<MenuFlyout x:Key="HistoryContextMenu">
+				<MenuFlyoutItem x:Uid="DeleteHistoryMenuItem"
+												Click="OnDeleteMenuItemClicked"
+												Icon="Delete" />
+			</MenuFlyout>
+
+			<DataTemplate x:Key="HistoryItemTemplate"
+										x:DataType="model:HistoryItemViewModel">
+				
+				--><!-- UNO TODO
+
+        <muxc:SwipeControl RightItems="{StaticResource HistorySwipeItems}">
+					
+					<StackPanel Margin="0,6,4,6"
+											Background="Transparent"
+											ContextFlyout="{StaticResource HistoryContextMenu}">
+						
+						<TextBlock x:Name="exprTextBlock"
+											 Margin="0,0,0,4"
+											 Style="{ThemeResource BodyTextBlockMediumStyle}"
+											 AutomationProperties.Name="{x:Bind AccExpression}"
+											 Text="{x:Bind Expression}"
+											 TextAlignment="Right"
+											 TextWrapping="Wrap" />
+						
+						<TextBlock x:Name="resultTextBlock"
+											 Style="{ThemeResource TitleTextBlockStyle}"
+											 FontWeight="SemiBold"
+											 AutomationProperties.Name="{x:Bind AccResult}"
+											 Text="{x:Bind Result}"
+											 TextAlignment="Right"
+											 TextWrapping="Wrap" />
+					</StackPanel>
+				</muxc:SwipeControl>--><!--
+        <TextBlock Text="TODO HistoryItemTemplate not supported"/>
+			</DataTemplate>
+			
+			<Style x:Key="HistoryItemContainerStyle"
+						 BasedOn="{StaticResource HistoryMemoryItemContainerStyle}"
+						 TargetType="ListViewItem">
+				<Setter Property="Margin"
+								Value="0,0,0,20" />
+			</Style>
+		</ResourceDictionary>
+	</UserControl.Resources>
+
+	<Grid x:Name="LayoutGrid">
+		
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="{Binding RowHeight, ElementName=HistoryList, Mode=OneWay}" />
+		</Grid.RowDefinitions>
+
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState x:Name="DockedLayout">
+					
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="560" />
+					</VisualState.StateTriggers>
+					
+					<VisualState.Setters>
+						<Setter Target="HistoryListRootGrid.(Grid.Row)"
+										Value="1" />
+						<Setter Target="HistoryListRootGrid.(Grid.RowSpan)"
+										Value="2" />
+						<Setter Target="HistoryListView.Padding"
+										Value="0" />
+						<Setter Target="BackgroundShade.Opacity"
+										Value="0" />
+						<Setter Target="CustomTitleBar.Height"
+										Value="0" />
+					</VisualState.Setters>
+				</VisualState>
+				
+				<VisualState x:Name="DefaultLayout">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="0" />
+					</VisualState.StateTriggers>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+		
+		<Border x:Name="BackgroundShade"
+						Grid.Row="2"
+						Margin="0,-1,0,0"
+						Padding="0"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Stretch"
+						Background="{ThemeResource SystemControlChromeMediumLowAcrylicElementMediumBrush}"
+						BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
+						BorderThickness="{ThemeResource HighContrastThicknessTop}" />
+
+		<Grid x:Name="HistoryListRootGrid"
+					Grid.Row="2">
+			
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			
+			<TextBlock x:Name="HistoryEmpty"
+								 x:Uid="HistoryEmpty"
+								 Margin="12,14,24,0"
+								 Style="{ThemeResource BaseTextBlockStyle}"
+								 Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+								 TextWrapping="Wrap"
+								 Visibility="{Binding ItemSize, Converter={StaticResource ItemSizeToVisibilityConverter}}" />
+			
+			<ListView x:Name="HistoryListView"
+								MinHeight="60"
+								Padding="0,12,0,0"
+								HorizontalAlignment="Stretch"
+								AutomationProperties.AutomationId="HistoryListView"
+								IsItemClickEnabled="True"
+								ItemClick="ListView_ItemClick"
+								ItemContainerStyle="{StaticResource HistoryItemContainerStyle}"
+								ItemTemplate="{StaticResource HistoryItemTemplate}"
+								ItemsSource="{x:Bind Model.Items, Mode=OneWay}"
+								SelectionMode="None"
+								TabIndex="0"
+								Visibility="{x:Bind Model.ItemSize, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}">
+				<ListView.ItemContainerTransitions>
+					<TransitionCollection>
+						<AddDeleteThemeTransition />
+						<ContentThemeTransition />
+						<ReorderThemeTransition />
+					</TransitionCollection>
+				</ListView.ItemContainerTransitions>
+			</ListView>
+			
+			<Button x:Name="ClearHistory"
+							x:Uid="ClearHistory"
+							Grid.Row="1"
+							Style="{StaticResource ClearAllHistoryMemoryButtonStyle}"
+							AutomationProperties.AutomationId="ClearHistory"
+							Command="{x:Bind Model.ClearCommand, Mode=OneWay}"
+							Content="&#xE74D;"
+							Visibility="{x:Bind Model.ItemSize, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}" />
+		</Grid>
+
+		<Border x:Name="CustomTitleBar"
+						Height="32"
+						HorizontalAlignment="Stretch"
+						Background="{ThemeResource TitleBarBackgroundTransparentBrush}" />
+	</Grid>-->
+</UserControl>

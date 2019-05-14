@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "Header Files/CalcEngine.h"
+#include "headers/CalcEngine.h"
 
 using namespace CalcEngine;
 using namespace CalcEngine::RationalMath;

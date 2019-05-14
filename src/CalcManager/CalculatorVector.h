@@ -5,10 +5,17 @@
 
 #include <string>
 #include <vector>
-#include <winerror.h>
+#include <array>
+#include <unordered_map>
 #include "Ratpack/CalcErr.h"
 #include <stdexcept> // for std::out_of_range
+
+#if !defined(__WEBASSEMBLY__)
+#include <winerror.h>
 #include <sal.h>     // for SAL
+#endif
+
+#include "compat.h"
 
 template <typename TType>
 class CalculatorVector

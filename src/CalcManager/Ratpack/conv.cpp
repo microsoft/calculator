@@ -18,10 +18,11 @@
 //---------------------------------------------------------------------------
 
 #include <algorithm>
-#include <winerror.h>
+// #include <winerror.h>
 #include <sstream>
 #include <cstring> // for memmove, memcpy
 #include "ratpak.h"
+#include "compat.h"
 
 using namespace std;
 
@@ -48,7 +49,7 @@ wchar_t g_decimalSeparator = L'.';
 #define Calc_UInt32x32To64(a, b) ((uint64_t)((uint32_t)(a)) * (uint64_t)((uint32_t)(b)))
 #endif
 
-#elif defined(_M_IX86) || defined(__i386__) || defined(_M_ARM)
+#elif defined(_M_IX86) || defined(__i386__) || defined(_M_ARM) || defined(__EMSCRIPTEN__)
 
 #ifndef Calc_UInt32x32To64
 #define Calc_UInt32x32To64(a, b) (uint64_t)((uint64_t)(uint32_t)(a) * (uint32_t)(b))

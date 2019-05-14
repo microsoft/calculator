@@ -41,7 +41,7 @@
     <RootNamespace>CalcManager</RootNamespace>
     <DisableAppLocalVCLibs>false</DisableAppLocalVCLibs>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
@@ -56,46 +56,46 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -158,6 +158,7 @@
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -222,7 +223,7 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalOptions>/Zm250 /await /std:c++17 /permissive- /Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -290,21 +291,23 @@
     <ClInclude Include="CalculatorManager.h" />
     <ClInclude Include="CalculatorResource.h" />
     <ClInclude Include="CalculatorVector.h" />
+    <ClInclude Include="CCalcManager.h" />
     <ClInclude Include="Command.h" />
+    <ClInclude Include="compat.h" />
     <ClInclude Include="ExpressionCommand.h" />
     <ClInclude Include="ExpressionCommandInterface.h" />
-    <ClInclude Include="Header Files\CalcEngine.h" />
-    <ClInclude Include="Header Files\CalcUtils.h" />
-    <ClInclude Include="Header Files\CCommand.h" />
-    <ClInclude Include="Header Files\EngineStrings.h" />
-    <ClInclude Include="Header Files\History.h" />
-    <ClInclude Include="Header Files\ICalcDisplay.h" />
-    <ClInclude Include="Header Files\CalcInput.h" />
-    <ClInclude Include="Header Files\IHistoryDisplay.h" />
-    <ClInclude Include="Header Files\Number.h" />
-    <ClInclude Include="Header Files\RadixType.h" />
-    <ClInclude Include="Header Files\Rational.h" />
-    <ClInclude Include="Header Files\RationalMath.h" />
+    <ClInclude Include="headers\CalcEngine.h" />
+    <ClInclude Include="headers\CalcInput.h" />
+    <ClInclude Include="headers\CalcUtils.h" />
+    <ClInclude Include="headers\CCommand.h" />
+    <ClInclude Include="headers\EngineStrings.h" />
+    <ClInclude Include="headers\History.h" />
+    <ClInclude Include="headers\ICalcDisplay.h" />
+    <ClInclude Include="headers\IHistoryDisplay.h" />
+    <ClInclude Include="headers\Number.h" />
+    <ClInclude Include="headers\RadixType.h" />
+    <ClInclude Include="headers\Rational.h" />
+    <ClInclude Include="headers\RationalMath.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Ratpack\CalcErr.h" />
     <ClInclude Include="Ratpack\ratconst.h" />
@@ -314,6 +317,7 @@
   <ItemGroup>
     <ClCompile Include="CalculatorHistory.cpp" />
     <ClCompile Include="CalculatorManager.cpp" />
+    <ClCompile Include="CCalcManager.cpp" />
     <ClCompile Include="CEngine\calc.cpp" />
     <ClCompile Include="CEngine\CalcUtils.cpp" />
     <ClCompile Include="CEngine\History.cpp" />

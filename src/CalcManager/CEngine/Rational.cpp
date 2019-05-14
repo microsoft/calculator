@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-#include <intsafe.h>
-#include "Header Files/Rational.h"
+//#include <intsafe.h>
+#include "headers/Rational.h"
 
 using namespace std;
 

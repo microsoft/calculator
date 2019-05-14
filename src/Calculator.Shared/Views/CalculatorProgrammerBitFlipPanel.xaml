@@ -1,0 +1,1002 @@
+﻿<UserControl x:Class="CalculatorApp.CalculatorProgrammerBitFlipPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:common="using:CalculatorApp.Common"
+             xmlns:controls="using:CalculatorApp.Controls"
+             xmlns:converters="using:CalculatorApp.Converters"
+             xmlns:local="using:CalculatorApp.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Name="BitFlip"
+             Loaded="OnLoaded"
+             Unloaded="OnUnloaded"
+             mc:Ignorable="">
+
+	<UserControl.Resources>
+		<converters:BooleanNegationConverter x:Key="BooleanNegationConverter" />
+		<converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter" />
+		<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+		<converters:BitFlipAutomationNameConverter x:Key="BitFlipAutomationNameConverter" />
+
+		<Style x:Key="FlippingToggleButtonStyle"
+					 TargetType="ToggleButton">
+
+			<Setter Property="FontSize"
+							Value="20" />
+			<Setter Property="Foreground"
+							Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+			<Setter Property="Background"
+							Value="{ThemeResource SystemControlBackgroundTransparentBrush}" />
+			<Setter Property="Padding"
+							Value="0,0,0,0" />
+			<Setter Property="MinWidth"
+							Value="12" />
+			<Setter Property="MinHeight"
+							Value="20" />
+			<Setter Property="HorizontalAlignment"
+							Value="Stretch" />
+			<Setter Property="VerticalAlignment"
+							Value="Stretch" />
+			<Setter Property="HorizontalContentAlignment"
+							Value="Center" />
+			<Setter Property="VerticalContentAlignment"
+							Value="Center" />
+
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ToggleButton">
+						<Grid>
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualState x:Name="Normal" />
+									<VisualState x:Name="PointerOver">
+										<VisualState.Setters>
+											<Setter Target="BinaryZero.Foreground"
+															Value="{ThemeResource SystemControlHighlightAltBaseMediumBrush}" />
+											<Setter Target="ContentPanel.Background"
+															Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+										</VisualState.Setters>
+									</VisualState>
+									<VisualState x:Name="Pressed">
+										<VisualState.Setters>
+											<Setter Target="BinaryZero.Foreground"
+															Value="{ThemeResource SystemControlHighlightAltBaseMediumLowBrush}" />
+											<Setter Target="ContentPanel.Background"
+															Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+										</VisualState.Setters>
+										<Storyboard>
+											<PointerDownThemeAnimation Storyboard.TargetName="ContentPanel" />
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Disabled">
+										<VisualState.Setters>
+											<Setter Target="BinaryZero.Foreground"
+															Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
+										</VisualState.Setters>
+									</VisualState>
+									<VisualState x:Name="Checked">
+										<VisualState.Setters>
+											<Setter Target="BinaryZero.Visibility"
+															Value="Collapsed" />
+											<Setter Target="BinaryOne.Visibility"
+															Value="Visible" />
+										</VisualState.Setters>
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+																										 Storyboard.TargetProperty="Content">
+												<DiscreteObjectKeyFrame KeyTime="0"
+																								Value="{Binding Text, ElementName=BinaryOne, Mode=OneWay}" />
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="CheckedPointerOver">
+										<VisualState.Setters>
+											<Setter Target="BinaryZero.Visibility"
+															Value="Collapsed" />
+											<Setter Target="BinaryOne.Visibility"
+															Value="Visible" />
+											<Setter Target="BinaryOne.Foreground"
+															Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+											<Setter Target="ContentPanel.Background"
+															Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+										</VisualState.Setters>
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+																										 Storyboard.TargetProperty="Content">
+												<DiscreteObjectKeyFrame KeyTime="0"
+																								Value="{Binding Text, ElementName=BinaryOne, Mode=OneWay}" />
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="CheckedPressed">
+										<VisualState.Setters>
+											<Setter Target="BinaryZero.Visibility"
+															Value="Collapsed" />
+											<Setter Target="BinaryOne.Visibility"
+															Value="Visible" />
+											<Setter Target="BinaryOne.Foreground"
+															Value="{ThemeResource SystemControlHighlightAltBaseMediumLowBrush}" />
+											<Setter Target="ContentPanel.Background"
+															Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+										</VisualState.Setters>
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+																										 Storyboard.TargetProperty="Content">
+												<DiscreteObjectKeyFrame KeyTime="0"
+																								Value="{Binding Text, ElementName=BinaryOne}" />
+											</ObjectAnimationUsingKeyFrames>
+											<PointerDownThemeAnimation Storyboard.TargetName="ContentPanel" />
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="CheckedDisabled" />
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<Grid x:Name="ContentPanel"
+										Background="{TemplateBinding Background}">
+								<ContentControl x:Name="ContentPresenter"
+																	Opacity="0"
+																	AutomationProperties.AccessibilityView="Raw"
+																	Content="{Binding Text, ElementName=BinaryZero, Mode=OneWay}" />
+								<TextBlock x:Name="BinaryZero"
+													 x:Uid="BinaryZero"
+													 Margin="{TemplateBinding Padding}"
+													 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+													 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+													 Foreground="{TemplateBinding Foreground}"
+													 FontSize="{TemplateBinding FontSize}"
+													 FontWeight="Bold"
+													 AutomationProperties.AccessibilityView="Raw"
+													 IsTextScaleFactorEnabled="False" />
+								<TextBlock x:Name="BinaryOne"
+													 x:Uid="BinaryOne"
+													 Margin="{TemplateBinding Padding}"
+													 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+													 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+													 Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
+													 FontSize="{TemplateBinding FontSize}"
+													 FontWeight="Bold"
+													 AutomationProperties.AccessibilityView="Raw"
+													 IsTextScaleFactorEnabled="False"
+													 Visibility="Collapsed" />
+							</Grid>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<Style x:Key="TextBlockStyle"
+					 BasedOn="{StaticResource CaptionTextBlockStyle}"
+					 TargetType="TextBlock">
+			<Setter Property="VerticalAlignment"
+							Value="Top" />
+			<Setter Property="HorizontalAlignment"
+							Value="Center" />
+			<Setter Property="TextAlignment"
+							Value="Center" />
+			<Setter Property="FontWeight"
+							Value="SemiBold" />
+			<Setter Property="Foreground"
+							Value="{ThemeResource AppControlPageTextBaseMediumHighBrush}" />
+			<Setter Property="AutomationProperties.AccessibilityView"
+							Value="Raw" />
+		</Style>
+
+	</UserControl.Resources>
+
+	<Grid x:Name="BitFlipPanel"
+				x:Uid="BitFlipPanel"
+				Margin="0,1,0,1"
+				AutomationProperties.HeadingLevel="Level1">
+    
+				<!-- UNO TODO
+        Background="{ThemeResource SystemControlAcrylicWindowBrush}"-->
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+		</Grid.RowDefinitions>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition x:Name="Gutter0"
+												Width="0.8*"
+												MinWidth="12" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition x:Name="Gutter1"
+												Width="0.8*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition x:Name="Gutter2"
+												Width="0.8*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition x:Name="Gutter3"
+												Width="0.8*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition x:Name="Gutter4"
+												Width="0.8*"
+												MinWidth="12" />
+		</Grid.ColumnDefinitions>
+
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="Sizing">
+				<VisualState x:Name="MinSizeLayout">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}"
+														 MinWindowWidth="{StaticResource AppMinWindowWidth}" />
+					</VisualState.StateTriggers>
+				</VisualState>
+				<VisualState x:Name="DefaultLayout">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowHeight="0"
+														 MinWindowWidth="0" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="Label60.FontSize"
+										Value="10" />
+						<Setter Target="Label56.FontSize"
+										Value="10" />
+						<Setter Target="Label52.FontSize"
+										Value="10" />
+						<Setter Target="Label48.FontSize"
+										Value="10" />
+
+						<Setter Target="Label44.FontSize"
+										Value="10" />
+						<Setter Target="Label40.FontSize"
+										Value="10" />
+						<Setter Target="Label36.FontSize"
+										Value="10" />
+						<Setter Target="Label32.FontSize"
+										Value="10" />
+
+						<Setter Target="Label28.FontSize"
+										Value="10" />
+						<Setter Target="Label24.FontSize"
+										Value="10" />
+						<Setter Target="Label20.FontSize"
+										Value="10" />
+						<Setter Target="Label16.FontSize"
+										Value="10" />
+
+						<Setter Target="Label12.FontSize"
+										Value="10" />
+						<Setter Target="Label8.FontSize"
+										Value="10" />
+						<Setter Target="Label4.FontSize"
+										Value="10" />
+						<Setter Target="Label0.FontSize"
+										Value="10" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+
+		<TextBlock x:Name="Label60"
+							 Grid.Row="1"
+							 Grid.Column="4"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="60" />
+
+		<TextBlock x:Name="Label56"
+							 Grid.Row="1"
+							 Grid.Column="9"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="56" />
+
+		<TextBlock x:Name="Label52"
+							 Grid.Row="1"
+							 Grid.Column="14"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="52" />
+
+		<TextBlock x:Name="Label48"
+							 Grid.Row="1"
+							 Grid.Column="19"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="48" />
+
+		<TextBlock x:Name="Label44"
+							 Grid.Row="3"
+							 Grid.Column="4"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="44" />
+
+		<TextBlock x:Name="Label40"
+							 Grid.Row="3"
+							 Grid.Column="9"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="40" />
+
+		<TextBlock x:Name="Label36"
+							 Grid.Row="3"
+							 Grid.Column="14"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="36" />
+
+		<TextBlock x:Name="Label32"
+							 Grid.Row="3"
+							 Grid.Column="19"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="32" />
+
+		<TextBlock x:Name="Label28"
+							 Grid.Row="5"
+							 Grid.Column="4"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="28" />
+
+		<TextBlock x:Name="Label24"
+							 Grid.Row="5"
+							 Grid.Column="9"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="24" />
+
+		<TextBlock x:Name="Label20"
+							 Grid.Row="5"
+							 Grid.Column="14"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="20" />
+
+		<TextBlock x:Name="Label16"
+							 Grid.Row="5"
+							 Grid.Column="19"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="16" />
+
+		<TextBlock x:Name="Label12"
+							 Grid.Row="7"
+							 Grid.Column="4"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="12" />
+
+		<TextBlock x:Name="Label8"
+							 Grid.Row="7"
+							 Grid.Column="9"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="8" />
+
+		<TextBlock x:Name="Label4"
+							 Grid.Row="7"
+							 Grid.Column="14"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="4" />
+
+		<TextBlock x:Name="Label0"
+							 Grid.Row="7"
+							 Grid.Column="19"
+							 Style="{StaticResource TextBlockStyle}"
+							 Text="0" />
+
+		<controls:FlipButtons x:Name="Bit63"
+													Grid.Column="1"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='63', Mode=OneWay}"
+													ButtonId="BINPOS63"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit62"
+													Grid.Column="2"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='62', Mode=OneWay}"
+													ButtonId="BINPOS62"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit61"
+													Grid.Column="3"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='61', Mode=OneWay}"
+													ButtonId="BINPOS61"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit60"
+													Grid.Column="4"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='60', Mode=OneWay}"
+													ButtonId="BINPOS60"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit59"
+													Grid.Column="6"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='59', Mode=OneWay}"
+													ButtonId="BINPOS59"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit58"
+													Grid.Column="7"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='58', Mode=OneWay}"
+													ButtonId="BINPOS58"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit57"
+													Grid.Column="8"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='57', Mode=OneWay}"
+													ButtonId="BINPOS57"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit56"
+													Grid.Column="9"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='56', Mode=OneWay}"
+													ButtonId="BINPOS56"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit55"
+													Grid.Column="11"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='55', Mode=OneWay}"
+													ButtonId="BINPOS55"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit54"
+													Grid.Column="12"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='54', Mode=OneWay}"
+													ButtonId="BINPOS54"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit53"
+													Grid.Column="13"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='53', Mode=OneWay}"
+													ButtonId="BINPOS53"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit52"
+													Grid.Column="14"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='52', Mode=OneWay}"
+													ButtonId="BINPOS52"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit51"
+													Grid.Column="16"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='51', Mode=OneWay}"
+													ButtonId="BINPOS51"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit50"
+													Grid.Column="17"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='50', Mode=OneWay}"
+													ButtonId="BINPOS50"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit49"
+													Grid.Column="18"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='49', Mode=OneWay}"
+													ButtonId="BINPOS49"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit48"
+													Grid.Column="19"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='48', Mode=OneWay}"
+													ButtonId="BINPOS48"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit47"
+													Grid.Row="2"
+													Grid.Column="1"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='47', Mode=OneWay}"
+													ButtonId="BINPOS47"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit46"
+													Grid.Row="2"
+													Grid.Column="2"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='46', Mode=OneWay}"
+													ButtonId="BINPOS46"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit45"
+													Grid.Row="2"
+													Grid.Column="3"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='45', Mode=OneWay}"
+													ButtonId="BINPOS45"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit44"
+													Grid.Row="2"
+													Grid.Column="4"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='44', Mode=OneWay}"
+													ButtonId="BINPOS44"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit43"
+													Grid.Row="2"
+													Grid.Column="6"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='43', Mode=OneWay}"
+													ButtonId="BINPOS43"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit42"
+													Grid.Row="2"
+													Grid.Column="7"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='42', Mode=OneWay}"
+													ButtonId="BINPOS42"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit41"
+													Grid.Row="2"
+													Grid.Column="8"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='41', Mode=OneWay}"
+													ButtonId="BINPOS41"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit40"
+													Grid.Row="2"
+													Grid.Column="9"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='40', Mode=OneWay}"
+													ButtonId="BINPOS40"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit39"
+													Grid.Row="2"
+													Grid.Column="11"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='39', Mode=OneWay}"
+													ButtonId="BINPOS39"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit38"
+													Grid.Row="2"
+													Grid.Column="12"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='38', Mode=OneWay}"
+													ButtonId="BINPOS38"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit37"
+													Grid.Row="2"
+													Grid.Column="13"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='37', Mode=OneWay}"
+													ButtonId="BINPOS37"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit36"
+													Grid.Row="2"
+													Grid.Column="14"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='36', Mode=OneWay}"
+													ButtonId="BINPOS36"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit35"
+													Grid.Row="2"
+													Grid.Column="16"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='35', Mode=OneWay}"
+													ButtonId="BINPOS35"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit34"
+													Grid.Row="2"
+													Grid.Column="17"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='34', Mode=OneWay}"
+													ButtonId="BINPOS34"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit33"
+													Grid.Row="2"
+													Grid.Column="18"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='33', Mode=OneWay}"
+													ButtonId="BINPOS33"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit32"
+													Grid.Row="2"
+													Grid.Column="19"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='32', Mode=OneWay}"
+													ButtonId="BINPOS32"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsQwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit31"
+													Grid.Row="4"
+													Grid.Column="1"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='31', Mode=OneWay}"
+													ButtonId="BINPOS31"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit30"
+													Grid.Row="4"
+													Grid.Column="2"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='30', Mode=OneWay}"
+													ButtonId="BINPOS30"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit29"
+													Grid.Row="4"
+													Grid.Column="3"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='29', Mode=OneWay}"
+													ButtonId="BINPOS29"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit28"
+													Grid.Row="4"
+													Grid.Column="4"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='28', Mode=OneWay}"
+													ButtonId="BINPOS28"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit27"
+													Grid.Row="4"
+													Grid.Column="6"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='27', Mode=OneWay}"
+													ButtonId="BINPOS27"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit26"
+													Grid.Row="4"
+													Grid.Column="7"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='26', Mode=OneWay}"
+													ButtonId="BINPOS26"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit25"
+													Grid.Row="4"
+													Grid.Column="8"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='25', Mode=OneWay}"
+													ButtonId="BINPOS25"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit24"
+													Grid.Row="4"
+													Grid.Column="9"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='24', Mode=OneWay}"
+													ButtonId="BINPOS24"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit23"
+													Grid.Row="4"
+													Grid.Column="11"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='23', Mode=OneWay}"
+													ButtonId="BINPOS23"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit22"
+													Grid.Row="4"
+													Grid.Column="12"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='22', Mode=OneWay}"
+													ButtonId="BINPOS22"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit21"
+													Grid.Row="4"
+													Grid.Column="13"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='21', Mode=OneWay}"
+													ButtonId="BINPOS21"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit20"
+													Grid.Row="4"
+													Grid.Column="14"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='20', Mode=OneWay}"
+													ButtonId="BINPOS20"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit19"
+													Grid.Row="4"
+													Grid.Column="16"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='19', Mode=OneWay}"
+													ButtonId="BINPOS19"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit18"
+													Grid.Row="4"
+													Grid.Column="17"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='18', Mode=OneWay}"
+													ButtonId="BINPOS18"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit17"
+													Grid.Row="4"
+													Grid.Column="18"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='17', Mode=OneWay}"
+													ButtonId="BINPOS17"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit16"
+													Grid.Row="4"
+													Grid.Column="19"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='16', Mode=OneWay}"
+													ButtonId="BINPOS16"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsDwordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit15"
+													Grid.Row="6"
+													Grid.Column="1"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='15', Mode=OneWay}"
+													ButtonId="BINPOS15"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsWordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit14"
+													Grid.Row="6"
+													Grid.Column="2"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='14', Mode=OneWay}"
+													ButtonId="BINPOS14"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsWordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit13"
+													Grid.Row="6"
+													Grid.Column="3"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='13', Mode=OneWay}"
+													ButtonId="BINPOS13"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsWordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit12"
+													Grid.Row="6"
+													Grid.Column="4"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='12', Mode=OneWay}"
+													ButtonId="BINPOS12"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsWordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit11"
+													Grid.Row="6"
+													Grid.Column="6"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='11', Mode=OneWay}"
+													ButtonId="BINPOS11"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsWordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit10"
+													Grid.Row="6"
+													Grid.Column="7"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='10', Mode=OneWay}"
+													ButtonId="BINPOS10"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsWordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit9"
+													Grid.Row="6"
+													Grid.Column="8"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='9', Mode=OneWay}"
+													ButtonId="BINPOS9"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsWordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit8"
+													Grid.Row="6"
+													Grid.Column="9"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='8', Mode=OneWay}"
+													ButtonId="BINPOS8"
+													Checked="OnBitToggled"
+													IsEnabled="{x:Bind Model.IsWordEnabled, Mode=OneWay}"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit7"
+													Grid.Row="6"
+													Grid.Column="11"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='7', Mode=OneWay}"
+													ButtonId="BINPOS7"
+													Checked="OnBitToggled"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit6"
+													Grid.Row="6"
+													Grid.Column="12"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='6', Mode=OneWay}"
+													ButtonId="BINPOS6"
+													Checked="OnBitToggled"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit5"
+													Grid.Row="6"
+													Grid.Column="13"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='5', Mode=OneWay}"
+													ButtonId="BINPOS5"
+													Checked="OnBitToggled"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit4"
+													Grid.Row="6"
+													Grid.Column="14"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='4', Mode=OneWay}"
+													ButtonId="BINPOS4"
+													Checked="OnBitToggled"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit3"
+													Grid.Row="6"
+													Grid.Column="16"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='3', Mode=OneWay}"
+													ButtonId="BINPOS3"
+													Checked="OnBitToggled"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit2"
+													Grid.Row="6"
+													Grid.Column="17"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='2', Mode=OneWay}"
+													ButtonId="BINPOS2"
+													Checked="OnBitToggled"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit1"
+													Grid.Row="6"
+													Grid.Column="18"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='1', Mode=OneWay}"
+													ButtonId="BINPOS1"
+													Checked="OnBitToggled"
+													Unchecked="OnBitToggled" />
+
+		<controls:FlipButtons x:Name="Bit0"
+													Grid.Row="6"
+													Grid.Column="19"
+													Style="{StaticResource FlippingToggleButtonStyle}"
+													AutomationProperties.Name="{x:Bind Model.BinaryDisplayValue, Converter={StaticResource BitFlipAutomationNameConverter}, ConverterParameter='0', Mode=OneWay}"
+													ButtonId="BINPOS0"
+													Checked="OnBitToggled"
+													Unchecked="OnBitToggled" />
+	</Grid>
+</UserControl>

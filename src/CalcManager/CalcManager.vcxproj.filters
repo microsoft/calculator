@@ -7,7 +7,7 @@
     <Filter Include="RatPack">
       <UniqueIdentifier>{a1bae6f0-0a01-447d-9a3a-5c65bcd384e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
+    <Filter Include="headers">
       <UniqueIdentifier>{5149465e-c5c9-48a2-b676-f11380b733a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -89,27 +89,13 @@
     <ClCompile Include="CEngine\RationalMath.cpp">
       <Filter>CEngine</Filter>
     </ClCompile>
+    <ClCompile Include="CCalcManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h" />
     <ClInclude Include="ExpressionCommand.h" />
     <ClInclude Include="ExpressionCommandInterface.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Header Files\History.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\CalcEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\CalcUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\CCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\EngineStrings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Ratpack\CalcErr.h">
       <Filter>RatPack</Filter>
     </ClInclude>
@@ -120,45 +106,49 @@
       <Filter>RatPack</Filter>
     </ClInclude>
     <ClInclude Include="CalculatorVector.h" />
-    <ClInclude Include="Header Files\CalcEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\CalcUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\CCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\EngineStrings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\History.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UnitConverter.h" />
     <ClInclude Include="CalculatorHistory.h" />
     <ClInclude Include="CalculatorManager.h" />
     <ClInclude Include="CalculatorResource.h" />
-    <ClInclude Include="Header Files\ICalcDisplay.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="headers\CalcEngine.h">
+      <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\CalcInput.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="headers\CalcInput.h">
+      <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\IHistoryDisplay.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="headers\CalcUtils.h">
+      <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\Number.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="headers\CCommand.h">
+      <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\Rational.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="headers\EngineStrings.h">
+      <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\RadixType.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="headers\History.h">
+      <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\RationalMath.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="headers\ICalcDisplay.h">
+      <Filter>headers</Filter>
     </ClInclude>
+    <ClInclude Include="headers\IHistoryDisplay.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Number.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\RadixType.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Rational.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\RationalMath.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="compat.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CCalcManager.h" />
   </ItemGroup>
 </Project>

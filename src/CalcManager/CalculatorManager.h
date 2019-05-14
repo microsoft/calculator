@@ -4,9 +4,9 @@
 #pragma once
 
 #include "CalculatorHistory.h"
-#include "Header Files/CalcEngine.h"
-#include "Header Files/Rational.h"
-#include "Header Files/ICalcDisplay.h"
+#include "headers/CalcEngine.h"
+#include "headers/Rational.h"
+#include "headers/ICalcDisplay.h"
 
 namespace CalculationManager
 {

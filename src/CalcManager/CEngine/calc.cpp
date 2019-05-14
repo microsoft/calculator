@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include <cassert>
-#include "Header Files/CalcEngine.h"
+#include "headers/CalcEngine.h"
 #include "CalculatorResource.h"
 
 using namespace std;

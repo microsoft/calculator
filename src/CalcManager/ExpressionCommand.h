@@ -3,8 +3,8 @@
 
 #pragma once
 #include "ExpressionCommandInterface.h"
-#include "Header Files/CalcEngine.h"
-#include "Header Files/Rational.h"
+#include "headers/CalcEngine.h"
+#include "headers/Rational.h"
 
 class CParentheses final : public IParenthesisCommand
 {

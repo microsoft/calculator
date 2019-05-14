@@ -1,0 +1,133 @@
+﻿<UserControl x:Class="CalculatorApp.CalculatorProgrammerDisplayPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:common="using:CalculatorApp.Common"
+             xmlns:controls="using:CalculatorApp.Controls"
+             xmlns:converters="using:CalculatorApp.Converters"
+             xmlns:local="using:CalculatorApp.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Margin="3,0,0,0"
+             mc:Ignorable="">
+
+	<UserControl.Resources>
+		<converters:BooleanNegationConverter x:Key="BooleanNegationConverter" />
+	</UserControl.Resources>
+
+	<Grid x:Name="ProgrammerDisplay">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="2*"
+												MaxWidth="160" />
+			<ColumnDefinition Width="0.01*" />
+			<ColumnDefinition Width="1*"
+												MaxWidth="80" />
+			<ColumnDefinition Width="1*"
+												MaxWidth="80" />
+			<ColumnDefinition Width="1*"
+												MaxWidth="80" />
+			<ColumnDefinition Width="1*"
+												MaxWidth="80" />
+		</Grid.ColumnDefinitions>
+
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="Layouts">
+				<VisualState x:Name="MinSizeLayout">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}"
+														 MinWindowWidth="{StaticResource AppMinWindowWidth}" />
+					</VisualState.StateTriggers>
+				</VisualState>
+				<VisualState x:Name="DefaultLayout">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowHeight="0"
+														 MinWindowWidth="0" />
+					</VisualState.StateTriggers>
+				</VisualState>
+			</VisualStateGroup>
+			<VisualStateGroup x:Name="ErrorVisualStates">
+				<VisualState x:Name="NoErrorLayout" />
+				<VisualState x:Name="ErrorLayout">
+					<VisualState.Setters>
+						<Setter Target="qwordButton.IsEnabled"
+										Value="False" />
+						<Setter Target="dwordButton.IsEnabled"
+										Value="False" />
+						<Setter Target="wordButton.IsEnabled"
+										Value="False" />
+						<Setter Target="byteButton.IsEnabled"
+										Value="False" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+
+		<Grid x:Uid="InputModeSelectionGroup"
+					Grid.Column="0"
+					AutomationProperties.HeadingLevel="Level1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"
+													MaxWidth="80" />
+				<ColumnDefinition Width="1*"
+													MaxWidth="80" />
+			</Grid.ColumnDefinitions>
+
+			<RadioButton x:Name="fullKeypad"
+									 x:Uid="fullKeypad"
+									 Style="{StaticResource ProgKeypadRadioButtonStyle}"
+									 AutomationProperties.AutomationId="fullKeypad"
+									 Content="&#xe75f;"
+									 IsChecked="{x:Bind Model.IsBitFlipChecked, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}" />
+
+			<RadioButton x:Name="bitFlip"
+									 x:Uid="bitFlip"
+									 Grid.Column="1"
+									 Style="{StaticResource ProgKeypadRadioButtonStyle}"
+									 AutomationProperties.AutomationId="bitFlip"
+									 Checked="ShowBitFlip"
+									 Content="&#xf7d0;"
+									 IsChecked="{x:Bind Model.IsBitFlipChecked, Mode=TwoWay}" />
+		</Grid>
+
+		<Button x:Name="qwordButton"
+						x:Uid="qwordButton"
+						Grid.Column="0"
+						Grid.ColumnSpan="7"
+						Style="{StaticResource ProgWordSizeButtonStyle}"
+						AutomationProperties.AutomationId="qwordButton"
+						Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
+						CommandParameter="0"
+						Content="QWORD" />
+
+		<Button x:Name="dwordButton"
+						x:Uid="dwordButton"
+						Grid.Column="0"
+						Grid.ColumnSpan="7"
+						Style="{StaticResource ProgWordSizeButtonStyle}"
+						AutomationProperties.AutomationId="dwordButton"
+						Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
+						CommandParameter="1"
+						Content="DWORD"
+						Visibility="Collapsed" />
+
+		<Button x:Name="wordButton"
+						x:Uid="wordButton"
+						Grid.Column="0"
+						Grid.ColumnSpan="7"
+						Style="{StaticResource ProgWordSizeButtonStyle}"
+						AutomationProperties.AutomationId="wordButton"
+						Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
+						CommandParameter="2"
+						Content="WORD"
+						Visibility="Collapsed" />
+
+		<Button x:Name="byteButton"
+						x:Uid="byteButton"
+						Grid.Column="0"
+						Grid.ColumnSpan="7"
+						Style="{StaticResource ProgWordSizeButtonStyle}"
+						AutomationProperties.AutomationId="byteButton"
+						Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
+						CommandParameter="3"
+						Content="BYTE"
+						Visibility="Collapsed" />
+	</Grid>
+</UserControl>

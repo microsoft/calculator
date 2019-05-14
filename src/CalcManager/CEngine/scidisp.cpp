@@ -15,7 +15,7 @@
 
 #include <sstream>
 #include <regex>
-#include "Header Files/CalcEngine.h"
+#include "headers/CalcEngine.h"
 
 using namespace std;
 using namespace CalcEngine;
@@ -48,7 +48,6 @@ typedef struct
     bool bUseSep;
 } LASTDISP;
 
-LASTDISP gldPrevious = { 0, -1, 0, -1, (NUM_WIDTH)-1, false, false, false };
 
 // Truncates if too big, makes it a non negative - the number in rat. Doesn't do anything if not in INT mode
 CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational const& rat)
@@ -77,6 +76,8 @@ CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational con
 
 void CCalcEngine::DisplayNum(void)
 {
+	static LASTDISP gldPrevious = { 0, -1, 0, -1, (NUM_WIDTH)-1, false, false, false };
+
     //
     // Only change the display if
     //  we are in record mode                               -OR-
