@@ -87,7 +87,7 @@ namespace CalculatorApp
     }
 }
 
-CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> client)
+CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> client, const wchar_t * forcedResponseLanguage)
     : m_client(move(client))
     , m_loadStatus(CurrencyLoadStatus::NotLoaded)
     , m_responseLanguage(L"en-US")
@@ -96,9 +96,20 @@ CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> clie
     , m_networkManager(ref new NetworkManager())
     , m_meteredOverrideSet(false)
 {
-    if (GlobalizationPreferences::Languages->Size > 0)
+    if (forcedResponseLanguage != nullptr)
     {
-        m_responseLanguage = GlobalizationPreferences::Languages->GetAt(0);
+        m_responseLanguage = ref new Platform::String(forcedResponseLanguage);
+    }
+    else
+    {
+        if (GlobalizationPreferences::Languages->Size > 0)
+        {
+            m_responseLanguage = GlobalizationPreferences::Languages->GetAt(0);
+        }
+        else
+        {
+            m_responseLanguage = L"en-US";
+        }
     }
 
     if (m_client != nullptr)
@@ -107,13 +118,14 @@ CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> clie
         m_client->SetResponseLanguage(m_responseLanguage);
     }
 
+    auto localizationService = LocalizationService::GetInstance();
     if (CoreWindow::GetForCurrentThread() != nullptr)
     {
         // Must have a CoreWindow to access the resource context.
-        m_isRtlLanguage = LocalizationService::GetInstance()->IsRtlLayout();
+        m_isRtlLanguage = localizationService->IsRtlLayout();
     }
 
-    m_ratioFormatter = LocalizationService::GetRegionalSettingsAwareDecimalFormatter();
+    m_ratioFormatter = localizationService->GetRegionalSettingsAwareDecimalFormatter();
     m_ratioFormatter->IsGrouped = true;
     m_ratioFormatter->IsDecimalPointAlwaysDisplayed = true;
     m_ratioFormatter->FractionDigits = FORMATTER_DIGIT_COUNT;

@@ -217,7 +217,7 @@ void DateCalculatorViewModel::UpdateStrDateResultAutomationName()
 void DateCalculatorViewModel::InitializeDateOutputFormats(_In_ String ^ calendarIdentifier)
 {
     // Format for Add/Subtract days
-    m_dateTimeFormatter = LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(
+    m_dateTimeFormatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDateTimeFormatter(
         L"longdate",
         calendarIdentifier,
         ClockIdentifiers::TwentyFourHour); // Clock Identifier is not used

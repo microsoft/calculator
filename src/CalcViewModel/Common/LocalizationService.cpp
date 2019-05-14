@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -49,17 +49,34 @@ LocalizationService ^ LocalizationService::GetInstance()
 
         if (s_singletonInstance == nullptr)
         {
-            s_singletonInstance = ref new LocalizationService();
+            s_singletonInstance = ref new LocalizationService(nullptr);
         }
     }
     return s_singletonInstance;
 }
 
-LocalizationService::LocalizationService()
+/// <summary>
+/// Replace (or create) the single instance of this singleton class by one with the language passed as parameter
+/// </summary>
+/// <param name="language">RFC-5646 identifier of the language to use</param>
+/// <remarks>
+/// Should only be used for test purpose
+/// </remarks>
+void LocalizationService::OverrideWithLanguage(_In_ const wchar_t * const language)
 {
-    m_language = ApplicationLanguages::Languages->GetAt(0);
-    m_flowDirection =
-        ResourceContext::GetForCurrentView()->QualifierValues->Lookup(L"LayoutDirection") != L"LTR" ? FlowDirection::RightToLeft : FlowDirection::LeftToRight;
+    s_singletonInstance = ref new LocalizationService(language);
+}
+
+/// <summary>
+/// Constructor
+/// </summary>
+/// <param name="overridedLanguage">RFC-5646 identifier of the language to use, if null, will use the current language of the system</param>
+LocalizationService::LocalizationService(_In_ const wchar_t * const overridedLanguage)
+{
+    m_isLanguageOverrided = overridedLanguage != nullptr;
+    m_language = m_isLanguageOverrided ? ref new Platform::String(overridedLanguage) : ApplicationLanguages::Languages->GetAt(0);
+    m_flowDirection = ResourceContext::GetForCurrentView()->QualifierValues->Lookup(L"LayoutDirection")
+        != L"LTR" ? FlowDirection::RightToLeft : FlowDirection::LeftToRight;
 
     auto resourceLoader = AppResourceProvider::GetInstance();
     m_fontFamilyOverride = resourceLoader.GetResourceString(L"LocalizedFontFamilyOverride");
@@ -339,7 +356,7 @@ void LocalizationService::UpdateFontFamilyAndSize(DependencyObject ^ target)
 
 // If successful, returns a formatter that respects the user's regional format settings,
 // as configured by running intl.cpl.
-DecimalFormatter ^ LocalizationService::GetRegionalSettingsAwareDecimalFormatter()
+DecimalFormatter ^ LocalizationService::GetRegionalSettingsAwareDecimalFormatter() const
 {
     IIterable<String ^> ^ languageIdentifiers = LocalizationService::GetLanguageIdentifiers();
     if (languageIdentifiers != nullptr)
@@ -354,7 +371,7 @@ DecimalFormatter ^ LocalizationService::GetRegionalSettingsAwareDecimalFormatter
 // as configured by running intl.cpl.
 //
 // This helper function creates a DateTimeFormatter with a TwentyFour hour clock
-DateTimeFormatter ^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String ^ format)
+DateTimeFormatter ^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String^ format) const
 {
     IIterable<String ^> ^ languageIdentifiers = LocalizationService::GetLanguageIdentifiers();
     if (languageIdentifiers == nullptr)
@@ -367,8 +384,7 @@ DateTimeFormatter ^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatt
 
 // If successful, returns a formatter that respects the user's regional format settings,
 // as configured by running intl.cpl.
-DateTimeFormatter
-    ^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String ^ format, _In_ String ^ calendarIdentifier, _In_ String ^ clockIdentifier)
+DateTimeFormatter^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String ^ format, _In_ String ^ calendarIdentifier, _In_ String ^ clockIdentifier) const
 {
     IIterable<String ^> ^ languageIdentifiers = LocalizationService::GetLanguageIdentifiers();
     if (languageIdentifiers == nullptr)
@@ -379,12 +395,12 @@ DateTimeFormatter
     return ref new DateTimeFormatter(format, languageIdentifiers, GlobalizationPreferences::HomeGeographicRegion, calendarIdentifier, clockIdentifier);
 }
 
-CurrencyFormatter ^ LocalizationService::GetRegionalSettingsAwareCurrencyFormatter()
+CurrencyFormatter ^ LocalizationService::GetRegionalSettingsAwareCurrencyFormatter() const
 {
     String ^ userCurrency =
         (GlobalizationPreferences::Currencies->Size > 0) ? GlobalizationPreferences::Currencies->GetAt(0) : StringReference(DefaultCurrencyCode.data());
 
-    IIterable<String ^> ^ languageIdentifiers = LocalizationService::GetLanguageIdentifiers();
+    IIterable<String ^> ^ languageIdentifiers = GetLanguageIdentifiers();
     if (languageIdentifiers == nullptr)
     {
         languageIdentifiers = ApplicationLanguages::Languages;
@@ -398,10 +414,18 @@ CurrencyFormatter ^ LocalizationService::GetRegionalSettingsAwareCurrencyFormatt
     return currencyFormatter;
 }
 
-IIterable<String ^> ^ LocalizationService::GetLanguageIdentifiers()
+IIterable<String ^> ^ LocalizationService::GetLanguageIdentifiers() const
 {
     WCHAR currentLocale[LOCALE_NAME_MAX_LENGTH] = {};
     int result = GetUserDefaultLocaleName(currentLocale, LOCALE_NAME_MAX_LENGTH);
+
+    if (m_isLanguageOverrided)
+    {
+        auto overridedLanguageList = ref new Vector<String^>();
+        overridedLanguageList->Append(m_language);
+        return overridedLanguageList;
+    }
+
     if (result != 0)
     {
         // GetUserDefaultLocaleName may return an invalid bcp47 language tag with trailing non-BCP47 friendly characters,
