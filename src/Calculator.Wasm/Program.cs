@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CalculatorApp;
+using Microsoft.Extensions.Logging;
 using System;
 using Uno.Extensions;
 using Windows.UI.Xaml;
