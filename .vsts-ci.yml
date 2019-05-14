@@ -1,6 +1,9 @@
 jobs:
 - job: Windows
 
+  pool:
+    vmImage: 'windows-2019'
+
   steps:
   - task: GitVersion@4
     inputs:
