@@ -1,8 +1,27 @@
 #pragma once
 namespace CalculatorApp
 {
+    public enum TraceLoggerCalculatorModeEnum
+    {
+        Standard,
+        Scientific,
+        Programmer,
+        DateCalculation,
+        CurrencyConverter,
+        VolumeConverter,
+        LengthConverter,
+        WeightMassConverter,
+        TemperatureConverter,
+        EnergyConverter,
+        AreaConverter,
+        SpeedConverter,
+        TimeConverter, 
+    };
+
+
     public enum TraceLoggerButtonIdEnum
     {
+        // Numberpad
         ZeroButton,
         OneButton,
         TwoButton,
@@ -14,19 +33,27 @@ namespace CalculatorApp
         EightButton,
         NineButton,
         DecimalButton,
+
+        // Standard Operators
         NegateButton,
         EqualsButton,
         PlusButton,
         MinusButton,
         MultiplyButton,
         DivideButton,
-        BackspaceButton,
-        ClearButton,
-        ClearEntryButton,
         PercentButton,
         SquareRootButton,
         XPower2Button,
         XPower3Button,
+        OpenParenthesisButton,
+        CloseParenthesisButton,
+
+        // Display Controls
+        BackspaceButton,
+        ClearButton,
+        ClearEntryButton,
+
+        // Scientific Operators
         InvertButton,
         SinButton,
         CosButton,
@@ -46,8 +73,6 @@ namespace CalculatorApp
         LogBaseEButton,
         DmsButton,
         DegreesButton,
-        OpenParenthesisButton,
-        CloseParenthesisButton,
         FactorialButton,
         PowerOf10Button,
         PowerOfEButton,
@@ -56,6 +81,28 @@ namespace CalculatorApp
         YSquareRootButton,
         PowerButton,
 
+        // Programmer Operators
+        RolButton,
+        RorButton,
+        LshButton,
+        RshButton,
+        OrButton,
+        XorButton,
+        NotButton,
+        AndButton,
 
+        // Programmer Numberpad
+        AButton,
+        BButton,
+        CButton,
+        DButton,
+        EButton,
+        FButton
+    };
+
+    public enum TraceLoggerInputMethodEnum
+    {
+            PhysicalKeyboard,
+            OnScreenKeyboard 
     };
 }
