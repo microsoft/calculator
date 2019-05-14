@@ -269,7 +269,6 @@
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="CppUnitTestFramework.Universal, Version=$(UnitTestPlatformVersion)" />
-    <SDKReference Include="Microsoft.VCLibs.Desktop, Version=14.0" />
     <SDKReference Include="TestPlatform.Universal, Version=$(UnitTestPlatformVersion)" />
   </ItemGroup>
   <ItemGroup>
