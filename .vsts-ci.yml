@@ -1,0 +1,32 @@
+jobs:
+- job: Windows
+
+  steps:
+  - task: GitVersion@4
+    inputs:
+      updateAssemblyInfo: false   
+      
+  - task: NuGetToolInstaller@0
+    inputs:
+        versionSpec: 4.9.1
+        checkLatest: false
+
+  - task: MSBuild@1
+    inputs:
+      solution: src/Calculator.sln
+      msbuildLocationMethod: version
+      msbuildVersion: latest
+      msbuildArchitecture: x86
+      msbuildArguments: /r /p:Configuration=Release "/p:PackageVersion=%GITVERSION_FullSemVer%" "/p:InformationalVersion=%GITVERSION_InformationalVersion%" /detailedsummary
+      clean: false
+      maximumCpuCount: true
+      restoreNugetPackages: false
+      logProjectEvents: false
+      createLogFile: false
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Package Artifacts
+    inputs:
+      pathToPublish: $(build.artifactstagingdirectory)
+      artifactType: container
+      artifactName: UnoBanner
