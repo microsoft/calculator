@@ -112,9 +112,9 @@ namespace CalculatorApp
         // https://msdn.microsoft.com/en-us/library/windows/desktop/aa363742(v=vs.85).aspx We're using Verbose level for events that are called frequently and
         // needed only for debugging or capturing perf for specific scenarios b) should decide whether or not to log to  telemetry and pass
         // TraceLoggingKeyword(MICROSOFT_KEYWORD_LEVEL_3) accordingly c) Should accept a variable number of additional data arguments if needed
-        void LogTelemetryEvent(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
-        void LogMeasureEvent(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
-        void LogCriticalDataEvent(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
+        void LogLevel3Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
+        void LogLevel2Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
+        void LogLevel1Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
         void LogPerformanceEvent(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
         void LogInfoEvent(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
 

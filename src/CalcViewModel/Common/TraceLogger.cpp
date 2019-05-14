@@ -91,7 +91,6 @@ namespace CalculatorApp
     constexpr int64_t MICROSOFT_KEYWORD_LEVEL_1 = 0;
     constexpr int64_t MICROSOFT_KEYWORD_LEVEL_2 = 0;
     constexpr int64_t MICROSOFT_KEYWORD_LEVEL_3 = 0;
-
 #endif
 
 #pragma region TraceLogger setup and cleanup
@@ -124,17 +123,17 @@ namespace CalculatorApp
     }
 
 #pragma region Tracing methods
-    void TraceLogger::LogTelemetryEvent(wstring_view eventName, LoggingFields fields) const
+    void TraceLogger::LogLevel3Event(wstring_view eventName, LoggingFields fields) const
     {
         g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_3));
     }
 
-    void TraceLogger::LogMeasureEvent(wstring_view eventName, LoggingFields fields) const
+    void TraceLogger::LogLevel2Event(wstring_view eventName, LoggingFields fields) const
     {
         g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_2));
     }
 
-    void TraceLogger::LogCriticalDataEvent(wstring_view eventName, LoggingFields fields) const
+    void TraceLogger::LogLevel1Event(wstring_view eventName, LoggingFields fields) const
     {
         g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_1));
     }
@@ -254,7 +253,7 @@ namespace CalculatorApp
             LoggingFields fields{};
             fields.AddString(L"CalculatorMode", NavCategory::GetFriendlyName(mode)->Data());
             fields.AddUInt32(L"WindowId", windowId);
-            LogTelemetryEvent(EVENT_NAME_CALCULATOR_VIEWED_IN_SESSION, fields);
+            LogLevel3Event(EVENT_NAME_CALCULATOR_VIEWED_IN_SESSION, fields);
         }
     }
 
@@ -277,7 +276,7 @@ namespace CalculatorApp
             LoggingFields fields{};
             fields.AddString(L"DateCalculatorMode", NavCategory::GetFriendlyName(mode)->Data());
             fields.AddUInt32(L"WindowId", windowId);
-            LogTelemetryEvent(EVENT_NAME_DATE_CALCULATOR_VIEWED_IN_SESSION, fields);
+            LogLevel3Event(EVENT_NAME_DATE_CALCULATOR_VIEWED_IN_SESSION, fields);
         }
     }
 
@@ -299,7 +298,7 @@ namespace CalculatorApp
             LoggingFields fields{};
             fields.AddString(L"ConverterMode", NavCategory::GetFriendlyName(mode)->Data());
             fields.AddUInt32(L"WindowId", windowId);
-            LogTelemetryEvent(EVENT_NAME_CONVERTER_VIEWED_IN_SESSION, fields);
+            LogLevel3Event(EVENT_NAME_CONVERTER_VIEWED_IN_SESSION, fields);
         }
     }
 
@@ -312,7 +311,7 @@ namespace CalculatorApp
         fields.AddString(L"FromMode", fromMode);
         fields.AddString(L"ToMode", toMode);
         fields.AddUInt32(L"MemoryListSize", memorySize);
-        LogTelemetryEvent(EVENT_NAME_SHARED_MEMORY_USED, fields);
+        LogLevel3Event(EVENT_NAME_SHARED_MEMORY_USED, fields);
     }
 
     void TraceLogger::LogBitFlipPaneClicked() const
@@ -321,7 +320,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
-        LogTelemetryEvent(EVENT_NAME_BITFLIP_PANE_CLICKED, fields);
+        LogLevel3Event(EVENT_NAME_BITFLIP_PANE_CLICKED, fields);
     }
 
     void TraceLogger::LogBitFlipUsed() const
@@ -330,7 +329,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
-        LogTelemetryEvent(EVENT_NAME_BITFLIP_BUTTONS_USED, fields);
+        LogLevel3Event(EVENT_NAME_BITFLIP_BUTTONS_USED, fields);
     }
 
     void TraceLogger::LogAppLaunchStart()
@@ -379,7 +378,7 @@ namespace CalculatorApp
 
         LoggingFields fields{};
         fields.AddString(L"DebugData", debugData);
-        LogTelemetryEvent(EVENT_NAME_DEBUG, fields);
+        LogLevel3Event(EVENT_NAME_DEBUG, fields);
     }
 
     void TraceLogger::LogOnAppLaunch(wstring_view previousExecutionState) const
@@ -389,7 +388,7 @@ namespace CalculatorApp
 
         LoggingFields fields{};
         fields.AddString(L"PreviousExecutionState", previousExecutionState);
-        LogTelemetryEvent(EVENT_NAME_PREVIOUS_STATE_WINDOW_ON_CREATION, fields);
+        LogLevel3Event(EVENT_NAME_PREVIOUS_STATE_WINDOW_ON_CREATION, fields);
     }
 
     void TraceLogger::LogAboutFlyoutOpened() const
@@ -398,7 +397,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
-        LogTelemetryEvent(EVENT_NAME_ABOUT_FLYOUT_OPENED, fields);
+        LogLevel3Event(EVENT_NAME_ABOUT_FLYOUT_OPENED, fields);
     }
 
     void TraceLogger::LogNavBarOpened() const
@@ -407,7 +406,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
-        LogTelemetryEvent(EVENT_NAME_NAV_BAR_OPENED, fields);
+        LogLevel3Event(EVENT_NAME_NAV_BAR_OPENED, fields);
     }
 
     void TraceLogger::LogClearHistory() const
@@ -416,7 +415,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
-        LogTelemetryEvent(EVENT_NAME_HISTORY_CLEAR, fields);
+        LogLevel3Event(EVENT_NAME_HISTORY_CLEAR, fields);
     }
 
     void TraceLogger::LogHistoryFlyoutOpenBegin(unsigned int historyItemCount) const
@@ -429,7 +428,7 @@ namespace CalculatorApp
         {
             LoggingFields fields{};
             fields.AddUInt32(L"HistoryItemCount", historyItemCount);
-            LogTelemetryEvent(EVENT_NAME_HISTORY_FLYOUT_OPEN_BEGIN, fields);
+            LogLevel3Event(EVENT_NAME_HISTORY_FLYOUT_OPEN_BEGIN, fields);
         }
     }
 
@@ -442,7 +441,7 @@ namespace CalculatorApp
         {
             LoggingFields fields{};
             fields.AddUInt32(L"HistoryItemCount", historyItemCount);
-            LogTelemetryEvent(EVENT_NAME_HISTORY_FLYOUT_OPEN_END, fields);
+            LogLevel3Event(EVENT_NAME_HISTORY_FLYOUT_OPEN_END, fields);
         }
     }
 
@@ -452,7 +451,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
-        LogTelemetryEvent(EVENT_NAME_HISTORY_BODY_OPENED, fields);
+        LogLevel3Event(EVENT_NAME_HISTORY_BODY_OPENED, fields);
     }
 
     void TraceLogger::LogMemoryFlyoutOpenBegin(unsigned int memoryItemCount) const
@@ -465,7 +464,7 @@ namespace CalculatorApp
         {
             LoggingFields fields{};
             fields.AddUInt32(L"MemoryItemCount", memoryItemCount);
-            LogTelemetryEvent(EVENT_NAME_MEMORY_FLYOUT_OPEN_BEGIN, fields);
+            LogLevel3Event(EVENT_NAME_MEMORY_FLYOUT_OPEN_BEGIN, fields);
         }
     }
 
@@ -478,7 +477,7 @@ namespace CalculatorApp
         {
             LoggingFields fields{};
             fields.AddUInt32(L"MemoryItemCount", memoryItemCount);
-            LogTelemetryEvent(EVENT_NAME_MEMORY_FLYOUT_OPEN_END, fields);
+            LogLevel3Event(EVENT_NAME_MEMORY_FLYOUT_OPEN_END, fields);
         }
     }
 
@@ -488,7 +487,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
-        LogTelemetryEvent(EVENT_NAME_MEMORY_BODY_OPENED, fields);
+        LogLevel3Event(EVENT_NAME_MEMORY_BODY_OPENED, fields);
     }
 
     // If calculator is launched in any mode other than standard then this call will come which is not intended. But there is no way to avoid it.
@@ -505,7 +504,7 @@ namespace CalculatorApp
             fields.AddString(L"FromMode", NavCategory::GetFriendlyName(fromMode)->Data());
             fields.AddString(L"ToMode", NavCategory::GetFriendlyName(toMode)->Data());
             fields.AddInt32(L"WindowId", windowId);
-            LogMeasureEvent(EVENT_NAME_MODE_CHANGE_BEGIN, fields);
+            LogLevel2Event(EVENT_NAME_MODE_CHANGE_BEGIN, fields);
         }
     }
 
@@ -520,7 +519,7 @@ namespace CalculatorApp
             LoggingFields fields{};
             fields.AddString(L"ToMode", NavCategory::GetFriendlyName(toMode)->Data());
             fields.AddInt32(L"WindowId", windowId);
-            LogMeasureEvent(EVENT_NAME_MODE_CHANGE_END, fields);
+            LogLevel2Event(EVENT_NAME_MODE_CHANGE_END, fields);
         }
     }
 
@@ -530,7 +529,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
-        LogTelemetryEvent(EVENT_NAME_HISTORY_ITEM_LOAD_BEGIN, fields);
+        LogLevel3Event(EVENT_NAME_HISTORY_ITEM_LOAD_BEGIN, fields);
     }
 
     void TraceLogger::LogHistoryItemLoadEnd(unsigned int historyTokenCount) const
@@ -540,7 +539,7 @@ namespace CalculatorApp
 
         LoggingFields fields{};
         fields.AddUInt32(L"HistoryTokenCount", historyTokenCount);
-        LogTelemetryEvent(EVENT_NAME_HISTORY_ITEM_LOAD_END, fields);
+        LogLevel3Event(EVENT_NAME_HISTORY_ITEM_LOAD_END, fields);
     }
 
     void TraceLogger::LogNewWindowCreationBegin(int windowId)
@@ -550,7 +549,7 @@ namespace CalculatorApp
 
         LoggingFields fields{};
         fields.AddUInt32(L"WindowId", windowId);
-        LogTelemetryEvent(EVENT_NAME_NEW_WINDOW_CREATION_BEGIN, fields);
+        LogLevel3Event(EVENT_NAME_NEW_WINDOW_CREATION_BEGIN, fields);
     }
 
     void TraceLogger::LogNewWindowCreationEnd(int windowId)
@@ -560,7 +559,7 @@ namespace CalculatorApp
 
         LoggingFields fields{};
         fields.AddUInt32(L"WindowId", windowId);
-        LogTelemetryEvent(EVENT_NAME_NEW_WINDOW_CREATION_END, fields);
+        LogLevel3Event(EVENT_NAME_NEW_WINDOW_CREATION_END, fields);
     }
 
     void TraceLogger::LogError(wstring_view errorString)
@@ -570,7 +569,7 @@ namespace CalculatorApp
 
         LoggingFields fields{};
         fields.AddString(L"ErrorString", errorString);
-        LogTelemetryEvent(EVENT_NAME_ERROR, fields);
+        LogLevel3Event(EVENT_NAME_ERROR, fields);
     }
 
     void TraceLogger::LogPrelaunchedAppActivatedByUser()
@@ -579,7 +578,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
-        LogTelemetryEvent(EVENT_NAME_PRELAUNCHED_APP_ACTIVATED_BY_USER, fields);
+        LogLevel3Event(EVENT_NAME_PRELAUNCHED_APP_ACTIVATED_BY_USER, fields);
     }
 
     void TraceLogger::LogAppPrelaunchedBySystem()
@@ -588,7 +587,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
-        LogTelemetryEvent(EVENT_NAME_APP_PRELAUNCHED_BY_SYSTEM, fields);
+        LogLevel3Event(EVENT_NAME_APP_PRELAUNCHED_BY_SYSTEM, fields);
     }
 
     void TraceLogger::LogMemoryClearAll(int windowId)
@@ -598,7 +597,7 @@ namespace CalculatorApp
         auto iterMap = s_memoryMap.find(windowId);
 
         LoggingFields fields{};
-        LogTelemetryEvent(EVENT_NAME_MEMORY_CLEAR_ALL, fields);
+        LogLevel3Event(EVENT_NAME_MEMORY_CLEAR_ALL, fields);
 
         if (iterMap != s_memoryMap.end())
         {
@@ -651,7 +650,7 @@ namespace CalculatorApp
         LoggingFields fields{};
         fields.AddUInt32(L"MemoryIndex", slotPosition);
         fields.AddUInt32(L"MemoryListSize", memorySize);
-        LogTelemetryEvent(EVENT_NAME_MULTIPLE_MEMORY_USED, fields);
+        LogLevel3Event(EVENT_NAME_MULTIPLE_MEMORY_USED, fields);
     }
 
     void TraceLogger::LogSingleMemoryUsed(unsigned int memorySize) const
@@ -661,7 +660,7 @@ namespace CalculatorApp
 
         LoggingFields fields{};
         fields.AddUInt32(L"MemoryListSize", memorySize);
-        LogTelemetryEvent(EVENT_NAME_SINGLE_MEMORY_USED, fields);
+        LogLevel3Event(EVENT_NAME_SINGLE_MEMORY_USED, fields);
     }
 
     void TraceLogger::LogInvalidPastedInputOccurred(wstring_view reason, ViewMode mode, int programmerNumberBase, int bitLengthType)
@@ -675,7 +674,7 @@ namespace CalculatorApp
         fields.AddString(L"ProgrammerNumberBase", GetProgrammerType(programmerNumberBase).c_str());
         fields.AddString(L"BitLengthType", GetProgrammerType(bitLengthType).c_str());
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogTelemetryEvent(EVENT_NAME_INVALID_PASTED_INPUT_OCCURRED, fields);
+        LogLevel3Event(EVENT_NAME_INVALID_PASTED_INPUT_OCCURRED, fields);
     }
 
     void TraceLogger::LogValidInputPasted(ViewMode mode) const
@@ -685,7 +684,7 @@ namespace CalculatorApp
 
         LoggingFields fields{};
         fields.AddString(L"Mode", NavCategory::GetFriendlyName(mode)->Data());
-        LogTelemetryEvent(EVENT_NAME_VALID_INPUT_PASTED, fields);
+        LogLevel3Event(EVENT_NAME_VALID_INPUT_PASTED, fields);
     }
 
     void TraceLogger::LogStandardException(wstring_view functionName, const exception& e) const
@@ -698,7 +697,7 @@ namespace CalculatorApp
         wstringstream exceptionMessage;
         exceptionMessage << e.what();
         fields.AddString(L"ExceptionMessage", exceptionMessage.str());
-        LogMeasureEvent(EVENT_NAME_EXCEPTION, fields);
+        LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
 
     void TraceLogger::LogWinRTException(wstring_view functionName, hresult_error const& e) const
@@ -710,7 +709,7 @@ namespace CalculatorApp
         fields.AddString(L"FunctionName", functionName);
         fields.AddInt32(L"HRESULT", e.code());
         fields.AddString(L"ExceptionMessage", e.message());
-        LogMeasureEvent(EVENT_NAME_EXCEPTION, fields);
+        LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
 
     void TraceLogger::LogPlatformException(wstring_view functionName, Platform::Exception ^ e) const
@@ -722,7 +721,7 @@ namespace CalculatorApp
         fields.AddString(L"FunctionName", functionName);
         fields.AddInt32(L"HRESULT", e->HResult);
         fields.AddString(L"ExceptionMessage", e->Message->Data());
-        LogMeasureEvent(EVENT_NAME_EXCEPTION, fields);
+        LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
 
     void TraceLogger::UpdateFunctionUsage(int funcIndex)
@@ -787,7 +786,7 @@ namespace CalculatorApp
 
         LoggingFields fields{};
         fields.AddUInt32(L"WindowCount", (unsigned int)maxWindowCount);
-        LogTelemetryEvent(EVENT_NAME_MAX_WINDOW_COUNT, fields);
+        LogLevel3Event(EVENT_NAME_MAX_WINDOW_COUNT, fields);
     }
 
     void TraceLogger::LogWindowActivated() const
@@ -796,7 +795,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
-        LogTelemetryEvent(EVENT_NAME_WINDOW_LAUNCHED_PROTOCOL, fields);
+        LogLevel3Event(EVENT_NAME_WINDOW_LAUNCHED_PROTOCOL, fields);
     }
 
     void TraceLogger::LogWindowLaunched() const
@@ -805,7 +804,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
-        LogTelemetryEvent(EVENT_NAME_WINDOW_LAUNCHED_TILESEARCH, fields);
+        LogLevel3Event(EVENT_NAME_WINDOW_LAUNCHED_TILESEARCH, fields);
     }
 
     void TraceLogger::LogBitLengthButtonUsed(int windowId)
@@ -822,7 +821,7 @@ namespace CalculatorApp
         {
             LoggingFields fields{};
             fields.AddUInt32(L"WindowId", windowId);
-            LogTelemetryEvent(EVENT_NAME_BITLENGTH_BUTTON_USED, fields);
+            LogLevel3Event(EVENT_NAME_BITLENGTH_BUTTON_USED, fields);
 
             bitLengthButtonLoggedInSession = true;
         }
@@ -842,7 +841,7 @@ namespace CalculatorApp
         {
             LoggingFields fields{};
             fields.AddUInt32(L"WindowId", windowId);
-            LogTelemetryEvent(EVENT_NAME_RADIX_BUTTON_USED, fields);
+            LogLevel3Event(EVENT_NAME_RADIX_BUTTON_USED, fields);
 
             radixButtonLoggedInSession = true;
         }
@@ -862,7 +861,7 @@ namespace CalculatorApp
         {
             LoggingFields fields{};
             fields.AddUInt32(L"WindowId", windowId);
-            LogTelemetryEvent(EVENT_NAME_ANGLE_BUTTONS_USED, fields);
+            LogLevel3Event(EVENT_NAME_ANGLE_BUTTONS_USED, fields);
 
             angleButtonLoggedInSession = true;
         }
@@ -882,7 +881,7 @@ namespace CalculatorApp
                 fields.AddString(L"FunctionName", funcLog[i].funcName.data());
                 fields.AddUInt32(L"UsageCount", funcLog[i].count);
                 fields.AddUInt32(L"WindowId", windowId);
-                LogTelemetryEvent(EVENT_NAME_FUNCTION_USAGE, fields);
+                LogLevel3Event(EVENT_NAME_FUNCTION_USAGE, fields);
             }
         }
     }
@@ -893,7 +892,7 @@ namespace CalculatorApp
         {
             LoggingFields fields{};
             fields.AddUInt32(L"WindowId", windowId);
-            LogTelemetryEvent(EVENT_NAME_HYP_BUTTON_USED, fields);
+            LogLevel3Event(EVENT_NAME_HYP_BUTTON_USED, fields);
 
             isHypButtonLogged = true;
         }
@@ -905,7 +904,7 @@ namespace CalculatorApp
         {
             LoggingFields fields{};
             fields.AddUInt32(L"WindowId", windowId);
-            LogTelemetryEvent(EVENT_NAME_DATE_DIFFERENCE_USED, fields);
+            LogLevel3Event(EVENT_NAME_DATE_DIFFERENCE_USED, fields);
 
             m_dateDiffUsageLoggedInSession = true;
         }
@@ -932,7 +931,7 @@ namespace CalculatorApp
         {
             LoggingFields fields{};
             fields.AddString(L"AddSubtractMode", isAddMode ? L"Add" : L"Subtract");
-            LogTelemetryEvent(EVENT_NAME_DATE_ADD_SUBTRACT_USED, fields);
+            LogLevel3Event(EVENT_NAME_DATE_ADD_SUBTRACT_USED, fields);
 
             *isLoggedInSession = true;
         }
@@ -955,7 +954,7 @@ namespace CalculatorApp
         fields.AddBoolean(L"IsDaylightSavingTime", today.IsDaylightSavingTime());
         fields.AddString(L"TodayDate", dtFormatter.Format(today.GetDateTime()));
         fields.AddString(L"ClippedDate", dtFormatter.Format(clippedTime));
-        LogTelemetryEvent(EVENT_NAME_DATE_DIFFERENCE_FOUND, fields);
+        LogLevel3Event(EVENT_NAME_DATE_DIFFERENCE_FOUND, fields);
     }
 
     void TraceLogger::LogUserRequestedRefreshFailed() const
@@ -964,7 +963,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
-        LogTelemetryEvent(L"UserRequestedRefreshFailed", fields);
+        LogLevel3Event(L"UserRequestedRefreshFailed", fields);
     }
 
     void TraceLogger::LogConversionResult(wstring_view fromValue, wstring_view fromUnit, wstring_view toValue, wstring_view toUnit) const
@@ -996,7 +995,7 @@ namespace CalculatorApp
         fields.AddString(L"FromUnit", fromUnit);
         fields.AddString(L"ToValue", toValue);
         fields.AddString(L"ToUnit", toUnit);
-        LogTelemetryEvent(L"CurrencyConverterInputReceived", fields);
+        LogLevel3Event(L"CurrencyConverterInputReceived", fields);
     }
 
     void TraceLogger::LogViewClosingTelemetry(int windowId)
@@ -1011,6 +1010,6 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
-        LogTelemetryEvent(EVENT_NAME_CORE_WINDOW_WAS_NULL, fields);
+        LogLevel3Event(EVENT_NAME_CORE_WINDOW_WAS_NULL, fields);
     }
 }
