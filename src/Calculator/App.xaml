@@ -400,7 +400,7 @@
                                                TextWrapping="NoWrap"/>
                                 </ScrollViewer>
                                 <HyperlinkButton x:Name="ScrollLeft"
-                                                 x:Uid="ScrollLeft"
+                                                 x:Uid="CalculationResultScrollLeft"
                                                  Grid.Column="0"
                                                  Width="20"
                                                  MinWidth="20"
@@ -420,7 +420,7 @@
                                               Glyph="&#xE26C;"/>
                                 </HyperlinkButton>
                                 <HyperlinkButton x:Name="ScrollRight"
-                                                 x:Uid="ScrollRight"
+                                                 x:Uid="CalculationResultScrollRight"
                                                  Grid.Column="2"
                                                  Width="20"
                                                  MinWidth="20"
