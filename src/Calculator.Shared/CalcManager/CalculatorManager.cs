@@ -100,7 +100,6 @@ namespace CalculationManager
 
         public CalculatorManager(ref CalculatorDisplay displayCallback, ref EngineResourceProvider resourceProvider)
         {
-			Debug.WriteLine($"new CalculatorManager");
             displayCallback = new CalculatorDisplay();
             resourceProvider = new EngineResourceProvider();
 
@@ -149,23 +148,26 @@ namespace CalculationManager
             };
 
 #endif
-			Debug.WriteLine($"-> CalculatorManager_Create");
+
             _nativeManager = NativeDispatch.CalculatorManager_Create(ref p);
-			Debug.WriteLine($"<- CalculatorManager_Create");
 		}
 
-        public void Reset(bool clearMemory = true) => throw new NotImplementedException();
-        public void SetStandardMode() => throw new NotImplementedException();
-        public void SetScientificMode() => throw new NotImplementedException();
-        public void SetProgrammerMode() => throw new NotImplementedException();
-        public void SendCommand(Command command)
-        {
-            Debug.WriteLine($"CalculatorManager.SendCommand({command})");
+        public void Reset(bool clearMemory = true)
+			=> NativeDispatch.CalculatorManager_Reset(_nativeManager, clearMemory);
 
-			NativeDispatch.CalculatorManager_SendCommand(_nativeManager, command);
-        }
+		public void SetStandardMode()
+			=> NativeDispatch.CalculatorManager_SetStandardMode(_nativeManager);
 
-        public List<char> SerializeCommands() => throw new NotImplementedException();
+		public void SetScientificMode()
+			=> NativeDispatch.CalculatorManager_SetScientificMode(_nativeManager);
+
+		public void SetProgrammerMode()
+			=> NativeDispatch.CalculatorManager_SetProgrammerMode(_nativeManager);
+
+		public void SendCommand(Command command)
+			=> NativeDispatch.CalculatorManager_SendCommand(_nativeManager, command);
+
+		public List<char> SerializeCommands() => throw new NotImplementedException();
         public void DeSerializeCommands(List<char> serializedData) => throw new NotImplementedException();
         public void SerializeMemory() => throw new NotImplementedException();
         public List<long> GetSerializedMemory() => throw new NotImplementedException();
@@ -175,47 +177,49 @@ namespace CalculationManager
         public void DeSerializePrimaryDisplay(List<long> serializedPrimaryDisplay) => throw new NotImplementedException();
         public Command SerializeSavedDegreeMode() => throw new NotImplementedException();
 
-        public void MemorizeNumber() => throw new NotImplementedException();
-        public void MemorizedNumberLoad(int value)
-        {
-            Debug.WriteLine($"CalculatorManager.MemorizedNumberLoad({value})");
-        }
-        public void MemorizedNumberAdd(int value)
-        {
-            Debug.WriteLine($"CalculatorManager.MemorizedNumberAdd({value})");
-        }
-        public void MemorizedNumberSubtract(int value)
-        {
-            Debug.WriteLine($"CalculatorManager.MemorizedNumberSubtract({value})");
-        }
-        public void MemorizedNumberClear(int value)
-        {
-            Debug.WriteLine($"CalculatorManager.MemorizedNumberClear({value})");
-        }
-        public void MemorizedNumberClearAll()
-        {
-            Debug.WriteLine($"CalculatorManager.MemorizedNumberClearAll()");
-        }
+        public void MemorizeNumber()
+			=> NativeDispatch.CalculatorManager_MemorizeNumber(_nativeManager);
 
-        public bool IsEngineRecording() => throw new NotImplementedException();
-        public List<char> GetSavedCommands() => throw new NotImplementedException();
+		public void MemorizedNumberLoad(int value)
+			=> NativeDispatch.CalculatorManager_MemorizedNumberLoad(_nativeManager, value);
+
+		public void MemorizedNumberAdd(int value)
+			=> NativeDispatch.CalculatorManager_MemorizedNumberAdd(_nativeManager, value);
+
+		public void MemorizedNumberSubtract(int value)
+			=> NativeDispatch.CalculatorManager_MemorizedNumberSubtract(_nativeManager, value);
+
+		public void MemorizedNumberClear(int value)
+			=> NativeDispatch.CalculatorManager_MemorizedNumberClear(_nativeManager, value);
+
+		public void MemorizedNumberClearAll()
+			=> NativeDispatch.CalculatorManager_MemorizedNumberClearAll(_nativeManager);
+
+		public bool IsEngineRecording()
+			=> NativeDispatch.CalculatorManager_IsEngineRecording(_nativeManager);
+
+		public List<char> GetSavedCommands()
+			=> throw new NotImplementedException();
+
         public void SetRadix(RADIX_TYPE iRadixType)
-        {
-            Debug.WriteLine($"CalculatorManager.SetRadix({iRadixType})");
-        }
-        public void SetMemorizedNumbersString() => throw new NotImplementedException();
-        public string GetResultForRadix(int radix, int precision) => throw new NotImplementedException();
-        public void SetPrecision(int precision)
-        {
-            Debug.WriteLine($"CalculatorManager.SetPrecision({precision})");
-        }
-        public void UpdateMaxIntDigits()
-        {
-            Debug.WriteLine($"CalculatorManager.UpdateMaxIntDigits()");
-        }
-        public char DecimalSeparator() => throw new NotImplementedException();
+			=> NativeDispatch.CalculatorManager_SetRadix(_nativeManager, iRadixType);
 
-        public List<HISTORYITEM> GetHistoryItems() => throw new NotImplementedException();
+		public void SetMemorizedNumbersString()
+			=> NativeDispatch.CalculatorManager_SetMemorizedNumbersString(_nativeManager);
+
+		public string GetResultForRadix(int radix, int precision)
+			=> NativeDispatch.CalculatorManager_GetResultForRadix(_nativeManager, radix, precision);
+
+		public void SetPrecision(int precision)
+			=> NativeDispatch.CalculatorManager_SetPrecision(_nativeManager, precision);
+
+		public void UpdateMaxIntDigits()
+			=> NativeDispatch.CalculatorManager_UpdateMaxIntDigits(_nativeManager);
+
+		public char DecimalSeparator()
+			=> NativeDispatch.CalculatorManager_DecimalSeparator(_nativeManager);
+
+		public List<HISTORYITEM> GetHistoryItems() => throw new NotImplementedException();
 
         public List<HISTORYITEM> GetHistoryItems(CalculationManager.CALCULATOR_MODE mode)
         {
@@ -225,11 +229,21 @@ namespace CalculationManager
         }
 
         public HISTORYITEM GetHistoryItem(int uIdx) => throw new NotImplementedException();
-        public bool RemoveHistoryItem(int uIdx) => throw new NotImplementedException();
-        public void ClearHistory() => throw new NotImplementedException();
-        public int MaxHistorySize() => throw new NotImplementedException();
-        public CalculationManager.Command GetCurrentDegreeMode() => throw new NotImplementedException();
-        public void SetHistory(CALCULATOR_MODE eMode, List<HISTORYITEM> history) => throw new NotImplementedException();
-        public void SetInHistoryItemLoadMode(bool isHistoryItemLoadMode) => throw new NotImplementedException();
-    }
+        public bool RemoveHistoryItem(int uIdx)
+			=> NativeDispatch.CalculatorManager_RemoveHistoryItem(_nativeManager, uIdx);
+
+		public void ClearHistory()
+			=> NativeDispatch.CalculatorManager_ClearHistory(_nativeManager);
+
+		public int MaxHistorySize()
+			=> NativeDispatch.CalculatorManager_MaxHistorySize(_nativeManager);
+
+		public CalculationManager.Command GetCurrentDegreeMode()
+			=> NativeDispatch.CalculatorManager_GetCurrentDegreeMode(_nativeManager);
+
+		public void SetHistory(CALCULATOR_MODE eMode, List<HISTORYITEM> history) => throw new NotImplementedException();
+
+        public void SetInHistoryItemLoadMode(bool isHistoryItemLoadMode)
+			=> NativeDispatch.CalculatorManager_SetInHistoryItemLoadMode(_nativeManager, isHistoryItemLoadMode);
+	}
 }
