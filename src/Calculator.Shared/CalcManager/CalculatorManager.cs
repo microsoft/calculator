@@ -108,7 +108,7 @@ namespace CalculationManager
             _resourceProviderHandle = GCHandle.Alloc(resourceProvider);
 
 #if __WASM__
-			var rawPtrs = WebAssemblyRuntime.InvokeJS("CalcManager.registerCallbacks()");
+			var rawPtrs = Uno.Foundation.WebAssemblyRuntime.InvokeJS("CalcManager.registerCallbacks()");
 			var ptrs = rawPtrs.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
 			var p = new CalculatorManager_CreateParams
