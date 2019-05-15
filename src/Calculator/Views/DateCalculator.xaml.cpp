@@ -104,6 +104,7 @@ void DateCalculator::FromDate_DateChanged(_In_ CalendarDatePicker ^ sender, _In_
         auto dateCalcViewModel = safe_cast<DateCalculatorViewModel ^>(this->DataContext);
         dateCalcViewModel->FromDate = e->NewDate->Value;
         TraceLogger::GetInstance().LogDateDifferenceModeUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+        TraceLogger::GetInstance().LogDateCalculationModeUsed(false /* AddSubtractMode */);
     }
     else
     {
@@ -118,6 +119,7 @@ void DateCalculator::ToDate_DateChanged(_In_ CalendarDatePicker ^ sender, _In_ C
         auto dateCalcViewModel = safe_cast<DateCalculatorViewModel ^>(this->DataContext);
         dateCalcViewModel->ToDate = e->NewDate->Value;
         TraceLogger::GetInstance().LogDateDifferenceModeUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+        TraceLogger::GetInstance().LogDateCalculationModeUsed(false /* AddSubtractMode */);
     }
     else
     {
@@ -133,6 +135,7 @@ void DateCalculator::AddSubtract_DateChanged(_In_ CalendarDatePicker ^ sender, _
         dateCalcViewModel->StartDate = e->NewDate->Value;
         TraceLogger::GetInstance().LogDateAddSubtractModeUsed(
             ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()), dateCalcViewModel->IsAddMode);
+        TraceLogger::GetInstance().LogDateCalculationModeUsed(true /* AddSubtractMode */);
     }
     else
     {
@@ -145,6 +148,11 @@ void CalculatorApp::DateCalculator::OffsetValue_Changed(_In_ Platform::Object ^ 
     auto dateCalcViewModel = safe_cast<DateCalculatorViewModel ^>(this->DataContext);
     TraceLogger::GetInstance().LogDateAddSubtractModeUsed(
         ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()), dateCalcViewModel->IsAddMode);
+    // do not log telemetry for no-ops and initialization of combo boxes
+    if (dateCalcViewModel->DaysOffset != 0 || dateCalcViewModel->MonthsOffset != 0 || dateCalcViewModel->YearsOffset != 0)
+    {
+        TraceLogger::GetInstance().LogDateCalculationModeUsed(true /* AddSubtractMode */);
+    }
 }
 
 void DateCalculator::OnCopyMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)

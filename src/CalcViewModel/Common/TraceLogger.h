@@ -77,6 +77,7 @@ namespace CalculatorApp
         void LogRadixButtonUsed(int windowId);
         void LogAngleButtonUsed(int windowId);
         void LogHypButtonUsed(int windowId);
+        void LogDateCalculationModeUsed(bool AddSubtractMode);
         void LogNewWindowCreationBegin(int windowId);
         void LogNewWindowCreationEnd(int windowId);
         void LogError(std::wstring_view errorString);

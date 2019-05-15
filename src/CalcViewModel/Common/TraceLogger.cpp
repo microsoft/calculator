@@ -76,6 +76,7 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_CORE_WINDOW_WAS_NULL = L"CoreWindowWasNull";
 
     constexpr auto EVENT_NAME_MODE_CHANGED = L"ModeChanged";
+    constexpr auto EVENT_NAME_DATE_CALCULATION_MODE_USED = L"DateCalculationModeUsed";
 
     constexpr auto EVENT_NAME_EXCEPTION = L"Exception";
 
@@ -917,6 +918,15 @@ namespace CalculatorApp
 
             isHypButtonLogged = true;
         }
+    }
+
+    void TraceLogger::LogDateCalculationModeUsed(bool AddSubtractMode)
+    {
+        LoggingFields fields{};
+        fields.AddBoolean(L"CalculationType", AddSubtractMode);
+        // cast mode to an int for telemetry
+        fields.AddInt32(L"CalcMode", NavCategory::Serialize(ViewMode::Date));
+        LogLevel2Event(EVENT_NAME_DATE_CALCULATION_MODE_USED, fields);
     }
 
     void TraceLogger::LogDateDifferenceModeUsed(int windowId)
