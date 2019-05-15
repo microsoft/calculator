@@ -17,15 +17,15 @@ namespace CalculatorApp
     {
     public:
         int count;
-        std::wstring funcName;
-        FuncLog()
+        int functionId;
+        std::wstring functionName;
+        int mode;
+        FuncLog(int fId, std::wstring fName, int vMode)
         {
-            count = 0;
-        }
-        FuncLog(std::wstring fName)
-        {
-            funcName = fName;
-            count = 0;
+            functionId = fId;
+            functionName = fName;
+            mode = vMode;
+            count = 1;
         }
     };
 
@@ -69,9 +69,9 @@ namespace CalculatorApp
         void LogMemoryFlyoutOpenEnd(unsigned int) const;
         void LogInvalidPastedInputOccurred(std::wstring_view reason, CalculatorApp::Common::ViewMode mode, int ProgrammerNumberBase, int bitLengthType);
         void LogValidInputPasted(CalculatorApp::Common::ViewMode mode) const;
-        void UpdateFunctionUsage(int func);
+        void UpdateFunctionUsage(int functionId, int mode);
         void LogFunctionUsage(int);
-        void InitFunctionLogArray();
+       // void InitFunctionLogArray();
         void LogBitLengthButtonUsed(int windowId);
         void LogRadixButtonUsed(int windowId);
         void LogAngleButtonUsed(int windowId);
@@ -133,11 +133,11 @@ namespace CalculatorApp
         GUID sessionGuid;
         CalculatorApp::Common::ViewMode currentMode = CalculatorApp::Common::ViewMode::None;
         std::vector<FuncLog> funcLog;
-        int functionCount = 0;
+        //int functionCount = 0;
         bool isHypButtonLogged = false;
         bool isAngleButtonInitialized = false;
-        unsigned int findIndex[maxFunctionSize] = { 0 };
-        bool GetIndex(int& index);
+        //unsigned int findIndex[maxFunctionSize] = { 0 };
+        //bool GetIndex(int& index);
         std::wstring GetProgrammerType(int index);
         size_t maxWindowCount = 0;
         bool isAppLaunchBeginLogged = false;

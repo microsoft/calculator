@@ -599,7 +599,27 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
     NumbersAndOperatorsEnum numOpEnum = CalculatorButtonPressedEventArgs::GetOperationFromCommandParameter(parameter);
     Command cmdenum = ConvertToOperatorsEnum(numOpEnum);
 
-    TraceLogger::GetInstance().UpdateFunctionUsage((int)numOpEnum);
+    if (numOpEnum != NumbersAndOperatorsEnum::IsScientificMode && numOpEnum != NumbersAndOperatorsEnum::IsStandardMode
+        && numOpEnum != NumbersAndOperatorsEnum::IsProgrammerMode && numOpEnum != NumbersAndOperatorsEnum::FToE
+        && (numOpEnum != NumbersAndOperatorsEnum::Degree) && (numOpEnum != NumbersAndOperatorsEnum::Radians) && (numOpEnum != NumbersAndOperatorsEnum::Grads)
+        && numOpEnum != NumbersAndOperatorsEnum::Memory)
+    {
+        ViewMode mode;
+        if (IsStandard)
+        {
+            mode = ViewMode::Standard;
+        }
+        else if (IsScientific)
+        {
+            mode = ViewMode::Scientific;
+        }
+        else if (IsProgrammer)
+        {
+            mode = ViewMode::Programmer;
+        }
+
+        TraceLogger::GetInstance().UpdateFunctionUsage((int)numOpEnum, (int)mode);
+    }
 
     if (IsInError)
     {
@@ -884,7 +904,7 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString, ViewMode mode)
         // Handle exponent and exponent sign (...e+... or ...e-... or ...e...)
         if (mappedNumOp == NumbersAndOperatorsEnum::Exp)
         {
-            //Check the following item
+            // Check the following item
             switch (MapCharacterToButtonId(*(it + 1), canSendNegate))
             {
             case NumbersAndOperatorsEnum::Subtract:
@@ -896,7 +916,7 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString, ViewMode mode)
             break;
             case NumbersAndOperatorsEnum::Add:
             {
-                //Nothing to do, skip to the next item
+                // Nothing to do, skip to the next item
                 ++it;
             }
             break;
@@ -1223,7 +1243,7 @@ void StandardCalculatorViewModel::SetCalculatorType(ViewMode targetState)
     }
 }
 
-String^ StandardCalculatorViewModel::GetRawDisplayValue()
+String ^ StandardCalculatorViewModel::GetRawDisplayValue()
 {
     if (IsInError)
     {

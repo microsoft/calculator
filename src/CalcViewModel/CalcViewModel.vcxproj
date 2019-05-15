@@ -356,6 +356,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="StandardCalculatorViewModel.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TraceLoggerEnums.h" />
     <ClInclude Include="UnitConverterViewModel.h" />
     <ClInclude Include="ViewState.h" />
   </ItemGroup>

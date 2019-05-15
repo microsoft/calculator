@@ -213,6 +213,9 @@
     <ClInclude Include="Common\TraceActivity.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="TraceLoggerEnums.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="DataLoaders\DefaultFromToCurrency.json">
