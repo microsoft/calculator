@@ -135,25 +135,6 @@ namespace CalculationManager
                 CalculatorState = GCHandle.ToIntPtr(_displayCallbackHandle),
                 GetCEngineString = Marshal.GetFunctionPointerForDelegate(NativeDispatch._getCEngineStringCallback),
 
-				GetCEngineString = (IntPtr)int.Parse(ptrs[0]),
-				BinaryOperatorReceived = (IntPtr)int.Parse(ptrs[1]),
-				SetPrimaryDisplay = (IntPtr)int.Parse(ptrs[2]),
-				SetIsInError = (IntPtr)int.Parse(ptrs[3]),
-				SetParenthesisNumber = (IntPtr)int.Parse(ptrs[4]),
-				MaxDigitsReached = (IntPtr)int.Parse(ptrs[5]),
-				MemoryItemChanged = (IntPtr)int.Parse(ptrs[6]),
-				OnHistoryItemAdded = (IntPtr)int.Parse(ptrs[7]),
-				OnNoRightParenAdded = (IntPtr)int.Parse(ptrs[8]),
-				SetExpressionDisplay = (IntPtr)int.Parse(ptrs[9]),
-				SetMemorizedNumbers = (IntPtr)int.Parse(ptrs[10]),
-			};
-
-#else
-            var p = new CalculatorManager_CreateParams
-            {
-                CalculatorState = GCHandle.ToIntPtr(_displayCallbackHandle),
-                GetCEngineString = Marshal.GetFunctionPointerForDelegate(NativeDispatch._getCEngineStringCallback),
-
                 ResourceState = GCHandle.ToIntPtr(_resourceProviderHandle),
                 BinaryOperatorReceived = Marshal.GetFunctionPointerForDelegate(NativeDispatch._binaryOperatorReceivedCallback),
                 SetPrimaryDisplay = Marshal.GetFunctionPointerForDelegate(NativeDispatch._setPrimaryDisplayCallback),

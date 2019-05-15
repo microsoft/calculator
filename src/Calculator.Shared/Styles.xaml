@@ -219,11 +219,17 @@
   <SolidColorBrush x:Key="AppControlPageTextBaseMediumHighBrush"
            Color="{StaticResource SystemBaseMediumHighColor}" />
 
-  <RevealBackgroundBrush x:Key="AppControlHoverButtonFaceBrush"
+  <win:RevealBackgroundBrush x:Key="AppControlHoverButtonFaceBrush"
                Color="#18FFFFFF" />
+	
+  <xamarin:SolidColorBrush x:Key="AppControlHoverButtonFaceBrush"
+               Color="{ThemeResource SystemColorHighlightColor}" />
 
-  <RevealBackgroundBrush x:Key="AppControlPressedButtonFaceBrush"
+  <win:RevealBackgroundBrush x:Key="AppControlPressedButtonFaceBrush"
                Color="#30FFFFFF" />
+	
+  <xamarin:SolidColorBrush x:Key="AppControlPressedButtonFaceBrush"
+               Color="{ThemeResource SystemColorButtonFaceColor}" />
 
   <SolidColorBrush x:Key="AppControlTransparentAccentColorBrush"
            Color="{ThemeResource SystemAccentColor}" />
@@ -234,25 +240,33 @@
   <SolidColorBrush x:Key="AppControlPageTextRedColorBrush"
            Color="Red" />
 
-  <RevealBorderBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
+  <win:RevealBorderBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
              FallbackColor="Transparent"
              TargetTheme="Dark"
              Color="Transparent" />
+	
+  <xamarin:SolidColorBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
+               Color="Transparent" />
 
-  <RevealBackgroundBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
+  <win:RevealBackgroundBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
                TargetTheme="Dark"
+			   Color="{ThemeResource SystemAccentColorDark3}"
+               FallbackColor="{ThemeResource SystemAccentColorDark3}"
                 />
-              <!--
-              UNO TODO
-              Color="{ThemeResource SystemAccentColorDark3}"
-               FallbackColor="{ThemeResource SystemAccentColorDark3}"-->
+	
+  <xamarin:SolidColorBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
+               Color="{ThemeResource SystemColorHighlightTextColor}" />
 
-  <AcrylicBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush"
+  <win:AcrylicBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush"
           BackgroundSource="HostBackdrop"
           FallbackColor="{ThemeResource SystemChromeMediumColor}"
           TintColor="{ThemeResource SystemChromeLowColor}"
           TintOpacity="0.7" />
-  <!-- UNO TODO END THEME RESOURCES -->
+	
+	<xamarin:SolidColorBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush"
+               Color="{ThemeResource SystemColorWindowColor}" />
+
+	<!-- UNO TODO END THEME RESOURCES -->
 
   <!-- Min Window Height/Width -->
   <x:Double x:Key="AppMinWindowHeight">500</x:Double>
@@ -336,9 +350,7 @@
                             To="KeyBoardEntry" />
                 </VisualStateGroup.Transitions>
                 <VisualState x:Name="Normal" />
-                <!--
-                UNO TODO
-                <VisualState x:Name="PointerOver">
+                <win:VisualState x:Name="PointerOver">
                   <VisualState.Setters>
                     <Setter Target="RootGrid.(RevealBrush.State)"
                         Value="PointerOver" />
@@ -347,17 +359,22 @@
                     <Setter Target="ContentPresenter.(ContentPresenter.Foreground)"
                         Value="{Binding HoverForeground, RelativeSource={RelativeSource TemplatedParent}}" />
                   </VisualState.Setters>
-                </VisualState>
+                </win:VisualState>
                 <VisualState x:Name="Pressed">
                   <VisualState.Setters>
                     <Setter Target="RootGrid.(RevealBrush.State)"
                         Value="Pressed" />
-                    <Setter Target="RootGrid.Background"
+                    <win:Setter Target="RootGrid.Background"
                         Value="{Binding PressBackground, RelativeSource={RelativeSource TemplatedParent}}" />
-                    <Setter Target="ContentPresenter.(ContentPresenter.Foreground)"
+                    <win:Setter Target="ContentPresenter.(ContentPresenter.Foreground)"
                         Value="{Binding PressForeground, RelativeSource={RelativeSource TemplatedParent}}" />
+					<!-- UNO TODO -->
+                    <xamarin:Setter Target="RootGrid.Background"
+                        Value="{ThemeResource AppControlPressedButtonFaceBrush}" />
+                    <xamarin:Setter Target="ContentPresenter.(ContentPresenter.Foreground)"
+                        Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                   </VisualState.Setters>
-                </VisualState>-->
+                </VisualState>
                 <VisualState x:Name="Disabled">
                   <VisualState.Setters>
                     <Setter Target="ContentPresenter.Foreground"
@@ -471,9 +488,7 @@
                             To="KeyBoardEntry" />
                 </VisualStateGroup.Transitions>
                 <VisualState x:Name="Normal" />
-                <!--
-                UNO TODO
-                <VisualState x:Name="PointerOver">
+                <win:VisualState x:Name="PointerOver">
                   <VisualState.Setters>
                     <Setter Target="RootGrid.(RevealBrush.State)"
                         Value="PointerOver" />
@@ -484,19 +499,25 @@
                     <Setter Target="ParenthesisCount.Foreground"
                         Value="{Binding HoverForeground, RelativeSource={RelativeSource TemplatedParent}}" />
                   </VisualState.Setters>
-                </VisualState>
+                </win:VisualState>
                 <VisualState x:Name="Pressed">
                   <VisualState.Setters>
                     <Setter Target="RootGrid.(RevealBrush.State)"
                         Value="Pressed" />
-                    <Setter Target="RootGrid.Background"
+                    <win:Setter Target="RootGrid.Background"
                         Value="{Binding PressBackground, RelativeSource={RelativeSource TemplatedParent}}" />
-                    <Setter Target="ContentPresenter.Foreground"
+                    <win:Setter Target="ContentPresenter.Foreground"
                         Value="{Binding PressForeground, RelativeSource={RelativeSource TemplatedParent}}" />
-                    <Setter Target="ParenthesisCount.Foreground"
+                    <win:Setter Target="ParenthesisCount.Foreground"
                         Value="{Binding PressForeground, RelativeSource={RelativeSource TemplatedParent}}" />
+                    <xamarin:Setter Target="RootGrid.Background"
+                        Value="{ThemeResource AppControlPressedButtonFaceBrush}" />
+                    <xamarin:Setter Target="ContentPresenter.Foreground"
+                        Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+                    <xamarin:Setter Target="ParenthesisCount.Foreground"
+                        Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                   </VisualState.Setters>
-                </VisualState>-->
+                </VisualState>
                 <VisualState x:Name="Disabled">
                   <VisualState.Setters>
                     <Setter Target="ContentPresenter.Foreground"
@@ -574,8 +595,10 @@
   <Style x:Key="ResultsScrollerSnapped"
        BasedOn="{StaticResource ResultsScroller}"
        TargetType="ScrollViewer">
-    <Setter Property="HorizontalScrollMode"
+    <win:Setter Property="HorizontalScrollMode"
         Value="Enabled" />
+    <xamarin:Setter Property="HorizontalScrollMode"
+        Value="Disabled" />
     <Setter Property="HorizontalScrollBarVisibility"
         Value="Hidden" />
     <Setter Property="IsHitTestVisible"
