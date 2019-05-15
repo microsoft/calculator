@@ -79,7 +79,7 @@ public:
 			auto pData = new char[str.size() + 1];
 
 #if !defined(__EMSCRIPTEN__)
-			strcpy_s(pData, str.size(), str.data());
+			strcpy_s(pData, str.size()+1, str.data());
 #else
             strcpy(pData, str.data());
 #endif
@@ -123,20 +123,141 @@ public:
 	}
 };
 
-void* CalculatorManager_Create(CalculatorManager_CreateParams* pParams) {
+CalculatorManager* AsManager(void* manager)
+{
+    return static_cast<CalculatorManager*>(manager);
+}
 
-	printf("-> NativeCalcManager:CalculatorManager_Create(%p)\n", pParams);
-
+void* CalculatorManager_Create(CalculatorManager_CreateParams* pParams)
+{
 	auto calcDisplay = new CalcDisplay(*pParams);
 	auto resProvider = new ResourceProvider(*pParams);
 
-	printf("NativeCalcManager:CalculatorManager_Create: Got providers\n");
-
 	auto cm = new CalculatorManager(calcDisplay, resProvider);
-    printf("<- NativeCalcManager:CalculatorManager_Create(%p)\n", pParams);
 	return cm;
 }
 
-void CalculatorManager_SendCommand(void* manager, int command) {
-	(static_cast<CalculatorManager*>(manager))->SendCommand((Command)command);
+void CalculatorManager_SendCommand(void* manager, int command)
+{
+    AsManager(manager)->SendCommand((Command)command);
+}
+
+void CalculatorManager_SetRadix(void* manager, RADIX_TYPE iRadixType)
+{
+    AsManager(manager)->SetRadix(iRadixType);
+}
+
+void CalculatorManager_Reset(void* manager, bool clearMemory)
+{
+    AsManager(manager)->Reset(clearMemory);
+}
+
+void CalculatorManager_SetStandardMode(void* manager)
+{
+    AsManager(manager)->SetStandardMode();
+}
+
+void CalculatorManager_SetScientificMode(void* manager)
+{
+    AsManager(manager)->SetScientificMode();
+}
+
+void CalculatorManager_SetProgrammerMode(void* manager)
+{
+    AsManager(manager)->SetProgrammerMode();
+}
+
+void CalculatorManager_MemorizeNumber(void* manager)
+{
+    AsManager(manager)->MemorizeNumber();
+}
+
+void CalculatorManager_MemorizedNumberLoad(void* manager, int value)
+{
+    AsManager(manager)->MemorizedNumberLoad(value);
+}
+
+void CalculatorManager_MemorizedNumberAdd(void* manager, int value)
+{
+    AsManager(manager)->MemorizedNumberAdd(value);
+}
+
+void CalculatorManager_MemorizedNumberSubtract(void* manager, int value)
+{
+    AsManager(manager)->MemorizedNumberSubtract(value);
+}
+
+void CalculatorManager_MemorizedNumberClear(void* manager, int value)
+{
+    AsManager(manager)->MemorizedNumberClear(value);
+}
+
+void CalculatorManager_MemorizedNumberClearAll(void* manager)
+{
+    AsManager(manager)->MemorizedNumberClearAll();
+}
+
+bool CalculatorManager_IsEngineRecording(void* manager)
+{
+    return AsManager(manager)->IsEngineRecording();
+}
+
+void CalculatorManager_SetMemorizedNumbersString(void* manager)
+{
+    AsManager(manager)->SetMemorizedNumbersString();
+}
+
+const char* CalculatorManager_GetResultForRadix(void* manager, int radix, int precision)
+{
+    auto res = AsManager(manager)->GetResultForRadix(radix, precision);
+
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
+    auto str = convert.to_bytes(res);
+
+	return str.data();
+}
+
+void CalculatorManager_SetPrecision(void* manager, int precision)
+{
+    AsManager(manager)->SetPrecision(precision);
+}
+
+void CalculatorManager_UpdateMaxIntDigits(void* manager)
+{
+    AsManager(manager)->UpdateMaxIntDigits();
+}
+
+const char* CalculatorManager_DecimalSeparator(void* manager)
+{
+    auto res = AsManager(manager)->DecimalSeparator();
+
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
+    auto str = convert.to_bytes(res);
+
+	return str.data();
+}
+
+bool CalculatorManager_RemoveHistoryItem(void* manager, int uIdx)
+{
+    return AsManager(manager)->RemoveHistoryItem(uIdx);
+}
+
+void CalculatorManager_ClearHistory(void* manager)
+{
+    AsManager(manager)->ClearHistory();
+}
+
+size_t CalculatorManager_MaxHistorySize(void* manager)
+{
+    return AsManager(manager)->MaxHistorySize();
+}
+
+int CalculatorManager_GetCurrentDegreeMode(void* manager)
+{
+    return (int)AsManager(manager)->GetCurrentDegreeMode();
+}
+
+void CalculatorManager_SetInHistoryItemLoadMode(void* manager, bool isHistoryItemLoadMode)
+{
+    AsManager(manager)->SetInHistoryItemLoadMode(isHistoryItemLoadMode);
 }

@@ -60,5 +60,27 @@ struct CalculatorManager_CreateParams {
 extern "C" {
     DLL_EXPORT void* CalculatorManager_Create(CalculatorManager_CreateParams* params);
     DLL_EXPORT void CalculatorManager_SendCommand(void* manager, int command);
+    DLL_EXPORT void CalculatorManager_SetRadix(void* manager, RADIX_TYPE iRadixType);
+    DLL_EXPORT void CalculatorManager_Reset(void* manager, bool clearMemory);
+    DLL_EXPORT void CalculatorManager_SetStandardMode(void* manager);
+    DLL_EXPORT void CalculatorManager_SetScientificMode(void* manager);
+    DLL_EXPORT void CalculatorManager_SetProgrammerMode(void* manager);
+    DLL_EXPORT void CalculatorManager_MemorizeNumber(void* manager);
+    DLL_EXPORT void CalculatorManager_MemorizedNumberLoad(void* manager, int value);
+    DLL_EXPORT void CalculatorManager_MemorizedNumberAdd(void* manager, int value);
+    DLL_EXPORT void CalculatorManager_MemorizedNumberSubtract(void* manager, int value);
+    DLL_EXPORT void CalculatorManager_MemorizedNumberClear(void* manager, int value);
+    DLL_EXPORT void CalculatorManager_MemorizedNumberClearAll(void* manager);
+    DLL_EXPORT bool CalculatorManager_IsEngineRecording(void* manager);
+    DLL_EXPORT void CalculatorManager_SetMemorizedNumbersString(void* manager);
+    DLL_EXPORT const char* CalculatorManager_GetResultForRadix(void* manager, int radix, int precision);
+    DLL_EXPORT void CalculatorManager_SetPrecision(void* manager, int precision);
+    DLL_EXPORT void CalculatorManager_UpdateMaxIntDigits(void* manager);
+    DLL_EXPORT const char* CalculatorManager_DecimalSeparator(void* manager);
+    DLL_EXPORT bool CalculatorManager_RemoveHistoryItem(void* manager, int uIdx);
+    DLL_EXPORT void CalculatorManager_ClearHistory(void* manager);
+    DLL_EXPORT size_t CalculatorManager_MaxHistorySize(void* manager);
+    DLL_EXPORT int CalculatorManager_GetCurrentDegreeMode(void* manager);
+    DLL_EXPORT void CalculatorManager_SetInHistoryItemLoadMode(void* manager, bool isHistoryItemLoadMode);
 }
 
