@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
-using Uno;
-using Uno.Foundation;
 
 namespace CalculationManager
 {
@@ -135,7 +133,7 @@ namespace CalculationManager
             var p = new CalculatorManager_CreateParams
             {
                 CalculatorState = GCHandle.ToIntPtr(_displayCallbackHandle),
-                GetCEngineString = Marshal.GetFunctionPointerForDelegate(_getCEngineStringCallback),
+                GetCEngineString = Marshal.GetFunctionPointerForDelegate(NativeDispatch._getCEngineStringCallback),
 
 				GetCEngineString = (IntPtr)int.Parse(ptrs[0]),
 				BinaryOperatorReceived = (IntPtr)int.Parse(ptrs[1]),
