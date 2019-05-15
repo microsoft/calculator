@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using Uno;
+using Uno.Foundation;
 
 namespace CalculationManager
 {
@@ -108,13 +110,32 @@ namespace CalculationManager
             _resourceProviderHandle = GCHandle.Alloc(resourceProvider);
 
 #if __WASM__
-			var rawPtrs = Uno.Foundation.WebAssemblyRuntime.InvokeJS("CalcManager.registerCallbacks()");
+			var rawPtrs = WebAssemblyRuntime.InvokeJS("CalcManager.registerCallbacks()");
 			var ptrs = rawPtrs.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
 			var p = new CalculatorManager_CreateParams
 			{
 				CalculatorState = GCHandle.ToIntPtr(_displayCallbackHandle),
 				ResourceState = GCHandle.ToIntPtr(_resourceProviderHandle),
+
+				GetCEngineString = (IntPtr)int.Parse(ptrs[0]),
+				BinaryOperatorReceived = (IntPtr)int.Parse(ptrs[1]),
+				SetPrimaryDisplay = (IntPtr)int.Parse(ptrs[2]),
+				SetIsInError = (IntPtr)int.Parse(ptrs[3]),
+				SetParenthesisNumber = (IntPtr)int.Parse(ptrs[4]),
+				MaxDigitsReached = (IntPtr)int.Parse(ptrs[5]),
+				MemoryItemChanged = (IntPtr)int.Parse(ptrs[6]),
+				OnHistoryItemAdded = (IntPtr)int.Parse(ptrs[7]),
+				OnNoRightParenAdded = (IntPtr)int.Parse(ptrs[8]),
+				SetExpressionDisplay = (IntPtr)int.Parse(ptrs[9]),
+				SetMemorizedNumbers = (IntPtr)int.Parse(ptrs[10]),
+			};
+
+#else
+            var p = new CalculatorManager_CreateParams
+            {
+                CalculatorState = GCHandle.ToIntPtr(_displayCallbackHandle),
+                GetCEngineString = Marshal.GetFunctionPointerForDelegate(_getCEngineStringCallback),
 
 				GetCEngineString = (IntPtr)int.Parse(ptrs[0]),
 				BinaryOperatorReceived = (IntPtr)int.Parse(ptrs[1]),
