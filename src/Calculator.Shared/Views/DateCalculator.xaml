@@ -5,11 +5,10 @@
              xmlns:converters="using:CalculatorApp.Converters"
              xmlns:local="using:CalculatorApp.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 Loaded="OnLoaded"
              mc:Ignorable="">
     
-             <!-- UNO TODO Loaded="OnLoaded"-->
-
-    <!-- UNO TODO <UserControl.Resources>
+	<UserControl.Resources>
 		<converters:BooleanNegationConverter x:Key="BooleanNegationConverter" />
 		<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 		<converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter" />
@@ -441,26 +440,26 @@
 							Value="False" />
 		</Style>
 
-		<MenuFlyout x:Key="ResultsContextMenu"
+		<!--TODO UNO <MenuFlyout x:Key="ResultsContextMenu"
 								x:Name="ResultsContextMenu">
 			<MenuFlyoutItem x:Name="CopyMenuItem"
 											x:Uid="CopyMenuItem"
 											Click="OnCopyMenuItemClicked"
 											Icon="Copy" />
-		</MenuFlyout>
+		</MenuFlyout>-->
 	</UserControl.Resources>
 
 	<Grid x:Name="DateCalculatorGrid"
 				Margin="12,0,12,0"
 				AutomationProperties.LandmarkType="Main">
-		
+
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition x:Name="C0"
 												Width="*" />
 			<ColumnDefinition x:Name="C1"
 												Width="0" />
 		</Grid.ColumnDefinitions>
-		
+
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*"
 										 MinHeight="{StaticResource HamburgerHeight}"
@@ -500,29 +499,29 @@
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
 
-		--><!-- ComboBox for Date Calculation options --><!--
+		<!-- ComboBox for Date Calculation options -->
 		<ComboBox x:Name="DateCalculationOption"
 							x:Uid="DateCalculationOption"
 							Grid.Row="1"
 							Style="{ThemeResource DateCalculation_ComboStyle}"
 							SelectedIndex="0">
-			
+
 			<ComboBoxItem x:Uid="Date_DifferenceOption"
 										MinWidth="276"
 										ContentTemplate="{StaticResource ComboBoxItemContentTemplate}"
 										IsSelected="{Binding IsDateDiffMode, Mode=TwoWay}" />
-			
+
 			<ComboBoxItem x:Uid="Date_AddSubtractOption"
 										MinWidth="276"
 										ContentTemplate="{StaticResource ComboBoxItemContentTemplate}"
 										IsSelected="{Binding IsDateDiffMode, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}" />
 		</ComboBox>
 
-		--><!-- Grid to Calculate Difference between Two Dates --><!--
+		<!-- Grid to Calculate Difference between Two Dates -->
 		<Grid x:Name="DateDiffGrid"
 					Grid.Row="2"
 					Visibility="{Binding IsDateDiffMode, Converter={StaticResource BooleanToVisibilityConverter}}">
-			
+
 			<Grid.RowDefinitions>
 				<RowDefinition Height="1*"
 											 MaxHeight="17" />
@@ -543,14 +542,14 @@
 				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 
-			--><!-- From Date --><!--
+			<!-- From Date -->
 			<TextBlock x:Name="Date_FromLabel"
 								 x:Uid="Date_FromLabel"
 								 Grid.Row="1"
 								 Margin="0,0,0,2"
 								 Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
 								 TextWrapping="Wrap" />
-			
+
 			<CalendarDatePicker x:Name="DateDiff_FromDate"
 													Grid.Row="2"
 													Style="{StaticResource DateCalculation_CalendarPickerStyle}"
@@ -559,14 +558,14 @@
 													Closed="CalendarFlyoutClosed"
 													DateChanged="FromDate_DateChanged" />
 
-			--><!-- To Date --><!--
+			<!-- To Date -->
 			<TextBlock x:Name="Date_ToLabel"
 								 x:Uid="Date_ToLabel"
 								 Grid.Row="4"
 								 Margin="0,0,0,2"
 								 Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
 								 TextWrapping="Wrap" />
-			
+
 			<CalendarDatePicker x:Name="DateDiff_ToDate"
 													Grid.Row="5"
 													Margin="0,0,0,0"
@@ -576,12 +575,12 @@
 													Closed="CalendarFlyoutClosed"
 													DateChanged="ToDate_DateChanged" />
 
-			--><!-- Difference Result --><!--
+			<!-- Difference Result -->
 			<TextBlock x:Uid="Date_DifferenceLabel"
 								 Grid.Row="7"
 								 Margin="0,0,0,0"
 								 Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" />
-			
+
 			<TextBlock x:Name="DateDiffAllUnitsResultLabel"
 								 Grid.Row="8"
 								 Style="{ThemeResource SubtitleTextBlockStyle}"
@@ -590,7 +589,7 @@
 								 AutomationProperties.Name="{Binding StrDateDiffResultAutomationName}"
 								 ContextFlyout="{StaticResource ResultsContextMenu}"
 								 Text="{Binding StrDateDiffResult}" />
-			
+
 			<TextBlock Grid.Row="10"
 								 Style="{ThemeResource BaseTextBlockStyle}"
 								 Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
@@ -599,7 +598,7 @@
 								 Visibility="{Binding IsDiffInDays, Converter={StaticResource BooleanToVisibilityNegationConverter}}" />
 		</Grid>
 
-		--><!-- Grid for Add/Subtract Date --><!--
+		<!-- Grid for Add/Subtract Date -->
 		<Grid x:Name="AddSubtractDateGrid"
 					Grid.Row="2"
 					x:DeferLoadStrategy="Lazy"
@@ -624,7 +623,8 @@
 				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 
-			--><!-- From Date --><!--
+			<!-- From Date -->
+
 			<TextBlock x:Name="AddSubtract_Date_FromLabel"
 								 x:Uid="Date_FromLabel"
 								 Grid.Row="1"
@@ -632,7 +632,7 @@
 								 Style="{ThemeResource BodyTextBlockStyle}"
 								 Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
 								 TextWrapping="Wrap" />
-			
+
 			<CalendarDatePicker x:Name="AddSubtract_FromDate"
 													Grid.Row="2"
 													Margin="0,0,0,0"
@@ -655,7 +655,7 @@
 										 VerticalAlignment="Top"
 										 Checked="AddSubtractOption_Checked"
 										 IsChecked="{Binding IsAddMode, Mode=TwoWay}" />
-				
+
 				<RadioButton x:Name="SubtractOption"
 										 x:Uid="SubtractOption"
 										 Grid.Column="1"
@@ -668,7 +668,8 @@
 
 			</Grid>
 
-			--><!-- Date Offset to be Added/Subtracted --><!--
+			<!-- Date Offset to be Added/Subtracted -->
+
 			<Grid x:Name="DateOffsetGrid"
 						Grid.Row="6">
 
@@ -688,7 +689,7 @@
 									 Margin="0,0,0,6"
 									 Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
 									 TextWrapping="Wrap" />
-				
+
 				<ComboBox x:Name="YearsValue"
 									Grid.Row="1"
 									MinWidth="84"
@@ -697,14 +698,14 @@
 									ItemsSource="{Binding OffsetValues, Mode=OneTime}"
 									SelectedIndex="{Binding YearsOffset, Mode=TwoWay}"
 									SelectionChanged="OffsetValue_Changed" />
-				
+
 				<TextBlock x:Name="MonthsLabel"
 									 x:Uid="MonthsLabel"
 									 Grid.Column="1"
 									 Margin="12,0,12,6"
 									 Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
 									 TextWrapping="Wrap" />
-				
+
 				<ComboBox x:Name="MonthsValue"
 									Grid.Row="1"
 									Grid.Column="1"
@@ -715,14 +716,14 @@
 									ItemsSource="{Binding OffsetValues, Mode=OneTime}"
 									SelectedIndex="{Binding MonthsOffset, Mode=TwoWay}"
 									SelectionChanged="OffsetValue_Changed" />
-				
+
 				<TextBlock x:Name="DaysLabel"
 									 x:Uid="DaysLabel"
 									 Grid.Column="2"
 									 Margin="0,0,0,6"
 									 Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
 									 TextWrapping="Wrap" />
-				
+
 				<ComboBox x:Name="DaysValue"
 									Grid.Row="1"
 									Grid.Column="2"
@@ -734,7 +735,8 @@
 									SelectionChanged="OffsetValue_Changed" />
 			</Grid>
 
-			--><!-- Resulting Date --><!--
+			<!-- Resulting Date -->
+
 			<TextBlock x:Uid="DateLabel"
 								 Grid.Row="8"
 								 Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" />
@@ -748,5 +750,5 @@
 								 ContextFlyout="{StaticResource ResultsContextMenu}"
 								 Text="{Binding StrDateResult}" />
 		</Grid>
-	</Grid>-->
+	</Grid>
 </UserControl>

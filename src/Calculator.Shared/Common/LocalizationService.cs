@@ -379,7 +379,7 @@ namespace CalculatorApp.Common
         // as configured by running intl.cpl.
         //
         // This helper function creates a DateTimeFormatter with a TwentyFour hour clock
-        DateTimeFormatter GetRegionalSettingsAwareDateTimeFormatter( string format)
+        public static DateTimeFormatter GetRegionalSettingsAwareDateTimeFormatter( string format)
         {
             IEnumerable<String> languageIdentifiers = GetLanguageIdentifiers();
             if (languageIdentifiers == null)
@@ -392,75 +392,39 @@ namespace CalculatorApp.Common
 
         // If successful, returns a formatter that respects the user's regional format settings,
         // as configured by running intl.cpl.
-        DateTimeFormatter GetRegionalSettingsAwareDateTimeFormatter( string format,  string calendarIdentifier,  string clockIdentifier)
+       public static DateTimeFormatter GetRegionalSettingsAwareDateTimeFormatter( string format,  string calendarIdentifier,  string clockIdentifier)
         {
-            // UNO TODO
-            //IIterable<String> languageIdentifiers = GetLanguageIdentifiers();
-            //if (languageIdentifiers == null)
-            //{
-            //    languageIdentifiers = ApplicationLanguages.Languages;
-            //}
+			IEnumerable<string> languageIdentifiers = GetLanguageIdentifiers();
+			if (languageIdentifiers == null)
+			{
+				languageIdentifiers = ApplicationLanguages.Languages;
+			}
 
-            //return  new DateTimeFormatter(format, languageIdentifiers, GlobalizationPerences.HomeGeographicRegion, calendarIdentifier, clockIdentifier);
-
-            throw new NotImplementedException();
+			return new DateTimeFormatter(format, languageIdentifiers, GlobalizationPreferences.HomeGeographicRegion, calendarIdentifier, clockIdentifier);
         }
 
-        public CurrencyFormatter GetRegionalSettingsAwareCurrencyFormatter()
+        public static CurrencyFormatter GetRegionalSettingsAwareCurrencyFormatter()
         {
-            // UNO TODO
-            //string userCurrency =
-            //    (GlobalizationPreferences.Currencies.Size > 0) ? GlobalizationPreferences.Currencies.GetAt(0) : string(DefaultCurrencyCode.data());
+			string userCurrency =
+				(GlobalizationPreferences.Currencies.Count > 0) ? GlobalizationPreferences.Currencies[0] : DefaultCurrencyCode;
 
-            //IIterable<String> languageIdentifiers = GetLanguageIdentifiers();
-            //if (languageIdentifiers == null)
-            //{
-            //    languageIdentifiers = ApplicationLanguages.Languages;
-            //}
+			IEnumerable<string> languageIdentifiers = GetLanguageIdentifiers();
+			if (languageIdentifiers == null)
+			{
+				languageIdentifiers = ApplicationLanguages.Languages;
+			}
 
-            //var currencyFormatter =  new CurrencyFormatter(userCurrency, languageIdentifiers, GlobalizationPerences.HomeGeographicRegion);
+			var currencyFormatter = new CurrencyFormatter(userCurrency, languageIdentifiers, GlobalizationPreferences.HomeGeographicRegion);
 
-            //int fractionDigits = LocalizationSettings.GetInstance().GetCurrencyTrailingDigits();
-            //currencyFormatter.FractionDigits = fractionDigits;
+			int fractionDigits = LocalizationSettings.GetInstance().GetCurrencyTrailingDigits();
+			currencyFormatter.FractionDigits = fractionDigits;
 
-            //return currencyFormatter;
-
-            throw new NotImplementedException();
+			return currencyFormatter;
         }
 
         static IEnumerable<String> GetLanguageIdentifiers()
-        {
-#if !HAS_UNO
-            //char currentLocale[LOCALE_NAME_MAX_LENGTH] = {};
-            //int result = GetUserDefaultLocaleName(currentLocale, LOCALE_NAME_MAX_LENGTH);
-            //if (result != 0)
-            //{
-            //    // GetUserDefaultLocaleName may return an invalid bcp47 language tag with trailing non-BCP47 friendly characters,
-            //    // which if present would start with an underscore, for example sort order
-            //    // (see https://msdn.microsoft.com/en-us/library/windows/desktop/dd373814(v=vs.85).aspx).
-            //    // Therefore, if there is an underscore in the locale name, trim all characters from the underscore onwards.
-            //    WCHAR* underscore = wcschr(currentLocale, '_');
-            //    if (underscore != null)
-            //    {
-            //        *underscore = '\0';
-            //    }
-
-            //    string localestring =  new String(currentLocale);
-            //    // validate if the locale we have is valid
-            //    // otherwise we fallback to the default.
-            //    if (Language.IsWellFormed(localeString))
-            //    {
-            //        var languageList =  new Vector<String>();
-            //        languageList.Append(localeString);
-            //        return languageList;
-            //    }
-            //}
-
-            //return null;
-            yield break;
-#else
-            yield break;
-#endif
+		{
+			return GlobalizationPreferences.Languages;
         }
 
         // Resources for the engine use numbers as keys. It's inconvenient, but also difficult to

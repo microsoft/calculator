@@ -128,17 +128,16 @@ namespace CalculatorApp
                     m_digitSymbols[i] = i.ToString(NumberFormatInfo.CurrentInfo)[0];
                 }
 
-                // As CalcEngine only supports the first character of the decimal separator,
-                // Only first character of the decimal separator string is supported.
-                m_decimalSeparator = NumberFormatInfo.CurrentInfo.NumberDecimalSeparator[0];
+				// As CalcEngine only supports the first character of the decimal separator,
+				// Only first character of the decimal separator string is supported.
+				m_decimalSeparator = NumberFormatInfo.CurrentInfo.NumberDecimalSeparator[0];
                 m_numberGroupSeparator = NumberFormatInfo.CurrentInfo.NumberGroupSeparator[0];
                 m_numberGrouping = ""; // UNO TODO https://docs.microsoft.com/en-us/windows/desktop/Intl/locale-sgrouping
                 m_listSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
                 m_currencyTrailingDigits = NumberFormatInfo.CurrentInfo.CurrencyDecimalDigits;
                 m_currencySymbolPrecedence = ~(NumberFormatInfo.CurrentInfo.CurrencyPositivePattern) & 1;
-
-                m_calendarIdentifier = "";//CultureInfo.CurrentCulture.DateTimeFormat.Calendar.ToString();
-
+				m_resolvedName = CultureInfo.CurrentCulture.Name;
+				m_calendarIdentifier = new Windows.Globalization.Calendar().GetCalendarSystem();
                 m_firstDayOfWeek = (Windows.Globalization.DayOfWeek)CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
 #endif
             }
@@ -155,7 +154,7 @@ namespace CalculatorApp
                 return m_localizationSettings;
             }
 
-            string GetLocaleName()
+			public string GetLocaleName()
             {
                 return m_resolvedName;
             }
@@ -326,7 +325,7 @@ namespace CalculatorApp
                 return m_listSeparator;
             }
 
-            Windows.Globalization.DayOfWeek GetFirstDayOfWeek()
+			public Windows.Globalization.DayOfWeek GetFirstDayOfWeek()
             {
                 return m_firstDayOfWeek;
             }
