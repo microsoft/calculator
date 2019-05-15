@@ -561,7 +561,7 @@ namespace CalculatorApp
                         string categoryName = resProvider.GetResourceString(nameResourceKey + "Text");
                         string categoryAutomationName = LocalizationStringUtil.GetLocalizedString(navCategoryItemAutomationNameFormat, categoryName, m_Name);
 
-                        m_Categories.Append( new NavCategory(
+                        m_Categories.Add( new NavCategory(
                             categoryName,
                             categoryAutomationName,
                             (categoryInitializer.Value.glyph),
