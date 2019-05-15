@@ -75,6 +75,8 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_NAV_BAR_OPENED = L"NavBarOpened";
     constexpr auto EVENT_NAME_CORE_WINDOW_WAS_NULL = L"CoreWindowWasNull";
 
+    constexpr auto EVENT_NAME_MODE_CHANGED = L"ModeChanged";
+
     constexpr auto EVENT_NAME_EXCEPTION = L"Exception";
 
     constexpr auto PDT_PRIVACY_DATA_TAG = L"PartA_PrivTags";
@@ -254,6 +256,7 @@ namespace CalculatorApp
             fields.AddString(L"CalculatorMode", NavCategory::GetFriendlyName(mode)->Data());
             fields.AddUInt32(L"WindowId", windowId);
             LogLevel3Event(EVENT_NAME_CALCULATOR_VIEWED_IN_SESSION, fields);
+            LogLevel2Event(EVENT_NAME_MODE_CHANGED, fields);
         }
     }
 
@@ -520,6 +523,20 @@ namespace CalculatorApp
             fields.AddString(L"ToMode", NavCategory::GetFriendlyName(toMode)->Data());
             fields.AddInt32(L"WindowId", windowId);
             LogLevel2Event(EVENT_NAME_MODE_CHANGE_END, fields);
+        }
+    }
+
+    void TraceLogger::LogModeChange(ViewMode mode) const
+    {
+        if (!GetTraceLoggingProviderEnabled())
+            return;
+
+        if (NavCategory::IsValidViewMode(mode))
+        {
+            LoggingFields fields{};
+            // cast mode to an int for telemetry
+            fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
+            LogLevel2Event(EVENT_NAME_MODE_CHANGE_BEGIN, fields);
         }
     }
 
