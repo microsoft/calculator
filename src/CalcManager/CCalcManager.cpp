@@ -1,8 +1,14 @@
+#define __STDC_WANT_LIB_EXT1__ 1
 #include "pch.h"
 #include "CCalcManager.h"
 #include "CalculatorManager.h"
 #include "CalculatorResource.h"
 #include <codecvt>
+#include <locale>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
 
 using namespace CalculationManager;
 
@@ -71,7 +77,12 @@ public:
 		{
 			auto str = convert.to_bytes(memorizedNumbers[i]);
 			auto pData = new char[str.size() + 1];
-			strncpy_s(pData, str.size(), str.data(), str.size());
+
+#ifdef __STDC_LIB_EXT1__
+			strcpy_s(pData, str.size(), str.data());
+#else
+            strcpy(pData, str.data());
+#endif
 			numbers[i] = pData;
 		}
 
@@ -114,10 +125,15 @@ public:
 
 void* CalculatorManager_Create(CalculatorManager_CreateParams* pParams) {
 
+	printf("-> NativeCalcManager:CalculatorManager_Create(%p)\n", pParams);
+
 	auto calcDisplay = new CalcDisplay(*pParams);
 	auto resProvider = new ResourceProvider(*pParams);
 
+	printf("NativeCalcManager:CalculatorManager_Create: Got providers\n");
+
 	auto cm = new CalculatorManager(calcDisplay, resProvider);
+    printf("<- NativeCalcManager:CalculatorManager_Create(%p)\n", pParams);
 	return cm;
 }
 

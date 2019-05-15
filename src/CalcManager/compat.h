@@ -1,6 +1,6 @@
 #pragma once
 
-#if defined(__WEBASSEMBLY__)
+#if defined(__EMSCRIPTEN__)
 
 #define HRESULT long
 #define _In_opt_
