@@ -120,6 +120,8 @@ void sinanglerat(_Inout_ PRAT* pa, ANGLE_TYPE angletype, uint32_t radix, int32_t
         divrat(pa, rat_200, precision);
         mulrat(pa, pi, precision);
         break;
+    case ANGLE_RAD:
+        break;
     }
     _sinrat(pa, precision);
 }
@@ -223,6 +225,8 @@ void cosanglerat(_Inout_ PRAT* pa, ANGLE_TYPE angletype, uint32_t radix, int32_t
         divrat(pa, rat_200, precision);
         mulrat(pa, pi, precision);
         break;
+    case ANGLE_RAD:
+        break;
     }
     _cosrat(pa, radix, precision);
 }
@@ -284,6 +288,9 @@ void tananglerat(_Inout_ PRAT* pa, ANGLE_TYPE angletype, uint32_t radix, int32_t
         }
         divrat(pa, rat_200, precision);
         mulrat(pa, pi, precision);
+        break;
+
+    case ANGLE_RAD:
         break;
     }
     _tanrat(pa, radix, precision);
