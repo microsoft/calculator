@@ -43,7 +43,7 @@ namespace CalculatorApp
         }
 
         public static readonly DependencyProperty IsStandardProperty =
-            DependencyProperty.Register("IsStandard", typeof(bool), typeof(Calculator), new PropertyMetadata(false));
+            DependencyProperty.Register("IsStandard", typeof(bool), typeof(Calculator), new PropertyMetadata(false, (snd, args) => ((Calculator)snd).OnIsStandardPropertyChanged((bool)args.OldValue, (bool)args.NewValue)));
 
 
 
@@ -54,9 +54,9 @@ namespace CalculatorApp
         }
 
         public static readonly DependencyProperty IsScientificProperty =
-            DependencyProperty.Register("IsScientific", typeof(bool), typeof(Calculator), new PropertyMetadata(false));
+            DependencyProperty.Register("IsScientific", typeof(bool), typeof(Calculator), new PropertyMetadata(false, (snd, args) => ((Calculator)snd).OnIsScientificPropertyChanged((bool)args.OldValue, (bool)args.NewValue)));
 
-        public bool IsProgrammer
+		public bool IsProgrammer
         {
             get { return (bool)GetValue(IsProgrammerProperty); }
             set { SetValue(IsProgrammerProperty, value); }
@@ -64,10 +64,10 @@ namespace CalculatorApp
 
         // Using a DependencyProperty as the backing store for IsProgrammer.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsProgrammerProperty =
-            DependencyProperty.Register("IsProgrammer", typeof(bool), typeof(Calculator), new PropertyMetadata(false));
+            DependencyProperty.Register("IsProgrammer", typeof(bool), typeof(Calculator), new PropertyMetadata(false, (snd, args) => ((Calculator)snd).OnIsProgrammerPropertyChanged((bool)args.OldValue, (bool)args.NewValue)));
 
 
-        Windows.UI.Xaml.Controls.ListView m_tokenList;
+		Windows.UI.Xaml.Controls.ListView m_tokenList;
         Windows.UI.Xaml.Controls.MenuFlyout m_displayFlyout;
         bool m_doAnimate;
         bool m_resultAnimate;
@@ -383,8 +383,7 @@ namespace CalculatorApp
 
         void EnsureScientific()
         {
-            // UNO TODO
-            // OpsPanel.EnsureScientificOps();
+            OpsPanel.EnsureScientificOps();
 
             if (ScientificAngleButtons == null)
             {
@@ -404,12 +403,12 @@ namespace CalculatorApp
                 this.FindName("ProgrammerDisplayPanel");
             }
 
-            // UNO TODO
-            // OpsPanel.EnsureProgrammerRadixOps();
-            // ProgrammerOperators.SetRadixButton(Model.GetCurrentRadixType());
-        }
+            OpsPanel.EnsureProgrammerRadixOps();
+			// UNO TODO
+			// ProgrammerOperators.SetRadixButton(Model.GetCurrentRadixType());
+		}
 
-        void OnCalcPropertyChanged(object sender, PropertyChangedEventArgs e)
+		void OnCalcPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             String prop = e.PropertyName;
             if (prop == nameof(StandardCalculatorViewModel.IsMemoryEmpty))

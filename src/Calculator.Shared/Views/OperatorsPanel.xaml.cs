@@ -74,7 +74,7 @@ namespace CalculatorApp
             }
         }
 
-        void EnsureScientificOps()
+        internal void EnsureScientificOps()
         {
             if (ScientificOperators == null)
             {
@@ -82,7 +82,7 @@ namespace CalculatorApp
             }
         }
 
-        void EnsureProgrammerRadixOps()
+        internal void EnsureProgrammerRadixOps()
         {
             if (ProgrammerRadixOperators == null)
             {
@@ -90,7 +90,7 @@ namespace CalculatorApp
             }
         }
 
-        void EnsureProgrammerBitFlipPanel()
+        internal void EnsureProgrammerBitFlipPanel()
         {
             if (BitFlipPanel == null)
             {
