@@ -157,7 +157,9 @@ namespace CalculationManager
 			var numbers = new List<String>();
 			for (int i = 0; i < count; i++)
 			{
-				numbers.Add(Marshal.PtrToStringUTF8(Marshal.ReadIntPtr(newMemorizedNumbers, i)));
+				// TODO Use native encoding instead.
+				var value = Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(newMemorizedNumbers, i));
+				numbers.Add(Encoding.UTF8.GetString(Encoding.ASCII.GetBytes(value)));
 			}
 
 			manager.SetMemorizedNumbers(numbers);
