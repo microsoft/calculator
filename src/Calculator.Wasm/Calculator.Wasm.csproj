@@ -10,7 +10,9 @@
     <!--<BuildingInsideUnoSourceGenerator>true</BuildingInsideUnoSourceGenerator>-->
 		<MonoRuntimeDebuggerEnabled Condition="'$(Configuration)'=='Debug'">true</MonoRuntimeDebuggerEnabled>
 		<MonoWasmRuntimeConfiguration>release-dynamic</MonoWasmRuntimeConfiguration>
-		<MonoWasmSDKUri>C:\Users\jerome.laban\Downloads\mono-wasm-4d023b6bf84.zip</MonoWasmSDKUri>
+
+		<!-- This build a custom one pending a PR in mono -->
+		<MonoWasmSDKUri Condition="'$(Configuration)'=='Debug'">C:\Users\jerome.laban\Downloads\mono-wasm-4d023b6bf84.zip</MonoWasmSDKUri>
 	</PropertyGroup>
   <ItemGroup>
     <Content Include="..\Calculator.UWP\Assets\*.png" Link="Assets\%(FileName)%(Extension)" />
