@@ -155,13 +155,19 @@ void ApplicationViewModel::OnModeChanged()
     auto resProvider = AppResourceProvider::GetInstance();
     CategoryName = resProvider.GetResourceString(NavCategory::GetNameResourceKey(m_mode));
 
-    // This is the only place where a ViewMode enum should be cast to an int.
-    //
+    // Cast mode to an int in order to save it to app data.
     // Save the changed mode, so that the new window launches in this mode.
     // Don't save until after we have adjusted to the new mode, so we don't save a mode that fails to load.
     ApplicationData::Current->LocalSettings->Values->Insert(ModePropertyName, NavCategory::Serialize(m_mode));
 
     TraceLogger::GetInstance().LogModeChangeEnd(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+
+    // Do not log mode change on first launch
+    if (NavCategory::IsValidViewMode(m_PreviousMode))
+    {
+        TraceLogger::GetInstance().LogModeChange(m_mode);
+    }
+
     RaisePropertyChanged(ClearMemoryVisibilityPropertyName);
 }
 
