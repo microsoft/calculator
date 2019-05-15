@@ -18,31 +18,31 @@ namespace CalculationManager
 		[DllImport("CalcManager")]
 		public static extern void CalculatorManager_SendCommand(int instance, Command command);
 
-		private delegate int GetCEngineStringFunc(int state, string id);
-		private delegate void BinaryOperatorReceivedFunc(int state);
-		private delegate void SetPrimaryDisplayCallbackFunc(int state, string displayStringValue, bool isError);
-		private delegate void SetIsInErrorCallbackFunc(int state, bool isError);
-		private delegate void SetParenthesisNumberCallbackFunc(int state, int parenthesisCount);
+		public delegate int GetCEngineStringFunc(int state, string id);
+		public delegate void BinaryOperatorReceivedFunc(int state);
+		public delegate void SetPrimaryDisplayCallbackFunc(int state, string displayStringValue, bool isError);
+		public delegate void SetIsInErrorCallbackFunc(int state, bool isError);
+		public delegate void SetParenthesisNumberCallbackFunc(int state, int parenthesisCount);
 
-		private delegate void MaxDigitsReachedCallbackFunc(int state);
-		private delegate void MemoryItemChangedCallbackFunc(int state, int indexOfMemory);
-		private delegate void OnHistoryItemAddedCallbackFunc(int state, int addedItemIndex);
-		private delegate void OnNoRightParenAddedCallbackFunc(int state);
-		private delegate void SetExpressionDisplayCallbackFunc(int state);
-		private delegate void SetMemorizedNumbersCallbackFunc(int state, string[] newMemorizedNumbers);
+		public delegate void MaxDigitsReachedCallbackFunc(int state);
+		public delegate void MemoryItemChangedCallbackFunc(int state, int indexOfMemory);
+		public delegate void OnHistoryItemAddedCallbackFunc(int state, int addedItemIndex);
+		public delegate void OnNoRightParenAddedCallbackFunc(int state);
+		public delegate void SetExpressionDisplayCallbackFunc(int state);
+		public delegate void SetMemorizedNumbersCallbackFunc(int state, string[] newMemorizedNumbers);
 
-		private static GetCEngineStringFunc _getCEngineStringCallback = GetCEngineStringCallback;
-		private static BinaryOperatorReceivedFunc _binaryOperatorReceivedCallback = BinaryOperatorReceivedCallback;
-		private static SetPrimaryDisplayCallbackFunc _setPrimaryDisplayCallback = SetPrimaryDisplayCallback;
-		private static SetIsInErrorCallbackFunc _setIsInErrorCallback = SetIsInErrorCallback;
-		private static SetParenthesisNumberCallbackFunc _setParenthesisNumberCallback = SetParenthesisNumberCallback;
+		public static GetCEngineStringFunc _getCEngineStringCallback = GetCEngineStringCallback;
+		public static BinaryOperatorReceivedFunc _binaryOperatorReceivedCallback = BinaryOperatorReceivedCallback;
+		public static SetPrimaryDisplayCallbackFunc _setPrimaryDisplayCallback = SetPrimaryDisplayCallback;
+		public static SetIsInErrorCallbackFunc _setIsInErrorCallback = SetIsInErrorCallback;
+		public static SetParenthesisNumberCallbackFunc _setParenthesisNumberCallback = SetParenthesisNumberCallback;
 
-		private static MaxDigitsReachedCallbackFunc _maxDigitsReachedCallback = MaxDigitsReachedCallback;
-		private static MemoryItemChangedCallbackFunc _memoryItemChangedCallback = MemoryItemChangedCallback;
-		private static OnHistoryItemAddedCallbackFunc _onHistoryItemAddedCallback = OnHistoryItemAddedCallback;
-		private static OnNoRightParenAddedCallbackFunc _onNoRightParenAddedCallback = OnNoRightParenAddedCallback;
-		private static SetExpressionDisplayCallbackFunc _setExpressionDisplayCallback = SetExpressionDisplayCallback;
-		private static SetMemorizedNumbersCallbackFunc _setMemorizedNumbersCallback = SetMemorizedNumbersCallback;
+		public static MaxDigitsReachedCallbackFunc _maxDigitsReachedCallback = MaxDigitsReachedCallback;
+		public static MemoryItemChangedCallbackFunc _memoryItemChangedCallback = MemoryItemChangedCallback;
+		public static OnHistoryItemAddedCallbackFunc _onHistoryItemAddedCallback = OnHistoryItemAddedCallback;
+		public static OnNoRightParenAddedCallbackFunc _onNoRightParenAddedCallback = OnNoRightParenAddedCallback;
+		public static SetExpressionDisplayCallbackFunc _setExpressionDisplayCallback = SetExpressionDisplayCallback;
+		public static SetMemorizedNumbersCallbackFunc _setMemorizedNumbersCallback = SetMemorizedNumbersCallback;
 
 		public static void MaxDigitsReachedCallback(int state)
 		{

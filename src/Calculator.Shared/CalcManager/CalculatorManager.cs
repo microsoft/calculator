@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
-using Uno;
-using Uno.Foundation;
 
 namespace CalculationManager
 {
@@ -135,19 +133,19 @@ namespace CalculationManager
             var p = new CalculatorManager_CreateParams
             {
                 CalculatorState = GCHandle.ToIntPtr(_displayCallbackHandle),
-                GetCEngineString = Marshal.GetFunctionPointerForDelegate(_getCEngineStringCallback),
+                GetCEngineString = Marshal.GetFunctionPointerForDelegate(NativeDispatch._getCEngineStringCallback),
 
                 ResourceState = GCHandle.ToIntPtr(_resourceProviderHandle),
-                BinaryOperatorReceived = Marshal.GetFunctionPointerForDelegate(_binaryOperatorReceivedCallback),
-                SetPrimaryDisplay = Marshal.GetFunctionPointerForDelegate(_setPrimaryDisplayCallback),
-                SetIsInError = Marshal.GetFunctionPointerForDelegate(_setIsInErrorCallback),
-                SetParenthesisNumber = Marshal.GetFunctionPointerForDelegate(_setParenthesisNumberCallback),
-                MaxDigitsReached = Marshal.GetFunctionPointerForDelegate(_maxDigitsReachedCallback),
-                MemoryItemChanged = Marshal.GetFunctionPointerForDelegate(_memoryItemChangedCallback),
-                OnHistoryItemAdded = Marshal.GetFunctionPointerForDelegate(_onHistoryItemAddedCallback),
-                OnNoRightParenAdded = Marshal.GetFunctionPointerForDelegate(_onNoRightParenAddedCallback),
-                SetExpressionDisplay = Marshal.GetFunctionPointerForDelegate(_setExpressionDisplayCallback),
-                SetMemorizedNumbers = Marshal.GetFunctionPointerForDelegate(_setMemorizedNumbersCallback),
+                BinaryOperatorReceived = Marshal.GetFunctionPointerForDelegate(NativeDispatch._binaryOperatorReceivedCallback),
+                SetPrimaryDisplay = Marshal.GetFunctionPointerForDelegate(NativeDispatch._setPrimaryDisplayCallback),
+                SetIsInError = Marshal.GetFunctionPointerForDelegate(NativeDispatch._setIsInErrorCallback),
+                SetParenthesisNumber = Marshal.GetFunctionPointerForDelegate(NativeDispatch._setParenthesisNumberCallback),
+                MaxDigitsReached = Marshal.GetFunctionPointerForDelegate(NativeDispatch._maxDigitsReachedCallback),
+                MemoryItemChanged = Marshal.GetFunctionPointerForDelegate(NativeDispatch._memoryItemChangedCallback),
+                OnHistoryItemAdded = Marshal.GetFunctionPointerForDelegate(NativeDispatch._onHistoryItemAddedCallback),
+                OnNoRightParenAdded = Marshal.GetFunctionPointerForDelegate(NativeDispatch._onNoRightParenAddedCallback),
+                SetExpressionDisplay = Marshal.GetFunctionPointerForDelegate(NativeDispatch._setExpressionDisplayCallback),
+                SetMemorizedNumbers = Marshal.GetFunctionPointerForDelegate(NativeDispatch._setMemorizedNumbersCallback),
             };
 
 #endif

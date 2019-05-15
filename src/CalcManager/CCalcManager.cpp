@@ -78,7 +78,7 @@ public:
 			auto str = convert.to_bytes(memorizedNumbers[i]);
 			auto pData = new char[str.size() + 1];
 
-#ifdef __STDC_LIB_EXT1__
+#if !defined(__EMSCRIPTEN__)
 			strcpy_s(pData, str.size(), str.data());
 #else
             strcpy(pData, str.data());
