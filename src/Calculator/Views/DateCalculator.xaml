@@ -502,7 +502,7 @@
                                 Grid.Row="2"
                                 Margin="0,0,0,0"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
-                                AutomationProperties.LabeledBy="{x:Bind AddSubtract_Date_FromLabel}"
+                                AutomationProperties.LabeledBy="{x:Bind Date_FromLabel}"
                                 CalendarViewStyle="{StaticResource DateCalculation_CalendarViewStyle}"
                                 Closed="CalendarFlyoutClosed"
                                 DateChanged="AddSubtract_DateChanged"/>
