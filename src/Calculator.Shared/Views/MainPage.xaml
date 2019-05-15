@@ -142,7 +142,7 @@
 												 DataContext="{x:Bind Model}"
 												 IsSettingsVisible="False"
 												 Loaded="OnNavLoaded"
-												 MenuItemsSource="{x:Bind CreateUIElementsForCategories(Model.Categories), Mode=OneWay}"
+												 MenuItemsSource="{x:Bind UIElementsForCategories, Mode=OneWay}"
 												 OpenPaneLength="{StaticResource SplitViewOpenPaneLength}"
 												 SelectionChanged="OnNavSelectionChanged"
 												 TabIndex="1"
