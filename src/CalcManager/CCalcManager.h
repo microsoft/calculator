@@ -51,8 +51,14 @@ struct CalculatorManager_CreateParams {
 	GetCEngineStringFunc GetCEngineString;
 };
 
+#if defined(__EMSCRIPTEN__)
+#define DLL_EXPORT 
+#else
+#define DLL_EXPORT __declspec(dllexport)
+#endif
+
 extern "C" {
-	__declspec(dllexport) void* CalculatorManager_Create(CalculatorManager_CreateParams* params);
-	__declspec(dllexport) void CalculatorManager_SendCommand(void* manager, int command);
+    DLL_EXPORT void* CalculatorManager_Create(CalculatorManager_CreateParams* params);
+    DLL_EXPORT void CalculatorManager_SendCommand(void* manager, int command);
 }
 

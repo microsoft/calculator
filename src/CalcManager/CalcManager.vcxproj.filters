@@ -76,7 +76,6 @@
     </ClCompile>
     <ClCompile Include="CalculatorHistory.cpp" />
     <ClCompile Include="CalculatorManager.cpp" />
-    <ClCompile Include="UnitConverter.cpp" />
     <ClCompile Include="CEngine\CalcInput.cpp">
       <Filter>CEngine</Filter>
     </ClCompile>
@@ -106,7 +105,6 @@
       <Filter>RatPack</Filter>
     </ClInclude>
     <ClInclude Include="CalculatorVector.h" />
-    <ClInclude Include="UnitConverter.h" />
     <ClInclude Include="CalculatorHistory.h" />
     <ClInclude Include="CalculatorManager.h" />
     <ClInclude Include="CalculatorResource.h" />

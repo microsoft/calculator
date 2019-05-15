@@ -10,7 +10,7 @@
 #include "Ratpack/CalcErr.h"
 #include <stdexcept> // for std::out_of_range
 
-#if !defined(__WEBASSEMBLY__)
+#if !defined(__EMSCRIPTEN__)
 #include <winerror.h>
 #include <sal.h>     // for SAL
 #endif

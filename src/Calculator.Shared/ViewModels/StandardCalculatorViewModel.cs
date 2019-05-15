@@ -510,6 +510,8 @@ namespace CalculatorApp.ViewModel
 
         public StandardCalculatorViewModel()
         {
+			Console.WriteLine("new StandardCalculatorViewModel()");
+
             m_DisplayValue = "0";
             m_DecimalDisplayValue = "0";
             m_HexDisplayValue = "0";
@@ -571,11 +573,13 @@ namespace CalculatorApp.ViewModel
 
             m_decimalSeparator = LocalizationSettings.GetInstance().GetDecimalSeparator();
 
-            if (CoreWindow.GetForCurrentThread() != null)
+#if !__WASM__
+			if (CoreWindow.GetForCurrentThread() != null)
             {
                 // Must have a CoreWindow to access the resource context.
                 m_isRtlLanguage = LocalizationService.GetInstance().IsRtlLayout();
             }
+#endif
 
             IsEditingEnabled = false;
             IsUnaryOperatorEnabled = true;

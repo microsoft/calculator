@@ -131,7 +131,8 @@ void* zmalloc(size_t a)
 
 void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER* const src)
 {
-    memcpy(dest, src, (int)(sizeof(NUMBER) + ((src)->cdigit) * (sizeof(MANTTYPE))));
+    memcpy(dest, src, (int)(sizeof(NUMBER) - sizeof(MANTTYPE*)));
+    memcpy(dest->mant, src->mant, (int)(src->cdigit) * sizeof(MANTTYPE));
 }
 
 //-----------------------------------------------------------------------------
@@ -151,6 +152,7 @@ void _destroynum(_In_ PNUMBER pnum)
 {
     if (pnum != nullptr)
     {
+		free(pnum->mant);
         free(pnum);
     }
 }
@@ -198,11 +200,15 @@ PNUMBER _createnum(_In_ uint32_t size)
     uint32_t cbAlloc;
 
     // sizeof( MANTTYPE ) is the size of a 'digit'
-    if (SUCCEEDED(Calc_ULongAdd(size, 1, &cbAlloc)) && SUCCEEDED(Calc_ULongMult(cbAlloc, sizeof(MANTTYPE), &cbAlloc))
-        && SUCCEEDED(Calc_ULongAdd(cbAlloc, sizeof(NUMBER), &cbAlloc)))
+	if (SUCCEEDED(Calc_ULongMult(size, sizeof(MANTTYPE), &cbAlloc)))
     {
-        pnumret = (PNUMBER)zmalloc(cbAlloc);
+        pnumret = (PNUMBER)zmalloc(sizeof(NUMBER));
         if (pnumret == nullptr)
+        {
+            throw(CALC_E_OUTOFMEMORY);
+        }
+        pnumret->mant = (MANTTYPE*)zmalloc(cbAlloc);
+        if (pnumret->mant == nullptr)
         {
             throw(CALC_E_OUTOFMEMORY);
         }

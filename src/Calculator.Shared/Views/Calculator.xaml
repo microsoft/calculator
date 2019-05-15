@@ -1,6 +1,7 @@
 <UserControl x:Class="CalculatorApp.Calculator"
 							xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 							xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+							xmlns:xamarin="http://uno.ui/xamarin"
 							xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 							xmlns:automation="using:CalculatorApp.Common.Automation"
 							xmlns:common="using:CalculatorApp.Common"
@@ -10,7 +11,7 @@
 							xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 							xmlns:model="using:CalculatorApp.ViewModels"
 							Loaded="OnLoaded"
-							mc:Ignorable="">
+							mc:Ignorable="xamarin">
 
 	<UserControl.Resources>
 		<!-- DataTemplates -->
@@ -188,6 +189,7 @@
 								<ScrollViewer x:Name="expressionContainer"
 															Grid.Column="1"
 															Padding="0,0,0,0"
+															xamarin:HorizontalScrollBarVisibility="Disabled"
 															VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
 															Style="{StaticResource ResultsScrollerSnapped}"
 															AutomationProperties.AccessibilityView="Raw">
@@ -967,6 +969,7 @@
 																	IsOperatorCommand="{x:Bind Model.IsOperatorCommand, Mode=OneWay}"
 																	TabIndex="1" />
 			<controls:OverflowTextBlock x:Name="expressionText"
+										xamarin:Style="{StaticResource overflowTextBlockStyle}"
 																	Grid.Row="1"
 																	Margin="6,0,6,0"
 																	VerticalAlignment="Bottom"

@@ -110,12 +110,15 @@ namespace CalculatorApp.ViewModel
 
             try
             {
+				Console.WriteLine($"ApplicationViewModel.Mode1={mode}");
                 Mode = mode;
-            }
-            catch (Exception e)
+				Console.WriteLine($"ApplicationViewModel.Mode2={Mode}");
+			}
+			catch (Exception e)
             {
-                // TraceLogger.GetInstance().LogPlatformException(__FUNCTIONW__, e);
-                if (!TryRecoverFromNavigationModeFailure())
+				Console.WriteLine($"ApplicationViewModel.Mode3={e}");
+				// TraceLogger.GetInstance().LogPlatformException(__FUNCTIONW__, e);
+				if (!TryRecoverFromNavigationModeFailure())
                 {
                     // Could not navigate to standard mode either.
                     // Throw the original exception so we have a good stack to debug.
@@ -152,6 +155,7 @@ namespace CalculatorApp.ViewModel
                     m_CalculatorViewModel = new StandardCalculatorViewModel();
                 }
                 m_CalculatorViewModel.SetCalculatorType(m_mode);
+				Console.WriteLine($"m_CalculatorViewMode = {m_CalculatorViewModel}");
             }
             else if (NavCategory.IsDateCalculatorViewMode(m_mode))
             {
