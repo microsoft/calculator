@@ -11,8 +11,10 @@ namespace WindowsCalculator.Wasm
 		private static App _app;
 
 		static void Main(string[] args)
-        {
-            ConfigureFilters(LogExtensionPoint.AmbientLoggerFactory);
+		{
+			Console.WriteLine("Program.Main");
+
+			ConfigureFilters(LogExtensionPoint.AmbientLoggerFactory);
 
             Windows.UI.Xaml.Application.Start(_ => _app = new App());
 		}

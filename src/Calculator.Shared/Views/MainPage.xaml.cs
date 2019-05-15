@@ -75,7 +75,11 @@ namespace CalculatorApp
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (m_model.CalculatorViewModel != null)
+			initialized = true;
+
+			NavView.DataContext = m_model;
+
+			if (m_model.CalculatorViewModel != null)
             {
                 m_model.CalculatorViewModel.HistoryVM.ClearHistory();
             }
@@ -101,8 +105,14 @@ namespace CalculatorApp
                 }
             }
 
-            m_model.Initialize(initialMode);
-        }
+			m_model.Initialize(initialMode);
+
+
+			EnsureCalculator();
+			m_calculator.DataContext = m_model.CalculatorViewModel;
+
+			Initialize();
+		}
 
         void WindowSizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
         {
@@ -229,34 +239,46 @@ namespace CalculatorApp
         }
 
         void OnPageLoaded(object sender, RoutedEventArgs args)
-        {
-            if (m_converter == null && m_calculator == null && m_dateCalculator == null)
-            {
-                // We have just launched into our default mode (standard calc) so ensure calc is loaded
-                EnsureCalculator();
-                m_model.CalculatorViewModel.IsStandard = true;
-            }
+		{
+			Initialize();
+		}
 
-            Windows.UI.Xaml.Window.Current.SizeChanged += WindowSizeChanged;
-            UpdateViewState();
+		bool initialized = false;
+		private void Initialize()
+		{
+			// UNO TODO Check for Initialized (Load/OnNavigatedTo order is different)
+			if (initialized)
+			{
+				if (m_converter == null && m_calculator == null && m_dateCalculator == null)
+				{
+					// We have just launched into our default mode (standard calc) so ensure calc is loaded
+					EnsureCalculator();
+					m_model.CalculatorViewModel.IsStandard = true;
+				}
 
-            SetHeaderAutomationName();
-            SetDefaultFocus();
 
-            // Delay load things later when we get a chance.
-            this.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, () => {
-                // UNO TODO
-                //if (TraceLogger.GetInstance().UpdateWindowIdLog(ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread())))
-                //{
-                //    TraceLogger.GetInstance().LogAppLaunchComplete();
-                //    AppLifecycleLogger.GetInstance().LaunchUIResponsive();
-                //    AppLifecycleLogger.GetInstance().LaunchVisibleComplete();
-                //}
-            });
-        }
+				Windows.UI.Xaml.Window.Current.SizeChanged += WindowSizeChanged;
+				UpdateViewState();
 
-        void SetDefaultFocus()
+				SetHeaderAutomationName();
+				SetDefaultFocus();
+
+				// Delay load things later when we get a chance.
+				this.Dispatcher.RunAsync(
+					CoreDispatcherPriority.Normal, () =>
+					{
+					// UNO TODO
+					//if (TraceLogger.GetInstance().UpdateWindowIdLog(ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread())))
+					//{
+					//    TraceLogger.GetInstance().LogAppLaunchComplete();
+					//    AppLifecycleLogger.GetInstance().LaunchUIResponsive();
+					//    AppLifecycleLogger.GetInstance().LaunchVisibleComplete();
+					//}
+				});
+			}
+		}
+
+		void SetDefaultFocus()
         {
             if (m_calculator != null && m_calculator.Visibility == Visibility.Visible)
             {
@@ -281,7 +303,7 @@ namespace CalculatorApp
                 // delay load calculator.
                 m_calculator = new Calculator();
                 m_calculator.Name = "Calculator";
-                m_calculator.DataContext = m_model.CalculatorViewModel;
+				m_calculator.DataContext = m_model.CalculatorViewModel;
                 Binding isStandardBinding = new Binding();
                 isStandardBinding.Path = new PropertyPath("IsStandard");
                 m_calculator.SetBinding(CalculatorApp.Calculator.IsStandardProperty, isStandardBinding);
@@ -305,7 +327,7 @@ namespace CalculatorApp
                 ShowHideControls(this.Model.Mode);
             }
 
-            if (m_dateCalculator != null)
+			if (m_dateCalculator != null)
             {
                 // UNO TODO
                 // m_dateCalculator.CloseCalendarFlyout();

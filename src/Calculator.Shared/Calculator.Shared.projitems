@@ -225,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\CalcMDL2.ttf" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalcMDL2.woff" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorAppList.targetsize-96.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorLargeTile.contrast-white_scale-400.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorMedTile.contrast-white_scale-400.png" />
