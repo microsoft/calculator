@@ -1,10 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
 namespace CalculatorApp
 {
-    public class CalculatorList<TType>
+    public class CalculatorList<TType> : IEnumerable<TType>, IEnumerable
     {
         List<TType> m_vector;
 
@@ -128,5 +129,13 @@ namespace CalculatorApp
             suffix = " =";
             return true;
         }
-    }
+
+		/// <inheritdoc />
+		public IEnumerator<TType> GetEnumerator()
+			=> m_vector.GetEnumerator();
+
+		/// <inheritdoc />
+		IEnumerator IEnumerable.GetEnumerator()
+			=> GetEnumerator();
+	}
 }

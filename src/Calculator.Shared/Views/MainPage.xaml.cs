@@ -427,9 +427,11 @@ namespace CalculatorApp
             }
         }
 
-        public List<object> CreateUIElementsForCategories(ObservableCollection<NavCategoryGroup> categories)
+		public CalculatorList<object> UIElementsForCategories => CreateUIElementsForCategories(Model.Categories);
+
+		public CalculatorList<object> CreateUIElementsForCategories(ObservableCollection<NavCategoryGroup> categories)
         {
-            var menuCategories = new List<object>();
+            var menuCategories = new CalculatorList<object>();
 
             foreach (var group in categories)
             {
