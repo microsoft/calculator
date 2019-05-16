@@ -57,7 +57,7 @@ namespace CalculationManager
 		[DllImport("CalcManager")]
 		public static extern void CalculatorManager_SetMemorizedNumbersString(IntPtr nativeManager);
 
-		[DllImport("CalcManager")]
+		[DllImport("CalcManager", CharSet = CharSet.Unicode)]
 		public static extern string CalculatorManager_GetResultForRadix(IntPtr nativeManager, int radix, int precision);
 
 		[DllImport("CalcManager")]
@@ -83,6 +83,15 @@ namespace CalculationManager
 
 		[DllImport("CalcManager")]
 		public static extern void CalculatorManager_SetInHistoryItemLoadMode(IntPtr nativeManager, bool isHistoryItemLoadMode);
+
+		[DllImport("CalcManager")]
+		public static extern IntPtr CalculatorManager_GetHistoryItems(IntPtr nativeManager);
+
+		[DllImport("CalcManager")]
+		public static extern IntPtr CalculatorManager_GetHistoryItemsWithMode(IntPtr nativeManager, CALCULATOR_MODE mode);
+
+		[DllImport("CalcManager")]
+		public static extern IntPtr CalculatorManager_GetHistoryItem(IntPtr nativeManager, int uIdx);
 
 		public delegate IntPtr GetCEngineStringFunc(IntPtr state, string id);
 		public delegate void BinaryOperatorReceivedFunc(IntPtr state);
@@ -157,9 +166,8 @@ namespace CalculationManager
 			var numbers = new List<String>();
 			for (int i = 0; i < count; i++)
 			{
-				// TODO Use native encoding instead.
-				var value = Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(newMemorizedNumbers, i));
-				numbers.Add(Encoding.UTF8.GetString(Encoding.ASCII.GetBytes(value)));
+				var value = Marshal.PtrToStringUni(Marshal.ReadIntPtr(newMemorizedNumbers, i));
+				numbers.Add(value);
 			}
 
 			manager.SetMemorizedNumbers(numbers);
@@ -183,7 +191,7 @@ namespace CalculationManager
 			Debug.WriteLine($"CalculatorManager.BinaryOperatorReceivedCallback");
 		}
 
-		public static void SetPrimaryDisplayCallback(IntPtr state, string displayStringValue, bool isError)
+		public static void SetPrimaryDisplayCallback(IntPtr state, [MarshalAs(UnmanagedType.LPWStr)] string displayStringValue, bool isError)
 		{
 			var manager = GCHandle.FromIntPtr((IntPtr)state).Target as CalculatorDisplay;
 			manager.SetPrimaryDisplay(displayStringValue, isError);
@@ -199,23 +207,39 @@ namespace CalculationManager
 			Debug.WriteLine($"CalculatorManager.SetIsInErrorCallback({isError})");
 		}
 
-		public static IntPtr GetCEngineStringCallback(IntPtr state, string resourceId)
+		public static IntPtr GetCEngineStringCallback(IntPtr state, [MarshalAs(UnmanagedType.LPWStr)] string resourceId)
 		{
 			var provider = GCHandle.FromIntPtr((IntPtr)state).Target as EngineResourceProvider;
-			var ret = provider.GetCEngineString(resourceId) ?? "";
+			var r = provider.GetCEngineString(resourceId) ?? "";
 
-			var retBytes = Encoding.UTF8.GetBytes(ret);
-			var retPtr = Marshal.AllocHGlobal(retBytes.Length + 1);
-			Marshal.WriteByte(retPtr + retBytes.Length, 0);
-			Marshal.Copy(retBytes, 0, retPtr, retBytes.Length);
-
-			Debug.WriteLine($"CalculatorManager.GetCEngineStringCallback({resourceId},{ret})");
-
-			return retPtr;
+			return Marshal.StringToHGlobalUni(r);
 		}
 	}
 
-    public partial class CalculatorManager : ICalcDisplay
+
+	[StructLayout(LayoutKind.Sequential)]
+	public struct GetHistoryItemsResult
+	{
+		public int ItemsCount;
+		public IntPtr HistoryItems;
+	}
+
+	[StructLayout(LayoutKind.Sequential)]
+	public struct GetHistoryItemResult
+	{
+		public string expression;
+		public string result;
+
+		public int TokenCount;
+		public IntPtr TokenStrings;
+		public IntPtr TokenValues;
+
+		public int CommandCount;
+		public IntPtr Commands;
+	}
+
+
+	public partial class CalculatorManager : ICalcDisplay
     {
 
 		private GCHandle _displayCallbackHandle;

@@ -306,7 +306,7 @@ namespace CalculatorApp
                     try
                     {
                         serializedHistoryItem = SerializeHistoryItem(it);
-                        historyContainer.Values.Add(index.ToString(), serializedHistoryItem);
+                        historyContainer.Values[index.ToString()] = serializedHistoryItem;
                     }
                     catch (Exception e)
                     {

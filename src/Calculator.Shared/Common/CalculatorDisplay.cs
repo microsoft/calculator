@@ -100,7 +100,7 @@ namespace CalculatorApp
         {
             if (m_historyCallbackReference != null)
             {
-                if (m_callbackReference.Target is ViewModel.HistoryViewModel historyVM)
+                if (m_historyCallbackReference.Target is ViewModel.HistoryViewModel historyVM)
                 {
                     historyVM.OnHistoryItemAdded(addedItemIndex);
                 }

@@ -28,10 +28,10 @@ typedef void (*OnNoRightParenAddedFunc)(void* state);
 typedef void (*MaxDigitsReachedFunc)(void* state);
 typedef void (*BinaryOperatorReceivedFunc)(void* state);
 typedef void (*OnHistoryItemAddedFunc)(void* state, unsigned int addedItemIndex);
-typedef void (*SetMemorizedNumbersFunc)(void* state, unsigned int count, const char** memorizedNumbers);
+typedef void (*SetMemorizedNumbersFunc)(void* state, unsigned int count, const wchar_t** memorizedNumbers);
 typedef void (*MemoryItemChangedFunc)(void* state, unsigned int indexOfMemory);
 
-typedef const char* (*GetCEngineStringFunc)(void* state, const char* id);
+typedef const wchar_t* (*GetCEngineStringFunc)(void* state, const wchar_t* id);
 
 struct CalculatorManager_CreateParams {
 	void* CalculatorState;
@@ -58,6 +58,26 @@ struct CalculatorManager_CreateParams {
 #endif
 
 extern "C" {
+
+	struct GetHistoryItemsResult
+    {
+        int32_t ItemsCount;
+        void* HistoryItems;
+    };
+
+    struct GetHistoryItemResult
+    {
+        const wchar_t* expression;
+        const wchar_t* result;
+
+        int32_t TokenCount;
+        const wchar_t** TokenStrings;
+        int32_t* TokenValues;
+
+        int32_t CommandCount;
+        void** Commands;
+    };
+
     DLL_EXPORT void* CalculatorManager_Create(CalculatorManager_CreateParams* params);
     DLL_EXPORT void CalculatorManager_SendCommand(void* manager, int command);
     DLL_EXPORT void CalculatorManager_SetRadix(void* manager, RADIX_TYPE iRadixType);
@@ -73,7 +93,7 @@ extern "C" {
     DLL_EXPORT void CalculatorManager_MemorizedNumberClearAll(void* manager);
     DLL_EXPORT bool CalculatorManager_IsEngineRecording(void* manager);
     DLL_EXPORT void CalculatorManager_SetMemorizedNumbersString(void* manager);
-    DLL_EXPORT const char* CalculatorManager_GetResultForRadix(void* manager, int radix, int precision);
+    DLL_EXPORT const wchar_t* CalculatorManager_GetResultForRadix(void* manager, int radix, int precision);
     DLL_EXPORT void CalculatorManager_SetPrecision(void* manager, int precision);
     DLL_EXPORT void CalculatorManager_UpdateMaxIntDigits(void* manager);
     DLL_EXPORT const char* CalculatorManager_DecimalSeparator(void* manager);
@@ -82,5 +102,10 @@ extern "C" {
     DLL_EXPORT size_t CalculatorManager_MaxHistorySize(void* manager);
     DLL_EXPORT int CalculatorManager_GetCurrentDegreeMode(void* manager);
     DLL_EXPORT void CalculatorManager_SetInHistoryItemLoadMode(void* manager, bool isHistoryItemLoadMode);
+    void* MarshalHistoryItem(std::shared_ptr<CalculationManager::HISTORYITEM>& historyItem, bool& retflag);
+    void* MarshalHistoryItems(std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>& historyItems);
+    DLL_EXPORT void* CalculatorManager_GetHistoryItemsWithMode(void* manager, int mode);
+    DLL_EXPORT void* CalculatorManager_GetHistoryItems(void* manager);
+    DLL_EXPORT void* CalculatorManager_GetHistoryItem(void* manager, int index);
 }
 

@@ -219,17 +219,63 @@ namespace CalculationManager
 		public char DecimalSeparator()
 			=> NativeDispatch.CalculatorManager_DecimalSeparator(_nativeManager);
 
-		public List<HISTORYITEM> GetHistoryItems() => throw new NotImplementedException();
+		public List<HISTORYITEM> GetHistoryItems()
+		{
+			var pResult = NativeDispatch.CalculatorManager_GetHistoryItems(_nativeManager);
+			return UnmarshalHistoryItemsResult(pResult);
+		}
 
-        public List<HISTORYITEM> GetHistoryItems(CalculationManager.CALCULATOR_MODE mode)
-        {
-            Debug.WriteLine($"CalculatorManager.GetHistoryItems({mode})");
+		public List<HISTORYITEM> GetHistoryItems(CalculationManager.CALCULATOR_MODE mode)
+		{
+			var pResult = NativeDispatch.CalculatorManager_GetHistoryItemsWithMode(_nativeManager, mode);
+			return UnmarshalHistoryItemsResult(pResult);
+		}
 
-            return new List<HISTORYITEM>();
-        }
+		private static List<HISTORYITEM> UnmarshalHistoryItemsResult(IntPtr pResult)
+		{
+			var result = Marshal.PtrToStructure<GetHistoryItemsResult>(pResult);
+			var output = new List<HISTORYITEM>();
 
-        public HISTORYITEM GetHistoryItem(int uIdx) => throw new NotImplementedException();
-        public bool RemoveHistoryItem(int uIdx)
+			for (var i = 0; i < result.ItemsCount; i++)
+			{
+				var historyResultItem = Marshal.PtrToStructure<GetHistoryItemResult>(Marshal.ReadIntPtr(result.HistoryItems, i * Marshal.SizeOf<IntPtr>()));
+
+				var historyItem = UnmarshalHistoryItemResult(historyResultItem);
+
+				output.Add(historyItem);
+			}
+
+			return output;
+		}
+
+		private static HISTORYITEM UnmarshalHistoryItemResult(GetHistoryItemResult historyResultItem)
+		{
+			var historyItem = new HISTORYITEM();
+			historyItem.historyItemVector.expression = historyResultItem.expression;
+			historyItem.historyItemVector.result = historyResultItem.result;
+			historyItem.historyItemVector.spTokens = new CalculatorList<(string, int)>();
+
+			for (var i = 0; i < historyResultItem.TokenCount; i++)
+			{
+				var tokenString = Marshal.PtrToStringUni(Marshal.ReadIntPtr(historyResultItem.TokenStrings, i * Marshal.SizeOf<IntPtr>()));
+
+				var tokenValue = Marshal.ReadInt32(historyResultItem.TokenValues, i * Marshal.SizeOf<int>());
+
+				historyItem.historyItemVector.spTokens.Append((tokenString, tokenValue));
+			}
+
+			return historyItem;
+		}
+
+		public HISTORYITEM GetHistoryItem(int uIdx)
+		{
+			var pResult = NativeDispatch.CalculatorManager_GetHistoryItem(_nativeManager, uIdx);
+			var result = Marshal.PtrToStructure<GetHistoryItemResult>(pResult);
+
+			return UnmarshalHistoryItemResult(result);
+		}
+
+		public bool RemoveHistoryItem(int uIdx)
 			=> NativeDispatch.CalculatorManager_RemoveHistoryItem(_nativeManager, uIdx);
 
 		public void ClearHistory()
