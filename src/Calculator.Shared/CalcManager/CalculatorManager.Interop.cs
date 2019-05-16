@@ -106,7 +106,7 @@ namespace CalculationManager
 		public delegate void MemoryItemChangedCallbackFunc(IntPtr state, int indexOfMemory);
 		public delegate void OnHistoryItemAddedCallbackFunc(IntPtr state, int addedItemIndex);
 		public delegate void OnNoRightParenAddedCallbackFunc(IntPtr state);
-		public delegate void SetExpressionDisplayCallbackFunc(IntPtr state);
+		public delegate void SetExpressionDisplayCallbackFunc(IntPtr state, IntPtr data);
 		public delegate void SetMemorizedNumbersCallbackFunc(IntPtr state, int count, IntPtr newMemorizedNumbers);
 
 		public static GetCEngineStringFunc _getCEngineStringCallback = GetCEngineStringCallback;
@@ -154,10 +154,14 @@ namespace CalculationManager
 			Debug.WriteLine($"CalculatorManager.OnNoRightParenAddedCallback");
 		}
 
-		public static void SetExpressionDisplayCallback(IntPtr state)
+		public static void SetExpressionDisplayCallback(IntPtr state, IntPtr historyItem)
 		{
 			var manager = GCHandle.FromIntPtr((IntPtr)state).Target as CalculatorDisplay;
-			// manager.SetExpressionDisplay();
+
+			var nativeResult = Marshal.PtrToStructure<GetHistoryItemResult>(historyItem);
+			var itemResult = CalculatorManager.UnmarshalHistoryItemResult(nativeResult);
+
+			manager.SetExpressionDisplay(itemResult.historyItemVector.spTokens, itemResult.historyItemVector.spCommands);
 
 			Debug.WriteLine($"CalculatorManager.SetExpressionDisplayCallback");
 		}

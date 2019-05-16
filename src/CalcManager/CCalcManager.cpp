@@ -75,11 +75,20 @@ public:
     }
 
     virtual void SetExpressionDisplay(
-        std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& /*tokens*/,
-        std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& /*commands*/) override
+        std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
+        std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands) override
     {
         printf("Native:SetExpressionDisplay()\n");
 
+		auto item = std::make_shared<HISTORYITEM>();
+        item->historyItemVector.expression = L"";
+        item->historyItemVector.result = L"";
+        item->historyItemVector.spCommands = commands;
+        item->historyItemVector.spTokens = tokens;
+
+		auto pItem = MarshalHistoryItem(item);
+
+        _params.SetExpressionDisplay(_params.CalculatorState, pItem);
     }
 
     virtual void SetParenthesisNumber(unsigned int count) override
@@ -181,6 +190,83 @@ const wchar_t* ToWChar(std::wstring& str)
     str.copy(out, str.size() + 1, 0);
     return out;
 }
+
+GetHistoryItemResult* MarshalHistoryItem(std::shared_ptr<CalculationManager::HISTORYITEM>& historyItem)
+{
+    auto itemResult = new GetHistoryItemResult{};
+
+    itemResult->expression = ToWChar(historyItem->historyItemVector.expression);
+    itemResult->result = ToWChar(historyItem->historyItemVector.result);
+
+    unsigned int tokenCount;
+    historyItem->historyItemVector.spTokens->GetSize(&tokenCount);
+    itemResult->TokenCount = tokenCount;
+
+    //
+    // Marshal Tokens
+    //
+    auto tokenStrings = new const wchar_t* [tokenCount] {};
+    auto tokenValues = new int32_t[tokenCount]{};
+
+    // DBGPRINT(L"TokenCount: %d (int32_t: %d)\n", tokenCount, sizeof(int32_t));
+
+    for (uint32_t j = 0; j < tokenCount; j++)
+    {
+        std::pair<std::wstring, int> pair;
+
+        if (SUCCEEDED(historyItem->historyItemVector.spTokens->GetAt(j, &pair)))
+        {
+            tokenStrings[j] = ToWChar(pair.first);
+            tokenValues[j] = (int32_t)pair.second;
+            // DBGPRINT(L"\tPair: %ws;%d\n", pair.first.data(), tokenValues[j]);
+        }
+    }
+
+    itemResult->TokenStrings = tokenStrings;
+    itemResult->TokenValues = tokenValues;
+
+    //
+    // Marshal Commands
+    //
+    unsigned int commandCount;
+    historyItem->historyItemVector.spCommands->GetSize(&commandCount);
+    itemResult->CommandCount = commandCount;
+
+    auto commands = new void* [commandCount] {};
+
+    for (uint32_t commandId = 0; commandId < commandCount; commandId++)
+    {
+        std::shared_ptr<IExpressionCommand> command;
+        if (SUCCEEDED(historyItem->historyItemVector.spCommands->GetAt(commandId, &command)))
+        {
+            commands[commandId] = command.get();
+        }
+    }
+
+    itemResult->Commands = commands;
+
+    return itemResult;
+}
+
+void* MarshalHistoryItems(std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>& historyItems)
+{
+    auto result = new GetHistoryItemsResult{};
+
+    result->ItemsCount = (int32_t)historyItems.size();
+
+    auto resultsArray = new GetHistoryItemResult*[result->ItemsCount];
+    result->HistoryItems = (void*)resultsArray;
+
+    for (size_t i = 0; i < historyItems.size(); i++)
+    {
+        auto historyItem = historyItems[i];
+
+        resultsArray[i] = MarshalHistoryItem(historyItem);
+    }
+
+    return result;
+}
+
 
 void* CalculatorManager_Create(CalculatorManager_CreateParams* pParams)
 {
@@ -314,82 +400,6 @@ int CalculatorManager_GetCurrentDegreeMode(void* manager)
 void CalculatorManager_SetInHistoryItemLoadMode(void* manager, bool isHistoryItemLoadMode)
 {
     AsManager(manager)->SetInHistoryItemLoadMode(isHistoryItemLoadMode);
-}
-
-GetHistoryItemResult* MarshalHistoryItem(std::shared_ptr<CalculationManager::HISTORYITEM>& historyItem)
-{
-    auto itemResult = new GetHistoryItemResult{};
-
-    itemResult->expression = ToWChar(historyItem->historyItemVector.expression);
-    itemResult->result = ToWChar(historyItem->historyItemVector.result);
-
-    unsigned int tokenCount;
-    historyItem->historyItemVector.spTokens->GetSize(&tokenCount);
-    itemResult->TokenCount = tokenCount;
-
-	//
-	// Marshal Tokens
-	//
-    auto tokenStrings = new const wchar_t* [tokenCount] {};
-    auto tokenValues = new int32_t[tokenCount]{};
-
-	// DBGPRINT(L"TokenCount: %d (int32_t: %d)\n", tokenCount, sizeof(int32_t));
-
-    for (uint32_t j = 0; j < tokenCount; j++)
-    {
-        std::pair<std::wstring, int> pair;
-
-        if (SUCCEEDED(historyItem->historyItemVector.spTokens->GetAt(j, &pair)))
-        {
-            tokenStrings[j] = ToWChar(pair.first);
-            tokenValues[j] = (int32_t)pair.second;
-            // DBGPRINT(L"\tPair: %ws;%d\n", pair.first.data(), tokenValues[j]);
-        }
-    }
-
-    itemResult->TokenStrings = tokenStrings;
-    itemResult->TokenValues = tokenValues;
-
-	//
-	// Marshal Commands
-	//
-    unsigned int commandCount;
-    historyItem->historyItemVector.spCommands->GetSize(&commandCount);
-    itemResult->CommandCount = commandCount;
-
-    auto commands = new void*[commandCount]{};
-
-	for (uint32_t commandId = 0; commandId < commandCount; commandId++)
-    {
-        std::shared_ptr<IExpressionCommand> command;
-        if (SUCCEEDED(historyItem->historyItemVector.spCommands->GetAt(commandId, &command)))
-        {
-            commands[commandId] = command.get();
-        }
-    }
-
-    itemResult->Commands = commands;
-
-	return itemResult;
-}
-
-void* MarshalHistoryItems(std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>& historyItems)
-{
-    auto result = new GetHistoryItemsResult{};
-
-    result->ItemsCount = (int32_t)historyItems.size();
-
-    auto resultsArray = new GetHistoryItemResult*[result->ItemsCount];
-	result->HistoryItems = (void*)resultsArray;
-
-    for (size_t i = 0; i < historyItems.size(); i++)
-    {
-        auto historyItem = historyItems[i];
-
-        resultsArray[i] = MarshalHistoryItem(historyItem);
-    }
-
-    return result;
 }
 
 void* CalculatorManager_GetHistoryItems(void* manager)

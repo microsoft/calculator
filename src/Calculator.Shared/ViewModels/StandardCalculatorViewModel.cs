@@ -830,7 +830,7 @@ namespace CalculatorApp.ViewModel
                     else
                     {
                         var expressionToken = new DisplayExpressionToken(currentTokenString, i, isEditable, type);
-                        m_ExpressionTokens.Append(expressionToken);
+                        m_ExpressionTokens.Add(expressionToken);
                     }
                 }
             }

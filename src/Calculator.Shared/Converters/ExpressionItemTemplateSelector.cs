@@ -11,7 +11,7 @@ namespace CalculatorApp
         [Windows.UI.Xaml.Data.Bindable]
         public sealed class ExpressionItemTemplateSelector : Windows.UI.Xaml.Controls.DataTemplateSelector
         {
-            Windows.UI.Xaml.DataTemplate SelectTemplateCore(object item, Windows.UI.Xaml.DependencyObject container)
+            protected override Windows.UI.Xaml.DataTemplate SelectTemplateCore(object item, Windows.UI.Xaml.DependencyObject container)
             {
                 DisplayExpressionToken token = (DisplayExpressionToken)(item);
                 if (token != null)

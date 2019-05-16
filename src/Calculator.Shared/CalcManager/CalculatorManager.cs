@@ -248,7 +248,7 @@ namespace CalculationManager
 			return output;
 		}
 
-		private static HISTORYITEM UnmarshalHistoryItemResult(GetHistoryItemResult historyResultItem)
+		internal static HISTORYITEM UnmarshalHistoryItemResult(GetHistoryItemResult historyResultItem)
 		{
 			var historyItem = new HISTORYITEM();
 			historyItem.historyItemVector.expression = historyResultItem.expression;
