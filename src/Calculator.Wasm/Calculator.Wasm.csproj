@@ -12,7 +12,7 @@
 		<MonoWasmRuntimeConfiguration>release-dynamic</MonoWasmRuntimeConfiguration>
 
 		<!-- This build a custom one pending a PR in mono -->
-		<MonoWasmSDKUri Condition="'$(Configuration)'=='Debug'">C:\Users\jerome.laban\Downloads\mono-wasm-4d023b6bf84.zip</MonoWasmSDKUri>
+		<MonoWasmSDKUri Condition="'$(Configuration)'=='Debug'">C:\Users\jerome.laban\Downloads\mono-wasm-527abcd1152.zip</MonoWasmSDKUri>
 	</PropertyGroup>
   <ItemGroup>
     <Content Include="..\Calculator.UWP\Assets\*.png" Link="Assets\%(FileName)%(Extension)" />
@@ -40,7 +40,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
     <PackageReference Include="Uno.UI" Version="1.45.0-dev.1457" />
-    <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.269" />
+    <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.271" />
     <DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.269" />
   </ItemGroup>
   <ItemGroup>

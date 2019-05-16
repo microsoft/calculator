@@ -61,14 +61,22 @@ namespace CalculationManager
 
     public class CParentheses : IParenthesisCommand
     {
-        public CParentheses(int command) => throw new NotImplementedException();
-        public int GetCommand() => throw new NotImplementedException();
+		private IntPtr pExpressionCommand;
+
+		public CParentheses(int command) => throw new NotImplementedException();
+		public CParentheses(IntPtr pExpressionCommand) => this.pExpressionCommand = pExpressionCommand;
+
+		public int GetCommand() => throw new NotImplementedException();
         public CalculationManager.CommandType GetCommandType() => throw new NotImplementedException();
         public void Accept(ISerializeCommandVisitor commandVisitor) => throw new NotImplementedException();
     }
 
     public class CUnaryCommand : IUnaryCommand
     {
+		private IntPtr pExpressionCommand;
+
+		public CUnaryCommand(IntPtr pExpressionCommand) => this.pExpressionCommand = pExpressionCommand;
+
         public CUnaryCommand(int command) => throw new NotImplementedException();
         public CUnaryCommand(int command1, int command2) => throw new NotImplementedException();
         public CalculatorList<int> GetCommands() => throw new NotImplementedException();
@@ -78,21 +86,29 @@ namespace CalculationManager
         public void Accept(ISerializeCommandVisitor commandVisitor) => throw new NotImplementedException();
     }
 
-    public class CBinaryCommand : IBinaryCommand
-    {
-        public CBinaryCommand(int command) => throw new NotImplementedException();
-        public void SetCommand(int command) => throw new NotImplementedException();
-        public int GetCommand() => throw new NotImplementedException();
-        public CommandType GetCommandType() => throw new NotImplementedException();
-        public void Accept(ISerializeCommandVisitor commandVisitor) => throw new NotImplementedException();
-    }
+	public class CBinaryCommand : IBinaryCommand
+	{
+		private IntPtr pExpressionCommand;
 
-    public class COpndCommand : IOpndCommand
-    {
-        public COpndCommand(CalculatorList<int> commands, bool fNegative, bool fDecimal, bool fSciFmt) => throw new NotImplementedException();
-        // public void Initialize(CalcEngine.Rational rat) => throw new NotImplementedException();
+		public CBinaryCommand(IntPtr pExpressionCommand) => this.pExpressionCommand = pExpressionCommand;
 
-        public CalculatorList<int> GetCommands() => throw new NotImplementedException();
+		public CBinaryCommand(int command) => throw new NotImplementedException();
+		public void SetCommand(int command) => throw new NotImplementedException();
+		public int GetCommand() => throw new NotImplementedException();
+		public CommandType GetCommandType() => throw new NotImplementedException();
+		public void Accept(ISerializeCommandVisitor commandVisitor) => throw new NotImplementedException();
+	}
+
+	public class COpndCommand : IOpndCommand
+    {
+		private IntPtr pExpressionCommand;
+
+		public COpndCommand(CalculatorList<int> commands, bool fNegative, bool fDecimal, bool fSciFmt) => throw new NotImplementedException();
+		public COpndCommand(IntPtr pExpressionCommand) => this.pExpressionCommand = pExpressionCommand;
+
+		// public void Initialize(CalcEngine.Rational rat) => throw new NotImplementedException();
+
+		public CalculatorList<int> GetCommands() => throw new NotImplementedException();
         public void SetCommands(CalculatorList<int> commands) => throw new NotImplementedException();
         public void AppendCommand(int command) => throw new NotImplementedException();
         public void ToggleSign() => throw new NotImplementedException();
