@@ -917,13 +917,13 @@ namespace CalculatorApp
         if (!GetTraceLoggingProviderEnabled())
             return;
 
-        for (vector<FuncLog>::iterator i; i < funcLog.end(); i++)
+        for (auto i : funcLog)
         {
             LoggingFields fields{};
-            fields.AddUInt32(L"FunctionId", i->functionId);
-            fields.AddString(L"FunctionName", i->functionName.data());
-            fields.AddUInt32(L"ViewModeId", i->mode);
-            fields.AddUInt32(L"UsageCount", i->count);
+            fields.AddUInt32(L"FunctionId", i.functionId);
+            fields.AddString(L"FunctionName", i.functionName.data());
+            fields.AddUInt32(L"ViewModeId", i.mode);
+            fields.AddUInt32(L"UsageCount", i.count);
             fields.AddUInt32(L"WindowId", windowId);
             LogLevel2Event(EVENT_NAME_FUNCTION_USAGE, fields);
         }
