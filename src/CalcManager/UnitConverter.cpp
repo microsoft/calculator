@@ -929,16 +929,16 @@ void UnitConverter::TrimString(_Inout_ wstring& returnString)
 unsigned int UnitConverter::GetNumberSignificantDigits(std::wstring value)
 {
     TrimString(value);
-    int currentNumberSignificantDigits = value.size();
+    unsigned int numberSignificantDigits = value.size();
     if (value.find(L'.') != value.npos)
     {
-        --currentNumberSignificantDigits;
+        --numberSignificantDigits;
     }
     if (value.find(L'-') != value.npos)
     {
-        --currentNumberSignificantDigits;
+        --numberSignificantDigits;
     }
-    return currentNumberSignificantDigits;
+    return numberSignificantDigits;
 }
 
 /// <summary>
