@@ -102,10 +102,10 @@ extern "C" {
     DLL_EXPORT size_t CalculatorManager_MaxHistorySize(void* manager);
     DLL_EXPORT int CalculatorManager_GetCurrentDegreeMode(void* manager);
     DLL_EXPORT void CalculatorManager_SetInHistoryItemLoadMode(void* manager, bool isHistoryItemLoadMode);
-    void* MarshalHistoryItem(std::shared_ptr<CalculationManager::HISTORYITEM>& historyItem, bool& retflag);
-    void* MarshalHistoryItems(std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>& historyItems);
     DLL_EXPORT void* CalculatorManager_GetHistoryItemsWithMode(void* manager, int mode);
     DLL_EXPORT void* CalculatorManager_GetHistoryItems(void* manager);
     DLL_EXPORT void* CalculatorManager_GetHistoryItem(void* manager, int index);
+
+	DLL_EXPORT int IExpressionCommand_GetCommandType(void* pExpressionCommand);
 }
 

@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+
+#if !defined(__EMSCRIPTEN__)
 #include <Windows.h>
 #include <strsafe.h>
 
@@ -39,6 +41,7 @@ VOID _DBGPRINT(LPCWSTR kwszFunction, INT iLineNumber, LPCWSTR kwszDebugFormatStr
     _freea(wszDebugString);
     va_end(args);
 }
+#endif
 
 using namespace CalculationManager;
 
@@ -59,11 +62,15 @@ public:
         std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
         auto str = convert.to_bytes(pszText);
 
+        printf("Native:SetPrimaryDisplay(%ls, %d)\n", pszText.data(), isError);
+
         _params.SetPrimaryDisplay(_params.CalculatorState, str.data(), isError);
     }
 
     virtual void SetIsInError(bool isInError) override
     {
+        printf("Native:SetIsInError(%d)\n", isInError);
+
         _params.SetIsInError(_params.CalculatorState, isInError);
     }
 
@@ -71,35 +78,45 @@ public:
         std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& /*tokens*/,
         std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& /*commands*/) override
     {
+        printf("Native:SetExpressionDisplay()\n");
+
     }
 
     virtual void SetParenthesisNumber(unsigned int count) override
     {
+        printf("Native:SetParenthesisNumber(%d)\n", count);
+
         _params.SetParenthesisNumber(_params.CalculatorState, count);
     }
 
     virtual void OnNoRightParenAdded() override
     {
+        printf("Native:OnNoRightParenAdded()\n");
         _params.OnNoRightParenAdded(_params.CalculatorState);
     }
 
     virtual void MaxDigitsReached() override
     {
+        printf("Native:MaxDigitsReached()\n");
         _params.MaxDigitsReached(_params.CalculatorState);
     }
 
     virtual void BinaryOperatorReceived() override
     {
+        printf("Native:BinaryOperatorReceived()\n");
         _params.BinaryOperatorReceived(_params.CalculatorState);
     }
 
     virtual void OnHistoryItemAdded(unsigned int addedItemIndex) override
     {
+        printf("Native:OnHistoryItemAdded(%d)\n", addedItemIndex);
         _params.OnHistoryItemAdded(_params.CalculatorState, addedItemIndex);
     }
 
     virtual void SetMemorizedNumbers(const std::vector<std::wstring>& memorizedNumbers) override
     {
+        printf("Native:SetMemorizedNumbers(%d)\n", (int)memorizedNumbers.size());
+
         auto numbers = new const wchar_t* [memorizedNumbers.size()] {};
 
         for (size_t i = 0; i < memorizedNumbers.size(); i++)
@@ -122,6 +139,8 @@ public:
 
     virtual void MemoryItemChanged(unsigned int indexOfMemory) override
     {
+        printf("Native:MemoryItemChanged(%d)\n", indexOfMemory);
+
         _params.MemoryItemChanged(_params.CalculatorState, indexOfMemory);
     }
 };
@@ -139,13 +158,21 @@ public:
 
     virtual std::wstring GetCEngineString(const std::wstring& id) override
     {
-        return _params.GetCEngineString(_params.ResourceState, id.data());
+        auto pResult = _params.GetCEngineString(_params.ResourceState, id.data());
+        auto str = std::wstring(pResult);
+        printf("Native:GetCEngineString(id=%ls, str.data()=%ls)\n", id.data(), str.data());
+        return str;
     }
 };
 
 CalculatorManager* AsManager(void* manager)
 {
     return static_cast<CalculatorManager*>(manager);
+}
+
+IExpressionCommand* AsIExpressionCommand(void* pExpressionCommand)
+{
+    return static_cast<IExpressionCommand*>(pExpressionCommand);
 }
 
 const wchar_t* ToWChar(std::wstring& str)
@@ -300,10 +327,13 @@ GetHistoryItemResult* MarshalHistoryItem(std::shared_ptr<CalculationManager::HIS
     historyItem->historyItemVector.spTokens->GetSize(&tokenCount);
     itemResult->TokenCount = tokenCount;
 
+	//
+	// Marshal Tokens
+	//
     auto tokenStrings = new const wchar_t* [tokenCount] {};
     auto tokenValues = new int32_t[tokenCount]{};
 
-	DBGPRINT(L"TokenCount: %d (int32_t: %d)\n", tokenCount, sizeof(int32_t));
+	// DBGPRINT(L"TokenCount: %d (int32_t: %d)\n", tokenCount, sizeof(int32_t));
 
     for (uint32_t j = 0; j < tokenCount; j++)
     {
@@ -313,12 +343,32 @@ GetHistoryItemResult* MarshalHistoryItem(std::shared_ptr<CalculationManager::HIS
         {
             tokenStrings[j] = ToWChar(pair.first);
             tokenValues[j] = (int32_t)pair.second;
-            DBGPRINT(L"\tPair: %ws;%d\n", pair.first.data(), tokenValues[j]);
+            // DBGPRINT(L"\tPair: %ws;%d\n", pair.first.data(), tokenValues[j]);
         }
     }
 
     itemResult->TokenStrings = tokenStrings;
     itemResult->TokenValues = tokenValues;
+
+	//
+	// Marshal Commands
+	//
+    unsigned int commandCount;
+    historyItem->historyItemVector.spCommands->GetSize(&commandCount);
+    itemResult->CommandCount = commandCount;
+
+    auto commands = new void*[commandCount]{};
+
+	for (uint32_t commandId = 0; commandId < commandCount; commandId++)
+    {
+        std::shared_ptr<IExpressionCommand> command;
+        if (SUCCEEDED(historyItem->historyItemVector.spCommands->GetAt(commandId, &command)))
+        {
+            commands[commandId] = command.get();
+        }
+    }
+
+    itemResult->Commands = commands;
 
 	return itemResult;
 }
@@ -361,4 +411,9 @@ void* CalculatorManager_GetHistoryItem(void* manager, int index)
     auto historyItem = AsManager(manager)->GetHistoryItem(index);
 
 	return MarshalHistoryItem(historyItem);
+}
+
+int IExpressionCommand_GetCommandType(void* pExpressionCommand)
+{
+    return (int)AsIExpressionCommand(pExpressionCommand)->GetCommandType();
 }

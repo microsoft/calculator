@@ -13,7 +13,7 @@
         var _setExpressionDisplayCallback   = Module.mono_bind_static_method("[Calculator.Wasm] CalculationManager.NativeDispatch:SetExpressionDisplayCallback");
         var _setMemorizedNumbersCallback    = Module.mono_bind_static_method("[Calculator.Wasm] CalculationManager.NativeDispatch:SetMemorizedNumbersCallback");
 
-        var fGetCEngineStringCallback       = Module.addFunction((state, id) => _getCEngineStringCallback(state, Module.UTF8ToString(id)), 'iii');
+        var fGetCEngineStringCallback       = Module.addFunction((state, id) => _getCEngineStringCallback(state, id), 'iii');
 
         var fBinaryOperatorReceivedCallback = Module.addFunction((state) => _binaryOperatorReceivedCallback(state), 'vi');
         var fSetPrimaryDisplayCallback      = Module.addFunction((state, displayStringValue, isError) => _setPrimaryDisplayCallback(state, Module.UTF8ToString(displayStringValue), isError), 'viii');
@@ -24,7 +24,7 @@
         var fOnHistoryItemAddedCallback     = Module.addFunction((state, addedItemIndex) => _onHistoryItemAddedCallback(state, addedItemIndex), 'vii');
         var fOnNoRightParenAddedCallback    = Module.addFunction((state) => _onNoRightParenAddedCallback    (state), 'vi');
         var fSetExpressionDisplayCallback   = Module.addFunction((state) => _setExpressionDisplayCallback   (state), 'vi');
-        var fSetMemorizedNumbersCallback    = Module.addFunction((state, numbers) => _setMemorizedNumbersCallback(state, numbers), 'vii');
+        var fSetMemorizedNumbersCallback    = Module.addFunction((state, size, numbers) => _setMemorizedNumbersCallback(state, size, numbers), 'viii');
 
         var ret = `${fGetCEngineStringCallback};`
             + `${fBinaryOperatorReceivedCallback};`

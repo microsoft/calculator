@@ -258,10 +258,39 @@ namespace CalculationManager
 			for (var i = 0; i < historyResultItem.TokenCount; i++)
 			{
 				var tokenString = Marshal.PtrToStringUni(Marshal.ReadIntPtr(historyResultItem.TokenStrings, i * Marshal.SizeOf<IntPtr>()));
-
 				var tokenValue = Marshal.ReadInt32(historyResultItem.TokenValues, i * Marshal.SizeOf<int>());
 
 				historyItem.historyItemVector.spTokens.Append((tokenString, tokenValue));
+			}
+
+			historyItem.historyItemVector.spCommands = new CalculatorList<IExpressionCommand>();
+			for (int j = 0; j < historyResultItem.CommandCount; j++)
+			{
+				var pExpressionCommand = Marshal.ReadIntPtr(historyResultItem.Commands, j * Marshal.SizeOf<IntPtr>());
+				var commandType = NativeDispatch.IExpressionCommand_GetCommandType(pExpressionCommand);
+
+				IExpressionCommand getCommand()
+				{
+					switch (commandType)
+					{
+						case CommandType.BinaryCommand:
+							return new CUnaryCommand(pExpressionCommand);
+
+						case CommandType.OperandCommand:
+							return new COpndCommand(pExpressionCommand);
+
+						case CommandType.Parentheses:
+							return new CParentheses(pExpressionCommand);
+
+						case CommandType.UnaryCommand:
+							return new CUnaryCommand(pExpressionCommand);
+
+						default:
+							throw new NotSupportedException($"CommandType.{commandType} is not supported");
+					}
+				}
+
+				historyItem.historyItemVector.spCommands.Append(getCommand());
 			}
 
 			return historyItem;

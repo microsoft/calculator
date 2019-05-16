@@ -93,7 +93,10 @@ namespace CalculationManager
 		[DllImport("CalcManager")]
 		public static extern IntPtr CalculatorManager_GetHistoryItem(IntPtr nativeManager, int uIdx);
 
-		public delegate IntPtr GetCEngineStringFunc(IntPtr state, string id);
+		[DllImport("CalcManager")]
+		public static extern CommandType IExpressionCommand_GetCommandType(IntPtr pExpressionCommand);
+
+		public delegate IntPtr GetCEngineStringFunc(IntPtr state, IntPtr id);
 		public delegate void BinaryOperatorReceivedFunc(IntPtr state);
 		public delegate void SetPrimaryDisplayCallbackFunc(IntPtr state, string displayStringValue, bool isError);
 		public delegate void SetIsInErrorCallbackFunc(IntPtr state, bool isError);
@@ -207,15 +210,33 @@ namespace CalculationManager
 			Debug.WriteLine($"CalculatorManager.SetIsInErrorCallback({isError})");
 		}
 
-		public static IntPtr GetCEngineStringCallback(IntPtr state, [MarshalAs(UnmanagedType.LPWStr)] string resourceId)
+		public static IntPtr GetCEngineStringCallback(IntPtr state, IntPtr pResourceId)
 		{
-			var provider = GCHandle.FromIntPtr((IntPtr)state).Target as EngineResourceProvider;
-			var r = provider.GetCEngineString(resourceId) ?? "";
+			var provider = GCHandle.FromIntPtr(state).Target as EngineResourceProvider;
+			var resourceId = Marshal.PtrToStringUni(pResourceId);
+			var resourceValue = provider.GetCEngineString(resourceId) ?? "";
 
-			return Marshal.StringToHGlobalUni(r);
+#if __WASM__
+			// wchar_t is 32bits with emscripten
+			var pEngineString = StringToHGlobalUTF32(resourceValue);
+#else
+			var pEngineString = Marshal.StringToHGlobalUni(resourceValue);
+#endif
+
+			Debug.WriteLine($"GetCEngineStringCallback({resourceId}, {resourceValue}");
+
+			return pEngineString;
+		}
+
+		private static IntPtr StringToHGlobalUTF32(string resourceValue)
+		{
+			var ret = Encoding.UTF32.GetBytes(resourceValue);
+			var pRet2 = Marshal.AllocHGlobal(resourceValue.Length * 4 + 4);
+			Marshal.Copy(ret, 0, pRet2, resourceValue.Length * 4);
+			Marshal.WriteInt32(pRet2 + resourceValue.Length * 4, 0);
+			return pRet2;
 		}
 	}
-
 
 	[StructLayout(LayoutKind.Sequential)]
 	public struct GetHistoryItemsResult
