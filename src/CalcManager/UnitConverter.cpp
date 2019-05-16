@@ -178,7 +178,7 @@ void UnitConverter::SwitchActive(const wstring& newValue)
     swap(m_currentHasDecimal, m_returnHasDecimal);
     m_returnDisplay = m_currentDisplay;
     m_currentDisplay = newValue;
-    m_currentHasDecimal = (m_currentDisplay.find(L'.') != m_currentDisplay.npos);
+    m_currentHasDecimal = (m_currentDisplay.find(L'.') != wstring::npos);
     m_switchedActive = true;
 
     if (m_currencyDataLoader != nullptr && m_vmCurrencyCallback != nullptr)
@@ -202,7 +202,7 @@ vector<wstring> UnitConverter::StringToVector(const wstring& w, const wchar_t* d
     size_t delimiterIndex = w.find(delimiter);
     size_t startIndex = 0;
     vector<wstring> serializedTokens = vector<wstring>();
-    while (delimiterIndex != w.npos)
+    while (delimiterIndex != wstring::npos)
     {
         serializedTokens.push_back(w.substr(startIndex, delimiterIndex - startIndex));
         startIndex = delimiterIndex + (int)wcslen(delimiter);
@@ -891,7 +891,7 @@ void UnitConverter::Calculate()
                 m_returnDisplay = RoundSignificant(returnValue, precision);
                 TrimString(m_returnDisplay);
             }
-            m_returnHasDecimal = (m_returnDisplay.find(L'.') != m_returnDisplay.npos);
+            m_returnHasDecimal = (m_returnDisplay.find(L'.') != wstring::npos);
         }
     }
     UpdateViewModel();
@@ -930,11 +930,11 @@ unsigned int UnitConverter::GetNumberSignificantDigits(std::wstring value)
 {
     TrimString(value);
     unsigned int numberSignificantDigits = static_cast<unsigned int>(value.size());
-    if (value.find(L'.') != value.npos)
+    if (value.find(L'.') != wstring::npos)
     {
         --numberSignificantDigits;
     }
-    if (value.find(L'-') != value.npos)
+    if (value.find(L'-') != wstring::npos)
     {
         --numberSignificantDigits;
     }
