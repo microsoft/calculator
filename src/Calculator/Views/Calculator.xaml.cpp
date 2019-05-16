@@ -457,6 +457,8 @@ void Calculator::OnHistoryItemClicked(_In_ HistoryItemViewModel ^ e)
     Model->IsFToEEnabled = false;
 
     TraceLogger::GetInstance().LogHistoryItemLoadEnd(tokenSize);
+    auto mode = IsScientific ? ViewMode::Scientific : ViewMode::Standard;
+    TraceLogger::GetInstance().LogHistoryItemLoad(mode, tokenSize);
     CloseHistoryFlyout();
     this->Focus(::FocusState::Programmatic);
 }

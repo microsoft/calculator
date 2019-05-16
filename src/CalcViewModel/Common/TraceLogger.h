@@ -65,6 +65,7 @@ namespace CalculatorApp
         void LogSharedMemoryUsed(std::wstring_view, std::wstring_view, unsigned int) const;
         void LogMemoryBodyOpened() const;
         void LogModeChange(CalculatorApp::Common::ViewMode mode) const;
+        void LogHistoryItemLoad(CalculatorApp::Common::ViewMode mode, int historyListSize) const;
         void LogMemoryFlyoutOpenBegin(unsigned int) const;
         void LogDebug(std::wstring_view debugData);
         void LogMemoryFlyoutOpenEnd(unsigned int) const;

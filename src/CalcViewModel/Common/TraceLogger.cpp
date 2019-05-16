@@ -77,6 +77,7 @@ namespace CalculatorApp
 
     constexpr auto EVENT_NAME_MODE_CHANGED = L"ModeChanged";
     constexpr auto EVENT_NAME_DATE_CALCULATION_MODE_USED = L"DateCalculationModeUsed";
+    constexpr auto EVENT_NAME_HISTORY_ITEM_LOAD = L"HistoryItemLoad";
 
     constexpr auto EVENT_NAME_EXCEPTION = L"Exception";
 
@@ -87,8 +88,8 @@ namespace CalculatorApp
     // c.f. WINEVENT_KEYWORD_RESERVED_63-56 0xFF00000000000000 // Bits 63-56 - channel keywords
     // c.f. WINEVENT_KEYWORD_*              0x00FF000000000000 // Bits 55-48 - system-reserved keywords
     constexpr int64_t MICROSOFT_KEYWORD_LEVEL_1 = 0x0000800000000000; // Bit 47
-    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_2 = 0x0000400000000000;      // Bit 46
-    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_3 = 0x0000200000000000;     // Bit 45
+    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_2 = 0x0000400000000000; // Bit 46
+    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_3 = 0x0000200000000000; // Bit 45
 #else
     // define all Keyword options as 0 when we do not want to upload app telemetry
     constexpr int64_t MICROSOFT_KEYWORD_LEVEL_1 = 0;
@@ -539,6 +540,20 @@ namespace CalculatorApp
             fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
             LogLevel2Event(EVENT_NAME_MODE_CHANGE_BEGIN, fields);
         }
+    }
+
+    void TraceLogger::LogHistoryItemLoad(ViewMode mode, int historyListSize) const
+    {
+        if (!GetTraceLoggingProviderEnabled())
+        {
+            return;
+        }
+
+        LoggingFields fields{};
+        // cast mode to an int for telemetry
+        fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
+        fields.AddInt32(L"HistoryListSize", historyListSize);
+        LogLevel2Event(EVENT_NAME_HISTORY_ITEM_LOAD, fields);
     }
 
     void TraceLogger::LogHistoryItemLoadBegin() const
