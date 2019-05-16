@@ -111,16 +111,13 @@ namespace CalculatorApp
         // Create an instance of TraceLogger
         TraceLogger();
 
-        // Any new Log method should
-        // a) decide the level of logging. This will help us in limiting recording of events only up to a certain level. See this link for guidance
-        // https://msdn.microsoft.com/en-us/library/windows/desktop/aa363742(v=vs.85).aspx We're using Verbose level for events that are called frequently and
-        // needed only for debugging or capturing perf for specific scenarios b) should decide whether or not to log to  telemetry and pass
-        // TraceLoggingKeyword(MICROSOFT_KEYWORD_LEVEL_3) accordingly c) Should accept a variable number of additional data arguments if needed
-        void LogLevel3Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
-        void LogLevel2Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
+        // As mentioned in Microsoft’s Privacy Statement(https://privacy.microsoft.com/en-US/privacystatement#maindiagnosticsmodule),
+        // sampling is involved in Microsoft’s diagnostic data collection process.
+        // These keywords provide additional input into how frequently an event might be sampled.
+        // The lower the level of the keyword, the higher the possibility that the corresponding event may be sampled.
         void LogLevel1Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
-        void LogPerformanceEvent(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
-        void LogInfoEvent(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
+        void LogLevel2Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
+        void LogLevel3Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
 
         std::unique_ptr<TraceActivity> CreateTraceActivity(std::wstring_view activityName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
 

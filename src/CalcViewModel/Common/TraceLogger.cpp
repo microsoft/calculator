@@ -128,9 +128,9 @@ namespace CalculatorApp
     }
 
 #pragma region Tracing methods
-    void TraceLogger::LogLevel3Event(wstring_view eventName, LoggingFields fields) const
+    void TraceLogger::LogLevel1Event(wstring_view eventName, LoggingFields fields) const
     {
-        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_3));
+        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_1));
     }
 
     void TraceLogger::LogLevel2Event(wstring_view eventName, LoggingFields fields) const
@@ -138,19 +138,9 @@ namespace CalculatorApp
         g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_2));
     }
 
-    void TraceLogger::LogLevel1Event(wstring_view eventName, LoggingFields fields) const
+    void TraceLogger::LogLevel3Event(wstring_view eventName, LoggingFields fields) const
     {
-        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_1));
-    }
-
-    void TraceLogger::LogPerformanceEvent(wstring_view eventName, LoggingFields fields) const
-    {
-        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(WINEVENT_KEYWORD_RESPONSE_TIME));
-    }
-
-    void TraceLogger::LogInfoEvent(wstring_view eventName, LoggingFields fields) const
-    {
-        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Information);
+        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_3));
     }
 
     unique_ptr<TraceActivity> TraceLogger::CreateTraceActivity(wstring_view eventName, LoggingFields fields) const
