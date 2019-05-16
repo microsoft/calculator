@@ -848,7 +848,7 @@ void UnitConverter::Calculate()
     }
 
     unordered_map<Unit, ConversionData, UnitHash> conversionTable = m_ratioMap[m_fromType];
-	if (AnyUnitIsEmpty() || (conversionTable[m_toType].ratio == 1.0 && conversionTable[m_toType].offset == 0.0))
+    if (AnyUnitIsEmpty() || (conversionTable[m_toType].ratio == 1.0 && conversionTable[m_toType].offset == 0.0))
     {
         m_returnDisplay = m_currentDisplay;
         m_returnHasDecimal = m_currentHasDecimal;
@@ -858,50 +858,41 @@ void UnitConverter::Calculate()
     {
         double currentValue = stod(m_currentDisplay);
         double returnValue = Convert(currentValue, conversionTable[m_toType]);
-        m_returnDisplay = RoundSignificant(returnValue, MAXIMUMDIGITSALLOWED);
-        TrimString(m_returnDisplay);
-        int numPreDecimal = (int)m_returnDisplay.size();
-        if (m_returnDisplay.find(L'.') != m_returnDisplay.npos)
-        {
-            numPreDecimal = (int)m_returnDisplay.find(L'.');
-        }
-        if (returnValue < 0)
-        {
-            numPreDecimal--;
-        }
 
-        if (numPreDecimal > MAXIMUMDIGITSALLOWED || (returnValue != 0 && abs(returnValue) < MINIMUMDECIMALALLOWED))
+        auto isCurrencyConverter = m_currencyDataLoader != nullptr && m_currencyDataLoader->SupportsCategory(this->m_currentCategory);
+        if (isCurrencyConverter)
         {
-            wstringstream out(wstringstream::out);
-            out << scientific << returnValue;
-            m_returnDisplay = out.str();
+            // We don't need to trim the value when it's a currency.
+            m_returnDisplay = RoundSignificant(returnValue, MAXIMUMDIGITSALLOWED);
+            TrimString(m_returnDisplay);
         }
         else
         {
-            returnValue = stod(m_returnDisplay);
-
-            auto currentDisplayTrimmed = m_currentDisplay;
-            TrimString(currentDisplayTrimmed);
-            int currentNumberSignificantDigits = static_cast<int>(currentDisplayTrimmed.size());
-            if (currentDisplayTrimmed.find(L'.') != currentDisplayTrimmed.npos)
-                --currentNumberSignificantDigits;
-            if (currentValue < 0)
-                --currentNumberSignificantDigits;
-
-            int precision = 0;
-            if (abs(returnValue) < OPTIMALDECIMALALLOWED)
+            int numPreDecimal = returnValue == 0 ? 0 : (1 + (int)log10(abs(returnValue)));
+            if (numPreDecimal > MAXIMUMDIGITSALLOWED || (returnValue != 0 && abs(returnValue) < MINIMUMDECIMALALLOWED))
             {
-                precision = MAXIMUMDIGITSALLOWED;
+                wstringstream out(wstringstream::out);
+                out << scientific << returnValue;
+                m_returnDisplay = out.str();
             }
             else
             {
-                precision = max(0, max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits)) - numPreDecimal);
+                int currentNumberSignificantDigits = GetNumberSignificantDigits(m_currentDisplay);
+                int precision = 0;
+                if (abs(returnValue) < OPTIMALDECIMALALLOWED)
+                {
+                    precision = MAXIMUMDIGITSALLOWED;
+                }
+                else
+                {
+                    precision = max(0, max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits)) - numPreDecimal);
+                }
+
+                m_returnDisplay = RoundSignificant(returnValue, precision);
+                TrimString(m_returnDisplay);
             }
-       
-            m_returnDisplay = RoundSignificant(returnValue, precision);
-            TrimString(m_returnDisplay);
+            m_returnHasDecimal = (m_returnDisplay.find(L'.') != m_returnDisplay.npos);
         }
-        m_returnHasDecimal = (m_returnDisplay.find(L'.') != m_returnDisplay.npos);
     }
     UpdateViewModel();
 }
@@ -910,9 +901,9 @@ void UnitConverter::Calculate()
 /// Trims out any trailing zeros or decimals in the given input string
 /// </summary>
 /// <param name="input">wstring to trim</param>
-void UnitConverter::TrimString(wstring& returnString)
+void UnitConverter::TrimString(_Inout_ wstring& returnString)
 {
-    if (returnString.find(L'.') == m_returnDisplay.npos)
+    if (returnString.find(L'.') == returnString.npos)
     {
         return;
     }
@@ -930,6 +921,24 @@ void UnitConverter::TrimString(wstring& returnString)
     {
         returnString.erase(returnString.end() - 1, returnString.end());
     }
+}
+
+/// <summary>
+/// Get number of significant digits (integer part + fractional part) of a number</summary>
+/// <param name="value">the number</param>
+unsigned int UnitConverter::GetNumberSignificantDigits(std::wstring value)
+{
+    TrimString(value);
+    int currentNumberSignificantDigits = value.size();
+    if (value.find(L'.') != value.npos)
+    {
+        --currentNumberSignificantDigits;
+    }
+    if (value.find(L'-') != value.npos)
+    {
+        --currentNumberSignificantDigits;
+    }
+    return currentNumberSignificantDigits;
 }
 
 /// <summary>
