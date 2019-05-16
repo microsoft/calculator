@@ -111,8 +111,8 @@ namespace CalculatorApp
         // Create an instance of TraceLogger
         TraceLogger();
 
-        // As mentioned in Microsoft’s Privacy Statement(https://privacy.microsoft.com/en-US/privacystatement#maindiagnosticsmodule),
-        // sampling is involved in Microsoft’s diagnostic data collection process.
+        // As mentioned in Microsoft's Privacy Statement(https://privacy.microsoft.com/en-US/privacystatement#maindiagnosticsmodule),
+        // sampling is involved in Microsoft's diagnostic data collection process.
         // These keywords provide additional input into how frequently an event might be sampled.
         // The lower the level of the keyword, the higher the possibility that the corresponding event may be sampled.
         void LogLevel1Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
