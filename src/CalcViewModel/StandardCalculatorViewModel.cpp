@@ -1101,6 +1101,8 @@ void StandardCalculatorViewModel::OnMemoryItemPressed(Object ^ memoryItemPositio
         HideMemoryClicked();
         int windowId = Utils::GetWindowId();
         TraceLogger::GetInstance().LogMemoryUsed(windowId, boxedPosition->Value, IsStandard, IsScientific, IsProgrammer, MemorizedNumbers->Size);
+        auto mode = IsStandard ? ViewMode::Standard : IsScientific ? ViewMode::Scientific : ViewMode::Programmer;
+        TraceLogger::GetInstance().LogMemoryItemLoad(mode, MemorizedNumbers->Size - 1, boxedPosition->Value);
     }
 }
 

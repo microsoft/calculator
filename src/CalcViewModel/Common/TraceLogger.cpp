@@ -78,6 +78,7 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_MODE_CHANGED = L"ModeChanged";
     constexpr auto EVENT_NAME_DATE_CALCULATION_MODE_USED = L"DateCalculationModeUsed";
     constexpr auto EVENT_NAME_HISTORY_ITEM_LOAD = L"HistoryItemLoad";
+    constexpr auto EVENT_NAME_MEMORY_ITEM_LOAD = L"MemoryItemLoad";
 
     constexpr auto EVENT_NAME_EXCEPTION = L"Exception";
 
@@ -554,6 +555,21 @@ namespace CalculatorApp
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddInt32(L"HistoryListSize", historyListSize);
         LogLevel2Event(EVENT_NAME_HISTORY_ITEM_LOAD, fields);
+    }
+
+    void TraceLogger::LogMemoryItemLoad(ViewMode mode, int maxMemoryIndex, int loadedIndex) const
+    {
+        if (!GetTraceLoggingProviderEnabled())
+        {
+            return;
+        }
+
+        LoggingFields fields{};
+        // cast mode to an int for telemetry
+        fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
+        fields.AddInt32(L"maxIndex", maxMemoryIndex);
+        fields.AddInt32(L"loadedIndex", loadedIndex);
+        LogLevel2Event(EVENT_NAME_MEMORY_ITEM_LOAD, fields);
     }
 
     void TraceLogger::LogHistoryItemLoadBegin() const
