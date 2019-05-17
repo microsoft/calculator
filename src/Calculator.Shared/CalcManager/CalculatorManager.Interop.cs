@@ -127,7 +127,7 @@ namespace CalculationManager
 			var manager = GCHandle.FromIntPtr((IntPtr)state).Target as CalculatorDisplay;
 			manager.MaxDigitsReached();
 
-			Debug.WriteLine($"CalculatorManager.MaxDigitsReachedCallback");
+			DebugTrace($"CalculatorManager.MaxDigitsReachedCallback");
 		}
 
 		public static void MemoryItemChangedCallback(IntPtr state, int indexOfMemory)
@@ -135,7 +135,7 @@ namespace CalculationManager
 			var manager = GCHandle.FromIntPtr((IntPtr)state).Target as CalculatorDisplay;
 			manager.MemoryItemChanged(indexOfMemory);
 
-			Debug.WriteLine($"CalculatorManager.MemoryItemChangedCallback({indexOfMemory})");
+			DebugTrace($"CalculatorManager.MemoryItemChangedCallback({indexOfMemory})");
 		}
 
 		public static void OnHistoryItemAddedCallback(IntPtr state, int addedItemIndex)
@@ -143,7 +143,7 @@ namespace CalculationManager
 			var manager = GCHandle.FromIntPtr((IntPtr)state).Target as CalculatorDisplay;
 			manager.OnHistoryItemAdded(addedItemIndex);
 
-			Debug.WriteLine($"CalculatorManager.OnHistoryItemAddedCallback({addedItemIndex})");
+			DebugTrace($"CalculatorManager.OnHistoryItemAddedCallback({addedItemIndex})");
 		}
 
 		public static void OnNoRightParenAddedCallback(IntPtr state)
@@ -151,11 +151,13 @@ namespace CalculationManager
 			var manager = GCHandle.FromIntPtr((IntPtr)state).Target as CalculatorDisplay;
 			manager.OnNoRightParenAdded();
 
-			Debug.WriteLine($"CalculatorManager.OnNoRightParenAddedCallback");
+			DebugTrace($"CalculatorManager.OnNoRightParenAddedCallback");
 		}
 
 		public static void SetExpressionDisplayCallback(IntPtr state, IntPtr historyItem)
 		{
+			DebugTrace($"CalculatorManager.SetExpressionDisplayCallback({state}, {historyItem})");
+
 			var manager = GCHandle.FromIntPtr((IntPtr)state).Target as CalculatorDisplay;
 
 			var nativeResult = Marshal.PtrToStructure<GetHistoryItemResult>(historyItem);
@@ -163,7 +165,6 @@ namespace CalculationManager
 
 			manager.SetExpressionDisplay(itemResult.historyItemVector.spTokens, itemResult.historyItemVector.spCommands);
 
-			Debug.WriteLine($"CalculatorManager.SetExpressionDisplayCallback");
 		}
 
 		public static void SetMemorizedNumbersCallback(IntPtr state, int count, IntPtr newMemorizedNumbers)
@@ -179,7 +180,7 @@ namespace CalculationManager
 
 			manager.SetMemorizedNumbers(numbers);
 
-			Debug.WriteLine($"CalculatorManager.SetMemorizedNumbersCallback({string.Join(";", numbers)})");
+			DebugTrace($"CalculatorManager.SetMemorizedNumbersCallback({string.Join(";", numbers)})");
 		}
 
 		public static void SetParenthesisNumberCallback(IntPtr state, int parenthesisCount)
@@ -187,7 +188,7 @@ namespace CalculationManager
 			var manager = GCHandle.FromIntPtr((IntPtr)state).Target as CalculatorDisplay;
 			manager.SetParenthesisNumber(parenthesisCount);
 
-			Debug.WriteLine($"CalculatorManager.SetParenthesisNumberCallback({parenthesisCount})");
+			DebugTrace($"CalculatorManager.SetParenthesisNumberCallback({parenthesisCount})");
 		}
 
 		public static void BinaryOperatorReceivedCallback(IntPtr state)
@@ -195,7 +196,7 @@ namespace CalculationManager
 			var manager = GCHandle.FromIntPtr((IntPtr)state).Target as CalculatorDisplay;
 			manager.BinaryOperatorReceived();
 
-			Debug.WriteLine($"CalculatorManager.BinaryOperatorReceivedCallback");
+			DebugTrace($"CalculatorManager.BinaryOperatorReceivedCallback");
 		}
 
 		public static void SetPrimaryDisplayCallback(IntPtr state, [MarshalAs(UnmanagedType.LPWStr)] string displayStringValue, bool isError)
@@ -203,7 +204,7 @@ namespace CalculationManager
 			var manager = GCHandle.FromIntPtr((IntPtr)state).Target as CalculatorDisplay;
 			manager.SetPrimaryDisplay(displayStringValue, isError);
 
-			Debug.WriteLine($"CalculatorManager.SetPrimaryDisplayCallback({displayStringValue}, {isError})");
+			DebugTrace($"CalculatorManager.SetPrimaryDisplayCallback({displayStringValue}, {isError})");
 		}
 
 		public static void SetIsInErrorCallback(IntPtr state, bool isError)
@@ -211,7 +212,7 @@ namespace CalculationManager
 			var manager = GCHandle.FromIntPtr((IntPtr)state).Target as CalculatorDisplay;
 			manager.SetIsInError(isError);
 
-			Debug.WriteLine($"CalculatorManager.SetIsInErrorCallback({isError})");
+			DebugTrace($"CalculatorManager.SetIsInErrorCallback({isError})");
 		}
 
 		public static IntPtr GetCEngineStringCallback(IntPtr state, IntPtr pResourceId)
@@ -227,7 +228,7 @@ namespace CalculationManager
 			var pEngineString = Marshal.StringToHGlobalUni(resourceValue);
 #endif
 
-			Debug.WriteLine($"GetCEngineStringCallback({resourceId}, {resourceValue}");
+			DebugTrace($"GetCEngineStringCallback({resourceId}, {resourceValue})");
 
 			return pEngineString;
 		}
@@ -239,6 +240,11 @@ namespace CalculationManager
 			Marshal.Copy(ret, 0, pRet2, resourceValue.Length * 4);
 			Marshal.WriteInt32(pRet2 + resourceValue.Length * 4, 0);
 			return pRet2;
+		}
+
+		private static void DebugTrace(string message)
+		{
+			// Debug.WriteLine(message);
 		}
 	}
 
