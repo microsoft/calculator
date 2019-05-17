@@ -35,7 +35,7 @@
         </DataTemplate>
 
         <!-- TextBox Styles -->
-               
+
         <Style TargetType="controls:OverflowTextBlock">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Template">
@@ -319,7 +319,7 @@
                 </VisualState>
             </VisualStateGroup>
             <!-- Layout specific -->
-            <VisualStateGroup>
+            <VisualStateGroup CurrentStateChanged="OnVisualStateChanged">
                 <VisualState x:Name="Portrait768x1366">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="1366" MinWindowWidth="768"/>

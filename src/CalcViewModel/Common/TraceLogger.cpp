@@ -79,6 +79,7 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_DATE_CALCULATION_MODE_USED = L"DateCalculationModeUsed";
     constexpr auto EVENT_NAME_HISTORY_ITEM_LOAD = L"HistoryItemLoad";
     constexpr auto EVENT_NAME_MEMORY_ITEM_LOAD = L"MemoryItemLoad";
+    constexpr auto EVENT_NAME_VISUAL_STATE_CHANGED = L"VisualStateChanged";
 
     constexpr auto EVENT_NAME_EXCEPTION = L"Exception";
 
@@ -102,14 +103,14 @@ namespace CalculatorApp
 
     TraceLogger::TraceLogger()
         : g_calculatorProvider(
-            L"MicrosoftCalculator",
-            LoggingChannelOptions(GUID{ 0x4f50731a, 0x89cf, 0x4782, 0xb3, 0xe0, 0xdc, 0xe8, 0xc9, 0x4, 0x76, 0xba }), // Microsoft Telemetry group
-            GUID{ 0x905ca09, 0x610e, 0x401e, 0xb6, 0x50, 0x2f, 0x21, 0x29, 0x80, 0xb9, 0xe0 })
+              L"MicrosoftCalculator",
+              LoggingChannelOptions(GUID{ 0x4f50731a, 0x89cf, 0x4782, 0xb3, 0xe0, 0xdc, 0xe8, 0xc9, 0x4, 0x76, 0xba }), // Microsoft Telemetry group
+              GUID{ 0x905ca09, 0x610e, 0x401e, 0xb6, 0x50, 0x2f, 0x21, 0x29, 0x80, 0xb9, 0xe0 })
         , // Unique providerID {0905CA09-610E-401E-B650-2F212980B9E0}
         m_appLaunchActivity{ nullptr }
     {
         // initialize the function array
-//        InitFunctionLogArray();
+        //        InitFunctionLogArray();
     }
 
     TraceLogger::~TraceLogger()
@@ -227,6 +228,19 @@ namespace CalculatorApp
         {
             return false;
         }
+    }
+
+    void TraceLogger::LogVisualStateChanged(ViewMode mode, wstring_view state) const
+    {
+        if (!GetTraceLoggingProviderEnabled())
+        {
+            return;
+        }
+
+        LoggingFields fields{};
+        fields.AddString(L"CalculatorMode", NavCategory::GetFriendlyName(mode)->Data());
+        fields.AddString(L"VisualState", state);
+        LogLevel2Event(EVENT_NAME_VISUAL_STATE_CHANGED, fields);
     }
 
     // call comes here at the time of ApplicationViewModel initialisation
@@ -767,9 +781,8 @@ namespace CalculatorApp
     {
         // Writer lock for the static resources
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
-        vector<FuncLog>::iterator it = std::find_if(funcLog.begin(), funcLog.end(), [functionId, mode](const FuncLog& f) -> bool {
-            return f.functionId == functionId && f.mode == mode;
-        });
+        vector<FuncLog>::iterator it =
+            std::find_if(funcLog.begin(), funcLog.end(), [functionId, mode](const FuncLog& f) -> bool { return f.functionId == functionId && f.mode == mode; });
         if (it != funcLog.end())
         {
             it->count++;
@@ -781,7 +794,7 @@ namespace CalculatorApp
         }
     }
 
-    //void TraceLogger::InitFunctionLogArray()
+    // void TraceLogger::InitFunctionLogArray()
     //{
     //    int i = -1;
     //    for (int funcIndex = 0; funcIndex != maxFunctionSize; funcIndex++)
@@ -808,15 +821,15 @@ namespace CalculatorApp
         return s_programmerType[0];
     }
 
-   /* bool TraceLogger::GetIndex(int& index)
-    {
-        if (findIndex[index] > 0)
-        {
-            index = findIndex[index];
-            return true;
-        }
-        return false;
-    }*/
+    /* bool TraceLogger::GetIndex(int& index)
+     {
+         if (findIndex[index] > 0)
+         {
+             index = findIndex[index];
+             return true;
+         }
+         return false;
+     }*/
 
     void TraceLogger::UpdateWindowCount(size_t windowCount)
     {

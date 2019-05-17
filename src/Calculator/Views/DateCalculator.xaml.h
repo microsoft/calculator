@@ -50,5 +50,6 @@ namespace CalculatorApp
         void RaiseLiveRegionChangedAutomationEvent(_In_ bool isDateDiffMode);
 
         Windows::Foundation::EventRegistrationToken m_dateCalcOptionChangedEventToken;
+        void OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e);
     };
 }

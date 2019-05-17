@@ -713,3 +713,10 @@ void CalculatorApp::Calculator::DockPivot_SelectionChanged(Platform::Object ^ se
         TraceLogger::GetInstance().LogMemoryBodyOpened();
     }
 }
+
+void CalculatorApp::Calculator::OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e)
+{
+    auto mode = IsStandard ? ViewMode::Standard : IsScientific ? ViewMode::Scientific : ViewMode::Programmer;
+    auto state = std::wstring(e->NewState->Name->Begin());
+    TraceLogger::GetInstance().LogVisualStateChanged(mode, state);
+}

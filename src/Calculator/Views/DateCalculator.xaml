@@ -358,7 +358,7 @@
         </Grid.RowDefinitions>
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
+            <VisualStateGroup CurrentStateChanged="OnVisualStateChanged">
                 <VisualState x:Name="LeftAlignedLayout">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="480"/>

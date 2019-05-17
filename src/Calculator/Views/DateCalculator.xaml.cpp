@@ -240,3 +240,9 @@ void DateCalculator::AddSubtractOption_Checked(_In_ Object ^ sender, _In_ Routed
 {
     RaiseLiveRegionChangedAutomationEvent(/* DateDiff mode */ false);
 }
+
+void CalculatorApp::DateCalculator::OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e)
+{
+    auto state = std::wstring(e->NewState->Name->Begin());
+    TraceLogger::GetInstance().LogVisualStateChanged(ViewMode::Date, state);
+}

@@ -6,6 +6,7 @@
 
 #include "pch.h"
 #include "UnitConverter.xaml.h"
+#include "CalcViewModel/Common/TraceLogger.h"
 #include "CalcViewModel/UnitConverterViewModel.h"
 #include "Controls/CalculationResult.h"
 #include "Controls/CalculatorButton.h"
@@ -367,4 +368,11 @@ void CalculatorApp::UnitConverter::SupplementaryResultsPanelInGrid_SizeChanged(P
 {
     // We add 0.01 to be sure to not create an infinite loop with SizeChanged events cascading due to float approximation
     RowDltrUnits->MinHeight = max(48.0, e->NewSize.Height + 0.01);
+}
+
+void CalculatorApp::UnitConverter::OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e)
+{
+    auto mode = NavCategory::Deserialize(Model->CurrentCategory->GetModelCategory().id);
+    auto state = std::wstring(e->NewState->Name->Begin());
+    TraceLogger::GetInstance().LogVisualStateChanged(mode, state);
 }
