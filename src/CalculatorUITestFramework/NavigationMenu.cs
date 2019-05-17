@@ -26,16 +26,18 @@ namespace CalculatorUITestFramework
         Pressure,
         Angle
     }
-    public class NavigationMenu : ApplicationBase
+    public class NavigationMenu
     {
-        public static WindowsElement NavigationMenuButton => TryFindElementByAccessibilityId("TogglePaneButton");
-        public static WindowsElement NavigationMenuPane => TryFindElementByClassName("SplitViewPane");
+        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+
+        public WindowsElement NavigationMenuButton => session.TryFindElementByAccessibilityId("TogglePaneButton");
+        public WindowsElement NavigationMenuPane => session.TryFindElementByClassName("SplitViewPane");
 
         /// <summary>
         /// Changes the mode using the navigation menu in the UI
         /// </summary>
         /// <param name="mode">The mode to be changed to</param>
-        public static void ChangeCalculatorMode(CalculatorMode mode)
+        public void ChangeCalculatorMode(CalculatorMode mode)
         {
             string modeAccessibilityId;
             switch (mode)
@@ -96,10 +98,10 @@ namespace CalculatorUITestFramework
                     break;
             }
 
-
+            var source = session.PageSource;
             NavigationMenuButton.Click();
             NavigationMenuPane.WaitForDisplayed();
-            TryFindElementByAccessibilityId(modeAccessibilityId).Click();
+            session.TryFindElementByAccessibilityId(modeAccessibilityId).Click();
         }
     }
 }

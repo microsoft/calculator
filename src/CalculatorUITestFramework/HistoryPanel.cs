@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System;
@@ -11,11 +12,13 @@ using System.Threading.Tasks;
 
 namespace CalculatorUITestFramework
 {
-    public class HistoryPanel : ApplicationBase
+    public class HistoryPanel
     {
-        public WindowsElement HistoryLabel => TryFindElementByAccessibilityId("HistoryLabel");
-        public WindowsElement HistoryListView => TryFindElementByAccessibilityId("HistoryListView");
-        public WindowsElement ClearHistoryButton => TryFindElementByAccessibilityId("ClearHistory");
+        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        public WindowsElement HistoryLabel => session.TryFindElementByAccessibilityId("HistoryLabel");
+        public WindowsElement HistoryListView => session.TryFindElementByAccessibilityId("HistoryListView");
+        public WindowsElement ClearHistoryButton => session.TryFindElementByAccessibilityId("ClearHistory");
+        public WindowsElement HistoryEmptyLabel => session.TryFindElementByAccessibilityId("HistoryEmpty");
 
         /// <summary>
         /// Opens the History Pane by clicking the History pivot label.
@@ -42,9 +45,20 @@ namespace CalculatorUITestFramework
         public void ClearHistory()
         {
             OpenHistoryPanel();
-            if (ClearHistoryButton != null)
+
+            try
             {
                 ClearHistoryButton.Click();
+            }
+            catch(WebDriverException ex)
+            {
+                if (ex.Message.Contains("element could not be located"))
+                {
+                    Assert.IsNotNull(HistoryEmptyLabel);
+                    return;
+                }
+
+                throw;
             }
         }
     }

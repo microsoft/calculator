@@ -3,20 +3,21 @@ using OpenQA.Selenium.Appium.Windows;
 
 namespace CalculatorUITestFramework
 {
-    public class NumerPad : ApplicationBase
+    public class NumerPad
     {
-        public WindowsElement Num0Button => TryFindElementByAccessibilityId("num0Button");
-        public WindowsElement Num1Button => TryFindElementByAccessibilityId("num1Button");
-        public WindowsElement Num2Button => TryFindElementByAccessibilityId("num2Button");
-        public WindowsElement Num3Button => TryFindElementByAccessibilityId("num3Button");
-        public WindowsElement Num4Button => TryFindElementByAccessibilityId("num4Button");
-        public WindowsElement Num5Button => TryFindElementByAccessibilityId("num5Button");
-        public WindowsElement Num6Button => TryFindElementByAccessibilityId("num6Button");
-        public WindowsElement Num7Button => TryFindElementByAccessibilityId("num7Button");
-        public WindowsElement Num8Button => TryFindElementByAccessibilityId("num8Button");
-        public WindowsElement Num9Button => TryFindElementByAccessibilityId("num9Button");
-        public WindowsElement DecimalButton => TryFindElementByAccessibilityId("decimalSeparatorButton");
-        public WindowsElement NegateButton => TryFindElementByAccessibilityId("negateButton");
+        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        public WindowsElement Num0Button => session.TryFindElementByAccessibilityId("num0Button");
+        public WindowsElement Num1Button => session.TryFindElementByAccessibilityId("num1Button");
+        public WindowsElement Num2Button => session.TryFindElementByAccessibilityId("num2Button");
+        public WindowsElement Num3Button => session.TryFindElementByAccessibilityId("num3Button");
+        public WindowsElement Num4Button => session.TryFindElementByAccessibilityId("num4Button");
+        public WindowsElement Num5Button => session.TryFindElementByAccessibilityId("num5Button");
+        public WindowsElement Num6Button => session.TryFindElementByAccessibilityId("num6Button");
+        public WindowsElement Num7Button => session.TryFindElementByAccessibilityId("num7Button");
+        public WindowsElement Num8Button => session.TryFindElementByAccessibilityId("num8Button");
+        public WindowsElement Num9Button => session.TryFindElementByAccessibilityId("num9Button");
+        public WindowsElement DecimalButton => session.TryFindElementByAccessibilityId("decimalSeparatorButton");
+        public WindowsElement NegateButton => session.TryFindElementByAccessibilityId("negateButton");
 
         /// <summary>
         /// Translates a number into the Calculator button clicks.

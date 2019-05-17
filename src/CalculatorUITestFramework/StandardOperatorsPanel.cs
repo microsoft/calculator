@@ -10,23 +10,24 @@ namespace CalculatorUITestFramework
     /// <summary>
     /// UI elements and helper methods to perform common mathematical standard operations.
     /// </summary>
-    public class StandardOperatorsPanel : ApplicationBase
+    public class StandardOperatorsPanel
     {
+        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
         public NumerPad NumberPad = new NumerPad();
 
-        public WindowsElement PercentButton => TryFindElementByAccessibilityId("percentButton");
-        public WindowsElement SquareRootButton => TryFindElementByAccessibilityId("squareRootButton");
-        public WindowsElement XPower2Button => TryFindElementByAccessibilityId("xpower2Button");
-        public WindowsElement XPower3Button => TryFindElementByAccessibilityId("xpower3Button");
-        public WindowsElement InvertButton => TryFindElementByAccessibilityId("invertButton");
-        public WindowsElement DivideButton => TryFindElementByAccessibilityId("divideButton");
-        public WindowsElement MultiplyButton => TryFindElementByAccessibilityId("multiplyButton");
-        public WindowsElement MinusButton => TryFindElementByAccessibilityId("minusButton");
-        public WindowsElement PlusButton => TryFindElementByAccessibilityId("plusButton");
-        public WindowsElement EqualButton => TryFindElementByAccessibilityId("equalButton");
-        public WindowsElement ClearEntryButton => TryFindElementByAccessibilityId("clearEntryButton");
-        public WindowsElement ClearButton => TryFindElementByAccessibilityId("clearButton");
-        public WindowsElement BackSpaceButton => TryFindElementByAccessibilityId("backSpaceButton");
+        public WindowsElement PercentButton => session.TryFindElementByAccessibilityId("percentButton");
+        public WindowsElement SquareRootButton => session.TryFindElementByAccessibilityId("squareRootButton");
+        public WindowsElement XPower2Button => session.TryFindElementByAccessibilityId("xpower2Button");
+        public WindowsElement XPower3Button => session.TryFindElementByAccessibilityId("xpower3Button");
+        public WindowsElement InvertButton => session.TryFindElementByAccessibilityId("invertButton");
+        public WindowsElement DivideButton => session.TryFindElementByAccessibilityId("divideButton");
+        public WindowsElement MultiplyButton => session.TryFindElementByAccessibilityId("multiplyButton");
+        public WindowsElement MinusButton => session.TryFindElementByAccessibilityId("minusButton");
+        public WindowsElement PlusButton => session.TryFindElementByAccessibilityId("plusButton");
+        public WindowsElement EqualButton => session.TryFindElementByAccessibilityId("equalButton");
+        public WindowsElement ClearEntryButton => session.TryFindElementByAccessibilityId("clearEntryButton");
+        public WindowsElement ClearButton => session.TryFindElementByAccessibilityId("clearButton");
+        public WindowsElement BackSpaceButton => session.TryFindElementByAccessibilityId("backSpaceButton");
 
         /// <summary>
         /// Uses the Calculator UI to add a list of numbers.
@@ -139,7 +140,6 @@ namespace CalculatorUITestFramework
         public void Cube(double number)
         {
             NumberPad.TranslateNumberToButtonClicks(number);
-            var source = CalculatorSession.PageSource;
             XPower3Button.Click();
         }
 

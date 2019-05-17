@@ -10,16 +10,18 @@ using System.Threading.Tasks;
 
 namespace CalculatorUITestFramework
 {
-    public class MemoryPanel : ApplicationBase
+    public class MemoryPanel
     {
-        public WindowsElement MemoryClear => TryFindElementByAccessibilityId("ClearMemoryButton");
-        public WindowsElement MemRecall => TryFindElementByAccessibilityId("MemRecall");
-        public WindowsElement MemPlus => TryFindElementByAccessibilityId("MemPlus");
-        public WindowsElement MemMinus => TryFindElementByAccessibilityId("MemMinus");
-        public WindowsElement MemButton => TryFindElementByAccessibilityId("memButton");
-        public WindowsElement MemoryPane => TryFindElementByAccessibilityId("MemoryPanel");
-        public WindowsElement MemoryLabel => TryFindElementByAccessibilityId("MemoryLabel");
-        public WindowsElement MemoryListView => TryFindElementByAccessibilityId("MemoryListView");
+        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        public WindowsElement MemoryClear => session.TryFindElementByAccessibilityId("ClearMemoryButton");
+        public WindowsElement MemRecall => session.TryFindElementByAccessibilityId("MemRecall");
+        public WindowsElement MemPlus => session.TryFindElementByAccessibilityId("MemPlus");
+        public WindowsElement MemMinus => session.TryFindElementByAccessibilityId("MemMinus");
+        public WindowsElement MemButton => session.TryFindElementByAccessibilityId("memButton");
+        public WindowsElement MemoryPane => session.TryFindElementByAccessibilityId("MemoryPanel");
+        public WindowsElement MemoryLabel => session.TryFindElementByAccessibilityId("MemoryLabel");
+        public WindowsElement MemoryListView => session.TryFindElementByAccessibilityId("MemoryListView");
+        public WindowsElement MemoryPaneEmptyLabel => session.TryFindElementByAccessibilityId("MemoryPaneEmpty");
 
         /// <summary>
         /// Opens the Memory Pane by clicking the Memory pivot label.

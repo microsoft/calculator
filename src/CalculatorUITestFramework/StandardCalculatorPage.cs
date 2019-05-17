@@ -12,44 +12,61 @@ namespace CalculatorUITestFramework
     /// <summary>
     /// This class contains the UI automation objects and helper methods available when the Calculator is in Standard Mode.
     /// </summary>
-    public class StandardCalculatorPage : ApplicationBase
+    public class StandardCalculatorPage
     {
-        public static StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
-        public static MemoryPanel MemoryPanel = new MemoryPanel();
-        public static HistoryPanel HistoryPanel = new HistoryPanel();
+        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
+        public MemoryPanel MemoryPanel = new MemoryPanel();
+        public HistoryPanel HistoryPanel = new HistoryPanel();
+        public NavigationMenu NavigationMenu = new NavigationMenu();
+        public WindowsElement Header
+        {
+            get
+            {
+                try
+                {
+                    return session.TryFindElementByAccessibilityId("Header");
+                }
+                catch
+                {
+                    return session.TryFindElementByAccessibilityId("ContentPresenter");
+                }
+            }
+        }
+        public WindowsElement CalculatorResult => session.TryFindElementByAccessibilityId("CalculatorResults");
 
-        public static void StandardCalculatorSetup(TestContext context)
+        public void StandardCalculatorSetup(TestContext context)
         {
             // Create session to launch a Calculator window
-            ApplicationSetup(context);
-            // Identify calculator mode by locating the header
-
+            WinAppDriver.Instance.SetupCalculatorSession(context);
 
             // Ensure that calculator is in standard mode
             NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            var source = CalculatorSession.PageSource;
             Assert.IsNotNull(CalculatorResult);
+        }
+
+        public void StandardCalculatorTearDown()
+        {
+            // Tear down Calculator session.
+            WinAppDriver.Instance.TearDownCalculatorSession();
         }
 
         /// <summary>
         /// Clear the Calculatory display, Memory Panel and optionally the History Panel
         /// </summary>
         /// <param name="clearHistory">Bool specifying if the History Panel should be cleared; true by default.</param>
-        public static void ClearAll(bool clearHistory = true)
+        public void ClearAll()
         {
             StandardOperators.ClearButton.Click();
             MemoryPanel.MemoryClear.Click();
-            if (clearHistory)
-            {
-                HistoryPanel.ClearHistory();
-            }
+            HistoryPanel.ClearHistory();
         }
 
         /// <summary>
         /// Gets the text from the display control and removes the narrator text that is not displayed in the UI.
         /// </summary>
         /// <returns>The string shown in the UI.</returns>
-        public static string GetCalculatorResultText()
+        public string GetCalculatorResultText()
         {
             return CalculatorResult.Text.Replace("Display is", string.Empty).Trim();
         }
