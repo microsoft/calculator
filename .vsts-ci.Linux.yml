@@ -1,0 +1,59 @@
+jobs:
+- job: linux
+  container: nv-bionic-wasm
+
+  pool:
+    vmImage: 'ubuntu-16.04'
+
+  variables:
+    NUGET_PACKAGES: $(build.sourcesdirectory)/.nuget
+
+  steps:
+  - checkout: self
+    clean: true
+  
+  - bash: |
+      sudo chmod -R 777 /emsdk
+      cd /emsdk
+      sudo ./emsdk activate sdk-1.38.28-64bit
+
+    displayName: 'Setup Emscripten'
+
+  - task: GitVersion@4
+    inputs:
+      updateAssemblyInfo: false
+
+  - script: |
+      source /emsdk/emsdk_env.sh
+      cd src/CalcManager
+      ./build.sh
+
+    displayName: 'Build Wasm CalcManager'
+
+    env:
+      GITVERSION_FullSemVer: $(GITVERSION_FullSemVer)
+
+  - script: |
+      source /emsdk/emsdk_env.sh
+      cd $(build.sourcesdirectory)
+      msbuild /r /p:Configuration=Release "/p:PackageVersion=$(GITVERSION_FullSemVer)" /p:MixedModeBuild=$(MixedModeBuild) $(build.sourcesdirectory)/src/Calculator.Wasm/Calculator.Wasm.csproj
+
+    env:
+      GITVERSION_FullSemVer: $(GITVERSION_FullSemVer)
+    displayName: 'Build Calculator'
+
+  - task: CopyFiles@2
+    displayName: 'Publish Wasm Binaries'
+    inputs:
+      SourceFolder: $(build.sourcesdirectory)/src/Calculator.Wasm/bin/Release/netstandard2.0/dist
+      Contents: '**/*.*'
+      TargetFolder: $(build.artifactstagingdirectory)/Uno-Calculator-wasm
+      CleanTargetFolder: false
+      OverWrite: false
+      flattenFolders: false
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: $(build.artifactstagingdirectory)
+      ArtifactName: Uno-Calculator-wasm
+      ArtifactType: Container
