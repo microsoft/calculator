@@ -290,10 +290,6 @@ namespace UnitConversionManager
         std::shared_ptr<IConverterDataLoader> GetDataLoaderForCategory(const Category& category);
         std::shared_ptr<ICurrencyConverterDataLoader> GetCurrencyConverterDataLoader();
 
-        static void TrimString(_Inout_ std::wstring& input);
-        static unsigned int GetNumberSignificantDigits(std::wstring value);
-        static std::wstring RoundSignificant(double num, int numSignificant);
-
     private:
         std::shared_ptr<IConverterDataLoader> m_dataLoader;
         std::shared_ptr<IConverterDataLoader> m_currencyDataLoader;
