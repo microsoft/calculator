@@ -8,4 +8,4 @@ emcc \
 	-s SIDE_MODULE=1 \
 	-o CalcManager.wasm \
 	-s EXPORT_ALL=1 \
-	CEngine/*.cpp RatPack/*.cpp *.cpp -I.
+	CEngine/*.cpp Ratpack/*.cpp *.cpp -I.

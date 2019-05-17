@@ -168,7 +168,7 @@
 			</Setter>
 		</Style>
 
-    <!-- UNO TODO -->
+	  <!-- UNO TODO -->
         <Style x:Key="overflowTextBlockStyle" TargetType="controls:OverflowTextBlock">
 
 			<Setter Property="HorizontalAlignment"
@@ -193,30 +193,26 @@
 															VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
 															Style="{StaticResource ResultsScrollerSnapped}"
 															AutomationProperties.AccessibilityView="Raw">
-									<ListView x:Name="TokenList"
+									<!-- UNO TODO-->
+									<ItemsControl x:Name="TokenList"
 														Padding="0"
 														VerticalAlignment="Stretch"
 														HorizontalContentAlignment="Right"
 														VerticalContentAlignment="Stretch"
 														IsTabStop="False"
 														ItemTemplateSelector="{StaticResource ExpressionItemTemplateSelector}"
-														ItemsSource="{Binding ExpressionTokens}"
-														ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-														ScrollViewer.HorizontalScrollMode="Enabled"
-														ScrollViewer.VerticalScrollBarVisibility="Disabled"
-														ScrollViewer.VerticalScrollMode="Disabled"
-														SelectionMode="None">
-										<ListView.ItemsPanel>
+														ItemsSource="{Binding ExpressionTokens}">
+									  <ItemsControl.ItemsPanel>
 											<ItemsPanelTemplate>
 												<StackPanel HorizontalAlignment="Right"
 																		VerticalAlignment="Stretch"
 																		Orientation="Horizontal" />
 											</ItemsPanelTemplate>
-										</ListView.ItemsPanel>
-										<ListView.ItemContainerTransitions>
+										</ItemsControl.ItemsPanel>
+									    <ItemsControl.ItemContainerTransitions>
 											<TransitionCollection />
-										</ListView.ItemContainerTransitions>
-									</ListView>
+										</ItemsControl.ItemContainerTransitions>
+									</ItemsControl>
 								</ScrollViewer>
 								<Button x:Name="scrollLeft"
 												x:Uid="scrollLeft"
