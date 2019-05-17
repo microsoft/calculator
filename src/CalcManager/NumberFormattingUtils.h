@@ -5,7 +5,7 @@
 
 #include <string>
 
-namespace CalculationManager::NumberFormattingUtils
+namespace CalcManager::NumberFormattingUtils
 {
     void TrimTrailingZeros(_Inout_ std::wstring& input);
     unsigned int GetNumberDigits(std::wstring value);

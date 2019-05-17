@@ -11,7 +11,7 @@
 using namespace concurrency;
 using namespace std;
 using namespace UnitConversionManager;
-using namespace CalculationManager::NumberFormattingUtils;
+using namespace CalcManager::NumberFormattingUtils;
 
 static constexpr uint32_t EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT = 3;
 static constexpr uint32_t EXPECTEDSERIALIZEDUNITTOKENCOUNT = 6;

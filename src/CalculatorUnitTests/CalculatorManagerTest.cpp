@@ -11,7 +11,7 @@
 
 using namespace CalculatorApp;
 using namespace CalculationManager;
-using namespace CalculationManager::NumberFormattingUtils;
+using namespace CalcManager::NumberFormattingUtils;
 using namespace Platform;
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

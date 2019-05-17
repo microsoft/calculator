@@ -4,7 +4,7 @@
 #include <math.h>
 using namespace std;
 
-namespace CalculationManager::NumberFormattingUtils
+namespace CalcManager::NumberFormattingUtils
 {
     /// <summary>
     /// Trims out any trailing zeros or decimals in the given input string
