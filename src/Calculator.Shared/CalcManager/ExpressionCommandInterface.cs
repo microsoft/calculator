@@ -67,8 +67,8 @@ namespace CalculationManager
 		public CParentheses(IntPtr pExpressionCommand) => this.pExpressionCommand = pExpressionCommand;
 
 		public int GetCommand() => throw new NotImplementedException();
-        public CalculationManager.CommandType GetCommandType() => throw new NotImplementedException();
-        public void Accept(ISerializeCommandVisitor commandVisitor) => throw new NotImplementedException();
+		public CalculationManager.CommandType GetCommandType() => CommandType.Parentheses;
+		public void Accept(ISerializeCommandVisitor commandVisitor) => throw new NotImplementedException();
     }
 
     public class CUnaryCommand : IUnaryCommand
@@ -80,8 +80,8 @@ namespace CalculationManager
         public CUnaryCommand(int command) => throw new NotImplementedException();
         public CUnaryCommand(int command1, int command2) => throw new NotImplementedException();
         public CalculatorList<int> GetCommands() => throw new NotImplementedException();
-        public CalculationManager.CommandType GetCommandType() => throw new NotImplementedException();
-        public void SetCommand(int command) => throw new NotImplementedException();
+		public CalculationManager.CommandType GetCommandType() => CommandType.UnaryCommand;
+		public void SetCommand(int command) => throw new NotImplementedException();
         public void SetCommands(int command1, int command2) => throw new NotImplementedException();
         public void Accept(ISerializeCommandVisitor commandVisitor) => throw new NotImplementedException();
     }
@@ -95,7 +95,7 @@ namespace CalculationManager
 		public CBinaryCommand(int command) => throw new NotImplementedException();
 		public void SetCommand(int command) => throw new NotImplementedException();
 		public int GetCommand() => throw new NotImplementedException();
-		public CommandType GetCommandType() => throw new NotImplementedException();
+		public CalculationManager.CommandType GetCommandType() => CommandType.BinaryCommand;
 		public void Accept(ISerializeCommandVisitor commandVisitor) => throw new NotImplementedException();
 	}
 
@@ -117,7 +117,7 @@ namespace CalculationManager
         public bool IsSciFmt() => throw new NotImplementedException();
         public bool IsDecimalPresent() => throw new NotImplementedException();
         public string GetToken(char decimalSymbol) => throw new NotImplementedException();
-        public CalculationManager.CommandType GetCommandType() => throw new NotImplementedException();
+        public CalculationManager.CommandType GetCommandType() => CommandType.OperandCommand;
         public void Accept(ISerializeCommandVisitor commandVisitor) => throw new NotImplementedException();
         public string GetString(uint radix, int precision) => throw new NotImplementedException();
     }

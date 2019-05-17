@@ -907,7 +907,7 @@
 			<VisualStateGroup>
 				<VisualState x:Name="ResultsL">
 					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowHeight="800" />
+						<AdaptiveTrigger x:Name="ResultsMVisualStateTrigger" MinWindowHeight="800" />
 					</VisualState.StateTriggers>
 					<Storyboard />
 				</VisualState>
@@ -969,7 +969,7 @@
 																	IsOperatorCommand="{x:Bind Model.IsOperatorCommand, Mode=OneWay}"
 																	TabIndex="1" />
 			<controls:OverflowTextBlock x:Name="expressionText"
-										xamarin:Style="{StaticResource overflowTextBlockStyle}"
+										Style="{StaticResource overflowTextBlockStyle}"
 																	Grid.Row="1"
 																	Margin="6,0,6,0"
 																	VerticalAlignment="Bottom"

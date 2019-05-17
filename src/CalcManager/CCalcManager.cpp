@@ -10,7 +10,8 @@
 #include <stdlib.h>
 #include <iostream>
 
-#if !defined(__EMSCRIPTEN__)
+#if DEBUG
+#if defined(_WINDOWS_)
 #include <Windows.h>
 #include <strsafe.h>
 
@@ -25,23 +26,28 @@ VOID _DBGPRINT(LPCWSTR kwszFunction, INT iLineNumber, LPCWSTR kwszDebugFormatStr
 
     va_start(args, kwszDebugFormatString);
 
-    cbFormatString = _scwprintf(L"[%s:%d] ", kwszFunction, iLineNumber) * sizeof(WCHAR);
-    cbFormatString += _vscwprintf(kwszDebugFormatString, args) * sizeof(WCHAR) + 2;
+    cbFormatString = _scwDBGPRINT(L"[%s:%d] ", kwszFunction, iLineNumber) * sizeof(WCHAR);
+    cbFormatString += _vscwDBGPRINT(kwszDebugFormatString, args) * sizeof(WCHAR) + 2;
 
     /* Depending on the size of the format string, allocate space on the stack or the heap. */
     wszDebugString = (PWCHAR)_malloca(cbFormatString);
 
     /* Populate the buffer with the contents of the format string. */
-    StringCbPrintfW(wszDebugString, cbFormatString, L"[%s:%d] ", kwszFunction, iLineNumber);
+    StringCbDBGPRINTW(wszDebugString, cbFormatString, L"[%s:%d] ", kwszFunction, iLineNumber);
     StringCbLengthW(wszDebugString, cbFormatString, &st_Offset);
-    StringCbVPrintfW(&wszDebugString[st_Offset / sizeof(WCHAR)], cbFormatString - st_Offset, kwszDebugFormatString, args);
+    StringCbVDBGPRINTW(&wszDebugString[st_Offset / sizeof(WCHAR)], cbFormatString - st_Offset, kwszDebugFormatString, args);
 
     OutputDebugStringW(wszDebugString);
 
     _freea(wszDebugString);
     va_end(args);
 }
+#elif defined(__EMSCRIPTEN__)
+#define DBGPRINT(kwszDebugFormatString, ...) printf(kwszDebugFormatString, ##__VA_ARGS__);
 #endif
+#else
+#define DBGPRINT(kwszDebugFormatString, ...)
+#endif // DEBUG
 
 using namespace CalculationManager;
 
@@ -62,60 +68,69 @@ public:
         std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
         auto str = convert.to_bytes(pszText);
 
-        printf("Native:SetPrimaryDisplay(%ls, %d)\n", pszText.data(), isError);
+        DBGPRINT("Native:SetPrimaryDisplay(%ls, %d)\n", pszText.data(), isError);
 
         _params.SetPrimaryDisplay(_params.CalculatorState, str.data(), isError);
     }
 
     virtual void SetIsInError(bool isInError) override
     {
-        printf("Native:SetIsInError(%d)\n", isInError);
+        DBGPRINT("Native:SetIsInError(%d)\n", isInError);
 
         _params.SetIsInError(_params.CalculatorState, isInError);
     }
 
     virtual void SetExpressionDisplay(
-        std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& /*tokens*/,
-        std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& /*commands*/) override
+        std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
+        std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands) override
     {
-        printf("Native:SetExpressionDisplay()\n");
+        DBGPRINT("Native:SetExpressionDisplay()\n");
 
+		auto item = std::make_shared<HISTORYITEM>();
+        item->historyItemVector.expression = L"";
+        item->historyItemVector.result = L"";
+        item->historyItemVector.spCommands = commands;
+        item->historyItemVector.spTokens = tokens;
+
+		auto pItem = MarshalHistoryItem(item);
+
+        _params.SetExpressionDisplay(_params.CalculatorState, pItem);
     }
 
     virtual void SetParenthesisNumber(unsigned int count) override
     {
-        printf("Native:SetParenthesisNumber(%d)\n", count);
+        DBGPRINT("Native:SetParenthesisNumber(%d)\n", count);
 
         _params.SetParenthesisNumber(_params.CalculatorState, count);
     }
 
     virtual void OnNoRightParenAdded() override
     {
-        printf("Native:OnNoRightParenAdded()\n");
+        DBGPRINT("Native:OnNoRightParenAdded()\n");
         _params.OnNoRightParenAdded(_params.CalculatorState);
     }
 
     virtual void MaxDigitsReached() override
     {
-        printf("Native:MaxDigitsReached()\n");
+        DBGPRINT("Native:MaxDigitsReached()\n");
         _params.MaxDigitsReached(_params.CalculatorState);
     }
 
     virtual void BinaryOperatorReceived() override
     {
-        printf("Native:BinaryOperatorReceived()\n");
+        DBGPRINT("Native:BinaryOperatorReceived()\n");
         _params.BinaryOperatorReceived(_params.CalculatorState);
     }
 
     virtual void OnHistoryItemAdded(unsigned int addedItemIndex) override
     {
-        printf("Native:OnHistoryItemAdded(%d)\n", addedItemIndex);
+        DBGPRINT("Native:OnHistoryItemAdded(%d)\n", addedItemIndex);
         _params.OnHistoryItemAdded(_params.CalculatorState, addedItemIndex);
     }
 
     virtual void SetMemorizedNumbers(const std::vector<std::wstring>& memorizedNumbers) override
     {
-        printf("Native:SetMemorizedNumbers(%d)\n", (int)memorizedNumbers.size());
+        DBGPRINT("Native:SetMemorizedNumbers(%d)\n", (int)memorizedNumbers.size());
 
         auto numbers = new const wchar_t* [memorizedNumbers.size()] {};
 
@@ -139,7 +154,7 @@ public:
 
     virtual void MemoryItemChanged(unsigned int indexOfMemory) override
     {
-        printf("Native:MemoryItemChanged(%d)\n", indexOfMemory);
+        DBGPRINT("Native:MemoryItemChanged(%d)\n", indexOfMemory);
 
         _params.MemoryItemChanged(_params.CalculatorState, indexOfMemory);
     }
@@ -160,7 +175,7 @@ public:
     {
         auto pResult = _params.GetCEngineString(_params.ResourceState, id.data());
         auto str = std::wstring(pResult);
-        printf("Native:GetCEngineString(id=%ls, str.data()=%ls)\n", id.data(), str.data());
+        DBGPRINT("Native:GetCEngineString(id=%ls, str.data()=%ls)\n", id.data(), str.data());
         return str;
     }
 };
@@ -181,6 +196,83 @@ const wchar_t* ToWChar(std::wstring& str)
     str.copy(out, str.size() + 1, 0);
     return out;
 }
+
+GetHistoryItemResult* MarshalHistoryItem(std::shared_ptr<CalculationManager::HISTORYITEM>& historyItem)
+{
+    auto itemResult = new GetHistoryItemResult{};
+
+    itemResult->expression = ToWChar(historyItem->historyItemVector.expression);
+    itemResult->result = ToWChar(historyItem->historyItemVector.result);
+
+    unsigned int tokenCount;
+    historyItem->historyItemVector.spTokens->GetSize(&tokenCount);
+    itemResult->TokenCount = tokenCount;
+
+    //
+    // Marshal Tokens
+    //
+    auto tokenStrings = new const wchar_t* [tokenCount] {};
+    auto tokenValues = new int32_t[tokenCount]{};
+
+    // DBGPRINT(L"TokenCount: %d (int32_t: %d)\n", tokenCount, sizeof(int32_t));
+
+    for (uint32_t j = 0; j < tokenCount; j++)
+    {
+        std::pair<std::wstring, int> pair;
+
+        if (SUCCEEDED(historyItem->historyItemVector.spTokens->GetAt(j, &pair)))
+        {
+            tokenStrings[j] = ToWChar(pair.first);
+            tokenValues[j] = (int32_t)pair.second;
+            // DBGPRINT(L"\tPair: %ws;%d\n", pair.first.data(), tokenValues[j]);
+        }
+    }
+
+    itemResult->TokenStrings = tokenStrings;
+    itemResult->TokenValues = tokenValues;
+
+    //
+    // Marshal Commands
+    //
+    unsigned int commandCount;
+    historyItem->historyItemVector.spCommands->GetSize(&commandCount);
+    itemResult->CommandCount = commandCount;
+
+    auto commands = new void* [commandCount] {};
+
+    for (uint32_t commandId = 0; commandId < commandCount; commandId++)
+    {
+        std::shared_ptr<IExpressionCommand> command;
+        if (SUCCEEDED(historyItem->historyItemVector.spCommands->GetAt(commandId, &command)))
+        {
+            commands[commandId] = command.get();
+        }
+    }
+
+    itemResult->Commands = commands;
+
+    return itemResult;
+}
+
+void* MarshalHistoryItems(std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>& historyItems)
+{
+    auto result = new GetHistoryItemsResult{};
+
+    result->ItemsCount = (int32_t)historyItems.size();
+
+    auto resultsArray = new GetHistoryItemResult*[result->ItemsCount];
+    result->HistoryItems = (void*)resultsArray;
+
+    for (size_t i = 0; i < historyItems.size(); i++)
+    {
+        auto historyItem = historyItems[i];
+
+        resultsArray[i] = MarshalHistoryItem(historyItem);
+    }
+
+    return result;
+}
+
 
 void* CalculatorManager_Create(CalculatorManager_CreateParams* pParams)
 {
@@ -314,82 +406,6 @@ int CalculatorManager_GetCurrentDegreeMode(void* manager)
 void CalculatorManager_SetInHistoryItemLoadMode(void* manager, bool isHistoryItemLoadMode)
 {
     AsManager(manager)->SetInHistoryItemLoadMode(isHistoryItemLoadMode);
-}
-
-GetHistoryItemResult* MarshalHistoryItem(std::shared_ptr<CalculationManager::HISTORYITEM>& historyItem)
-{
-    auto itemResult = new GetHistoryItemResult{};
-
-    itemResult->expression = ToWChar(historyItem->historyItemVector.expression);
-    itemResult->result = ToWChar(historyItem->historyItemVector.result);
-
-    unsigned int tokenCount;
-    historyItem->historyItemVector.spTokens->GetSize(&tokenCount);
-    itemResult->TokenCount = tokenCount;
-
-	//
-	// Marshal Tokens
-	//
-    auto tokenStrings = new const wchar_t* [tokenCount] {};
-    auto tokenValues = new int32_t[tokenCount]{};
-
-	// DBGPRINT(L"TokenCount: %d (int32_t: %d)\n", tokenCount, sizeof(int32_t));
-
-    for (uint32_t j = 0; j < tokenCount; j++)
-    {
-        std::pair<std::wstring, int> pair;
-
-        if (SUCCEEDED(historyItem->historyItemVector.spTokens->GetAt(j, &pair)))
-        {
-            tokenStrings[j] = ToWChar(pair.first);
-            tokenValues[j] = (int32_t)pair.second;
-            // DBGPRINT(L"\tPair: %ws;%d\n", pair.first.data(), tokenValues[j]);
-        }
-    }
-
-    itemResult->TokenStrings = tokenStrings;
-    itemResult->TokenValues = tokenValues;
-
-	//
-	// Marshal Commands
-	//
-    unsigned int commandCount;
-    historyItem->historyItemVector.spCommands->GetSize(&commandCount);
-    itemResult->CommandCount = commandCount;
-
-    auto commands = new void*[commandCount]{};
-
-	for (uint32_t commandId = 0; commandId < commandCount; commandId++)
-    {
-        std::shared_ptr<IExpressionCommand> command;
-        if (SUCCEEDED(historyItem->historyItemVector.spCommands->GetAt(commandId, &command)))
-        {
-            commands[commandId] = command.get();
-        }
-    }
-
-    itemResult->Commands = commands;
-
-	return itemResult;
-}
-
-void* MarshalHistoryItems(std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>& historyItems)
-{
-    auto result = new GetHistoryItemsResult{};
-
-    result->ItemsCount = (int32_t)historyItems.size();
-
-    auto resultsArray = new GetHistoryItemResult*[result->ItemsCount];
-	result->HistoryItems = (void*)resultsArray;
-
-    for (size_t i = 0; i < historyItems.size(); i++)
-    {
-        auto historyItem = historyItems[i];
-
-        resultsArray[i] = MarshalHistoryItem(historyItem);
-    }
-
-    return result;
 }
 
 void* CalculatorManager_GetHistoryItems(void* manager)

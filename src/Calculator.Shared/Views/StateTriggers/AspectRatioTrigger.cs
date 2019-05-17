@@ -14,126 +14,146 @@ using Windows.UI.Xaml;
 
 namespace CalculatorApp.Views.StateTriggers
 {
-    public enum Aspect
-    {
-        Height,
-        Width
-    }
+	public enum Aspect
+	{
+		Height,
+		Width
+	}
 
-    public sealed class AspectRatioTrigger : Windows.UI.Xaml.StateTriggerBase
-    {
-        /* The source for which this class will respond to size changed events. */
-        public FrameworkElement Source
-        {
-            get { return (FrameworkElement)GetValue(SourceProperty); }
-            set { SetValue(SourceProperty, value); }
-        }
+	public sealed class AspectRatioTrigger : Windows.UI.Xaml.StateTriggerBase
+	{
+		/* The source for which this class will respond to size changed events. */
+		public FrameworkElement Source
+		{
+			get { return (FrameworkElement)GetValue(SourceProperty); }
+			set { SetValue(SourceProperty, value); }
+		}
 
-        public static readonly DependencyProperty SourceProperty =
-            DependencyProperty.Register("Source", typeof(FrameworkElement), typeof(AspectRatioTrigger), new PropertyMetadata(null));
+		public static readonly DependencyProperty SourceProperty =
+			DependencyProperty.Register(
+				name: nameof(Source),
+				propertyType: typeof(FrameworkElement),
+				ownerType: typeof(AspectRatioTrigger),
+				typeMetadata: new PropertyMetadata(
+					defaultValue: null,
+					propertyChangedCallback: (s, e) => (s as AspectRatioTrigger)?.OnSourcePropertyChanged(e.OldValue as FrameworkElement, e.NewValue as FrameworkElement))
+			);
 
-        /* Either Height or Width. The property will determine which aspect is used as the numerator when calculating
+		/* Either Height or Width. The property will determine which aspect is used as the numerator when calculating
            the aspect ratio. */
-        public Aspect NumeratorAspect
-        {
-            get { return (Aspect)GetValue(NumeratorAspectProperty); }
-            set { SetValue(NumeratorAspectProperty, value); }
-        }
+		public Aspect NumeratorAspect
+		{
+			get { return (Aspect)GetValue(NumeratorAspectProperty); }
+			set { SetValue(NumeratorAspectProperty, value); }
+		}
 
-        // Using a DependencyProperty as the backing store for NumeratorAspect.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty NumeratorAspectProperty =
-            DependencyProperty.Register("NumeratorAspect", typeof(Aspect), typeof(AspectRatioTrigger), new PropertyMetadata(Aspect.Height));
-
-
-        /* The threshold that will cause the trigger to fire when the aspect ratio exceeds this value. */
-        public double Threshold
-        {
-            get { return (double)GetValue(ThresholdProperty); }
-            set { SetValue(ThresholdProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Threshold.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ThresholdProperty =
-            DependencyProperty.Register("Threshold", typeof(double), typeof(AspectRatioTrigger), new PropertyMetadata(0.0));
+		// Using a DependencyProperty as the backing store for NumeratorAspect.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty NumeratorAspectProperty =
+			DependencyProperty.Register(
+				name: "NumeratorAspect",
+				propertyType: typeof(Aspect),
+				ownerType: typeof(AspectRatioTrigger),
+				typeMetadata: new PropertyMetadata(Aspect.Height)
+			);
 
 
+		/* The threshold that will cause the trigger to fire when the aspect ratio exceeds this value. */
+		public double Threshold
+		{
+			get { return (double)GetValue(ThresholdProperty); }
+			set { SetValue(ThresholdProperty, value); }
+		}
 
-        /* If true, the trigger will fire if the aspect ratio is greater than or equal to the threshold. */
-        public bool ActiveIfEqual
-        {
-            get { return (bool)GetValue(ActiveIfEqualProperty); }
-            set { SetValue(ActiveIfEqualProperty, value); }
-        }
+		// Using a DependencyProperty as the backing store for Threshold.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty ThresholdProperty =
+			DependencyProperty.Register(
+				name: "Threshold",
+				propertyType: typeof(double),
+				ownerType: typeof(AspectRatioTrigger),
+				typeMetadata: new PropertyMetadata(0.0)
+			);
 
-        // Using a DependencyProperty as the backing store for ActiveIfEqual.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ActiveIfEqualProperty =
-            DependencyProperty.Register("ActiveIfEqual", typeof(bool), typeof(AspectRatioTrigger), new PropertyMetadata(false));
+		/* If true, the trigger will fire if the aspect ratio is greater than or equal to the threshold. */
+		public bool ActiveIfEqual
+		{
+			get { return (bool)GetValue(ActiveIfEqualProperty); }
+			set { SetValue(ActiveIfEqualProperty, value); }
+		}
+
+		// Using a DependencyProperty as the backing store for ActiveIfEqual.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty ActiveIfEqualProperty =
+			DependencyProperty.Register(
+				name: "ActiveIfEqual",
+				propertyType: typeof(bool),
+				ownerType: typeof(AspectRatioTrigger),
+				typeMetadata: new PropertyMetadata(false)
+			);
 
 
-        AspectRatioTrigger()
-        {
-            SetActive(false);
-        }
+		AspectRatioTrigger()
+		{
+			SetActive(false);
+		}
 
-        void OnSourcePropertyChanged(FrameworkElement oldValue, FrameworkElement newValue)
-        {
-            UnregisterSizeChanged(oldValue);
-            RegisterSizeChanged(newValue);
-        }
+		void OnSourcePropertyChanged(FrameworkElement oldValue, FrameworkElement newValue)
+		{
+			UnregisterSizeChanged(oldValue);
+			RegisterSizeChanged(newValue);
+		}
 
-        void RegisterSizeChanged(FrameworkElement element)
-        {
-            if (element == null)
-            {
-                return;
-            }
+		void RegisterSizeChanged(FrameworkElement element)
+		{
+			if (element == null)
+			{
+				return;
+			}
 
-            if (element != Source)
-            {
-                UnregisterSizeChanged(Source);
-            }
+			if (element != Source)
+			{
+				UnregisterSizeChanged(Source);
+			}
 
-            element.SizeChanged += OnSizeChanged;
-        }
+			element.SizeChanged += OnSizeChanged;
+		}
 
-        void UnregisterSizeChanged(FrameworkElement element)
-        {
-            if (element != null)
-            {
-                element.SizeChanged -= OnSizeChanged;
-            }
-        }
+		void UnregisterSizeChanged(FrameworkElement element)
+		{
+			if (element != null)
+			{
+				element.SizeChanged -= OnSizeChanged;
+			}
+		}
 
-        void OnSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            UpdateIsActive(e.NewSize);
-        }
+		void OnSizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			UpdateIsActive(e.NewSize);
+		}
 
-        void UpdateIsActive(Size sourceSize)
-        {
-            double numerator, denominator;
-            if (NumeratorAspect == Aspect.Height)
-            {
-                numerator = sourceSize.Height;
-                denominator = sourceSize.Width;
-            }
-            else
-            {
-                numerator = sourceSize.Width;
-                denominator = sourceSize.Height;
-            }
+		void UpdateIsActive(Size sourceSize)
+		{
+			double numerator, denominator;
+			if (NumeratorAspect == Aspect.Height)
+			{
+				numerator = sourceSize.Height;
+				denominator = sourceSize.Width;
+			}
+			else
+			{
+				numerator = sourceSize.Width;
+				denominator = sourceSize.Height;
+			}
 
-            bool isActive = false;
-            if (denominator > 0)
-            {
-                double ratio = numerator / denominator;
-                double threshold = Math.Abs(Threshold);
+			bool isActive = false;
+			if (denominator > 0)
+			{
+				double ratio = numerator / denominator;
+				double threshold = Math.Abs(Threshold);
 
-                isActive = ((ratio > threshold) || (ActiveIfEqual && (ratio == threshold)));
-            }
+				isActive = ((ratio > threshold) || (ActiveIfEqual && (ratio == threshold)));
+			}
 
-            SetActive(isActive);
-        }
+			SetActive(isActive);
+		}
 
-    }
+	}
 }

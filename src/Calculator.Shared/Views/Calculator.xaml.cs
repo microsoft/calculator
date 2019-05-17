@@ -228,21 +228,21 @@ namespace CalculatorApp
                 state = "Programmer";
                 Model.IsDecimalEnabled = false;
                 // UNO TODO
-                // ResultsMVisualStateTrigger.MinWindowHeight = 640;
+                ResultsMVisualStateTrigger.MinWindowHeight = 640;
             }
             else if (IsScientific)
             {
                 state = "Scientific";
                 Model.IsDecimalEnabled = true;
                 // UNO TODO
-                // ResultsMVisualStateTrigger.MinWindowHeight = 544;
+                ResultsMVisualStateTrigger.MinWindowHeight = 544;
             }
             else
             {
                 state = "Standard";
                 Model.IsDecimalEnabled = true;
                 // UNO TODO
-                // ResultsMVisualStateTrigger.MinWindowHeight = 1;
+                ResultsMVisualStateTrigger.MinWindowHeight = 1;
             }
 
             CloseHistoryFlyout();
@@ -376,7 +376,8 @@ namespace CalculatorApp
                 }
                 else
                 {
-                    AnimateWithoutResult.Begin();
+					/* UNO TODO */
+                    AnimateWithoutResult?.Begin();
                 }
             }
         }

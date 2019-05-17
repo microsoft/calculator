@@ -6,23 +6,12 @@
 #include "headers/Rational.h"
 #include "headers/ICalcDisplay.h"
 
-
-struct TokenPair {
-	char* Item1;
-	int Item2;
-};
-
-struct ExpressionDisplayData {
-	int TokenCount;
-	TokenPair* Tokens;
-
-	int CommandCount;
-	void* Commands;
-};
+struct GetHistoryItemResult;
+struct GetHistoryItemsResult;
 
 typedef void (*SetPrimaryDisplayFunc)(void* state, const char* text, bool isError);
 typedef void (*SetIsInErrorFunc)(void* state, bool isInError);
-typedef void (*SetExpressionDisplayFunc)(void* state, ExpressionDisplayData* data);
+typedef void (*SetExpressionDisplayFunc)(void* state, GetHistoryItemResult* data);
 typedef void (*SetParenthesisNumberFunc)(void* state, unsigned int count);
 typedef void (*OnNoRightParenAddedFunc)(void* state);
 typedef void (*MaxDigitsReachedFunc)(void* state);
@@ -56,6 +45,9 @@ struct CalculatorManager_CreateParams {
 #else
 #define DLL_EXPORT __declspec(dllexport)
 #endif
+
+GetHistoryItemResult* MarshalHistoryItem(std::shared_ptr<CalculationManager::HISTORYITEM>& historyItem);
+void* MarshalHistoryItems(std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>& historyItems);
 
 extern "C" {
 
