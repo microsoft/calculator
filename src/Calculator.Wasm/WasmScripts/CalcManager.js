@@ -22,8 +22,8 @@
         var fMaxDigitsReachedCallback       = Module.addFunction((state) => _maxDigitsReachedCallback(state), 'vii');
         var fMemoryItemChangedCallback      = Module.addFunction((state, indexOfMemory) => _memoryItemChangedCallback(state, indexOfMemory), 'vii');
         var fOnHistoryItemAddedCallback     = Module.addFunction((state, addedItemIndex) => _onHistoryItemAddedCallback(state, addedItemIndex), 'vii');
-        var fOnNoRightParenAddedCallback    = Module.addFunction((state) => _onNoRightParenAddedCallback    (state), 'vi');
-        var fSetExpressionDisplayCallback   = Module.addFunction((state) => _setExpressionDisplayCallback   (state), 'vi');
+        var fOnNoRightParenAddedCallback    = Module.addFunction((state) => _onNoRightParenAddedCallback(state), 'vi');
+        var fSetExpressionDisplayCallback   = Module.addFunction((state, historyItem) => _setExpressionDisplayCallback(state, historyItem), 'vii');
         var fSetMemorizedNumbersCallback    = Module.addFunction((state, size, numbers) => _setMemorizedNumbersCallback(state, size, numbers), 'viii');
 
         var ret = `${fGetCEngineStringCallback};`

@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <iostream>
 
-#if !DEBUG
+#if DEBUG
 #if defined(_WINDOWS_)
 #include <Windows.h>
 #include <strsafe.h>
