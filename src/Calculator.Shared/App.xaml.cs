@@ -106,8 +106,12 @@ namespace CalculatorApp
         public static string GetAppViewState()
         {
             String newViewState;
-            CoreWindow window = CoreWindow.GetForCurrentThread();
-            if ((window.Bounds.Width >= 560) && (window.Bounds.Height >= 356))
+#if NETFX_CORE
+			CoreWindow window = CoreWindow.GetForCurrentThread();
+#else
+			var window = Windows.UI.Xaml.Window.Current;
+#endif
+			if ((window.Bounds.Width >= 560) && (window.Bounds.Height >= 356))
             {
                 newViewState = ViewState.DockedView;
             }
