@@ -263,7 +263,6 @@ namespace CalculatorApp
             fields.AddString(L"CalculatorMode", NavCategory::GetFriendlyName(mode)->Data());
             fields.AddUInt32(L"WindowId", windowId);
             LogLevel3Event(EVENT_NAME_CALCULATOR_VIEWED_IN_SESSION, fields);
-            LogLevel2Event(EVENT_NAME_MODE_CHANGED, fields);
         }
     }
 
@@ -543,7 +542,7 @@ namespace CalculatorApp
             LoggingFields fields{};
             // cast mode to an int for telemetry
             fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
-            LogLevel2Event(EVENT_NAME_MODE_CHANGE_BEGIN, fields);
+            LogLevel2Event(EVENT_NAME_MODE_CHANGED, fields);
         }
     }
 
