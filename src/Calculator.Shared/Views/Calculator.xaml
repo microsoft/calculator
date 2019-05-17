@@ -907,7 +907,7 @@
 			<VisualStateGroup>
 				<VisualState x:Name="ResultsL">
 					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowHeight="800" />
+						<AdaptiveTrigger x:Name="ResultsMVisualStateTrigger" MinWindowHeight="800" />
 					</VisualState.StateTriggers>
 					<Storyboard />
 				</VisualState>
