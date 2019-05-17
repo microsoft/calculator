@@ -26,6 +26,7 @@ jobs:
   - script: |
       source /emsdk/emsdk_env.sh
       cd src/CalcManager
+      chmod +x build.sh
       ./build.sh
 
     displayName: 'Build Wasm CalcManager'
