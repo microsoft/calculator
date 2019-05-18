@@ -417,19 +417,13 @@
             </Grid.RowDefinitions>
 
             <!-- From Date -->
-            <TextBlock x:Name="Date_FromLabel"
-                       x:Uid="Date_FromLabel"
-                       Grid.Row="1"
-                       Margin="0,0,0,2"
-                       Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                       TextWrapping="Wrap"/>
             <CalendarDatePicker x:Name="DateDiff_FromDate"
                                 Grid.Row="2"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
-                                AutomationProperties.LabeledBy="{x:Bind Date_FromLabel}"
                                 CalendarViewStyle="{StaticResource DateCalculation_CalendarViewStyle}"
                                 Closed="CalendarFlyoutClosed"
-                                DateChanged="FromDate_DateChanged"/>
+                                DateChanged="FromDate_DateChanged"
+                                Header="From"/>
 
             <!-- To Date -->
             <TextBlock x:Name="Date_ToLabel"
@@ -502,7 +496,6 @@
                                 Grid.Row="2"
                                 Margin="0,0,0,0"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
-                                AutomationProperties.LabeledBy="{x:Bind Date_FromLabel}"
                                 CalendarViewStyle="{StaticResource DateCalculation_CalendarViewStyle}"
                                 Closed="CalendarFlyoutClosed"
                                 DateChanged="AddSubtract_DateChanged"/>
