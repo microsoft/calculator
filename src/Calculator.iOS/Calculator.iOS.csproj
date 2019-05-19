@@ -92,9 +92,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
-    <None Include="Info.plist" />
+    <None Include="Info.plist">
+      <SubType>Designer</SubType>
+    </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Entitlements.plist" />
+    <BundleResource Include="Resources\Fonts\CalcMDL2.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
