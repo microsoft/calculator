@@ -12,88 +12,94 @@ namespace CalculationManager
 {
 	public static class NativeDispatch
 	{
-		[DllImport("CalcManager")]
+#if __IOS__
+		private const string DllPath = "__Internal"; // https://docs.microsoft.com/en-us/xamarin/ios/platform/native-interop
+#else
+		private const string DllPath = "CalcManager";
+#endif
+
+		[DllImport(DllPath)]
 		public static extern IntPtr CalculatorManager_Create(ref CalculatorManager_CreateParams parms);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_SendCommand(IntPtr nativeManager, Command command);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_SetRadix(IntPtr nativeManager, RADIX_TYPE iRadixType);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_Reset(IntPtr nativeManager, bool clearMemory);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_SetStandardMode(IntPtr nativeManager);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_SetScientificMode(IntPtr nativeManager);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_SetProgrammerMode(IntPtr nativeManager);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_MemorizeNumber(IntPtr nativeManager);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_MemorizedNumberLoad(IntPtr nativeManager, int value);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_MemorizedNumberAdd(IntPtr nativeManager, int value);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_MemorizedNumberSubtract(IntPtr nativeManager, int value);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_MemorizedNumberClear(IntPtr nativeManager, int value);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_MemorizedNumberClearAll(IntPtr nativeManager);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern bool CalculatorManager_IsEngineRecording(IntPtr nativeManager);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_SetMemorizedNumbersString(IntPtr nativeManager);
 
-		[DllImport("CalcManager", CharSet = CharSet.Unicode)]
+		[DllImport(DllPath, CharSet = CharSet.Unicode)]
 		public static extern string CalculatorManager_GetResultForRadix(IntPtr nativeManager, int radix, int precision);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_SetPrecision(IntPtr nativeManager, int precision);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_UpdateMaxIntDigits(IntPtr nativeManager);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern char CalculatorManager_DecimalSeparator(IntPtr nativeManager);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern bool CalculatorManager_RemoveHistoryItem(IntPtr nativeManager, int uIdx);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_ClearHistory(IntPtr nativeManager);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern int CalculatorManager_MaxHistorySize(IntPtr nativeManager);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern Command CalculatorManager_GetCurrentDegreeMode(IntPtr nativeManager);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern void CalculatorManager_SetInHistoryItemLoadMode(IntPtr nativeManager, bool isHistoryItemLoadMode);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern IntPtr CalculatorManager_GetHistoryItems(IntPtr nativeManager);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern IntPtr CalculatorManager_GetHistoryItemsWithMode(IntPtr nativeManager, CALCULATOR_MODE mode);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern IntPtr CalculatorManager_GetHistoryItem(IntPtr nativeManager, int uIdx);
 
-		[DllImport("CalcManager")]
+		[DllImport(DllPath)]
 		public static extern CommandType IExpressionCommand_GetCommandType(IntPtr pExpressionCommand);
 
 		public delegate IntPtr GetCEngineStringFunc(IntPtr state, IntPtr id);
