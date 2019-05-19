@@ -573,7 +573,7 @@ namespace CalculatorApp.ViewModel
 
             m_decimalSeparator = LocalizationSettings.GetInstance().GetDecimalSeparator();
 
-#if !__WASM__
+#if !__WASM__ && !__IOS__
 			if (CoreWindow.GetForCurrentThread() != null)
             {
                 // Must have a CoreWindow to access the resource context.
