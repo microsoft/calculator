@@ -4,14 +4,14 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace CalculatorUITestFramework
 {
     public sealed class WinAppDriver
     {
-        // Note: append /wd/hub to the URL if you're directing the test at Appium
-        private const string windowsApplicationDriverUrl = "http://127.0.0.1:4723";
+        private WindowsDriverLocalService windowsDriverService = null;
         private const string calculatorAppId = "Microsoft.WindowsCalculator.Dev_8wekyb3d8bbwe!App";
         private static WinAppDriver instance = null;
         public static WinAppDriver Instance
@@ -36,6 +36,18 @@ namespace CalculatorUITestFramework
 
         public void SetupCalculatorSession(TestContext context)
         {
+            windowsDriverService = new WindowsDriverServiceBuilder().Build();
+
+            windowsDriverService.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
+            {
+                if (!String.IsNullOrEmpty(e.Data))
+                {
+                    Console.WriteLine(e.Data);
+                }
+            });
+
+            windowsDriverService.Start();
+
             // Launch Calculator application if it is not yet launched
             if (CalculatorSession == null)
             {
@@ -44,7 +56,7 @@ namespace CalculatorUITestFramework
                 var options = new AppiumOptions();
                 options.AddAdditionalCapability("app", calculatorAppId);
                 options.AddAdditionalCapability("deviceName", "WindowsPC");
-                CalculatorSession = new WindowsDriver<WindowsElement>(new Uri(windowsApplicationDriverUrl), options);
+                CalculatorSession = new WindowsDriver<WindowsElement>(windowsDriverService.ServiceUrl, options);
                 CalculatorSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 Assert.IsNotNull(CalculatorSession);
             }
@@ -57,6 +69,12 @@ namespace CalculatorUITestFramework
             {
                 CalculatorSession.Quit();
                 CalculatorSession = null;
+            }
+
+            if (windowsDriverService != null)
+            {
+                windowsDriverService.Dispose();
+                windowsDriverService = null;
             }
         }
 

@@ -15,6 +15,10 @@ jobs:
   steps:
   - checkout: none
 
+  - powershell: Set-DisplayResolution -Width 1920 -Height 1080 -Force	
+    displayName: Set resolution to 1920x1080	
+    continueOnError: true	
+
   - task: DownloadBuildArtifacts@0
     displayName: Download AppxBundle and CalculatorUITests
     inputs:
@@ -35,11 +39,6 @@ jobs:
       filePath: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
       arguments: -Force
 
-  - task: WinAppDriver.winappdriver-pipelines-task.winappdriver-pipelines-task.Windows Application Driver@0
-    displayName: 'WinAppDriver - Start'
-    inputs:
-      AgentResolution: 1080p
-
   - task: VSTest@2
     displayName: Run CalculatorUITests
     inputs:
@@ -48,8 +47,3 @@ jobs:
       runSettingsFile: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/CalculatorUITests.runsettings
       platform: ${{ parameters.platform }}
       configuration: Release
- 
-  - task: WinAppDriver.winappdriver-pipelines-task.winappdriver-pipelines-task.Windows Application Driver@0
-    displayName: 'WinAppDriver - Stop'
-    inputs:
-      OperationType: Stop
