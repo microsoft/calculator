@@ -51,8 +51,8 @@ Run the following commands in Powershell and copy/paste the output.
 
 **Requested Assignment**
 <!--
-Some people just want to report a bug and let someone else fix.
-Other people want to not only submit the bug report, but want to fix it as well.
+Some people just want to report a bug and let someone else fix it.
+Other people want to not only submit the bug report, but fix it as well.
 Both scenarios are completely ok.  We just want to know which one it is.
 Please indicate which bucket you fall into by keeping one and removing the other.
 -->

@@ -45,7 +45,7 @@ Show as much of the experience as needed to explain the idea. This can be as sim
 **Requested Assignment**
 <!--
 Some people just want to suggest a feature and let someone else implement it.
-Other people want to not only suggest a feature, but want to implement it as well.
+Other people want to not only suggest a feature, but implement it as well.
 Both scenarios are completely ok.  We just want to know which one it is.
 We are likely to prioritize the review of feature requests if they already have someone who can implement them.
 Please indicate which bucket you fall into by keeping one and removing the other.
