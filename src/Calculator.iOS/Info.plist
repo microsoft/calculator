@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>UnoQuickStart.iOS</string>
+	<string>Calculator</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.WindowsCalculator</string>
+	<string>uno.platform.calculator</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
