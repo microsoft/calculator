@@ -14,7 +14,7 @@ static constexpr size_t SERIALIZED_NUMBER_MINSIZE = 3;
 
 // Converts Memory Command enum value to unsigned char,
 // while ignoring Warning C4309: 'conversion' : truncation of constant value
-#if defined(__EMSCRIPTEN__)
+#if defined(__EMSCRIPTEN__) || defined(__APPLE__)
 #define MEMORY_COMMAND_TO_UNSIGNED_CHAR(c) static_cast<unsigned char>(c)
 #else
 #define MEMORY_COMMAND_TO_UNSIGNED_CHAR(c) __pragma(warning(push)) __pragma(warning(disable : 4309)) static_cast<unsigned char>(c) __pragma(warning(pop))
