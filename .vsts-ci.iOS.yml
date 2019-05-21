@@ -1,0 +1,75 @@
+jobs:
+- job: iOS
+
+  pool:
+    vmImage: 'macOS-10.14'
+
+  variables:
+    NUGET_PACKAGES: $(build.sourcesdirectory)/.nuget
+
+  steps:
+  - checkout: self
+    clean: true
+
+  - bash: /bin/bash -c "sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1"
+    displayName: Select Xamarin Version
+  
+  - bash: |
+      shopt -s nullglob
+      function join_by { local IFS="$1"; shift; echo "$*"; }
+      lib_path=$(join_by ';' $(Agent.WorkFolder)/_tasks/GitVersion*/4.0.*/lib/osx)
+      echo LD_LIBRARY_PATH: $lib_path
+      echo "##vso[task.setvariable variable=LD_LIBRARY_PATH]$lib_path"
+    displayName: Update LD_LIBRARY_PATH for GitVersion
+    
+  - task: GitVersion@4
+    inputs:
+      updateAssemblyInfo: false
+
+  - task: InstallAppleCertificate@2
+    displayName: 'Install an Apple certificate'
+    inputs:
+      certSecureFile: 'nventive-appstore-prod-20190521.p12'
+      certPwd: '$(iOSSigning.CertificatePwd)'
+      signingIdentity: '$(iOSSigning.CertificateIdentity)'
+
+  - task: InstallAppleProvisioningProfile@1
+    displayName: 'Install an Apple provisioning profile'
+    inputs:
+      provProfileSecureFile: 'Uno_Calculator.mobileprovision'
+
+  - bash: |
+      cd $(build.sourcesdirectory)/src/CalcManager
+      chmod +x build_ios.sh
+      ./build_ios.sh
+
+    displayName: Build native CalcManager
+
+  - task: MSBuild@1
+    inputs:
+      solution: '$(build.sourcesdirectory)/src/Calculator.iOS/Calculator.iOS.csproj'
+      msbuildLocationMethod: version
+      msbuildVersion: latest
+      msbuildArchitecture: x86
+      msbuildArguments: /r /p:Configuration=Release /p:Platform=iPhone /detailedsummary /m:16 /nr:false "/p:InformationalVersion=%GITVERSION_InformationalVersion%"
+      clean: false
+      maximumCpuCount: true
+      restoreNugetPackages: false
+      logProjectEvents: true
+      createLogFile: true
+
+  - task: CopyFiles@2
+    displayName: 'Publish iOS Binaries'
+    inputs:
+      SourceFolder: $(build.sourcesdirectory)/src/Calculator.iOS/bin/iPhone/Release
+      Contents: '*.ipa'
+      TargetFolder: $(build.artifactstagingdirectory)
+      CleanTargetFolder: false
+      OverWrite: false
+      flattenFolders: false
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: $(build.artifactstagingdirectory)
+      ArtifactName: Uno-Calculator-iOS
+      ArtifactType: Container

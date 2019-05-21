@@ -32,4 +32,4 @@ jobs:
     inputs:
       pathToPublish: $(build.artifactstagingdirectory)
       artifactType: container
-      artifactName: UnoBanner
+      artifactName: Calculator
