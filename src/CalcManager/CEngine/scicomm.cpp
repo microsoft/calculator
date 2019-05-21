@@ -711,13 +711,6 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         break;
 
     case IDC_PI:
-
-        m_bNoPrevEqu = true;
-        if (!m_bChangeOp)
-        {
-            m_nOpCode = 0;
-        }
-
         if (!m_fIntegerMode)
         {
             CheckAndAddLastBinOpToHistory(); // pi is like entering the number
