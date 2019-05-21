@@ -1,6 +1,9 @@
+#!/bin/bash
+
 xcrun -sdk iphoneos clang \
     -x c++ \
     -arch arm64 \
+	-miphoneos-version-min=10.0 \
     -std=c++1z \
     -stdlib=libc++ \
     -c \

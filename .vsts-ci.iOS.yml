@@ -38,6 +38,13 @@ jobs:
     inputs:
       provProfileSecureFile: 'Uno_Calculator.mobileprovision'
 
+  - bash: |
+      cd $(build.sourcesdirectory)/src/CalcManager
+      chmod +x build_ios.sh
+      ./build_ios.sh
+
+    displayName: Build native CalcManager
+
   - task: MSBuild@1
     inputs:
       solution: '$(build.sourcesdirectory)/src/Calculator.iOS/Calculator.iOS.csproj'
