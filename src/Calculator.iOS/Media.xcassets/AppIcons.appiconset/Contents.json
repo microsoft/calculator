@@ -68,22 +68,10 @@
       "filename": "iPhone-20x20@3x.png"
     },
     {
-      "scale": "3x",
-      "size": "40x40",
-      "idiom": "iphone",
-      "filename": "iPhone-40x40@3x.png"
-    },
-    {
       "scale": "2x",
       "size": "60x60",
       "idiom": "iphone",
       "filename": "iPhone-60x60@2x.png"
-    },
-    {
-      "scale": "2x",
-      "size": "76x76",
-      "idiom": "ipad",
-      "filename": "iPad-76x76@2x.png squaretile-sdk-ipad.png"
     },
     {
       "scale": "2x",
@@ -96,6 +84,18 @@
       "size": "1024x1024",
       "idiom": "ios-marketing",
       "filename": "ios-marketing-1024x1024@1x.png"
+    },
+    {
+      "scale": "2x",
+      "size": "76x76",
+      "idiom": "ipad",
+      "filename": "iPhone-152x152@3x.png"
+    },
+    {
+      "scale": "3x",
+      "size": "40x40",
+      "idiom": "iphone",
+      "filename": "iPhone-120x120@3x.png"
     }
   ],
   "properties": {},
