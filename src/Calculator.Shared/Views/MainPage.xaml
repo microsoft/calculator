@@ -8,6 +8,7 @@
 			xmlns:converters="using:CalculatorApp.Converters"
 			xmlns:local="using:CalculatorApp"
 			xmlns:vm="using:WindowsCalculatorShared.ViewModel"
+			xmlns:toolkit="using:Uno.UI.Toolkit"
 			x:Name="pageRoot"
 			Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
 			Loaded="OnPageLoaded"
@@ -59,8 +60,8 @@
 							Value="Right"/>
 		</Style>
 	</Page.Resources>
-	
-	<Grid>
+
+	<Grid toolkit:VisibleBoundsPadding.PaddingMask="All">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 				<!--
