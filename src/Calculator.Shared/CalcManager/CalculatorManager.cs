@@ -257,7 +257,7 @@ namespace CalculationManager
 
 			for (var i = 0; i < historyResultItem.TokenCount; i++)
 			{
-				var tokenString = Marshal.PtrToStringUni(Marshal.ReadIntPtr(historyResultItem.TokenStrings, i * Marshal.SizeOf<IntPtr>()));
+				var tokenString = NativeDispatch.PtrToString(Marshal.ReadIntPtr(historyResultItem.TokenStrings, i * Marshal.SizeOf<IntPtr>()));
 				var tokenValue = Marshal.ReadInt32(historyResultItem.TokenValues, i * Marshal.SizeOf<int>());
 
 				historyItem.historyItemVector.spTokens.Append((tokenString, tokenValue));

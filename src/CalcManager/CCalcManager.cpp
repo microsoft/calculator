@@ -65,12 +65,9 @@ public:
     // Inherited via ICalcDisplay
     virtual void SetPrimaryDisplay(const std::wstring& pszText, bool isError) override
     {
-        std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
-        auto str = convert.to_bytes(pszText);
-
         DBGPRINT("Native:SetPrimaryDisplay(%ls, %d)\n", pszText.data(), isError);
 
-        _params.SetPrimaryDisplay(_params.CalculatorState, str.data(), isError);
+        _params.SetPrimaryDisplay(_params.CalculatorState, pszText.data(), isError);
     }
 
     virtual void SetIsInError(bool isInError) override

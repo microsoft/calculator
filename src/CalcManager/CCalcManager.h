@@ -9,7 +9,7 @@
 struct GetHistoryItemResult;
 struct GetHistoryItemsResult;
 
-typedef void (*SetPrimaryDisplayFunc)(void* state, const char* text, bool isError);
+typedef void (*SetPrimaryDisplayFunc)(void* state, const wchar_t* text, bool isError);
 typedef void (*SetIsInErrorFunc)(void* state, bool isInError);
 typedef void (*SetExpressionDisplayFunc)(void* state, GetHistoryItemResult* data);
 typedef void (*SetParenthesisNumberFunc)(void* state, unsigned int count);
