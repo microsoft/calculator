@@ -20,7 +20,8 @@ using namespace Windows::Foundation::Collections;
 
 namespace CalculatorApp
 {
-    TitleBar::TitleBar() : m_coreTitleBar(CoreApplication::GetCurrentView()->TitleBar)
+    TitleBar::TitleBar()
+        : m_coreTitleBar(CoreApplication::GetCurrentView()->TitleBar)
     {
         m_uiSettings = ref new UISettings();
         m_accessibilitySettings = ref new AccessibilitySettings();
@@ -163,7 +164,7 @@ namespace CalculatorApp
 
     void TitleBar::OnWindowActivated(_In_ Object ^ /*sender*/, _In_ WindowActivatedEventArgs ^ e)
     {
-        VisualStateManager::GoToState(this, e->WindowActivationState == CoreWindowActivationState::Deactivated ? WindowNotFocused->Name : WindowFocused->Name,
-                                      false);
+        VisualStateManager::GoToState(
+            this, e->WindowActivationState == CoreWindowActivationState::Deactivated ? WindowNotFocused->Name : WindowFocused->Name, false);
     }
 }

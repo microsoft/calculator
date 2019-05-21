@@ -58,8 +58,11 @@ public
         // class that can access the private constructor.
         friend class CalculatorAnnouncement;
 
-        NarratorAnnouncement(Platform::String ^ announcement, Platform::String ^ activityId, AutomationNotificationKind kind,
-                             AutomationNotificationProcessing processing);
+        NarratorAnnouncement(
+            Platform::String ^ announcement,
+            Platform::String ^ activityId,
+            AutomationNotificationKind kind,
+            AutomationNotificationProcessing processing);
 
         Platform::String ^ m_announcement;
         Platform::String ^ m_activityId;

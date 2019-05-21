@@ -235,9 +235,10 @@ void StandardCalculatorViewModel::SetOpenParenthesisCountNarratorAnnouncement()
     wstring localizedParenthesisCount = to_wstring(m_OpenParenthesisCount).c_str();
     LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
 
-    String ^ announcement =
-        LocalizationStringUtil::GetLocalizedNarratorAnnouncement(CalculatorResourceKeys::OpenParenthesisCountAutomationFormat,
-                                                                 m_localizedOpenParenthesisCountChangedAutomationFormat, localizedParenthesisCount.c_str());
+    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
+        CalculatorResourceKeys::OpenParenthesisCountAutomationFormat,
+        m_localizedOpenParenthesisCountChangedAutomationFormat,
+        localizedParenthesisCount.c_str());
 
     Announcement = CalculatorAnnouncement::GetOpenParenthesisCountChangedAnnouncement(announcement);
 }
@@ -283,8 +284,9 @@ void StandardCalculatorViewModel::DisableButtons(CommandType selectedExpressionC
     }
 }
 
-void StandardCalculatorViewModel::SetExpressionDisplay(_Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
-                                                       _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
+void StandardCalculatorViewModel::SetExpressionDisplay(
+    _Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
+    _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
 {
     m_tokens = tokens;
     m_commands = commands;
@@ -298,8 +300,9 @@ void StandardCalculatorViewModel::SetExpressionDisplay(_Inout_ shared_ptr<Calcul
     AreTokensUpdated = true;
 }
 
-void StandardCalculatorViewModel::SetHistoryExpressionDisplay(_Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
-                                                              _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
+void StandardCalculatorViewModel::SetHistoryExpressionDisplay(
+    _Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
+    _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
 {
     m_tokens = make_shared<CalculatorVector<pair<wstring, int>>>(*tokens);
     m_commands = make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>(*commands);
@@ -878,14 +881,25 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString, ViewMode mode)
             }
         }
 
-        // Handle exponent and exponent sign (...e+... or ...e-...)
+        // Handle exponent and exponent sign (...e+... or ...e-... or ...e...)
         if (mappedNumOp == NumbersAndOperatorsEnum::Exp)
         {
-            ++it;
-            if (!(MapCharacterToButtonId(*it, canSendNegate) == NumbersAndOperatorsEnum::Add))
+            //Check the following item
+            switch (MapCharacterToButtonId(*(it + 1), canSendNegate))
+            {
+            case NumbersAndOperatorsEnum::Subtract:
             {
                 Command cmdNegate = ConvertToOperatorsEnum(NumbersAndOperatorsEnum::Negate);
                 m_standardCalculatorManager.SendCommand(cmdNegate);
+                ++it;
+            }
+            break;
+            case NumbersAndOperatorsEnum::Add:
+            {
+                //Nothing to do, skip to the next item
+                ++it;
+            }
+            break;
             }
         }
 
@@ -1035,8 +1049,8 @@ void StandardCalculatorViewModel::OnMemoryButtonPressed()
     int windowId = Utils::GetWindowId();
     TraceLogger::GetInstance().InsertIntoMemoryMap(windowId, IsStandard, IsScientific, IsProgrammer);
 
-    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(CalculatorResourceKeys::MemorySave, m_localizedMemorySavedAutomationFormat,
-                                                                                     m_DisplayValue->Data());
+    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
+        CalculatorResourceKeys::MemorySave, m_localizedMemorySavedAutomationFormat, m_DisplayValue->Data());
 
     Announcement = CalculatorAnnouncement::GetMemoryItemAddedAnnouncement(announcement);
 }
@@ -1149,110 +1163,6 @@ void StandardCalculatorViewModel::OnMemoryClear(_In_ Object ^ memoryItemPosition
     }
 }
 
-Array<unsigned char> ^ StandardCalculatorViewModel::Serialize()
-{
-    DataWriter ^ writer = ref new DataWriter();
-    writer->WriteUInt32(static_cast<UINT32>(m_CurrentAngleType));
-    writer->WriteBoolean(IsFToEChecked);
-    writer->WriteBoolean(IsCurrentViewPinned);
-    writer->WriteUInt32(static_cast<UINT32>(m_standardCalculatorManager.SerializeSavedDegreeMode()));
-
-    // Serialize Memory
-    vector<long> serializedMemory;
-    serializedMemory = m_standardCalculatorManager.GetSerializedMemory();
-    size_t lengthOfSerializedMemory = serializedMemory.size();
-    writer->WriteUInt32(static_cast<UINT32>(lengthOfSerializedMemory));
-    for (auto data : serializedMemory)
-    {
-        writer->WriteInt32(data);
-    }
-
-    // Serialize Primary Display
-    vector<long> serializedPrimaryDisplay = m_standardCalculatorManager.GetSerializedPrimaryDisplay();
-    writer->WriteUInt32(static_cast<UINT32>(serializedPrimaryDisplay.size()));
-    for (auto data : serializedPrimaryDisplay)
-    {
-        writer->WriteInt32(data);
-    }
-
-    // For ProgrammerMode
-    writer->WriteUInt32(static_cast<UINT32>(CurrentRadixType));
-
-    // Serialize commands of calculator manager
-    vector<unsigned char> serializedCommand = m_standardCalculatorManager.SerializeCommands();
-    writer->WriteUInt32(static_cast<UINT32>(serializedCommand.size()));
-    writer->WriteBytes(ref new Array<unsigned char>(serializedCommand.data(), static_cast<unsigned int>(serializedCommand.size())));
-
-    if (IsInError)
-    {
-        Utils::SerializeCommandsAndTokens(m_tokens, m_commands, writer);
-    }
-
-    // Convert viewmodel data in writer to bytes
-    IBuffer ^ buffer = writer->DetachBuffer();
-    DataReader ^ reader = DataReader::FromBuffer(buffer);
-    Platform::Array<unsigned char> ^ viewModelDataAsBytes = ref new Array<unsigned char>(buffer->Length);
-    reader->ReadBytes(viewModelDataAsBytes);
-
-    // Return byte array
-    return viewModelDataAsBytes;
-}
-
-void StandardCalculatorViewModel::Deserialize(Array<unsigned char> ^ state)
-{
-    // Read byte array into a buffer
-    DataWriter ^ writer = ref new DataWriter();
-    writer->WriteBytes(state);
-    IBuffer ^ buffer = writer->DetachBuffer();
-
-    // Read view model data
-    if (buffer->Length != 0)
-    {
-        DataReader ^ reader = DataReader::FromBuffer(buffer);
-        m_CurrentAngleType = ConvertIntegerToNumbersAndOperatorsEnum(reader->ReadUInt32());
-
-        IsFToEChecked = reader->ReadBoolean();
-        IsCurrentViewPinned = reader->ReadBoolean();
-        Command serializedDegreeMode = static_cast<Command>(reader->ReadUInt32());
-
-        m_standardCalculatorManager.SendCommand(serializedDegreeMode);
-
-        // Deserialize Memory
-        UINT32 memoryDataLength = reader->ReadUInt32();
-        vector<long> serializedMemory;
-        for (unsigned int i = 0; i < memoryDataLength; i++)
-        {
-            serializedMemory.push_back(reader->ReadInt32());
-        }
-        m_standardCalculatorManager.DeSerializeMemory(serializedMemory);
-
-        // Serialize Primary Display
-        UINT32 serializedPrimaryDisplayLength = reader->ReadUInt32();
-        vector<long> serializedPrimaryDisplay;
-        for (unsigned int i = 0; i < serializedPrimaryDisplayLength; i++)
-        {
-            serializedPrimaryDisplay.push_back(reader->ReadInt32());
-        }
-        m_standardCalculatorManager.DeSerializePrimaryDisplay(serializedPrimaryDisplay);
-
-        CurrentRadixType = reader->ReadUInt32();
-        // Read command data and Deserialize
-        UINT32 modeldatalength = reader->ReadUInt32();
-        Array<unsigned char> ^ modelDataAsBytes = ref new Array<unsigned char>(modeldatalength);
-        reader->ReadBytes(modelDataAsBytes);
-        m_standardCalculatorManager.DeSerializeCommands(vector<unsigned char>(modelDataAsBytes->begin(), modelDataAsBytes->end()));
-
-        // After recalculation. If there is an error then
-        // IsInError should be set synchronously.
-        if (IsInError)
-        {
-            shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> commandVector = Utils::DeserializeCommands(reader);
-            shared_ptr<CalculatorVector<pair<wstring, int>>> tokenVector = Utils::DeserializeTokens(reader);
-            SetExpressionDisplay(tokenVector, commandVector);
-        }
-    }
-}
-
 void StandardCalculatorViewModel::OnPropertyChanged(String ^ propertyname)
 {
     if (propertyname == IsScientificPropertyName)
@@ -1313,13 +1223,18 @@ void StandardCalculatorViewModel::SetCalculatorType(ViewMode targetState)
     }
 }
 
-Platform::String ^ StandardCalculatorViewModel::GetRawDisplayValue()
+String^ StandardCalculatorViewModel::GetRawDisplayValue()
 {
-    wstring rawValue;
-
-    LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue->Data(), DisplayValue->Length(), &rawValue);
-
-    return ref new Platform::String(rawValue.c_str());
+    if (IsInError)
+    {
+        return DisplayValue;
+    }
+    else
+    {
+        wstring rawValue;
+        LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue->Data(), DisplayValue->Length(), &rawValue);
+        return ref new String(rawValue.c_str());
+    }
 }
 
 // Given a format string, returns a string with the input display value inserted.
@@ -1957,9 +1872,11 @@ NarratorAnnouncement ^ StandardCalculatorViewModel::GetDisplayUpdatedNarratorAnn
     }
     else
     {
-        announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(CalculatorResourceKeys::ButtonPressFeedbackFormat,
-                                                                                m_localizedButtonPressFeedbackAutomationFormat,
-                                                                                m_CalculationResultAutomationName->Data(), m_feedbackForButtonPress->Data());
+        announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
+            CalculatorResourceKeys::ButtonPressFeedbackFormat,
+            m_localizedButtonPressFeedbackAutomationFormat,
+            m_CalculationResultAutomationName->Data(),
+            m_feedbackForButtonPress->Data());
     }
 
     // Make sure we don't accidentally repeat an announcement.

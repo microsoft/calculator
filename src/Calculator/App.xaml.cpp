@@ -180,7 +180,6 @@ task<void> App::SetupJumpList()
             ViewMode mode = option->Mode;
             auto item = JumpListItem::CreateWithArguments(((int)mode).ToString(), L"ms-resource:///Resources/" + NavCategory::GetNameResourceKey(mode));
             item->Description = L"ms-resource:///Resources/" + NavCategory::GetNameResourceKey(mode);
-            item->GroupName = L"ms-resource:///Resources/" + NavCategoryGroup::GetHeaderResourceKey(calculatorOptions->GroupType);
             item->Logo = ref new Uri("ms-appx:///Assets/" + mode.ToString() + ".png");
 
             jumpList->Items->Append(item);
@@ -356,9 +355,11 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
                                 auto activatedEventArgs = dynamic_cast<IApplicationViewActivatedEventArgs ^>(args);
                                 if ((activatedEventArgs != nullptr) && (activatedEventArgs->CurrentlyShownApplicationViewId != 0))
                                 {
-                                    create_task(ApplicationViewSwitcher::TryShowAsStandaloneAsync(frameService->GetViewId(), ViewSizePreference::Default,
-                                                                                                  activatedEventArgs->CurrentlyShownApplicationViewId,
-                                                                                                  ViewSizePreference::Default))
+                                    create_task(ApplicationViewSwitcher::TryShowAsStandaloneAsync(
+                                                    frameService->GetViewId(),
+                                                    ViewSizePreference::Default,
+                                                    activatedEventArgs->CurrentlyShownApplicationViewId,
+                                                    ViewSizePreference::Default))
                                         .then(
                                             [safeFrameServiceCreation](bool viewShown) {
                                                 // SafeFrameServiceCreation is used to automatically remove the frame
@@ -385,8 +386,8 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
 
                 if (activationViewSwitcher != nullptr)
                 {
-                    activationViewSwitcher->ShowAsStandaloneAsync(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()),
-                                                                  ViewSizePreference::Default);
+                    activationViewSwitcher->ShowAsStandaloneAsync(
+                        ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()), ViewSizePreference::Default);
                     TraceLogger::GetInstance().LogNewWindowCreationEnd(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
                     TraceLogger::GetInstance().LogPrelaunchedAppActivatedByUser();
                 }

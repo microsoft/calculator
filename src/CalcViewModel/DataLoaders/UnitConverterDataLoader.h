@@ -16,9 +16,16 @@ namespace CalculatorApp
             {
             }
 
-            OrderedUnit(int id, std::wstring name, std::wstring abbreviation, int order, bool isConversionSource = false, bool isConversionTarget = false,
-                        bool isWhimsical = false)
-                : UnitConversionManager::Unit(id, name, abbreviation, isConversionSource, isConversionTarget, isWhimsical), order(order)
+            OrderedUnit(
+                int id,
+                std::wstring name,
+                std::wstring abbreviation,
+                int order,
+                bool isConversionSource = false,
+                bool isConversionTarget = false,
+                bool isWhimsical = false)
+                : UnitConversionManager::Unit(id, name, abbreviation, isConversionSource, isConversionTarget, isWhimsical)
+                , order(order)
             {
             }
 
@@ -37,9 +44,17 @@ namespace CalculatorApp
             ExplicitUnitConversionData()
             {
             }
-            ExplicitUnitConversionData(CalculatorApp::Common::ViewMode categoryId, int parentUnitId, int unitId, double ratio, double offset,
-                                       bool offsetFirst = false)
-                : categoryId(categoryId), parentUnitId(parentUnitId), unitId(unitId), UnitConversionManager::ConversionData(ratio, offset, offsetFirst)
+            ExplicitUnitConversionData(
+                CalculatorApp::Common::ViewMode categoryId,
+                int parentUnitId,
+                int unitId,
+                double ratio,
+                double offset,
+                bool offsetFirst = false)
+                : categoryId(categoryId)
+                , parentUnitId(parentUnitId)
+                , unitId(unitId)
+                , UnitConversionManager::ConversionData(ratio, offset, offsetFirst)
             {
             }
 

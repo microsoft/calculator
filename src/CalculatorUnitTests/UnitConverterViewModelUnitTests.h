@@ -34,8 +34,6 @@ namespace CalculatorUnitTests
         UCM::Category GetCurrentCategory();
         void SetCurrentUnitTypes(const UCM::Unit& fromType, const UCM::Unit& toType) override;
         void SwitchActive(const std::wstring& newValue);
-        std::wstring Serialize() override;
-        void DeSerialize(const std::wstring& serializedData) override;
         std::wstring SaveUserPreferences() override;
         void RestoreUserPreferences(_In_ const std::wstring& userPreferences) override;
         void SendCommand(UCM::Command command) override;
@@ -61,8 +59,6 @@ namespace CalculatorUnitTests
         UINT m_switchActiveCallCount;
         UINT m_sendCommandCallCount;
         UINT m_setVMCallbackCallCount;
-        UINT m_serializeCallCount;
-        UINT m_deSerializeCallCount;
 
         UCM::Category m_curCategory;
         UCM::Unit m_curFrom;

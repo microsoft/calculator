@@ -60,8 +60,8 @@ namespace CalculatorApp
             Platform::String ^ m_localizedHistoryCleared;
 
             void RestoreHistory(_In_ CalculationManager::CALCULATOR_MODE cMode);
-            CalculationManager::HISTORYITEM DeserializeHistoryItem(_In_ Platform::String ^ historyItemKey,
-                                                                   _In_ Windows::Storage::ApplicationDataContainer ^ historyContainer);
+            CalculationManager::HISTORYITEM
+            DeserializeHistoryItem(_In_ Platform::String ^ historyItemKey, _In_ Windows::Storage::ApplicationDataContainer ^ historyContainer);
             Windows::Storage::ApplicationDataContainer ^ GetHistoryContainer(_In_ CalculationManager::CALCULATOR_MODE cMode);
             Platform::String ^ GetHistoryContainerKey(_In_ CalculationManager::CALCULATOR_MODE cMode);
             void ClearHistoryContainer(_In_ CalculationManager::CALCULATOR_MODE cMode);

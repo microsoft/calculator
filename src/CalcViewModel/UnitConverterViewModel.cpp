@@ -122,14 +122,15 @@ UnitConverterViewModel::UnitConverterViewModel(const shared_ptr<UCM::IUnitConver
     , m_isInputBlocked(false)
     , m_CurrencyDataLoadFailed(false)
 {
+    auto localizationService = LocalizationService::GetInstance();
     m_model->SetViewModelCallback(make_shared<UnitConverterVMCallback>(this));
     m_model->SetViewModelCurrencyCallback(make_shared<ViewModelCurrencyCallback>(this));
-    m_decimalFormatter = LocalizationService::GetRegionalSettingsAwareDecimalFormatter();
+    m_decimalFormatter = localizationService->GetRegionalSettingsAwareDecimalFormatter();
     m_decimalFormatter->FractionDigits = 0;
     m_decimalFormatter->IsGrouped = true;
     m_decimalSeparator = LocalizationSettings::GetInstance().GetDecimalSeparator();
 
-    m_currencyFormatter = LocalizationService::GetRegionalSettingsAwareCurrencyFormatter();
+    m_currencyFormatter = localizationService->GetRegionalSettingsAwareCurrencyFormatter();
     m_currencyFormatter->IsGrouped = true;
     m_currencyFormatter->Mode = CurrencyFormatterMode::UseCurrencyCode;
     m_currencyFormatter->ApplyRoundingForCurrency(RoundingAlgorithm::RoundHalfDown);
@@ -463,7 +464,8 @@ void UnitConverterViewModel::UpdateSupplementaryResults(const std::vector<std::t
 
     // Schedule the timer
     m_supplementaryResultsTimer = ThreadPoolTimer::CreateTimer(
-        ref new TimerElapsedHandler(this, &UnitConverterViewModel::SupplementaryResultsTimerTick, TIMER_CALLBACK_CONTEXT), SUPPLEMENTARY_VALUES_INTERVAL,
+        ref new TimerElapsedHandler(this, &UnitConverterViewModel::SupplementaryResultsTimerTick, TIMER_CALLBACK_CONTEXT),
+        SUPPLEMENTARY_VALUES_INTERVAL,
         ref new TimerDestroyedHandler(this, &UnitConverterViewModel::SupplementaryResultsTimerCancel, TIMER_CALLBACK_CONTEXT));
 }
 
@@ -609,52 +611,6 @@ void UnitConverterViewModel::OnPropertyChanged(Platform::String ^ prop)
     {
         RaisePropertyChanged(CurrencySymbolVisibilityPropertyName);
     }
-}
-
-String ^ UnitConverterViewModel::Serialize()
-{
-    wstringstream out(wstringstream::out);
-    const wchar_t* delimiter = L"[;;;]";
-    out << std::to_wstring(m_resettingTimer) << delimiter;
-    out << std::to_wstring(static_cast<int>(m_value1cp)) << delimiter;
-    out << m_Value1Active << delimiter << m_Value2Active << delimiter;
-    out << m_Value1->Data() << delimiter << m_Value2->Data() << delimiter;
-    out << m_valueFromUnlocalized << delimiter << m_valueToUnlocalized << delimiter << L"[###]";
-    wstring unitConverterSerializedData = m_model->Serialize();
-
-    if (!unitConverterSerializedData.empty())
-    {
-        out << m_model->Serialize() << L"[###]";
-        String ^ serializedData = ref new String(wstring(out.str()).c_str());
-        return serializedData;
-    }
-
-    return nullptr;
-}
-
-void UnitConverterViewModel::Deserialize(Platform::String ^ state)
-{
-    wstring serializedData = wstring(state->Data());
-    vector<wstring> tokens = UCM::UnitConverter::StringToVector(serializedData, L"[###]");
-    assert(tokens.size() >= 2);
-    vector<wstring> viewModelData = UCM::UnitConverter::StringToVector(tokens[0], L"[;;;]");
-    assert(viewModelData.size() == EXPECTEDVIEWMODELDATATOKENS);
-    m_resettingTimer = (viewModelData[0].compare(L"1") == 0);
-    m_value1cp = (ConversionParameter)_wtoi(viewModelData[1].c_str());
-    m_Value1Active = (viewModelData[2].compare(L"1") == 0);
-    m_Value2Active = (viewModelData[3].compare(L"1") == 0);
-    m_Value1 = ref new String(viewModelData[4].c_str());
-    m_Value2 = ref new String(viewModelData[5].c_str());
-    m_valueFromUnlocalized = viewModelData[6];
-    m_valueToUnlocalized = viewModelData[7];
-    wstringstream modelData(wstringstream::out);
-    for (unsigned int i = 1; i < tokens.size(); i++)
-    {
-        modelData << tokens[i] << L"[###]";
-    }
-    m_model->DeSerialize(modelData.str());
-    InitializeView();
-    RaisePropertyChanged(nullptr); // Update since all props have been updated.
 }
 
 // Saving User Preferences of Category and Associated-Units across Sessions.
@@ -1010,12 +966,16 @@ String ^ UnitConverterViewModel::GetLocalizedAutomationName(_In_ String ^ displa
 }
 
 String
-    ^ UnitConverterViewModel::GetLocalizedConversionResultStringFormat(_In_ String ^ fromValue, _In_ String ^ fromUnit, _In_ String ^ toValue,
-                                                                       _In_ String ^ toUnit)
+    ^ UnitConverterViewModel::GetLocalizedConversionResultStringFormat(
+        _In_ String ^ fromValue,
+        _In_ String ^ fromUnit,
+        _In_ String ^ toValue,
+        _In_ String ^ toUnit)
 {
-    String ^ localizedString = ref new String(LocalizationStringUtil::GetLocalizedString(m_localizedConversionResultFormat->Data(), fromValue->Data(),
-                                                                                         fromUnit->Data(), toValue->Data(), toUnit->Data())
-                                                  .c_str());
+    String ^ localizedString =
+        ref new String(LocalizationStringUtil::GetLocalizedString(
+                           m_localizedConversionResultFormat->Data(), fromValue->Data(), fromUnit->Data(), toValue->Data(), toUnit->Data())
+                           .c_str());
     return localizedString;
 }
 

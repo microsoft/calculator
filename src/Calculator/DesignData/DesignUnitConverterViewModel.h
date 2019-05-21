@@ -21,11 +21,15 @@ namespace Numbers
         ref class CategoryViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         public:
-            CategoryViewModel(Platform::String ^ name) : m_Name(name), m_NegateVisibility(Windows::UI::Xaml::Visibility::Collapsed)
+            CategoryViewModel(Platform::String ^ name)
+                : m_Name(name)
+                , m_NegateVisibility(Windows::UI::Xaml::Visibility::Collapsed)
             {
             }
 
-            CategoryViewModel(Platform::String ^ name, Windows::UI::Xaml::Visibility negateVisibility) : m_Name(name), m_NegateVisibility(negateVisibility)
+            CategoryViewModel(Platform::String ^ name, Windows::UI::Xaml::Visibility negateVisibility)
+                : m_Name(name)
+                , m_NegateVisibility(negateVisibility)
             {
             }
 
@@ -39,7 +43,9 @@ namespace Numbers
         ref class UnitViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         public:
-            UnitViewModel(Platform::String ^ unit, Platform::String ^ abbr) : m_Name(unit), m_Abbreviation(abbr)
+            UnitViewModel(Platform::String ^ unit, Platform::String ^ abbr)
+                : m_Name(unit)
+                , m_Abbreviation(abbr)
             {
             }
 
@@ -53,7 +59,8 @@ namespace Numbers
         ref class UnitConverterSupplementaryResultViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         public:
-            UnitConverterSupplementaryResultViewModel(Platform::String ^ value, Platform::String ^ unit, Platform::String ^ abbr) : m_Value(value)
+            UnitConverterSupplementaryResultViewModel(Platform::String ^ value, Platform::String ^ unit, Platform::String ^ abbr)
+                : m_Value(value)
             {
                 m_Unit = ref new UnitViewModel(unit, abbr);
             }
@@ -68,7 +75,11 @@ namespace Numbers
         ref class UnitConverterViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         public:
-            UnitConverterViewModel() : m_Value1("Åy24"), m_Value2("Åy183"), m_Value1Active(true), m_Value2Active(false)
+            UnitConverterViewModel()
+                : m_Value1("Åy24")
+                , m_Value2("Åy183")
+                , m_Value1Active(true)
+                , m_Value2Active(false)
             {
                 m_SupplementaryResults = ref new Platform::Collections::Vector<UnitConverterSupplementaryResultViewModel ^>();
                 m_SupplementaryResults->Append(ref new UnitConverterSupplementaryResultViewModel("128", "Kilograms", "Kgs"));

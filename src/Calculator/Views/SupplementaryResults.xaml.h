@@ -26,11 +26,17 @@ public
         }
 
         internal : virtual Platform::Object
-                   ^ Convert(Platform::Object ^ value, Windows::UI::Xaml::Interop::TypeName targetType, Platform::Object ^ parameter,
-                             Platform::String ^ language) = Windows::UI::Xaml::Data::IValueConverter::Convert;
+                   ^ Convert(
+                       Platform::Object ^ value,
+                       Windows::UI::Xaml::Interop::TypeName targetType,
+                       Platform::Object ^ parameter,
+                       Platform::String ^ language) = Windows::UI::Xaml::Data::IValueConverter::Convert;
         virtual Platform::Object
-            ^ ConvertBack(Platform::Object ^ value, Windows::UI::Xaml::Interop::TypeName targetType, Platform::Object ^ parameter,
-                          Platform::String ^ language) = Windows::UI::Xaml::Data::IValueConverter::ConvertBack;
+            ^ ConvertBack(
+                Platform::Object ^ value,
+                Windows::UI::Xaml::Interop::TypeName targetType,
+                Platform::Object ^ parameter,
+                Platform::String ^ language) = Windows::UI::Xaml::Data::IValueConverter::ConvertBack;
 
     private:
         Windows::UI::Xaml::ResourceDictionary ^ m_delighters;

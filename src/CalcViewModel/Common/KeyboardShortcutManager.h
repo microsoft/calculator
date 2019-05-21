@@ -62,13 +62,13 @@ namespace CalculatorApp
 
             static void OnVirtualKeyInverseChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
 
-            static void OnVirtualKeyControlInverseChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue,
-                                                                       MyVirtualKey newValue);
+            static void
+            OnVirtualKeyControlInverseChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
 
             static void OnVirtualKeyAltChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
 
-            static void OnVirtualKeyControlShiftChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue,
-                                                                     MyVirtualKey newValue);
+            static void
+            OnVirtualKeyControlShiftChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
 
             static void OnCharacterReceivedHandler(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::CharacterReceivedEventArgs ^ args);
             static void OnKeyDownHandler(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args);

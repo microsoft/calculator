@@ -2907,4 +2907,12 @@
     <value>Microsoft পরিষেবা চুক্তি</value>
     <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
   </data>
+  <data name="UnitAbbreviation_Pyeong" xml:space="preserve">
+    <value>পিয়ং</value>
+    <comment>An abbreviation for a measurement unit of area.</comment>
+  </data>
+  <data name="UnitName_Pyeong" xml:space="preserve">
+    <value>পিয়ং</value>
+    <comment>A measurement unit for area.</comment>
+  </data>
 </root>

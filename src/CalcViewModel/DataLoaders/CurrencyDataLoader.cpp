@@ -46,8 +46,10 @@ static constexpr auto CACHE_LANGCODE_KEY = L"CURRENCY_CONVERTER_LANGCODE";
 static constexpr auto CACHE_DELIMITER = L"%";
 
 static constexpr auto STATIC_DATA_FILENAME = L"CURRENCY_CONVERTER_STATIC_DATA.txt";
-static constexpr array<wstring_view, 5> STATIC_DATA_PROPERTIES = { wstring_view{ L"CountryCode", 11 }, wstring_view{ L"CountryName", 11 },
-                                                                   wstring_view{ L"CurrencyCode", 12 }, wstring_view{ L"CurrencyName", 12 },
+static constexpr array<wstring_view, 5> STATIC_DATA_PROPERTIES = { wstring_view{ L"CountryCode", 11 },
+                                                                   wstring_view{ L"CountryName", 11 },
+                                                                   wstring_view{ L"CurrencyCode", 12 },
+                                                                   wstring_view{ L"CurrencyName", 12 },
                                                                    wstring_view{ L"CurrencySymbol", 14 } };
 
 static constexpr auto ALL_RATIOS_DATA_FILENAME = L"CURRENCY_CONVERTER_ALL_RATIOS_DATA.txt";
@@ -85,7 +87,7 @@ namespace CalculatorApp
     }
 }
 
-CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> client)
+CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> client, const wchar_t * forcedResponseLanguage)
     : m_client(move(client))
     , m_loadStatus(CurrencyLoadStatus::NotLoaded)
     , m_responseLanguage(L"en-US")
@@ -94,9 +96,20 @@ CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> clie
     , m_networkManager(ref new NetworkManager())
     , m_meteredOverrideSet(false)
 {
-    if (GlobalizationPreferences::Languages->Size > 0)
+    if (forcedResponseLanguage != nullptr)
     {
-        m_responseLanguage = GlobalizationPreferences::Languages->GetAt(0);
+        m_responseLanguage = ref new Platform::String(forcedResponseLanguage);
+    }
+    else
+    {
+        if (GlobalizationPreferences::Languages->Size > 0)
+        {
+            m_responseLanguage = GlobalizationPreferences::Languages->GetAt(0);
+        }
+        else
+        {
+            m_responseLanguage = L"en-US";
+        }
     }
 
     if (m_client != nullptr)
@@ -105,13 +118,14 @@ CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> clie
         m_client->SetResponseLanguage(m_responseLanguage);
     }
 
+    auto localizationService = LocalizationService::GetInstance();
     if (CoreWindow::GetForCurrentThread() != nullptr)
     {
         // Must have a CoreWindow to access the resource context.
-        m_isRtlLanguage = LocalizationService::GetInstance()->IsRtlLayout();
+        m_isRtlLanguage = localizationService->IsRtlLayout();
     }
 
-    m_ratioFormatter = LocalizationService::GetRegionalSettingsAwareDecimalFormatter();
+    m_ratioFormatter = localizationService->GetRegionalSettingsAwareDecimalFormatter();
     m_ratioFormatter->IsGrouped = true;
     m_ratioFormatter->IsDecimalPointAlwaysDisplayed = true;
     m_ratioFormatter->FractionDigits = FORMATTER_DIGIT_COUNT;
@@ -275,8 +289,8 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencyRatioEquality(_In_ const U
                 wstring digitSymbol = wstring{ LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit(L'1') };
                 wstring roundedFormat = m_ratioFormatter->Format(rounded)->Data();
 
-                wstring ratioString = LocalizationStringUtil::GetLocalizedString(m_ratioFormat.c_str(), digitSymbol.c_str(), unit1.abbreviation.c_str(),
-                                                                                 roundedFormat.c_str(), unit2.abbreviation.c_str());
+                wstring ratioString = LocalizationStringUtil::GetLocalizedString(
+                    m_ratioFormat.c_str(), digitSymbol.c_str(), unit1.abbreviation.c_str(), roundedFormat.c_str(), unit2.abbreviation.c_str());
 
                 wstring accessibleRatioString = LocalizationStringUtil::GetLocalizedString(
                     m_ratioFormat.c_str(), digitSymbol.c_str(), unit1.accessibleName.c_str(), roundedFormat.c_str(), unit2.accessibleName.c_str());
@@ -459,8 +473,11 @@ task<bool> CurrencyDataLoader::TryLoadDataFromWebOverrideAsync()
 };
 #pragma optimize("", on)
 
-bool CurrencyDataLoader::TryParseWebResponses(_In_ String ^ staticDataJson, _In_ String ^ allRatiosJson, _Inout_ vector<UCM::CurrencyStaticData>& staticData,
-                                              _Inout_ CurrencyRatioMap& allRatiosData)
+bool CurrencyDataLoader::TryParseWebResponses(
+    _In_ String ^ staticDataJson,
+    _In_ String ^ allRatiosJson,
+    _Inout_ vector<UCM::CurrencyStaticData>& staticData,
+    _Inout_ CurrencyRatioMap& allRatiosData)
 {
     return TryParseStaticData(staticDataJson, staticData) && TryParseAllRatiosData(allRatiosJson, allRatiosData);
 }

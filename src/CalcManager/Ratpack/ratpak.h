@@ -356,12 +356,14 @@ uint64_t rattoUi64(_In_ PRAT prat, uint32_t radix, int32_t precision);
 extern PNUMBER _createnum(_In_ uint32_t size); // returns an empty number structure with size digits
 extern PNUMBER nRadixxtonum(_In_ PNUMBER a, uint32_t radix, int32_t precision);
 extern PNUMBER gcd(_In_ PNUMBER a, _In_ PNUMBER b);
-extern PNUMBER StringToNumber(std::wstring_view numberString, uint32_t radix,
-                              int32_t precision); // takes a text representation of a number and returns a number.
+extern PNUMBER StringToNumber(
+    std::wstring_view numberString,
+    uint32_t radix,
+    int32_t precision); // takes a text representation of a number and returns a number.
 
 // takes a text representation of a number as a mantissa with sign and an exponent with sign.
-extern PRAT StringToRat(bool mantissaIsNegative, std::wstring_view mantissa, bool exponentIsNegative, std::wstring_view exponent, uint32_t radix,
-                        int32_t precision);
+extern PRAT
+StringToRat(bool mantissaIsNegative, std::wstring_view mantissa, bool exponentIsNegative, std::wstring_view exponent, uint32_t radix, int32_t precision);
 
 extern PNUMBER i32factnum(int32_t ini32, uint32_t radix);
 extern PNUMBER i32prodnum(int32_t start, int32_t stop, uint32_t radix);

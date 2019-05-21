@@ -58,8 +58,15 @@ namespace CalculatorApp
     private
         struct NavCategoryInitializer
         {
-            constexpr NavCategoryInitializer(ViewMode mode, int id, wchar_t const* name, wchar_t const* nameKey, wchar_t const* glyph, CategoryGroupType group,
-                                             MyVirtualKey vKey, bool categorySupportsNegative)
+            constexpr NavCategoryInitializer(
+                ViewMode mode,
+                int id,
+                wchar_t const* name,
+                wchar_t const* nameKey,
+                wchar_t const* glyph,
+                CategoryGroupType group,
+                MyVirtualKey vKey,
+                bool categorySupportsNegative)
                 : viewMode(mode)
                 , serializationId(id)
                 , friendlyName(name)
@@ -85,7 +92,10 @@ namespace CalculatorApp
         struct NavCategoryGroupInitializer
         {
             constexpr NavCategoryGroupInitializer(CategoryGroupType t, wchar_t const* h, wchar_t const* n, wchar_t const* a)
-                : type(t), headerResourceKey(h), modeResourceKey(n), automationResourceKey(a)
+                : type(t)
+                , headerResourceKey(h)
+                , modeResourceKey(n)
+                , automationResourceKey(a)
             {
             }
 
@@ -161,8 +171,14 @@ namespace CalculatorApp
 
             static ViewMode GetViewModeForVirtualKey(MyVirtualKey virtualKey);
 
-            internal : NavCategory(Platform::String ^ name, Platform::String ^ automationName, Platform::String ^ glyph, Platform::String ^ accessKey,
-                                   Platform::String ^ mode, ViewMode viewMode, bool supportsNegative)
+            internal : NavCategory(
+                           Platform::String ^ name,
+                           Platform::String ^ automationName,
+                           Platform::String ^ glyph,
+                           Platform::String ^ accessKey,
+                           Platform::String ^ mode,
+                           ViewMode viewMode,
+                           bool supportsNegative)
                 : m_name(name)
                 , m_automationName(automationName)
                 , m_glyph(glyph)

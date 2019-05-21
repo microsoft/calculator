@@ -9,7 +9,8 @@ using namespace Windows::UI::Xaml::Automation::Peers;
 
 namespace CalculatorApp::Controls
 {
-    CalculationResultAutomationPeer::CalculationResultAutomationPeer(FrameworkElement ^ owner) : FrameworkElementAutomationPeer(owner)
+    CalculationResultAutomationPeer::CalculationResultAutomationPeer(FrameworkElement ^ owner)
+        : FrameworkElementAutomationPeer(owner)
     {
     }
 

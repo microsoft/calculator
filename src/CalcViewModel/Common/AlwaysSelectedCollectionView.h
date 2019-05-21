@@ -9,7 +9,8 @@ namespace CalculatorApp
     {
         ref class AlwaysSelectedCollectionView sealed : public Windows::UI::Xaml::DependencyObject, public Windows::UI::Xaml::Data::ICollectionView
         {
-            internal : AlwaysSelectedCollectionView(Windows::UI::Xaml::Interop::IBindableVector ^ source) : m_currentPosition(-1)
+            internal : AlwaysSelectedCollectionView(Windows::UI::Xaml::Interop::IBindableVector ^ source)
+                : m_currentPosition(-1)
             {
                 m_source = source;
 
@@ -47,8 +48,8 @@ namespace CalculatorApp
                 throw ref new Platform::NotImplementedException();
             }
             property Windows::Foundation::Collections::IObservableVector<Platform::Object ^> ^ CollectionGroups {
-                virtual Windows::Foundation::Collections::IObservableVector<Platform::Object
-                                                                            ^> ^ get() = Windows::UI::Xaml::Data::ICollectionView::CollectionGroups::get
+                virtual Windows::Foundation::Collections::IObservableVector<
+                    Platform::Object ^> ^ get() = Windows::UI::Xaml::Data::ICollectionView::CollectionGroups::get
                 {
                     return ref new Platform::Collections::Vector<Platform::Object ^>();
                 }
@@ -80,8 +81,9 @@ namespace CalculatorApp
                 // restore the selection to the way we wanted it to begin with
                 if (m_currentPosition >= 0 && m_currentPosition < static_cast<int>(m_source->Size))
                 {
-                    this->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal,
-                                               ref new Windows::UI::Core::DispatchedHandler([this]() { m_currentChanged(this, nullptr); }));
+                    this->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]() {
+                                                   m_currentChanged(this, nullptr);
+                                               }));
                 }
                 return false;
             }
@@ -167,14 +169,14 @@ namespace CalculatorApp
             {
                 throw ref new Platform::NotImplementedException();
             }
-            virtual unsigned int
-            GetMany(unsigned int /*startIndex*/,
-                    Platform::WriteOnlyArray<Platform::Object ^> ^ /*items*/) = Windows::Foundation::Collections::IVector<Platform::Object ^>::GetMany
+            virtual unsigned int GetMany(
+                unsigned int /*startIndex*/,
+                Platform::WriteOnlyArray<Platform::Object ^> ^ /*items*/) = Windows::Foundation::Collections::IVector<Platform::Object ^>::GetMany
             {
                 throw ref new Platform::NotImplementedException();
             }
-            virtual Windows::Foundation::Collections::IVectorView<Platform::Object ^> ^ GetView() = Windows::Foundation::Collections::IVector<Platform::Object
-                                                                                                                                              ^>::GetView
+            virtual Windows::Foundation::Collections::IVectorView<Platform::Object ^> ^ GetView() = Windows::Foundation::Collections::IVector<
+                Platform::Object ^>::GetView
             {
                 throw ref new Platform::NotImplementedException();
             }
@@ -263,8 +265,11 @@ namespace CalculatorApp
 
         private:
             virtual Platform::Object
-                ^ Convert(Platform::Object ^ value, Windows::UI::Xaml::Interop::TypeName /*targetType*/, Platform::Object ^ /*parameter*/,
-                          Platform::String ^ /*language*/) = Windows::UI::Xaml::Data::IValueConverter::Convert
+                ^ Convert(
+                    Platform::Object ^ value,
+                    Windows::UI::Xaml::Interop::TypeName /*targetType*/,
+                    Platform::Object ^ /*parameter*/,
+                    Platform::String ^ /*language*/) = Windows::UI::Xaml::Data::IValueConverter::Convert
             {
                 auto result = dynamic_cast<Windows::UI::Xaml::Interop::IBindableVector ^>(value);
                 if (result)
@@ -275,8 +280,11 @@ namespace CalculatorApp
             }
 
             virtual Platform::Object
-                ^ ConvertBack(Platform::Object ^ /*value*/, Windows::UI::Xaml::Interop::TypeName /*targetType*/, Platform::Object ^ /*parameter*/,
-                              Platform::String ^ /*language*/) = Windows::UI::Xaml::Data::IValueConverter::ConvertBack
+                ^ ConvertBack(
+                    Platform::Object ^ /*value*/,
+                    Windows::UI::Xaml::Interop::TypeName /*targetType*/,
+                    Platform::Object ^ /*parameter*/,
+                    Platform::String ^ /*language*/) = Windows::UI::Xaml::Data::IValueConverter::ConvertBack
             {
                 return Windows::UI::Xaml::DependencyProperty::UnsetValue;
             }

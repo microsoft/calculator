@@ -41,7 +41,11 @@ DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsStandard);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsScientific);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsProgrammer);
 
-Calculator::Calculator() : m_doAnimate(false), m_isLastAnimatedInScientific(false), m_isLastAnimatedInProgrammer(false), m_resultAnimate(false)
+Calculator::Calculator()
+    : m_doAnimate(false)
+    , m_isLastAnimatedInScientific(false)
+    , m_isLastAnimatedInProgrammer(false)
+    , m_resultAnimate(false)
 {
     SetFontSizeResources();
     InitializeComponent();
@@ -93,7 +97,7 @@ void Calculator::SetFontSizeResources()
         { L"Tibt", 104, 29.333, 20, 40, 56, 40, 56 },   { L"Default", 104, 29.333, 23, 40, 56, 40, 56 }
     };
 
-    DecimalFormatter ^ formatter = LocalizationService::GetRegionalSettingsAwareDecimalFormatter();
+    DecimalFormatter^ formatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter();
 
     const FontTable* currentItem = fontTables;
     while (currentItem->numericSystem.compare(std::wstring(L"Default")) != 0 && currentItem->numericSystem.compare(formatter->NumeralSystem->Data()) != 0)

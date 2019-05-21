@@ -44,12 +44,17 @@ namespace CalculatorApp
                 DateCalculationEngine(_In_ Platform::String ^ calendarIdentifier);
 
                 // Public Methods
-                bool __nothrow AddDuration(_In_ Windows::Foundation::DateTime startDate, _In_ const DateDifference& duration,
-                                           _Out_ Windows::Foundation::DateTime* endDate);
-                bool __nothrow SubtractDuration(_In_ Windows::Foundation::DateTime startDate, _In_ const DateDifference& duration,
-                                                _Out_ Windows::Foundation::DateTime* endDate);
-                void __nothrow GetDateDifference(_In_ Windows::Foundation::DateTime date1, _In_ Windows::Foundation::DateTime date2, _In_ DateUnit outputFormat,
-                                                 _Out_ DateDifference* difference);
+                bool __nothrow
+                AddDuration(_In_ Windows::Foundation::DateTime startDate, _In_ const DateDifference& duration, _Out_ Windows::Foundation::DateTime* endDate);
+                bool __nothrow SubtractDuration(
+                    _In_ Windows::Foundation::DateTime startDate,
+                    _In_ const DateDifference& duration,
+                    _Out_ Windows::Foundation::DateTime* endDate);
+                void __nothrow GetDateDifference(
+                    _In_ Windows::Foundation::DateTime date1,
+                    _In_ Windows::Foundation::DateTime date2,
+                    _In_ DateUnit outputFormat,
+                    _Out_ DateDifference* difference);
 
             private:
                 // Private Variables

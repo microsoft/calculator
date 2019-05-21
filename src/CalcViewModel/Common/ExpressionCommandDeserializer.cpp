@@ -7,7 +7,8 @@
 using namespace CalculatorApp::Common;
 using namespace Windows::Storage::Streams;
 
-CommandDeserializer::CommandDeserializer(_In_ DataReader ^ dataReader) : m_dataReader(dataReader)
+CommandDeserializer::CommandDeserializer(_In_ DataReader ^ dataReader)
+    : m_dataReader(dataReader)
 {
 }
 

@@ -45,7 +45,9 @@ using namespace Windows::UI::ViewManagement;
 // There are 10,000 intervals in 1 ms.
 static const long long DURATION_500_MS = 10000 * 500;
 
-UnitConverter::UnitConverter() : m_meteredConnectionOverride(false), m_isAnimationEnabled(false)
+UnitConverter::UnitConverter()
+    : m_meteredConnectionOverride(false)
+    , m_isAnimationEnabled(false)
 {
     m_layoutDirection = LocalizationService::GetInstance()->GetFlowDirection();
     m_FlowDirectionHorizontalAlignment = m_layoutDirection == ::FlowDirection::RightToLeft ? ::HorizontalAlignment::Right : ::HorizontalAlignment::Left;

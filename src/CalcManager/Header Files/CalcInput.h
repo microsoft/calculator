@@ -13,7 +13,9 @@ namespace CalcEngine
     class CalcNumSec
     {
     public:
-        CalcNumSec() : value(), m_isNegative(false)
+        CalcNumSec()
+            : value()
+            , m_isNegative(false)
         {
         }
 
@@ -41,11 +43,18 @@ namespace CalcEngine
     class CalcInput
     {
     public:
-        CalcInput() : CalcInput(L'.')
+        CalcInput()
+            : CalcInput(L'.')
         {
         }
 
-        CalcInput(wchar_t decSymbol) : m_hasExponent(false), m_hasDecimal(false), m_decPtIndex(0), m_decSymbol(decSymbol), m_base(), m_exponent()
+        CalcInput(wchar_t decSymbol)
+            : m_hasExponent(false)
+            , m_hasDecimal(false)
+            , m_decPtIndex(0)
+            , m_decSymbol(decSymbol)
+            , m_base()
+            , m_exponent()
         {
         }
 

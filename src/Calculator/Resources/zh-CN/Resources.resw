@@ -901,7 +901,10 @@
     <value>左括号</value>
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
-  
+  <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
+    <value>左括号，左开式括号计数 %1</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
+  </data>
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>右括号</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
@@ -1107,7 +1110,7 @@
     <comment>Unit conversion category name called Time</comment>
   </data>
   <data name="CategoryName_VolumeText" xml:space="preserve">
-    <value>音量</value>
+    <value>体积</value>
     <comment>Unit conversion category name called Volume (eg. cups, teaspoons, milliliters)</comment>
   </data>
   <data name="CategoryName_TemperatureText" xml:space="preserve">
@@ -2903,5 +2906,13 @@
   <data name="AboutControlServicesAgreement.Text" xml:space="preserve">
     <value>Microsoft 服务协议</value>
     <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
+  </data>
+  <data name="UnitAbbreviation_Pyeong" xml:space="preserve">
+    <value>坪</value>
+    <comment>An abbreviation for a measurement unit of area.</comment>
+  </data>
+  <data name="UnitName_Pyeong" xml:space="preserve">
+    <value>坪</value>
+    <comment>A measurement unit for area.</comment>
   </data>
 </root>

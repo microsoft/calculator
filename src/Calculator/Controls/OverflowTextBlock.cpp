@@ -155,8 +155,9 @@ void OverflowTextBlock::UpdateScrollButtons()
         ShowHideScrollButtons(::Visibility::Collapsed, ::Visibility::Collapsed);
     }
     // We have more number on both side. Show both arrows
-    else if ((m_expressionContainer->HorizontalOffset > 0)
-             && (m_expressionContainer->HorizontalOffset < (m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth)))
+    else if (
+        (m_expressionContainer->HorizontalOffset > 0)
+        && (m_expressionContainer->HorizontalOffset < (m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth)))
     {
         ShowHideScrollButtons(::Visibility::Visible, ::Visibility::Visible);
     }

@@ -221,10 +221,11 @@ namespace CalculatorFunctionalTests
             m_historyViewModel->SaveHistory();
             m_historyViewModel->ReloadHistory(ViewMode::Scientific);
             auto itemAfterSerializeDeserialize = m_standardViewModel->m_standardCalculatorManager.GetHistoryItem(0);
-            VERIFY_IS_TRUE((itemBeforeSerializeDeserialize->historyItemVector.expression == itemAfterSerializeDeserialize->historyItemVector.expression)
-                           && (itemBeforeSerializeDeserialize->historyItemVector.result == itemAfterSerializeDeserialize->historyItemVector.result)
-                           && (itemBeforeSerializeDeserialize->historyItemVector.spCommands == itemAfterSerializeDeserialize->historyItemVector.spCommands)
-                           && (itemBeforeSerializeDeserialize->historyItemVector.spTokens == itemAfterSerializeDeserialize->historyItemVector.spTokens));
+            VERIFY_IS_TRUE(
+                (itemBeforeSerializeDeserialize->historyItemVector.expression == itemAfterSerializeDeserialize->historyItemVector.expression)
+                && (itemBeforeSerializeDeserialize->historyItemVector.result == itemAfterSerializeDeserialize->historyItemVector.result)
+                && (itemBeforeSerializeDeserialize->historyItemVector.spCommands == itemAfterSerializeDeserialize->historyItemVector.spCommands)
+                && (itemBeforeSerializeDeserialize->historyItemVector.spTokens == itemAfterSerializeDeserialize->historyItemVector.spTokens));
             Cleanup();
         }
 

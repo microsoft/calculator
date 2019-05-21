@@ -9,7 +9,8 @@ using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Windows::UI::Xaml::Controls;
 
-LiveRegionHost::LiveRegionHost() : m_host(nullptr)
+LiveRegionHost::LiveRegionHost()
+    : m_host(nullptr)
 {
 }
 

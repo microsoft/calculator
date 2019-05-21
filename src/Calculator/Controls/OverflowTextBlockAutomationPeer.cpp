@@ -10,7 +10,8 @@ using namespace Windows::Foundation::Collections;
 
 namespace CalculatorApp::Controls
 {
-    OverflowTextBlockAutomationPeer::OverflowTextBlockAutomationPeer(OverflowTextBlock ^ owner) : FrameworkElementAutomationPeer(owner)
+    OverflowTextBlockAutomationPeer::OverflowTextBlockAutomationPeer(OverflowTextBlock ^ owner)
+        : FrameworkElementAutomationPeer(owner)
     {
     }
 

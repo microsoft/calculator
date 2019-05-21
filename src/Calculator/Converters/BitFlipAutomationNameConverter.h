@@ -14,11 +14,17 @@ namespace CalculatorApp
         {
         public:
             virtual Platform::Object
-                ^ Convert(_In_ Platform::Object ^ value, Windows::UI::Xaml::Interop::TypeName targetType, _In_ Platform::Object ^ parameter,
-                          _In_ Platform::String ^ language);
+                ^ Convert(
+                    _In_ Platform::Object ^ value,
+                    Windows::UI::Xaml::Interop::TypeName targetType,
+                    _In_ Platform::Object ^ parameter,
+                    _In_ Platform::String ^ language);
             virtual Platform::Object
-                ^ ConvertBack(_In_ Platform::Object ^ value, Windows::UI::Xaml::Interop::TypeName targetType, _In_ Platform::Object ^ parameter,
-                              _In_ Platform::String ^ language);
+                ^ ConvertBack(
+                    _In_ Platform::Object ^ value,
+                    Windows::UI::Xaml::Interop::TypeName targetType,
+                    _In_ Platform::Object ^ parameter,
+                    _In_ Platform::String ^ language);
         };
     }
 }

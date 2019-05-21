@@ -343,8 +343,8 @@ TEST_METHOD(TestSubtractOob)
         DateTime endDate;
 
         // Subtract Duration
-        bool isValid = m_DateCalcEngine.SubtractDuration(DateUtils::SystemTimeToDateTime(datetimeBoundSubtract[testIndex].startDate),
-                                                         datetimeBoundSubtract[testIndex].dateDiff, &endDate);
+        bool isValid = m_DateCalcEngine.SubtractDuration(
+            DateUtils::SystemTimeToDateTime(datetimeBoundSubtract[testIndex].startDate), datetimeBoundSubtract[testIndex].dateDiff, &endDate);
 
         // Assert for the result
         VERIFY_IS_FALSE(isValid);
