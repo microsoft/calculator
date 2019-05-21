@@ -41,6 +41,7 @@
   <key>UIAppFonts</key>
   <array>
 	<string>Fonts/winjs-symbols.ttf</string>
+	<string>Fonts/CalcMDL2.ttf</string>
   </array>
 </dict>
 </plist>
