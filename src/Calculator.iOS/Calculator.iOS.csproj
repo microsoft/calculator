@@ -83,6 +83,7 @@
     <CodesignResourceRules />
     <MtouchUseLlvm>true</MtouchUseLlvm>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
+    <BuildIpa>true</BuildIpa>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
