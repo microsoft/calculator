@@ -16,7 +16,7 @@
         var fGetCEngineStringCallback       = Module.addFunction((state, id) => _getCEngineStringCallback(state, id), 'iii');
 
         var fBinaryOperatorReceivedCallback = Module.addFunction((state) => _binaryOperatorReceivedCallback(state), 'vi');
-        var fSetPrimaryDisplayCallback      = Module.addFunction((state, displayStringValue, isError) => _setPrimaryDisplayCallback(state, Module.UTF8ToString(displayStringValue), isError), 'viii');
+        var fSetPrimaryDisplayCallback      = Module.addFunction((state, displayStringValue, isError) => _setPrimaryDisplayCallback(state, displayStringValue, isError), 'viii');
         var fSetIsInErrorCallback           = Module.addFunction((state, isError) => _setIsInErrorCallback(state, isError), 'vii');
         var fSetParenthesisNumberCallback   = Module.addFunction((state, parenthesisCount) => _setParenthesisNumberCallback(state, parenthesisCount), 'vii');
         var fMaxDigitsReachedCallback       = Module.addFunction((state) => _maxDigitsReachedCallback(state), 'vii');

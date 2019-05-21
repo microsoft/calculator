@@ -98,7 +98,7 @@ namespace CalculationManager
 
 		public delegate IntPtr GetCEngineStringFunc(IntPtr state, IntPtr id);
 		public delegate void BinaryOperatorReceivedFunc(IntPtr state);
-		public delegate void SetPrimaryDisplayCallbackFunc(IntPtr state, string displayStringValue, bool isError);
+		public delegate void SetPrimaryDisplayCallbackFunc(IntPtr state, IntPtr pDisplayStringValue, bool isError);
 		public delegate void SetIsInErrorCallbackFunc(IntPtr state, bool isError);
 		public delegate void SetParenthesisNumberCallbackFunc(IntPtr state, int parenthesisCount);
 
@@ -163,6 +163,10 @@ namespace CalculationManager
 			var nativeResult = Marshal.PtrToStructure<GetHistoryItemResult>(historyItem);
 			var itemResult = CalculatorManager.UnmarshalHistoryItemResult(nativeResult);
 
+			var tokens = string.Join("; ", itemResult.historyItemVector.spTokens.Select(v => $"{v.Item1} : {v.Item2}"));
+
+			DebugTrace($"CalculatorManager.SetExpressionDisplayCallback: Tokens {tokens}");
+
 			manager.SetExpressionDisplay(itemResult.historyItemVector.spTokens, itemResult.historyItemVector.spCommands);
 
 		}
@@ -174,7 +178,7 @@ namespace CalculationManager
 			var numbers = new List<String>();
 			for (int i = 0; i < count; i++)
 			{
-				var value = Marshal.PtrToStringUni(Marshal.ReadIntPtr(newMemorizedNumbers, i));
+				var value = PtrToString(Marshal.ReadIntPtr(newMemorizedNumbers, i));
 				numbers.Add(value);
 			}
 
@@ -199,8 +203,10 @@ namespace CalculationManager
 			DebugTrace($"CalculatorManager.BinaryOperatorReceivedCallback");
 		}
 
-		public static void SetPrimaryDisplayCallback(IntPtr state, [MarshalAs(UnmanagedType.LPWStr)] string displayStringValue, bool isError)
+		public static void SetPrimaryDisplayCallback(IntPtr state, IntPtr pDisplayStringValue, bool isError)
 		{
+			var displayStringValue = PtrToString(pDisplayStringValue);
+
 			var manager = GCHandle.FromIntPtr((IntPtr)state).Target as CalculatorDisplay;
 			manager.SetPrimaryDisplay(displayStringValue, isError);
 
@@ -218,19 +224,57 @@ namespace CalculationManager
 		public static IntPtr GetCEngineStringCallback(IntPtr state, IntPtr pResourceId)
 		{
 			var provider = GCHandle.FromIntPtr(state).Target as EngineResourceProvider;
-			var resourceId = Marshal.PtrToStringUni(pResourceId);
+
+			var resourceId = PtrToString(pResourceId);
+
 			var resourceValue = provider.GetCEngineString(resourceId) ?? "";
 
-#if __WASM__
-			// wchar_t is 32bits with emscripten
-			var pEngineString = StringToHGlobalUTF32(resourceValue);
-#else
-			var pEngineString = Marshal.StringToHGlobalUni(resourceValue);
-#endif
+			var pEngineString = StringToHGlobal(resourceValue);
 
 			DebugTrace($"GetCEngineStringCallback({resourceId}, {resourceValue})");
 
 			return pEngineString;
+		}
+
+		internal static IntPtr StringToHGlobal(string resourceValue)
+		{
+#if __WASM__ || __IOS__
+			// wchar_t is 32bits
+			return StringToHGlobalUTF32(resourceValue);
+#else
+			return Marshal.StringToHGlobalUni(resourceValue);
+#endif
+		}
+
+		internal static string PtrToString(IntPtr pResourceId)
+		{
+#if __WASM__ || __IOS__
+			return PtrToStringUTF32(pResourceId);
+#else
+			return Marshal.PtrToStringUni(pResourceId);
+#endif
+		}
+
+		private static string PtrToStringUTF32(IntPtr ptr)
+		{
+			var endPtr = ptr;
+			while (Marshal.ReadInt32(endPtr) is int c && c != 0)
+			{
+				endPtr += 4;
+			}
+
+			if (endPtr != ptr)
+			{
+				var b = new byte[(int)endPtr - (int)ptr];
+				Marshal.Copy(ptr, b, 0, b.Length);
+
+				return Encoding.UTF32.GetString(b);
+			}
+			else
+			{
+				return "";
+			}
+
 		}
 
 		private static IntPtr StringToHGlobalUTF32(string resourceValue)
@@ -244,7 +288,7 @@ namespace CalculationManager
 
 		private static void DebugTrace(string message)
 		{
-			// Debug.WriteLine(message);
+			Debug.WriteLine(message);
 		}
 	}
 
