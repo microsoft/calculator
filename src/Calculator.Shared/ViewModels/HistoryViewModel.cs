@@ -153,12 +153,12 @@ namespace CalculatorApp
                 calculatorDisplay.SetHistoryCallback(new WeakReference(this));
             }
 
-            void ShowItem(HistoryItemViewModel e)
+            public void ShowItem(HistoryItemViewModel e)
             {
                 HistoryItemClicked(e);
             }
 
-            void DeleteItem(HistoryItemViewModel e)
+            public void DeleteItem(HistoryItemViewModel e)
             {
                 int itemIndex= Items.IndexOf(e);
                 if (itemIndex != -1)

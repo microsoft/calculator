@@ -83,13 +83,13 @@ public:
     {
         DBGPRINT("Native:SetExpressionDisplay()\n");
 
-		auto item = std::make_shared<HISTORYITEM>();
+        auto item = std::make_shared<HISTORYITEM>();
         item->historyItemVector.expression = L"";
         item->historyItemVector.result = L"";
         item->historyItemVector.spCommands = commands;
         item->historyItemVector.spTokens = tokens;
 
-		auto pItem = MarshalHistoryItem(item);
+        auto pItem = MarshalHistoryItem(item);
 
         _params.SetExpressionDisplay(_params.CalculatorState, pItem);
     }
@@ -187,6 +187,21 @@ IExpressionCommand* AsIExpressionCommand(void* pExpressionCommand)
     return static_cast<IExpressionCommand*>(pExpressionCommand);
 }
 
+COpndCommand* AsCOpndCommand(void* pExpressionCommand)
+{
+    return static_cast<COpndCommand*>(pExpressionCommand);
+}
+
+CUnaryCommand* AsCUnaryCommand(void* pExpressionCommand)
+{
+    return static_cast<CUnaryCommand*>(pExpressionCommand);
+}
+
+CBinaryCommand* AsCBinaryCommand(void* pExpressionCommand)
+{
+    return static_cast<CBinaryCommand*>(pExpressionCommand);
+}
+
 const wchar_t* ToWChar(std::wstring& str)
 {
     auto out = new wchar_t[str.size() + 1]{};
@@ -269,7 +284,6 @@ void* MarshalHistoryItems(std::vector<std::shared_ptr<CalculationManager::HISTOR
 
     return result;
 }
-
 
 void* CalculatorManager_Create(CalculatorManager_CreateParams* pParams)
 {
@@ -423,10 +437,71 @@ void* CalculatorManager_GetHistoryItem(void* manager, int index)
 {
     auto historyItem = AsManager(manager)->GetHistoryItem(index);
 
-	return MarshalHistoryItem(historyItem);
+    return MarshalHistoryItem(historyItem);
+}
+
+void Free(void* ptr)
+{
+    free(ptr);
 }
 
 int IExpressionCommand_GetCommandType(void* pExpressionCommand)
 {
     return (int)AsIExpressionCommand(pExpressionCommand)->GetCommandType();
+}
+
+void* COpndCommand_GetCommands(void* pExpressionCommand)
+{
+    auto res = AsCOpndCommand(pExpressionCommand)->GetCommands();
+
+    auto pRes = (COpndCommand_GetCommandsResult*)malloc(sizeof(COpndCommand_GetCommandsResult));
+
+    unsigned int commandCount;
+    res->GetSize(&commandCount);
+    pRes->CommandCount = commandCount;
+
+    auto pCommands = (int32_t*)malloc(commandCount * sizeof(int32_t));
+    pRes->pCommands = pCommands;
+
+    for (unsigned int i = 0; i < commandCount; i++)
+    {
+        int value;
+        res->GetAt(i, &value);
+        pCommands[i] = (int32_t)value;
+    }
+
+    return pRes;
+}
+
+void* CUnaryCommand_GetCommands(void* pExpressionCommand)
+{
+    auto res = AsCUnaryCommand(pExpressionCommand)->GetCommands();
+
+    auto pRes = (CUnaryCommand_GetCommandsResult*)malloc(sizeof(CUnaryCommand_GetCommandsResult));
+
+    unsigned int commandCount;
+    res->GetSize(&commandCount);
+    pRes->CommandCount = commandCount;
+
+    auto pCommands = (int32_t*)malloc(commandCount * sizeof(int32_t));
+    pRes->pCommands = pCommands;
+
+    for (unsigned int i = 0; i < commandCount; i++)
+    {
+        int value;
+        res->GetAt(i, &value);
+        pCommands[i] = (int32_t)value;
+    }
+
+    return pRes;
+}
+
+bool COpndCommand_IsNegative(void* pExpressionCommand)
+{
+    return (int)AsCOpndCommand(pExpressionCommand)->IsNegative();
+}
+
+int CBinaryCommand_GetCommand(void* pExpressionCommand)
+{
+    return (int)AsCBinaryCommand(pExpressionCommand)->GetCommand();
 }

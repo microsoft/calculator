@@ -9,12 +9,17 @@ namespace CalculatorApp
     {
         List<TType> m_vector;
 
-        public CalculatorList()
-        {
-            m_vector = new List<TType>();
-        }
+		public CalculatorList()
+		{
+			m_vector = new List<TType>();
+		}
 
-        public CalculatorList(CalculatorList<TType> source)
+		public CalculatorList(IEnumerable<TType> source)
+		{
+			m_vector = new List<TType>(source);
+		}
+
+		public CalculatorList(CalculatorList<TType> source)
         {
             m_vector = new List<TType>(source.m_vector);
         }

@@ -77,7 +77,11 @@ namespace CalculatorApp
         {
 			initialized = true;
 
-			NavView.DataContext = m_model;
+			if (NavView != null)
+			{
+				// UNO TODO OnNavigatedTo/Loaded Sequence is different
+				NavView.DataContext = m_model;
+			}
 
 			if (m_model.CalculatorViewModel != null)
             {

@@ -251,8 +251,8 @@ namespace CalculationManager
 		internal static HISTORYITEM UnmarshalHistoryItemResult(GetHistoryItemResult historyResultItem)
 		{
 			var historyItem = new HISTORYITEM();
-			historyItem.historyItemVector.expression = historyResultItem.expression;
-			historyItem.historyItemVector.result = historyResultItem.result;
+			historyItem.historyItemVector.expression = NativeDispatch.PtrToString(historyResultItem.expression);
+			historyItem.historyItemVector.result = NativeDispatch.PtrToString(historyResultItem.result);
 			historyItem.historyItemVector.spTokens = new CalculatorList<(string, int)>();
 
 			for (var i = 0; i < historyResultItem.TokenCount; i++)
@@ -274,7 +274,7 @@ namespace CalculationManager
 					switch (commandType)
 					{
 						case CommandType.BinaryCommand:
-							return new CUnaryCommand(pExpressionCommand);
+							return new CBinaryCommand(pExpressionCommand);
 
 						case CommandType.OperandCommand:
 							return new COpndCommand(pExpressionCommand);
