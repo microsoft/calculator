@@ -426,20 +426,14 @@
                                 Header="From"/>
 
             <!-- To Date -->
-            <TextBlock x:Name="Date_ToLabel"
-                       x:Uid="Date_ToLabel"
-                       Grid.Row="4"
-                       Margin="0,0,0,2"
-                       Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                       TextWrapping="Wrap"/>
             <CalendarDatePicker x:Name="DateDiff_ToDate"
                                 Grid.Row="5"
                                 Margin="0,0,0,0"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
-                                AutomationProperties.LabeledBy="{x:Bind Date_ToLabel}"
                                 CalendarViewStyle="{StaticResource DateCalculation_CalendarViewStyle}"
                                 Closed="CalendarFlyoutClosed"
-                                DateChanged="ToDate_DateChanged"/>
+                                DateChanged="ToDate_DateChanged"
+                                Header="To"/>
 
             <!-- Difference Result -->
             <TextBlock x:Uid="Date_DifferenceLabel"
