@@ -165,50 +165,98 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>..\CalcManager\pch.h</PrecompiledHeaderFile>
+      <ExceptionHandling>Enabled</ExceptionHandling>
+      <CppLanguageStandard>c++1z</CppLanguageStandard>
+      <AdditionalIncludeDirectories>$(StlIncludeDirectories);$(Sysroot)\usr\include;$(Sysroot)\usr\include\$(AndroidHeaderTriple);$(VS_NdkRoot)\sources\android\support\include;$(SolutionDir).\CalcManager\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>..\CalcManager\pch.h</PrecompiledHeaderFile>
+      <CppLanguageStandard>c++1z</CppLanguageStandard>
+      <AdditionalIncludeDirectories>$(StlIncludeDirectories);$(Sysroot)\usr\include;$(Sysroot)\usr\include\$(AndroidHeaderTriple);$(VS_NdkRoot)\sources\android\support\include;$(SolutionDir).\CalcManager\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
+    <Link>
+      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>..\CalcManager\pch.h</PrecompiledHeaderFile>
+      <CppLanguageStandard>c++1z</CppLanguageStandard>
+      <AdditionalIncludeDirectories>$(StlIncludeDirectories);$(Sysroot)\usr\include;$(Sysroot)\usr\include\$(AndroidHeaderTriple);$(VS_NdkRoot)\sources\android\support\include;$(SolutionDir).\CalcManager\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
+    <Link>
+      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>..\CalcManager\pch.h</PrecompiledHeaderFile>
+      <CppLanguageStandard>c++1z</CppLanguageStandard>
+      <AdditionalIncludeDirectories>$(StlIncludeDirectories);$(Sysroot)\usr\include;$(Sysroot)\usr\include\$(AndroidHeaderTriple);$(VS_NdkRoot)\sources\android\support\include;$(SolutionDir).\CalcManager\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
+    <Link>
+      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>..\CalcManager\pch.h</PrecompiledHeaderFile>
+      <CppLanguageStandard>c++1z</CppLanguageStandard>
+      <AdditionalIncludeDirectories>$(StlIncludeDirectories);$(Sysroot)\usr\include;$(Sysroot)\usr\include\$(AndroidHeaderTriple);$(VS_NdkRoot)\sources\android\support\include;$(SolutionDir).\CalcManager\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
+    <Link>
+      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>..\CalcManager\pch.h</PrecompiledHeaderFile>
+      <CppLanguageStandard>c++1z</CppLanguageStandard>
+      <AdditionalIncludeDirectories>$(StlIncludeDirectories);$(Sysroot)\usr\include;$(Sysroot)\usr\include\$(AndroidHeaderTriple);$(VS_NdkRoot)\sources\android\support\include;$(SolutionDir).\CalcManager\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
+    <Link>
+      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>..\CalcManager\pch.h</PrecompiledHeaderFile>
+      <CppLanguageStandard>c++1z</CppLanguageStandard>
+      <AdditionalIncludeDirectories>$(StlIncludeDirectories);$(Sysroot)\usr\include;$(Sysroot)\usr\include\$(AndroidHeaderTriple);$(VS_NdkRoot)\sources\android\support\include;$(SolutionDir).\CalcManager\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
+    <Link>
+      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>..\CalcManager\pch.h</PrecompiledHeaderFile>
+      <CppLanguageStandard>c++1z</CppLanguageStandard>
+      <AdditionalIncludeDirectories>$(StlIncludeDirectories);$(Sysroot)\usr\include;$(Sysroot)\usr\include\$(AndroidHeaderTriple);$(VS_NdkRoot)\sources\android\support\include;$(SolutionDir).\CalcManager\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
+    <Link>
+      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+    </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
