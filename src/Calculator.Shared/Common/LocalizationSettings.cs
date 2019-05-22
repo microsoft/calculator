@@ -335,7 +335,7 @@ namespace CalculatorApp
                 return m_currencyTrailingDigits;
             }
 
-            int GetCurrencySymbolPrecedence()
+			public int GetCurrencySymbolPrecedence()
             {
                 return m_currencySymbolPrecedence;
             }

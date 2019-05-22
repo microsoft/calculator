@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Windows.Foundation;
@@ -8,5 +9,9 @@ namespace WindowsCalculator.Shared.Common
 {
 	class AlwaysSelectedCollectionView
 	{
+		public AlwaysSelectedCollectionView(IEnumerable result)
+		{
+			
+		}
 	}
 }

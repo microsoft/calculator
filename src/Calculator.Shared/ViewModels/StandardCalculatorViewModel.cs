@@ -23,6 +23,7 @@ using System.Text;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Calculator;
 
 namespace CalculatorApp.ViewModel
 {
@@ -86,8 +87,8 @@ namespace CalculatorApp.ViewModel
         public string DisplayStringExpression { get => m_DisplayStringExpression; set { m_DisplayStringExpression = value; RaisePropertyChanged("DisplayStringExpression"); } }
 
 
-        private ObservableCollection<Common.DisplayExpressionToken> m_ExpressionTokens;
-        public ObservableCollection<Common.DisplayExpressionToken> ExpressionTokens { get => m_ExpressionTokens; private set { m_ExpressionTokens = value; RaisePropertyChanged("ExpressionTokens"); } }
+        private CalculatorObservableCollection<Common.DisplayExpressionToken> m_ExpressionTokens;
+        public CalculatorObservableCollection<Common.DisplayExpressionToken> ExpressionTokens { get => m_ExpressionTokens; private set { m_ExpressionTokens = value; RaisePropertyChanged("ExpressionTokens"); } }
 
 
         private string m_DecimalDisplayValue;
@@ -518,7 +519,7 @@ namespace CalculatorApp.ViewModel
             m_BinaryDisplayValue = "0";
             m_OctalDisplayValue = "0";
             m_standardCalculatorManager = new CalculatorManager(ref m_calculatorDisplay, ref m_resourceProvider);
-            m_ExpressionTokens = new ObservableCollection<DisplayExpressionToken>();
+            m_ExpressionTokens = new CalculatorObservableCollection<DisplayExpressionToken>();
             m_MemorizedNumbers = new List<MemoryItemViewModel>();
             m_IsMemoryEmpty = true;
             m_IsFToEChecked = false;
@@ -618,7 +619,7 @@ namespace CalculatorApp.ViewModel
             if (Utils.IsLastCharacterTarget(displayValue, m_decimalSeparator))
             {
                 // remove the decimal separator, to avoid a long pause between words
-                localizedValue = LocalizeDisplayValue(displayValue.Substring(0, displayValue.Length - 1), isError);
+                localizedValue = LocalizeDisplayValue(displayValue.substr(0, displayValue.Length - 1), isError);
 
                 // Use a format which has a word in the decimal separator's place
                 // "The Display is 10 point"

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Windows.Globalization;
 using CalculatorApp.Common;
@@ -63,7 +64,7 @@ namespace CalculatorApp
 		public void LogWindowActivated()  {}
 		public void LogWindowLaunched()  {}
 		public void LogUserRequestedRefreshFailed()  {}
-		//public void LogConversionResult(std::wstring_view fromValue, std::wstring_view fromUnit, std::wstring_view toValue, std::wstring_view toUnit)  {}
+		public void LogConversionResult(string fromValue, string fromUnit, string toValue, string toUnit)  {}
 		public void LogAboutFlyoutOpened()  {}
 		public void LogNavBarOpened()  {}
 		public void LogViewClosingTelemetry(int i)  {}
@@ -74,8 +75,8 @@ namespace CalculatorApp
 		public void LogDateAddSubtractModeUsed(int windowId, bool isAddMode)  {}
 		public void LogDateClippedTimeDifferenceFound(Calendar today, DateTime clippedTime)  {}
 		
-		//public void LogStandardException(std::wstring_view functionName, _In_ const std::exception& e)  {}
-		//public void LogWinRTException(std::wstring_view functionName, _In_ winrt::hresult_error const& e)  {}
-		//public void LogPlatformException(std::wstring_view functionName, _In_ Platform::Exception ^ e)  {}
+		public void LogStandardException(Exception e, [CallerMemberName] string functionName = null) { }
+		public void LogWinRTException(Exception e, [CallerMemberName] string functionName = null) { }
+		public void LogPlatformException(Exception e, [CallerMemberName] string functionName = null)  {}
 	}
 }

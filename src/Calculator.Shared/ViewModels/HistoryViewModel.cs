@@ -30,8 +30,8 @@ namespace CalculatorApp
             public int ItemSize { get => m_ItemSize; set { m_ItemSize = value; RaisePropertyChanged("ItemSize"); } }
 
 
-            private ObservableCollection<HistoryItemViewModel> m_Items;
-            public ObservableCollection<HistoryItemViewModel> Items { get => m_Items; set { m_Items = value; RaisePropertyChanged("Items"); } }
+            private CalculatorObservableCollection<HistoryItemViewModel> m_Items;
+            public CalculatorObservableCollection<HistoryItemViewModel> Items { get => m_Items; set { m_Items = value; RaisePropertyChanged("Items"); } }
 
 
             private bool m_AreHistoryShortcutsEnabled;
@@ -70,7 +70,7 @@ namespace CalculatorApp
 
                 AreHistoryShortcutsEnabled = true;
 
-                Items = new ObservableCollection<HistoryItemViewModel>();
+                Items = new CalculatorObservableCollection<HistoryItemViewModel>();
                 ItemSize = 0;
             }
 
@@ -97,7 +97,7 @@ namespace CalculatorApp
                 }
 
                 var historyListModel = m_calculatorManager.GetHistoryItems(m_currentMode);
-                var historyListVM = new ObservableCollection<HistoryItemViewModel>();
+                var historyListVM = new CalculatorObservableCollection<HistoryItemViewModel>();
                 var localizer = LocalizationSettings.GetInstance();
                 if (historyListModel.Count > 0)
                 {

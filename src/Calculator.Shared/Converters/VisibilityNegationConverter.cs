@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Windows.UI.Xaml.Interop;
@@ -6,7 +9,7 @@ using Windows.Foundation.Metadata;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml;
 
-namespace CalculatorApp.Converters
+namespace CalculatorApp.Common
 {
 	[WebHostHidden]
 	public sealed class VisibilityNegationConverter : IValueConverter

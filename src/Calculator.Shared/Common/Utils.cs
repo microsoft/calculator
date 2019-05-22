@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 
@@ -31,5 +34,47 @@ namespace CalculatorApp
         {
             return !string.IsNullOrEmpty(input) && input.Last() == target;
         }
-    }
+
+		public static void Swap<T>(ref T field1, ref T field2)
+		{
+			var tmp = field1;
+			field1 = field2;
+			field2 = tmp;
+		}
+
+		public static bool IsDateTimeOlderThan(DateTime dateTime, long duration)
+		{
+			return dateTime + TimeSpan.FromTicks(duration) < DateTime.Now;
+		}
+
+		public static async Task<string> ReadFileFromFolder(StorageFolder folder, string filename)
+		{
+			if (folder == null)
+			{
+				return null;
+			}
+
+			var filePath = Path.Combine(folder.Path, filename);
+			using (var reader = new StreamReader(filePath))
+			{
+				return await reader.ReadToEndAsync();
+			}
+		}
+
+		public static async Task WriteFileToFolder(StorageFolder folder, string filename, string contents, CreationCollisionOption colisionOption)
+		{
+			if (folder== null)
+			{
+				return;
+			}
+
+			var filePath = Path.Combine(folder.Path, filename);
+			using (var writer = new StreamWriter(filePath, append: false))
+			{
+				await writer.WriteAsync(contents);
+			}
+		}
+
+		public static DateTime GetUniversalSystemTime() => DateTime.UtcNow;
+	}
 }

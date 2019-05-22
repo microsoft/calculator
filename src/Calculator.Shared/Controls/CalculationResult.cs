@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using CalculatorApp.ViewModel;
 
 namespace CalculatorApp
 {
@@ -17,7 +18,7 @@ namespace CalculatorApp
     {
         public delegate void SelectedEventHandler(object sender);
 
-        public sealed partial class CalculationResult : Windows.UI.Xaml.Controls.Control
+        public sealed partial class CalculationResult : Windows.UI.Xaml.Controls.Control, IActivatable
         {
             public Visibility ExpressionVisibility
             {
@@ -130,7 +131,7 @@ namespace CalculatorApp
             public static readonly DependencyProperty IsOperatorCommandProperty =
                 DependencyProperty.Register("IsOperatorCommand", typeof(bool), typeof(CalculationResult), new PropertyMetadata(false));
 
-            event SelectedEventHandler Selected;
+            public event SelectedEventHandler Selected;
 
 
             private Windows.UI.Xaml.Controls.ScrollViewer m_textContainer;
@@ -163,7 +164,7 @@ namespace CalculatorApp
                 m_haveCalculatedMax = false;
             }
 
-            string GetRawDisplayValue()
+			public string GetRawDisplayValue()
             {
                 string rawValue = null;
 
@@ -298,7 +299,7 @@ namespace CalculatorApp
                 }
             }
 
-            void UpdateTextState()
+			public void UpdateTextState()
             {
                 if ((m_textContainer == null) || (m_textBlock == null))
                 {

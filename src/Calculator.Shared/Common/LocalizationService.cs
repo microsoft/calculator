@@ -28,7 +28,7 @@ namespace CalculatorApp.Common
 
     public sealed class LocalizationService
     {
-        static string DefaultCurrencyCode = "USD";
+        internal static string DefaultCurrencyCode = "USD";
 
 
 
@@ -167,7 +167,7 @@ namespace CalculatorApp.Common
             }
         }
 
-        FlowDirection GetFlowDirection()
+		public FlowDirection GetFlowDirection()
         {
             return m_flowDirection;
         }

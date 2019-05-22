@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CalculatorApp
 {
-    public class CalculatorList<TType> : IEnumerable<TType>, IEnumerable
+	public class CalculatorList<TType> : IEnumerable<TType>, IEnumerable
     {
         List<TType> m_vector;
 
@@ -19,7 +19,22 @@ namespace CalculatorApp
             m_vector = new List<TType>(source.m_vector);
         }
 
-        public bool GetAt(int index, out TType item)
+		public TType this[int index]
+		{
+			get => m_vector[index];
+		}
+
+		public TType this[uint index]
+		{
+			get => m_vector[(int)index];
+		}
+
+		public TType At(int index)
+		{
+			return m_vector[index];
+		}
+
+		public bool GetAt(int index, out TType item)
         {
             item = m_vector[index];
             return true;
@@ -70,11 +85,26 @@ namespace CalculatorApp
             return true;
         }
 
-        public bool Append(TType item)
+        public void Add(TType item)
         {
             m_vector.Add(item);
-            return true;
         }
+
+		public bool Append(TType item)
+		{
+			m_vector.Add(item);
+			return true;
+		}
+
+		public void EmplaceBack(TType item)
+		{
+			m_vector.Add(item);
+		}
+
+		public void PushBack(TType item)
+		{
+			m_vector.Add(item);
+		}
 
         public bool RemoveAtEnd()
         {
@@ -87,6 +117,28 @@ namespace CalculatorApp
             m_vector.Clear();
             return true;
         }
+
+		public bool IsEmpty()
+		{
+			return m_vector.Count == 0;
+		}
+
+		public uint Size()
+		{
+			return (uint)m_vector.Count;
+		}
+
+		public void Sort(Func<TType, TType, bool> comparison)
+		{
+			m_vector.Sort((t1, t2) => comparison(t1, t2) ? -1 : 1);
+		}
+
+		public int IndexOf(TType item)
+		{
+			return m_vector.IndexOf(item);
+		}
+
+		public int Count => m_vector.Count;
 
         public bool GetString(out string expression)
         {
