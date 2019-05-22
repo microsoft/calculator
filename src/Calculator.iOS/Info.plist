@@ -45,5 +45,9 @@
 	</array>
 	<key>UIRequiresFullScreen</key>
 	<true/>
+	<key>XSAppIconAssets</key>
+	<string>Media.xcassets/AppIcons.appiconset</string>
+	<key>XSLaunchImageAssets</key>
+	<string>Media.xcassets/LaunchImages.launchimage</string>
 </dict>
 </plist>
