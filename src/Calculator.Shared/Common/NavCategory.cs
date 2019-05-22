@@ -140,7 +140,7 @@ namespace CalculatorApp
 
             public string AccessKey => m_accessKey;
 
-            bool SupportsNegative
+            public bool SupportsNegative
             {
                 get
                 {
@@ -531,13 +531,13 @@ namespace CalculatorApp
             public CategoryGroupType GroupType { get => m_GroupType; private set { m_GroupType = value; RaisePropertyChanged("GroupType"); } }
 
 
-            private ObservableCollection<NavCategory> m_Categories;
-            public ObservableCollection<NavCategory> Categories { get => m_Categories; private set { m_Categories = value; RaisePropertyChanged("Categories"); } }
+            private CalculatorObservableCollection<NavCategory> m_Categories;
+            public CalculatorObservableCollection<NavCategory> Categories { get => m_Categories; private set { m_Categories = value; RaisePropertyChanged("Categories"); } }
 
 
             internal NavCategoryGroup(NavCategoryGroupInitializer groupInitializer)
             {
-                m_Categories = new ObservableCollection<NavCategory>();
+                m_Categories = new CalculatorObservableCollection<NavCategory>();
                 m_GroupType = groupInitializer.type;
 
                 var resProvider = AppResourceProvider.GetInstance();
@@ -573,9 +573,9 @@ namespace CalculatorApp
                 }
             }
 
-            public static ObservableCollection<NavCategoryGroup> CreateMenuOptions()
+            public static CalculatorObservableCollection<NavCategoryGroup> CreateMenuOptions()
             {
-                var menuOptions =  new ObservableCollection<NavCategoryGroup>();
+                var menuOptions =  new CalculatorObservableCollection<NavCategoryGroup>();
                 menuOptions.Add(CreateCalculatorCategory());
                 menuOptions.Add(CreateConverterCategory());
                 return menuOptions;
@@ -586,7 +586,7 @@ namespace CalculatorApp
                 return  new NavCategoryGroup(NavCategory.s_categoryGroupManifest[0].Value);
             }
 
-            static NavCategoryGroup CreateConverterCategory()
+			public static NavCategoryGroup CreateConverterCategory()
             {
                 return  new NavCategoryGroup(NavCategory.s_categoryGroupManifest[1].Value);
             }

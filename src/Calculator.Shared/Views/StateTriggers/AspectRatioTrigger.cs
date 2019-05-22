@@ -90,10 +90,10 @@ namespace CalculatorApp.Views.StateTriggers
 			);
 
 
-		AspectRatioTrigger()
-		{
-			SetActive(false);
-		}
+        public AspectRatioTrigger()
+        {
+            SetActive(false);
+        }
 
 		void OnSourcePropertyChanged(FrameworkElement oldValue, FrameworkElement newValue)
 		{

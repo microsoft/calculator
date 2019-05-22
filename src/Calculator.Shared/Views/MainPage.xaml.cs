@@ -225,8 +225,7 @@ namespace CalculatorApp
             if (NavCategory.IsConverterViewMode(m_model.Mode))
             {
                 int modeIndex = NavCategory.GetIndexInGroup(m_model.Mode, CategoryGroupType.Converter);
-                // UNO TODO
-                // m_model.ConverterViewModel.CurrentCategory = m_model.ConverterViewModel.Categories.GetAt(modeIndex);
+                m_model.ConverterViewModel.CurrentCategory = m_model.ConverterViewModel.Categories.GetAt(modeIndex);
             }
         }
 
@@ -288,11 +287,10 @@ namespace CalculatorApp
 			{
 				m_dateCalculator.SetDefaultFocus();
 			}
-			// UNO TODO
-			//if (m_converter != null && m_converter.Visibility == Visibility.Visible)
-			//{
-			//    m_converter.SetDefaultFocus();
-			//}
+			if (m_converter != null && m_converter.Visibility == Visibility.Visible)
+			{
+				m_converter.SetDefaultFocus();
+			}
 		}
 
 		void EnsureCalculator()
@@ -312,11 +310,7 @@ namespace CalculatorApp
                 Binding isProgramerBinding = new Binding();
                 isProgramerBinding.Path = new PropertyPath("IsProgrammer");
                 m_calculator.SetBinding(CalculatorApp.Calculator.IsProgrammerProperty, isProgramerBinding);
-
-#if NETFX_CORE
-                // UNO TODO
-                m_calculator.Style = CalculatorBaseStyle;
-#endif
+                m_calculator.Style = (Style)Resources["CalculatorBaseStyle"];
 
                 CalcHolder.Child = m_calculator;
 
@@ -354,17 +348,16 @@ namespace CalculatorApp
 
         void EnsureConverter()
         {
-            // UNO TODO
-            //if (m_converter == null)
-            //{
-            //    // delay loading converter
-            //    m_converter = new CalculatorApp.UnitConverter();
-            //    m_converter.Name = "unitConverter";
-            //    m_converter.DataContext = m_model.ConverterViewModel;
-            //    m_converter.Style = UnitConverterBaseStyle;
-            //    ConverterHolder.Child = m_converter;
-            //}
-        }
+			if (m_converter == null)
+			{
+				// delay loading converter
+				m_converter = new CalculatorApp.UnitConverter();
+				m_converter.Name = "unitConverter";
+				m_converter.DataContext = m_model.ConverterViewModel;
+				m_converter.Style = (Style)Resources["UnitConverterBaseStyle"];
+				ConverterHolder.Child = m_converter;
+			}
+		}
 
         void OnNavLoaded(object sender, RoutedEventArgs e)
         {
@@ -449,7 +442,7 @@ namespace CalculatorApp
 
 		public CalculatorList<object> UIElementsForCategories => CreateUIElementsForCategories(Model.Categories);
 
-		public CalculatorList<object> CreateUIElementsForCategories(ObservableCollection<NavCategoryGroup> categories)
+		public CalculatorList<object> CreateUIElementsForCategories(CalculatorObservableCollection<NavCategoryGroup> categories)
         {
             var menuCategories = new CalculatorList<object>();
 
@@ -552,14 +545,12 @@ namespace CalculatorApp
         {
             String categoryName = AutomationProperties.GetName(Header);
             NarratorAnnouncement announcement = CalculatorAnnouncement.GetCategoryNameChangedAnnouncement(categoryName);
-            // UNO TODO
-            // NarratorNotifier.Announce(announcement);
+            //NarratorNotifier.Announce(announcement);
         }
 
         void OnNavItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs e)
         {
             NavView.IsPaneOpen = false;
         }
-
     }
 }

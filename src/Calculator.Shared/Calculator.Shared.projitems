@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CalcManager\CalculatorManager.Interop.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CalcManager\CalculatorManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CalcManager\CalculatorMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CalcManager\CalculatorObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CalcManager\CCalcEngine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CalcManager\CCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CalcManager\Command.cs" />
@@ -34,10 +35,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\AppLifecycleLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\AppResourceProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Automation\NarratorAnnouncement.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Automation\NarratorNotifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\BindableBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\CalculatorButtonPressedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\CalculatorButtonUser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\CalculatorDisplay.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ConversionResultTaskHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\CopyPasteManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\DateCalculator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\DelegateCommand.cs" />
@@ -48,13 +51,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\LocalizationStringUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\MyVirtualKey.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\NetworkManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\TitleBarHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\TraceLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Utils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ValidSelectedItemConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CalculationResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CalculationResultAutomationPeer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CalculatorButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\FlipButtons.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HorizontalNoOverflowStackPanel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\KeyboardShortcutManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\OperandTextBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\OperatorTextBox.cs" />
@@ -72,6 +78,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ItemSizeToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\RadixToStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibilityNegationConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataLoaders\CurrencyDataLoader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataLoaders\CurrencyHttpClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataLoaders\ICurrencyHttpClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataLoaders\UnitConverterDataConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataLoaders\UnitConverterDataLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ApplicationViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DateCalculatorViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\HistoryItemViewModel.cs" />
@@ -138,6 +149,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\UnitConverter.xaml.cs">
       <DependentUpon>UnitConverter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)_adapters\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Styles.xaml">

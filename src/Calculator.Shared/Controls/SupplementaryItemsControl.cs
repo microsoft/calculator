@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -5,6 +8,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
+using CalculatorApp.ViewModel;
 
 namespace CalculatorApp.Controls
 {
@@ -20,13 +24,12 @@ namespace CalculatorApp.Controls
 		{
             base.PrepareContainerForItemOverride(element, item);
 
-            // UNO TODO
-            //var supplementaryResult = (SupplementaryResult)(item);
-            //if (supplementaryResult)
-            //{
-            //    AutomationProperties.SetName(element, supplementaryResult.GetLocalizedAutomationName());
-            //}
-        }
+			var supplementaryResult = (SupplementaryResult)(item);
+			if (supplementaryResult != null)
+			{
+				AutomationProperties.SetName(element, supplementaryResult.GetLocalizedAutomationName());
+			}
+		}
     }
 
 	public sealed partial class SupplementaryContentPresenter : ContentPresenter

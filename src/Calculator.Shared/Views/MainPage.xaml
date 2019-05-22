@@ -25,14 +25,14 @@
 		-->
 		
 		<!-- CalculatorBaseStyle -->
-		<Style x:Name="CalculatorBaseStyle" 
+		<Style x:Key="CalculatorBaseStyle" 
 					 TargetType="local:Calculator">
 			<Setter Property="Margin" 
 							Value="0,0,0,0"/>
 		</Style>
 
 		<!-- UnitConverterBaseStyle -->
-		<Style x:Name="UnitConverterBaseStyle" 
+		<Style x:Key="UnitConverterBaseStyle" 
 					 TargetType="local:UnitConverter">
 			<Setter Property="Visibility" 
 							Value="Collapsed"/>
