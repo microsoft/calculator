@@ -115,46 +115,69 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-83.5%402x.png" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-76%402x.png" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-76.png" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-60%403x.png" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-60%402x.png" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-40%403x.png" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-40%402x.png" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-40.png" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-29%403x.png" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-29%402x.png" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-29.png" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-20%403x.png" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-20%402x.png" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-20.png" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-1024.png" />
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-83.5%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-76%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-76.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-60%403x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-60%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-40%403x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-40%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-40.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-29%403x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-29%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-20%403x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-20%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-20.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-1024.png">
+      <Visible>false</Visible>
+    </ImageAsset>
     <None Include="Info.plist">
       <SubType>Designer</SubType>
     </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Entitlements.plist" />
     <BundleResource Include="Resources\Fonts\CalcMDL2.ttf" />
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Contents.json" />
-    <ImageAsset Include="Media.xcassets\LaunchImages.launchimage\Contents.json" />
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\LaunchImages.launchimage\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
-  </ItemGroup>
-  <ItemGroup>
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\iPad-76x76@2x.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\iPhone-120x120@3x.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\iPhone-152x152@3x.png">
-      <Visible>false</Visible>
-    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Fonts\winjs-symbols.ttf" />
