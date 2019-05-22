@@ -59,6 +59,9 @@
     <PackageReference Include="Uno.UniversalImageLoader" Version="1.9.32" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyVersion.Android.cs">
+      <Link>Properties\AssemblyVersion.Android.cs</Link>
+    </Compile>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Main.cs" />

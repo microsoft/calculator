@@ -16,11 +16,24 @@ jobs:
 
   - task: MSBuild@1
     inputs:
+      solution: src/build/build.csproj
+      msbuildLocationMethod: version
+      msbuildVersion: latest
+      msbuildArchitecture: x86
+      msbuildArguments: /r /p:Configuration=Release /detailedsummary
+      clean: false
+      maximumCpuCount: true
+      restoreNugetPackages: false
+      logProjectEvents: false
+      createLogFile: false
+
+  - task: MSBuild@1
+    inputs:
       solution: src/Calculator.sln
       msbuildLocationMethod: version
       msbuildVersion: latest
       msbuildArchitecture: x86
-      msbuildArguments: /r /p:Configuration=Release "/p:PackageVersion=%GITVERSION_FullSemVer%" "/p:InformationalVersion=%GITVERSION_InformationalVersion%" /detailedsummary
+      msbuildArguments: /r /p:Configuration=Release /detailedsummary
       clean: false
       maximumCpuCount: true
       restoreNugetPackages: false

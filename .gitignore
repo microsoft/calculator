@@ -293,3 +293,4 @@ src/GraphControl/GraphingImplOverrides.props
 !/build/config/TRexDefs/**
 !src/Calculator/TemporaryKey.pfx
 !src/CalculatorUnitTests/CalculatorUnitTests_TemporaryKey.pfx
+*.binlog

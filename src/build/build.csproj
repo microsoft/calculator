@@ -1,0 +1,237 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<IsTool>true</IsTool>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+
+		<AppName>Calculator</AppName>
+		<IncludeBuildInVersion>true</IncludeBuildInVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MSBuildTasks" Version="1.5.0.235" />
+	</ItemGroup>
+
+	<Target Name="RunBuild" AfterTargets="Build">
+
+		<CallTarget Targets="BuildVersion">
+			<Output TaskParameter="TargetOutputs" PropertyName="_VersionOutput"/>
+		</CallTarget>
+
+		<ItemGroup>
+			<PackageVersion Include="$(_VersionOutput.Split(';')[0])" />
+			<PackageBuildNumber Include="$(_VersionOutput.Split(';')[1])" />
+		</ItemGroup>
+
+	</Target>
+
+	<Target Name="BuildVersion"
+                  Outputs="$(_AppVersion);$(_BuildNumber)"
+                  Condition="'$(GITVERSION_InformationalVersion)'!=''">
+		<!-- Build Number -->
+		<PropertyGroup>
+			<_BuildNumber>$(PackageBuildNumber)</_BuildNumber>
+			<_BuildNumber Condition="'$(BUILD_REPOSITORY_PROVIDER)' == 'TfsVersionControl'">$(BUILD_SOURCEVERSION.Substring(1))</_BuildNumber>
+		</PropertyGroup>
+
+		<Message Text="%0A#### Running BuildVersion"
+                     Importance="$(_MessageImportance)" />
+
+		<Exec Command="git rev-list --count HEAD"
+                Condition="'$(_BuildNumber)' == ''"
+                ConsoleToMSBuild="true">
+			<Output TaskParameter="ConsoleOutput"
+                      PropertyName="_BuildNumber" />
+		</Exec>
+
+		<PropertyGroup>
+			<_BuildNumber Condition="$(BuildNumberOffset) != ''">$([MSBuild]::Add($(_BuildNumber), $(BuildNumberOffset)))</_BuildNumber>
+			<_InformationalVersion>$(PackageInformationalVersion)</_InformationalVersion>
+			<_InformationalVersion Condition="'$(_InformationalVersion)' == ''">$(GITVERSION_InformationalVersion)</_InformationalVersion>
+			<_AppVersion>$(PackageVersion)</_AppVersion>
+			<_AppVersion Condition="'$(_AppVersion)'==''">$(GitVersion_MajorMinorPatch)</_AppVersion>
+		</PropertyGroup>
+
+		<Error Condition="'$(_InformationalVersion)'=='' Or '$(_AppVersion)'==''"
+                 Text="Failed to calculate version. You must either run GitVersion before building the application or set both AppVersion and InformationalVersion variables."/>
+
+		<!-- App version without revision -->
+		<PropertyGroup Condition="'$(IncludeBuildInVersion)' == 'True'">
+			<_AppVersion>$(GitVersion_Major).$(GitVersion_Minor).$(_BuildNumber)</_AppVersion>
+		</PropertyGroup>
+
+		<!-- Pad the version in case it's too short -->
+		<PropertyGroup Condition="'$(IncludeBuildInVersion)' != 'True'">
+			<_AppVersion Condition="$(_AppVersion.Split('.').length) == 1">$(_AppVersion).0.0</_AppVersion>
+			<_AppVersion Condition="$(_AppVersion.Split('.').length) == 2">$(_AppVersion).0</_AppVersion>
+		</PropertyGroup>
+
+		<!-- App revision -->
+		<PropertyGroup>
+			<AppRevision Condition="'$(AppRevision)'==''">0</AppRevision>
+			<_AppVersion>$(_AppVersion).$(AppRevision)</_AppVersion>
+		</PropertyGroup>
+
+		<Message Text="App version : $(_AppVersion)"
+                     Importance="$(_MessageImportance)" />
+		<Message Text="Build number : $(_BuildNumber)"
+                     Importance="$(_MessageImportance)" />
+		<Message Text="Informational version : $(_InformationalVersion)"
+                     Importance="$(_MessageImportance)" />
+
+		<!-- Create official assembly version files with right version number -->
+		<AssemblyInfo
+        CodeLanguage="CS"
+        OutputFile="../AssemblyVersion.Uwp.cs"
+        AssemblyVersion="$(_AppVersion)"
+        AssemblyFileVersion="$(GitVersion_MajorMinorPatch)"
+        AssemblyProduct="$(ProjectName) for Windows"
+        AssemblyCompany="$(CompanyName)"
+        AssemblyInformationalVersion="$(_InformationalVersion)"
+        AssemblyCopyright="Copyright (C) $(CompanyName) $([System.DateTime]::Now.Year)" />
+
+		<AssemblyInfo
+        CodeLanguage="CS"
+        OutputFile="../AssemblyVersion.Wasm.cs"
+        AssemblyVersion="$(_AppVersion)"
+        AssemblyFileVersion="$(_BuildNumber)"
+        AssemblyProduct="$(ProjectName) for WebAssembly"
+        AssemblyCompany="$(CompanyName)"
+        AssemblyInformationalVersion="$(_InformationalVersion)"
+        AssemblyCopyright="Copyright (C) $(CompanyName) $([System.DateTime]::Now.Year)" />
+
+		<AssemblyInfo
+        CodeLanguage="CS"
+        OutputFile="../AssemblyVersion.iOS.cs"
+        AssemblyVersion="$(_AppVersion)"
+        AssemblyFileVersion="$(_BuildNumber)"
+        AssemblyProduct="$(ProjectName) for iOS"
+        AssemblyCompany="$(CompanyName)"
+        AssemblyInformationalVersion="$(_InformationalVersion)"
+        AssemblyCopyright="Copyright (C) $(CompanyName) $([System.DateTime]::Now.Year)" />
+
+		<AssemblyInfo
+        CodeLanguage="CS"
+        OutputFile="../AssemblyVersion.Android.cs"
+        AssemblyVersion="$(_AppVersion)"
+        AssemblyFileVersion="$(_BuildNumber)"
+        AssemblyProduct="$(ProjectName) for Android"
+        AssemblyCompany="$(CompanyName)"
+        AssemblyInformationalVersion="$(_InformationalVersion)"
+        AssemblyCopyright="Copyright (C) $(CompanyName) $([System.DateTime]::Now.Year)" />
+
+		<Message Text="#### Done running BuildVersion"
+                     Importance="$(_MessageImportance)" />
+		<Message Text="%0A"
+                     Importance="$(_MessageImportance)" />
+	</Target>
+
+	<UsingTask TaskName="_XmlUpdate"
+                       TaskFactory="CodeTaskFactory"
+                       AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.v12.0.dll" >
+		<ParameterGroup>
+			<XmlFileName Required="True" />
+			<XPath Required="True" />
+			<Value Required="True" />
+		</ParameterGroup>
+		<Task>
+			<Reference Include="System.Xml" />
+			<Reference Include="System.Xml.Linq" />
+			<Using Namespace="System"/>
+			<Using Namespace="System.Xml.XPath"/>
+			<!-- The following code is from the MSBuildTasks library (https://github.com/loresoft/msbuildtasks/blob/6196d43e7eb6807f306e9861b286fe61c8bb0993/Source/MSBuild.Community.Tasks/XmlUpdate.cs) -->
+			<!-- MSBuildTasks is not used as it brings a Zip tasks that conflicts with Xamarin's -->
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[
+						System.Xml.Linq.XDocument xdoc = System.Xml.Linq.XDocument.Load(XmlFileName);
+						System.Xml.XmlNamespaceManager manager = new System.Xml.XmlNamespaceManager(new System.Xml.NameTable());
+
+						var items = xdoc.XPathEvaluate(XPath, manager) as System.Collections.Generic.IEnumerable<object>;
+
+						Console.WriteLine("Updating " + items.Count() + " nodes");
+
+						foreach (var item in items.ToArray())
+						{
+								var attr = item as System.Xml.Linq.XAttribute;
+								if (attr != null)
+								{
+									attr.SetValue(Value);
+								}
+
+								var ele = item as System.Xml.Linq.XElement;
+								if (ele != null)
+								{
+									ele.SetValue(Value);
+								}
+						}
+
+						xdoc.Save(XmlFileName);
+				]]>
+			</Code>
+		</Task>
+	</UsingTask>
+
+	<Target Name="_SetPackageVersion"
+          AfterTargets="RunBuild"
+          Condition="'$(PackageVersion)'!='' And '$(PackageBuildNumber)'!=''">
+		<PropertyGroup>
+			<_SourceBasePath>../$(AppName)</_SourceBasePath>
+			<_ManifestPath>$(_SourceBasePath).Android/Properties/AndroidManifest.xml</_ManifestPath>
+			<_PlistFilePath>$(_SourceBasePath).Android/Info.plist</_PlistFilePath>
+			<_AppxManifestPath>$(_SourceBasePath).Android/Package.appxmanifest</_AppxManifestPath>
+			<_AndroidNamespace>
+				<Namespace Prefix="android" Uri="http://schemas.android.com/apk/res/android" />
+			</_AndroidNamespace>
+			<_WindowsNamespace>
+				<Namespace Prefix="x" Uri="http://schemas.microsoft.com/appx/manifest/foundation/windows10" />
+			</_WindowsNamespace>
+		</PropertyGroup>
+
+		<!-- Android -->
+		<XmlPoke Condition="Exists('$(_ManifestPath)')"
+                     XmlInputPath="$(_ManifestPath)"
+                     Query="/manifest/@android:versionName"
+                     Value="$(PackageVersion)"
+                     Namespaces="$(_AndroidNamespace)" />
+
+		<XmlPoke Condition="Exists('$(_ManifestPath)')"
+                     XmlInputPath="$(_ManifestPath)"
+                     Query="/manifest/@android:versionCode"
+                     Value="$(PackageBuildNumber)"
+                     Namespaces="$(_AndroidNamespace)" />
+
+		<!-- iOS -->
+		<!-- Using our own _XmlUpdate instead of XmlPoke to avoid unecessary (and possibly breaking) changes in the plist -->
+		<_XmlUpdate Condition="Exists('$(_PlistFilePath)')"
+                            XmlFileName="$(_PlistFilePath)"
+                            XPath="//plist/dict/key[text() = 'CFBundleShortVersionString']/following-sibling::string[1]"
+                            Value="$(PackageVersion)" />
+
+		<_XmlUpdate Condition="Exists('$(_PlistFilePath)')"
+                            XmlFileName="$(_PlistFilePath)"
+                            XPath="//plist/dict/key[text() = 'CFBundleVersion']/following-sibling::string[1]"
+                            Value="$(PackageBuildNumber)" />
+
+		<!-- UWP -->
+		<ItemGroup>
+			<_Major Include="$(PackageVersion.Split('.')[0])" />
+			<_Minor Include="$(PackageVersion.Split('.')[1])" />
+			<_Revision Include="$(PackageVersion.Split('.')[3])" />
+		</ItemGroup>
+
+		<!-- Forcing the inclusion of the build number in UWP as the standard format is Major.Minor.Build.Revision -->
+		<!-- Not doing this makes it impossible to update a package unless the version is updated -->
+		<PropertyGroup>
+			<_UWPVersion>@(_Major).@(_Minor).$(PackageBuildNumber).@(_Revision)</_UWPVersion>
+		</PropertyGroup>
+
+		<XmlPoke Condition="Exists('$(_AppxManifestPath)')"
+                     XmlInputPath="$(_AppxManifestPath)"
+                     Query="/x:Package/x:Identity/@Version"
+                     Value="$(_UWPVersion)"
+                     Namespaces="$(_WindowsNamespace)" />
+	</Target>
+
+
+</Project>

@@ -15,7 +15,7 @@ mkdir bin/arm64
 libtool \
     -static \
     *.o \
-    -o bin/arm64/libCalcManager.a
+    -o ../Calculator.iOS/NativeReferences/arm64/libCalcManager.a
 
 rm *.o
 
@@ -32,7 +32,7 @@ mkdir bin/x86_64
 libtool \
     -static \
     *.o \
-    -o bin/x86_64/libCalcManager.a
+    -o ../Calculator.iOS/NativeReferences/x86_64/libCalcManager.a
 
 rm *.o
 
