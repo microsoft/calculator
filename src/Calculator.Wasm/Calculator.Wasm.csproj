@@ -1,50 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <WasmHead>true</WasmHead>
-    <DefineConstants>$(DefineConstants);__WASM__</DefineConstants>
-    <NoWarn>NU1701</NoWarn>
-    <WasmShellGenerateCompressedFiles Condition="'$(Configuration)'=='Debug'">false</WasmShellGenerateCompressedFiles>
-    <!--<BuildingInsideUnoSourceGenerator>true</BuildingInsideUnoSourceGenerator>-->
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<WasmHead>true</WasmHead>
+		<DefineConstants>$(DefineConstants);__WASM__</DefineConstants>
+		<NoWarn>NU1701</NoWarn>
+		<WasmShellGenerateCompressedFiles Condition="'$(Configuration)'=='Debug'">false</WasmShellGenerateCompressedFiles>
 		<MonoRuntimeDebuggerEnabled Condition="'$(Configuration)'=='Debug'">true</MonoRuntimeDebuggerEnabled>
+		<WasmShellMonoRuntimeExecutionMode Condition="$([MSBuild]::IsOsPlatform('Linux'))">FullAOT</WasmShellMonoRuntimeExecutionMode>
 		<MonoWasmRuntimeConfiguration>release-dynamic</MonoWasmRuntimeConfiguration>
-
-		<!-- This build a custom one pending a PR in mono -->
-		<MonoWasmSDKUri Condition="'$(Configuration)'=='Debug'">C:\Users\jerome.laban\Downloads\mono-wasm-527abcd1152.zip</MonoWasmSDKUri>
 	</PropertyGroup>
-  <ItemGroup>
-    <Content Include="..\Calculator.UWP\Assets\*.png" Link="Assets\%(FileName)%(Extension)" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="WasmCSS\Fonts.css" />
-    <EmbeddedResource Include="WasmScripts\*.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <LinkerDescriptor Include="LinkerConfig.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <!-- 
+	<ItemGroup>
+		<Content Include="..\Calculator.UWP\Assets\*.png" Link="Assets\%(FileName)%(Extension)" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="WasmCSS\Fonts.css" />
+		<EmbeddedResource Include="WasmScripts\*.js" />
+	</ItemGroup>
+	<ItemGroup>
+		<LinkerDescriptor Include="LinkerConfig.xml" />
+	</ItemGroup>
+	<ItemGroup>
+		<!-- 
     This item group is required by the project templace because of the
     new SDK-Style project, otherwise some files are not aded automatically.
     
     You can safely remove this ItemGroup completely.
     -->
-    <Compile Remove="Program.cs" />
-    <None Remove="WasmScripts\CalcManager.js" />
-    <Compile Include="Program.cs" />
-    <Content Include="LinkerConfig.xml" />
-  </ItemGroup> 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
-    <PackageReference Include="Uno.UI" Version="1.45.0-dev.1457" />
-    <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.271" />
-    <DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.269" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\CalcManager\CalcManager.wasm" Link="CalcManager.wasm" />
-  </ItemGroup>
-  <Import Project="..\Calculator.Shared\Calculator.Shared.projitems" Label="Shared" Condition="Exists('..\Calculator.Shared\Calculator.Shared.projitems')" />
+		<Compile Remove="Program.cs" />
+		<None Remove="WasmScripts\CalcManager.js" />
+		<Compile Include="Program.cs" />
+		<Content Include="LinkerConfig.xml" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
+		<PackageReference Include="Uno.UI" Version="1.45.0-dev.1503" />
+		<PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.278" />
+		<DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.276" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="..\CalcManager\CalcManager.wasm" Link="CalcManager.wasm" />
+	</ItemGroup>
+	<Import Project="..\Calculator.Shared\Calculator.Shared.projitems" Label="Shared" Condition="Exists('..\Calculator.Shared\Calculator.Shared.projitems')" />
 </Project>

@@ -114,6 +114,9 @@
     <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyVersion.iOS.cs">
+      <Link>Properties\AssemblyVersion.iOS.cs</Link>
+    </Compile>
     <Compile Include="Main.cs" />
     <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-83.5%402x.png">
       <Visible>false</Visible>
@@ -172,6 +175,8 @@
     <ImageAsset Include="Media.xcassets\LaunchImages.launchimage\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
+    <None Include="NativeReferences\arm64\libCalcManager.a" />
+    <None Include="NativeReferences\x86_64\libCalcManager.a" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -183,15 +188,15 @@
     <BundleResource Include="Resources\Fonts\winjs-symbols.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Uno.UI" Version="1.45.0-dev.1457" />
+    <PackageReference Include="Uno.UI" Version="1.45.0-dev.1503" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'iPhoneSimulator' ">
-    <NativeReference Include="Native References/x86_64/libCalcManager.a">
+    <NativeReference Include="NativeReferences/x86_64/libCalcManager.a">
       <Kind>Static</Kind>
     </NativeReference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'iPhone' ">
-    <NativeReference Include="Native References/arm64/libCalcManager.a">
+    <NativeReference Include="NativeReferences/arm64/libCalcManager.a">
       <Kind>Static</Kind>
     </NativeReference>
   </ItemGroup>

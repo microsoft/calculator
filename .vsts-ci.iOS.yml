@@ -47,11 +47,24 @@ jobs:
 
   - task: MSBuild@1
     inputs:
+      solution: '$(build.sourcesdirectory)/src/build/build.csproj'
+      msbuildLocationMethod: version
+      msbuildVersion: latest
+      msbuildArchitecture: x86
+      msbuildArguments: /r  /p:BuildPlatformTarget=iOS /bl:$(build.artifactstagingdirectory)/build.binlog
+      clean: false
+      maximumCpuCount: true
+      restoreNugetPackages: false
+      logProjectEvents: true
+      createLogFile: true
+
+  - task: MSBuild@1
+    inputs:
       solution: '$(build.sourcesdirectory)/src/Calculator.iOS/Calculator.iOS.csproj'
       msbuildLocationMethod: version
       msbuildVersion: latest
       msbuildArchitecture: x86
-      msbuildArguments: /r /p:Configuration=Release /p:Platform=iPhone /detailedsummary /m:16 /nr:false "/p:InformationalVersion=%GITVERSION_InformationalVersion%"
+      msbuildArguments: /r /p:Configuration=Release /p:Platform=iPhone /bl:$(build.artifactstagingdirectory)/build.binlog
       clean: false
       maximumCpuCount: true
       restoreNugetPackages: false
@@ -69,6 +82,7 @@ jobs:
       flattenFolders: false
 
   - task: PublishBuildArtifacts@1
+    condition: always()
     inputs:
       PathtoPublish: $(build.artifactstagingdirectory)
       ArtifactName: Uno-Calculator-iOS

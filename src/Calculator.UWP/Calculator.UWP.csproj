@@ -9,7 +9,7 @@
       <Version>4.3.1</Version>
     </PackageReference>
     <PackageReference Include="Uno.UI">
-      <Version>1.45.0-dev.1457</Version>
+      <Version>1.45.0-dev.1503</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup>
@@ -103,6 +103,9 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyVersion.Uwp.cs">
+      <Link>Properties\AssemblyVersion.Uwp.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

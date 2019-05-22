@@ -13,9 +13,9 @@ jobs:
     clean: true
   
   - bash: |
-      sudo chmod -R 777 /emsdk
       cd /emsdk
-      sudo ./emsdk activate sdk-1.38.28-64bit
+      sudo ./emsdk activate sdk-1.38.31-64bit
+      sudo chmod -R 777 /emsdk
 
     displayName: 'Setup Emscripten'
 
@@ -37,7 +37,8 @@ jobs:
   - script: |
       source /emsdk/emsdk_env.sh
       cd $(build.sourcesdirectory)
-      msbuild /r /p:Configuration=Release "/p:PackageVersion=$(GITVERSION_FullSemVer)" /p:MixedModeBuild=$(MixedModeBuild) $(build.sourcesdirectory)/src/Calculator.Wasm/Calculator.Wasm.csproj
+      msbuild /r /p:BuildPlatformTarget=Wasm $(build.sourcesdirectory)/src/build/build.csproj
+      msbuild /r /p:Configuration=Release $(build.sourcesdirectory)/src/Calculator.Wasm/Calculator.Wasm.csproj
 
     env:
       GITVERSION_FullSemVer: $(GITVERSION_FullSemVer)
