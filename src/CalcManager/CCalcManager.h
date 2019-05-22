@@ -41,8 +41,8 @@ struct CalculatorManager_CreateParams
     GetCEngineStringFunc GetCEngineString;
 };
 
-#if defined(__EMSCRIPTEN__) || defined(__APPLE__)
-#define DLL_EXPORT
+#if defined(__EMSCRIPTEN__) || defined(__APPLE__) || defined(__ANDROID__)
+#define DLL_EXPORT 
 #else
 #define DLL_EXPORT __declspec(dllexport)
 #endif
