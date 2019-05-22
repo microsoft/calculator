@@ -5,7 +5,7 @@
       "extent": "full-screen",
       "minimum-system-version": "7.0",
       "scale": "2x",
-      "size": "640x960",
+      "size": "0x0",
       "idiom": "iphone"
     },
     {
@@ -14,7 +14,7 @@
       "minimum-system-version": "7.0",
       "subtype": "retina4",
       "scale": "2x",
-      "size": "640x1136",
+      "size": "0x0",
       "idiom": "iphone"
     },
     {
@@ -22,7 +22,7 @@
       "extent": "full-screen",
       "minimum-system-version": "7.0",
       "scale": "1x",
-      "size": "768x1024",
+      "size": "0x0",
       "idiom": "ipad"
     },
     {
@@ -30,7 +30,7 @@
       "extent": "full-screen",
       "minimum-system-version": "7.0",
       "scale": "1x",
-      "size": "1024x768",
+      "size": "0x0",
       "idiom": "ipad"
     },
     {
@@ -38,7 +38,7 @@
       "extent": "full-screen",
       "minimum-system-version": "7.0",
       "scale": "2x",
-      "size": "1536x2048",
+      "size": "0x0",
       "idiom": "ipad"
     },
     {
@@ -46,7 +46,7 @@
       "extent": "full-screen",
       "minimum-system-version": "7.0",
       "scale": "2x",
-      "size": "2048x1536",
+      "size": "0x0",
       "idiom": "ipad"
     }
   ],
