@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.UWP", "Calculato
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.Wasm", "Calculator.Wasm\Calculator.Wasm.csproj", "{53337466-6E79-45F3-A650-1BFB93CC19B0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalcManager.Android", "CalcManager.Android\CalcManager.Android.vcxproj", "{08A1283C-522B-4820-8C56-361638A82E24}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Calculator.Shared\Calculator.Shared.projitems*{093428d1-ab83-4f1a-93e9-304b44a24d1f}*SharedItemsImports = 4
