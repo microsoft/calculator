@@ -135,7 +135,7 @@ public:
             }
 
             std::wstring expressionSuffix{};
-            hr = GetExpressionSuffix(&expressionSuffix); // Will always return S_OK
+            hr = GetExpressionSuffix(&expressionSuffix);
             if (SUCCEEDED(hr))
             {
                 expression->append(expressionSuffix);
