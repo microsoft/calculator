@@ -553,7 +553,7 @@ namespace CalculatorApp
             FullscreenFlyoutClosed();
         }
 
-        void CloseHistoryFlyout()
+        public void CloseHistoryFlyout()
         {
             if (m_fIsHistoryFlyoutOpen)
             {
@@ -561,7 +561,7 @@ namespace CalculatorApp
             }
         }
 
-        void CloseMemoryFlyout()
+        public void CloseMemoryFlyout()
         {
             if (m_fIsMemoryFlyoutOpen)
             {

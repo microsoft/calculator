@@ -284,19 +284,18 @@ namespace CalculatorApp
             {
                 m_calculator.SetDefaultFocus();
             }
+			if (m_dateCalculator != null && m_dateCalculator.Visibility == Visibility.Visible)
+			{
+				m_dateCalculator.SetDefaultFocus();
+			}
+			// UNO TODO
+			//if (m_converter != null && m_converter.Visibility == Visibility.Visible)
+			//{
+			//    m_converter.SetDefaultFocus();
+			//}
+		}
 
-            // UNO TODO
-            //if (m_dateCalculator != null && m_dateCalculator.Visibility == Visibility.Visible)
-            //{
-            //    m_dateCalculator.SetDefaultFocus();
-            //}
-            //if (m_converter != null && m_converter.Visibility == Visibility.Visible)
-            //{
-            //    m_converter.SetDefaultFocus();
-            //}
-        }
-
-        void EnsureCalculator()
+		void EnsureCalculator()
         {
             if (m_calculator == null)
             {
@@ -336,23 +335,22 @@ namespace CalculatorApp
 
         void EnsureDateCalculator()
         {
-            // UNO TODO
-            //if (m_dateCalculator == null)
-            //{
-            //    // delay loading converter
-            //    m_dateCalculator = new DateCalculator();
-            //    m_dateCalculator.Name = "dateCalculator";
-            //    m_dateCalculator.DataContext = m_model.DateCalcViewModel;
+			if (m_dateCalculator == null)
+			{
+				// delay loading converter
+				m_dateCalculator = new DateCalculator();
+				m_dateCalculator.Name = "dateCalculator";
+				m_dateCalculator.DataContext = m_model.DateCalcViewModel;
 
-            //    DateCalcHolder.Child = m_dateCalculator;
-            //}
+				DateCalcHolder.Child = m_dateCalculator;
+			}
 
-            //if (m_calculator != null)
-            //{
-            //    m_calculator.CloseHistoryFlyout();
-            //    m_calculator.CloseMemoryFlyout();
-            //}
-        }
+			if (m_calculator != null)
+			{
+				m_calculator.CloseHistoryFlyout();
+				m_calculator.CloseMemoryFlyout();
+			}
+		}
 
         void EnsureConverter()
         {

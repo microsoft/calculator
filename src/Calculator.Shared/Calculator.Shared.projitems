@@ -39,6 +39,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\CalculatorButtonUser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\CalculatorDisplay.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\CopyPasteManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\DateCalculator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\DelegateCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\DisplayExpressionToken.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\EngineResourceProvider.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\MyVirtualKey.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavCategory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\TitleBarHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\TraceLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CalculationResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CalculationResultAutomationPeer.cs" />

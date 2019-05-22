@@ -35,9 +35,8 @@ namespace CalculatorApp.ViewModel
         private StandardCalculatorViewModel m_CalculatorViewModel;
         public StandardCalculatorViewModel CalculatorViewModel { get => m_CalculatorViewModel; set { m_CalculatorViewModel = value; RaisePropertyChanged("CalculatorViewModel"); } }
 
-        // UNO TODO
-        //private DateCalculatorViewModel m_DateCalcViewModel;
-        //public DateCalculatorViewModel DateCalcViewModel { get => m_DateCalcViewModel; set { m_DateCalcViewModel = value; RaisePropertyChanged("DateCalcViewModel"); } }
+        private DateCalculatorViewModel m_DateCalcViewModel;
+        public DateCalculatorViewModel DateCalcViewModel { get => m_DateCalcViewModel; set { m_DateCalcViewModel = value; RaisePropertyChanged("DateCalcViewModel"); } }
 
 
         // UNO TODO
@@ -160,12 +159,11 @@ namespace CalculatorApp.ViewModel
             else if (NavCategory.IsDateCalculatorViewMode(m_mode))
             {
                 // TraceLogger.GetInstance().LogDateCalculatorModeViewed(m_mode, ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread()));
-                // UNO TODO
-                //if (m_DateCalcViewModel == null)
-                //{
-                //    m_DateCalcViewModel = new DateCalculatorViewModel();
-                //}
-            }
+				if (m_DateCalcViewModel == null)
+				{
+					m_DateCalcViewModel = new DateCalculatorViewModel();
+				}
+			}
             else if (NavCategory.IsConverterViewMode(m_mode))
             {
                 // UNO TODO
@@ -200,12 +198,13 @@ namespace CalculatorApp.ViewModel
             //{
             //    ConverterViewModel.OnCopyCommand(parameter);
             //}
-            //else if (NavCategory.IsDateCalculatorViewMode(m_mode))
-            //{
-            //    DateCalcViewModel.OnCopyCommand(parameter);
-            //}
             //else
-            {
+            if (NavCategory.IsDateCalculatorViewMode(m_mode))
+			{
+				DateCalcViewModel.OnCopyCommand(parameter);
+			}
+			else
+			{
                 CalculatorViewModel.OnCopyCommand(parameter);
             }
         }
