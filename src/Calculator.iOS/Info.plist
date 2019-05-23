@@ -51,5 +51,7 @@
     <string>Media.xcassets/AppIcons.appiconset</string>
     <key>XSLaunchImageAssets</key>
     <string>Media.xcassets/LaunchImages.launchimage</string>
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
   </dict>
 </plist>
