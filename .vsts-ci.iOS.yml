@@ -2,7 +2,10 @@ jobs:
 - job: iOS
 
   pool:
-    vmImage: 'macOS-10.14'
+    name: Default
+    demands:
+    - Agent.OS -equals Darwin
+    - Xamarin.iOS -equals Latest
 
   variables:
     NUGET_PACKAGES: $(build.sourcesdirectory)/.nuget
@@ -11,8 +14,8 @@ jobs:
   - checkout: self
     clean: true
 
-  - bash: /bin/bash -c "sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1"
-    displayName: Select Xamarin Version
+  #- bash: /bin/bash -c "sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1"
+  #  displayName: Select Xamarin Version
   
   - bash: |
       shopt -s nullglob
@@ -37,6 +40,16 @@ jobs:
     displayName: 'Install an Apple provisioning profile'
     inputs:
       provProfileSecureFile: 'Uno_Calculator.mobileprovision'
+
+  - task: NuGetToolInstaller@0
+    inputs:
+      versionSpec: 4.9.1
+      checkLatest: false
+
+  - task: NuGetCommand@2
+    inputs:
+      command: 'restore'
+      restoreSolution: '$(build.sourcesdirectory)/src/Calculator.iOS/Calculator.iOS.csproj'
 
   - bash: |
       cd $(build.sourcesdirectory)/src/CalcManager

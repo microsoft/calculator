@@ -6,7 +6,6 @@
 		<IncludeBuildOutput>false</IncludeBuildOutput>
 
 		<AppName>Calculator</AppName>
-		<IncludeBuildInVersion>true</IncludeBuildInVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -18,20 +17,14 @@
 		<CallTarget Targets="BuildVersion">
 			<Output TaskParameter="TargetOutputs" PropertyName="_VersionOutput"/>
 		</CallTarget>
-
-		<ItemGroup>
-			<PackageVersion Include="$(_VersionOutput.Split(';')[0])" />
-			<PackageBuildNumber Include="$(_VersionOutput.Split(';')[1])" />
-		</ItemGroup>
-
 	</Target>
+	
 
 	<Target Name="BuildVersion"
-                  Outputs="$(_AppVersion);$(_BuildNumber)"
-                  Condition="'$(GITVERSION_InformationalVersion)'!=''">
+					Condition="'$(GITVERSION_InformationalVersion)'!=''">
 		<!-- Build Number -->
 		<PropertyGroup>
-			<_BuildNumber>$(PackageBuildNumber)</_BuildNumber>
+			<_BuildNumber>$(_BuildNumber)</_BuildNumber>
 			<_BuildNumber Condition="'$(BUILD_REPOSITORY_PROVIDER)' == 'TfsVersionControl'">$(BUILD_SOURCEVERSION.Substring(1))</_BuildNumber>
 		</PropertyGroup>
 
@@ -49,7 +42,7 @@
 			<_BuildNumber Condition="$(BuildNumberOffset) != ''">$([MSBuild]::Add($(_BuildNumber), $(BuildNumberOffset)))</_BuildNumber>
 			<_InformationalVersion>$(PackageInformationalVersion)</_InformationalVersion>
 			<_InformationalVersion Condition="'$(_InformationalVersion)' == ''">$(GITVERSION_InformationalVersion)</_InformationalVersion>
-			<_AppVersion>$(PackageVersion)</_AppVersion>
+			<_AppVersion>$(_AppVersion)</_AppVersion>
 			<_AppVersion Condition="'$(_AppVersion)'==''">$(GitVersion_MajorMinorPatch)</_AppVersion>
 		</PropertyGroup>
 
@@ -65,12 +58,6 @@
 		<PropertyGroup Condition="'$(IncludeBuildInVersion)' != 'True'">
 			<_AppVersion Condition="$(_AppVersion.Split('.').length) == 1">$(_AppVersion).0.0</_AppVersion>
 			<_AppVersion Condition="$(_AppVersion.Split('.').length) == 2">$(_AppVersion).0</_AppVersion>
-		</PropertyGroup>
-
-		<!-- App revision -->
-		<PropertyGroup>
-			<AppRevision Condition="'$(AppRevision)'==''">0</AppRevision>
-			<_AppVersion>$(_AppVersion).$(AppRevision)</_AppVersion>
 		</PropertyGroup>
 
 		<Message Text="App version : $(_AppVersion)"
@@ -125,6 +112,66 @@
                      Importance="$(_MessageImportance)" />
 		<Message Text="%0A"
                      Importance="$(_MessageImportance)" />
+
+		<PropertyGroup>
+			<_SourceBasePath>../$(AppName)</_SourceBasePath>
+			<_ManifestPath>$(_SourceBasePath).Android/Properties/AndroidManifest.xml</_ManifestPath>
+			<_PlistFilePath>$(_SourceBasePath).iOS/Info.plist</_PlistFilePath>
+			<_AppxManifestPath>$(_SourceBasePath).UWP/Package.appxmanifest</_AppxManifestPath>
+			<_AndroidNamespace>
+				<Namespace Prefix="android" Uri="http://schemas.android.com/apk/res/android" />
+			</_AndroidNamespace>
+			<_WindowsNamespace>
+				<Namespace Prefix="x" Uri="http://schemas.microsoft.com/appx/manifest/foundation/windows10" />
+			</_WindowsNamespace>
+		</PropertyGroup>
+
+		<Message Text="Updating Package versions" />
+		<Message Text="_AppVersion: $(_AppVersion) _BuildNumber: $(_BuildNumber)" Importance="high" />
+
+		<!-- Android -->
+		<XmlPoke Condition="Exists('$(_ManifestPath)')"
+                     XmlInputPath="$(_ManifestPath)"
+                     Query="/manifest/@android:versionName"
+                     Value="$(_AppVersion)"
+                     Namespaces="$(_AndroidNamespace)" />
+
+		<XmlPoke Condition="Exists('$(_ManifestPath)')"
+                     XmlInputPath="$(_ManifestPath)"
+                     Query="/manifest/@android:versionCode"
+                     Value="$(_BuildNumber)"
+                     Namespaces="$(_AndroidNamespace)" />
+
+		<!-- iOS -->
+		<!-- Using our own _XmlUpdate instead of XmlPoke to avoid unecessary (and possibly breaking) changes in the plist -->
+		<_XmlUpdate Condition="Exists('$(_PlistFilePath)')"
+                            XmlFileName="$(_PlistFilePath)"
+                            XPath="//plist/dict/key[text() = 'CFBundleShortVersionString']/following-sibling::string[1]"
+                            Value="$(_AppVersion)" />
+
+		<_XmlUpdate Condition="Exists('$(_PlistFilePath)')"
+                            XmlFileName="$(_PlistFilePath)"
+                            XPath="//plist/dict/key[text() = 'CFBundleVersion']/following-sibling::string[1]"
+                            Value="$(_BuildNumber)" />
+
+		<!-- UWP -->
+		<ItemGroup>
+			<_Major Include="$(_AppVersion.Split('.')[0])" />
+			<_Minor Include="$(_AppVersion.Split('.')[1])" />
+			<_Revision Include="$(_AppVersion.Split('.')[2])" />
+		</ItemGroup>
+
+		<!-- Forcing the inclusion of the build number in UWP as the standard format is Major.Minor.Build.Revision -->
+		<!-- Not doing this makes it impossible to update a package unless the version is updated -->
+		<PropertyGroup>
+			<_UWPVersion>@(_Major).@(_Minor).$(_BuildNumber).@(_Revision)</_UWPVersion>
+		</PropertyGroup>
+
+		<XmlPoke Condition="Exists('$(_AppxManifestPath)')"
+                     XmlInputPath="$(_AppxManifestPath)"
+                     Query="/x:Package/x:Identity/@Version"
+                     Value="$(_UWPVersion)"
+                     Namespaces="$(_WindowsNamespace)" />
 	</Target>
 
 	<UsingTask TaskName="_XmlUpdate"
@@ -149,7 +196,7 @@
 
 						var items = xdoc.XPathEvaluate(XPath, manager) as System.Collections.Generic.IEnumerable<object>;
 
-						Console.WriteLine("Updating " + items.Count() + " nodes");
+						Log.LogMessage("Updating " + items.Count() + " nodes");
 
 						foreach (var item in items.ToArray())
 						{
@@ -171,67 +218,6 @@
 			</Code>
 		</Task>
 	</UsingTask>
-
-	<Target Name="_SetPackageVersion"
-          AfterTargets="RunBuild"
-          Condition="'$(PackageVersion)'!='' And '$(PackageBuildNumber)'!=''">
-		<PropertyGroup>
-			<_SourceBasePath>../$(AppName)</_SourceBasePath>
-			<_ManifestPath>$(_SourceBasePath).Android/Properties/AndroidManifest.xml</_ManifestPath>
-			<_PlistFilePath>$(_SourceBasePath).Android/Info.plist</_PlistFilePath>
-			<_AppxManifestPath>$(_SourceBasePath).Android/Package.appxmanifest</_AppxManifestPath>
-			<_AndroidNamespace>
-				<Namespace Prefix="android" Uri="http://schemas.android.com/apk/res/android" />
-			</_AndroidNamespace>
-			<_WindowsNamespace>
-				<Namespace Prefix="x" Uri="http://schemas.microsoft.com/appx/manifest/foundation/windows10" />
-			</_WindowsNamespace>
-		</PropertyGroup>
-
-		<!-- Android -->
-		<XmlPoke Condition="Exists('$(_ManifestPath)')"
-                     XmlInputPath="$(_ManifestPath)"
-                     Query="/manifest/@android:versionName"
-                     Value="$(PackageVersion)"
-                     Namespaces="$(_AndroidNamespace)" />
-
-		<XmlPoke Condition="Exists('$(_ManifestPath)')"
-                     XmlInputPath="$(_ManifestPath)"
-                     Query="/manifest/@android:versionCode"
-                     Value="$(PackageBuildNumber)"
-                     Namespaces="$(_AndroidNamespace)" />
-
-		<!-- iOS -->
-		<!-- Using our own _XmlUpdate instead of XmlPoke to avoid unecessary (and possibly breaking) changes in the plist -->
-		<_XmlUpdate Condition="Exists('$(_PlistFilePath)')"
-                            XmlFileName="$(_PlistFilePath)"
-                            XPath="//plist/dict/key[text() = 'CFBundleShortVersionString']/following-sibling::string[1]"
-                            Value="$(PackageVersion)" />
-
-		<_XmlUpdate Condition="Exists('$(_PlistFilePath)')"
-                            XmlFileName="$(_PlistFilePath)"
-                            XPath="//plist/dict/key[text() = 'CFBundleVersion']/following-sibling::string[1]"
-                            Value="$(PackageBuildNumber)" />
-
-		<!-- UWP -->
-		<ItemGroup>
-			<_Major Include="$(PackageVersion.Split('.')[0])" />
-			<_Minor Include="$(PackageVersion.Split('.')[1])" />
-			<_Revision Include="$(PackageVersion.Split('.')[3])" />
-		</ItemGroup>
-
-		<!-- Forcing the inclusion of the build number in UWP as the standard format is Major.Minor.Build.Revision -->
-		<!-- Not doing this makes it impossible to update a package unless the version is updated -->
-		<PropertyGroup>
-			<_UWPVersion>@(_Major).@(_Minor).$(PackageBuildNumber).@(_Revision)</_UWPVersion>
-		</PropertyGroup>
-
-		<XmlPoke Condition="Exists('$(_AppxManifestPath)')"
-                     XmlInputPath="$(_AppxManifestPath)"
-                     Query="/x:Package/x:Identity/@Version"
-                     Value="$(_UWPVersion)"
-                     Namespaces="$(_WindowsNamespace)" />
-	</Target>
 
 
 </Project>
