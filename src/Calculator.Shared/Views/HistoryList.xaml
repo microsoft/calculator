@@ -1,5 +1,6 @@
 ﻿<UserControl x:Class="CalculatorApp.HistoryList"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:automation="using:CalculatorApp.Common.Automation"
              xmlns:controls="using:CalculatorApp.Controls"
@@ -41,11 +42,12 @@
 			<converters:ItemSizeToVisibilityNegationConverter x:Key="ItemSizeToVisibilityNegationConverter"/>
 			<converters:ItemSizeToVisibilityConverter x:Key="ItemSizeToVisibilityConverter"/>
 
-			<MenuFlyout x:Key="HistoryContextMenu">
+			<!--UNO TODO-->
+			<win:MenuFlyout x:Key="HistoryContextMenu">
 				<MenuFlyoutItem x:Uid="DeleteHistoryMenuItem"
                                 Click="OnDeleteMenuItemClicked"
                                 Icon="Delete"/>
-			</MenuFlyout>
+			</win:MenuFlyout>
 
 
 			<!--
@@ -94,7 +96,7 @@
 			<DataTemplate x:Key="HistoryItemTemplate" x:DataType="model:HistoryItemViewModel">
 				<StackPanel Margin="0,6,4,6"
                             Background="Transparent"
-                            ContextFlyout="{StaticResource HistoryContextMenu}">
+                            win:ContextFlyout="{StaticResource HistoryContextMenu}">
 					<TextBlock x:Name="ExprTextBlock"
                                 Margin="0,0,0,4"
                                 HorizontalAlignment="Right"

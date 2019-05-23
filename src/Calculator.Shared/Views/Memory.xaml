@@ -1,5 +1,6 @@
 ﻿<UserControl x:Class="CalculatorApp.Memory"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:common="using:CalculatorApp.Common"
              xmlns:controls="using:CalculatorApp.Controls"
@@ -17,7 +18,8 @@
 		<converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
 		<converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
 
-		<MenuFlyout x:Key="MemoryContextMenu">
+		<!--UNO TODO-->
+		<win:MenuFlyout x:Key="MemoryContextMenu">
 			<MenuFlyoutItem x:Uid="ClearMemoryMenuItem" Click="OnClearMenuItemClicked">
 				<MenuFlyoutItem.Icon>
 					<FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xf754;"/>
@@ -33,7 +35,7 @@
 					<FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xf758;"/>
 				</MenuFlyoutItem.Icon>
 			</MenuFlyoutItem>
-		</MenuFlyout>
+		</win:MenuFlyout>
 
 		<DataTemplate x:Key="MemoryItemTemplate" x:DataType="model:MemoryItemViewModel">
 			<local:MemoryListItem Model="{x:Bind Mode=OneWay}"/>

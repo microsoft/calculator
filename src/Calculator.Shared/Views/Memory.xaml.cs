@@ -35,7 +35,9 @@ namespace CalculatorApp
 		{
 			m_isErrorVisualState = false;
 			InitializeComponent();
-			m_memoryItemFlyout = (MenuFlyout)(Resources["MemoryContextMenu"]);
+
+			// UNO TODO
+			m_memoryItemFlyout = Resources["MemoryContextMenu"] as MenuFlyout ?? new MenuFlyout();
 
 			MemoryPaneEmpty.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
 		}
