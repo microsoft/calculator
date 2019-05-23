@@ -272,10 +272,9 @@
   <x:Double x:Key="AppMinWindowHeight">500</x:Double>
   <x:Double x:Key="AppMinWindowWidth">320</x:Double>
 
-  <win:FontFamily x:Key="CalculatorFontFamily">ms-appx:///Assets/CalcMDL2.ttf#Calculator MDL2 Assets</win:FontFamily>
-  <xamarin:FontFamily x:Key="CalculatorFontFamily">Calculator MDL2 Assets</xamarin:FontFamily>
+	<FontFamily x:Key="CalculatorFontFamily">ms-appx:///Assets/CalcMDL2.ttf#Calculator MDL2 Assets</FontFamily>
 
-  <x:Double x:Key="SplitViewOpenPaneLength">256</x:Double>
+	<x:Double x:Key="SplitViewOpenPaneLength">256</x:Double>
   <Thickness x:Key="PivotPortraitThemePadding">0,1,0,0</Thickness>
   <x:Double x:Key="PivotHeaderItemFontSize">15</x:Double>
   <FontWeight x:Key="PivotHeaderItemThemeFontWeight">SemiBold</FontWeight>
