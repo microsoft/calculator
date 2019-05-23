@@ -1,13 +1,23 @@
-using OpenQA.Selenium;
-using OpenQA.Selenium.Appium.Service;
-using OpenQA.Selenium.Appium.Service.Options;
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//See the NOTICE file distributed with this work for additional
+//information regarding copyright ownership.
+//You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+
+//Portions Copyright(c) Microsoft Corporation
+
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 
 namespace CalculatorUITestFramework
 {
@@ -20,11 +30,11 @@ namespace CalculatorUITestFramework
 
         public WindowsDriverLocalService Build()
         {
-            if (FileInfo == null)
+            if (this.FileInfo == null)
             {
-                FileInfo = new FileInfo(@"c:\Program Files (x86)\Windows Application Driver\winappdriver.exe");
+                this.FileInfo = new FileInfo(@"c:\Program Files (x86)\Windows Application Driver\winappdriver.exe");
             }
-            return new WindowsDriverLocalService(FileInfo, string.Empty, IPAddress.Parse(this.IpAddress), this.Port, StartUpTimeout);
+            return new WindowsDriverLocalService(this.FileInfo, string.Empty, IPAddress.Parse(this.IpAddress), this.Port, this.StartUpTimeout);
         }
 
         public WindowsDriverServiceBuilder WithFileInfo(FileInfo fileInfo)
@@ -33,7 +43,7 @@ namespace CalculatorUITestFramework
             {
                 throw new ArgumentNullException("FileInfo should not be NULL");
             }
-            FileInfo = fileInfo;
+            this.FileInfo = fileInfo;
             return this;
         }
 
@@ -43,13 +53,13 @@ namespace CalculatorUITestFramework
             {
                 throw new ArgumentNullException("A startup timeout should not be NULL");
             }
-            StartUpTimeout = startUpTimeout;
+            this.StartUpTimeout = startUpTimeout;
             return this;
         }
 
         public WindowsDriverServiceBuilder WithIPAddress(string ipAddress)
         {
-            IpAddress = ipAddress;
+            this.IpAddress = ipAddress;
             return this;
         }
 
@@ -65,7 +75,7 @@ namespace CalculatorUITestFramework
                 return UsingAnyFreePort();
             }
 
-            Port = port;
+            this.Port = port;
             return this;
         }
 
@@ -78,7 +88,7 @@ namespace CalculatorUITestFramework
                 sock = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream, ProtocolType.Tcp);
                 sock.Bind(new IPEndPoint(IPAddress.Any, 0));
-                Port = ((IPEndPoint)sock.LocalEndPoint).Port;
+                this.Port = ((IPEndPoint)sock.LocalEndPoint).Port;
                 return this;
             }
             finally

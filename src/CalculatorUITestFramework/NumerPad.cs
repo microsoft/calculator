@@ -1,76 +1,80 @@
-using System;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using OpenQA.Selenium.Appium.Windows;
+using System;
 
 namespace CalculatorUITestFramework
 {
     public class NumerPad
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
-        public WindowsElement Num0Button => session.TryFindElementByAccessibilityId("num0Button");
-        public WindowsElement Num1Button => session.TryFindElementByAccessibilityId("num1Button");
-        public WindowsElement Num2Button => session.TryFindElementByAccessibilityId("num2Button");
-        public WindowsElement Num3Button => session.TryFindElementByAccessibilityId("num3Button");
-        public WindowsElement Num4Button => session.TryFindElementByAccessibilityId("num4Button");
-        public WindowsElement Num5Button => session.TryFindElementByAccessibilityId("num5Button");
-        public WindowsElement Num6Button => session.TryFindElementByAccessibilityId("num6Button");
-        public WindowsElement Num7Button => session.TryFindElementByAccessibilityId("num7Button");
-        public WindowsElement Num8Button => session.TryFindElementByAccessibilityId("num8Button");
-        public WindowsElement Num9Button => session.TryFindElementByAccessibilityId("num9Button");
-        public WindowsElement DecimalButton => session.TryFindElementByAccessibilityId("decimalSeparatorButton");
-        public WindowsElement NegateButton => session.TryFindElementByAccessibilityId("negateButton");
+        public WindowsElement Num0Button => this.session.TryFindElementByAccessibilityId("num0Button");
+        public WindowsElement Num1Button => this.session.TryFindElementByAccessibilityId("num1Button");
+        public WindowsElement Num2Button => this.session.TryFindElementByAccessibilityId("num2Button");
+        public WindowsElement Num3Button => this.session.TryFindElementByAccessibilityId("num3Button");
+        public WindowsElement Num4Button => this.session.TryFindElementByAccessibilityId("num4Button");
+        public WindowsElement Num5Button => this.session.TryFindElementByAccessibilityId("num5Button");
+        public WindowsElement Num6Button => this.session.TryFindElementByAccessibilityId("num6Button");
+        public WindowsElement Num7Button => this.session.TryFindElementByAccessibilityId("num7Button");
+        public WindowsElement Num8Button => this.session.TryFindElementByAccessibilityId("num8Button");
+        public WindowsElement Num9Button => this.session.TryFindElementByAccessibilityId("num9Button");
+        public WindowsElement DecimalButton => this.session.TryFindElementByAccessibilityId("decimalSeparatorButton");
+        public WindowsElement NegateButton => this.session.TryFindElementByAccessibilityId("negateButton");
 
         /// <summary>
         /// Translates a number into the Calculator button clicks.
         /// </summary>
         /// <param name="number">Number to be entered into the calculator.</param>
-        public void TranslateNumberToButtonClicks(double number)
+        public void Input(double number)
         {
             string numberStr = number.ToString();
             if (numberStr.StartsWith("-"))
             {
-                numberStr = numberStr.Remove(0, 1);
-                numberStr += '-';
+                numberStr = numberStr.Substring(1) + "-";
             }
             foreach (char digit in numberStr)
             {
                 switch (digit)
                 {
                     case '0':
-                        Num0Button.Click();
+                        this.Num0Button.Click();
                         break;
                     case '1':
-                        Num1Button.Click();
+                        this.Num1Button.Click();
                         break;
                     case '2':
-                        Num2Button.Click();
+                        this.Num2Button.Click();
                         break;
                     case '3':
-                        Num3Button.Click();
+                        this.Num3Button.Click();
                         break;
                     case '4':
-                        Num4Button.Click();
+                        this.Num4Button.Click();
                         break;
                     case '5':
-                        Num5Button.Click();
+                        this.Num5Button.Click();
                         break;
                     case '6':
-                        Num6Button.Click();
+                        this.Num6Button.Click();
                         break;
                     case '7':
-                        Num7Button.Click();
+                        this.Num7Button.Click();
                         break;
                     case '8':
-                        Num8Button.Click();
+                        this.Num8Button.Click();
                         break;
                     case '9':
-                        Num9Button.Click();
+                        this.Num9Button.Click();
                         break;
                     case '.':
-                        DecimalButton.Click();
+                        this.DecimalButton.Click();
                         break;
                     case '-':
-                        NegateButton.Click();
+                        this.NegateButton.Click();
                         break;
+                    default:
+                        throw (new ArgumentException(String.Format("{0} is not valid", digit)));
                 }
             }
         }

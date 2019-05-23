@@ -1,11 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium.Windows;
-using OpenQA.Selenium.Remote;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CalculatorUITestFramework
 {
@@ -25,15 +22,15 @@ namespace CalculatorUITestFramework
             {
                 try
                 {
-                    return session.TryFindElementByAccessibilityId("Header");
+                    return this.session.TryFindElementByAccessibilityId("Header");
                 }
                 catch
                 {
-                    return session.TryFindElementByAccessibilityId("ContentPresenter");
+                    return this.session.TryFindElementByAccessibilityId("ContentPresenter");
                 }
             }
         }
-        public WindowsElement CalculatorResult => session.TryFindElementByAccessibilityId("CalculatorResults");
+        public WindowsElement CalculatorResult => this.session.TryFindElementByAccessibilityId("CalculatorResults");
 
         public void StandardCalculatorSetup(TestContext context)
         {
@@ -41,7 +38,7 @@ namespace CalculatorUITestFramework
             WinAppDriver.Instance.SetupCalculatorSession(context);
 
             // Ensure that calculator is in standard mode
-            NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
+            this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
             Assert.IsNotNull(CalculatorResult);
         }
 
@@ -57,9 +54,9 @@ namespace CalculatorUITestFramework
         /// <param name="clearHistory">Bool specifying if the History Panel should be cleared; true by default.</param>
         public void ClearAll()
         {
-            StandardOperators.ClearButton.Click();
-            MemoryPanel.MemoryClear.Click();
-            HistoryPanel.ClearHistory();
+            this.StandardOperators.ClearButton.Click();
+            this.MemoryPanel.MemoryClear.Click();
+            this.HistoryPanel.ClearHistory();
         }
 
         /// <summary>
@@ -68,7 +65,7 @@ namespace CalculatorUITestFramework
         /// <returns>The string shown in the UI.</returns>
         public string GetCalculatorResultText()
         {
-            return CalculatorResult.Text.Replace("Display is", string.Empty).Trim();
+            return this.CalculatorResult.Text.Replace("Display is", string.Empty).Trim();
         }
     }
 }

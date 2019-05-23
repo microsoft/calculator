@@ -1,11 +1,24 @@
-using OpenQA.Selenium.Appium.Service;
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//See the NOTICE file distributed with this work for additional
+//information regarding copyright ownership.
+//You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+
+//Portions Copyright (c) Microsoft Corporation
+
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace CalculatorUITestFramework
 {
@@ -27,33 +40,33 @@ namespace CalculatorUITestFramework
             int port,
             TimeSpan initializationTimeout)
         {
-            FileName = fileName;
-            Arguments = arguments;
-            IP = ip;
-            Port = port;
-            InitializationTimeout = initializationTimeout;
+            this.FileName = fileName;
+            this.Arguments = arguments;
+            this.IP = ip;
+            this.Port = port;
+            this.InitializationTimeout = initializationTimeout;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void Start()
         {
-            if (IsRunning)
+            if (this.IsRunning)
             {
                 return;
             }
 
-            Service = new Process();
-            Service.StartInfo.FileName = FileName.FullName;
-            Service.StartInfo.Arguments = Arguments;
-            Service.StartInfo.UseShellExecute = false;
-            Service.StartInfo.CreateNoWindow = true;
+            this.Service = new Process();
+            this.Service.StartInfo.FileName = FileName.FullName;
+            this.Service.StartInfo.Arguments = Arguments;
+            this.Service.StartInfo.UseShellExecute = false;
+            this.Service.StartInfo.CreateNoWindow = true;
 
-            Service.StartInfo.RedirectStandardOutput = true;
-            Service.OutputDataReceived += (sender, e) => OutputDataReceived?.Invoke(this, e);
+            this.Service.StartInfo.RedirectStandardOutput = true;
+            this.Service.OutputDataReceived += (sender, e) => OutputDataReceived?.Invoke(this, e);
 
             bool isLaunched = false;
             string msgTxt =
-                $"The local WinAppDriver server has not been started: {FileName.FullName} Arguments: {Arguments}. " +
+                $"The local WinAppDriver server has not been started: {this.FileName.FullName} Arguments: {this.Arguments}. " +
                 "\n";
 
             try
@@ -82,14 +95,14 @@ namespace CalculatorUITestFramework
         {
             get
             {
-                if (Service == null)
+                if (this.Service == null)
                 {
                     return false;
                 }
 
                 try
                 {
-                    var pid = Service.Id;
+                    var pid = this.Service.Id;
                 }
                 catch (Exception)
                 {
@@ -109,26 +122,26 @@ namespace CalculatorUITestFramework
         public Uri ServiceUrl
         {
             // Note: append /wd/hub to the URL if you're directing the test at Appium
-            get { return new Uri($"http://{IP.ToString()}:{Convert.ToString(Port)}"); }
+            get { return new Uri($"http://{this.IP.ToString()}:{Convert.ToString(this.Port)}"); }
         }
 
         private void DestroyProcess()
         {
-            if (Service == null)
+            if (this.Service == null)
             {
                 return;
             }
 
             try
             {
-                Service.Kill();
+                this.Service.Kill();
             }
             catch (Exception)
             {
             }
             finally
             {
-                Service.Close();
+                this.Service.Close();
             }
         }
 
@@ -138,10 +151,10 @@ namespace CalculatorUITestFramework
 
             Uri status;
 
-            Uri service = ServiceUrl;
+            Uri service = this.ServiceUrl;
             if (service.IsLoopback)
             {
-                status = new Uri("http://localhost:" + Convert.ToString(Port) + "/status");
+                status = new Uri("http://localhost:" + Convert.ToString(this.Port) + "/status");
             }
             else
             {

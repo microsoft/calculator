@@ -1,14 +1,12 @@
 using CalculatorUITestFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace CalculatorUITests
-{ 
+{
     [TestClass]
     public class StandardModeFunctionalTests
     {
@@ -56,8 +54,10 @@ namespace CalculatorUITests
         [TestMethod]
         public void SmokeTest_Add()
         {
-            // Find the buttons by their names and click them in sequence to peform 1 + 7 = 8
-            page.StandardOperators.Add(new List<double>() { 3.5, 0.25 });
+            page.StandardOperators.NumberPad.Input(3.5);
+            page.StandardOperators.PlusButton.Click();
+            page.StandardOperators.NumberPad.Input(0.25);
+            page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("3.75", page.GetCalculatorResultText());
         }
 
@@ -71,17 +71,31 @@ namespace CalculatorUITests
         [TestMethod]
         public void SmokeTest_Subtract()
         {
-            // Find the buttons by their names and click them in sequence to peform 1 + 7 = 8
-            page.StandardOperators.Subtract(new List<double>() { 4.3, 2.6 });
+            page.StandardOperators.NumberPad.Input(4.3);
+            page.StandardOperators.MinusButton.Click();
+            page.StandardOperators.NumberPad.Input(2.6);
+            page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("1.7", page.GetCalculatorResultText());
         }
 
         [TestMethod]
         public void SmokeTest_History()
         {
-            page.StandardOperators.Add(new List<double>() { -3, -2.6 });
-            page.StandardOperators.Subtract(new List<double>() { 2, 3 });
-            page.StandardOperators.Multiply(new List<double>() { 1, 3 });
+            page.StandardOperators.NumberPad.Input(-3);
+            page.StandardOperators.PlusButton.Click();
+            page.StandardOperators.NumberPad.Input(-2.6);
+            page.StandardOperators.EqualButton.Click();
+
+            page.StandardOperators.NumberPad.Input(2);
+            page.StandardOperators.MinusButton.Click();
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.EqualButton.Click();
+
+            page.StandardOperators.NumberPad.Input(1);
+            page.StandardOperators.MultiplyButton.Click();
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.EqualButton.Click();
+
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
             Assert.IsTrue(historyItems[0].Text.Equals("1 × 3 = 3", StringComparison.InvariantCultureIgnoreCase));
             Assert.IsTrue(historyItems[1].Text.Equals("2 Minus ( 3 = Minus (1", StringComparison.InvariantCultureIgnoreCase));
@@ -92,12 +106,24 @@ namespace CalculatorUITests
         [TestMethod]
         public void SmokeTest_Memory()
         {
-            page.StandardOperators.Add(new List<double>() { 3, 0 });
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.PlusButton.Click();
+            page.StandardOperators.NumberPad.Input(0);
+            page.StandardOperators.EqualButton.Click();
             page.MemoryPanel.MemButton.Click();
-            page.StandardOperators.Divide(new List<double>() { 2, 3 });
+
+            page.StandardOperators.NumberPad.Input(2);
+            page.StandardOperators.DivideButton.Click();
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.EqualButton.Click();
             page.MemoryPanel.MemButton.Click();
-            page.StandardOperators.Multiply(new List<double>() { 7, 9 });
+
+            page.StandardOperators.NumberPad.Input(7);
+            page.StandardOperators.MultiplyButton.Click();
+            page.StandardOperators.NumberPad.Input(9);
+            page.StandardOperators.EqualButton.Click();
             page.MemoryPanel.MemButton.Click();
+
             var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
 
             Assert.IsTrue(memoryItems[0].Text.Equals("63", StringComparison.InvariantCultureIgnoreCase));
@@ -113,37 +139,41 @@ namespace CalculatorUITests
         [TestMethod]
         public void Operator_Reciprocal()
         {
-            page.StandardOperators.Reciprocal(4);
+            page.StandardOperators.NumberPad.Input(4);
+            page.StandardOperators.InvertButton.Click();
             Assert.AreEqual("0.25", page.GetCalculatorResultText());
         }
 
         [TestMethod]
         public void Operator_Squared()
         {
-            page.StandardOperators.Square(-15.5);
+            page.StandardOperators.NumberPad.Input(-15.5);
+            page.StandardOperators.XPower2Button.Click();
             Assert.AreEqual("240.25", page.GetCalculatorResultText());
         }
 
         [TestMethod]
         public void Operator_SquareRoot()
         {
-            page.StandardOperators.SquareRoot(144);
+            page.StandardOperators.NumberPad.Input(144);
+            page.StandardOperators.SquareRootButton.Click();
             Assert.AreEqual("12", page.GetCalculatorResultText());
         }
 
         [TestMethod]
         public void Operator_Cubed()
         {
-            page.StandardOperators.Cube(-3);
+            page.StandardOperators.NumberPad.Input(-3);
+            page.StandardOperators.XPower3Button.Click();
             Assert.AreEqual("-27", page.GetCalculatorResultText());
         }
 
         [TestMethod]
         public void Operator_Percent()
         {
-            page.StandardOperators.NumberPad.TranslateNumberToButtonClicks(600);
+            page.StandardOperators.NumberPad.Input(600);
             page.StandardOperators.MultiplyButton.Click();
-            page.StandardOperators.NumberPad.TranslateNumberToButtonClicks(15);
+            page.StandardOperators.NumberPad.Input(15);
             page.StandardOperators.PercentButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("90", page.GetCalculatorResultText());
@@ -152,7 +182,7 @@ namespace CalculatorUITests
         [TestMethod]
         public void Operator_Delete()
         {
-            page.StandardOperators.NumberPad.TranslateNumberToButtonClicks(-12345);
+            page.StandardOperators.NumberPad.Input(-12345);
             page.StandardOperators.BackSpaceButton.Click();
             Assert.AreEqual("-1,234", page.GetCalculatorResultText());
         }
@@ -160,7 +190,9 @@ namespace CalculatorUITests
         [TestMethod]
         public void Operator_ClearAll()
         {
-            page.StandardOperators.Add(new List<double>() { 12345, 6789 });
+            page.StandardOperators.NumberPad.Input(12345);
+            page.StandardOperators.PlusButton.Click();
+            page.StandardOperators.NumberPad.Input(6789);
             page.StandardOperators.ClearButton.Click();
             Assert.AreEqual("0", page.GetCalculatorResultText());
         }
@@ -168,9 +200,9 @@ namespace CalculatorUITests
         [TestMethod]
         public void Operator_ClearEntry()
         {
-            page.StandardOperators.NumberPad.TranslateNumberToButtonClicks(-12345);
+            page.StandardOperators.NumberPad.Input(-12345);
             page.StandardOperators.MinusButton.Click();
-            page.StandardOperators.NumberPad.TranslateNumberToButtonClicks(5678);
+            page.StandardOperators.NumberPad.Input(5678);
             page.StandardOperators.ClearEntryButton.Click();
             Assert.AreEqual("0", page.GetCalculatorResultText());
         }
@@ -239,9 +271,13 @@ namespace CalculatorUITests
         [TestMethod]
         public void Memory_AddTest()
         {
-            page.StandardOperators.Divide(new List<double>() { 12, 3 });
+            page.StandardOperators.NumberPad.Input(12);
+            page.StandardOperators.DivideButton.Click();
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.EqualButton.Click();
+
             page.MemoryPanel.MemButton.Click();
-            page.StandardOperators.NumberPad.TranslateNumberToButtonClicks(15);
+            page.StandardOperators.NumberPad.Input(15);
             page.MemoryPanel.MemPlus.Click();
             var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
             Assert.IsTrue(memoryItems[0].Text.Equals("19", StringComparison.InvariantCultureIgnoreCase));
@@ -250,9 +286,13 @@ namespace CalculatorUITests
         [TestMethod]
         public void Memory_SubtractTest()
         {
-            page.StandardOperators.Divide(new List<double>() { 12, 3 });
+            page.StandardOperators.NumberPad.Input(12);
+            page.StandardOperators.DivideButton.Click();
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.EqualButton.Click();
+
             page.MemoryPanel.MemButton.Click();
-            page.StandardOperators.NumberPad.TranslateNumberToButtonClicks(3.3);
+            page.StandardOperators.NumberPad.Input(3.3);
             page.MemoryPanel.MemMinus.Click();
             var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
             Assert.IsTrue(memoryItems[0].Text.Equals("0.7", StringComparison.InvariantCultureIgnoreCase));
@@ -261,9 +301,13 @@ namespace CalculatorUITests
         [TestMethod]
         public void Memory_RecallTest()
         {
-            page.StandardOperators.Divide(new List<double>() { 12, 3 });
+            page.StandardOperators.NumberPad.Input(12);
+            page.StandardOperators.DivideButton.Click();
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.EqualButton.Click();
+
             page.MemoryPanel.MemButton.Click();
-            page.StandardOperators.NumberPad.TranslateNumberToButtonClicks(3.3);
+            page.StandardOperators.NumberPad.Input(3.3);
             page.MemoryPanel.MemRecall.Click();
             var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
             Assert.IsTrue(memoryItems[0].Text.Equals("4", StringComparison.InvariantCultureIgnoreCase));
@@ -272,9 +316,13 @@ namespace CalculatorUITests
         [TestMethod]
         public void Memory_ClearTest()
         {
-            page.StandardOperators.Divide(new List<double>() { 12, 3 });
+            page.StandardOperators.NumberPad.Input(12);
+            page.StandardOperators.DivideButton.Click();
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.EqualButton.Click();
+
             page.MemoryPanel.MemButton.Click();
-            page.StandardOperators.NumberPad.TranslateNumberToButtonClicks(3.3);
+            page.StandardOperators.NumberPad.Input(3.3);
             page.MemoryPanel.MemoryClear.Click();
             page.MemoryPanel.OpenMemoryPanel();
             Assert.IsNotNull(page.MemoryPanel.MemoryPaneEmptyLabel);

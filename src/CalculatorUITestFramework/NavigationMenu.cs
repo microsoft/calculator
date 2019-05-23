@@ -1,8 +1,8 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using OpenQA.Selenium.Appium.Windows;
 using System;
-using System.Diagnostics;
-using System.Threading;
 
 namespace CalculatorUITestFramework
 {
@@ -30,8 +30,8 @@ namespace CalculatorUITestFramework
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
 
-        public WindowsElement NavigationMenuButton => session.TryFindElementByAccessibilityId("TogglePaneButton");
-        public WindowsElement NavigationMenuPane => session.TryFindElementByClassName("SplitViewPane");
+        public WindowsElement NavigationMenuButton => this.session.TryFindElementByAccessibilityId("TogglePaneButton");
+        public WindowsElement NavigationMenuPane => this.session.TryFindElementByClassName("SplitViewPane");
 
         /// <summary>
         /// Changes the mode using the navigation menu in the UI
@@ -94,14 +94,12 @@ namespace CalculatorUITestFramework
                     modeAccessibilityId = "Angle";
                     break;
                 default:
-                    modeAccessibilityId = string.Empty;
-                    break;
+                    throw (new ArgumentException("The mode is not valid"));
             }
 
-            var source = session.PageSource;
-            NavigationMenuButton.Click();
-            NavigationMenuPane.WaitForDisplayed();
-            session.TryFindElementByAccessibilityId(modeAccessibilityId).Click();
+            this.NavigationMenuButton.Click();
+            this.NavigationMenuPane.WaitForDisplayed();
+            this.session.TryFindElementByAccessibilityId(modeAccessibilityId).Click();
         }
     }
 }

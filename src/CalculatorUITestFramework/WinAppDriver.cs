@@ -1,11 +1,11 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace CalculatorUITestFramework
 {
@@ -36,9 +36,9 @@ namespace CalculatorUITestFramework
 
         public void SetupCalculatorSession(TestContext context)
         {
-            windowsDriverService = new WindowsDriverServiceBuilder().Build();
+            this.windowsDriverService = new WindowsDriverServiceBuilder().Build();
 
-            windowsDriverService.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
+            this.windowsDriverService.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
             {
                 if (!String.IsNullOrEmpty(e.Data))
                 {
@@ -46,35 +46,35 @@ namespace CalculatorUITestFramework
                 }
             });
 
-            windowsDriverService.Start();
+            this.windowsDriverService.Start();
 
             // Launch Calculator application if it is not yet launched
-            if (CalculatorSession == null)
+            if (this.CalculatorSession == null)
             {
                 // Create a new  WinAppDriver session to bring up an instance of the Calculator application
                 // Note: Multiple calculator windows (instances) share the same process Id
                 var options = new AppiumOptions();
                 options.AddAdditionalCapability("app", calculatorAppId);
                 options.AddAdditionalCapability("deviceName", "WindowsPC");
-                CalculatorSession = new WindowsDriver<WindowsElement>(windowsDriverService.ServiceUrl, options);
-                CalculatorSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-                Assert.IsNotNull(CalculatorSession);
+                this.CalculatorSession = new WindowsDriver<WindowsElement>(this.windowsDriverService.ServiceUrl, options);
+                this.CalculatorSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                Assert.IsNotNull(this.CalculatorSession);
             }
         }
 
         public void TearDownCalculatorSession()
         {
             // Close the application and delete the session
-            if (CalculatorSession != null)
+            if (this.CalculatorSession != null)
             {
-                CalculatorSession.Quit();
-                CalculatorSession = null;
+                this.CalculatorSession.Quit();
+                this.CalculatorSession = null;
             }
 
-            if (windowsDriverService != null)
+            if (this.windowsDriverService != null)
             {
-                windowsDriverService.Dispose();
-                windowsDriverService = null;
+                this.windowsDriverService.Dispose();
+                this.windowsDriverService = null;
             }
         }
 

@@ -1,35 +1,32 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CalculatorUITestFramework
 {
     public class MemoryPanel
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
-        public WindowsElement MemoryClear => session.TryFindElementByAccessibilityId("ClearMemoryButton");
-        public WindowsElement MemRecall => session.TryFindElementByAccessibilityId("MemRecall");
-        public WindowsElement MemPlus => session.TryFindElementByAccessibilityId("MemPlus");
-        public WindowsElement MemMinus => session.TryFindElementByAccessibilityId("MemMinus");
-        public WindowsElement MemButton => session.TryFindElementByAccessibilityId("memButton");
-        public WindowsElement MemoryPane => session.TryFindElementByAccessibilityId("MemoryPanel");
-        public WindowsElement MemoryLabel => session.TryFindElementByAccessibilityId("MemoryLabel");
-        public WindowsElement MemoryListView => session.TryFindElementByAccessibilityId("MemoryListView");
-        public WindowsElement MemoryPaneEmptyLabel => session.TryFindElementByAccessibilityId("MemoryPaneEmpty");
+        public WindowsElement MemoryClear => this.session.TryFindElementByAccessibilityId("ClearMemoryButton");
+        public WindowsElement MemRecall => this.session.TryFindElementByAccessibilityId("MemRecall");
+        public WindowsElement MemPlus => this.session.TryFindElementByAccessibilityId("MemPlus");
+        public WindowsElement MemMinus => this.session.TryFindElementByAccessibilityId("MemMinus");
+        public WindowsElement MemButton => this.session.TryFindElementByAccessibilityId("memButton");
+        public WindowsElement MemoryPane => this.session.TryFindElementByAccessibilityId("MemoryPanel");
+        public WindowsElement MemoryLabel => this.session.TryFindElementByAccessibilityId("MemoryLabel");
+        public WindowsElement MemoryListView => this.session.TryFindElementByAccessibilityId("MemoryListView");
+        public WindowsElement MemoryPaneEmptyLabel => this.session.TryFindElementByAccessibilityId("MemoryPaneEmpty");
 
         /// <summary>
         /// Opens the Memory Pane by clicking the Memory pivot label.
         /// </summary>
         public void OpenMemoryPanel()
         {
-            MemoryLabel.Click();
-            MemoryPane.WaitForDisplayed();
+            this.MemoryLabel.Click();
+            this.MemoryPane.WaitForDisplayed();
         }
 
         /// <summary>
@@ -39,7 +36,7 @@ namespace CalculatorUITestFramework
         public ReadOnlyCollection<AppiumWebElement> GetAllMemoryListViewItems()
         {
             OpenMemoryPanel();
-            return MemoryListView.FindElementsByClassName("ListViewItem");
+            return this.MemoryListView.FindElementsByClassName("ListViewItem");
         }
     }
 }
