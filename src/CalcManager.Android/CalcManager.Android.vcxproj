@@ -95,7 +95,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{08a1283c-522b-4820-8c56-361638a82e24}</ProjectGuid>
     <Keyword>Android</Keyword>
-    <RootNamespace>CalcManager_Android</RootNamespace>
+    <RootNamespace>CalcManager</RootNamespace>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <ApplicationType>Android</ApplicationType>
     <ApplicationTypeRevision>3.0</ApplicationTypeRevision>
