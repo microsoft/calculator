@@ -394,7 +394,7 @@
     <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
   </data>
   <data name="squareRootButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
-    <value>@</value>
+    <value>UNO_TODO_AMPERSAND</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
   <data name="tanButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
