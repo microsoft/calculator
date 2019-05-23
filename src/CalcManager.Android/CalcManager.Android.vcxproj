@@ -105,6 +105,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>Clang_5_0</PlatformToolset>
+    <AndroidAPILevel>android-21</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -115,11 +116,13 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>Clang_5_0</PlatformToolset>
+    <AndroidAPILevel>android-21</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>Clang_5_0</PlatformToolset>
+    <AndroidAPILevel>android-21</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -135,11 +138,13 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>Clang_5_0</PlatformToolset>
+    <AndroidAPILevel>android-21</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>Clang_5_0</PlatformToolset>
+    <AndroidAPILevel>android-21</AndroidAPILevel>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
@@ -171,7 +176,8 @@
       <AdditionalIncludeDirectories>$(StlIncludeDirectories);$(Sysroot)\usr\include;$(Sysroot)\usr\include\$(AndroidHeaderTriple);$(VS_NdkRoot)\sources\android\support\include;$(SolutionDir).\CalcManager\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+      <UnresolvedSymbolReferences>true</UnresolvedSymbolReferences>
+      <AdditionalOptions>-lm</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -183,7 +189,8 @@
       <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
     <Link>
-      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+      <UnresolvedSymbolReferences>true</UnresolvedSymbolReferences>
+      <AdditionalOptions>-lm</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
@@ -195,7 +202,8 @@
       <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
     <Link>
-      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+      <UnresolvedSymbolReferences>true</UnresolvedSymbolReferences>
+      <AdditionalOptions>-lm</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
@@ -207,7 +215,8 @@
       <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
     <Link>
-      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+      <UnresolvedSymbolReferences>true</UnresolvedSymbolReferences>
+      <AdditionalOptions>-lm</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
@@ -219,7 +228,8 @@
       <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
     <Link>
-      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+      <UnresolvedSymbolReferences>true</UnresolvedSymbolReferences>
+      <AdditionalOptions>-lm</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
@@ -231,7 +241,8 @@
       <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
     <Link>
-      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+      <UnresolvedSymbolReferences>true</UnresolvedSymbolReferences>
+      <AdditionalOptions>-lm</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -243,7 +254,8 @@
       <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
     <Link>
-      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+      <UnresolvedSymbolReferences>true</UnresolvedSymbolReferences>
+      <AdditionalOptions>-lm</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -255,7 +267,8 @@
       <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
     <Link>
-      <UnresolvedSymbolReferences>false</UnresolvedSymbolReferences>
+      <UnresolvedSymbolReferences>true</UnresolvedSymbolReferences>
+      <AdditionalOptions>-lm</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
