@@ -1518,7 +1518,7 @@ namespace CalculatorApp.ViewModel
             }
         }
 
-        void OnMemoryItemPressed(object memoryItemPosition)
+        public void OnMemoryItemPressed(object memoryItemPosition)
         {
             if (MemorizedNumbers != null && MemorizedNumbers.Count > 0)
             {
