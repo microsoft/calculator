@@ -61,7 +61,7 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_BITFLIP_BUTTONS_USED = L"BitFlipToggleButtonUsed";
     constexpr auto EVENT_NAME_ANGLE_BUTTONS_USED = L"AngleButtonUsedInSession";
     constexpr auto EVENT_NAME_HYP_BUTTON_USED = L"HypButtonUsedInSession";
-    constexpr auto EVENT_NAME_FUNCTION_USAGE = L"KeyboardOperatorUsageInSession";
+    constexpr auto EVENT_NAME_BUTTON_USAGE = L"KeyboardOperatorUsageInSession";
     constexpr auto EVENT_NAME_BITLENGTH_BUTTON_USED = L"BitLengthButtonUsed";
     constexpr auto EVENT_NAME_RADIX_BUTTON_USED = L"RadixButtonUsed";
     constexpr auto EVENT_NAME_MAX_WINDOW_COUNT = L"MaxWindowCountInSession";
@@ -109,8 +109,6 @@ namespace CalculatorApp
         , // Unique providerID {0905CA09-610E-401E-B650-2F212980B9E0}
         m_appLaunchActivity{ nullptr }
     {
-        // initialize the function array
-        //        InitFunctionLogArray();
     }
 
     TraceLogger::~TraceLogger()
@@ -776,39 +774,22 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
 
-    void TraceLogger::UpdateFunctionUsage(int functionId, int mode)
+    void TraceLogger::UpdateButtonUsage(int buttonId, int mode)
     {
         // Writer lock for the static resources
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
-        vector<FuncLog>::iterator it =
-            std::find_if(funcLog.begin(), funcLog.end(), [functionId, mode](const FuncLog& f) -> bool { return f.functionId == functionId && f.mode == mode; });
-        if (it != funcLog.end())
+        vector<ButtonLog>::iterator it = std::find_if(
+            buttonLog.begin(), buttonLog.end(), [buttonId, mode](const ButtonLog& bLog) -> bool { return bLog.buttonId == buttonId && bLog.mode == mode; });
+        if (it != buttonLog.end())
         {
             it->count++;
         }
         else
         {
-            FunctionLogEnum func = safe_cast<FunctionLogEnum>(functionId);
-            funcLog.push_back(FuncLog(functionId, func.ToString()->Data(), mode));
+            NumbersAndOperatorsEnum button = safe_cast<NumbersAndOperatorsEnum>(buttonId);
+            buttonLog.push_back(ButtonLog(buttonId, button.ToString()->Data(), mode));
         }
     }
-
-    // void TraceLogger::InitFunctionLogArray()
-    //{
-    //    int i = -1;
-    //    for (int funcIndex = 0; funcIndex != maxFunctionSize; funcIndex++)
-    //    {
-    //        FunctionLogEnum func = safe_cast<FunctionLogEnum>(funcIndex);
-    //        wstring functionName = func.ToString()->Data();
-    //        if (functionName.compare(L"CalculatorApp.FunctionLogEnum") != 0)
-    //        {
-    //            findIndex[funcIndex] = ++i;
-    //            funcLog.push_back(FuncLog(functionName));
-    //        }
-    //    }
-    //    // update the functionCount with total function count which we are tracking through tracelog.
-    //    functionCount = i;
-    //}
 
     wstring TraceLogger::GetProgrammerType(int index)
     {
@@ -820,20 +801,10 @@ namespace CalculatorApp
         return s_programmerType[0];
     }
 
-    /* bool TraceLogger::GetIndex(int& index)
-     {
-         if (findIndex[index] > 0)
-         {
-             index = findIndex[index];
-             return true;
-         }
-         return false;
-     }*/
-
     void TraceLogger::UpdateWindowCount(size_t windowCount)
     {
         maxWindowCount = (maxWindowCount > windowCount) ? maxWindowCount : windowCount;
-        windowLaunchCount++;
+        currentWindowCount = windowCount;
     }
 
     void TraceLogger::LogMaxWindowCount()
@@ -924,20 +895,19 @@ namespace CalculatorApp
         }
     }
 
-    void TraceLogger::LogFunctionUsage(int windowId)
+    void TraceLogger::LogButtonUsage()
     {
         if (!GetTraceLoggingProviderEnabled())
             return;
 
-        for (auto i : funcLog)
+        for (auto i : buttonLog)
         {
             LoggingFields fields{};
-            fields.AddUInt32(L"FunctionId", i.functionId);
-            fields.AddString(L"FunctionName", i.functionName.data());
+            fields.AddUInt32(L"ButtonId", i.buttonId);
+            fields.AddString(L"ButtonName", i.buttonName.data());
             fields.AddUInt32(L"ViewModeId", i.mode);
             fields.AddUInt32(L"UsageCount", i.count);
-            fields.AddUInt32(L"WindowId", windowId);
-            LogLevel2Event(EVENT_NAME_FUNCTION_USAGE, fields);
+            LogLevel2Event(EVENT_NAME_BUTTON_USAGE, fields);
         }
     }
 
@@ -1062,9 +1032,12 @@ namespace CalculatorApp
         LogLevel3Event(L"CurrencyConverterInputReceived", fields);
     }
 
-    void TraceLogger::LogViewClosingTelemetry(int windowId)
+    void TraceLogger::LogViewClosingTelemetry()
     {
-        LogFunctionUsage(windowId);
+        if (currentWindowCount == 1)
+        {
+            LogButtonUsage();
+        }
         LogMaxWindowCount();
     }
 

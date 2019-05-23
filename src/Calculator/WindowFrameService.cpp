@@ -140,7 +140,7 @@ namespace CalculatorApp
     {
         if (coreWindow)
         {
-            TraceLogger::GetInstance().LogViewClosingTelemetry(ApplicationView::GetApplicationViewIdForWindow(coreWindow));
+            TraceLogger::GetInstance().LogViewClosingTelemetry();
         }
         else
         {

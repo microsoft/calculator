@@ -13,17 +13,17 @@ static const int maxFunctionSize = (int)CalculationManager::Command::CommandBINE
 // This class implements a singleton model ensure that only one instance is created.
 namespace CalculatorApp
 {
-    struct FuncLog
+    struct ButtonLog
     {
     public:
         int count;
-        int functionId;
-        std::wstring functionName;
+        int buttonId;
+        std::wstring buttonName;
         int mode;
-        FuncLog(int fId, std::wstring fName, int vMode)
+        ButtonLog(int bId, std::wstring bName, int vMode)
         {
-            functionId = fId;
-            functionName = fName;
+            buttonId = bId;
+            buttonName = bName;
             mode = vMode;
             count = 1;
         }
@@ -72,9 +72,8 @@ namespace CalculatorApp
         void LogMemoryFlyoutOpenEnd(unsigned int) const;
         void LogInvalidPastedInputOccurred(std::wstring_view reason, CalculatorApp::Common::ViewMode mode, int ProgrammerNumberBase, int bitLengthType);
         void LogValidInputPasted(CalculatorApp::Common::ViewMode mode) const;
-        void UpdateFunctionUsage(int functionId, int mode);
-        void LogFunctionUsage(int);
-       // void InitFunctionLogArray();
+        void UpdateButtonUsage(int buttonId, int mode);
+        void LogButtonUsage();
         void LogBitLengthButtonUsed(int windowId);
         void LogRadixButtonUsed(int windowId);
         void LogAngleButtonUsed(int windowId);
@@ -95,7 +94,7 @@ namespace CalculatorApp
         void LogConversionResult(std::wstring_view fromValue, std::wstring_view fromUnit, std::wstring_view toValue, std::wstring_view toUnit) const;
         void LogAboutFlyoutOpened() const;
         void LogNavBarOpened() const;
-        void LogViewClosingTelemetry(int);
+        void LogViewClosingTelemetry();
         void LogCoreWindowWasNull() const;
 
         // Trace methods for Date Calculator usage
@@ -134,12 +133,9 @@ namespace CalculatorApp
         bool bitLengthButtonLoggedInSession = false;
         GUID sessionGuid;
         CalculatorApp::Common::ViewMode currentMode = CalculatorApp::Common::ViewMode::None;
-        std::vector<FuncLog> funcLog;
-        //int functionCount = 0;
+        std::vector<ButtonLog> buttonLog;
         bool isHypButtonLogged = false;
         bool isAngleButtonInitialized = false;
-        //unsigned int findIndex[maxFunctionSize] = { 0 };
-        //bool GetIndex(int& index);
         std::wstring GetProgrammerType(int index);
         size_t maxWindowCount = 0;
         bool isAppLaunchBeginLogged = false;
@@ -156,7 +152,7 @@ namespace CalculatorApp
         std::map<int, int> m_dateAddModeUsage;
         std::map<int, int> m_dateSubtractModeUsage;
 
-        size_t windowLaunchCount = 0;
+        size_t currentWindowCount = 0;
 
         winrt::Windows::Foundation::Diagnostics::LoggingActivity m_appLaunchActivity;
     };

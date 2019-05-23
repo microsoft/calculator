@@ -618,7 +618,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
             mode = ViewMode::Programmer;
         }
 
-        TraceLogger::GetInstance().UpdateFunctionUsage((int)numOpEnum, (int)mode);
+        TraceLogger::GetInstance().UpdateButtonUsage((int)numOpEnum, (int)mode);
     }
 
     if (IsInError)
