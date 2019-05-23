@@ -100,14 +100,31 @@ namespace CalculationManager
 		public static extern IntPtr CalculatorManager_GetHistoryItem(IntPtr nativeManager, int uIdx);
 
 		[DllImport(DllPath)]
+		public static extern int CBinaryCommand_GetCommand(IntPtr m_pExpressionCommand);
+
+		[DllImport(DllPath)]
+		public static extern void Free(IntPtr ptr);
+
+		[DllImport(DllPath)]
 		public static extern CommandType IExpressionCommand_GetCommandType(IntPtr pExpressionCommand);
+
+		[DllImport(DllPath)]
+		public static extern bool COpndCommand_IsNegative(IntPtr pExpressionCommand);
+
+		[DllImport(DllPath)]
+		public static extern IntPtr COpndCommand_GetCommands(IntPtr pExpressionCommand);
+
+		[DllImport(DllPath)]
+		public static extern IntPtr CUnaryCommand_GetCommands(IntPtr pExpressionCommand);
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		public delegate IntPtr GetCEngineStringFunc(IntPtr state, IntPtr id);
+
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		public delegate void BinaryOperatorReceivedFunc(IntPtr state);
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		public delegate void SetPrimaryDisplayCallbackFunc(IntPtr state, IntPtr pDisplayStringValue, bool isError);
+
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		public delegate void SetIsInErrorCallbackFunc(IntPtr state, bool isError);
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -353,8 +370,8 @@ namespace CalculationManager
 	[StructLayout(LayoutKind.Sequential)]
 	public struct GetHistoryItemResult
 	{
-		public string expression;
-		public string result;
+		public IntPtr expression;
+		public IntPtr result;
 
 		public int TokenCount;
 		public IntPtr TokenStrings;
@@ -364,6 +381,19 @@ namespace CalculationManager
 		public IntPtr Commands;
 	}
 
+	[StructLayout(LayoutKind.Sequential)]
+	public struct COpndCommand_GetCommandsResult
+	{
+		public int CommandCount;
+		public IntPtr Commands;
+	}
+
+	[StructLayout(LayoutKind.Sequential)]
+	public struct CUnaryCommand_GetCommandsResult
+	{
+		public int CommandCount;
+		public IntPtr Commands;
+	}
 
 	public partial class CalculatorManager : ICalcDisplay
 	{
@@ -371,6 +401,5 @@ namespace CalculationManager
 		private GCHandle _displayCallbackHandle;
 		private GCHandle _resourceProviderHandle;
 		private readonly IntPtr _nativeManager;
-
 	}
 }

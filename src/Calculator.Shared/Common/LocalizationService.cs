@@ -167,7 +167,7 @@ namespace CalculatorApp.Common
             }
         }
 
-		public FlowDirection GetFlowDirection()
+        public FlowDirection GetFlowDirection()
         {
             return m_flowDirection;
         }

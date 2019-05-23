@@ -127,27 +127,24 @@
 										Grid.Row="0"
 										Visibility="Collapsed"/>
 		
-		<!--
-												 x:Uid="NavView"
-												 IsBackButtonVisible="Collapsed"
-												 PaneClosed="OnNavPaneClosed"
-												 PaneOpened="OnNavPaneOpened"
-												 PaneOpening="OnNavPaneOpening"
-		-->
 												 <!--UNO TODO 
-                         CompactModeThresholdWidth="Infinity"
-												 ExpandedModeThresholdWidth="Infinity"
                          -->
 		<NavigationView x:Name="NavView"
-												 Grid.Row="2"
-												 DataContext="{x:Bind Model}"
-												 IsSettingsVisible="False"
-												 Loaded="OnNavLoaded"
-												 MenuItemsSource="{x:Bind UIElementsForCategories, Mode=OneWay}"
-												 OpenPaneLength="{StaticResource SplitViewOpenPaneLength}"
-												 SelectionChanged="OnNavSelectionChanged"
-												 TabIndex="1"
-												 UseSystemFocusVisuals="True">
+                         CompactModeThresholdWidth="10000"
+						ExpandedModeThresholdWidth="10000"
+						IsBackButtonVisible="Collapsed"
+						PaneClosed="OnNavPaneClosed"
+						PaneOpened="OnNavPaneOpened"
+						PaneOpening="OnNavPaneOpening"
+						Grid.Row="2"
+						DataContext="{x:Bind Model}"
+						IsSettingsVisible="False"
+						Loaded="OnNavLoaded"
+						MenuItemsSource="{x:Bind UIElementsForCategories, Mode=OneWay}"
+						OpenPaneLength="{StaticResource SplitViewOpenPaneLength}"
+						SelectionChanged="OnNavSelectionChanged"
+						TabIndex="1"
+						UseSystemFocusVisuals="True">
 			
 			<NavigationView.PaneFooter>
 				

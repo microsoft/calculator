@@ -22,26 +22,27 @@ typedef void (*MemoryItemChangedFunc)(void* state, unsigned int indexOfMemory);
 
 typedef const wchar_t* (*GetCEngineStringFunc)(void* state, const wchar_t* id);
 
-struct CalculatorManager_CreateParams {
-	void* CalculatorState;
+struct CalculatorManager_CreateParams
+{
+    void* CalculatorState;
 
-	SetPrimaryDisplayFunc SetPrimaryDisplay;
-	SetIsInErrorFunc SetIsInError;
-	SetExpressionDisplayFunc SetExpressionDisplay;
-	SetParenthesisNumberFunc SetParenthesisNumber;
-	OnNoRightParenAddedFunc OnNoRightParenAdded;
-	MaxDigitsReachedFunc MaxDigitsReached;
-	BinaryOperatorReceivedFunc BinaryOperatorReceived;
-	OnHistoryItemAddedFunc OnHistoryItemAdded;
-	SetMemorizedNumbersFunc SetMemorizedNumbers;
-	MemoryItemChangedFunc MemoryItemChanged;
+    SetPrimaryDisplayFunc SetPrimaryDisplay;
+    SetIsInErrorFunc SetIsInError;
+    SetExpressionDisplayFunc SetExpressionDisplay;
+    SetParenthesisNumberFunc SetParenthesisNumber;
+    OnNoRightParenAddedFunc OnNoRightParenAdded;
+    MaxDigitsReachedFunc MaxDigitsReached;
+    BinaryOperatorReceivedFunc BinaryOperatorReceived;
+    OnHistoryItemAddedFunc OnHistoryItemAdded;
+    SetMemorizedNumbersFunc SetMemorizedNumbers;
+    MemoryItemChangedFunc MemoryItemChanged;
 
-	void* ResourceState;
-	GetCEngineStringFunc GetCEngineString;
+    void* ResourceState;
+    GetCEngineStringFunc GetCEngineString;
 };
 
 #if defined(__EMSCRIPTEN__) || defined(__APPLE__)
-#define DLL_EXPORT 
+#define DLL_EXPORT
 #else
 #define DLL_EXPORT __declspec(dllexport)
 #endif
@@ -49,9 +50,9 @@ struct CalculatorManager_CreateParams {
 GetHistoryItemResult* MarshalHistoryItem(std::shared_ptr<CalculationManager::HISTORYITEM>& historyItem);
 void* MarshalHistoryItems(std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>& historyItems);
 
-extern "C" {
-
-	struct GetHistoryItemsResult
+extern "C"
+{
+    struct GetHistoryItemsResult
     {
         int32_t ItemsCount;
         void* HistoryItems;
@@ -68,6 +69,18 @@ extern "C" {
 
         int32_t CommandCount;
         void** Commands;
+    };
+
+    struct COpndCommand_GetCommandsResult
+    {
+        int32_t CommandCount;
+        int32_t* pCommands;
+    };
+
+    struct CUnaryCommand_GetCommandsResult
+    {
+        int32_t CommandCount;
+        int32_t* pCommands;
     };
 
     DLL_EXPORT void* CalculatorManager_Create(CalculatorManager_CreateParams* params);
@@ -98,6 +111,14 @@ extern "C" {
     DLL_EXPORT void* CalculatorManager_GetHistoryItems(void* manager);
     DLL_EXPORT void* CalculatorManager_GetHistoryItem(void* manager, int index);
 
-	DLL_EXPORT int IExpressionCommand_GetCommandType(void* pExpressionCommand);
-}
+    DLL_EXPORT void Free(void* ptr);
 
+    DLL_EXPORT int IExpressionCommand_GetCommandType(void* pExpressionCommand);
+
+    DLL_EXPORT void* COpndCommand_GetCommands(void* pExpressionCommand);
+    DLL_EXPORT bool COpndCommand_IsNegative(void* pExpressionCommand);
+
+    DLL_EXPORT void* CUnaryCommand_GetCommands(void* pExpressionCommand);
+
+	DLL_EXPORT int CBinaryCommand_GetCommand(void* pExpressionCommand);
+}
