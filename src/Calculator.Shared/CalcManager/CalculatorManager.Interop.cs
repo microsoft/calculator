@@ -306,7 +306,7 @@ namespace CalculationManager
 
 		internal static IntPtr StringToHGlobal(string resourceValue)
 		{
-#if __WASM__ || __IOS__
+#if __WASM__ || __IOS__ || __ANDROID__
 			// wchar_t is 32bits
 			return StringToHGlobalUTF32(resourceValue);
 #else
@@ -316,7 +316,7 @@ namespace CalculationManager
 
 		internal static string PtrToString(IntPtr pResourceId)
 		{
-#if __WASM__ || __IOS__
+#if __WASM__ || __IOS__ || __ANDROID__
 			return PtrToStringUTF32(pResourceId);
 #else
 			return Marshal.PtrToStringUni(pResourceId);
