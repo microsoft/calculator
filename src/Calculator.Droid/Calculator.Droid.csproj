@@ -83,6 +83,14 @@
   <ItemGroup>
     <AndroidResource Include="Resources\values\Styles.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CalcManager.Android\CalcManager.Android.vcxproj">
+      <Project>{08a1283c-522b-4820-8c56-361638a82e24}</Project>
+      <Name>CalcManager.Android</Name>
+      <TargetPlatformIdentifier>Android</TargetPlatformIdentifier>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\Calculator.Shared\Calculator.Shared.projitems" Label="Shared" Condition="Exists('..\Calculator.Shared\Calculator.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
