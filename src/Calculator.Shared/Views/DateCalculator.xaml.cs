@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 using CalculatorApp.Common;
 using CalculatorApp.ViewModel;
+using System.Globalization;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -50,7 +51,7 @@ namespace CalculatorApp
 		    DateDiff_ToDate.Language = localizationSettings.GetLocaleName();
 
 		    // Set Min and Max Dates according to the Gregorian Calendar(1601 & 9999)
-		    var calendar = new Calendar();
+		    var calendar = new Windows.Globalization.Calendar();
 		    var today = calendar.GetDateTime();
 
 		    calendar.ChangeCalendarSystem(CalendarIdentifiers.Gregorian);
@@ -77,9 +78,10 @@ namespace CalculatorApp
 		    DateDiff_FromDate.DateFormat = "day month year";
 		    DateDiff_ToDate.DateFormat = "day month year";
 
-		    var placeholderText = dateTimeFormatter.Format(today);
+			//TODO UNO: var placeholderText = dateTimeFormatter.Format(today);
+			var placeholderText = today.ToString("day month year", CultureInfo.CurrentCulture);
 
-		    DateDiff_FromDate.PlaceholderText = placeholderText;
+			DateDiff_FromDate.PlaceholderText = placeholderText;
 		    DateDiff_ToDate.PlaceholderText = placeholderText;
 
 		    // TODO UNO

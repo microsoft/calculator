@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Windows.Globalization;
@@ -114,7 +115,9 @@ namespace CalculatorApp.ViewModel
 
 		public UnitConverterDataLoader(GeographicRegion region)
 		{
-			m_currentRegionCode = region.CodeTwoLetter;
+			// TODO UNO
+			//m_currentRegionCode = region.CodeTwoLetter;
+			m_currentRegionCode = new RegionInfo(CultureInfo.CurrentCulture.LCID).TwoLetterISORegionName;
 
 			m_categoryList = new CalculatorList<UCM.Category>();
 			m_categoryToUnits = new CategoryToUnitVectorMap(EqualityComparer<UCM.Category>.Default);
