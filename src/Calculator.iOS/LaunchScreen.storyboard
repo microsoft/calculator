@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" colorMatched="YES" initialViewController="5">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="4">
+            <objects>
+                <viewController id="5" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2"/>
+                        <viewControllerLayoutGuide type="bottom" id="3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="55">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" customColorSpace="sRGB" colorSpace="calibratedRGB" red="0" green="0.471" blue="0.843" alpha="1"/>
+                        <color key="tintColor" colorSpace="calibratedRGB" red="0" green="0.471" blue="0.843" alpha="1"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="321" translatesAutoresizingMaskIntoConstraints="NO" image="splashscreen_icon.png" misplaced="YES">
+                                <rect key="frame" x="122" y="167" width="169" height="169"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="325" translatesAutoresizingMaskIntoConstraints="NO" image="uno.png">
+                                <rect key="frame" x="126.5" y="640" width="161" height="56"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint id="546" firstItem="321" firstAttribute="centerX" secondItem="55" secondAttribute="centerX"/>
+                            <constraint id="547" firstAttribute="centerY" secondItem="321" secondAttribute="centerY" constant="97"/>
+                            <constraint id="774" firstItem="325" firstAttribute="centerX" secondItem="55" secondAttribute="centerX"/>
+                            <constraint id="775" firstItem="3" firstAttribute="top" secondItem="325" secondAttribute="bottom" constant="40"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-300" y="-555"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="splashscreen_icon.png" width="507" height="507"/>
+        <image name="uno.png" width="161" height="56"/>
+    </resources>
+</document>
