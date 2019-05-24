@@ -12,7 +12,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <ResourcesDirectory>..\Calculator.Shared\Strings</ResourcesDirectory>
-	<LangVersion>7.3</LangVersion>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -78,8 +78,9 @@
     <MtouchArch>ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <MtouchExtraArgs>-gcc_flags "-lc++ -lstdc++" --setenv=MONO_GC_PARAMS=soft-heap-limit=512m,nursery-size=64m,evacuation-threshold=66,major=marksweep,concurrent-sweep</MtouchExtraArgs>
-    <CodesignProvision>Uno Calculator</CodesignProvision>
-    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignProvision>
+    </CodesignProvision>
+    <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignExtraArgs />
     <CodesignResourceRules />
     <MtouchUseLlvm>true</MtouchUseLlvm>
@@ -189,7 +190,7 @@
     <BundleResource Include="Resources\Fonts\winjs-symbols.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Uno.UI" Version="1.45.0-dev.1503" />
+    <PackageReference Include="Uno.UI" Version="1.45.0-dev.1533" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'iPhoneSimulator' ">
     <NativeReference Include="NativeReferences/x86_64/libCalcManager.a">
