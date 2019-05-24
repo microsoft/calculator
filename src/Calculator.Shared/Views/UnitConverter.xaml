@@ -233,8 +233,9 @@
 			<!-- TODO UNO <Setter Property="AutomationProperties.AccessibilityView" Value="Raw"/>-->
 		</Style>
 
-		<Storyboard x:Name="AnimationStory">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetName="ConverterNumPad" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)">
+		<Storyboard x:Key="AnimationStory">
+			<!--TODO UNO Storyboard.TargetName="ConverterNumPad"-->
+			<DoubleAnimationUsingKeyFrames  Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)">
 				<EasingDoubleKeyFrame KeyTime="0" Value="0.92">
 					<EasingDoubleKeyFrame.EasingFunction>
 						<ExponentialEase EasingMode="EaseOut" Exponent="5"/>
@@ -246,7 +247,8 @@
 					</EasingDoubleKeyFrame.EasingFunction>
 				</EasingDoubleKeyFrame>
 			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetName="ConverterNumPad" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)">
+			<!--TODO UNO Storyboard.TargetName="ConverterNumPad"-->
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)">
 				<EasingDoubleKeyFrame KeyTime="0" Value="0.92">
 					<EasingDoubleKeyFrame.EasingFunction>
 						<ExponentialEase EasingMode="EaseOut" Exponent="5"/>
@@ -260,10 +262,10 @@
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 
-		<Storyboard x:Name="TimestampFadeInAnimation">
+		<Storyboard x:Key="TimestampFadeInAnimation">
+			<!--TODO UNO Storyboard.TargetName="CurrencyTimestampTextBlock"-->
 			<DoubleAnimation Duration="0:0:1"
                              From="0"
-                             Storyboard.TargetName="CurrencyTimestampTextBlock"
                              Storyboard.TargetProperty="Opacity"
                              To="1"/>
 		</Storyboard>

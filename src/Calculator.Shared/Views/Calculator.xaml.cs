@@ -362,7 +362,51 @@ namespace CalculatorApp
         }
 
 		// TODO UNO
-		private Storyboard Animate => (Storyboard)Resources[nameof(Animate)];
+		private Storyboard _animate;
+		private Storyboard Animate
+		{
+			get
+			{
+				if (_animate == null)
+				{
+#if NETFX_CORE
+					_animate = (Storyboard)Resources[nameof(Animate)];
+#else
+					_animate = StaticResources.Animate;
+#endif
+
+					foreach (var animation in _animate.Children)
+					{
+						Storyboard.SetTarget(animation, NumpadPanel);
+					}
+				}
+
+				return _animate;
+			}
+		}
+		// TODO UNO
+		private Storyboard _animateWithoutResult;
+		private Storyboard AnimateWithoutResult
+		{
+			get
+			{
+				if (_animateWithoutResult == null)
+				{
+#if NETFX_CORE
+					_animateWithoutResult = (Storyboard)Resources[nameof(AnimateWithoutResult)];
+#else
+					_animateWithoutResult = StaticResources.AnimateWithoutResult;
+#endif
+
+					foreach (var animation in _animateWithoutResult.Children)
+					{
+						Storyboard.SetTarget(animation, NumpadPanel);
+					}
+				}
+
+				return _animateWithoutResult;
+			}
+		}
 
 		// Once the storyboard that rearranges the buttons completed,
 		// We do the animation based on the Mode or Orientation change.
@@ -377,18 +421,11 @@ namespace CalculatorApp
                 {
                     m_resultAnimate = false;
 
-					// TODO UNO
-					foreach (var animation in Animate.Children)
-					{
-						Storyboard.SetTarget(animation, NumpadPanel);
-					}
-
-                    Animate.Begin();
+					Animate.Begin();
                 }
                 else
                 {
-					/* UNO TODO */
-                    AnimateWithoutResult?.Begin();
+					AnimateWithoutResult.Begin();
                 }
             }
         }

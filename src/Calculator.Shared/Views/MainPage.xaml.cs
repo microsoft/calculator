@@ -188,8 +188,7 @@ namespace CalculatorApp
                     EnsureConverter();
                     if (!NavCategory.IsConverterViewMode(previousMode))
                     {
-                        // UNO TODO
-                        // m_converter.AnimateConverter();
+                        m_converter.AnimateConverter();
                     }
                 }
 
