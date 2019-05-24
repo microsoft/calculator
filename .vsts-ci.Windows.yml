@@ -28,6 +28,48 @@ jobs:
       createLogFile: false
 
   - task: MSBuild@1
+    displayName: ARM Android build
+    inputs:
+      solution: src/CalcManager.Android/CalcManager.Android.vcxproj
+      msbuildLocationMethod: version
+      msbuildVersion: latest
+      msbuildArchitecture: x86
+      msbuildArguments: /r /p:Configuration=Release /p:Platform=ARM /detailedsummary
+      clean: false
+      maximumCpuCount: true
+      restoreNugetPackages: false
+      logProjectEvents: false
+      createLogFile: false
+
+  - task: MSBuild@1
+    displayName: ARM64 Android build
+    inputs:
+      solution: src/CalcManager.Android/CalcManager.Android.vcxproj
+      msbuildLocationMethod: version
+      msbuildVersion: latest
+      msbuildArchitecture: x86
+      msbuildArguments: /r /p:Configuration=Release /p:Platform=ARM64 /detailedsummary
+      clean: false
+      maximumCpuCount: true
+      restoreNugetPackages: false
+      logProjectEvents: false
+      createLogFile: false
+      
+  - task: MSBuild@1
+    displayName: X86 Android build
+    inputs:
+      solution: src/CalcManager.Android/CalcManager.Android.vcxproj
+      msbuildLocationMethod: version
+      msbuildVersion: latest
+      msbuildArchitecture: x86
+      msbuildArguments: /r /p:Configuration=Release /p:Platform=x86 /detailedsummary
+      clean: false
+      maximumCpuCount: true
+      restoreNugetPackages: false
+      logProjectEvents: false
+      createLogFile: false
+
+  - task: MSBuild@1
     inputs:
       solution: src/Calculator.sln
       msbuildLocationMethod: version

@@ -131,7 +131,7 @@ namespace CalculatorApp
             public static readonly DependencyProperty IsOperatorCommandProperty =
                 DependencyProperty.Register("IsOperatorCommand", typeof(bool), typeof(CalculationResult), new PropertyMetadata(false));
 
-            public event SelectedEventHandler Selected;
+            public event SelectedEventHandler ValueSelected;
 
 
             private Windows.UI.Xaml.Controls.ScrollViewer m_textContainer;
@@ -532,7 +532,7 @@ namespace CalculatorApp
 
             void RaiseSelectedEvent()
             {
-                Selected?.Invoke(this);
+                ValueSelected?.Invoke(this);
             }
         };
     }

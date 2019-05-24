@@ -197,9 +197,9 @@ namespace CalculatorApp
 
 			// Find the delimiters.
 			int firstSplitPosition = offlineStatusHyperlinkText.find(delimiter, 0);
-			Debug.Assert(firstSplitPosition != "".npos());
+			System.Diagnostics.Debug.Assert(firstSplitPosition != "".npos());
 			int secondSplitPosition = offlineStatusHyperlinkText.find(delimiter, firstSplitPosition + 1);
-			Debug.Assert(secondSplitPosition != "".npos());
+			System.Diagnostics.Debug.Assert(secondSplitPosition != "".npos());
 			int hyperlinkTextLength = secondSplitPosition - (firstSplitPosition + delimiterLength);
 
 			// Assign pieces.
@@ -281,7 +281,7 @@ namespace CalculatorApp
 			}
 		}
 
-		void OnValueSelected( object sender)
+		public void OnValueSelected( object sender)
 		{
 			var value = (CalculationResult) sender;
 			// update the font size since the font is changed to bold

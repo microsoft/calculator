@@ -73,7 +73,7 @@ namespace CalculationManager
 		public static extern void CalculatorManager_UpdateMaxIntDigits(IntPtr nativeManager);
 
 		[DllImport(DllPath)]
-		public static extern char CalculatorManager_DecimalSeparator(IntPtr nativeManager);
+		public static extern IntPtr CalculatorManager_DecimalSeparator(IntPtr nativeManager);
 
 		[DllImport(DllPath)]
 		public static extern bool CalculatorManager_RemoveHistoryItem(IntPtr nativeManager, int uIdx);

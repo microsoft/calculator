@@ -504,7 +504,7 @@
                                         FlowDirection="{x:Bind LayoutDirection}"
                                         IsActive="{Binding Value1Active, Mode=TwoWay}"
                                         KeyDown="OnValueKeyDown"
-                                        Selected="OnValueSelected"
+                                        ValueSelected="OnValueSelected"
                                         TabIndex="1"/>
 			<!--TODO UNO
 			                                        AutomationProperties.AutomationId="Value1"
@@ -560,7 +560,7 @@
                                         FlowDirection="{x:Bind LayoutDirection}"
                                         IsActive="{Binding Value2Active, Mode=TwoWay}"
                                         KeyDown="OnValueKeyDown"
-                                        Selected="OnValueSelected"
+                                        ValueSelected="OnValueSelected"
                                         TabIndex="3"/>
 			<!--TODO UNO
 			AutomationProperties.AutomationId="Value2"

@@ -384,14 +384,14 @@ void CalculatorManager_UpdateMaxIntDigits(void* manager)
     AsManager(manager)->UpdateMaxIntDigits();
 }
 
-const char* CalculatorManager_DecimalSeparator(void* manager)
+const wchar_t* CalculatorManager_DecimalSeparator(void* manager)
 {
     auto res = AsManager(manager)->DecimalSeparator();
 
-    std::wstring_convert<std::codecvt_utf8<wchar_t>> convert;
-    auto str = convert.to_bytes(res);
+    std::wstring ret;
+    ret += res;
 
-    return str.data();
+    return ToWChar(ret);
 }
 
 bool CalculatorManager_RemoveHistoryItem(void* manager, int uIdx)

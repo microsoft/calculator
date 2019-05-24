@@ -4,6 +4,7 @@ using CalculatorApp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -217,7 +218,10 @@ namespace CalculationManager
 			=> NativeDispatch.CalculatorManager_UpdateMaxIntDigits(_nativeManager);
 
 		public char DecimalSeparator()
-			=> NativeDispatch.CalculatorManager_DecimalSeparator(_nativeManager);
+		{
+			var pString = NativeDispatch.CalculatorManager_DecimalSeparator(_nativeManager);
+			return NativeDispatch.PtrToString(pString).FirstOrDefault();
+		}
 
 		public List<HISTORYITEM> GetHistoryItems()
 		{

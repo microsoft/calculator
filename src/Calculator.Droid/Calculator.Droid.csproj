@@ -16,7 +16,7 @@
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <AndroidUseIntermediateDesignerFile>True</AndroidUseIntermediateDesignerFile>
     <ResourcesDirectory>..\Calculator.Shared\Strings</ResourcesDirectory>
@@ -84,15 +84,18 @@
   <ItemGroup>
     <AndroidResource Include="Resources\values\Styles.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CalcManager.Android\CalcManager.Android.vcxproj">
-      <Project>{08a1283c-522b-4820-8c56-361638a82e24}</Project>
-      <Name>CalcManager.Android</Name>
-      <TargetPlatformIdentifier>Android</TargetPlatformIdentifier>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="..\Calculator.Shared\Calculator.Shared.projitems" Label="Shared" Condition="Exists('..\Calculator.Shared\Calculator.Shared.projitems')" />
+	<ItemGroup>
+		<AndroidNativeLibrary Include="libs\ARM\$(Configuration)\libCalcManager.so">
+			<Abi>armeabi-v7a</Abi>
+		</AndroidNativeLibrary>
+		<AndroidNativeLibrary Include="libs\ARM64\$(Configuration)\libCalcManager.so">
+			<Abi>arm64-v8a</Abi>
+		</AndroidNativeLibrary>
+		<AndroidNativeLibrary Include="libs\x86\$(Configuration)\libCalcManager.so">
+			<Abi>x86</Abi>
+		</AndroidNativeLibrary>
+	</ItemGroup>
+	<Import Project="..\Calculator.Shared\Calculator.Shared.projitems" Label="Shared" Condition="Exists('..\Calculator.Shared\Calculator.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.
