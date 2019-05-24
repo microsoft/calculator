@@ -31,7 +31,16 @@ namespace CalculatorApp
         }
 
         public static readonly DependencyProperty IsErrorVisualStateProperty =
-            DependencyProperty.Register("IsErrorVisualState", typeof(bool), typeof(CalculatorScientificOperators), new PropertyMetadata(false));
+            DependencyProperty.Register(
+				name: "IsErrorVisualState",
+				propertyType: typeof(bool),
+				ownerType: typeof(CalculatorScientificOperators),
+				typeMetadata: new PropertyMetadata(
+					defaultValue: false,
+					propertyChangedCallback: (s, e) => (s as CalculatorScientificOperators)?.OnIsErrorVisualStatePropertyChanged(
+						(bool)e.OldValue,
+						(bool)e.NewValue
+					)));
 
         public bool IsWideLayout
         {

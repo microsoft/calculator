@@ -13,7 +13,6 @@ namespace CalculatorApp.Controls
 {
 	public partial class FlipButtons : ToggleButton
 	{
-
 		// NumbersAndOperatorsEnum
 		public NumbersAndOperatorsEnum ButtonId
         {
@@ -22,7 +21,15 @@ namespace CalculatorApp.Controls
 		}
 
 		public static readonly DependencyProperty ButtonIdProperty =
-			DependencyProperty.Register("ButtonId", typeof(NumbersAndOperatorsEnum), typeof(FlipButtons), new PropertyMetadata(null));
+			DependencyProperty.Register(
+				name: "ButtonId",
+				propertyType: typeof(NumbersAndOperatorsEnum),
+				ownerType: typeof(FlipButtons),
+				typeMetadata: new PropertyMetadata(
+					defaultValue: NumbersAndOperatorsEnum.None,
+					propertyChangedCallback: (s, e) => (s as FlipButtons)?.OnButtonIdPropertyChanged(
+						(NumbersAndOperatorsEnum)(e.OldValue ?? NumbersAndOperatorsEnum.None),
+						(NumbersAndOperatorsEnum)(e.NewValue ?? NumbersAndOperatorsEnum.None))));
 
 		// HoverBackground
 		public Brush HoverBackground
