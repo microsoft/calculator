@@ -80,7 +80,7 @@
     <MtouchExtraArgs>-gcc_flags "-lc++ -lstdc++" --setenv=MONO_GC_PARAMS=soft-heap-limit=512m,nursery-size=64m,evacuation-threshold=66,major=marksweep,concurrent-sweep</MtouchExtraArgs>
     <CodesignProvision>
     </CodesignProvision>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution</CodesignKey>
     <CodesignExtraArgs />
     <CodesignResourceRules />
     <MtouchUseLlvm>true</MtouchUseLlvm>
