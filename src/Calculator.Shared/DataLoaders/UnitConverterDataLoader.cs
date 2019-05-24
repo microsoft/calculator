@@ -1051,9 +1051,10 @@ namespace CalculatorApp.ViewModel
 				GetLocalizedStringName("UnitName_KiloPascal"),
 				GetLocalizedStringName("UnitAbbreviation_KiloPascal"),
 				3));
-			pressureUnits.PushBack(new OrderedUnit(UnitConverterUnits.Pressure_MillimeterOfMercury,
-				GetLocalizedStringName("UnitName_MillimeterOfMercury "),
-				GetLocalizedStringName("UnitAbbreviation_MillimeterOfMercury "),
+			pressureUnits.PushBack(new OrderedUnit(
+				UnitConverterUnits.Pressure_MillimeterOfMercury,
+				GetLocalizedStringName("UnitName_MillimeterOfMercury"),
+				GetLocalizedStringName("UnitAbbreviation_MillimeterOfMercury"),
 				4));
 			pressureUnits.PushBack(
 				new OrderedUnit(UnitConverterUnits.Pressure_Pascal, GetLocalizedStringName("UnitName_Pascal"), GetLocalizedStringName("UnitAbbreviation_Pascal"), 5));
