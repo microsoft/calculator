@@ -19,11 +19,20 @@ namespace CalculatorApp.Controls
 		{
 			double maxHeight = 0;
 			double width = 0;
+
+			// TODO UNO
+			var childSize = new Size(double.PositiveInfinity, double.PositiveInfinity);
 			foreach (UIElement child in Children)
 			{
-				child.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+				child.Measure(childSize);
 				maxHeight = Math.Max(maxHeight, child.DesiredSize.Height);
 				width += child.DesiredSize.Width;
+
+				// TODO UNO
+				if (width > availableSize.Width)
+				{
+					childSize = new Size(0, 0);
+				}
 			}
 			return new Size(Math.Min(width, availableSize.Width), Math.Min(availableSize.Height, maxHeight));
 		}
@@ -64,7 +73,7 @@ namespace CalculatorApp.Controls
 				else
 				{
 					// Not display the item
-					item.Arrange(new Rect(0, 0, 0, 0));
+					item.Arrange(new Rect(50000 /* TODO UNO */, 0, 0, 0));
 				}
 			}
 			return finalSize;
