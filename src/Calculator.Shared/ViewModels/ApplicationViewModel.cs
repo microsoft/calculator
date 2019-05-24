@@ -33,7 +33,7 @@ namespace CalculatorApp.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string p = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(p));
-        private StandardCalculatorViewModel m_CalculatorViewModel;
+        private StandardCalculatorViewModel m_CalculatorViewModel /* TODO UNO: Initial nav when not Standard */ = new StandardCalculatorViewModel(); 
         public StandardCalculatorViewModel CalculatorViewModel { get => m_CalculatorViewModel; set { m_CalculatorViewModel = value; RaisePropertyChanged("CalculatorViewModel"); } }
 
         private DateCalculatorViewModel m_DateCalcViewModel;
