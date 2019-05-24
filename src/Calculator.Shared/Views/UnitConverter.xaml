@@ -200,7 +200,7 @@
 		<Style x:Key="ValueMediumStyle"
                BasedOn="{StaticResource ValueBaseStyle}"
                TargetType="controls:CalculationResult">
-			<Setter Property="MaxFontSize" Value="34"/>
+			<Setter Property="MaxFontSize" Value="46"/>
 			<Setter Property="Margin" Value="0,0,0,0"/>
 			<Setter Property="DisplayMargin" Value="0,0,0,4"/>
 		</Style>
@@ -502,6 +502,7 @@
                                         DisplayValue="{x:Bind Model.Value1, Mode=OneWay}"
                                         ExpressionVisibility="Collapsed"
                                         FlowDirection="{x:Bind LayoutDirection}"
+										FontSize="{StaticResource CalcResultFontSizeM}"
                                         IsActive="{Binding Value1Active, Mode=TwoWay}"
                                         KeyDown="OnValueKeyDown"
                                         ValueSelected="OnValueSelected"
@@ -558,6 +559,7 @@
                                         DisplayValue="{x:Bind Model.Value2, Mode=OneWay}"
                                         ExpressionVisibility="Collapsed"
                                         FlowDirection="{x:Bind LayoutDirection}"
+										FontSize="{StaticResource CalcResultFontSizeM}"
                                         IsActive="{Binding Value2Active, Mode=TwoWay}"
                                         KeyDown="OnValueKeyDown"
                                         ValueSelected="OnValueSelected"
