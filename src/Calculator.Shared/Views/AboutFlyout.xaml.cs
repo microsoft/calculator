@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,6 +24,23 @@ namespace CalculatorApp
 		public AboutFlyout()
 		{
 			this.InitializeComponent();
+			PopulateStrings();
+		}
+
+		private void PopulateStrings()
+		{
+			var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+			Header.Text = resourceLoader.GetString("AboutButton/Content");
+			var version = Package.Current.Id.Version;
+			var versionNumber = $"Version {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+			AboutFlyoutVersion.Text = versionNumber;
+			AboutControlCopyrightRun.Text = resourceLoader.GetString("AboutControlCopyright").Replace("%1", "2019");
 		}
 	}
 }
+
+
+
+
+
+
