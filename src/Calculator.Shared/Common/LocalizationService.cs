@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Globalization;
@@ -366,14 +367,15 @@ namespace CalculatorApp.Common
         // as configured by running intl.cpl.
         public static DecimalFormatter GetRegionalSettingsAwareDecimalFormatter()
         {
-            IEnumerable<String> languageIdentifiers = GetLanguageIdentifiers();
-            if (languageIdentifiers != null)
-            {
-                return  new DecimalFormatter(languageIdentifiers, GlobalizationPreferences.HomeGeographicRegion);
-            }
+			IEnumerable<String> languageIdentifiers = GetLanguageIdentifiers();
+			// TODO UNO
+			//if (languageIdentifiers != null)
+			//{
+			//	return new DecimalFormatter(languageIdentifiers, GlobalizationPreferences.HomeGeographicRegion);
+			//}
 
-            return  new DecimalFormatter();
-        }
+			return new DecimalFormatter();
+		}
 
         // If successful, returns a formatter that respects the user's regional format settings,
         // as configured by running intl.cpl.
@@ -400,13 +402,16 @@ namespace CalculatorApp.Common
 				languageIdentifiers = ApplicationLanguages.Languages;
 			}
 
-			return new DateTimeFormatter(format, languageIdentifiers, GlobalizationPreferences.HomeGeographicRegion, calendarIdentifier, clockIdentifier);
-        }
+			//TODO UNO: return new DateTimeFormatter(format, languageIdentifiers, GlobalizationPreferences.HomeGeographicRegion, calendarIdentifier, clockIdentifier);
+			return new DateTimeFormatter(format, languageIdentifiers);
+		}
 
         public static CurrencyFormatter GetRegionalSettingsAwareCurrencyFormatter()
         {
-			string userCurrency =
-				(GlobalizationPreferences.Currencies.Count > 0) ? GlobalizationPreferences.Currencies[0] : DefaultCurrencyCode;
+			// TOOD UNO
+			//string userCurrency =
+			//	(GlobalizationPreferences.Currencies.Count > 0) ? GlobalizationPreferences.Currencies[0] : DefaultCurrencyCode;
+			string userCurrency = DefaultCurrencyCode;
 
 			IEnumerable<string> languageIdentifiers = GetLanguageIdentifiers();
 			if (languageIdentifiers == null)
@@ -414,7 +419,8 @@ namespace CalculatorApp.Common
 				languageIdentifiers = ApplicationLanguages.Languages;
 			}
 
-			var currencyFormatter = new CurrencyFormatter(userCurrency, languageIdentifiers, GlobalizationPreferences.HomeGeographicRegion);
+			// TODO UNO: var currencyFormatter = new CurrencyFormatter(userCurrency, languageIdentifiers, GlobalizationPreferences.HomeGeographicRegion);
+			var currencyFormatter = new CurrencyFormatter(userCurrency);
 
 			int fractionDigits = LocalizationSettings.GetInstance().GetCurrencyTrailingDigits();
 			currencyFormatter.FractionDigits = fractionDigits;
@@ -424,7 +430,8 @@ namespace CalculatorApp.Common
 
         static IEnumerable<String> GetLanguageIdentifiers()
 		{
-			return GlobalizationPreferences.Languages;
+			// TODO UNO: return GlobalizationPreferences.Languages;
+			return new[] { CultureInfo.CurrentCulture.IetfLanguageTag };
         }
 
         // Resources for the engine use numbers as keys. It's inconvenient, but also difficult to

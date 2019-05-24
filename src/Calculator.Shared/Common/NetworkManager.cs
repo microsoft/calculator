@@ -23,29 +23,34 @@ namespace CalculatorApp
 
 		public NetworkManager()
 		{
-			NetworkInformation.NetworkStatusChanged += new NetworkStatusChangedEventHandler(OnNetworkStatusChange);
+			// TODO: UNO (Not implemented)
+			//NetworkInformation.NetworkStatusChanged += new NetworkStatusChangedEventHandler(OnNetworkStatusChange);
 		}
 
 		~NetworkManager()
 		{
-			NetworkInformation.NetworkStatusChanged -= OnNetworkStatusChange;
+			// TODO: UNO (Not implemented)
+			//NetworkInformation.NetworkStatusChanged -= OnNetworkStatusChange;
 		}
 
 		public static NetworkAccessBehavior GetNetworkAccessBehavior()
 		{
-			NetworkAccessBehavior behavior = NetworkAccessBehavior.Offline;
-			ConnectionProfile connectionProfile = NetworkInformation.GetInternetConnectionProfile();
-			if (connectionProfile != null)
-			{
-				NetworkConnectivityLevel connectivityLevel = connectionProfile.GetNetworkConnectivityLevel();
-				if (connectivityLevel == NetworkConnectivityLevel.InternetAccess || connectivityLevel == NetworkConnectivityLevel.ConstrainedInternetAccess)
-				{
-					ConnectionCost connectionCost = connectionProfile.GetConnectionCost();
-					behavior = ConvertCostInfoToBehavior(connectionCost);
-				}
-			}
+			// TODO: UNO (Not implemented)
+			return NetworkAccessBehavior.Normal;
 
-			return behavior;
+			//NetworkAccessBehavior behavior = NetworkAccessBehavior.Offline;
+			//ConnectionProfile connectionProfile = NetworkInformation.GetInternetConnectionProfile();
+			//if (connectionProfile != null)
+			//{
+			//	NetworkConnectivityLevel connectivityLevel = connectionProfile.GetNetworkConnectivityLevel();
+			//	if (connectivityLevel == NetworkConnectivityLevel.InternetAccess || connectivityLevel == NetworkConnectivityLevel.ConstrainedInternetAccess)
+			//	{
+			//		ConnectionCost connectionCost = connectionProfile.GetConnectionCost();
+			//		behavior = ConvertCostInfoToBehavior(connectionCost);
+			//	}
+			//}
+
+			//return behavior;
 		}
 
 		void OnNetworkStatusChange(object sender)

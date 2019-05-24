@@ -13,6 +13,7 @@ using CalculatorApp.Common.DateCalculation;
 using Windows.Foundation;
 using System.Numerics;
 using CalculatorApp;
+using System.Globalization;
 
 namespace CalculatorApp.ViewModel
 {
@@ -70,7 +71,7 @@ namespace CalculatorApp.ViewModel
 			m_dateCalcEngine = new DateCalculationEngine(localizationSettings.GetCalendarIdentifier());
 
 			// Initialize dates of DatePicker controls to today's date
-			var calendar = new Calendar();
+			var calendar = new Windows.Globalization.Calendar();
 			var today = calendar.GetDateTime().DateTime;
 
 			// FromDate and ToDate should be clipped (adjusted to a consistent hour in UTC)
@@ -126,7 +127,7 @@ namespace CalculatorApp.ViewModel
 			PropertyChanged += (snd, e) => ((DateCalculatorViewModel)snd).OnPropertyChanged(e.PropertyName);
 		}
 
-		static void CheckClipTimeSameDay(Calendar reference)
+		static void CheckClipTimeSameDay(Windows.Globalization.Calendar reference)
 		{
 
 		}
@@ -473,7 +474,8 @@ namespace CalculatorApp.ViewModel
 				else
 				{
 					// Display the resulting date in long format
-					StrDateResult = m_dateTimeFormatter.Format(DateResult);
+					//TODO UNO: StrDateResult = m_dateTimeFormatter.Format(DateResult);
+					StrDateResult = DateResult.ToString(CultureInfo.CurrentCulture);
 				}
 			}
 		}
@@ -637,7 +639,7 @@ namespace CalculatorApp.ViewModel
 
 		private static DateTime ClipTime(DateTime dateTime)
 		{
-			var calendar = new Calendar();
+			var calendar = new Windows.Globalization.Calendar();
 			calendar.SetDateTime(dateTime);
 			calendar.Period = 1;
 			calendar.Hour = 12;

@@ -21,6 +21,7 @@ using SelectedUnits = System.Collections.Generic.KeyValuePair<string, string>;
 using CategorySelectionInitializer = System.Tuple<CalculatorApp.CalculatorList<UnitConversionManager.Unit>, UnitConversionManager.Unit, UnitConversionManager.Unit>;
 using UnitToUnitToConversionDataMap = System.Collections.Generic.Dictionary<UnitConversionManager.Unit, System.Collections.Generic.Dictionary<UnitConversionManager.Unit, UnitConversionManager.ConversionData>>;
 using CategoryToUnitVectorMap = System.Collections.Generic.Dictionary<UnitConversionManager.Category, CalculatorApp.CalculatorList<UnitConversionManager.Unit>>;
+using System.Globalization;
 
 namespace CalculatorApp.ViewModel
 {
@@ -140,10 +141,12 @@ namespace CalculatorApp.ViewModel
 			this.m_meteredOverrideSet = false;
 
 
-			if (GlobalizationPreferences.Languages.Count > 0)
-			{
-				m_responseLanguage = GlobalizationPreferences.Languages[0];
-			}
+			// TODO UNO
+			//if (GlobalizationPreferences.Languages.Count > 0)
+			//{
+			//	m_responseLanguage = GlobalizationPreferences.Languages[0];
+			//}
+			m_responseLanguage = CultureInfo.CurrentCulture.IetfLanguageTag;
 
 			if (m_client != null)
 			{
@@ -151,11 +154,13 @@ namespace CalculatorApp.ViewModel
 				m_client.SetResponseLanguage(m_responseLanguage);
 			}
 
-			if (CoreWindow.GetForCurrentThread() != null)
-			{
-				// Must have a CoreWindow to access the resource context.
-				m_isRtlLanguage = LocalizationService.GetInstance().IsRtlLayout();
-			}
+			// TODO UNO
+			//if (CoreWindow.GetForCurrentThread() != null)
+			//{
+			//	// Must have a CoreWindow to access the resource context.
+			//	m_isRtlLanguage = LocalizationService.GetInstance().IsRtlLayout();
+			//}
+			m_isRtlLanguage = true;
 
 			m_ratioFormatter = LocalizationService.GetRegionalSettingsAwareDecimalFormatter();
 			m_ratioFormatter.IsGrouped = true;
@@ -311,7 +316,8 @@ namespace CalculatorApp.ViewModel
 						double rounded = (int)(ratio * (int)(scale)) / scale;
 
 						string digitSymbol = LocalizationSettings.GetInstance().GetDigitSymbolFromEnUsDigit('1').ToString();
-						string roundedFormat = m_ratioFormatter.Format(rounded);
+						// TODO UNO: string roundedFormat = m_ratioFormatter.Format(rounded);
+						string roundedFormat = rounded.ToString(CultureInfo.CurrentCulture);
 
 						string ratioString = LocalizationStringUtil.GetLocalizedString(
 							m_ratioFormat,
