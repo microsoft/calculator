@@ -190,15 +190,10 @@
     0
   </x:Double>
 
-  <Color x:Key="AltHighColor">
-    #FF000000
-  </Color>
+	<Color x:Key="AltHighColor">#FFF2F2F2</Color>
+	<Color x:Key="ChromeMediumLowColor">#FFE0E0E0</Color>
 
-  <Color x:Key="ChromeMediumLowColor">
-    #FF2B2B2B
-  </Color>
-
-  <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush"
+	<SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush"
            Color="{StaticResource AltHighColor}" />
 
   <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush"
@@ -223,13 +218,13 @@
            Color="{StaticResource SystemBaseMediumHighColor}" />
 
   <win:RevealBackgroundBrush x:Key="AppControlHoverButtonFaceBrush"
-               Color="#18FFFFFF" />
+               Color="#17000000" />
 	
   <xamarin:SolidColorBrush x:Key="AppControlHoverButtonFaceBrush"
                Color="{ThemeResource SystemColorHighlightColor}" />
 
   <win:RevealBackgroundBrush x:Key="AppControlPressedButtonFaceBrush"
-               Color="#30FFFFFF" />
+               Color="#30000000" />
 	
   <xamarin:SolidColorBrush x:Key="AppControlPressedButtonFaceBrush"
                Color="{ThemeResource SystemColorButtonFaceColor}" />
