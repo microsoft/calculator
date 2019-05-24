@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using Calculator;
 using CalculatorApp.Common;
@@ -273,6 +274,30 @@ namespace CalculatorApp
 			Model.OnPaste(pastedString, Model.Mode);
 		}
 
+		private Storyboard _animationStory;
+		private Storyboard AnimationStory
+		{
+			get
+			{
+				if (_animationStory == null)
+				{
+#if NETFX_CORE
+					_animationStory = (Storyboard)Resources[nameof(AnimationStory)];
+#else
+					_animationStory = StaticResources.AnimationStory;
+#endif
+
+
+					foreach (var animation in _animationStory.Children)
+					{
+						Storyboard.SetTarget(animation, ConverterNumPad);
+					}
+				}
+
+				return _animationStory;
+			}
+		}
+
 		public void AnimateConverter()
 		{
 			if (App.IsAnimationEnabled())
@@ -336,6 +361,31 @@ namespace CalculatorApp
 			if ((Units1.Visibility == Visibility.Visible) && Units1.IsEnabled)
 			{
 				SetDefaultFocus();
+			}
+		}
+
+		// TODO UNO
+		private Storyboard _timestampFadeInAnimation;
+		private Storyboard TimestampFadeInAnimation
+		{
+			get
+			{
+				if (_timestampFadeInAnimation == null)
+				{
+#if NETFX_CORE
+					_timestampFadeInAnimation = (Storyboard)Resources[nameof(TimestampFadeInAnimation)];
+#else
+					_timestampFadeInAnimation = StaticResources.TimestampFadeInAnimation;
+#endif
+
+
+					foreach (var animation in _timestampFadeInAnimation.Children)
+					{
+						Storyboard.SetTarget(animation, CurrencyTimestampTextBlock);
+					}
+				}
+
+				return _timestampFadeInAnimation;
 			}
 		}
 
