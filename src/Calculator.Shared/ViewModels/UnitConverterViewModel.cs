@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -1089,9 +1090,9 @@ namespace CalculatorApp.ViewModel
 				if (IsCurrencyCurrentCategory)
 				{
 					// TODO UNO:
-					// string currencyResult = m_currencyFormatter.Format(System.Convert.ToDouble(stringToLocalize));
+					// string currencyResult = m_currencyFormatter.Format(System.Convert.ToDouble(stringToLocalize, CultureInfo.InvariantCulture));
 					// string currencyCode = m_currencyFormatter.Currency;
-					string currencyResult = System.Convert.ToDouble(stringToLocalize).ToString(CultureInfo.CurrentCulture);
+					string currencyResult = System.Convert.ToDouble(stringToLocalize, CultureInfo.InvariantCulture).ToString(CultureInfo.CurrentCulture);
 					string currencyCode = "TODO UNO";
 
 					// CurrencyFormatter always includes LangCode or Symbol. Make it include LangCode
@@ -1112,7 +1113,7 @@ namespace CalculatorApp.ViewModel
 					// Then use the decimalFormatter to reformat the double to Platform String
 					// TODO UNO
 					//result = m_decimalFormatter.Format(System.Convert.ToDouble(stringToLocalize));
-					result = System.Convert.ToDouble(stringToLocalize).ToString(CultureInfo.CurrentCulture);
+					result = System.Convert.ToDouble(stringToLocalize, CultureInfo.InvariantCulture).ToString(CultureInfo.CurrentCulture);
 				}
 
 				if (hasDecimal)
