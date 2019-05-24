@@ -165,8 +165,9 @@
 									<FontIcon FontFamily="{StaticResource CalculatorFontFamily}" 
 														Glyph="&#xe946;"/>
 								</NavigationViewItem.Icon>
-								
-								<FlyoutBase.AttachedFlyout>
+								<TextBlock Text=""
+										   x:Name="AboutText" />
+								<NavigationViewItem.ContextFlyout>
 									
 									<Flyout x:Name="AboutPageFlyout"
 													x:Uid="AboutPageFlyout"
@@ -177,7 +178,7 @@
 										<local:AboutFlyout x:Name="AboutPage" 
 																			 x:Load="False"/>
 									</Flyout>
-								</FlyoutBase.AttachedFlyout>
+								</NavigationViewItem.ContextFlyout>
 							</NavigationViewItem>
 						</NavigationViewList.Items>
 					</NavigationViewList>
