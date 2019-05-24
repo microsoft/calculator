@@ -618,8 +618,8 @@ namespace UnitConversionManager
 			CalculatorList<string> tokenList = StringToVector(w, ';');
 			Debug.Assert(tokenList.Size() == EXPECTEDSERIALIZEDCONVERSIONDATATOKENCOUNT);
 			ConversionData serializedConversionData = new ConversionData();
-			serializedConversionData.ratio = System.Convert.ToDouble(Unquote(tokenList[0]));
-			serializedConversionData.offset = System.Convert.ToDouble(Unquote(tokenList[1]));
+			serializedConversionData.ratio = System.Convert.ToDouble(Unquote(tokenList[0]), CultureInfo.InvariantCulture);
+			serializedConversionData.offset = System.Convert.ToDouble(Unquote(tokenList[1]), CultureInfo.InvariantCulture);
 			serializedConversionData.offsetFirst = (tokenList[2].CompareTo("1") == 0);
 			return serializedConversionData;
 		}
@@ -1140,7 +1140,7 @@ namespace UnitConversionManager
 			{
 				if (cur.Key != m_fromType && cur.Key != m_toType)
 				{
-					double convertedValue = Convert(System.Convert.ToDouble(m_currentDisplay), cur.Value);
+					double convertedValue = Convert(System.Convert.ToDouble(m_currentDisplay, CultureInfo.InvariantCulture), cur.Value);
 					SuggestedValueIntermediate newEntry;
 					newEntry.magnitude = Math.Log10(convertedValue);
 					newEntry.value = convertedValue;
@@ -1180,7 +1180,7 @@ namespace UnitConversionManager
 				{
 					roundedString = RoundSignificant(entry.value, 0);
 				}
-				if (System.Convert.ToDouble(roundedString) != 0.0 || m_currentCategory.supportsNegative)
+				if (System.Convert.ToDouble(roundedString, CultureInfo.InvariantCulture) != 0.0 || m_currentCategory.supportsNegative)
 				{
 					TrimString(ref roundedString);
 					returnVector.PushBack(Tuple.Create(roundedString, entry.type));
@@ -1220,7 +1220,7 @@ namespace UnitConversionManager
 				}
 
 				// How to work out which is the best whimsical value to add to the vector?
-				if (System.Convert.ToDouble(roundedString) != 0.0)
+				if (System.Convert.ToDouble(roundedString, CultureInfo.InvariantCulture) != 0.0)
 				{
 					TrimString(ref roundedString);
 					whimsicalReturnVector.PushBack(Tuple.Create(roundedString, entry.type));
@@ -1383,7 +1383,7 @@ namespace UnitConversionManager
 			}
 
 			Dictionary<Unit, ConversionData> conversionTable = m_ratioMap[m_fromType];
-			double returnValue = System.Convert.ToDouble(m_currentDisplay);
+			double returnValue = System.Convert.ToDouble(m_currentDisplay, CultureInfo.InvariantCulture);
 			if (conversionTable[m_toType].ratio == 1.0 && conversionTable[m_toType].offset == 0.0)
 			{
 				m_returnDisplay = m_currentDisplay;
@@ -1407,11 +1407,11 @@ namespace UnitConversionManager
 
 				if (numPreDecimal > MAXIMUMDIGITSALLOWED || (returnValue != 0 && Math.Abs(returnValue) < MINIMUMDECIMALALLOWED))
 				{
-					m_returnDisplay = returnValue.ToString("e");
+					m_returnDisplay = returnValue.ToString("e", CultureInfo.InvariantCulture);
 				}
 				else
 				{
-					returnValue = System.Convert.ToDouble(m_returnDisplay);
+					returnValue = System.Convert.ToDouble(m_returnDisplay, CultureInfo.InvariantCulture);
 					string returnString;
 					if (m_currentDisplay.size() <= OPTIMALDIGITSALLOWED && Math.Abs(returnValue) >= OPTIMALDECIMALALLOWED)
 					{
@@ -1451,7 +1451,7 @@ namespace UnitConversionManager
 		/// <param name="numSignificant">int number of significant digits to round to</param>
 		string RoundSignificant(double num, int numSignificant)
 		{
-			return num.ToString($"F{numSignificant}");
+			return num.ToString($"F{numSignificant}", CultureInfo.InvariantCulture);
 		}
 
 		void UpdateCurrencySymbols()
