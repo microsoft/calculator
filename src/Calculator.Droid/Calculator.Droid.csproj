@@ -22,7 +22,7 @@
     <ResourcesDirectory>..\Calculator.Shared\Strings</ResourcesDirectory>
     <LangVersion>7.3</LangVersion>
     <AndroidKeyStore>true</AndroidKeyStore>
-    <AndroidSigningKeyStore>C:\s\nv.github\calculator-2\src\Calculator.Droid\calc-prod.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyStore>calc-prod.keystore</AndroidSigningKeyStore>
     <AndroidSigningKeyAlias>calc-prod</AndroidSigningKeyAlias>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
