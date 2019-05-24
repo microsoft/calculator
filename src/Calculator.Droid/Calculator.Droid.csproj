@@ -20,7 +20,7 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <AndroidUseIntermediateDesignerFile>True</AndroidUseIntermediateDesignerFile>
     <ResourcesDirectory>..\Calculator.Shared\Strings</ResourcesDirectory>
-	<LangVersion>7.3</LangVersion>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,7 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Uno.UI" Version="1.45.0-dev.1457" />
+    <PackageReference Include="Uno.UI" Version="1.45.0-dev.1533" />
     <PackageReference Include="Uno.UniversalImageLoader" Version="1.9.32" />
   </ItemGroup>
   <ItemGroup>
