@@ -4,7 +4,7 @@ using Android.OS;
 using Android.Content.PM;
 using Android.Views;
 
-namespace WindowsCalculator.Droid
+namespace CalculatorApp.Droid
 {
 	[Activity(
 			MainLauncher = true,

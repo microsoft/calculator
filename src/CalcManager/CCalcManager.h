@@ -41,8 +41,8 @@ struct CalculatorManager_CreateParams
     GetCEngineStringFunc GetCEngineString;
 };
 
-#if defined(__EMSCRIPTEN__) || defined(__APPLE__)
-#define DLL_EXPORT
+#if defined(__EMSCRIPTEN__) || defined(__APPLE__) || defined(__ANDROID__)
+#define DLL_EXPORT 
 #else
 #define DLL_EXPORT __declspec(dllexport)
 #endif
@@ -101,7 +101,7 @@ extern "C"
     DLL_EXPORT const wchar_t* CalculatorManager_GetResultForRadix(void* manager, int radix, int precision);
     DLL_EXPORT void CalculatorManager_SetPrecision(void* manager, int precision);
     DLL_EXPORT void CalculatorManager_UpdateMaxIntDigits(void* manager);
-    DLL_EXPORT const char* CalculatorManager_DecimalSeparator(void* manager);
+    DLL_EXPORT const wchar_t* CalculatorManager_DecimalSeparator(void* manager);
     DLL_EXPORT bool CalculatorManager_RemoveHistoryItem(void* manager, int uIdx);
     DLL_EXPORT void CalculatorManager_ClearHistory(void* manager);
     DLL_EXPORT size_t CalculatorManager_MaxHistorySize(void* manager);

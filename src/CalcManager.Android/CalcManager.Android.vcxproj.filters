@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="CEngine">
+      <UniqueIdentifier>{8b6920ee-f524-4a48-837a-dba211bd5f7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers">
+      <UniqueIdentifier>{628c5935-02b4-4f8a-b4f4-3850e24c8e36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RatPack">
+      <UniqueIdentifier>{d346c535-3d9b-4cbf-a41e-b89243f563c0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="../CalcManager/CalculatorHistory.cpp" />
+    <ClCompile Include="../CalcManager/CalculatorManager.cpp" />
+    <ClCompile Include="../CalcManager/CCalcManager.cpp" />
+    <ClCompile Include="../CalcManager/CEngine/calc.cpp" />
+    <ClCompile Include="../CalcManager/CEngine/CalcInput.cpp" />
+    <ClCompile Include="../CalcManager/CEngine/CalcUtils.cpp" />
+    <ClCompile Include="../CalcManager/CEngine/History.cpp" />
+    <ClCompile Include="../CalcManager/CEngine/Number.cpp" />
+    <ClCompile Include="../CalcManager/CEngine/Rational.cpp" />
+    <ClCompile Include="../CalcManager/CEngine/RationalMath.cpp" />
+    <ClCompile Include="../CalcManager/CEngine/scicomm.cpp" />
+    <ClCompile Include="../CalcManager/CEngine/scidisp.cpp" />
+    <ClCompile Include="../CalcManager/CEngine/scifunc.cpp" />
+    <ClCompile Include="../CalcManager/CEngine/scioper.cpp" />
+    <ClCompile Include="../CalcManager/CEngine/sciset.cpp" />
+    <ClCompile Include="../CalcManager/ExpressionCommand.cpp" />
+    <ClCompile Include="../CalcManager/pch.cpp" />
+    <ClCompile Include="../CalcManager/Ratpack/basex.cpp" />
+    <ClCompile Include="../CalcManager/Ratpack/conv.cpp" />
+    <ClCompile Include="../CalcManager/Ratpack/exp.cpp" />
+    <ClCompile Include="../CalcManager/Ratpack/fact.cpp" />
+    <ClCompile Include="../CalcManager/Ratpack/itrans.cpp" />
+    <ClCompile Include="../CalcManager/Ratpack/itransh.cpp" />
+    <ClCompile Include="../CalcManager/Ratpack/logic.cpp" />
+    <ClCompile Include="../CalcManager/Ratpack/num.cpp" />
+    <ClCompile Include="../CalcManager/Ratpack/rat.cpp" />
+    <ClCompile Include="../CalcManager/Ratpack/support.cpp" />
+    <ClCompile Include="../CalcManager/Ratpack/trans.cpp" />
+    <ClCompile Include="../CalcManager/Ratpack/transh.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="../CalcManager/CalculatorHistory.h" />
+    <ClInclude Include="../CalcManager/CalculatorManager.h" />
+    <ClInclude Include="../CalcManager/CalculatorResource.h" />
+    <ClInclude Include="../CalcManager/CalculatorVector.h" />
+    <ClInclude Include="../CalcManager/CCalcManager.h" />
+    <ClInclude Include="../CalcManager/Command.h" />
+    <ClInclude Include="../CalcManager/compat.h" />
+    <ClInclude Include="../CalcManager/ExpressionCommand.h" />
+    <ClInclude Include="../CalcManager/ExpressionCommandInterface.h" />
+    <ClInclude Include="../CalcManager/headers/CalcEngine.h" />
+    <ClInclude Include="../CalcManager/headers/CalcInput.h" />
+    <ClInclude Include="../CalcManager/headers/CalcUtils.h" />
+    <ClInclude Include="../CalcManager/headers/CCommand.h" />
+    <ClInclude Include="../CalcManager/headers/EngineStrings.h" />
+    <ClInclude Include="../CalcManager/headers/History.h" />
+    <ClInclude Include="../CalcManager/headers/ICalcDisplay.h" />
+    <ClInclude Include="../CalcManager/headers/IHistoryDisplay.h" />
+    <ClInclude Include="../CalcManager/headers/Number.h" />
+    <ClInclude Include="../CalcManager/headers/RadixType.h" />
+    <ClInclude Include="../CalcManager/headers/Rational.h" />
+    <ClInclude Include="../CalcManager/headers/RationalMath.h" />
+    <ClInclude Include="../CalcManager/pch.h" />
+    <ClInclude Include="../CalcManager/Ratpack/CalcErr.h" />
+    <ClInclude Include="../CalcManager/Ratpack/ratconst.h" />
+    <ClInclude Include="../CalcManager/Ratpack/ratpak.h" />
+  </ItemGroup>
+</Project>

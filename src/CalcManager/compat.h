@@ -1,6 +1,6 @@
 #pragma once
 
-#if defined(__EMSCRIPTEN__) || defined(__APPLE__)
+#if defined(__EMSCRIPTEN__) || defined(__APPLE__) || defined(__ANDROID__)
 
 #define HRESULT long
 #define _In_opt_
