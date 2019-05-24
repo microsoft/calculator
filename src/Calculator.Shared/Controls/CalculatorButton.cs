@@ -31,17 +31,17 @@ namespace CalculatorApp.Controls
 
 		public static readonly DependencyProperty ButtonIdProperty =
 			DependencyProperty.Register(
-                "ButtonId",
-                typeof(NumbersAndOperatorsEnum), 
-                typeof(CalculatorButton),
-                new PropertyMetadata(
-                    null, 
-                    (s, e) => (s as CalculatorButton)?.OnButtonIdPropertyChanged(
-                        (NumbersAndOperatorsEnum)(e.OldValue ?? NumbersAndOperatorsEnum.None),
-                        (NumbersAndOperatorsEnum)(e.NewValue ?? NumbersAndOperatorsEnum.None)
-                    )
-                )
-            );
+				"ButtonId",
+				typeof(NumbersAndOperatorsEnum),
+				typeof(CalculatorButton),
+				new PropertyMetadata(
+					null,
+					(s, e) => (s as CalculatorButton)?.OnButtonIdPropertyChanged(
+						(NumbersAndOperatorsEnum)(e.OldValue ?? NumbersAndOperatorsEnum.None),
+						(NumbersAndOperatorsEnum)(e.NewValue ?? NumbersAndOperatorsEnum.None)
+					)
+				)
+			);
 
 		// AuditoryFeedback
 		public string AuditoryFeedback
@@ -51,7 +51,15 @@ namespace CalculatorApp.Controls
 		}
 
 		public static readonly DependencyProperty AuditoryFeedbackProperty =
-			DependencyProperty.Register("AuditoryFeedback", typeof(string), typeof(CalculatorButton), new PropertyMetadata(null));
+			DependencyProperty.Register(
+				name: "AuditoryFeedback",
+				propertyType: typeof(string),
+				ownerType: typeof(CalculatorButton),
+				typeMetadata: new PropertyMetadata(
+					defaultValue: null,
+					propertyChangedCallback: (s, e) => (s as CalculatorButton)?.OnAuditoryFeedbackPropertyChanged(
+						oldValue: e.OldValue as string,
+						newValue: e.NewValue as string)));
 
 		// HoverBackground
 		public Brush HoverBackground
@@ -106,7 +114,7 @@ namespace CalculatorApp.Controls
 			base.OnKeyDown(e);
 		}
 
-        protected override void OnKeyUp(KeyRoutedEventArgs e)
+		protected override void OnKeyUp(KeyRoutedEventArgs e)
 		{
 			// Ignore the Enter key
 			if (e.Key == VirtualKey.Enter)
@@ -114,7 +122,7 @@ namespace CalculatorApp.Controls
 				return;
 			}
 
-            base.OnKeyUp(e);
+			base.OnKeyUp(e);
 		}
 
 		// PRIVATE
