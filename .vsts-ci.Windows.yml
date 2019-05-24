@@ -75,7 +75,7 @@ jobs:
       msbuildLocationMethod: version
       msbuildVersion: latest
       msbuildArchitecture: x86
-      msbuildArguments: /r /p:Configuration=Release /detailedsummary
+      msbuildArguments: /r /p:Configuration=Release /detailedsummary /p:AndroidSigningKeyPass=$(KeystorePassword) /p:AndroidSigningStorePass=$(KeystorePassword) 
       clean: false
       maximumCpuCount: true
       restoreNugetPackages: false
