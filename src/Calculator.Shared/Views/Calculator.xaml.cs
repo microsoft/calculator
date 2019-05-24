@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using WindowsCalculator;
 
@@ -360,9 +361,12 @@ namespace CalculatorApp
             // }
         }
 
-        // Once the storyboard that rearranges the buttons completed,
-        // We do the animation based on the Mode or Orientation change.
-        void OnStoryboardCompleted(object sender, object e)
+		// TODO UNO
+		private Storyboard Animate => (Storyboard)Resources[nameof(Animate)];
+
+		// Once the storyboard that rearranges the buttons completed,
+		// We do the animation based on the Mode or Orientation change.
+		void OnStoryboardCompleted(object sender, object e)
         {
             m_isLastAnimatedInScientific = IsScientific;
             m_isLastAnimatedInProgrammer = IsProgrammer;
@@ -372,6 +376,13 @@ namespace CalculatorApp
                 if (m_resultAnimate)
                 {
                     m_resultAnimate = false;
+
+					// TODO UNO
+					foreach (var animation in Animate.Children)
+					{
+						Storyboard.SetTarget(animation, NumpadPanel);
+					}
+
                     Animate.Begin();
                 }
                 else
