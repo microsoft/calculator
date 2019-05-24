@@ -4,6 +4,9 @@ jobs:
   pool:
     vmImage: 'windows-2019'
 
+  variables:
+    NDK_ROOT: C:\Microsoft\AndroidNDK64\android-ndk-r19c
+
   steps:
   - task: GitVersion@4
     inputs:
