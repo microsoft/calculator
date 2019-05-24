@@ -115,7 +115,7 @@
 
 		<PropertyGroup>
 			<_SourceBasePath>../$(AppName)</_SourceBasePath>
-			<_ManifestPath>$(_SourceBasePath).Android/Properties/AndroidManifest.xml</_ManifestPath>
+			<_ManifestPath>$(_SourceBasePath).Droid/Properties/AndroidManifest.xml</_ManifestPath>
 			<_PlistFilePath>$(_SourceBasePath).iOS/Info.plist</_PlistFilePath>
 			<_AppxManifestPath>$(_SourceBasePath).UWP/Package.appxmanifest</_AppxManifestPath>
 			<_AndroidNamespace>
