@@ -698,10 +698,9 @@
                                            x:Uid="backSpaceButton"
                                            Grid.Column="1"
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
-                                           FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                            FontSize="16"
                                            ButtonId="Backspace"
-                                           Content="&#xE750;"
+										   Content="&#xE94F;"
                                            TabIndex="8"/>
 			</Grid>
 
