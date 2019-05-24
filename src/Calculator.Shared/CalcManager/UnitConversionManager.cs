@@ -1435,7 +1435,7 @@ namespace UnitConversionManager
 		/// <param name="input">string to trim</param>
 		void TrimString(ref string returnString)
 		{
-			if (returnString.IndexOf('.') == m_returnDisplay.Length)
+			if (returnString.IndexOf('.') == m_returnDisplay.npos())
 			{
 				return;
 			}
