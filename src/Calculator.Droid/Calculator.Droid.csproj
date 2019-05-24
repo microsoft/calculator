@@ -21,6 +21,9 @@
     <AndroidUseIntermediateDesignerFile>True</AndroidUseIntermediateDesignerFile>
     <ResourcesDirectory>..\Calculator.Shared\Strings</ResourcesDirectory>
     <LangVersion>7.3</LangVersion>
+    <AndroidKeyStore>true</AndroidKeyStore>
+    <AndroidSigningKeyStore>C:\s\nv.github\calculator-2\src\Calculator.Droid\calc-prod.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyAlias>calc-prod</AndroidSigningKeyAlias>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -84,21 +87,21 @@
   <ItemGroup>
     <AndroidResource Include="Resources\values\Styles.xml" />
   </ItemGroup>
-	<ItemGroup>
-		<AndroidNativeLibrary Include="libs\ARM\$(Configuration)\libCalcManager.so">
-			<Abi>armeabi-v7a</Abi>
-		</AndroidNativeLibrary>
-		<AndroidNativeLibrary Include="libs\ARM64\$(Configuration)\libCalcManager.so">
-			<Abi>arm64-v8a</Abi>
-		</AndroidNativeLibrary>
-		<AndroidNativeLibrary Include="libs\x86\$(Configuration)\libCalcManager.so">
-			<Abi>x86</Abi>
-		</AndroidNativeLibrary>
-	</ItemGroup>
-	<Import Project="..\Calculator.Shared\Calculator.Shared.projitems" Label="Shared" Condition="Exists('..\Calculator.Shared\Calculator.Shared.projitems')" />
+  <ItemGroup>
+    <AndroidNativeLibrary Include="libs\ARM\$(Configuration)\libCalcManager.so">
+      <Abi>armeabi-v7a</Abi>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="libs\ARM64\$(Configuration)\libCalcManager.so">
+      <Abi>arm64-v8a</Abi>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="libs\x86\$(Configuration)\libCalcManager.so">
+      <Abi>x86</Abi>
+    </AndroidNativeLibrary>
+  </ItemGroup>
+  <Import Project="..\Calculator.Shared\Calculator.Shared.projitems" Label="Shared" Condition="Exists('..\Calculator.Shared\Calculator.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-	<Target Name="GenerateBuild" DependsOnTargets="SignAndroidPackage" AfterTargets="Build" Condition="'$(BuildingInsideVisualStudio)'==''" />
-	<!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <Target Name="GenerateBuild" DependsOnTargets="SignAndroidPackage" AfterTargets="Build" Condition="'$(BuildingInsideVisualStudio)'==''" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.
 		<Target Name="BeforeBuild">
 		</Target>
