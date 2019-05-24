@@ -97,7 +97,8 @@
 	</ItemGroup>
 	<Import Project="..\Calculator.Shared\Calculator.Shared.projitems" Label="Shared" Condition="Exists('..\Calculator.Shared\Calculator.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	<Target Name="GenerateBuild" DependsOnTargets="SignAndroidPackage" AfterTargets="Build" Condition="'$(BuildingInsideVisualStudio)'==''" />
+	<!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.
 		<Target Name="BeforeBuild">
 		</Target>

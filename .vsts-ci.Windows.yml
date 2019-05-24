@@ -81,6 +81,36 @@ jobs:
       restoreNugetPackages: false
       logProjectEvents: false
       createLogFile: false
+      
+  - task: CopyFiles@2
+    displayName: 'Publish Wasm Binaries'
+    inputs:
+      SourceFolder: $(build.sourcesdirectory)/src/Calculator.Wasm/bin/Release/netstandard2.0/dist
+      Contents: '**/*.*'
+      TargetFolder: $(build.artifactstagingdirectory)/wasm-interp
+      CleanTargetFolder: false
+      OverWrite: false
+      flattenFolders: false
+
+  - task: CopyFiles@2
+    displayName: 'Publish Android Binaries'
+    inputs:
+      SourceFolder: $(build.sourcesdirectory)/src/Calculator.Droid/bin/Release
+      Contents: '**/*.apk'
+      TargetFolder: $(build.artifactstagingdirectory)/android
+      CleanTargetFolder: false
+      OverWrite: false
+      flattenFolders: false
+
+  - task: CopyFiles@2
+    displayName: 'Publish Windows Binaries'
+    inputs:
+      SourceFolder: $(build.sourcesdirectory)/src/Calculator.UWP/AppPackages
+      Contents: '**/*.*'
+      TargetFolder: $(build.artifactstagingdirectory)/windows
+      CleanTargetFolder: false
+      OverWrite: false
+      flattenFolders: false
 
   - task: PublishBuildArtifacts@1
     displayName: Publish Package Artifacts
