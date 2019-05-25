@@ -19,6 +19,10 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+#if HAS_UNO
+using Microsoft.Extensions.Logging;
+#endif
+
 namespace CalculatorApp
 {
 	/// <summary>
@@ -96,11 +100,11 @@ namespace CalculatorApp
 		}
 
 #if HAS_UNO
-		static void ConfigureFilters(Microsoft.Extensions.Logging.ILoggerFactory factory)
+		static void ConfigureFilters(ILoggerFactory factory)
 		{
 #if DEBUG
 			factory
-				.WithFilter(new Microsoft.Extensions.Logging.FilterLoggerSettings
+				.WithFilter(new FilterLoggerSettings
 					{
 						{ "Uno", LogLevel.Warning },
 						{ "Windows", LogLevel.Warning },
@@ -131,7 +135,7 @@ namespace CalculatorApp
 #if !__WASM__
 			factory
 				.AddConsole(LogLevel.Error);
-#endifs
+#endif
 #endif
 		}
 #endif
