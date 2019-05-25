@@ -60,7 +60,7 @@ namespace CalculatorApp
 					propertyType: typeof(double),
 					ownerType: typeof(CalculationResult),
 					typeMetadata: new PropertyMetadata(
-						defaultValue: 30.0,
+						defaultValue: 42.0,
 						propertyChangedCallback: (s, e) => (s as CalculationResult)?.OnMaxFontSizePropertyChanged(
 							(double)e.OldValue,
 							(double)e.NewValue)));
@@ -216,7 +216,9 @@ namespace CalculatorApp
 					m_textContainer.SizeChanged += TextContainerSizeChanged;
 					// We want to know when the size of the container changes so
 					// we can rescale the textbox
+#if NETFX_CORE // TODO UNO: We listen on m_textBlock instead
 					m_textContainer.LayoutUpdated += OnTextContainerLayoutUpdated;
+#endif
 
 					m_textContainer.ChangeView(m_textContainer.ExtentWidth - m_textContainer.ViewportWidth, null, null);
 					m_scrollLeft = (HyperlinkButton)(GetTemplateChild("ScrollLeft"));
@@ -233,6 +235,9 @@ namespace CalculatorApp
 					if (m_textBlock != null)
 					{
 						m_textBlock.Visibility = Visibility.Visible;
+#if !NETFX_CORE // TODO UNO: We should be listening on m_textContainer
+						m_textBlock.LayoutUpdated += OnTextContainerLayoutUpdated;
+#endif
 					}
 				}
 				UpdateAllState();
@@ -337,7 +342,9 @@ namespace CalculatorApp
 
 				var containerSize = m_textContainer.ActualWidth;
 				string oldText = m_textBlock.Text;
-				string newText = Utils.LRO + DisplayValue + Utils.PDF;
+				//string newText = Utils.LRO + DisplayValue + Utils.PDF;
+				// TODO UNO
+				string newText = DisplayValue;
 
 				// Initiate the scaling operation
 				// UpdateLayout will keep calling us until we make it through the below 2 if-statements
