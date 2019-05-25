@@ -581,19 +581,19 @@
 								 Margin="0,0,0,0"
 								 Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" />
 
+			<!--TOOD UNO ContextFlyout="{StaticResource ResultsContextMenu}"-->
 			<TextBlock x:Name="DateDiffAllUnitsResultLabel"
 								 Grid.Row="8"
 								 Style="{ThemeResource SubtitleTextBlockStyle}"
 								 FontWeight="SemiBold"
 								 AutomationProperties.LiveSetting="Polite"
 								 AutomationProperties.Name="{Binding StrDateDiffResultAutomationName}"
-								 ContextFlyout="{StaticResource ResultsContextMenu}"
 								 Text="{Binding StrDateDiffResult}" />
 
+			<!--TODO UNO ContextFlyout="{StaticResource ResultsContextMenu}"-->
 			<TextBlock Grid.Row="10"
 								 Style="{ThemeResource BaseTextBlockStyle}"
 								 Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
-								 ContextFlyout="{StaticResource ResultsContextMenu}"
 								 Text="{Binding StrDateDiffResultInDays, Mode=OneWay}"
 								 Visibility="{Binding IsDiffInDays, Converter={StaticResource BooleanToVisibilityNegationConverter}}" />
 		</Grid>
@@ -741,13 +741,13 @@
 								 Grid.Row="8"
 								 Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" />
 
+			<!--TODO UNO ContextFlyout="{StaticResource ResultsContextMenu}"-->
 			<TextBlock x:Name="DateResultLabel"
 								 Grid.Row="9"
 								 Style="{ThemeResource SubtitleTextBlockStyle}"
 								 FontWeight="SemiBold"
 								 AutomationProperties.LiveSetting="Polite"
 								 AutomationProperties.Name="{Binding StrDateResultAutomationName}"
-								 ContextFlyout="{StaticResource ResultsContextMenu}"
 								 Text="{Binding StrDateResult}" />
 		</Grid>
 	</Grid>

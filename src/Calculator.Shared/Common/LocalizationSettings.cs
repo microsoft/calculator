@@ -137,7 +137,7 @@ namespace CalculatorApp
                 m_currencyTrailingDigits = NumberFormatInfo.CurrentInfo.CurrencyDecimalDigits;
                 m_currencySymbolPrecedence = ~(NumberFormatInfo.CurrentInfo.CurrencyPositivePattern) & 1;
 				m_resolvedName = CultureInfo.CurrentCulture.Name;
-				m_calendarIdentifier = ""; // new Windows.Globalization.Calendar().GetCalendarSystem();
+				m_calendarIdentifier = new Windows.Globalization.Calendar().GetCalendarSystem();
                 m_firstDayOfWeek = (Windows.Globalization.DayOfWeek)CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
 #endif
             }
