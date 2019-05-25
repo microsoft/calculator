@@ -19,6 +19,10 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+#if HAS_UNO
+using Microsoft.Extensions.Logging;
+#endif
+
 namespace CalculatorApp
 {
 	/// <summary>
@@ -34,6 +38,10 @@ namespace CalculatorApp
         /// </summary>
         public App()
 		{
+#if HAS_UNO
+			ConfigureFilters(Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory);
+#endif
+
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
         }
@@ -91,10 +99,52 @@ namespace CalculatorApp
 			}
 		}
 
-        /// <summary>
-        /// Return True if animation is enabled by user setting.
-        /// </summary>
-        public static bool IsAnimationEnabled()
+#if HAS_UNO
+		static void ConfigureFilters(ILoggerFactory factory)
+		{
+#if DEBUG
+			factory
+				.WithFilter(new FilterLoggerSettings
+					{
+						{ "Uno", LogLevel.Warning },
+						{ "Windows", LogLevel.Warning },
+						
+						// Generic Xaml events
+						//{ "Windows.UI.Xaml", LogLevel.Debug },
+						// { "Windows.UI.Xaml.Shapes", LogLevel.Debug },
+						//{ "Windows.UI.Xaml.VisualStateGroup", LogLevel.Debug },
+						//{ "Windows.UI.Xaml.StateTriggerBase", LogLevel.Debug },
+						// { "Windows.UI.Xaml.UIElement", LogLevel.Debug },
+						// { "Windows.UI.Xaml.Setter", LogLevel.Debug },
+						   
+						// Layouter specific messages
+						// { "Windows.UI.Xaml.Controls", LogLevel.Debug },
+						//{ "Windows.UI.Xaml.Controls.Layouter", LogLevel.Debug },
+						//{ "Windows.UI.Xaml.Controls.Panel", LogLevel.Debug },
+						   
+						// Binding related messages
+						// { "Windows.UI.Xaml.Data", LogLevel.Debug },
+						// { "Windows.UI.Xamll.Data", LogLevel.Debug },
+						   
+						//  Binder memory references tracking
+						// { "ReferenceHolder", LogLevel.Debug },
+					}
+				)
+				.AddConsole(LogLevel.Trace);
+#else
+#if !__WASM__
+			factory
+				.AddConsole(LogLevel.Error);
+#endif
+#endif
+		}
+#endif
+
+
+		/// <summary>
+		/// Return True if animation is enabled by user setting.
+		/// </summary>
+		public static bool IsAnimationEnabled()
         {
             return m_isAnimationEnabled;
         }

@@ -33,11 +33,18 @@
 		<Compile Include="Program.cs" />
 		<Content Include="LinkerConfig.xml" />
 	</ItemGroup>
+	
+	<ItemGroup>
+		<WasmShellMonoEnvironment Include="MONO_GC_PARAMS" Value="soft-heap-limit=512m,nursery-size=64m,evacuation-threshold=66,major=marksweep" />
+		<WasmShellMonoEnvironment Include="MONO_LOG_LEVEL" Value="debug" />
+		<WasmShellMonoEnvironment Include="MONO_LOG_MASK" Value="gc" />
+	</ItemGroup>
+	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
 		<PackageReference Include="Uno.UI" Version="1.45.0-dev.1550" />
-		<PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.278" />
+		<PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.281" />
 		<DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.276" />
 	</ItemGroup>
 	<ItemGroup>

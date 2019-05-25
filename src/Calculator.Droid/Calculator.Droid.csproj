@@ -21,7 +21,7 @@
     <AndroidUseIntermediateDesignerFile>True</AndroidUseIntermediateDesignerFile>
     <ResourcesDirectory>..\Calculator.Shared\Strings</ResourcesDirectory>
     <LangVersion>7.3</LangVersion>
-    <AndroidKeyStore>true</AndroidKeyStore>
+    <AndroidKeyStore>false</AndroidKeyStore>
     <AndroidSigningKeyStore>calc-prod.keystore</AndroidSigningKeyStore>
     <AndroidSigningKeyAlias>calc-prod</AndroidSigningKeyAlias>
   </PropertyGroup>
@@ -65,7 +65,9 @@
   <ItemGroup>
     <PackageReference Include="Uno.UI" Version="1.45.0-dev.1550" />
     <PackageReference Include="Uno.UniversalImageLoader" Version="1.9.32" />
-  </ItemGroup>
+ 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
+ </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyVersion.Android.cs">
       <Link>Properties\AssemblyVersion.Android.cs</Link>

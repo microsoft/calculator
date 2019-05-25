@@ -41,6 +41,7 @@
     <ClCompile Include="../CalcManager/Ratpack/support.cpp" />
     <ClCompile Include="../CalcManager/Ratpack/trans.cpp" />
     <ClCompile Include="../CalcManager/Ratpack/transh.cpp" />
+    <ClCompile Include="strto_workaround.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="../CalcManager/CalculatorHistory.h" />
