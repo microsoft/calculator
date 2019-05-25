@@ -629,7 +629,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Controls:CalculationResult">
-          <Grid x:Name="border"
+          <Grid x:Name="Border"
               Background="{TemplateBinding Background}">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="12" />
@@ -641,18 +641,18 @@
                 <VisualState x:Name="Active" />
                 <VisualState x:Name="Normal">
                   <VisualState.Setters>
-                    <Setter Target="normalOutput.FontWeight"
+                    <Setter Target="NormalOutput.FontWeight"
                         Value="Light" />
                   </VisualState.Setters>
                 </VisualState>
               </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-            <ScrollViewer x:Name="textContainer"
+            <ScrollViewer x:Name="TextContainer"
                     Grid.Column="1"
                     Padding="0,0,0,0"
                     Style="{ThemeResource ResultsScrollerSnapped}"
                     AutomationProperties.AccessibilityView="Raw">
-              <TextBlock x:Name="normalOutput"
+              <TextBlock x:Name="NormalOutput"
                      Margin="{TemplateBinding DisplayMargin}"
                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -664,7 +664,7 @@
                      TextAlignment="{TemplateBinding HorizontalContentAlignment}"
                      TextWrapping="NoWrap" />
             </ScrollViewer>
-            <HyperlinkButton x:Name="scrollLeft"
+            <HyperlinkButton x:Name="ScrollLeft"
                      Grid.Column="0"
                      Width="20"
                      MinWidth="20"
@@ -677,12 +677,12 @@
                      Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
                      BorderThickness="0"
                      Visibility="Collapsed">
-              <FontIcon x:Name="scrollLeftText"
+              <FontIcon x:Name="ScrollLeftText"
                     FontFamily="{ThemeResource SymbolThemeFontFamily}"
                     FontSize="12"
                     Glyph="&#xE26C;" />
             </HyperlinkButton>
-            <HyperlinkButton x:Name="scrollRight"
+            <HyperlinkButton x:Name="ScrollRight"
                      Grid.Column="2"
                      Width="20"
                      MinWidth="20"
@@ -695,7 +695,7 @@
                      Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
                      BorderThickness="0"
                      Visibility="Collapsed">
-              <FontIcon x:Name="scrollRightText"
+              <FontIcon x:Name="ScrollRightText"
                     FontFamily="{ThemeResource SymbolThemeFontFamily}"
                     FontSize="12"
                     Glyph="&#xE26B;" />
@@ -730,7 +730,7 @@
       <Setter.Value>
         <ControlTemplate TargetType="Controls:CalculationResult">
 
-          <Grid x:Name="border"
+          <Grid x:Name="Border"
               Background="{TemplateBinding Background}">
 
             <Grid.ColumnDefinitions>
@@ -744,20 +744,20 @@
                 <VisualState x:Name="Active" />
                 <VisualState x:Name="Normal">
                   <VisualState.Setters>
-                    <Setter Target="normalOutput.FontWeight"
+                    <Setter Target="NormalOutput.FontWeight"
                         Value="Light" />
                   </VisualState.Setters>
                 </VisualState>
               </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
 
-            <ScrollViewer x:Name="textContainer"
+            <ScrollViewer x:Name="TextContainer"
                     Grid.Column="1"
                     Padding="0,0,0,0"
                     Style="{ThemeResource ResultsScrollerSnapped}"
                     AutomationProperties.AccessibilityView="Raw">
 
-              <TextBlock x:Name="normalOutput"
+              <TextBlock x:Name="NormalOutput"
                      Margin="{TemplateBinding DisplayMargin}"
                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -770,7 +770,7 @@
                      TextWrapping="NoWrap" />
             </ScrollViewer>
 
-            <HyperlinkButton x:Name="scrollLeft"
+            <HyperlinkButton x:Name="ScrollLeft"
                      Grid.Column="0"
                      Width="20"
                      MinWidth="20"
@@ -783,13 +783,13 @@
                      Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
                      BorderThickness="0"
                      Visibility="Collapsed">
-              <FontIcon x:Name="scrollLeftText"
+              <FontIcon x:Name="ScrollLeftText"
                     FontFamily="{ThemeResource SymbolThemeFontFamily}"
                     FontSize="12"
                     Glyph="&#xE26C;" />
             </HyperlinkButton>
 
-            <HyperlinkButton x:Name="scrollRight"
+            <HyperlinkButton x:Name="ScrollRight"
                      Grid.Column="2"
                      Width="20"
                      MinWidth="20"
@@ -802,7 +802,7 @@
                      Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
                      BorderThickness="0"
                      Visibility="Collapsed">
-              <FontIcon x:Name="scrollRightText"
+              <FontIcon x:Name="ScrollRightText"
                     FontFamily="{ThemeResource SymbolThemeFontFamily}"
                     FontSize="12"
                     Glyph="&#xE26B;" />
