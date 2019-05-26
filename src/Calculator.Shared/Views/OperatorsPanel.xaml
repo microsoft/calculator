@@ -9,9 +9,11 @@
              UseLayoutRounding="False"
              mc:Ignorable="">
 	<Grid>
+		<!--Bind visibility as a workaround for nventive/Uno#925-->
 		<local:CalculatorStandardOperators x:Name="StandardOperators"
 																			 x:Load="{x:Bind Model.IsStandard, Mode=OneWay}"
 																			 IsEnabled="{x:Bind Model.IsStandard, Mode=OneWay}"
+																			 Visibility="{x:Bind Model.IsStandard, Mode=OneWay}"
 																			 TabIndex="17" />
 
 		<local:CalculatorScientificOperators x:Name="ScientificOperators"
