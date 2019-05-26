@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <item name="primaryColor" type="color">#FF000000</item>
+  <item name="primaryColorDark" type="color">#FF000000</item>
+  <item name="white" type="color">#FFFFFFFF</item>
+
+  <!-- Temp nventive blue resource -->
+  <item name="splashscreenColor" type="color">#FF0078D7</item>
+</resources>

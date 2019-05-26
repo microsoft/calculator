@@ -7,6 +7,8 @@
 		<item name="android:windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
 		<item name="android:windowNoTitle">true</item>
-
+	  
+		<!-- SplashScreen -->
+	    <item name="android:windowBackground">@drawable/splash</item>
 	</style>
 </resources>

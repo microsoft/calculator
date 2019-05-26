@@ -1,7 +1,7 @@
 ﻿var UnoAppManifest = {
 
     splashScreenImage: "Assets/SplashScreen.scale-200.png",
-    splashScreenColor: "#00f",
+    splashScreenColor: "#0078D7",
     displayName: "Calculator"
 
 }

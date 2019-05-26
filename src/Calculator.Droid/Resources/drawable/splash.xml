@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item>
+	<shape>
+	  <solid android:color="#0078D7"/>
+	</shape>
+  </item>
+  <item android:bottom="160dp">
+	<bitmap
+	  android:src="@drawable/splashscreen_icon"
+	  android:gravity="center"/>
+  </item>
+  <item android:bottom="80dp">
+	<bitmap
+	  android:src="@drawable/uno"
+	  android:gravity="bottom"/>
+  </item>
+</layer-list>

@@ -12,7 +12,8 @@
 			x:Name="pageRoot"
 			Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
 			Loaded="OnPageLoaded"
-			mc:Ignorable="">
+			xmlns:android="http://nventive.com/android"
+			mc:Ignorable="android">
 	<!-- 
 			xmlns:automation="using:WindowsCalculator.Common.Automation"
 	-->
@@ -61,7 +62,8 @@
 		</Style>
 	</Page.Resources>
 
-	<Grid toolkit:VisibleBoundsPadding.PaddingMask="All">
+	<Grid toolkit:VisibleBoundsPadding.PaddingMask="All"
+		  android:Background="White">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 				<!--

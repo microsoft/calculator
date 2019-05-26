@@ -240,24 +240,17 @@
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\CalcMDL2.ttf" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\CalcMDL2.woff" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorAppList.targetsize-96.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorLargeTile.contrast-white_scale-400.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorMedTile.contrast-white_scale-400.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorSmallTile.contrast-white_scale-400.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorSplashScreen.contrast-white_scale-400.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorStoreLogo.contrast-white_scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorWideTile.contrast-white_scale-400.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Date.targetsize-64_contrast-white.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\LockScreenLogo.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Programmer.targetsize-64_contrast-white.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Scientific.targetsize-64_contrast-white.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\SplashScreen.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Standard.targetsize-64_contrast-white.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\StoreLogo.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorAppList.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorLargeTile.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorMedTile.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorSmallTile.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorSplashScreen.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorStoreLogo.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\CalculatorWideTile.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Date.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Programmer.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Scientific.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Standard.png" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="$(MSBuildThisFileDirectory)Resources\af-ZA\CEngineStrings.resw" />
