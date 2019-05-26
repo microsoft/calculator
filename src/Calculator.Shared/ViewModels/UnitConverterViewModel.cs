@@ -950,18 +950,21 @@ namespace CalculatorApp.ViewModel
 
 		void BuildUnitList(CalculatorList<UCM.Unit> modelUnitList)
 		{
-			m_Units.Clear();
-			foreach (UCM.Unit modelUnit in modelUnitList)
+			using (m_Units.BatchUpdate())
 			{
-				if (!modelUnit.isWhimsical)
+				m_Units.Clear();
+				foreach (UCM.Unit modelUnit in modelUnitList)
 				{
-					m_Units.Append(new Unit(modelUnit));
+					if (!modelUnit.isWhimsical)
+					{
+						m_Units.Append(new Unit(modelUnit));
+					}
 				}
-			}
 
-			if (m_Units.Count == 0)
-			{
-				m_Units.Append(EMPTY_UNIT);
+				if (m_Units.Count == 0)
+				{
+					m_Units.Append(EMPTY_UNIT);
+				}
 			}
 		}
 
@@ -1284,11 +1287,14 @@ namespace CalculatorApp.ViewModel
 
 		void InitializeView()
 		{
-			CalculatorList<UCM.Category> categories = m_model.GetCategories();
-			for (uint i = 0; i < categories.Size(); i++)
+			using (m_Categories.BatchUpdate())
 			{
-				Category category = new Category(categories[i]);
-				m_Categories.Append(category);
+				CalculatorList<UCM.Category> categories = m_model.GetCategories();
+				for (uint i = 0; i < categories.Size(); i++)
+				{
+					Category category = new Category(categories[i]);
+					m_Categories.Append(category);
+				}
 			}
 
 			RestoreUserPreferences();
@@ -1585,6 +1591,7 @@ namespace CalculatorApp.ViewModel
 		void RefreshSupplementaryResults()
 		{
 			lock (m_cacheMutex)
+			using(m_SupplementaryResults.BatchUpdate())
 			{
 				m_SupplementaryResults.Clear();
 
@@ -1607,7 +1614,6 @@ namespace CalculatorApp.ViewModel
 				{
 					m_SupplementaryResults.Append(whimsicals[0]);
 				}
-
 			}
 
 			RaisePropertyChanged(SupplementaryResultsPropertyName);
