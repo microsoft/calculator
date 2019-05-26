@@ -17,37 +17,37 @@
 	<!-- 
 			xmlns:automation="using:WindowsCalculator.Common.Automation"
 	-->
-	
+
 	<Page.Resources>
-		
+
 		<!-- NarratorNotifier -->
 		<!--
 		<automation:NarratorNotifier x:Name="NarratorNotifier"/>
 		-->
-		
+
 		<!-- CalculatorBaseStyle -->
-		<Style x:Key="CalculatorBaseStyle" 
-					 TargetType="local:Calculator">
-			<Setter Property="Margin" 
-							Value="0,0,0,0"/>
+		<Style x:Name="CalculatorBaseStyle"
+			   TargetType="local:Calculator">
+			<Setter Property="Margin"
+					Value="0,0,0,0" />
 		</Style>
 
 		<!-- UnitConverterBaseStyle -->
-		<Style x:Key="UnitConverterBaseStyle" 
-					 TargetType="local:UnitConverter">
-			<Setter Property="Visibility" 
-							Value="Collapsed"/>
-			<Setter Property="IsEnabled" 
-							Value="False"/>
-			<Setter Property="Margin" 
-							Value="0,0,0,0"/>
+		<Style x:Name="UnitConverterBaseStyle"
+			   TargetType="local:UnitConverter">
+			<Setter Property="Visibility"
+					Value="Collapsed" />
+			<Setter Property="IsEnabled"
+					Value="False" />
+			<Setter Property="Margin"
+					Value="0,0,0,0" />
 		</Style>
 
 		<!-- AboutFlyoutPresenterStyle -->
-		<Style x:Key="AboutFlyoutPresenterStyle" 
-					 TargetType="FlyoutPresenter">
-			<Setter Property="IsTabStop" 
-							Value="False"/>
+		<Style x:Key="AboutFlyoutPresenterStyle"
+			   TargetType="FlyoutPresenter">
+			<Setter Property="IsTabStop"
+					Value="False" />
 			<!--
 			<Setter Property="AutomationProperties.AccessibilityView" 
 							Value="Raw"/>
@@ -55,71 +55,72 @@
 		</Style>
 
 		<!-- NavViewItemStyle -->
-		<Style x:Key="NavViewItemStyle" 
-					 TargetType="NavigationViewItem">
-			<Setter Property="KeyTipPlacementMode" 
-							Value="Right"/>
+		<Style x:Key="NavViewItemStyle"
+			   TargetType="NavigationViewItem">
+			<Setter Property="KeyTipPlacementMode"
+					Value="Right" />
 		</Style>
 	</Page.Resources>
 
 	<Grid toolkit:VisibleBoundsPadding.PaddingMask="All"
 		  android:Background="White">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-				<!--
+			<RowDefinition Height="Auto" />
+			<!--
 					This row is padding for the SystemFocusVisuals,
 					otherwise the focus rectangles render under the title bar controls.
 				-->
-			<RowDefinition x:Name="FocusVisualMargin" Height="3"/>
-			<RowDefinition Height="*"/>
+			<RowDefinition x:Name="FocusVisualMargin"
+						   Height="3" />
+			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="Mode">
 				<VisualState x:Name="ConverterWide">
 					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}" 
-														 MinWindowWidth="640"/>
+						<AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}"
+										 MinWindowWidth="640" />
 					</VisualState.StateTriggers>
 				</VisualState>
 				<VisualState x:Name="DockVisible">
 					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}" 
-														 MinWindowWidth="560"/>
+						<AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}"
+										 MinWindowWidth="560" />
 					</VisualState.StateTriggers>
 				</VisualState>
 				<VisualState x:Name="MinSizeLayout">
 					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}" 
-														 MinWindowWidth="{StaticResource AppMinWindowWidth}"/>
+						<AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}"
+										 MinWindowWidth="{StaticResource AppMinWindowWidth}" />
 					</VisualState.StateTriggers>
 				</VisualState>
 				<VisualState x:Name="DefaultLayout">
 					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowHeight="0" 
-														 MinWindowWidth="0"/>
+						<AdaptiveTrigger MinWindowHeight="0"
+										 MinWindowWidth="0" />
 					</VisualState.StateTriggers>
 				</VisualState>
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
 		<StackPanel Visibility="Collapsed">
-			
+
 			<!--
 				These buttons are only here to serve as the target for copy/paste commands
 				they are not to be shown, only to have the command and shortcut assigned to them.
 			-->
 			<Button x:Name="copyButton"
-							x:Uid="copyButton"
-							Command="{x:Bind Model.CopyCommand}"/>
+					x:Uid="copyButton"
+					Command="{x:Bind Model.CopyCommand}" />
 			<Button x:Name="pasteButton"
-							x:Uid="pasteButton"
-							Command="{x:Bind Model.PasteCommand}"/>
+					x:Uid="pasteButton"
+					Command="{x:Bind Model.PasteCommand}" />
 			<Button x:Name="copyButtonAlternate"
-							x:Uid="copyButtonAlternate"
-							Command="{x:Bind Model.CopyCommand}"/>
+					x:Uid="copyButtonAlternate"
+					Command="{x:Bind Model.CopyCommand}" />
 			<Button x:Name="pasteButtonAlternate"
-							x:Uid="pasteButtonAlternate"
-							Command="{x:Bind Model.PasteCommand}"/>
+					x:Uid="pasteButtonAlternate"
+					Command="{x:Bind Model.PasteCommand}" />
 		</StackPanel>
 
 		<!-- Title Bar -->
@@ -149,36 +150,37 @@
 						UseSystemFocusVisuals="True">
 			
 			<NavigationView.PaneFooter>
-				
-				<StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
-					
+
+				<StackPanel HorizontalAlignment="Stretch"
+							Orientation="Vertical">
+
 					<NavigationViewList x:Name="NavFooter"
-																	 Width="{x:Bind NavView.OpenPaneLength, Mode=Oneway}"
-																	 x:Load="False"
-																	 IsItemClickEnabled="True"
-																	 ItemClick="OnAboutButtonClick">
-						
+										Width="{x:Bind NavView.OpenPaneLength, Mode=Oneway}"
+										x:Load="False"
+										IsItemClickEnabled="True"
+										ItemClick="OnAboutButtonClick">
+
 						<NavigationViewList.Items>
-							
+
 							<NavigationViewItem x:Name="AboutButton"
-																			 x:Uid="AboutButton"
-																			 Style="{StaticResource NavViewItemStyle}">
+												x:Uid="AboutButton"
+												Style="{StaticResource NavViewItemStyle}">
 								<NavigationViewItem.Icon>
-									<FontIcon FontFamily="{StaticResource CalculatorFontFamily}" 
-														Glyph="&#xe946;"/>
+									<FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
+											  Glyph="&#xe946;" />
 								</NavigationViewItem.Icon>
 								<TextBlock Text=""
 										   x:Name="AboutText" />
 								<NavigationViewItem.ContextFlyout>
 									
 									<Flyout x:Name="AboutPageFlyout"
-													x:Uid="AboutPageFlyout"
-													Closed="OnAboutFlyoutClosed"
-													FlyoutPresenterStyle="{StaticResource AboutFlyoutPresenterStyle}"
-													Opened="OnAboutFlyoutOpened">
-										
-										<local:AboutFlyout x:Name="AboutPage" 
-																			 x:Load="False"/>
+											x:Uid="AboutPageFlyout"
+											Closed="OnAboutFlyoutClosed"
+											FlyoutPresenterStyle="{StaticResource AboutFlyoutPresenterStyle}"
+											Opened="OnAboutFlyoutOpened">
+
+										<local:AboutFlyout x:Name="AboutPage"
+														   x:Load="False" />
 									</Flyout>
 								</NavigationViewItem.ContextFlyout>
 							</NavigationViewItem>
@@ -188,23 +190,23 @@
 			</NavigationView.PaneFooter>
 
 			<Grid>
-				
+
 				<!-- Header -->
 				<TextBlock x:Name="Header"
-									 Margin="52,6,12,0"
-									 HorizontalAlignment="Left"
-									 VerticalAlignment="Top"
-									 Style="{StaticResource SubtitleTextBlockStyle}"
-									 Text="{x:Bind Model.CategoryName, Mode=OneWay}"/>
-				
+						   Margin="52,6,12,0"
+						   HorizontalAlignment="Left"
+						   VerticalAlignment="Top"
+						   Style="{StaticResource SubtitleTextBlockStyle}"
+						   Text="{x:Bind Model.CategoryName, Mode=OneWay}" />
+
 				<Border x:Name="CalcHolder">
 					<!-- PLACEHOLDER!!!! This is where the calculator goes when it is delay loaded -->
 				</Border>
-				
+
 				<Border x:Name="DateCalcHolder">
 					<!-- PLACEHOLDER!!!! This is where the date calculator goes when it is delay loaded -->
 				</Border>
-				
+
 				<Border x:Name="ConverterHolder">
 					<!-- PLACEHOLDER!!!! This is where the converter goes when it is delay loaded -->
 				</Border>
