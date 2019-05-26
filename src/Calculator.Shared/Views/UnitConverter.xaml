@@ -478,10 +478,11 @@
                           IsActive="False"/>
 		</Grid>
 
+		<!--TODO UNO: HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}" --> 
 		<Grid x:Name="Value1Container"
               Grid.Row="1"
               Grid.Column="1"
-              HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
+              HorizontalAlignment="Stretch"
               Style="{ThemeResource ValueContainerStyle}"
               Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
 			<Grid.ColumnDefinitions>
@@ -535,10 +536,11 @@
 		AutomationProperties.AutomationId="Units1"
                   AutomationProperties.Name="{x:Bind Model.Unit1AutomationName, Mode=OneWay}"-->
 
+		<!--TODO UNO: HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}" -->
 		<Grid x:Name="Value2Container"
               Grid.Row="3"
               Grid.Column="1"
-              HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
+              HorizontalAlignment="Stretch"
               Style="{ThemeResource ValueContainerStyle}"
               Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
 			<Grid.ColumnDefinitions>
@@ -555,7 +557,7 @@
 			<!--TODO UNO AutomationProperties.AccessibilityView="Raw"-->
 			<controls:CalculationResult x:Name="Value2"
                                         Grid.Column="1"
-                                        Style="{ThemeResource ValueMediumStyle}"
+										Style="{ThemeResource ValueMediumStyle}"
                                         ContextCanceled="OnContextCanceled"
                                         ContextRequested="OnContextRequested"
                                         DisplayValue="{x:Bind Model.Value2, Mode=OneWay}"
