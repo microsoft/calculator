@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -14,33 +15,13 @@ namespace CalculatorApp
 		{
 			public static string GetLocalizedString(string pMessage, params object[] args)
 			{
-				var stringBuilder = new StringBuilder(pMessage);
-
-				// This will capture all %<number> strings
-				var matches = Regex
-					.Matches(pMessage, @"%(\d+)")
-					.AsEnumerable()
-					.OrderBy(str => str.Value.Replace("%", ""));
-
-				// If our starting index begin at 1, we will decrease all of them in order to use string.Format
-				if (matches.FirstOrDefault()?.Value == "%1")
+				if (pMessage == null)
 				{
-					var addedCharacterFromOriginal = 0;
-
-					foreach (var match in matches)
-					{
-						if(int.TryParse(match.Value.Replace("%", ""), out var argumentIndex))
-						{
-							stringBuilder.Remove(match.Index + addedCharacterFromOriginal, match.Length);
-							stringBuilder.Insert(match.Index + addedCharacterFromOriginal, "{" + (argumentIndex - 1).ToString() + "}");
-							// Since we are replace %<number> by {<number>}, we will add one character for each iteration
-							// so we need to consider that
-							addedCharacterFromOriginal++;
-						}
-					}
+					return string.Empty;
 				}
 
-				return $"{string.Format(stringBuilder.ToString(), args)}";
+				var pattern = Regex.Replace(pMessage, @"%(?<number>\d+)", m => "{" + (int.Parse(m.Groups["number"].Value) - 1) + "}");
+				return string.Format(CultureInfo.CurrentCulture, pattern, args);
 			}
 
 			public static string GetLocalizedNarratorAnnouncement(string resourceKey, string formatVariable, params object[] args)

@@ -123,11 +123,11 @@ namespace CalculatorApp.ViewModel
 		static string FROM_KEY = "from";
 		static string TO_KEY = "to";
 
+		private static string DefaultCurrencyCode = LocalizationService.DefaultCurrencyCode;
+
 		// Fallback default values.
 		static string DEFAULT_FROM_CURRENCY = DefaultCurrencyCode;
 		static string DEFAULT_TO_CURRENCY = "EUR";
-
-		private static string DefaultCurrencyCode = LocalizationService.DefaultCurrencyCode;
 
 		public CurrencyDataLoader(ICurrencyHttpClient client)
 		{
@@ -507,6 +507,7 @@ namespace CalculatorApp.ViewModel
 
 		bool TryParseStaticData(String rawJson, CalculatorList<UCM.CurrencyStaticData> staticData)
 		{
+#if NETFX_CORE // TODO UNO
 			JsonArray data = null;
 			if (!JsonArray.TryParse(rawJson, out data))
 			{
@@ -519,7 +520,7 @@ namespace CalculatorApp.ViewModel
 			string currencyName = "";
 			string currencySymbol = "";
 
-			string[] values = {countryCode, countryName, currencyCode, currencyName, currencySymbol};
+			string[] values = { countryCode, countryName, currencyCode, currencyName, currencySymbol };
 
 			Debug.Assert(values.Length == STATIC_DATA_PROPERTIES.Length);
 			staticData.Clear();
@@ -540,10 +541,36 @@ namespace CalculatorApp.ViewModel
 			staticData.Sort((UCM.CurrencyStaticData unit1, UCM.CurrencyStaticData unit2) => { return unit1.countryName.CompareTo(unit2.countryName) < 0; });
 
 			return true;
+#else
+			try
+			{
+				var items = Newtonsoft.Json.JsonConvert.DeserializeObject<UCM.CurrencyStaticData[]>(rawJson);
+				staticData.Clear();
+				foreach (var item in items)
+				{
+					staticData.Add(item);
+				}
+				staticData.Sort((UCM.CurrencyStaticData unit1, UCM.CurrencyStaticData unit2) => { return unit1.countryName.CompareTo(unit2.countryName) < 0; });
+
+				return true;
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+#endif
+		}
+
+		public class JsonCurrencyRatio
+		{
+			public double Rt { get; set; }
+
+			public string An { get; set; }
 		}
 
 		public bool TryParseAllRatiosData(String rawJson, CurrencyRatioMap allRatios)
 		{
+#if NETFX_CORE // TODO UNO
 			JsonArray data = null;
 			if (!JsonArray.TryParse(rawJson, out data))
 			{
@@ -565,6 +592,26 @@ namespace CalculatorApp.ViewModel
 			}
 
 			return true;
+#else
+			try
+			{
+				string sourceCurrencyCode = DefaultCurrencyCode;
+
+				var items = Newtonsoft.Json.JsonConvert.DeserializeObject<JsonCurrencyRatio[]>(rawJson);
+				allRatios.Clear();
+				foreach (var item in items)
+				{
+					allRatios.Add(item.An, new UCM.CurrencyRatio(item.Rt, sourceCurrencyCode, item.An));
+				}
+
+				return true;
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+
+#endif
 		}
 
 		// FinalizeUnits
@@ -712,11 +759,15 @@ namespace CalculatorApp.ViewModel
 			DateTime epoch = default(DateTime);
 			if (m_cacheTimestamp.ToUniversalTime() != epoch.ToUniversalTime())
 			{
-				DateTimeFormatter dateFormatter = new DateTimeFormatter("{month.abbreviated} {day.integer}, {year.full}");
-				string date = dateFormatter.Format(m_cacheTimestamp);
+				// TODO UNO
+				//DateTimeFormatter dateFormatter = new DateTimeFormatter("{month.abbreviated} {day.integer}, {year.full}");
+				//string date = dateFormatter.Format(m_cacheTimestamp);
+				var date = m_cacheTimestamp.ToString("D");
 
-				DateTimeFormatter timeFormatter = new DateTimeFormatter("shorttime");
-				string time = timeFormatter.Format(m_cacheTimestamp);
+				// TODO UNO
+				//DateTimeFormatter timeFormatter = new DateTimeFormatter("shorttime");
+				//string time = timeFormatter.Format(m_cacheTimestamp);
+				var time = m_cacheTimestamp.ToString("t");
 
 				timestamp = LocalizationStringUtil.GetLocalizedString(m_timestampFormat, date, time);
 			}
