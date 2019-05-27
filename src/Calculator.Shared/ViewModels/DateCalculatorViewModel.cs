@@ -14,6 +14,7 @@ using Windows.Foundation;
 using System.Numerics;
 using CalculatorApp;
 using System.Globalization;
+using Windows.System;
 
 namespace CalculatorApp.ViewModel
 {
@@ -367,6 +368,12 @@ namespace CalculatorApp.ViewModel
 		public void OnCopyCommand(Object parameter)
 		{
 
+		}
+
+
+		// TODO UNO: KeyboardShortcutManager
+		public void OnKeyPress(VirtualKey key)
+		{
 		}
 
 		// PRIVATE

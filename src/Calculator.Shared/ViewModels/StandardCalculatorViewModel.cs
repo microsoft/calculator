@@ -24,6 +24,7 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Calculator;
+using Windows.UI.Xaml.Input;
 
 namespace CalculatorApp.ViewModel
 {
@@ -1174,7 +1175,44 @@ namespace CalculatorApp.ViewModel
             }
         }
 
-        public void OnCopyCommand(object parameter)
+		private static readonly IDictionary<VirtualKey, Command> _keyToCommandMap = new Dictionary<VirtualKey, Command>
+		{
+			{ VirtualKey.Number0, Command.Command0 },
+			{ VirtualKey.Number1, Command.Command1 },
+			{ VirtualKey.Number2, Command.Command2 },
+			{ VirtualKey.Number3, Command.Command3 },
+			{ VirtualKey.Number4, Command.Command4 },
+			{ VirtualKey.Number5, Command.Command5 },
+			{ VirtualKey.Number6, Command.Command6 },
+			{ VirtualKey.Number7, Command.Command7 },
+			{ VirtualKey.Number8, Command.Command8 },
+			{ VirtualKey.Number9, Command.Command9 },
+			{ VirtualKey.A, Command.CommandA },
+			{ VirtualKey.B, Command.CommandB },
+			{ VirtualKey.C, Command.CommandC },
+			{ VirtualKey.D, Command.CommandD },
+			{ VirtualKey.E, Command.CommandE },
+			{ VirtualKey.F, Command.CommandF },
+			{ VirtualKey.Decimal, Command.CommandPNT },
+			{ VirtualKey.Add, Command.CommandADD },
+			{ VirtualKey.Subtract, Command.CommandSUB },
+			{ VirtualKey.Multiply, Command.CommandMUL },
+			{ VirtualKey.Divide, Command.CommandDIV },
+			{ VirtualKey.Enter, Command.CommandEQU },
+			{ VirtualKey.Back, Command.CommandBACK },
+			{ VirtualKey.Escape, Command.CommandCLEAR },
+		};
+
+		// TODO UNO: KeyboardShortcutManager
+		public void OnKeyPress(VirtualKey key)
+		{
+			if (_keyToCommandMap.TryGetValue(key, out var cmd))
+			{
+				m_standardCalculatorManager.SendCommand(cmd);
+			}
+		}
+
+		public void OnCopyCommand(object parameter)
         {
             CopyPasteManager.CopyToClipboard(GetRawDisplayValue());
 
