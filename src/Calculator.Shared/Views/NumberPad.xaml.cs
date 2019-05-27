@@ -22,7 +22,8 @@ namespace CalculatorApp
 {
 	public sealed partial class NumberPad : UserControl
 	{
-        public Style ButtonStyle
+		#region ButtonStyle
+		public Style ButtonStyle
         {
             get { return (Style)GetValue(ButtonStyleProperty); }
             set { SetValue(ButtonStyleProperty, value); }
@@ -30,8 +31,21 @@ namespace CalculatorApp
 
         // Using a DependencyProperty as the backing store for ButtonStyle.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ButtonStyleProperty =
-            DependencyProperty.Register("ButtonStyle", typeof(Style), typeof(NumberPad), new PropertyMetadata(null));
-        private bool m_isErrorVisualState;
+            DependencyProperty.Register(nameof(ButtonStyle), typeof(Style), typeof(NumberPad), new PropertyMetadata(null));
+		#endregion
+
+		#region DecimalButtonStyle
+		public Style DecimalButtonStyle
+		{
+			get { return (Style)GetValue(DecimalButtonStyleProperty); }
+			set { SetValue(DecimalButtonStyleProperty, value); }
+		}
+
+		public static readonly DependencyProperty DecimalButtonStyleProperty =
+			DependencyProperty.Register(nameof(DecimalButtonStyle), typeof(Style), typeof(NumberPad), new PropertyMetadata(null));
+		#endregion
+
+		private bool m_isErrorVisualState;
 
         public NumberPad()
 		{

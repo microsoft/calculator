@@ -605,7 +605,8 @@
 						 Grid.Column="2"
 						 Grid.ColumnSpan="3"
 						 AutomationProperties.HeadingLevel="Level1"
-						 ButtonStyle="{StaticResource NumericButtonStyle24}" />
+						 ButtonStyle="{StaticResource NumericButtonStyle24}"
+						 DecimalButtonStyle="{StaticResource DecimalButtonStyle}" />
 
 		<controls:CalculatorButton x:Name="negateButton"
 								   x:Uid="negateButton"
