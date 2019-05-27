@@ -252,6 +252,7 @@ namespace CalculatorApp
 
             ApplicationDataContainer GetHistoryContainer(CalculationManager.CALCULATOR_MODE cMode)
             {
+				 // TODO UNO
 				//ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 				//ApplicationDataContainer historyContainer;
 
