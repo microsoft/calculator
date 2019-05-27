@@ -17,8 +17,8 @@ namespace CalculatorApp.DataLoaders
 		string m_responseLanguage;
 		string m_sourceCurrencyCode;
 
-		static string sc_MetadataUriLocalizeFor = "https://go.microsoft.com/fwlink/?linkid=2041093&localizeFor=";
-		static string sc_RatiosUriRelativeTo = "https://go.microsoft.com/fwlink/?linkid=2041339&localCurrency=";
+		static string sc_MetadataUriLocalizeFor = "https://cors-anywhere.herokuapp.com/https://go.microsoft.com/fwlink/?linkid=2041093&localizeFor=";
+		static string sc_RatiosUriRelativeTo = "https://cors-anywhere.herokuapp.com/https://go.microsoft.com/fwlink/?linkid=2041339&localCurrency=";
 
 		public CurrencyHttpClient()
 		{
@@ -26,30 +26,20 @@ namespace CalculatorApp.DataLoaders
 			m_responseLanguage = "en-US";
 		}
 
-		public void SetSourceCurrencyCode(String sourceCurrencyCode)
+		public void SetSourceCurrencyCode(string sourceCurrencyCode)
 		{
 			m_sourceCurrencyCode = sourceCurrencyCode;
 		}
 
-		public void SetResponseLanguage(String responseLanguage)
+		public void SetResponseLanguage(string responseLanguage)
 		{
 			m_responseLanguage = responseLanguage;
 		}
 
-		public Task<String> GetCurrencyMetadata()
-		{
-			string uri = sc_MetadataUriLocalizeFor + m_responseLanguage;
-			var metadataUri = new Uri(uri);
+		public async Task<string> GetCurrencyMetadata() => await ExecuteRequestAsync(sc_MetadataUriLocalizeFor + m_responseLanguage);
 
-			return m_client.GetStringAsync(metadataUri);
-		}
+		public async Task<string> GetCurrencyRatios() => await ExecuteRequestAsync(sc_RatiosUriRelativeTo + m_sourceCurrencyCode);
 
-		public Task<String> GetCurrencyRatios()
-		{
-			string uri = sc_RatiosUriRelativeTo + m_sourceCurrencyCode;
-			var ratiosUri = new Uri(uri);
-
-			return m_client.GetStringAsync(ratiosUri);
-		}
+		private async Task<string> ExecuteRequestAsync(string url) => await m_client.GetStringAsync(new Uri(url));
 	}
 }
