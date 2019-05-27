@@ -268,7 +268,9 @@ namespace CalculatorApp.ViewModel
             }
         }
 
-        public bool IsBinaryBitFlippingEnabled
+		public bool IsBitFlipCheckedOppositeValue => !IsBitFlipChecked;
+
+		public bool IsBinaryBitFlippingEnabled
         {
             get
             {

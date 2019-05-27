@@ -5,9 +5,11 @@
 			 xmlns:controls="using:CalculatorApp.Controls"
 			 xmlns:designdata="using:CalculatorApp.DesignData"
 			 xmlns:local="using:CalculatorApp.Views"
+			 xmlns:android="http://nventive.com/android"
+			 xmlns:not_android="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 x:Name="ControlRoot"
-			 mc:Ignorable="">
+			 mc:Ignorable="android">
 
 	<UserControl.Resources>
 		<!-- Programmer mode display radio button -->
@@ -112,7 +114,8 @@
 
 								<TextBlock x:Name="ContentPresenter"
 										   Grid.Column="2"
-										   Margin="0,2,4,-2"
+										   not_android:Margin="0,2,4,-2"
+										   android:Margin="4,0,0,0"
 										   HorizontalAlignment="Left"
 										   VerticalAlignment="Center"
 										   Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
@@ -158,7 +161,8 @@
 
 								<TextBlock x:Name="CheckedContentPresenter"
 										   Grid.Column="2"
-										   Margin="0,2,4,-2"
+										   not_android:Margin="0,2,4,-2"
+										   android:Margin="4,0,0,0"
 										   HorizontalAlignment="Left"
 										   VerticalAlignment="Center"
 										   Foreground="{ThemeResource SystemControlHighlightAltBaseHighBrush}"

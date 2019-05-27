@@ -75,7 +75,8 @@
 									 Style="{StaticResource ProgKeypadRadioButtonStyle}"
 									 AutomationProperties.AutomationId="fullKeypad"
 									 Content="&#xe75f;"
-									 IsChecked="{x:Bind Model.IsBitFlipChecked, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}" />
+									 Visibility="Visible"
+									 IsChecked="{x:Bind Model.IsBitFlipCheckedOppositeValue}" />
 
 			<RadioButton x:Name="bitFlip"
 									 x:Uid="bitFlip"
