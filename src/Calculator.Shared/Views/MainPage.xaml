@@ -125,14 +125,11 @@
 		</StackPanel>
 
 		<!-- Title Bar -->
-		<!--
-		-->
 		<local:TitleBar x:Name="CustomTitleBar"
 						Grid.Row="0"
 						Visibility="Collapsed" />
 
-		<!--UNO TODO 
-                         -->
+		<!-- UNO TODO -->
 		<NavigationView x:Name="NavView"
 						CompactModeThresholdWidth="10000"
 						ExpandedModeThresholdWidth="10000"
