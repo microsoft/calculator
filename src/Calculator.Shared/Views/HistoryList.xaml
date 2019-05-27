@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="CalculatorApp.HistoryList"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:xamarin="http://platform.uno/xamarin"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:automation="using:CalculatorApp.Common.Automation"
              xmlns:controls="using:CalculatorApp.Controls"
@@ -12,7 +13,7 @@
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              AutomationProperties.AutomationId="HistoryList"
              FlowDirection="LeftToRight"
-             mc:Ignorable="d">
+             mc:Ignorable="d xamarin">
 	
              <!-- UNO TODO x:Name="HistoryList"-->
 
@@ -41,6 +42,12 @@
 			</ResourceDictionary.ThemeDictionaries>
 			<converters:ItemSizeToVisibilityNegationConverter x:Key="ItemSizeToVisibilityNegationConverter"/>
 			<converters:ItemSizeToVisibilityConverter x:Key="ItemSizeToVisibilityConverter"/>
+			<!--Workaround for nventive/Uno#935-->
+			<xamarin:Style x:Key="BodyTextBlockMediumStyle"
+                           BasedOn="{StaticResource BodyTextBlockStyle}"
+                           TargetType="TextBlock">
+				<Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+			</xamarin:Style>
 
 			<!--UNO TODO-->
 			<win:MenuFlyout x:Key="HistoryContextMenu">

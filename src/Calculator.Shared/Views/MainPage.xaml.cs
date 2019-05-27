@@ -62,22 +62,15 @@ namespace CalculatorApp
 
             double sizeInInches = 0.0;
 
-			// UNO TODO
-			//if (SUCCEEDED(GetIntegratedDisplaySize(&sizeInInches)))
-			//{
-			//    if (sizeInInches < 7.0) // If device's display size (diagonal length) is less than 7 inches then keep the calc always in Portrait mode only
-			//    {
-			//        DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait | DisplayOrientations.PortraitFlipped;
-			//    }
-			//}       
-
-			//UNO_TODO /Workaround to have both the Text localisation and the glyph working on all platforms
-			var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-			if (AboutText != null)
-			{
-				AboutText.Text = resourceLoader.GetString("AboutButton/Content");
-			}
-		}
+            // UNO TODO
+            //if (SUCCEEDED(GetIntegratedDisplaySize(&sizeInInches)))
+            //{
+            //    if (sizeInInches < 7.0) // If device's display size (diagonal length) is less than 7 inches then keep the calc always in Portrait mode only
+            //    {
+            //        DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait | DisplayOrientations.PortraitFlipped;
+            //    }
+            //}
+        }
 
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -508,7 +501,7 @@ namespace CalculatorApp
                 this.FindName("AboutPage");
             }
 
-			AboutButton.ContextFlyout.ShowAt(AboutButton);
+            FlyoutBase.ShowAttachedFlyout(AboutButton);
         }
 
         void UnregisterEventHandlers()

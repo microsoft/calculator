@@ -85,7 +85,7 @@ namespace CalculatorApp
         string m_openHistoryFlyoutAutomationName;
         string m_closeHistoryFlyoutAutomationName;
 
-        public ICommand HistoryButtonPressed;
+		public ICommand HistoryButtonPressed;
 
         Windows.UI.Xaml.Controls.PivotItem m_pivotItem;
         bool m_IsDigit = false;
@@ -598,7 +598,8 @@ namespace CalculatorApp
                 HistoryButton.Focus(FocusState.Programmatic);
             }
 
-            FullscreenFlyoutClosed();
+			// UNO TODO
+			//FullscreenFlyoutClosed();
         }
 
         public void CloseHistoryFlyout()
@@ -692,7 +693,8 @@ namespace CalculatorApp
                 MemoryButton.Focus(FocusState.Programmatic);
             }
 
-            FullscreenFlyoutClosed();
+			// UNO TODO
+			//FullscreenFlyoutClosed();
         }
 
         Memory GetMemory()
