@@ -1138,7 +1138,7 @@ namespace CalculatorApp.ViewModel
 			}
 
 			string resultHolder = result;
-			if ((stringToLocalize.front() == '-' && System.Convert.ToDouble(stringToLocalize) == 0) || resultHolder.back() == '-')
+			if ((stringToLocalize.front() == '-' && System.Convert.ToDouble(stringToLocalize, CultureInfo.InvariantCulture) == 0) || resultHolder.back() == '-')
 			{
 				if (resultHolder.back() == '-')
 				{
