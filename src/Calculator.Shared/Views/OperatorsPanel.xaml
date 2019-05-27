@@ -11,7 +11,7 @@
 	<Grid>
 		<!--Bind visibility as a workaround for nventive/Uno#925-->
 		<local:CalculatorStandardOperators x:Name="StandardOperators"
-																			 x:Load="{x:Bind Model.IsStandard, Mode=OneWay}"
+																			 x:Load="False"
 																			 IsEnabled="{x:Bind Model.IsStandard, Mode=OneWay}"
 																			 Visibility="{x:Bind Model.IsStandard, Mode=OneWay}"
 																			 TabIndex="17" />
