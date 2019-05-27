@@ -87,7 +87,7 @@
 															Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
 											<Setter Target="SelectedContentPresenter.Foreground"
 															Value="{ThemeResource SystemControlHighlightAltBaseMediumHighBrush}" />
-											<Setter Target="DropDownGlyph.Foreground"
+											<Setter Target="DropDownGlyph.Fill"
 															Value="{ThemeResource SystemControlHighlightAltBaseMediumHighBrush}" />
 										</VisualState.Setters>
 									</VisualState>
@@ -97,7 +97,7 @@
 															Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
 											<Setter Target="SelectedContentPresenter.Foreground"
 															Value="{ThemeResource SystemControlHighlightAltBaseMediumBrush}" />
-											<Setter Target="DropDownGlyph.Foreground"
+											<Setter Target="DropDownGlyph.Fill"
 															Value="{ThemeResource SystemControlHighlightAltBaseMediumBrush}" />
 										</VisualState.Setters>
 									</VisualState>

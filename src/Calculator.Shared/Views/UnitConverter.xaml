@@ -79,14 +79,14 @@
 										<VisualState.Setters>
 											<Setter Target="BackgroundElement.Background" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
 											<Setter Target="SelectedContentPresenter.Foreground" Value="{ThemeResource SystemControlHighlightAltBaseMediumHighBrush}"/>
-											<Setter Target="DropDownGlyph.Foreground" Value="{ThemeResource SystemControlHighlightAltBaseMediumHighBrush}"/>
+											<Setter Target="DropDownGlyph.Fill" Value="{ThemeResource SystemControlHighlightAltBaseMediumHighBrush}"/>
 										</VisualState.Setters>
 									</VisualState>
 									<VisualState x:Name="Pressed">
 										<VisualState.Setters>
 											<Setter Target="BackgroundElement.Background" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
 											<Setter Target="SelectedContentPresenter.Foreground" Value="{ThemeResource SystemControlHighlightAltBaseMediumBrush}"/>
-											<Setter Target="DropDownGlyph.Foreground" Value="{ThemeResource SystemControlHighlightAltBaseMediumBrush}"/>
+											<Setter Target="DropDownGlyph.Fill" Value="{ThemeResource SystemControlHighlightAltBaseMediumBrush}"/>
 										</VisualState.Setters>
 									</VisualState>
 									<VisualState x:Name="Disabled"/>
@@ -136,16 +136,16 @@
                                                   ContentTemplate="{StaticResource SelectedUnitTemplate}"
                                                   FlowDirection="{TemplateBinding FlowDirection}"/>
 								<!--TODO UNO: AutomationProperties.AccessibilityView="Raw"-->
-								<TextBlock x:Name="DropDownGlyph"
-                                           Grid.Column="1"
-                                           Margin="8,3,12,0"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center"
-                                           Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
-                                           FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                           FontSize="12"
-                                           IsHitTestVisible="False"
-                                           Text="&#xE0E5;"/>
+								<Path x:Name="DropDownGlyph"
+									  Data="M30.519004,0L32.000998,1.3439932 15.932995,19.049 0,1.4920032 1.481019,0.1489867 15.932995,16.071982z"
+									  Fill="{ThemeResource SystemControlForegroundBaseHighBrush}"
+									  Stretch="Uniform"
+									  Width="12"
+									  IsHitTestVisible="False"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Center"
+                                      Margin="8,3,12,0"
+                                      Grid.Column="1"/>
 								<!--TODO UNO: AutomationProperties.AccessibilityView="Raw"-->
 								<Popup x:Name="Popup">
 									<Border x:Name="PopupBorder"
