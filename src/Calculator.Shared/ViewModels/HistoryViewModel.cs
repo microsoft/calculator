@@ -252,28 +252,43 @@ namespace CalculatorApp
 
             ApplicationDataContainer GetHistoryContainer(CalculationManager.CALCULATOR_MODE cMode)
             {
-                ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-                ApplicationDataContainer historyContainer;
+				//ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+				//ApplicationDataContainer historyContainer;
 
-                // naming container based on mode
-                string historyContainerKey = GetHistoryContainerKey(cMode);
+				//// naming container based on mode
+				//string historyContainerKey = GetHistoryContainerKey(cMode);
 
-                if (localSettings.Containers.ContainsKey(historyContainerKey))
-                {
-                    historyContainer = localSettings.Containers[historyContainerKey];
-                }
-                else
-                {
-                    // create container for adding data
-                    historyContainer = localSettings.CreateContainer(historyContainerKey, ApplicationDataCreateDisposition.Always);
-                    int initialHistoryVectorLength = 0;
-                    historyContainer.Values.Add(HistoryVectorLengthKey, initialHistoryVectorLength);
-                }
+				//if (localSettings.Containers.ContainsKey(historyContainerKey))
+				//{
+				//    historyContainer = localSettings.Containers[historyContainerKey];
+				//}
+				//else
+				//{
+				//    // create container for adding data
+				//    historyContainer = localSettings.CreateContainer(historyContainerKey, ApplicationDataCreateDisposition.Always);
+				//    int initialHistoryVectorLength = 0;
+				//    historyContainer.Values.Add(HistoryVectorLengthKey, initialHistoryVectorLength);
+				//}
 
-                return historyContainer;
-            }
+				//return historyContainer;
 
-            void ClearHistoryContainer(CalculationManager.CALCULATOR_MODE cMode)
+				ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+				ApplicationDataContainer historyContainer = localSettings;
+
+				// naming container based on mode
+				string historyContainerKey = GetHistoryContainerKey(cMode);
+
+				if (!historyContainer.Values.ContainsKey(HistoryVectorLengthKey))
+				{
+					int initialHistoryVectorLength = 0;
+					historyContainer.Values.Add(HistoryVectorLengthKey, initialHistoryVectorLength);
+				}
+
+				return historyContainer;
+
+			}
+
+			void ClearHistoryContainer(CalculationManager.CALCULATOR_MODE cMode)
             {
                 ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
                 localSettings.DeleteContainer(GetHistoryContainerKey(cMode));
