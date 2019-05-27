@@ -88,6 +88,14 @@ namespace CalculatorApp
 			}
 		}
 
+		internal void EnsureStandardOps()
+		{
+			if (StandardOperators == null)
+			{
+				this.FindName("StandardOperators");
+			}
+		}
+
 		internal void EnsureScientificOps()
 		{
 			if (ScientificOperators == null)

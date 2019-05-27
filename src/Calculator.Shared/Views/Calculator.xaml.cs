@@ -301,6 +301,11 @@ namespace CalculatorApp
 
         void OnIsStandardPropertyChanged(bool oldValue, bool newValue)
         {
+			if (newValue)
+			{
+				EnsureStandard();
+			}
+
             UpdateViewState();
             UpdatePanelViewState();
         }
@@ -429,6 +434,11 @@ namespace CalculatorApp
                 }
             }
         }
+
+		void EnsureStandard()
+		{
+			OpsPanel.EnsureStandardOps();
+		}
 
         void EnsureScientific()
         {
