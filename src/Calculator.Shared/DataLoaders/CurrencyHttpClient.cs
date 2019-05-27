@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Web.Http;
 
@@ -11,7 +12,8 @@ namespace CalculatorApp.DataLoaders
 {
 	public class CurrencyHttpClient : ICurrencyHttpClient
 	{
-		Windows.Web.Http.HttpClient m_client;
+		// TODO UNO: Windows.Web.Http.HttpClient
+		System.Net.Http.HttpClient m_client;
 		string m_responseLanguage;
 		string m_sourceCurrencyCode;
 
@@ -20,7 +22,7 @@ namespace CalculatorApp.DataLoaders
 
 		public CurrencyHttpClient()
 		{
-			m_client = new HttpClient();
+			m_client = new System.Net.Http.HttpClient();
 			m_responseLanguage = "en-US";
 		}
 
@@ -34,7 +36,7 @@ namespace CalculatorApp.DataLoaders
 			m_responseLanguage = responseLanguage;
 		}
 
-		public IAsyncOperationWithProgress<String, HttpProgress> GetCurrencyMetadata()
+		public Task<String> GetCurrencyMetadata()
 		{
 			string uri = sc_MetadataUriLocalizeFor + m_responseLanguage;
 			var metadataUri = new Uri(uri);
@@ -42,7 +44,7 @@ namespace CalculatorApp.DataLoaders
 			return m_client.GetStringAsync(metadataUri);
 		}
 
-		public IAsyncOperationWithProgress<String, HttpProgress> GetCurrencyRatios()
+		public Task<String> GetCurrencyRatios()
 		{
 			string uri = sc_RatiosUriRelativeTo + m_sourceCurrencyCode;
 			var ratiosUri = new Uri(uri);

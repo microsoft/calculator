@@ -8,7 +8,7 @@
 		<NoWarn>NU1701</NoWarn>
 		<WasmShellGenerateCompressedFiles Condition="'$(Configuration)'=='Debug'">false</WasmShellGenerateCompressedFiles>
 		<MonoRuntimeDebuggerEnabled Condition="'$(Configuration)'=='Debug'">true</MonoRuntimeDebuggerEnabled>
-		<WasmShellMonoRuntimeExecutionMode Condition="$([MSBuild]::IsOsPlatform('Linux'))">FullAOT</WasmShellMonoRuntimeExecutionMode>
+		<WasmShellMonoRuntimeExecutionMode Condition="$([MSBuild]::IsOsPlatform('Linux'))">InterpreterAndAOT</WasmShellMonoRuntimeExecutionMode>
 		<MonoWasmRuntimeConfiguration>release-dynamic</MonoWasmRuntimeConfiguration>
 	</PropertyGroup>
 	<ItemGroup>
@@ -43,9 +43,14 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
 		<PackageReference Include="Uno.UI" Version="1.45.0-dev.1560" />
 		<PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.281" />
 		<DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.276" />
+	</ItemGroup>
+	<ItemGroup>
+		<MonoRuntimeMixedModeExcludedAssembly Include="Newtonsoft.Json" />
+		<MonoRuntimeMixedModeExcludedAssembly Include="System.Data" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="..\CalcManager\CalcManager.wasm" Link="CalcManager.wasm" />
