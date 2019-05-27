@@ -111,7 +111,7 @@
 								Value="{StaticResource CalcStandardOperatorCaptionSize}" />
 
 						<Setter Target="NumberPad.ButtonStyle"
-								Value="{StaticResource NumericButtonStyle46}" />
+								Value="{StaticResource NumericButtonStyle18}" />
 					</VisualState.Setters>
 				</VisualState>
 
