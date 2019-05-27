@@ -1,19 +1,20 @@
 ﻿<Page x:Class="CalculatorApp.MainPage"
-			xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-			xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			xmlns:automation="using:CalculatorApp.Common.Automation"
-			xmlns:common="using:CalculatorApp.Common"
-			xmlns:controls="using:CalculatorApp.Controls"
-			xmlns:converters="using:CalculatorApp.Converters"
-			xmlns:local="using:CalculatorApp"
-			xmlns:vm="using:WindowsCalculatorShared.ViewModel"
-			xmlns:toolkit="using:Uno.UI.Toolkit"
-			x:Name="pageRoot"
-			Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
-			Loaded="OnPageLoaded"
-			xmlns:android="http://nventive.com/android"
-			mc:Ignorable="android">
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  xmlns:automation="using:CalculatorApp.Common.Automation"
+	  xmlns:common="using:CalculatorApp.Common"
+	  xmlns:controls="using:CalculatorApp.Controls"
+	  xmlns:converters="using:CalculatorApp.Converters"
+	  xmlns:local="using:CalculatorApp"
+	  xmlns:vm="using:WindowsCalculatorShared.ViewModel"
+	  xmlns:toolkit="using:Uno.UI.Toolkit"
+	  x:Name="pageRoot"
+	  Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
+	  Loaded="OnPageLoaded"
+	  xmlns:xamarin="http://uno.ui/xamarin"
+	  xmlns:android="http://nventive.com/android"
+	  mc:Ignorable="android xamarin">
 	<!-- 
 			xmlns:automation="using:WindowsCalculator.Common.Automation"
 	-->
@@ -63,7 +64,7 @@
 	</Page.Resources>
 
 	<Grid toolkit:VisibleBoundsPadding.PaddingMask="All"
-		  android:Background="White">
+		  xamarin:Background="{StaticResource XamarinBackgroundBrush}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<!--
@@ -127,13 +128,13 @@
 		<!--
 		-->
 		<local:TitleBar x:Name="CustomTitleBar"
-										Grid.Row="0"
-										Visibility="Collapsed"/>
-		
-												 <!--UNO TODO 
+						Grid.Row="0"
+						Visibility="Collapsed" />
+
+		<!--UNO TODO 
                          -->
 		<NavigationView x:Name="NavView"
-                         CompactModeThresholdWidth="10000"
+						CompactModeThresholdWidth="10000"
 						ExpandedModeThresholdWidth="10000"
 						IsBackButtonVisible="Collapsed"
 						PaneClosed="OnNavPaneClosed"
@@ -148,7 +149,7 @@
 						SelectionChanged="OnNavSelectionChanged"
 						TabIndex="1"
 						UseSystemFocusVisuals="True">
-			
+
 			<NavigationView.PaneFooter>
 
 				<StackPanel HorizontalAlignment="Stretch"
@@ -172,7 +173,7 @@
 								<TextBlock Text=""
 										   x:Name="AboutText" />
 								<NavigationViewItem.ContextFlyout>
-									
+
 									<Flyout x:Name="AboutPageFlyout"
 											x:Uid="AboutPageFlyout"
 											Closed="OnAboutFlyoutClosed"
