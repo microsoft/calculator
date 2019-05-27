@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using Uno.Extensions;
 using Windows.UI.Xaml;
+using Uno.UI;
 
 namespace WindowsCalculator.Wasm
 {
@@ -14,7 +15,10 @@ namespace WindowsCalculator.Wasm
 		{
 			Console.WriteLine("Program.Main");
 
-            Windows.UI.Xaml.Application.Start(_ => _app = new App());
+			FeatureConfiguration.UIElement.AssignDOMXamlName = true;
+
+
+			Windows.UI.Xaml.Application.Start(_ => _app = new App());
 		}
     }
 }
