@@ -3,12 +3,17 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:common="using:CalculatorApp.Common"
 			 xmlns:controls="using:CalculatorApp.Controls"
+			 xmlns:converters="using:CalculatorApp.Converters"
 			 xmlns:local="using:CalculatorApp"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 x:Name="ControlRoot"
 			 Loaded="OnLoaded"
 			 mc:Ignorable="">
 
+	<UserControl.Resources>
+		<converters:ZeroToEmptyStringConverter x:Key="ZeroToEmptyStringConverter"/>
+	</UserControl.Resources>
+	
 	<Grid x:Name="ProgRadixOps">
 
 		<Grid.RowDefinitions>
@@ -498,7 +503,7 @@
 								   AutomationProperties.Name="{Binding LeftParenthesisAutomationName}"
 								   ButtonId="OpenParenthesis"
 								   Content="("
-								   Tag="{x:Bind Model.OpenParenthesisCount, Mode=OneWay}" />
+								   Tag="{x:Bind Model.OpenParenthesisCount, Mode=OneWay, Converter={StaticResource ZeroToEmptyStringConverter}}" />
 
 		<controls:CalculatorButton x:Name="closeParenthesisButton"
 								   x:Uid="closeParenthesisButton"

@@ -78,6 +78,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ItemSizeToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\RadixToStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibilityNegationConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ZeroToEmptyStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataLoaders\CurrencyDataLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataLoaders\CurrencyHttpClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataLoaders\ICurrencyHttpClient.cs" />

@@ -14,6 +14,7 @@
 		<converters:BooleanNegationConverter x:Key="BooleanNegationConverter" />
 		<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 		<converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter" />
+		<converters:ZeroToEmptyStringConverter x:Key="ZeroToEmptyStringConverter"/>
 	</UserControl.Resources>
 
 	<Grid x:Name="ScientificOperators">
@@ -1027,7 +1028,8 @@
 								   AutomationProperties.Name="{Binding LeftParenthesisAutomationName}"
 								   ButtonId="OpenParenthesis"
 								   Content="("
-								   Tag="{x:Bind Model.OpenParenthesisCount, Mode=OneWay}" />
+								   Tag="{x:Bind Model.OpenParenthesisCount, Mode=OneWay, Converter={StaticResource ZeroToEmptyStringConverter}}" />
+		
 
 		<controls:CalculatorButton x:Name="closeParenthesisButton"
 								   x:Uid="closeParenthesisButton"
