@@ -461,6 +461,7 @@
 									   Grid.Column="0"
 									   Style="{StaticResource SymbolOperatorButtonStyle}"
 									   AutomationProperties.AutomationId="percentButton"
+									   AutomationProperties.Name=""
 									   ButtonId="Percent"
 									   Content="&#xE94C;" />
 
@@ -469,6 +470,7 @@
 									   Grid.Column="1"
 									   Style="{StaticResource SymbolOperatorButtonStyle}"
 									   AutomationProperties.AutomationId="squareRootButton"
+									   AutomationProperties.Name=""
 									   ButtonId="Sqrt"
 									   Content="&#xE94B;" />
 
@@ -478,6 +480,7 @@
 									   Style="{StaticResource SymbolOperatorButtonStyle}"
 									   FontSize="18"
 									   AutomationProperties.AutomationId="xpower2Button"
+									   AutomationProperties.Name=""
 									   ButtonId="XPower2"
 									   Content="&#xf7c8;" />
 
@@ -487,6 +490,7 @@
 									   Style="{StaticResource SymbolOperatorButtonStyle}"
 									   FontSize="18"
 									   AutomationProperties.AutomationId="xpower3Button"
+									   AutomationProperties.Name=""
 									   ButtonId="Cube"
 									   Content="&#xf7cb;"
 									   Visibility="Collapsed" />
@@ -497,6 +501,7 @@
 									   Style="{StaticResource SymbolOperatorButtonStyle}"
 									   FontSize="18"
 									   AutomationProperties.AutomationId="invertButton"
+									   AutomationProperties.Name=""
 									   ButtonId="Invert"
 									   Content="&#xf7c9;" />
 		</Grid>
@@ -521,6 +526,7 @@
 									   Grid.Row="0"
 									   Style="{StaticResource AccentCalcButtonStyle}"
 									   AutomationProperties.AutomationId="divideButton"
+									   AutomationProperties.Name=""
 									   ButtonId="Divide"
 									   Content="&#xE94A;" />
 
@@ -529,6 +535,7 @@
 									   Grid.Row="1"
 									   Style="{StaticResource AccentCalcButtonStyle}"
 									   AutomationProperties.AutomationId="multiplyButton"
+									   AutomationProperties.Name=""
 									   ButtonId="Multiply"
 									   Content="&#xE947;" />
 
@@ -537,6 +544,7 @@
 									   Grid.Row="2"
 									   Style="{StaticResource AccentCalcButtonStyle}"
 									   AutomationProperties.AutomationId="minusButton"
+									   AutomationProperties.Name=""
 									   ButtonId="Subtract"
 									   Content="&#xE949;" />
 
@@ -545,6 +553,7 @@
 									   Grid.Row="3"
 									   Style="{StaticResource AccentCalcButtonStyle}"
 									   AutomationProperties.AutomationId="plusButton"
+									   AutomationProperties.Name=""
 									   ButtonId="Add"
 									   Content="&#xE948;" />
 
@@ -553,6 +562,7 @@
 									   Grid.Row="4"
 									   Style="{StaticResource AccentCalcButtonStyle}"
 									   AutomationProperties.AutomationId="equalButton"
+									   AutomationProperties.Name=""
 									   ButtonId="Equals"
 									   Content="&#xE94E;" />
 		</Grid>
@@ -576,6 +586,7 @@
 									   Style="{StaticResource OperatorButtonStyle}"
 									   FontSize="16"
 									   AutomationProperties.AutomationId="clearEntryButton"
+									   AutomationProperties.Name=""
 									   ButtonId="ClearEntry"
 									   Content="CE" />
 
@@ -585,6 +596,7 @@
 									   Style="{StaticResource OperatorButtonStyle}"
 									   FontSize="16"
 									   AutomationProperties.AutomationId="clearButton"
+									   AutomationProperties.Name=""
 									   ButtonId="Clear"
 									   Content="C" />
 
@@ -594,6 +606,7 @@
 									   Style="{StaticResource SymbolOperatorButtonStyle}"
 									   FontSize="16"
 									   AutomationProperties.AutomationId="backSpaceButton"
+									   AutomationProperties.Name=""
 									   ButtonId="Backspace"
 									   Content="&#xE94F;" />
 		</Grid>
@@ -614,6 +627,7 @@
 								   Grid.Column="2"
 								   Style="{StaticResource SymbolOperatorButtonStyle}"
 								   AutomationProperties.AutomationId="negateButton"
+									   AutomationProperties.Name=""
 								   ButtonId="Negate"
 								   Content="&#xE94D;" />
 	</Grid>
