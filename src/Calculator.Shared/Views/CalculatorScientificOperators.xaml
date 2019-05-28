@@ -256,11 +256,23 @@
 						<Setter Target="equalButton.FontSize"
 								Value="{ThemeResource CalcStandardOperatorCaptionSize}" />
 						<Setter Target="NumberPad.ButtonStyle"
-								Value="{ThemeResource NumericButtonStyle34}" />
+								Value="{ThemeResource NumericButtonStyle12}" />
 					</VisualState.Setters>
 					<Storyboard Completed="WideLayout_Completed" />
 				</VisualState>
 
+				<!-- UNO TODO Temp fix for iphoneX-->
+				<VisualState x:Name="Landscape">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowHeight="768"
+										 MinWindowWidth="1366" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="NumberPad.ButtonStyle"
+								Value="{ThemeResource NumericButtonStyle12}" />
+					</VisualState.Setters>
+				</VisualState>
+				
 				<VisualState x:Name="WideL">
 					<VisualState.StateTriggers>
 						<AdaptiveTrigger MinWindowHeight="768"
@@ -1027,6 +1039,9 @@
 								   ButtonId="CloseParenthesis"
 								   Content=")" />
 
+		<!-- UNO TODO Temp fix for iphone7 Landscape mode
+		 ButtonStyle should be "{StaticResource NumericButtonStyle24}"
+		-->
 		<local:NumberPad x:Name="NumberPad"
 						 x:Uid="NumberPad"
 						 Grid.Row="5"
@@ -1034,7 +1049,6 @@
 						 Grid.Column="6"
 						 Grid.ColumnSpan="3"
 						 AutomationProperties.HeadingLevel="Level1"
-						 ButtonStyle="{StaticResource NumericButtonStyle24}"
-						 DecimalButtonStyle="{StaticResource DecimalButtonStyle}" />
+						 ButtonStyle="{StaticResource NumericButtonStyle18}" />
 	</Grid>
 </UserControl>
