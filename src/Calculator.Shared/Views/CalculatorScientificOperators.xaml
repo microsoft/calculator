@@ -620,6 +620,7 @@
 										   x:Uid="xpower2Button"
 										   Style="{StaticResource SymbolOperatorButtonStyle}"
 										   AutomationProperties.AutomationId="xpower2Button"
+										   AutomationProperties.Name=""
 										   ButtonId="XPower2"
 										   Content="&#xf7c8;" />
 
@@ -628,6 +629,7 @@
 										   Grid.Column="1"
 										   Style="{StaticResource SymbolOperatorButtonStyle}"
 										   AutomationProperties.AutomationId="powerButton"
+										   AutomationProperties.Name=""
 										   ButtonId="XPowerY"
 										   Content="&#xf7ca;" />
 
@@ -636,6 +638,7 @@
 										   Grid.Column="2"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="sinButton"
+										   AutomationProperties.Name=""
 										   ButtonId="Sin"
 										   Content="sin"
 										   Visibility="{Binding IsHyperbolicChecked, Converter={StaticResource BooleanToVisibilityNegationConverter}}" />
@@ -645,6 +648,7 @@
 										   Grid.Column="3"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="cosButton"
+										   AutomationProperties.Name=""
 										   ButtonId="Cos"
 										   Content="cos"
 										   Visibility="{Binding IsHyperbolicChecked, Converter={StaticResource BooleanToVisibilityNegationConverter}}" />
@@ -654,6 +658,7 @@
 										   Grid.Column="4"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="tanButton"
+										   AutomationProperties.Name=""
 										   ButtonId="Tan"
 										   Content="tan"
 										   Visibility="{Binding IsHyperbolicChecked, Converter={StaticResource BooleanToVisibilityNegationConverter}}" />
@@ -663,6 +668,7 @@
 										   Grid.Column="2"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="sinhButton"
+										   AutomationProperties.Name=""
 										   ButtonId="Sinh"
 										   Content="sinh"
 										   Visibility="{Binding IsHyperbolicChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -672,6 +678,7 @@
 										   Grid.Column="3"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="coshButton"
+										   AutomationProperties.Name=""
 										   ButtonId="Cosh"
 										   Content="cosh"
 										   Visibility="{Binding IsHyperbolicChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -681,6 +688,7 @@
 										   Grid.Column="4"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="tanhButton"
+										   AutomationProperties.Name=""
 										   ButtonId="Tanh"
 										   Content="tanh"
 										   Visibility="{Binding IsHyperbolicChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -706,6 +714,7 @@
 										   x:Uid="xpower3Button"
 										   Style="{StaticResource SymbolOperatorButtonStyle}"
 										   AutomationProperties.AutomationId="xpower3Button"
+										   AutomationProperties.Name=""
 										   ButtonId="Cube"
 										   Content="&#xf7cb;" />
 
@@ -714,6 +723,7 @@
 										   Grid.Column="1"
 										   Style="{StaticResource SymbolOperatorButtonStyle}"
 										   AutomationProperties.AutomationId="ySquareRootButton"
+										   AutomationProperties.Name=""
 										   ButtonId="YRootX"
 										   Content="&#xf7cd;" />
 
@@ -722,6 +732,7 @@
 										   Grid.Column="2"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="invsinButton"
+										   AutomationProperties.Name=""
 										   ButtonId="InvSin"
 										   Content="sin⁻¹"
 										   Visibility="{Binding IsHyperbolicChecked, Converter={StaticResource BooleanToVisibilityNegationConverter}}" />
@@ -731,6 +742,7 @@
 										   Grid.Column="3"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="invcosButton"
+										   AutomationProperties.Name=""
 										   ButtonId="InvCos"
 										   Content="cos⁻¹"
 										   Visibility="{Binding IsHyperbolicChecked, Converter={StaticResource BooleanToVisibilityNegationConverter}}" />
@@ -740,6 +752,7 @@
 										   Grid.Column="4"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="invtanButton"
+										   AutomationProperties.Name=""
 										   ButtonId="InvTan"
 										   Content="tan⁻¹"
 										   Visibility="{Binding IsHyperbolicChecked, Converter={StaticResource BooleanToVisibilityNegationConverter}}" />
@@ -749,6 +762,7 @@
 										   Grid.Column="2"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="invsinhButton"
+										   AutomationProperties.Name=""
 										   ButtonId="InvSinh"
 										   Content="sinh⁻¹"
 										   Visibility="{Binding IsHyperbolicChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -758,6 +772,7 @@
 										   Grid.Column="3"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="invcoshButton"
+										   AutomationProperties.Name=""
 										   ButtonId="InvCosh"
 										   Content="cosh⁻¹"
 										   Visibility="{Binding IsHyperbolicChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -767,6 +782,7 @@
 										   Grid.Column="4"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="invtanhButton"
+										   AutomationProperties.Name=""
 										   ButtonId="InvTanh"
 										   Content="tanh⁻¹"
 										   Visibility="{Binding IsHyperbolicChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -787,6 +803,7 @@
 										   x:Uid="squareRootButton"
 										   Style="{StaticResource SymbolOperatorButtonStyle}"
 										   AutomationProperties.AutomationId="squareRootButton"
+										   AutomationProperties.Name=""
 										   ButtonId="Sqrt"
 										   Content="&#xE94B;" />
 
@@ -795,6 +812,7 @@
 										   Grid.Column="1"
 										   Style="{StaticResource SymbolOperatorButtonStyle}"
 										   AutomationProperties.AutomationId="powerOf10Button"
+										   AutomationProperties.Name=""
 										   ButtonId="TenPowerX"
 										   Content="&#xF7CC;" />
 
@@ -803,6 +821,7 @@
 										   Grid.Column="2"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="logBase10Button"
+										   AutomationProperties.Name=""
 										   ButtonId="LogBase10"
 										   Content="log" />
 
@@ -811,6 +830,7 @@
 										   Grid.Column="3"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="expButton"
+										   AutomationProperties.Name=""
 										   ButtonId="Exp"
 										   Content="Exp" />
 
@@ -819,6 +839,7 @@
 										   Grid.Column="4"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="modButton"
+										   AutomationProperties.Name=""
 										   ButtonId="Mod"
 										   Content="Mod" />
 			</Grid>
@@ -839,6 +860,7 @@
 										   x:Uid="invertButton"
 										   Style="{StaticResource SymbolOperatorButtonStyle}"
 										   AutomationProperties.AutomationId="invertButton"
+										   AutomationProperties.Name=""
 										   ButtonId="Invert"
 										   Content="&#xf7c9;" />
 
@@ -847,6 +869,7 @@
 										   Grid.Column="1"
 										   Style="{StaticResource SymbolOperatorButtonStyle}"
 										   AutomationProperties.AutomationId="powerOfEButton"
+										   AutomationProperties.Name=""
 										   ButtonId="EPowerX"
 										   Content="&#xf7ce;" />
 
@@ -855,6 +878,7 @@
 										   Grid.Column="2"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="logBaseEButton"
+										   AutomationProperties.Name=""
 										   ButtonId="LogBaseE"
 										   Content="ln" />
 
@@ -863,6 +887,7 @@
 										   Grid.Column="3"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="dmsButton"
+										   AutomationProperties.Name=""
 										   ButtonId="DMS"
 										   Content="dms" />
 
@@ -871,6 +896,7 @@
 										   Grid.Column="4"
 										   Style="{StaticResource OperatorButtonStyle}"
 										   AutomationProperties.AutomationId="degreesButton"
+										   AutomationProperties.Name=""
 										   ButtonId="Degrees"
 										   Content="deg" />
 			</Grid>
@@ -884,6 +910,7 @@
 					  FontFamily="{StaticResource CalculatorFontFamily}"
 					  FontSize="20"
 					  AutomationProperties.AutomationId="shiftButton"
+										   AutomationProperties.Name=""
 					  Checked="shiftButton_Check"
 					  Content="&#xE752;"
 					  IsEnabled="{x:Bind IsShiftEnabled(IsWideLayout, IsErrorVisualState), Mode=OneWay}"
@@ -910,6 +937,7 @@
 									   Grid.Row="0"
 									   Style="{StaticResource AccentCalcButtonStyle}"
 									   AutomationProperties.AutomationId="divideButton"
+										   AutomationProperties.Name=""
 									   ButtonId="Divide"
 									   Content="&#xE94A;" />
 
@@ -918,6 +946,7 @@
 									   Grid.Row="1"
 									   Style="{StaticResource AccentCalcButtonStyle}"
 									   AutomationProperties.AutomationId="multiplyButton"
+										   AutomationProperties.Name=""
 									   ButtonId="Multiply"
 									   Content="&#xE947;" />
 
@@ -926,6 +955,7 @@
 									   Grid.Row="2"
 									   Style="{StaticResource AccentCalcButtonStyle}"
 									   AutomationProperties.AutomationId="minusButton"
+										   AutomationProperties.Name=""
 									   ButtonId="Subtract"
 									   Content="&#xE949;" />
 
@@ -934,6 +964,7 @@
 									   Grid.Row="3"
 									   Style="{StaticResource AccentCalcButtonStyle}"
 									   AutomationProperties.AutomationId="plusButton"
+										   AutomationProperties.Name=""
 									   ButtonId="Add"
 									   Content="&#xE948;" />
 
@@ -942,6 +973,7 @@
 									   Grid.Row="4"
 									   Style="{StaticResource AccentCalcButtonStyle}"
 									   AutomationProperties.AutomationId="equalButton"
+										   AutomationProperties.Name=""
 									   ButtonId="Equals"
 									   Content="&#xE94E;" />
 		</Grid>
@@ -964,6 +996,7 @@
 									   Style="{StaticResource OperatorButtonStyle}"
 									   FontSize="16"
 									   AutomationProperties.AutomationId="clearEntryButton"
+										   AutomationProperties.Name=""
 									   ButtonId="ClearEntry"
 									   Content="CE" />
 
@@ -973,6 +1006,7 @@
 									   Style="{StaticResource OperatorButtonStyle}"
 									   FontSize="16"
 									   AutomationProperties.AutomationId="clearButton"
+										   AutomationProperties.Name=""
 									   ButtonId="Clear"
 									   Content="C" />
 
@@ -983,6 +1017,7 @@
 									   FontFamily="{StaticResource CalculatorFontFamily}"
 									   FontSize="16"
 									   AutomationProperties.AutomationId="backSpaceButton"
+										   AutomationProperties.Name=""
 									   ButtonId="Backspace"
 									   Content="&#xE94F;" />
 		</Grid>
@@ -994,6 +1029,7 @@
 								   Style="{StaticResource SymbolOperatorButtonStyle}"
 								   FontSize="14"
 								   AutomationProperties.AutomationId="piButton"
+										   AutomationProperties.Name=""
 								   ButtonId="Pi"
 								   Content="&#xf7cf;" />
 
@@ -1004,6 +1040,7 @@
 								   Style="{StaticResource OperatorButtonStyle}"
 								   FontSize="18"
 								   AutomationProperties.AutomationId="factorialButton"
+										   AutomationProperties.Name=""
 								   ButtonId="Factorial"
 								   Content="n!" />
 
@@ -1014,6 +1051,7 @@
 								   Style="{StaticResource SymbolOperatorButtonStyle}"
 								   FontSize="16"
 								   AutomationProperties.AutomationId="negateButton"
+										   AutomationProperties.Name=""
 								   ButtonId="Negate"
 								   Content="&#xE94D;"
 								   IsEnabled="{x:Bind Model.IsNegateEnabled, Mode=OneWay}" />
@@ -1038,6 +1076,7 @@
 								   Style="{StaticResource OperatorButtonStyle}"
 								   FontSize="19"
 								   AutomationProperties.AutomationId="closeParenthesisButton"
+										   AutomationProperties.Name=""
 								   ButtonId="CloseParenthesis"
 								   Content=")" />
 
