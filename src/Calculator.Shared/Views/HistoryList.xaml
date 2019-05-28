@@ -130,10 +130,11 @@
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutGrid">
+		<!-- TODO UNO
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="{Binding RowHeight, ElementName=HistoryList, Mode=OneWay}"/>
-		</Grid.RowDefinitions>
+		</Grid.RowDefinitions>-->
 
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup>
