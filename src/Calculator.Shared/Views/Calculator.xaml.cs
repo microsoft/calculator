@@ -292,7 +292,7 @@ namespace CalculatorApp
         void OnContextCanceled(UIElement sender, RoutedEventArgs e)
         {
             m_displayFlyout.Hide();
-        }
+		}
 
         void OnLayoutStateChanged(object sender, object e)
         {
@@ -555,6 +555,7 @@ namespace CalculatorApp
                 InitializeHistoryView(Model.HistoryVM);
             }
 
+			HistoryFlyout_Hide();
             DockHistoryHolder.Child = m_historyList;
         }
 
@@ -616,8 +617,8 @@ namespace CalculatorApp
         {
             if (m_fIsHistoryFlyoutOpen)
             {
-                HistoryFlyout.Hide();
-            }
+                HistoryFlyout_Hide();
+			}
         }
 
         public void CloseMemoryFlyout()
@@ -625,7 +626,7 @@ namespace CalculatorApp
             if (m_fIsMemoryFlyoutOpen)
             {
                 MemoryFlyout.Hide();
-            }
+			}
         }
 
         public void SetDefaultFocus()
@@ -638,23 +639,50 @@ namespace CalculatorApp
             String viewState = App.GetAppViewState();
             // If app starts correctly in snap mode and shortcut is used for history then we need to load history if not yet initialized.
             if (viewState != ViewState.DockedView)
-            {
-                if (m_fIsHistoryFlyoutOpen)
-                {
-                    HistoryFlyout.Hide();
-                }
-                else
-                {
-                    // TraceLogger.GetInstance().LogHistoryFlyoutOpenBegin(Model.HistoryVM.ItemSize);
-                    HistoryFlyout.Content = m_historyList;
-                    // UNO TODO
-                    // m_historyList.RowHeight = NumpadPanel.ActualHeight;
-                    FlyoutBase.ShowAttachedFlyout(HistoryButton);
-                }
-            }
+			{
+				if (TODO_UNO_HISTORY.Visibility == Visibility.Visible)
+				{
+					HistoryFlyout_Hide();
+				}
+				else
+				{
+					m_historyList.RowHeight = new GridLength(NumpadPanel.ActualHeight);
+					TODO_UNO_HISTORY.Content = m_historyList;
+					TODO_UNO_HISTORY.Visibility = Visibility.Visible;
+					TODO_UNO_HISTORY_DISMISS_PANEL.Visibility = Visibility.Visible;
+					HistoryFlyout_Opened(null, null);
+				}
+
+				//if (m_fIsHistoryFlyoutOpen)
+				//{
+				//    HistoryFlyout.Hide();
+				//}
+				//else
+				//{
+				//    // TraceLogger.GetInstance().LogHistoryFlyoutOpenBegin(Model.HistoryVM.ItemSize);
+				//    HistoryFlyout.Content = m_historyList;
+				//    // UNO TODO
+				//    // m_historyList.RowHeight = NumpadPanel.ActualHeight;
+				//    FlyoutBase.ShowAttachedFlyout(HistoryButton);
+				//}
+			}
         }
 
-        void ToggleMemoryFlyout(object sender, object args)
+		void HistoryFlyout_Hide()
+		{
+			TODO_UNO_HISTORY_DISMISS_PANEL.Visibility = Visibility.Collapsed;
+			TODO_UNO_HISTORY.Visibility = Visibility.Collapsed;
+			TODO_UNO_HISTORY.Content = null;
+			HistoryFlyout_Closed(null, null);
+		}
+
+		private void TODO_UNO_HISTORY_Dismiss(object sender, TappedRoutedEventArgs e)
+		{
+			HistoryFlyout_Hide();
+			e.Handled = true;
+		}
+
+		void ToggleMemoryFlyout(object sender, object args)
         {
             String viewState = App.GetAppViewState();
             if (viewState != ViewState.DockedView)
@@ -662,7 +690,7 @@ namespace CalculatorApp
                 if (m_fIsMemoryFlyoutOpen)
                 {
                     MemoryFlyout.Hide();
-                }
+				}
                 else
                 {
                     // TraceLogger.GetInstance().LogMemoryFlyoutOpenBegin(Model.MemorizedNumbers.Size);
@@ -726,7 +754,7 @@ namespace CalculatorApp
             }
 
             MemoryFlyout.Hide();
-        }
+		}
 
         void EnableMemoryControls(bool enable)
         {
@@ -754,7 +782,7 @@ namespace CalculatorApp
             if (point.Y < (grid.ActualHeight - NumpadPanel.ActualHeight))
             {
                 MemoryFlyout.Hide();
-            }
+			}
         }
 
         void OnHistoryFlyOutTapped(object sender, TappedRoutedEventArgs e)
@@ -764,8 +792,8 @@ namespace CalculatorApp
 
             if (point.Y < (grid.ActualHeight - NumpadPanel.ActualHeight))
             {
-                HistoryFlyout.Hide();
-            }
+                HistoryFlyout_Hide();
+			}
         }
 
         bool IsValidRegularExpression(string str)
@@ -834,8 +862,7 @@ namespace CalculatorApp
                 // TraceLogger.GetInstance().LogMemoryBodyOpened();
             }
         }
-
-    }
+	}
 
     delegate void FullscreenFlyoutClosedEventHandler();
 

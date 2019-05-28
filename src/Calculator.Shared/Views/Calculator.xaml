@@ -1132,6 +1132,24 @@
 				<local:OperatorsPanel x:Name="OpsPanel"
 															IsBitFlipChecked="{x:Bind Model.IsBitFlipChecked, Mode=OneWay}" />
 			</Grid>
+
+			<Border
+				Grid.RowSpan="5"
+				x:Name="TODO_UNO_HISTORY_DISMISS_PANEL"
+				Tapped="TODO_UNO_HISTORY_Dismiss"
+				Visibility="Collapsed"
+				Background="{ThemeResource TitleBarBackgroundTransparentBrush}"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Stretch" />
+
+			<ContentPresenter
+				x:Name="TODO_UNO_HISTORY"
+				Grid.Row="5"
+				Visibility="Collapsed"
+				HorizontalAlignment="Stretch"
+				HorizontalContentAlignment="Stretch"
+				VerticalAlignment="Stretch"
+				VerticalContentAlignment="Stretch" />
 		</Grid>
 
 		<!-- Docked Pivot panel for history/memory -->
