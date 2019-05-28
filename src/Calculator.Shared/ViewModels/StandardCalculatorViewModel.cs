@@ -22,9 +22,11 @@ using static CalculationManager.CCommand;
 using System.Text;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Threading.Tasks;
 using Calculator;
 using Windows.UI.Xaml.Input;
+using Uno.Extensions;
 
 namespace CalculatorApp.ViewModel
 {
@@ -671,7 +673,7 @@ namespace CalculatorApp.ViewModel
 
             if (IsProgrammer)
             {
-                UpdateProgrammerPanelDisplay();
+                UpdateProgrammerPanelDisplay(displayStringValue);
             }
         }
 
@@ -2243,7 +2245,7 @@ namespace CalculatorApp.ViewModel
             return padString + binaryString;
         }
 
-        void UpdateProgrammerPanelDisplay()
+        void UpdateProgrammerPanelDisplay(string displayValue)
         {
             string hexDisplayString = "";
             string decimalDisplayString = "";
@@ -2252,23 +2254,70 @@ namespace CalculatorApp.ViewModel
 
             if (!IsInError)
             {
-                // we want the precision to be set to maximum value so that the varconversions result as desired
-                int precision = 64;
-                if (m_standardCalculatorManager.GetResultForRadix(16, precision) == "")
-                {
-                    hexDisplayString = DisplayValue;
-                    decimalDisplayString = DisplayValue;
-                    octalDisplayString = DisplayValue;
-                    binaryDisplayString = DisplayValue;
-                }
-                else
-                {
-                    hexDisplayString = m_standardCalculatorManager.GetResultForRadix(16, precision);
-                    decimalDisplayString = m_standardCalculatorManager.GetResultForRadix(10, precision);
-                    octalDisplayString = m_standardCalculatorManager.GetResultForRadix(8, precision);
-                    binaryDisplayString = m_standardCalculatorManager.GetResultForRadix(2, precision);
-                }
-            }
+				// we want the precision to be set to maximum value so that the varconversions result as desired
+				// TODO UNO -- BEGIN
+				var value = 0L;
+				var hasValue = false;
+				try
+				{
+					displayValue = displayValue.Replace(" ", string.Empty);
+					switch (m_CurrentRadixType)
+					{
+						case RADIX_TYPE.HEX_RADIX:
+							value = Convert.ToInt64(displayValue, 16);
+							hasValue = true;
+							break;
+
+						case RADIX_TYPE.DEC_RADIX:
+							hasValue = long.TryParse(displayValue, NumberStyles.Any, CultureInfo.InvariantCulture, out value);
+							break;
+
+						case RADIX_TYPE.OCT_RADIX:
+							value = Convert.ToInt64(displayValue, 8);
+							hasValue = true;
+							break;
+
+						case RADIX_TYPE.BIN_RADIX:
+							value = Convert.ToInt64(displayValue, 2);
+							hasValue = true;
+							break;
+					}
+				}
+				catch { }
+
+				if (hasValue && value != 0)
+				{
+					hexDisplayString = GroupBy(Convert.ToString(value, 16).ToUpperInvariant(), 4);
+					decimalDisplayString = value.ToString(CultureInfo.CurrentCulture);
+					octalDisplayString = GroupBy(Convert.ToString(value, 8), 3);
+					binaryDisplayString = GroupBy(Convert.ToString(value, 2), 4, '0');
+				}
+				else
+				{
+					hexDisplayString = DisplayValue;
+					decimalDisplayString = DisplayValue;
+					octalDisplayString = DisplayValue;
+					binaryDisplayString = DisplayValue;
+				}
+				
+
+				//if (m_standardCalculatorManager.GetResultForRadix(16, precision) == "")
+				//{
+				//    hexDisplayString = DisplayValue;
+				//    decimalDisplayString = DisplayValue;
+				//    octalDisplayString = DisplayValue;
+				//    binaryDisplayString = DisplayValue;
+				//}
+				//else
+				//{
+				//    hexDisplayString = m_standardCalculatorManager.GetResultForRadix(16, precision);
+				//    decimalDisplayString = m_standardCalculatorManager.GetResultForRadix(10, precision);
+				//    octalDisplayString = m_standardCalculatorManager.GetResultForRadix(8, precision);
+				//    binaryDisplayString = m_standardCalculatorManager.GetResultForRadix(2, precision);
+				//}
+
+				// TODO UNO -- EBD
+			}
             var localizer = LocalizationSettings.GetInstance();
             binaryDisplayString = AddPadding(binaryDisplayString);
 
@@ -2286,6 +2335,37 @@ namespace CalculatorApp.ViewModel
             OctDisplayValue_AutomationName = GetLocalizedStringFormat(m_localizedOctalAutomationFormat, GetNarratorStringReadRawNumbers(OctalDisplayValue));
             BinDisplayValue_AutomationName = GetLocalizedStringFormat(m_localizedBinaryAutomationFormat, GetNarratorStringReadRawNumbers(BinaryDisplayValue));
         }
+
+		// TODO UNO
+		private static string GroupBy(string value, int count, char? pad = null)
+		{
+			var sb = new StringBuilder(value.Length);
+
+			if (string.IsNullOrEmpty(value))
+			{
+				return value;
+			}
+
+			var firstGroupLength = value.Length % count;
+			if (firstGroupLength > 0 && pad.HasValue)
+			{
+				sb.Append(pad.Value, count - firstGroupLength);
+			}
+
+			if (firstGroupLength <= 0)
+			{
+				firstGroupLength = count;
+			}
+			sb.Append(value, 0, firstGroupLength);
+
+			for (var i = firstGroupLength; i < value.Length; i += count)
+			{
+				sb.Append(' ');
+				sb.Append(value, i, count);
+			}
+
+			return sb.ToString();
+		}
 
         public void SwitchAngleType(NumbersAndOperatorsEnum num)
         {
