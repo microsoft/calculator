@@ -106,7 +106,7 @@
                             win:ContextFlyout="{StaticResource HistoryContextMenu}">
 					<TextBlock x:Name="ExprTextBlock"
                                 Margin="0,0,0,4"
-                                HorizontalAlignment="Right"
+                                HorizontalAlignment="Stretch"
                                 Style="{ThemeResource BodyTextBlockMediumStyle}"
                                 AutomationProperties.Name="{x:Bind AccExpression}"
                                 IsTextSelectionEnabled="True"
