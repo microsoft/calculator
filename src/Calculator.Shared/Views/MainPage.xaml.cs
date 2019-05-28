@@ -13,6 +13,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
@@ -55,8 +56,7 @@ namespace CalculatorApp
             this.InitializeComponent();
             m_model = new ApplicationViewModel();
 
-            // UNO TODO
-            // KeyboardShortcutManager.Initialize();
+            KeyboardShortcutManager.Initialize(m_model);
 
             m_model.PropertyChanged += OnAppPropertyChanged;
 

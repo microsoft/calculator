@@ -31,6 +31,7 @@ using CategorySelectionInitializer = System.Tuple<CalculatorApp.CalculatorList<U
 using UnitToUnitToConversionDataMap = System.Collections.Generic.Dictionary<UnitConversionManager.Unit, System.Collections.Generic.Dictionary<UnitConversionManager.Unit, UnitConversionManager.ConversionData>>;
 using CategoryToUnitVectorMap = System.Collections.Generic.Dictionary<UnitConversionManager.Category, CalculatorApp.CalculatorList<UnitConversionManager.Unit>>;
 using System.Globalization;
+using Windows.System;
 
 namespace CalculatorApp.ViewModel
 {
@@ -1709,6 +1710,34 @@ namespace CalculatorApp.ViewModel
 			}
 
 			return mappedValue;
+		}
+
+		private static readonly IDictionary<VirtualKey, UCM.Command> _keyToCommandMap = new Dictionary<VirtualKey, UCM.Command>
+		{
+			{VirtualKey.Number0, UCM.Command.Zero},
+			{VirtualKey.Number1, UCM.Command.One},
+			{VirtualKey.Number2, UCM.Command.Two},
+			{VirtualKey.Number3, UCM.Command.Three},
+			{VirtualKey.Number4, UCM.Command.Four},
+			{VirtualKey.Number5, UCM.Command.Five},
+			{VirtualKey.Number6, UCM.Command.Six},
+			{VirtualKey.Number7, UCM.Command.Seven},
+			{VirtualKey.Number8, UCM.Command.Eight},
+			{VirtualKey.Number9, UCM.Command.Nine},
+			{VirtualKey.Decimal, UCM.Command.Decimal},
+			{VirtualKey.Subtract, UCM.Command.Negate},
+			{VirtualKey.Back, UCM.Command.Backspace},
+			{VirtualKey.Escape, UCM.Command.Clear},
+			{VirtualKey.Delete, UCM.Command.Reset},
+		};
+
+		// TODO UNO: KeyboardShortcutManager
+		public void OnKeyPress(VirtualKey key)
+		{
+			if (_keyToCommandMap.TryGetValue(key, out var cmd))
+			{
+				m_model.SendCommand(cmd);
+			}
 		}
 
 		public void OnPaste(String stringToPaste, ViewMode mode)

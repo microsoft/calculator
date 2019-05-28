@@ -217,12 +217,28 @@ namespace CalculatorApp.ViewModel
             }
         }
 
-        void SetMenuCategories()
+		public void OnKeyPress(VirtualKey key)
+		{
+			if (NavCategory.IsConverterViewMode(m_mode))
+			{
+				ConverterViewModel.OnKeyPress(key);
+			}
+			else if (NavCategory.IsDateCalculatorViewMode(m_mode))
+			{
+				DateCalcViewModel.OnKeyPress(key);
+			}
+			else
+			{
+				CalculatorViewModel.OnKeyPress(key);
+			}
+		}
+
+		void SetMenuCategories()
         {
             // Use the Categories property instead of the backing variable
             // because we want to take advantage of binding updates and
             // property setter logic.
             Categories = NavCategoryGroup.CreateMenuOptions();
         }
-    }
+	}
 }

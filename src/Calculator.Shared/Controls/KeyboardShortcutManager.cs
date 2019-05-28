@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-
+using System;
 using Windows.UI.Xaml;
+using CalculatorApp.ViewModel;
 
 namespace CalculatorApp
 {
@@ -91,6 +92,23 @@ namespace CalculatorApp
             // Using a DependencyProperty as the backing store for VirtualKeyControlInverseChord.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty VirtualKeyControlInverseChordProperty =
                 DependencyProperty.RegisterAttached("VirtualKeyControlInverseChord", typeof(MyVirtualKey), typeof(KeyboardShortcutManager), new PropertyMetadata(MyVirtualKey.None));
-        }
+
+			// TODO UNO
+			public static void Initialize(ApplicationViewModel target)
+			{
+				var coreWindow = Window.Current.Content;
+				try
+				{
+					coreWindow.KeyDown += (snd, e) =>
+					{
+						target.OnKeyPress(e.Key);
+						e.Handled = true;
+					};
+				}
+				catch (Exception)
+				{
+				}
+			}
+		}
     }
 }
