@@ -480,6 +480,15 @@
 				Value="{StaticResource CalcOperatorCaptionSize}" />
 	</Style>
 
+	<Style x:Key="DecimalButtonStyle"
+		   BasedOn="{StaticResource OperatorButtonStyle}"
+		   TargetType="Controls:CalculatorButton">
+		<Setter Property="FontWeight"
+				Value="Bold" />
+		<Setter Property="FontSize"
+				Value="24" />
+	</Style>
+
 	<Style x:Key="SymbolOperatorButtonStyle"
 		   BasedOn="{StaticResource OperatorButtonStyle}"
 		   TargetType="Controls:CalculatorButton">

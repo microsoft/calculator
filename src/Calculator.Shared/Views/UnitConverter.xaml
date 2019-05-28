@@ -849,16 +849,17 @@
 			</Grid>
 
 			<local:NumberPad x:Name="NumberPad"
-							 x:Uid="NumberPad"
-							 Grid.Row="2"
-							 Grid.RowSpan="4"
-							 Grid.Column="1"
-							 Grid.ColumnSpan="3"
-							 VerticalAlignment="Stretch"
-							 AutomationProperties.HeadingLevel="Level1"
-							 ButtonStyle="{StaticResource NumericButtonStyle24}"
-							 TabIndex="10"
-							 TabNavigation="Local" />
+                             x:Uid="NumberPad"
+                             Grid.Row="2"
+                             Grid.RowSpan="4"
+                             Grid.Column="1"
+                             Grid.ColumnSpan="3"
+                             VerticalAlignment="Stretch"
+                             AutomationProperties.HeadingLevel="Level1"
+                             ButtonStyle="{StaticResource NumericButtonStyle24}"
+							 DecimalButtonStyle="{StaticResource DecimalButtonStyle}"
+                             TabIndex="10"
+                             TabNavigation="Local"/>
 			<controls:CalculatorButton x:Name="ConverterNegateButton"
 									   x:Uid="converterNegateButton"
 									   Grid.Row="5"
