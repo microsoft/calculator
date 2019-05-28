@@ -124,7 +124,7 @@
 								Value="{StaticResource TitleFontSize}" />
 
 						<Setter Target="NumberPad.ButtonStyle"
-								Value="{StaticResource NumericButtonStyle24}" />
+										Value="{StaticResource NumericButtonStyle18}" />
 					</VisualState.Setters>
 				</VisualState>
 

@@ -307,7 +307,8 @@
 	<x:Double x:Key="CalcButtonCaptionSize">34</x:Double>
 	<x:Double x:Key="CalcStandardOperatorCaptionSizeLarge">24</x:Double>
 	<!-- Numpad Standard/Scientific in Fill/Full -->
-	<x:Double x:Key="CalcStandardOperatorCaptionSize">20</x:Double>
+	<!-- UNO TODO Temp fix, value should be 20 -->
+	<x:Double x:Key="CalcStandardOperatorCaptionSize">17</x:Double>
 	<!-- Standard Operators Standard/Scientific in Fill/Full -->
 	<x:Double x:Key="CalcOperatorCaptionSize">15</x:Double>
 
