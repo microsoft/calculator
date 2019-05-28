@@ -1106,7 +1106,7 @@
 										<Setter Target="RootGrid.(RevealBrush.State)"
 												Value="PointerOver" />
 										<Setter Target="RootGrid.Background"
-												Value="{ThemeResource SystemControlHighlightAccentRevealBackgroundBrush}" />
+												Value="{ThemeResource SystemAccentColor}" />
 										<Setter Target="ContentPresenter.Foreground"
 												Value="{ThemeResource SystemControlHighlightAltAltHighBrush}" />
 									</VisualState.Setters>

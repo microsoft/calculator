@@ -21,11 +21,11 @@ namespace CalculatorApp
         {
             int windowId = -1;
 
-            var window = CoreWindow.GetForCurrentThread();
-            if (window != null)
-            {
-                windowId = ApplicationView.GetApplicationViewIdForWindow(window);
-            }
+            //var window = CoreWindow.GetForCurrentThread();
+            //if (window != null)
+            //{
+            //    windowId = ApplicationView.GetApplicationViewIdForWindow(window);
+            //}
 
             return windowId;
         }
