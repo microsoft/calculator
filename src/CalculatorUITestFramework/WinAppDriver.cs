@@ -43,7 +43,7 @@ namespace CalculatorUITestFramework
                 var outputData = e.Data?.Replace("\0", string.Empty);
                 if (!String.IsNullOrEmpty(outputData))
                 {
-                    context.WriteLine(outputData);
+                    Console.WriteLine(outputData);
                 }
             });
 
