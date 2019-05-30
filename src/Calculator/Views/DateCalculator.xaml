@@ -418,22 +418,22 @@
 
             <!-- From Date -->
             <CalendarDatePicker x:Name="DateDiff_FromDate"
+                                x:Uid="DateDiff_FromHeader"
                                 Grid.Row="2"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
                                 CalendarViewStyle="{StaticResource DateCalculation_CalendarViewStyle}"
                                 Closed="CalendarFlyoutClosed"
-                                DateChanged="FromDate_DateChanged"
-                                Header="From"/>
+                                DateChanged="FromDate_DateChanged"/>
 
             <!-- To Date -->
             <CalendarDatePicker x:Name="DateDiff_ToDate"
+                                x:Uid="DateDiff_ToHeader"
                                 Grid.Row="5"
                                 Margin="0,0,0,0"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
                                 CalendarViewStyle="{StaticResource DateCalculation_CalendarViewStyle}"
                                 Closed="CalendarFlyoutClosed"
-                                DateChanged="ToDate_DateChanged"
-                                Header="To"/>
+                                DateChanged="ToDate_DateChanged"/>
 
             <!-- Difference Result -->
             <TextBlock x:Uid="Date_DifferenceLabel"
@@ -479,14 +479,8 @@
             </Grid.RowDefinitions>
 
             <!-- From Date -->
-            <TextBlock x:Name="AddSubtract_Date_FromLabel"
-                       x:Uid="Date_FromLabel"
-                       Grid.Row="1"
-                       Margin="0,0,0,2"
-                       Style="{ThemeResource BodyTextBlockStyle}"
-                       Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
-                       TextWrapping="Wrap"/>
             <CalendarDatePicker x:Name="AddSubtract_FromDate"
+                                x:Uid="AddSubtract_Date_FromHeader"
                                 Grid.Row="2"
                                 Margin="0,0,0,0"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
