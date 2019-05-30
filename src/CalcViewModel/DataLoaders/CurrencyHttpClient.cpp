@@ -16,23 +16,23 @@ using namespace std;
 using namespace Windows::Foundation;
 using namespace Windows::Web::Http;
 
-CurrencyHttpClient::CurrencyHttpClient() :
-    m_client(ref new HttpClient()),
-    m_responseLanguage(L"en-US")
+CurrencyHttpClient::CurrencyHttpClient()
+    : m_client(ref new HttpClient())
+    , m_responseLanguage(L"en-US")
 {
 }
 
-void CurrencyHttpClient::SetSourceCurrencyCode(String^ sourceCurrencyCode)
+void CurrencyHttpClient::SetSourceCurrencyCode(String ^ sourceCurrencyCode)
 {
     m_sourceCurrencyCode = sourceCurrencyCode;
 }
 
-void CurrencyHttpClient::SetResponseLanguage(String^ responseLanguage)
+void CurrencyHttpClient::SetResponseLanguage(String ^ responseLanguage)
 {
     m_responseLanguage = responseLanguage;
 }
 
-IAsyncOperationWithProgress<String^, HttpProgress>^ CurrencyHttpClient::GetCurrencyMetadata()
+IAsyncOperationWithProgress<String ^, HttpProgress> ^ CurrencyHttpClient::GetCurrencyMetadata()
 {
     wstring uri = wstring{ sc_MetadataUriLocalizeFor } + m_responseLanguage->Data();
     auto metadataUri = ref new Uri(StringReference(uri.c_str()));
@@ -40,7 +40,7 @@ IAsyncOperationWithProgress<String^, HttpProgress>^ CurrencyHttpClient::GetCurre
     return m_client->GetStringAsync(metadataUri);
 }
 
-IAsyncOperationWithProgress<String^, HttpProgress>^ CurrencyHttpClient::GetCurrencyRatios()
+IAsyncOperationWithProgress<String ^, HttpProgress> ^ CurrencyHttpClient::GetCurrencyRatios()
 {
     wstring uri = wstring{ sc_RatiosUriRelativeTo } + m_sourceCurrencyCode->Data();
     auto ratiosUri = ref new Uri(StringReference(uri.c_str()));

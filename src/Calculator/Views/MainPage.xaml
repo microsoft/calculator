@@ -110,6 +110,10 @@
                                              x:Load="False"
                                              IsItemClickEnabled="True"
                                              ItemClick="OnAboutButtonClick">
+                        <muxc:NavigationViewList.ItemContainerTransitions>
+                            <!-- Remove EntranceThemeTransition which is a default transition for NavigationViewList -->
+                            <TransitionCollection/>
+                        </muxc:NavigationViewList.ItemContainerTransitions>
                         <muxc:NavigationViewList.Items>
                             <muxc:NavigationViewItem x:Name="AboutButton"
                                                      x:Uid="AboutButton"

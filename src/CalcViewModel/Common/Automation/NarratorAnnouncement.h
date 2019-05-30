@@ -11,7 +11,8 @@ namespace CalculatorApp::Common::Automation
     // enums should be removed and the Windows types should be used
     // instead.
     // TODO - MSFT 12735088
-    public enum class AutomationNotificationKind
+public
+    enum class AutomationNotificationKind
     {
         ItemAdded = 0,
         ItemRemoved = 1,
@@ -20,7 +21,8 @@ namespace CalculatorApp::Common::Automation
         Other = 4
     };
 
-    public enum class AutomationNotificationProcessing
+public
+    enum class AutomationNotificationProcessing
     {
         ImportantAll = 0,
         ImportantMostRecent = 1,
@@ -29,20 +31,17 @@ namespace CalculatorApp::Common::Automation
         CurrentThenMostRecent = 4
     };
 
-    public ref class NarratorAnnouncement sealed
+public
+    ref class NarratorAnnouncement sealed
     {
     public:
-        property Platform::String^ Announcement
-        {
-            Platform::String^ get();
-        }
+        property Platform::String
+            ^ Announcement { Platform::String ^ get(); }
 
-        property Platform::String^ ActivityId
-        {
-            Platform::String^ get();
-        }
+            property Platform::String
+            ^ ActivityId { Platform::String ^ get(); }
 
-        property AutomationNotificationKind Kind
+            property AutomationNotificationKind Kind
         {
             AutomationNotificationKind get();
         }
@@ -52,7 +51,7 @@ namespace CalculatorApp::Common::Automation
             AutomationNotificationProcessing get();
         }
 
-        static bool IsValid(NarratorAnnouncement^ announcement);
+        static bool IsValid(NarratorAnnouncement ^ announcement);
 
     private:
         // Make CalculatorAnnouncement a friend class so it is the only
@@ -60,13 +59,13 @@ namespace CalculatorApp::Common::Automation
         friend class CalculatorAnnouncement;
 
         NarratorAnnouncement(
-            Platform::String^ announcement,
-            Platform::String^ activityId,
+            Platform::String ^ announcement,
+            Platform::String ^ activityId,
             AutomationNotificationKind kind,
             AutomationNotificationProcessing processing);
 
-        Platform::String^ m_announcement;
-        Platform::String^ m_activityId;
+        Platform::String ^ m_announcement;
+        Platform::String ^ m_activityId;
         AutomationNotificationKind m_kind;
         AutomationNotificationProcessing m_processing;
     };
@@ -76,22 +75,22 @@ namespace CalculatorApp::Common::Automation
     class CalculatorAnnouncement
     {
     public:
-        static NarratorAnnouncement^ GetDisplayUpdatedAnnouncement(Platform::String^ announcement);
-        static NarratorAnnouncement^ GetMaxDigitsReachedAnnouncement(Platform::String^ announcement);
+        static NarratorAnnouncement ^ GetDisplayUpdatedAnnouncement(Platform::String ^ announcement);
+        static NarratorAnnouncement ^ GetMaxDigitsReachedAnnouncement(Platform::String ^ announcement);
 
-        static NarratorAnnouncement^ GetMemoryClearedAnnouncement(Platform::String^ announcement);
-        static NarratorAnnouncement^ GetMemoryItemChangedAnnouncement(Platform::String^ announcement);
-        static NarratorAnnouncement^ GetMemoryItemAddedAnnouncement(Platform::String^ announcement);
+        static NarratorAnnouncement ^ GetMemoryClearedAnnouncement(Platform::String ^ announcement);
+        static NarratorAnnouncement ^ GetMemoryItemChangedAnnouncement(Platform::String ^ announcement);
+        static NarratorAnnouncement ^ GetMemoryItemAddedAnnouncement(Platform::String ^ announcement);
 
-        static NarratorAnnouncement^ GetHistoryClearedAnnouncement(Platform::String^ announcement);
+        static NarratorAnnouncement ^ GetHistoryClearedAnnouncement(Platform::String ^ announcement);
 
-        static NarratorAnnouncement^ GetCategoryNameChangedAnnouncement(Platform::String^ announcement);
+        static NarratorAnnouncement ^ GetCategoryNameChangedAnnouncement(Platform::String ^ announcement);
 
-        static NarratorAnnouncement^ GetUpdateCurrencyRatesAnnouncement(Platform::String^ announcement);
+        static NarratorAnnouncement ^ GetUpdateCurrencyRatesAnnouncement(Platform::String ^ announcement);
 
-        static NarratorAnnouncement^ GetDisplayCopiedAnnouncement(Platform::String^ announcement);
+        static NarratorAnnouncement ^ GetDisplayCopiedAnnouncement(Platform::String ^ announcement);
 
-        static NarratorAnnouncement^ GetOpenParenthesisCountChangedAnnouncement(Platform::String^ announcement);
-        static NarratorAnnouncement^ GetNoRightParenthesisAddedAnnouncement(Platform::String ^ announcement);
+        static NarratorAnnouncement ^ GetOpenParenthesisCountChangedAnnouncement(Platform::String ^ announcement);
+        static NarratorAnnouncement ^ GetNoRightParenthesisAddedAnnouncement(Platform::String ^ announcement);
     };
 }

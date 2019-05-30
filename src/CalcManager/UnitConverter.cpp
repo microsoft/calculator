@@ -11,8 +11,6 @@ using namespace concurrency;
 using namespace std;
 using namespace UnitConversionManager;
 
-static constexpr uint32_t EXPECTEDSERIALIZEDTOKENCOUNT = 7;
-static constexpr uint32_t EXPECTEDSERIALIZEDCONVERSIONDATATOKENCOUNT = 3;
 static constexpr uint32_t EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT = 3;
 static constexpr uint32_t EXPECTEDSERIALIZEDUNITTOKENCOUNT = 6;
 static constexpr uint32_t EXPECTEDSTATEDATATOKENCOUNT = 5;
@@ -34,8 +32,8 @@ unordered_map<wstring, wchar_t> unquoteConversions;
 /// Constructor, sets up all the variables and requires a configLoader
 /// </summary>
 /// <param name="dataLoader">An instance of the IConverterDataLoader interface which we use to read in category/unit names and conversion data</param>
-UnitConverter::UnitConverter(_In_ const shared_ptr<IConverterDataLoader>& dataLoader) :
-    UnitConverter::UnitConverter(dataLoader, nullptr)
+UnitConverter::UnitConverter(_In_ const shared_ptr<IConverterDataLoader>& dataLoader)
+    : UnitConverter::UnitConverter(dataLoader, nullptr)
 {
 }
 
@@ -192,14 +190,14 @@ void UnitConverter::SwitchActive(const wstring& newValue)
     }
 }
 
-wstring UnitConverter::CategoryToString(const Category& c, const wchar_t * delimiter)
+wstring UnitConverter::CategoryToString(const Category& c, const wchar_t* delimiter)
 {
     wstringstream out(wstringstream::out);
     out << Quote(std::to_wstring(c.id)) << delimiter << Quote(std::to_wstring(c.supportsNegative)) << delimiter << Quote(c.name) << delimiter;
     return out.str();
 }
 
-vector<wstring> UnitConverter::StringToVector(const wstring& w, const wchar_t * delimiter, bool addRemainder)
+vector<wstring> UnitConverter::StringToVector(const wstring& w, const wchar_t* delimiter, bool addRemainder)
 {
     size_t delimiterIndex = w.find(delimiter);
     size_t startIndex = 0;
@@ -217,22 +215,12 @@ vector<wstring> UnitConverter::StringToVector(const wstring& w, const wchar_t * 
     }
     return serializedTokens;
 }
-
-Category UnitConverter::StringToCategory(const wstring& w)
-{
-    vector<wstring> tokenList = StringToVector(w, L";");
-    assert(tokenList.size() == EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT);
-    Category serializedCategory;
-    serializedCategory.id = _wtoi(Unquote(tokenList[0]).c_str());
-    serializedCategory.supportsNegative = (tokenList[1].compare(L"1") == 0);
-    serializedCategory.name = Unquote(tokenList[2]);
-    return serializedCategory;
-}
-
-wstring UnitConverter::UnitToString(const Unit& u, const wchar_t * delimiter)
+wstring UnitConverter::UnitToString(const Unit& u, const wchar_t* delimiter)
 {
     wstringstream out(wstringstream::out);
-    out << Quote(std::to_wstring(u.id)) << delimiter << Quote(u.name) << delimiter << Quote(u.abbreviation) << delimiter << std::to_wstring(u.isConversionSource) << delimiter << std::to_wstring(u.isConversionTarget) << delimiter << std::to_wstring(u.isWhimsical) << delimiter;
+    out << Quote(std::to_wstring(u.id)) << delimiter << Quote(u.name) << delimiter << Quote(u.abbreviation) << delimiter
+        << std::to_wstring(u.isConversionSource) << delimiter << std::to_wstring(u.isConversionTarget) << delimiter << std::to_wstring(u.isWhimsical)
+        << delimiter;
     return out.str();
 }
 
@@ -251,147 +239,15 @@ Unit UnitConverter::StringToUnit(const wstring& w)
     return serializedUnit;
 }
 
-ConversionData UnitConverter::StringToConversionData(const wstring& w)
+Category UnitConverter::StringToCategory(const wstring& w)
 {
     vector<wstring> tokenList = StringToVector(w, L";");
-    assert(tokenList.size() == EXPECTEDSERIALIZEDCONVERSIONDATATOKENCOUNT);
-    ConversionData serializedConversionData;
-    serializedConversionData.ratio = stod(Unquote(tokenList[0]).c_str());
-    serializedConversionData.offset = stod(Unquote(tokenList[1]).c_str());
-    serializedConversionData.offsetFirst = (tokenList[2].compare(L"1") == 0);
-    return serializedConversionData;
-}
-
-wstring UnitConverter::ConversionDataToString(ConversionData d, const wchar_t * delimiter)
-{
-    wstringstream out(wstringstream::out);
-    out.precision(32);
-    out << fixed << d.ratio;
-    wstring ratio = out.str();
-    out.str(L"");
-    out << fixed << d.offset;
-    wstring offset = out.str();
-    out.str(L"");
-    TrimString(ratio);
-    TrimString(offset);
-    out << Quote(ratio) << delimiter << Quote(offset) << delimiter << std::to_wstring(d.offsetFirst) << delimiter;
-    return out.str();
-}
-
-/// <summary>
-/// Serializes the data in the converter and returns it as a string
-/// </summary>
-wstring UnitConverter::Serialize()
-{
-    if (!CheckLoad())
-    {
-        return wstring();
-    }
-
-    wstringstream out(wstringstream::out);
-    const wchar_t * delimiter = L";";
-
-    out << UnitToString(m_fromType, delimiter) << "|";
-    out << UnitToString(m_toType, delimiter) << "|";
-    out << CategoryToString(m_currentCategory, delimiter) << "|";
-    out << std::to_wstring(m_currentHasDecimal) << delimiter << std::to_wstring(m_returnHasDecimal) << delimiter << std::to_wstring(m_switchedActive) << delimiter;
-    out << m_currentDisplay << delimiter << m_returnDisplay << delimiter << "|";
-    wstringstream categoryString(wstringstream::out);
-    wstringstream categoryToUnitString(wstringstream::out);
-    wstringstream unitToUnitToDoubleString(wstringstream::out);
-    for (const Category& c : m_categories)
-    {
-        categoryString << CategoryToString(c, delimiter) << ",";
-    }
-
-    for (const auto& cur : m_categoryToUnits)
-    {
-        categoryToUnitString << CategoryToString(cur.first, delimiter) << "[";
-        for (const Unit& u : cur.second)
-        {
-            categoryToUnitString << UnitToString(u, delimiter) << ",";
-        }
-        categoryToUnitString << "[" << "]";
-    }
-
-    for (const auto& cur : m_ratioMap)
-    {
-        unitToUnitToDoubleString << UnitToString(cur.first, delimiter) << "[";
-        for (const auto& curConversion : cur.second)
-        {
-            unitToUnitToDoubleString << UnitToString(curConversion.first, delimiter) << ":";
-            unitToUnitToDoubleString << ConversionDataToString(curConversion.second, delimiter) << ":,";
-        }
-        unitToUnitToDoubleString << "[" << "]";
-    }
-
-    out << categoryString.str() << "|";
-    out << categoryToUnitString.str() << "|";
-    out << unitToUnitToDoubleString.str() << "|";
-    wstring test = out.str();
-    return test;
-}
-
-/// <summary>
-/// De-Serializes the data in the converter from a string
-/// </summary>
-/// <param name="serializedData">wstring holding the serialized data. If it does not have expected number of parameters, we will ignore it</param>
-void UnitConverter::DeSerialize(const wstring& serializedData)
-{
-    ClearValues();
-    ResetCategoriesAndRatios();
-
-    if (serializedData.empty())
-    {
-        return;
-    }
-
-    vector<wstring> outerTokens = StringToVector(serializedData, L"|");
-    assert(outerTokens.size() == EXPECTEDSERIALIZEDTOKENCOUNT);
-    m_fromType = StringToUnit(outerTokens[0]);
-    m_toType = StringToUnit(outerTokens[1]);
-    m_currentCategory = StringToCategory(outerTokens[2]);
-    vector<wstring> stateDataTokens = StringToVector(outerTokens[3], L";");
-    assert(stateDataTokens.size() == EXPECTEDSTATEDATATOKENCOUNT);
-    m_currentHasDecimal = (stateDataTokens[0].compare(L"1") == 0);
-    m_returnHasDecimal = (stateDataTokens[1].compare(L"1") == 0);
-    m_switchedActive = (stateDataTokens[2].compare(L"1") == 0);
-    m_currentDisplay = stateDataTokens[3];
-    m_returnDisplay = stateDataTokens[4];
-    vector<wstring> categoryListTokens = StringToVector(outerTokens[4], L",");
-    for (wstring token : categoryListTokens)
-    {
-        m_categories.push_back(StringToCategory(token));
-    }
-    vector<wstring> unitVectorTokens = StringToVector(outerTokens[5], L"]");
-    for (wstring unitVector : unitVectorTokens)
-    {
-        vector<wstring> mapcomponents = StringToVector(unitVector, L"[");
-        assert(mapcomponents.size() == EXPECTEDMAPCOMPONENTTOKENCOUNT);
-        Category key = StringToCategory(mapcomponents[0]);
-        vector<wstring> units = StringToVector(mapcomponents[1], L",");
-        for (wstring unit : units)
-        {
-            m_categoryToUnits[key].push_back(StringToUnit(unit));
-        }
-    }
-    vector<wstring> ratioMapTokens = StringToVector(outerTokens[6], L"]");
-    for (wstring token : ratioMapTokens)
-    {
-        vector<wstring> ratioMapComponentTokens = StringToVector(token, L"[");
-        assert(ratioMapComponentTokens.size() == EXPECTEDMAPCOMPONENTTOKENCOUNT);
-        Unit key = StringToUnit(ratioMapComponentTokens[0]);
-        vector<wstring> ratioMapList = StringToVector(ratioMapComponentTokens[1], L",");
-        for (wstring subtoken : ratioMapList)
-        {
-            vector<wstring> ratioMapSubComponentTokens = StringToVector(subtoken, L":");
-            assert(ratioMapSubComponentTokens.size() == EXPECTEDMAPCOMPONENTTOKENCOUNT);
-            Unit subkey = StringToUnit(ratioMapSubComponentTokens[0]);
-            ConversionData conversion = StringToConversionData(ratioMapSubComponentTokens[1]);
-            m_ratioMap[key][subkey] = conversion;
-        }
-    }
-    UpdateViewModel();
+    assert(tokenList.size() == EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT);
+    Category serializedCategory;
+    serializedCategory.id = _wtoi(Unquote(tokenList[0]).c_str());
+    serializedCategory.supportsNegative = (tokenList[1].compare(L"1") == 0);
+    serializedCategory.name = Unquote(tokenList[2]);
+    return serializedCategory;
 }
 
 /// <summary>
@@ -429,7 +285,6 @@ void UnitConverter::RestoreUserPreferences(const wstring& userPreferences)
             m_toType = toType;
         }
     }
-
 }
 
 /// <summary>
@@ -438,7 +293,7 @@ void UnitConverter::RestoreUserPreferences(const wstring& userPreferences)
 wstring UnitConverter::SaveUserPreferences()
 {
     wstringstream out(wstringstream::out);
-    const wchar_t * delimiter = L";";
+    const wchar_t* delimiter = L";";
 
     out << UnitToString(m_fromType, delimiter) << "|";
     out << UnitToString(m_toType, delimiter) << "|";
@@ -457,7 +312,7 @@ wstring UnitConverter::Quote(const wstring& s)
 
     // Iterate over the delimiter characters we need to quote
     wstring::const_iterator cursor = s.begin();
-    while(cursor != s.end())
+    while (cursor != s.end())
     {
         if (quoteConversions.find(*cursor) != quoteConversions.end())
         {
@@ -481,9 +336,9 @@ wstring UnitConverter::Unquote(const wstring& s)
     wstringstream quotedSubString(wstringstream::out);
     wstringstream unquotedString(wstringstream::out);
     wstring::const_iterator cursor = s.begin();
-    while(cursor != s.end())
+    while (cursor != s.end())
     {
-        if(*cursor == LEFTESCAPECHAR)
+        if (*cursor == LEFTESCAPECHAR)
         {
             quotedSubString.str(L"");
             while (cursor != s.end() && *cursor != RIGHTESCAPECHAR)
@@ -529,7 +384,8 @@ void UnitConverter::SendCommand(Command command)
         clearFront = true;
     }
     bool clearBack = false;
-    if ((m_currentHasDecimal && m_currentDisplay.size() - 1 >= MAXIMUMDIGITSALLOWED) || (!m_currentHasDecimal && m_currentDisplay.size() >= MAXIMUMDIGITSALLOWED))
+    if ((m_currentHasDecimal && m_currentDisplay.size() - 1 >= MAXIMUMDIGITSALLOWED)
+        || (!m_currentHasDecimal && m_currentDisplay.size() >= MAXIMUMDIGITSALLOWED))
     {
         clearBack = true;
     }
@@ -643,7 +499,6 @@ void UnitConverter::SendCommand(Command command)
         break;
     }
 
-
     if (clearFront)
     {
         m_currentDisplay.erase(0, 1);
@@ -684,26 +539,27 @@ void UnitConverter::SetViewModelCurrencyCallback(_In_ const shared_ptr<IViewMode
 task<pair<bool, wstring>> UnitConverter::RefreshCurrencyRatios()
 {
     shared_ptr<ICurrencyConverterDataLoader> currencyDataLoader = GetCurrencyConverterDataLoader();
-    return create_task([this, currencyDataLoader]()
-    {
-        if (currencyDataLoader != nullptr)
-        {
-            return currencyDataLoader->TryLoadDataFromWebOverrideAsync();
-        }
-        else
-        {
-            return task_from_result(false);
-        }
-    }).then([this, currencyDataLoader](bool didLoad)
-    {
-        wstring timestamp = L"";
-        if (currencyDataLoader != nullptr)
-        {
-            timestamp = currencyDataLoader->GetCurrencyTimestamp();
-        }
+    return create_task([this, currencyDataLoader]() {
+               if (currencyDataLoader != nullptr)
+               {
+                   return currencyDataLoader->TryLoadDataFromWebOverrideAsync();
+               }
+               else
+               {
+                   return task_from_result(false);
+               }
+           })
+        .then(
+            [this, currencyDataLoader](bool didLoad) {
+                wstring timestamp = L"";
+                if (currencyDataLoader != nullptr)
+                {
+                    timestamp = currencyDataLoader->GetCurrencyTimestamp();
+                }
 
-        return make_pair(didLoad, timestamp);
-    }, task_continuation_context::use_default());
+                return make_pair(didLoad, timestamp);
+            },
+            task_continuation_context::use_default());
 }
 
 shared_ptr<ICurrencyConverterDataLoader> UnitConverter::GetCurrencyConverterDataLoader()
@@ -752,7 +608,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
             newEntry.magnitude = log10(convertedValue);
             newEntry.value = convertedValue;
             newEntry.type = cur.first;
-            if(newEntry.type.isWhimsical == false)
+            if (newEntry.type.isWhimsical == false)
                 intermediateVector.push_back(newEntry);
             else
                 intermediateWhimsicalVector.push_back(newEntry);
@@ -760,9 +616,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
     }
 
     // Sort the resulting list by absolute magnitude, breaking ties by choosing the positive value
-    sort(intermediateVector.begin(), intermediateVector.end(), []
-    (SuggestedValueIntermediate first, SuggestedValueIntermediate second)
-    {
+    sort(intermediateVector.begin(), intermediateVector.end(), [](SuggestedValueIntermediate first, SuggestedValueIntermediate second) {
         if (abs(first.magnitude) == abs(second.magnitude))
         {
             return first.magnitude > second.magnitude;
@@ -783,7 +637,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         }
         else if (abs(entry.value) < 1000)
         {
-        roundedString = RoundSignificant(entry.value, 1);
+            roundedString = RoundSignificant(entry.value, 1);
         }
         else
         {
@@ -798,9 +652,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
 
     // The Whimsicals are determined differently
     // Sort the resulting list by absolute magnitude, breaking ties by choosing the positive value
-    sort(intermediateWhimsicalVector.begin(), intermediateWhimsicalVector.end(), []
-    (SuggestedValueIntermediate first, SuggestedValueIntermediate second)
-    {
+    sort(intermediateWhimsicalVector.begin(), intermediateWhimsicalVector.end(), [](SuggestedValueIntermediate first, SuggestedValueIntermediate second) {
         if (abs(first.magnitude) == abs(second.magnitude))
         {
             return first.magnitude > second.magnitude;
@@ -922,7 +774,6 @@ shared_ptr<IConverterDataLoader> UnitConverter::GetDataLoaderForCategory(const C
 /// </summary>
 void UnitConverter::InitializeSelectedUnits()
 {
-
     if (m_categoryToUnits.empty())
     {
         return;
@@ -1057,7 +908,7 @@ void UnitConverter::TrimString(wstring& returnString)
     }
 
     wstring::iterator iter;
-    for (iter = returnString.end() - 1; ;iter--)
+    for (iter = returnString.end() - 1;; iter--)
     {
         if (*iter != L'0')
         {
@@ -1065,9 +916,9 @@ void UnitConverter::TrimString(wstring& returnString)
             break;
         }
     }
-    if (*(returnString.end()-1) == L'.')
+    if (*(returnString.end() - 1) == L'.')
     {
-        returnString.erase(returnString.end()-1, returnString.end());
+        returnString.erase(returnString.end() - 1, returnString.end());
     }
 }
 

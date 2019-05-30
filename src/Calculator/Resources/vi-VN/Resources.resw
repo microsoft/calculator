@@ -901,7 +901,10 @@
     <value>Dấu ngoặc đơn trái</value>
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
-  
+  <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
+    <value>Ngoặc trái, tính ngoặc mở %1</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
+  </data>
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Dấu ngoặc đơn phải</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
@@ -2903,5 +2906,13 @@
   <data name="AboutControlServicesAgreement.Text" xml:space="preserve">
     <value>Thỏa thuận Dịch vụ của Microsoft</value>
     <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
+  </data>
+  <data name="UnitAbbreviation_Pyeong" xml:space="preserve">
+    <value>Pyeong</value>
+    <comment>An abbreviation for a measurement unit of area.</comment>
+  </data>
+  <data name="UnitName_Pyeong" xml:space="preserve">
+    <value>Pyeong</value>
+    <comment>A measurement unit for area.</comment>
   </data>
 </root>
