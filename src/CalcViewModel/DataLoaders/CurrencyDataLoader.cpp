@@ -644,6 +644,23 @@ void CurrencyDataLoader::GuaranteeSelectedUnits()
             isConversionTargetSet = true;
         }
     }
+
+    // If still not set for either source or target, just select the first currency in the list
+
+    if (!m_currencyUnits.empty())
+    {
+        if (!isConversionSourceSet)
+        {
+            m_currencyUnits[0].isConversionSource = true;
+            isConversionSourceSet = true;
+        }
+
+        if (!isConversionTargetSet)
+        {
+            m_currencyUnits[0].isConversionTarget = true;
+            isConversionTargetSet = true;
+        }
+    }
 }
 
 void CurrencyDataLoader::NotifyDataLoadFinished(bool didLoad)
