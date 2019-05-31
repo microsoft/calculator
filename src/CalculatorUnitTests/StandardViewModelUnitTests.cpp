@@ -387,26 +387,26 @@ namespace CalculatorUnitTests
         {
             m_viewModel->IsScientific = false;
 
-            m_viewModel->OnPaste("-0.99", ViewMode::Standard);
+            m_viewModel->OnPaste("-0.99");
             ValidateViewModelValueAndExpression("-0" + m_decimalSeparator + "99", "");
 
-            m_viewModel->OnPaste("1+1=", ViewMode::Standard);
+            m_viewModel->OnPaste("1+1=");
             ValidateViewModelValueAndExpression("2", "");
 
             // This result is not obvious: it's the result of the previous operation
-            m_viewModel->OnPaste("0=", ViewMode::Standard);
+            m_viewModel->OnPaste("0=");
             ValidateViewModelValueAndExpression("1", "");
 
             // Negative value
-            m_viewModel->OnPaste("-1", ViewMode::Standard);
+            m_viewModel->OnPaste("-1");
             ValidateViewModelValueAndExpression("-1", "");
 
             // Negated expression
-            m_viewModel->OnPaste("-(1+1)", ViewMode::Standard);
+            m_viewModel->OnPaste("-(1+1)");
             ValidateViewModelValueAndSecondaryExpression("-2", "negate(1 + 1)");
 
             // More complicated Negated expression
-            m_viewModel->OnPaste("-(-(-1))", ViewMode::Standard);
+            m_viewModel->OnPaste("-(-(-1))");
             ValidateViewModelValueAndSecondaryExpression("-1", "negate(0 - (0 - 1))");
 
             // Switch to scientific mode
@@ -415,24 +415,24 @@ namespace CalculatorUnitTests
             VERIFY_IS_FALSE(m_viewModel->IsFToEChecked);
 
             //// Positive exponent
-            m_viewModel->OnPaste("1.23e+10", ViewMode::Scientific);
+            m_viewModel->OnPaste("1.23e+10");
             ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e+10", "");
 
-            m_viewModel->OnPaste("1.23e10", ViewMode::Scientific);
+            m_viewModel->OnPaste("1.23e10");
             ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e+10", "");
 
-            m_viewModel->OnPaste("135e10", ViewMode::Scientific);
+            m_viewModel->OnPaste("135e10");
             ValidateViewModelValueAndExpression("135" + m_decimalSeparator + "e+10", "");
 
             //// Negative exponent
-            m_viewModel->OnPaste("1.23e-10", ViewMode::Scientific);
+            m_viewModel->OnPaste("1.23e-10");
             ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e-10", "");
 
             //// Uppercase E (for exponent)
-            m_viewModel->OnPaste("1.23E-10", ViewMode::Scientific);
+            m_viewModel->OnPaste("1.23E-10");
             ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e-10", "");
 
-            m_viewModel->OnPaste("135E10", ViewMode::Scientific);
+            m_viewModel->OnPaste("135E10");
             ValidateViewModelValueAndExpression("135" + m_decimalSeparator + "e+10", "");
         }
 

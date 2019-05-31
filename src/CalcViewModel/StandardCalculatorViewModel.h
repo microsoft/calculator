@@ -317,7 +317,7 @@ namespace CalculatorApp
                 }
             }
 
-            internal : void OnPaste(Platform::String ^ pastedString, CalculatorApp::Common::ViewMode mode);
+            internal : void OnPaste(Platform::String ^ pastedString);
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);
 
@@ -347,7 +347,6 @@ namespace CalculatorApp
             void OnMaxDigitsReached();
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
-
 
             Platform::String ^ GetLocalizedStringFormat(Platform::String ^ format, Platform::String ^ displayValue);
             void OnPropertyChanged(Platform::String ^ propertyname);
@@ -450,6 +449,8 @@ namespace CalculatorApp
 
             bool IsViewPinned();
             void SetViewPinnedState(bool pinned);
+
+            CalculatorApp::Common::ViewMode GetCalculatorMode();
 
             friend class CalculatorDisplay;
             friend class CalculatorFunctionalTests::HistoryTests;

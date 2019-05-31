@@ -109,7 +109,7 @@ String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode
     if (pastedText->Length() > MaxPasteableLength)
     {
         // return NoOp to indicate don't paste anything.
-        TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"PastedExpressionSizeGreaterThanMaxAllowed", mode, programmerNumberBase, bitLengthType);
+///////        TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"PastedExpressionSizeGreaterThanMaxAllowed", mode, programmerNumberBase, bitLengthType);
         return StringReference(PasteErrorString);
     }
 
@@ -129,7 +129,7 @@ String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode
 
     // Extract operands from the expression to make regex comparison easy and quick. For whole expression it was taking too much of time.
     // Operands vector will have the list of operands in the pasteExpression
-    vector<wstring> operands = ExtractOperands(pasteExpression, mode, programmerNumberBase, bitLengthType);
+    vector<wstring> operands = ExtractOperands(pasteExpression, mode);
     if (operands.empty())
     {
         // return NoOp to indicate don't paste anything.
@@ -144,14 +144,14 @@ String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode
     // validate each operand with patterns for different modes
     if (!ExpressionRegExMatch(operands, mode, modeType, programmerNumberBase, bitLengthType))
     {
-        TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"InvalidExpressionForPresentMode", mode, programmerNumberBase, bitLengthType);
+//////        TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"InvalidExpressionForPresentMode", mode, programmerNumberBase, bitLengthType);
         return StringReference(PasteErrorString);
     }
 
     return ref new String(pastedText->Data());
 }
 
-vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression, ViewMode mode, int programmerNumberBase, int bitLengthType)
+vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression, ViewMode mode)
 {
     vector<wstring> operands{};
     size_t lastIndex = 0;
@@ -173,7 +173,7 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
 
         if (operands.size() >= MaxOperandCount)
         {
-            TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"OperandCountGreaterThanMaxCount", mode, programmerNumberBase, bitLengthType);
+            TraceLogger::GetInstance().LogError(mode, L"OperandCountGreaterThanMaxCount");
             operands.clear();
             return operands;
         }
@@ -187,7 +187,7 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
                 // to disallow pasting of 1e+12345 as 1e+1234, max exponent that can be pasted is 9999.
                 if (expLength > MaxExponentLength)
                 {
-                    TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"ExponentLengthGreaterThanMaxLength", mode, programmerNumberBase, bitLengthType);
+                    TraceLogger::GetInstance().LogError(mode, L"ExponentLengthGreaterThanMaxLength");
                     operands.clear();
                     return operands;
                 }

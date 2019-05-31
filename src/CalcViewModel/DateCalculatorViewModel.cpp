@@ -89,9 +89,6 @@ DateCalculatorViewModel::DateCalculatorViewModel()
     if (calendar->DayOfWeek != trueDayOfWeek)
     {
         calendar->SetDateTime(today);
-        TraceLogger::GetInstance().LogDateClippedTimeDifferenceFound(
-            from_cx<winrt::Windows::Globalization::Calendar>(calendar),
-            winrt::Windows::Foundation::DateTime{ winrt::Windows::Foundation::TimeSpan{ clippedTime.UniversalTime } });
     }
 }
 

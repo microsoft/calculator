@@ -19,8 +19,8 @@ namespace CalculatorApp
         int count;
         int buttonId;
         std::wstring buttonName;
-        int mode;
-        ButtonLog(int bId, std::wstring bName, int vMode)
+        CalculatorApp::Common::ViewMode mode;
+        ButtonLog(int bId, std::wstring bName, CalculatorApp::Common::ViewMode vMode)
         {
             buttonId = bId;
             buttonName = bName;
@@ -38,74 +38,24 @@ namespace CalculatorApp
         static TraceLogger& GetInstance();
         bool GetTraceLoggingProviderEnabled() const;
 
-        void LogAppLaunchStart();
-        void LogAppLaunchComplete();
-        void LogAppResumeComplete();
-        void LogOnAppLaunch(std::wstring_view previousExecutionState) const;
-        void LogMemoryClearAll(int);
-        void LogBitFlipPaneClicked() const;
-        void LogBitFlipUsed() const;
-        void LogHistoryBodyOpened() const;
-        void LogHistoryItemLoadBegin() const;
-        void LogHistoryItemLoadEnd(unsigned int) const;
-        void LogHistoryFlyoutOpenBegin(unsigned int) const;
-        void LogHistoryFlyoutOpenEnd(int) const;
-        void LogCalculatorModeViewed(CalculatorApp::Common::ViewMode, int);
-        void LogDateCalculatorModeViewed(CalculatorApp::Common::ViewMode, int);
-        void LogConverterModeViewed(CalculatorApp::Common::ViewMode, int);
-        void LogModeChangeBegin(CalculatorApp::Common::ViewMode, CalculatorApp::Common::ViewMode, int);
-        void LogModeChangeEnd(CalculatorApp::Common::ViewMode, int) const;
-        void LogClearHistory() const;
-        void InsertIntoMemoryMap(int, bool, bool, bool);
-        void UpdateMemoryMap(int, int, bool, bool, bool);
-        void DeleteFromMemoryMap(int, int);
-        void LogMemoryUsed(int, unsigned int, bool, bool, bool, unsigned int) const;
-        void LogMultipleMemoryUsed(unsigned int, unsigned int) const;
-        void LogSingleMemoryUsed(unsigned int) const;
-        void LogSharedMemoryUsed(std::wstring_view, std::wstring_view, unsigned int) const;
-        void LogMemoryBodyOpened() const;
         void LogModeChange(CalculatorApp::Common::ViewMode mode) const;
-        void LogHistoryItemLoad(CalculatorApp::Common::ViewMode mode, int historyListSize) const;
-        void LogMemoryItemLoad(CalculatorApp::Common::ViewMode mode, int maxMemoryIndex, int loadedIndex) const;
-        void LogMemoryFlyoutOpenBegin(unsigned int) const;
-        void LogDebug(std::wstring_view debugData);
-        void LogMemoryFlyoutOpenEnd(unsigned int) const;
-        void LogInvalidPastedInputOccurred(std::wstring_view reason, CalculatorApp::Common::ViewMode mode, int ProgrammerNumberBase, int bitLengthType);
-        void LogValidInputPasted(CalculatorApp::Common::ViewMode mode) const;
-        void UpdateButtonUsage(int buttonId, int mode);
+        void LogHistoryItemLoad(CalculatorApp::Common::ViewMode mode, int historyListSize, int loadedIndex) const;
+        void LogMemoryItemLoad(CalculatorApp::Common::ViewMode mode, int memoryListSize, int loadedIndex) const;
+        void UpdateButtonUsage(int buttonId, CalculatorApp::Common::ViewMode mode);
         void LogButtonUsage();
-        void LogBitLengthButtonUsed(int windowId);
-        void LogRadixButtonUsed(int windowId);
-        void LogAngleButtonUsed(int windowId);
-        void LogHypButtonUsed(int windowId);
         void LogDateCalculationModeUsed(bool AddSubtractMode);
-        void LogNewWindowCreationBegin(int windowId);
-        void LogNewWindowCreationEnd(int windowId);
-        void LogError(std::wstring_view errorString);
-        void LogPrelaunchedAppActivatedByUser();
-        void LogAppPrelaunchedBySystem();
         void UpdateWindowCount(size_t windowCount);
         bool UpdateWindowIdLog(int windowId);
         void LogVisualStateChanged(CalculatorApp::Common::ViewMode mode, std::wstring_view state) const;
-        void LogMaxWindowCount();
-        void LogWindowActivated() const;
-        void LogWindowLaunched() const;
+        void LogWindowCreated(std::wstring_view previousExecutionState) const;
         void LogUserRequestedRefreshFailed() const;
-        void LogConversionResult(std::wstring_view fromValue, std::wstring_view fromUnit, std::wstring_view toValue, std::wstring_view toUnit) const;
-        void LogAboutFlyoutOpened() const;
-        void LogNavBarOpened() const;
+        void LogConverterInputReceived(CalculatorApp::Common::ViewMode mode) const;
         void LogViewClosingTelemetry();
-        void LogCoreWindowWasNull() const;
 
-        // Trace methods for Date Calculator usage
-        void LogDateDifferenceModeUsed(int windowId);
-        void LogDateAddSubtractModeUsed(int windowId, bool isAddMode);
-        void
-        LogDateClippedTimeDifferenceFound(winrt::Windows::Globalization::Calendar const& today, winrt::Windows::Foundation::DateTime const& clippedTime) const;
-
-        void LogStandardException(std::wstring_view functionName, _In_ const std::exception& e) const;
-        void LogWinRTException(std::wstring_view functionName, _In_ winrt::hresult_error const& e) const;
-        void LogPlatformException(std::wstring_view functionName, _In_ Platform::Exception ^ e) const;
+        void LogError(CalculatorApp::Common::ViewMode mode, std::wstring_view errorString);
+         void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e) const;
+        void LogWinRTException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ winrt::hresult_error const& e) const;
+        void LogPlatformException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ Platform::Exception ^ e) const;
 
     private:
         // Create an instance of TraceLogger
@@ -136,7 +86,6 @@ namespace CalculatorApp
         std::vector<ButtonLog> buttonLog;
         bool isHypButtonLogged = false;
         bool isAngleButtonInitialized = false;
-        std::wstring GetProgrammerType(int index);
         size_t maxWindowCount = 0;
         bool isAppLaunchBeginLogged = false;
         bool isAppLaunchEndLogged = false;

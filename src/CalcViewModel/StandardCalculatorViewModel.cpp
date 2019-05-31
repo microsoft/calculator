@@ -37,6 +37,7 @@ namespace
     StringReference IsProgrammerPropertyName(L"IsProgrammer");
     StringReference DisplayValuePropertyName(L"DisplayValue");
     StringReference CalculationResultAutomationNamePropertyName(L"CalculationResultAutomationName");
+    StringReference IsBitFlipCheckedPropertyName(L"IsBitFlipChecked");
 }
 
 namespace CalculatorResourceKeys
@@ -599,28 +600,6 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
     NumbersAndOperatorsEnum numOpEnum = CalculatorButtonPressedEventArgs::GetOperationFromCommandParameter(parameter);
     Command cmdenum = ConvertToOperatorsEnum(numOpEnum);
 
-    if (numOpEnum != NumbersAndOperatorsEnum::IsScientificMode && numOpEnum != NumbersAndOperatorsEnum::IsStandardMode
-        && numOpEnum != NumbersAndOperatorsEnum::IsProgrammerMode && numOpEnum != NumbersAndOperatorsEnum::FToE
-        && (numOpEnum != NumbersAndOperatorsEnum::Degree) && (numOpEnum != NumbersAndOperatorsEnum::Radians) && (numOpEnum != NumbersAndOperatorsEnum::Grads)
-        && numOpEnum != NumbersAndOperatorsEnum::Memory)
-    {
-        ViewMode mode;
-        if (IsStandard)
-        {
-            mode = ViewMode::Standard;
-        }
-        else if (IsScientific)
-        {
-            mode = ViewMode::Scientific;
-        }
-        else if (IsProgrammer)
-        {
-            mode = ViewMode::Programmer;
-        }
-
-        TraceLogger::GetInstance().UpdateButtonUsage((int)numOpEnum, (int)mode);
-    }
-
     if (IsInError)
     {
         m_standardCalculatorManager.SendCommand(Command::CommandCLEAR);
@@ -688,6 +667,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
                 m_isLastOperationHistoryLoad = false;
             }
 
+            TraceLogger::GetInstance().UpdateButtonUsage((int)numOpEnum, GetCalculatorMode());
             m_standardCalculatorManager.SendCommand(cmdenum);
         }
     }
@@ -768,7 +748,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
 
     // Ensure that the paste happens on the UI thread
     CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), NumberBase, bitLengthType)
-        .then([this, mode](String ^ pastedString) { OnPaste(pastedString, mode); }, concurrency::task_continuation_context::use_current());
+        .then([this, mode](String ^ pastedString) { OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 
 CalculationManager::Command StandardCalculatorViewModel::ConvertToOperatorsEnum(NumbersAndOperatorsEnum operation)
@@ -776,7 +756,7 @@ CalculationManager::Command StandardCalculatorViewModel::ConvertToOperatorsEnum(
     return safe_cast<Command>(operation);
 }
 
-void StandardCalculatorViewModel::OnPaste(String ^ pastedString, ViewMode mode)
+void StandardCalculatorViewModel::OnPaste(String ^ pastedString)
 {
     // If pastedString is invalid("NoOp") then display pasteError else process the string
     if (pastedString == StringReference(CopyPasteManager::PasteErrorString))
@@ -785,7 +765,6 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString, ViewMode mode)
         return;
     }
 
-    TraceLogger::GetInstance().LogValidInputPasted(mode);
     bool isFirstLegalChar = true;
     m_standardCalculatorManager.SendCommand(Command::CommandCENTR);
     bool sendNegate = false;
@@ -931,8 +910,7 @@ void StandardCalculatorViewModel::OnClearMemoryCommand(Object ^ parameter)
 {
     m_standardCalculatorManager.MemorizedNumberClearAll();
 
-    int windowId = Utils::GetWindowId();
-    TraceLogger::GetInstance().LogMemoryClearAll(windowId);
+    TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
 
     String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(CalculatorResourceKeys::MemoryCleared, m_localizedMemoryCleared);
     Announcement = CalculatorAnnouncement::GetMemoryClearedAnnouncement(announcement);
@@ -1066,8 +1044,7 @@ void StandardCalculatorViewModel::OnMemoryButtonPressed()
 {
     m_standardCalculatorManager.MemorizeNumber();
 
-    int windowId = Utils::GetWindowId();
-    TraceLogger::GetInstance().InsertIntoMemoryMap(windowId, IsStandard, IsScientific, IsProgrammer);
+    TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::Memory, GetCalculatorMode());
 
     String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
         CalculatorResourceKeys::MemorySave, m_localizedMemorySavedAutomationFormat, m_DisplayValue->Data());
@@ -1099,51 +1076,31 @@ void StandardCalculatorViewModel::OnMemoryItemPressed(Object ^ memoryItemPositio
         auto boxedPosition = safe_cast<Box<int> ^>(memoryItemPosition);
         m_standardCalculatorManager.MemorizedNumberLoad(boxedPosition->Value);
         HideMemoryClicked();
-        int windowId = Utils::GetWindowId();
-        TraceLogger::GetInstance().LogMemoryUsed(windowId, boxedPosition->Value, IsStandard, IsScientific, IsProgrammer, MemorizedNumbers->Size);
+
         auto mode = IsStandard ? ViewMode::Standard : IsScientific ? ViewMode::Scientific : ViewMode::Programmer;
-        TraceLogger::GetInstance().LogMemoryItemLoad(mode, MemorizedNumbers->Size - 1, boxedPosition->Value);
+        TraceLogger::GetInstance().LogMemoryItemLoad(mode, MemorizedNumbers->Size, boxedPosition->Value);
     }
 }
 
 void StandardCalculatorViewModel::OnMemoryAdd(Object ^ memoryItemPosition)
 {
     // M+ will add display to memorylist if memory list is empty.
-    int windowId = Utils::GetWindowId();
 
     if (MemorizedNumbers)
     {
         auto boxedPosition = safe_cast<Box<int> ^>(memoryItemPosition);
-        if (MemorizedNumbers->Size > 0)
-        {
-            TraceLogger::GetInstance().LogMemoryUsed(windowId, boxedPosition->Value, IsStandard, IsScientific, IsProgrammer, MemorizedNumbers->Size);
-            TraceLogger::GetInstance().UpdateMemoryMap(windowId, boxedPosition->Value, IsStandard, IsScientific, IsProgrammer);
-        }
-        else
-        {
-            TraceLogger::GetInstance().InsertIntoMemoryMap(windowId, IsStandard, IsScientific, IsProgrammer);
-        }
+        TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::MemoryAdd, GetCalculatorMode());
         m_standardCalculatorManager.MemorizedNumberAdd(boxedPosition->Value);
     }
 }
 
 void StandardCalculatorViewModel::OnMemorySubtract(Object ^ memoryItemPosition)
 {
-    int windowId = Utils::GetWindowId();
-
     // M- will add negative of displayed number to memorylist if memory list is empty.
     if (MemorizedNumbers)
     {
         auto boxedPosition = safe_cast<Box<int> ^>(memoryItemPosition);
-        if (MemorizedNumbers->Size > 0)
-        {
-            TraceLogger::GetInstance().LogMemoryUsed(windowId, boxedPosition->Value, IsStandard, IsScientific, IsProgrammer, MemorizedNumbers->Size);
-            TraceLogger::GetInstance().UpdateMemoryMap(windowId, boxedPosition->Value, IsStandard, IsScientific, IsProgrammer);
-        }
-        else
-        {
-            TraceLogger::GetInstance().InsertIntoMemoryMap(windowId, IsStandard, IsScientific, IsProgrammer);
-        }
+        TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::MemorySubtract, GetCalculatorMode());
         m_standardCalculatorManager.MemorizedNumberSubtract(boxedPosition->Value);
     }
 }
@@ -1152,7 +1109,6 @@ void StandardCalculatorViewModel::OnMemoryClear(_In_ Object ^ memoryItemPosition
 {
     if (MemorizedNumbers && MemorizedNumbers->Size > 0)
     {
-        int windowId = Utils::GetWindowId();
         auto boxedPosition = safe_cast<Box<int> ^>(memoryItemPosition);
 
         if (boxedPosition->Value >= 0)
@@ -1170,9 +1126,7 @@ void StandardCalculatorViewModel::OnMemoryClear(_In_ Object ^ memoryItemPosition
             {
                 IsMemoryEmpty = true;
             }
-
-            TraceLogger::GetInstance().LogMemoryUsed(windowId, boxedPosition->Value, IsStandard, IsScientific, IsProgrammer, MemorizedNumbers->Size);
-            TraceLogger::GetInstance().DeleteFromMemoryMap(windowId, boxedPosition->Value);
+            TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
 
             wstring localizedIndex = to_wstring(boxedPosition->Value + 1);
             LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedIndex);
@@ -1212,6 +1166,11 @@ void StandardCalculatorViewModel::OnPropertyChanged(String ^ propertyname)
     {
         RaisePropertyChanged(CalculationResultAutomationNamePropertyName);
         Announcement = GetDisplayUpdatedNarratorAnnouncement();
+    }
+    else if (propertyname == IsBitFlipCheckedPropertyName)
+    {
+        TraceLogger::GetInstance().UpdateButtonUsage(
+            IsBitFlipChecked ? (int)NumbersAndOperatorsEnum::BitflipButton : (int)NumbersAndOperatorsEnum::FullKeypadButton, ViewMode::Programmer);
     }
 }
 
@@ -1905,4 +1864,17 @@ NarratorAnnouncement ^ StandardCalculatorViewModel::GetDisplayUpdatedNarratorAnn
     m_feedbackForButtonPress = nullptr;
 
     return CalculatorAnnouncement::GetDisplayUpdatedAnnouncement(announcement);
+}
+
+ViewMode StandardCalculatorViewModel::GetCalculatorMode()
+{
+    if (IsStandard)
+    {
+        return ViewMode::Standard;
+    }
+    else if (IsScientific)
+    {
+        return ViewMode::Scientific;
+    }
+    return ViewMode::Programmer;
 }

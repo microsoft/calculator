@@ -38,7 +38,7 @@ CalculatorProgrammerOperators::CalculatorProgrammerOperators()
 
 void CalculatorProgrammerOperators::HexButtonChecked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    TraceLogger::GetInstance().LogRadixButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+    TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::HexButton, ViewMode::Programmer);
     if (Model)
     {
         Model->SwitchProgrammerModeBase(RADIX_TYPE::HEX_RADIX);
@@ -47,7 +47,7 @@ void CalculatorProgrammerOperators::HexButtonChecked(_In_ Object ^ sender, _In_ 
 
 void CalculatorProgrammerOperators::DecButtonChecked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    TraceLogger::GetInstance().LogRadixButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+    TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::DecButton, ViewMode::Programmer);
     if (Model)
     {
         Model->SwitchProgrammerModeBase(RADIX_TYPE::DEC_RADIX);
@@ -56,7 +56,7 @@ void CalculatorProgrammerOperators::DecButtonChecked(_In_ Object ^ sender, _In_ 
 
 void CalculatorProgrammerOperators::OctButtonChecked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    TraceLogger::GetInstance().LogRadixButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+    TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::OctButton, ViewMode::Programmer);
     if (Model)
     {
         Model->SwitchProgrammerModeBase(RADIX_TYPE::OCT_RADIX);
@@ -65,7 +65,7 @@ void CalculatorProgrammerOperators::OctButtonChecked(_In_ Object ^ sender, _In_ 
 
 void CalculatorProgrammerOperators::BinButtonChecked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    TraceLogger::GetInstance().LogRadixButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+    TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::BinButton, ViewMode::Programmer);
     if (Model)
     {
         Model->SwitchProgrammerModeBase(RADIX_TYPE::BIN_RADIX);

@@ -6,6 +6,7 @@
 #include "CalcViewModel/Common/TraceLogger.h"
 
 using namespace CalculatorApp;
+using namespace CalculatorApp::Common;
 using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace Windows::Foundation;
@@ -28,12 +29,11 @@ CalculatorProgrammerDisplayPanel::CalculatorProgrammerDisplayPanel()
 
 void CalculatorProgrammerDisplayPanel::ShowBitFlip(Object ^ sender, RoutedEventArgs ^ e)
 {
-    TraceLogger::GetInstance().LogBitFlipPaneClicked();
+    // TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::BitflipButton, ViewMode::Programmer);
 }
 
 void CalculatorProgrammerDisplayPanel::OnBitLengthButtonPressed(Object ^ parameter)
 {
-    TraceLogger::GetInstance().LogBitLengthButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
     String ^ buttonId = parameter->ToString();
 
     QwordButton->Visibility = ::Visibility::Collapsed;

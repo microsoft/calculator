@@ -144,7 +144,7 @@ namespace CalculatorApp
         }
         else
         {
-            TraceLogger::GetInstance().LogCoreWindowWasNull();
+            //TraceLogger::GetInstance().LogStandardException(L"WindowFrameService::LogOnViewClosed");
         }
     }
 

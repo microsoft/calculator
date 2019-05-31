@@ -253,7 +253,6 @@ void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
         CoreDispatcherPriority::Normal, ref new DispatchedHandler([]() {
             if (TraceLogger::GetInstance().UpdateWindowIdLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
             {
-                TraceLogger::GetInstance().LogAppLaunchComplete();
                 AppLifecycleLogger::GetInstance().LaunchUIResponsive();
                 AppLifecycleLogger::GetInstance().LaunchVisibleComplete();
             }
@@ -375,7 +374,6 @@ void MainPage::OnNavPaneOpening(_In_ MUXC::NavigationView ^ sender, _In_ Object 
 void MainPage::OnNavPaneOpened(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
 {
     KeyboardShortcutManager::HonorShortcuts(false);
-    TraceLogger::GetInstance().LogNavBarOpened();
 }
 
 void MainPage::OnNavPaneClosed(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)

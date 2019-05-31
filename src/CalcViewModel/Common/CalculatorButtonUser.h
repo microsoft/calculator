@@ -161,6 +161,14 @@ public
         BINPOS62 = (int)CM::Command::CommandBINPOS62,
         BINPOS63 = (int)CM::Command::CommandBINPOS63,
         BINEND = (int)CM::Command::CommandBINEDITEND,
-        Hyp = (int)CM::Command::CommandHYP
+        Hyp = (int)CM::Command::CommandHYP,
+
+        // Enum values below are used for Tracelogging and do not map to the Calculator engine
+        MemoryAdd,
+        MemorySubtract,
+        MemoryRecall,
+        MemoryClear,
+        BitflipButton,
+        FullKeypadButton
     };
 }

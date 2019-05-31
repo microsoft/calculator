@@ -149,7 +149,6 @@ void HistoryViewModel::OnHideCommand(_In_ Platform::Object ^ e)
 
 void HistoryViewModel::OnClearCommand(_In_ Platform::Object ^ e)
 {
-    TraceLogger::GetInstance().LogClearHistory();
     if (AreHistoryShortcutsEnabled == true)
     {
         m_calculatorManager->ClearHistory();

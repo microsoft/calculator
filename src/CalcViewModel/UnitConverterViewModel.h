@@ -204,7 +204,7 @@ namespace CalculatorApp
             NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
             void DisplayPasteError();
             void OnValueActivated(IActivatable ^ control);
-            void OnPaste(Platform::String ^ stringToPaste, CalculatorApp::Common::ViewMode mode);
+            void OnPaste(Platform::String ^ stringToPaste);
 
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);

@@ -246,7 +246,7 @@ void UnitConverter::OnCopyMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEvent
 void UnitConverter::OnPasteMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     CopyPasteManager::GetStringToPaste(Model->Mode, CategoryGroupType::Converter).then([this](String ^ pastedString) {
-        Model->OnPaste(pastedString, Model->Mode);
+        Model->OnPaste(pastedString);
     });
 }
 
