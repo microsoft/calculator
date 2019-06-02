@@ -191,6 +191,19 @@ namespace CalculatorManagerTest
         TEST_METHOD(CalculatorManagerTestMaxDigitsReached_LeadingDecimal);
         TEST_METHOD(CalculatorManagerTestMaxDigitsReached_TrailingDecimal);
 
+        TEST_METHOD(stallkjaSerialize1);
+        TEST_METHOD(stallkjaSerialize2);
+        TEST_METHOD(stallkjaSerialize3);
+        TEST_METHOD(stallkjaSerialize4);
+        TEST_METHOD(stallkjaSerialize5);
+        TEST_METHOD(stallkjaSerialize6);
+        TEST_METHOD(stallkjaMemoSub1);
+        TEST_METHOD(stallkjaMemoSub2);
+        TEST_METHOD(stallkjaMemoSub3);
+        TEST_METHOD(stallkjaMemoSub4);
+        TEST_METHOD(stallkjaMemoSub5);
+        TEST_METHOD(stallkjaMemoSub6);
+
         // TODO re-enable when cause of failure is determined. Bug 20226670
         //TEST_METHOD(CalculatorManagerTestBinaryOperatorReceived);
         //TEST_METHOD(CalculatorManagerTestBinaryOperatorReceived_Multiple);
@@ -435,6 +448,182 @@ namespace CalculatorManagerTest
         TestDriver::Test(L"0", L"\x221A(1024) - 32 + ", commands22);
     }
 
+    void CalculatorManagerTest::stallkjaSerialize1()
+    {
+        Cleanup();
+
+        Command commands[] = { Command::Command2, Command::CommandNULL };
+        ExecuteCommands(commands);
+
+        for (int i = 0; i < 110; i++)
+        {
+            m_calculatorManager->MemorizeNumber();
+        }
+
+        VerifyPersistence();
+    }
+	
+    void CalculatorManagerTest::stallkjaSerialize2()
+    {
+        Cleanup();
+
+        Command commands[] = {Command::Command2, Command::CommandSIGN, Command::CommandNULL };
+        ExecuteCommands(commands);
+
+        for (int i = 0; i < 110; i++)
+        {
+            m_calculatorManager->MemorizeNumber();
+        }
+
+        VerifyPersistence();
+    }
+	
+    void CalculatorManagerTest::stallkjaSerialize3()
+    {
+        Cleanup();
+
+        Command commands[] = { Command::Command2, Command::CommandPWR,Command::Command2,Command::Command5,Command::Command6,Command::CommandEQU,  Command::CommandNULL };
+        ExecuteCommands(commands);
+
+        for (int i = 0; i < 110; i++)
+        {
+            m_calculatorManager->MemorizeNumber();
+        }
+
+        VerifyPersistence();
+    }
+	
+    void CalculatorManagerTest::stallkjaSerialize4()
+    {
+        Cleanup();
+
+        Command commands[] = { Command::Command2, Command::CommandPWR,Command::Command2,Command::Command5,Command::Command6,Command::CommandSIGN,Command::CommandEQU, Command::CommandNULL };
+        ExecuteCommands(commands);
+
+        for (int i = 0; i < 110; i++)
+        {
+            m_calculatorManager->MemorizeNumber();
+        }
+
+        VerifyPersistence();
+    }
+	
+    void CalculatorManagerTest::stallkjaSerialize5()
+    {
+        Cleanup();
+
+        Command commands[] = { Command::Command0, Command::CommandNULL };
+        ExecuteCommands(commands);
+
+        for (int i = 0; i < 110; i++)
+        {
+            m_calculatorManager->MemorizeNumber();
+        }
+
+        VerifyPersistence();
+    }
+	
+    void CalculatorManagerTest::stallkjaSerialize6()
+    {
+        Cleanup();
+
+        Command commands[] = { Command::Command5,Command::CommandDIV,Command::Command1,Command::Command0, Command::CommandEQU, Command::CommandNULL };
+        ExecuteCommands(commands);
+
+        for (int i = 0; i < 110; i++)
+        {
+            m_calculatorManager->MemorizeNumber();
+        }
+
+        VerifyPersistence();
+    }
+
+    void CalculatorManagerTest::stallkjaMemoSub1()
+    {
+        Cleanup();
+        m_calculatorManager->SendCommand(Command::Command1);
+        m_calculatorManager->SendCommand(Command::CommandDIV);
+        m_calculatorManager->SendCommand(Command::Command0);
+        m_calculatorManager->SendCommand(Command::CommandEQU);
+        m_calculatorManager->MemorizedNumberSubtract(0);
+        VERIFY_ARE_EQUAL(0, m_calculatorDisplayTester->GetMemorizedNumbers().size());
+    }
+	
+    void CalculatorManagerTest::stallkjaMemoSub2()
+    {
+        Cleanup();
+        m_calculatorManager->SendCommand(Command::Command1);
+        m_calculatorManager->SendCommand(Command::CommandSIGN);
+        m_calculatorManager->MemorizedNumberSubtract(0);
+        auto savedMemory = m_calculatorDisplayTester->GetMemorizedNumbers();
+        VERIFY_ARE_EQUAL(L"1", savedMemory.at(0));
+    }
+	
+    void CalculatorManagerTest::stallkjaMemoSub3()
+    {
+        Cleanup();
+        m_calculatorManager->SendCommand(Command::Command1);
+        m_calculatorManager->MemorizeNumber();
+        m_calculatorManager->SendCommand(Command::Command1);
+        m_calculatorManager->SendCommand(Command::Command2);
+        m_calculatorManager->MemorizeNumber();
+        auto savedMemory = m_calculatorDisplayTester->GetMemorizedNumbers();
+
+        m_calculatorManager->SendCommand(Command::CommandNULL);
+        m_calculatorManager->SendCommand(Command::Command2);
+        m_calculatorManager->MemorizedNumberSubtract(0);
+        auto value = m_calculatorDisplayTester->GetPrimaryDisplay();
+
+        savedMemory = m_calculatorDisplayTester->GetMemorizedNumbers();
+        VERIFY_ARE_EQUAL(L"10", savedMemory.at(0));
+        VERIFY_ARE_EQUAL(L"1", savedMemory.at(1));
+    }
+	
+    void CalculatorManagerTest::stallkjaMemoSub4()
+    {
+        Cleanup();
+		VERIFY_ARE_EQUAL(1, 1);
+        m_calculatorManager->SendCommand(Command::Command1);
+        m_calculatorManager->MemorizeNumber();
+        m_calculatorManager->SendCommand(Command::Command1);
+        m_calculatorManager->SendCommand(Command::Command2);
+        m_calculatorManager->MemorizeNumber();
+        auto savedMemory = m_calculatorDisplayTester->GetMemorizedNumbers();
+        m_calculatorManager->SendCommand(Command::CommandNULL);
+        m_calculatorManager->SendCommand(Command::Command2);
+        m_calculatorManager->MemorizedNumberSubtract(2);
+        //should have thrown error by now
+        VERIFY_ARE_EQUAL(0, 1);
+    }
+	
+    void CalculatorManagerTest::stallkjaMemoSub5()
+    {
+        Cleanup();
+        m_calculatorManager->SendCommand(Command::Command1);
+        m_calculatorManager->MemorizeNumber();
+        m_calculatorManager->SendCommand(Command::Command1);
+        m_calculatorManager->SendCommand(Command::Command2);
+        m_calculatorManager->MemorizeNumber();
+        auto savedMemory = m_calculatorDisplayTester->GetMemorizedNumbers();
+
+        m_calculatorManager->SendCommand(Command::CommandNULL);
+        m_calculatorManager->SendCommand(Command::Command2);
+        m_calculatorManager->MemorizedNumberAdd(0);
+        auto value = m_calculatorDisplayTester->GetPrimaryDisplay();
+
+        savedMemory = m_calculatorDisplayTester->GetMemorizedNumbers();
+        VERIFY_ARE_EQUAL(L"14", savedMemory.at(0));
+        VERIFY_ARE_EQUAL(L"1", savedMemory.at(1));
+    }
+    void CalculatorManagerTest::stallkjaMemoSub6()
+    {
+        Cleanup();
+        m_calculatorManager->SendCommand(Command::Command1);
+        m_calculatorManager->MemorizedNumberAdd(0);
+        auto savedMemory = m_calculatorDisplayTester->GetMemorizedNumbers();
+        VERIFY_ARE_EQUAL(L"1", savedMemory.at(0));
+    }
+	
     void CalculatorManagerTest::CalculatorManagerTestScientific()
     {
         Command commands1[] = { Command::Command1, Command::Command2, Command::Command3,

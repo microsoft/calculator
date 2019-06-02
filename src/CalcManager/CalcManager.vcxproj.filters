@@ -160,5 +160,6 @@
     <ClInclude Include="Header Files\RationalMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CalcException.h" />
   </ItemGroup>
 </Project>

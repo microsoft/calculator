@@ -38,6 +38,18 @@ namespace CalculatorFunctionalTests
         TEST_METHOD(TestRadixAutomationName);
         TEST_METHOD(TestHistoryEmpty);
 
+        
+        TEST_METHOD(destafen01ClearHistory);
+        TEST_METHOD(destafen02ClearHistory);
+        TEST_METHOD(destafen03ClearHistory);
+        TEST_METHOD(destafen04ClearHistory);
+        TEST_METHOD(destafen05ClearHistory);
+        TEST_METHOD(destafen01AddMaxHistoryItems);
+        TEST_METHOD(destafen02AddMaxHistoryItems);
+        TEST_METHOD(destafen03AddMaxHistoryItems);
+        TEST_METHOD(destafen04AddMaxHistoryItems);
+        TEST_METHOD(destafen05AddMaxHistoryItems);
+
     private:
         HistoryViewModel^ m_historyViewModel;
         StandardCalculatorViewModel^ m_standardViewModel;
@@ -527,4 +539,288 @@ namespace CalculatorFunctionalTests
     {
         HistoryClearCommandWithEmptyHistory();
     }
+
+    
+    void HistoryTests::destafen01ClearHistory()
+    {
+        Initialize();
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeScientific);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command2);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeBasic);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command2);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        m_historyViewModel->OnClearCommand(nullptr);
+        VERIFY_ARE_EQUAL(0, m_historyViewModel->ItemSize);
+        VERIFY_IS_TRUE(IsHistoryContainerEmpty(GetHistoryContainerKeyHelper(CM_STD)));
+        VERIFY_IS_TRUE(IsHistoryContainerEmpty(GetHistoryContainerKeyHelper(CM_SCI)));
+        Cleanup();
+    }
+
+    void HistoryTests::destafen02ClearHistory()
+    {
+        Initialize();
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeScientific);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandDEG);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandSIN);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandRAD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandSIN);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandGRAD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandSIN);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        m_historyViewModel->OnClearCommand(nullptr);
+        VERIFY_ARE_EQUAL(0, m_historyViewModel->ItemSize);
+        VERIFY_IS_TRUE(IsHistoryContainerEmpty(GetHistoryContainerKeyHelper(CM_STD)));
+        VERIFY_IS_TRUE(IsHistoryContainerEmpty(GetHistoryContainerKeyHelper(CM_SCI)));
+        Cleanup();
+    }
+
+    void HistoryTests::destafen03ClearHistory()
+    {
+        Initialize();
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeBasic);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command5);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandMUL);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command5);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        m_historyViewModel->OnClearCommand(nullptr);
+        VERIFY_ARE_EQUAL(0, m_historyViewModel->ItemSize);
+        VERIFY_IS_TRUE(IsHistoryContainerEmpty(GetHistoryContainerKeyHelper(CM_STD)));
+        VERIFY_IS_TRUE(IsHistoryContainerEmpty(GetHistoryContainerKeyHelper(CM_SCI)));
+        Cleanup();
+    }
+
+    void HistoryTests::destafen04ClearHistory()
+    {
+        Initialize();
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeProgrammer);
+        m_standardViewModel->IsProgrammer = true;
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command2);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        m_historyViewModel->OnClearCommand(nullptr);
+        VERIFY_ARE_EQUAL(0, m_historyViewModel->ItemSize);
+        VERIFY_IS_TRUE(IsHistoryContainerEmpty(GetHistoryContainerKeyHelper(CM_STD)));
+        VERIFY_IS_TRUE(IsHistoryContainerEmpty(GetHistoryContainerKeyHelper(CM_SCI)));
+        Cleanup();
+    }
+
+    void HistoryTests::destafen05ClearHistory()
+    {
+        Initialize();
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeProgrammer);
+        m_standardViewModel->IsProgrammer = true;
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command7);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        m_historyViewModel->OnClearCommand(nullptr);
+        VERIFY_ARE_EQUAL(0, m_historyViewModel->ItemSize);
+        VERIFY_IS_TRUE(IsHistoryContainerEmpty(GetHistoryContainerKeyHelper(CM_STD)));
+        VERIFY_IS_TRUE(IsHistoryContainerEmpty(GetHistoryContainerKeyHelper(CM_SCI)));
+        Cleanup();
+    }
+
+    void HistoryTests::destafen01AddMaxHistoryItems()
+    {
+        Initialize();
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        for (size_t i = 1; i < m_standardViewModel->m_standardCalculatorManager.MaxHistorySize(); i++)
+        {
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command2);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        }
+        VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemSize, m_standardViewModel->m_standardCalculatorManager.MaxHistorySize());
+        String^ expression = UtfUtils::LRO + L"1   +   1 =" + UtfUtils::PDF;
+        int output = 2;
+        String^ result = output.ToString();
+        auto historyItem = m_standardViewModel->m_standardCalculatorManager.GetHistoryItem(0);
+        VERIFY_ARE_EQUAL(expression, StringReference(historyItem->historyItemVector.expression.c_str()));
+        VERIFY_ARE_EQUAL(result, StringReference(historyItem->historyItemVector.result.c_str()));
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command5);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemSize, m_standardViewModel->m_standardCalculatorManager.MaxHistorySize());
+        expression = UtfUtils::LRO + L"1   +   2 =" + UtfUtils::PDF;
+        output = 3;
+        result = output.ToString();
+        historyItem = m_standardViewModel->m_standardCalculatorManager.GetHistoryItem(0);
+        VERIFY_ARE_EQUAL(expression, StringReference(historyItem->historyItemVector.expression.c_str()));
+        VERIFY_ARE_EQUAL(result, StringReference(historyItem->historyItemVector.result.c_str()));
+        Cleanup();
+    }
+
+    void HistoryTests::destafen02AddMaxHistoryItems()
+    {
+        Initialize();
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeProgrammer);
+        m_standardViewModel->IsProgrammer = true;
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        for (size_t i = 1; i < m_standardViewModel->m_standardCalculatorManager.MaxHistorySize(); i++)
+        {
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command2);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        }
+        VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemSize, m_standardViewModel->m_standardCalculatorManager.MaxHistorySize());
+        String^ expression = UtfUtils::LRO + L"1   +   1 =" + UtfUtils::PDF;
+        int output = 2;
+        String^ result = output.ToString();
+        auto historyItem = m_standardViewModel->m_standardCalculatorManager.GetHistoryItem(0);
+        VERIFY_ARE_EQUAL(expression, StringReference(historyItem->historyItemVector.expression.c_str()));
+        VERIFY_ARE_EQUAL(result, StringReference(historyItem->historyItemVector.result.c_str()));
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command5);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemSize, m_standardViewModel->m_standardCalculatorManager.MaxHistorySize());
+        expression = UtfUtils::LRO + L"1   +   2 =" + UtfUtils::PDF;
+        output = 3;
+        result = output.ToString();
+        historyItem = m_standardViewModel->m_standardCalculatorManager.GetHistoryItem(0);
+        VERIFY_ARE_EQUAL(expression, StringReference(historyItem->historyItemVector.expression.c_str()));
+        VERIFY_ARE_EQUAL(result, StringReference(historyItem->historyItemVector.result.c_str()));
+        Cleanup();
+    }
+
+    void HistoryTests::destafen03AddMaxHistoryItems()
+    {
+        Initialize();
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeScientific);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        for (size_t i = 1; i < m_standardViewModel->m_standardCalculatorManager.MaxHistorySize(); i++)
+        {
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command2);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        }
+        VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemSize, m_standardViewModel->m_standardCalculatorManager.MaxHistorySize());
+        String^ expression = UtfUtils::LRO + L"1   +   1 =" + UtfUtils::PDF;
+        int output = 2;
+        String^ result = output.ToString();
+        auto historyItem = m_standardViewModel->m_standardCalculatorManager.GetHistoryItem(0);
+        VERIFY_ARE_EQUAL(expression, StringReference(historyItem->historyItemVector.expression.c_str()));
+        VERIFY_ARE_EQUAL(result, StringReference(historyItem->historyItemVector.result.c_str()));
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command5);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemSize, m_standardViewModel->m_standardCalculatorManager.MaxHistorySize());
+        expression = UtfUtils::LRO + L"1   +   2 =" + UtfUtils::PDF;
+        output = 3;
+        result = output.ToString();
+        historyItem = m_standardViewModel->m_standardCalculatorManager.GetHistoryItem(0);
+        VERIFY_ARE_EQUAL(expression, StringReference(historyItem->historyItemVector.expression.c_str()));
+        VERIFY_ARE_EQUAL(result, StringReference(historyItem->historyItemVector.result.c_str()));
+        Cleanup();
+    }
+
+    void HistoryTests::destafen04AddMaxHistoryItems()
+    {
+        Initialize();
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeBasic);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command2);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command2);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        for (size_t i = 1; i < m_standardViewModel->m_standardCalculatorManager.MaxHistorySize(); i++)
+        {
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command2);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command2);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        }
+        VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemSize, m_standardViewModel->m_standardCalculatorManager.MaxHistorySize());
+        String^ expression = UtfUtils::LRO + L"1   +   1 =" + UtfUtils::PDF;
+        int output = 2;
+        String^ result = output.ToString();
+        auto historyItem = m_standardViewModel->m_standardCalculatorManager.GetHistoryItem(0);
+        VERIFY_ARE_EQUAL(expression, StringReference(historyItem->historyItemVector.expression.c_str()));
+        VERIFY_ARE_EQUAL(result, StringReference(historyItem->historyItemVector.result.c_str()));
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command5);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemSize, m_standardViewModel->m_standardCalculatorManager.MaxHistorySize());
+        expression = UtfUtils::LRO + L"1   +   2 =" + UtfUtils::PDF;
+        output = 3;
+        result = output.ToString();
+        historyItem = m_standardViewModel->m_standardCalculatorManager.GetHistoryItem(0);
+        VERIFY_ARE_EQUAL(expression, StringReference(historyItem->historyItemVector.expression.c_str()));
+        VERIFY_ARE_EQUAL(result, StringReference(historyItem->historyItemVector.result.c_str()));
+        Cleanup();
+    }
+
+    void HistoryTests::destafen05AddMaxHistoryItems()
+    {
+        Initialize();
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::ModeScientific);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandDEG);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandSIN);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandRAD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandSIN);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandGRAD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandSIN);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        for (size_t i = 1; i < m_standardViewModel->m_standardCalculatorManager.MaxHistorySize(); i++)
+        {
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command2);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command2);
+            m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        }
+        VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemSize, m_standardViewModel->m_standardCalculatorManager.MaxHistorySize());
+        String^ expression = UtfUtils::LRO + L"1   +   1 =" + UtfUtils::PDF;
+        int output = 2;
+        String^ result = output.ToString();
+        auto historyItem = m_standardViewModel->m_standardCalculatorManager.GetHistoryItem(0);
+        VERIFY_ARE_EQUAL(expression, StringReference(historyItem->historyItemVector.expression.c_str()));
+        VERIFY_ARE_EQUAL(result, StringReference(historyItem->historyItemVector.result.c_str()));
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command1);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandADD);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::Command5);
+        m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
+        VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemSize, m_standardViewModel->m_standardCalculatorManager.MaxHistorySize());
+        expression = UtfUtils::LRO + L"1   +   2 =" + UtfUtils::PDF;
+        output = 3;
+        result = output.ToString();
+        historyItem = m_standardViewModel->m_standardCalculatorManager.GetHistoryItem(0);
+        VERIFY_ARE_EQUAL(expression, StringReference(historyItem->historyItemVector.expression.c_str()));
+        VERIFY_ARE_EQUAL(result, StringReference(historyItem->historyItemVector.result.c_str()));
+        Cleanup();
+    }
+    
+
+
+
+
 }
