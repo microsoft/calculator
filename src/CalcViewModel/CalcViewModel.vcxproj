@@ -408,6 +408,23 @@
       <Project>{311e866d-8b93-4609-a691-265941fee101}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemDefinitionGroup Condition="!Exists('DataLoaders\DataLoaderConstants.h')">
+    <ClCompile>
+      <AdditionalOptions>/DUSE_MOCK_DATA %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <Choose>
+	<When Condition="Exists('DataLoaders\DataLoaderConstants.h')">
+	  <ItemGroup>
+		<ClInclude Include="DataLoaders\DataLoaderConstants.h" />
+	  </ItemGroup>
+	</When>
+	<Otherwise>
+	  <ItemGroup>
+		<ClInclude Include="DataLoaders\DataLoaderMockConstants.h" />
+	  </ItemGroup>
+	</Otherwise>
+  </Choose>
   <ItemGroup>
     <None Include="DataLoaders\DefaultFromToCurrency.json" />
     <None Include="packages.config" />
