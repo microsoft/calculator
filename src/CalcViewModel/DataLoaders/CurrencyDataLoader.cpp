@@ -530,7 +530,22 @@ bool CurrencyDataLoader::TryParseStaticData(_In_ String^ rawJson, _Inout_ vector
     staticData.resize(size_t{ data->Size });
     for (unsigned int i = 0; i < data->Size; i++)
     {
-        JsonObject^ obj = data->GetAt(i)->GetObject();
+        JsonObject ^ obj;
+        try
+        {
+            obj = data->GetAt(i)->GetObject();
+        }
+        catch (COMException ^ e)
+        {
+            if (e->HResult == E_ILLEGAL_METHOD_CALL)
+            {
+                continue;
+            }
+            else
+            {
+                throw;
+            }
+        }
 
         for (size_t j = 0; j < values.size(); j++)
         {
@@ -557,7 +572,7 @@ bool CurrencyDataLoader::TryParseStaticData(_In_ String^ rawJson, _Inout_ vector
 
 bool CurrencyDataLoader::TryParseAllRatiosData(_In_ String^ rawJson, _Inout_ CurrencyRatioMap& allRatios)
 {
-    JsonArray^ data = nullptr;
+    JsonArray ^ data = nullptr;
     if (!JsonArray::TryParse(rawJson, &data))
     {
         return false;
@@ -568,7 +583,22 @@ bool CurrencyDataLoader::TryParseAllRatiosData(_In_ String^ rawJson, _Inout_ Cur
     allRatios.clear();
     for (unsigned int i = 0; i < data->Size; i++)
     {
-        JsonObject^ obj = data->GetAt(i)->GetObject();
+        JsonObject ^ obj;
+        try
+        {
+            obj = data->GetAt(i)->GetObject();
+        }
+        catch (COMException^ e)
+        {
+            if (e->HResult == E_ILLEGAL_METHOD_CALL)
+            {
+                continue;
+            }
+            else
+            {
+                throw;
+            }
+        }
 
         // Rt is ratio, An is target currency ISO code.
         double relativeRatio = obj->GetNamedNumber(StringReference(RATIO_KEY));
