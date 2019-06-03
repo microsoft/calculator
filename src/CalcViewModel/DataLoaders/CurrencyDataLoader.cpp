@@ -502,7 +502,22 @@ bool CurrencyDataLoader::TryParseStaticData(_In_ String ^ rawJson, _Inout_ vecto
     staticData.resize(size_t{ data->Size });
     for (unsigned int i = 0; i < data->Size; i++)
     {
-        JsonObject ^ obj = data->GetAt(i)->GetObject();
+        JsonObject ^ obj;
+        try
+        {
+            obj = data->GetAt(i)->GetObject();
+        }
+        catch (COMException ^ e)
+        {
+            if (e->HResult == E_ILLEGAL_METHOD_CALL)
+            {
+                continue;
+            }
+            else
+            {
+                throw;
+            }
+        }
 
         for (size_t j = 0; j < values.size(); j++)
         {
@@ -531,7 +546,22 @@ bool CurrencyDataLoader::TryParseAllRatiosData(_In_ String ^ rawJson, _Inout_ Cu
     allRatios.clear();
     for (unsigned int i = 0; i < data->Size; i++)
     {
-        JsonObject ^ obj = data->GetAt(i)->GetObject();
+        JsonObject ^ obj;
+        try
+        {
+            obj = data->GetAt(i)->GetObject();
+        }
+        catch (COMException^ e)
+        {
+            if (e->HResult == E_ILLEGAL_METHOD_CALL)
+            {
+                continue;
+            }
+            else
+            {
+                throw;
+            }
+        }
 
         // Rt is ratio, An is target currency ISO code.
         double relativeRatio = obj->GetNamedNumber(StringReference(RATIO_KEY));
@@ -641,6 +671,23 @@ void CurrencyDataLoader::GuaranteeSelectedUnits()
         if (!isConversionTargetSet && unit.abbreviation == DEFAULT_TO_CURRENCY)
         {
             unit.isConversionTarget = true;
+            isConversionTargetSet = true;
+        }
+    }
+
+    // If still not set for either source or target, just select the first currency in the list
+
+    if (!m_currencyUnits.empty())
+    {
+        if (!isConversionSourceSet)
+        {
+            m_currencyUnits[0].isConversionSource = true;
+            isConversionSourceSet = true;
+        }
+
+        if (!isConversionTargetSet)
+        {
+            m_currencyUnits[0].isConversionTarget = true;
             isConversionTargetSet = true;
         }
     }
