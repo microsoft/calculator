@@ -639,7 +639,7 @@ namespace CalculatorManagerTest
    /*****************************************************************
     * Kulkarnr TESTS
     * **************************************************************/
-    void CalculatorManagerTest::kulkarnr01CalculatorManagerTest()
+    void CalculatorManagerTest::kulkarnr01CalculatorManagerTestProgrammer()
     {
         Command commands1[] = { Command::Command1, Command::Command2, Command::Command3,
             Command::CommandPNT, Command::Command4, Command::Command5, Command::Command6, Command::CommandNULL };
