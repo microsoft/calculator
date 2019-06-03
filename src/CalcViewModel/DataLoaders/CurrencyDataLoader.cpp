@@ -513,6 +513,10 @@ bool CurrencyDataLoader::TryParseStaticData(_In_ String ^ rawJson, _Inout_ vecto
             {
                 continue;
             }
+            else
+            {
+                throw;
+            }
         }
 
         for (size_t j = 0; j < values.size(); j++)
@@ -552,6 +556,10 @@ bool CurrencyDataLoader::TryParseAllRatiosData(_In_ String ^ rawJson, _Inout_ Cu
             if (e->HResult == E_ILLEGAL_METHOD_CALL)
             {
                 continue;
+            }
+            else
+            {
+                throw;
             }
         }
 
