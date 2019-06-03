@@ -507,9 +507,12 @@ bool CurrencyDataLoader::TryParseStaticData(_In_ String ^ rawJson, _Inout_ vecto
         {
             obj = data->GetAt(i)->GetObject();
         }
-        catch (...)
+        catch (COMException ^ e)
         {
-            continue;
+            if (e->HResult == E_ILLEGAL_METHOD_CALL)
+            {
+                continue;
+            }
         }
 
         for (size_t j = 0; j < values.size(); j++)
@@ -544,9 +547,12 @@ bool CurrencyDataLoader::TryParseAllRatiosData(_In_ String ^ rawJson, _Inout_ Cu
         {
             obj = data->GetAt(i)->GetObject();
         }
-        catch (...)
+        catch (COMException^ e)
         {
-            continue;
+            if (e->HResult == E_ILLEGAL_METHOD_CALL)
+            {
+                continue;
+            }
         }
 
         // Rt is ratio, An is target currency ISO code.
