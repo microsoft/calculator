@@ -10,7 +10,7 @@
 
 [assembly: System.Reflection.AssemblyVersion("1.0.0.0")]
 [assembly: System.Reflection.AssemblyFileVersion("270")]
-[assembly: System.Reflection.AssemblyProduct("AppVersion for Windows Phone")]
+[assembly: System.Reflection.AssemblyProduct("AppVersion for WebAssembly")]
 [assembly: System.Reflection.AssemblyInformationalVersion("1.0.0.0")]
 [assembly: System.Reflection.AssemblyCopyright("Copyright (C)  2019")]
 

@@ -342,9 +342,7 @@ namespace CalculatorApp
 
 				var containerSize = m_textContainer.ActualWidth;
 				string oldText = m_textBlock.Text;
-				//string newText = Utils.LRO + DisplayValue + Utils.PDF;
-				// TODO UNO
-				string newText = DisplayValue;
+				string newText = Utils.LRO + DisplayValue + Utils.PDF;
 
 				// Initiate the scaling operation
 				// UpdateLayout will keep calling us until we make it through the below 2 if-statements
@@ -354,7 +352,7 @@ namespace CalculatorApp
 
 					m_isScalingText = true;
 					m_haveCalculatedMax = false;
-					m_textBlock.InvalidateArrange();
+					m_textBlock.InvalidateMeasure(); // UNO TODO
 					return;
 				}
 				if (containerSize > 0)
@@ -369,7 +367,7 @@ namespace CalculatorApp
 					if (m_textBlock.ActualWidth < containerSize && Math.Abs(m_textBlock.FontSize - MaxFontSize) > FONTTOLERANCE && !m_haveCalculatedMax)
 					{
 						ModifyFontAndMargin(m_textBlock, fontSizeChange);
-						m_textBlock.InvalidateArrange();
+						m_textBlock.InvalidateMeasure(); // UNO TODO
 						return;
 					}
 					if (fontSizeChange < 5)
@@ -379,7 +377,13 @@ namespace CalculatorApp
 					if (m_textBlock.ActualWidth >= containerSize && Math.Abs(m_textBlock.FontSize - MinFontSize) > FONTTOLERANCE)
 					{
 						ModifyFontAndMargin(m_textBlock, -1 * fontSizeChange);
-						m_textBlock.InvalidateArrange();
+						m_textBlock.InvalidateMeasure(); // UNO TODO
+
+#if __ANDROID__
+						// On android, the layout system incorrectly does not pick up the small difference of font size change and does not reschedule a
+						// layout pass. This works around that issue.
+						var _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () => m_textBlock.InvalidateMeasure());
+#endif
 						return;
 					}
 					System.Diagnostics.Debug.Assert(m_textBlock.FontSize >= MinFontSize && m_textBlock.FontSize <= MaxFontSize);
@@ -411,7 +415,7 @@ namespace CalculatorApp
 							}
 						}
 					}
-					m_textBlock.InvalidateArrange();
+					m_textBlock.InvalidateMeasure(); // UNO TODO
 				}
 			}
 

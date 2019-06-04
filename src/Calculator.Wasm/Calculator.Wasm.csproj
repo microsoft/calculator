@@ -6,6 +6,7 @@
 		<WasmHead>true</WasmHead>
 		<DefineConstants>$(DefineConstants);__WASM__</DefineConstants>
 		<NoWarn>NU1701</NoWarn>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<WasmShellGenerateCompressedFiles Condition="'$(Configuration)'=='Debug'">false</WasmShellGenerateCompressedFiles>
 		<MonoRuntimeDebuggerEnabled Condition="'$(Configuration)'=='Debug'">true</MonoRuntimeDebuggerEnabled>
 		<WasmShellMonoRuntimeExecutionMode Condition="$([MSBuild]::IsOsPlatform('Linux'))">InterpreterAndAOT</WasmShellMonoRuntimeExecutionMode>
@@ -30,6 +31,7 @@
     -->
 		<Compile Remove="Program.cs" />
 		<None Remove="WasmScripts\CalcManager.js" />
+		<Compile Include="..\AssemblyVersion.Wasm.cs" Link="Properties\AssemblyVersion.Wasm.cs" />
 		<Compile Include="Program.cs" />
 		<Content Include="LinkerConfig.xml" />
 	</ItemGroup>
