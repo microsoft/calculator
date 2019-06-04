@@ -230,7 +230,7 @@ namespace CalculationManager
 			var numbers = new List<String>();
 			for (int i = 0; i < count; i++)
 			{
-				var value = PtrToString(Marshal.ReadIntPtr(newMemorizedNumbers, i));
+				var value = PtrToString(Marshal.ReadIntPtr(newMemorizedNumbers, i * Marshal.SizeOf<IntPtr>()));
 				numbers.Add(value);
 			}
 

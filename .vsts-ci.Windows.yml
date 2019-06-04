@@ -4,6 +4,11 @@ jobs:
   pool:
     vmImage: 'windows-2019'
 
+  variables:
+    ANDROID_NDK_HOME: C:\Microsoft\AndroidNDK64\android-ndk-r16b
+    ANDROID_NDK_PATH: C:\Microsoft\AndroidNDK64\android-ndk-r16b
+    AndroidNdkDirectory: C:\Microsoft\AndroidNDK64\android-ndk-r16b
+
   steps:
   - task: GitVersion@4
     inputs:
