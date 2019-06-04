@@ -63,7 +63,7 @@
 		</Style>
 	</Page.Resources>
 
-	<Grid toolkit:VisibleBoundsPadding.PaddingMask="All"
+	<Grid x:Name="rootGrid"
 		  xamarin:Background="{StaticResource XamarinBackgroundBrush}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
