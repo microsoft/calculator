@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
@@ -31,10 +32,25 @@ namespace CalculatorApp
 		{
 			var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
 			Header.Text = resourceLoader.GetString("AboutButton/Content");
-			var version = Package.Current.Id.Version;
-			var versionNumber = $"Version {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
-			AboutFlyoutVersion.Text = versionNumber;
 			AboutControlCopyrightRun.Text = resourceLoader.GetString("AboutControlCopyright").Replace("%1", "2019");
+
+			AboutFlyoutVersion.Text = GetAppVersion();
+		}
+
+		private string GetAppVersion()
+		{
+			var application = Application.Current;
+			var assembly = application.GetType().GetTypeInfo().Assembly;
+
+			if (assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>() is AssemblyInformationalVersionAttribute aiva)
+			{
+				return $"Version {aiva.InformationalVersion}";
+			}
+			else
+			{
+				var version = Package.Current.Id.Version;
+				return $"Version {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+			}
 		}
 	}
 }
