@@ -30,6 +30,7 @@
     -->
 		<Compile Remove="Program.cs" />
 		<None Remove="WasmScripts\CalcManager.js" />
+		<Compile Include="..\AssemblyVersion.Wasm.cs" Link="Properties\AssemblyVersion.Wasm.cs" />
 		<Compile Include="Program.cs" />
 		<Content Include="LinkerConfig.xml" />
 	</ItemGroup>
