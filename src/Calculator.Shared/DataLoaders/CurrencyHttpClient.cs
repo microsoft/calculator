@@ -22,7 +22,10 @@ namespace CalculatorApp.DataLoaders
 
 		public CurrencyHttpClient()
 		{
-			m_client = new System.Net.Http.HttpClient();
+			m_client = new System.Net.Http.HttpClient()
+			{
+				DefaultRequestHeaders = {{"origin", "WindowsCalculator"}} // Required for Android
+			};
 			m_responseLanguage = "en-US";
 		}
 
