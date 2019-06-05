@@ -41,8 +41,15 @@
 		<WasmShellMonoEnvironment Include="MONO_LOG_LEVEL" Value="debug" />
 		<WasmShellMonoEnvironment Include="MONO_LOG_MASK" Value="gc" />
 	</ItemGroup>
-	
 	<ItemGroup>
+		<PackageReference Include="Microsoft.TypeScript.Compiler" Version="3.1.5">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.3.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
@@ -56,6 +63,9 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="..\CalcManager\CalcManager.wasm" Link="CalcManager.wasm" />
+	</ItemGroup>
+	<ItemGroup>
+	  <TypeScriptCompile Include="ts\GoogleAnalytics.ts" />
 	</ItemGroup>
 	<Import Project="..\Calculator.Shared\Calculator.Shared.projitems" Label="Shared" Condition="Exists('..\Calculator.Shared\Calculator.Shared.projitems')" />
 </Project>

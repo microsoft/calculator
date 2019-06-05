@@ -1,0 +1,17 @@
+﻿{
+	"compilerOptions": {
+			"module": "none",
+			"declaration": true,
+			"diagnostics": true,
+			"noImplicitAny": true,
+			"outFile": "WasmScripts/Calculator.js",
+			//"inlineSourceMap": true,
+			"locale": "en-US",
+			"target": "es6"
+	},
+  "include": [
+    "ts/**/*",
+    "tsBindings/**/*"
+  ]
+}
+
