@@ -8,9 +8,6 @@
 #include "Command.h"
 #include "UnitConverter.h"
 
-#ifdef _MSC_VER
-using namespace concurrency;
-#endif
 using namespace std;
 using namespace UnitConversionManager;
 
@@ -539,33 +536,32 @@ void UnitConverter::SetViewModelCurrencyCallback(_In_ const shared_ptr<IViewMode
     }
 }
 
-#ifdef _MSC_VER
-task<pair<bool, wstring>> UnitConverter::RefreshCurrencyRatios()
+future<pair<bool, wstring>> UnitConverter::RefreshCurrencyRatios()
 {
     shared_ptr<ICurrencyConverterDataLoader> currencyDataLoader = GetCurrencyConverterDataLoader();
-    return create_task([this, currencyDataLoader]() {
-               if (currencyDataLoader != nullptr)
-               {
-                   return currencyDataLoader->TryLoadDataFromWebOverrideAsync();
-               }
-               else
-               {
-                   return task_from_result(false);
-               }
-           })
-        .then(
-            [this, currencyDataLoader](bool didLoad) {
-                wstring timestamp = L"";
-                if (currencyDataLoader != nullptr)
-                {
-                    timestamp = currencyDataLoader->GetCurrencyTimestamp();
-                }
+    future<bool> loadDataResult;
+    if (currencyDataLoader != nullptr)
+    {
+        loadDataResult = currencyDataLoader->TryLoadDataFromWebOverrideAsync();
+    }
+    else
+    {
+        loadDataResult = async([] { return false; });
+    }
 
-                return make_pair(didLoad, timestamp);
-            },
-            task_continuation_context::use_default());
+    shared_future<bool> sharedLoadResult = loadDataResult.share();
+    return async([this, currencyDataLoader, sharedLoadResult]() {
+        sharedLoadResult.wait();
+        bool didLoad = sharedLoadResult.get();
+        wstring timestamp = L"";
+        if (currencyDataLoader != nullptr)
+        {
+            timestamp = currencyDataLoader->GetCurrencyTimestamp();
+        }
+
+        return make_pair(didLoad, timestamp);
+    });
 }
-#endif
 
 shared_ptr<ICurrencyConverterDataLoader> UnitConverter::GetCurrencyConverterDataLoader()
 {
