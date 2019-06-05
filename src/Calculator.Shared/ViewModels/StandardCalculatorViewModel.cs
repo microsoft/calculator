@@ -2269,7 +2269,7 @@ namespace CalculatorApp.ViewModel
 							break;
 
 						case RADIX_TYPE.DEC_RADIX:
-							hasValue = long.TryParse(displayValue, NumberStyles.Any, CultureInfo.InvariantCulture, out value);
+							hasValue = long.TryParse(displayValue, NumberStyles.Any, CultureInfo.CurrentCulture, out value);
 							break;
 
 						case RADIX_TYPE.OCT_RADIX:
