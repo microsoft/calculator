@@ -1072,7 +1072,38 @@ namespace CalculatorApp.ViewModel
 				int posOfDecimal = stringToLocalize.find('.');
 
 				bool hasDecimal = "".npos() != posOfDecimal;
+				
+				// TODO UNO - BEGIN
+				var value = double.Parse(stringToLocalize, NumberStyles.Any, CultureInfo.InvariantCulture);
+				if (IsCurrencyCurrentCategory)
+				{
+					if (hasDecimal)
+					{
+						result = value.ToString("N" + m_currencyMaxFractionDigits, CultureInfo.CurrentCulture);
+					}
+					else
+					{
+						result = value.ToString("N0", CultureInfo.CurrentCulture);
+					}
+				}
+				else
+				{
+					var decimalDigitCount = stringToLocalize.length() - (posOfDecimal + 1);
+					if (hasDecimal && decimalDigitCount == 0 && allowPartialStrings)
+					{
+						result = value.ToString("N1", CultureInfo.CurrentCulture).TrimEnd('0');
+					}
+					else if (hasDecimal)
+					{
+						result = value.ToString("N" + decimalDigitCount, CultureInfo.CurrentCulture);
+					}
+					else
+					{
+						result = value.ToString("N0", CultureInfo.CurrentCulture);
+					}
+				}
 
+				/* TODO UNO
 				if (hasDecimal)
 				{
 					if (allowPartialStrings)
@@ -1093,11 +1124,8 @@ namespace CalculatorApp.ViewModel
 
 				if (IsCurrencyCurrentCategory)
 				{
-					// TODO UNO:
-					// string currencyResult = m_currencyFormatter.Format(System.Convert.ToDouble(stringToLocalize, CultureInfo.InvariantCulture));
-					// string currencyCode = m_currencyFormatter.Currency;
-					string currencyResult = System.Convert.ToDouble(stringToLocalize, CultureInfo.InvariantCulture).ToString(CultureInfo.CurrentCulture);
-					string currencyCode = "TODO UNO";
+					string currencyResult = m_currencyFormatter.Format(System.Convert.ToDouble(stringToLocalize, CultureInfo.InvariantCulture));
+					string currencyCode = m_currencyFormatter.Currency;
 
 					// CurrencyFormatter always includes LangCode or Symbol. Make it include LangCode
 					// because this includes a non-breaking space. Remove the LangCode.
@@ -1115,9 +1143,7 @@ namespace CalculatorApp.ViewModel
 				{
 					// Convert the input string to double using stod
 					// Then use the decimalFormatter to reformat the double to Platform String
-					// TODO UNO
-					//result = m_decimalFormatter.Format(System.Convert.ToDouble(stringToLocalize));
-					result = System.Convert.ToDouble(stringToLocalize, CultureInfo.InvariantCulture).ToString(CultureInfo.CurrentCulture);
+					result = m_decimalFormatter.Format(System.Convert.ToDouble(stringToLocalize));
 				}
 
 				if (hasDecimal)
@@ -1125,9 +1151,7 @@ namespace CalculatorApp.ViewModel
 					// Since the output from GetLocaleInfoEx() and DecimalFormatter are differing for decimal string
 					// we are adding the below work-around of editing the string returned by DecimalFormatter
 					// and replacing the decimal separator with the one returned by GetLocaleInfoEx()
-					// TODO UNO
-					//String formattedSampleString = m_decimalFormatter.Format(System.Convert.ToDouble("1.1"));
-					String formattedSampleString = 1.1.ToString(CultureInfo.CurrentCulture);
+					String formattedSampleString = m_decimalFormatter.Format(System.Convert.ToDouble("1.1"));
 					string formattedSampleWString = formattedSampleString;
 
 					string resultWithDecimal = result;
@@ -1135,7 +1159,7 @@ namespace CalculatorApp.ViewModel
 
 					// Copy back the edited string to the result
 					result = resultWithDecimal;
-				}
+				} TODO UNO - END */
 			}
 
 			string resultHolder = result;
