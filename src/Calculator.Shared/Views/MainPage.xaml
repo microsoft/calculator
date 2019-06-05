@@ -13,6 +13,7 @@
 	  Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
 	  Loaded="OnPageLoaded"
 	  xmlns:xamarin="http://uno.ui/xamarin"
+	  xmlns:wasm="http://uno.ui/wasm"
 	  xmlns:android="http://nventive.com/android"
 	  mc:Ignorable="android xamarin">
 	<!-- 
@@ -66,6 +67,7 @@
 	<Grid toolkit:VisibleBoundsPadding.PaddingMask="All"
 		  xamarin:Background="{StaticResource XamarinBackgroundBrush}">
 		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 			<!--
 					This row is padding for the SystemFocusVisuals,
@@ -126,7 +128,7 @@
 
 		<!-- Title Bar -->
 		<local:TitleBar x:Name="CustomTitleBar"
-						Grid.Row="0"
+						Grid.Row="1"
 						Visibility="Collapsed" />
 
 		<!-- UNO TODO -->
@@ -137,7 +139,7 @@
 						PaneClosed="OnNavPaneClosed"
 						PaneOpened="OnNavPaneOpened"
 						PaneOpening="OnNavPaneOpening"
-						Grid.Row="2"
+						Grid.Row="3"
 						DataContext="{x:Bind Model}"
 						IsSettingsVisible="False"
 						Loaded="OnNavLoaded"
