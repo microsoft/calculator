@@ -64,6 +64,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="..\CalcManager\CalcManager.wasm" Link="CalcManager.wasm" />
+		<Content Include="..\CalcManager\CalcManager.bc" Link="CalcManager.bc" />
 	</ItemGroup>
 	<ItemGroup>
 	  <TypeScriptCompile Include="ts\GoogleAnalytics.ts" />
