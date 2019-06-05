@@ -25,6 +25,7 @@ namespace CalculatorApp.Droid
 		public Application(IntPtr javaReference, JniHandleOwnership transfer)
 			: base(new App(), javaReference, transfer)
 		{
+			Telemetry.AnalyticsService.Initialize();
 			ConfigureUniversalImageLoader();
 		}
 

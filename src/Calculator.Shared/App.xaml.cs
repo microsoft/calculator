@@ -45,7 +45,11 @@ namespace CalculatorApp
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
 
+#if !__ANDROID__
+			// Android needs to be initialized in the CalculatorApp.Droid.Application.ctor()
+
 			Telemetry.AnalyticsService.Initialize();
+#endif
 		}
 
 		/// <summary>
