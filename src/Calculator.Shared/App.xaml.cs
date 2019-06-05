@@ -44,7 +44,9 @@ namespace CalculatorApp
 
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
-        }
+
+			Telemetry.AnalyticsService.Initialize();
+		}
 
 		/// <summary>
 		/// Invoked when the application is launched normally by the end user.  Other entry points
@@ -108,7 +110,8 @@ namespace CalculatorApp
 					{
 						{ "Uno", LogLevel.Warning },
 						{ "Windows", LogLevel.Warning },
-						
+						{ "Windows.UI.ViewManagement", LogLevel.Debug },
+					
 						// Generic Xaml events
 						//{ "Windows.UI.Xaml", LogLevel.Debug },
 						// { "Windows.UI.Xaml.Shapes", LogLevel.Debug },

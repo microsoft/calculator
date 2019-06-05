@@ -15,6 +15,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Telemetry\AnalyticsService.Wasm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Telemetry\AnalyticsService.AppCenter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Telemetry\AnalyticsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

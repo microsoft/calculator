@@ -13,10 +13,7 @@ namespace WindowsCalculator.Wasm
 
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Program.Main");
-
 			FeatureConfiguration.UIElement.AssignDOMXamlName = true;
-
 
 			Windows.UI.Xaml.Application.Start(_ => _app = new App());
 		}

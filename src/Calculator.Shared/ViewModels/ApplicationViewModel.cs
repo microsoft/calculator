@@ -108,13 +108,10 @@ namespace CalculatorApp.ViewModel
 
             try
             {
-				Console.WriteLine($"ApplicationViewModel.Mode1={mode}");
                 Mode = mode;
-				Console.WriteLine($"ApplicationViewModel.Mode2={Mode}");
 			}
 			catch (Exception e)
             {
-				Console.WriteLine($"ApplicationViewModel.Mode3={e}");
 				// TraceLogger.GetInstance().LogPlatformException(__FUNCTIONW__, e);
 				if (!TryRecoverFromNavigationModeFailure())
                 {
@@ -143,9 +140,12 @@ namespace CalculatorApp.ViewModel
 
         void OnModeChanged()
         {
+			Telemetry.AnalyticsService.TrackView(m_mode.ToString());
+
             Debug.Assert(NavCategory.IsValidViewMode(m_mode));
-            // TraceLogger.GetInstance().LogModeChangeBegin(m_PreviousMode, m_mode, ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread()));
-            if (NavCategory.IsCalculatorViewMode(m_mode))
+
+			// TraceLogger.GetInstance().LogModeChangeBegin(m_PreviousMode, m_mode, ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread()));
+			if (NavCategory.IsCalculatorViewMode(m_mode))
             {
                 // TraceLogger.GetInstance().LogCalculatorModeViewed(m_mode, ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread()));
                 if (m_CalculatorViewModel == null)
