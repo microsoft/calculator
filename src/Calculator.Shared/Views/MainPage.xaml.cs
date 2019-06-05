@@ -62,20 +62,15 @@ namespace CalculatorApp
 
             double sizeInInches = 0.0;
 
-			// UNO TODO
-			//if (SUCCEEDED(GetIntegratedDisplaySize(&sizeInInches)))
-			//{
-			//    if (sizeInInches < 7.0) // If device's display size (diagonal length) is less than 7 inches then keep the calc always in Portrait mode only
-			//    {
-			//        DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait | DisplayOrientations.PortraitFlipped;
-			//    }
-			//}
-
-#if __IOS__ || __ANDROID__
-			// Visible bounds is not working properly under Wasm. See https://github.com/nventive/Uno/issues/1015
-			Uno.UI.Toolkit.VisibleBoundsPadding.SetPaddingMask(rootGrid, Uno.UI.Toolkit.VisibleBoundsPadding.PaddingMask.All);
-#endif
-		}
+            // UNO TODO
+            //if (SUCCEEDED(GetIntegratedDisplaySize(&sizeInInches)))
+            //{
+            //    if (sizeInInches < 7.0) // If device's display size (diagonal length) is less than 7 inches then keep the calc always in Portrait mode only
+            //    {
+            //        DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait | DisplayOrientations.PortraitFlipped;
+            //    }
+            //}
+        }
 
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
