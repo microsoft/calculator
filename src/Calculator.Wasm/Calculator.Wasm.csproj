@@ -63,8 +63,8 @@
 		<MonoRuntimeMixedModeExcludedAssembly Include="System.Data" />
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="..\CalcManager\CalcManager.wasm" Link="CalcManager.wasm" />
-		<Content Include="..\CalcManager\CalcManager.bc" Link="CalcManager.bc" />
+		<Content Include="..\CalcManager\bin\wasm\CalcManager.wasm" Link="CalcManager.wasm" />
+		<Content Include="..\CalcManager\bin\wasm\CalcManager.bc" Link="CalcManager.bc" />
 	</ItemGroup>
 	<ItemGroup>
 	  <TypeScriptCompile Include="ts\GoogleAnalytics.ts" />
