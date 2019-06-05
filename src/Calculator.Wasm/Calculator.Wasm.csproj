@@ -53,7 +53,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-		<PackageReference Include="Uno.UI" Version="1.45.0-dev.1638" />
+		<PackageReference Include="Uno.UI" Version="1.45.0-dev.1719" />
 		<PackageReference Include="Uno.UI.Sample.Banner" Version="1.44.0-dev.16" />
 		<PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.281" />
 		<DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.276" />
@@ -63,7 +63,8 @@
 		<MonoRuntimeMixedModeExcludedAssembly Include="System.Data" />
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="..\CalcManager\CalcManager.wasm" Link="CalcManager.wasm" />
+		<Content Include="..\CalcManager\bin\wasm\CalcManager.wasm" Link="CalcManager.wasm" />
+		<Content Include="..\CalcManager\bin\wasm\CalcManager.bc" Link="CalcManager.bc" />
 	</ItemGroup>
 	<ItemGroup>
 	  <TypeScriptCompile Include="ts\GoogleAnalytics.ts" />
