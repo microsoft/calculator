@@ -62,15 +62,30 @@ namespace CalculatorApp
 
             double sizeInInches = 0.0;
 
-            // UNO TODO
-            //if (SUCCEEDED(GetIntegratedDisplaySize(&sizeInInches)))
-            //{
-            //    if (sizeInInches < 7.0) // If device's display size (diagonal length) is less than 7 inches then keep the calc always in Portrait mode only
-            //    {
-            //        DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait | DisplayOrientations.PortraitFlipped;
-            //    }
-            //}
-        }
+			// UNO TODO
+			//if (SUCCEEDED(GetIntegratedDisplaySize(&sizeInInches)))
+			//{
+			//    if (sizeInInches < 7.0) // If device's display size (diagonal length) is less than 7 inches then keep the calc always in Portrait mode only
+			//    {
+			//        DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait | DisplayOrientations.PortraitFlipped;
+			//    }
+			//}
+
+#if __WASM__
+			// Uno Banner here
+			var grid = VisualTreeHelper.GetChild(this, 0) as Grid;
+			var banner = new Uno.UI.Sample.Banner.BannerControl
+			{
+				AppName = "Windows Calculator App",
+				AppAuthor = "Microsoft",
+				LinkToOriginalApp = "https://github.com/microsoft/calculator",
+				LinkToAppAuthor = "https://www.microsoft.com/",
+				LinkToUnoPlatformApp = "https://github.com/nventive/calculator",
+				AboutContent = "This is the original Windows Calculator, by Microsoft, recompiled using Uno Platform."
+			};
+			grid.Children.Insert(0, banner);
+#endif
+		}
 
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
