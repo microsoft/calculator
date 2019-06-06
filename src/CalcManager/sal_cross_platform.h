@@ -1,6 +1,10 @@
 #pragma once
 
-#if !defined(_WIN32) || !defined(_MSC_VER)
+#if defined(_WIN32) && defined(_MSC_VER)
+
+#include <sal.h>
+
+#else
 
 // Empty macro definitions for source annotations
 
