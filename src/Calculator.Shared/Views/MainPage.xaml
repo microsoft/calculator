@@ -133,6 +133,7 @@
 
 		<!-- UNO TODO -->
 		<NavigationView x:Name="NavView"
+						x:Uid="NavView"
 						CompactModeThresholdWidth="10000"
 						ExpandedModeThresholdWidth="10000"
 						IsBackButtonVisible="Collapsed"
@@ -146,7 +147,9 @@
 						MenuItemsSource="{x:Bind UIElementsForCategories, Mode=OneWay}"
 						OpenPaneLength="{StaticResource SplitViewOpenPaneLength}"
 						SelectionChanged="OnNavSelectionChanged"
+						ItemInvoked="OnNavItemInvoked"
 						TabIndex="1"
+						IsPaneOpen="false"
 						UseSystemFocusVisuals="True">
 
 			<NavigationView.PaneFooter>
