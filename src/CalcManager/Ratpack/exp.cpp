@@ -131,15 +131,15 @@ void _lograt(PRAT* px, int32_t precision)
     createrat(thisterm);
 
     // sub one from x
-    (*px)->pq->sign *= -1;
+    (*px)->pq.sign *= -1;
     addnum(&((*px)->pp), (*px)->pq, BASEX);
-    (*px)->pq->sign *= -1;
+    (*px)->pq.sign *= -1;
 
     DUPRAT(pret, *px);
     DUPRAT(thisterm, *px);
 
     n2 = i32tonum(1L, BASEX);
-    (*px)->pp->sign *= -1;
+    (*px)->pp.sign *= -1;
 
     do
     {
@@ -168,7 +168,7 @@ void lograt(_Inout_ PRAT* px, int32_t precision)
     if (fneglog)
     {
         // WARNING: This is equivalent to doing *px = 1 / *px
-        PNUMBER pnumtemp = nullptr;
+        NUMBER pnumtemp;
         pnumtemp = (*px)->pp;
         (*px)->pp = (*px)->pq;
         (*px)->pq = pnumtemp;
@@ -182,7 +182,7 @@ void lograt(_Inout_ PRAT* px, int32_t precision)
         // a reasonable range.
         int32_t intpwr;
         intpwr = LOGRAT2(*px) - 1;
-        (*px)->pq->exp += intpwr;
+        (*px)->pq.exp += intpwr;
         pwr = i32torat(intpwr * BASEXPWR);
         mulrat(&pwr, ln_two, precision);
         // ln(x+e)-ln(x) looks close to e when x is close to one using some
@@ -217,7 +217,7 @@ void lograt(_Inout_ PRAT* px, int32_t precision)
     // If number started out < 1 rescale answer to negative.
     if (fneglog)
     {
-        (*px)->pp->sign *= -1;
+        (*px)->pp.sign *= -1;
     }
 
     destroyrat(offset);
@@ -344,7 +344,7 @@ void powratNumeratorDenominator(_Inout_ PRAT* px, _In_ PRAT y, uint32_t radix, i
         // ##################################
         PRAT roundedResult = nullptr;
         DUPRAT(roundedResult, originalResult);
-        if (roundedResult->pp->sign == -1)
+        if (roundedResult->pp.sign == -1)
         {
             subrat(&roundedResult, rat_half, precision);
         }
@@ -405,11 +405,11 @@ void powratNumeratorDenominator(_Inout_ PRAT* px, _In_ PRAT y, uint32_t radix, i
 //---------------------------------------------------------------------------
 void powratcomp(_Inout_ PRAT* px, _In_ PRAT y, uint32_t radix, int32_t precision)
 {
-    int32_t sign = SIGN(*px);
+    int32_t sign = ((*px)->pp.sign * (*px)->pq.sign);
 
     // Take the absolute value
-    (*px)->pp->sign = 1;
-    (*px)->pq->sign = 1;
+    (*px)->pp.sign = 1;
+    (*px)->pq.sign = 1;
 
     if (zerrat(*px))
     {
@@ -492,9 +492,9 @@ void powratcomp(_Inout_ PRAT* px, _In_ PRAT y, uint32_t radix, int32_t precision
                     DUPRAT(pDenominator, rat_zero); // pDenominator->pq is 1 one
 
                     DUPNUM(pNumerator->pp, y->pp);
-                    pNumerator->pp->sign = 1;
+                    pNumerator->pp.sign = 1;
                     DUPNUM(pDenominator->pp, y->pq);
-                    pDenominator->pp->sign = 1;
+                    pDenominator->pp.sign = 1;
 
                     while (IsEven(pNumerator, radix, precision) && IsEven(pDenominator, radix, precision)) // both Numerator & denominator is even
                     {
@@ -531,5 +531,5 @@ void powratcomp(_Inout_ PRAT* px, _In_ PRAT y, uint32_t radix, int32_t precision
         }
         destroyrat(pxint);
     }
-    (*px)->pp->sign *= sign;
+    (*px)->pp.sign *= sign;
 }

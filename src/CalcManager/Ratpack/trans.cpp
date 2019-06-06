@@ -72,7 +72,7 @@ void _sinrat(PRAT* px, int32_t precision)
     DUPRAT(thisterm, *px);
 
     DUPNUM(n2, num_one);
-    xx->pp->sign *= -1;
+    xx->pp.sign *= -1;
 
     do
     {
@@ -160,16 +160,13 @@ void _cosrat(PRAT* px, uint32_t radix, int32_t precision)
 {
     CREATETAYLOR();
 
-    destroynum(pret->pp);
-    destroynum(pret->pq);
-
     pret->pp = i32tonum(1L, radix);
     pret->pq = i32tonum(1L, radix);
 
     DUPRAT(thisterm, pret)
 
     n2 = i32tonum(0L, radix);
-    xx->pp->sign *= -1;
+    xx->pp.sign *= -1;
 
     do
     {

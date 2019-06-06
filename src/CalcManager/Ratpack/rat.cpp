@@ -40,7 +40,7 @@ using namespace std;
 void gcdrat(_Inout_ PRAT* pa, int32_t precision)
 
 {
-    PNUMBER pgcd = nullptr;
+    NUMBER pgcd;
     PRAT a = nullptr;
 
     a = *pa;
@@ -52,7 +52,6 @@ void gcdrat(_Inout_ PRAT* pa, int32_t precision)
         divnumx(&(a->pq), pgcd, precision);
     }
 
-    destroynum(pgcd);
     *pa = a;
 
     RENORMALIZE(*pa);
@@ -185,9 +184,9 @@ void divrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision)
 void subrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision)
 
 {
-    b->pp->sign *= -1;
+    b->pp.sign *= -1;
     addrat(pa, b, precision);
-    b->pp->sign *= -1;
+    b->pp.sign *= -1;
 }
 
 //-----------------------------------------------------------------------------
@@ -206,7 +205,7 @@ void subrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision)
 void addrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision)
 
 {
-    PNUMBER bot = nullptr;
+    NUMBER bot;
 
     if (equnum((*pa)->pq, b->pq))
     {
@@ -214,10 +213,10 @@ void addrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision)
         // make sure signs are involved in the calculation
         // we have to do this since the optimization here is only
         // working with the top half of the rationals.
-        (*pa)->pp->sign *= (*pa)->pq->sign;
-        (*pa)->pq->sign = 1;
-        b->pp->sign *= b->pq->sign;
-        b->pq->sign = 1;
+        (*pa)->pp.sign *= (*pa)->pq.sign;
+        (*pa)->pq.sign = 1;
+        b->pp.sign *= b->pq.sign;
+        b->pq.sign = 1;
         addnum(&((*pa)->pp), b->pp, BASEX);
     }
     else
@@ -228,13 +227,12 @@ void addrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision)
         mulnumx(&((*pa)->pp), b->pq);
         mulnumx(&((*pa)->pq), b->pp);
         addnum(&((*pa)->pp), (*pa)->pq, BASEX);
-        destroynum((*pa)->pq);
         (*pa)->pq = bot;
         trimit(pa, precision);
 
         // Get rid of negative zeros here.
-        (*pa)->pp->sign *= (*pa)->pq->sign;
-        (*pa)->pq->sign = 1;
+        (*pa)->pp.sign *= (*pa)->pq.sign;
+        (*pa)->pq.sign = 1;
     }
 
 #ifdef ADDGCD

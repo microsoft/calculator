@@ -19,28 +19,22 @@ namespace CalcEngine
     {
     }
 
-    Number::Number(PNUMBER p) noexcept
-        : m_sign{ p->sign }
-        , m_exp{ p->exp }
+    Number::Number(NUMBER p) noexcept
+        : m_sign{ p.sign }
+        , m_exp{ p.exp }
         , m_mantissa{}
     {
-        m_mantissa.reserve(p->cdigit);
-        copy(p->mant, p->mant + p->cdigit, back_inserter(m_mantissa));
+        m_mantissa.reserve(p.cdigit);
+        copy(p.mant.begin(), p.mant.begin() + p.cdigit, back_inserter(m_mantissa));
     }
 
-    PNUMBER Number::ToPNUMBER() const
+    NUMBER Number::ToNUMBER() const
     {
-        PNUMBER ret = _createnum(static_cast<uint32_t>(this->Mantissa().size()) + 1);
-        ret->sign = this->Sign();
-        ret->exp = this->Exp();
-        ret->cdigit = static_cast<int32_t>(this->Mantissa().size());
-
-        MANTTYPE* ptrRet = ret->mant;
-        for (auto const& digit : this->Mantissa())
-        {
-            *ptrRet++ = digit;
-        }
-
+        NUMBER ret = _createnum(static_cast<uint32_t>(this->Mantissa().size()) + 1);
+        ret.sign = this->Sign();
+        ret.exp = this->Exp();
+        ret.cdigit = static_cast<int32_t>(this->Mantissa().size());
+        ret.mant = this->Mantissa();
         return ret;
     }
 

@@ -15,8 +15,8 @@
 //-----------------------------------------------------------------------------
 #include "ratpak.h"
 
-#define ABSRAT(x) (((x)->pp->sign = 1), ((x)->pq->sign = 1))
-#define NEGATE(x) ((x)->pp->sign *= -1)
+#define ABSRAT(x) (((x)->pp.sign = 1), ((x)->pq.sign = 1))
+#define NEGATE(x) ((x)->pp.sign *= -1)
 
 //-----------------------------------------------------------------------------
 //
@@ -58,7 +58,7 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
 
 {
     PRAT factorial = nullptr;
-    PNUMBER count = nullptr;
+    NUMBER count;
     PRAT tmp = nullptr;
     PRAT one_pt_five = nullptr;
     PRAT a = nullptr;
@@ -182,8 +182,6 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
     destroyrat(tmp);
     destroyrat(one_pt_five);
 
-    destroynum(count);
-
     destroyrat(factorial);
     destroyrat(*pn);
     DUPRAT(*pn, sum);
@@ -206,13 +204,13 @@ void factrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
     DUPRAT(fact, rat_one);
 
     DUPRAT(neg_rat_one, rat_one);
-    neg_rat_one->pp->sign *= -1;
+    neg_rat_one->pp.sign *= -1;
 
     DUPRAT(frac, *px);
     fracrat(&frac, radix, precision);
 
     // Check for negative integers and throw an error.
-    if ((zerrat(frac) || (LOGRATRADIX(frac) <= -precision)) && (SIGN(*px) == -1))
+    if ((zerrat(frac) || (LOGRATRADIX(frac) <= -precision)) && ((*px)->pp.sign * (*px)->pq.sign == -1))
     {
         throw CALC_E_DOMAIN;
     }

@@ -88,10 +88,11 @@ void asinrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
 {
     PRAT pret = nullptr;
     PRAT phack = nullptr;
+
     int32_t sgn = SIGN(*px);
 
-    (*px)->pp->sign = 1;
-    (*px)->pq->sign = 1;
+    (*px)->pp.sign = 1;
+    (*px)->pq.sign = 1;
 
     // Avoid the really bad part of the asin curve near +/-1.
     DUPRAT(phack, *px);
@@ -121,11 +122,11 @@ void asinrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
             }
             DUPRAT(pret, *px);
             mulrat(px, pret, precision);
-            (*px)->pp->sign *= -1;
+            (*px)->pp.sign *= -1;
             addrat(px, rat_one, precision);
             rootrat(px, rat_two, radix, precision);
             _asinrat(px, precision);
-            (*px)->pp->sign *= -1;
+            (*px)->pp.sign *= -1;
             addrat(px, pi_over_two, precision);
             destroyrat(pret);
         }
@@ -134,8 +135,8 @@ void asinrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
             _asinrat(px, precision);
         }
     }
-    (*px)->pp->sign = sgn;
-    (*px)->pq->sign = 1;
+    (*px)->pp.sign = sgn;
+    (*px)->pq.sign = 1;
 }
 
 //-----------------------------------------------------------------------------
@@ -195,8 +196,8 @@ void acosrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
 {
     int32_t sgn = SIGN(*px);
 
-    (*px)->pp->sign = 1;
-    (*px)->pq->sign = 1;
+    (*px)->pp.sign = 1;
+    (*px)->pq.sign = 1;
 
     if (rat_equ(*px, rat_one, precision))
     {
@@ -211,9 +212,9 @@ void acosrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
     }
     else
     {
-        (*px)->pp->sign = sgn;
+        (*px)->pp.sign = sgn;
         asinrat(px, radix, precision);
-        (*px)->pp->sign *= -1;
+        (*px)->pp.sign *= -1;
         addrat(px, pi_over_two, precision);
     }
 }
@@ -266,7 +267,7 @@ void _atanrat(PRAT* px, int32_t precision)
 
     DUPNUM(n2, num_one);
 
-    xx->pp->sign *= -1;
+    xx->pp.sign *= -1;
 
     do
     {
@@ -280,29 +281,30 @@ void atanrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
 
 {
     PRAT tmpx = nullptr;
+
     int32_t sgn = SIGN(*px);
 
-    (*px)->pp->sign = 1;
-    (*px)->pq->sign = 1;
+    (*px)->pp.sign = 1;
+    (*px)->pq.sign = 1;
 
     if (rat_gt((*px), pt_eight_five, precision))
     {
         if (rat_gt((*px), rat_two, precision))
         {
-            (*px)->pp->sign = sgn;
-            (*px)->pq->sign = 1;
+            (*px)->pp.sign = sgn;
+            (*px)->pq.sign = 1;
             DUPRAT(tmpx, rat_one);
             divrat(&tmpx, (*px), precision);
             _atanrat(&tmpx, precision);
-            tmpx->pp->sign = sgn;
-            tmpx->pq->sign = 1;
+            tmpx->pp.sign = sgn;
+            tmpx->pq.sign = 1;
             DUPRAT(*px, pi_over_two);
             subrat(px, tmpx, precision);
             destroyrat(tmpx);
         }
         else
         {
-            (*px)->pp->sign = sgn;
+            (*px)->pp.sign = sgn;
             DUPRAT(tmpx, *px);
             mulrat(&tmpx, *px, precision);
             addrat(&tmpx, rat_one, precision);
@@ -310,14 +312,14 @@ void atanrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
             divrat(px, tmpx, precision);
             destroyrat(tmpx);
             asinrat(px, radix, precision);
-            (*px)->pp->sign = sgn;
-            (*px)->pq->sign = 1;
+            (*px)->pp.sign = sgn;
+            (*px)->pq.sign = 1;
         }
     }
     else
     {
-        (*px)->pp->sign = sgn;
-        (*px)->pq->sign = 1;
+        (*px)->pp.sign = sgn;
+        (*px)->pq.sign = 1;
         _atanrat(px, precision);
     }
     if (rat_gt(*px, pi_over_two, precision))
