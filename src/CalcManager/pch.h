@@ -13,7 +13,7 @@
 #include <cassert>
 #include <intsafe.h>
 #include <list>
-#include <ppltasks.h>
+#include <future>
 #include <regex>
 #include <sstream>
 #include <string>

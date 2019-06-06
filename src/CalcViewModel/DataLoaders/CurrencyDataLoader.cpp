@@ -191,7 +191,7 @@ void CurrencyDataLoader::LoadData()
     if (!LoadFinished())
     {
         create_task([this]() -> task<bool> {
-            vector<function<task<bool>()>> loadFunctions = {
+            vector<function<future<bool>()>> loadFunctions = {
                 [this]() { return TryLoadDataFromCacheAsync(); },
                 [this]() { return TryLoadDataFromWebAsync(); },
             };
@@ -307,7 +307,7 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencyRatioEquality(_In_ const U
 }
 
 #pragma optimize("", off) // Turn off optimizations to work around DevDiv 393321
-task<bool> CurrencyDataLoader::TryLoadDataFromCacheAsync()
+future<bool> CurrencyDataLoader::TryLoadDataFromCacheAsync()
 {
     try
     {
@@ -349,7 +349,7 @@ task<bool> CurrencyDataLoader::TryLoadDataFromCacheAsync()
     }
 }
 
-task<bool> CurrencyDataLoader::TryFinishLoadFromCacheAsync()
+future<bool> CurrencyDataLoader::TryFinishLoadFromCacheAsync()
 {
     auto localSettings = ApplicationData::Current->LocalSettings;
     if (localSettings == nullptr)
@@ -386,7 +386,7 @@ task<bool> CurrencyDataLoader::TryFinishLoadFromCacheAsync()
     co_return true;
 }
 
-task<bool> CurrencyDataLoader::TryLoadDataFromWebAsync()
+future<bool> CurrencyDataLoader::TryLoadDataFromWebAsync()
 {
     try
     {
@@ -459,7 +459,7 @@ task<bool> CurrencyDataLoader::TryLoadDataFromWebAsync()
     }
 }
 
-task<bool> CurrencyDataLoader::TryLoadDataFromWebOverrideAsync()
+future<bool> CurrencyDataLoader::TryLoadDataFromWebOverrideAsync()
 {
     m_meteredOverrideSet = true;
     bool didLoad = co_await TryLoadDataFromWebAsync();

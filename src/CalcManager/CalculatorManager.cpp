@@ -12,6 +12,10 @@ using namespace CalcEngine;
 static constexpr size_t MAX_HISTORY_ITEMS = 20;
 static constexpr size_t SERIALIZED_NUMBER_MINSIZE = 3;
 
+#ifndef _MSC_VER
+#define __pragma(x)
+#endif
+
 // Converts Memory Command enum value to unsigned char,
 // while ignoring Warning C4309: 'conversion' : truncation of constant value
 #define MEMORY_COMMAND_TO_UNSIGNED_CHAR(c) __pragma(warning(push)) __pragma(warning(disable : 4309)) static_cast<unsigned char>(c) __pragma(warning(pop))
