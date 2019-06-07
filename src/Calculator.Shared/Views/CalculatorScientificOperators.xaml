@@ -262,18 +262,6 @@
 					<Storyboard Completed="WideLayout_Completed" />
 				</VisualState>
 
-				<!-- UNO TODO Temp fix for iphoneX-->
-				<VisualState x:Name="Landscape">
-					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowHeight="768"
-										 MinWindowWidth="1366" />
-					</VisualState.StateTriggers>
-					<VisualState.Setters>
-						<Setter Target="NumberPad.ButtonStyle"
-								Value="{ThemeResource NumericButtonStyle12}" />
-					</VisualState.Setters>
-				</VisualState>
-				
 				<VisualState x:Name="WideL">
 					<VisualState.StateTriggers>
 						<AdaptiveTrigger MinWindowHeight="768"
