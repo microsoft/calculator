@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -59,7 +59,7 @@ Size HorizontalNoOverflowStackPanel::ArrangeOverride(Size finalSize)
         {
             // stack the items horizontally (left to right)
             item->Arrange(Rect(posX, 0, itemWidth, finalSize.Height));
-            AutomationProperties::SetAccessibilityView(item, ::AccessibilityView::Control);
+            AutomationProperties::SetAccessibilityView(item, ::AccessibilityView::Content);
             posX += item->RenderSize.Width;
         }
         else
