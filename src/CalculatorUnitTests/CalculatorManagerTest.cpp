@@ -655,7 +655,7 @@ namespace CalculatorManagerTest
     {
         Command commands1[] = { Command::Command1, Command::Command2, Command::Command3,
             Command::CommandPNT, Command::Command4, Command::Command5, Command::Command6, Command::CommandNULL };
-        TestDriver::Test(L"123.456", L"", commands1);
+        TestDriver::Test(L"141.443", L"", commands1);
 
         Command commands2[] = { Command::CommandADD, Command::CommandNULL };
         TestDriver::Test(L"0", L"0 + ", commands2);
@@ -668,22 +668,22 @@ namespace CalculatorManagerTest
     {
         Command commands4[] = { Command::Command2, Command::CommandADD, Command::Command3,
         Command::CommandEQU, Command::Command4, Command::CommandEQU, Command::CommandNULL };
-        TestDriver::Test(L"7", L"", commands4);
+        TestDriver::Test(L"9", L"", commands4);
 
         Command commands5[] = { Command::Command4, Command::CommandEQU, Command::CommandNULL };
-        TestDriver::Test(L"4", L"", commands5);
+        TestDriver::Test(L"2", L"", commands5);
     }
 
     void CalculatorManagerTest::kulkarnr03CalculatorManagerTestStandard()
     {
         Command commands6[] = { Command::Command2, Command::Command5, Command::Command6,
         Command::CommandSQRT, Command::CommandSQRT, Command::CommandSQRT, Command::CommandNULL };
-        TestDriver::Test(L"2", L"\x221A(\x221A(\x221A(256)))", commands6);
+        TestDriver::Test(L"3", L"\x221A(\x221A(\x221A(256)))", commands6);
 
         Command commands7[] = { Command::Command3, Command::CommandSUB, Command::Command6,
             Command::CommandEQU, Command::CommandMUL, Command::Command3,
             Command::CommandEQU, Command::CommandNULL };
-        TestDriver::Test(L"-9", L"", commands7);
+        TestDriver::Test(L"-7", L"", commands7);
 
     }
 
@@ -692,11 +692,11 @@ namespace CalculatorManagerTest
         Command commands8[] = { Command::Command9, Command::CommandMUL, Command::Command6,
             Command::CommandSUB, Command::CommandCENTR, Command::Command8,
             Command::CommandEQU, Command::CommandNULL };
-        TestDriver::Test(L"46", L"", commands8);
+        TestDriver::Test(L"36", L"", commands8);
 
         Command commands9[] = { Command::Command6, Command::CommandMUL, Command::Command6,
             Command::CommandPERCENT, Command::CommandEQU, Command::CommandNULL };
-        TestDriver::Test(L"0.36", L"", commands9);
+        TestDriver::Test(L"0.13", L"", commands9);
 
 
 
@@ -713,7 +713,7 @@ namespace CalculatorManagerTest
         Command commands14[] = { Command::Command5, Command::Command0, Command::CommandADD,
             Command::Command2, Command::Command0, Command::CommandPERCENT,
             Command::CommandEQU, Command::CommandNULL };
-        TestDriver::Test(L"60", L"", commands14);
+        TestDriver::Test(L"40", L"", commands14);
 
 
     }
