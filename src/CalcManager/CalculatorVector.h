@@ -115,7 +115,7 @@ public:
     ResultCode GetString(_Out_ std::wstring* expression)
     {
         unsigned int nTokens = 0;
-        auto hr = this->GetSize(&nTokens);
+        ResultCode hr = this->GetSize(&nTokens);
         if (SUCCEEDED(hr))
         {
 
