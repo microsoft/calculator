@@ -12,7 +12,8 @@ constexpr int ASCII_0 = 48;
 using namespace std;
 using namespace CalcEngine;
 
-namespace {
+namespace
+{
     void IFT(ResultCode hr)
     {
         if (FAILED(hr))
@@ -135,9 +136,12 @@ void CHistoryCollector::AddBinOpToHistory(int nOpCode, bool fNoRepetition)
     m_lastOpStartIndex = -1;
 }
 
-// This is expected to be called when a binary op in the last say 1+2+ is changing to another one say 1+2* (+ changed to *)
-// It needs to know by this change a Precedence inversion happened. i.e. previous op was lower or equal to its previous op, but the new
-// one isn't. (Eg. 1*2* to 1*2^). It can add explicit brackets to ensure the precedence is inverted. (Eg. (1*2) ^)
+// This is expected to be called when a binary op in the last
+// say 1+2+ is changing to another one say 1+2* (+ changed to *)
+// It needs to know by this change a Precedence inversion happened.
+// i.e. previous op was lower or equal to its previous op, but the new
+// one isn't. (Eg. 1*2* to 1*2^). It can add explicit brackets
+// to ensure the precedence is inverted. (Eg. (1*2) ^)
 void CHistoryCollector::ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher)
 {
     TruncateEquationSzFromIch(m_lastBinOpStartIndex);
