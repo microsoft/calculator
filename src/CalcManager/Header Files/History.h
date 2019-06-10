@@ -38,14 +38,16 @@ private:
     std::shared_ptr<IHistoryDisplay> m_pHistoryDisplay;
     ICalcDisplay *m_pCalcDisplay;
 
-    int m_iCurLineHistStart; // index of the beginning of the current equation
-    // a sort of state, set to the index before 2 after 2 in the expression 2 + 3 say. Useful for auto correct portion of history and for
-    // attaching the unary op around the last operand
-    int m_lastOpStartIndex; // index of the beginning of the last operand added to the history
-    int m_lastBinOpStartIndex; // index of the beginning of the last binary operator added to the history
-    std::array<int, MAXPRECDEPTH> m_operandIndices; // Stack of index of opnd's beginning for each '('. A parallel array to m_hnoParNum, but abstracted independently of that
-    int m_curOperandIndex; // Stack index for the above stack
-    bool m_bLastOpndBrace;    // iff the last opnd in history is already braced so we can avoid putting another one for unary operator
+    int m_iCurLineHistStart;                            // index of the beginning of the current equation
+                                                        // a sort of state, set to the index before 2 after 2 in the expression 2 + 3 say.
+                                                        // Useful for auto correct portion of history and for
+                                                        // attaching the unary op around the last operand
+    int m_lastOpStartIndex;                             // index of the beginning of the last operand added to the history
+    int m_lastBinOpStartIndex;                          // index of the beginning of the last binary operator added to the history
+    std::array<int, MAXPRECDEPTH> m_operandIndices;     // Stack of index of opnd's beginning for each '('. A parallel array to m_hnoParNum,
+                                                        // but abstracted independently of that
+    int m_curOperandIndex;                              // Stack index for the above stack
+    bool m_bLastOpndBrace;                              // iff the last opnd in history is already braced so we can avoid putting another one for unary operator
     wchar_t m_decimalSymbol;
     std::shared_ptr<CalculatorVector <std::pair<std::wstring, int>>> m_spTokens;
     std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> m_spCommands;
