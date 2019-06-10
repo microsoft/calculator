@@ -24,9 +24,7 @@ namespace CalculatorApp
     static reader_writer_lock s_traceLoggerLock;
 
     // Telemetry events. Uploaded to asimov.
-    constexpr auto EVENT_NAME_PREVIOUS_STATE_WINDOW_ON_CREATION = L"PreviousStateOnWindowCreation";
-    constexpr auto EVENT_NAME_INVALID_PASTED_INPUT_OCCURRED = L"InvalidPastedInputOccurred";
-    constexpr auto EVENT_NAME_VALID_INPUT_PASTED = L"ValidInputPasted";
+    constexpr auto EVENT_NAME_WINDOW_ON_CREATED = L"OnWindowCreated";
     constexpr auto EVENT_NAME_BUTTON_USAGE = L"KeyboardOperatorUsageInSession";
 
     constexpr auto EVENT_NAME_MODE_CHANGED = L"ModeChanged";
@@ -137,14 +135,16 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_VISUAL_STATE_CHANGED, fields);
     }
 
-    void TraceLogger::LogWindowCreated(wstring_view previousExecutionState) const
+    void TraceLogger::LogWindowCreated(ViewMode mode) const
     {
         if (!GetTraceLoggingProviderEnabled())
             return;
 
         LoggingFields fields{};
-        fields.AddString(L"PreviousExecutionState", previousExecutionState);
-        LogLevel3Event(EVENT_NAME_PREVIOUS_STATE_WINDOW_ON_CREATION, fields);
+        fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
+        fields.AddUInt64(L"NumOfOpenWindows", currentWindowCount);
+        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
+        LogLevel2Event(EVENT_NAME_WINDOW_ON_CREATED, fields);
     }
 
     void TraceLogger::LogModeChange(ViewMode mode) const
@@ -280,6 +280,7 @@ namespace CalculatorApp
         for (auto i : buttonLog)
         {
             LoggingFields fields{};
+            fields.AddInt32(L"CalcMode", NavCategory::Serialize(i.mode));
             fields.AddUInt32(L"ButtonId", i.buttonId);
             fields.AddString(L"ButtonName", i.buttonName.data());
             fields.AddUInt32(L"ViewModeId", NavCategory::Serialize(i.mode));
@@ -326,12 +327,5 @@ namespace CalculatorApp
         {
             LogButtonUsage();
         }
-
-        LoggingFields fields{};
-        fields.AddInt32(L"CalcMode", NavCategory::Serialize(ViewMode::Date));
-        fields.AddInt32(L"NumOpenWindows", (int)currentWindowCount);
-        // fields.AddString(L"VisualState", state);
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(L"WindowClosed", fields);
     }
 }

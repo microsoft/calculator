@@ -156,10 +156,14 @@ void ApplicationViewModel::OnModeChanged()
     // Don't save until after we have adjusted to the new mode, so we don't save a mode that fails to load.
     ApplicationData::Current->LocalSettings->Values->Insert(ModePropertyName, NavCategory::Serialize(m_mode));
 
-    // Do not log mode change on first launch
+    // Log ModeChange event when not first launch, log WindowCreated on first launch
     if (NavCategory::IsValidViewMode(m_PreviousMode))
     {
         TraceLogger::GetInstance().LogModeChange(m_mode);
+    }
+    else
+    {
+        TraceLogger::GetInstance().LogWindowCreated(m_mode);
     }
 
     RaisePropertyChanged(ClearMemoryVisibilityPropertyName);

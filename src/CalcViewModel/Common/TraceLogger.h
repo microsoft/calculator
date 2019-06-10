@@ -47,7 +47,7 @@ namespace CalculatorApp
         void UpdateWindowCount(size_t windowCount);
         bool UpdateWindowIdLog(int windowId);
         void LogVisualStateChanged(CalculatorApp::Common::ViewMode mode, std::wstring_view state) const;
-        void LogWindowCreated(std::wstring_view previousExecutionState) const;
+        void LogWindowCreated(CalculatorApp::Common::ViewMode mode) const;
         void LogUserRequestedRefreshFailed() const;
         void LogConverterInputReceived(CalculatorApp::Common::ViewMode mode) const;
         void LogViewClosingTelemetry();

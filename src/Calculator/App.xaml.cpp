@@ -227,7 +227,6 @@ void App::OnLaunched(LaunchActivatedEventArgs ^ args)
 
 void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
 {
-    auto previousExecutionState = args->PreviousExecutionState;
 
     // Uncomment the following lines to display frame-rate and per-frame CPU usage info.
     //#if _DEBUG
@@ -368,7 +367,6 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
             }
             else
             {
-
                 ActivationViewSwitcher ^ activationViewSwitcher;
                 auto activateEventArgs = dynamic_cast<IViewSwitcherProvider ^>(args);
                 if (activateEventArgs != nullptr)
@@ -383,7 +381,7 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
                 }
                 else
                 {
-/////                    TraceLogger::GetInstance().LogError(L"Null_ActivationViewSwitcher");
+                    TraceLogger::GetInstance().LogError(ViewMode::None, L"Null_ActivationViewSwitcher");
                 }
             }
             // Set the preLaunched flag to false
@@ -423,7 +421,6 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
                 }
             }
             // Ensure the current window is active
-            TraceLogger::GetInstance().LogWindowCreated(previousExecutionState.ToString()->Data());
             Window::Current->Activate();
         }
     }
