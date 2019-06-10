@@ -22,7 +22,14 @@ namespace CalculatorApp.DataLoaders
 
 		public CurrencyHttpClient()
 		{
+#if __WASM__
+			// Workaround for https://github.com/mono/mono/issues/14940
+			var handler = new Uno.UI.Wasm.WasmHttpHandler();
+			m_client = new System.Net.Http.HttpClient(handler)
+#else
 			m_client = new System.Net.Http.HttpClient()
+#endif
+
 			{
 				DefaultRequestHeaders = {{"origin", "WindowsCalculator"}} // Required for Android
 			};
