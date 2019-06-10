@@ -211,8 +211,11 @@ namespace CalculatorApp.ViewModel
 			get => m_Categories;
 			private set
 			{
-				m_Categories = value;
-				RaisePropertyChanged("Categories");
+				if (m_Categories != value)
+				{
+					m_Categories = value;
+					RaisePropertyChanged("Categories");
+				}
 			}
 		}
 
@@ -224,8 +227,11 @@ namespace CalculatorApp.ViewModel
 			get => m_CurrentCategory;
 			set
 			{
-				m_CurrentCategory = value;
-				RaisePropertyChanged("CurrentCategory");
+				if (m_CurrentCategory != value)
+				{
+					m_CurrentCategory = value;
+					RaisePropertyChanged("CurrentCategory");
+				}
 			}
 		}
 
@@ -237,8 +243,11 @@ namespace CalculatorApp.ViewModel
 			get => m_Mode;
 			set
 			{
-				m_Mode = value;
-				RaisePropertyChanged("Mode");
+				if (m_Mode != value)
+				{
+					m_Mode = value;
+					RaisePropertyChanged("Mode");
+				}
 			}
 		}
 
@@ -250,8 +259,11 @@ namespace CalculatorApp.ViewModel
 			get => m_Units;
 			private set
 			{
-				m_Units = value;
-				RaisePropertyChanged("Units");
+				if (m_Units != value)
+				{
+					m_Units = value;
+					RaisePropertyChanged("Units");
+				}
 			}
 		}
 
@@ -263,8 +275,11 @@ namespace CalculatorApp.ViewModel
 			get => m_CurrencySymbol1;
 			set
 			{
-				m_CurrencySymbol1 = value;
-				RaisePropertyChanged("CurrencySymbol1");
+				if (m_CurrencySymbol1 != value)
+				{
+					m_CurrencySymbol1 = value;
+					RaisePropertyChanged("CurrencySymbol1"); 
+				}
 			}
 		}
 
@@ -276,8 +291,11 @@ namespace CalculatorApp.ViewModel
 			get => m_Unit1;
 			set
 			{
-				m_Unit1 = value;
-				RaisePropertyChanged("Unit1");
+				if (m_Unit1 != value)
+				{
+					m_Unit1 = value;
+					RaisePropertyChanged("Unit1"); 
+				}
 			}
 		}
 
@@ -289,8 +307,11 @@ namespace CalculatorApp.ViewModel
 			get => m_Value1;
 			set
 			{
-				m_Value1 = value;
-				RaisePropertyChanged("Value1");
+				if (m_Value1 != value)
+				{
+					m_Value1 = value;
+					RaisePropertyChanged("Value1"); 
+				}
 			}
 		}
 
@@ -302,8 +323,11 @@ namespace CalculatorApp.ViewModel
 			get => m_CurrencySymbol2;
 			set
 			{
-				m_CurrencySymbol2 = value;
-				RaisePropertyChanged("CurrencySymbol2");
+				if (m_CurrencySymbol2 != value)
+				{
+					m_CurrencySymbol2 = value;
+					RaisePropertyChanged("CurrencySymbol2"); 
+				}
 			}
 		}
 
@@ -315,8 +339,11 @@ namespace CalculatorApp.ViewModel
 			get => m_Unit2;
 			set
 			{
-				m_Unit2 = value;
-				RaisePropertyChanged("Unit2");
+				if (m_Unit2 != value)
+				{
+					m_Unit2 = value;
+					RaisePropertyChanged("Unit2"); 
+				}
 			}
 		}
 
@@ -328,8 +355,11 @@ namespace CalculatorApp.ViewModel
 			get => m_Value2;
 			set
 			{
-				m_Value2 = value;
-				RaisePropertyChanged("Value2");
+				if (m_Value2 != value)
+				{
+					m_Value2 = value;
+					RaisePropertyChanged("Value2"); 
+				}
 			}
 		}
 
@@ -341,8 +371,11 @@ namespace CalculatorApp.ViewModel
 			get => m_SupplementaryResults;
 			set
 			{
-				m_SupplementaryResults = value;
-				RaisePropertyChanged("SupplementaryResults");
+				if (m_SupplementaryResults != value)
+				{
+					m_SupplementaryResults = value;
+					RaisePropertyChanged("SupplementaryResults"); 
+				}
 			}
 		}
 
@@ -355,8 +388,11 @@ namespace CalculatorApp.ViewModel
 			get => m_Value1Active;
 			set
 			{
-				m_Value1Active = value;
-				RaisePropertyChanged("Value1Active");
+				if (m_Value1Active != value)
+				{
+					m_Value1Active = value;
+					RaisePropertyChanged("Value1Active"); 
+				}
 			}
 		}
 
@@ -368,8 +404,11 @@ namespace CalculatorApp.ViewModel
 			get => m_Value2Active;
 			set
 			{
-				m_Value2Active = value;
-				RaisePropertyChanged("Value2Active");
+				if (m_Value2Active != value)
+				{
+					m_Value2Active = value;
+					RaisePropertyChanged("Value2Active"); 
+				}
 			}
 		}
 
@@ -381,8 +420,11 @@ namespace CalculatorApp.ViewModel
 			get => m_Value1AutomationName;
 			set
 			{
-				m_Value1AutomationName = value;
-				RaisePropertyChanged("Value1AutomationName");
+				if (m_Value1AutomationName != value)
+				{
+					m_Value1AutomationName = value;
+					RaisePropertyChanged("Value1AutomationName"); 
+				}
 			}
 		}
 
@@ -394,8 +436,11 @@ namespace CalculatorApp.ViewModel
 			get => m_Value2AutomationName;
 			set
 			{
-				m_Value2AutomationName = value;
-				RaisePropertyChanged("Value2AutomationName");
+				if (m_Value2AutomationName != value)
+				{
+					m_Value2AutomationName = value;
+					RaisePropertyChanged("Value2AutomationName"); 
+				}
 			}
 		}
 
@@ -407,8 +452,11 @@ namespace CalculatorApp.ViewModel
 			get => m_Unit1AutomationName;
 			set
 			{
-				m_Unit1AutomationName = value;
-				RaisePropertyChanged("Unit1AutomationName");
+				if (m_Unit1AutomationName != value)
+				{
+					m_Unit1AutomationName = value;
+					RaisePropertyChanged("Unit1AutomationName"); 
+				}
 			}
 		}
 
@@ -420,8 +468,11 @@ namespace CalculatorApp.ViewModel
 			get => m_Unit2AutomationName;
 			set
 			{
-				m_Unit2AutomationName = value;
-				RaisePropertyChanged("Unit2AutomationName");
+				if (m_Unit2AutomationName != value)
+				{
+					m_Unit2AutomationName = value;
+					RaisePropertyChanged("Unit2AutomationName"); 
+				}
 			}
 		}
 
@@ -433,8 +484,11 @@ namespace CalculatorApp.ViewModel
 			get => m_Announcement;
 			set
 			{
-				m_Announcement = value;
-				RaisePropertyChanged("Announcement");
+				if (m_Announcement != value)
+				{
+					m_Announcement = value;
+					RaisePropertyChanged("Announcement"); 
+				}
 			}
 		}
 
@@ -446,8 +500,11 @@ namespace CalculatorApp.ViewModel
 			get => m_IsDecimalEnabled;
 			set
 			{
-				m_IsDecimalEnabled = value;
-				RaisePropertyChanged("IsDecimalEnabled");
+				if (m_IsDecimalEnabled != value)
+				{
+					m_IsDecimalEnabled = value;
+					RaisePropertyChanged("IsDecimalEnabled"); 
+				}
 			}
 		}
 
@@ -459,8 +516,11 @@ namespace CalculatorApp.ViewModel
 			get => m_IsDropDownOpen;
 			set
 			{
-				m_IsDropDownOpen = value;
-				RaisePropertyChanged("IsDropDownOpen");
+				if (m_IsDropDownOpen != value)
+				{
+					m_IsDropDownOpen = value;
+					RaisePropertyChanged("IsDropDownOpen"); 
+				}
 			}
 		}
 
@@ -472,8 +532,11 @@ namespace CalculatorApp.ViewModel
 			get => m_IsDropDownEnabled;
 			set
 			{
-				m_IsDropDownEnabled = value;
-				RaisePropertyChanged("IsDropDownEnabled");
+				if (m_IsDropDownEnabled != value)
+				{
+					m_IsDropDownEnabled = value;
+					RaisePropertyChanged("IsDropDownEnabled"); 
+				}
 			}
 		}
 
@@ -486,8 +549,11 @@ namespace CalculatorApp.ViewModel
 			get => m_IsCurrencyLoadingVisible;
 			set
 			{
-				m_IsCurrencyLoadingVisible = value;
-				RaisePropertyChanged("IsCurrencyLoadingVisible");
+				if (m_IsCurrencyLoadingVisible != value)
+				{
+					m_IsCurrencyLoadingVisible = value;
+					RaisePropertyChanged("IsCurrencyLoadingVisible"); 
+				}
 			}
 		}
 
@@ -499,8 +565,11 @@ namespace CalculatorApp.ViewModel
 			get => m_IsCurrencyCurrentCategory;
 			set
 			{
-				m_IsCurrencyCurrentCategory = value;
-				RaisePropertyChanged("IsCurrencyCurrentCategory");
+				if (m_IsCurrencyCurrentCategory != value)
+				{
+					m_IsCurrencyCurrentCategory = value;
+					RaisePropertyChanged("IsCurrencyCurrentCategory"); 
+				}
 			}
 		}
 
@@ -512,8 +581,11 @@ namespace CalculatorApp.ViewModel
 			get => m_CurrencyRatioEquality;
 			set
 			{
-				m_CurrencyRatioEquality = value;
-				RaisePropertyChanged("CurrencyRatioEquality");
+				if (m_CurrencyRatioEquality != value)
+				{
+					m_CurrencyRatioEquality = value;
+					RaisePropertyChanged("CurrencyRatioEquality"); 
+				}
 			}
 		}
 
@@ -525,8 +597,11 @@ namespace CalculatorApp.ViewModel
 			get => m_CurrencyRatioEqualityAutomationName;
 			set
 			{
-				m_CurrencyRatioEqualityAutomationName = value;
-				RaisePropertyChanged("CurrencyRatioEqualityAutomationName");
+				if (m_CurrencyRatioEqualityAutomationName != value)
+				{
+					m_CurrencyRatioEqualityAutomationName = value;
+					RaisePropertyChanged("CurrencyRatioEqualityAutomationName"); 
+				}
 			}
 		}
 
@@ -538,8 +613,11 @@ namespace CalculatorApp.ViewModel
 			get => m_CurrencyTimestamp;
 			set
 			{
-				m_CurrencyTimestamp = value;
-				RaisePropertyChanged("CurrencyTimestamp");
+				if (m_CurrencyTimestamp != value)
+				{
+					m_CurrencyTimestamp = value;
+					RaisePropertyChanged("CurrencyTimestamp"); 
+				}
 			}
 		}
 
@@ -552,8 +630,11 @@ namespace CalculatorApp.ViewModel
 			get => m_NetworkBehavior;
 			set
 			{
-				m_NetworkBehavior = value;
-				RaisePropertyChanged("NetworkBehavior");
+				if (m_NetworkBehavior != value)
+				{
+					m_NetworkBehavior = value;
+					RaisePropertyChanged("NetworkBehavior"); 
+				}
 			}
 		}
 
@@ -566,8 +647,11 @@ namespace CalculatorApp.ViewModel
 			get => m_CurrencyDataLoadFailed;
 			set
 			{
-				m_CurrencyDataLoadFailed = value;
-				RaisePropertyChanged("CurrencyDataLoadFailed");
+				if (m_CurrencyDataLoadFailed != value)
+				{
+					m_CurrencyDataLoadFailed = value;
+					RaisePropertyChanged("CurrencyDataLoadFailed"); 
+				}
 			}
 		}
 
@@ -580,8 +664,11 @@ namespace CalculatorApp.ViewModel
 			get => m_CurrencyDataIsWeekOld;
 			set
 			{
-				m_CurrencyDataIsWeekOld = value;
-				RaisePropertyChanged("CurrencyDataIsWeekOld");
+				if (m_CurrencyDataIsWeekOld != value)
+				{
+					m_CurrencyDataIsWeekOld = value;
+					RaisePropertyChanged("CurrencyDataIsWeekOld"); 
+				}
 			}
 		}
 
