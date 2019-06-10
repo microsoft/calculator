@@ -32,7 +32,8 @@ namespace CalculatorApp
 		{
 			var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
 			Header.Text = resourceLoader.GetString("AboutButton/Content");
-			AboutControlCopyrightRun.Text = resourceLoader.GetString("AboutControlCopyright").Replace("%1", "2019");
+			AboutNVControlCopyrightRun.Text = "© 2019 nventive inc. All rights reserved.";
+			AboutMSControlCopyrightRun.Text = resourceLoader.GetString("AboutControlCopyright").Replace("%1", "2019");
 
 			AboutFlyoutVersion.Text = GetAppVersion();
 		}

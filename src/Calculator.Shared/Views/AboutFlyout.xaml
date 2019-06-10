@@ -36,8 +36,11 @@
 					   TextWrapping="Wrap">
 					<Run x:Name="AboutFlyoutVersion" />
 						<LineBreak />
-					<Run x:Name="AboutControlCopyrightRun" />
+					<Run x:Name="AboutNVControlCopyrightRun" />
+						<LineBreak />
+					<Run x:Name="AboutMSControlCopyrightRun" />
 			</TextBlock>
+			<!--
 			<HyperlinkButton x:Name="AboutFlyoutEULA"
 							 Margin="12,0,12,6"
 							 NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
@@ -70,6 +73,7 @@
 					Margin="12,12,0,0"
 					HorizontalAlignment="Left"
 					VerticalAlignment="Top" />
+			-->
 		</StackPanel>
 	</Grid>
 </UserControl>
