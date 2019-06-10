@@ -3,13 +3,12 @@ The Calculator team encourages community feedback and contributions. Thank you f
 making Calculator better! There are several ways you can get involved.
 
 ## Reporting issues and suggesting new features
-If Calculator is not working properly, please file a report in the 
-[Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130&newFeedback=True).
+If Calculator is not working properly, please [file a report](https://github.com/nventive/calculator/issues).
 Feedback Hub reports automatically include diagnostic data, such as the version of Calculator
 you're using.
 
 We are happy to hear your ideas for the future of Calculator. Check the
-[Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130) and see if others have
+[GitHub issues](https://github.com/nventive/calculator/issues) and see if others have
 submitted similar feedback. You can upvote existing feedback or submit a new suggestion.
 
 We always look at upvoted items in Feedback Hub when we decide what to work on next. We read the
@@ -18,10 +17,10 @@ all community interactions must abide by the [Code of Conduct](CODE_OF_CONDUCT.m
 
 ## Finding issues you can help with
 Looking for something to work on?
-Issues marked [``good first issue``](https://github.com/Microsoft/calculator/labels/good%20first%20issue)
+Issues marked [``good first issue``](https://github.com/nventive/calculator/labels/good%20first%20issue)
 are a good place to start.
 
-You can also check the [``help wanted``](https://github.com/Microsoft/calculator/labels/help%20wanted) tag to find 
+You can also check the [``help wanted``](https://github.com/nventive/calculator/labels/help%20wanted) tag to find 
 other issues to help with. If you're interested in working on a fix, leave a comment to let everyone know and to help
 avoid duplicated effort from others.
 
@@ -58,10 +57,7 @@ To learn how to build the code and run tests, follow the instructions in the [RE
 
 ### Style guidelines
 The code in this project uses several different coding styles, depending on the age and history of
-the code. Please attempt to match the style of surrounding code as much as possible. In new
-components, prefer the patterns described in the 
-[C++ core guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
-and the [modern C++/WinRT language projections](https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/).
+the code. Please attempt to match the style of surrounding code as much as possible. 
 
 ### Testing
 Your change should include tests to verify new functionality wherever possible. Code should be
@@ -89,16 +85,3 @@ the request.
 Often, multiple iterations will be needed to responding to feedback from reviewers. Try looking at
 [past pull requests](https://github.com/Microsoft/calculator/pulls?q=is%3Apr+is%3Aclosed) to see
 what the experience might be like.
-
-## Contributor License Agreement
-Before we can review and accept a pull request from you, you'll need to sign a Contributor License
-Agreement (CLA). The CLA ensures that the community is free to use your contributions. More
-information about the agreement is available on the [Microsoft web site](https://cla.opensource.microsoft.com/).
-Signing the CLA is an automated process, and you only need to do it once for Microsoft projects on
-GitHub.
-
-You don't need to sign a CLA until you're ready to create a pull request. When your pull request is
-created, it is classified by a bot. If the change is trivial (i.e. you just fixed a typo) then the
-bot will label the PR `cla-not-required`. Otherwise, it's classified as `cla-required`. In that
-case, the system will also tell you how you can sign the CLA. Once you have signed a CLA, the
-current and all future pull requests will be labeled as `cla-signed`.
