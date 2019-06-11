@@ -147,8 +147,8 @@ namespace CalculatorApp.ViewModel
         public bool IsCurrentViewPinned { get => m_IsCurrentViewPinned; set { m_IsCurrentViewPinned = value; RaisePropertyChanged("IsCurrentViewPinned"); } }
 
 
-        private List<MemoryItemViewModel> m_MemorizedNumbers;
-        public List<MemoryItemViewModel> MemorizedNumbers { get => m_MemorizedNumbers; set { m_MemorizedNumbers = value; RaisePropertyChanged("MemorizedNumbers"); } }
+        private ObservableCollection<MemoryItemViewModel> m_MemorizedNumbers; // List<> => ObserableCollection<> because of https://github.com/nventive/Uno/issues/1046
+		public ObservableCollection<MemoryItemViewModel> MemorizedNumbers { get => m_MemorizedNumbers; set { m_MemorizedNumbers = value; RaisePropertyChanged("MemorizedNumbers"); } }
 
 
         private const string IsMemoryEmptyName = "IsMemoryEmpty";
@@ -525,7 +525,7 @@ namespace CalculatorApp.ViewModel
             m_OctalDisplayValue = "0";
             m_standardCalculatorManager = new CalculatorManager(ref m_calculatorDisplay, ref m_resourceProvider);
             m_ExpressionTokens = new CalculatorObservableCollection<DisplayExpressionToken>();
-            m_MemorizedNumbers = new List<MemoryItemViewModel>();
+            m_MemorizedNumbers = new ObservableCollection<MemoryItemViewModel>();
             m_IsMemoryEmpty = true;
             m_IsFToEChecked = false;
             m_isShiftChecked = false;
