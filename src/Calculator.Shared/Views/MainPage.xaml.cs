@@ -81,14 +81,14 @@ namespace CalculatorApp
 				LinkToOriginalApp = "https://github.com/microsoft/calculator",
 				LinkToAppAuthor = "https://www.microsoft.com/",
 				LinkToUnoPlatformApp = "https://github.com/nventive/calculator",
-				AboutContent = "This is the original Windows Calculator, by Microsoft, recompiled using Uno Platform."
+				AboutContent = "A simple yet powerful iOS/Android/WebAssembly C# port of the calculator that ships with Windows."
 			};
 			grid.Children.Insert(0, banner);
 #endif
 		}
 
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+		protected override void OnNavigatedTo(NavigationEventArgs e)
         {
 			initialized = true;
 

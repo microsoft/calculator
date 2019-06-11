@@ -54,7 +54,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
 		<PackageReference Include="Uno.UI" Version="1.45.0-dev.1782" />
-		<PackageReference Include="Uno.UI.Sample.Banner" Version="1.44.0-dev.16" />
+		<PackageReference Include="Uno.UI.Sample.Banner" Version="1.44.0-dev.21" />
 		<PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.293" />
 		<DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.289" />
 	</ItemGroup>
