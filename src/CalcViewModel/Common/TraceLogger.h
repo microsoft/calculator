@@ -51,6 +51,7 @@ namespace CalculatorApp
         void LogUserRequestedRefreshFailed() const;
         void LogConverterInputReceived(CalculatorApp::Common::ViewMode mode) const;
         void LogViewClosingTelemetry();
+        void LogNavBarOpened() const;
 
         void LogError(CalculatorApp::Common::ViewMode mode, std::wstring_view errorString);
          void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e) const;

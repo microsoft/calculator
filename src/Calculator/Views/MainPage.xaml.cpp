@@ -374,6 +374,7 @@ void MainPage::OnNavPaneOpening(_In_ MUXC::NavigationView ^ sender, _In_ Object 
 void MainPage::OnNavPaneOpened(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
 {
     KeyboardShortcutManager::HonorShortcuts(false);
+    TraceLogger::GetInstance().LogNavBarOpened();
 }
 
 void MainPage::OnNavPaneClosed(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)

@@ -26,7 +26,7 @@ namespace CalculatorApp
     // Telemetry events. Uploaded to asimov.
     constexpr auto EVENT_NAME_WINDOW_ON_CREATED = L"OnWindowCreated";
     constexpr auto EVENT_NAME_BUTTON_USAGE = L"KeyboardOperatorUsageInSession";
-
+    constexpr auto EVENT_NAME_NAV_BAR_OPENED = L"NavBarOpened";
     constexpr auto EVENT_NAME_MODE_CHANGED = L"ModeChanged";
     constexpr auto EVENT_NAME_DATE_CALCULATION_MODE_USED = L"DateCalculationModeUsed";
     constexpr auto EVENT_NAME_HISTORY_ITEM_LOAD = L"HistoryItemLoad";
@@ -327,5 +327,15 @@ namespace CalculatorApp
         {
             LogButtonUsage();
         }
+    }
+
+    void TraceLogger::LogNavBarOpened() const
+    {
+        if (!GetTraceLoggingProviderEnabled())
+            return;
+
+        LoggingFields fields{};
+        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
+        LogLevel2Event(EVENT_NAME_NAV_BAR_OPENED, fields);
     }
 }
