@@ -1,10 +1,12 @@
 #include "pch.h"
 #include "EquationInputArea.xaml.h"
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "Controls/EquationTextBox.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::Controls;
 using namespace Platform;
 using namespace std;
 using namespace Windows::System;
@@ -84,18 +86,18 @@ void EquationInputArea::InputTextBox_LostFocus(Object^ sender, RoutedEventArgs^ 
 {
     KeyboardShortcutManager::HonorShortcuts(true);
     
-    auto tb = static_cast<TextBox^>(sender);
+    auto tb = static_cast<EquationTextBox^>(sender);
     auto eq = static_cast<EquationViewModel^>(tb->DataContext);
-    tb->Text = eq->Expression;
+    tb->SetEquationText(eq->Expression);
 }
 
 void EquationInputArea::InputTextBox_KeyUp(Object^ sender, KeyRoutedEventArgs^ e)
 {
     if (e->Key == VirtualKey::Enter)
     {
-        auto tb = static_cast<TextBox^>(sender);
+        auto tb = static_cast<EquationTextBox^>(sender);
         auto eq = static_cast<EquationViewModel^>(tb->DataContext);
-        eq->Expression = tb->Text;
+        eq->Expression = tb->GetEquationText();
 
         e->Handled = true;
     }

@@ -3415,7 +3415,7 @@
     <value>^</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="EquationInputButton.PlaceholderText" xml:space="preserve">
+  <data name="EquationInputButtonPlaceholderText" xml:space="preserve">
     <value>Add Equation</value>
     <comment>Placeholder text for the equation input button</comment>
   </data>

@@ -9,27 +9,49 @@ namespace CalculatorApp
 {
     namespace Controls
     {
-        public ref class EquationTextBox sealed : public Windows::UI::Xaml::Controls::TextBox
+        public ref class EquationTextBox sealed : public Windows::UI::Xaml::Controls::Control
         {
         public:
-            EquationTextBox();
+            EquationTextBox()
+            {
+            }
+
+            DEPENDENCY_PROPERTY_OWNER(EquationTextBox);
+            DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::SolidColorBrush^, EquationColor);
 
             event Windows::UI::Xaml::RoutedEventHandler^ FunctionButtonClicked;
             event Windows::UI::Xaml::RoutedEventHandler^ ColorChangeButtonClicked;
             event Windows::UI::Xaml::RoutedEventHandler^ RemoveButtonClicked;
 
+            Platform::String^ GetEquationText();
+            void SetEquationText(Platform::String^ equationText);
+
         protected:
             virtual void OnApplyTemplate() override;
+            virtual void OnPointerEntered(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+            virtual void OnPointerExited(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+            virtual void OnPointerCanceled(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+            virtual void OnPointerCaptureLost(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
 
         private:
-            void OnPointerEnteredButton(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e);
-            void OnPointerExitedButton(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e);
+            void UpdateCommonVisualState();
+            void UpdateDeleteButtonVisualState();
+            bool ShouldDeleteButtonBeVisible();
 
-            Windows::UI::Core::CoreCursor^ m_cursorBeforePointerEntered;
-            Windows::UI::Core::CoreCursor^ m_buttonCursor;
+            void OnRichEditBoxGotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+            void OnRichEditBoxLostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+            void OnRichEditBoxTextChanged(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+            void OnDeleteButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+
+            Windows::UI::Xaml::Controls::RichEditBox^ m_richEditBox;
+            Windows::UI::Xaml::Controls::Button^ m_equationButton;
+            Windows::UI::Xaml::Controls::Button^ m_deleteButton;
             Windows::UI::Xaml::Controls::Button^ m_removeButton;
             Windows::UI::Xaml::Controls::Button^ m_colorChooserButton;
             Windows::UI::Xaml::Controls::Button^ m_functionButton;
+
+            bool m_isFocused;
+            bool m_isPointerOver;
         };
     }
 }

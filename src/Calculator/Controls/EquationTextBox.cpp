@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "EquationTextBox.h"
 
+using namespace std;
 using namespace Platform;
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -11,46 +12,154 @@ using namespace CalculatorApp::Controls;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
+using namespace Windows::UI::Text;
 
-
-EquationTextBox::EquationTextBox()
-{
-    m_buttonCursor = ref new Windows::UI::Core::CoreCursor(Windows::UI::Core::CoreCursorType::Hand, 0);
-}
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationColor);
 
 void EquationTextBox::OnApplyTemplate()
 {
-    TextBox::OnApplyTemplate();
-
+    m_equationButton = dynamic_cast<Button^>(GetTemplateChild("EquationButton"));
+    m_richEditBox = dynamic_cast<RichEditBox^>(GetTemplateChild("EquationTextBox"));
+    m_deleteButton = dynamic_cast<Button^>(GetTemplateChild("DeleteButton"));
     m_removeButton = dynamic_cast<Button^>(GetTemplateChild("RemoveButton"));
     m_colorChooserButton = dynamic_cast<Button^>(GetTemplateChild("ColorChooserButton"));
     m_functionButton = dynamic_cast<Button^>(GetTemplateChild("FunctionButton"));
 
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->GotFocus += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxGotFocus);
+        m_richEditBox->LostFocus += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxLostFocus);
+        m_richEditBox->TextChanged += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxTextChanged);
+    }
+
+    if (m_deleteButton != nullptr)
+    {
+        m_deleteButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnDeleteButtonClicked);
+    }
+
     if (m_removeButton != nullptr)
     {
-        m_removeButton->PointerEntered += ref new PointerEventHandler(this, &EquationTextBox::OnPointerEnteredButton);
+
     }
 
     if (m_colorChooserButton != nullptr)
     {
-        m_colorChooserButton->PointerEntered += ref new PointerEventHandler(this, &EquationTextBox::OnPointerEnteredButton);
+
     }
 
     if (m_functionButton != nullptr)
     {
-        m_functionButton->PointerEntered += ref new PointerEventHandler(this, &EquationTextBox::OnPointerEnteredButton);
+
+    }
+}
+
+void EquationTextBox::OnPointerEntered(PointerRoutedEventArgs^ e)
+{
+    m_isPointerOver = true;
+    UpdateCommonVisualState();
+}
+
+void EquationTextBox::OnPointerExited(PointerRoutedEventArgs^ e)
+{
+    m_isPointerOver = false;
+    UpdateCommonVisualState();
+}
+
+void EquationTextBox::OnPointerCanceled(PointerRoutedEventArgs^ e)
+{
+    m_isPointerOver = false;
+    UpdateCommonVisualState();
+}
+
+void EquationTextBox::OnPointerCaptureLost(PointerRoutedEventArgs^ e)
+{
+    m_isPointerOver = false;
+    UpdateCommonVisualState();
+}
+
+void EquationTextBox::OnRichEditBoxTextChanged(Object^ sender, RoutedEventArgs^ e)
+{
+    UpdateDeleteButtonVisualState();
+}
+
+void EquationTextBox::OnRichEditBoxGotFocus(Object^ sender, RoutedEventArgs^ e)
+{
+    m_isFocused = true;
+    UpdateCommonVisualState();
+    UpdateDeleteButtonVisualState();
+}
+
+void EquationTextBox::OnRichEditBoxLostFocus(Object^ sender, RoutedEventArgs^ e)
+{
+    m_isFocused = false;
+    UpdateCommonVisualState();
+    UpdateDeleteButtonVisualState();
+}
+
+void EquationTextBox::OnDeleteButtonClicked(Object^ sender, RoutedEventArgs^ e)
+{
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->TextDocument->SetText(::TextSetOptions::None, L"");
+    }
+}
+
+void EquationTextBox::UpdateDeleteButtonVisualState()
+{
+    String^ state;
+
+    if (ShouldDeleteButtonBeVisible())
+    {
+        state = "ButtonVisible";
+    }
+    else
+    {
+        state = "ButtonCollapsed";
+    }
+
+    VisualStateManager::GoToState(this, state, true);
+}
+
+void EquationTextBox::UpdateCommonVisualState()
+{
+    String^ state = "Normal";
+
+    if (m_isFocused)
+    {
+        state = "Focused";
+    }
+    else if (m_isPointerOver)
+    {
+        state = "PointerOver";
+    }
+
+    VisualStateManager::GoToState(this, state, true);
+}
+
+
+Platform::String^ EquationTextBox::GetEquationText()
+{
+    String^ text;
+
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->TextDocument->GetText(::TextGetOptions::NoHidden, &text);
+    }
+
+    return text;
+}
+
+void EquationTextBox::SetEquationText(Platform::String^ equationText)
+{
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->TextDocument->SetText(::TextSetOptions::None, equationText);
     }
 }
 
 
-
-void EquationTextBox::OnPointerEnteredButton(_In_ Object^ sender, _In_ PointerRoutedEventArgs^ e)
+bool EquationTextBox::ShouldDeleteButtonBeVisible()
 {
-    m_cursorBeforePointerEntered = Window::Current->CoreWindow->PointerCursor;
-    Window::Current->CoreWindow->PointerCursor = m_buttonCursor;
-}
-
-void EquationTextBox::OnPointerExitedButton(_In_ Object^ sender, _In_ PointerRoutedEventArgs^ e)
-{
+    return (!GetEquationText()->IsEmpty() && m_isFocused);
 
 }

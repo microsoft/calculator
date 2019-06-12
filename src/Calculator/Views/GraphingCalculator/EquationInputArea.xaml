@@ -67,17 +67,10 @@
                                                   Height="44"
                                                   Margin="0,0,3,0"
                                                   Style="{StaticResource EquationTextBoxStyle}"
-                                                  BorderBrush="{StaticResource LineColorBrush}"
-                                                  BorderThickness="0"
+                                                  EquationColor="{StaticResource LineColorBrush}"
                                                   GotFocus="InputTextBox_GotFocus"
                                                   KeyUp="InputTextBox_KeyUp"
                                                   LostFocus="InputTextBox_LostFocus"/>
-
-                        <Button Width="{StaticResource ItemHeight}"
-                                Height="{StaticResource ItemHeight}"
-                                Background="{StaticResource LineColorBrush}"
-                                Foreground="{StaticResource SystemChromeWhiteColor}"
-                                Content="ƒₓ"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
