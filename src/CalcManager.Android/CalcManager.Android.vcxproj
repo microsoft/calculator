@@ -275,6 +275,7 @@
     <Link>
       <UnresolvedSymbolReferences>true</UnresolvedSymbolReferences>
       <AdditionalOptions>-lm</AdditionalOptions>
+      <AdditionalDependencies>-lunwind</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -289,6 +290,7 @@
     <Link>
       <UnresolvedSymbolReferences>true</UnresolvedSymbolReferences>
       <AdditionalOptions>-lm</AdditionalOptions>
+      <AdditionalDependencies>-lunwind</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)/Microsoft.Cpp.targets" />
