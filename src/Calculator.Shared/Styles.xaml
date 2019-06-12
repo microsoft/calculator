@@ -1738,6 +1738,7 @@
 
 						<ContentPresenter x:Name="ContentPresenter"
 										  Padding="{TemplateBinding Padding}"
+										  Content="{TemplateBinding Content}"
 										  HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
 										  VerticalAlignment="{TemplateBinding VerticalAlignment}"
 										  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -1745,12 +1746,14 @@
 										  BorderBrush="{ThemeResource AppControlForegroundTransparentRevealBorderBrush}"
 										  BorderThickness="{TemplateBinding BorderThickness}"
 										  AutomationProperties.AccessibilityView="Raw"
-										  ContentTemplate="{TemplateBinding ContentTemplate}"
 										  ContentTransitions="{TemplateBinding ContentTransitions}">
-							<ContentPresenter.Content>
-								<PathIcon AutomationProperties.AccessibilityView="Raw"
-										  Data="{TemplateBinding Content}" />
-							</ContentPresenter.Content>
+							<!-- UNO TODO https://github.com/nventive/Uno/issues/1055 -->
+							<ContentPresenter.ContentTemplate>
+								<DataTemplate>
+									<PathIcon AutomationProperties.AccessibilityView="Raw"
+											  Data="{Binding}" />
+								</DataTemplate>
+							</ContentPresenter.ContentTemplate>
 						</ContentPresenter>
 					</Grid>
 				</ControlTemplate>
