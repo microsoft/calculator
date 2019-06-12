@@ -1592,8 +1592,4 @@
   <ItemGroup>
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="$(GraphingImplDll)" />
-    <CopyFileToFolders Include="$(GraphingEngineDll)" />
-  </ItemGroup>
 </Project>
