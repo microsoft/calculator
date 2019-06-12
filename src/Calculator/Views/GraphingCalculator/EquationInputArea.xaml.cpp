@@ -14,6 +14,7 @@ using namespace Windows::UI;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Input;
 
 namespace
@@ -107,4 +108,16 @@ Color EquationInputArea::GetNextLineColor()
 {
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % lineColorsSize;
     return lineColors[m_lastLineColorIndex];
+}
+
+
+void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object^ sender, RoutedEventArgs^ e)
+{
+    auto tb = static_cast<EquationTextBox^>(sender);
+    auto eq = static_cast<EquationViewModel^>(tb->DataContext);
+    unsigned int index;
+    if (Equations->IndexOf(eq, &index))
+    {
+        Equations->RemoveAt(index);
+    }
 }

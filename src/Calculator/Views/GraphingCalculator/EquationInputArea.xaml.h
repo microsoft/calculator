@@ -29,5 +29,6 @@ namespace CalculatorApp
 
     private:
         int m_lastLineColorIndex;
+        void EquationTextBox_RemoveButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
     };
 }

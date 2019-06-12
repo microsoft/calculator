@@ -53,9 +53,8 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:EquationViewModel">
-                    <Grid Height="{StaticResource ItemHeight}">
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Grid.Resources>
@@ -64,13 +63,28 @@
 
                         <controls:EquationTextBox x:Uid="EquationInputButton"
                                                   Grid.Column="1"
-                                                  Height="44"
                                                   Margin="0,0,3,0"
                                                   Style="{StaticResource EquationTextBoxStyle}"
                                                   EquationColor="{StaticResource LineColorBrush}"
                                                   GotFocus="InputTextBox_GotFocus"
                                                   KeyUp="InputTextBox_KeyUp"
-                                                  LostFocus="InputTextBox_LostFocus"/>
+                                                  LostFocus="InputTextBox_LostFocus"
+                                                  RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
+                            <controls:EquationTextBox.KeyGraphFeaturesContent>
+                                <StackPanel x:Name="KeyGraphFeaturesGrid" Visibility="{x:Bind KeyGraphFeaturesVisibility, Mode=OneWay}">
+                                    <TextBlock Text="Key Graph Features"/>
+                                    <TextBlock Text="{x:Bind Expression, Mode=OneWay}"/>
+                                </StackPanel>
+                            </controls:EquationTextBox.KeyGraphFeaturesContent>
+                            <controls:EquationTextBox.ColorChooserFlyout>
+                                <Flyout x:Name="ColorChooserFlyout"
+                                        x:Uid="ColorChooserFlyout"
+                                        Placement="Bottom">
+                                    <TextBlock Text="Color Chooser Goes Here"/>
+                                </Flyout>
+                            </controls:EquationTextBox.ColorChooserFlyout>
+                        </controls:EquationTextBox>
+
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
