@@ -48,10 +48,10 @@
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutGrid">
-		<Grid.RowDefinitions>
+		<!--<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="{Binding RowHeight, ElementName=MemoryList, Mode=OneWay}"/>
-		</Grid.RowDefinitions>
+		</Grid.RowDefinitions>-->
 
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="ErrorVisualStates">
