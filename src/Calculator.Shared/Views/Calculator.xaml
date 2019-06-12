@@ -1150,6 +1150,15 @@
 				HorizontalContentAlignment="Stretch"
 				VerticalAlignment="Stretch"
 				VerticalContentAlignment="Stretch" />
+
+			<ContentPresenter
+				x:Name="TODO_UNO_MEMORY"
+				Grid.Row="5"
+				Visibility="Collapsed"
+				HorizontalAlignment="Stretch"
+				HorizontalContentAlignment="Stretch"
+				VerticalAlignment="Stretch"
+				VerticalContentAlignment="Stretch" />
 		</Grid>
 
 		<!-- Docked Pivot panel for history/memory -->
