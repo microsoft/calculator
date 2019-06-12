@@ -725,11 +725,14 @@
 								</VisualState>
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
-						<ScrollViewer x:Name="TextContainer"
+
+						<!-- TODO UNO <ScrollViewer x:Name="TextContainer"
 									  Grid.Column="1"
 									  Padding="0,0,0,0"
 									  Style="{ThemeResource ResultsScrollerSnapped}"
-									  AutomationProperties.AccessibilityView="Raw">
+									  AutomationProperties.AccessibilityView="Raw">-->
+						<Viewbox Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Height="75">
+
 							<TextBlock x:Name="NormalOutput"
 									   Margin="{TemplateBinding DisplayMargin}"
 									   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -741,7 +744,9 @@
 									   Text="{TemplateBinding DisplayValue}"
 									   TextAlignment="{TemplateBinding HorizontalContentAlignment}"
 									   TextWrapping="NoWrap" />
-						</ScrollViewer>
+						<!--</ScrollViewer>-->
+						</Viewbox>
+
 						<HyperlinkButton x:Name="ScrollLeft"
 										 Grid.Column="0"
 										 Width="20"
@@ -829,11 +834,12 @@
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
 
-						<ScrollViewer x:Name="TextContainer"
+						<!--TODO UNO <ScrollViewer x:Name="TextContainer"
 									  Grid.Column="1"
 									  Padding="0,0,0,0"
 									  Style="{ThemeResource ResultsScrollerSnapped}"
-									  AutomationProperties.AccessibilityView="Raw">
+									  AutomationProperties.AccessibilityView="Raw">-->
+						<Viewbox Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Height="75">
 
 							<TextBlock x:Name="NormalOutput"
 									   Margin="{TemplateBinding DisplayMargin}"
@@ -846,7 +852,8 @@
 									   Text="{TemplateBinding DisplayValue}"
 									   TextAlignment="{TemplateBinding HorizontalContentAlignment}"
 									   TextWrapping="NoWrap" />
-						</ScrollViewer>
+						<!--</ScrollViewer>-->
+						</Viewbox>
 
 						<HyperlinkButton x:Name="ScrollLeft"
 										 Grid.Column="0"
@@ -938,11 +945,12 @@
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
 
-						<ScrollViewer x:Name="textContainer"
+						<!-- TODO UNO <ScrollViewer x:Name="textContainer"
 									  Grid.Column="1"
 									  Padding="0,0,0,0"
 									  Style="{ThemeResource ResultsScrollerSnapped}"
-									  AutomationProperties.AccessibilityView="Raw">
+									  AutomationProperties.AccessibilityView="Raw">-->
+						<Viewbox Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Height="75">
 
 							<TextBlock x:Name="normalOutput"
 									   Margin="{TemplateBinding DisplayMargin}"
@@ -955,7 +963,8 @@
 									   Text="{TemplateBinding DisplayValue}"
 									   TextAlignment="{TemplateBinding HorizontalContentAlignment}"
 									   TextWrapping="NoWrap" />
-						</ScrollViewer>
+						<!--</ScrollViewer>-->
+						</Viewbox>
 
 						<HyperlinkButton x:Name="scrollLeft"
 										 Grid.Column="0"
