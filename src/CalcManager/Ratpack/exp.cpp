@@ -405,7 +405,7 @@ void powratNumeratorDenominator(_Inout_ PRAT* px, _In_ PRAT y, uint32_t radix, i
 //---------------------------------------------------------------------------
 void powratcomp(_Inout_ PRAT* px, _In_ PRAT y, uint32_t radix, int32_t precision)
 {
-    int32_t sign = ((*px)->pp.sign * (*px)->pq.sign);
+    int32_t sign = SIGN(*px);
 
     // Take the absolute value
     (*px)->pp.sign = 1;

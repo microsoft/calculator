@@ -210,7 +210,7 @@ void factrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
     fracrat(&frac, radix, precision);
 
     // Check for negative integers and throw an error.
-    if ((zerrat(frac) || (LOGRATRADIX(frac) <= -precision)) && ((*px)->pp.sign * (*px)->pq.sign == -1))
+    if ((zerrat(frac) || (LOGRATRADIX(frac) <= -precision)) && SIGN(*px) == -1)
     {
         throw CALC_E_DOMAIN;
     }

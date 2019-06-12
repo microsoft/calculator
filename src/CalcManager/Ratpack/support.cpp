@@ -408,7 +408,7 @@ bool rat_lt(_In_ PRAT a, _In_ PRAT b, int32_t precision)
     b->pp.sign *= -1;
     addrat(&rattmp, b, precision);
     b->pp.sign *= -1;
-    bool bret = (!zernum(rattmp->pp) && rattmp->pp.sign * rattmp->pq.sign == -1);
+    bool bret = (!zernum(rattmp->pp) && SIGN(rattmp) == -1);
     destroyrat(rattmp);
     return (bret);
 }
