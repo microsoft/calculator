@@ -625,7 +625,7 @@ namespace CalculatorApp
         {
             if (m_fIsMemoryFlyoutOpen)
             {
-                MemoryFlyout.Hide();
+				MemoryFlyout_Hide();
 			}
         }
 
@@ -678,6 +678,7 @@ namespace CalculatorApp
 
 		private void TODO_UNO_HISTORY_Dismiss(object sender, TappedRoutedEventArgs e)
 		{
+			MemoryFlyout_Hide();
 			HistoryFlyout_Hide();
 			e.Handled = true;
 		}
@@ -687,22 +688,42 @@ namespace CalculatorApp
             String viewState = App.GetAppViewState();
             if (viewState != ViewState.DockedView)
             {
-                if (m_fIsMemoryFlyoutOpen)
-                {
-                    MemoryFlyout.Hide();
+				if (TODO_UNO_MEMORY.Visibility == Visibility.Visible)
+				{
+					MemoryFlyout_Hide();
 				}
-                else
-                {
-                    // TraceLogger.GetInstance().LogMemoryFlyoutOpenBegin(Model.MemorizedNumbers.Size);
-                    MemoryFlyout.Content = GetMemory();
-                    // UNO TODO
-                    // m_memory.RowHeight = NumpadPanel.ActualHeight;
-                    FlyoutBase.ShowAttachedFlyout(MemoryButton);
-                }
-            }
+				else
+				{
+					m_memory.RowHeight = new GridLength(NumpadPanel.ActualHeight);
+					TODO_UNO_MEMORY.Content = m_memory;
+					TODO_UNO_MEMORY.Visibility = Visibility.Visible;
+					TODO_UNO_HISTORY_DISMISS_PANEL.Visibility = Visibility.Visible;
+					OnMemoryFlyoutOpened(null, null);
+				}
+				//if (m_fIsMemoryFlyoutOpen)
+				//{
+				//    MemoryFlyout.Hide();
+				//}
+				//else
+				//{
+				//    // TraceLogger.GetInstance().LogMemoryFlyoutOpenBegin(Model.MemorizedNumbers.Size);
+				//    MemoryFlyout.Content = GetMemory();
+				//    // UNO TODO
+				//    // m_memory.RowHeight = NumpadPanel.ActualHeight;
+				//    FlyoutBase.ShowAttachedFlyout(MemoryButton);
+				//}
+			}
         }
+		void MemoryFlyout_Hide()
+		{
+			OnMemoryFlyoutClosing(null, null);
+			TODO_UNO_HISTORY_DISMISS_PANEL.Visibility = Visibility.Collapsed;
+			TODO_UNO_MEMORY.Visibility = Visibility.Collapsed;
+			TODO_UNO_MEMORY.Content = null;
+			OnMemoryFlyoutClosed(null, null);
+		}
 
-        void OnMemoryFlyoutOpened(object sender, object args)
+		void OnMemoryFlyoutOpened(object sender, object args)
         {
             // TraceLogger.GetInstance().LogMemoryFlyoutOpenEnd(Model.MemorizedNumbers.Size);
             m_IsLastFlyoutMemory = true;
@@ -753,7 +774,7 @@ namespace CalculatorApp
                 this.Focus(FocusState.Programmatic);
             }
 
-            MemoryFlyout.Hide();
+			MemoryFlyout_Hide();
 		}
 
         void EnableMemoryControls(bool enable)
@@ -781,7 +802,7 @@ namespace CalculatorApp
 
             if (point.Y < (grid.ActualHeight - NumpadPanel.ActualHeight))
             {
-                MemoryFlyout.Hide();
+				MemoryFlyout_Hide();
 			}
         }
 
