@@ -1084,16 +1084,16 @@
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="BorderThickness" Value="0,1,1,1"/>
                 <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-                <Setter Property="FontSize" Value="{ThemeResource SearchBoxContentThemeFontSize}"/>
-                <Setter Property="FontWeight" Value="{ThemeResource SearchBoxContentThemeFontWeight}"/>
-                <Setter Property="Foreground" Value="{ThemeResource SearchBoxForegroundThemeBrush}"/>
-                <Setter Property="Padding" Value="{ThemeResource SearchBoxThemePadding}"/>
+                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="{ThemeResource TextBoxForegroundThemeBrush}"/>
+                <Setter Property="Padding" Value="{ThemeResource TextControlThemePadding}"/>
                 <Setter Property="IsTabStop" Value="False"/>
                 <Setter Property="Typography.StylisticSet20" Value="True"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Controls:EquationTextBox">
-                            <Grid x:Name="SearchBoxGrid">
+                            <Grid>
 
                                 <Grid.Resources>
                                     <Style x:Name="EquationTextBoxButtonStyle" TargetType="Button">
@@ -1571,10 +1571,10 @@
                                         <VisualState x:Name="Disabled">
                                             <Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SearchBoxDisabledBackgroundThemeBrush}"/>
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextBoxDisabledBackgroundThemeBrush}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SearchBoxDisabledBorderThemeBrush}"/>
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextBoxDisabledBorderThemeBrush}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationTextBox" Storyboard.TargetProperty="Background">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
@@ -1588,7 +1588,7 @@
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SearchBoxFocusedBackgroundThemeBrush}"/>
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextBoxBackgroundThemeBrush}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
@@ -1613,8 +1613,8 @@
                                 </VisualStateManager.VisualStateGroups>
 
                                 <Button x:Name="EquationButton"
-                                        Width="44"
-                                        Height="44"
+                                        MinWidth="44"
+                                        MinHeight="44"
                                         Background="{TemplateBinding EquationColor}"
                                         Foreground="{StaticResource SystemChromeWhiteColor}"
                                         Content="ƒₓ">
@@ -1638,7 +1638,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <RichEditBox x:Name="EquationTextBox"
-                                                     MinHeight="{ThemeResource SearchBoxTextBoxThemeMinHeight}"
+                                                     MinHeight="42"
                                                      Padding="{TemplateBinding Padding}"
                                                      VerticalAlignment="Stretch"
                                                      Style="{StaticResource EquationTextBoxStyle}"
