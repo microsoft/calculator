@@ -12,42 +12,22 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Margin="0,0,17,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <TextBlock x:Uid="EquationInputAreaHeader"
-                       Grid.Column="0"
-                       Style="{ThemeResource SubheaderTextBlockStyle}"
-                       FontSize="20"/>
-
-            <Button Grid.Column="1"
-                    Click="AddEquationButton_Click"
-                    Content="+"/>
-        </Grid>
-
         <ListView x:Name="EquationInputList"
-                  Grid.Row="2"
-                  Margin="0,4,0,0"
+                  Grid.Row="0"
+                  Margin="0,8,0,0"
                   IsItemClickEnabled="False"
                   ItemsSource="{x:Bind Equations}"
                   SelectionMode="None">
-
-            <ListView.Resources>
-                <x:Double x:Key="ItemHeight">44</x:Double>
-            </ListView.Resources>
 
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="IsTabStop" Value="False"/>
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     <Setter Property="Padding" Value="0"/>
-                    <Setter Property="Margin" Value="0,0,17,1"/>
+                    <Setter Property="Margin" Value="0,0,0,0"/>
                 </Style>
             </ListView.ItemContainerStyle>
 
@@ -65,11 +45,13 @@
                                                   Grid.Column="1"
                                                   Margin="0,0,3,0"
                                                   Style="{StaticResource EquationTextBoxStyle}"
-                                                  EquationColor="{StaticResource LineColorBrush}"
                                                   GotFocus="InputTextBox_GotFocus"
                                                   KeyUp="InputTextBox_KeyUp"
                                                   LostFocus="InputTextBox_LostFocus"
                                                   RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
+                            <controls:EquationTextBox.EquationColor>
+                                <SolidColorBrush x:Name="EquationLineColor" Color="{x:Bind LineColor, Mode=OneWay}"/>
+                            </controls:EquationTextBox.EquationColor>
                             <controls:EquationTextBox.KeyGraphFeaturesContent>
                                 <StackPanel x:Name="KeyGraphFeaturesGrid" Visibility="{x:Bind KeyGraphFeaturesVisibility, Mode=OneWay}">
                                     <TextBlock Text="Key Graph Features"/>
@@ -80,7 +62,9 @@
                                 <Flyout x:Name="ColorChooserFlyout"
                                         x:Uid="ColorChooserFlyout"
                                         Placement="Bottom">
-                                    <TextBlock Text="Color Chooser Goes Here"/>
+                                    <StackPanel>
+                                        <ColorPicker x:Name="EquationColorPicker" Color="{x:Bind LineColor, Mode=TwoWay}"/>
+                                    </StackPanel>
                                 </Flyout>
                             </controls:EquationTextBox.ColorChooserFlyout>
                         </controls:EquationTextBox>
@@ -89,5 +73,10 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <Button Grid.Row="1"
+                Margin="4"
+                Click="AddEquationButton_Click"
+                Content="+"/>
     </Grid>
 </UserControl>
