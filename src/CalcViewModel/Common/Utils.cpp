@@ -50,8 +50,7 @@ double Utils::GetDoubleFromWstring(wstring input)
 {
     wchar_t unWantedChars[] = { L' ', L',', 8234, 8235, 8236, 8237 };
     wstring ws = RemoveUnwantedCharsFromWstring(input, unWantedChars, 6);
-    string inputString(ws.begin(), ws.end());
-    return ::atof(inputString.c_str());
+    return stod(ws);
 }
 
 // Returns windowId for the current view
