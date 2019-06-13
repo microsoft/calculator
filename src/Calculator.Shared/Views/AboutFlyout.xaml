@@ -48,9 +48,13 @@
                 <Run FontWeight="Bold" Text="Uno Calculator"/>
                 <Run Text="is developed with Uno Platform (Apache 2.0)." />
                 <LineBreak /><Run Text="With Uno you can create single-codebase apps for Web, Desktop and Mobile using only C# and XAML." />
-                <LineBreak />
-                <LineBreak /><Hyperlink NavigateUri="https://platform.uno/docs/articles/getting-started-tutorial-1.html" Foreground="Black">Try Uno Platform</Hyperlink>
 			</TextBlock>
+			<HyperlinkButton
+				Margin="12,0,12,18"
+				Content="Try Uno Platform"
+				FontSize="12"
+				Foreground="Black"
+				NavigateUri="https://platform.uno/docs/articles/getting-started-tutorial-1.html"/>
 
 			<!--
 			<HyperlinkButton x:Name="AboutFlyoutEULA"
