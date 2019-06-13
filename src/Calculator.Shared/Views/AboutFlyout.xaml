@@ -40,6 +40,18 @@
 						<LineBreak />
 					<Run x:Name="AboutMSControlCopyrightRun" />
 			</TextBlock>
+			<TextBlock
+				Margin="12,0,12,18"
+                TextWrapping="WrapWholeWords"
+				FontSize="12">
+                <Run Text="The"/>
+                <Run FontWeight="Bold" Text="Uno Calculator"/>
+                <Run Text="is developed with Uno Platform (Apache 2.0)." />
+                <LineBreak /><Run Text="With Uno you can create single-codebase apps for Web, Desktop and Mobile using only C# and XAML." />
+                <LineBreak />
+                <LineBreak /><Hyperlink NavigateUri="https://platform.uno/docs/articles/getting-started-tutorial-1.html" Foreground="Black">Try Uno Platform</Hyperlink>
+			</TextBlock>
+
 			<!--
 			<HyperlinkButton x:Name="AboutFlyoutEULA"
 							 Margin="12,0,12,6"

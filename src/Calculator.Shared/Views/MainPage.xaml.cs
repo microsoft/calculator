@@ -76,7 +76,7 @@ namespace CalculatorApp
 			var grid = VisualTreeHelper.GetChild(this, 0) as Grid;
 			var banner = new Uno.UI.Sample.Banner.BannerControl
 			{
-				AppName = "Windows Calculator App",
+				AppName = "Uno Calculator",
 				AppAuthor = "Microsoft",
 				LinkToOriginalApp = "https://github.com/microsoft/calculator",
 				LinkToAppAuthor = "https://www.microsoft.com/",
