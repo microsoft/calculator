@@ -29,7 +29,7 @@ steps:
     displayName: 'Build solution src/Calculator.sln'
     inputs:
       solution: src/Calculator.sln
-      vsVersion: 15.0
+      vsVersion: 16.0
       msbuildArgs: /bl:$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator.binlog /p:OutDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\ /p:GenerateProjectSpecificOutputFolder=true /p:AppVersion=$(Build.BuildNumber) /t:Publish /p:PublishDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\publish\ ${{ parameters.extraMsBuildArgs }}
       platform: $(BuildPlatform)
       configuration: $(BuildConfiguration)
