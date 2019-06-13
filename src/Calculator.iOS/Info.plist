@@ -45,8 +45,6 @@
       <string>Fonts/winjs-symbols.ttf</string>
       <string>Fonts/CalcMDL2.ttf</string>
     </array>
-    <key>UIRequiresFullScreen</key>
-    <true/>
     <key>XSAppIconAssets</key>
     <string>Media.xcassets/AppIcons.appiconset</string>
     <key>XSLaunchImageAssets</key>
