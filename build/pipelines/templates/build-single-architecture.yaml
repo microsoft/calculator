@@ -6,9 +6,9 @@ parameters:
 
 steps:
   - task: NuGetToolInstaller@0
-    displayName: Use NuGet 4.7.1
+    displayName: Use NuGet 5.0.2
     inputs:
-      versionSpec: 4.7.1
+      versionSpec: 5.0.2
       checkLatest: true
 
   # In most accounts, you can just use 'NuGetCommand' instead of this GUID.
