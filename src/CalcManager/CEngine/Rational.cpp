@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-#include <intsafe.h>
 #include "Header Files/Rational.h"
 
 using namespace std;
@@ -53,8 +52,8 @@ namespace CalcEngine
 
     Rational::Rational(uint64_t ui)
     {
-        uint32_t hi = HIDWORD(ui);
-        uint32_t lo = LODWORD(ui);
+        uint32_t hi = (uint32_t) (((ui) >> 32) & 0xffffffff);
+        uint32_t lo = (uint32_t) ui;
 
         Rational temp = (Rational{ hi } << 32) | lo;
 

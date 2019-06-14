@@ -18,7 +18,7 @@
 //---------------------------------------------------------------------------
 
 #include <algorithm>
-#include <winerror.h>
+#include "winerror_cross_platform.h"
 #include <sstream>
 #include <cstring> // for memmove, memcpy
 #include "ratpak.h"

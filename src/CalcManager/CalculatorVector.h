@@ -5,10 +5,10 @@
 
 #include <string>
 #include <vector>
-#include <winerror.h>
+#include "winerror_cross_platform.h"
 #include "Ratpack/CalcErr.h"
 #include <stdexcept> // for std::out_of_range
-#include <sal.h>     // for SAL
+#include "sal_cross_platform.h"     // for SAL
 
 template <typename TType>
 class CalculatorVector

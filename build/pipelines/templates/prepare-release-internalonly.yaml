@@ -91,7 +91,7 @@ jobs:
       downloadDirectory: $(Build.SourcesDirectory)
       vstsFeed: WindowsApps
       vstsFeedPackage: calculator-internals
-      vstsPackageVersion: 0.0.10
+      vstsPackageVersion: 0.0.11
 
   - task: PkgESStoreBrokerPackage@10
     displayName: Create StoreBroker Packages

@@ -353,8 +353,7 @@
                 <Setter Property="ZoomMode" Value="Disabled"/>
             </Style>
 
-            <Style x:Key="CalculationResultStyle"
-                   TargetType="Controls:CalculationResult">
+            <Style x:Key="CalculationResultStyle" TargetType="Controls:CalculationResult">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -401,6 +400,7 @@
                                                TextWrapping="NoWrap"/>
                                 </ScrollViewer>
                                 <HyperlinkButton x:Name="ScrollLeft"
+                                                 x:Uid="CalculationResultScrollLeft"
                                                  Grid.Column="0"
                                                  Width="20"
                                                  MinWidth="20"
@@ -412,6 +412,7 @@
                                                  VerticalContentAlignment="Center"
                                                  Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
                                                  BorderThickness="0"
+                                                 AutomationProperties.AutomationId="CalculationResultScrollLeft"
                                                  Visibility="Collapsed">
                                     <FontIcon x:Name="ScrollLeftText"
                                               FontFamily="{ThemeResource SymbolThemeFontFamily}"
@@ -419,6 +420,7 @@
                                               Glyph="&#xE26C;"/>
                                 </HyperlinkButton>
                                 <HyperlinkButton x:Name="ScrollRight"
+                                                 x:Uid="CalculationResultScrollRight"
                                                  Grid.Column="2"
                                                  Width="20"
                                                  MinWidth="20"
@@ -430,6 +432,7 @@
                                                  VerticalContentAlignment="Center"
                                                  Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
                                                  BorderThickness="0"
+                                                 AutomationProperties.AutomationId="CalculationResultScrollRight"
                                                  Visibility="Collapsed">
                                     <FontIcon x:Name="ScrollRightText"
                                               FontFamily="{ThemeResource SymbolThemeFontFamily}"
