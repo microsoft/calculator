@@ -366,7 +366,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     {
         if (!m_bChangeOp)
         {
-            // A special goody we are doing to preserve the history, if all was done was serious of unary operations last
+            // Preserve history, if everything done before was a series of unary operations.
             CheckAndAddLastBinOpToHistory(false);
         }
 
