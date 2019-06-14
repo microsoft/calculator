@@ -62,44 +62,6 @@ wchar_t g_decimalSeparator = L'.';
 #define CALC_INTSAFE_E_ARITHMETIC_OVERFLOW ((int32_t)0x80070216L) // 0x216 = 534 = ERROR_ARITHMETIC_OVERFLOW
 #define CALC_ULONG_ERROR ((uint32_t)0xffffffffU)
 
-namespace
-{
-    int32_t Calc_ULongAdd(_In_ uint32_t ulAugend, _In_ uint32_t ulAddend, _Out_ uint32_t* pulResult)
-    {
-        int32_t hr = CALC_INTSAFE_E_ARITHMETIC_OVERFLOW;
-        *pulResult = CALC_ULONG_ERROR;
-
-        if ((ulAugend + ulAddend) >= ulAugend)
-        {
-            *pulResult = (ulAugend + ulAddend);
-            hr = S_OK;
-        }
-
-        return hr;
-    }
-
-    int32_t Calc_ULongLongToULong(_In_ uint64_t ullOperand, _Out_ uint32_t* pulResult)
-    {
-        int32_t hr = CALC_INTSAFE_E_ARITHMETIC_OVERFLOW;
-        *pulResult = CALC_ULONG_ERROR;
-
-        if (ullOperand <= UINT32_MAX)
-        {
-            *pulResult = (uint32_t)ullOperand;
-            hr = S_OK;
-        }
-
-        return hr;
-    }
-
-    int32_t Calc_ULongMult(_In_ uint32_t ulMultiplicand, _In_ uint32_t ulMultiplier, _Out_ uint32_t* pulResult)
-    {
-        uint64_t ull64Result = Calc_UInt32x32To64(ulMultiplicand, ulMultiplier);
-
-        return Calc_ULongLongToULong(ull64Result, pulResult);
-    }
-}
-
 // Used to strip trailing zeros, and prevent combinatorial explosions
 bool stripzeroesnum(_Inout_ NUMBER pnum, int32_t starting);
 
