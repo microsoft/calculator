@@ -213,6 +213,28 @@ namespace CalculatorApp
                 }
             }
 
+            property bool IsAlwaysOnTop
+            {
+                bool get()
+                {
+                    return m_isAlwaysOnTop;
+                }
+                void set(bool value)
+                {
+                    if (m_isAlwaysOnTop != value)
+                    {
+                        m_isAlwaysOnTop = value;
+                        if (value)
+                        {
+                            IsStandard = true;
+                            IsScientific = false;
+                            IsProgrammer = false;
+                        }
+                        RaisePropertyChanged(L"IsAlwaysOnTop");
+                    }
+                }
+            }
+
             property bool IsEditingEnabled
             {
                 bool get()
@@ -348,7 +370,6 @@ namespace CalculatorApp
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
 
-
             Platform::String ^ GetLocalizedStringFormat(Platform::String ^ format, Platform::String ^ displayValue);
             void OnPropertyChanged(Platform::String ^ propertyname);
             void SetCalculatorType(CalculatorApp::Common::ViewMode targetState);
@@ -407,6 +428,7 @@ namespace CalculatorApp
             bool m_isStandard;
             bool m_isScientific;
             bool m_isProgrammer;
+            bool m_isAlwaysOnTop;
             bool m_isBinaryBitFlippingEnabled;
             bool m_isBitFlipChecked;
             bool m_isShiftChecked;

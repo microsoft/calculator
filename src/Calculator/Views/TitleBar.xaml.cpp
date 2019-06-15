@@ -27,10 +27,15 @@ namespace CalculatorApp
         m_accessibilitySettings = ref new AccessibilitySettings();
         InitializeComponent();
 
+        m_coreTitleBar->ExtendViewIntoTitleBar = true;
+        Window::Current->SetTitleBar(BackgroundElement);
+
         Loaded += ref new RoutedEventHandler(this, &TitleBar::OnLoaded);
         Unloaded += ref new RoutedEventHandler(this, &TitleBar::OnUnloaded);
 
         AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
+
+        m_beforeAlwaysOnTopMode = CalculatorApp::Common::ViewMode::Standard;
     }
 
     void TitleBar::OnLoaded(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
@@ -52,7 +57,7 @@ namespace CalculatorApp
         // Set properties
         LayoutRoot->Height = m_coreTitleBar->Height;
         SetTitleBarControlColors();
-        SetTitleBarExtendView();
+        // SetTitleBarExtendView();
         SetTitleBarVisibility();
         SetTitleBarPadding();
     }
@@ -166,5 +171,30 @@ namespace CalculatorApp
     {
         VisualStateManager::GoToState(
             this, e->WindowActivationState == CoreWindowActivationState::Deactivated ? WindowNotFocused->Name : WindowFocused->Name, false);
+    }
+
+    void TitleBar::AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+    {
+        auto avm = safe_cast<CalculatorApp::ViewModel::ApplicationViewModel ^>(this->DataContext);
+        if (ApplicationView::GetForCurrentView()->GetForCurrentView()->ViewMode == ApplicationViewMode::CompactOverlay)
+        {
+            avm->Mode = m_beforeAlwaysOnTopMode;
+            if (avm->Mode == CalculatorApp::Common::ViewMode::Standard)
+            {
+                avm->CalculatorViewModel->AreHistoryShortcutsEnabled = true;
+                avm->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
+            }
+            avm->CalculatorViewModel->IsAlwaysOnTop = false;
+            ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::Default);
+        }
+        else
+        {
+            m_beforeAlwaysOnTopMode = avm->Mode;
+            avm->Mode = CalculatorApp::Common::ViewMode::Standard;
+            avm->CalculatorViewModel->AreHistoryShortcutsEnabled = false;
+            avm->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
+            avm->CalculatorViewModel->IsAlwaysOnTop = true;
+            ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::CompactOverlay);
+        }
     }
 }

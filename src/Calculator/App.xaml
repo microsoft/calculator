@@ -131,6 +131,27 @@
             <!-- Standard Operators Standard/Scientific in Fill/Full -->
             <x:Double x:Key="CalcOperatorCaptionSize">15</x:Double>
 
+            <Style x:Key="AlwaysOnTopButtonStyle" TargetType="Button">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="RootGrid.(RevealBrush.State)" Value="PointerOver"/>
+                                                <Setter Target="RootGrid.Background" Value="{ThemeResource RevealBackgroundBrush}"/>
+                                            </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <!-- Base style for calc buttons -->
             <Style x:Key="CalcButtonStyle" TargetType="Controls:CalculatorButton">
                 <Setter Property="MinWidth" Value="24"/>

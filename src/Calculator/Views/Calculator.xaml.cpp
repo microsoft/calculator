@@ -40,6 +40,7 @@ using namespace Windows::UI::ViewManagement;
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsStandard);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsScientific);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsProgrammer);
+DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsAlwaysOnTop);
 
 Calculator::Calculator()
     : m_doAnimate(false)
@@ -277,6 +278,22 @@ void Calculator::OnIsProgrammerPropertyChanged(bool /*oldValue*/, bool newValue)
     DockPivot->SelectedIndex = 0;
     UpdateViewState();
     UpdatePanelViewState();
+}
+
+void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue)
+{
+    UpdateViewState();
+    UpdatePanelViewState();
+    if (newValue)
+    {
+        MemoryPanel->Visibility = ::Visibility::Collapsed;
+        HistoryButtonParent->Visibility = ::Visibility::Collapsed;
+    }
+    else
+    {
+        MemoryPanel->Visibility = ::Visibility::Visible;
+        HistoryButtonParent->Visibility = ::Visibility::Visible;
+    }
 }
 
 void Calculator::OnIsInErrorPropertyChanged()

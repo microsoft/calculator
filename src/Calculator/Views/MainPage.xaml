@@ -83,7 +83,7 @@
                     Command="{x:Bind Model.PasteCommand}"/>
         </StackPanel>
 
-        <local:TitleBar x:Name="CustomTitleBar" Grid.Row="0"/>
+        <local:TitleBar x:Name="CustomTitleBar" Grid.Row="0" DataContext="{x:Bind Model}"/>
 
         <muxc:NavigationView x:Name="NavView"
                              x:Uid="NavView"

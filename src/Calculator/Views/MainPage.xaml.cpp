@@ -293,13 +293,16 @@ void MainPage::EnsureCalculator()
         Binding ^ isProgramerBinding = ref new Binding();
         isProgramerBinding->Path = ref new PropertyPath(L"IsProgrammer");
         m_calculator->SetBinding(m_calculator->IsProgrammerProperty, isProgramerBinding);
+        Binding ^ isAlwaysOnTopBinding = ref new Binding();
+        isAlwaysOnTopBinding->Path = ref new PropertyPath(L"IsAlwaysOnTop");
+        m_calculator->SetBinding(m_calculator->IsAlwaysOnTopProperty, isAlwaysOnTopBinding);
         m_calculator->Style = CalculatorBaseStyle;
 
         CalcHolder->Child = m_calculator;
 
         // Calculator's "default" state is visible, but if we get delay loaded
         // when in converter, we should not be visible. This is not a problem for converter
-        // since it's default state is hidden.
+        // since its default state is hidden.
         ShowHideControls(this->Model->Mode);
     }
 

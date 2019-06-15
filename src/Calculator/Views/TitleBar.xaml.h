@@ -4,6 +4,7 @@
 #pragma once
 
 #include "Views/TitleBar.g.h"
+#include <CalcViewModel\ApplicationViewModel.h>
 
 namespace CalculatorApp
 {
@@ -39,5 +40,7 @@ public
         Windows::Foundation::EventRegistrationToken m_accessibilitySettingsToken;
         Windows::UI::ViewManagement::UISettings ^ m_uiSettings;
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
+        CalculatorApp::Common::ViewMode m_beforeAlwaysOnTopMode;
+        void AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }
