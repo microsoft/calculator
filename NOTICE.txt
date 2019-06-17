@@ -41,6 +41,8 @@ SOFTWARE.
 ---
 
 Appium DotNet Driver
+
+Copyright 2014-2015 Appium Contributors
       
 Apache License
 Version 2.0, January 2004
