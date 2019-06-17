@@ -25,8 +25,6 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Threading.Tasks;
 using Calculator;
-using Windows.UI.Xaml.Input;
-using Uno.Extensions;
 
 namespace CalculatorApp.ViewModel
 {
