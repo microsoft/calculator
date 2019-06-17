@@ -119,13 +119,14 @@ bool DateCalculationEngine::SubtractDuration(_In_ DateTime startDate, _In_ const
 }
 
 // Calculate the difference between two dates
-void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime date2, _In_ DateUnit outputFormat, _Out_ DateDifference* difference)
+bool DateCalculationEngine::TryGetDateDifference(_In_ DateTime date1, _In_ DateTime date2, _In_ DateUnit outputFormat, _Out_ DateDifference* difference)
 {
     DateTime startDate;
     DateTime endDate;
     DateTime pivotDate;
     DateTime tempPivotDate;
     UINT daysDiff = 0;
+    UINT totalDaysDiff = 0;
     UINT differenceInDates[c_unitsOfDate] = { 0 };
 
     if (date1.UniversalTime < date2.UniversalTime)
@@ -141,7 +142,7 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
 
     pivotDate = startDate;
 
-    daysDiff = GetDifferenceInDays(startDate, endDate);
+    totalDaysDiff = daysDiff = GetDifferenceInDays(startDate, endDate);
 
     // If output has units other than days
     // 0th bit: Year, 1st bit: Month, 2nd bit: Week, 3rd bit: Day
@@ -190,6 +191,10 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
                         if (tempDaysDiff < 0)
                         {
                             // pivotDate has gone over the end date; start from the beginning of this unit
+                            if (differenceInDates[unitIndex] == 0)
+                            {
+                                return false;
+                            }
                             differenceInDates[unitIndex] -= 1;
                             pivotDate = tempPivotDate;
                             pivotDate = AdjustCalendarDate(pivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex]));
@@ -212,15 +217,20 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
                             catch (Platform::InvalidArgumentException ^)
                             {
                                 // handling for 31st Dec, 9999 last valid date
-                                // Do nothing - break out
-                                break;
+                                return false;
                             }
                         }
                     } while (tempDaysDiff != 0); // dates are the same - exit the loop
 
                     tempPivotDate = AdjustCalendarDate(tempPivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex]));
                     pivotDate = tempPivotDate;
-                    daysDiff = GetDifferenceInDays(pivotDate, endDate);
+                    int signedDaysDiff = GetDifferenceInDays(pivotDate, endDate);
+                    if (signedDaysDiff < 0)
+                    {
+                        return false;
+                    }
+
+                    daysDiff = signedDaysDiff;
                 }
             }
         }
@@ -232,6 +242,7 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
     difference->month = differenceInDates[1];
     difference->week = differenceInDates[2];
     difference->day = differenceInDates[3];
+    return true;
 }
 
 // Private Methods
