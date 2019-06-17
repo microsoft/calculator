@@ -126,7 +126,6 @@ bool DateCalculationEngine::TryGetDateDifference(_In_ DateTime date1, _In_ DateT
     DateTime pivotDate;
     DateTime tempPivotDate;
     UINT daysDiff = 0;
-    UINT totalDaysDiff = 0;
     UINT differenceInDates[c_unitsOfDate] = { 0 };
 
     if (date1.UniversalTime < date2.UniversalTime)
@@ -142,7 +141,7 @@ bool DateCalculationEngine::TryGetDateDifference(_In_ DateTime date1, _In_ DateT
 
     pivotDate = startDate;
 
-    totalDaysDiff = daysDiff = GetDifferenceInDays(startDate, endDate);
+    daysDiff = GetDifferenceInDays(startDate, endDate);
 
     // If output has units other than days
     // 0th bit: Year, 1st bit: Month, 2nd bit: Week, 3rd bit: Day
