@@ -177,8 +177,9 @@ bool DateCalculationEngine::TryGetDateDifference(_In_ DateTime date1, _In_ DateT
                         catch (Platform::InvalidArgumentException ^)
                         {
                             // Operation failed due to out of bound result
-                            // Do nothing
-                            differenceInDates[unitIndex] = 0;
+                            // For example: 31st Dec, 9999 - last valid date
+                            *difference = DateDifferenceUnknown;
+                            return false;
                         }
                     }
 
@@ -193,6 +194,8 @@ bool DateCalculationEngine::TryGetDateDifference(_In_ DateTime date1, _In_ DateT
                             // pivotDate has gone over the end date; start from the beginning of this unit
                             if (differenceInDates[unitIndex] == 0)
                             {
+                                // differenceInDates[unitIndex] is unsigned, the value can't be negative
+                                *difference = DateDifferenceUnknown;
                                 return false;
                             }
                             differenceInDates[unitIndex] -= 1;
@@ -216,7 +219,9 @@ bool DateCalculationEngine::TryGetDateDifference(_In_ DateTime date1, _In_ DateT
                             }
                             catch (Platform::InvalidArgumentException ^)
                             {
-                                // handling for 31st Dec, 9999 last valid date
+                                // Operation failed due to out of bound result
+                                // For example: 31st Dec, 9999 - last valid date
+                                *difference = DateDifferenceUnknown;
                                 return false;
                             }
                         }
@@ -227,6 +232,8 @@ bool DateCalculationEngine::TryGetDateDifference(_In_ DateTime date1, _In_ DateT
                     int signedDaysDiff = GetDifferenceInDays(pivotDate, endDate);
                     if (signedDaysDiff < 0)
                     {
+                        // daysDiff is unsigned, the value can't be negative
+                        *difference = DateDifferenceUnknown;
                         return false;
                     }
 
