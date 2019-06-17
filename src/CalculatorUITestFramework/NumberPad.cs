@@ -6,7 +6,7 @@ using System;
 
 namespace CalculatorUITestFramework
 {
-    public class NumerPad
+    public class NumberPad
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
         public WindowsElement Num0Button => this.session.TryFindElementByAccessibilityId("num0Button");

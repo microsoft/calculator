@@ -32,20 +32,11 @@ namespace CalculatorUITestFramework
         }
         public WindowsElement CalculatorResult => this.session.TryFindElementByAccessibilityId("CalculatorResults");
 
-        public void StandardCalculatorSetup(TestContext context)
+        public void NavigateToStandardCalculator()
         {
-            // Create session to launch a Calculator window
-            WinAppDriver.Instance.SetupCalculatorSession(context);
-
             // Ensure that calculator is in standard mode
             this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
             Assert.IsNotNull(CalculatorResult);
-        }
-
-        public void StandardCalculatorTearDown()
-        {
-            // Tear down Calculator session.
-            WinAppDriver.Instance.TearDownCalculatorSession();
         }
 
         /// <summary>
