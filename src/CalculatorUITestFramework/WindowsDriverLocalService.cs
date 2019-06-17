@@ -12,7 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-//Portions Copyright (c) Microsoft Corporation
+//Portions Copyright(c) Microsoft Corporation
 
 using System;
 using System.Diagnostics;
