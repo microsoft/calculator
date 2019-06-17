@@ -48,7 +48,7 @@ typedef struct
     bool bUseSep;
 } LASTDISP;
 
-LASTDISP gldPrevious = { 0, -1, 0, -1, (NUM_WIDTH)-1, false, false, false };
+static LASTDISP gldPrevious = { 0, -1, 0, -1, (NUM_WIDTH)-1, false, false, false };
 
 // Truncates if too big, makes it a non negative - the number in rat. Doesn't do anything if not in INT mode
 CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational const& rat)
