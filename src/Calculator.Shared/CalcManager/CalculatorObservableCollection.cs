@@ -2,6 +2,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using Windows.UI.Xaml.Input;
+using Uno.Extensions;
 
 namespace CalculatorApp
 {
