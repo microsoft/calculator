@@ -236,20 +236,6 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
-        public void KeyboardInput_Reciprocal()
-        {
-            page.Header.SendKeys("10r");
-            Assert.AreEqual("0.1", page.GetCalculatorResultText());
-        }
-
-        [TestMethod]
-        public void KeyboardInput_Squared()
-        {
-            page.Header.SendKeys("3q");
-            Assert.AreEqual("9", page.GetCalculatorResultText());
-        }
-
-        [TestMethod]
         public void KeyboardInput_SquareRoot()
         {
             page.Header.SendKeys("100@");
