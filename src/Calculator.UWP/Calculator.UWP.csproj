@@ -14,6 +14,9 @@
     <PackageReference Include="System.Runtime">
       <Version>4.3.1</Version>
     </PackageReference>
+    <PackageReference Include="Uno.UI">
+      <Version>1.45.0-dev.1836</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
