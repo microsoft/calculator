@@ -67,6 +67,7 @@ public
         void OnPageLoaded(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
 
         void EnsureCalculator();
+        void EnsureAlwaysOnTopCalculator();
         void EnsureConverter();
         void EnsureDateCalculator();
         void ShowAboutPage();
@@ -74,6 +75,7 @@ public
         void AnnounceCategoryName();
 
         CalculatorApp::Calculator ^ m_calculator;
+        CalculatorApp::Calculator ^ m_alwaysOnTopCalculator;
         CalculatorApp::UnitConverter ^ m_converter;
         CalculatorApp::DateCalculator ^ m_dateCalculator;
         Windows::Foundation::EventRegistrationToken m_windowSizeEventToken;

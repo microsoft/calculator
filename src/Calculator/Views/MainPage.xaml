@@ -32,6 +32,9 @@
         <Style x:Key="NavViewItemStyle" TargetType="muxc:NavigationViewItem">
             <Setter Property="KeyTipPlacementMode" Value="Right"/>
         </Style>
+
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -85,8 +88,16 @@
 
         <local:TitleBar x:Name="CustomTitleBar" Grid.Row="0" DataContext="{x:Bind Model}"/>
 
+        <Grid x:Name="AlwaysOnTopView"
+              Visibility="{x:Bind Model.CalculatorViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+            <Border x:Name="AlwaysOnTopCalcHolder">
+                <!-- PLACEHOLDER!!!! This is where the calculator goes when it is delay loaded -->
+            </Border>
+        </Grid>
+        
         <muxc:NavigationView x:Name="NavView"
                              x:Uid="NavView"
+                             Visibility="{x:Bind Model.CalculatorViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"
                              Grid.Row="1"
                              CompactModeThresholdWidth="Infinity"
                              DataContext="{x:Bind Model}"

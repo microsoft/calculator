@@ -128,6 +128,7 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         if (newValue == ViewMode::Standard)
         {
             EnsureCalculator();
+            EnsureAlwaysOnTopCalculator();
             m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = true;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
             m_calculator->AnimateCalculator(NavCategory::IsConverterViewMode(previousMode));
@@ -136,6 +137,7 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         else if (newValue == ViewMode::Scientific)
         {
             EnsureCalculator();
+            EnsureAlwaysOnTopCalculator();
             m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = true;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
             if (m_model->PreviousMode != ViewMode::Scientific)
@@ -150,6 +152,7 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
             m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = false;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             EnsureCalculator();
+            EnsureAlwaysOnTopCalculator();
             if (m_model->PreviousMode != ViewMode::Programmer)
             {
                 m_calculator->AnimateCalculator(NavCategory::IsConverterViewMode(previousMode));
@@ -163,6 +166,7 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
                 m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             }
             EnsureDateCalculator();
+            EnsureAlwaysOnTopCalculator();
         }
         else if (NavCategory::IsConverterViewMode(newValue))
         {
@@ -172,6 +176,7 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
                 m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             }
             EnsureConverter();
+            EnsureAlwaysOnTopCalculator();
             if (!NavCategory::IsConverterViewMode(previousMode))
             {
                 m_converter->AnimateConverter();
@@ -235,10 +240,11 @@ void MainPage::UpdatePanelViewState()
 
 void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
 {
-    if (!m_converter && !m_calculator && !m_dateCalculator)
+    if (!m_converter && !m_calculator && !m_dateCalculator && !m_alwaysOnTopCalculator)
     {
         // We have just launched into our default mode (standard calc) so ensure calc is loaded
         EnsureCalculator();
+        EnsureAlwaysOnTopCalculator();
         m_model->CalculatorViewModel->IsStandard = true;
     }
 
@@ -265,6 +271,10 @@ void MainPage::SetDefaultFocus()
     if (m_calculator != nullptr && m_calculator->Visibility == ::Visibility::Visible)
     {
         m_calculator->SetDefaultFocus();
+    }
+    if (m_alwaysOnTopCalculator != nullptr && m_alwaysOnTopCalculator->Visibility == ::Visibility::Visible)
+    {
+        m_alwaysOnTopCalculator->SetDefaultFocus();
     }
     if (m_dateCalculator != nullptr && m_dateCalculator->Visibility == ::Visibility::Visible)
     {
@@ -309,6 +319,32 @@ void MainPage::EnsureCalculator()
     if (m_dateCalculator != nullptr)
     {
         m_dateCalculator->CloseCalendarFlyout();
+    }
+}
+
+void MainPage::EnsureAlwaysOnTopCalculator()
+{
+    if (!m_alwaysOnTopCalculator)
+    {
+        // delay load calculator.
+        m_alwaysOnTopCalculator = ref new Calculator();
+        m_alwaysOnTopCalculator->Name = L"Calculator";
+        m_alwaysOnTopCalculator->DataContext = m_model->CalculatorViewModel;
+        Binding ^ isStandardBinding = ref new Binding();
+        isStandardBinding->Path = ref new PropertyPath(L"IsStandard");
+        m_alwaysOnTopCalculator->SetBinding(m_alwaysOnTopCalculator->IsStandardProperty, isStandardBinding);
+        Binding ^ isScientificBinding = ref new Binding();
+        isScientificBinding->Path = ref new PropertyPath(L"IsScientific");
+        m_alwaysOnTopCalculator->SetBinding(m_alwaysOnTopCalculator->IsScientificProperty, isScientificBinding);
+        Binding ^ isProgramerBinding = ref new Binding();
+        isProgramerBinding->Path = ref new PropertyPath(L"IsProgrammer");
+        m_alwaysOnTopCalculator->SetBinding(m_alwaysOnTopCalculator->IsProgrammerProperty, isProgramerBinding);
+        Binding ^ isAlwaysOnTopBinding = ref new Binding();
+        isAlwaysOnTopBinding->Path = ref new PropertyPath(L"IsAlwaysOnTop");
+        m_alwaysOnTopCalculator->SetBinding(m_alwaysOnTopCalculator->IsAlwaysOnTopProperty, isAlwaysOnTopBinding);
+        m_alwaysOnTopCalculator->Style = CalculatorBaseStyle;
+
+        AlwaysOnTopCalcHolder->Child = m_alwaysOnTopCalculator;
     }
 }
 
@@ -485,6 +521,10 @@ void MainPage::UnregisterEventHandlers()
     if (m_calculator != nullptr)
     {
         m_calculator->UnregisterEventHandlers();
+    }
+    if (m_alwaysOnTopCalculator != nullptr)
+    {
+        m_alwaysOnTopCalculator->UnregisterEventHandlers();
     }
 }
 
