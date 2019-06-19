@@ -4,6 +4,7 @@
 #include "IGraphingOptions.h"
 #include "IGraphRenderer.h"
 #include "IEquation.h"
+#include <optional>
 
 namespace Graphing
 {
