@@ -42,10 +42,10 @@ static int cbitsofprecision = 0;
 #define DUMPRAWRAT(v)
 #define DUMPRAWNUM(v)
 #define READRAWRAT(v) createrat(v); (v)->pp = init_p_##v; (v)->pq = init_q_##v;
-#define READRAWNUM(v) DUPNUM(v, (&(init_##v)))
+#define READRAWNUM(v) DUPNUM(v, ((init_##v)))
 
 #define INIT_AND_DUMP_RAW_NUM_IF_NULL(r, v)                                                                                                                    \
-    if (r == nullptr)                                                                                                                                          \
+    if (r == NUMBER())                                                                                                                                          \
     {                                                                                                                                                          \
         r = i32tonum(v, BASEX);                                                                                                                                \
         DUMPRAWNUM(v);                                                                                                                                         \
@@ -126,6 +126,13 @@ PRAT rat_max_i32 = nullptr; // max signed i32
 //
 //----------------------------------------------------------------------------
 
+constexpr bool operator==(const NUMBER& a, const NUMBER& b)
+{
+    if (a.sign == b.sign && a.cdigit == b.cdigit && a.exp == b.exp && a.mant == b.mant)
+        return true;
+    return false;
+}
+
 void ChangeConstants(uint32_t radix, int32_t precision)
 {
     // ratio is set to the number of digits in the current radix, you can get
@@ -148,6 +155,11 @@ void ChangeConstants(uint32_t radix, int32_t precision)
     {
         g_ftrueinfinite = false;
 
+        INIT_AND_DUMP_RAW_NUM_IF_NULL(num_one, 1L);
+        INIT_AND_DUMP_RAW_NUM_IF_NULL(num_two, 2L);
+        INIT_AND_DUMP_RAW_NUM_IF_NULL(num_five, 5L);
+        INIT_AND_DUMP_RAW_NUM_IF_NULL(num_six, 6L);
+        INIT_AND_DUMP_RAW_NUM_IF_NULL(num_ten, 10L);
         // 3248, is the max number for which calc is able to compute factorial, after that it is unable to compute due to overflow.
         // Hence restricted factorial range as at most 3248.Beyond that calc will throw overflow error immediately.
         INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_max_fact, 3249);
@@ -591,6 +603,11 @@ void _dumprawnum(_In_ const wchar_t* varname, _In_ const NUMBER& num, wostream& 
 void _readconstants(void)
 
 {
+    READRAWNUM(num_one);
+    READRAWNUM(num_two);
+    READRAWNUM(num_five);
+    READRAWNUM(num_six);
+    READRAWNUM(num_ten);
     READRAWRAT(pt_eight_five);
     READRAWRAT(rat_six);
     READRAWRAT(rat_two);
