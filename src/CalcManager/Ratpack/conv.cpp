@@ -63,7 +63,7 @@ wchar_t g_decimalSeparator = L'.';
 #define CALC_ULONG_ERROR ((uint32_t)0xffffffffU)
 
 // Used to strip trailing zeros, and prevent combinatorial explosions
-bool stripzeroesnum(_Inout_ NUMBER pnum, int32_t starting);
+bool stripzeroesnum(_Inout_ NUMBER& pnum, int32_t starting);
 
 void SetDecimalSeparator(wchar_t decimalSeparator)
 {
@@ -947,7 +947,7 @@ int32_t numtoi32(_In_ const NUMBER& pnum, uint32_t radix)
 //
 //-----------------------------------------------------------------------------
 
-bool stripzeroesnum(_Inout_ NUMBER pnum, int32_t starting)
+bool stripzeroesnum(_Inout_ NUMBER& pnum, int32_t starting)
 {
     vector<MANTTYPE>::iterator pmant;
     int32_t cdigits;
