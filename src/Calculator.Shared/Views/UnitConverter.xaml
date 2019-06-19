@@ -459,7 +459,6 @@
 											BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
 											BorderThickness="{ThemeResource ComboBoxDropdownBorderThickness}">
 										<ScrollViewer x:Name="ScrollViewer"
-													  wasm:MinHeight="320"
 													  MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.DropDownContentMinWidth}"
 													  Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
 													  BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
