@@ -24,11 +24,11 @@
 	</ItemGroup>
 	<ItemGroup>
 		<!-- 
-    This item group is required by the project templace because of the
-    new SDK-Style project, otherwise some files are not aded automatically.
-    
-    You can safely remove this ItemGroup completely.
-    -->
+		This item group is required by the project templace because of the
+		new SDK-Style project, otherwise some files are not aded automatically.
+		
+		You can safely remove this ItemGroup completely.
+		-->
 		<Compile Remove="Program.cs" />
 		<None Remove="WasmScripts\CalcManager.js" />
 		<Compile Include="..\AssemblyVersion.Wasm.cs" Link="Properties\AssemblyVersion.Wasm.cs" />
@@ -53,10 +53,10 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-		<PackageReference Include="Uno.UI" Version="1.45.0-dev.1813" />
+		<PackageReference Include="Uno.UI" Version="1.45.0-dev.1836" />
 		<PackageReference Include="Uno.UI.Sample.Banner" Version="1.44.0-dev.23" />
-		<PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.293" />
-		<DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.289" />
+		<PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.0-dev.298" />
+		<DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.0-dev.298" />
 	</ItemGroup>
 	<ItemGroup>
 		<MonoRuntimeMixedModeExcludedAssembly Include="Newtonsoft.Json" />
@@ -67,7 +67,7 @@
 		<Content Include="..\CalcManager\bin\wasm\CalcManager.bc" Link="CalcManager.bc" />
 	</ItemGroup>
 	<ItemGroup>
-	  <TypeScriptCompile Include="ts\GoogleAnalytics.ts" />
+		<TypeScriptCompile Include="ts\GoogleAnalytics.ts" />
 	</ItemGroup>
 	<Import Project="..\Calculator.Shared\Calculator.Shared.projitems" Label="Shared" Condition="Exists('..\Calculator.Shared\Calculator.Shared.projitems')" />
 </Project>
