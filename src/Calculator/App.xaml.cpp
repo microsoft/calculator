@@ -192,6 +192,7 @@ task<void> App::SetupJumpList()
     {
     }
 }
+#pragma optimize("", on)
 
 void App::RemoveSecondaryWindow(_In_ WindowFrameService ^ frameService)
 {
