@@ -36,6 +36,7 @@ namespace CalculatorApp
         AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
 
         m_beforeAlwaysOnTopMode = CalculatorApp::Common::ViewMode::Standard;
+
     }
 
     void TitleBar::OnLoaded(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
@@ -193,8 +194,33 @@ namespace CalculatorApp
             avm->Mode = CalculatorApp::Common::ViewMode::Standard;
             avm->CalculatorViewModel->AreHistoryShortcutsEnabled = false;
             avm->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
-            avm->CalculatorViewModel->IsAlwaysOnTop = true;
-            ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::CompactOverlay);
+
+            Windows::Storage::ApplicationDataContainer ^ localSettings = Windows::Storage::ApplicationData::Current->LocalSettings;
+            ViewModePreferences ^ compactOptions = ViewModePreferences::CreateDefault(ApplicationViewMode::CompactOverlay);
+            if (!localSettings->Values->GetView()->HasKey("calculatorAlwaysOnTopLaunched"))
+            {
+                compactOptions->CustomSize = Windows::Foundation::Size(320, 394);
+                localSettings->Values->Insert("calculatorAlwaysOnTopLaunched", true);
+            }
+            else
+            {
+                if (localSettings->Values->GetView()->HasKey("calculatorAlwaysOnTopLastWidth") && localSettings->Values->GetView()->HasKey("calculatorAlwaysOnTopLastHeight"))
+                {
+                    float width = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup("calculatorAlwaysOnTopLastWidth"))->GetSingle();
+                    float height = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup("calculatorAlwaysOnTopLastHeight"))->GetSingle();
+                    compactOptions->CustomSize = Windows::Foundation::Size(width, height);
+                }
+                else
+                {
+                    compactOptions->CustomSize = Windows::Foundation::Size(320, 394);
+                }
+            }
+            IAsyncOperation<bool> ^ result = ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::CompactOverlay, compactOptions);
+            auto changeModeTask = Concurrency::create_task(result);
+            changeModeTask.then([this](bool success) {
+                auto avm = safe_cast<CalculatorApp::ViewModel::ApplicationViewModel ^>(this->DataContext);
+                avm->CalculatorViewModel->IsAlwaysOnTop = success;
+            });
         }
     }
 }

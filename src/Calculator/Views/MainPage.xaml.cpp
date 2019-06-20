@@ -115,6 +115,18 @@ void MainPage::WindowSizeChanged(_In_ Platform::Object ^ /*sender*/, _In_ Window
 {
     // We don't use layout aware page's view states, we have our own
     UpdateViewState();
+    if (m_model->CalculatorViewModel->IsAlwaysOnTop)
+    {
+        Windows::Storage::ApplicationDataContainer ^ localSettings = Windows::Storage::ApplicationData::Current->LocalSettings;
+        float width = safe_cast<float>(this->ActualWidth);
+        float height = safe_cast<float>(this->ActualHeight);
+        localSettings->Values->Insert("calculatorAlwaysOnTopLastWidth", width);
+        localSettings->Values->Insert("calculatorAlwaysOnTopLastHeight", height);
+        if (width < 320 || height < 394)
+        {
+            m_model->CalculatorViewModel->HideStandardFunctions = true;
+        }
+    }
 }
 
 void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e)

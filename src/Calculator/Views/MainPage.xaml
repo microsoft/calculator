@@ -89,7 +89,9 @@
         <local:TitleBar x:Name="CustomTitleBar" Grid.Row="0" DataContext="{x:Bind Model}"/>
 
         <Grid x:Name="AlwaysOnTopView"
-              Visibility="{x:Bind Model.CalculatorViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+              Visibility="{x:Bind Model.CalculatorViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+              Grid.Row="1"
+              DataContext="{x:Bind Model}">
             <Border x:Name="AlwaysOnTopCalcHolder">
                 <!-- PLACEHOLDER!!!! This is where the calculator goes when it is delay loaded -->
             </Border>

@@ -235,6 +235,22 @@ namespace CalculatorApp
                 }
             }
 
+            property bool HideStandardFunctions
+            {
+                bool get()
+                {
+                    return m_hideStandardFunctions;
+                }
+                void set(bool value)
+                {
+                    if (m_hideStandardFunctions != value)
+                    {
+                        m_hideStandardFunctions = value;
+                        RaisePropertyChanged(L"HideStandardFunctions");
+                    }
+                }
+            }
+
             property bool IsEditingEnabled
             {
                 bool get()
@@ -429,6 +445,7 @@ namespace CalculatorApp
             bool m_isScientific;
             bool m_isProgrammer;
             bool m_isAlwaysOnTop;
+            bool m_hideStandardFunctions;
             bool m_isBinaryBitFlippingEnabled;
             bool m_isBitFlipChecked;
             bool m_isShiftChecked;

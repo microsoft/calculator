@@ -36,6 +36,7 @@ namespace
     StringReference IsScientificPropertyName(L"IsScientific");
     StringReference IsProgrammerPropertyName(L"IsProgrammer");
     StringReference IsAlwaysOnTopPropertyName(L"IsAlwaysOnTop");
+    StringReference HideStandardFunctionsPropertyName(L"HideStandardFunctions");
     StringReference DisplayValuePropertyName(L"DisplayValue");
     StringReference CalculationResultAutomationNamePropertyName(L"CalculationResultAutomationName");
 }
