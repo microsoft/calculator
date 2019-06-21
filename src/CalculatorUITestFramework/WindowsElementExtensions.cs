@@ -35,14 +35,5 @@ namespace CalculatorUITestFramework
             timer.Stop();
             Assert.Fail(String.Format("{0} was not displayed in {1} ms", element, timeout));
         }
-
-        /// <summary>
-        /// Sends keyboard key presses to the calculator app.
-        /// </summary>
-        /// <param name="keysToSend"></param>
-        public static void SendKeys(this WindowsElement element, string keysToSend)
-        {
-            element.SendKeys(keysToSend);
-        }
     }
 }

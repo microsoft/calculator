@@ -16,20 +16,8 @@ namespace CalculatorUITestFramework
         public MemoryPanel MemoryPanel = new MemoryPanel();
         public HistoryPanel HistoryPanel = new HistoryPanel();
         public NavigationMenu NavigationMenu = new NavigationMenu();
-        public WindowsElement Header
-        {
-            get
-            {
-                try
-                {
-                    return this.session.TryFindElementByAccessibilityId("Header");
-                }
-                catch
-                {
-                    return this.session.TryFindElementByAccessibilityId("ContentPresenter");
-                }
-            }
-        }
+        public WindowsElement Header => this.session.TryFindElementByAccessibilityId("Header");
+
         public WindowsElement CalculatorResult => this.session.TryFindElementByAccessibilityId("CalculatorResults");
 
         public void NavigateToStandardCalculator()
@@ -40,9 +28,8 @@ namespace CalculatorUITestFramework
         }
 
         /// <summary>
-        /// Clear the Calculatory display, Memory Panel and optionally the History Panel
+        /// Clear the Calculator display, Memory Panel and optionally the History Panel
         /// </summary>
-        /// <param name="clearHistory">Bool specifying if the History Panel should be cleared; true by default.</param>
         public void ClearAll()
         {
             this.StandardOperators.ClearButton.Click();

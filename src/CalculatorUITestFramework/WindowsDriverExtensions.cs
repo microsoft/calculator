@@ -10,7 +10,7 @@ namespace CalculatorUITestFramework
     {
         /// <summary>
         /// Wraps the WindowsDriver.FindElementByAccessibilityId and adds retry logic for when the element cannot be found due to WinAppDriver losing the window.
-        /// If FindElementByAccessibilityId fails for a different reason log the error and return null.
+        /// If FindElementByAccessibilityId fails for a different reason rethrow the error.
         /// </summary>
         public static WindowsElement TryFindElementByAccessibilityId(this WindowsDriver<WindowsElement> driver, string id)
         {
@@ -32,7 +32,7 @@ namespace CalculatorUITestFramework
 
         /// <summary>
         /// Wraps the WindowsDriver.FindElementByClassName and adds retry logic for when the element cannot be found due to WinAppDriver losing the window.
-        /// If FindElementByClassName fails for a different reason log the error and return null.
+        /// If FindElementByAccessibilityId fails for a different reason rethrow the error.
         /// </summary>
         public static WindowsElement TryFindElementByClassName(this WindowsDriver<WindowsElement> driver, string name)
         {
