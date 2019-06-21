@@ -21,15 +21,15 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
+using namespace Windows::UI::ViewManagement;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
-DEPENDENCY_PROPERTY_INITIALIZATION(CalculatorStandardOperators, HideStandardFunctions);
 
 CalculatorStandardOperators::CalculatorStandardOperators()
     : m_isErrorVisualState(false)
 {
     InitializeComponent();
+    this->SizeChanged += ref new SizeChangedEventHandler(this, &CalculatorStandardOperators::ShowHideStandardFunctions);
 }
 
 bool CalculatorStandardOperators::IsErrorVisualState::get()
@@ -48,9 +48,10 @@ void CalculatorStandardOperators::IsErrorVisualState::set(bool value)
     }
 }
 
-void CalculatorStandardOperators::OnHideStandardFunctionsPropertyChanged(bool /*oldValue*/, bool newValue)
+void CalculatorStandardOperators::ShowHideStandardFunctions(Object ^ /*sender*/, SizeChangedEventArgs ^ /*e*/)
 {
-    if (newValue)
+    Windows::Foundation::Rect bounds = Window::Current->Bounds;
+    if (ApplicationView::GetForCurrentView()->ViewMode == ApplicationViewMode::CompactOverlay && (bounds.Width < 320 || bounds.Height < 394))
     {
         StandardFunctions->Visibility = ::Visibility::Collapsed;
     }

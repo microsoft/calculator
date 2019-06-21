@@ -36,7 +36,6 @@ namespace
     StringReference IsScientificPropertyName(L"IsScientific");
     StringReference IsProgrammerPropertyName(L"IsProgrammer");
     StringReference IsAlwaysOnTopPropertyName(L"IsAlwaysOnTop");
-    StringReference HideStandardFunctionsPropertyName(L"HideStandardFunctions");
     StringReference DisplayValuePropertyName(L"DisplayValue");
     StringReference CalculationResultAutomationNamePropertyName(L"CalculationResultAutomationName");
 }
@@ -109,6 +108,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     // Initialize the Automation Name
     CalculationResultAutomationName = GetLocalizedStringFormat(m_localizedCalculationResultAutomationFormat, m_DisplayValue);
     CalculationExpressionAutomationName = GetLocalizedStringFormat(m_expressionAutomationNameFormat, L"");
+    CalculationAlwaysOnTopResultAutomationName = GetLocalizedStringFormat(m_expressionAutomationNameFormat, L"");
 
     // Initialize history view model
     m_HistoryVM = ref new HistoryViewModel(&m_standardCalculatorManager);
@@ -298,6 +298,7 @@ void StandardCalculatorViewModel::SetExpressionDisplay(
     }
 
     CalculationExpressionAutomationName = GetCalculatorExpressionAutomationName();
+    CalculationAlwaysOnTopResultAutomationName = GetCalculatorExpressionAutomationName();
 
     AreTokensUpdated = true;
 }

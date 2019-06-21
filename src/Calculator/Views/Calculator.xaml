@@ -457,6 +457,18 @@
                                         AutomationProperties.Name="{x:Bind Model.CalculationExpressionAutomationName, Mode=OneWay}"
                                         IsTabStop="False"
                                         TokensUpdated="{x:Bind Model.AreTokensUpdated, Mode=OneWay}"/>
+            <controls:OverflowTextBlock x:Name="AlwaysOnTopResults"
+                                        x:Uid="CalculatorAlwaysOnTopResults"
+                                        Grid.Row="2"
+                                        Margin="0,0,0,0"
+                                        Style="{ThemeResource ResultsStyle}"
+                                        AutomationProperties.AutomationId="CalculatorAlwaysOnTopResults"
+                                        AutomationProperties.HeadingLevel="Level1"
+                                        AutomationProperties.Name="{x:Bind Model.CalculationAlwaysOnTopResultAutomationName, Mode=OneWay}"
+                                        ContextCanceled="OnContextCanceled"
+                                        ContextRequested="OnContextRequested"
+                                        TokensUpdated="{x:Bind Model.AreTokensUpdated, Mode=OneWay}"
+                                        TabIndex="1"/>
 
             <!-- Programmer display panel controls -->
             <local:CalculatorProgrammerOperators x:Name="ProgrammerOperators"

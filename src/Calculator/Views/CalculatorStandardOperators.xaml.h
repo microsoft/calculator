@@ -19,7 +19,6 @@ namespace CalculatorApp
         CalculatorStandardOperators();
 
         DEPENDENCY_PROPERTY_OWNER(CalculatorStandardOperators);
-        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, HideStandardFunctions, false);
 
         property bool IsErrorVisualState
         {
@@ -29,6 +28,6 @@ namespace CalculatorApp
 
     private:
         bool m_isErrorVisualState;
-        void OnHideStandardFunctionsPropertyChanged(bool oldValue, bool newValue);
+        void ShowHideStandardFunctions(Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
     };
 }

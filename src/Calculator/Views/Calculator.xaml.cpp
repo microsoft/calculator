@@ -288,11 +288,19 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
     {
         MemoryPanel->Visibility = ::Visibility::Collapsed;
         HistoryButtonParent->Visibility = ::Visibility::Collapsed;
+        ExpressionText->Visibility = ::Visibility::Collapsed;
+        Results->Visibility = ::Visibility::Collapsed;
+        ExpressionText->Visibility = ::Visibility::Collapsed;
+        AlwaysOnTopResults->Visibility = ::Visibility::Visible;
     }
     else
     {
         MemoryPanel->Visibility = ::Visibility::Visible;
         HistoryButtonParent->Visibility = ::Visibility::Visible;
+        ExpressionText->Visibility = ::Visibility::Visible;
+        Results->Visibility = ::Visibility::Visible;
+        ExpressionText->Visibility = ::Visibility::Visible;
+        AlwaysOnTopResults->Visibility = ::Visibility::Collapsed;
     }
 }
 

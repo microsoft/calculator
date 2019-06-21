@@ -71,6 +71,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, AreHEXButtonsEnabled);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationResultAutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationExpressionAutomationName);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationAlwaysOnTopResultAutomationName);
             OBSERVABLE_PROPERTY_RW(bool, IsShiftProgrammerChecked);
             OBSERVABLE_PROPERTY_RW(bool, IsQwordEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsDwordEnabled);
@@ -231,22 +232,6 @@ namespace CalculatorApp
                             IsProgrammer = false;
                         }
                         RaisePropertyChanged(L"IsAlwaysOnTop");
-                    }
-                }
-            }
-
-            property bool HideStandardFunctions
-            {
-                bool get()
-                {
-                    return m_hideStandardFunctions;
-                }
-                void set(bool value)
-                {
-                    if (m_hideStandardFunctions != value)
-                    {
-                        m_hideStandardFunctions = value;
-                        RaisePropertyChanged(L"HideStandardFunctions");
                     }
                 }
             }
@@ -445,7 +430,6 @@ namespace CalculatorApp
             bool m_isScientific;
             bool m_isProgrammer;
             bool m_isAlwaysOnTop;
-            bool m_hideStandardFunctions;
             bool m_isBinaryBitFlippingEnabled;
             bool m_isBitFlipChecked;
             bool m_isShiftChecked;

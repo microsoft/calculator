@@ -122,10 +122,6 @@ void MainPage::WindowSizeChanged(_In_ Platform::Object ^ /*sender*/, _In_ Window
         float height = safe_cast<float>(this->ActualHeight);
         localSettings->Values->Insert("calculatorAlwaysOnTopLastWidth", width);
         localSettings->Values->Insert("calculatorAlwaysOnTopLastHeight", height);
-        if (width < 320 || height < 394)
-        {
-            m_model->CalculatorViewModel->HideStandardFunctions = true;
-        }
     }
 }
 
