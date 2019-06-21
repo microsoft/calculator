@@ -273,6 +273,8 @@
     <ClInclude Include="..\GraphingInterfaces\IGraphingOptions.h" />
     <ClInclude Include="..\GraphingInterfaces\IGraphRenderer.h" />
     <ClInclude Include="..\GraphingInterfaces\IMathSolver.h" />
+    <ClInclude Include="..\GraphingInterfaces\IEquation.h" />
+    <ClInclude Include="..\GraphingInterfaces\IEquationOptions.h" />
     <ClInclude Include="Mocks\MathSolver.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
