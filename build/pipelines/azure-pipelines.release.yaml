@@ -35,6 +35,14 @@ jobs:
     platform: ARM64
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
+- template: ./templates/run-ui-tests.yaml
+  parameters:
+    platform: x64
+
+- template: ./templates/run-ui-tests.yaml
+  parameters:
+    platform: x86
+
 - template: ./templates/run-unit-tests.yaml
   parameters:
     platform: x64
