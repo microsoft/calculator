@@ -12,7 +12,7 @@ namespace CalculatorUITestFramework
     public sealed class WinAppDriver
     {
         private WindowsDriverLocalService windowsDriverService = null;
-        private const string calculatorAppId = "Microsoft.WindowsCalculator.Dev_8wekyb3d8bbwe!App";
+        private const string defaultAppId = "Microsoft.WindowsCalculator.Dev_8wekyb3d8bbwe!App";
         private static WinAppDriver instance = null;
         public static WinAppDriver Instance
         {
@@ -55,7 +55,16 @@ namespace CalculatorUITestFramework
                 // Create a new  WinAppDriver session to bring up an instance of the Calculator application
                 // Note: Multiple calculator windows (instances) share the same process Id
                 var options = new AppiumOptions();
-                options.AddAdditionalCapability("app", calculatorAppId);
+
+                if (context.Properties.TryGetValue("AppId", out object appId))
+                {
+                    options.AddAdditionalCapability("app", (string)appId);
+                }
+                else
+                {
+                    options.AddAdditionalCapability("app", defaultAppId);
+                }
+
                 options.AddAdditionalCapability("deviceName", "WindowsPC");
                 this.CalculatorSession = new WindowsDriver<WindowsElement>(this.windowsDriverService.ServiceUrl, options);
                 this.CalculatorSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
