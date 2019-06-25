@@ -10,7 +10,7 @@ jobs:
   displayName: Build ${{ parameters.platform }}
   condition: ${{ parameters.condition }}
   pool:
-    vmImage: vs2017-win2016
+    vmImage: windows-2019
   variables:
     BuildConfiguration: Release
     BuildPlatform: ${{ parameters.platform }}

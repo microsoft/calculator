@@ -165,6 +165,7 @@ task<void> App::HandleViewReleaseAndRemoveWindowFromMap(_In_ WindowFrameService 
         task_continuation_context::use_arbitrary());
 }
 
+#pragma optimize("", off) // Turn off optimizations to work around coroutine optimization bug
 task<void> App::SetupJumpList()
 {
     try
@@ -190,7 +191,8 @@ task<void> App::SetupJumpList()
     catch (...)
     {
     }
-}
+};
+#pragma optimize("", on)
 
 void App::RemoveSecondaryWindow(_In_ WindowFrameService ^ frameService)
 {

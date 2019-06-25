@@ -16,7 +16,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace CalculatorManagerTest
 {
-    class CalculatorManagerDisplayTester : public ICalcDisplay
+    class CalculatorManagerDisplayTester final : public ICalcDisplay
     {
     public:
         CalculatorManagerDisplayTester()
@@ -42,7 +42,7 @@ namespace CalculatorManagerTest
         }
         void SetExpressionDisplay(
             _Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
-            _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& /*commands*/)
+            _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& /*commands*/) override
         {
             m_expression.clear();
             unsigned int nTokens = 0;
@@ -86,7 +86,7 @@ namespace CalculatorManagerTest
             return m_isError;
         }
 
-        void OnHistoryItemAdded(_In_ unsigned int /*addedItemIndex */)
+        void OnHistoryItemAdded(_In_ unsigned int /*addedItemIndex */) override
         {
         }
 
@@ -100,12 +100,12 @@ namespace CalculatorManagerTest
             return m_maxDigitsCalledCount;
         }
 
-        void BinaryOperatorReceived()
+        void BinaryOperatorReceived() override
         {
             m_binaryOperatorReceivedCallCount++;
         }
 
-        void MemoryItemChanged(unsigned int /*indexOfMemory*/)
+        void MemoryItemChanged(unsigned int /*indexOfMemory*/) override
         {
         }
 

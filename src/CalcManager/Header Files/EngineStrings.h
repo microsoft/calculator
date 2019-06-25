@@ -16,7 +16,10 @@
 
 #pragma once
 
+#include <array>
 #include <string>
+#include <string_view>
+#include <unordered_map>
 
 inline constexpr auto IDS_ERRORS_FIRST = 99;
 
