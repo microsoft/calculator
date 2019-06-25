@@ -314,6 +314,11 @@
     <ClCompile Include="Controls\HorizontalNoOverflowStackPanel.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\EquationInputArea.xaml.cpp" />
+    <ClCompile Include="Views\GraphingCalculator\GraphingCalculator.xaml.cpp" />
+    <ClCompile Include="Controls\EquationTextBox.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -414,6 +419,11 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Controls\HorizontalNoOverflowStackPanel.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\EquationInputArea.xaml.h" />
+    <ClInclude Include="Views\GraphingCalculator\GraphingCalculator.xaml.h" />
+    <ClInclude Include="Controls\EquationTextBox.h">
       <Filter>Controls</Filter>
     </ClInclude>
   </ItemGroup>

@@ -35,8 +35,6 @@ namespace GraphControl
             m_tokens.emplace_back(
                 value->PropertyChanged += ref new GraphControl::PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged)
             );
-
-            EquationChanged();
         }
 
         virtual void Clear()
@@ -49,8 +47,6 @@ namespace GraphControl
 
             m_vector->Clear();
             m_tokens.clear();
-
-            EquationChanged();
         }
 
         virtual GraphControl::Equation^ GetAt(unsigned int index)
@@ -80,8 +76,6 @@ namespace GraphControl
                 m_tokens.begin() + index,
                 value->PropertyChanged += ref new PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged)
             );
-
-            EquationChanged();
         }
 
         virtual void RemoveAt(unsigned int index)
@@ -90,8 +84,6 @@ namespace GraphControl
 
             m_vector->RemoveAt(index);
             m_tokens.erase(m_tokens.begin() + index);
-
-            EquationChanged();
         }
 
         virtual void RemoveAtEnd()
@@ -104,8 +96,6 @@ namespace GraphControl
             }
 
             m_vector->RemoveAtEnd();
-
-            EquationChanged();
         }
 
         virtual void ReplaceAll(const Platform::Array< GraphControl::Equation^ >^ items)
@@ -124,8 +114,6 @@ namespace GraphControl
             }
 
             m_vector->ReplaceAll(items);
-
-            EquationChanged();
         }
 
         virtual void SetAt(unsigned int index, GraphControl::Equation^ value)
@@ -135,8 +123,6 @@ namespace GraphControl
             m_vector->SetAt(index, value);
             m_tokens[index] =
                 value->PropertyChanged += ref new PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged);
-
-            EquationChanged();
         }
         #pragma endregion
 

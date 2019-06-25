@@ -12,6 +12,7 @@
 #include "Controls/CalculatorButton.h"
 #include "Controls/CalculationResult.h"
 #include "Controls/OverflowTextBlock.h"
+#include "Controls/EquationTextBox.h"
 #include "CalcViewModel/HistoryViewModel.h"
 #include "Views/CalculatorProgrammerDisplayPanel.xaml.h"
 #include "Views/CalculatorProgrammerOperators.xaml.h"

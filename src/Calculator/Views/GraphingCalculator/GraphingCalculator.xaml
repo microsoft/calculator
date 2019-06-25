@@ -43,10 +43,10 @@
 
         <!-- Right portion of the screen -->
         <Grid x:Name="RightGrid"
-              Grid.Row="0"
+              Grid.Row="1"
               Grid.RowSpan="2"
               Grid.Column="1"
-              Margin="4,0,4,0">
+              Margin="0,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="3*"/>

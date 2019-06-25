@@ -1,6 +1,7 @@
 <UserControl x:Class="CalculatorApp.EquationInputArea"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:CalculatorApp.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:CalculatorApp.ViewModel"
@@ -11,76 +12,71 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Margin="0,0,17,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <TextBlock x:Uid="EquationInputAreaHeader"
-                       Grid.Column="0"
-                       Style="{ThemeResource SubheaderTextBlockStyle}"
-                       FontSize="20"/>
-
-            <Button Grid.Column="1"
-                    Click="AddEquationButton_Click"
-                    Content="+"/>
-        </Grid>
-
         <ListView x:Name="EquationInputList"
-                  Grid.Row="2"
-                  Margin="0,4,0,0"
+                  Grid.Row="0"
+                  Margin="0,8,0,0"
                   IsItemClickEnabled="False"
                   ItemsSource="{x:Bind Equations}"
                   SelectionMode="None">
-
-            <ListView.Resources>
-                <x:Double x:Key="ItemHeight">40</x:Double>
-            </ListView.Resources>
 
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="IsTabStop" Value="False"/>
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     <Setter Property="Padding" Value="0"/>
-                    <Setter Property="Margin" Value="0,0,17,1"/>
+                    <Setter Property="Margin" Value="0,0,0,2"/>
                 </Style>
             </ListView.ItemContainerStyle>
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:EquationViewModel">
-                    <Grid Height="{StaticResource ItemHeight}">
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Grid.Resources>
                             <SolidColorBrush x:Key="LineColorBrush" Color="{x:Bind LineColor, Mode=OneWay}"/>
                         </Grid.Resources>
-                        <Grid.Background>
-                            <StaticResource ResourceKey="LineColorBrush"/>
-                        </Grid.Background>
 
-                        <Button Width="{StaticResource ItemHeight}"
-                                Height="{StaticResource ItemHeight}"
-                                Background="{StaticResource LineColorBrush}"/>
+                        <controls:EquationTextBox x:Uid="EquationInputButton"
+                                                  Grid.Column="1"
+                                                  Margin="0,0,3,0"
+                                                  Style="{StaticResource EquationTextBoxStyle}"
+                                                  GotFocus="InputTextBox_GotFocus"
+                                                  KeyUp="InputTextBox_KeyUp"
+                                                  LostFocus="InputTextBox_LostFocus"
+                                                  RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
+                            <controls:EquationTextBox.EquationColor>
+                                <SolidColorBrush x:Name="EquationLineColor" Color="{x:Bind LineColor, Mode=OneWay}"/>
+                            </controls:EquationTextBox.EquationColor>
+                            <controls:EquationTextBox.KeyGraphFeaturesContent>
+                                <StackPanel x:Name="KeyGraphFeaturesGrid" Visibility="{x:Bind KeyGraphFeaturesVisibility, Mode=OneWay}">
+                                    <TextBlock Text="Key Graph Features"/>
+                                    <TextBlock Text="{x:Bind Expression, Mode=OneWay}"/>
+                                </StackPanel>
+                            </controls:EquationTextBox.KeyGraphFeaturesContent>
+                            <controls:EquationTextBox.ColorChooserFlyout>
+                                <Flyout x:Name="ColorChooserFlyout"
+                                        x:Uid="ColorChooserFlyout"
+                                        Placement="Bottom">
+                                    <StackPanel>
+                                        <ColorPicker x:Name="EquationColorPicker" Color="{x:Bind LineColor, Mode=TwoWay}"/>
+                                    </StackPanel>
+                                </Flyout>
+                            </controls:EquationTextBox.ColorChooserFlyout>
+                        </controls:EquationTextBox>
 
-                        <Rectangle x:Name="InputBackplate"
-                                   Grid.Column="1"
-                                   Margin="0,2,3,2"
-                                   Fill="White"/>
-
-                        <TextBox Grid.Column="1"
-                                 Margin="0,2,3,2"
-                                 GotFocus="InputTextBox_GotFocus"
-                                 KeyUp="InputTextBox_KeyUp"
-                                 LostFocus="InputTextBox_LostFocus"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <Button Grid.Row="1"
+                Margin="4"
+                Click="AddEquationButton_Click"
+                Content="+"/>
     </Grid>
 </UserControl>

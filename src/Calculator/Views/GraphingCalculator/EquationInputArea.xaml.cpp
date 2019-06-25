@@ -1,10 +1,12 @@
 #include "pch.h"
 #include "EquationInputArea.xaml.h"
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "Controls/EquationTextBox.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::Controls;
 using namespace Platform;
 using namespace std;
 using namespace Windows::System;
@@ -12,6 +14,7 @@ using namespace Windows::UI;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Input;
 
 namespace
@@ -51,13 +54,6 @@ void EquationInputArea::OnEquationsPropertyChanged()
     if (Equations != nullptr && Equations->Size == 0)
     {
         AddNewEquation();
-
-        // For now, the first equation needs to be y = 0.
-        // We can remove this when we can create empty graphs.
-        if (EquationViewModel^ eqvm = Equations->GetAt(0))
-        {
-            eqvm->Expression = L"0";
-        }
     }
 }
 
@@ -72,7 +68,6 @@ void EquationInputArea::AddNewEquation()
     eq->LineColor = GetNextLineColor();
 
     Equations->Append(eq);
-    EquationInputList->ScrollIntoView(eq);
 }
 
 void EquationInputArea::InputTextBox_GotFocus(Object^ sender, RoutedEventArgs^ e)
@@ -84,18 +79,18 @@ void EquationInputArea::InputTextBox_LostFocus(Object^ sender, RoutedEventArgs^ 
 {
     KeyboardShortcutManager::HonorShortcuts(true);
     
-    auto tb = static_cast<TextBox^>(sender);
+    auto tb = static_cast<EquationTextBox^>(sender);
     auto eq = static_cast<EquationViewModel^>(tb->DataContext);
-    tb->Text = eq->Expression;
+    tb->SetEquationText(eq->Expression);
 }
 
 void EquationInputArea::InputTextBox_KeyUp(Object^ sender, KeyRoutedEventArgs^ e)
 {
     if (e->Key == VirtualKey::Enter)
     {
-        auto tb = static_cast<TextBox^>(sender);
+        auto tb = static_cast<EquationTextBox^>(sender);
         auto eq = static_cast<EquationViewModel^>(tb->DataContext);
-        eq->Expression = tb->Text;
+        eq->Expression = tb->GetEquationText();
 
         e->Handled = true;
     }
@@ -105,4 +100,16 @@ Color EquationInputArea::GetNextLineColor()
 {
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % lineColorsSize;
     return lineColors[m_lastLineColorIndex];
+}
+
+
+void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object^ sender, RoutedEventArgs^ e)
+{
+    auto tb = static_cast<EquationTextBox^>(sender);
+    auto eq = static_cast<EquationViewModel^>(tb->DataContext);
+    unsigned int index;
+    if (Equations->IndexOf(eq, &index))
+    {
+        Equations->RemoveAt(index);
+    }
 }
