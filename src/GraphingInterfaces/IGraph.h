@@ -12,7 +12,7 @@ namespace Graphing
     {
         virtual ~IGraph() = default;
 
-        virtual std::optional<std::vector<std::shared_ptr<IEquation>>> TryInitialize(const IExpression* graphingExp) = 0;
+        virtual std::optional<std::vector<std::shared_ptr<IEquation>>> TryInitialize(const IExpression* graphingExp = nullptr) = 0;
 
         virtual IGraphingOptions& GetOptions() = 0;
 

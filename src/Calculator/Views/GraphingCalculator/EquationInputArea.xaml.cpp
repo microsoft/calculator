@@ -54,13 +54,6 @@ void EquationInputArea::OnEquationsPropertyChanged()
     if (Equations != nullptr && Equations->Size == 0)
     {
         AddNewEquation();
-
-        // For now, the first equation needs to be y = 0.
-        // We can remove this when we can create empty graphs.
-        if (EquationViewModel^ eqvm = Equations->GetAt(0))
-        {
-            eqvm->Expression = L"0";
-        }
     }
 }
 
@@ -75,7 +68,6 @@ void EquationInputArea::AddNewEquation()
     eq->LineColor = GetNextLineColor();
 
     Equations->Append(eq);
-    EquationInputList->ScrollIntoView(eq);
 }
 
 void EquationInputArea::InputTextBox_GotFocus(Object^ sender, RoutedEventArgs^ e)

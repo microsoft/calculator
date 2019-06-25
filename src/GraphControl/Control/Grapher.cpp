@@ -300,6 +300,17 @@ namespace GraphControl
 
     void Grapher::OnEquationsVectorChanged(IObservableVector<Equation^>^ sender, IVectorChangedEventArgs^ event)
     {
+        if (event->CollectionChange == ::CollectionChange::ItemInserted || event->CollectionChange == ::CollectionChange::ItemChanged)
+        {
+            auto eq = sender->GetAt(event->Index);
+
+            // Don't update the graph unless the equations being added/modified is valid.
+            if (eq->Expression->IsEmpty())
+            {
+                return;
+            }
+        }
+
         UpdateGraph();
     }
 
@@ -313,9 +324,9 @@ namespace GraphControl
         if (m_renderMain && m_graph != nullptr)
         {
             auto validEqs = GetValidEquations();
+
             if (!validEqs.empty())
             {
-
                 wstringstream ss{};
                 ss << L"show2d(";
 
@@ -333,7 +344,8 @@ namespace GraphControl
                 ss << L")";
 
                 wstring request = ss.str();
-                if (auto graphExpression = m_solver->ParseInput(request))
+                unique_ptr<IExpression> graphExpression;
+                if (graphExpression = m_solver->ParseInput(request))
                 {
                     if (m_graph->TryInitialize(graphExpression.get()))
                     {
@@ -343,6 +355,15 @@ namespace GraphControl
                     }
                 }
             }
+            else
+            {
+                if (m_graph->TryInitialize())
+                {
+                    UpdateGraphOptions(m_graph->GetOptions(), validEqs);
+
+                    m_renderMain->Graph = m_graph;
+                }
+            }
         }
     }
 
@@ -350,18 +371,21 @@ namespace GraphControl
     {
         options.SetForceProportional(ForceProportionalAxes);
 
-        vector<Graphing::Color> graphColors;
-        graphColors.reserve(validEqs.size());
-        for (Equation^ eq : validEqs)
+        if (!validEqs.empty())
         {
-            auto lineColor = eq->LineColor;
-            graphColors.emplace_back(
-                lineColor.R,
-                lineColor.G,
-                lineColor.B,
-                lineColor.A);
+            vector<Graphing::Color> graphColors;
+            graphColors.reserve(validEqs.size());
+            for (Equation^ eq : validEqs)
+            {
+                auto lineColor = eq->LineColor;
+                graphColors.emplace_back(
+                    lineColor.R,
+                    lineColor.G,
+                    lineColor.B,
+                    lineColor.A);
+            }
+            options.SetGraphColors(graphColors);
         }
-        options.SetGraphColors(graphColors);
     }
 
     vector<Equation^> Grapher::GetValidEquations()
