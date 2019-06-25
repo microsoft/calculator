@@ -2,7 +2,7 @@
 
 parameters:
   platform: ''
-  additionalTestParameters: ''
+  runsettingsFileName: ''
 
 jobs:
 - job: UITests${{ parameters.platform }}
@@ -45,7 +45,6 @@ jobs:
     inputs:
       testAssemblyVer2: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/CalculatorUITests.dll
       vsTestVersion: 16.0
-      runSettingsFile: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/CalculatorUITests.runsettings
+      runSettingsFile: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/${{ parameters.runsettingsFileName }}
       platform: ${{ parameters.platform }}
       configuration: Release
-      overrideTestrunParameters: ${{ parameters.additionalTestParameters }}

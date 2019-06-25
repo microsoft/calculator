@@ -38,12 +38,12 @@ jobs:
 - template: ./templates/run-ui-tests.yaml
   parameters:
     platform: x64
-    additionalTestParameters: -AppId Microsoft.WindowsCalculator_8wekyb3d8bbwe!App
+    runsettingsFileName: CalculatorUITests.release.runsettings
 
 - template: ./templates/run-ui-tests.yaml
   parameters:
     platform: x86
-    additionalTestParameters: -AppId Microsoft.WindowsCalculator_8wekyb3d8bbwe!App
+    runsettingsFileName: CalculatorUITests.release.runsettings
 
 - template: ./templates/run-unit-tests.yaml
   parameters:
