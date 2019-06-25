@@ -18,11 +18,7 @@ namespace CalculatorUITestFramework
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new WinAppDriver();
-                }
-                return instance;
+                return instance is null ? new WinAppDriver() : instance;
             }
 
         }
