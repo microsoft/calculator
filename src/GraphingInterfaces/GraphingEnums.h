@@ -326,17 +326,23 @@ namespace Graphing
             //   Zoom out on all axes by the predefined ratio
             ZoomOut,
 
-            //   Zoom out on X axis only, leave the range of Y unchanged
+            //   Zoom out on X axis only, leave the range of Y (and Z in 3D) unchanged
             WidenX,
 
-            //   Zoom in on X axis only, leave the range of Y unchanged
+            //   Zoom in on X axis only, leave the range of Y (and Z in 3D) unchanged
             ShrinkX,
 
-            //   Zoom out on Y axis only, leave the range of X unchanged
+            //   Zoom out on Y axis only, leave the range of X (and Z in 3D) unchanged
             WidenY,
 
-            //   Zoom in on Y axis only, leave the range of X unchanged
+            //   Zoom in on Y axis only, leave the range of X (and Z in 3D) unchanged
             ShrinkY,
+
+            //   Zoom out on Z axis only, leave the range of X and Y unchanged. Apply to 3D graph only but not 2D graph.
+            WidenZ,
+
+            //   Zoom in on Z axis only, leave the range of X and Y unchanged. Apply to 3D graph only but not 2D graph.
+            ShrinkZ,
 
             //   Move the view window of the graph towards the negative X axis.
             MoveNegativeX,
@@ -349,6 +355,12 @@ namespace Graphing
 
             //   Move the view window of the graph towards the positive Y axis.
             MovePositiveY,
+
+            //   Move the view window of the graph towards the negative Z axis.
+            MoveNegativeZ,
+
+            //   Move the view window of the graph towards the positive Z axis.
+            MovePositiveZ,
 
             //   Zoom in on all axes by the predefined ratio. The ratio is smaller than used in ZoomIn result in a smoother motion
             SmoothZoomIn,
