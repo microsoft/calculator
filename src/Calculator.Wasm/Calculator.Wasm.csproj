@@ -11,6 +11,7 @@
 		<MonoRuntimeDebuggerEnabled Condition="'$(Configuration)'=='Debug'">true</MonoRuntimeDebuggerEnabled>
 		<WasmShellMonoRuntimeExecutionMode Condition="$([MSBuild]::IsOsPlatform('Linux'))">InterpreterAndAOT</WasmShellMonoRuntimeExecutionMode>
 		<MonoWasmRuntimeConfiguration>release-dynamic</MonoWasmRuntimeConfiguration>
+		<WasmShellIndexHtmlPath>$(MSBuildThisFileDirectory)index.html</WasmShellIndexHtmlPath>
 	</PropertyGroup>
 	<ItemGroup>
 		<Content Include="..\Calculator.UWP\Assets\*.png" Link="Assets\%(FileName)%(Extension)" />
@@ -31,8 +32,10 @@
 		-->
 		<Compile Remove="Program.cs" />
 		<None Remove="WasmScripts\CalcManager.js" />
+		<None Remove="WasmScripts\ios-redirect.js" />
 		<Compile Include="..\AssemblyVersion.Wasm.cs" Link="Properties\AssemblyVersion.Wasm.cs" />
 		<Compile Include="Program.cs" />
+		<Content Include="index.html" />
 		<Content Include="LinkerConfig.xml" />
 	</ItemGroup>
 	
