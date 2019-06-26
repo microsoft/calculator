@@ -38,6 +38,14 @@ namespace Graphing
         virtual bool IsEmptySet() const = 0;
     };
 
+    struct IVariable
+    {
+        virtual ~IVariable() = default;
+
+        virtual int GetVariableID() const = 0;
+        virtual const std::wstring& GetVariableName() = 0;
+    };
+
     struct IExpressible
     {
         virtual ~IExpressible() = default;

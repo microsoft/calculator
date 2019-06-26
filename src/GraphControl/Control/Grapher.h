@@ -5,6 +5,7 @@
 #include "Equation.h"
 #include "EquationCollection.h"
 #include "IMathSolver.h"
+#include "Common.h"
 
 namespace GraphControl
 {
@@ -77,6 +78,28 @@ namespace GraphControl
             }
         }
         #pragma endregion
+
+#pragma region Platform::Collection^ Variables DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty^ VariablesProperty
+        {
+            Windows::UI::Xaml::DependencyProperty^ get()
+            {
+                return s_variablesProperty;
+            }
+        }
+
+        property Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ Variables
+        {
+            Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ get()
+            {
+                return static_cast<Windows::Foundation::Collections::IObservableVector<Platform::Object^>^>(GetValue(s_variablesProperty));
+            }
+            void set(Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ value)
+            {
+                SetValue(s_variablesProperty, value);
+            }
+        }
+#pragma endregion
 
         #pragma region Windows::UI::Xaml::DataTemplate^ ForceProportionalAxes DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ ForceProportionalAxesTemplateProperty
@@ -154,6 +177,7 @@ namespace GraphControl
         Windows::Foundation::EventRegistrationToken m_tokenDataSourceChanged;
 
         static Windows::UI::Xaml::DependencyProperty^ s_equationsProperty;
+        static Windows::UI::Xaml::DependencyProperty^ s_variablesProperty;
         Windows::Foundation::EventRegistrationToken m_tokenEquationsChanged;
         Windows::Foundation::EventRegistrationToken m_tokenEquationChanged;
 

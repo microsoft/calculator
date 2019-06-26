@@ -26,6 +26,7 @@ namespace
     constexpr auto s_propertyName_EquationTemplate = L"EquationTemplate";
     constexpr auto s_propertyName_Equations = L"Equations";
     constexpr auto s_propertyName_EquationsSource = L"EquationsSource";
+    constexpr auto s_propertyName_Variables = L"Variables";
     constexpr auto s_propertyName_ForceProportionalAxes = L"ForceProportionalAxes";
 
     // Helper function for converting a pointer position to a position that the graphing engine will understand.
@@ -43,6 +44,7 @@ namespace GraphControl
     DependencyProperty^ Grapher::s_equationTemplateProperty;
     DependencyProperty^ Grapher::s_equationsProperty;
     DependencyProperty^ Grapher::s_equationsSourceProperty;
+    DependencyProperty^ Grapher::s_variablesProperty;
     DependencyProperty^ Grapher::s_forceProportionalAxesTemplateProperty;
     
     Grapher::Grapher()
