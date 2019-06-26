@@ -24,9 +24,9 @@ namespace CalculatorApp
     static reader_writer_lock s_traceLoggerLock;
 
     // Telemetry events. Uploaded to asimov.
-    constexpr auto EVENT_NAME_WINDOW_ON_CREATED = L"OnWindowCreated";
-    constexpr auto EVENT_NAME_BUTTON_USAGE = L"KeyboardOperatorUsageInSession";
-    constexpr auto EVENT_NAME_NAV_BAR_OPENED = L"NavBarOpened";
+    constexpr auto EVENT_NAME_WINDOW_ON_CREATED = L"WindowCreated";
+    constexpr auto EVENT_NAME_BUTTON_USAGE = L"ButtonUsageInSession";
+    constexpr auto EVENT_NAME_NAV_BAR_OPENED = L"NavigationViewOpened";
     constexpr auto EVENT_NAME_MODE_CHANGED = L"ModeChanged";
     constexpr auto EVENT_NAME_DATE_CALCULATION_MODE_USED = L"DateCalculationModeUsed";
     constexpr auto EVENT_NAME_HISTORY_ITEM_LOAD = L"HistoryItemLoad";
@@ -203,7 +203,7 @@ namespace CalculatorApp
 
         fields.AddString(L"ErrorString", errorString);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel3Event(EVENT_NAME_EXCEPTION, fields);
+        LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
     void TraceLogger::LogStandardException(ViewMode mode, wstring_view functionName, const exception& e) const
     {
@@ -251,6 +251,13 @@ namespace CalculatorApp
 
     void TraceLogger::UpdateButtonUsage(int buttonId, ViewMode mode)
     {
+        // IsProgrammerMode, IsScientificMode, IsStandardMode and None are not actual buttons, so ignore them
+        if (buttonId == (int)NumbersAndOperatorsEnum::IsProgrammerMode || buttonId == (int)NumbersAndOperatorsEnum::IsScientificMode ||
+            buttonId == (int)NumbersAndOperatorsEnum::IsStandardMode || buttonId == (int)NumbersAndOperatorsEnum::None)
+        {
+            return;
+        }
+
         // Writer lock for the static resources
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
         vector<ButtonLog>::iterator it = std::find_if(
@@ -268,7 +275,11 @@ namespace CalculatorApp
 
     void TraceLogger::UpdateWindowCount(size_t windowCount)
     {
-        maxWindowCount = (maxWindowCount > windowCount) ? maxWindowCount : windowCount;
+        if (windowCount == 0)
+        {
+            currentWindowCount--;
+            return;
+        }
         currentWindowCount = windowCount;
     }
 
@@ -288,6 +299,8 @@ namespace CalculatorApp
             fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
             LogLevel2Event(EVENT_NAME_BUTTON_USAGE, fields);
         }
+
+        buttonLog.clear();
     }
 
     void TraceLogger::LogDateCalculationModeUsed(bool AddSubtractMode)
@@ -300,16 +313,6 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_DATE_CALCULATION_MODE_USED, fields);
     }
 
-    void TraceLogger::LogUserRequestedRefreshFailed() const
-    {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
-        LoggingFields fields{};
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel3Event(L"UserRequestedRefreshFailed", fields);
-    }
-
     void TraceLogger::LogConverterInputReceived(ViewMode mode) const
     {
         if (!GetTraceLoggingProviderEnabled())
@@ -319,14 +322,6 @@ namespace CalculatorApp
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(L"ConverterInputReceived", fields);
-    }
-
-    void TraceLogger::LogViewClosingTelemetry()
-    {
-        if (currentWindowCount == 1)
-        {
-            LogButtonUsage();
-        }
     }
 
     void TraceLogger::LogNavBarOpened() const

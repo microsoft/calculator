@@ -109,7 +109,7 @@ String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode
     if (pastedText->Length() > MaxPasteableLength)
     {
         // return NoOp to indicate don't paste anything.
-///////        TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"PastedExpressionSizeGreaterThanMaxAllowed", mode, programmerNumberBase, bitLengthType);
+        TraceLogger::GetInstance().LogError(mode, L"PastedExpressionSizeGreaterThanMaxAllowed");
         return StringReference(PasteErrorString);
     }
 
@@ -144,7 +144,7 @@ String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode
     // validate each operand with patterns for different modes
     if (!ExpressionRegExMatch(operands, mode, modeType, programmerNumberBase, bitLengthType))
     {
-//////        TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"InvalidExpressionForPresentMode", mode, programmerNumberBase, bitLengthType);
+        TraceLogger::GetInstance().LogError(mode, L"InvalidExpressionForPresentMode");
         return StringReference(PasteErrorString);
     }
 

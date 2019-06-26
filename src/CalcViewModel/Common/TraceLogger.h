@@ -44,13 +44,11 @@ namespace CalculatorApp
         void UpdateButtonUsage(int buttonId, CalculatorApp::Common::ViewMode mode);
         void LogButtonUsage();
         void LogDateCalculationModeUsed(bool AddSubtractMode);
-        void UpdateWindowCount(size_t windowCount);
+        void UpdateWindowCount(size_t windowCount = 0);
         bool UpdateWindowIdLog(int windowId);
         void LogVisualStateChanged(CalculatorApp::Common::ViewMode mode, std::wstring_view state) const;
         void LogWindowCreated(CalculatorApp::Common::ViewMode mode) const;
-        void LogUserRequestedRefreshFailed() const;
         void LogConverterInputReceived(CalculatorApp::Common::ViewMode mode) const;
-        void LogViewClosingTelemetry();
         void LogNavBarOpened() const;
 
         void LogError(CalculatorApp::Common::ViewMode mode, std::wstring_view errorString);
@@ -74,33 +72,10 @@ namespace CalculatorApp
 
         winrt::Windows::Foundation::Diagnostics::LoggingChannel g_calculatorProvider;
 
-        bool isSizeChangeLogged = false;
-        bool isHideIfShownLogged = false;
-        bool isSizeChangedFirstTime = true; // to track the first size changed event which is fired on the launch of app
-        bool isAutoConversionBeginLoggedInSession = false;
-        bool isAutoConversionEndLoggedInSession = false;
-        bool angleButtonLoggedInSession = false;
-        bool radixButtonLoggedInSession = false;
-        bool bitLengthButtonLoggedInSession = false;
-        GUID sessionGuid;
-        CalculatorApp::Common::ViewMode currentMode = CalculatorApp::Common::ViewMode::None;
         std::vector<ButtonLog> buttonLog;
-        bool isHypButtonLogged = false;
-        bool isAngleButtonInitialized = false;
-        size_t maxWindowCount = 0;
-        bool isAppLaunchBeginLogged = false;
-        bool isAppLaunchEndLogged = false;
-        std::map<int, int> bitLengthButtonUsage;
-        std::map<int, int> angleButtonUsage;
-        std::map<int, int> radixButtonUsage;
         std::map<int, bool> windowIdLog;
 
         // Private variables for Date Calculator usage
-        bool m_dateDiffUsageLoggedInSession = false;
-        bool m_dateAddUsageLoggedInSession = false;
-        bool m_dateSubtractUsageLoggedInSession = false;
-        std::map<int, int> m_dateAddModeUsage;
-        std::map<int, int> m_dateSubtractModeUsage;
 
         size_t currentWindowCount = 0;
 

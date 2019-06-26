@@ -454,7 +454,7 @@ task<bool> CurrencyDataLoader::TryLoadDataFromWebOverrideAsync()
     if (!didLoad)
     {
         m_loadStatus = CurrencyLoadStatus::FailedToLoad;
-        TraceLogger::GetInstance().LogUserRequestedRefreshFailed();
+        TraceLogger::GetInstance().LogError(ViewMode::Currency, L"UserRequestedRefreshFailed");
     }
 
     co_return didLoad;

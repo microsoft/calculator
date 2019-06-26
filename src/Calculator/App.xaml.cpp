@@ -70,6 +70,8 @@ App::App()
     // Currently this is bugged so the property is only respected from code-behind.
     this->HighContrastAdjustment = ApplicationHighContrastAdjustment::None;
 
+    this->Suspending += ref new SuspendingEventHandler(this, &App::OnSuspending);
+
 #if _DEBUG
     this->DebugSettings->IsBindingTracingEnabled = true;
     this->DebugSettings->BindingFailed += ref new BindingFailedEventHandler([](_In_ Object ^ /*sender*/, _In_ BindingFailedEventArgs ^ e) {
@@ -452,6 +454,11 @@ void App::OnActivated(IActivatedEventArgs ^ args)
     }
 }
 
+void CalculatorApp::App::OnSuspending(Object ^ sender, SuspendingEventArgs ^ args)
+{
+    TraceLogger::GetInstance().LogButtonUsage();
+}
+
 void App::DismissedEventHandler(SplashScreen ^ sender, Object ^ e)
 {
     SetupJumpList();
@@ -462,3 +469,5 @@ float App::GetAppWindowHeight()
     CoreWindow ^ window = CoreWindow::GetForCurrentThread();
     return window->Bounds.Height;
 }
+
+
