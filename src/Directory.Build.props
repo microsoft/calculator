@@ -1,0 +1,6 @@
+<Project>
+ <PropertyGroup>
+   <!-- Workaround for android build using the Uno Source Generators: https://github.com/nventive/Uno.SourceGeneration/issues/109 -->
+   <JavaSdkDirectory Condition="'$(JavaSdkDirectory)'=='' and '$(JAVA_HOME_8_X64)'!=''">$(JAVA_HOME_8_X64)</JavaSdkDirectory>
+ </PropertyGroup>
+</Project>
