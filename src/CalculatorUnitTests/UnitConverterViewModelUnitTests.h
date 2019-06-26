@@ -47,7 +47,7 @@ namespace CalculatorUnitTests
         void ResetCategoriesAndRatios() override
         {
         }
-        concurrency::task<std::pair<bool, std::wstring>> RefreshCurrencyRatios() override
+        std::future<std::pair<bool, std::wstring>> RefreshCurrencyRatios() override
         {
             co_return std::make_pair(true, L"");
         }

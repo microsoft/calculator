@@ -122,14 +122,15 @@ UnitConverterViewModel::UnitConverterViewModel(const shared_ptr<UCM::IUnitConver
     , m_isInputBlocked(false)
     , m_CurrencyDataLoadFailed(false)
 {
+    auto localizationService = LocalizationService::GetInstance();
     m_model->SetViewModelCallback(make_shared<UnitConverterVMCallback>(this));
     m_model->SetViewModelCurrencyCallback(make_shared<ViewModelCurrencyCallback>(this));
-    m_decimalFormatter = LocalizationService::GetRegionalSettingsAwareDecimalFormatter();
+    m_decimalFormatter = localizationService->GetRegionalSettingsAwareDecimalFormatter();
     m_decimalFormatter->FractionDigits = 0;
     m_decimalFormatter->IsGrouped = true;
     m_decimalSeparator = LocalizationSettings::GetInstance().GetDecimalSeparator();
 
-    m_currencyFormatter = LocalizationService::GetRegionalSettingsAwareCurrencyFormatter();
+    m_currencyFormatter = localizationService->GetRegionalSettingsAwareCurrencyFormatter();
     m_currencyFormatter->IsGrouped = true;
     m_currencyFormatter->Mode = CurrencyFormatterMode::UseCurrencyCode;
     m_currencyFormatter->ApplyRoundingForCurrency(RoundingAlgorithm::RoundHalfDown);
@@ -674,7 +675,7 @@ void UnitConverterViewModel::RefreshCurrencyRatios()
     String ^ announcement = AppResourceProvider::GetInstance().GetResourceString(UnitConverterResourceKeys::UpdatingCurrencyRates);
     Announcement = CalculatorAnnouncement::GetUpdateCurrencyRatesAnnouncement(announcement);
 
-    auto refreshTask = create_task(m_model->RefreshCurrencyRatios());
+    auto refreshTask = create_task([this] { return m_model->RefreshCurrencyRatios().get(); });
     refreshTask.then(
         [this](const pair<bool, wstring>& refreshResult) {
             bool didLoad = refreshResult.first;

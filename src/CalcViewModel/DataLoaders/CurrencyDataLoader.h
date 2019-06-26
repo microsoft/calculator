@@ -54,7 +54,7 @@ namespace CalculatorApp
         class CurrencyDataLoader : public UCM::IConverterDataLoader, public UCM::ICurrencyConverterDataLoader
         {
         public:
-            CurrencyDataLoader(_In_ std::unique_ptr<CalculatorApp::DataLoaders::ICurrencyHttpClient> client);
+            CurrencyDataLoader(_In_ std::unique_ptr<CalculatorApp::DataLoaders::ICurrencyHttpClient> client, const wchar_t* overrideLanguage = nullptr);
             ~CurrencyDataLoader();
 
             bool LoadFinished();
@@ -76,9 +76,9 @@ namespace CalculatorApp
             GetCurrencyRatioEquality(_In_ const UnitConversionManager::Unit& unit1, _In_ const UnitConversionManager::Unit& unit2) override;
             std::wstring GetCurrencyTimestamp() override;
 
-            concurrency::task<bool> TryLoadDataFromCacheAsync() override;
-            concurrency::task<bool> TryLoadDataFromWebAsync() override;
-            concurrency::task<bool> TryLoadDataFromWebOverrideAsync() override;
+            std::future<bool> TryLoadDataFromCacheAsync() override;
+            std::future<bool> TryLoadDataFromWebAsync() override;
+            std::future<bool> TryLoadDataFromWebOverrideAsync() override;
             // ICurrencyConverterDataLoader
 
             void OnNetworkBehaviorChanged(CalculatorApp::NetworkAccessBehavior newBehavior);
@@ -87,7 +87,7 @@ namespace CalculatorApp
             void ResetLoadStatus();
             void NotifyDataLoadFinished(bool didLoad);
 
-            concurrency::task<bool> TryFinishLoadFromCacheAsync();
+            std::future<bool> TryFinishLoadFromCacheAsync();
 
             bool TryParseWebResponses(
                 _In_ Platform::String ^ staticDataJson,

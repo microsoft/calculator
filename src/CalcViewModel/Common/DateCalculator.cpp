@@ -206,7 +206,7 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
                             // pivotDate is still below the end date
                             try
                             {
-                                pivotDate = AdjustCalendarDate(pivotDate, dateUnit, 1);
+                                pivotDate = AdjustCalendarDate(tempPivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex] + 1));
                                 differenceInDates[unitIndex] += 1;
                             }
                             catch (Platform::InvalidArgumentException ^)

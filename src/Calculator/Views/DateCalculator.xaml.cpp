@@ -79,7 +79,7 @@ DateCalculator::DateCalculator()
     DateDiff_ToDate->MaxDate = maxYear;
 
     // Set the PlaceHolderText for CalendarDatePicker
-    DateTimeFormatter ^ dateTimeFormatter = LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(
+    DateTimeFormatter^ dateTimeFormatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDateTimeFormatter(
         L"day month year",
         localizationSettings.GetCalendarIdentifier(),
         ClockIdentifiers::TwentyFourHour); // Clock Identifier is not used

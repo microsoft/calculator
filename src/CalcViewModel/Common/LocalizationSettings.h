@@ -19,7 +19,7 @@ namespace CalculatorApp
 
                 // Use DecimalFormatter as it respects the locale and the user setting
                 Windows::Globalization::NumberFormatting::DecimalFormatter ^ formatter;
-                formatter = CalculatorApp::Common::LocalizationService::GetRegionalSettingsAwareDecimalFormatter();
+                formatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter();
                 formatter->FractionDigits = 0;
                 formatter->IsDecimalPointAlwaysDisplayed = false;
 
@@ -61,7 +61,7 @@ namespace CalculatorApp
                     // Get locale info for List Separator, eg. comma is used in many locales
                     wchar_t listSeparatorString[4] = L"";
                     result = ::GetLocaleInfoEx(
-                        LOCALE_NAME_USER_DEFAULT,
+                        m_resolvedName.c_str(),
                         LOCALE_SLIST,
                         listSeparatorString,
                         static_cast<int>(std::size(listSeparatorString))); // Max length of the expected return value is 4
@@ -85,7 +85,7 @@ namespace CalculatorApp
                     // A value of 0 indicates the symbol follows the currency value.
                     int currencySymbolPrecedence = 1;
                     result = GetLocaleInfoEx(
-                        LOCALE_NAME_USER_DEFAULT,
+                        m_resolvedName.c_str(),
                         LOCALE_IPOSSYMPRECEDES | LOCALE_RETURN_NUMBER,
                         (LPWSTR)&currencySymbolPrecedence,
                         sizeof(currencySymbolPrecedence) / sizeof(WCHAR));
@@ -104,14 +104,14 @@ namespace CalculatorApp
                 // Note: This function returns 0 on failure.
                 // We'll ignore the failure in that case and the CalendarIdentifier would get set to GregorianCalendar.
                 CALID calId;
-                ::GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT, LOCALE_ICALENDARTYPE | LOCALE_RETURN_NUMBER, reinterpret_cast<PWSTR>(&calId), sizeof(calId));
+                ::GetLocaleInfoEx(m_resolvedName.c_str(), LOCALE_ICALENDARTYPE | LOCALE_RETURN_NUMBER, reinterpret_cast<PWSTR>(&calId), sizeof(calId));
 
                 m_calendarIdentifier = GetCalendarIdentifierFromCalid(calId);
 
                 // Get FirstDayOfWeek Date and Time setting
                 wchar_t day[80] = L"";
                 ::GetLocaleInfoEx(
-                    LOCALE_NAME_USER_DEFAULT,
+                    m_resolvedName.c_str(),
                     LOCALE_IFIRSTDAYOFWEEK,            // The first day in a week
                     reinterpret_cast<PWSTR>(day),      // Argument is of type PWSTR
                     static_cast<int>(std::size(day))); // Max return size are 80 characters
