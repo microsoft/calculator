@@ -43,7 +43,6 @@ namespace CalculationManager
     /// </summary>
     CalculatorManager::~CalculatorManager()
     {
-        this->MemorizedNumberClearAll();
     }
 
     /// <summary>
