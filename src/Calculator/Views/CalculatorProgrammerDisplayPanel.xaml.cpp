@@ -27,11 +27,6 @@ CalculatorProgrammerDisplayPanel::CalculatorProgrammerDisplayPanel()
     InitializeComponent();
 }
 
-void CalculatorProgrammerDisplayPanel::ShowBitFlip(Object ^ sender, RoutedEventArgs ^ e)
-{
-    // TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::BitflipButton, ViewMode::Programmer);
-}
-
 void CalculatorProgrammerDisplayPanel::OnBitLengthButtonPressed(Object ^ parameter)
 {
     String ^ buttonId = parameter->ToString();
