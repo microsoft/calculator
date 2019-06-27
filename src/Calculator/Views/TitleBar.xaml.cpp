@@ -15,6 +15,7 @@ using namespace Windows::UI;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::Foundation::Collections;
 
@@ -186,6 +187,9 @@ namespace CalculatorApp
                 avm->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
             }
             avm->CalculatorViewModel->IsAlwaysOnTop = false;
+            AlwaysOnTopButton->Content = "&#xEE49;";
+            AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
+            ToolTipService::SetToolTip(AlwaysOnTopButton, "Always-on-top");
             ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::Default);
         }
         else
@@ -220,6 +224,18 @@ namespace CalculatorApp
             changeModeTask.then([this](bool success) {
                 auto avm = safe_cast<CalculatorApp::ViewModel::ApplicationViewModel ^>(this->DataContext);
                 avm->CalculatorViewModel->IsAlwaysOnTop = success;
+                if (success)
+                {
+                    AlwaysOnTopButton->Content = "&#xEE47;";
+                    AppName->Text = "";
+                    ToolTipService::SetToolTip(AlwaysOnTopButton, "Exit always-on-top");
+                }
+                else
+                {
+                    AlwaysOnTopButton->Content = "&#xEE49;";
+                    AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
+                    ToolTipService::SetToolTip(AlwaysOnTopButton, "Always-on-top");
+                }
             });
         }
     }

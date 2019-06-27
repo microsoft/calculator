@@ -388,6 +388,8 @@
                         <Setter Target="Results.MaxExpressionHistoryCharacters" Value="51"/>
                         <Setter Target="RowResult.MinHeight" Value="108"/>
                         <Setter Target="RowResult.Height" Value="72*"/>
+                        <Setter Target="AlwaysOnTopResults.MaxFontSize" Value="72"/>
+                        <Setter Target="AlwaysOnTopResults.MaxExpressionHistoryCharacters" Value="51"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="ResultsM">
@@ -399,6 +401,8 @@
                         <Setter Target="Results.MaxExpressionHistoryCharacters" Value="30"/>
                         <Setter Target="RowResult.MinHeight" Value="72"/>
                         <Setter Target="RowResult.Height" Value="72*"/>
+                        <Setter Target="AlwaysOnTopResults.MaxFontSize" Value="46"/>
+                        <Setter Target="AlwaysOnTopResults.MaxExpressionHistoryCharacters" Value="30"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="ResultsS">
@@ -410,6 +414,8 @@
                         <Setter Target="Results.MaxExpressionHistoryCharacters" Value="30"/>
                         <Setter Target="RowResult.MinHeight" Value="42"/>
                         <Setter Target="RowResult.Height" Value="42*"/>
+                        <Setter Target="AlwaysOnTopResults.MaxFontSize" Value="26"/>
+                        <Setter Target="AlwaysOnTopResults.MaxExpressionHistoryCharacters" Value="30"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -420,14 +426,14 @@
                 <RowDefinition x:Name="RowHamburger" Height="{StaticResource HamburgerHeightGridLength}"/>
                 <RowDefinition x:Name="RowExpression"
                                Height="20*"
-                               MinHeight="20"/>
+                               MinHeight="0"/>
                 <RowDefinition x:Name="RowResult"
                                Height="72*"
-                               MinHeight="72"/>
+                               MinHeight="42"/>
                 <RowDefinition x:Name="RowDisplayControls" Height="0"/>
                 <RowDefinition x:Name="RowMemoryControls"
                                Height="32*"
-                               MinHeight="32"/>
+                               MinHeight="0"/>
                 <RowDefinition x:Name="RowNumPad"
                                Height="308*"
                                MinHeight="0"/>
@@ -461,14 +467,25 @@
                                         x:Uid="CalculatorAlwaysOnTopResults"
                                         Grid.Row="2"
                                         Margin="0,0,0,0"
-                                        Style="{ThemeResource ResultsStyle}"
+                                        AutomationProperties.AccessibilityView="Raw"
                                         AutomationProperties.AutomationId="CalculatorAlwaysOnTopResults"
                                         AutomationProperties.HeadingLevel="Level1"
                                         AutomationProperties.Name="{x:Bind Model.CalculationAlwaysOnTopResultAutomationName, Mode=OneWay}"
                                         ContextCanceled="OnContextCanceled"
                                         ContextRequested="OnContextRequested"
                                         TokensUpdated="{x:Bind Model.AreTokensUpdated, Mode=OneWay}"
-                                        TabIndex="1"/>
+                                        HorizontalContentAlignment="Right"
+                                        IsActive="True"
+                                        TabIndex="1"
+                                        Background="Transparent"
+                                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        IsTextScaleFactorEnabled="False"
+                                        UseSystemFocusVisuals="True"
+                                        FontSize="36"
+                                        FontWeight="SemiBold"
+                                        Visibility="Collapsed"/>
 
             <!-- Programmer display panel controls -->
             <local:CalculatorProgrammerOperators x:Name="ProgrammerOperators"

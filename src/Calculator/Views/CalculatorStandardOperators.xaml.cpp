@@ -53,10 +53,12 @@ void CalculatorStandardOperators::ShowHideStandardFunctions(Object ^ /*sender*/,
     Windows::Foundation::Rect bounds = Window::Current->Bounds;
     if (ApplicationView::GetForCurrentView()->ViewMode == ApplicationViewMode::CompactOverlay && (bounds.Width < 320 || bounds.Height < 394))
     {
-        StandardFunctions->Visibility = ::Visibility::Collapsed;
+        R0->Height = GridLength(0, GridUnitType::Star);
+        StandardFunctions->Visibility = ::Visibility::Collapsed;      
     }
     else
     {
+        R0->Height = GridLength(1, GridUnitType::Star);
         StandardFunctions->Visibility = ::Visibility::Visible;
     }
 }

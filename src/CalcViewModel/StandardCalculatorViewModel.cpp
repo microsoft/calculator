@@ -8,6 +8,7 @@
 #include "Common/LocalizationSettings.h"
 #include "Common/CopyPasteManager.h"
 #include "Common/TraceLogger.h"
+#include <intsafe.h>
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -211,6 +212,93 @@ void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ wstring const& displayS
     {
         UpdateProgrammerPanelDisplay();
     }
+
+    if (IsAlwaysOnTop && !IsEditingEnabled)
+    {
+        shared_ptr<CalculatorVector<pair<wstring, int>>> savedTokens = make_shared<CalculatorVector<pair<wstring, int>>>();
+
+        unsigned int tokenCount;
+        IFTPlatformException(m_tokens->GetSize(&tokenCount));
+
+        int maxValue = -1;
+        for (unsigned int i = 0; i < tokenCount; ++i)
+        {
+            pair<wstring, int> currentToken;
+            IFTPlatformException(m_tokens->GetAt(i, &currentToken));
+            savedTokens->Append(currentToken);
+            maxValue = max(maxValue, currentToken.second);
+        }
+        if (tokenCount > 0)
+        {
+            pair<wstring, int> currentToken;
+            IFTPlatformException(m_tokens->GetAt(tokenCount - 1, &currentToken));
+            if (currentToken.first != L" ")
+            {
+                savedTokens->Append(pair(L" ", -1));
+            }
+        }
+
+        std::wstring wStr(m_DisplayValue->Length(), L' ');
+        std::copy(m_DisplayValue->Begin(), m_DisplayValue->End(), wStr.begin());
+        savedTokens->Append(pair(wStr, maxValue + 1));
+
+        AreTokensUpdated = false;
+
+        unsigned int nTokens = 0;
+        savedTokens->GetSize(&nTokens);
+
+        pair<wstring, int> currentToken;
+        const auto& localizer = LocalizationSettings::GetInstance();
+
+        const wstring separator = L" ";
+        for (unsigned int i = 0; i < nTokens; ++i)
+        {
+            if (SUCCEEDED(savedTokens->GetAt(i, &currentToken)))
+            {
+                Common::TokenType type;
+                bool isEditable = (currentToken.second == -1) ? false : true;
+                localizer.LocalizeDisplayValue(&(currentToken.first));
+
+                if (!isEditable)
+                {
+                    type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
+                }
+                else
+                {
+                    type = TokenType::Operand;
+                }
+
+                auto currentTokenString = ref new String(currentToken.first.c_str());
+                if (i < m_ExpressionTokens->Size)
+                {
+                    auto existingItem = m_ExpressionTokens->GetAt(i);
+                    if (type == existingItem->Type && existingItem->Token->Equals(currentTokenString))
+                    {
+                        existingItem->TokenPosition = i;
+                        existingItem->IsTokenEditable = isEditable;
+                        existingItem->CommandIndex = 0;
+                    }
+                    else
+                    {
+                        auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
+                        m_ExpressionTokens->InsertAt(i, expressionToken);
+                    }
+                }
+                else
+                {
+                    auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
+                    m_ExpressionTokens->Append(expressionToken);
+                }
+            }
+        }
+
+        while (m_ExpressionTokens->Size != nTokens)
+        {
+            m_ExpressionTokens->RemoveAtEnd();
+        }
+
+        CalculationAlwaysOnTopResultAutomationName = GetCalculatorExpressionAutomationName();
+    }
 }
 
 void StandardCalculatorViewModel::DisplayPasteError()
@@ -294,10 +382,76 @@ void StandardCalculatorViewModel::SetExpressionDisplay(
     m_commands = commands;
     if (!IsEditingEnabled)
     {
-        SetTokens(tokens);
+        unsigned int nTokens = 0;
+        tokens->GetSize(&nTokens);
+        if (IsAlwaysOnTop && nTokens == 0 && m_DisplayValue->Length() > 0)
+        {
+            std::wstring wStr(m_DisplayValue->Length(), L' ');
+            std::copy(m_DisplayValue->Begin(), m_DisplayValue->End(), wStr.begin());
+            tokens->Append(pair(wStr, 0));
+
+            AreTokensUpdated = false;
+
+            tokens->GetSize(&nTokens);
+
+            pair<wstring, int> currentToken;
+            const auto& localizer = LocalizationSettings::GetInstance();
+
+            const wstring separator = L" ";
+            for (unsigned int i = 0; i < nTokens; ++i)
+            {
+                if (SUCCEEDED(tokens->GetAt(i, &currentToken)))
+                {
+                    Common::TokenType type;
+                    bool isEditable = (currentToken.second == -1) ? false : true;
+                    localizer.LocalizeDisplayValue(&(currentToken.first));
+
+                    if (!isEditable)
+                    {
+                        type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
+                    }
+                    else
+                    {
+                        type = TokenType::Operand;
+                    }
+
+                    auto currentTokenString = ref new String(currentToken.first.c_str());
+                    if (i < m_ExpressionTokens->Size)
+                    {
+                        auto existingItem = m_ExpressionTokens->GetAt(i);
+                        if (type == existingItem->Type && existingItem->Token->Equals(currentTokenString))
+                        {
+                            existingItem->TokenPosition = i;
+                            existingItem->IsTokenEditable = isEditable;
+                            existingItem->CommandIndex = 0;
+                        }
+                        else
+                        {
+                            auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
+                            m_ExpressionTokens->InsertAt(i, expressionToken);
+                        }
+                    }
+                    else
+                    {
+                        auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
+                        m_ExpressionTokens->Append(expressionToken);
+                    }
+                }
+            }
+
+            while (m_ExpressionTokens->Size != nTokens)
+            {
+                m_ExpressionTokens->RemoveAtEnd();
+            }
+        }
+        else
+        {
+            SetTokens(tokens);
+        }
     }
 
     CalculationExpressionAutomationName = GetCalculatorExpressionAutomationName();
+
     CalculationAlwaysOnTopResultAutomationName = GetCalculatorExpressionAutomationName();
 
     AreTokensUpdated = true;
@@ -887,7 +1041,7 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString, ViewMode mode)
         // Handle exponent and exponent sign (...e+... or ...e-... or ...e...)
         if (mappedNumOp == NumbersAndOperatorsEnum::Exp)
         {
-            //Check the following item
+            // Check the following item
             switch (MapCharacterToButtonId(*(it + 1), canSendNegate))
             {
             case NumbersAndOperatorsEnum::Subtract:
@@ -899,7 +1053,7 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString, ViewMode mode)
             break;
             case NumbersAndOperatorsEnum::Add:
             {
-                //Nothing to do, skip to the next item
+                // Nothing to do, skip to the next item
                 ++it;
             }
             break;
@@ -1226,7 +1380,7 @@ void StandardCalculatorViewModel::SetCalculatorType(ViewMode targetState)
     }
 }
 
-String^ StandardCalculatorViewModel::GetRawDisplayValue()
+String ^ StandardCalculatorViewModel::GetRawDisplayValue()
 {
     if (IsInError)
     {

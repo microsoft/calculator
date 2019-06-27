@@ -31,11 +31,13 @@
                    TextTrimming="CharacterEllipsis"/>
         </Grid>
         <Button x:Name="AlwaysOnTopButton" Grid.Row="0"
-                Content="R"
+                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                Content="&#xEE49;"
                 Click="AlwaysOnTopButtonClick"
                 ClickMode="Release"
                 Width="46"
                 HorizontalAlignment="Right"
-                Background="Transparent"/>
+                Background="Transparent"
+                ToolTipService.ToolTip="Always-on-top"/>
     </Grid>
 </UserControl>

@@ -286,6 +286,8 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
     UpdatePanelViewState();
     if (newValue)
     {
+        RowExpression->Height = 0;
+        RowHamburger->Height = 0;
         MemoryPanel->Visibility = ::Visibility::Collapsed;
         HistoryButtonParent->Visibility = ::Visibility::Collapsed;
         ExpressionText->Visibility = ::Visibility::Collapsed;
@@ -295,6 +297,8 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
     }
     else
     {
+        RowExpression->Height = 20;
+        RowHamburger->Height = 40;
         MemoryPanel->Visibility = ::Visibility::Visible;
         HistoryButtonParent->Visibility = ::Visibility::Visible;
         ExpressionText->Visibility = ::Visibility::Visible;
