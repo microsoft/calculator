@@ -3399,4 +3399,8 @@
     <value>Scroll Calculation Result Right</value>
     <comment>Automation label for the "Scroll Right" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
   </data>
+  <data name="CalculationFailed" xml:space="preserve">
+    <value>Calculation failed</value>
+    <comment>Text displayed when the application is not able to do a calculation</comment>
+  </data>
 </root>

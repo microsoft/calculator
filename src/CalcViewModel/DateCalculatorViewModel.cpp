@@ -176,7 +176,7 @@ void DateCalculatorViewModel::UpdateDisplayResult()
         {
             IsDiffInDays = false;
             StrDateDiffResultInDays = L"";
-            StrDateDiffResult = L"";
+            StrDateDiffResult = AppResourceProvider::GetInstance().GetResourceString(L"CalculationFailed");
         }
         else if (m_dateDiffResultInDays.day == 0)
         {
