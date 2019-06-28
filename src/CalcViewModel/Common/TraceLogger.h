@@ -51,7 +51,7 @@ namespace CalculatorApp
         void LogConverterInputReceived(CalculatorApp::Common::ViewMode mode) const;
         void LogNavBarOpened() const;
 
-        void LogError(CalculatorApp::Common::ViewMode mode, std::wstring_view errorString);
+        void LogError(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, std::wstring_view errorString);
         void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e) const;
         void LogWinRTException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ winrt::hresult_error const& e) const;
         void LogPlatformException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ Platform::Exception ^ e) const;

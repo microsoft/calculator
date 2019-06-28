@@ -61,7 +61,3 @@ void AboutFlyout::SetDefaultFocus()
 {
     AboutFlyoutEULA->Focus(::FocusState::Programmatic);
 }
-
-void CalculatorApp::AboutFlyout::UserControl_Loaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
-{
-}

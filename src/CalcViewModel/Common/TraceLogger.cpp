@@ -193,15 +193,15 @@ namespace CalculatorApp
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_MEMORY_ITEM_LOAD, fields);
     }
-    void TraceLogger::LogError(ViewMode mode, wstring_view errorString)
+    void TraceLogger::LogError(ViewMode mode, wstring_view functionName, wstring_view errorString)
     {
         if (!GetTraceLoggingProviderEnabled())
             return;
 
         LoggingFields fields{};
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
-
-        fields.AddString(L"ErrorString", errorString);
+        fields.AddString(L"FunctionName", functionName);
+        fields.AddString(L"Message", errorString);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
@@ -212,11 +212,10 @@ namespace CalculatorApp
 
         LoggingFields fields{};
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
-
         fields.AddString(L"FunctionName", functionName);
         wstringstream exceptionMessage;
         exceptionMessage << e.what();
-        fields.AddString(L"ExceptionMessage", exceptionMessage.str());
+        fields.AddString(L"Message", exceptionMessage.str());
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
@@ -229,8 +228,8 @@ namespace CalculatorApp
         LoggingFields fields{};
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddString(L"FunctionName", functionName);
+        fields.AddString(L"Message", e.message());
         fields.AddInt32(L"HRESULT", e.code());
-        fields.AddString(L"ExceptionMessage", e.message());
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
@@ -243,8 +242,8 @@ namespace CalculatorApp
         LoggingFields fields{};
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddString(L"FunctionName", functionName);
+        fields.AddString(L"Message", e->Message->Data());
         fields.AddInt32(L"HRESULT", e->HResult);
-        fields.AddString(L"ExceptionMessage", e->Message->Data());
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }

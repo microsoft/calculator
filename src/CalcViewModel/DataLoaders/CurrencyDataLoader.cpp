@@ -466,7 +466,7 @@ future<bool> CurrencyDataLoader::TryLoadDataFromWebOverrideAsync()
     if (!didLoad)
     {
         m_loadStatus = CurrencyLoadStatus::FailedToLoad;
-        TraceLogger::GetInstance().LogError(ViewMode::Currency, L"UserRequestedRefreshFailed");
+        TraceLogger::GetInstance().LogError(ViewMode::Currency, L"CurrencyDataLoader::TryLoadDataFromWebOverrideAsync", L"UserRequestedRefreshFailed");
     }
 
     co_return didLoad;

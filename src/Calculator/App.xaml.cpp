@@ -384,7 +384,7 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
                 }
                 else
                 {
-                    TraceLogger::GetInstance().LogError(ViewMode::None, L"Null_ActivationViewSwitcher");
+                    TraceLogger::GetInstance().LogError(ViewMode::None, L"App::OnAppLaunch", L"Null_ActivationViewSwitcher");
                 }
             }
             // Set the preLaunched flag to false

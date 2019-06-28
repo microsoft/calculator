@@ -455,8 +455,6 @@ void Calculator::OnHistoryItemClicked(_In_ HistoryItemViewModel ^ e)
     Model->SetPrimaryDisplay(e->Result->Data(), false);
     Model->IsFToEEnabled = false;
 
-    auto mode = IsScientific ? ViewMode::Scientific : ViewMode::Standard;
-    TraceLogger::GetInstance().LogHistoryItemLoad(mode, tokenSize, tokenSize);
     CloseHistoryFlyout();
     this->Focus(::FocusState::Programmatic);
 }
@@ -692,10 +690,6 @@ void Calculator::OnHistoryAccessKeyInvoked(_In_ UIElement ^ sender, _In_ AccessK
 void Calculator::OnMemoryAccessKeyInvoked(_In_ UIElement ^ sender, _In_ AccessKeyInvokedEventArgs ^ args)
 {
     DockPivot->SelectedItem = MemoryPivotItem;
-}
-
-void CalculatorApp::Calculator::DockPivot_SelectionChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e)
-{
 }
 
 void CalculatorApp::Calculator::OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e)

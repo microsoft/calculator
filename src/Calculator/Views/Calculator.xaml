@@ -943,7 +943,6 @@
             </Border.Resources>
 
             <Pivot x:Name="DockPivot"
-                   SelectionChanged="DockPivot_SelectionChanged"
                    TabIndex="5"
                    Tapped="DockPanelTapped"
                    Template="{StaticResource DockPanelTemplate}">
