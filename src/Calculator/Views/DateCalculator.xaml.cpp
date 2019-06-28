@@ -142,7 +142,7 @@ void DateCalculator::AddSubtract_DateChanged(_In_ CalendarDatePicker ^ sender, _
 void CalculatorApp::DateCalculator::OffsetValue_Changed(_In_ Platform::Object ^ sender, _In_ SelectionChangedEventArgs ^ e)
 {
     auto dateCalcViewModel = safe_cast<DateCalculatorViewModel ^>(this->DataContext);
-    // do not log telemetry for no-ops and initialization of combo boxes
+    // do not log diagnostics for no-ops and initialization of combo boxes
     if (dateCalcViewModel->DaysOffset != 0 || dateCalcViewModel->MonthsOffset != 0 || dateCalcViewModel->YearsOffset != 0)
     {
         TraceLogger::GetInstance().LogDateCalculationModeUsed(true /* AddSubtractMode */);

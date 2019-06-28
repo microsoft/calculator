@@ -23,7 +23,7 @@ namespace CalculatorApp
                                                                       L"HexBase", L"DecBase",   L"OctBase",   L"BinBase" };
     static reader_writer_lock s_traceLoggerLock;
 
-    // Telemetry events. Uploaded to asimov.
+    // Diagnostics events. Uploaded to asimov.
     constexpr auto EVENT_NAME_WINDOW_ON_CREATED = L"WindowCreated";
     constexpr auto EVENT_NAME_BUTTON_USAGE = L"ButtonUsageInSession";
     constexpr auto EVENT_NAME_NAV_BAR_OPENED = L"NavigationViewOpened";
@@ -38,14 +38,14 @@ namespace CalculatorApp
     constexpr auto PDT_PRIVACY_DATA_TAG = L"PartA_PrivTags";
     constexpr auto PDT_PRODUCT_AND_SERVICE_USAGE = 0x0000'0000'0200'0000u;
 
-#ifdef SEND_TELEMETRY
+#ifdef SEND_DIAGNOSTICS
     // c.f. WINEVENT_KEYWORD_RESERVED_63-56 0xFF00000000000000 // Bits 63-56 - channel keywords
     // c.f. WINEVENT_KEYWORD_*              0x00FF000000000000 // Bits 55-48 - system-reserved keywords
     constexpr int64_t MICROSOFT_KEYWORD_LEVEL_1 = 0x0000800000000000; // Bit 47
     constexpr int64_t MICROSOFT_KEYWORD_LEVEL_2 = 0x0000400000000000; // Bit 46
     constexpr int64_t MICROSOFT_KEYWORD_LEVEL_3 = 0x0000200000000000; // Bit 45
 #else
-    // define all Keyword options as 0 when we do not want to upload app telemetry
+    // define all Keyword options as 0 when we do not want to upload app diagnostics
     constexpr int64_t MICROSOFT_KEYWORD_LEVEL_1 = 0;
     constexpr int64_t MICROSOFT_KEYWORD_LEVEL_2 = 0;
     constexpr int64_t MICROSOFT_KEYWORD_LEVEL_3 = 0;
@@ -56,7 +56,7 @@ namespace CalculatorApp
     TraceLogger::TraceLogger()
         : g_calculatorProvider(
               L"MicrosoftCalculator",
-              LoggingChannelOptions(GUID{ 0x4f50731a, 0x89cf, 0x4782, 0xb3, 0xe0, 0xdc, 0xe8, 0xc9, 0x4, 0x76, 0xba }), // Microsoft Telemetry group
+              LoggingChannelOptions(GUID{ 0x4f50731a, 0x89cf, 0x4782, 0xb3, 0xe0, 0xdc, 0xe8, 0xc9, 0x4, 0x76, 0xba }), // Microsoft Diagnostics group
               GUID{ 0x905ca09, 0x610e, 0x401e, 0xb6, 0x50, 0x2f, 0x21, 0x29, 0x80, 0xb9, 0xe0 })
         , // Unique providerID {0905CA09-610E-401E-B650-2F212980B9E0}
         m_appLaunchActivity{ nullptr }
@@ -155,7 +155,7 @@ namespace CalculatorApp
         if (NavCategory::IsValidViewMode(mode))
         {
             LoggingFields fields{};
-            // cast mode to an int for telemetry
+            // cast mode to an int for diagnostics
             fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
             fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
             LogLevel2Event(EVENT_NAME_MODE_CHANGED, fields);
@@ -170,7 +170,7 @@ namespace CalculatorApp
         }
 
         LoggingFields fields{};
-        // cast mode to an int for telemetry
+        // cast mode to an int for diagnostics
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddInt32(L"HistoryListSize", historyListSize);
         fields.AddInt32(L"HistoryItemIndex", loadedIndex);
@@ -186,7 +186,7 @@ namespace CalculatorApp
         }
 
         LoggingFields fields{};
-        // cast mode to an int for telemetry
+        // cast mode to an int for diagnostics
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddInt32(L"MemoryListSize", memoryListSize);
         fields.AddInt32(L"MemoryItemIndex", loadedIndex);
@@ -307,7 +307,7 @@ namespace CalculatorApp
     {
         LoggingFields fields{};
         fields.AddBoolean(L"CalculationType", AddSubtractMode);
-        // cast mode to an int for telemetry
+        // cast mode to an int for diagnostics
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(ViewMode::Date));
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_DATE_CALCULATION_MODE_USED, fields);

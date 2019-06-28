@@ -48,10 +48,10 @@ We also welcome [issues submitted on GitHub](https://github.com/Microsoft/calcul
 ## Roadmap
 For information regarding Windows Calculator plans and release schedule, please see the [Windows Calculator Roadmap](docs/Roadmap.md).
 
-## Data / Telemetry
+## Data / Diagnostics
 This project collects usage data and sends it to Microsoft to help improve our products and services.
 Read our [privacy statement](https://go.microsoft.com/fwlink/?LinkId=521839) to learn more.
-Telemetry is disabled in development builds by default, and can be enabled with the `SEND_TELEMETRY`
+Diagnostics is disabled in development builds by default, and can be enabled with the `SEND_DIAGNOSTICS`
 build flag.
 
 ## Currency Converter
