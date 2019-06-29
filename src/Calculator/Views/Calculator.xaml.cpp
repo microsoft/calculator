@@ -41,6 +41,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsStandard);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsScientific);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsProgrammer);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsAlwaysOnTop);
+DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, UpdateScrollButtons);
 
 Calculator::Calculator()
     : m_doAnimate(false)
@@ -298,7 +299,7 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
     else
     {
         RowExpression->Height = 20;
-        RowHamburger->Height = 40;
+        RowHamburger->Height = safe_cast<GridLength>(Application::Current->Resources->Lookup("HamburgerHeightGridLength"));
         MemoryPanel->Visibility = ::Visibility::Visible;
         HistoryButtonParent->Visibility = ::Visibility::Visible;
         ExpressionText->Visibility = ::Visibility::Visible;
@@ -307,6 +308,11 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
         AlwaysOnTopResults->Visibility = ::Visibility::Collapsed;
     }
 }
+
+ void Calculator::OnUpdateScrollButtonsPropertyChanged(bool /*oldValue*/, bool /*newValue*/)
+{
+     AlwaysOnTopResults->OnTokensUpdatedPropertyChanged(true, true);
+ }
 
 void Calculator::OnIsInErrorPropertyChanged()
 {
@@ -540,7 +546,14 @@ void Calculator::CloseMemoryFlyout()
 
 void Calculator::SetDefaultFocus()
 {
-    Results->Focus(::FocusState::Programmatic);
+    if (!IsAlwaysOnTop)
+    {
+        Results->Focus(::FocusState::Programmatic);
+    }
+    else
+    {
+        AlwaysOnTopResults->Focus(::FocusState::Programmatic);
+    }
 }
 
 void Calculator::ToggleHistoryFlyout(Object ^ /*parameter*/)

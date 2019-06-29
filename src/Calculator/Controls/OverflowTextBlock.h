@@ -22,6 +22,7 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, TokensUpdated);
             DEPENDENCY_PROPERTY(bool, IsActive);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Style ^, TextStyle);
+            void OnTokensUpdatedPropertyChanged(bool oldValue, bool newValue);
             void UpdateScrollButtons();
             void UnregisterEventHandlers();
 
@@ -34,7 +35,6 @@ namespace CalculatorApp
             void OnPointerEntered(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
             void OnPointerExited(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
             void ShowHideScrollButtons(Windows::UI::Xaml::Visibility vLeft, Windows::UI::Xaml::Visibility vRight);
-            void OnTokensUpdatedPropertyChanged(bool oldValue, bool newValue);
             void OnViewChanged(_In_opt_ Platform::Object ^ sender, _In_opt_ Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs ^ args);
 
             void UpdateVisualState();

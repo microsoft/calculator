@@ -37,6 +37,7 @@ namespace
     StringReference IsScientificPropertyName(L"IsScientific");
     StringReference IsProgrammerPropertyName(L"IsProgrammer");
     StringReference IsAlwaysOnTopPropertyName(L"IsAlwaysOnTop");
+    StringReference UpdateScrollButtonsPropertyName(L"UpdateScrollButtons");
     StringReference DisplayValuePropertyName(L"DisplayValue");
     StringReference CalculationResultAutomationNamePropertyName(L"CalculationResultAutomationName");
 }
@@ -215,89 +216,19 @@ void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ wstring const& displayS
 
     if (IsAlwaysOnTop && !IsEditingEnabled)
     {
-        shared_ptr<CalculatorVector<pair<wstring, int>>> savedTokens = make_shared<CalculatorVector<pair<wstring, int>>>();
-
-        unsigned int tokenCount;
-        IFTPlatformException(m_tokens->GetSize(&tokenCount));
-
-        int maxValue = -1;
-        for (unsigned int i = 0; i < tokenCount; ++i)
-        {
-            pair<wstring, int> currentToken;
-            IFTPlatformException(m_tokens->GetAt(i, &currentToken));
-            savedTokens->Append(currentToken);
-            maxValue = max(maxValue, currentToken.second);
-        }
-        if (tokenCount > 0)
-        {
-            pair<wstring, int> currentToken;
-            IFTPlatformException(m_tokens->GetAt(tokenCount - 1, &currentToken));
-            if (currentToken.first != L" ")
-            {
-                savedTokens->Append(pair(L" ", -1));
-            }
-        }
-
-        std::wstring wStr(m_DisplayValue->Length(), L' ');
-        std::copy(m_DisplayValue->Begin(), m_DisplayValue->End(), wStr.begin());
-        savedTokens->Append(pair(wStr, maxValue + 1));
-
-        AreTokensUpdated = false;
-
         unsigned int nTokens = 0;
-        savedTokens->GetSize(&nTokens);
-
-        pair<wstring, int> currentToken;
-        const auto& localizer = LocalizationSettings::GetInstance();
-
-        const wstring separator = L" ";
-        for (unsigned int i = 0; i < nTokens; ++i)
+        m_tokens->GetSize(&nTokens);
+        if (IsEngineRecording || nTokens == 0)
         {
-            if (SUCCEEDED(savedTokens->GetAt(i, &currentToken)))
-            {
-                Common::TokenType type;
-                bool isEditable = (currentToken.second == -1) ? false : true;
-                localizer.LocalizeDisplayValue(&(currentToken.first));
-
-                if (!isEditable)
-                {
-                    type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
-                }
-                else
-                {
-                    type = TokenType::Operand;
-                }
-
-                auto currentTokenString = ref new String(currentToken.first.c_str());
-                if (i < m_ExpressionTokens->Size)
-                {
-                    auto existingItem = m_ExpressionTokens->GetAt(i);
-                    if (type == existingItem->Type && existingItem->Token->Equals(currentTokenString))
-                    {
-                        existingItem->TokenPosition = i;
-                        existingItem->IsTokenEditable = isEditable;
-                        existingItem->CommandIndex = 0;
-                    }
-                    else
-                    {
-                        auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
-                        m_ExpressionTokens->InsertAt(i, expressionToken);
-                    }
-                }
-                else
-                {
-                    auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
-                    m_ExpressionTokens->Append(expressionToken);
-                }
-            }
+            DoesAlwaysOnTopResultConcatenate = true;
+            CalculationAlwaysOnTopResultAutomationName = GetCalculatorExpressionAutomationName() + " " + CalculationResultAutomationName;
         }
-
-        while (m_ExpressionTokens->Size != nTokens)
+        else
         {
-            m_ExpressionTokens->RemoveAtEnd();
+            DoesAlwaysOnTopResultConcatenate = false;
+            CalculationAlwaysOnTopResultAutomationName = CalculationResultAutomationName;
         }
-
-        CalculationAlwaysOnTopResultAutomationName = GetCalculatorExpressionAutomationName();
+        UpdateScrollButtons = !UpdateScrollButtons;
     }
 }
 
@@ -384,76 +315,19 @@ void StandardCalculatorViewModel::SetExpressionDisplay(
     {
         unsigned int nTokens = 0;
         tokens->GetSize(&nTokens);
-        if (IsAlwaysOnTop && nTokens == 0 && m_DisplayValue->Length() > 0)
+        if (IsEngineRecording || nTokens == 0)
         {
-            std::wstring wStr(m_DisplayValue->Length(), L' ');
-            std::copy(m_DisplayValue->Begin(), m_DisplayValue->End(), wStr.begin());
-            tokens->Append(pair(wStr, 0));
-
-            AreTokensUpdated = false;
-
-            tokens->GetSize(&nTokens);
-
-            pair<wstring, int> currentToken;
-            const auto& localizer = LocalizationSettings::GetInstance();
-
-            const wstring separator = L" ";
-            for (unsigned int i = 0; i < nTokens; ++i)
-            {
-                if (SUCCEEDED(tokens->GetAt(i, &currentToken)))
-                {
-                    Common::TokenType type;
-                    bool isEditable = (currentToken.second == -1) ? false : true;
-                    localizer.LocalizeDisplayValue(&(currentToken.first));
-
-                    if (!isEditable)
-                    {
-                        type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
-                    }
-                    else
-                    {
-                        type = TokenType::Operand;
-                    }
-
-                    auto currentTokenString = ref new String(currentToken.first.c_str());
-                    if (i < m_ExpressionTokens->Size)
-                    {
-                        auto existingItem = m_ExpressionTokens->GetAt(i);
-                        if (type == existingItem->Type && existingItem->Token->Equals(currentTokenString))
-                        {
-                            existingItem->TokenPosition = i;
-                            existingItem->IsTokenEditable = isEditable;
-                            existingItem->CommandIndex = 0;
-                        }
-                        else
-                        {
-                            auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
-                            m_ExpressionTokens->InsertAt(i, expressionToken);
-                        }
-                    }
-                    else
-                    {
-                        auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
-                        m_ExpressionTokens->Append(expressionToken);
-                    }
-                }
-            }
-
-            while (m_ExpressionTokens->Size != nTokens)
-            {
-                m_ExpressionTokens->RemoveAtEnd();
-            }
+            DoesAlwaysOnTopResultConcatenate = true;
+            CalculationAlwaysOnTopResultAutomationName = GetCalculatorExpressionAutomationName() + " " + CalculationResultAutomationName;
         }
         else
         {
-            SetTokens(tokens);
+            DoesAlwaysOnTopResultConcatenate = false;
+            CalculationAlwaysOnTopResultAutomationName = CalculationResultAutomationName;
         }
+        SetTokens(tokens);
     }
-
     CalculationExpressionAutomationName = GetCalculatorExpressionAutomationName();
-
-    CalculationAlwaysOnTopResultAutomationName = GetCalculatorExpressionAutomationName();
-
     AreTokensUpdated = true;
 }
 

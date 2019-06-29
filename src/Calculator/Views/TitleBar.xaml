@@ -32,11 +32,14 @@
         </Grid>
         <Button x:Name="AlwaysOnTopButton" Grid.Row="0"
                 FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                Style="{ThemeResource CommandBarFlyoutEllipsisButtonStyle}"
                 Content="&#xEE49;"
                 Click="AlwaysOnTopButtonClick"
                 ClickMode="Release"
                 Width="46"
+                Height="32"
                 HorizontalAlignment="Right"
+                HorizontalContentAlignment="Center"
                 Background="Transparent"
                 ToolTipService.ToolTip="Always-on-top"/>
     </Grid>

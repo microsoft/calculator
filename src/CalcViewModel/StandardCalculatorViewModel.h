@@ -58,6 +58,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(Platform::String ^, DecDisplayValue_AutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, OctDisplayValue_AutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, BinDisplayValue_AutomationName);
+            OBSERVABLE_PROPERTY_RW(bool, DoesAlwaysOnTopResultConcatenate);
             OBSERVABLE_PROPERTY_RW(bool, IsBinaryOperatorEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsUnaryOperatorEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsNegateEnabled);
@@ -232,6 +233,22 @@ namespace CalculatorApp
                             IsProgrammer = false;
                         }
                         RaisePropertyChanged(L"IsAlwaysOnTop");
+                    }
+                }
+            }
+
+            property bool UpdateScrollButtons
+            {
+                bool get()
+                {
+                    return m_updateScrollButtons;
+                }
+                void set(bool value)
+                {
+                    if (m_updateScrollButtons != value)
+                    {
+                        m_updateScrollButtons = value;
+                        RaisePropertyChanged(L"UpdateScrollButtons");
                     }
                 }
             }
@@ -430,6 +447,7 @@ namespace CalculatorApp
             bool m_isScientific;
             bool m_isProgrammer;
             bool m_isAlwaysOnTop;
+            bool m_updateScrollButtons;
             bool m_isBinaryBitFlippingEnabled;
             bool m_isBitFlipChecked;
             bool m_isShiftChecked;
