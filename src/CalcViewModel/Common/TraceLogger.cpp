@@ -61,6 +61,7 @@ namespace CalculatorApp
         , // Unique providerID {0905CA09-610E-401E-B650-2F212980B9E0}
         m_appLaunchActivity{ nullptr }
     {
+        CoCreateGuid(&sessionGuid);
     }
 
     TraceLogger::~TraceLogger()
@@ -129,6 +130,7 @@ namespace CalculatorApp
         }
 
         LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddString(L"CalcMode", NavCategory::GetFriendlyName(mode)->Data());
         fields.AddString(L"VisualState", state);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
@@ -141,6 +143,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddUInt64(L"NumOfOpenWindows", currentWindowCount);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
@@ -155,7 +158,7 @@ namespace CalculatorApp
         if (NavCategory::IsValidViewMode(mode))
         {
             LoggingFields fields{};
-            // cast mode to an int for diagnostics
+            fields.AddGuid(L"SessionGuid", sessionGuid);
             fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
             fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
             LogLevel2Event(EVENT_NAME_MODE_CHANGED, fields);
@@ -170,7 +173,7 @@ namespace CalculatorApp
         }
 
         LoggingFields fields{};
-        // cast mode to an int for diagnostics
+        fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddInt32(L"HistoryListSize", historyListSize);
         fields.AddInt32(L"HistoryItemIndex", loadedIndex);
@@ -186,7 +189,7 @@ namespace CalculatorApp
         }
 
         LoggingFields fields{};
-        // cast mode to an int for diagnostics
+        fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddInt32(L"MemoryListSize", memoryListSize);
         fields.AddInt32(L"MemoryItemIndex", loadedIndex);
@@ -199,6 +202,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddString(L"FunctionName", functionName);
         fields.AddString(L"Message", errorString);
@@ -211,6 +215,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddString(L"FunctionName", functionName);
         wstringstream exceptionMessage;
@@ -226,6 +231,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddString(L"FunctionName", functionName);
         fields.AddString(L"Message", e.message());
@@ -240,6 +246,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddString(L"FunctionName", functionName);
         fields.AddString(L"Message", e->Message->Data());
@@ -290,6 +297,7 @@ namespace CalculatorApp
         for (auto i : buttonLog)
         {
             LoggingFields fields{};
+            fields.AddGuid(L"SessionGuid", sessionGuid);
             fields.AddInt32(L"CalcMode", NavCategory::Serialize(i.mode));
             fields.AddUInt32(L"ButtonId", i.buttonId);
             fields.AddString(L"ButtonName", i.buttonName.data());
@@ -305,9 +313,9 @@ namespace CalculatorApp
     void TraceLogger::LogDateCalculationModeUsed(bool AddSubtractMode)
     {
         LoggingFields fields{};
-        fields.AddBoolean(L"CalculationType", AddSubtractMode);
-        // cast mode to an int for diagnostics
+        fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(ViewMode::Date));
+        fields.AddBoolean(L"CalculationType", AddSubtractMode);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_DATE_CALCULATION_MODE_USED, fields);
     }
@@ -318,6 +326,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(L"ConverterInputReceived", fields);
@@ -329,6 +338,7 @@ namespace CalculatorApp
             return;
 
         LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_NAV_BAR_OPENED, fields);
     }

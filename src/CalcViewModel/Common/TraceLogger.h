@@ -75,8 +75,7 @@ namespace CalculatorApp
         std::vector<ButtonLog> buttonLog;
         std::map<int, bool> windowIdLog;
 
-        // Private variables for Date Calculator usage
-
+        GUID sessionGuid;
         size_t currentWindowCount = 0;
 
         winrt::Windows::Foundation::Diagnostics::LoggingActivity m_appLaunchActivity;
