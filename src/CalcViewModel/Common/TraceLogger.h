@@ -17,13 +17,11 @@ namespace CalculatorApp
     {
     public:
         int count;
-        int buttonId;
-        std::wstring buttonName;
+        CalculatorApp::NumbersAndOperatorsEnum buttonId;
         CalculatorApp::Common::ViewMode mode;
-        ButtonLog(int bId, std::wstring bName, CalculatorApp::Common::ViewMode vMode)
+        ButtonLog(CalculatorApp::NumbersAndOperatorsEnum bId, CalculatorApp::Common::ViewMode vMode)
         {
             buttonId = bId;
-            buttonName = bName;
             mode = vMode;
             count = 1;
         }
@@ -41,7 +39,7 @@ namespace CalculatorApp
         void LogModeChange(CalculatorApp::Common::ViewMode mode) const;
         void LogHistoryItemLoad(CalculatorApp::Common::ViewMode mode, int historyListSize, int loadedIndex) const;
         void LogMemoryItemLoad(CalculatorApp::Common::ViewMode mode, int memoryListSize, int loadedIndex) const;
-        void UpdateButtonUsage(int buttonId, CalculatorApp::Common::ViewMode mode);
+        void UpdateButtonUsage(CalculatorApp::NumbersAndOperatorsEnum buttonId, CalculatorApp::Common::ViewMode mode);
         void LogButtonUsage();
         void LogDateCalculationModeUsed(bool AddSubtractMode);
         void UpdateWindowCount(size_t windowCount = 0);

@@ -56,7 +56,7 @@ namespace CalculatorApp
     TraceLogger::TraceLogger()
         : g_calculatorProvider(
               L"MicrosoftCalculator",
-              LoggingChannelOptions(GUID{ 0x4f50731a, 0x89cf, 0x4782, 0xb3, 0xe0, 0xdc, 0xe8, 0xc9, 0x4, 0x76, 0xba }), // Microsoft Diagnostics group
+              LoggingChannelOptions(GUID{ 0x4f50731a, 0x89cf, 0x4782, 0xb3, 0xe0, 0xdc, 0xe8, 0xc9, 0x4, 0x76, 0xba }),
               GUID{ 0x905ca09, 0x610e, 0x401e, 0xb6, 0x50, 0x2f, 0x21, 0x29, 0x80, 0xb9, 0xe0 })
         , // Unique providerID {0905CA09-610E-401E-B650-2F212980B9E0}
         m_appLaunchActivity{ nullptr }
@@ -104,7 +104,7 @@ namespace CalculatorApp
     // return true if windowId is logged once else return false
     bool TraceLogger::UpdateWindowIdLog(int windowId)
     {
-        // Writer lock for the static resources
+        // Writer lock for the windowIdLog resource
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
 
         if (windowIdLog.find(windowId) == windowIdLog.end())
@@ -255,16 +255,16 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
 
-    void TraceLogger::UpdateButtonUsage(int buttonId, ViewMode mode)
+    void TraceLogger::UpdateButtonUsage(NumbersAndOperatorsEnum buttonId, ViewMode mode)
     {
         // IsProgrammerMode, IsScientificMode, IsStandardMode and None are not actual buttons, so ignore them
-        if (buttonId == (int)NumbersAndOperatorsEnum::IsProgrammerMode || buttonId == (int)NumbersAndOperatorsEnum::IsScientificMode ||
-            buttonId == (int)NumbersAndOperatorsEnum::IsStandardMode || buttonId == (int)NumbersAndOperatorsEnum::None)
+        if (buttonId == NumbersAndOperatorsEnum::IsProgrammerMode || buttonId == NumbersAndOperatorsEnum::IsScientificMode ||
+            buttonId == NumbersAndOperatorsEnum::IsStandardMode || buttonId == NumbersAndOperatorsEnum::None)
         {
             return;
         }
 
-        // Writer lock for the static resources
+        // Writer lock for the buttonLog resource
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
         vector<ButtonLog>::iterator it = std::find_if(
             buttonLog.begin(), buttonLog.end(), [buttonId, mode](const ButtonLog& bLog) -> bool { return bLog.buttonId == buttonId && bLog.mode == mode; });
@@ -274,8 +274,7 @@ namespace CalculatorApp
         }
         else
         {
-            NumbersAndOperatorsEnum button = safe_cast<NumbersAndOperatorsEnum>(buttonId);
-            buttonLog.push_back(ButtonLog(buttonId, button.ToString()->Data(), mode));
+            buttonLog.push_back(ButtonLog(buttonId, mode));
         }
     }
 
@@ -294,14 +293,18 @@ namespace CalculatorApp
         if (!GetTraceLoggingProviderEnabled())
             return;
 
+        // Writer lock for the buttonLog resource
+        reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
+
         for (auto i : buttonLog)
         {
+            NumbersAndOperatorsEnum button = static_cast<NumbersAndOperatorsEnum>(i.buttonId);
+
             LoggingFields fields{};
             fields.AddGuid(L"SessionGuid", sessionGuid);
             fields.AddInt32(L"CalcMode", NavCategory::Serialize(i.mode));
-            fields.AddUInt32(L"ButtonId", i.buttonId);
-            fields.AddString(L"ButtonName", i.buttonName.data());
-            fields.AddUInt32(L"ViewModeId", NavCategory::Serialize(i.mode));
+            fields.AddUInt32(L"ButtonId", (int)i.buttonId);
+            fields.AddString(L"ButtonName", button.ToString()->Data());
             fields.AddUInt32(L"UsageCount", i.count);
             fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
             LogLevel2Event(EVENT_NAME_BUTTON_USAGE, fields);
