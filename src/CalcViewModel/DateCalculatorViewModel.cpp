@@ -122,11 +122,24 @@ void DateCalculatorViewModel::OnInputsChanged()
         DateTime clippedToDate = ClipTime(ToDate, true);
 
         // Calculate difference between two dates
-        m_dateCalcEngine->GetDateDifference(clippedFromDate, clippedToDate, m_allDateUnitsOutputFormat, &dateDiff);
-        DateDiffResult = dateDiff;
-
-        m_dateCalcEngine->GetDateDifference(clippedFromDate, clippedToDate, m_daysOutputFormat, &dateDiff);
-        DateDiffResultInDays = dateDiff;
+        if (m_dateCalcEngine->TryGetDateDifference(clippedFromDate, clippedToDate, m_daysOutputFormat, &dateDiff))
+        {
+            DateDiffResultInDays = dateDiff;
+            if (m_dateCalcEngine->TryGetDateDifference(clippedFromDate, clippedToDate, m_allDateUnitsOutputFormat, &dateDiff))
+            {
+                DateDiffResult = dateDiff;
+            }
+            else
+            {
+                // TryGetDateDifference wasn't able to calculate the difference in days/weeks/months/years, we will instead display the difference in days.
+                DateDiffResult = DateDiffResultInDays;
+            }
+        }
+        else
+        {
+            DateDiffResult = DateDifferenceUnknown;
+            DateDiffResultInDays = DateDifferenceUnknown;
+        }
     }
     else
     {
@@ -158,14 +171,21 @@ void DateCalculatorViewModel::UpdateDisplayResult()
 {
     if (m_IsDateDiffMode)
     {
-        // Are to and from dates the same
-        if (m_dateDiffResultInDays.day == 0)
+        if (m_dateDiffResultInDays == DateDifferenceUnknown)
         {
+            IsDiffInDays = false;
+            StrDateDiffResultInDays = L"";
+            StrDateDiffResult = AppResourceProvider::GetInstance().GetResourceString(L"CalculationFailed");
+        }
+        else if (m_dateDiffResultInDays.day == 0)
+        {
+            // to and from dates the same
             IsDiffInDays = true;
             StrDateDiffResultInDays = L"";
             StrDateDiffResult = AppResourceProvider::GetInstance().GetResourceString(L"Date_SameDates");
         }
-        else if ((m_dateDiffResult.year == 0) && (m_dateDiffResult.month == 0) && (m_dateDiffResult.week == 0))
+        else if (m_dateDiffResult == DateDifferenceUnknown ||
+            (m_dateDiffResult.year == 0 && m_dateDiffResult.month == 0 && m_dateDiffResult.week == 0))
         {
             IsDiffInDays = true;
             StrDateDiffResultInDays = L"";
