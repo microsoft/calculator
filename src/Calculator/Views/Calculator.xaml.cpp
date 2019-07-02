@@ -41,7 +41,6 @@ DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsStandard);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsScientific);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsProgrammer);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsAlwaysOnTop);
-DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, UpdateScrollButtons);
 
 Calculator::Calculator()
     : m_doAnimate(false)
@@ -308,11 +307,6 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
         AlwaysOnTopResults->Visibility = ::Visibility::Collapsed;
     }
 }
-
- void Calculator::OnUpdateScrollButtonsPropertyChanged(bool /*oldValue*/, bool /*newValue*/)
-{
-     AlwaysOnTopResults->OnTokensUpdatedPropertyChanged(true, true);
- }
 
 void Calculator::OnIsInErrorPropertyChanged()
 {

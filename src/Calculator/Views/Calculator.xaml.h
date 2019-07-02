@@ -54,7 +54,6 @@ public
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, IsScientific, false);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, IsProgrammer, false);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, IsAlwaysOnTop, false);
-        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, UpdateScrollButtons, false);
 
         COMMAND_FOR_METHOD(HistoryButtonPressed, Calculator::ToggleHistoryFlyout);
 
@@ -84,7 +83,6 @@ public
         void OnIsProgrammerPropertyChanged(bool oldValue, bool newValue);
         void OnIsStandardPropertyChanged(bool oldValue, bool newValue);
         void OnIsAlwaysOnTopPropertyChanged(bool oldValue, bool newValue);
-        void OnUpdateScrollButtonsPropertyChanged(bool oldValue, bool newValue);
         void OnIsInErrorPropertyChanged();
         void OnCalcPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e);
         void OnStoryboardCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);

@@ -186,11 +186,24 @@ namespace CalculatorApp
                 avm->CalculatorViewModel->AreHistoryShortcutsEnabled = true;
                 avm->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
             }
-            avm->CalculatorViewModel->IsAlwaysOnTop = false;
-            AlwaysOnTopButton->Content = "&#xEE49;";
-            AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
-            ToolTipService::SetToolTip(AlwaysOnTopButton, "Always-on-top");
-            ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::Default);
+            IAsyncOperation<bool> ^ result = ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::Default);
+            auto changeModeTask = Concurrency::create_task(result);
+            changeModeTask.then([this](bool success) {
+                auto avm = safe_cast<CalculatorApp::ViewModel::ApplicationViewModel ^>(this->DataContext);
+                avm->CalculatorViewModel->IsAlwaysOnTop = !success;
+                if (!success)
+                {
+                    AlwaysOnTopButton->Content = L"\uEE47";
+                    AppName->Text = "";
+                    ToolTipService::SetToolTip(AlwaysOnTopButton, "Exit always-on-top");
+                }
+                else
+                {
+                    AlwaysOnTopButton->Content = L"\uEE49";
+                    AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
+                    ToolTipService::SetToolTip(AlwaysOnTopButton, "Always-on-top");
+                }
+            });
         }
         else
         {
@@ -226,13 +239,13 @@ namespace CalculatorApp
                 avm->CalculatorViewModel->IsAlwaysOnTop = success;
                 if (success)
                 {
-                    AlwaysOnTopButton->Content = "&#xEE47;";
+                    AlwaysOnTopButton->Content = L"\uEE47";
                     AppName->Text = "";
                     ToolTipService::SetToolTip(AlwaysOnTopButton, "Exit always-on-top");
                 }
                 else
                 {
-                    AlwaysOnTopButton->Content = "&#xEE49;";
+                    AlwaysOnTopButton->Content = L"\uEE49";
                     AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
                     ToolTipService::SetToolTip(AlwaysOnTopButton, "Always-on-top");
                 }

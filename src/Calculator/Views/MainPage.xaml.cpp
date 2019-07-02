@@ -314,9 +314,6 @@ void MainPage::EnsureCalculator()
         Binding ^ isAlwaysOnTopBinding = ref new Binding();
         isAlwaysOnTopBinding->Path = ref new PropertyPath(L"IsAlwaysOnTop");
         m_calculator->SetBinding(m_calculator->IsAlwaysOnTopProperty, isAlwaysOnTopBinding);
-        Binding ^ updateScrollButtonsBinding = ref new Binding();
-        updateScrollButtonsBinding->Path = ref new PropertyPath(L"UpdateScrollButtons");
-        m_calculator->SetBinding(m_calculator->UpdateScrollButtonsProperty, updateScrollButtonsBinding);
         m_calculator->Style = CalculatorBaseStyle;
 
         CalcHolder->Child = m_calculator;
@@ -353,9 +350,6 @@ void MainPage::EnsureAlwaysOnTopCalculator()
         Binding ^ isAlwaysOnTopBinding = ref new Binding();
         isAlwaysOnTopBinding->Path = ref new PropertyPath(L"IsAlwaysOnTop");
         m_alwaysOnTopCalculator->SetBinding(m_alwaysOnTopCalculator->IsAlwaysOnTopProperty, isAlwaysOnTopBinding);
-        Binding ^ updateScrollButtonsBinding = ref new Binding();
-        updateScrollButtonsBinding->Path = ref new PropertyPath(L"UpdateScrollButtons");
-        m_calculator->SetBinding(m_calculator->UpdateScrollButtonsProperty, updateScrollButtonsBinding);
         m_alwaysOnTopCalculator->Style = CalculatorBaseStyle;
 
         AlwaysOnTopCalcHolder->Child = m_alwaysOnTopCalculator;

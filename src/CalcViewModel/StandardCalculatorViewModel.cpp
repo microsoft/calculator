@@ -37,7 +37,6 @@ namespace
     StringReference IsScientificPropertyName(L"IsScientific");
     StringReference IsProgrammerPropertyName(L"IsProgrammer");
     StringReference IsAlwaysOnTopPropertyName(L"IsAlwaysOnTop");
-    StringReference UpdateScrollButtonsPropertyName(L"UpdateScrollButtons");
     StringReference DisplayValuePropertyName(L"DisplayValue");
     StringReference CalculationResultAutomationNamePropertyName(L"CalculationResultAutomationName");
 }
@@ -214,11 +213,13 @@ void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ wstring const& displayS
         UpdateProgrammerPanelDisplay();
     }
 
+    AreAlwaysOnTopResultsUpdated = false;
     if (IsAlwaysOnTop && !IsEditingEnabled)
     {
         unsigned int nTokens = 0;
         m_tokens->GetSize(&nTokens);
-        if (IsEngineRecording || nTokens == 0)
+        DoesAlwaysOnTopResultShowTokens = !IsInError;
+        if (IsEngineRecording || nTokens == 0 || IsInError)
         {
             DoesAlwaysOnTopResultConcatenate = true;
             CalculationAlwaysOnTopResultAutomationName = GetCalculatorExpressionAutomationName() + " " + CalculationResultAutomationName;
@@ -228,7 +229,7 @@ void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ wstring const& displayS
             DoesAlwaysOnTopResultConcatenate = false;
             CalculationAlwaysOnTopResultAutomationName = CalculationResultAutomationName;
         }
-        UpdateScrollButtons = !UpdateScrollButtons;
+        AreAlwaysOnTopResultsUpdated = true;
     }
 }
 
@@ -315,7 +316,8 @@ void StandardCalculatorViewModel::SetExpressionDisplay(
     {
         unsigned int nTokens = 0;
         tokens->GetSize(&nTokens);
-        if (IsEngineRecording || nTokens == 0)
+        DoesAlwaysOnTopResultShowTokens = !IsInError;
+        if (IsEngineRecording || nTokens == 0 || IsInError)
         {
             DoesAlwaysOnTopResultConcatenate = true;
             CalculationAlwaysOnTopResultAutomationName = GetCalculatorExpressionAutomationName() + " " + CalculationResultAutomationName;
@@ -325,10 +327,12 @@ void StandardCalculatorViewModel::SetExpressionDisplay(
             DoesAlwaysOnTopResultConcatenate = false;
             CalculationAlwaysOnTopResultAutomationName = CalculationResultAutomationName;
         }
+        AreAlwaysOnTopResultsUpdated = false;
         SetTokens(tokens);
     }
     CalculationExpressionAutomationName = GetCalculatorExpressionAutomationName();
     AreTokensUpdated = true;
+    AreAlwaysOnTopResultsUpdated = true;
 }
 
 void StandardCalculatorViewModel::SetHistoryExpressionDisplay(

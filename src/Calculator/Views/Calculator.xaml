@@ -131,7 +131,9 @@
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           Style="{StaticResource ResultsScrollerSnapped}"
                                           AutomationProperties.AccessibilityView="Raw">
-                                <StackPanel Orientation="Horizontal" Grid.Row="2">
+                                <StackPanel Orientation="Horizontal"
+                                            Grid.Row="2"
+                                            HorizontalAlignment="Right">
                                     <ItemsControl x:Name="TokenList"
                                                   Padding="0"
                                                   VerticalAlignment="Stretch"
@@ -141,8 +143,9 @@
                                                   FontSize="40"
                                                   FontWeight="SemiBold"
                                                   ItemTemplateSelector="{StaticResource AlwaysOnTopExpressionItemTemplateSelector}"
-                                                  ItemsSource="{Binding ExpressionTokens}">
-                                        <ItemsControl.ItemsPanel>
+                                                  ItemsSource="{Binding ExpressionTokens}"
+                                                  Visibility="{Binding DoesAlwaysOnTopResultShowTokens, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                                    <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <ItemsStackPanel HorizontalAlignment="Right"
                                                                  VerticalAlignment="Stretch"
@@ -568,7 +571,7 @@
                                         AutomationProperties.AutomationId="CalculatorAlwaysOnTopResults"
                                         AutomationProperties.HeadingLevel="Level1"
                                         AutomationProperties.Name="{x:Bind Model.CalculationAlwaysOnTopResultAutomationName, Mode=OneWay}"
-                                        TokensUpdated="{x:Bind Model.AreTokensUpdated, Mode=OneWay}"
+                                        TokensUpdated="{x:Bind Model.AreAlwaysOnTopResultsUpdated, Mode=OneWay}"
                                         HorizontalContentAlignment="Right"
                                         IsActive="True"
                                         TabIndex="1"

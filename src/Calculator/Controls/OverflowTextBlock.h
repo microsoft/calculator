@@ -18,10 +18,10 @@ namespace CalculatorApp
             }
 
             DEPENDENCY_PROPERTY_OWNER(OverflowTextBlock);
-
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, TokensUpdated);
             DEPENDENCY_PROPERTY(bool, IsActive);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Style ^, TextStyle);
+
             void OnTokensUpdatedPropertyChanged(bool oldValue, bool newValue);
             void UpdateScrollButtons();
             void UnregisterEventHandlers();

@@ -31,7 +31,7 @@
                    TextTrimming="CharacterEllipsis"/>
         </Grid>
         <Button x:Name="AlwaysOnTopButton" Grid.Row="0"
-                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                FontFamily="{StaticResource CalculatorFontFamily}"
                 Style="{ThemeResource CommandBarFlyoutEllipsisButtonStyle}"
                 Content="&#xEE49;"
                 Click="AlwaysOnTopButtonClick"
