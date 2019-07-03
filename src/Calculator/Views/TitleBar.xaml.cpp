@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include "TitleBar.xaml.h"
-#include "Calculator/ChangingTitle.h"
 #include "CalcViewModel/Common/AppResourceProvider.h"
 #include "CalcViewModel/Common/Utils.h"
 
@@ -30,8 +29,11 @@ namespace CalculatorApp
 
         Loaded += ref new RoutedEventHandler(this, &TitleBar::OnLoaded);
         Unloaded += ref new RoutedEventHandler(this, &TitleBar::OnUnloaded);
-
-        AppName->Text = AppNameLocal;
+        #ifdef SEND_TELEMETRY         //AppName for Retail Builds
+        AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName"); 
+        #else                         //AppName for Developer Builds
+        AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"DevAppName");
+        #endif        //SEND_TELEMETRY
     }
 
     void TitleBar::OnLoaded(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
