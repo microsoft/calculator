@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Web;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -71,7 +72,20 @@ namespace CalculatorApp
             m_isAnimationEnabled = userSettings.AnimationsEnabled;
 #endif
 
-            Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
+#if __WASM__
+			if (!string.IsNullOrWhiteSpace(e.Arguments))
+			{
+				var parameters = HttpUtility.ParseQueryString(e.Arguments);
+				var theme = (parameters.GetValues("Theme") ?? parameters.GetValues("theme"))?.FirstOrDefault();
+				if(theme != null)
+				{
+					Uno.UI.ApplicationHelper.RequestedCustomTheme = theme;
+				}
+			}
+#endif
+
+
+			Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
 
 			// Do not repeat app initialization when the Window already has content,
 			// just ensure that the window is active
