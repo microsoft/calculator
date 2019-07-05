@@ -51,6 +51,7 @@ namespace CalculatorApp
 
 			Telemetry.AnalyticsService.Initialize();
 #endif
+			RequestedTheme = ApplicationTheme.Dark;
 		}
 
 		/// <summary>

@@ -18,266 +18,223 @@
 				-->
 	</ResourceDictionary.MergedDictionaries>
 
-	<!--<ResourceDictionary.ThemeDictionaries>
+	<ResourceDictionary.ThemeDictionaries>
 
-    <ResourceDictionary x:Key="Default">
+		<ResourceDictionary x:Key="Default">
 
-      <Thickness x:Key="HighContrastThicknessTop">
-        0,0,0,0
-      </Thickness>
+			<Thickness x:Key="HighContrastThicknessTop">
+				0,0,0,0
+			</Thickness>
 
-      <x:Double x:Key="HighContrastStrokeThickness">
-        0
-      </x:Double>
+			<x:Double x:Key="HighContrastStrokeThickness">
+				0
+			</x:Double>
 
-      <Color x:Key="AltHighColor">
-        #FF000000
-      </Color>
+			<Color x:Key="AltHighColor">
+				#FF000000
+			</Color>
 
-      <Color x:Key="ChromeMediumLowColor">
-        #FF2B2B2B
-      </Color>
+			<Color x:Key="ChromeMediumLowColor">
+				#FF2B2B2B
+			</Color>
 
-      <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush"
-               Color="{StaticResource AltHighColor}" />
+			<Color x:Key="XamarinBackgroundColor">#FFEBEBEB</Color>
 
-      <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush"
-               Color="{StaticResource ChromeMediumLowColor}" />
+			<Color x:Key="AccentPressColor">#FFB0DCFF</Color>
 
-      <SolidColorBrush x:Key="TitleBarBackgroundTransparentBrush"
-               Color="Transparent" />
+			<Color x:Key="AccentHoverColor">#FF0077D7</Color>
 
-      <SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush"
-               Color="{StaticResource SystemBaseHighColor}" />
+			<SolidColorBrush x:Key="AccentPressBackgroundColorBrush"
+			                 Color="{StaticResource AccentPressColor}" />
 
-      <SolidColorBrush x:Key="SystemControlBackgroundTransparentBrush"
-               Color="Transparent" />
+			<SolidColorBrush x:Key="AccentHoverBackgroundColorBrush"
+			                 Color="{StaticResource AccentHoverColor}" />
 
-      <SolidColorBrush x:Key="SystemControlHighlightTransparentBrush"
-               Color="Transparent" />
+			<SolidColorBrush x:Key="AccentPressForegroundColorBrush"
+			                 Color="White" />
 
-      <SolidColorBrush x:Key="AppBackgroundAltMediumLowBrush"
-               Color="{ThemeResource SystemAltMediumLowColor}" />
+			<SolidColorBrush x:Key="AccentHoverForegroundColorBrush"
+			                 Color="White" />
 
-      <SolidColorBrush x:Key="AppControlPageTextBaseMediumHighBrush"
-               Color="{StaticResource SystemBaseMediumHighColor}" />
+			<SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush"
+							 Color="{StaticResource AltHighColor}" />
 
-      <RevealBackgroundBrush x:Key="AppControlHoverButtonFaceBrush"
-                   Color="#18FFFFFF" />
+			<SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush"
+							 Color="{StaticResource ChromeMediumLowColor}" />
 
-      <RevealBackgroundBrush x:Key="AppControlPressedButtonFaceBrush"
-                   Color="#30FFFFFF" />
-
-      <SolidColorBrush x:Key="AppControlTransparentAccentColorBrush"
-               Color="{ThemeResource SystemAccentColor}" />
-
-      <SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush"
-               Color="{StaticResource SystemBaseHighColor}" />
-
-      <SolidColorBrush x:Key="AppControlPageTextRedColorBrush"
-               Color="Red" />
-
-      <RevealBorderBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
-                 FallbackColor="Transparent"
-                 TargetTheme="Dark"
-                 Color="Transparent" />
-
-      <RevealBackgroundBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
-                   FallbackColor="{ThemeResource SystemAccentColorDark3}"
-                   TargetTheme="Dark"
-                   Color="{ThemeResource SystemAccentColorDark3}" />
-
-      <AcrylicBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush"
-              BackgroundSource="HostBackdrop"
-              FallbackColor="{ThemeResource SystemChromeMediumColor}"
-              TintColor="{ThemeResource SystemChromeLowColor}"
-              TintOpacity="0.7" />
-    </ResourceDictionary>
-
-    <ResourceDictionary x:Key="Light">
-
-      <Thickness x:Key="HighContrastThicknessTop">0,0,0,0</Thickness>
-      <x:Double x:Key="HighContrastStrokeThickness">0</x:Double>
-      <Color x:Key="AltHighColor">#FFF2F2F2</Color>
-      <Color x:Key="ChromeMediumLowColor">#FFE0E0E0</Color>
-      <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush"
-               Color="{StaticResource SystemAltHighColor}" />
-      <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush"
-               Color="{StaticResource ChromeMediumLowColor}" />
-      <SolidColorBrush x:Key="TitleBarBackgroundTransparentBrush"
-               Color="Transparent" />
-      <SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush"
-               Color="{StaticResource SystemBaseHighColor}" />
-      <SolidColorBrush x:Key="SystemControlBackgroundTransparentBrush"
-               Color="Transparent" />
-      <SolidColorBrush x:Key="SystemControlHighlightTransparentBrush"
-               Color="Transparent" />
-      <SolidColorBrush x:Key="AppBackgroundAltMediumLowBrush"
-               Color="{ThemeResource SystemAltMediumLowColor}" />
-      <SolidColorBrush x:Key="AppControlPageTextBaseMediumHighBrush"
-               Color="{StaticResource SystemBaseMediumHighColor}" />
-      <RevealBackgroundBrush x:Key="AppControlHoverButtonFaceBrush"
-                   Color="#17000000" />
-      <RevealBackgroundBrush x:Key="AppControlPressedButtonFaceBrush"
-                   Color="#30000000" />
-      <SolidColorBrush x:Key="AppControlTransparentAccentColorBrush"
-               Color="{ThemeResource SystemAccentColor}" />
-      <SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush"
-               Color="{StaticResource SystemBaseHighColor}" />
-      <SolidColorBrush x:Key="AppControlPageTextRedColorBrush"
-               Color="Red" />
-      <RevealBorderBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
-                 FallbackColor="Transparent"
-                 TargetTheme="Light"
-                 Color="Transparent" />
-      <RevealBackgroundBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
-                   FallbackColor="{ThemeResource SystemAccentColorLight3}"
-                   TargetTheme="Light"
-                   Color="{ThemeResource SystemAccentColorLight3}" />
-      <AcrylicBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush"
-              BackgroundSource="HostBackdrop"
-              FallbackColor="{ThemeResource SystemChromeMediumColor}"
-              TintColor="{ThemeResource SystemChromeLowColor}"
-              TintOpacity="0.7" />
-    </ResourceDictionary>
-    <ResourceDictionary x:Key="HighContrast">
-      <Thickness x:Key="HighContrastThicknessTop">0,1,0,0</Thickness>
-      <x:Double x:Key="HighContrastStrokeThickness">2</x:Double>
-      <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush"
-               Color="{ThemeResource SystemColorButtonFaceColor}" />
-      <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush"
-               Color="{ThemeResource SystemColorButtonFaceColor}" />
-      <SolidColorBrush x:Key="TitleBarBackgroundTransparentBrush"
-               Color="{ThemeResource SystemColorActiveCaptionColor}" />
-      <SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush"
-               Color="{ThemeResource SystemColorCaptionTextColor}" />
-      <SolidColorBrush x:Key="SystemControlBackgroundTransparentBrush"
-               Color="{ThemeResource SystemColorButtonFaceColor}" />
-      <SolidColorBrush x:Key="SystemControlHighlightTransparentBrush"
-               Color="{ThemeResource SystemColorHighlightColor}" />
-      <SolidColorBrush x:Key="AppBackgroundAltMediumLowBrush"
-               Color="{ThemeResource SystemColorButtonFaceColor}" />
-      <SolidColorBrush x:Key="AppControlPageTextBaseMediumHighBrush"
-               Color="{ThemeResource SystemColorWindowTextColor}" />
-      <SolidColorBrush x:Key="AppControlHoverButtonFaceBrush"
-               Color="{ThemeResource SystemColorHighlightColor}" />
-      <SolidColorBrush x:Key="AppControlPressedButtonFaceBrush"
-               Color="{ThemeResource SystemColorButtonFaceColor}" />
-      <SolidColorBrush x:Key="AppControlTransparentAccentColorBrush"
-               Color="Transparent" />
-      <SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush"
-               Color="{ThemeResource SystemColorWindowTextColor}" />
-      <SolidColorBrush x:Key="AppControlPageTextRedColorBrush"
-               Color="{ThemeResource SystemColorWindowTextColor}" />
-      <SolidColorBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
-               Color="{ThemeResource SystemColorButtonTextColor}" />
-      <SolidColorBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
-               Color="{ThemeResource SystemColorHighlightTextColor}" />
-      <SolidColorBrush x:Key="AppControlListLowRevealHighlightBrush"
-               Color="{ThemeResource SystemColorHighlightColor}" />
-      <SolidColorBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush"
-               Color="{ThemeResource SystemColorWindowColor}" />
-    </ResourceDictionary>
-  </ResourceDictionary.ThemeDictionaries>-->
-
-	<!-- UNO TODO BEGIN THEME RESOURCES -->
-	<Thickness x:Key="HighContrastThicknessTop">0,0,0,0</Thickness>
-
-	<x:Double x:Key="HighContrastStrokeThickness">0</x:Double>
-
-	<Color x:Key="AltHighColor">#FFF2F2F2</Color>
-	<Color x:Key="ChromeMediumLowColor">#FFE0E0E0</Color>
-
-	<Color x:Key="AccentPressColor">#FFB0DCFF</Color>
-
-	<Color x:Key="AccentHoverColor">#FF0077D7</Color>
-
-	<Color x:Key="XamarinBackgroundColor">#FFEBEBEB</Color>
-
-	<SolidColorBrush x:Key="AccentPressBackgroundColorBrush"
-					 Color="{StaticResource AccentPressColor}" />
-
-	<SolidColorBrush x:Key="AccentHoverBackgroundColorBrush"
-					 Color="{StaticResource AccentHoverColor}" />
-
-	<SolidColorBrush x:Key="AccentPressForegroundColorBrush"
-					 Color="White" />
-
-	<SolidColorBrush x:Key="AccentHoverForegroundColorBrush"
-					 Color="White" />
-
-	<SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush"
-					 Color="{StaticResource AltHighColor}" />
-
-	<SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush"
-					 Color="{StaticResource ChromeMediumLowColor}" />
-
-	<SolidColorBrush x:Key="TitleBarBackgroundTransparentBrush"
-					 Color="Transparent" />
-
-	<SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush"
-					 Color="{StaticResource SystemBaseHighColor}" />
-
-	<SolidColorBrush x:Key="SystemControlBackgroundTransparentBrush"
-					 Color="Transparent" />
-
-	<SolidColorBrush x:Key="SystemControlHighlightTransparentBrush"
-					 Color="Transparent" />
-
-	<SolidColorBrush x:Key="AppBackgroundAltMediumLowBrush"
-					 Color="{ThemeResource SystemAltMediumLowColor}" />
-
-	<SolidColorBrush x:Key="AppControlPageTextBaseMediumHighBrush"
-					 Color="{StaticResource SystemBaseMediumHighColor}" />
-
-	<SolidColorBrush x:Key="XamarinBackgroundBrush"
-					 Color="{StaticResource XamarinBackgroundColor}" />
-
-	<win:RevealBackgroundBrush x:Key="AppControlHoverButtonFaceBrush"
-							   Color="#17000000" />
-
-	<xamarin:SolidColorBrush x:Key="AppControlHoverButtonFaceBrush"
-							 Color="{ThemeResource SystemColorHighlightColor}" />
-
-	<win:RevealBackgroundBrush x:Key="AppControlPressedButtonFaceBrush"
-							   Color="#30000000" />
-
-	<xamarin:SolidColorBrush x:Key="AppControlPressedButtonFaceBrush"
-							 Color="{ThemeResource SystemColorButtonFaceColor}" />
-
-	<SolidColorBrush x:Key="AppControlTransparentAccentColorBrush"
-					 Color="{ThemeResource SystemAccentColor}" />
-
-	<SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush"
-					 Color="{StaticResource SystemBaseHighColor}" />
-
-	<SolidColorBrush x:Key="AppControlPageTextRedColorBrush"
-					 Color="Red" />
-
-	<win:RevealBorderBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
-						   FallbackColor="Transparent"
-						   TargetTheme="Dark"
-						   Color="Transparent" />
-
-	<xamarin:SolidColorBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
+			<SolidColorBrush x:Key="TitleBarBackgroundTransparentBrush"
 							 Color="Transparent" />
 
-	<win:RevealBackgroundBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
-							   TargetTheme="Dark"
-							   Color="{ThemeResource SystemAccentColorDark3}"
-							   FallbackColor="{ThemeResource SystemAccentColorDark3}" />
+			<SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush"
+							 Color="{StaticResource SystemBaseHighColor}" />
 
-	<xamarin:SolidColorBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
+			<SolidColorBrush x:Key="SystemControlBackgroundTransparentBrush"
+							 Color="Transparent" />
+
+			<SolidColorBrush x:Key="SystemControlHighlightTransparentBrush"
+							 Color="Transparent" />
+
+			<SolidColorBrush x:Key="AppBackgroundAltMediumLowBrush"
+							 Color="{ThemeResource SystemAltMediumLowColor}" />
+
+			<SolidColorBrush x:Key="AppControlPageTextBaseMediumHighBrush"
+							 Color="{StaticResource SystemBaseMediumHighColor}" />
+
+			<SolidColorBrush x:Key="XamarinBackgroundBrush"
+							 Color="{StaticResource XamarinBackgroundColor}" />
+
+			<win:RevealBackgroundBrush x:Key="AppControlHoverButtonFaceBrush"
+									   Color="#18FFFFFF" />
+
+			<xamarin:SolidColorBrush x:Key="AppControlHoverButtonFaceBrush"
+									 Color="{ThemeResource SystemColorHighlightColor}" />
+
+			<win:RevealBackgroundBrush x:Key="AppControlPressedButtonFaceBrush"
+									   Color="#30FFFFFF" />
+
+			<xamarin:SolidColorBrush x:Key="AppControlPressedButtonFaceBrush"
+									 Color="{ThemeResource SystemColorButtonFaceColor}" />
+
+			<SolidColorBrush x:Key="AppControlTransparentAccentColorBrush"
+							 Color="{ThemeResource SystemAccentColor}" />
+
+			<SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush"
+							 Color="{StaticResource SystemBaseHighColor}" />
+
+			<SolidColorBrush x:Key="AppControlPageTextRedColorBrush"
+							 Color="Red" />
+
+			<win:RevealBorderBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
+			                       FallbackColor="Transparent"
+			                       TargetTheme="Dark"
+			                       Color="Transparent" />
+
+			<xamarin:SolidColorBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
+			                         Color="Transparent" />
+
+			<win:RevealBackgroundBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
+			                           TargetTheme="Dark"
+			                           Color="{ThemeResource SystemAccentColorDark3}"
+			                           FallbackColor="{ThemeResource SystemAccentColorDark3}" />
+			<xamarin:SolidColorBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
+			                         Color="{ThemeResource SystemColorHighlightTextColor}" />
+
+			<win:AcrylicBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush"
+			                  BackgroundSource="HostBackdrop"
+			                  FallbackColor="{ThemeResource SystemChromeMediumColor}"
+			                  TintColor="{ThemeResource SystemChromeLowColor}"
+			                  TintOpacity="0.7" />
+
+			<xamarin:SolidColorBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush"
+			                         Color="{ThemeResource SystemColorWindowColor}" />
+		</ResourceDictionary>
+
+		<ResourceDictionary x:Key="Light">
+
+			<Thickness x:Key="HighContrastThicknessTop">0,0,0,0</Thickness>
+			<x:Double x:Key="HighContrastStrokeThickness">0</x:Double>
+			<Color x:Key="AltHighColor">#FFF2F2F2</Color>
+			<Color x:Key="ChromeMediumLowColor">#FFE0E0E0</Color>
+			<SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush"
+							 Color="{StaticResource SystemAltHighColor}" />
+			<SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush"
+							 Color="{StaticResource ChromeMediumLowColor}" />
+			<SolidColorBrush x:Key="TitleBarBackgroundTransparentBrush"
+							 Color="Transparent" />
+			<SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush"
+							 Color="{StaticResource SystemBaseHighColor}" />
+			<SolidColorBrush x:Key="SystemControlBackgroundTransparentBrush"
+							 Color="Transparent" />
+			<SolidColorBrush x:Key="SystemControlHighlightTransparentBrush"
+							 Color="Transparent" />
+			<SolidColorBrush x:Key="AppBackgroundAltMediumLowBrush"
+							 Color="{ThemeResource SystemAltMediumLowColor}" />
+			<SolidColorBrush x:Key="AppControlPageTextBaseMediumHighBrush"
+							 Color="{StaticResource SystemBaseMediumHighColor}" />
+			<win:RevealBackgroundBrush x:Key="AppControlHoverButtonFaceBrush"
+									   Color="#17000000" />
+
+			<xamarin:SolidColorBrush x:Key="AppControlHoverButtonFaceBrush"
+									 Color="{ThemeResource SystemColorHighlightColor}" />
+
+			<win:RevealBackgroundBrush x:Key="AppControlPressedButtonFaceBrush"
+									   Color="#30000000" />
+
+			<xamarin:SolidColorBrush x:Key="AppControlPressedButtonFaceBrush"
+									 Color="{ThemeResource SystemColorButtonFaceColor}" />
+			<SolidColorBrush x:Key="AppControlTransparentAccentColorBrush"
+							 Color="{ThemeResource SystemAccentColor}" />
+			<SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush"
+							 Color="{StaticResource SystemBaseHighColor}" />
+			<SolidColorBrush x:Key="AppControlPageTextRedColorBrush"
+							 Color="Red" />
+			<win:RevealBorderBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
+			                       FallbackColor="Transparent"
+			                       TargetTheme="Light"
+			                       Color="Transparent" />
+
+			<xamarin:SolidColorBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
+			                         Color="Transparent" />
+
+			<win:RevealBackgroundBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
+			                           TargetTheme="Light"
+			                           Color="{ThemeResource SystemAccentColorLight3}"
+			                           FallbackColor="{ThemeResource SystemAccentColorLight3}" />
+			<xamarin:SolidColorBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
+			                         Color="{ThemeResource SystemColorHighlightTextColor}" />
+			<win:AcrylicBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush"
+			                  BackgroundSource="HostBackdrop"
+			                  FallbackColor="{ThemeResource SystemChromeMediumColor}"
+			                  TintColor="{ThemeResource SystemChromeLowColor}"
+			                  TintOpacity="0.7" />
+
+			<xamarin:SolidColorBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush"
+			                         Color="{ThemeResource SystemColorWindowColor}" />
+		</ResourceDictionary>
+		<ResourceDictionary x:Key="HighContrast">
+			<Thickness x:Key="HighContrastThicknessTop">0,1,0,0</Thickness>
+			<x:Double x:Key="HighContrastStrokeThickness">2</x:Double>
+			<SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush"
+							 Color="{ThemeResource SystemColorButtonFaceColor}" />
+			<SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush"
+							 Color="{ThemeResource SystemColorButtonFaceColor}" />
+			<SolidColorBrush x:Key="TitleBarBackgroundTransparentBrush"
+							 Color="{ThemeResource SystemColorActiveCaptionColor}" />
+			<SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush"
+							 Color="{ThemeResource SystemColorCaptionTextColor}" />
+			<SolidColorBrush x:Key="SystemControlBackgroundTransparentBrush"
+							 Color="{ThemeResource SystemColorButtonFaceColor}" />
+			<SolidColorBrush x:Key="SystemControlHighlightTransparentBrush"
+							 Color="{ThemeResource SystemColorHighlightColor}" />
+			<SolidColorBrush x:Key="AppBackgroundAltMediumLowBrush"
+							 Color="{ThemeResource SystemColorButtonFaceColor}" />
+			<SolidColorBrush x:Key="AppControlPageTextBaseMediumHighBrush"
+							 Color="{ThemeResource SystemColorWindowTextColor}" />
+			<SolidColorBrush x:Key="AppControlHoverButtonFaceBrush"
+							 Color="{ThemeResource SystemColorHighlightColor}" />
+			<SolidColorBrush x:Key="AppControlPressedButtonFaceBrush"
+							 Color="{ThemeResource SystemColorButtonFaceColor}" />
+			<SolidColorBrush x:Key="AppControlTransparentAccentColorBrush"
+							 Color="Transparent" />
+			<SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush"
+							 Color="{ThemeResource SystemColorWindowTextColor}" />
+			<SolidColorBrush x:Key="AppControlPageTextRedColorBrush"
+							 Color="{ThemeResource SystemColorWindowTextColor}" />
+			<SolidColorBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
+							 Color="{ThemeResource SystemColorButtonTextColor}" />
+			<SolidColorBrush x:Key="AppControlHighlightAltListAccentHighRevealBackgroundBrush"
 							 Color="{ThemeResource SystemColorHighlightTextColor}" />
-
-	<win:AcrylicBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush"
-					  BackgroundSource="HostBackdrop"
-					  FallbackColor="{ThemeResource SystemChromeMediumColor}"
-					  TintColor="{ThemeResource SystemChromeLowColor}"
-					  TintOpacity="0.7" />
-
-	<xamarin:SolidColorBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush"
+			<SolidColorBrush x:Key="AppControlListLowRevealHighlightBrush"
+							 Color="{ThemeResource SystemColorHighlightColor}" />
+			<SolidColorBrush x:Key="AppChromeAcrylicHostBackdropMediumLowBrush"
 							 Color="{ThemeResource SystemColorWindowColor}" />
+		</ResourceDictionary>
+	</ResourceDictionary.ThemeDictionaries>
+
+	<!-- UNO TODO BEGIN THEME RESOURCES -->
+
+
+
 
 	<!-- UNO TODO END THEME RESOURCES -->
 
