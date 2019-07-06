@@ -256,38 +256,30 @@ const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
     }
 
     // Remove zeros
-    bool fDigitsFound = false;
-    int trimIdx = 0;
     for (unsigned int i = 0; i < m_token.size(); i++)
     {
         if (m_token.at(i) != chZero)
         {
-            if (m_token.at(i) == decimalSymbol)
+            if (m_token.at(i) == decimalSymbol) 
             {
-                trimIdx = i - 1;
+                m_token.erase(0, i-1);
+              
             }
             else
             {
-                trimIdx = i;
+                m_token.erase(0, i);
             }
-            fDigitsFound = true;
-            break;
+            
+            if (m_fNegative) 
+            {
+                m_token.insert(0, &chNegate);
+            }
+            return m_token;
         }
     }
-
-    if (fDigitsFound)
-    {
-        m_token.erase(0, trimIdx);
-        if (m_fNegative)
-        {
-            m_token.insert(0, &chNegate);
-        }
-    }
-    else
-    {
-        m_token.clear();
-        m_token.append(&chZero);
-    }
+     m_token.clear();
+     m_token.append(&chZero);
+  
 
     return m_token;
 }
