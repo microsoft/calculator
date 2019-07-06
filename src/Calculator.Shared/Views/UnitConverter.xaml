@@ -1029,6 +1029,7 @@
 				<!-- Currency Timestamp -->
 				<TextBlock x:Name="CurrencyTimestampTextBlock"
 						   Style="{ThemeResource CaptionTextBlockStyle}"
+						   Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
 						   Text="{x:Bind Model.CurrencyTimestamp, Mode=OneWay}" />
 
 				<!-- Currency Refresh button and additional status text -->

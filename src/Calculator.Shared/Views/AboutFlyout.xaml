@@ -28,7 +28,7 @@
 					Grid.ColumnSpan="2"
 					Margin="0,12,0,0"
 					Orientation="Vertical">
-			<TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+			<TextBlock Foreground="Black"
 					   FontSize="{ThemeResource BodyFontSize}"
 					   Margin="12,0,12,18"
 					   HorizontalAlignment="Left"

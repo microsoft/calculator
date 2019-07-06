@@ -61,6 +61,8 @@
 			   TargetType="NavigationViewItem">
 			<Setter Property="KeyTipPlacementMode"
 					Value="Right" />
+			<Setter Property="Foreground"
+					Value="{StaticResource NavigationViewItemForgroundBrush}" />
 		</Style>
 	</Page.Resources>
 
@@ -165,9 +167,9 @@
 
 						<NavigationViewList.Items>
 
+							<!-- Style="{StaticResource NavViewItemStyle}" -->
 							<NavigationViewItem x:Name="AboutButton"
-												x:Uid="AboutButton"
-												Style="{StaticResource NavViewItemStyle}">
+												x:Uid="AboutButton" >
 								<NavigationViewItem.Icon>
 									<FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
 											  Glyph="&#xe946;" />
@@ -199,6 +201,7 @@
 						   HorizontalAlignment="Left"
 						   VerticalAlignment="Top"
 						   Style="{StaticResource SubtitleTextBlockStyle}"
+						   Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
 						   Text="{x:Bind Model.CategoryName, Mode=OneWay}" />
 
 				<Border x:Name="CalcHolder">
