@@ -99,18 +99,11 @@ bool App::IsAnimationEnabled()
 /// </summary>
 String ^ App::GetAppViewState()
 {
-    String ^ newViewState;
+  
     CoreWindow ^ window = CoreWindow::GetForCurrentThread();
-    if ((window->Bounds.Width >= 560) && (window->Bounds.Height >= 356))
-    {
-        newViewState = ViewState::DockedView;
-    }
-    else
-    {
-        newViewState = ViewState::Snap;
-    }
-
-    return newViewState;
+    
+    return ((window->Bounds.Width >= 560) && (window->Bounds.Height >= 356)) ? ViewState::DockedView : ViewState::Snap
+   
 }
 
 void App::AddWindowToMap(_In_ WindowFrameService ^ frameService)
