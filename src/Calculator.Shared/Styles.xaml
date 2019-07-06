@@ -199,9 +199,9 @@
 			<SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush"
 							 Color="{ThemeResource SystemColorButtonFaceColor}" />
 			<SolidColorBrush x:Key="TitleBarBackgroundTransparentBrush"
-							 Color="{ThemeResource SystemColorActiveCaptionColor}" />
+							 Color="{ThemeResource SystemBaseHighColor}" />
 			<SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush"
-							 Color="{ThemeResource SystemColorCaptionTextColor}" />
+							 Color="{ThemeResource SystemBaseHighColor}" />
 			<SolidColorBrush x:Key="SystemControlBackgroundTransparentBrush"
 							 Color="{ThemeResource SystemColorButtonFaceColor}" />
 			<SolidColorBrush x:Key="SystemControlHighlightTransparentBrush"
