@@ -102,7 +102,7 @@ String ^ App::GetAppViewState()
   
     CoreWindow ^ window = CoreWindow::GetForCurrentThread();
     
-    return ((window->Bounds.Width >= 560) && (window->Bounds.Height >= 356)) ? ViewState::DockedView : ViewState::Snap
+    return ((window->Bounds.Width >= 560) && (window->Bounds.Height >= 356)) ? ViewState::DockedView : ViewState::Snap;
    
 }
 
