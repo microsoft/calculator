@@ -6,6 +6,7 @@
 #include "CalcManager/Command.h"
 #include "TraceActivity.h"
 #include "NavCategory.h"
+#include "CalculatorButtonUser.h"
 
 static const int maxFunctionSize = (int)CalculationManager::Command::CommandBINEDITEND;
 

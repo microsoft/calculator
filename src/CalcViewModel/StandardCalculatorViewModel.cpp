@@ -667,7 +667,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
                 m_isLastOperationHistoryLoad = false;
             }
 
-            TraceLogger::GetInstance().UpdateButtonUsage((int)numOpEnum, GetCalculatorMode());
+            TraceLogger::GetInstance().UpdateButtonUsage(numOpEnum, GetCalculatorMode());
             m_standardCalculatorManager.SendCommand(cmdenum);
         }
     }
@@ -910,7 +910,7 @@ void StandardCalculatorViewModel::OnClearMemoryCommand(Object ^ parameter)
 {
     m_standardCalculatorManager.MemorizedNumberClearAll();
 
-    TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
+    TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
 
     String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(CalculatorResourceKeys::MemoryCleared, m_localizedMemoryCleared);
     Announcement = CalculatorAnnouncement::GetMemoryClearedAnnouncement(announcement);
@@ -1044,7 +1044,7 @@ void StandardCalculatorViewModel::OnMemoryButtonPressed()
 {
     m_standardCalculatorManager.MemorizeNumber();
 
-    TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::Memory, GetCalculatorMode());
+    TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::Memory, GetCalculatorMode());
 
     String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
         CalculatorResourceKeys::MemorySave, m_localizedMemorySavedAutomationFormat, m_DisplayValue->Data());
@@ -1089,7 +1089,7 @@ void StandardCalculatorViewModel::OnMemoryAdd(Object ^ memoryItemPosition)
     if (MemorizedNumbers)
     {
         auto boxedPosition = safe_cast<Box<int> ^>(memoryItemPosition);
-        TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::MemoryAdd, GetCalculatorMode());
+        TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryAdd, GetCalculatorMode());
         m_standardCalculatorManager.MemorizedNumberAdd(boxedPosition->Value);
     }
 }
@@ -1100,7 +1100,7 @@ void StandardCalculatorViewModel::OnMemorySubtract(Object ^ memoryItemPosition)
     if (MemorizedNumbers)
     {
         auto boxedPosition = safe_cast<Box<int> ^>(memoryItemPosition);
-        TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::MemorySubtract, GetCalculatorMode());
+        TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemorySubtract, GetCalculatorMode());
         m_standardCalculatorManager.MemorizedNumberSubtract(boxedPosition->Value);
     }
 }
@@ -1126,7 +1126,7 @@ void StandardCalculatorViewModel::OnMemoryClear(_In_ Object ^ memoryItemPosition
             {
                 IsMemoryEmpty = true;
             }
-            TraceLogger::GetInstance().UpdateButtonUsage((int)NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
+            TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
 
             wstring localizedIndex = to_wstring(boxedPosition->Value + 1);
             LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedIndex);
@@ -1170,7 +1170,7 @@ void StandardCalculatorViewModel::OnPropertyChanged(String ^ propertyname)
     else if (propertyname == IsBitFlipCheckedPropertyName)
     {
         TraceLogger::GetInstance().UpdateButtonUsage(
-            IsBitFlipChecked ? (int)NumbersAndOperatorsEnum::BitflipButton : (int)NumbersAndOperatorsEnum::FullKeypadButton, ViewMode::Programmer);
+            IsBitFlipChecked ? NumbersAndOperatorsEnum::BitflipButton : NumbersAndOperatorsEnum::FullKeypadButton, ViewMode::Programmer);
     }
 }
 
