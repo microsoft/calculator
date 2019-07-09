@@ -501,7 +501,6 @@ namespace CalculatorApp
 
             item.Content = category.Name;
             item.AccessKey = category.AccessKey;
-            item.Style = (Windows.UI.Xaml.Style)(Resources["NavViewItemStyle"]);
 
             AutomationProperties.SetName(item, category.AutomationName);
             AutomationProperties.SetAutomationId(item, category.AutomationId);

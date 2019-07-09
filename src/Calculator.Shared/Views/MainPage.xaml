@@ -167,9 +167,9 @@
 
 						<NavigationViewList.Items>
 
-							<!-- Style="{StaticResource NavViewItemStyle}" -->
 							<NavigationViewItem x:Name="AboutButton"
-												x:Uid="AboutButton" >
+												x:Uid="AboutButton"
+												Style="{StaticResource NavViewItemStyle}" >
 								<NavigationViewItem.Icon>
 									<FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
 											  Glyph="&#xe946;" />
