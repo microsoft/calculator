@@ -131,7 +131,7 @@ namespace CalculatorApp
 
         LoggingFields fields{};
         fields.AddGuid(L"SessionGuid", sessionGuid);
-        fields.AddString(L"CalcMode", NavCategory::GetFriendlyName(mode)->Data());
+        fields.AddInt32(L"CalcMode", NavCategory::Serialize(mode));
         fields.AddString(L"VisualState", state);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_VISUAL_STATE_CHANGED, fields);
