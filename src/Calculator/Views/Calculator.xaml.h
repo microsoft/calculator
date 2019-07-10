@@ -102,6 +102,18 @@ public
         bool m_IsLastFlyoutMemory = false;
         bool m_IsLastFlyoutHistory = false;
 
+        // Used for disabling/enabling behavior involving AlwaysOnTop mode
+        bool ClearMemoryButtonErrorPrevState;
+        bool MemRecallErrorPrevState;
+        bool MemPlusErrorPrevState;
+        bool MemMinusErrorPrevState;
+        bool MemButtonErrorPrevState; 
+        bool ClearMemoryButtonEnabled = true;
+        bool MemRecallEnabled = true;
+        bool MemPlusEnabled = true;
+        bool MemMinusEnabled = true;
+        bool MemButtonEnabled = true;
+
         Platform::String ^ m_openMemoryFlyoutAutomationName;
         Platform::String ^ m_closeMemoryFlyoutAutomationName;
         Platform::String ^ m_openHistoryFlyoutAutomationName;
@@ -137,6 +149,7 @@ public
         void OnHistoryFlyOutTapped(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         bool IsValidRegularExpression(std::wstring str);
         void DockPanelTapped(_In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
+        void OnNoErrorLayoutCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void OnErrorLayoutCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void OnHistoryAccessKeyInvoked(_In_ Windows::UI::Xaml::UIElement ^ sender, _In_ Windows::UI::Xaml::Input::AccessKeyInvokedEventArgs ^ args);
         void OnMemoryAccessKeyInvoked(_In_ Windows::UI::Xaml::UIElement ^ sender, _In_ Windows::UI::Xaml::Input::AccessKeyInvokedEventArgs ^ args);

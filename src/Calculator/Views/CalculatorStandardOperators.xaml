@@ -47,6 +47,74 @@
                 </VisualState>
             </VisualStateGroup>
             <VisualStateGroup>
+                <VisualState x:Name="MaxAlwaysOnTop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="440" MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PercentButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="SquareRootButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="XPower2Button.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="InvertButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="NegateButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="ClearEntryButton.Style" Value="{StaticResource OperatorButtonStyle}"/>
+                        <Setter Target="ClearButton.Style" Value="{StaticResource OperatorButtonStyle}"/>
+                        <Setter Target="BackSpaceButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="DivideButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="MultiplyButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="MinusButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="PlusButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="EqualButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+
+                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle24}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="RegularAlwaysOnTop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="260" MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PercentButton.FontSize" Value="12"/>
+                        <Setter Target="SquareRootButton.FontSize" Value="12"/>
+                        <Setter Target="XPower2Button.FontSize" Value="12"/>
+                        <Setter Target="InvertButton.FontSize" Value="12"/>
+                        <Setter Target="NegateButton.FontSize" Value="12"/>
+                        <Setter Target="ClearEntryButton.FontSize" Value="12"/>
+                        <Setter Target="ClearButton.FontSize" Value="12"/>
+                        <Setter Target="BackSpaceButton.FontSize" Value="12"/>
+                        <Setter Target="DivideButton.FontSize" Value="12"/>
+                        <Setter Target="MultiplyButton.FontSize" Value="12"/>
+                        <Setter Target="MinusButton.FontSize" Value="12"/>
+                        <Setter Target="PlusButton.FontSize" Value="12"/>
+                        <Setter Target="EqualButton.FontSize" Value="12"/>
+
+                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle12}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="MinAlwaysOnTop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PercentButton.FontSize" Value="10"/>
+                        <Setter Target="SquareRootButton.FontSize" Value="10"/>
+                        <Setter Target="XPower2Button.FontSize" Value="10"/>
+                        <Setter Target="InvertButton.FontSize" Value="10"/>
+                        <Setter Target="NegateButton.FontSize" Value="10"/>
+                        <Setter Target="ClearEntryButton.FontSize" Value="10"/>
+                        <Setter Target="ClearButton.FontSize" Value="10"/>
+                        <Setter Target="BackSpaceButton.FontSize" Value="10"/>
+                        <Setter Target="DivideButton.FontSize" Value="10"/>
+                        <Setter Target="MultiplyButton.FontSize" Value="10"/>
+                        <Setter Target="MinusButton.FontSize" Value="10"/>
+                        <Setter Target="PlusButton.FontSize" Value="10"/>
+                        <Setter Target="EqualButton.FontSize" Value="10"/>
+
+                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle10}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup>
                 <VisualState x:Name="Portrait768x1366">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="1366" MinWindowWidth="768"/>
@@ -238,6 +306,23 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}" MinWindowWidth="{StaticResource AppMinWindowWidth}"/>
                     </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PercentButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="SquareRootButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="XPower2Button.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="InvertButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="NegateButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="ClearEntryButton.Style" Value="{StaticResource OperatorButtonStyle}"/>
+                        <Setter Target="ClearButton.Style" Value="{StaticResource OperatorButtonStyle}"/>
+                        <Setter Target="BackSpaceButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="DivideButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="MultiplyButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="MinusButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="PlusButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        <Setter Target="EqualButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
+                        
+                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle24}"/>
+                    </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="DefaultLayout">
                     <VisualState.StateTriggers>

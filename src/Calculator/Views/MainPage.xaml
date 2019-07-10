@@ -35,6 +35,7 @@
 
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
+        <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -100,6 +101,7 @@
         <muxc:NavigationView x:Name="NavView"
                              x:Uid="NavView"
                              Visibility="{x:Bind Model.CalculatorViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"
+                             IsEnabled="{x:Bind Model.CalculatorViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                              Grid.Row="1"
                              CompactModeThresholdWidth="Infinity"
                              DataContext="{x:Bind Model}"
@@ -116,6 +118,7 @@
                              ItemInvoked="OnNavItemInvoked"
                              TabIndex="1"
                              UseSystemFocusVisuals="True">
+            
             <muxc:NavigationView.PaneFooter>
                 <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
                     <muxc:NavigationViewList x:Name="NavFooter"

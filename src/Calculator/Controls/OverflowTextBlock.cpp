@@ -32,6 +32,7 @@ void OverflowTextBlock::OnApplyTemplate()
 {
     UnregisterEventHandlers();
 
+    // NEED TO ADD ANOTHER MEMBER VARIABLE TO KEEP TRACK OF MAIN RESULT SO THAT WE CAN USE ITS WIDTH IN SCROLLING CALCULATIONS
     auto uiElement = GetTemplateChild("ExpressionContainer");
     if (uiElement != nullptr)
     {
@@ -62,6 +63,12 @@ void OverflowTextBlock::OnApplyTemplate()
     if (uiElement != nullptr)
     {
         m_itemsControl = safe_cast<ItemsControl ^>(uiElement);
+    }
+
+    uiElement = GetTemplateChild("EditableToken");
+    if (uiElement != nullptr)
+    {
+        m_editableToken = safe_cast<TextBlock ^>(uiElement);
     }
 
     UpdateAllState();
@@ -149,8 +156,14 @@ void OverflowTextBlock::UpdateScrollButtons()
         return;
     }
 
+    double editableTokenWidth = 0;
+    if (m_editableToken != nullptr)
+    {
+        editableTokenWidth = m_editableToken->ActualWidth;
+    }
+
     // When the width is smaller than the container, don't show any
-    if (m_itemsControl->ActualWidth <= m_expressionContainer->ActualWidth)
+    if (m_itemsControl->ActualWidth + editableTokenWidth <= m_expressionContainer->ActualWidth)
     {
         ShowHideScrollButtons(::Visibility::Collapsed, ::Visibility::Collapsed);
     }

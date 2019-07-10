@@ -41,6 +41,7 @@
                 HorizontalAlignment="Right"
                 HorizontalContentAlignment="Center"
                 Background="Transparent"
+                FontWeight="SemiLight"
                 ToolTipService.ToolTip="Always-on-top"/>
     </Grid>
 </UserControl>

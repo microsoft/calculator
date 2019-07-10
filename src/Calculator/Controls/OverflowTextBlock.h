@@ -47,6 +47,7 @@ namespace CalculatorApp
             bool m_scrollingLeft;
             bool m_scrollingRight;
             bool m_isAccessibilityViewControl;
+            Windows::UI::Xaml::Controls::TextBlock ^ m_editableToken;
             Windows::UI::Xaml::Controls::ItemsControl ^ m_itemsControl;
             Windows::UI::Xaml::Controls::ScrollViewer ^ m_expressionContainer;
             Windows::UI::Xaml::Controls::Button ^ m_scrollLeft;

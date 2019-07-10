@@ -231,10 +231,20 @@
                    TargetType="Controls:CalculatorButton">
                 <Setter Property="FontWeight" Value="SemiBold"/>
             </Style>
+            <Style x:Key="NumericButtonStyle10"
+                   BasedOn="{StaticResource NumericButtonStyle}"
+                   TargetType="Controls:CalculatorButton">
+                <Setter Property="FontSize" Value="10"/>
+            </Style>
             <Style x:Key="NumericButtonStyle12"
                    BasedOn="{StaticResource NumericButtonStyle}"
                    TargetType="Controls:CalculatorButton">
                 <Setter Property="FontSize" Value="12"/>
+            </Style>
+            <Style x:Key="NumericButtonStyle16"
+                   BasedOn="{StaticResource NumericButtonStyle}"
+                   TargetType="Controls:CalculatorButton">
+                <Setter Property="FontSize" Value="16"/>
             </Style>
             <Style x:Key="NumericButtonStyle18"
                    BasedOn="{StaticResource NumericButtonStyle}"
