@@ -3415,4 +3415,8 @@
     <value>Add Equation</value>
     <comment>Placeholder text for the equation input button</comment>
   </data>
+  <data name="VaiablesHeader.Text" xml:space="preserve">
+    <value>Variables</value>
+    <comment>Header text for variables area</comment>
+  </data>
 </root>

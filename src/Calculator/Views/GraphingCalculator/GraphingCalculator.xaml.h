@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Views\GraphingCalculator\GraphingCalculator.g.h"
-#include "CalcViewModel/GraphingCalculator/GraphingCalculatorViewModel.h"
+#include "CalcViewModel\GraphingCalculator\GraphingCalculatorViewModel.h"
 #include "Views\NumberPad.xaml.h"
 
 namespace CalculatorApp
@@ -22,7 +22,16 @@ namespace CalculatorApp
     private:
         void GraphingCalculator_DataContextChanged(Windows::UI::Xaml::FrameworkElement^ sender, Windows::UI::Xaml::DataContextChangedEventArgs^ args);
 
-    private:
+        void GraphVariablesUpdated(Platform::Object^ sender, Object^ args);
+        void OnVariableChanged(Platform::Object^ sender, CalculatorApp::ViewModel::VariableChangedEventArgs args);
+
+        void BeforeTextChanging(Windows::UI::Xaml::Controls::TextBox^ sender, Windows::UI::Xaml::Controls::TextBoxBeforeTextChangingEventArgs^ args);
+        void TextBoxLosingFocus(Windows::UI::Xaml::Controls::TextBox^ textbox, Windows::UI::Xaml::Input::LosingFocusEventArgs^ args);
+        void TextBoxKeyDown(Windows::UI::Xaml::Controls::TextBox^ textbox, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e);
+        void ValidateTextBox(Windows::UI::Xaml::Controls::TextBox^ textbox);
+
         CalculatorApp::ViewModel::GraphingCalculatorViewModel^ m_viewModel;
+        bool m_ignoreNextTextChanged;
+
     };
 }

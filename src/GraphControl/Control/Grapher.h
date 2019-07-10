@@ -79,7 +79,7 @@ namespace GraphControl
         }
         #pragma endregion
 
-#pragma region Platform::Collection^ Variables DependencyProperty
+        #pragma region Windows::Foundation::Collections::IObservableMap<Platform::String^, double>^ Variables DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ VariablesProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -88,18 +88,19 @@ namespace GraphControl
             }
         }
 
-        property Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ Variables
+        property Windows::Foundation::Collections::IObservableMap<Platform::String^, double>^ Variables
         {
-            Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ get()
+            Windows::Foundation::Collections::IObservableMap<Platform::String^, double>^ get()
             {
-                return static_cast<Windows::Foundation::Collections::IObservableVector<Platform::Object^>^>(GetValue(s_variablesProperty));
+                return static_cast<Windows::Foundation::Collections::IObservableMap<Platform::String^, double>^>(GetValue(s_variablesProperty));
             }
-            void set(Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ value)
+
+            void set(Windows::Foundation::Collections::IObservableMap<Platform::String^, double>^ value)
             {
                 SetValue(s_variablesProperty, value);
             }
         }
-#pragma endregion
+        #pragma endregion
 
         #pragma region Windows::UI::Xaml::DataTemplate^ ForceProportionalAxes DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ ForceProportionalAxesTemplateProperty
@@ -122,6 +123,10 @@ namespace GraphControl
             }
         }
         #pragma endregion
+
+        event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String^, double>^>^ VariablesUpdated;
+
+        void SetVariable(Platform::String^ variableName, double newValue);
 
     protected:
         #pragma region Control Overrides
@@ -150,12 +155,16 @@ namespace GraphControl
         void OnDataSourceChanged(GraphControl::InspectingDataSource^ sender, GraphControl::DataSourceChangedEventArgs args);
 
         void OnEquationsChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ args);
-        void OnEquationsVectorChanged(Windows::Foundation::Collections::IObservableVector<GraphControl::Equation ^> ^sender, Windows::Foundation::Collections::IVectorChangedEventArgs ^event);
+        void OnEquationsVectorChanged(Windows::Foundation::Collections::IObservableVector<GraphControl::Equation ^> ^sender, Windows::Foundation::Collections::IVectorChangedEventArgs^ event);
         void OnEquationChanged();
 
         void UpdateGraph();
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation^>& validEqs);
         std::vector<Equation^> GetValidEquations();
+        void SetGraphArgs();
+
+        void OnVariableMapChanged(Windows::Foundation::Collections::IObservableMap<Platform::String^, double> ^sender, Windows::Foundation::Collections::IMapChangedEventArgs<Platform::String^>^ event);
+        void UpdateVariables();
 
         void OnForceProportionalAxesChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ args);
 

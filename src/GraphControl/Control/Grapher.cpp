@@ -56,6 +56,7 @@ namespace GraphControl
         DefaultStyleKey = StringReference(s_defaultStyleKey);
 
         this->SetValue(EquationsProperty, ref new EquationCollection());
+        this->SetValue(VariablesProperty, ref new Map<String^, double>());
 
         this->Loaded += ref new RoutedEventHandler(this, &Grapher::OnLoaded);
         this->Unloaded += ref new RoutedEventHandler(this, &Grapher::OnUnloaded);
@@ -141,6 +142,17 @@ namespace GraphControl
             s_equationTemplateProperty = DependencyProperty::Register(
                 StringReference(s_propertyName_EquationTemplate),
                 DataTemplate::typeid,
+                Grapher::typeid,
+                ref new PropertyMetadata(
+                    nullptr,
+                    ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
+        }
+
+        if (!s_variablesProperty)
+        {
+            s_variablesProperty = DependencyProperty::Register(
+                StringReference(s_propertyName_Variables),
+                IObservableMap<String^, double>::typeid,
                 Grapher::typeid,
                 ref new PropertyMetadata(
                     nullptr,
@@ -352,8 +364,11 @@ namespace GraphControl
                     if (m_graph->TryInitialize(graphExpression.get()))
                     {
                         UpdateGraphOptions(m_graph->GetOptions(), validEqs);
+                        SetGraphArgs();
 
                         m_renderMain->Graph = m_graph;
+
+                        UpdateVariables();
                     }
                 }
             }
@@ -362,9 +377,75 @@ namespace GraphControl
                 if (m_graph->TryInitialize())
                 {
                     UpdateGraphOptions(m_graph->GetOptions(), validEqs);
+                    SetGraphArgs();
 
                     m_renderMain->Graph = m_graph;
+
+                    UpdateVariables();
                 }
+            }
+        }
+    }
+
+    void Grapher::SetGraphArgs()
+    {
+        if (m_graph)
+        {
+            for (auto variable : Variables)
+            {
+                m_graph->SetArgValue(variable->Key->Data(), variable->Value);
+            }
+        }
+    }
+
+    void Grapher::UpdateVariables()
+    {
+        auto updatedVariables = ref new Map<String^, double>();
+        if (m_graph)
+        {
+            auto graphVariables = m_graph->GetVariables();
+
+            for (auto graphVar : graphVariables)
+            {
+                // TODO: Update to be static list of known variables to ignore
+                if (graphVar->GetVariableName() != L"x" && graphVar->GetVariableName() != L"y")
+                {
+                    auto key = ref new String(graphVar->GetVariableName().data());
+                    double value = 1.0;
+
+                    if (Variables->HasKey(key))
+                    {
+                        value = Variables->Lookup(key);
+                    }
+
+                    updatedVariables->Insert(key, value);
+                }
+            }
+        }
+
+        Variables = updatedVariables;
+        VariablesUpdated(this, Variables);
+    }
+
+    void Grapher::SetVariable(Platform::String^ variableName, double newValue)
+    {
+        if (Variables->HasKey(variableName))
+        {
+            if (Variables->Lookup(variableName) == newValue)
+            {
+                return;
+            }
+            Variables->Remove(variableName);
+        }
+        Variables->Insert(variableName, newValue);
+
+        if (m_graph)
+        {
+            m_graph->SetArgValue(variableName->Data(), newValue);
+
+            if (m_renderMain)
+            {
+                m_renderMain->RunRenderPass();
             }
         }
     }
@@ -408,6 +489,11 @@ namespace GraphControl
     void Grapher::OnForceProportionalAxesChanged(DependencyPropertyChangedEventArgs^ args)
     {
         UpdateGraph();
+    }
+
+    void Grapher::OnVariableMapChanged(IObservableMap<String^, double>^ sender, IMapChangedEventArgs<String^>^ event)
+    {
+        VariablesUpdated(this, sender);
     }
 
     void Grapher::OnBackgroundColorChanged(const Windows::UI::Color& color)

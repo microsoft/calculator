@@ -17,6 +17,7 @@
                     <x:Double x:Key="HighContrastStrokeThickness">0</x:Double>
                     <Color x:Key="AltHighColor">#FF000000</Color>
                     <Color x:Key="ChromeMediumLowColor">#FF2B2B2B</Color>
+                    <Color x:Key="AppControlFocusedVariableForegroundText">#FFFFFFFF</Color>
                     <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="{StaticResource AltHighColor}"/>
                     <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush" Color="{StaticResource ChromeMediumLowColor}"/>
                     <SolidColorBrush x:Key="TitleBarBackgroundTransparentBrush" Color="Transparent"/>
@@ -55,6 +56,7 @@
                     <x:Double x:Key="HighContrastStrokeThickness">0</x:Double>
                     <Color x:Key="AltHighColor">#FFF2F2F2</Color>
                     <Color x:Key="ChromeMediumLowColor">#FFE0E0E0</Color>
+                    <Color x:Key="AppControlFocusedVariableForegroundText">#FF000000</Color>
                     <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="{StaticResource SystemAltHighColor}"/>
                     <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush" Color="{StaticResource ChromeMediumLowColor}"/>
                     <SolidColorBrush x:Key="TitleBarBackgroundTransparentBrush" Color="Transparent"/>

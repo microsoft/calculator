@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 
 #ifndef GRAPHINGAPI
 #ifdef GRAPHING_ENGINE_IMPL
