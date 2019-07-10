@@ -25,19 +25,37 @@ namespace CalculatorApp::ViewModel
         { }
 
         OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
+
         OBSERVABLE_PROPERTY_R(Platform::String^, Name);
-        OBSERVABLE_PROPERTY_RW(double, Value);
+        OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(double, Value);
+        OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(double, Min);
+        OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(double, Step);
+        OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(double, Max);
         OBSERVABLE_PROPERTY_RW(bool, SliderSettingsVisible);
-        OBSERVABLE_PROPERTY_RW(double, Min);
-        OBSERVABLE_PROPERTY_RW(double, Step);
-        OBSERVABLE_PROPERTY_RW(double, Max);
 
         event Windows::Foundation::EventHandler<VariableChangedEventArgs>^ VariableUpdated;
+
+        void SetValue(double value)
+        {
+            if (value < Min)
+            {
+                value = Min;
+            }
+            else if (value > Max)
+            {
+                value = Max;
+            }
+
+            Value = value;
+        }
 
     private:
         void OnPropertyChanged(Platform::String^ propertyName)
         {
-            VariableUpdated(this, VariableChangedEventArgs{ Name, Value });
+            if (propertyName == "Value")
+            {
+                VariableUpdated(this, VariableChangedEventArgs{ Name, Value });
+            }
         }
     };
 

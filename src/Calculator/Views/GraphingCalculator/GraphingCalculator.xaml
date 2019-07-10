@@ -119,18 +119,18 @@
                                             <TextBlock Padding="0,0,0,8"
                                                        VerticalAlignment="Bottom"
                                                        Text="{x:Bind Name}"/>
-                                            <TextBox Grid.Column="1"
+                                            <TextBox x:Name="Value"
+                                                     Grid.Column="1"
                                                      Margin="12,4,4,4"
                                                      HorizontalAlignment="Left"
                                                      Background="Transparent"
                                                      BorderThickness="0,0,0,1"
                                                      FontSize="14"
                                                      AcceptsReturn="False"
-                                                     BeforeTextChanging="BeforeTextChanging"
                                                      InputScope="Number"
                                                      KeyDown="TextBoxKeyDown"
                                                      LosingFocus="TextBoxLosingFocus"
-                                                     Text="{x:Bind Value, Mode=TwoWay}"
+                                                     Text="{x:Bind Value, Mode=OneWay}"
                                                      TextWrapping="NoWrap"/>
                                             <ToggleButton Grid.Column="2"
                                                           HorizontalAlignment="Right"
@@ -155,13 +155,14 @@
                                                 </ToggleButton.Resources>
                                             </ToggleButton>
                                         </Grid>
-                                        <Slider Maximum="{x:Bind Max, Mode=TwoWay}"
+                                        <Slider MinHeight="38"
+                                                Maximum="{x:Bind Max, Mode=TwoWay}"
                                                 Minimum="{x:Bind Min, Mode=TwoWay}"
                                                 StepFrequency="{x:Bind Step, Mode=TwoWay}"
                                                 Visibility="{x:Bind SliderSettingsVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"
                                                 Value="{x:Bind Value, Mode=TwoWay}"/>
                                         <Grid Grid.Row="1"
-                                              MinHeight="32"
+                                              MinHeight="38"
                                               HorizontalAlignment="Stretch"
                                               Visibility="{x:Bind SliderSettingsVisible, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
                                             <Grid.ColumnDefinitions>
@@ -170,57 +171,59 @@
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Padding="0,0,0,8"
+                                                <TextBlock x:Uid="MinTextBlock"
+                                                           Padding="0,0,0,8"
                                                            VerticalAlignment="Bottom"
-                                                           FontWeight="SemiBold"
-                                                           Text="Min"/>
-                                                <TextBox Margin="12,4,4,4"
+                                                           FontWeight="SemiBold"/>
+                                                <TextBox x:Name="Min"
+                                                         MaxWidth="96"
+                                                         Margin="12,4,4,4"
                                                          Background="Transparent"
                                                          BorderThickness="0,0,0,1"
                                                          FontSize="14"
                                                          AcceptsReturn="False"
-                                                         BeforeTextChanging="BeforeTextChanging"
                                                          InputScope="Number"
                                                          KeyDown="TextBoxKeyDown"
                                                          LosingFocus="TextBoxLosingFocus"
-                                                         Text="{x:Bind Min, Mode=TwoWay}"/>
+                                                         Text="{x:Bind Min, Mode=OneWay}"/>
                                             </StackPanel>
                                             <StackPanel Grid.Column="1"
                                                         HorizontalAlignment="Center"
                                                         Orientation="Horizontal">
-                                                <!-- TODO: make these x:Uid -->
-                                                <TextBlock Padding="0,0,0,8"
+                                                <TextBlock x:Uid="StepTextBlock"
+                                                           Padding="0,0,0,8"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Bottom"
-                                                           FontWeight="SemiBold"
-                                                           Text="Step"/>
-                                                <TextBox Margin="12,4,4,4"
+                                                           FontWeight="SemiBold"/>
+                                                <TextBox x:Name="Step"
+                                                         MaxWidth="96"
+                                                         Margin="12,4,4,4"
                                                          HorizontalAlignment="Center"
                                                          Background="Transparent"
                                                          BorderThickness="0,0,0,1"
                                                          FontSize="14"
                                                          AcceptsReturn="False"
-                                                         BeforeTextChanging="BeforeTextChanging"
                                                          InputScope="Number"
                                                          KeyDown="TextBoxKeyDown"
                                                          LosingFocus="TextBoxLosingFocus"
-                                                         Text="{x:Bind Step, Mode=TwoWay}"/>
+                                                         Text="{x:Bind Step, Mode=OneWay}"/>
                                             </StackPanel>
                                             <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                                <TextBlock Padding="0,0,0,8"
+                                                <TextBlock x:Uid="MaxTextBlock"
+                                                           Padding="0,0,0,8"
                                                            VerticalAlignment="Bottom"
-                                                           FontWeight="SemiBold"
-                                                           Text="Max"/>
-                                                <TextBox Margin="12,4,4,4"
+                                                           FontWeight="SemiBold"/>
+                                                <TextBox x:Name="Max"
+                                                         MaxWidth="96"
+                                                         Margin="12,4,4,4"
                                                          Background="Transparent"
                                                          BorderThickness="0,0,0,1"
                                                          FontSize="14"
                                                          AcceptsReturn="False"
-                                                         BeforeTextChanging="BeforeTextChanging"
                                                          InputScope="Number"
                                                          KeyDown="TextBoxKeyDown"
                                                          LosingFocus="TextBoxLosingFocus"
-                                                         Text="{x:Bind Max, Mode=TwoWay}"/>
+                                                         Text="{x:Bind Max, Mode=OneWay}"/>
                                             </StackPanel>
                                         </Grid>
                                     </StackPanel>

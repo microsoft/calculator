@@ -66,46 +66,31 @@ void GraphingCalculator::OnVariableChanged(Platform::Object^ sender, VariableCha
 }
 
 
-void GraphingCalculator::BeforeTextChanging(TextBox^ sender, TextBoxBeforeTextChangingEventArgs^ args)
+void GraphingCalculator::SubmitTextbox(TextBox^ sender)
 {
-    if (args->NewText->IsEmpty() || args->NewText == "-")
-    {
-        return;
-    }
+    auto variableViewModel = static_cast<VariableViewModel^>(sender->DataContext);
 
-    try
+    if (sender->Name == "Value")
     {
-        stod(args->NewText->Data());
+        variableViewModel->SetValue(validateDouble(sender->Text, variableViewModel->Value));
     }
-    catch (...)
+    else if (sender->Name == "Min")
     {
-        args->Cancel = true;
+        variableViewModel->Min = validateDouble(sender->Text, variableViewModel->Min);
+    }
+    else if (sender->Name == "Step")
+    {
+        variableViewModel->Step = validateDouble(sender->Text, variableViewModel->Step);
+    }
+    else if (sender->Name == "Max")
+    {
+        variableViewModel->Max = validateDouble(sender->Text, variableViewModel->Max);
     }
 }
 
-
-// Move this into view model, make it take into account min/max values also
-void GraphingCalculator::ValidateTextBox(TextBox^ sender)
+void GraphingCalculator::TextBoxLosingFocus(TextBox^ sender, LosingFocusEventArgs^)
 {
-    if (sender->Text->IsEmpty())
-    {
-        sender->Text = "1";
-    }
-
-    try
-    {
-        stod(sender->Text->Data());
-    }
-    catch (...)
-    {
-        sender->Text = "1";
-    }
-}
-
-
-void GraphingCalculator::TextBoxLosingFocus(TextBox^ sender, LosingFocusEventArgs^ args)
-{
-    ValidateTextBox(sender);
+    SubmitTextbox(sender);
 }
 
 
@@ -113,6 +98,18 @@ void GraphingCalculator::TextBoxKeyDown(TextBox^ sender, KeyRoutedEventArgs^ e)
 {
     if (e->Key == ::VirtualKey::Enter)
     {
-        ValidateTextBox(sender);
+        SubmitTextbox(sender);
+    }
+}
+
+double GraphingCalculator::validateDouble(String^ value, double defaultValue)
+{
+    try
+    {
+        return stod(value->Data());
+    }
+    catch (...)
+    {
+        return defaultValue;
     }
 }

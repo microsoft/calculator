@@ -32,6 +32,15 @@
     }}\
     } private: t m_##n; public:
 
+#define OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(t, n)\
+    property t n {\
+    t get() { return m_##n; }\
+    void set(t value) {\
+    m_##n = value;\
+    RaisePropertyChanged(L#n);\
+        }\
+    } private: t m_##n; public:
+
 #define OBSERVABLE_PROPERTY_RW(t, n)\
     property t n {\
     t get() { return m_##n; }\

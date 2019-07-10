@@ -29,6 +29,9 @@ namespace
     constexpr auto s_propertyName_Variables = L"Variables";
     constexpr auto s_propertyName_ForceProportionalAxes = L"ForceProportionalAxes";
 
+    constexpr auto s_X = L"x";
+    constexpr auto s_Y = L"y";
+
     // Helper function for converting a pointer position to a position that the graphing engine will understand.
     // posX/posY are the pointer position elements and width,height are the dimensions of the graph surface.
     // The graphing engine interprets x,y position between the range [-1, 1].
@@ -407,8 +410,7 @@ namespace GraphControl
 
             for (auto graphVar : graphVariables)
             {
-                // TODO: Update to be static list of known variables to ignore
-                if (graphVar->GetVariableName() != L"x" && graphVar->GetVariableName() != L"y")
+                if (graphVar->GetVariableName() != s_X && graphVar->GetVariableName() != s_Y)
                 {
                     auto key = ref new String(graphVar->GetVariableName().data());
                     double value = 1.0;
@@ -435,8 +437,10 @@ namespace GraphControl
             {
                 return;
             }
+
             Variables->Remove(variableName);
         }
+
         Variables->Insert(variableName, newValue);
 
         if (m_graph)

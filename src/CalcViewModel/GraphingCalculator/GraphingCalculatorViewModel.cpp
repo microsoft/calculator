@@ -4,6 +4,7 @@
 using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace Platform::Collections;
+using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::UI::Xaml::Data;
 
@@ -26,12 +27,9 @@ namespace CalculatorApp::ViewModel
         for (auto var : variables)
         {
             auto variable = ref new VariableViewModel(var->Key, var->Value);
-            variable->PropertyChanged += ref new PropertyChangedEventHandler([this, variable](Object^ sender, PropertyChangedEventArgs^ e)
+            variable->VariableUpdated += ref new EventHandler<VariableChangedEventArgs>([this, variable](Object^ sender, VariableChangedEventArgs e)
                 {
-                    if (e->PropertyName == "Value")
-                    {
-                        VariableUpdated(variable, VariableChangedEventArgs{ variable->Name, variable->Value });
-                    }
+                    VariableUpdated(variable, VariableChangedEventArgs{ e.variableName, e.newValue });
                 });
             Variables->Append(variable);
 
