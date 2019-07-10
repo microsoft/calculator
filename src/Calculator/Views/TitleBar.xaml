@@ -3,7 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="using:CalculatorApp.Converters"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
     <Grid x:Name="LayoutRoot"
           Height="32"
           HorizontalAlignment="Stretch">
@@ -42,6 +46,7 @@
                 HorizontalContentAlignment="Center"
                 Background="Transparent"
                 FontWeight="SemiLight"
+                Visibility="{x:Bind Model.IsNormalMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
                 ToolTipService.ToolTip="Always-on-top"/>
     </Grid>
 </UserControl>

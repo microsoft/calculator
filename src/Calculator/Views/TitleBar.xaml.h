@@ -18,6 +18,12 @@ public
     {
     public:
         TitleBar();
+        property CalculatorApp::ViewModel::ApplicationViewModel^ Model
+        {
+            CalculatorApp::ViewModel::ApplicationViewModel^ get() {
+                return static_cast<CalculatorApp::ViewModel::ApplicationViewModel^>(this->DataContext);
+            }
+        }
 
     private:
         void OnLoaded(_In_ Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
@@ -31,6 +37,7 @@ public
         void ColorValuesChanged(_In_ Windows::UI::ViewManagement::UISettings ^ sender, _In_ Platform::Object ^ e);
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
         void OnWindowActivated(Platform::Object ^ sender, Windows::UI::Core::WindowActivatedEventArgs ^ e);
+
 
         Platform::Agile<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar ^> m_coreTitleBar;
         Windows::Foundation::EventRegistrationToken m_layoutChangedToken;

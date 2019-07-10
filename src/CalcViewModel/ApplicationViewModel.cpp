@@ -55,6 +55,7 @@ void ApplicationViewModel::Mode::set(ViewMode value)
     {
         PreviousMode = m_mode;
         m_mode = value;
+        IsNormalMode = m_mode == ViewMode::Standard;
         OnModeChanged();
         RaisePropertyChanged(ModePropertyName);
     }

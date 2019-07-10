@@ -364,7 +364,7 @@
                                        Style="{StaticResource SymbolOperatorButtonStyle}"
                                        AutomationProperties.AutomationId="squareRootButton"
                                        ButtonId="Sqrt"
-                                       Content="&#xE94B;"/>
+                                       Content="&#xF899;"/>
             <controls:CalculatorButton x:Name="XPower2Button"
                                        x:Uid="xpower2Button"
                                        Grid.Column="2"
@@ -495,6 +495,6 @@
                                    Style="{StaticResource SymbolOperatorButtonStyle}"
                                    AutomationProperties.AutomationId="negateButton"
                                    ButtonId="Negate"
-                                   Content="&#xE94D;"/>
+                                   Content="&#xF898;"/>
     </Grid>
 </UserControl>

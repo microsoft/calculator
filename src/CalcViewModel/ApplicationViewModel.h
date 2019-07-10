@@ -23,6 +23,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(DateCalculatorViewModel ^, DateCalcViewModel);
             OBSERVABLE_PROPERTY_RW(UnitConverterViewModel ^, ConverterViewModel);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::ViewMode, PreviousMode);
+            OBSERVABLE_PROPERTY_RW(bool, IsNormalMode);
             OBSERVABLE_NAMED_PROPERTY_RW(Platform::String ^, CategoryName);
 
             COMMAND_FOR_METHOD(CopyCommand, ApplicationViewModel::OnCopyCommand);
@@ -75,6 +76,7 @@ namespace CalculatorApp
             void SetMenuCategories();
 
             CalculatorApp::Common::ViewMode m_mode;
+            bool m_isNormalMode;
             Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup ^> ^ m_categories;
         };
     }
