@@ -243,14 +243,6 @@
 							 Color="#FFFF7F99" />
 			<SolidColorBrush x:Key="SystemControlPageTextBaseHighBrush"
 							 Color="#FFC52644" />
-			<SolidColorBrush x:Key="AppControlHoverButtonFaceBrush"
-							 Color="#FFFF96AA" />
-			<SolidColorBrush x:Key="AppControlPressedButtonFaceBrush"
-							 Color="#FFFFA8B8" />
-			<SolidColorBrush x:Key="AccentPressBackgroundColorBrush"
-							 Color="#FFFFA8B8" />
-			<SolidColorBrush x:Key="AccentHoverBackgroundColorBrush"
-							 Color="#FFFF96AA" />
 
 		</ResourceDictionary>
 </ResourceDictionary.ThemeDictionaries>
