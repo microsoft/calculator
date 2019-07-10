@@ -247,7 +247,7 @@
 		</ResourceDictionary>
 </ResourceDictionary.ThemeDictionaries>
 
-	<!-- Min Window Height/Width FC214C FF0032 -->
+	<!-- Min Window Height/Width -->
 	<x:Double x:Key="AppMinWindowHeight">500</x:Double>
 	<x:Double x:Key="AppMinWindowWidth">320</x:Double>
 
