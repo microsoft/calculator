@@ -495,11 +495,6 @@ namespace GraphControl
         UpdateGraph();
     }
 
-    void Grapher::OnVariableMapChanged(IObservableMap<String^, double>^ sender, IMapChangedEventArgs<String^>^ event)
-    {
-        VariablesUpdated(this, sender);
-    }
-
     void Grapher::OnBackgroundColorChanged(const Windows::UI::Color& color)
     {
         if (m_renderMain)

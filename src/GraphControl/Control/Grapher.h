@@ -162,8 +162,6 @@ namespace GraphControl
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation^>& validEqs);
         std::vector<Equation^> GetValidEquations();
         void SetGraphArgs();
-
-        void OnVariableMapChanged(Windows::Foundation::Collections::IObservableMap<Platform::String^, double> ^sender, Windows::Foundation::Collections::IMapChangedEventArgs<Platform::String^>^ event);
         void UpdateVariables();
 
         void OnForceProportionalAxesChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ args);

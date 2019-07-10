@@ -31,7 +31,6 @@
               Grid.Row="1"
               Grid.Column="0">
 
-
             <graphControl:Grapher Name="GraphingControl"
                                   Margin="4,7,4,4"
                                   EquationsSource="{x:Bind ViewModel.Equations, Mode=OneWay}"
@@ -121,17 +120,12 @@
                                                        Text="{x:Bind Name}"/>
                                             <TextBox x:Name="Value"
                                                      Grid.Column="1"
-                                                     Margin="12,4,4,4"
                                                      HorizontalAlignment="Left"
-                                                     Background="Transparent"
-                                                     BorderThickness="0,0,0,1"
-                                                     FontSize="14"
-                                                     AcceptsReturn="False"
-                                                     InputScope="Number"
+                                                     Style="{StaticResource VariableTextBoxStyle}"
+                                                     GotFocus="TextBoxGotFocus"
                                                      KeyDown="TextBoxKeyDown"
                                                      LosingFocus="TextBoxLosingFocus"
-                                                     Text="{x:Bind Value, Mode=OneWay}"
-                                                     TextWrapping="NoWrap"/>
+                                                     Text="{x:Bind Value, Mode=OneWay}"/>
                                             <ToggleButton Grid.Column="2"
                                                           HorizontalAlignment="Right"
                                                           Background="Transparent"
@@ -177,12 +171,8 @@
                                                            FontWeight="SemiBold"/>
                                                 <TextBox x:Name="Min"
                                                          MaxWidth="96"
-                                                         Margin="12,4,4,4"
-                                                         Background="Transparent"
-                                                         BorderThickness="0,0,0,1"
-                                                         FontSize="14"
-                                                         AcceptsReturn="False"
-                                                         InputScope="Number"
+                                                         Style="{StaticResource VariableTextBoxStyle}"
+                                                         GotFocus="TextBoxGotFocus"
                                                          KeyDown="TextBoxKeyDown"
                                                          LosingFocus="TextBoxLosingFocus"
                                                          Text="{x:Bind Min, Mode=OneWay}"/>
@@ -197,13 +187,9 @@
                                                            FontWeight="SemiBold"/>
                                                 <TextBox x:Name="Step"
                                                          MaxWidth="96"
-                                                         Margin="12,4,4,4"
                                                          HorizontalAlignment="Center"
-                                                         Background="Transparent"
-                                                         BorderThickness="0,0,0,1"
-                                                         FontSize="14"
-                                                         AcceptsReturn="False"
-                                                         InputScope="Number"
+                                                         Style="{StaticResource VariableTextBoxStyle}"
+                                                         GotFocus="TextBoxGotFocus"
                                                          KeyDown="TextBoxKeyDown"
                                                          LosingFocus="TextBoxLosingFocus"
                                                          Text="{x:Bind Step, Mode=OneWay}"/>
@@ -215,12 +201,8 @@
                                                            FontWeight="SemiBold"/>
                                                 <TextBox x:Name="Max"
                                                          MaxWidth="96"
-                                                         Margin="12,4,4,4"
-                                                         Background="Transparent"
-                                                         BorderThickness="0,0,0,1"
-                                                         FontSize="14"
-                                                         AcceptsReturn="False"
-                                                         InputScope="Number"
+                                                         Style="{StaticResource VariableTextBoxStyle}"
+                                                         GotFocus="TextBoxGotFocus"
                                                          KeyDown="TextBoxKeyDown"
                                                          LosingFocus="TextBoxLosingFocus"
                                                          Text="{x:Bind Max, Mode=OneWay}"/>

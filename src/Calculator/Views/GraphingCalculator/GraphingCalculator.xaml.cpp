@@ -113,3 +113,8 @@ double GraphingCalculator::validateDouble(String^ value, double defaultValue)
         return defaultValue;
     }
 }
+
+void GraphingCalculator::TextBoxGotFocus(TextBox^ sender, RoutedEventArgs^ e)
+{
+    sender->SelectAll();
+}

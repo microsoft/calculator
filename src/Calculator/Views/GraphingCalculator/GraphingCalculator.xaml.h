@@ -32,7 +32,7 @@ namespace CalculatorApp
         double validateDouble(Platform::String^ value, double defaultValue);
 
         CalculatorApp::ViewModel::GraphingCalculatorViewModel^ m_viewModel;
-        bool m_ignoreNextTextChanged;
 
+        void TextBoxGotFocus(Windows::UI::Xaml::Controls::TextBox^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
     };
 }
