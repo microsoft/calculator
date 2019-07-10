@@ -236,9 +236,14 @@
 		</ResourceDictionary>
 
 		<ResourceDictionary x:Key="Pink">
-			<SolidColorBrush x:Key="SystemControlBackgroundAltMediumHighBrush" Color="#FFF85977" />
-			<Color x:Key="SystemAltMediumLowColor">#FFFF7F99</Color>
-			<SolidColorBrush x:Key="SystemControlPageTextBaseHighBrush" Color="#FFC52644" />
+
+			<Color x:Key="SystemAltMediumLowColor">#FFF85977</Color>
+
+			<SolidColorBrush x:Key="SystemControlBackgroundAltMediumHighBrush"
+							 Color="#FFFF7F99" />
+			<SolidColorBrush x:Key="SystemControlPageTextBaseHighBrush"
+							 Color="#FFC52644" />
+
 		</ResourceDictionary>
 </ResourceDictionary.ThemeDictionaries>
 
