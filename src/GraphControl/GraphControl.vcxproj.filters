@@ -65,15 +65,4 @@
       <Filter>Themes</Filter>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="$(GraphingImplDll)" />
-    <CopyFileToFolders Include="$(GraphingEngineDll)" />
-    <CopyFileToFolders Include="$(GraphingImplDll)" />
-    <CopyFileToFolders Include="$(GraphingEngineDll)" />
-    <CopyFileToFolders Include="$(GraphingImplDll)" />
-    <CopyFileToFolders Include="$(GraphingEngineDll)" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(ProjectDir)\GraphingImplOverrides.props" />
-  </ItemGroup>
 </Project>
