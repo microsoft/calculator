@@ -48,6 +48,15 @@
 
 			<Color x:Key="AccentHoverColor">#FF0077D7</Color>
 
+			<SolidColorBrush x:Key="SystemControlHighlightAltAccentBrush"
+							 Color="{StaticResource AccentHoverColor}" />
+			
+			<SolidColorBrush x:Key="SystemControlHighlightAccentBrush"
+							 Color="{StaticResource AccentHoverColor}" />
+			
+			<SolidColorBrush x:Key="SystemControlForegroundAccentBrush"
+							 Color="{StaticResource AccentHoverColor}" />
+
 			<SolidColorBrush x:Key="AccentPressBackgroundColorBrush"
 			                 Color="{StaticResource AccentPressColor}" />
 
@@ -212,7 +221,7 @@
 			<SolidColorBrush x:Key="SystemControlHighlightTransparentBrush"
 							 Color="{ThemeResource SystemColorHighlightColor}" />
 			<SolidColorBrush x:Key="AppBackgroundAltMediumLowBrush"
-							 Color="{ThemeResource SystemColorButtonFaceColor}" />
+							 Color="#FFCECECE" />
 			<SolidColorBrush x:Key="AppControlPageTextBaseMediumHighBrush"
 							 Color="{ThemeResource SystemColorWindowTextColor}" />
 			<SolidColorBrush x:Key="AppControlHoverButtonFaceBrush"
@@ -252,6 +261,12 @@
 			<SolidColorBrush x:Key="AccentHoverBackgroundColorBrush"
 							 Color="#FFFF96AA" />
 
+			<SolidColorBrush x:Key="SystemControlForegroundAccentBrush"
+							 Color="#FFF85977" />
+			<SolidColorBrush x:Key="SystemControlHighlightAccentBrush"
+							 Color="#FFF85977" />
+			<SolidColorBrush x:Key="SystemControlHighlightAltAccentBrush"
+							 Color="#FFF85977" />
 		</ResourceDictionary>
 </ResourceDictionary.ThemeDictionaries>
 
