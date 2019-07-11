@@ -255,26 +255,35 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
 
-    void TraceLogger::UpdateButtonUsage(NumbersAndOperatorsEnum buttonId, ViewMode mode)
+    void TraceLogger::UpdateButtonUsage(NumbersAndOperatorsEnum button, ViewMode mode)
     {
         // IsProgrammerMode, IsScientificMode, IsStandardMode and None are not actual buttons, so ignore them
-        if (buttonId == NumbersAndOperatorsEnum::IsProgrammerMode || buttonId == NumbersAndOperatorsEnum::IsScientificMode ||
-            buttonId == NumbersAndOperatorsEnum::IsStandardMode || buttonId == NumbersAndOperatorsEnum::None)
+        if (button == NumbersAndOperatorsEnum::IsProgrammerMode || button == NumbersAndOperatorsEnum::IsScientificMode
+            || button == NumbersAndOperatorsEnum::IsStandardMode || button == NumbersAndOperatorsEnum::None)
         {
             return;
         }
 
-        // Writer lock for the buttonLog resource
-        reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
-        vector<ButtonLog>::iterator it = std::find_if(
-            buttonLog.begin(), buttonLog.end(), [buttonId, mode](const ButtonLog& bLog) -> bool { return bLog.buttonId == buttonId && bLog.mode == mode; });
-        if (it != buttonLog.end())
         {
-            it->count++;
+            // Writer lock for the buttonLog resource
+            reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
+
+            vector<ButtonLog>::iterator it = std::find_if(
+                buttonLog.begin(), buttonLog.end(), [button, mode](const ButtonLog& bLog) -> bool { return bLog.button == button && bLog.mode == mode; });
+            if (it != buttonLog.end())
+            {
+                it->count++;
+            }
+            else
+            {
+                buttonLog.push_back(ButtonLog(button, mode));
+            }
         }
-        else
+
+        // Periodically log the button usage so that we do not lose all button data if the app is foricibly closed or crashes
+        if (buttonLog.size() >= 10)
         {
-            buttonLog.push_back(ButtonLog(buttonId, mode));
+            LogButtonUsage();
         }
     }
 
@@ -295,20 +304,25 @@ namespace CalculatorApp
 
         // Writer lock for the buttonLog resource
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
-
-        for (auto i : buttonLog)
+        Platform::String ^ buttonUsageString;
+        for (int i = 0; i < buttonLog.size(); i++)
         {
-            NumbersAndOperatorsEnum button = static_cast<NumbersAndOperatorsEnum>(i.buttonId);
-
-            LoggingFields fields{};
-            fields.AddGuid(L"SessionGuid", sessionGuid);
-            fields.AddInt32(L"CalcMode", NavCategory::Serialize(i.mode));
-            fields.AddUInt32(L"ButtonId", (int)i.buttonId);
-            fields.AddString(L"ButtonName", button.ToString()->Data());
-            fields.AddUInt32(L"UsageCount", i.count);
-            fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-            LogLevel2Event(EVENT_NAME_BUTTON_USAGE, fields);
+            buttonUsageString += NavCategory::GetFriendlyName(buttonLog[i].mode);
+            buttonUsageString += "|";
+            buttonUsageString += buttonLog[i].button.ToString();
+            buttonUsageString += "|";
+            buttonUsageString += buttonLog[i].count;
+            if (i != buttonLog.size() - 1)
+            {
+                buttonUsageString += ",";
+            }
         }
+
+        LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
+        fields.AddString(L"ButtonUsage", buttonUsageString->Data());
+        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
+        LogLevel2Event(EVENT_NAME_BUTTON_USAGE, fields);
 
         buttonLog.clear();
     }
