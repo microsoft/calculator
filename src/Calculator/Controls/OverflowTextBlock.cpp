@@ -32,7 +32,6 @@ void OverflowTextBlock::OnApplyTemplate()
 {
     UnregisterEventHandlers();
 
-    // NEED TO ADD ANOTHER MEMBER VARIABLE TO KEEP TRACK OF MAIN RESULT SO THAT WE CAN USE ITS WIDTH IN SCROLLING CALCULATIONS
     auto uiElement = GetTemplateChild("ExpressionContainer");
     if (uiElement != nullptr)
     {
@@ -162,8 +161,14 @@ void OverflowTextBlock::UpdateScrollButtons()
         editableTokenWidth = m_editableToken->ActualWidth;
     }
 
+    double itemsControlWidth = 0;
+    if (m_itemsControl->Visibility == ::Visibility::Visible)
+    {
+        itemsControlWidth = m_itemsControl->ActualWidth; 
+    }
+
     // When the width is smaller than the container, don't show any
-    if (m_itemsControl->ActualWidth + editableTokenWidth <= m_expressionContainer->ActualWidth)
+    if (itemsControlWidth + editableTokenWidth <= m_expressionContainer->ActualWidth)
     {
         ShowHideScrollButtons(::Visibility::Collapsed, ::Visibility::Collapsed);
     }
@@ -174,7 +179,7 @@ void OverflowTextBlock::UpdateScrollButtons()
     {
         ShowHideScrollButtons(::Visibility::Visible, ::Visibility::Visible);
     }
-    // Width is larger than the container and left most part of the number is shown. Should be able to scroll left.
+    // Width is larger than the container and left most part of the number is shown. Should be able to scroll right.
     else if (m_expressionContainer->HorizontalOffset == 0)
     {
         ShowHideScrollButtons(::Visibility::Collapsed, ::Visibility::Visible);

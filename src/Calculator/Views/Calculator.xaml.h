@@ -91,6 +91,7 @@ public
         void EnsureProgrammer();
         void SetFontSizeResources();
         std::wstring GetCurrentLayoutState();
+        void UpdateOverflowTextBlock(Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
 
     private:
         Windows::UI::Xaml::Controls::ListView ^ m_tokenList;

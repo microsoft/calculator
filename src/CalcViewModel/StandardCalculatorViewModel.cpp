@@ -214,7 +214,7 @@ void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ wstring const& displayS
     }
 
     AreAlwaysOnTopResultsUpdated = false;
-    if (IsAlwaysOnTop && !IsEditingEnabled)
+    if (!IsEditingEnabled && m_tokens != nullptr)
     {
         unsigned int nTokens = 0;
         m_tokens->GetSize(&nTokens);

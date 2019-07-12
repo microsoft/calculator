@@ -140,7 +140,7 @@
                                                   HorizontalContentAlignment="Right"
                                                   VerticalContentAlignment="Center"
                                                   IsTabStop="False"
-                                                  FontWeight="SemiBold"
+                                                  FontWeight="SemiLight"
                                                   ItemTemplateSelector="{StaticResource AlwaysOnTopExpressionItemTemplateSelector}"
                                                   ItemsSource="{Binding ExpressionTokens}"
                                                   Visibility="{Binding DoesAlwaysOnTopResultShowTokens, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
@@ -586,7 +586,7 @@
                                         TokensUpdated="{x:Bind Model.AreAlwaysOnTopResultsUpdated, Mode=OneWay}"
                                         HorizontalContentAlignment="Right"
                                         IsActive="True"
-                                        TabIndex="1"
+                                        IsTabStop="False"
                                         Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
 
             <!-- Programmer display panel controls -->

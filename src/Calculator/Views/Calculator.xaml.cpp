@@ -61,6 +61,8 @@ Calculator::Calculator()
     auto resLoader = AppResourceProvider::GetInstance();
     CopyMenuItem->Text = resLoader.GetResourceString(L"copyMenuItem");
     PasteMenuItem->Text = resLoader.GetResourceString(L"pasteMenuItem");
+
+    this->SizeChanged += ref new SizeChangedEventHandler(this, &Calculator::UpdateOverflowTextBlock);
 }
 
 void Calculator::LoadResourceStrings()
@@ -307,6 +309,7 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
         MemButton->IsEnabled = MemButtonEnabled;
     }
     Model->IsMemoryEmptyAlwaysOnTop = Model->IsMemoryEmpty || Model->IsAlwaysOnTop;
+    AlwaysOnTopResults->UpdateScrollButtons();
 }
 
 void Calculator::OnIsInErrorPropertyChanged()
@@ -825,4 +828,9 @@ void CalculatorApp::Calculator::DockPivot_SelectionChanged(Platform::Object ^ se
     {
         TraceLogger::GetInstance().LogMemoryBodyOpened();
     }
+}
+
+void Calculator::UpdateOverflowTextBlock(Object ^ /*sender*/, SizeChangedEventArgs ^ /*e*/)
+{
+    AlwaysOnTopResults->UpdateScrollButtons();
 }

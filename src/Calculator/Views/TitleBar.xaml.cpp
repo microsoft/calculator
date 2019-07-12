@@ -86,7 +86,8 @@ namespace CalculatorApp
 
     void TitleBar::SetTitleBarVisibility()
     {
-        this->LayoutRoot->Visibility = m_coreTitleBar->IsVisible && !m_accessibilitySettings->HighContrast ? ::Visibility::Visible : ::Visibility::Collapsed;
+        // this->BackgroundElement->Visibility = m_coreTitleBar->IsVisible && !m_accessibilitySettings->HighContrast ? ::Visibility::Visible : ::Visibility::Collapsed;
+        this->LayoutRoot->Visibility = m_coreTitleBar->IsVisible ? ::Visibility::Visible : ::Visibility::Collapsed;
     }
 
     void TitleBar::SetTitleBarPadding()
@@ -193,16 +194,19 @@ namespace CalculatorApp
                 avm->CalculatorViewModel->IsAlwaysOnTop = !success;
                 if (!success)
                 {
+                    AlwaysOnTopButton->HorizontalAlignment = ::HorizontalAlignment::Left;
                     AlwaysOnTopButton->Content = L"\uEE47";
                     AppName->Text = "";
                     ToolTipService::SetToolTip(AlwaysOnTopButton, "Exit always-on-top");
                 }
                 else
                 {
+                    AlwaysOnTopButton->HorizontalAlignment = ::HorizontalAlignment::Right;
                     AlwaysOnTopButton->Content = L"\uEE49";
                     AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
-                    ToolTipService::SetToolTip(AlwaysOnTopButton, "Always-on-top");
+                    ToolTipService::SetToolTip(AlwaysOnTopButton, "Always on top");
                 }
+                this->Focus(::FocusState::Programmatic);
             });
         }
         else
@@ -239,16 +243,19 @@ namespace CalculatorApp
                 avm->CalculatorViewModel->IsAlwaysOnTop = success;
                 if (success)
                 {
+                    AlwaysOnTopButton->HorizontalAlignment = ::HorizontalAlignment::Left;
                     AlwaysOnTopButton->Content = L"\uEE47";
                     AppName->Text = "";
                     ToolTipService::SetToolTip(AlwaysOnTopButton, "Exit always-on-top");
                 }
                 else
                 {
+                    AlwaysOnTopButton->HorizontalAlignment = ::HorizontalAlignment::Right;
                     AlwaysOnTopButton->Content = L"\uEE49";
                     AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
-                    ToolTipService::SetToolTip(AlwaysOnTopButton, "Always-on-top");
+                    ToolTipService::SetToolTip(AlwaysOnTopButton, "Always on top");
                 }
+                this->Focus(::FocusState::Programmatic);
             });
         }
     }

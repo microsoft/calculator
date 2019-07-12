@@ -712,7 +712,7 @@
                                        Style="{StaticResource SymbolOperatorButtonStyle}"
                                        FontSize="16"
                                        ButtonId="Negate"
-                                       Content="&#xe94d;"
+                                       Content="&#xF898;"
                                        TabIndex="6"
                                        Visibility="{x:Bind Model.CurrentCategory.NegateVisibility, Mode=OneWay}"/>
         </Grid>

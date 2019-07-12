@@ -7,6 +7,7 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot"
           Height="32"
@@ -32,7 +33,8 @@
                    Foreground="{ThemeResource TitleBarForegroundBaseHighBrush}"
                    FontSize="12"
                    TextAlignment="Left"
-                   TextTrimming="CharacterEllipsis"/>
+                   TextTrimming="CharacterEllipsis"
+                   Visibility="{x:Bind Model.CalculatorViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
         </Grid>
         <Button x:Name="AlwaysOnTopButton" Grid.Row="0"
                 FontFamily="{StaticResource CalculatorFontFamily}"
@@ -45,8 +47,9 @@
                 HorizontalAlignment="Right"
                 HorizontalContentAlignment="Center"
                 Background="Transparent"
-                FontWeight="SemiLight"
+                FontWeight="Thin"
+                FontSize="14"
                 Visibility="{x:Bind Model.IsNormalMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
-                ToolTipService.ToolTip="Always-on-top"/>
+                ToolTipService.ToolTip="Always on top"/>
     </Grid>
 </UserControl>
