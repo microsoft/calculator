@@ -18,6 +18,8 @@ namespace GraphControl::DX
         virtual void OnDeviceLost();
         virtual void OnDeviceRestored();
 
+        void TestShare();
+
     internal:
         RenderMain(Windows::UI::Xaml::Controls::SwapChainPanel^ panel);
 

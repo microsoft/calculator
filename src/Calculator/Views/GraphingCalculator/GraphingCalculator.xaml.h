@@ -24,5 +24,6 @@ namespace CalculatorApp
 
     private:
         CalculatorApp::ViewModel::GraphingCalculatorViewModel^ m_viewModel;
-    };
+		void OnShareClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+	};
 }

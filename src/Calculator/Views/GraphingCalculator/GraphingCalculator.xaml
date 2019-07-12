@@ -25,7 +25,7 @@
               Grid.Row="1"
               Grid.Column="0">
 
-            <graphControl:Grapher Grid.Row="0"
+            <graphControl:Grapher x:Name="TheGrapher" Grid.Row="0"
                                   Margin="4,7,4,4"
                                   EquationsSource="{x:Bind ViewModel.Equations, Mode=OneWay}"
                                   ForceProportionalAxes="True"
@@ -52,7 +52,10 @@
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
 
-            <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
+            <StackPanel>
+                <Button x:Name="Share" Content="Share" Click="OnShareClick"/>
+                <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
+            </StackPanel>
 
             <Grid x:Name="ButtonContainerGrid"
                   Grid.Row="1"

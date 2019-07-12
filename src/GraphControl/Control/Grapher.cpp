@@ -548,4 +548,24 @@ namespace GraphControl
             }
         }
     }
+
+    void Grapher::Share()
+    {
+        HRESULT hr E_FAIL;
+        if (m_renderMain != nullptr && m_graph != nullptr)
+        {
+            if (auto renderer = m_graph->GetRenderer())
+            {
+                std::shared_ptr < MathSolverEngine::Graph::Renderer::IBitmap> BitmapOut;
+                bool hasSomeMissingDataOut = false;
+
+                hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
+                if (SUCCEEDED(hr))
+                {
+                    // Now try to share it
+                }
+            }
+        }
+
+    }
 }

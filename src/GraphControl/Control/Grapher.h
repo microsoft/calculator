@@ -15,6 +15,7 @@ namespace GraphControl
         Grapher();
 
         static void RegisterDependencyProperties();
+        void Share();
 
         #pragma region Windows::UI::Xaml::DataTemplate^ EquationTemplate DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ EquationTemplateProperty

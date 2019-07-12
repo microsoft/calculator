@@ -36,6 +36,8 @@ namespace GraphControl::DX
         m_deviceResources.RegisterDeviceNotify(this);
 
         RegisterEventHandlers();
+
+        //TestShare();
     }
 
     RenderMain::~RenderMain()
@@ -336,4 +338,24 @@ namespace GraphControl::DX
     {
         m_nearestPointRenderer.CreateDeviceDependentResources();
     }
+
+    //void RenderMain::TestShare()
+    //{
+    //    if (m_graph)
+    //    {
+    //        if (auto renderer = m_graph->GetRenderer())
+    //        {
+    //            HRESULT hr = E_FAIL;
+
+    //            std::shared_ptr < MathSolverEngine::Graph::Renderer::IBitmap> BitmapOut;
+    //            bool hasSomeMissingDataOut = false;
+
+    //            hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
+    //            if (SUCCEEDED(hr))
+    //            {
+    //                // Now try to share it
+    //            }
+    //        }
+    //    }
+    //}
 }

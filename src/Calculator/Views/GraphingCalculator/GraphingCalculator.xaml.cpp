@@ -49,3 +49,14 @@ void GraphingCalculator::ViewModel::set(GraphingCalculatorViewModel^ vm)
         RaisePropertyChanged(StringReference(sc_ViewModelPropertyName));
     }
 }
+
+
+void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+    // Notify the graphing component to start a share action.
+    if (TheGrapher != nullptr)
+    {
+        TheGrapher->Share();
+    }
+
+}
