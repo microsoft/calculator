@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -35,7 +35,14 @@ namespace CalculatorApp
                 int month = 0;
                 int week = 0;
                 int day = 0;
+
+                bool operator==(const DateDifference& dd) const
+                {
+                    return year == dd.year && month == dd.month && week == dd.week && day == day;
+                }
             };
+
+            const DateDifference DateDifferenceUnknown{ INT_MIN, INT_MIN, INT_MIN, INT_MIN };
 
             class DateCalculationEngine
             {
@@ -50,7 +57,7 @@ namespace CalculatorApp
                     _In_ Windows::Foundation::DateTime startDate,
                     _In_ const DateDifference& duration,
                     _Out_ Windows::Foundation::DateTime* endDate);
-                void __nothrow GetDateDifference(
+                bool __nothrow TryGetDateDifference(
                     _In_ Windows::Foundation::DateTime date1,
                     _In_ Windows::Foundation::DateTime date2,
                     _In_ DateUnit outputFormat,

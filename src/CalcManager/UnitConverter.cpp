@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 #include <cassert>
+#include <cmath>
 #include <sstream>
 #include <algorithm> // for std::sort
 #include "Command.h"
 #include "UnitConverter.h"
 
-using namespace concurrency;
 using namespace std;
 using namespace UnitConversionManager;
 
@@ -229,7 +229,7 @@ Unit UnitConverter::StringToUnit(const wstring& w)
     vector<wstring> tokenList = StringToVector(w, L";");
     assert(tokenList.size() == EXPECTEDSERIALIZEDUNITTOKENCOUNT);
     Unit serializedUnit;
-    serializedUnit.id = _wtoi(Unquote(tokenList[0]).c_str());
+    serializedUnit.id = wcstol(Unquote(tokenList[0]).c_str(), nullptr, 10);
     serializedUnit.name = Unquote(tokenList[1]);
     serializedUnit.accessibleName = serializedUnit.name;
     serializedUnit.abbreviation = Unquote(tokenList[2]);
@@ -244,7 +244,7 @@ Category UnitConverter::StringToCategory(const wstring& w)
     vector<wstring> tokenList = StringToVector(w, L";");
     assert(tokenList.size() == EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT);
     Category serializedCategory;
-    serializedCategory.id = _wtoi(Unquote(tokenList[0]).c_str());
+    serializedCategory.id = wcstol(Unquote(tokenList[0]).c_str(), nullptr, 10);
     serializedCategory.supportsNegative = (tokenList[1].compare(L"1") == 0);
     serializedCategory.name = Unquote(tokenList[2]);
     return serializedCategory;
@@ -536,30 +536,31 @@ void UnitConverter::SetViewModelCurrencyCallback(_In_ const shared_ptr<IViewMode
     }
 }
 
-task<pair<bool, wstring>> UnitConverter::RefreshCurrencyRatios()
+future<pair<bool, wstring>> UnitConverter::RefreshCurrencyRatios()
 {
     shared_ptr<ICurrencyConverterDataLoader> currencyDataLoader = GetCurrencyConverterDataLoader();
-    return create_task([this, currencyDataLoader]() {
-               if (currencyDataLoader != nullptr)
-               {
-                   return currencyDataLoader->TryLoadDataFromWebOverrideAsync();
-               }
-               else
-               {
-                   return task_from_result(false);
-               }
-           })
-        .then(
-            [this, currencyDataLoader](bool didLoad) {
-                wstring timestamp = L"";
-                if (currencyDataLoader != nullptr)
-                {
-                    timestamp = currencyDataLoader->GetCurrencyTimestamp();
-                }
+    future<bool> loadDataResult;
+    if (currencyDataLoader != nullptr)
+    {
+        loadDataResult = currencyDataLoader->TryLoadDataFromWebOverrideAsync();
+    }
+    else
+    {
+        loadDataResult = async([] { return false; });
+    }
 
-                return make_pair(didLoad, timestamp);
-            },
-            task_continuation_context::use_default());
+    shared_future<bool> sharedLoadResult = loadDataResult.share();
+    return async([this, currencyDataLoader, sharedLoadResult]() {
+        sharedLoadResult.wait();
+        bool didLoad = sharedLoadResult.get();
+        wstring timestamp = L"";
+        if (currencyDataLoader != nullptr)
+        {
+            timestamp = currencyDataLoader->GetCurrencyTimestamp();
+        }
+
+        return make_pair(didLoad, timestamp);
+    });
 }
 
 shared_ptr<ICurrencyConverterDataLoader> UnitConverter::GetCurrencyConverterDataLoader()

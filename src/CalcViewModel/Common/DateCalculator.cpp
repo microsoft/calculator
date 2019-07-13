@@ -119,7 +119,7 @@ bool DateCalculationEngine::SubtractDuration(_In_ DateTime startDate, _In_ const
 }
 
 // Calculate the difference between two dates
-void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime date2, _In_ DateUnit outputFormat, _Out_ DateDifference* difference)
+bool DateCalculationEngine::TryGetDateDifference(_In_ DateTime date1, _In_ DateTime date2, _In_ DateUnit outputFormat, _Out_ DateDifference* difference)
 {
     DateTime startDate;
     DateTime endDate;
@@ -176,8 +176,9 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
                         catch (Platform::InvalidArgumentException ^)
                         {
                             // Operation failed due to out of bound result
-                            // Do nothing
-                            differenceInDates[unitIndex] = 0;
+                            // For example: 31st Dec, 9999 - last valid date
+                            *difference = DateDifferenceUnknown;
+                            return false;
                         }
                     }
 
@@ -190,6 +191,12 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
                         if (tempDaysDiff < 0)
                         {
                             // pivotDate has gone over the end date; start from the beginning of this unit
+                            if (differenceInDates[unitIndex] == 0)
+                            {
+                                // differenceInDates[unitIndex] is unsigned, the value can't be negative
+                                *difference = DateDifferenceUnknown;
+                                return false;
+                            }
                             differenceInDates[unitIndex] -= 1;
                             pivotDate = tempPivotDate;
                             pivotDate = AdjustCalendarDate(pivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex]));
@@ -206,21 +213,30 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
                             // pivotDate is still below the end date
                             try
                             {
-                                pivotDate = AdjustCalendarDate(pivotDate, dateUnit, 1);
+                                pivotDate = AdjustCalendarDate(tempPivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex] + 1));
                                 differenceInDates[unitIndex] += 1;
                             }
                             catch (Platform::InvalidArgumentException ^)
                             {
-                                // handling for 31st Dec, 9999 last valid date
-                                // Do nothing - break out
-                                break;
+                                // Operation failed due to out of bound result
+                                // For example: 31st Dec, 9999 - last valid date
+                                *difference = DateDifferenceUnknown;
+                                return false;
                             }
                         }
                     } while (tempDaysDiff != 0); // dates are the same - exit the loop
 
                     tempPivotDate = AdjustCalendarDate(tempPivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex]));
                     pivotDate = tempPivotDate;
-                    daysDiff = GetDifferenceInDays(pivotDate, endDate);
+                    int signedDaysDiff = GetDifferenceInDays(pivotDate, endDate);
+                    if (signedDaysDiff < 0)
+                    {
+                        // daysDiff is unsigned, the value can't be negative
+                        *difference = DateDifferenceUnknown;
+                        return false;
+                    }
+
+                    daysDiff = signedDaysDiff;
                 }
             }
         }
@@ -232,6 +248,7 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
     difference->month = differenceInDates[1];
     difference->week = differenceInDates[2];
     difference->day = differenceInDates[3];
+    return true;
 }
 
 // Private Methods

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5" IgnorableNamespaces="uap uap5 mp">
     <Identity Name="Microsoft.WindowsCalculator.Dev" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="0.0.0.0" />
     <mp:PhoneIdentity PhoneProductId="b58171c6-c70c-4266-a2e8-8f9c994f4456" PhonePublisherId="95d94207-0c7c-47ed-82db-d75c81153c35" />
@@ -8,7 +8,7 @@
         <Logo>Assets\CalculatorStoreLogo.png</Logo>
     </Properties>
     <Dependencies>
-        <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17133.0" MaxVersionTested="10.0.17763.0" />
+        <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17133.0" MaxVersionTested="10.0.18362.0" />
     </Dependencies>
     <Resources>
         <Resource Language="x-generate" />

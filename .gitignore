@@ -290,6 +290,7 @@ __pycache__/
 # Calculator specific
 Generated Files/
 src/GraphControl/GraphingImplOverrides.props
+src/CalcViewModel/DataLoaders/DataLoaderConstants.h
 !/build/config/TRexDefs/**
 !src/Calculator/TemporaryKey.pfx
 !src/CalculatorUnitTests/CalculatorUnitTests_TemporaryKey.pfx

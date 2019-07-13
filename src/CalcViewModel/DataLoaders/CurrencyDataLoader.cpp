@@ -191,7 +191,7 @@ void CurrencyDataLoader::LoadData()
     if (!LoadFinished())
     {
         create_task([this]() -> task<bool> {
-            vector<function<task<bool>()>> loadFunctions = {
+            vector<function<future<bool>()>> loadFunctions = {
                 [this]() { return TryLoadDataFromCacheAsync(); },
                 [this]() { return TryLoadDataFromWebAsync(); },
             };
@@ -307,7 +307,7 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencyRatioEquality(_In_ const U
 }
 
 #pragma optimize("", off) // Turn off optimizations to work around DevDiv 393321
-task<bool> CurrencyDataLoader::TryLoadDataFromCacheAsync()
+future<bool> CurrencyDataLoader::TryLoadDataFromCacheAsync()
 {
     try
     {
@@ -349,7 +349,7 @@ task<bool> CurrencyDataLoader::TryLoadDataFromCacheAsync()
     }
 }
 
-task<bool> CurrencyDataLoader::TryFinishLoadFromCacheAsync()
+future<bool> CurrencyDataLoader::TryFinishLoadFromCacheAsync()
 {
     auto localSettings = ApplicationData::Current->LocalSettings;
     if (localSettings == nullptr)
@@ -386,7 +386,7 @@ task<bool> CurrencyDataLoader::TryFinishLoadFromCacheAsync()
     co_return true;
 }
 
-task<bool> CurrencyDataLoader::TryLoadDataFromWebAsync()
+future<bool> CurrencyDataLoader::TryLoadDataFromWebAsync()
 {
     try
     {
@@ -459,7 +459,7 @@ task<bool> CurrencyDataLoader::TryLoadDataFromWebAsync()
     }
 }
 
-task<bool> CurrencyDataLoader::TryLoadDataFromWebOverrideAsync()
+future<bool> CurrencyDataLoader::TryLoadDataFromWebOverrideAsync()
 {
     m_meteredOverrideSet = true;
     bool didLoad = co_await TryLoadDataFromWebAsync();
@@ -502,7 +502,22 @@ bool CurrencyDataLoader::TryParseStaticData(_In_ String ^ rawJson, _Inout_ vecto
     staticData.resize(size_t{ data->Size });
     for (unsigned int i = 0; i < data->Size; i++)
     {
-        JsonObject ^ obj = data->GetAt(i)->GetObject();
+        JsonObject ^ obj;
+        try
+        {
+            obj = data->GetAt(i)->GetObject();
+        }
+        catch (COMException ^ e)
+        {
+            if (e->HResult == E_ILLEGAL_METHOD_CALL)
+            {
+                continue;
+            }
+            else
+            {
+                throw;
+            }
+        }
 
         for (size_t j = 0; j < values.size(); j++)
         {
@@ -531,7 +546,22 @@ bool CurrencyDataLoader::TryParseAllRatiosData(_In_ String ^ rawJson, _Inout_ Cu
     allRatios.clear();
     for (unsigned int i = 0; i < data->Size; i++)
     {
-        JsonObject ^ obj = data->GetAt(i)->GetObject();
+        JsonObject ^ obj;
+        try
+        {
+            obj = data->GetAt(i)->GetObject();
+        }
+        catch (COMException^ e)
+        {
+            if (e->HResult == E_ILLEGAL_METHOD_CALL)
+            {
+                continue;
+            }
+            else
+            {
+                throw;
+            }
+        }
 
         // Rt is ratio, An is target currency ISO code.
         double relativeRatio = obj->GetNamedNumber(StringReference(RATIO_KEY));
@@ -641,6 +671,23 @@ void CurrencyDataLoader::GuaranteeSelectedUnits()
         if (!isConversionTargetSet && unit.abbreviation == DEFAULT_TO_CURRENCY)
         {
             unit.isConversionTarget = true;
+            isConversionTargetSet = true;
+        }
+    }
+
+    // If still not set for either source or target, just select the first currency in the list
+
+    if (!m_currencyUnits.empty())
+    {
+        if (!isConversionSourceSet)
+        {
+            m_currencyUnits[0].isConversionSource = true;
+            isConversionSourceSet = true;
+        }
+
+        if (!isConversionTargetSet)
+        {
+            m_currencyUnits[0].isConversionTarget = true;
             isConversionTargetSet = true;
         }
     }
