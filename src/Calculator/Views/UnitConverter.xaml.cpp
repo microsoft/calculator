@@ -98,13 +98,13 @@ void UnitConverter::OnNetworkBehaviorChanged()
     {
     case NetworkAccessBehavior::Normal:
         OnNormalNetworkAccess();
-        break;
+        return;
     case NetworkAccessBehavior::OptIn:
         OnOptInNetworkAccess();
-        break;
+        return;
     case NetworkAccessBehavior::Offline:
         OnOfflineNetworkAccess();
-        break;
+        return;
     }
 }
 
@@ -283,7 +283,7 @@ void UnitConverter::SetDefaultFocus()
     {
         if (control->Focus(::FocusState::Programmatic))
         {
-            break;
+            return;
         }
     }
 }

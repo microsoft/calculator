@@ -74,12 +74,9 @@ MainPage::MainPage()
 
     double sizeInInches = 0.0;
 
-    if (SUCCEEDED(GetIntegratedDisplaySize(&sizeInInches)))
-    {
-        if (sizeInInches < 7.0) // If device's display size (diagonal length) is less than 7 inches then keep the calc always in Portrait mode only
-        {
-            DisplayInformation::AutoRotationPreferences = DisplayOrientations::Portrait | DisplayOrientations::PortraitFlipped;
-        }
+    if (SUCCEEDED(GetIntegratedDisplaySize(&sizeInInches)) && sizeInInches < 7.0)// If device's display size (diagonal length) is less than 7 inches then keep the calc always in Portrait mode only
+    {   
+        DisplayInformation::AutoRotationPreferences = DisplayOrientations::Portrait | DisplayOrientations::PortraitFlipped;
     }
 }
 
