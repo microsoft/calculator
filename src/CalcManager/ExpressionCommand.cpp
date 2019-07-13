@@ -260,7 +260,7 @@ const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
     {
         if (m_token.at(i) != chZero)
         {
-            if (m_token.at(i) == decimalSymbol) 
+            if (m_token.at(i) == decimalSymbol)
             {
 
               
