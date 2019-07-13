@@ -16,17 +16,18 @@ namespace CalculatorApp::Common::Automation
     // When the app switches to min version RS3, this class can be removed
     // and the app will switch to using the Notification API.
     // TODO - MSFT 12735088
-    public ref class LiveRegionHost sealed : public INarratorAnnouncementHost
+public
+    ref class LiveRegionHost sealed : public INarratorAnnouncementHost
     {
     public:
         LiveRegionHost();
 
         virtual bool IsHostAvailable();
-        virtual INarratorAnnouncementHost^ MakeHost();
+        virtual INarratorAnnouncementHost ^ MakeHost();
 
-        virtual void Announce(NarratorAnnouncement^ announcement);
+        virtual void Announce(NarratorAnnouncement ^ announcement);
 
     private:
-        Windows::UI::Xaml::UIElement^ m_host;
+        Windows::UI::Xaml::UIElement ^ m_host;
     };
 }

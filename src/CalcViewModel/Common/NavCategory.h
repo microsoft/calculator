@@ -24,7 +24,8 @@ namespace CalculatorApp
         // Don't change the order of these enums
         // and definitely don't use int arithmetic
         // to change modes.
-        public enum class ViewMode
+    public
+        enum class ViewMode
         {
             None = -1,
             Standard = 0,
@@ -46,81 +47,84 @@ namespace CalculatorApp
             Currency = 16
         };
 
-        public enum class CategoryGroupType
+    public
+        enum class CategoryGroupType
         {
             None = -1,
             Calculator = 0,
             Converter = 1
         };
 
-        private struct NavCategoryInitializer
+    private
+        struct NavCategoryInitializer
         {
             constexpr NavCategoryInitializer(
                 ViewMode mode,
                 int id,
-                wchar_t const * name,
-                wchar_t const * nameKey,
-                wchar_t const * glyph,
+                wchar_t const* name,
+                wchar_t const* nameKey,
+                wchar_t const* glyph,
                 CategoryGroupType group,
                 MyVirtualKey vKey,
                 bool categorySupportsNegative)
-                :
-                viewMode(mode),
-                serializationId(id),
-                friendlyName(name),
-                nameResourceKey(nameKey),
-                glyph(glyph),
-                groupType(group),
-                virtualKey(vKey),
-                supportsNegative(categorySupportsNegative)
-            {}
+                : viewMode(mode)
+                , serializationId(id)
+                , friendlyName(name)
+                , nameResourceKey(nameKey)
+                , glyph(glyph)
+                , groupType(group)
+                , virtualKey(vKey)
+                , supportsNegative(categorySupportsNegative)
+            {
+            }
 
             const ViewMode viewMode;
             const int serializationId;
-            const wchar_t * const friendlyName;
-            const wchar_t * const nameResourceKey;
-            const wchar_t * const glyph;
+            const wchar_t* const friendlyName;
+            const wchar_t* const nameResourceKey;
+            const wchar_t* const glyph;
             const CategoryGroupType groupType;
             const MyVirtualKey virtualKey;
             const bool supportsNegative;
         };
 
-        private struct NavCategoryGroupInitializer
+    private
+        struct NavCategoryGroupInitializer
         {
-            constexpr NavCategoryGroupInitializer(CategoryGroupType t, wchar_t const * h, wchar_t const * n, wchar_t const * a) :
-                type(t), headerResourceKey(h), modeResourceKey(n), automationResourceKey(a)
-            {}
+            constexpr NavCategoryGroupInitializer(CategoryGroupType t, wchar_t const* h, wchar_t const* n, wchar_t const* a)
+                : type(t)
+                , headerResourceKey(h)
+                , modeResourceKey(n)
+                , automationResourceKey(a)
+            {
+            }
 
             const CategoryGroupType type;
-            const wchar_t *headerResourceKey;
-            const wchar_t *modeResourceKey;
-            const wchar_t *automationResourceKey;
+            const wchar_t* headerResourceKey;
+            const wchar_t* modeResourceKey;
+            const wchar_t* automationResourceKey;
         };
 
-        [Windows::UI::Xaml::Data::Bindable]
-        public ref class NavCategory sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+        [Windows::UI::Xaml::Data::Bindable] public ref class NavCategory sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         public:
             OBSERVABLE_OBJECT();
 
-            property Platform::String^ Name
-            {
-                Platform::String^ get() { return m_name; }
-            }
+            property Platform::String
+                ^ Name { Platform::String ^ get() { return m_name; } }
 
-            property Platform::String^ AutomationName
-            {
-                Platform::String^ get() { return m_automationName; }
-            }
+                property Platform::String
+                ^ AutomationName { Platform::String ^ get() { return m_automationName; } }
 
-            property Platform::String^ Glyph
-            {
-                Platform::String^ get() { return m_glyph; }
-            }
+                property Platform::String
+                ^ Glyph { Platform::String ^ get() { return m_glyph; } }
 
-            property int Position
+                property int Position
             {
-                int get() { return m_position; }
+                int get()
+                {
+                    return m_position;
+                }
             }
 
             property ViewMode Mode
@@ -131,24 +135,13 @@ namespace CalculatorApp
                 }
             }
 
-            property Platform::String^ AutomationId
-            {
-                Platform::String^ get()
-                {
-                    return m_viewMode.ToString();
-                }
-            }
+            property Platform::String
+                ^ AutomationId { Platform::String ^ get() { return m_viewMode.ToString(); } }
 
-            property Platform::String^ AccessKey
-            {
-                Platform::String^ get()
-                {
-                    return m_accessKey;
-                }
-            }
+                property Platform::String
+                ^ AccessKey { Platform::String ^ get() { return m_accessKey; } }
 
-
-            property bool SupportsNegative
+                property bool SupportsNegative
             {
                 bool get()
                 {
@@ -158,16 +151,16 @@ namespace CalculatorApp
 
             // For saving/restoring last mode used.
             static int Serialize(ViewMode mode);
-            static ViewMode Deserialize(Platform::Object^ obj);
-            static ViewMode GetViewModeForFriendlyName(Platform::String^ name);
+            static ViewMode Deserialize(Platform::Object ^ obj);
+            static ViewMode GetViewModeForFriendlyName(Platform::String ^ name);
 
             static bool IsValidViewMode(ViewMode mode);
             static bool IsCalculatorViewMode(ViewMode mode);
             static bool IsDateCalculatorViewMode(ViewMode mode);
             static bool IsConverterViewMode(ViewMode mode);
 
-            static Platform::String^ GetFriendlyName(ViewMode mode);
-            static Platform::String^ GetNameResourceKey(ViewMode mode);
+            static Platform::String ^ GetFriendlyName(ViewMode mode);
+            static Platform::String ^ GetNameResourceKey(ViewMode mode);
             static CategoryGroupType GetGroupType(ViewMode mode);
 
             // GetIndex is 0-based, GetPosition is 1-based
@@ -178,15 +171,21 @@ namespace CalculatorApp
 
             static ViewMode GetViewModeForVirtualKey(MyVirtualKey virtualKey);
 
-        internal:
-            NavCategory(Platform::String^ name, Platform::String^ automationName, Platform::String^ glyph, Platform::String^ accessKey, Platform::String^ mode, ViewMode viewMode, bool supportsNegative) :
-                m_name(name),
-                m_automationName(automationName),
-                m_glyph(glyph),
-                m_accessKey(accessKey),
-                m_mode(mode),
-                m_viewMode(viewMode),
-                m_supportsNegative(supportsNegative)
+            internal : NavCategory(
+                           Platform::String ^ name,
+                           Platform::String ^ automationName,
+                           Platform::String ^ glyph,
+                           Platform::String ^ accessKey,
+                           Platform::String ^ mode,
+                           ViewMode viewMode,
+                           bool supportsNegative)
+                : m_name(name)
+                , m_automationName(automationName)
+                , m_glyph(glyph)
+                , m_accessKey(accessKey)
+                , m_mode(mode)
+                , m_viewMode(viewMode)
+                , m_supportsNegative(supportsNegative)
             {
                 m_position = NavCategory::GetPosition(m_viewMode);
             }
@@ -197,33 +196,30 @@ namespace CalculatorApp
             static bool IsModeInCategoryGroup(ViewMode mode, CategoryGroupType groupType);
 
             ViewMode m_viewMode;
-            Platform::String^ m_name;
-            Platform::String^ m_automationName;
-            Platform::String^ m_glyph;
-            Platform::String^ m_accessKey;
-            Platform::String^ m_mode;
+            Platform::String ^ m_name;
+            Platform::String ^ m_automationName;
+            Platform::String ^ m_glyph;
+            Platform::String ^ m_accessKey;
+            Platform::String ^ m_mode;
             int m_position;
             bool m_supportsNegative;
         };
 
-        [Windows::UI::Xaml::Data::Bindable]
-        public ref class NavCategoryGroup sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+        [Windows::UI::Xaml::Data::Bindable] public ref class NavCategoryGroup sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
-
         public:
             OBSERVABLE_OBJECT();
-            OBSERVABLE_PROPERTY_R(Platform::String^, Name);
-            OBSERVABLE_PROPERTY_R(Platform::String^, AutomationName);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, Name);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, AutomationName);
             OBSERVABLE_PROPERTY_R(CategoryGroupType, GroupType);
-            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<NavCategory^>^, Categories);
+            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<NavCategory ^> ^, Categories);
 
-            static Windows::Foundation::Collections::IObservableVector<NavCategoryGroup^>^ CreateMenuOptions();
+            static Windows::Foundation::Collections::IObservableVector<NavCategoryGroup ^> ^ CreateMenuOptions();
 
-            static Platform::String^ GetHeaderResourceKey(CategoryGroupType type);
+            static Platform::String ^ GetHeaderResourceKey(CategoryGroupType type);
 
-        internal:
-            static NavCategoryGroup^ CreateCalculatorCategory();
-            static NavCategoryGroup^ CreateConverterCategory();
+            internal : static NavCategoryGroup ^ CreateCalculatorCategory();
+            static NavCategoryGroup ^ CreateConverterCategory();
 
         private:
             NavCategoryGroup(const NavCategoryGroupInitializer& groupInitializer);

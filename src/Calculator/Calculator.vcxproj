@@ -8,7 +8,7 @@
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0.18362.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
     <!-- We want to manually control the MinVersion/MaxVersionTested in the manifest so turn of the replacement. -->
     <AppxOSMinVersionReplaceManifestVersion>false</AppxOSMinVersionReplaceManifestVersion>
@@ -62,46 +62,46 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -132,7 +132,7 @@
   </ImportGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 </AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -141,7 +141,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 </AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -150,7 +150,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -162,7 +162,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -174,7 +174,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 </AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -183,7 +183,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -195,7 +195,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 </AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -204,7 +204,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -234,19 +234,15 @@
     <ClInclude Include="Controls\OverflowTextBlockAutomationPeer.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h" />
     <ClInclude Include="Common\BindableBase.h" />
-    <ClInclude Include="Controls\AppBar.h" />
     <ClInclude Include="Controls\CalculationResult.h" />
     <ClInclude Include="Controls\CalculatorButton.h" />
     <ClInclude Include="Controls\FlipButtons.h" />
-    <ClInclude Include="Controls\OperandTextBox.h" />
-    <ClInclude Include="Controls\OperatorTextBox.h" />
     <ClInclude Include="Controls\OverflowTextBlock.h" />
     <ClInclude Include="Controls\RadixButton.h" />
     <ClInclude Include="Controls\SupplementaryItemsControl.h" />
     <ClInclude Include="Converters\BitFlipAutomationNameConverter.h" />
     <ClInclude Include="Converters\BooleanNegationConverter.h" />
     <ClInclude Include="Converters\BooleanToVisibilityConverter.h" />
-    <ClInclude Include="Converters\ExpressionItemContainerStyle.h" />
     <ClInclude Include="Converters\ExpressionItemTemplateSelector.h" />
     <ClInclude Include="Converters\ItemSizeToVisibilityConverter.h" />
     <ClInclude Include="Converters\RadixToStringConverter.h" />
@@ -256,7 +252,6 @@
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="Common\TitleBarHelper.h" />
     <ClInclude Include="Views\Calculator.xaml.h">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
     </ClInclude>
@@ -372,15 +367,12 @@
     <ClCompile Include="Controls\CalculationResult.cpp" />
     <ClCompile Include="Controls\CalculatorButton.cpp" />
     <ClCompile Include="Controls\FlipButtons.cpp" />
-    <ClCompile Include="Controls\OperandTextBox.cpp" />
-    <ClCompile Include="Controls\OperatorTextBox.cpp" />
     <ClCompile Include="Controls\OverflowTextBlock.cpp" />
     <ClCompile Include="Controls\RadixButton.cpp" />
     <ClCompile Include="Controls\SupplementaryItemsControl.cpp" />
     <ClCompile Include="Converters\BitFlipAutomationNameConverter.cpp" />
     <ClCompile Include="Converters\BooleanNegationConverter.cpp" />
     <ClCompile Include="Converters\BooleanToVisibilityConverter.cpp" />
-    <ClCompile Include="Converters\ExpressionItemContainerStyle.cpp" />
     <ClCompile Include="Converters\ExpressionItemTemplateSelector.cpp" />
     <ClCompile Include="Converters\ItemSizeToVisibilityConverter.cpp" />
     <ClCompile Include="Converters\RadixToStringConverter.cpp" />
@@ -396,7 +388,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Common\TitleBarHelper.cpp" />
     <ClCompile Include="Views\Calculator.xaml.cpp">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
     </ClCompile>
@@ -848,7 +839,7 @@
   </Target>
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets" Condition="Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" />
-    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.0.181018004\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.0.181018004\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -856,6 +847,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.0.181018004\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.0.181018004\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets'))" />
   </Target>
 </Project>

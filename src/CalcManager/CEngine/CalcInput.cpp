@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
+#include <sstream>
 #include "Header Files/CalcEngine.h"
 
 using namespace std;
@@ -124,15 +124,15 @@ bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMo
         else if (radix == 10)
         {
             // If value length is at least the max, we know we can't add another digit.
-            if(pNumSec->value.size() < maxNumStr.size())
+            if (pNumSec->value.size() < maxNumStr.size())
             {
                 // Compare value to substring of maxNumStr of value.size() length.
                 // If cmpResult > 0:
-                // eg. max is "127", and the current number is "20". first digit itself says we are out. 
+                // eg. max is "127", and the current number is "20". first digit itself says we are out.
                 // Additional digit is not possible
 
                 // If cmpResult < 0:
-                // Success case. eg. max is "127", and current number is say "11". The second digit '1' being < 
+                // Success case. eg. max is "127", and current number is say "11". The second digit '1' being <
                 // corresponding digit '2', means all digits are possible to append, like 119 will still be < 127
 
                 // If cmpResult == 0:
@@ -151,7 +151,7 @@ bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMo
                     }
                     else if (pNumSec->IsNegative() && chDigit <= lastChar + 1)
                     {
-                        // Negative value case, eg. max is "127", and current number is "-12". Then 8 is also valid, as the range 
+                        // Negative value case, eg. max is "127", and current number is "-12". Then 8 is also valid, as the range
                         // is always from -(max+1)...max in signed mode
                         allowExtraDigit = true;
                     }

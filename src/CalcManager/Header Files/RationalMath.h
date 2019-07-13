@@ -13,6 +13,7 @@ namespace CalcEngine::RationalMath
     Rational Pow(Rational const& base, Rational const& pow);
     Rational Root(Rational const& base, Rational const& root);
     Rational Fact(Rational const& rat);
+    Rational Mod(Rational const& a, Rational const& b);
 
     Rational Exp(Rational const& rat);
     Rational Log(Rational const& rat);

@@ -2904,9 +2904,9 @@
     <value>Difference</value>
     <comment>Difference result label</comment>
   </data>
-  <data name="Date_FromLabel.Text" xml:space="preserve">
+  <data name="DateDiff_FromHeader.Header" xml:space="preserve">
     <value>From</value>
-    <comment>From Date label for Date Picker</comment>
+    <comment>From Date Header for Difference Date Picker</comment>
   </data>
   <data name="MonthsLabel.Text" xml:space="preserve">
     <value>Months</value>
@@ -2916,9 +2916,9 @@
     <value>Subtract</value>
     <comment>Subtract toggle button text</comment>
   </data>
-  <data name="Date_ToLabel.Text" xml:space="preserve">
+  <data name="DateDiff_ToHeader.Header" xml:space="preserve">
     <value>To</value>
-    <comment>To Date label for Date Picker</comment>
+    <comment>To Date Header for Difference Date Picker</comment>
   </data>
   <data name="YearsLabel.Text" xml:space="preserve">
     <value>Years</value>
@@ -3378,5 +3378,29 @@
   <data name="AboutControlServicesAgreement.Text" xml:space="preserve">
     <value>Microsoft Services Agreement</value>
     <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
+  </data>
+  <data name="UnitAbbreviation_Pyeong" xml:space="preserve">
+    <value>Pyeong</value>
+    <comment>An abbreviation for a measurement unit of area.</comment>
+  </data>
+  <data name="UnitName_Pyeong" xml:space="preserve">
+    <value>Pyeong</value>
+    <comment>A measurement unit for area.</comment>
+  </data>
+  <data name="AddSubtract_Date_FromHeader.Header" xml:space="preserve">
+    <value>From</value>
+    <comment>From Date Header for AddSubtract Date Picker</comment>
+  </data>
+  <data name="CalculationResultScrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Scroll Calculation Result Left</value>
+    <comment>Automation label for the "Scroll Left" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
+  </data>
+  <data name="CalculationResultScrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Scroll Calculation Result Right</value>
+    <comment>Automation label for the "Scroll Right" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
+  </data>
+  <data name="CalculationFailed" xml:space="preserve">
+    <value>Calculation failed</value>
+    <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
 </root>

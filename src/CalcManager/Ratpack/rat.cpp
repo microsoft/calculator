@@ -16,7 +16,6 @@
 //
 //-----------------------------------------------------------------------------
 
-#include "pch.h"
 #include "ratpak.h"
 
 using namespace std;
@@ -38,23 +37,23 @@ using namespace std;
 //
 //-----------------------------------------------------------------------------
 
-void gcdrat( PRAT *pa, int32_t precision)
+void gcdrat(PRAT* pa, int32_t precision)
 
 {
-    PNUMBER pgcd= nullptr;
-    PRAT a= nullptr;
+    PNUMBER pgcd = nullptr;
+    PRAT a = nullptr;
 
-    a=*pa;
-    pgcd = gcd( a->pp, a->pq );
+    a = *pa;
+    pgcd = gcd(a->pp, a->pq);
 
-    if ( !zernum( pgcd ) )
-        {
-        divnumx( &(a->pp), pgcd, precision);
-        divnumx( &(a->pq), pgcd, precision);
-        }
+    if (!zernum(pgcd))
+    {
+        divnumx(&(a->pp), pgcd, precision);
+        divnumx(&(a->pq), pgcd, precision);
+    }
 
-    destroynum( pgcd );
-    *pa=a;
+    destroynum(pgcd);
+    *pa = a;
 
     RENORMALIZE(*pa);
 }
@@ -71,16 +70,16 @@ void gcdrat( PRAT *pa, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void fracrat( PRAT *pa , uint32_t radix, int32_t precision)
+void fracrat(PRAT* pa, uint32_t radix, int32_t precision)
 {
     // Only do the flatrat operation if number is nonzero.
     // and only if the bottom part is not one.
-    if ( !zernum( (*pa)->pp ) && !equnum( (*pa)->pq, num_one ) )
+    if (!zernum((*pa)->pp) && !equnum((*pa)->pq, num_one))
     {
         flatrat(*pa, radix, precision);
     }
 
-    remnum( &((*pa)->pp), (*pa)->pq, BASEX );
+    remnum(&((*pa)->pp), (*pa)->pq, BASEX);
 
     // Get *pa back in the integer over integer form.
     RENORMALIZE(*pa);
@@ -99,26 +98,25 @@ void fracrat( PRAT *pa , uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void mulrat( PRAT *pa, PRAT b, int32_t precision)
+void mulrat(PRAT* pa, PRAT b, int32_t precision)
 
-    {
+{
     // Only do the multiply if it isn't zero.
-    if ( !zernum( (*pa)->pp ) )
-        {
-        mulnumx( &((*pa)->pp), b->pp );
-        mulnumx( &((*pa)->pq), b->pq );
+    if (!zernum((*pa)->pp))
+    {
+        mulnumx(&((*pa)->pp), b->pp);
+        mulnumx(&((*pa)->pq), b->pq);
         trimit(pa, precision);
-        }
+    }
     else
-        {
+    {
         // If it is zero, blast a one in the denominator.
-        DUPNUM( ((*pa)->pq), num_one );
-        }
+        DUPNUM(((*pa)->pq), num_one);
+    }
 
 #ifdef MULGCD
-    gcdrat( pa );
+    gcdrat(pa);
 #endif
-
 }
 
 //-----------------------------------------------------------------------------
@@ -134,44 +132,41 @@ void mulrat( PRAT *pa, PRAT b, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-
-void divrat( PRAT *pa, PRAT b, int32_t precision)
+void divrat(PRAT* pa, PRAT b, int32_t precision)
 
 {
-
-    if ( !zernum( (*pa)->pp ) )
-        {
+    if (!zernum((*pa)->pp))
+    {
         // Only do the divide if the top isn't zero.
-        mulnumx( &((*pa)->pp), b->pq );
-        mulnumx( &((*pa)->pq), b->pp );
+        mulnumx(&((*pa)->pp), b->pq);
+        mulnumx(&((*pa)->pq), b->pp);
 
-        if ( zernum( (*pa)->pq ) )
-            {
-            // raise an exception if the bottom is 0.
-            throw( CALC_E_DIVIDEBYZERO );
-            }
-        trimit(pa, precision);
-        }
-    else
+        if (zernum((*pa)->pq))
         {
+            // raise an exception if the bottom is 0.
+            throw(CALC_E_DIVIDEBYZERO);
+        }
+        trimit(pa, precision);
+    }
+    else
+    {
         // Top is zero.
-        if ( zerrat( b ) )
-            {
+        if (zerrat(b))
+        {
             // If bottom is zero
             // 0 / 0 is indefinite, raise an exception.
-            throw( CALC_E_INDEFINITE );
-            }
-        else
-            {
-            // 0/x make a unique 0.
-            DUPNUM( ((*pa)->pq), num_one );
-            }
+            throw(CALC_E_INDEFINITE);
         }
+        else
+        {
+            // 0/x make a unique 0.
+            DUPNUM(((*pa)->pq), num_one);
+        }
+    }
 
 #ifdef DIVGCD
-    gcdrat( pa );
+    gcdrat(pa);
 #endif
-
 }
 
 //-----------------------------------------------------------------------------
@@ -187,11 +182,11 @@ void divrat( PRAT *pa, PRAT b, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void subrat( PRAT *pa, PRAT b, int32_t precision)
+void subrat(PRAT* pa, PRAT b, int32_t precision)
 
 {
     b->pp->sign *= -1;
-    addrat( pa, b, precision);
+    addrat(pa, b, precision);
     b->pp->sign *= -1;
 }
 
@@ -208,13 +203,13 @@ void subrat( PRAT *pa, PRAT b, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void addrat( PRAT *pa, PRAT b, int32_t precision)
+void addrat(PRAT* pa, PRAT b, int32_t precision)
 
 {
-    PNUMBER bot= nullptr;
+    PNUMBER bot = nullptr;
 
-    if ( equnum( (*pa)->pq, b->pq ) )
-        {
+    if (equnum((*pa)->pq, b->pq))
+    {
         // Very special case, q's match.,
         // make sure signs are involved in the calculation
         // we have to do this since the optimization here is only
@@ -223,32 +218,29 @@ void addrat( PRAT *pa, PRAT b, int32_t precision)
         (*pa)->pq->sign = 1;
         b->pp->sign *= b->pq->sign;
         b->pq->sign = 1;
-        addnum( &((*pa)->pp), b->pp, BASEX );
-        }
+        addnum(&((*pa)->pp), b->pp, BASEX);
+    }
     else
-        {
+    {
         // Usual case q's aren't the same.
-        DUPNUM( bot, (*pa)->pq );
-        mulnumx( &bot, b->pq );
-        mulnumx( &((*pa)->pp), b->pq );
-        mulnumx( &((*pa)->pq), b->pp );
-        addnum( &((*pa)->pp), (*pa)->pq, BASEX );
-        destroynum( (*pa)->pq );
+        DUPNUM(bot, (*pa)->pq);
+        mulnumx(&bot, b->pq);
+        mulnumx(&((*pa)->pp), b->pq);
+        mulnumx(&((*pa)->pq), b->pp);
+        addnum(&((*pa)->pp), (*pa)->pq, BASEX);
+        destroynum((*pa)->pq);
         (*pa)->pq = bot;
         trimit(pa, precision);
 
         // Get rid of negative zeros here.
         (*pa)->pp->sign *= (*pa)->pq->sign;
         (*pa)->pq->sign = 1;
-        }
+    }
 
 #ifdef ADDGCD
-    gcdrat( pa );
+    gcdrat(pa);
 #endif
-
 }
-
-
 
 //-----------------------------------------------------------------------------
 //
@@ -263,18 +255,17 @@ void addrat( PRAT *pa, PRAT b, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void rootrat( PRAT *py, PRAT n, uint32_t radix, int32_t precision)
+void rootrat(PRAT* py, PRAT n, uint32_t radix, int32_t precision)
 {
     // Initialize 1/n
-    PRAT oneovern= nullptr;
-    DUPRAT(oneovern,rat_one);
+    PRAT oneovern = nullptr;
+    DUPRAT(oneovern, rat_one);
     divrat(&oneovern, n, precision);
 
     powrat(py, oneovern, radix, precision);
 
     destroyrat(oneovern);
 }
-
 
 //-----------------------------------------------------------------------------
 //
@@ -289,10 +280,8 @@ void rootrat( PRAT *py, PRAT n, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-bool zerrat( PRAT a )
+bool zerrat(PRAT a)
 
 {
-    return( zernum(a->pp) );
+    return (zernum(a->pp));
 }
-
-

@@ -13,7 +13,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 static constexpr size_t MAX_HISTORY_SIZE = 20;
 
-namespace CalculatorUnitTests
+namespace CalculatorEngineTests
 {
     TEST_CLASS(CalcEngineTests)
     {
@@ -22,7 +22,8 @@ namespace CalculatorUnitTests
             m_resourceProvider = make_shared<EngineResourceProvider>();
             m_history = make_shared<CalculatorHistory>(MAX_HISTORY_SIZE);
             CCalcEngine::InitialOneTimeOnlySetup(*(m_resourceProvider.get()));
-            m_calcEngine = make_unique<CCalcEngine>(false /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider.get(), nullptr, m_history);
+            m_calcEngine = make_unique<CCalcEngine>(
+                false /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider.get(), nullptr, m_history);
         }
         TEST_METHOD_CLEANUP(Cleanup)
         {
@@ -51,7 +52,8 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(L"1,234,567,890", m_calcEngine->GroupDigitsPerRadix(L"1234567890", 10), L"Verify grouping in base10.");
             VERIFY_ARE_EQUAL(L"1,234,567.89", m_calcEngine->GroupDigitsPerRadix(L"1234567.89", 10), L"Verify grouping in base10 with decimal.");
             VERIFY_ARE_EQUAL(L"1,234,567e89", m_calcEngine->GroupDigitsPerRadix(L"1234567e89", 10), L"Verify grouping in base10 with exponent.");
-            VERIFY_ARE_EQUAL(L"1,234,567.89e5", m_calcEngine->GroupDigitsPerRadix(L"1234567.89e5", 10), L"Verify grouping in base10 with decimal and exponent.");
+            VERIFY_ARE_EQUAL(
+                L"1,234,567.89e5", m_calcEngine->GroupDigitsPerRadix(L"1234567.89e5", 10), L"Verify grouping in base10 with decimal and exponent.");
             VERIFY_ARE_EQUAL(L"-123,456,789", m_calcEngine->GroupDigitsPerRadix(L"-123456789", 10), L"Verify grouping in base10 with negative.");
         }
 
@@ -115,22 +117,32 @@ namespace CalculatorUnitTests
 
             // Regex matching (descriptions taken from CalcUtils.cpp)
             // Use 100 for exp/mantissa length as they are tested above
-            vector<wstring> validDecStrs{
-                // Start with an optional + or -
-                L"+1", L"-1", L"1",
-                // Followed by zero or more digits
-                L"-", L"", L"1234567890",
-                // Followed by an optional decimal point
-                L"1.0", L"-.", L"1.",
-                // Followed by zero or more digits
-                L"0.0", L"0.123456",
-                // Followed by an optional exponent ('e')
-                L"1e", L"1.e", L"-e",
-                // If there's an exponent, its optionally followed by + or -
-                // and followed by zero or more digits
-                L"1e+12345", L"1e-12345", L"1e123",
-                // All together
-                L"-123.456e+789"
+            vector<wstring> validDecStrs{ // Start with an optional + or -
+                                          L"+1",
+                                          L"-1",
+                                          L"1",
+                                          // Followed by zero or more digits
+                                          L"-",
+                                          L"",
+                                          L"1234567890",
+                                          // Followed by an optional decimal point
+                                          L"1.0",
+                                          L"-.",
+                                          L"1.",
+                                          // Followed by zero or more digits
+                                          L"0.0",
+                                          L"0.123456",
+                                          // Followed by an optional exponent ('e')
+                                          L"1e",
+                                          L"1.e",
+                                          L"-e",
+                                          // If there's an exponent, its optionally followed by + or -
+                                          // and followed by zero or more digits
+                                          L"1e+12345",
+                                          L"1e-12345",
+                                          L"1e123",
+                                          // All together
+                                          L"-123.456e+789"
             };
             vector<wstring> invalidDecStrs{ L"x123", L"123-", L"1e1.2", L"1-e2" };
             for (wstring const& str : validDecStrs)
@@ -141,7 +153,6 @@ namespace CalculatorUnitTests
             {
                 VERIFY_ARE_EQUAL(IDS_ERR_UNK_CH, m_calcEngine->IsNumberInvalid(str, 100, 100, 10 /* Dec */));
             }
-
         }
 
         TEST_METHOD(TestDigitGroupingStringToGroupingVector)
@@ -204,14 +215,18 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(result, m_calcEngine->GroupDigits(L",", { 3, 0, 0 }, L"1234567890123456", false), L"Verify expanded form non-repeating grouping.");
 
             result = L"12,34,56,78,901,23456";
-            VERIFY_ARE_EQUAL(result, m_calcEngine->GroupDigits(L",", { 5, 3, 2, 0 }, L"1234567890123456", false), L"Verify multigroup with repeating grouping.");
+            VERIFY_ARE_EQUAL(
+                result, m_calcEngine->GroupDigits(L",", { 5, 3, 2, 0 }, L"1234567890123456", false), L"Verify multigroup with repeating grouping.");
 
             result = L"1234,5678,9012,3456";
             VERIFY_ARE_EQUAL(result, m_calcEngine->GroupDigits(L",", { 4, 0 }, L"1234567890123456", false), L"Verify repeating non-standard grouping.");
 
             result = L"123456,78,901,23456";
             VERIFY_ARE_EQUAL(result, m_calcEngine->GroupDigits(L",", { 5, 3, 2 }, L"1234567890123456", false), L"Verify multigroup non-repeating grouping.");
-            VERIFY_ARE_EQUAL(result, m_calcEngine->GroupDigits(L",", { 5, 3, 2, 0, 0 }, L"1234567890123456", false), L"Verify expanded form multigroup non-repeating grouping.");
+            VERIFY_ARE_EQUAL(
+                result,
+                m_calcEngine->GroupDigits(L",", { 5, 3, 2, 0, 0 }, L"1234567890123456", false),
+                L"Verify expanded form multigroup non-repeating grouping.");
         }
 
     private:

@@ -30,6 +30,7 @@
       <Filter>Mocks</Filter>
     </ClCompile>
     <ClCompile Include="LocalizationServiceUnitTests.cpp" />
+    <ClCompile Include="RationalTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AsyncHelper.h" />

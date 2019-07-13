@@ -8,8 +8,7 @@
 
 namespace CalculatorApp
 {
-    [Windows::Foundation::Metadata::WebHostHidden]
-    public ref class CalculatorProgrammerDisplayPanel sealed
+    [Windows::Foundation::Metadata::WebHostHidden] public ref class CalculatorProgrammerDisplayPanel sealed
     {
     public:
         CalculatorProgrammerDisplayPanel();
@@ -23,14 +22,15 @@ namespace CalculatorApp
             }
         }
 
-        property bool IsErrorVisualState {
+        property bool IsErrorVisualState
+        {
             bool get();
             void set(bool value);
         }
 
     private:
-        void ShowBitFlip(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OnBitLengthButtonPressed(Platform::Object^ parameter);
+        void ShowBitFlip(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnBitLengthButtonPressed(Platform::Object ^ parameter);
 
         bool m_isErrorVisualState;
     };

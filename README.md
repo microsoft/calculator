@@ -16,6 +16,9 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 - Calculation history and memory capabilities.
 - Conversion between many units of measurement.
 - Currency conversion based on data retrieved from [Bing](https://www.bing.com).
+- [Infinite precision](https://en.wikipedia.org/wiki/Arbitrary-precision_arithmetic) for basic
+  arithmetic operations (addition, subtraction, multiplication, division) so that calculations
+  never lose precision.
 
 ## Getting started
 Prerequisites:
@@ -50,6 +53,12 @@ This project collects usage data and sends it to Microsoft to help improve our p
 Read our [privacy statement](https://go.microsoft.com/fwlink/?LinkId=521839) to learn more.
 Telemetry is disabled in development builds by default, and can be enabled with the `SEND_TELEMETRY`
 build flag.
+
+## Currency Converter
+Windows Calculator includes a currency converter feature that uses mock data in developer builds. The data that 
+Microsoft uses for the currency converter feature (e.g., in the retail version of the application) is not licensed 
+for your use. The mock data will be clearly identifiable as it references planets instead of countries, 
+and remains static regardless of selected inputs.
 
 ## Reporting Security Issues
 Security issues and bugs should be reported privately, via email, to the

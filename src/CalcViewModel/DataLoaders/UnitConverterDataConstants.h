@@ -1,11 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 namespace CalculatorApp
 {
     namespace ViewModel
     {
-        private enum UnitConverterUnits
+    private
+        enum UnitConverterUnits
         {
             UnitStart = 0,
             Area_Acre = UnitStart + 1,
@@ -162,7 +163,8 @@ namespace CalculatorApp
             Data_Zebibytes = UnitStart + 162,
             Data_Zetabits = UnitStart + 163,
             Data_Zetabytes = UnitStart + 164,
-            UnitEnd = Data_Zetabytes
+            Area_Pyeong = UnitStart + 165,
+            UnitEnd = Area_Pyeong
         };
     }
 }
