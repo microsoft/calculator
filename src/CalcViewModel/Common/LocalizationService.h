@@ -26,10 +26,12 @@ namespace CalculatorApp
         {
         public:
             DEPENDENCY_PROPERTY_OWNER(LocalizationService);
+
             DEPENDENCY_PROPERTY_ATTACHED_WITH_DEFAULT_AND_CALLBACK(LanguageFontType, FontType, LanguageFontType::UIText);
             DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(double, FontSize);
 
-            internal : static LocalizationService ^ GetInstance();
+        internal :
+            static LocalizationService ^ GetInstance();
             static void OverrideWithLanguage(_In_ const wchar_t* const language);
 
             Windows::UI::Xaml::FlowDirection GetFlowDirection();
@@ -56,8 +58,7 @@ namespace CalculatorApp
 
             Windows::Globalization::NumberFormatting::DecimalFormatter ^ GetRegionalSettingsAwareDecimalFormatter() const;
             Windows::Globalization::DateTimeFormatting::DateTimeFormatter ^ GetRegionalSettingsAwareDateTimeFormatter(_In_ Platform::String ^ format) const;
-            Windows::Globalization::DateTimeFormatting::DateTimeFormatter
-                ^ GetRegionalSettingsAwareDateTimeFormatter(
+            Windows::Globalization::DateTimeFormatting::DateTimeFormatter ^ GetRegionalSettingsAwareDateTimeFormatter(
                       _In_ Platform::String ^ format,
                       _In_ Platform::String ^ calendarIdentifier,
                       _In_ Platform::String ^ clockIdentifier) const;

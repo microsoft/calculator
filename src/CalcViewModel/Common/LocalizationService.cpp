@@ -62,7 +62,7 @@ LocalizationService ^ LocalizationService::GetInstance()
 /// <remarks>
 /// Should only be used for test purpose
 /// </remarks>
-void LocalizationService::OverrideWithLanguage(_In_ const wchar_t* const language)
+void LocalizationService::OverrideWithLanguage(_In_ const wchar_t * const language)
 {
     s_singletonInstance = ref new LocalizationService(language);
 }
@@ -71,12 +71,12 @@ void LocalizationService::OverrideWithLanguage(_In_ const wchar_t* const languag
 /// Constructor
 /// </summary>
 /// <param name="overridedLanguage">RFC-5646 identifier of the language to use, if null, will use the current language of the system</param>
-LocalizationService::LocalizationService(_In_ const wchar_t* const overridedLanguage)
+LocalizationService::LocalizationService(_In_ const wchar_t * const overridedLanguage)
 {
     m_isLanguageOverrided = overridedLanguage != nullptr;
     m_language = m_isLanguageOverrided ? ref new Platform::String(overridedLanguage) : ApplicationLanguages::Languages->GetAt(0);
-    m_flowDirection = ResourceContext::GetForViewIndependentUse()->QualifierValues->Lookup(L"LayoutDirection") != L"LTR" ? FlowDirection::RightToLeft
-                                                                                                                         : FlowDirection::LeftToRight;
+    m_flowDirection = ResourceContext::GetForViewIndependentUse()->QualifierValues->Lookup(L"LayoutDirection")
+        != L"LTR" ? FlowDirection::RightToLeft : FlowDirection::LeftToRight;
     wstring localeName = wstring(m_language->Data());
     localeName += L".UTF8";
 
@@ -399,9 +399,7 @@ DateTimeFormatter ^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatt
 
 // If successful, returns a formatter that respects the user's regional format settings,
 // as configured by running intl.cpl.
-DateTimeFormatter
-    ^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String ^ format, _In_ String ^ calendarIdentifier, _In_ String ^ clockIdentifier)
-          const
+DateTimeFormatter ^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String ^ format, _In_ String ^ calendarIdentifier, _In_ String ^ clockIdentifier) const
 {
     IIterable<String ^> ^ languageIdentifiers = LocalizationService::GetLanguageIdentifiers();
     if (languageIdentifiers == nullptr)
