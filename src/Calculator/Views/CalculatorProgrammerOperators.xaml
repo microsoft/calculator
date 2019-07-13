@@ -170,7 +170,7 @@
             <RowDefinition Height="1*" MinHeight="0"/>
             <RowDefinition Height="1*" MinHeight="0"/>
             <RowDefinition Height="1*" MinHeight="0"/>
-            <RowDefinition Height="1*" MinHeight="{Binding ActualHeight, ElementName=binaryButton, FallbackValue=16, Mode=OneWay}"/>
+            <RowDefinition Height="1*" MinHeight="{Binding ActualHeight, ElementName=BinaryButton, FallbackValue=16, Mode=OneWay}"/>
             <RowDefinition Height="4"/>
         </Grid.RowDefinitions>
         <VisualStateManager.VisualStateGroups>
@@ -192,7 +192,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <controls:RadixButton x:Name="hexButton"
+        <controls:RadixButton x:Name="HexButton"
                               x:Uid="hexButton"
                               HorizontalAlignment="Stretch"
                               Style="{ThemeResource ProgModeRadioButtonStyle}"
@@ -202,7 +202,7 @@
                               Content="{x:Bind Model.HexDisplayValue, Mode=OneWay}"
                               ContextFlyout="{StaticResource ProgrammerOperatorsContextMenu}"
                               GroupName="BaseConversion"/>
-        <controls:RadixButton x:Name="decimalButton"
+        <controls:RadixButton x:Name="DecimalButton"
                               x:Uid="decimalButton"
                               Grid.Row="1"
                               HorizontalAlignment="Stretch"
@@ -214,7 +214,7 @@
                               ContextFlyout="{StaticResource ProgrammerOperatorsContextMenu}"
                               GroupName="BaseConversion"
                               IsChecked="true"/>
-        <controls:RadixButton x:Name="octButton"
+        <controls:RadixButton x:Name="OctButton"
                               x:Uid="octButton"
                               Grid.Row="2"
                               HorizontalAlignment="Stretch"
@@ -225,7 +225,7 @@
                               Content="{x:Bind Model.OctalDisplayValue, Mode=OneWay}"
                               ContextFlyout="{StaticResource ProgrammerOperatorsContextMenu}"
                               GroupName="BaseConversion"/>
-        <controls:RadixButton x:Name="binaryButton"
+        <controls:RadixButton x:Name="BinaryButton"
                               x:Uid="binaryButton"
                               Grid.Row="3"
                               HorizontalAlignment="Stretch"

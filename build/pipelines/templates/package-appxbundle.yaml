@@ -17,9 +17,11 @@ jobs:
       in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
     ) 
   pool:
-    vmImage: vs2017-win2016
+    vmImage: windows-2019
   workspace:
     clean: outputs
+  variables:
+    skipComponentGovernanceDetection: true
   steps:
   - checkout: self
     clean: true

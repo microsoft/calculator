@@ -10,23 +10,22 @@ using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Windows::UI::Xaml::Controls;
 
-NotificationHost::NotificationHost() :
-    m_host(nullptr)
-{}
+NotificationHost::NotificationHost()
+    : m_host(nullptr)
+{
+}
 
 bool NotificationHost::IsHostAvailable()
 {
-    return ApiInformation::IsMethodPresent(
-        L"Windows.UI.Xaml.Automation.Peers.AutomationPeer",
-        L"RaiseNotificationEvent");
+    return ApiInformation::IsMethodPresent(L"Windows.UI.Xaml.Automation.Peers.AutomationPeer", L"RaiseNotificationEvent");
 }
 
-INarratorAnnouncementHost^ NotificationHost::MakeHost()
+INarratorAnnouncementHost ^ NotificationHost::MakeHost()
 {
     return ref new NotificationHost();
 }
 
-void NotificationHost::Announce(NarratorAnnouncement^ announcement)
+void NotificationHost::Announce(NarratorAnnouncement ^ announcement)
 {
     if (m_host == nullptr)
     {
@@ -44,8 +43,7 @@ void NotificationHost::Announce(NarratorAnnouncement^ announcement)
     }
 }
 
-StandardPeers::AutomationNotificationKind NotificationHost::GetWindowsNotificationKind(
-    CustomPeers::AutomationNotificationKind customKindType)
+StandardPeers::AutomationNotificationKind NotificationHost::GetWindowsNotificationKind(CustomPeers::AutomationNotificationKind customKindType)
 {
     switch (customKindType)
     {
@@ -71,8 +69,8 @@ StandardPeers::AutomationNotificationKind NotificationHost::GetWindowsNotificati
     return StandardPeers::AutomationNotificationKind::Other;
 }
 
-StandardPeers::AutomationNotificationProcessing NotificationHost::GetWindowsNotificationProcessing(
-    CustomPeers::AutomationNotificationProcessing customProcessingType)
+StandardPeers::AutomationNotificationProcessing
+NotificationHost::GetWindowsNotificationProcessing(CustomPeers::AutomationNotificationProcessing customProcessingType)
 {
     switch (customProcessingType)
     {

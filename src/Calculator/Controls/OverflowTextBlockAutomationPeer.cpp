@@ -10,16 +10,17 @@ using namespace Windows::Foundation::Collections;
 
 namespace CalculatorApp::Controls
 {
-    OverflowTextBlockAutomationPeer::OverflowTextBlockAutomationPeer(OverflowTextBlock^ owner) :
-        FrameworkElementAutomationPeer(owner)
-    { }
+    OverflowTextBlockAutomationPeer::OverflowTextBlockAutomationPeer(OverflowTextBlock ^ owner)
+        : FrameworkElementAutomationPeer(owner)
+    {
+    }
 
     AutomationControlType OverflowTextBlockAutomationPeer::GetAutomationControlTypeCore()
     {
         return AutomationControlType::Text;
     }
 
-    IVector<AutomationPeer^>^ OverflowTextBlockAutomationPeer::GetChildrenCore()
+    IVector<AutomationPeer ^> ^ OverflowTextBlockAutomationPeer::GetChildrenCore()
     {
         return nullptr;
     }

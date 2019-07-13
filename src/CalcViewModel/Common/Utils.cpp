@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -30,12 +30,12 @@ void Utils::IFTPlatformException(HRESULT hr)
 {
     if (FAILED(hr))
     {
-        Platform::Exception^ exception = ref new Platform::Exception(hr);
+        Platform::Exception ^ exception = ref new Platform::Exception(hr);
         throw(exception);
     }
 }
 
-String^ Utils::GetStringValue(String^ input)
+String ^ Utils::GetStringValue(String ^ input)
 {
     // Remove first and last " characters
     if (input->Length() >= 3)
@@ -50,11 +50,10 @@ double Utils::GetDoubleFromWstring(wstring input)
 {
     wchar_t unWantedChars[] = { L' ', L',', 8234, 8235, 8236, 8237 };
     wstring ws = RemoveUnwantedCharsFromWstring(input, unWantedChars, 6);
-    string inputString(ws.begin(), ws.end());
-    return ::atof(inputString.c_str());
+    return stod(ws);
 }
 
-//returns windowId for the current view
+// Returns windowId for the current view
 int Utils::GetWindowId()
 {
     int windowId = -1;
@@ -68,32 +67,21 @@ int Utils::GetWindowId()
     return windowId;
 }
 
-void Utils::RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ CoreDispatcher^ currentDispatcher)
+void Utils::RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ CoreDispatcher ^ currentDispatcher)
 {
     if (currentDispatcher != nullptr)
     {
-        auto task = create_task(currentDispatcher->RunAsync(CoreDispatcherPriority::Normal,
-            ref new DispatchedHandler([function]()
-        {
-            function();
-        })));
+        auto task = create_task(currentDispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([function]() { function(); })));
     }
 }
 
-// returns if the last character of a wstring is the target wchar_t
-bool Utils::IsLastCharacterTarget(_In_ wstring const &input, _In_ wchar_t target)
+// Returns if the last character of a wstring is the target wchar_t
+bool Utils::IsLastCharacterTarget(_In_ wstring const& input, _In_ wchar_t target)
 {
     return !input.empty() && input.back() == target;
 }
 
-//return wstring after removing characters like space, comma, and double quotes
-wstring Utils::RemoveUnwantedCharsFromWstring(wstring input)
-{
-    wchar_t unWantedChars[] = { L' ', L',', L'"', 8234, 8235, 8236, 8237 };
-    return RemoveUnwantedCharsFromWstring(input, unWantedChars, 6);
-}
-
-//return wstring after removing characters specified by unwantedChars array
+// Return wstring after removing characters specified by unwantedChars array
 wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, wchar_t* unwantedChars, unsigned int size)
 {
     for (unsigned int i = 0; i < size; ++i)
@@ -103,14 +91,15 @@ wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, wchar_t* unwantedCh
     return input;
 }
 
-void Utils::SerializeCommandsAndTokens(_In_ shared_ptr<CalculatorVector <pair<wstring, int>>> const &tokens,
-    _In_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const &commands,
-    DataWriter^ writer)
+void Utils::SerializeCommandsAndTokens(
+    _In_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
+    _In_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands,
+    DataWriter ^ writer)
 {
     unsigned int commandsSize;
     IFTPlatformException(commands->GetSize(&commandsSize));
 
-    // save the size of the commands vector
+    // Save the size of the commands vector
     writer->WriteUInt32(commandsSize);
 
     SerializeCommandVisitor cmdVisitor(writer);
@@ -141,7 +130,7 @@ void Utils::SerializeCommandsAndTokens(_In_ shared_ptr<CalculatorVector <pair<ws
     }
 }
 
-const shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> Utils::DeserializeCommands(DataReader^ reader)
+const shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> Utils::DeserializeCommands(DataReader ^ reader)
 {
     shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> commandVector = make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>();
     auto commandVectorSize = reader->ReadUInt32();
@@ -158,9 +147,9 @@ const shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> Utils::Deseri
     return commandVector;
 }
 
-const shared_ptr<CalculatorVector <pair<wstring, int>>> Utils::DeserializeTokens(DataReader^ reader)
+const shared_ptr<CalculatorVector<pair<wstring, int>>> Utils::DeserializeTokens(DataReader ^ reader)
 {
-    shared_ptr<CalculatorVector <pair<wstring, int>>> tokenVector = make_shared<CalculatorVector<pair<wstring, int>>>();
+    shared_ptr<CalculatorVector<pair<wstring, int>>> tokenVector = make_shared<CalculatorVector<pair<wstring, int>>>();
     auto tokensSize = reader->ReadUInt32();
 
     for (unsigned int i = 0; i < tokensSize; ++i)
@@ -200,14 +189,14 @@ bool Utils::IsDateTimeOlderThan(DateTime dateTime, const long long duration)
     return dateTime.UniversalTime + duration < now.UniversalTime;
 }
 
-task<void> Utils::WriteFileToFolder(IStorageFolder^ folder, String^ fileName, String^ contents, CreationCollisionOption collisionOption)
+task<void> Utils::WriteFileToFolder(IStorageFolder ^ folder, String ^ fileName, String ^ contents, CreationCollisionOption collisionOption)
 {
     if (folder == nullptr)
     {
         co_return;
     }
 
-    StorageFile^ file = co_await folder->CreateFileAsync(fileName, collisionOption);
+    StorageFile ^ file = co_await folder->CreateFileAsync(fileName, collisionOption);
     if (file == nullptr)
     {
         co_return;
@@ -216,19 +205,19 @@ task<void> Utils::WriteFileToFolder(IStorageFolder^ folder, String^ fileName, St
     co_await FileIO::WriteTextAsync(file, contents);
 }
 
-task<String^> Utils::ReadFileFromFolder(IStorageFolder^ folder, String^ fileName)
+task<String ^> Utils::ReadFileFromFolder(IStorageFolder ^ folder, String ^ fileName)
 {
     if (folder == nullptr)
     {
         co_return nullptr;
     }
 
-    StorageFile^ file = co_await folder->GetFileAsync(fileName);
+    StorageFile ^ file = co_await folder->GetFileAsync(fileName);
     if (file == nullptr)
     {
         co_return nullptr;
     }
 
-    String^ contents = co_await FileIO::ReadTextAsync(file);
+    String ^ contents = co_await FileIO::ReadTextAsync(file);
     co_return contents;
 }

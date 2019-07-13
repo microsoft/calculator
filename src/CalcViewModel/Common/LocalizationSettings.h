@@ -4,6 +4,8 @@
 #pragma once
 #include "LocalizationService.h"
 
+#include <iterator>
+
 namespace CalculatorApp
 {
     namespace Common
@@ -16,8 +18,8 @@ namespace CalculatorApp
                 int result = 0;
 
                 // Use DecimalFormatter as it respects the locale and the user setting
-                Windows::Globalization::NumberFormatting::DecimalFormatter^ formatter;
-                formatter = CalculatorApp::Common::LocalizationService::GetRegionalSettingsAwareDecimalFormatter();
+                Windows::Globalization::NumberFormatting::DecimalFormatter ^ formatter;
+                formatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter();
                 formatter->FractionDigits = 0;
                 formatter->IsDecimalPointAlwaysDisplayed = false;
 
@@ -27,9 +29,7 @@ namespace CalculatorApp
                 }
 
                 wchar_t resolvedName[LOCALE_NAME_MAX_LENGTH];
-                result = ResolveLocaleName(formatter->ResolvedLanguage->Data(),
-                    resolvedName,
-                    LOCALE_NAME_MAX_LENGTH);
+                result = ResolveLocaleName(formatter->ResolvedLanguage->Data(), resolvedName, LOCALE_NAME_MAX_LENGTH);
                 if (result == 0)
                 {
                     throw std::runtime_error("Unexpected error resolving locale name");
@@ -38,30 +38,21 @@ namespace CalculatorApp
                 {
                     m_resolvedName = resolvedName;
                     wchar_t decimalString[LocaleSettingBufferSize] = L"";
-                    result = GetLocaleInfoEx(m_resolvedName.c_str(),
-                        LOCALE_SDECIMAL,
-                        decimalString,
-                        ARRAYSIZE(decimalString));
+                    result = GetLocaleInfoEx(m_resolvedName.c_str(), LOCALE_SDECIMAL, decimalString, static_cast<int>(std::size(decimalString)));
                     if (result == 0)
                     {
                         throw std::runtime_error("Unexpected error while getting locale info");
                     }
 
                     wchar_t groupingSymbolString[LocaleSettingBufferSize] = L"";
-                    result = GetLocaleInfoEx(m_resolvedName.c_str(),
-                        LOCALE_STHOUSAND,
-                        groupingSymbolString,
-                        ARRAYSIZE(groupingSymbolString));
+                    result = GetLocaleInfoEx(m_resolvedName.c_str(), LOCALE_STHOUSAND, groupingSymbolString, static_cast<int>(std::size(groupingSymbolString)));
                     if (result == 0)
                     {
                         throw std::runtime_error("Unexpected error while getting locale info");
                     }
 
                     wchar_t numberGroupingString[LocaleSettingBufferSize] = L"";
-                    result = GetLocaleInfoEx(m_resolvedName.c_str(),
-                        LOCALE_SGROUPING,
-                        numberGroupingString,
-                        ARRAYSIZE(numberGroupingString));
+                    result = GetLocaleInfoEx(m_resolvedName.c_str(), LOCALE_SGROUPING, numberGroupingString, static_cast<int>(std::size(numberGroupingString)));
                     if (result == 0)
                     {
                         throw std::runtime_error("Unexpected error while getting locale info");
@@ -69,17 +60,19 @@ namespace CalculatorApp
 
                     // Get locale info for List Separator, eg. comma is used in many locales
                     wchar_t listSeparatorString[4] = L"";
-                    result = ::GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT,
+                    result = ::GetLocaleInfoEx(
+                        m_resolvedName.c_str(),
                         LOCALE_SLIST,
                         listSeparatorString,
-                        ARRAYSIZE(listSeparatorString)); // Max length of the expected return value is 4
+                        static_cast<int>(std::size(listSeparatorString))); // Max length of the expected return value is 4
                     if (result == 0)
                     {
                         throw std::runtime_error("Unexpected error while getting locale info");
                     }
 
                     int currencyTrailingDigits = 0;
-                    result = GetLocaleInfoEx(m_resolvedName.c_str(),
+                    result = GetLocaleInfoEx(
+                        m_resolvedName.c_str(),
                         LOCALE_ICURRDIGITS | LOCALE_RETURN_NUMBER,
                         (LPWSTR)&currencyTrailingDigits,
                         sizeof(currencyTrailingDigits) / sizeof(WCHAR));
@@ -91,7 +84,8 @@ namespace CalculatorApp
                     // Currency symbol precedence is either 0 or 1.
                     // A value of 0 indicates the symbol follows the currency value.
                     int currencySymbolPrecedence = 1;
-                    result = GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT,
+                    result = GetLocaleInfoEx(
+                        m_resolvedName.c_str(),
                         LOCALE_IPOSSYMPRECEDES | LOCALE_RETURN_NUMBER,
                         (LPWSTR)&currencySymbolPrecedence,
                         sizeof(currencySymbolPrecedence) / sizeof(WCHAR));
@@ -110,24 +104,22 @@ namespace CalculatorApp
                 // Note: This function returns 0 on failure.
                 // We'll ignore the failure in that case and the CalendarIdentifier would get set to GregorianCalendar.
                 CALID calId;
-                ::GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT,
-                    LOCALE_ICALENDARTYPE | LOCALE_RETURN_NUMBER,
-                    reinterpret_cast<PWSTR>(&calId),
-                    sizeof(calId));
+                ::GetLocaleInfoEx(m_resolvedName.c_str(), LOCALE_ICALENDARTYPE | LOCALE_RETURN_NUMBER, reinterpret_cast<PWSTR>(&calId), sizeof(calId));
 
                 m_calendarIdentifier = GetCalendarIdentifierFromCalid(calId);
 
                 // Get FirstDayOfWeek Date and Time setting
                 wchar_t day[80] = L"";
-                ::GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT,
-                    LOCALE_IFIRSTDAYOFWEEK,                     // The first day in a week
-                    reinterpret_cast<PWSTR>(day),               // Argument is of type PWSTR
-                    ARRAYSIZE(day));                            // Max return size are 80 characters
+                ::GetLocaleInfoEx(
+                    m_resolvedName.c_str(),
+                    LOCALE_IFIRSTDAYOFWEEK,            // The first day in a week
+                    reinterpret_cast<PWSTR>(day),      // Argument is of type PWSTR
+                    static_cast<int>(std::size(day))); // Max return size are 80 characters
 
                 // The LOCALE_IFIRSTDAYOFWEEK integer value varies from 0, 1, .. 6 for Monday, Tuesday, ... Sunday
                 // DayOfWeek enum value varies from 0, 1, .. 6 for Sunday, Monday, ... Saturday
                 // Hence, DayOfWeek = (valueof(LOCALE_IFIRSTDAYOFWEEK) + 1) % 7
-                m_firstDayOfWeek = static_cast<Windows::Globalization::DayOfWeek>((_wtoi(day) + 1) % 7);    // static cast int to DayOfWeek enum
+                m_firstDayOfWeek = static_cast<Windows::Globalization::DayOfWeek>((_wtoi(day) + 1) % 7); // static cast int to DayOfWeek enum
             }
 
         public:
@@ -147,7 +139,7 @@ namespace CalculatorApp
                 return localizationSettings;
             }
 
-            Platform::String^ GetLocaleName() const
+            Platform::String ^ GetLocaleName() const
             {
                 return ref new Platform::String(m_resolvedName.c_str());
             }
@@ -177,7 +169,7 @@ namespace CalculatorApp
                 }
             }
 
-            Platform::String^ GetEnglishValueFromLocalizedDigits(const std::wstring& localizedString) const
+            Platform::String ^ GetEnglishValueFromLocalizedDigits(const std::wstring& localizedString) const
             {
                 if (m_resolvedName == L"en-US")
                 {
@@ -199,7 +191,7 @@ namespace CalculatorApp
                             {
                                 ch = j.ToString()->Data()[0];
                                 break;
-                                //ch = val - L'0';
+                                // ch = val - L'0';
                             }
                         }
                     }
@@ -303,7 +295,7 @@ namespace CalculatorApp
                 }
             }
 
-            Platform::String^ GetCalendarIdentifier() const
+            Platform::String ^ GetCalendarIdentifier() const
             {
                 return m_calendarIdentifier;
             }
@@ -376,7 +368,7 @@ namespace CalculatorApp
             // Hexadecimal characters are not currently localized
             static constexpr std::array<wchar_t, 6> s_hexSymbols{ L'A', L'B', L'C', L'D', L'E', L'F' };
             std::wstring m_listSeparator;
-            Platform::String^ m_calendarIdentifier;
+            Platform::String ^ m_calendarIdentifier;
             Windows::Globalization::DayOfWeek m_firstDayOfWeek;
             int m_currencySymbolPrecedence;
             std::wstring m_resolvedName;
