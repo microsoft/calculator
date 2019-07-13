@@ -279,7 +279,6 @@ const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
 
     m_token.clear();
     m_token.append(&chZero);
-
     return m_token;
 }
 
