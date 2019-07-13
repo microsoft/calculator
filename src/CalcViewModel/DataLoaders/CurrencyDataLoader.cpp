@@ -39,9 +39,9 @@ static constexpr auto CURRENCY_UNIT_TO_KEY = L"CURRENCY_UNIT_TO_KEY";
 static constexpr long long DAY_DURATION = 1LL * 60 * 60 * 24 * 10000000;
 static constexpr long long WEEK_DURATION = DAY_DURATION * 7;
 
-static constexpr int FORMATTER_DIGIT_COUNT = 4;
+static constexpr int FORMATTER_RATE_FRACTION_PADDING = 2;
 static constexpr int FORMATTER_RATE_MIN_DECIMALS = 4;
-static constexpr int FORMATTER_RATE_MIN_SIGNIFICANT_DECIMALS = 2;
+static constexpr int FORMATTER_RATE_MIN_SIGNIFICANT_DECIMALS = 4;
 
 static constexpr auto CACHE_TIMESTAMP_KEY = L"CURRENCY_CONVERTER_TIMESTAMP";
 static constexpr auto CACHE_LANGCODE_KEY = L"CURRENCY_CONVERTER_LANGCODE";
@@ -123,7 +123,7 @@ CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> clie
     m_ratioFormatter = LocalizationService::GetRegionalSettingsAwareDecimalFormatter();
     m_ratioFormatter->IsGrouped = true;
     m_ratioFormatter->IsDecimalPointAlwaysDisplayed = true;
-    m_ratioFormatter->FractionDigits = FORMATTER_DIGIT_COUNT;
+    m_ratioFormatter->FractionDigits = FORMATTER_RATE_FRACTION_PADDING;
 
     m_ratioFormat = AppResourceProvider::GetInstance().GetResourceString(L"CurrencyFromToRatioFormat")->Data();
     m_timestampFormat = AppResourceProvider::GetInstance().GetResourceString(L"CurrencyTimestampFormat")->Data();
@@ -267,7 +267,7 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencySymbols(const UCM::Unit& u
 double CurrencyDataLoader::RoundCurrencyRatio(double ratio)
 {
     // Compute how many decimals we need to display two meaningful digits at minimum
-    // For example: 0.000000003423 -> 0.0000000034, 0.000212 -> 0.00021
+    // For example: 0.00000000342334 -> 0.000000003423, 0.000212 -> 0.000212
     int numberDecimals = FORMATTER_RATE_MIN_DECIMALS;
     if (ratio < 1)
     {

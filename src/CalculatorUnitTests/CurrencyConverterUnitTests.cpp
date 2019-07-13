@@ -613,21 +613,21 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.1234), 0.1234);
             VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.12343), 0.1234);
             VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0321), 0.0321);
-            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.03211), 0.0321);
-            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.03219), 0.0322);
-            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.003219), 0.0032);
-            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.003269), 0.0033);
-            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.000269), 0.00027);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.03211), 0.03211);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.032119), 0.03212);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.00322119), 0.003221);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.00123269), 0.001233);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.00076269), 0.0007627);
             VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.000069), 0.000069);
             VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.000061), 0.000061);
-            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000612), 0.000061);
-            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000616), 0.000062);
-            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000016), 0.0000016);
-            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000016134324), 0.0000016);
-            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000096134324), 0.0000096);
-            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.00000169348392), 0.0000017);
-            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000000034987218), 0.0000000035);
-            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000000000000231445), 0.000000000000023);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.000054612), 0.00005461);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.000054616), 0.00005462);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.000005416), 0.000005416);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000016134324), 0.000001613);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000096134324), 0.000009613);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.0000032169348392), 0.000003217);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.000000002134987218), 0.000000002135);
+            VERIFY_ARE_EQUAL(CurrencyDataLoader::RoundCurrencyRatio(0.000000000000087231445), 0.00000000000008723);
         }
     };
 }
