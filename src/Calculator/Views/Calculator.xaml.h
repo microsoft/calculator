@@ -91,7 +91,7 @@ public
         void EnsureProgrammer();
         void SetFontSizeResources();
         std::wstring GetCurrentLayoutState();
-        void UpdateOverflowTextBlock(Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
+        void Calculator_SizeChanged(Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
 
     private:
         Windows::UI::Xaml::Controls::ListView ^ m_tokenList;
@@ -104,16 +104,16 @@ public
         bool m_IsLastFlyoutHistory = false;
 
         // Used for disabling/enabling behavior involving AlwaysOnTop mode
-        bool ClearMemoryButtonErrorPrevState;
-        bool MemRecallErrorPrevState;
-        bool MemPlusErrorPrevState;
-        bool MemMinusErrorPrevState;
-        bool MemButtonErrorPrevState; 
-        bool ClearMemoryButtonEnabled = true;
-        bool MemRecallEnabled = true;
-        bool MemPlusEnabled = true;
-        bool MemMinusEnabled = true;
-        bool MemButtonEnabled = true;
+        bool m_clearMemoryButtonErrorPrevState;
+        bool m_memRecallErrorPrevState;
+        bool m_memPlusErrorPrevState;
+        bool m_memMinusErrorPrevState;
+        bool m_memButtonErrorPrevState; 
+        bool m_clearMemoryButtonEnabled = true;
+        bool m_memRecallEnabled = true;
+        bool m_memPlusEnabled = true;
+        bool m_memMinusEnabled = true;
+        bool m_memButtonEnabled = true;
 
         Platform::String ^ m_openMemoryFlyoutAutomationName;
         Platform::String ^ m_closeMemoryFlyoutAutomationName;

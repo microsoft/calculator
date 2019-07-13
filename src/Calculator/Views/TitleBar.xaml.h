@@ -33,7 +33,6 @@ public
         void SetTitleBarVisibility();
         void SetTitleBarPadding();
         void SetTitleBarControlColors();
-        void SetTitleBarExtendView();
         void ColorValuesChanged(_In_ Windows::UI::ViewManagement::UISettings ^ sender, _In_ Platform::Object ^ e);
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
         void OnWindowActivated(Platform::Object ^ sender, Windows::UI::Core::WindowActivatedEventArgs ^ e);

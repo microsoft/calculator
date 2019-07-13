@@ -143,7 +143,7 @@
                                                   FontWeight="SemiLight"
                                                   ItemTemplateSelector="{StaticResource AlwaysOnTopExpressionItemTemplateSelector}"
                                                   ItemsSource="{Binding ExpressionTokens}"
-                                                  Visibility="{Binding DoesAlwaysOnTopResultShowTokens, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                                                  Visibility="{Binding DoesAlwaysOnTopResultShowTokens, Mode=OneWay}">
                                     <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <ItemsStackPanel HorizontalAlignment="Right"
@@ -158,7 +158,7 @@
                                                Padding="0"
                                                VerticalAlignment="Stretch"
                                                FontWeight="SemiBold"
-                                               Visibility="{Binding DoesAlwaysOnTopResultConcatenate, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>  
+                                               Visibility="{Binding DoesAlwaysOnTopResultConcatenate, Mode=OneWay}"/>  
                                 </StackPanel>
                             </ScrollViewer>
                             <Button x:Name="ScrollLeft"
@@ -329,7 +329,6 @@
 
         <!-- Value Converters -->
 
-        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
 
@@ -587,7 +586,7 @@
                                         HorizontalContentAlignment="Right"
                                         IsActive="True"
                                         IsTabStop="False"
-                                        Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
+                                        Visibility="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"/>
 
             <!-- Programmer display panel controls -->
             <local:CalculatorProgrammerOperators x:Name="ProgrammerOperators"

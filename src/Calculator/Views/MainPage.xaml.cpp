@@ -118,10 +118,10 @@ void MainPage::WindowSizeChanged(_In_ Platform::Object ^ /*sender*/, _In_ Window
     if (m_model->CalculatorViewModel->IsAlwaysOnTop)
     {
         Windows::Storage::ApplicationDataContainer ^ localSettings = Windows::Storage::ApplicationData::Current->LocalSettings;
-        float width = safe_cast<float>(this->ActualWidth);
-        float height = safe_cast<float>(this->ActualHeight);
-        localSettings->Values->Insert("calculatorAlwaysOnTopLastWidth", width);
-        localSettings->Values->Insert("calculatorAlwaysOnTopLastHeight", height);
+        //double width = safe_cast<float>(this->ActualWidth);
+        //double height = safe_cast<float>(this->ActualHeight);
+        localSettings->Values->Insert(AppResourceProvider::GetInstance().GetResourceString(L"CalculatorAlwaysOnTopLastWidthLocalSettings"), this->ActualWidth);
+        localSettings->Values->Insert(AppResourceProvider::GetInstance().GetResourceString(L"CalculatorAlwaysOnTopLastHeightLocalSettings"), this->ActualHeight);
     }
 }
 
@@ -145,7 +145,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         else if (newValue == ViewMode::Scientific)
         {
             EnsureCalculator();
-            EnsureAlwaysOnTopCalculator();
             m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = true;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
             if (m_model->PreviousMode != ViewMode::Scientific)
@@ -160,7 +159,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
             m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = false;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             EnsureCalculator();
-            EnsureAlwaysOnTopCalculator();
             if (m_model->PreviousMode != ViewMode::Programmer)
             {
                 m_calculator->AnimateCalculator(NavCategory::IsConverterViewMode(previousMode));
@@ -174,7 +172,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
                 m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             }
             EnsureDateCalculator();
-            EnsureAlwaysOnTopCalculator();
         }
         else if (NavCategory::IsConverterViewMode(newValue))
         {
@@ -184,7 +181,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
                 m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             }
             EnsureConverter();
-            EnsureAlwaysOnTopCalculator();
             if (!NavCategory::IsConverterViewMode(previousMode))
             {
                 m_converter->AnimateConverter();

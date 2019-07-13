@@ -41,7 +41,6 @@
                 Style="{ThemeResource CommandBarFlyoutEllipsisButtonStyle}"
                 Content="&#xEE49;"
                 Click="AlwaysOnTopButtonClick"
-                ClickMode="Release"
                 Width="46"
                 Height="32"
                 HorizontalAlignment="Right"
@@ -50,6 +49,7 @@
                 FontWeight="Thin"
                 FontSize="14"
                 Visibility="{x:Bind Model.IsNormalMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
-                ToolTipService.ToolTip="Always on top"/>
+                AutomationProperties.AutomationId="AlwaysOnTopButton"
+                AutomationProperties.Name="Always on top"/>
     </Grid>
 </UserControl>

@@ -545,7 +545,19 @@
     <value>Insert</value>
     <comment>{Locked}This is the alternate shortcut for paste, SHIFT+Insert</comment>
   </data>
-  <data name="BitAutomationName" xml:space="preserve">
+  <data name="CalculatorAlwaysOnTopLaunchedLocalSettings" xml:space="preserve">
+    <value>calculatorAlwaysOnTopLaunched</value>
+    <comment>LocalSettings variable name for calculatorAlwaysOnTopLaunched</comment>
+  </data>
+  <data name="CalculatorAlwaysOnTopLastWidthLocalSettings" xml:space="preserve">
+    <value>calculatorAlwaysOnTopLastWidth</value>
+    <comment>LocalSettings variable name for calculatorAlwaysOnTopLastWidth</comment>
+  </data>
+  <data name="CalculatorAlwaysOnTopLastHeightLocalSettings" xml:space="preserve">
+    <value>calculatorAlwaysOnTopLastHeight</value>
+    <comment>LocalSettings variable name for calculatorAlwaysOnTopLastHeight</comment>
+  </data>
+    <data name="BitAutomationName" xml:space="preserve">
     <value>Bit </value>
     <comment>Sub-string used in automation name for each bit in bit flip</comment>
   </data>
@@ -825,6 +837,14 @@
     <value>Close memory flyout</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
   </data>
+  <data name="AlwaysOnTop_Enter" xml:space="preserve">
+    <value>Always on top</value>
+    <comment>This is the tool tip automation name for the always-on-top button when out of always-on-top mode.</comment>
+  </data>
+  <data name="AlwaysOnTop_Exit" xml:space="preserve">
+    <value>Exit always-on-top</value>
+    <comment>This is the tool tip automation name for the always-on-top button when in always-on-top mode.</comment>
+  </data>
   <data name="MemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Memory</value>
     <comment>This is the tool tip automation name for the memory button.</comment>
@@ -956,6 +976,10 @@
   <data name="Format_CalculatorResults" xml:space="preserve">
     <value>Display is %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator results text block. %1 = Localized display value, e.g. "50".</comment>
+  </data>
+  <data name="Format_CalculatorAlwaysOnTopResults" xml:space="preserve">
+    <value>Expression is %1, Current input is %2</value>
+    <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
     <value>Display is %1 point</value>

@@ -413,6 +413,7 @@ namespace CalculatorApp
             CalculationManager::CalculatorManager m_standardCalculatorManager;
             Platform::String ^ m_expressionAutomationNameFormat;
             Platform::String ^ m_localizedCalculationResultAutomationFormat;
+            Platform::String ^ m_localizedCalculationAlwaysOnTopResultAutomationFormat;
             Platform::String ^ m_localizedCalculationResultDecimalAutomationFormat;
             Platform::String ^ m_localizedHexaDecimalAutomationFormat;
             Platform::String ^ m_localizedDecimalAutomationFormat;
@@ -451,6 +452,7 @@ namespace CalculatorApp
                 ^ CalculateNarratorDisplayValue(_In_ std::wstring const& displayValue, _In_ Platform::String ^ localizedDisplayValue, _In_ bool isError);
             CalculatorApp::Common::Automation::NarratorAnnouncement ^ GetDisplayUpdatedNarratorAnnouncement();
             Platform::String ^ GetCalculatorExpressionAutomationName();
+            Platform::String ^ GetCalculatorAlwaysOnTopExpressionAutomationName();
             Platform::String ^ GetNarratorStringReadRawNumbers(_In_ Platform::String ^ localizedDisplayValue);
 
             CalculationManager::Command ConvertToOperatorsEnum(NumbersAndOperatorsEnum operation);

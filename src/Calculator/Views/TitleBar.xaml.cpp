@@ -35,9 +35,9 @@ namespace CalculatorApp
         Unloaded += ref new RoutedEventHandler(this, &TitleBar::OnUnloaded);
 
         AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
+        ToolTipService::SetToolTip(AlwaysOnTopButton, AppResourceProvider::GetInstance().GetResourceString(L"AlwaysOnTop_Enter"));
 
         m_beforeAlwaysOnTopMode = CalculatorApp::Common::ViewMode::Standard;
-
     }
 
     void TitleBar::OnLoaded(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
@@ -59,7 +59,7 @@ namespace CalculatorApp
         // Set properties
         LayoutRoot->Height = m_coreTitleBar->Height;
         SetTitleBarControlColors();
-        // SetTitleBarExtendView();
+
         SetTitleBarVisibility();
         SetTitleBarPadding();
     }
@@ -79,14 +79,9 @@ namespace CalculatorApp
         m_windowActivatedToken.Value = 0;
     }
 
-    void TitleBar::SetTitleBarExtendView()
-    {
-        m_coreTitleBar->ExtendViewIntoTitleBar = !m_accessibilitySettings->HighContrast;
-    }
 
     void TitleBar::SetTitleBarVisibility()
     {
-        // this->BackgroundElement->Visibility = m_coreTitleBar->IsVisible && !m_accessibilitySettings->HighContrast ? ::Visibility::Visible : ::Visibility::Collapsed;
         this->LayoutRoot->Visibility = m_coreTitleBar->IsVisible ? ::Visibility::Visible : ::Visibility::Collapsed;
     }
 
@@ -165,7 +160,6 @@ namespace CalculatorApp
     {
         Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]() {
                                  SetTitleBarControlColors();
-                                 SetTitleBarExtendView();
                                  SetTitleBarVisibility();
                              }));
     }
@@ -197,14 +191,14 @@ namespace CalculatorApp
                     AlwaysOnTopButton->HorizontalAlignment = ::HorizontalAlignment::Left;
                     AlwaysOnTopButton->Content = L"\uEE47";
                     AppName->Text = "";
-                    ToolTipService::SetToolTip(AlwaysOnTopButton, "Exit always-on-top");
+                    ToolTipService::SetToolTip(AlwaysOnTopButton, AppResourceProvider::GetInstance().GetResourceString(L"AlwaysOnTop_Exit"));
                 }
                 else
                 {
                     AlwaysOnTopButton->HorizontalAlignment = ::HorizontalAlignment::Right;
                     AlwaysOnTopButton->Content = L"\uEE49";
                     AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
-                    ToolTipService::SetToolTip(AlwaysOnTopButton, "Always on top");
+                    ToolTipService::SetToolTip(AlwaysOnTopButton, AppResourceProvider::GetInstance().GetResourceString(L"AlwaysOnTop_Enter"));
                 }
                 this->Focus(::FocusState::Programmatic);
             });
@@ -218,17 +212,20 @@ namespace CalculatorApp
 
             Windows::Storage::ApplicationDataContainer ^ localSettings = Windows::Storage::ApplicationData::Current->LocalSettings;
             ViewModePreferences ^ compactOptions = ViewModePreferences::CreateDefault(ApplicationViewMode::CompactOverlay);
-            if (!localSettings->Values->GetView()->HasKey("calculatorAlwaysOnTopLaunched"))
+            if (!localSettings->Values->GetView()->HasKey(AppResourceProvider::GetInstance().GetResourceString(L"CalculatorAlwaysOnTopLaunchedLocalSettings")))
             {
                 compactOptions->CustomSize = Windows::Foundation::Size(320, 394);
-                localSettings->Values->Insert("calculatorAlwaysOnTopLaunched", true);
+                localSettings->Values->Insert(AppResourceProvider::GetInstance().GetResourceString(L"CalculatorAlwaysOnTopLaunchedLocalSettings"), true);
             }
             else
             {
-                if (localSettings->Values->GetView()->HasKey("calculatorAlwaysOnTopLastWidth") && localSettings->Values->GetView()->HasKey("calculatorAlwaysOnTopLastHeight"))
+                if (localSettings->Values->GetView()->HasKey(AppResourceProvider::GetInstance().GetResourceString(L"CalculatorAlwaysOnTopLastWidthLocalSettings"))
+                    && localSettings->Values->GetView()->HasKey(AppResourceProvider::GetInstance().GetResourceString(L"CalculatorAlwaysOnTopLastHeightLocalSettings")))
                 {
-                    float width = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup("calculatorAlwaysOnTopLastWidth"))->GetSingle();
-                    float height = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup("calculatorAlwaysOnTopLastHeight"))->GetSingle();
+                    float width = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup(AppResourceProvider::GetInstance().GetResourceString(L"CalculatorAlwaysOnTopLastWidthLocalSettings")))
+                                      ->GetSingle();
+                    float height = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup(AppResourceProvider::GetInstance().GetResourceString(L"CalculatorAlwaysOnTopLastHeightLocalSettings")))
+                                       ->GetSingle();
                     compactOptions->CustomSize = Windows::Foundation::Size(width, height);
                 }
                 else
@@ -246,14 +243,14 @@ namespace CalculatorApp
                     AlwaysOnTopButton->HorizontalAlignment = ::HorizontalAlignment::Left;
                     AlwaysOnTopButton->Content = L"\uEE47";
                     AppName->Text = "";
-                    ToolTipService::SetToolTip(AlwaysOnTopButton, "Exit always-on-top");
+                    ToolTipService::SetToolTip(AlwaysOnTopButton, AppResourceProvider::GetInstance().GetResourceString(L"AlwaysOnTop_Exit"));
                 }
                 else
                 {
                     AlwaysOnTopButton->HorizontalAlignment = ::HorizontalAlignment::Right;
                     AlwaysOnTopButton->Content = L"\uEE49";
                     AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
-                    ToolTipService::SetToolTip(AlwaysOnTopButton, "Always on top");
+                    ToolTipService::SetToolTip(AlwaysOnTopButton, AppResourceProvider::GetInstance().GetResourceString(L"AlwaysOnTop_Enter"));
                 }
                 this->Focus(::FocusState::Programmatic);
             });

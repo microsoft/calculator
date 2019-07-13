@@ -33,7 +33,6 @@
             <Setter Property="KeyTipPlacementMode" Value="Right"/>
         </Style>
 
-        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
     </Page.Resources>
@@ -90,7 +89,7 @@
         <local:TitleBar x:Name="CustomTitleBar" Grid.Row="0" DataContext="{x:Bind Model}"/>
 
         <Grid x:Name="AlwaysOnTopView"
-              Visibility="{x:Bind Model.CalculatorViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+              Visibility="{x:Bind Model.CalculatorViewModel.IsAlwaysOnTop, Mode=OneWay}"
               Grid.Row="1"
               DataContext="{x:Bind Model}">
             <Border x:Name="AlwaysOnTopCalcHolder">

@@ -23,8 +23,10 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(DateCalculatorViewModel ^, DateCalcViewModel);
             OBSERVABLE_PROPERTY_RW(UnitConverterViewModel ^, ConverterViewModel);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::ViewMode, PreviousMode);
-            OBSERVABLE_PROPERTY_RW(bool, IsNormalMode);
             OBSERVABLE_NAMED_PROPERTY_RW(Platform::String ^, CategoryName);
+
+            // Indicates whether calculator is currently in standard mode _and_ supports CompactOverlay
+            OBSERVABLE_PROPERTY_RW(bool, IsNormalMode);
 
             COMMAND_FOR_METHOD(CopyCommand, ApplicationViewModel::OnCopyCommand);
             COMMAND_FOR_METHOD(PasteCommand, ApplicationViewModel::OnPasteCommand);

@@ -45,6 +45,7 @@ namespace CalculatorResourceKeys
 {
     StringReference CalculatorExpression(L"Format_CalculatorExpression");
     StringReference CalculatorResults(L"Format_CalculatorResults");
+    StringReference CalculatorAlwaysOnTopResults(L"Format_CalculatorAlwaysOnTopResults");
     StringReference CalculatorResults_DecimalSeparator_Announced(L"Format_CalculatorResults_Decimal");
     StringReference HexButton(L"Format_HexButtonValue");
     StringReference DecButton(L"Format_DecButtonValue");
@@ -99,6 +100,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     m_calculatorDisplay.SetCallback(calculatorViewModel);
     m_expressionAutomationNameFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::CalculatorExpression);
     m_localizedCalculationResultAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::CalculatorResults);
+    m_localizedCalculationAlwaysOnTopResultAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::CalculatorAlwaysOnTopResults);
     m_localizedCalculationResultDecimalAutomationFormat =
         AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::CalculatorResults_DecimalSeparator_Announced);
     m_localizedHexaDecimalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::HexButton);
@@ -109,7 +111,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     // Initialize the Automation Name
     CalculationResultAutomationName = GetLocalizedStringFormat(m_localizedCalculationResultAutomationFormat, m_DisplayValue);
     CalculationExpressionAutomationName = GetLocalizedStringFormat(m_expressionAutomationNameFormat, L"");
-    CalculationAlwaysOnTopResultAutomationName = GetLocalizedStringFormat(m_expressionAutomationNameFormat, L"");
+    CalculationAlwaysOnTopResultAutomationName = GetLocalizedStringFormat(m_localizedCalculationAlwaysOnTopResultAutomationFormat, L"");
 
     // Initialize history view model
     m_HistoryVM = ref new HistoryViewModel(&m_standardCalculatorManager);
@@ -219,14 +221,17 @@ void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ wstring const& displayS
         unsigned int nTokens = 0;
         m_tokens->GetSize(&nTokens);
         DoesAlwaysOnTopResultShowTokens = !IsInError;
-        if (IsEngineRecording || nTokens == 0 || IsInError)
+        DoesAlwaysOnTopResultConcatenate = IsEngineRecording || nTokens == 0 || IsInError;
+        if (DoesAlwaysOnTopResultShowTokens && DoesAlwaysOnTopResultConcatenate && nTokens > 0)
         {
-            DoesAlwaysOnTopResultConcatenate = true;
-            CalculationAlwaysOnTopResultAutomationName = GetCalculatorExpressionAutomationName() + " " + CalculationResultAutomationName;
+            CalculationAlwaysOnTopResultAutomationName = GetCalculatorAlwaysOnTopExpressionAutomationName();
+        }
+        else if (DoesAlwaysOnTopResultShowTokens && nTokens > 0)
+        {
+            CalculationAlwaysOnTopResultAutomationName = GetCalculatorExpressionAutomationName();
         }
         else
         {
-            DoesAlwaysOnTopResultConcatenate = false;
             CalculationAlwaysOnTopResultAutomationName = CalculationResultAutomationName;
         }
         AreAlwaysOnTopResultsUpdated = true;
@@ -317,14 +322,17 @@ void StandardCalculatorViewModel::SetExpressionDisplay(
         unsigned int nTokens = 0;
         tokens->GetSize(&nTokens);
         DoesAlwaysOnTopResultShowTokens = !IsInError;
-        if (IsEngineRecording || nTokens == 0 || IsInError)
+        DoesAlwaysOnTopResultConcatenate = IsEngineRecording || nTokens == 0 || IsInError;
+        if (DoesAlwaysOnTopResultShowTokens && DoesAlwaysOnTopResultConcatenate && nTokens > 0)
         {
-            DoesAlwaysOnTopResultConcatenate = true;
-            CalculationAlwaysOnTopResultAutomationName = GetCalculatorExpressionAutomationName() + " " + CalculationResultAutomationName;
+            CalculationAlwaysOnTopResultAutomationName = GetCalculatorAlwaysOnTopExpressionAutomationName();
+        }
+        else if (DoesAlwaysOnTopResultShowTokens && nTokens > 0)
+        {
+            CalculationAlwaysOnTopResultAutomationName = GetCalculatorExpressionAutomationName();
         }
         else
         {
-            DoesAlwaysOnTopResultConcatenate = false;
             CalculationAlwaysOnTopResultAutomationName = CalculationResultAutomationName;
         }
         AreAlwaysOnTopResultsUpdated = false;
@@ -425,6 +433,18 @@ String ^ StandardCalculatorViewModel::GetCalculatorExpressionAutomationName()
     }
 
     return GetLocalizedStringFormat(m_expressionAutomationNameFormat, expression);
+}
+
+String ^ StandardCalculatorViewModel::GetCalculatorAlwaysOnTopExpressionAutomationName()
+{
+    String ^ expression = L"";
+    for (auto&& token : m_ExpressionTokens)
+    {
+        expression += LocalizationService::GetNarratorReadableToken(token->Token);
+    }
+    wstring localizedResult =
+        LocalizationStringUtil::GetLocalizedString(m_localizedCalculationAlwaysOnTopResultAutomationFormat->Data(), expression->Data(), m_DisplayValue->Data());
+    return ref new String(localizedResult.c_str());
 }
 
 void StandardCalculatorViewModel::SetMemorizedNumbers(const vector<wstring>& newMemorizedNumbers)
