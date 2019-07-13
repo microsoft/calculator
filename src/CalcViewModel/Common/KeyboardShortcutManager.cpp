@@ -60,13 +60,14 @@ namespace CalculatorApp
         void LightUpButtons(const T& buttons)
         {
             auto iterator = buttons.first;
-            for (; iterator != buttons.second; ++iterator)
+            while (iterator != buttons.second)
             {
                 auto button = iterator->second.Resolve<ButtonBase>();
                 if (button && button->IsEnabled)
                 {
                     LightUpButton(button);
                 }
+                ++iterator;
             }
         }
 
@@ -117,14 +118,15 @@ namespace CalculatorApp
         void RunFirstEnabledButtonCommand(const T& buttons)
         {
             auto buttonIterator = buttons.first;
-            for (; buttonIterator != buttons.second; ++buttonIterator)
+            for ( buttonIterator != buttons.second)
             {
                 auto button = buttonIterator->second.Resolve<ButtonBase>();
                 if (button && button->IsEnabled)
                 {
                     RunButtonCommand(button);
-                    break;
+                    return;
                 }
+                 ++buttonIterator;
             }
         }
 
