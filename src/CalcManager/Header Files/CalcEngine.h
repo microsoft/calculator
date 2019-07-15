@@ -76,8 +76,16 @@ public:
     bool IsCurrentTooBigForTrig();
     int GetCurrentRadix();
     std::wstring GetCurrentResultForRadix(uint32_t radix, int32_t precision);
+<<<<<<< HEAD
+    void ChangePrecision(int32_t precision)
+    {
+        m_precision = precision;
+        ChangeConstants(m_radix, precision);
+    }
+=======
     void ChangePrecision(int32_t precision) { m_precision = precision; ChangeConstants(m_radix, precision); }
     void ChangeFormat(eNUMOBJ_FMT format) { m_nFE = format; m_nDefaultFE = format; }
+>>>>>>> 8591c856c4765ceabb9ec7820bff0c37d5f4862a
     std::wstring GroupDigitsPerRadix(std::wstring_view numberString, uint32_t radix);
     std::wstring GetStringForDisplay(CalcEngine::Rational const& rat, uint32_t radix);
     void UpdateMaxIntDigits();
@@ -113,8 +121,12 @@ private:
     bool m_bRecord;                // Global mode: recording or displaying
     bool m_bSetCalcState;          // Flag for setting the engine result state
     CalcEngine::CalcInput m_input; // Global calc input object for decimal strings
+<<<<<<< HEAD
+    eNUMOBJ_FMT m_nFE;             /* Scientific notation conversion flag.       */
+=======
     eNUMOBJ_FMT m_nFE;    /* Scientific notation conversion flag.       */
     eNUMOBJ_FMT m_nDefaultFE;    /* Default scientific notation conversion flag.       */
+>>>>>>> 8591c856c4765ceabb9ec7820bff0c37d5f4862a
     CalcEngine::Rational m_maxTrigonometricNum;
     std::unique_ptr<CalcEngine::Rational> m_memoryValue; // Current memory value.
 

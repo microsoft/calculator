@@ -107,6 +107,10 @@ TEST_METHOD(MultipleModesCalculationTest)
     {
         viewModels[i] = ref new StandardCalculatorViewModel();
 
+<<<<<<< HEAD
+        ChangeMode(viewModels[i], i);
+    }
+=======
         // Perform calculations on 2 instances of Calculator in Scientific Mode
         // (with different Angle types, HYP and F-E settings) and verify that they work independently
         TEST_METHOD(MultipleScientificModeWithDifferentSettingsTest)
@@ -155,6 +159,7 @@ TEST_METHOD(MultipleModesCalculationTest)
             };
             ValidateViewModelByCommands(scientificViewModel2, scientificModeTestItems2, true);
         }
+>>>>>>> 8591c856c4765ceabb9ec7820bff0c37d5f4862a
 
     // Perform Calculations on all instances and check that they work independently
 

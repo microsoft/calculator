@@ -59,6 +59,7 @@ namespace CalculatorResourceKeys
     StringReference DisplayCopied(L"Display_Copied");
 }
 
+<<<<<<< HEAD
 StandardCalculatorViewModel::StandardCalculatorViewModel()
     : m_DisplayValue(L"0")
     , m_DecimalDisplayValue(L"0")
@@ -66,10 +67,10 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_BinaryDisplayValue(L"0")
     , m_OctalDisplayValue(L"0")
     , m_standardCalculatorManager(&m_calculatorDisplay, &m_resourceProvider)
+    , m_ExpressionTokens(ref new Vector<DisplayExpressionToken ^>())
     , m_MemorizedNumbers(ref new Vector<MemoryItemViewModel ^>())
     , m_IsMemoryEmpty(true)
     , m_IsFToEChecked(false)
-    , m_IsFToEAuto(false)
     , m_isShiftChecked(false)
     , m_IsShiftProgrammerChecked(false)
     , m_IsQwordEnabled(true)
@@ -80,8 +81,8 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_isBinaryBitFlippingEnabled(false)
     , m_CurrentRadixType(RADIX_TYPE::DEC_RADIX)
     , m_CurrentAngleType(NumbersAndOperatorsEnum::Degree)
-    , m_OpenParenthesisCount(L"")
     , m_Announcement(nullptr)
+    , m_OpenParenthesisCount(0)
     , m_feedbackForButtonPress(nullptr)
     , m_isRtlLanguage(false)
     , m_localizedMaxDigitsReachedAutomationFormat(nullptr)
@@ -92,6 +93,41 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_localizedMemoryCleared(nullptr)
     , m_localizedOpenParenthesisCountChangedAutomationFormat(nullptr)
     , m_localizedNoRightParenthesisAddedFormat(nullptr)
+=======
+StandardCalculatorViewModel::StandardCalculatorViewModel() :
+    m_DisplayValue(L"0"),
+    m_DecimalDisplayValue(L"0"),
+    m_HexDisplayValue(L"0"),
+    m_BinaryDisplayValue(L"0"),
+    m_OctalDisplayValue(L"0"),
+    m_standardCalculatorManager(&m_calculatorDisplay, &m_resourceProvider),
+    m_MemorizedNumbers(ref new Vector<MemoryItemViewModel^>()),
+    m_IsMemoryEmpty(true),
+    m_IsFToEChecked(false),
+    m_IsFToEAuto(false),
+    m_isShiftChecked(false),
+    m_IsShiftProgrammerChecked(false),
+    m_IsQwordEnabled(true),
+    m_IsDwordEnabled(true),
+    m_IsWordEnabled(true),
+    m_IsByteEnabled(true),
+    m_isBitFlipChecked(false),
+    m_isBinaryBitFlippingEnabled(false),
+    m_CurrentRadixType(RADIX_TYPE::DEC_RADIX),
+    m_CurrentAngleType(NumbersAndOperatorsEnum::Degree),
+    m_OpenParenthesisCount(L""),
+    m_Announcement(nullptr),
+    m_feedbackForButtonPress(nullptr),
+    m_isRtlLanguage(false),
+    m_localizedMaxDigitsReachedAutomationFormat(nullptr),
+    m_localizedButtonPressFeedbackAutomationFormat(nullptr),
+    m_localizedMemorySavedAutomationFormat(nullptr),
+    m_localizedMemoryItemChangedAutomationFormat(nullptr),
+    m_localizedMemoryItemClearedAutomationFormat(nullptr),
+    m_localizedMemoryCleared(nullptr),
+    m_localizedOpenParenthesisCountChangedAutomationFormat(nullptr),
+    m_localizedNoRightParenthesisAddedFormat(nullptr)
+>>>>>>> 8591c856c4765ceabb9ec7820bff0c37d5f4862a
 {
     WeakReference calculatorViewModel(this);
     m_calculatorDisplay.SetCallback(calculatorViewModel);
@@ -203,22 +239,19 @@ void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ wstring const& displayS
 
     DisplayValue = localizedDisplayStringValue;
 
-    if (IsFtoEAuto)
-    {
-        if (!IsFToEChecked)
-        {
-            IsFToEAuto = false;
-        }
-        else if (displayStringValue.find(L"e") == std::wstring::npos)
-        {
-            IsFToEChecked = false;
-            IsFToEAuto = false;
-        }
-    }
-    else if (!IsFToEChecked && displayStringValue.find(L"e") != std::wstring::npos)
+    if (!IsFToEAuto && !IsFToEChecked && displayStringValue.find(L"e") != std::wstring::npos)
     {
         IsFToEAuto = true;
         IsFToEChecked = true;
+    }
+    else if (IsFToEAuto && IsFToEChecked && displayStringValue.find(L"e") == std::wstring::npos)
+    {
+        IsFToEChecked = false;
+        IsFToEAuto = false;
+    }
+    else if (IsFToEAuto && !IsFToEChecked)
+    {
+        IsFToEAuto = false;
     }
 
     IsInError = isError;
@@ -236,13 +269,15 @@ void StandardCalculatorViewModel::DisplayPasteError()
 
 void StandardCalculatorViewModel::SetParenthesisCount(_In_ unsigned int parenthesisCount)
 {
-    if (m_OpenParenthesisCount != parenthesisCount)
+    if (m_OpenParenthesisCount == parenthesisCount)
     {
-        OpenParenthesisCount = parenthesisCount;
-        if (IsProgrammer || IsScientific)
-        {
-            SetOpenParenthesisCountNarratorAnnouncement();
-        }
+        return;
+    }
+
+    OpenParenthesisCount = parenthesisCount;
+    if (IsProgrammer || IsScientific)
+    {
+        SetOpenParenthesisCountNarratorAnnouncement();
     }
 }
 
@@ -361,6 +396,7 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<CalculatorVector<
                 shared_ptr<IExpressionCommand> command;
                 IFTPlatformException(m_commands->GetAt(static_cast<unsigned int>(currentToken.second), &command));
                 type = command->GetCommandType() == CommandType::OperandCommand ? TokenType::Operand : TokenType::Operator;
+                
             }
             else
             {
@@ -525,7 +561,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
     int length = 0;
     wchar_t* temp = new wchar_t[100];
     const wchar_t* data = m_selectedExpressionLastData->Data();
-
+    int i = 0, j = 0;
     int commandIndex = displayExpressionToken->CommandIndex;
 
     if (IsOperandTextCompletelySelected)
@@ -547,8 +583,6 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
     }
     else
     {
-        int i = 0;
-        int length = m_selectedExpressionLastData->Length();
         if (ch == L'x')
         {
             if (commandIndex == 0)
@@ -557,26 +591,27 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
                 return;
             }
 
-            for (int j = 0; j < length; j++)
+            length = m_selectedExpressionLastData->Length();
+            while (j < length)
             {
-                if (j != commandIndex - 1)
+                if (j == commandIndex - 1)
                 {
-                    temp[i++] = data[j];
+                    j++;
+                    continue;
                 }
+                temp[i++] = data[j++];
             }
             temp[i] = L'\0';
             commandIndex -= 1;
         }
         else
         {
-            if (length > 49) // Check before we add 1 to it so that we know the total length will be greater than 50
+            length = m_selectedExpressionLastData->Length() + 1;
+            if (length > 50)
             {
                 delete[] temp;
                 return;
             }
-
-            length++; // Add one to the length/
-            int j = 0;
             while (i < length)
             {
                 if (i == commandIndex)
@@ -844,6 +879,7 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString, ViewMode mode)
             {
                 // Don't send a closing parenthesis if a matching opening parenthesis hasn't been sent already
                 sendCommand = false;
+                
             }
             else
             {
@@ -902,7 +938,7 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString, ViewMode mode)
         // Handle exponent and exponent sign (...e+... or ...e-... or ...e...)
         if (mappedNumOp == NumbersAndOperatorsEnum::Exp)
         {
-            // Check the following item
+            //Check the following item
             switch (MapCharacterToButtonId(*(it + 1), canSendNegate))
             {
             case NumbersAndOperatorsEnum::Subtract:
@@ -914,7 +950,7 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString, ViewMode mode)
             break;
             case NumbersAndOperatorsEnum::Add:
             {
-                // Nothing to do, skip to the next item
+                //Nothing to do, skip to the next item
                 ++it;
             }
             break;
@@ -1181,9 +1217,12 @@ void StandardCalculatorViewModel::OnMemoryClear(_In_ Object ^ memoryItemPosition
     }
 }
 
-Array<unsigned char> ^ StandardCalculatorViewModel::Serialize()
+<<<<<<< HEAD
+void StandardCalculatorViewModel::OnPropertyChanged(String ^ propertyname)
+=======
+Array<unsigned char>^ StandardCalculatorViewModel::Serialize()
 {
-    DataWriter ^ writer = ref new DataWriter();
+    DataWriter^ writer = ref new DataWriter();
     writer->WriteUInt32(static_cast<UINT32>(m_CurrentAngleType));
     writer->WriteBoolean(IsFToEChecked);
     writer->WriteBoolean(IsFToEAuto);
@@ -1222,26 +1261,26 @@ Array<unsigned char> ^ StandardCalculatorViewModel::Serialize()
     }
 
     // Convert viewmodel data in writer to bytes
-    IBuffer ^ buffer = writer->DetachBuffer();
-    DataReader ^ reader = DataReader::FromBuffer(buffer);
-    Platform::Array<unsigned char> ^ viewModelDataAsBytes = ref new Array<unsigned char>(buffer->Length);
+    IBuffer^ buffer = writer->DetachBuffer();
+    DataReader^ reader = DataReader::FromBuffer(buffer);
+    Platform::Array<unsigned char>^ viewModelDataAsBytes = ref new Array<unsigned char>(buffer->Length);
     reader->ReadBytes(viewModelDataAsBytes);
 
     // Return byte array
     return viewModelDataAsBytes;
 }
 
-void StandardCalculatorViewModel::Deserialize(Array<unsigned char> ^ state)
+void StandardCalculatorViewModel::Deserialize(Array<unsigned char>^ state)
 {
     // Read byte array into a buffer
-    DataWriter ^ writer = ref new DataWriter();
+    DataWriter^ writer = ref new DataWriter();
     writer->WriteBytes(state);
-    IBuffer ^ buffer = writer->DetachBuffer();
+    IBuffer^ buffer = writer->DetachBuffer();
 
     // Read view model data
     if (buffer->Length != 0)
     {
-        DataReader ^ reader = DataReader::FromBuffer(buffer);
+        DataReader^ reader = DataReader::FromBuffer(buffer);
         m_CurrentAngleType = ConvertIntegerToNumbersAndOperatorsEnum(reader->ReadUInt32());
 
         IsFToEChecked = reader->ReadBoolean();
@@ -1272,7 +1311,7 @@ void StandardCalculatorViewModel::Deserialize(Array<unsigned char> ^ state)
         CurrentRadixType = reader->ReadUInt32();
         // Read command data and Deserialize
         UINT32 modeldatalength = reader->ReadUInt32();
-        Array<unsigned char> ^ modelDataAsBytes = ref new Array<unsigned char>(modeldatalength);
+        Array<unsigned char>^ modelDataAsBytes = ref new Array<unsigned char>(modeldatalength);
         reader->ReadBytes(modelDataAsBytes);
         m_standardCalculatorManager.DeSerializeCommands(vector<unsigned char>(modelDataAsBytes->begin(), modelDataAsBytes->end()));
 
@@ -1281,13 +1320,14 @@ void StandardCalculatorViewModel::Deserialize(Array<unsigned char> ^ state)
         if (IsInError)
         {
             shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> commandVector = Utils::DeserializeCommands(reader);
-            shared_ptr<CalculatorVector<pair<wstring, int>>> tokenVector = Utils::DeserializeTokens(reader);
+            shared_ptr<CalculatorVector <pair<wstring, int>>> tokenVector = Utils::DeserializeTokens(reader);
             SetExpressionDisplay(tokenVector, commandVector);
         }
     }
 }
 
-void StandardCalculatorViewModel::OnPropertyChanged(String ^ propertyname)
+void StandardCalculatorViewModel::OnPropertyChanged(String^ propertyname)
+>>>>>>> 8591c856c4765ceabb9ec7820bff0c37d5f4862a
 {
     if (propertyname == IsScientificPropertyName)
     {
@@ -1347,7 +1387,7 @@ void StandardCalculatorViewModel::SetCalculatorType(ViewMode targetState)
     }
 }
 
-String ^ StandardCalculatorViewModel::GetRawDisplayValue()
+String^ StandardCalculatorViewModel::GetRawDisplayValue()
 {
     if (IsInError)
     {
