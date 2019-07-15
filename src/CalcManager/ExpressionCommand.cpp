@@ -265,11 +265,6 @@ const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
 
               
                 m_token.erase(0, i - 1);
-<<<<<<< HEAD
-           
-=======
-
->>>>>>> parent of 3120dbc... Merge pull request #4 from pi1024e/master
             }
             else
             {
