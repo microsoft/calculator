@@ -118,7 +118,7 @@ namespace CalculatorApp
         void RunFirstEnabledButtonCommand(const T& buttons)
         {
             auto buttonIterator = buttons.first;
-            for ( buttonIterator != buttons.second)
+            while (buttonIterator != buttons.second)
             {
                 auto button = buttonIterator->second.Resolve<ButtonBase>();
                 if (button && button->IsEnabled)
@@ -126,7 +126,7 @@ namespace CalculatorApp
                     RunButtonCommand(button);
                     return;
                 }
-                 ++buttonIterator;
+                ++buttonIterator;
             }
         }
 
@@ -652,34 +652,32 @@ void KeyboardShortcutManager::OnAcceleratorKeyActivated(CoreDispatcher ^, Accele
         // If the Alt/Menu key is not pressed then we don't care about the key anymore
         if (altPressed)
         {
-           
-
-        const auto& lookupMap = GetCurrentKeyDictionary(static_cast<MyVirtualKey>(key), altPressed);
-        auto listItems = lookupMap.equal_range(static_cast<MyVirtualKey>(key));
-        for (auto listIterator = listItems.first; listIterator != listItems.second; ++listIterator)
-        {
-            auto item = listIterator->second.Resolve<MUXC::NavigationView>();
-            if (item != nullptr)
+            const auto& lookupMap = GetCurrentKeyDictionary(static_cast<MyVirtualKey>(key), altPressed);
+            auto listItems = lookupMap.equal_range(static_cast<MyVirtualKey>(key));
+            for (auto listIterator = listItems.first; listIterator != listItems.second; ++listIterator)
             {
-                auto navView = safe_cast<MUXC::NavigationView ^>(item);
-
-                auto menuItems = static_cast<IObservableVector<Object ^> ^>(navView->MenuItemsSource);
-                if (menuItems != nullptr)
+                auto item = listIterator->second.Resolve<MUXC::NavigationView>();
+                if (item != nullptr)
                 {
-                    auto vm = safe_cast<ApplicationViewModel ^>(navView->DataContext);
-                    if (nullptr != vm)
+                    auto navView = safe_cast<MUXC::NavigationView ^>(item);
+
+                    auto menuItems = static_cast<IObservableVector<Object ^> ^>(navView->MenuItemsSource);
+                    if (menuItems != nullptr)
                     {
-                        ViewMode toMode = NavCategory::GetViewModeForVirtualKey(static_cast<MyVirtualKey>(key));
-                        if (NavCategory::IsValidViewMode(toMode))
+                        auto vm = safe_cast<ApplicationViewModel ^>(navView->DataContext);
+                        if (nullptr != vm)
                         {
-                            vm->Mode = toMode;
-                            navView->SelectedItem = menuItems->GetAt(NavCategory::GetFlatIndex(toMode));
+                            ViewMode toMode = NavCategory::GetViewModeForVirtualKey(static_cast<MyVirtualKey>(key));
+                            if (NavCategory::IsValidViewMode(toMode))
+                            {
+                                vm->Mode = toMode;
+                                navView->SelectedItem = menuItems->GetAt(NavCategory::GetFlatIndex(toMode));
+                            }
                         }
                     }
+                    return;
                 }
-                return;
             }
-        }
         }
     }
 
