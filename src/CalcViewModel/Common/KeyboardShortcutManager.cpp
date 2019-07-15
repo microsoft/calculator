@@ -117,11 +117,9 @@ namespace CalculatorApp
         void RunFirstEnabledButtonCommand(const T& buttons)
         {
             auto buttonIterator = buttons.first;
-<<<<<<< HEAD
+
             for (; buttonIterator != buttons.second; ++buttonIterator)
-=======
-            for ( buttonIterator != buttons.second)
->>>>>>> parent of ad82512... Fixed compilation
+
             {
                 auto button = buttonIterator->second.Resolve<ButtonBase>();
                 if (button && button->IsEnabled)
@@ -129,10 +127,6 @@ namespace CalculatorApp
                     RunButtonCommand(button);
                     break;
                 }
-<<<<<<< HEAD
-=======
-                 ++buttonIterator;
->>>>>>> parent of ad82512... Fixed compilation
             }
         }
 
