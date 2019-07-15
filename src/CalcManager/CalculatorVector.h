@@ -16,15 +16,16 @@ class CalculatorVector
 public:
     ResultCode GetAt(_In_opt_ unsigned int index, _Out_ TType* item)
     {
+        ResultCode hr = S_OK;
         try
         {
             *item = m_vector.at(index);
         }
         catch (const std::out_of_range& /*ex*/)
         {
-            return E_BOUNDS;
+            hr = E_BOUNDS;
         }
-        return S_OK;
+        return hr;
     }
 
     ResultCode GetSize(_Out_ unsigned int* size)
@@ -35,32 +36,35 @@ public:
 
     ResultCode SetAt(_In_ unsigned int index, _In_opt_ TType item)
     {
+        ResultCode hr = S_OK;
         try
         {
             m_vector[index] = item;
         }
         catch (const std::out_of_range& /*ex*/)
         {
-            return E_BOUNDS;
+            hr = E_BOUNDS;
         }
-        return S_OK;
+        return hr;
     }
 
     ResultCode RemoveAt(_In_ unsigned int index)
     {
+        ResultCode hr = S_OK;
         if (index < m_vector.size())
         {
             m_vector.erase(m_vector.begin() + index);
         }
         else
         {
-            return E_BOUNDS;
+            hr = E_BOUNDS;
         }
-        return S_OK;
+        return hr;
     }
 
     ResultCode InsertAt(_In_ unsigned int index, _In_ TType item)
     {
+        ResultCode hr = S_OK;
         try
         {
             auto iter = m_vector.begin() + index;
@@ -68,13 +72,14 @@ public:
         }
         catch (const std::bad_alloc& /*ex*/)
         {
-            return E_OUTOFMEMORY;
+            hr = E_OUTOFMEMORY;
         }
-        return S_OK;
+        return hr;
     }
 
     ResultCode Truncate(_In_ unsigned int index)
     {
+        ResultCode hr = S_OK;
         if (index < m_vector.size())
         {
             auto startIter = m_vector.begin() + index;
@@ -82,22 +87,23 @@ public:
         }
         else
         {
-            return E_BOUNDS;
+            hr = E_BOUNDS;
         }
-        return S_OK;
+        return hr;
     }
 
     ResultCode Append(_In_opt_ TType item)
     {
+        ResultCode hr = S_OK;
         try
         {
             m_vector.push_back(item);
         }
         catch (const std::bad_alloc& /*ex*/)
         {
-            return E_OUTOFMEMORY;
+            hr = E_OUTOFMEMORY;
         }
-        return S_OK;
+        return hr;
     }
 
     ResultCode RemoveAtEnd()
@@ -114,12 +120,12 @@ public:
 
     ResultCode GetString(_Out_ std::wstring* expression)
     {
+        ResultCode hr = S_OK;
         unsigned int nTokens = 0;
-        ResultCode hr = this->GetSize(&nTokens);
+        std::pair<std::wstring, int> currentPair;
+        hr = this->GetSize(&nTokens);
         if (SUCCEEDED(hr))
         {
-
-            std::pair<std::wstring, int> currentPair;
             for (unsigned int i = 0; i < nTokens; i++)
             {
                 hr = this->GetAt(i, &currentPair);
