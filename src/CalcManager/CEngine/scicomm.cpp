@@ -378,11 +378,6 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         m_nPrevOpCode = 0;
         m_bNoPrevEqu = true;
 
-<<<<<<< HEAD
-=======
-        m_nFE = m_nDefaultFE;
-
->>>>>>> 8591c856c4765ceabb9ec7820bff0c37d5f4862a
         /* clear the parenthesis status box indicator, this will not be
         cleared for CENTR */
         if (nullptr != m_pCalcDisplay)
@@ -721,14 +716,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 
     case IDC_FE:
         // Toggle exponential notation display.
-        if (m_nFE == FMT_SCIENTIFIC)
-        {
-            m_nFE = FMT_FLOAT;
-        }
-        else
-        {
-            m_nFE = FMT_SCIENTIFIC;
-        }
+        m_nFE = NUMOBJ_FMT(!(int)m_nFE);
         DisplayNum();
         break;
 

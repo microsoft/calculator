@@ -1088,7 +1088,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
     int32_t exponent = pnum->exp + length; // Actual number of digits to the left of decimal
 
     int32_t oldFormat = format;
-    if (exponent > precision && format == FMT_AUTOSCIENTIFIC)
+    if (exponent > precision && format == FMT_FLOAT)
     {
         // Force scientific mode to prevent user from assuming 33rd digit is exact.
         format = FMT_SCIENTIFIC;
@@ -1111,7 +1111,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
         divnum(&round, num_two, radix, precision);
 
         // Make round number exponent one below the LSD for the number.
-        if (exponent > 0 || format == FMT_FLOAT || format == FMT_AUTOSCIENTIFIC)
+        if (exponent > 0 || format == FMT_FLOAT)
         {
             round->exp = pnum->exp + pnum->cdigit - round->cdigit - precision;
         }
@@ -1124,12 +1124,12 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
         round->sign = pnum->sign;
     }
 
-    if (format == FMT_FLOAT || format == FMT_AUTOSCIENTIFIC)
+    if (format == FMT_FLOAT)
     {
         // Figure out if the exponent will fill more space than the non-exponent field.
         if ((length - exponent > precision) || (exponent > precision + 3))
         {
-            if (exponent >= -MAX_ZEROS_AFTER_DECIMAL || format == FMT_FLOAT && round != nullptr)
+            if (exponent >= -MAX_ZEROS_AFTER_DECIMAL)
             {
                 round->exp -= exponent;
                 length = precision + exponent;

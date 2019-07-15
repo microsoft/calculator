@@ -176,7 +176,6 @@ namespace CalculationManager
         m_currentCalculatorEngine->ProcessCommand(IDC_CLEAR);
         m_currentCalculatorEngine->ChangePrecision(static_cast<int>(CalculatorPrecision::StandardModePrecision));
         UpdateMaxIntDigits();
-        m_currentCalculatorEngine->ChangeFormat(FMT_FLOAT);
         m_pHistory = m_pStdHistory.get();
     }
 
@@ -195,7 +194,6 @@ namespace CalculationManager
         m_currentCalculatorEngine->ProcessCommand(IDC_DEC);
         m_currentCalculatorEngine->ProcessCommand(IDC_CLEAR);
         m_currentCalculatorEngine->ChangePrecision(static_cast<int>(CalculatorPrecision::ScientificModePrecision));
-        m_currentCalculatorEngine->ChangeFormat(FMT_AUTOSCIENTIFIC);
         m_pHistory = m_pSciHistory.get();
     }
 

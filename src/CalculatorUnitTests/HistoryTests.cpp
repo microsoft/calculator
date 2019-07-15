@@ -77,7 +77,6 @@ namespace CalculatorFunctionalTests
             m_standardViewModel->SetExpressionDisplay(e->GetTokens(), e->GetCommands());
             m_standardViewModel->SetPrimaryDisplay(e->Result->Data(), false /*IsError*/);
             m_standardViewModel->IsFToEEnabled = false;
-            m_standardViewModel->IsFToEAuto = false;
         }
 
         void AddSingleHistoryItem()
