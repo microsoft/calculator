@@ -115,12 +115,11 @@ public:
 
     ResultCode GetString(_Out_ std::wstring* expression)
     {
-        ResultCode hr = S_OK;
         unsigned int nTokens = 0;
-        std::pair<std::wstring, int> currentPair;
-        hr = this->GetSize(&nTokens);
+        ResultCode hr = this->GetSize(&nTokens);
         if (SUCCEEDED(hr))
         {
+            std::pair<std::wstring, int> currentPair;
             for (unsigned int i = 0; i < nTokens; i++)
             {
                 hr = this->GetAt(i, &currentPair);
