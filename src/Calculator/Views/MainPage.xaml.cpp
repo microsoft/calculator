@@ -44,6 +44,10 @@ using namespace Windows::System;
 using namespace Windows::System::Threading;
 using namespace Utils;
 
+using namespace Windows::ApplicationModel::DataTransfer;
+using namespace Windows::Storage::Streams;
+using namespace Windows::UI::Xaml::Media;
+
 namespace MUXC = Microsoft::UI::Xaml::Controls;
 
 namespace CalculatorApp::VisualStates
@@ -112,7 +116,64 @@ void MainPage::OnNavigatedTo(NavigationEventArgs^ e)
     }
 
     m_model->Initialize(initialMode);
+
+    DataTransferManager^ dataTransferManager = DataTransferManager::GetForCurrentView();
+
+    // Register the current page as a share source.
+    dataRequestedToken = dataTransferManager->DataRequested += ref new TypedEventHandler<DataTransferManager^, DataRequestedEventArgs^>(this, &MainPage::OnDataRequested);
+
+    // Request to be notified when the user chooses a share target app.
+    targetApplicationChosenToken = dataTransferManager->TargetApplicationChosen += ref new TypedEventHandler<DataTransferManager^, TargetApplicationChosenEventArgs^>(this, &MainPage::OnTargetApplicationChosen);
+
 }
+
+void MainPage::OnNavigatedFrom(NavigationEventArgs^ e)
+{
+    // Unregister our event handlers.
+    DataTransferManager^ dataTransferManager = DataTransferManager::GetForCurrentView();
+    dataTransferManager->DataRequested -= dataRequestedToken;
+    dataTransferManager->TargetApplicationChosen -= targetApplicationChosenToken;
+}
+
+// When share is invoked (by the user or programatically) the event handler we registered will be called to populate the datapackage with the
+// data to be shared.
+void MainPage::OnDataRequested(DataTransferManager^ sender, DataRequestedEventArgs^ e)
+{
+    // Register to be notified if the share operation completes.
+    e->Request->Data->ShareCompleted += ref new TypedEventHandler<DataPackage^, ShareCompletedEventArgs^>(this, &MainPage::OnShareCompleted);
+
+    // Call the share worker
+    GetShareContent(e->Request);
+}
+
+void MainPage::OnTargetApplicationChosen(DataTransferManager^ sender, TargetApplicationChosenEventArgs^ e)
+{
+    String^ shareCompletedStatus = "target chosen";
+
+    //this->rootPage->NotifyUser("User chose " + e->ApplicationName, NotifyType::StatusMessage);
+}
+
+void MainPage::OnShareCompleted(DataPackage^ sender, ShareCompletedEventArgs^ e)
+{
+    String^ shareCompletedStatus = "Shared successfully. ";
+
+    //// Typically, this information is not displayed to the user because the
+    //// user already knows which share target was selected.
+    //if (!e->ShareTarget->AppUserModelId->IsEmpty())
+    //{
+    //    // The user picked an app.
+    //    shareCompletedStatus += "Target: App \"" + e->ShareTarget->AppUserModelId + "\"";
+    //}
+    //else if (e->ShareTarget->ShareProvider != nullptr)
+    //{
+    //    // The user picked a ShareProvider.
+    //    shareCompletedStatus += "Target: Share Provider \"" + e->ShareTarget->ShareProvider->Title + "\"";
+    //}
+
+    //this->rootPage->NotifyUser(shareCompletedStatus, NotifyType::StatusMessage);
+}
+
+
 
 void MainPage::WindowSizeChanged(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Core::WindowSizeChangedEventArgs^ e)
 {
@@ -628,4 +689,32 @@ void MainPage::AnnounceCategoryName()
     String^ categoryName = AutomationProperties::GetName(Header);
     NarratorAnnouncement^ announcement = CalculatorAnnouncement::GetCategoryNameChangedAnnouncement(categoryName);
     NarratorNotifier->Announce(announcement);
+}
+
+bool MainPage::GetShareContent(DataRequest^ request)
+{
+    bool succeeded = false;
+    String^ TextToShare = L"Here is some text";
+
+    auto requestData = request->Data;
+    requestData->Properties->Title = L"share text title";
+    requestData->Properties->Description = L"Share text description"; // The description is optional.
+//    requestData->Properties->ContentSourceApplicationLink = ApplicationLink;
+    requestData->SetText(TextToShare);
+
+
+    if (m_graphingCalculator != nullptr && m_graphingCalculator->TheGrapher != nullptr)
+    {
+        auto bitmapImage = ref new BitmapImage();
+        m_graphingCalculator->TheGrapher->Share(bitmapImage);
+
+        auto source = bitmapImage.GetSource();
+
+        auto stream = RandomAccessStreamReference.CreateFromUri(source.UriSource);
+        requestData->SetBitmap(stream);
+
+        succeeded = true;
+    }
+
+    return succeeded;
 }

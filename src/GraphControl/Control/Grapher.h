@@ -1,10 +1,12 @@
 #pragma once
 
+#include <pch.h>
 #include "InspectingDataSource.h"
 #include "DirectX/RenderMain.h"
 #include "Equation.h"
 #include "EquationCollection.h"
 #include "IMathSolver.h"
+using namespace Windows::UI::Xaml::Media::Imaging;
 
 namespace GraphControl
 {
@@ -15,7 +17,6 @@ namespace GraphControl
         Grapher();
 
         static void RegisterDependencyProperties();
-        void Share();
 
         #pragma region Windows::UI::Xaml::DataTemplate^ EquationTemplate DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ EquationTemplateProperty
@@ -114,6 +115,9 @@ namespace GraphControl
         void OnPointerCanceled(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
         void OnManipulationDelta(Windows::UI::Xaml::Input::ManipulationDeltaRoutedEventArgs^ e) override;
         #pragma endregion
+
+        void Share(BitmapImage bitmapOut);
+
 
     private:
         void OnLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ args);

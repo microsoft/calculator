@@ -21,6 +21,7 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
+using namespace Windows::ApplicationModel::DataTransfer;
 
 constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 
@@ -56,7 +57,12 @@ void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object^ sender, W
     // Notify the graphing component to start a share action.
     if (TheGrapher != nullptr)
     {
-        TheGrapher->Share();
+        //auto bitmapImage = ref new BitmapImage();
+
+        TheGrapher->Share(bitmapImage);
+
+        Windows::ApplicationModel::DataTransfer::DataTransferManager::ShowShareUI();
+
     }
 
 }

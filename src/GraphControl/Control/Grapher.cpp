@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Grapher.h"
+using namespace Windows::UI::Xaml::Media::Imaging;
 
 using namespace Graphing;
 using namespace GraphControl;
@@ -549,7 +550,7 @@ namespace GraphControl
         }
     }
 
-    void Grapher::Share()
+    void Grapher::Share(BitmapImage bitmapOut)
     {
         HRESULT hr E_FAIL;
         if (m_renderMain != nullptr && m_graph != nullptr)
@@ -562,7 +563,9 @@ namespace GraphControl
                 hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
                 if (SUCCEEDED(hr))
                 {
-                    // Now try to share it
+                    bitmapOut.SetSource(BitmapOut);
+                    auto width = bitmapOut.PixelWidth;
+                    auto height = bitmapOut.PixelHeight;
                 }
             }
         }
