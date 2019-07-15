@@ -4,7 +4,8 @@
 #pragma once
 
 // This is expected to be in same order as IDM_HEX, IDM_DEC, IDM_OCT, IDM_BIN
-enum eRADIX_TYPE {
+enum eRADIX_TYPE
+{
     HEX_RADIX,
     DEC_RADIX,
     OCT_RADIX,

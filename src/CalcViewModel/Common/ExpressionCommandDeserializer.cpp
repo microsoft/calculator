@@ -7,7 +7,10 @@
 using namespace CalculatorApp::Common;
 using namespace Windows::Storage::Streams;
 
-CommandDeserializer::CommandDeserializer(_In_ DataReader^ dataReader) :m_dataReader(dataReader){}
+CommandDeserializer::CommandDeserializer(_In_ DataReader ^ dataReader)
+    : m_dataReader(dataReader)
+{
+}
 
 std::shared_ptr<IExpressionCommand> CommandDeserializer::Deserialize(_In_ CalculationManager::CommandType cmdType)
 {
@@ -20,7 +23,7 @@ std::shared_ptr<IExpressionCommand> CommandDeserializer::Deserialize(_In_ Calcul
 
     case CalculationManager::CommandType::Parentheses:
 
-         return std::make_shared<CParentheses>(DeserializeParentheses());
+        return std::make_shared<CParentheses>(DeserializeParentheses());
         break;
 
     case CalculationManager::CommandType::UnaryCommand:

@@ -15,14 +15,13 @@ using namespace winrt::Windows::UI::ViewManagement;
 
 namespace CalculatorApp
 {
-
 #ifdef SEND_TELEMETRY
     // c.f. WINEVENT_KEYWORD_RESERVED_63-56 0xFF00000000000000 // Bits 63-56 - channel keywords
     // c.f. WINEVENT_KEYWORD_*              0x00FF000000000000 // Bits 55-48 - system-reserved keywords
     constexpr int64_t MICROSOFT_KEYWORD_CRITICAL_DATA = 0x0000800000000000; // Bit 47
-    constexpr int64_t MICROSOFT_KEYWORD_MEASURES = 0x0000400000000000; // Bit 46
-    constexpr int64_t MICROSOFT_KEYWORD_TELEMETRY = 0x0000200000000000; // Bit 45
-    constexpr int64_t MICROSOFT_KEYWORD_RESERVED_44 = 0x0000100000000000; // Bit 44 (reserved for future assignment)
+    constexpr int64_t MICROSOFT_KEYWORD_MEASURES = 0x0000400000000000;      // Bit 46
+    constexpr int64_t MICROSOFT_KEYWORD_TELEMETRY = 0x0000200000000000;     // Bit 45
+    constexpr int64_t MICROSOFT_KEYWORD_RESERVED_44 = 0x0000100000000000;   // Bit 44 (reserved for future assignment)
 #else
     // define all Keyword options as 0 when we do not want to upload app telemetry
     constexpr int64_t MICROSOFT_KEYWORD_CRITICAL_DATA = 0;
@@ -33,8 +32,8 @@ namespace CalculatorApp
 
 #pragma region TraceLogger setup and cleanup
 
-    AppLifecycleLogger::AppLifecycleLogger() :
-        m_appLifecycleProvider(
+    AppLifecycleLogger::AppLifecycleLogger()
+        : m_appLifecycleProvider(
             L"Microsoft.Windows.AppLifeCycle",
             LoggingChannelOptions(GUID{ 0x4f50731a, 0x89cf, 0x4782, 0xb3, 0xe0, 0xdc, 0xe8, 0xc9, 0x4, 0x76, 0xba }), // Microsoft Telemetry group
             GUID{ 0xef00584a, 0x2655, 0x462c, 0xbc, 0x24, 0xe7, 0xde, 0x63, 0xe, 0x7f, 0xbf }) // Unique provider ID {EF00584A-2655-462C-BC24-E7DE630E7FBF}
@@ -59,13 +58,15 @@ namespace CalculatorApp
 #pragma region Tracing methods
     void AppLifecycleLogger::LogAppLifecycleEvent(hstring const& eventName, LoggingFields const& fields) const
     {
-        m_appLifecycleProvider.LogEvent(eventName, fields, LoggingLevel::Information, LoggingOptions(MICROSOFT_KEYWORD_TELEMETRY | WINEVENT_KEYWORD_RESPONSE_TIME));
+        m_appLifecycleProvider.LogEvent(
+            eventName, fields, LoggingLevel::Information, LoggingOptions(MICROSOFT_KEYWORD_TELEMETRY | WINEVENT_KEYWORD_RESPONSE_TIME));
     }
 #pragma endregion
 
     void AppLifecycleLogger::LaunchUIResponsive() const
     {
-        if (!GetTraceLoggingProviderEnabled()) return;
+        if (!GetTraceLoggingProviderEnabled())
+            return;
 
         LoggingFields fields{};
         PopulateAppInfo(fields);
@@ -74,7 +75,8 @@ namespace CalculatorApp
 
     void AppLifecycleLogger::LaunchVisibleComplete() const
     {
-        if (!GetTraceLoggingProviderEnabled()) return;
+        if (!GetTraceLoggingProviderEnabled())
+            return;
 
         LoggingFields fields{};
         PopulateAppInfo(fields);
@@ -83,7 +85,8 @@ namespace CalculatorApp
 
     void AppLifecycleLogger::ResumeUIResponsive() const
     {
-        if (!GetTraceLoggingProviderEnabled()) return;
+        if (!GetTraceLoggingProviderEnabled())
+            return;
 
         LoggingFields fields{};
         PopulateAppInfo(fields);
@@ -92,7 +95,8 @@ namespace CalculatorApp
 
     void AppLifecycleLogger::ResumeVisibleComplete() const
     {
-        if (!GetTraceLoggingProviderEnabled()) return;
+        if (!GetTraceLoggingProviderEnabled())
+            return;
 
         LoggingFields fields{};
         PopulateAppInfo(fields);
@@ -106,7 +110,8 @@ namespace CalculatorApp
 
     void AppLifecycleLogger::ResizeUIResponsive(int32_t viewId) const
     {
-        if (!GetTraceLoggingProviderEnabled()) return;
+        if (!GetTraceLoggingProviderEnabled())
+            return;
 
         LoggingFields fields{};
         PopulateAppInfo(fields);
@@ -121,7 +126,8 @@ namespace CalculatorApp
 
     void AppLifecycleLogger::ResizeVisibleComplete(int32_t viewId) const
     {
-        if (!GetTraceLoggingProviderEnabled()) return;
+        if (!GetTraceLoggingProviderEnabled())
+            return;
 
         LoggingFields fields{};
         PopulateAppInfo(fields);
@@ -141,6 +147,3 @@ namespace CalculatorApp
         fields.AddString(L"PsmKey", psmKey);
     }
 }
-
-
-

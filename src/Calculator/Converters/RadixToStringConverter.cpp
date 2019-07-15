@@ -15,14 +15,14 @@ namespace CalculatorApp
 {
     namespace Converters
     {
-        Object^ RadixToStringConverter::Convert(Object^ value, TypeName targetType, Object^ parameter, String^ language)
+        Object ^ RadixToStringConverter::Convert(Object ^ value, TypeName targetType, Object ^ parameter, String ^ language)
         {
-            (void)targetType;    // Unused parameter
-            (void)parameter;    // Unused parameter
-            (void)language;    // Unused parameter
+            (void)targetType; // Unused parameter
+            (void)parameter;  // Unused parameter
+            (void)language;   // Unused parameter
 
-            auto boxedInt = dynamic_cast<Box<int>^>(value);
-            Platform::String^ convertedValue;
+            auto boxedInt = dynamic_cast<Box<int> ^>(value);
+            Platform::String ^ convertedValue;
             auto resourceLoader = AppResourceProvider::GetInstance();
             switch (boxedInt->Value)
             {
@@ -48,14 +48,11 @@ namespace CalculatorApp
             }
             default:
                 break;
-
             };
             return convertedValue;
-
-
         }
 
-        Object^ RadixToStringConverter::ConvertBack(Object^ value, TypeName targetType, Object^ parameter, String^ language)
+        Object ^ RadixToStringConverter::ConvertBack(Object ^ value, TypeName targetType, Object ^ parameter, String ^ language)
         {
             throw ref new NotImplementedException();
         }

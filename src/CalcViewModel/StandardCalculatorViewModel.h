@@ -29,73 +29,77 @@ namespace CalculatorApp
     namespace ViewModel
     {
 #define ASCII_0 48
-        public delegate void HideMemoryClickedHandler();
-        public delegate void ProgModeRadixChangeHandler();
+    public
+        delegate void HideMemoryClickedHandler();
+    public
+        delegate void ProgModeRadixChangeHandler();
 
-        [Windows::UI::Xaml::Data::Bindable]
-        public ref class StandardCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+        [Windows::UI::Xaml::Data::Bindable] public ref class StandardCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         public:
             StandardCalculatorViewModel();
-            void UpdateOperand(int pos, Platform::String^ text);
+            void UpdateOperand(int pos, Platform::String ^ text);
             void UpdatecommandsInRecordingMode();
             int GetBitLengthType();
             int GetNumberBase();
 
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, DisplayValue);
-            OBSERVABLE_PROPERTY_RW(HistoryViewModel^, HistoryVM);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, DisplayValue);
+            OBSERVABLE_PROPERTY_RW(HistoryViewModel ^, HistoryVM);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsInError);
             OBSERVABLE_PROPERTY_RW(bool, IsOperatorCommand);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, DisplayStringExpression);
-            OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IVector<Common::DisplayExpressionToken^>^, ExpressionTokens);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, DecimalDisplayValue);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, HexDisplayValue);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, OctalDisplayValue);
-            OBSERVABLE_NAMED_PROPERTY_RW(Platform::String^, BinaryDisplayValue);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, HexDisplayValue_AutomationName);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, DecDisplayValue_AutomationName);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, OctDisplayValue_AutomationName);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, BinDisplayValue_AutomationName);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, DisplayStringExpression);
+            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Common::DisplayExpressionToken ^> ^, ExpressionTokens);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, DecimalDisplayValue);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, HexDisplayValue);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, OctalDisplayValue);
+            OBSERVABLE_NAMED_PROPERTY_RW(Platform::String ^, BinaryDisplayValue);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, HexDisplayValue_AutomationName);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, DecDisplayValue_AutomationName);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, OctDisplayValue_AutomationName);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, BinDisplayValue_AutomationName);
             OBSERVABLE_PROPERTY_RW(bool, IsBinaryOperatorEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsUnaryOperatorEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsNegateEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsDecimalEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsCurrentViewPinned);
-            OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IVector<MemoryItemViewModel^>^, MemorizedNumbers);
+            OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IVector<MemoryItemViewModel ^> ^, MemorizedNumbers);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsMemoryEmpty);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEChecked);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsHyperbolicChecked);
             OBSERVABLE_PROPERTY_RW(bool, AreHEXButtonsEnabled);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, CalculationResultAutomationName);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, CalculationExpressionAutomationName);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationResultAutomationName);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationExpressionAutomationName);
             OBSERVABLE_PROPERTY_RW(bool, IsShiftProgrammerChecked);
             OBSERVABLE_PROPERTY_RW(bool, IsQwordEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsDwordEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsWordEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsByteEnabled);
-            OBSERVABLE_NAMED_PROPERTY_RW(Platform::String^, OpenParenthesisCount);
             OBSERVABLE_PROPERTY_RW(int, CurrentRadixType);
             OBSERVABLE_PROPERTY_RW(bool, AreTokensUpdated);
             OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
             OBSERVABLE_PROPERTY_RW(bool, AreProgrammerRadixOperatorsEnabled);
-            OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::Automation::NarratorAnnouncement^, Announcement);
+            OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::Automation::NarratorAnnouncement ^, Announcement);
+            OBSERVABLE_PROPERTY_R(unsigned int, OpenParenthesisCount);
 
             COMMAND_FOR_METHOD(CopyCommand, StandardCalculatorViewModel::OnCopyCommand);
             COMMAND_FOR_METHOD(PasteCommand, StandardCalculatorViewModel::OnPasteCommand);
             COMMAND_FOR_METHOD(ButtonPressed, StandardCalculatorViewModel::OnButtonPressed);
             COMMAND_FOR_METHOD(ClearMemoryCommand, StandardCalculatorViewModel::OnClearMemoryCommand);
-            COMMAND_FOR_METHOD(PinUnpinAppBarButtonOnClicked, StandardCalculatorViewModel::OnPinUnpinCommand);
             COMMAND_FOR_METHOD(MemoryItemPressed, StandardCalculatorViewModel::OnMemoryItemPressed);
             COMMAND_FOR_METHOD(MemoryAdd, StandardCalculatorViewModel::OnMemoryAdd);
             COMMAND_FOR_METHOD(MemorySubtract, StandardCalculatorViewModel::OnMemorySubtract);
 
-            event HideMemoryClickedHandler^ HideMemoryClicked;
-            event ProgModeRadixChangeHandler^ ProgModeRadixChange;
+            event HideMemoryClickedHandler ^ HideMemoryClicked;
+            event ProgModeRadixChangeHandler ^ ProgModeRadixChange;
 
-            property bool IsShiftChecked {
-                bool get() { return m_isShiftChecked; }
+            property bool IsShiftChecked
+            {
+                bool get()
+                {
+                    return m_isShiftChecked;
+                }
                 void set(bool value)
                 {
                     if (m_isShiftChecked != value)
@@ -106,8 +110,12 @@ namespace CalculatorApp
                 }
             }
 
-            property bool IsBitFlipChecked {
-                bool get() { return m_isBitFlipChecked; }
+            property bool IsBitFlipChecked
+            {
+                bool get()
+                {
+                    return m_isBitFlipChecked;
+                }
                 void set(bool value)
                 {
                     if (m_isBitFlipChecked != value)
@@ -120,8 +128,12 @@ namespace CalculatorApp
                 }
             }
 
-            property bool IsBinaryBitFlippingEnabled {
-                bool get() { return m_isBinaryBitFlippingEnabled; }
+            property bool IsBinaryBitFlippingEnabled
+            {
+                bool get()
+                {
+                    return m_isBinaryBitFlippingEnabled;
+                }
                 void set(bool value)
                 {
                     if (m_isBinaryBitFlippingEnabled != value)
@@ -132,8 +144,12 @@ namespace CalculatorApp
                 }
             }
 
-            property bool IsStandard {
-                bool get() { return m_isStandard; }
+            property bool IsStandard
+            {
+                bool get()
+                {
+                    return m_isStandard;
+                }
                 void set(bool value)
                 {
                     if (m_isStandard != value)
@@ -149,8 +165,12 @@ namespace CalculatorApp
                 }
             }
 
-            property bool IsScientific {
-                bool get() { return m_isScientific; }
+            property bool IsScientific
+            {
+                bool get()
+                {
+                    return m_isScientific;
+                }
                 void set(bool value)
                 {
                     if (m_isScientific != value)
@@ -166,8 +186,12 @@ namespace CalculatorApp
                 }
             }
 
-            property bool IsProgrammer {
-                bool get() { return m_isProgrammer; }
+            property bool IsProgrammer
+            {
+                bool get()
+                {
+                    return m_isProgrammer;
+                }
                 void set(bool value)
                 {
                     if (m_isProgrammer != value)
@@ -189,9 +213,14 @@ namespace CalculatorApp
                 }
             }
 
-            property bool  IsEditingEnabled {
-                bool get() { return m_isEditingEnabled; }
-                void set(bool value) {
+            property bool IsEditingEnabled
+            {
+                bool get()
+                {
+                    return m_isEditingEnabled;
+                }
+                void set(bool value)
+                {
                     if (m_isEditingEnabled != value)
                     {
                         //                        Numbers::Common::KeyboardShortcutManager::IsCalculatorInEditingMode = value;
@@ -207,13 +236,22 @@ namespace CalculatorApp
                 }
             }
 
-            property bool IsEngineRecording {
-                bool get() { return m_standardCalculatorManager.IsEngineRecording(); }
+            property bool IsEngineRecording
+            {
+                bool get()
+                {
+                    return m_standardCalculatorManager.IsEngineRecording();
+                }
             }
 
-            property bool  IsOperandEnabled {
-                bool get() { return m_isOperandEnabled; }
-                void set(bool value) {
+            property bool IsOperandEnabled
+            {
+                bool get()
+                {
+                    return m_isOperandEnabled;
+                }
+                void set(bool value)
+                {
                     if (m_isOperandEnabled != value)
                     {
                         m_isOperandEnabled = value;
@@ -227,8 +265,14 @@ namespace CalculatorApp
 
             property int TokenPosition
             {
-                int get() { return m_tokenPosition; }
-                void set(int value) { m_tokenPosition = value; }
+                int get()
+                {
+                    return m_tokenPosition;
+                }
+                void set(int value)
+                {
+                    m_tokenPosition = value;
+                }
             }
 
             property Platform::String^ SelectedExpressionLastData
@@ -239,51 +283,64 @@ namespace CalculatorApp
 
             property bool KeyPressed
             {
-                bool get() { return m_keyPressed; }
-                void set(bool value) { m_keyPressed = value; }
+                bool get()
+                {
+                    return m_keyPressed;
+                }
+                void set(bool value)
+                {
+                    m_keyPressed = value;
+                }
             }
 
             property bool IsOperandUpdatedUsingViewModel
             {
-                bool get() { return m_operandUpdated; }
-                void set(bool value) { m_operandUpdated = value; }
+                bool get()
+                {
+                    return m_operandUpdated;
+                }
+                void set(bool value)
+                {
+                    m_operandUpdated = value;
+                }
             }
 
             property bool IsOperandTextCompletelySelected
             {
-                bool get() { return m_completeTextSelection; }
-                void set(bool value) { m_completeTextSelection = value; }
-            }
-
-            property Platform::String^ LeftParenthesisAutomationName
-            {
-                Platform::String^ get()
+                bool get()
                 {
-                    return GetLeftParenthesisAutomationName();
+                    return m_completeTextSelection;
+                }
+                void set(bool value)
+                {
+                    m_completeTextSelection = value;
                 }
             }
 
-        internal:
-            void OnPaste(Platform::String^ pastedString, CalculatorApp::Common::ViewMode mode);
-            void OnCopyCommand(Platform::Object^ parameter);
-            void OnPasteCommand(Platform::Object^ parameter);
+            internal : void OnPaste(Platform::String ^ pastedString, CalculatorApp::Common::ViewMode mode);
+            void OnCopyCommand(Platform::Object ^ parameter);
+            void OnPasteCommand(Platform::Object ^ parameter);
 
             NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
 
             // Memory feature related methods. They are internal because they need to called from the MainPage code-behind
             void OnMemoryButtonPressed();
-            void OnMemoryItemPressed(Platform::Object^ memoryItemPosition);
-            void OnMemoryAdd(Platform::Object^ memoryItemPosition);
-            void OnMemorySubtract(Platform::Object^ memoryItemPosition);
-            void OnMemoryClear(_In_ Platform::Object^ memoryItemPosition);
-            void OnPinUnpinCommand(Platform::Object^ parameter);
+            void OnMemoryItemPressed(Platform::Object ^ memoryItemPosition);
+            void OnMemoryAdd(Platform::Object ^ memoryItemPosition);
+            void OnMemorySubtract(Platform::Object ^ memoryItemPosition);
+            void OnMemoryClear(_In_ Platform::Object ^ memoryItemPosition);
+            void OnPinUnpinCommand(Platform::Object ^ parameter);
 
-            void SetPrimaryDisplay(_In_ std::wstring const&displayString, _In_ bool isError);
+            void SetPrimaryDisplay(_In_ std::wstring const& displayString, _In_ bool isError);
             void DisplayPasteError();
-            void SetTokens(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens);
-            void SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &commands);
-            void SetHistoryExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector <std::shared_ptr<IExpressionCommand>>> const &commands);
-            void SetParenthesisCount(_In_ const std::wstring& parenthesisCount);
+            void SetTokens(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens);
+            void SetExpressionDisplay(
+                _Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
+                _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands);
+            void SetHistoryExpressionDisplay(
+                _Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
+                _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands);
+            void SetParenthesisCount(_In_ unsigned int parenthesisCount);
             void SetOpenParenthesisCountNarratorAnnouncement();
             void OnNoRightParenAdded();
             void SetNoParenAddedNarratorAnnouncement();
@@ -291,14 +348,12 @@ namespace CalculatorApp
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
 
-            Platform::Array<unsigned char>^ Serialize();
-            void Deserialize(Platform::Array<unsigned char>^ state);
 
-            Platform::String^ GetLocalizedStringFormat(Platform::String^ format, Platform::String^ displayValue);
-            void OnPropertyChanged(Platform::String^ propertyname);
+            Platform::String ^ GetLocalizedStringFormat(Platform::String ^ format, Platform::String ^ displayValue);
+            void OnPropertyChanged(Platform::String ^ propertyname);
             void SetCalculatorType(CalculatorApp::Common::ViewMode targetState);
 
-            Platform::String^ GetRawDisplayValue();
+            Platform::String ^ GetRawDisplayValue();
             void Recalculate(bool fromHistory = false);
             bool IsOperator(CalculationManager::Command cmdenum);
             void FtoEButtonToggled();
@@ -306,10 +361,19 @@ namespace CalculatorApp
             void SetMemorizedNumbersString();
             void SwitchAngleType(NumbersAndOperatorsEnum num);
             void ResetDisplay();
-            RADIX_TYPE GetCurrentRadixType() { return (RADIX_TYPE)m_CurrentRadixType; }
+            RADIX_TYPE GetCurrentRadixType()
+            {
+                return (RADIX_TYPE)m_CurrentRadixType;
+            }
             void SetPrecision(int32_t precision);
-            void UpdateMaxIntDigits() { m_standardCalculatorManager.UpdateMaxIntDigits(); }
-            NumbersAndOperatorsEnum GetCurrentAngleType() { return m_CurrentAngleType; }
+            void UpdateMaxIntDigits()
+            {
+                m_standardCalculatorManager.UpdateMaxIntDigits();
+            }
+            NumbersAndOperatorsEnum GetCurrentAngleType()
+            {
+                return m_CurrentAngleType;
+            }
 
         private:
             void SetMemorizedNumbers(const std::vector<std::wstring>& memorizedNumbers);
@@ -321,21 +385,21 @@ namespace CalculatorApp
             CalculatorDisplay m_calculatorDisplay;
             CalculatorApp::EngineResourceProvider m_resourceProvider;
             CalculationManager::CalculatorManager m_standardCalculatorManager;
-            Platform::String^ m_expressionAutomationNameFormat;
-            Platform::String^ m_localizedCalculationResultAutomationFormat;
-            Platform::String^ m_localizedCalculationResultDecimalAutomationFormat;
-            Platform::String^ m_localizedHexaDecimalAutomationFormat;
-            Platform::String^ m_localizedDecimalAutomationFormat;
-            Platform::String^ m_localizedOctalAutomationFormat;
-            Platform::String^ m_localizedBinaryAutomationFormat;
-            Platform::String^ m_localizedMaxDigitsReachedAutomationFormat;
-            Platform::String^ m_localizedButtonPressFeedbackAutomationFormat;
-            Platform::String^ m_localizedMemorySavedAutomationFormat;
-            Platform::String^ m_localizedMemoryItemChangedAutomationFormat;
-            Platform::String^ m_localizedMemoryItemClearedAutomationFormat;
-            Platform::String^ m_localizedMemoryCleared;
-            Platform::String^ m_localizedOpenParenthesisCountChangedAutomationFormat;
-            Platform::String^ m_localizedNoRightParenthesisAddedFormat;
+            Platform::String ^ m_expressionAutomationNameFormat;
+            Platform::String ^ m_localizedCalculationResultAutomationFormat;
+            Platform::String ^ m_localizedCalculationResultDecimalAutomationFormat;
+            Platform::String ^ m_localizedHexaDecimalAutomationFormat;
+            Platform::String ^ m_localizedDecimalAutomationFormat;
+            Platform::String ^ m_localizedOctalAutomationFormat;
+            Platform::String ^ m_localizedBinaryAutomationFormat;
+            Platform::String ^ m_localizedMaxDigitsReachedAutomationFormat;
+            Platform::String ^ m_localizedButtonPressFeedbackAutomationFormat;
+            Platform::String ^ m_localizedMemorySavedAutomationFormat;
+            Platform::String ^ m_localizedMemoryItemChangedAutomationFormat;
+            Platform::String ^ m_localizedMemoryItemClearedAutomationFormat;
+            Platform::String ^ m_localizedMemoryCleared;
+            Platform::String ^ m_localizedOpenParenthesisCountChangedAutomationFormat;
+            Platform::String ^ m_localizedNoRightParenthesisAddedFormat;
 
             bool m_pinned;
             bool m_isOperandEnabled;
@@ -352,28 +416,27 @@ namespace CalculatorApp
             bool m_operandUpdated;
             bool m_completeTextSelection;
             bool m_isLastOperationHistoryLoad;
-            Platform::String^ m_selectedExpressionLastData;
-            Common::DisplayExpressionToken^ m_selectedExpressionToken;
-            Platform::String^ m_leftParenthesisAutomationFormat;
+            Platform::String ^ m_selectedExpressionLastData;
+            Common::DisplayExpressionToken ^ m_selectedExpressionToken;
 
-            Platform::String^ LocalizeDisplayValue(_In_ std::wstring const &displayValue, _In_ bool isError);
-            Platform::String^ CalculateNarratorDisplayValue(_In_ std::wstring const &displayValue, _In_ Platform::String^ localizedDisplayValue, _In_ bool isError);
-            CalculatorApp::Common::Automation::NarratorAnnouncement^ GetDisplayUpdatedNarratorAnnouncement();
-            Platform::String^ GetCalculatorExpressionAutomationName();
-            Platform::String^ GetNarratorStringReadRawNumbers(_In_ Platform::String^ localizedDisplayValue);
+            Platform::String ^ LocalizeDisplayValue(_In_ std::wstring const& displayValue, _In_ bool isError);
+            Platform::String
+                ^ CalculateNarratorDisplayValue(_In_ std::wstring const& displayValue, _In_ Platform::String ^ localizedDisplayValue, _In_ bool isError);
+            CalculatorApp::Common::Automation::NarratorAnnouncement ^ GetDisplayUpdatedNarratorAnnouncement();
+            Platform::String ^ GetCalculatorExpressionAutomationName();
+            Platform::String ^ GetNarratorStringReadRawNumbers(_In_ Platform::String ^ localizedDisplayValue);
 
             CalculationManager::Command ConvertToOperatorsEnum(NumbersAndOperatorsEnum operation);
             void DisableButtons(CalculationManager::CommandType selectedExpressionCommandType);
-            Platform::String^ GetLeftParenthesisAutomationName();
 
-            Platform::String^ m_feedbackForButtonPress;
-            void OnButtonPressed(Platform::Object^ parameter);
-            void OnClearMemoryCommand(Platform::Object^ parameter);
+            Platform::String ^ m_feedbackForButtonPress;
+            void OnButtonPressed(Platform::Object ^ parameter);
+            void OnClearMemoryCommand(Platform::Object ^ parameter);
             std::wstring AddPadding(std::wstring);
             size_t LengthWithoutPadding(std::wstring);
 
             std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> m_tokens;
-            std::shared_ptr<CalculatorVector <std::shared_ptr<IExpressionCommand>>> m_commands;
+            std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> m_commands;
 
             // Token types
             bool IsUnaryOp(int nOpCode);

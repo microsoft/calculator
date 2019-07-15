@@ -12,8 +12,7 @@ namespace CalculatorApp
 {
     namespace ViewModel
     {
-        [Windows::UI::Xaml::Data::Bindable]
-        public ref class DateCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+        [Windows::UI::Xaml::Data::Bindable] public ref class DateCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         public:
             DateCalculatorViewModel();
@@ -23,8 +22,8 @@ namespace CalculatorApp
             // Input Properties
             OBSERVABLE_PROPERTY_RW(bool, IsDateDiffMode);
             OBSERVABLE_PROPERTY_RW(bool, IsAddMode);
-            OBSERVABLE_PROPERTY_R(bool, IsDiffInDays);     // If diff is only in days or the dates are the same,
-                                                           // then show only one result and avoid redundancy
+            OBSERVABLE_PROPERTY_R(bool, IsDiffInDays); // If diff is only in days or the dates are the same,
+                                                       // then show only one result and avoid redundancy
 
             OBSERVABLE_PROPERTY_RW(int, DaysOffset);
             OBSERVABLE_PROPERTY_RW(int, MonthsOffset);
@@ -39,7 +38,10 @@ namespace CalculatorApp
             // From date for Date Diff
             property Windows::Foundation::DateTime FromDate
             {
-                Windows::Foundation::DateTime get() { return m_fromDate; }
+                Windows::Foundation::DateTime get()
+                {
+                    return m_fromDate;
+                }
 
                 void set(Windows::Foundation::DateTime value)
                 {
@@ -54,7 +56,10 @@ namespace CalculatorApp
             // To date for Date Diff
             property Windows::Foundation::DateTime ToDate
             {
-                Windows::Foundation::DateTime get() { return m_toDate; }
+                Windows::Foundation::DateTime get()
+                {
+                    return m_toDate;
+                }
 
                 void set(Windows::Foundation::DateTime value)
                 {
@@ -69,7 +74,10 @@ namespace CalculatorApp
             // Start date for Add/Subtract date
             property Windows::Foundation::DateTime StartDate
             {
-                Windows::Foundation::DateTime get() { return m_startDate; }
+                Windows::Foundation::DateTime get()
+                {
+                    return m_startDate;
+                }
 
                 void set(Windows::Foundation::DateTime value)
                 {
@@ -82,56 +90,84 @@ namespace CalculatorApp
             }
 
             // Output Properties
-            OBSERVABLE_PROPERTY_R(Platform::String^, StrDateDiffResult);
-            OBSERVABLE_PROPERTY_R(Platform::String^, StrDateDiffResultAutomationName);
-            OBSERVABLE_PROPERTY_R(Platform::String^, StrDateDiffResultInDays);
-            OBSERVABLE_PROPERTY_R(Platform::String^, StrDateResult);
-            OBSERVABLE_PROPERTY_R(Platform::String^, StrDateResultAutomationName);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, StrDateDiffResult);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, StrDateDiffResultAutomationName);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, StrDateDiffResultInDays);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, StrDateResult);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, StrDateResultAutomationName);
 
             COMMAND_FOR_METHOD(CopyCommand, DateCalculatorViewModel::OnCopyCommand);
 
-            void OnCopyCommand(Platform::Object^ parameter);
+            void OnCopyCommand(Platform::Object ^ parameter);
 
         private:
-            void OnPropertyChanged(_In_ Platform::String^ prop);
+            void OnPropertyChanged(_In_ Platform::String ^ prop);
             void OnInputsChanged();
             void UpdateDisplayResult();
             void UpdateStrDateDiffResultAutomationName();
             void UpdateStrDateResultAutomationName();
-            void InitializeDateOutputFormats(Platform::String^ calendarIdentifier);
-            Platform::String^ GetDateDiffString() const;
-            Platform::String^ GetDateDiffStringInDays() const;
-            Platform::String^ GetLocalizedNumberString(int value) const;
-            static Windows::Foundation::DateTime ClipTime(Windows::Foundation::DateTime dateTime);
+            void InitializeDateOutputFormats(Platform::String ^ calendarIdentifier);
+            Platform::String ^ GetDateDiffString() const;
+            Platform::String ^ GetDateDiffStringInDays() const;
+            Platform::String ^ GetLocalizedNumberString(int value) const;
+            static Windows::Foundation::DateTime ClipTime(Windows::Foundation::DateTime dateTime, bool adjustToLocalTime);
 
             property bool IsOutOfBound
             {
-                bool get() { return m_isOutOfBound; }
-                void set(bool value) { m_isOutOfBound = value; UpdateDisplayResult(); }
+                bool get()
+                {
+                    return m_isOutOfBound;
+                }
+                void set(bool value)
+                {
+                    m_isOutOfBound = value;
+                    UpdateDisplayResult();
+                }
             }
 
             property CalculatorApp::Common::DateCalculation::DateDifference DateDiffResult
             {
-                CalculatorApp::Common::DateCalculation::DateDifference get() { return m_dateDiffResult; }
-                void set(CalculatorApp::Common::DateCalculation::DateDifference value) { m_dateDiffResult = value; UpdateDisplayResult(); }
+                CalculatorApp::Common::DateCalculation::DateDifference get()
+                {
+                    return m_dateDiffResult;
+                }
+                void set(CalculatorApp::Common::DateCalculation::DateDifference value)
+                {
+                    m_dateDiffResult = value;
+                    UpdateDisplayResult();
+                }
             }
 
             property CalculatorApp::Common::DateCalculation::DateDifference DateDiffResultInDays
             {
-                CalculatorApp::Common::DateCalculation::DateDifference get() { return m_dateDiffResultInDays; }
-                void set(CalculatorApp::Common::DateCalculation::DateDifference value) { m_dateDiffResultInDays = value; UpdateDisplayResult(); }
+                CalculatorApp::Common::DateCalculation::DateDifference get()
+                {
+                    return m_dateDiffResultInDays;
+                }
+                void set(CalculatorApp::Common::DateCalculation::DateDifference value)
+                {
+                    m_dateDiffResultInDays = value;
+                    UpdateDisplayResult();
+                }
             }
 
             property Windows::Foundation::DateTime DateResult
             {
-                Windows::Foundation::DateTime get() { return m_dateResult; }
-                void set(Windows::Foundation::DateTime value) { m_dateResult = value; UpdateDisplayResult();}
+                Windows::Foundation::DateTime get()
+                {
+                    return m_dateResult;
+                }
+                void set(Windows::Foundation::DateTime value)
+                {
+                    m_dateResult = value;
+                    UpdateDisplayResult();
+                }
             }
 
         private:
             // Property variables
             bool m_isOutOfBound;
-            Platform::Collections::Vector<Platform::String^>^ m_offsetValues;
+            Platform::Collections::Vector<Platform::String ^> ^ m_offsetValues;
             Windows::Foundation::DateTime m_fromDate;
             Windows::Foundation::DateTime m_toDate;
             Windows::Foundation::DateTime m_startDate;
@@ -143,7 +179,7 @@ namespace CalculatorApp
             std::shared_ptr<CalculatorApp::Common::DateCalculation::DateCalculationEngine> m_dateCalcEngine;
             CalculatorApp::Common::DateCalculation::DateUnit m_daysOutputFormat;
             CalculatorApp::Common::DateCalculation::DateUnit m_allDateUnitsOutputFormat;
-            Windows::Globalization::DateTimeFormatting::DateTimeFormatter^ m_dateTimeFormatter;
+            Windows::Globalization::DateTimeFormatting::DateTimeFormatter ^ m_dateTimeFormatter;
             std::wstring m_listSeparator;
         };
     }

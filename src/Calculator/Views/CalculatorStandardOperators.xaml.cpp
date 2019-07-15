@@ -24,13 +24,14 @@ using namespace Windows::UI::Xaml::Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-CalculatorStandardOperators::CalculatorStandardOperators() :
-    m_isErrorVisualState(false)
+CalculatorStandardOperators::CalculatorStandardOperators()
+    : m_isErrorVisualState(false)
 {
     InitializeComponent();
 }
 
-bool CalculatorStandardOperators::IsErrorVisualState::get() {
+bool CalculatorStandardOperators::IsErrorVisualState::get()
+{
     return m_isErrorVisualState;
 }
 
@@ -39,7 +40,7 @@ void CalculatorStandardOperators::IsErrorVisualState::set(bool value)
     if (m_isErrorVisualState != value)
     {
         m_isErrorVisualState = value;
-        String^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
+        String ^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
         VisualStateManager::GoToState(this, newState, false);
         NumberPad->IsErrorVisualState = m_isErrorVisualState;
     }

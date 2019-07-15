@@ -41,46 +41,45 @@ typedef int32_t ResultCode;
 // CALC_E_DIVIDEBYZERO
 //
 // The current operation would require a divide by zero to complete
-#define CALC_E_DIVIDEBYZERO     ((uint32_t)0x80000000)
+#define CALC_E_DIVIDEBYZERO ((uint32_t)0x80000000)
 
 // CALC_E_DOMAIN
 //
 // The given input is not within the domain of this function
-#define CALC_E_DOMAIN           ((uint32_t)0x80000001)
+#define CALC_E_DOMAIN ((uint32_t)0x80000001)
 
 // CALC_E_INDEFINITE
 //
 // The result of this function is undefined
-#define CALC_E_INDEFINITE        ((uint32_t)0x80000002)
+#define CALC_E_INDEFINITE ((uint32_t)0x80000002)
 
 // CALC_E_POSINFINITY
 //
 // The result of this function is Positive Infinity.
-#define CALC_E_POSINFINITY      ((uint32_t)0x80000003)
+#define CALC_E_POSINFINITY ((uint32_t)0x80000003)
 
 // CALC_E_NEGINFINITY
 //
 // The result of this function is Negative Infinity
-#define CALC_E_NEGINFINITY      ((uint32_t)0x80000004)
+#define CALC_E_NEGINFINITY ((uint32_t)0x80000004)
 
 // CALC_E_INVALIDRANGE
 //
 // The given input is within the domain of the function but is beyond
 // the range for which calc can successfully compute the answer
-#define CALC_E_INVALIDRANGE     ((uint32_t)0x80000006)
+#define CALC_E_INVALIDRANGE ((uint32_t)0x80000006)
 
 // CALC_E_OUTOFMEMORY
 //
 // There is not enough free memory to complete the requested function
-#define CALC_E_OUTOFMEMORY      ((uint32_t)0x80000007)
+#define CALC_E_OUTOFMEMORY ((uint32_t)0x80000007)
 
 // CALC_E_OVERFLOW
 //
 // The result of this operation is an overflow
-#define CALC_E_OVERFLOW         ((uint32_t)0x80000008)
+#define CALC_E_OVERFLOW ((uint32_t)0x80000008)
 
 // CALC_E_NORESULT
 //
 // The result of this operation is undefined
-#define CALC_E_NORESULT         ((uint32_t)0x80000009)
-
+#define CALC_E_NORESULT ((uint32_t)0x80000009)

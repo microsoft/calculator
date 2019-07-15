@@ -9,7 +9,7 @@ using namespace Windows::Foundation;
 using namespace Windows::Globalization;
 using namespace CalculatorApp::Common::DateCalculation;
 
-DateCalculationEngine::DateCalculationEngine(_In_ String^ calendarIdentifier)
+DateCalculationEngine::DateCalculationEngine(_In_ String ^ calendarIdentifier)
 {
     m_calendar = ref new Calendar();
     m_calendar->ChangeTimeZone("UTC");
@@ -18,11 +18,24 @@ DateCalculationEngine::DateCalculationEngine(_In_ String^ calendarIdentifier)
 
 // Adding Duration to a Date
 // Returns: True if function succeeds to calculate the date else returns False
-bool DateCalculationEngine::AddDuration(_In_ DateTime startDate, _In_ const DateDifference& duration, _Out_ DateTime *endDate)
+bool DateCalculationEngine::AddDuration(_In_ DateTime startDate, _In_ const DateDifference& duration, _Out_ DateTime* endDate)
 {
+    auto currentCalendarSystem = m_calendar->GetCalendarSystem();
+
     try
     {
         m_calendar->SetDateTime(startDate);
+
+        // The Japanese Era system can have multiple year partitions within the same year.
+        // For example, April 30, 2019 is denoted April 30, Heisei 31; May 1, 2019 is denoted as May 1, Reiwa 1.
+        // The Calendar treats Heisei 31 and Reiwa 1 as separate years, which results in some unexpected behaviors where subtracting a year from Reiwa 1 results
+        // in a date in Heisei 31. To provide the expected result across era boundaries, we first convert the Japanese era system to a Gregorian system, do date
+        // math, and then convert back to the Japanese era system. This works because the Japanese era system maintains the same year/month boundaries and
+        // durations as the Gregorian system and is only different in display value.
+        if (currentCalendarSystem == CalendarIdentifiers::Japanese)
+        {
+            m_calendar->ChangeCalendarSystem(CalendarIdentifiers::Gregorian);
+        }
 
         if (duration.year != 0)
         {
@@ -39,24 +52,42 @@ bool DateCalculationEngine::AddDuration(_In_ DateTime startDate, _In_ const Date
 
         *endDate = m_calendar->GetDateTime();
     }
-    catch (Platform::InvalidArgumentException^ ex)
+    catch (Platform::InvalidArgumentException ^ ex)
     {
+        // ensure that we revert to the correct calendar system
+        m_calendar->ChangeCalendarSystem(currentCalendarSystem);
+
         // Do nothing
         return false;
     }
+
+    m_calendar->ChangeCalendarSystem(currentCalendarSystem);
 
     return true;
 }
 
 // Subtracting Duration from a Date
 // Returns: True if function succeeds to calculate the date else returns False
-bool DateCalculationEngine::SubtractDuration(_In_ DateTime startDate, _In_ const DateDifference& duration, _Out_ DateTime *endDate)
+bool DateCalculationEngine::SubtractDuration(_In_ DateTime startDate, _In_ const DateDifference& duration, _Out_ DateTime* endDate)
 {
+    auto currentCalendarSystem = m_calendar->GetCalendarSystem();
+
     // For Subtract the Algorithm is different than Add. Here the smaller units are subtracted first
     // and then the larger units.
     try
     {
         m_calendar->SetDateTime(startDate);
+
+        // The Japanese Era system can have multiple year partitions within the same year.
+        // For example, April 30, 2019 is denoted April 30, Heisei 31; May 1, 2019 is denoted as May 1, Reiwa 1.
+        // The Calendar treats Heisei 31 and Reiwa 1 as separate years, which results in some unexpected behaviors where subtracting a year from Reiwa 1 results
+        // in a date in Heisei 31. To provide the expected result across era boundaries, we first convert the Japanese era system to a Gregorian system, do date
+        // math, and then convert back to the Japanese era system. This works because the Japanese era system maintains the same year/month boundaries and
+        // durations as the Gregorian system and is only different in display value.
+        if (currentCalendarSystem == CalendarIdentifiers::Japanese)
+        {
+            m_calendar->ChangeCalendarSystem(CalendarIdentifiers::Gregorian);
+        }
 
         if (duration.day != 0)
         {
@@ -70,21 +101,25 @@ bool DateCalculationEngine::SubtractDuration(_In_ DateTime startDate, _In_ const
         {
             m_calendar->AddYears(-duration.year);
         }
-
         *endDate = m_calendar->GetDateTime();
     }
-    catch (Platform::InvalidArgumentException^ ex)
+    catch (Platform::InvalidArgumentException ^ ex)
     {
+        // ensure that we revert to the correct calendar system
+        m_calendar->ChangeCalendarSystem(currentCalendarSystem);
+
         // Do nothing
         return false;
     }
+
+    m_calendar->ChangeCalendarSystem(currentCalendarSystem);
 
     // Check that the UniversalTime value is not negative
     return (endDate->UniversalTime >= 0);
 }
 
 // Calculate the difference between two dates
-void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime date2, _In_ DateUnit outputFormat, _Out_ DateDifference *difference)
+bool DateCalculationEngine::TryGetDateDifference(_In_ DateTime date1, _In_ DateTime date2, _In_ DateUnit outputFormat, _Out_ DateDifference* difference)
 {
     DateTime startDate;
     DateTime endDate;
@@ -116,8 +151,7 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
         UINT approximateDaysInYear;
 
         // If we're unable to calculate the days-in-month or days-in-year, we'll leave the values at 0.
-        if (TryGetCalendarDaysInMonth(startDate, daysInMonth)
-            && TryGetCalendarDaysInYear(endDate, approximateDaysInYear))
+        if (TryGetCalendarDaysInMonth(startDate, daysInMonth) && TryGetCalendarDaysInYear(endDate, approximateDaysInYear))
         {
             UINT daysIn[c_unitsOfDate] = { approximateDaysInYear, daysInMonth, c_daysInWeek, 1 };
 
@@ -139,11 +173,12 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
                         {
                             pivotDate = AdjustCalendarDate(pivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex]));
                         }
-                        catch (Platform::InvalidArgumentException^)
+                        catch (Platform::InvalidArgumentException ^)
                         {
                             // Operation failed due to out of bound result
-                            // Do nothing
-                            differenceInDates[unitIndex] = 0;
+                            // For example: 31st Dec, 9999 - last valid date
+                            *difference = DateDifferenceUnknown;
+                            return false;
                         }
                     }
 
@@ -156,6 +191,12 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
                         if (tempDaysDiff < 0)
                         {
                             // pivotDate has gone over the end date; start from the beginning of this unit
+                            if (differenceInDates[unitIndex] == 0)
+                            {
+                                // differenceInDates[unitIndex] is unsigned, the value can't be negative
+                                *difference = DateDifferenceUnknown;
+                                return false;
+                            }
                             differenceInDates[unitIndex] -= 1;
                             pivotDate = tempPivotDate;
                             pivotDate = AdjustCalendarDate(pivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex]));
@@ -172,21 +213,30 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
                             // pivotDate is still below the end date
                             try
                             {
-                                pivotDate = AdjustCalendarDate(pivotDate, dateUnit, 1);
+                                pivotDate = AdjustCalendarDate(tempPivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex] + 1));
                                 differenceInDates[unitIndex] += 1;
                             }
-                            catch (Platform::InvalidArgumentException^)
+                            catch (Platform::InvalidArgumentException ^)
                             {
-                                // handling for 31st Dec, 9999 last valid date
-                                // Do nothing - break out
-                                break;
+                                // Operation failed due to out of bound result
+                                // For example: 31st Dec, 9999 - last valid date
+                                *difference = DateDifferenceUnknown;
+                                return false;
                             }
                         }
                     } while (tempDaysDiff != 0); // dates are the same - exit the loop
 
                     tempPivotDate = AdjustCalendarDate(tempPivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex]));
                     pivotDate = tempPivotDate;
-                    daysDiff = GetDifferenceInDays(pivotDate, endDate);
+                    int signedDaysDiff = GetDifferenceInDays(pivotDate, endDate);
+                    if (signedDaysDiff < 0)
+                    {
+                        // daysDiff is unsigned, the value can't be negative
+                        *difference = DateDifferenceUnknown;
+                        return false;
+                    }
+
+                    daysDiff = signedDaysDiff;
                 }
             }
         }
@@ -198,8 +248,8 @@ void DateCalculationEngine::GetDateDifference(_In_ DateTime date1, _In_ DateTime
     difference->month = differenceInDates[1];
     difference->week = differenceInDates[2];
     difference->day = differenceInDates[3];
+    return true;
 }
-
 
 // Private Methods
 
@@ -274,34 +324,34 @@ bool DateCalculationEngine::TryGetCalendarDaysInYear(_In_ DateTime date, _Out_ U
 // Adds/Subtracts certain value for a particular date unit
 DateTime DateCalculationEngine::AdjustCalendarDate(Windows::Foundation::DateTime date, DateUnit dateUnit, int difference)
 {
-
     m_calendar->SetDateTime(date);
+
+    // The Japanese Era system can have multiple year partitions within the same year.
+    // For example, April 30, 2019 is denoted April 30, Heisei 31; May 1, 2019 is denoted as May 1, Reiwa 1.
+    // The Calendar treats Heisei 31 and Reiwa 1 as separate years, which results in some unexpected behaviors where subtracting a year from Reiwa 1 results in
+    // a date in Heisei 31. To provide the expected result across era boundaries, we first convert the Japanese era system to a Gregorian system, do date math,
+    // and then convert back to the Japanese era system. This works because the Japanese era system maintains the same year/month boundaries and durations as
+    // the Gregorian system and is only different in display value.
+    auto currentCalendarSystem = m_calendar->GetCalendarSystem();
+    if (currentCalendarSystem == CalendarIdentifiers::Japanese)
+    {
+        m_calendar->ChangeCalendarSystem(CalendarIdentifiers::Gregorian);
+    }
 
     switch (dateUnit)
     {
-        case DateUnit::Year:
-        {
-            // In the Japanese calendar, transition years have 2 partial years.
-            // It is not guaranteed that adding 1 year will always add 365 days in the Japanese Calendar.
-            // To work around this quirk, we will change the calendar system to Gregorian before adding 1 year in the Japanese Calendar case only.
-            // We will then return the calendar system back to the Japanese Calendar.
-            auto currentCalendarSystem = m_calendar->GetCalendarSystem();
-            if (currentCalendarSystem == CalendarIdentifiers::Japanese)
-            {
-                m_calendar->ChangeCalendarSystem(CalendarIdentifiers::Gregorian);
-            }
-
-            m_calendar->AddYears(difference);
-            m_calendar->ChangeCalendarSystem(currentCalendarSystem);
-            break;
-        }
-        case DateUnit::Month:
-            m_calendar->AddMonths(difference);
-            break;
-        case DateUnit::Week:
-            m_calendar->AddWeeks(difference);
-            break;
+    case DateUnit::Year:
+        m_calendar->AddYears(difference);
+        break;
+    case DateUnit::Month:
+        m_calendar->AddMonths(difference);
+        break;
+    case DateUnit::Week:
+        m_calendar->AddWeeks(difference);
+        break;
     }
+
+    m_calendar->ChangeCalendarSystem(currentCalendarSystem);
 
     return m_calendar->GetDateTime();
 }

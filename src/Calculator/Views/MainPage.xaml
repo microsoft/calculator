@@ -10,10 +10,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       xmlns:vm="using:CalculatorApp.ViewModel"
-      x:Name="pageRoot"
+      x:Name="PageRoot"
       Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
       Loaded="OnPageLoaded"
-      Unloaded="OnPageUnLoaded"
       mc:Ignorable="d">
 
     <Page.Resources>
@@ -38,11 +37,6 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!--
-                This row is padding for the SystemFocusVisuals,
-                otherwise the focus rectangles render under the title bar controls.
-            -->
-            <RowDefinition x:Name="FocusVisualMargin" Height="3"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -75,28 +69,25 @@
                 These buttons are only here to serve as the target for copy/paste commands
                 they are not to be shown, only to have the command and shortcut assigned to them.
             -->
-            <Button x:Name="copyButton"
+            <Button x:Name="CopyButton"
                     x:Uid="copyButton"
                     Command="{x:Bind Model.CopyCommand}"/>
-            <Button x:Name="pasteButton"
+            <Button x:Name="PasteButton"
                     x:Uid="pasteButton"
                     Command="{x:Bind Model.PasteCommand}"/>
-            <Button x:Name="copyButtonAlternate"
+            <Button x:Name="CopyButtonAlternate"
                     x:Uid="copyButtonAlternate"
                     Command="{x:Bind Model.CopyCommand}"/>
-            <Button x:Name="pasteButtonAlternate"
+            <Button x:Name="PasteButtonAlternate"
                     x:Uid="pasteButtonAlternate"
                     Command="{x:Bind Model.PasteCommand}"/>
         </StackPanel>
 
-        <!-- Title Bar -->
-        <local:TitleBar x:Name="CustomTitleBar"
-                        Grid.Row="0"
-                        Visibility="Collapsed"/>
+        <local:TitleBar x:Name="CustomTitleBar" Grid.Row="0"/>
 
         <muxc:NavigationView x:Name="NavView"
                              x:Uid="NavView"
-                             Grid.Row="2"
+                             Grid.Row="1"
                              CompactModeThresholdWidth="Infinity"
                              DataContext="{x:Bind Model}"
                              ExpandedModeThresholdWidth="Infinity"
@@ -109,6 +100,7 @@
                              PaneOpened="OnNavPaneOpened"
                              PaneOpening="OnNavPaneOpening"
                              SelectionChanged="OnNavSelectionChanged"
+                             ItemInvoked="OnNavItemInvoked"
                              TabIndex="1"
                              UseSystemFocusVisuals="True">
             <muxc:NavigationView.PaneFooter>
@@ -118,6 +110,10 @@
                                              x:Load="False"
                                              IsItemClickEnabled="True"
                                              ItemClick="OnAboutButtonClick">
+                        <muxc:NavigationViewList.ItemContainerTransitions>
+                            <!-- Remove EntranceThemeTransition which is a default transition for NavigationViewList -->
+                            <TransitionCollection/>
+                        </muxc:NavigationViewList.ItemContainerTransitions>
                         <muxc:NavigationViewList.Items>
                             <muxc:NavigationViewItem x:Name="AboutButton"
                                                      x:Uid="AboutButton"
