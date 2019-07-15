@@ -378,13 +378,9 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         m_nPrevOpCode = 0;
         m_bNoPrevEqu = true;
 
-<<<<<<< HEAD
-=======
-        m_nFE = m_nDefaultFE;
-
->>>>>>> 8591c856c4765ceabb9ec7820bff0c37d5f4862a
         /* clear the parenthesis status box indicator, this will not be
         cleared for CENTR */
+        m_nFE = m_nDefaultFE;
         if (nullptr != m_pCalcDisplay)
         {
             m_pCalcDisplay->SetParenthesisNumber(0);

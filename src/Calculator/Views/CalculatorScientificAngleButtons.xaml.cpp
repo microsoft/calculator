@@ -42,16 +42,12 @@ void CalculatorScientificAngleButtons::HypButton_Toggled(_In_ Object ^ sender, _
 
 void CalculatorScientificAngleButtons::FToEButton_Toggled(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-<<<<<<< HEAD
     auto viewModel = safe_cast<StandardCalculatorViewModel ^>(this->DataContext);
-    viewModel->FtoEButtonToggled();
-=======
-    auto viewModel = safe_cast<StandardCalculatorViewModel^>(this->DataContext);
     if (!viewModel->IsFToEAuto)
     {
         viewModel->FtoEButtonToggled();
     }
-    else if (viewModel->IsFToEAuto && !viewModel->IsFToEChecked)
+    else if (!viewModel->IsFToEChecked)
     {
         std::wstring displayValue(viewModel->DisplayValue->Data());
         if (displayValue.find(L"e") != std::wstring::npos)
@@ -61,7 +57,6 @@ void CalculatorScientificAngleButtons::FToEButton_Toggled(_In_ Object ^ sender, 
             viewModel->FtoEButtonToggled();
         }
     }
->>>>>>> 8591c856c4765ceabb9ec7820bff0c37d5f4862a
 }
 
 void CalculatorApp::CalculatorScientificAngleButtons::OnAngleButtonPressed(_In_ Object ^ commandParameter)
