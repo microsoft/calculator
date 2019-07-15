@@ -59,6 +59,7 @@ namespace CalculatorResourceKeys
     StringReference DisplayCopied(L"Display_Copied");
 }
 
+<<<<<<< HEAD
 StandardCalculatorViewModel::StandardCalculatorViewModel()
     : m_DisplayValue(L"0")
     , m_DecimalDisplayValue(L"0")
@@ -92,6 +93,41 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_localizedMemoryCleared(nullptr)
     , m_localizedOpenParenthesisCountChangedAutomationFormat(nullptr)
     , m_localizedNoRightParenthesisAddedFormat(nullptr)
+=======
+StandardCalculatorViewModel::StandardCalculatorViewModel() :
+    m_DisplayValue(L"0"),
+    m_DecimalDisplayValue(L"0"),
+    m_HexDisplayValue(L"0"),
+    m_BinaryDisplayValue(L"0"),
+    m_OctalDisplayValue(L"0"),
+    m_standardCalculatorManager(&m_calculatorDisplay, &m_resourceProvider),
+    m_MemorizedNumbers(ref new Vector<MemoryItemViewModel^>()),
+    m_IsMemoryEmpty(true),
+    m_IsFToEChecked(false),
+    m_IsFToEAuto(false),
+    m_isShiftChecked(false),
+    m_IsShiftProgrammerChecked(false),
+    m_IsQwordEnabled(true),
+    m_IsDwordEnabled(true),
+    m_IsWordEnabled(true),
+    m_IsByteEnabled(true),
+    m_isBitFlipChecked(false),
+    m_isBinaryBitFlippingEnabled(false),
+    m_CurrentRadixType(RADIX_TYPE::DEC_RADIX),
+    m_CurrentAngleType(NumbersAndOperatorsEnum::Degree),
+    m_OpenParenthesisCount(L""),
+    m_Announcement(nullptr),
+    m_feedbackForButtonPress(nullptr),
+    m_isRtlLanguage(false),
+    m_localizedMaxDigitsReachedAutomationFormat(nullptr),
+    m_localizedButtonPressFeedbackAutomationFormat(nullptr),
+    m_localizedMemorySavedAutomationFormat(nullptr),
+    m_localizedMemoryItemChangedAutomationFormat(nullptr),
+    m_localizedMemoryItemClearedAutomationFormat(nullptr),
+    m_localizedMemoryCleared(nullptr),
+    m_localizedOpenParenthesisCountChangedAutomationFormat(nullptr),
+    m_localizedNoRightParenthesisAddedFormat(nullptr)
+>>>>>>> 8591c856c4765ceabb9ec7820bff0c37d5f4862a
 {
     WeakReference calculatorViewModel(this);
     m_calculatorDisplay.SetCallback(calculatorViewModel);
@@ -202,6 +238,21 @@ void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ wstring const& displayS
     m_CalculationResultAutomationName = CalculateNarratorDisplayValue(displayStringValue, localizedDisplayStringValue, isError);
 
     DisplayValue = localizedDisplayStringValue;
+
+    if (!IsFToEAuto && !IsFToEChecked && displayStringValue.find(L"e") != std::wstring::npos)
+    {
+        IsFToEAuto = true;
+        IsFToEChecked = true;
+    }
+    else if (IsFToEAuto && IsFToEChecked && displayStringValue.find(L"e") == std::wstring::npos)
+    {
+        IsFToEChecked = false;
+        IsFToEAuto = false;
+    }
+    else if (IsFToEAuto && !IsFToEChecked)
+    {
+        IsFToEAuto = false;
+    }
 
     IsInError = isError;
 
@@ -1166,7 +1217,117 @@ void StandardCalculatorViewModel::OnMemoryClear(_In_ Object ^ memoryItemPosition
     }
 }
 
+<<<<<<< HEAD
 void StandardCalculatorViewModel::OnPropertyChanged(String ^ propertyname)
+=======
+Array<unsigned char>^ StandardCalculatorViewModel::Serialize()
+{
+    DataWriter^ writer = ref new DataWriter();
+    writer->WriteUInt32(static_cast<UINT32>(m_CurrentAngleType));
+    writer->WriteBoolean(IsFToEChecked);
+    writer->WriteBoolean(IsFToEAuto);
+    writer->WriteBoolean(IsCurrentViewPinned);
+    writer->WriteUInt32(static_cast<UINT32>(m_standardCalculatorManager.SerializeSavedDegreeMode()));
+
+    // Serialize Memory
+    vector<long> serializedMemory;
+    serializedMemory = m_standardCalculatorManager.GetSerializedMemory();
+    size_t lengthOfSerializedMemory = serializedMemory.size();
+    writer->WriteUInt32(static_cast<UINT32>(lengthOfSerializedMemory));
+    for (auto data : serializedMemory)
+    {
+        writer->WriteInt32(data);
+    }
+
+    // Serialize Primary Display
+    vector<long> serializedPrimaryDisplay = m_standardCalculatorManager.GetSerializedPrimaryDisplay();
+    writer->WriteUInt32(static_cast<UINT32>(serializedPrimaryDisplay.size()));
+    for (auto data : serializedPrimaryDisplay)
+    {
+        writer->WriteInt32(data);
+    }
+
+    // For ProgrammerMode
+    writer->WriteUInt32(static_cast<UINT32>(CurrentRadixType));
+
+    // Serialize commands of calculator manager
+    vector<unsigned char> serializedCommand = m_standardCalculatorManager.SerializeCommands();
+    writer->WriteUInt32(static_cast<UINT32>(serializedCommand.size()));
+    writer->WriteBytes(ref new Array<unsigned char>(serializedCommand.data(), static_cast<unsigned int>(serializedCommand.size())));
+
+    if (IsInError)
+    {
+        Utils::SerializeCommandsAndTokens(m_tokens, m_commands, writer);
+    }
+
+    // Convert viewmodel data in writer to bytes
+    IBuffer^ buffer = writer->DetachBuffer();
+    DataReader^ reader = DataReader::FromBuffer(buffer);
+    Platform::Array<unsigned char>^ viewModelDataAsBytes = ref new Array<unsigned char>(buffer->Length);
+    reader->ReadBytes(viewModelDataAsBytes);
+
+    // Return byte array
+    return viewModelDataAsBytes;
+}
+
+void StandardCalculatorViewModel::Deserialize(Array<unsigned char>^ state)
+{
+    // Read byte array into a buffer
+    DataWriter^ writer = ref new DataWriter();
+    writer->WriteBytes(state);
+    IBuffer^ buffer = writer->DetachBuffer();
+
+    // Read view model data
+    if (buffer->Length != 0)
+    {
+        DataReader^ reader = DataReader::FromBuffer(buffer);
+        m_CurrentAngleType = ConvertIntegerToNumbersAndOperatorsEnum(reader->ReadUInt32());
+
+        IsFToEChecked = reader->ReadBoolean();
+        IsFToEAuto = reader->ReadBoolean();
+        IsCurrentViewPinned = reader->ReadBoolean();
+        Command serializedDegreeMode = static_cast<Command>(reader->ReadUInt32());
+
+        m_standardCalculatorManager.SendCommand(serializedDegreeMode);
+
+        // Deserialize Memory
+        UINT32 memoryDataLength = reader->ReadUInt32();
+        vector<long> serializedMemory;
+        for (unsigned int i = 0; i < memoryDataLength; i++)
+        {
+            serializedMemory.push_back(reader->ReadInt32());
+        }
+        m_standardCalculatorManager.DeSerializeMemory(serializedMemory);
+
+        // Serialize Primary Display
+        UINT32 serializedPrimaryDisplayLength = reader->ReadUInt32();
+        vector<long> serializedPrimaryDisplay;
+        for (unsigned int i = 0; i < serializedPrimaryDisplayLength; i++)
+        {
+            serializedPrimaryDisplay.push_back(reader->ReadInt32());
+        }
+        m_standardCalculatorManager.DeSerializePrimaryDisplay(serializedPrimaryDisplay);
+
+        CurrentRadixType = reader->ReadUInt32();
+        // Read command data and Deserialize
+        UINT32 modeldatalength = reader->ReadUInt32();
+        Array<unsigned char>^ modelDataAsBytes = ref new Array<unsigned char>(modeldatalength);
+        reader->ReadBytes(modelDataAsBytes);
+        m_standardCalculatorManager.DeSerializeCommands(vector<unsigned char>(modelDataAsBytes->begin(), modelDataAsBytes->end()));
+
+        // After recalculation. If there is an error then
+        // IsInError should be set synchronously.
+        if (IsInError)
+        {
+            shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> commandVector = Utils::DeserializeCommands(reader);
+            shared_ptr<CalculatorVector <pair<wstring, int>>> tokenVector = Utils::DeserializeTokens(reader);
+            SetExpressionDisplay(tokenVector, commandVector);
+        }
+    }
+}
+
+void StandardCalculatorViewModel::OnPropertyChanged(String^ propertyname)
+>>>>>>> 8591c856c4765ceabb9ec7820bff0c37d5f4862a
 {
     if (propertyname == IsScientificPropertyName)
     {

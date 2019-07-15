@@ -107,8 +107,59 @@ TEST_METHOD(MultipleModesCalculationTest)
     {
         viewModels[i] = ref new StandardCalculatorViewModel();
 
+<<<<<<< HEAD
         ChangeMode(viewModels[i], i);
     }
+=======
+        // Perform calculations on 2 instances of Calculator in Scientific Mode
+        // (with different Angle types, HYP and F-E settings) and verify that they work independently
+        TEST_METHOD(MultipleScientificModeWithDifferentSettingsTest)
+        {
+            // Create 2 instances of Standard Mode
+            StandardCalculatorViewModel^ scientificViewModel1 = ref new StandardCalculatorViewModel();
+            StandardCalculatorViewModel^ scientificViewModel2 = ref new StandardCalculatorViewModel();
+
+            ChangeMode(scientificViewModel1, 1);
+            ChangeMode(scientificViewModel2, 1);
+
+            ValidateViewModelMode(scientificViewModel1, 1);
+            ValidateViewModelMode(scientificViewModel2, 1);
+
+            // Perform Calculations on the 2 instances and check that they work independently
+
+            // Scientific Mode 1: Degrees with HYP checked
+            TESTITEM scientificModeInitializeItems1[] = {
+                { NumbersAndOperatorsEnum::Degree, L"0", L"" },
+                { NumbersAndOperatorsEnum::Hyp, L"0", L"" },
+                { NumbersAndOperatorsEnum::None, L"", L"" }
+            };
+            ValidateViewModelByCommands(scientificViewModel1, scientificModeInitializeItems1, true);
+
+            // Scientific Mode 2: Radians with F-E checked
+            TESTITEM scientificModeInitializeItems2[] = {
+                { NumbersAndOperatorsEnum::Radians, L"0", L"" },
+                { NumbersAndOperatorsEnum::FToE, L"0.e+0", L"" },
+                { NumbersAndOperatorsEnum::None, L"", L"" }
+            };
+            ValidateViewModelByCommands(scientificViewModel2, scientificModeInitializeItems2, true);
+
+            // Scientific Mode 1: Expression CosH(0 degrees)
+            TESTITEM scientificModeTestItems1[] = {
+                { NumbersAndOperatorsEnum::Zero, L"0", L"" },
+                { NumbersAndOperatorsEnum::Cosh, L"1", L"" },
+                { NumbersAndOperatorsEnum::None, L"", L"" }
+            };
+            ValidateViewModelByCommands(scientificViewModel1, scientificModeTestItems1, true);
+
+            // Scientific Mode 2: Expression Cos(pi radians)
+            TESTITEM scientificModeTestItems2[] = {
+                { NumbersAndOperatorsEnum::Pi, L"3.1415926535897932384626433832795", L"" },
+                { NumbersAndOperatorsEnum::Cos, L"-1", L"" },
+                { NumbersAndOperatorsEnum::None, L"", L"" }
+            };
+            ValidateViewModelByCommands(scientificViewModel2, scientificModeTestItems2, true);
+        }
+>>>>>>> 8591c856c4765ceabb9ec7820bff0c37d5f4862a
 
     // Perform Calculations on all instances and check that they work independently
 
