@@ -35,35 +35,33 @@ public:
 
     ResultCode SetAt(_In_ unsigned int index, _In_opt_ TType item)
     {
-        ResultCode hr = S_OK;
+      
         try
         {
             m_vector[index] = item;
         }
         catch (const std::out_of_range& /*ex*/)
         {
-            hr = E_BOUNDS;
+            return E_BOUNDS;
         }
-        return hr;
+        return S_OK;
     }
 
     ResultCode RemoveAt(_In_ unsigned int index)
     {
-        ResultCode hr = S_OK;
         if (index < m_vector.size())
         {
             m_vector.erase(m_vector.begin() + index);
         }
         else
         {
-            hr = E_BOUNDS;
+            return E_BOUNDS;
         }
-        return hr;
+        return S_OK;
     }
 
     ResultCode InsertAt(_In_ unsigned int index, _In_ TType item)
     {
-        ResultCode hr = S_OK;
         try
         {
             auto iter = m_vector.begin() + index;
@@ -71,14 +69,13 @@ public:
         }
         catch (const std::bad_alloc& /*ex*/)
         {
-            hr = E_OUTOFMEMORY;
+            return E_OUTOFMEMORY;
         }
-        return hr;
+        return S_OK;
     }
 
     ResultCode Truncate(_In_ unsigned int index)
     {
-        ResultCode hr = S_OK;
         if (index < m_vector.size())
         {
             auto startIter = m_vector.begin() + index;
@@ -86,23 +83,22 @@ public:
         }
         else
         {
-            hr = E_BOUNDS;
+            return E_BOUNDS;
         }
-        return hr;
+        return S_OK;
     }
 
     ResultCode Append(_In_opt_ TType item)
     {
-        ResultCode hr = S_OK;
         try
         {
             m_vector.push_back(item);
         }
         catch (const std::bad_alloc& /*ex*/)
         {
-            hr = E_OUTOFMEMORY;
+            return E_OUTOFMEMORY;
         }
-        return hr;
+        return S_OK;
     }
 
     ResultCode RemoveAtEnd()
