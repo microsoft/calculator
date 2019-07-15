@@ -260,26 +260,22 @@ const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
     {
         if (m_token.at(i) != chZero)
         {
-            if (m_token.at(i) == decimalSymbol) 
+            if (m_token.at(i) == decimalSymbol)
             {
-
-              
                 m_token.erase(0, i - 1);
-
             }
             else
             {
                 m_token.erase(0, i);
             }
-            if (m_fNegative)
 
+            if (m_fNegative)
             {
                 m_token.insert(0, &chNegate);
             }
             return m_token;
         }
     }
-
 
     m_token.clear();
     m_token.append(&chZero);
