@@ -15,20 +15,14 @@ using namespace Windows::ApplicationModel::Core;
 
 task<void> AsyncHelper::RunOnUIThreadAsync(function<void()>&& action)
 {
-    auto callback = ref new DispatchedHandler([action]()
-    {
-        action();
-    });
+    auto callback = ref new DispatchedHandler([action]() { action(); });
 
     return create_task(CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, callback));
 }
 
 void AsyncHelper::RunOnUIThread(function<void()>&& action, DWORD timeout)
 {
-    task<void> waitTask = RunOnUIThreadAsync([action]()
-    {
-        action();
-    });
+    task<void> waitTask = RunOnUIThreadAsync([action]() { action(); });
 
     WaitForTask<void>(waitTask, timeout);
 }

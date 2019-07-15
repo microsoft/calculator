@@ -29,9 +29,9 @@ using namespace Windows::UI::Xaml::Navigation;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(SupplementaryResults, Results);
 
-Object^ DelighterUnitToStyleConverter::Convert(Object^ value, TypeName /*targetType*/, Object^ /*parameter*/, String^ /*language*/)
+Object ^ DelighterUnitToStyleConverter::Convert(Object ^ value, TypeName /*targetType*/, Object ^ /*parameter*/, String ^ /*language*/)
 {
-    Unit^ unit = safe_cast<Unit^>(value);
+    Unit ^ unit = safe_cast<Unit ^>(value);
 
     assert(unit->GetModelUnit().isWhimsical);
     if (!unit->GetModelUnit().isWhimsical)
@@ -41,19 +41,19 @@ Object^ DelighterUnitToStyleConverter::Convert(Object^ value, TypeName /*targetT
 
     std::wstring key = L"Unit_";
     key.append(std::to_wstring(unit->GetModelUnit().id));
-    return safe_cast<IStyle^>(m_delighters->Lookup(ref new String(key.c_str())));
+    return safe_cast<IStyle ^>(m_delighters->Lookup(ref new String(key.c_str())));
 }
 
-Object^ DelighterUnitToStyleConverter::ConvertBack(Object^ /*value*/, TypeName /*targetType*/, Object^ /*parameter*/, String^ /*language*/)
+Object ^ DelighterUnitToStyleConverter::ConvertBack(Object ^ /*value*/, TypeName /*targetType*/, Object ^ /*parameter*/, String ^ /*language*/)
 {
     // We never use convert back, only one way binding supported
     assert(false);
     return nullptr;
 }
 
-Windows::UI::Xaml::DataTemplate^ SupplementaryResultDataTemplateSelector::SelectTemplateCore(Object^ item, DependencyObject^ /*container*/)
+Windows::UI::Xaml::DataTemplate ^ SupplementaryResultDataTemplateSelector::SelectTemplateCore(Object ^ item, DependencyObject ^ /*container*/)
 {
-    SupplementaryResult^ result = safe_cast<SupplementaryResult^>(item);
+    SupplementaryResult ^ result = safe_cast<SupplementaryResult ^>(item);
     if (result->IsWhimsical())
     {
         return DelighterTemplate;
@@ -75,11 +75,11 @@ bool SupplementaryResultNoOverflowStackPanel::ShouldPrioritizeLastItem()
     {
         return false;
     }
-    auto lastChild = dynamic_cast<FrameworkElement^>(Children->GetAt(Children->Size - 1));
+    auto lastChild = dynamic_cast<FrameworkElement ^>(Children->GetAt(Children->Size - 1));
     if (lastChild == nullptr)
     {
         return false;
     }
-    auto suppResult = dynamic_cast<SupplementaryResult^>(lastChild->DataContext);
-    return suppResult == nullptr? false: suppResult->IsWhimsical();
+    auto suppResult = dynamic_cast<SupplementaryResult ^>(lastChild->DataContext);
+    return suppResult == nullptr ? false : suppResult->IsWhimsical();
 }

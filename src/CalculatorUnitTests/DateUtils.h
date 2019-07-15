@@ -38,8 +38,7 @@ namespace DateCalculationUnitTests
         }
 
         // Returns long date format for a date
-        static Platform::String^ GetLongDate(SYSTEMTIME systemTime)
-        {
+        static Platform::String ^ GetLongDate(SYSTEMTIME systemTime) {
             auto formatter = ref new Windows::Globalization::DateTimeFormatting::DateTimeFormatter(
                 L"longdate",
                 Windows::Globalization::ApplicationLanguages::Languages,

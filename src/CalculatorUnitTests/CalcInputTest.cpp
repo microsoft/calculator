@@ -8,7 +8,7 @@ using namespace std;
 using namespace CalculationManager;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace CalculatorUnitTests
+namespace CalculatorEngineTests
 {
     TEST_CLASS(CalcInputTest)
     {
@@ -173,7 +173,8 @@ namespace CalculatorUnitTests
             m_calcInput.Backspace();
             m_calcInput.TryToggleSign(true, L"127");
             VERIFY_IS_FALSE(m_calcInput.TryAddDigit(9, 10, true, L"127", 8, 2), L"Negative value: verify we cannot add a digit if digit exceeds max value.");
-            VERIFY_IS_TRUE(m_calcInput.TryAddDigit(8, 10, true, L"127", 8, 2), L"Negative value: verify we can add a digit if digit does not exceed max value.");
+            VERIFY_IS_TRUE(
+                m_calcInput.TryAddDigit(8, 10, true, L"127", 8, 2), L"Negative value: verify we can add a digit if digit does not exceed max value.");
         }
 
         TEST_METHOD(TryAddDecimalPtEmpty)

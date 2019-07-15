@@ -12,7 +12,9 @@
 *
 * Author:
 \****************************************************************************/
-#include "pch.h"
+
+#include <sstream>
+#include <regex>
 #include "Header Files/CalcEngine.h"
 
 using namespace std;
@@ -22,7 +24,6 @@ constexpr int MAX_EXPONENT = 4;
 constexpr uint32_t MAX_GROUPING_SIZE = 16;
 constexpr wstring_view c_decPreSepStr = L"[+-]?(\\d*)[";
 constexpr wstring_view c_decPostSepStr = L"]?(\\d*)(?:e[+-]?(\\d*))?$";
-
 
 /****************************************************************************\
 * void DisplayNum(void)
@@ -35,18 +36,19 @@ constexpr wstring_view c_decPostSepStr = L"]?(\\d*)(?:e[+-]?(\\d*))?$";
 //
 // State of calc last time DisplayNum was called
 //
-typedef struct {
+typedef struct
+{
     Rational value;
     int32_t precision;
     uint32_t radix;
-    int         nFE;
-    NUM_WIDTH   numwidth;
-    bool        fIntMath;
-    bool        bRecord;
-    bool        bUseSep;
+    int nFE;
+    NUM_WIDTH numwidth;
+    bool fIntMath;
+    bool bRecord;
+    bool bUseSep;
 } LASTDISP;
 
-LASTDISP gldPrevious = { 0, -1, 0, -1, (NUM_WIDTH)-1, false, false, false };
+static LASTDISP gldPrevious = { 0, -1, 0, -1, (NUM_WIDTH)-1, false, false, false };
 
 // Truncates if too big, makes it a non negative - the number in rat. Doesn't do anything if not in INT mode
 CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational const& rat)
@@ -64,7 +66,7 @@ CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational con
     if (result < 0)
     {
         // if negative make positive by doing a twos complement
-        result = -(result) - 1;
+        result = -(result)-1;
         result ^= m_chopNumbers[m_numwidth];
     }
 
@@ -82,15 +84,8 @@ void CCalcEngine::DisplayNum(void)
     //  something important has changed since the last time DisplayNum was
     //  called.
     //
-    if (m_bRecord ||
-        gldPrevious.value != m_currentVal ||
-        gldPrevious.precision != m_precision ||
-        gldPrevious.radix != m_radix ||
-        gldPrevious.nFE != (int)m_nFE ||
-        gldPrevious.bUseSep != true ||
-        gldPrevious.numwidth != m_numwidth ||
-        gldPrevious.fIntMath != m_fIntegerMode ||
-        gldPrevious.bRecord != m_bRecord)
+    if (m_bRecord || gldPrevious.value != m_currentVal || gldPrevious.precision != m_precision || gldPrevious.radix != m_radix || gldPrevious.nFE != (int)m_nFE
+        || gldPrevious.bUseSep != true || gldPrevious.numwidth != m_numwidth || gldPrevious.fIntMath != m_fIntegerMode || gldPrevious.bRecord != m_bRecord)
     {
         gldPrevious.precision = m_precision;
         gldPrevious.radix = m_radix;

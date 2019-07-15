@@ -17,7 +17,10 @@
 //
 //---------------------------------------------------------------------------
 
-#include "pch.h"
+#include <algorithm>
+#include "winerror_cross_platform.h"
+#include <sstream>
+#include <cstring> // for memmove, memcpy
 #include "ratpak.h"
 
 using namespace std;
@@ -29,7 +32,7 @@ static constexpr wstring_view DIGITS = L"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabc
 
 // ratio of internal 'digits' to output 'digits'
 // Calculated elsewhere as part of initialization and when base is changed
-int32_t g_ratio;    // int(log(2L^BASEXPWR)/log(radix))
+int32_t g_ratio; // int(log(2L^BASEXPWR)/log(radix))
 // Default decimal separator
 wchar_t g_decimalSeparator = L'.';
 
@@ -39,8 +42,7 @@ wchar_t g_decimalSeparator = L'.';
 // See also
 // * https://docs.microsoft.com/en-us/cpp/preprocessor/predefined-macros
 // * https://sourceforge.net/p/predef/wiki/Architectures/
-#if defined(MIDL_PASS) || defined(RC_INVOKED) || defined(_M_CEE_PURE) \
-    || defined(_M_AMD64) || defined(__ARM_ARCH) || defined(__x86_64__) || defined(_M_ARM64)
+#if defined(MIDL_PASS) || defined(RC_INVOKED) || defined(_M_CEE_PURE) || defined(_M_AMD64) || defined(__ARM_ARCH) || defined(__x86_64__) || defined(_M_ARM64)
 
 #ifndef Calc_UInt32x32To64
 #define Calc_UInt32x32To64(a, b) ((uint64_t)((uint32_t)(a)) * (uint64_t)((uint32_t)(b)))
@@ -60,52 +62,42 @@ wchar_t g_decimalSeparator = L'.';
 #define CALC_INTSAFE_E_ARITHMETIC_OVERFLOW ((int32_t)0x80070216L) // 0x216 = 534 = ERROR_ARITHMETIC_OVERFLOW
 #define CALC_ULONG_ERROR ((uint32_t)0xffffffffU)
 
-namespace {
-	int32_t
-	Calc_ULongAdd(
-		_In_ uint32_t ulAugend,
-		_In_ uint32_t ulAddend,
-		_Out_ uint32_t* pulResult)
-	{
-		int32_t hr = CALC_INTSAFE_E_ARITHMETIC_OVERFLOW;
-		*pulResult = CALC_ULONG_ERROR;
+namespace
+{
+    int32_t Calc_ULongAdd(_In_ uint32_t ulAugend, _In_ uint32_t ulAddend, _Out_ uint32_t* pulResult)
+    {
+        int32_t hr = CALC_INTSAFE_E_ARITHMETIC_OVERFLOW;
+        *pulResult = CALC_ULONG_ERROR;
 
-		if ((ulAugend + ulAddend) >= ulAugend)
-		{
-			*pulResult = (ulAugend + ulAddend);
-			hr = S_OK;
-		}
+        if ((ulAugend + ulAddend) >= ulAugend)
+        {
+            *pulResult = (ulAugend + ulAddend);
+            hr = S_OK;
+        }
 
-		return hr;
-	}
+        return hr;
+    }
 
-	int32_t
-	Calc_ULongLongToULong(
-		_In_ uint64_t ullOperand,
-		_Out_ uint32_t* pulResult)
-	{
-		int32_t hr = CALC_INTSAFE_E_ARITHMETIC_OVERFLOW;
-		*pulResult = CALC_ULONG_ERROR;
+    int32_t Calc_ULongLongToULong(_In_ uint64_t ullOperand, _Out_ uint32_t* pulResult)
+    {
+        int32_t hr = CALC_INTSAFE_E_ARITHMETIC_OVERFLOW;
+        *pulResult = CALC_ULONG_ERROR;
 
-		if (ullOperand <= UINT32_MAX)
-		{
-			*pulResult = (uint32_t)ullOperand;
-			hr = S_OK;
-		}
+        if (ullOperand <= UINT32_MAX)
+        {
+            *pulResult = (uint32_t)ullOperand;
+            hr = S_OK;
+        }
 
-		return hr;
-	}
+        return hr;
+    }
 
-	int32_t
-	Calc_ULongMult(
-		_In_ uint32_t ulMultiplicand,
-		_In_ uint32_t ulMultiplier,
-		_Out_ uint32_t* pulResult)
-	{
-		uint64_t ull64Result = Calc_UInt32x32To64(ulMultiplicand, ulMultiplier);
+    int32_t Calc_ULongMult(_In_ uint32_t ulMultiplicand, _In_ uint32_t ulMultiplier, _Out_ uint32_t* pulResult)
+    {
+        uint64_t ull64Result = Calc_UInt32x32To64(ulMultiplicand, ulMultiplier);
 
-		return Calc_ULongLongToULong(ull64Result, pulResult);
-	}
+        return Calc_ULongLongToULong(ull64Result, pulResult);
+    }
 }
 
 // Used to strip trailing zeros, and prevent combinatorial explosions
@@ -136,9 +128,9 @@ void* zmalloc(size_t a)
 //
 //-----------------------------------------------------------------------------
 
-void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER * const src)
+void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER* const src)
 {
-    memcpy(dest, src, (int)(sizeof(NUMBER) + ((src)->cdigit)*(sizeof(MANTTYPE))));
+    memcpy(dest, src, (int)(sizeof(NUMBER) + ((src)->cdigit) * (sizeof(MANTTYPE))));
 }
 
 //-----------------------------------------------------------------------------
@@ -153,15 +145,14 @@ void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER * const src)
 //
 //-----------------------------------------------------------------------------
 
-void _destroynum( _In_ PNUMBER pnum )
+void _destroynum(_In_ PNUMBER pnum)
 
 {
-    if ( pnum != nullptr)
-        {
-        free( pnum );
-        }
+    if (pnum != nullptr)
+    {
+        free(pnum);
+    }
 }
-
 
 //-----------------------------------------------------------------------------
 //
@@ -176,17 +167,16 @@ void _destroynum( _In_ PNUMBER pnum )
 //
 //-----------------------------------------------------------------------------
 
-void _destroyrat( _In_ PRAT prat )
+void _destroyrat(_In_ PRAT prat)
 
 {
-    if ( prat != nullptr)
-        {
-        destroynum( prat->pp );
-        destroynum( prat->pq );
-        free( prat );
-        }
+    if (prat != nullptr)
+    {
+        destroynum(prat->pp);
+        destroynum(prat->pq);
+        free(prat);
+    }
 }
-
 
 //-----------------------------------------------------------------------------
 //
@@ -200,28 +190,27 @@ void _destroyrat( _In_ PRAT prat )
 //
 //-----------------------------------------------------------------------------
 
-PNUMBER _createnum( _In_ uint32_t size )
+PNUMBER _createnum(_In_ uint32_t size)
 
 {
-    PNUMBER pnumret= nullptr;
+    PNUMBER pnumret = nullptr;
     uint32_t cbAlloc;
 
     // sizeof( MANTTYPE ) is the size of a 'digit'
-    if (SUCCEEDED(Calc_ULongAdd(size, 1, &cbAlloc)) &&
-        SUCCEEDED(Calc_ULongMult(cbAlloc, sizeof(MANTTYPE), &cbAlloc)) &&
-        SUCCEEDED(Calc_ULongAdd(cbAlloc, sizeof(NUMBER), &cbAlloc)))
+    if (SUCCEEDED(Calc_ULongAdd(size, 1, &cbAlloc)) && SUCCEEDED(Calc_ULongMult(cbAlloc, sizeof(MANTTYPE), &cbAlloc))
+        && SUCCEEDED(Calc_ULongAdd(cbAlloc, sizeof(NUMBER), &cbAlloc)))
     {
-        pnumret = (PNUMBER)zmalloc( cbAlloc );
-        if ( pnumret == nullptr)
+        pnumret = (PNUMBER)zmalloc(cbAlloc);
+        if (pnumret == nullptr)
         {
-            throw( CALC_E_OUTOFMEMORY );
+            throw(CALC_E_OUTOFMEMORY);
         }
     }
     else
     {
-        throw( CALC_E_INVALIDRANGE );
+        throw(CALC_E_INVALIDRANGE);
     }
-    return( pnumret );
+    return (pnumret);
 }
 
 //-----------------------------------------------------------------------------
@@ -238,24 +227,21 @@ PNUMBER _createnum( _In_ uint32_t size )
 //
 //-----------------------------------------------------------------------------
 
-
-PRAT _createrat( void )
+PRAT _createrat(void)
 
 {
-    PRAT prat= nullptr;
+    PRAT prat = nullptr;
 
-    prat = (PRAT)zmalloc( sizeof( RAT ) );
+    prat = (PRAT)zmalloc(sizeof(RAT));
 
-    if ( prat == nullptr)
+    if (prat == nullptr)
     {
-        throw( CALC_E_OUTOFMEMORY );
+        throw(CALC_E_OUTOFMEMORY);
     }
     prat->pp = nullptr;
     prat->pq = nullptr;
-    return( prat );
+    return (prat);
 }
-
-
 
 //-----------------------------------------------------------------------------
 //
@@ -272,36 +258,33 @@ PRAT _createrat( void )
 //
 //-----------------------------------------------------------------------------
 
-PRAT numtorat( _In_ PNUMBER pin, uint32_t radix)
+PRAT numtorat(_In_ PNUMBER pin, uint32_t radix)
 
 {
-    PNUMBER pnRadixn= nullptr;
-    DUPNUM( pnRadixn, pin );
+    PNUMBER pnRadixn = nullptr;
+    DUPNUM(pnRadixn, pin);
 
-    PNUMBER qnRadixn=i32tonum( 1, radix);
+    PNUMBER qnRadixn = i32tonum(1, radix);
 
     // Ensure p and q start out as integers.
-    if ( pnRadixn->exp < 0 )
-        {
+    if (pnRadixn->exp < 0)
+    {
         qnRadixn->exp -= pnRadixn->exp;
         pnRadixn->exp = 0;
-        }
+    }
 
-    PRAT pout= nullptr;
+    PRAT pout = nullptr;
     createrat(pout);
 
     // There is probably a better way to do this.
     pout->pp = numtonRadixx(pnRadixn, radix);
     pout->pq = numtonRadixx(qnRadixn, radix);
 
+    destroynum(pnRadixn);
+    destroynum(qnRadixn);
 
-    destroynum( pnRadixn );
-    destroynum( qnRadixn );
-
-    return( pout );
+    return (pout);
 }
-
-
 
 //----------------------------------------------------------------------------
 //
@@ -317,49 +300,48 @@ PRAT numtorat( _In_ PNUMBER pin, uint32_t radix)
 //
 //----------------------------------------------------------------------------
 
-PNUMBER nRadixxtonum( _In_ PNUMBER a, uint32_t radix, int32_t precision)
+PNUMBER nRadixxtonum(_In_ PNUMBER a, uint32_t radix, int32_t precision)
 
 {
     uint32_t bitmask;
     uint32_t cdigits;
-    MANTTYPE *ptr;
+    MANTTYPE* ptr;
 
-    PNUMBER sum = i32tonum( 0, radix );
-    PNUMBER powofnRadix = i32tonum( BASEX, radix );
+    PNUMBER sum = i32tonum(0, radix);
+    PNUMBER powofnRadix = i32tonum(BASEX, radix);
 
     // A large penalty is paid for conversion of digits no one will see anyway.
     // limit the digits to the minimum of the existing precision or the
     // requested precision.
     cdigits = precision + 1;
-    if ( cdigits > (uint32_t)a->cdigit )
-        {
+    if (cdigits > (uint32_t)a->cdigit)
+    {
         cdigits = (uint32_t)a->cdigit;
-        }
+    }
 
     // scale by the internal base to the internal exponent offset of the LSD
-    numpowi32( &powofnRadix, a->exp + (a->cdigit - cdigits), radix, precision);
+    numpowi32(&powofnRadix, a->exp + (a->cdigit - cdigits), radix, precision);
 
     // Loop over all the relative digits from MSD to LSD
-    for ( ptr = &(a->mant[a->cdigit-1]); cdigits > 0;
-        ptr--, cdigits-- )
-        {
+    for (ptr = &(a->mant[a->cdigit - 1]); cdigits > 0; ptr--, cdigits--)
+    {
         // Loop over all the bits from MSB to LSB
-        for ( bitmask = BASEX/2; bitmask > 0; bitmask /= 2 )
+        for (bitmask = BASEX / 2; bitmask > 0; bitmask /= 2)
+        {
+            addnum(&sum, sum, radix);
+            if (*ptr & bitmask)
             {
-            addnum( &sum, sum, radix );
-            if ( *ptr & bitmask )
-                {
                 sum->mant[0] |= 1;
-                }
             }
         }
+    }
 
     // Scale answer by power of internal exponent.
-    mulnum( &sum, powofnRadix, radix );
+    mulnum(&sum, powofnRadix, radix);
 
-    destroynum( powofnRadix );
+    destroynum(powofnRadix);
     sum->sign = a->sign;
-    return( sum );
+    return (sum);
 }
 
 //-----------------------------------------------------------------------------
@@ -380,37 +362,37 @@ PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix)
 {
     PNUMBER pnumret = i32tonum(0, BASEX); // pnumret is the number in internal form.
     PNUMBER num_radix = i32tonum(radix, BASEX);
-    MANTTYPE *ptrdigit = a->mant; // pointer to digit being worked on.
+    MANTTYPE* ptrdigit = a->mant; // pointer to digit being worked on.
 
     // Digits are in reverse order, back over them LSD first.
-    ptrdigit += a->cdigit-1;
+    ptrdigit += a->cdigit - 1;
 
-    PNUMBER thisdigit = nullptr;      // thisdigit holds the current digit of a
-                                   // being summed into result.
-    int32_t idigit;                   // idigit is the iterate of digits in a.
-    for ( idigit = 0; idigit < a->cdigit; idigit++ )
-        {
-        mulnumx( &pnumret, num_radix);
+    PNUMBER thisdigit = nullptr; // thisdigit holds the current digit of a
+                                 // being summed into result.
+    int32_t idigit;              // idigit is the iterate of digits in a.
+    for (idigit = 0; idigit < a->cdigit; idigit++)
+    {
+        mulnumx(&pnumret, num_radix);
         // WARNING:
         // This should just smack in each digit into a 'special' thisdigit.
         // and not do the overhead of recreating the number type each time.
-        thisdigit = i32tonum( *ptrdigit--, BASEX );
-        addnum( &pnumret, thisdigit, BASEX );
-        destroynum( thisdigit );
-        }
+        thisdigit = i32tonum(*ptrdigit--, BASEX);
+        addnum(&pnumret, thisdigit, BASEX);
+        destroynum(thisdigit);
+    }
 
     // Calculate the exponent of the external base for scaling.
-    numpowi32x( &num_radix, a->exp );
+    numpowi32x(&num_radix, a->exp);
 
     // ... and scale the result.
-    mulnumx( &pnumret, num_radix);
+    mulnumx(&pnumret, num_radix);
 
     destroynum(num_radix);
 
     // And propagate the sign.
     pnumret->sign = a->sign;
 
-    return( pnumret );
+    return (pnumret);
 }
 
 //-----------------------------------------------------------------------------
@@ -566,80 +548,66 @@ static constexpr uint8_t EX = 4;
 
 static constexpr uint8_t START = 0;
 static constexpr uint8_t MANTS = 1;
-static constexpr uint8_t LZ    = 2;
-static constexpr uint8_t LZDP  = 3;
-static constexpr uint8_t LD    = 4;
-static constexpr uint8_t DZ    = 5;
-static constexpr uint8_t DD    = 6;
-static constexpr uint8_t DDP   = 7;
-static constexpr uint8_t EXPB  = 8;
-static constexpr uint8_t EXPS  = 9;
-static constexpr uint8_t EXPD  = 10;
+static constexpr uint8_t LZ = 2;
+static constexpr uint8_t LZDP = 3;
+static constexpr uint8_t LD = 4;
+static constexpr uint8_t DZ = 5;
+static constexpr uint8_t DD = 6;
+static constexpr uint8_t DDP = 7;
+static constexpr uint8_t EXPB = 8;
+static constexpr uint8_t EXPS = 9;
+static constexpr uint8_t EXPD = 10;
 static constexpr uint8_t EXPBZ = 11;
 static constexpr uint8_t EXPSZ = 12;
 static constexpr uint8_t EXPDZ = 13;
-static constexpr uint8_t ERR   = 14;
+static constexpr uint8_t ERR = 14;
 
-#if defined( DEBUG )
-char *statestr[] = {
-    "START",
-    "MANTS",
-    "LZ",
-    "LZDP",
-    "LD",
-    "DZ",
-    "DD",
-    "DDP",
-    "EXPB",
-    "EXPS",
-    "EXPD",
-    "EXPBZ",
-    "EXPSZ",
-    "EXPDZ",
-    "ERR",
+#if defined(DEBUG)
+char* statestr[] = {
+    "START", "MANTS", "LZ", "LZDP", "LD", "DZ", "DD", "DDP", "EXPB", "EXPS", "EXPD", "EXPBZ", "EXPSZ", "EXPDZ", "ERR",
 };
 #endif
 
 // New state is machine[state][terminal]
-static constexpr uint8_t machine[ERR+1][EX+1]= {
+static constexpr uint8_t machine[ERR + 1][EX + 1] = {
     //        DP,     ZR,      NZ,      SG,     EX
     // START
-        {     LZDP,   LZ,      LD,      MANTS,  ERR },
+    { LZDP, LZ, LD, MANTS, ERR },
     // MANTS
-        {     LZDP,   LZ,      LD,      ERR,    ERR },
+    { LZDP, LZ, LD, ERR, ERR },
     // LZ
-        {     LZDP,   LZ,      LD,      ERR,    EXPBZ },
+    { LZDP, LZ, LD, ERR, EXPBZ },
     // LZDP
-        {     ERR,    DZ,      DD,      ERR,    EXPB },
+    { ERR, DZ, DD, ERR, EXPB },
     // LD
-        {     DDP,    LD,      LD,      ERR,    EXPB },
+    { DDP, LD, LD, ERR, EXPB },
     // DZ
-        {     ERR,    DZ,      DD,      ERR,    EXPBZ },
+    { ERR, DZ, DD, ERR, EXPBZ },
     // DD
-        {     ERR,    DD,      DD,      ERR,    EXPB },
+    { ERR, DD, DD, ERR, EXPB },
     // DDP
-        {     ERR,    DD,      DD,      ERR,    EXPB },
+    { ERR, DD, DD, ERR, EXPB },
     // EXPB
-        {     ERR,    EXPD,    EXPD,    EXPS,   ERR },
+    { ERR, EXPD, EXPD, EXPS, ERR },
     // EXPS
-        {     ERR,    EXPD,    EXPD,    ERR,    ERR },
+    { ERR, EXPD, EXPD, ERR, ERR },
     // EXPD
-        {     ERR,    EXPD,    EXPD,    ERR,    ERR },
+    { ERR, EXPD, EXPD, ERR, ERR },
     // EXPBZ
-        {     ERR,    EXPDZ,   EXPDZ,   EXPSZ,  ERR },
+    { ERR, EXPDZ, EXPDZ, EXPSZ, ERR },
     // EXPSZ
-        {     ERR,    EXPDZ,   EXPDZ,   ERR,    ERR },
+    { ERR, EXPDZ, EXPDZ, ERR, ERR },
     // EXPDZ
-        {     ERR,    EXPDZ,   EXPDZ,   ERR,    ERR },
+    { ERR, EXPDZ, EXPDZ, ERR, ERR },
     // ERR
-        {     ERR,    ERR,     ERR,     ERR,    ERR }
+    { ERR, ERR, ERR, ERR, ERR }
 };
 
 wchar_t NormalizeCharDigit(wchar_t c, uint32_t radix)
 {
     // Allow upper and lower case letters as equivalent, base
     // is in the range where this is not ambiguous.
-    if (size_t{ radix } >= DIGITS.find(L'A') && size_t { radix } <= DIGITS.find(L'Z'))
+    if (size_t{ radix } >= DIGITS.find(L'A') && size_t{ radix } <= DIGITS.find(L'Z'))
     {
         return towupper(c);
     }
@@ -649,15 +617,15 @@ wchar_t NormalizeCharDigit(wchar_t c, uint32_t radix)
 
 PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precision)
 {
-    int32_t expSign = 1L;           // expSign is exponent sign ( +/- 1 )
-    int32_t expValue = 0L;          // expValue is exponent mantissa, should be unsigned
+    int32_t expSign = 1L;  // expSign is exponent sign ( +/- 1 )
+    int32_t expValue = 0L; // expValue is exponent mantissa, should be unsigned
 
     PNUMBER pnumret = nullptr;
     createnum(pnumret, static_cast<uint32_t>(numberString.length()));
     pnumret->sign = 1L;
     pnumret->cdigit = 0;
     pnumret->exp = 0;
-    MANTTYPE *pmant = pnumret->mant + numberString.length() - 1;
+    MANTTYPE* pmant = pnumret->mant + numberString.length() - 1;
 
     uint8_t state = START; // state is the state of the input state machine.
     wchar_t curChar;
@@ -705,41 +673,41 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
             break;
         case EXPDZ:
         case EXPD:
-            {
-                curChar = NormalizeCharDigit(curChar, radix);
+        {
+            curChar = NormalizeCharDigit(curChar, radix);
 
-                size_t pos = DIGITS.find(curChar);
-                if (pos != wstring_view::npos)
-                {
-                    expValue *= radix;
-                    expValue += static_cast<int32_t>(pos);
-                }
-                else
-                {
-                    state = ERR;
-                }
+            size_t pos = DIGITS.find(curChar);
+            if (pos != wstring_view::npos)
+            {
+                expValue *= radix;
+                expValue += static_cast<int32_t>(pos);
             }
-            break;
+            else
+            {
+                state = ERR;
+            }
+        }
+        break;
         case LD:
             pnumret->exp++;
             [[fallthrough]];
         case DD:
-            {
-                curChar = NormalizeCharDigit(curChar, radix);
+        {
+            curChar = NormalizeCharDigit(curChar, radix);
 
-                size_t pos = DIGITS.find(curChar);
-                if (pos != wstring_view::npos && pos < static_cast<size_t>(radix))
-                {
-                    *pmant-- = static_cast<MANTTYPE>(pos);
-                    pnumret->exp--;
-                    pnumret->cdigit++;
-                }
-                else
-                {
-                    state = ERR;
-                }
+            size_t pos = DIGITS.find(curChar);
+            if (pos != wstring_view::npos && pos < static_cast<size_t>(radix))
+            {
+                *pmant-- = static_cast<MANTTYPE>(pos);
+                pnumret->exp--;
+                pnumret->cdigit++;
             }
-            break;
+            else
+            {
+                state = ERR;
+            }
+        }
+        break;
         case DZ:
             pnumret->exp--;
             break;
@@ -792,14 +760,14 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
 //
 //-----------------------------------------------------------------------------
 
-PRAT i32torat( _In_ int32_t ini32 )
+PRAT i32torat(_In_ int32_t ini32)
 
 {
-    PRAT pratret= nullptr;
-    createrat( pratret );
-    pratret->pp = i32tonum(ini32, BASEX );
-    pratret->pq = i32tonum(1L, BASEX );
-    return( pratret );
+    PRAT pratret = nullptr;
+    createrat(pratret);
+    pratret->pp = i32tonum(ini32, BASEX);
+    pratret->pq = i32tonum(1L, BASEX);
+    return (pratret);
 }
 
 //-----------------------------------------------------------------------------
@@ -816,14 +784,14 @@ PRAT i32torat( _In_ int32_t ini32 )
 //
 //-----------------------------------------------------------------------------
 
-PRAT Ui32torat( _In_ uint32_t inui32 )
+PRAT Ui32torat(_In_ uint32_t inui32)
 
 {
-    PRAT pratret= nullptr;
-    createrat( pratret );
-    pratret->pp = Ui32tonum(inui32, BASEX );
-    pratret->pq = i32tonum(1L, BASEX );
-    return( pratret );
+    PRAT pratret = nullptr;
+    createrat(pratret);
+    pratret->pp = Ui32tonum(inui32, BASEX);
+    pratret->pq = i32tonum(1L, BASEX);
+    return (pratret);
 }
 
 //-----------------------------------------------------------------------------
@@ -839,33 +807,34 @@ PRAT Ui32torat( _In_ uint32_t inui32 )
 //
 //-----------------------------------------------------------------------------
 
-PNUMBER i32tonum( int32_t ini32, uint32_t radix)
+PNUMBER i32tonum(int32_t ini32, uint32_t radix)
 
 {
-    MANTTYPE *pmant;
-    PNUMBER pnumret= nullptr;
+    MANTTYPE* pmant;
+    PNUMBER pnumret = nullptr;
 
-    createnum( pnumret, MAX_LONG_SIZE );
+    createnum(pnumret, MAX_LONG_SIZE);
     pmant = pnumret->mant;
     pnumret->cdigit = 0;
     pnumret->exp = 0;
-    if ( ini32 < 0 )
-        {
+    if (ini32 < 0)
+    {
         pnumret->sign = -1;
         ini32 *= -1;
-        }
+    }
     else
-        {
+    {
         pnumret->sign = 1;
-        }
+    }
 
-    do    {
+    do
+    {
         *pmant++ = (MANTTYPE)(ini32 % radix);
         ini32 /= radix;
         pnumret->cdigit++;
-        } while ( ini32 );
+    } while (ini32);
 
-    return( pnumret );
+    return (pnumret);
 }
 
 //-----------------------------------------------------------------------------
@@ -882,27 +851,26 @@ PNUMBER i32tonum( int32_t ini32, uint32_t radix)
 //
 //-----------------------------------------------------------------------------
 
-
 PNUMBER Ui32tonum(uint32_t ini32, uint32_t radix)
 {
-    MANTTYPE *pmant;
-    PNUMBER pnumret= nullptr;
+    MANTTYPE* pmant;
+    PNUMBER pnumret = nullptr;
 
-    createnum( pnumret, MAX_LONG_SIZE );
+    createnum(pnumret, MAX_LONG_SIZE);
     pmant = pnumret->mant;
     pnumret->cdigit = 0;
     pnumret->exp = 0;
     pnumret->sign = 1;
 
-    do    {
+    do
+    {
         *pmant++ = (MANTTYPE)(ini32 % radix);
         ini32 /= radix;
         pnumret->cdigit++;
-        } while ( ini32 );
+    } while (ini32);
 
-    return( pnumret );
+    return (pnumret);
 }
-
 
 //-----------------------------------------------------------------------------
 //
@@ -918,26 +886,26 @@ PNUMBER Ui32tonum(uint32_t ini32, uint32_t radix)
 //
 //-----------------------------------------------------------------------------
 
-int32_t rattoi32( _In_ PRAT prat , uint32_t radix, int32_t precision)
+int32_t rattoi32(_In_ PRAT prat, uint32_t radix, int32_t precision)
 {
-    if ( rat_gt( prat, rat_max_i32, precision) || rat_lt( prat, rat_min_i32, precision) )
+    if (rat_gt(prat, rat_max_i32, precision) || rat_lt(prat, rat_min_i32, precision))
     {
         // Don't attempt rattoi32 of anything too big or small
-        throw( CALC_E_DOMAIN );
+        throw(CALC_E_DOMAIN);
     }
 
     PRAT pint = nullptr;
-    DUPRAT(pint,prat);
+    DUPRAT(pint, prat);
 
-    intrat( &pint, radix, precision);
-    divnumx( &(pint->pp), pint->pq, precision);
-    DUPNUM( pint->pq, num_one );
+    intrat(&pint, radix, precision);
+    divnumx(&(pint->pp), pint->pq, precision);
+    DUPNUM(pint->pq, num_one);
 
-    int32_t lret = numtoi32( pint->pp, BASEX );
+    int32_t lret = numtoi32(pint->pp, BASEX);
 
     destroyrat(pint);
 
-    return( lret );
+    return (lret);
 }
 
 //-----------------------------------------------------------------------------
@@ -953,28 +921,27 @@ int32_t rattoi32( _In_ PRAT prat , uint32_t radix, int32_t precision)
 //    base.
 //
 //-----------------------------------------------------------------------------
-uint32_t rattoUi32( _In_ PRAT prat, uint32_t radix, int32_t precision)
+uint32_t rattoUi32(_In_ PRAT prat, uint32_t radix, int32_t precision)
 {
-    if ( rat_gt( prat, rat_dword, precision) || rat_lt( prat, rat_zero, precision) )
+    if (rat_gt(prat, rat_dword, precision) || rat_lt(prat, rat_zero, precision))
     {
         // Don't attempt rattoui32 of anything too big or small
-        throw( CALC_E_DOMAIN );
+        throw(CALC_E_DOMAIN);
     }
 
     PRAT pint = nullptr;
-    DUPRAT(pint,prat);
+    DUPRAT(pint, prat);
 
-    intrat( &pint, radix, precision);
-    divnumx( &(pint->pp), pint->pq, precision);
-    DUPNUM( pint->pq, num_one );
+    intrat(&pint, radix, precision);
+    divnumx(&(pint->pp), pint->pq, precision);
+    DUPNUM(pint->pq, num_one);
 
-    uint32_t lret = numtoi32( pint->pp, BASEX ); // This happens to work even if it is only signed
+    uint32_t lret = numtoi32(pint->pp, BASEX); // This happens to work even if it is only signed
 
     destroyrat(pint);
 
-    return( lret );
+    return (lret);
 }
-
 
 //-----------------------------------------------------------------------------
 //
@@ -991,20 +958,20 @@ uint32_t rattoUi32( _In_ PRAT prat, uint32_t radix, int32_t precision)
 //    internal base chosen happens to be 2^32, this is easier.
 //-----------------------------------------------------------------------------
 
-uint64_t rattoUi64( _In_ PRAT prat, uint32_t radix, int32_t precision)
+uint64_t rattoUi64(_In_ PRAT prat, uint32_t radix, int32_t precision)
 {
     PRAT pint = nullptr;
 
     // first get the LO 32 bit word
     DUPRAT(pint, prat);
-    andrat(&pint, rat_dword, radix, precision);  // & 0xFFFFFFFF   (2 ^ 32 -1)
-    uint32_t lo = rattoUi32(pint, radix, precision);  // wont throw exception because already hi-dword chopped off
+    andrat(&pint, rat_dword, radix, precision);      // & 0xFFFFFFFF   (2 ^ 32 -1)
+    uint32_t lo = rattoUi32(pint, radix, precision); // wont throw exception because already hi-dword chopped off
 
     DUPRAT(pint, prat); // previous pint will get freed by this as well
     PRAT prat32 = i32torat(32);
     rshrat(&pint, prat32, radix, precision);
-    intrat( &pint, radix, precision);
-    andrat(&pint, rat_dword, radix, precision);  // & 0xFFFFFFFF   (2 ^ 32 -1)
+    intrat(&pint, radix, precision);
+    andrat(&pint, rat_dword, radix, precision); // & 0xFFFFFFFF   (2 ^ 32 -1)
     uint32_t hi = rattoUi32(pint, radix, precision);
 
     destroyrat(prat32);
@@ -1026,11 +993,11 @@ uint64_t rattoUi64( _In_ PRAT prat, uint32_t radix, int32_t precision)
 //    base   claimed.
 //
 //-----------------------------------------------------------------------------
-int32_t numtoi32( _In_ PNUMBER pnum, uint32_t radix )
+int32_t numtoi32(_In_ PNUMBER pnum, uint32_t radix)
 {
     int32_t lret = 0;
 
-    MANTTYPE *pmant = pnum->mant;
+    MANTTYPE* pmant = pnum->mant;
     pmant += pnum->cdigit - 1;
 
     int32_t expt = pnum->exp;
@@ -1063,40 +1030,40 @@ int32_t numtoi32( _In_ PNUMBER pnum, uint32_t radix )
 
 bool stripzeroesnum(_Inout_ PNUMBER pnum, int32_t starting)
 {
-    MANTTYPE *pmant;
+    MANTTYPE* pmant;
     int32_t cdigits;
     bool fstrip = false;
 
     // point pmant to the LeastCalculatedDigit
-    pmant=pnum->mant;
-    cdigits=pnum->cdigit;
+    pmant = pnum->mant;
+    cdigits = pnum->cdigit;
     // point pmant to the LSD
-    if ( cdigits > starting )
-        {
+    if (cdigits > starting)
+    {
         pmant += cdigits - starting;
         cdigits = starting;
-        }
+    }
 
     // Check we haven't gone too far, and we are still looking at zeros.
-    while ( ( cdigits > 0 ) && !(*pmant) )
-        {
+    while ((cdigits > 0) && !(*pmant))
+    {
         // move to next significant digit and keep track of digits we can
-    // ignore later.
+        // ignore later.
         pmant++;
         cdigits--;
         fstrip = true;
     }
 
     // If there are zeros to remove.
-    if ( fstrip )
-        {
+    if (fstrip)
+    {
         // Remove them.
-        memmove( pnum->mant, pmant, (int)(cdigits*sizeof(MANTTYPE)) );
+        memmove(pnum->mant, pmant, (int)(cdigits * sizeof(MANTTYPE)));
         // And adjust exponent and digit count accordingly.
-        pnum->exp += ( pnum->cdigit - cdigits );
+        pnum->exp += (pnum->cdigit - cdigits);
         pnum->cdigit = cdigits;
-        }
-    return( fstrip );
+    }
+    return (fstrip);
 }
 
 //-----------------------------------------------------------------------------
@@ -1202,7 +1169,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
     // Set up all the post rounding stuff.
     bool useSciForm = false;
     int32_t eout = exponent - 1; // Displayed exponent.
-    MANTTYPE *pmant = pnum->mant + pnum->cdigit - 1;
+    MANTTYPE* pmant = pnum->mant + pnum->cdigit - 1;
     // Case where too many digits are to the left of the decimal or
     // FMT_SCIENTIFIC or FMT_ENGINEERING was specified.
     if ((format == FMT_SCIENTIFIC) || (format == FMT_ENGINEERING))
@@ -1394,17 +1361,17 @@ void flatrat(_Inout_ PRAT& prat, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-PNUMBER gcd( _In_ PNUMBER a, _In_ PNUMBER b)
+PNUMBER gcd(_In_ PNUMBER a, _In_ PNUMBER b)
 {
-    PNUMBER r= nullptr;
-    PNUMBER larger= nullptr;
-    PNUMBER smaller= nullptr;
+    PNUMBER r = nullptr;
+    PNUMBER larger = nullptr;
+    PNUMBER smaller = nullptr;
 
     if (zernum(a))
     {
         return b;
     }
-    else if(zernum(b))
+    else if (zernum(b))
     {
         return a;
     }
@@ -1450,18 +1417,18 @@ PNUMBER gcd( _In_ PNUMBER a, _In_ PNUMBER b)
 PNUMBER i32factnum(int32_t ini32, uint32_t radix)
 
 {
-    PNUMBER lret= nullptr;
-    PNUMBER tmp= nullptr;
+    PNUMBER lret = nullptr;
+    PNUMBER tmp = nullptr;
 
-    lret = i32tonum( 1, radix);
+    lret = i32tonum(1, radix);
 
-    while ( ini32 > 0 )
-        {
-        tmp = i32tonum( ini32--, radix);
-        mulnum( &lret, tmp, radix);
-        destroynum( tmp );
-        }
-    return( lret );
+    while (ini32 > 0)
+    {
+        tmp = i32tonum(ini32--, radix);
+        mulnum(&lret, tmp, radix);
+        destroynum(tmp);
+    }
+    return (lret);
 }
 
 //-----------------------------------------------------------------------------
@@ -1480,22 +1447,22 @@ PNUMBER i32factnum(int32_t ini32, uint32_t radix)
 PNUMBER i32prodnum(int32_t start, int32_t stop, uint32_t radix)
 
 {
-    PNUMBER lret= nullptr;
-    PNUMBER tmp= nullptr;
+    PNUMBER lret = nullptr;
+    PNUMBER tmp = nullptr;
 
-    lret = i32tonum( 1, radix);
+    lret = i32tonum(1, radix);
 
-    while ( start <= stop )
+    while (start <= stop)
+    {
+        if (start)
         {
-        if ( start )
-            {
-            tmp = i32tonum( start, radix);
-            mulnum( &lret, tmp, radix);
-            destroynum( tmp );
-            }
-        start++;
+            tmp = i32tonum(start, radix);
+            mulnum(&lret, tmp, radix);
+            destroynum(tmp);
         }
-    return( lret );
+        start++;
+    }
+    return (lret);
 }
 
 //-----------------------------------------------------------------------------
@@ -1512,23 +1479,22 @@ PNUMBER i32prodnum(int32_t start, int32_t stop, uint32_t radix)
 //
 //-----------------------------------------------------------------------------
 
-void numpowi32( _Inout_ PNUMBER *proot, int32_t power, uint32_t radix, int32_t precision)
+void numpowi32(_Inout_ PNUMBER* proot, int32_t power, uint32_t radix, int32_t precision)
 {
-    PNUMBER lret = i32tonum( 1, radix );
+    PNUMBER lret = i32tonum(1, radix);
 
-    while ( power > 0 )
+    while (power > 0)
+    {
+        if (power & 1)
         {
-        if ( power & 1 )
-            {
-            mulnum( &lret, *proot, radix );
-            }
-        mulnum( proot, *proot, radix );
+            mulnum(&lret, *proot, radix);
+        }
+        mulnum(proot, *proot, radix);
         TRIMNUM(*proot, precision);
         power >>= 1;
-        }
-    destroynum( *proot );
-    *proot=lret;
-
+    }
+    destroynum(*proot);
+    *proot = lret;
 }
 
 //-----------------------------------------------------------------------------
@@ -1544,37 +1510,37 @@ void numpowi32( _Inout_ PNUMBER *proot, int32_t power, uint32_t radix, int32_t p
 //
 //-----------------------------------------------------------------------------
 
-void ratpowi32( _Inout_ PRAT *proot, int32_t power, int32_t precision)
+void ratpowi32(_Inout_ PRAT* proot, int32_t power, int32_t precision)
 
 {
-    if ( power < 0 )
-        {
+    if (power < 0)
+    {
         // Take the positive power and invert answer.
         PNUMBER pnumtemp = nullptr;
-        ratpowi32( proot, -power, precision);
+        ratpowi32(proot, -power, precision);
         pnumtemp = (*proot)->pp;
-        (*proot)->pp  = (*proot)->pq;
+        (*proot)->pp = (*proot)->pq;
         (*proot)->pq = pnumtemp;
-        }
+    }
     else
+    {
+        PRAT lret = nullptr;
+
+        lret = i32torat(1);
+
+        while (power > 0)
         {
-        PRAT lret= nullptr;
-
-        lret = i32torat( 1 );
-
-        while ( power > 0 )
+            if (power & 1)
             {
-            if ( power & 1 )
-                {
-                mulnumx( &(lret->pp), (*proot)->pp );
-                mulnumx( &(lret->pq), (*proot)->pq );
-                }
-            mulrat( proot, *proot, precision);
+                mulnumx(&(lret->pp), (*proot)->pp);
+                mulnumx(&(lret->pq), (*proot)->pq);
+            }
+            mulrat(proot, *proot, precision);
             trimit(&lret, precision);
             trimit(proot, precision);
             power >>= 1;
-            }
-        destroyrat( *proot );
-        *proot=lret;
         }
+        destroyrat(*proot);
+        *proot = lret;
+    }
 }
