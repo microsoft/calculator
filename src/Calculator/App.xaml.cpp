@@ -101,7 +101,6 @@ String ^ App::GetAppViewState()
 {
     String ^ newViewState;
     CoreWindow ^ window = CoreWindow::GetForCurrentThread();
-    
     if ((window->Bounds.Width >= 560) && (window->Bounds.Height >= 356))
     {
         newViewState = ViewState::DockedView;
