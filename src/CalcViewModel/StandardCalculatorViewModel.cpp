@@ -541,14 +541,13 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
             }
 
             length = m_selectedExpressionLastData->Length();
-            while (j < length)
+            for (; j < length; ++j)
             {
                 if (j == commandIndex - 1)
                 {
-                    j++;
                     continue;
                 }
-                temp[i++] = data[j++];
+                temp[i++] = data[j];
             }
             temp[i] = L'\0';
             commandIndex -= 1;
@@ -561,14 +560,14 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
                 delete[] temp;
                 return;
             }
-            while (i < length)
+            for (; i < length; ++i)
             {
                 if (i == commandIndex)
                 {
-                    temp[i++] = ch;
+                    temp[i] = ch;
                     continue;
                 }
-                temp[i++] = data[j++];
+                temp[i] = data[j++];
             }
             temp[i] = L'\0';
             commandIndex += 1;
@@ -824,17 +823,16 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString, ViewMode mode)
 
             // Closing parenthesis pops the negation state off the stack and sends it down to the calc engine
         case NumbersAndOperatorsEnum::CloseParenthesis:
-            if (negateStack.empty())
-            {
-                // Don't send a closing parenthesis if a matching opening parenthesis hasn't been sent already
-                sendCommand = false;
-                
-            }
-            else
+            if (!negateStack.empty())
             {
                 sendNegate = negateStack.back();
                 negateStack.pop_back();
                 canSendNegate = true;
+            }
+            else
+            {
+                // Don't send a closing parenthesis if a matching opening parenthesis hasn't been sent already
+                sendCommand = false;
             }
             break;
 

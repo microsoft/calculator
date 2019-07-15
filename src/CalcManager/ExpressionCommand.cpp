@@ -152,6 +152,7 @@ void COpndCommand::ToggleSign()
     {
         int nOpCode;
         m_commands->GetAt(i, &nOpCode);
+
         if (nOpCode != IDC_0)
         {
             m_fNegative = !m_fNegative;
@@ -261,19 +262,24 @@ const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
         {
             if (m_token.at(i) == decimalSymbol)
             {
+
+              
                 m_token.erase(0, i - 1);
+
             }
             else
             {
                 m_token.erase(0, i);
             }
             if (m_fNegative)
+
             {
                 m_token.insert(0, &chNegate);
             }
             return m_token;
         }
     }
+
 
     m_token.clear();
     m_token.append(&chZero);
