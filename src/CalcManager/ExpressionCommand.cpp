@@ -262,8 +262,14 @@ const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
         {
             if (m_token.at(i) == decimalSymbol)
             {
+
+              
                 m_token.erase(0, i - 1);
+<<<<<<< HEAD
            
+=======
+
+>>>>>>> parent of 3120dbc... Merge pull request #4 from pi1024e/master
             }
             else
             {
@@ -271,12 +277,14 @@ const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
             }
             
             if (m_fNegative)
+
             {
                 m_token.insert(0, &chNegate);
             }
             return m_token;
         }
     }
+
 
     m_token.clear();
     m_token.append(&chZero);
