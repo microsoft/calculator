@@ -7,8 +7,8 @@
 #include <vector>
 #include "winerror_cross_platform.h"
 #include "Ratpack/CalcErr.h"
-#include <stdexcept> // for std::out_of_range
-#include "sal_cross_platform.h"     // for SAL
+#include <stdexcept>            // for std::out_of_range
+#include "sal_cross_platform.h" // for SAL
 
 template <typename TType>
 class CalculatorVector
@@ -35,7 +35,6 @@ public:
 
     ResultCode SetAt(_In_ unsigned int index, _In_opt_ TType item)
     {
-      
         try
         {
             m_vector[index] = item;
