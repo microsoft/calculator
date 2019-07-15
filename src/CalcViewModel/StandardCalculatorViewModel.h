@@ -197,21 +197,17 @@ namespace CalculatorApp
                     if (m_isProgrammer != value)
                     {
                         m_isProgrammer = value;
-                        if (m_isProgrammer)
+                        if (!m_isProgrammer)
                         {
-                            IsBinaryBitFlippingEnabled = IsBitFlipChecked;
-                            AreProgrammerRadixOperatorsEnabled = !IsBitFlipChecked;
-
+                            IsBitFlipChecked = false;
+                        }
+                        IsBinaryBitFlippingEnabled = m_isProgrammer && IsBitFlipChecked;
+                        AreProgrammerRadixOperatorsEnabled = m_isProgrammer && !IsBitFlipChecked;
+                        if (value)
+                        {
                             IsStandard = false;
                             IsScientific = false;
                         }
-                        else
-                        {
-                            IsBitFlipChecked = false;
-                            IsBinaryBitFlippingEnabled = false;
-                            AreProgrammerRadixOperatorsEnabled = false;
-                        }
-
                         RaisePropertyChanged(L"IsProgrammer");
                     }
                 }
@@ -351,6 +347,7 @@ namespace CalculatorApp
             void OnMaxDigitsReached();
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
+
 
             Platform::String ^ GetLocalizedStringFormat(Platform::String ^ format, Platform::String ^ displayValue);
             void OnPropertyChanged(Platform::String ^ propertyname);

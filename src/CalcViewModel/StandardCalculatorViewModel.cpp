@@ -340,16 +340,15 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<CalculatorVector<
             bool isEditable = (currentToken.second == -1) ? false : true;
             localizer.LocalizeDisplayValue(&(currentToken.first));
 
-            if (isEditable)
+            if (!isEditable)
+            {
+                type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
+            }
+            else
             {
                 shared_ptr<IExpressionCommand> command;
                 IFTPlatformException(m_commands->GetAt(static_cast<unsigned int>(currentToken.second), &command));
                 type = command->GetCommandType() == CommandType::OperandCommand ? TokenType::Operand : TokenType::Operator;
-                
-            }
-            else
-            {
-                type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
             }
 
             auto currentTokenString = ref new String(currentToken.first.c_str());

@@ -502,107 +502,106 @@ const std::multimap<MyVirtualKey, WeakReference>& GetCurrentKeyDictionary(MyVirt
 void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs ^ args)
 {
     // If keyboard shortcuts like Ctrl+C or Ctrl+V are not handled
-    if (args->Handled)
+    if (!args->Handled)
     {
-        return;
-    }
-    auto key = args->VirtualKey;
-    int viewId = Utils::GetWindowId();
+        auto key = args->VirtualKey;
+        int viewId = Utils::GetWindowId();
 
-    auto currentControlKeyPressed = s_ControlKeyPressed.find(viewId);
-    auto currentShiftKeyPressed = s_ShiftKeyPressed.find(viewId);
+        auto currentControlKeyPressed = s_ControlKeyPressed.find(viewId);
+        auto currentShiftKeyPressed = s_ShiftKeyPressed.find(viewId);
 
-    bool isControlKeyPressed = (currentControlKeyPressed != s_ControlKeyPressed.end()) && (currentControlKeyPressed->second);
-    bool isShiftKeyPressed = (currentShiftKeyPressed != s_ShiftKeyPressed.end()) && (currentShiftKeyPressed->second);
+        bool isControlKeyPressed = (currentControlKeyPressed != s_ControlKeyPressed.end()) && (currentControlKeyPressed->second);
+        bool isShiftKeyPressed = (currentShiftKeyPressed != s_ShiftKeyPressed.end()) && (currentShiftKeyPressed->second);
 
-    // Handle Ctrl + E for DateCalculator
-    if ((key == VirtualKey::E) && isControlKeyPressed && !isShiftKeyPressed)
-    {
-        const auto& lookupMap = GetCurrentKeyDictionary(static_cast<MyVirtualKey>(key));
-        auto buttons = lookupMap.equal_range(static_cast<MyVirtualKey>(key));
-        auto navView = buttons.first->second.Resolve<MUXC::NavigationView>();
-        auto appViewModel = safe_cast<ApplicationViewModel ^>(navView->DataContext);
-        appViewModel->Mode = ViewMode::Date;
-        auto categoryName = AppResourceProvider::GetInstance().GetResourceString(L"DateCalculationModeText");
-        appViewModel->CategoryName = categoryName;
-
-        auto menuItems = static_cast<IObservableVector<Object ^> ^>(navView->MenuItemsSource);
-        auto flatIndex = NavCategory::GetFlatIndex(ViewMode::Date);
-        navView->SelectedItem = menuItems->GetAt(flatIndex);
-        return;
-    }
-
-    auto currentHonorShortcuts = s_fHonorShortcuts.find(viewId);
-
-    auto currentIgnoreNextEscape = s_ignoreNextEscape.find(viewId);
-
-    if (currentIgnoreNextEscape != s_ignoreNextEscape.end())
-    {
-        if (currentIgnoreNextEscape->second && key == VirtualKey::Escape)
+        // Handle Ctrl + E for DateCalculator
+        if ((key == VirtualKey::E) && isControlKeyPressed && !isShiftKeyPressed)
         {
-            auto currentKeepIgnoringEscape = s_keepIgnoringEscape.find(viewId);
+            const auto& lookupMap = GetCurrentKeyDictionary(static_cast<MyVirtualKey>(key));
+            auto buttons = lookupMap.equal_range(static_cast<MyVirtualKey>(key));
+            auto navView = buttons.first->second.Resolve<MUXC::NavigationView>();
+            auto appViewModel = safe_cast<ApplicationViewModel ^>(navView->DataContext);
+            appViewModel->Mode = ViewMode::Date;
+            auto categoryName = AppResourceProvider::GetInstance().GetResourceString(L"DateCalculationModeText");
+            appViewModel->CategoryName = categoryName;
 
-            if (currentKeepIgnoringEscape != s_keepIgnoringEscape.end())
+            auto menuItems = static_cast<IObservableVector<Object ^> ^>(navView->MenuItemsSource);
+            auto flatIndex = NavCategory::GetFlatIndex(ViewMode::Date);
+            navView->SelectedItem = menuItems->GetAt(flatIndex);
+            return;
+        }
+
+        auto currentHonorShortcuts = s_fHonorShortcuts.find(viewId);
+
+        auto currentIgnoreNextEscape = s_ignoreNextEscape.find(viewId);
+
+        if (currentIgnoreNextEscape != s_ignoreNextEscape.end())
+        {
+            if (currentIgnoreNextEscape->second && key == VirtualKey::Escape)
             {
-                if (!currentKeepIgnoringEscape->second)
+                auto currentKeepIgnoringEscape = s_keepIgnoringEscape.find(viewId);
+
+                if (currentKeepIgnoringEscape != s_keepIgnoringEscape.end())
                 {
-                    HonorEscape();
+                    if (!currentKeepIgnoringEscape->second)
+                    {
+                        HonorEscape();
+                    }
+                    return;
                 }
-                return;
             }
         }
-    }
 
-    if (key == VirtualKey::Control)
-    {
-        // Writer lock for the static maps
-        reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
-
-        auto currControlKeyPressed = s_ControlKeyPressed.find(viewId);
-
-        if (currControlKeyPressed != s_ControlKeyPressed.end())
+        if (key == VirtualKey::Control)
         {
-            s_ControlKeyPressed.erase(viewId);
-            s_ControlKeyPressed.insert(std::make_pair(viewId, true));
-        }
-        return;
-    }
-    else if (key == VirtualKey::Shift)
-    {
-        // Writer lock for the static maps
-        reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
+            // Writer lock for the static maps
+            reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
-        auto currShiftKeyPressed = s_ShiftKeyPressed.find(viewId);
+            auto currControlKeyPressed = s_ControlKeyPressed.find(viewId);
 
-        if (currShiftKeyPressed != s_ShiftKeyPressed.end())
-        {
-            s_ShiftKeyPressed.erase(viewId);
-            s_ShiftKeyPressed.insert(std::make_pair(viewId, true));
-        }
-        return;
-    }
-
-    const auto& lookupMap = GetCurrentKeyDictionary(static_cast<MyVirtualKey>(key));
-    auto buttons = lookupMap.equal_range(static_cast<MyVirtualKey>(key));
-
-    auto currentIsDropDownOpen = s_IsDropDownOpen.find(viewId);
-
-    if (currentHonorShortcuts != s_fHonorShortcuts.end())
-    {
-        if (currentHonorShortcuts->second)
-        {
-            RunFirstEnabledButtonCommand(buttons);
-
-            // Ctrl+C and Ctrl+V shifts focus to some button because of which enter doesn't work after copy/paste. So don't shift focus if Ctrl+C or Ctrl+V
-            // is pressed. When drop down is open, pressing escape shifts focus to clear button. So dont's shift focus if drop down is open. Ctrl+Insert is
-            // equivalent to Ctrl+C and Shift+Insert is equivalent to Ctrl+V
-            if (currentIsDropDownOpen != s_IsDropDownOpen.end() && !currentIsDropDownOpen->second)
+            if (currControlKeyPressed != s_ControlKeyPressed.end())
             {
-                // Do not Light Up Buttons when Ctrl+C, Ctrl+V, Ctrl+Insert or Shift+Insert is pressed
-                if (!((isControlKeyPressed && (key == VirtualKey::C || key == VirtualKey::V || key == VirtualKey::Insert))
-                      || (isShiftKeyPressed && (key == VirtualKey::Insert))))
+                s_ControlKeyPressed.erase(viewId);
+                s_ControlKeyPressed.insert(std::make_pair(viewId, true));
+            }
+            return;
+        }
+        else if (key == VirtualKey::Shift)
+        {
+            // Writer lock for the static maps
+            reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
+
+            auto currShiftKeyPressed = s_ShiftKeyPressed.find(viewId);
+
+            if (currShiftKeyPressed != s_ShiftKeyPressed.end())
+            {
+                s_ShiftKeyPressed.erase(viewId);
+                s_ShiftKeyPressed.insert(std::make_pair(viewId, true));
+            }
+            return;
+        }
+
+        const auto& lookupMap = GetCurrentKeyDictionary(static_cast<MyVirtualKey>(key));
+        auto buttons = lookupMap.equal_range(static_cast<MyVirtualKey>(key));
+
+        auto currentIsDropDownOpen = s_IsDropDownOpen.find(viewId);
+
+        if (currentHonorShortcuts != s_fHonorShortcuts.end())
+        {
+            if (currentHonorShortcuts->second)
+            {
+                RunFirstEnabledButtonCommand(buttons);
+
+                // Ctrl+C and Ctrl+V shifts focus to some button because of which enter doesn't work after copy/paste. So don't shift focus if Ctrl+C or Ctrl+V
+                // is pressed. When drop down is open, pressing escape shifts focus to clear button. So dont's shift focus if drop down is open. Ctrl+Insert is
+                // equivalent to Ctrl+C and Shift+Insert is equivalent to Ctrl+V
+                if (currentIsDropDownOpen != s_IsDropDownOpen.end() && !currentIsDropDownOpen->second)
                 {
-                    LightUpButtons(buttons);
+                    // Do not Light Up Buttons when Ctrl+C, Ctrl+V, Ctrl+Insert or Shift+Insert is pressed
+                    if (!(isControlKeyPressed && (key == VirtualKey::C || key == VirtualKey::V || key == VirtualKey::Insert))
+                        && !(isShiftKeyPressed && (key == VirtualKey::Insert)))
+                    {
+                        LightUpButtons(buttons);
+                    }
                 }
             }
         }
@@ -650,9 +649,10 @@ void KeyboardShortcutManager::OnAcceleratorKeyActivated(CoreDispatcher ^, Accele
         bool altPressed = args->KeyStatus.IsMenuKeyDown;
 
         // If the Alt/Menu key is not pressed then we don't care about the key anymore
-        if (altPressed)
+        if (!altPressed)
         {
-           
+            return;
+        }
 
         const auto& lookupMap = GetCurrentKeyDictionary(static_cast<MyVirtualKey>(key), altPressed);
         auto listItems = lookupMap.equal_range(static_cast<MyVirtualKey>(key));
@@ -677,9 +677,8 @@ void KeyboardShortcutManager::OnAcceleratorKeyActivated(CoreDispatcher ^, Accele
                         }
                     }
                 }
-                return;
+                break;
             }
-        }
         }
     }
 

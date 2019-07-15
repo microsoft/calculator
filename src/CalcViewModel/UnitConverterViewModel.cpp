@@ -239,14 +239,14 @@ void UnitConverterViewModel::OnUnitChanged(Object ^ parameter)
         // End timer to show results immediately
         m_supplementaryResultsTimer->Cancel();
     }
-    if (m_IsFirstTime)
+    if (!m_IsFirstTime)
     {
-        RestoreUserPreferences();
-        m_IsFirstTime = false;
+        SaveUserPreferences();
     }
     else
     {
-        SaveUserPreferences();
+        RestoreUserPreferences();
+        m_IsFirstTime = false;
     }
 }
 
@@ -513,14 +513,17 @@ void UnitConverterViewModel::OnCopyCommand(Platform::Object ^ parameter)
 
 void UnitConverterViewModel::OnPasteCommand(Platform::Object ^ parameter)
 {
-    if (CopyPasteManager::HasStringToPaste())
+    // if there's nothing to copy early out
+    if (!CopyPasteManager::HasStringToPaste())
     {
-        // Ensure that the paste happens on the UI thread
-        // EventWriteClipboardPaste_Start();
-        // Any converter ViewMode is fine here.
-        CopyPasteManager::GetStringToPaste(m_Mode, NavCategory::GetGroupType(m_Mode))
-            .then([this](String ^ pastedString) { OnPaste(pastedString, m_Mode); }, concurrency::task_continuation_context::use_current());
+        return;
     }
+
+    // Ensure that the paste happens on the UI thread
+    // EventWriteClipboardPaste_Start();
+    // Any converter ViewMode is fine here.
+    CopyPasteManager::GetStringToPaste(m_Mode, NavCategory::GetGroupType(m_Mode))
+        .then([this](String ^ pastedString) { OnPaste(pastedString, m_Mode); }, concurrency::task_continuation_context::use_current());
 }
 
 void UnitConverterViewModel::InitializeView()
@@ -616,17 +619,17 @@ void UnitConverterViewModel::SaveUserPreferences()
     if (UnitsAreValid())
     {
         ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
-        if (m_IsCurrencyCurrentCategory)
+        if (!m_IsCurrencyCurrentCategory)
+        {
+            auto userPreferences = m_model->SaveUserPreferences();
+            localSettings->Values->Insert(ref new String(L"UnitConverterPreferences"), ref new String(userPreferences.c_str()));
+        }
+        else
         {
             // Currency preferences shouldn't be saved in the same way as standard converter modes because
             // the delay loading creates a big mess of issues that are better to avoid.
             localSettings->Values->Insert(UnitConverterResourceKeys::CurrencyUnitFromKey, UnitFrom->Abbreviation);
             localSettings->Values->Insert(UnitConverterResourceKeys::CurrencyUnitToKey, UnitTo->Abbreviation);
-        }
-        else
-        {
-            auto userPreferences = m_model->SaveUserPreferences();
-            localSettings->Values->Insert(ref new String(L"UnitConverterPreferences"), ref new String(userPreferences.c_str()));
         }
     }
 }
@@ -634,16 +637,14 @@ void UnitConverterViewModel::SaveUserPreferences()
 // Restoring User Preferences of Category and Associated-Units.
 void UnitConverterViewModel::RestoreUserPreferences()
 {
-    if (IsCurrencyCurrentCategory)
+    if (!IsCurrencyCurrentCategory)
     {
-        return;
-    }
-
-    ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
-    if (localSettings->Values->HasKey(ref new String(L"UnitConverterPreferences")))
-    {
-        String ^ userPreferences = safe_cast<String ^>(localSettings->Values->Lookup(ref new String(L"UnitConverterPreferences")));
-        m_model->RestoreUserPreferences(userPreferences->Data());
+        ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
+        if (localSettings->Values->HasKey(ref new String(L"UnitConverterPreferences")))
+        {
+            String ^ userPreferences = safe_cast<String ^>(localSettings->Values->Lookup(ref new String(L"UnitConverterPreferences")));
+            m_model->RestoreUserPreferences(userPreferences->Data());
+        }
     }
 }
 
@@ -868,11 +869,14 @@ NumbersAndOperatorsEnum UnitConverterViewModel::MapCharacterToButtonId(const wch
         }
     }
 
-    if (mappedValue == NumbersAndOperatorsEnum::None && LocalizationSettings::GetInstance().IsLocalizedDigit(ch))
+    if (mappedValue == NumbersAndOperatorsEnum::None)
     {
-        mappedValue =
-            NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit(L'0'));
-        canSendNegate = true;
+        if (LocalizationSettings::GetInstance().IsLocalizedDigit(ch))
+        {
+            mappedValue = NumbersAndOperatorsEnum::Zero
+                          + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit(L'0'));
+            canSendNegate = true;
+        }
     }
 
     return mappedValue;
@@ -963,10 +967,10 @@ String ^ UnitConverterViewModel::GetLocalizedAutomationName(_In_ String ^ displa
 
 String
     ^ UnitConverterViewModel::GetLocalizedConversionResultStringFormat(
-          _In_ String ^ fromValue,
-          _In_ String ^ fromUnit,
-          _In_ String ^ toValue,
-          _In_ String ^ toUnit)
+        _In_ String ^ fromValue,
+        _In_ String ^ fromUnit,
+        _In_ String ^ toValue,
+        _In_ String ^ toUnit)
 {
     String ^ localizedString =
         ref new String(LocalizationStringUtil::GetLocalizedString(
