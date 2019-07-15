@@ -16,16 +16,15 @@ class CalculatorVector
 public:
     ResultCode GetAt(_In_opt_ unsigned int index, _Out_ TType* item)
     {
-        ResultCode hr = S_OK;
         try
         {
             *item = m_vector.at(index);
         }
         catch (const std::out_of_range& /*ex*/)
         {
-            hr = E_BOUNDS;
+            return E_BOUNDS;
         }
-        return hr;
+        return S_OK;
     }
 
     ResultCode GetSize(_Out_ unsigned int* size)
