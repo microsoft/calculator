@@ -160,15 +160,17 @@ void CalculatorApp::DateCalculator::OnLoaded(_In_ Platform::Object ^ sender, _In
 
 void DateCalculator::CloseCalendarFlyout()
 {
-   
-     DateDiff_FromDate->IsCalendarOpen = false;
-    
+    if (DateDiff_FromDate->IsCalendarOpen)
+    {
+        DateDiff_FromDate->IsCalendarOpen = false;
+    }
 
-    
-     DateDiff_ToDate->IsCalendarOpen = false;
-   
+    if (DateDiff_ToDate->IsCalendarOpen)
+    {
+        DateDiff_ToDate->IsCalendarOpen = false;
+    }
 
-    if (AddSubtract_FromDate != nullptr)
+    if ((AddSubtract_FromDate != nullptr) && (AddSubtract_FromDate->IsCalendarOpen))
     {
         AddSubtract_FromDate->IsCalendarOpen = false;
     }
