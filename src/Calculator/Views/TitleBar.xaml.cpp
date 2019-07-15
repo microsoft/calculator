@@ -29,11 +29,11 @@ namespace CalculatorApp
 
         Loaded += ref new RoutedEventHandler(this, &TitleBar::OnLoaded);
         Unloaded += ref new RoutedEventHandler(this, &TitleBar::OnUnloaded);
-        #ifdef IsStoreBuild           //AppName for Retail Builds
-        AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName"); 
-        #else                         //AppName for Developer Builds
+#ifdef IsStoreBuild
+        AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
+#else
         AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"DevAppName");
-        #endif        //IsStoreBuild
+#endif //IsStoreBuild
     }
 
     void TitleBar::OnLoaded(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
