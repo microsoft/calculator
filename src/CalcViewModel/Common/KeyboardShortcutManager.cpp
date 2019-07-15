@@ -117,13 +117,7 @@ namespace CalculatorApp
         void RunFirstEnabledButtonCommand(const T& buttons)
         {
             auto buttonIterator = buttons.first;
-<<<<<<< HEAD
-
             for (; buttonIterator != buttons.second; ++buttonIterator)
-
-=======
-            for (; buttonIterator != buttons.second; ++buttonIterator)
->>>>>>> parent of 3120dbc... Merge pull request #4 from pi1024e/master
             {
                 auto button = buttonIterator->second.Resolve<ButtonBase>();
                 if (button && button->IsEnabled)
