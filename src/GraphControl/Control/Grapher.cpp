@@ -19,6 +19,16 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 
+using namespace Windows::Storage::Streams;
+
+typedef struct tagBITMAPFILEHEADER {
+    WORD  bfType;
+    DWORD bfSize;
+    WORD  bfReserved1;
+    WORD  bfReserved2;
+    DWORD bfOffBits;
+} BITMAPFILEHEADER, * LPBITMAPFILEHEADER, * PBITMAPFILEHEADER;
+
 namespace
 {
     constexpr auto s_defaultStyleKey = L"GraphControl.Grapher";
@@ -28,6 +38,7 @@ namespace
     constexpr auto s_propertyName_Equations = L"Equations";
     constexpr auto s_propertyName_EquationsSource = L"EquationsSource";
     constexpr auto s_propertyName_ForceProportionalAxes = L"ForceProportionalAxes";
+    constexpr auto s_propertyName_GraphBitmap = L"GraphBitmap";
 
     // Helper function for converting a pointer position to a position that the graphing engine will understand.
     // posX/posY are the pointer position elements and width,height are the dimensions of the graph surface.
@@ -45,7 +56,8 @@ namespace GraphControl
     DependencyProperty^ Grapher::s_equationsProperty;
     DependencyProperty^ Grapher::s_equationsSourceProperty;
     DependencyProperty^ Grapher::s_forceProportionalAxesTemplateProperty;
-    
+    DependencyProperty^ Grapher::s_graphBitmapProperty;
+
     Grapher::Grapher()
         : m_solver{ IMathSolver::CreateMathSolver() }
         , m_graph{ m_solver->CreateGrapher() }
@@ -156,6 +168,18 @@ namespace GraphControl
                     true,
                     ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
         }
+
+        if (!s_graphBitmapProperty)
+        {
+            s_graphBitmapProperty = DependencyProperty::Register(
+                StringReference(s_propertyName_GraphBitmap),
+                bool::typeid,
+                Grapher::typeid,
+                ref new PropertyMetadata(
+                    true,
+                    ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
+        }
+
     }
 
     void Grapher::OnCustomDependencyPropertyChanged(DependencyObject^ obj, DependencyPropertyChangedEventArgs^ args)
@@ -550,25 +574,109 @@ namespace GraphControl
         }
     }
 
-    void Grapher::Share(BitmapImage bitmapOut)
+    class CBitmap : public MathSolverEngine::Graph::Renderer::IBitmap
     {
-        HRESULT hr E_FAIL;
-        if (m_renderMain != nullptr && m_graph != nullptr)
-        {
-            if (auto renderer = m_graph->GetRenderer())
-            {
-                std::shared_ptr < MathSolverEngine::Graph::Renderer::IBitmap> BitmapOut;
-                bool hasSomeMissingDataOut = false;
+    public:
 
-                hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
-                if (SUCCEEDED(hr))
+        CBitmap(std::vector<BYTE>& bitmap) {}
+        virtual ~CBitmap() {}
+        const std::vector<BYTE>& GetData() const override
+        {
+            return m_bitmap;
+        }
+    private:
+        std::vector<BYTE> m_bitmap;
+    };
+
+    void Grapher::Share()
+    {
+            HRESULT hr E_FAIL;
+            BitmapImage^ bitmapOut = ref new BitmapImage();
+            if (m_renderMain != nullptr && m_graph != nullptr)
+            {
+                if (auto renderer = m_graph->GetRenderer())
                 {
-                    bitmapOut.SetSource(BitmapOut);
-                    auto width = bitmapOut.PixelWidth;
-                    auto height = bitmapOut.PixelHeight;
+                    std::shared_ptr < MathSolverEngine::Graph::Renderer::IBitmap> BitmapOut;
+                    bool hasSomeMissingDataOut = false;
+
+                    hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
+
+                    if (SUCCEEDED(hr))
+                    {
+                        CBitmap* pBitmap = (CBitmap*)BitmapOut.get();
+
+                        std::vector<BYTE> byteVector = pBitmap->GetData();
+
+                        BITMAPFILEHEADER* bmhx = (BITMAPFILEHEADER*)(void*)byteVector.data();
+                        BITMAPINFO * pbmi = (BITMAPINFO*)(void*)byteVector.data();
+
+                        void* pVoid = (void*)(BitmapOut.get());
+                        BITMAPFILEHEADER* bmh = (BITMAPFILEHEADER*)((void*)BitmapOut.get());
+                        BYTE* rawBuffer = (BYTE*)((void*)BitmapOut.get());
+                        WORD type = bmh->bfType;
+                        DWORD size = bmh->bfSize;
+                        WORD r1 = bmh->bfReserved1;
+                        WORD r2 = bmh->bfReserved2;
+                        DWORD ofsetBits = bmh->bfOffBits;
+
+
+                        InMemoryRandomAccessStream^ stream = ref new InMemoryRandomAccessStream();
+                        {
+                            auto writer = ref new DataWriter(stream->GetOutputStreamAt(0));
+                            writer->WriteBytes(Platform::ArrayReference<BYTE>((BYTE*)byteVector.data(), size));
+                            writer->StoreAsync()->GetResults();
+                            stream->Seek(0);
+
+                            auto image = ref new BitmapImage();
+                            
+                            image->SetSource(stream);
+                            auto w = image->PixelWidth;
+                            auto h = image->PixelHeight;
+                        }
+
+                        //auto ms = new InMemoryRandomAccessStream::Create(bitmapArray);
+                        //{
+                        //    using (System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(ms))
+                        //    {
+                        //        return System.Drawing.Bitmap.FromHbitmap(bmp.GetHbitmap());
+                        //    }
+                        //}
+
+
+                        //DWORD* pBits = (DWORD*)(((void*)bmh) + ofsetBits);
+                        //DWORD first = pBits[0];
+
+                         //BitmapImage b = (BitmapImage)((void*)BitmapOut);
+                        //auto w = BitmapOut->
+                        //bitmapOut->SetSource(BitmapOut);
+                        //auto width = bitmapOut->PixelWidth;
+                        //auto height = bitmapOut->PixelHeight;
+                    }
                 }
             }
-        }
 
     }
+
+
+    //void Grapher::Share(BitmapImage bitmapOut)
+    //{
+    //    HRESULT hr E_FAIL;
+    //    if (m_renderMain != nullptr && m_graph != nullptr)
+    //    {
+    //        if (auto renderer = m_graph->GetRenderer())
+    //        {
+    //            std::shared_ptr < MathSolverEngine::Graph::Renderer::IBitmap> BitmapOut;
+    //            bool hasSomeMissingDataOut = false;
+
+    //            hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
+    //            if (SUCCEEDED(hr))
+    //            {
+    //                bitmapOut.SetSource(BitmapOut);
+    //                auto width = bitmapOut.PixelWidth;
+    //                auto height = bitmapOut.PixelHeight;
+    //            }
+    //        }
+    //    }
+
+    //}
 }

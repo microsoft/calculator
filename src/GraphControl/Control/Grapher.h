@@ -102,6 +102,51 @@ namespace GraphControl
         }
         #pragma endregion
 
+        #pragma region Windows::UI::Xaml::Media::Imaging::BitmapImage^ GraphBitmapProperty DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty^ GraphBitmapProperty
+        {
+            Windows::UI::Xaml::DependencyProperty^ get()
+            {
+                return s_graphBitmapProperty;
+            }
+        }
+
+        property Windows::UI::Xaml::Media::Imaging::BitmapImage^ GraphBitmap
+        {
+            Windows::UI::Xaml::Media::Imaging::BitmapImage^ get()
+            {
+                HRESULT hr = E_FAIL;
+                Windows::UI::Xaml::Media::Imaging::BitmapImage^ bitmapOut = ref new BitmapImage();
+                if (m_renderMain != nullptr && m_graph != nullptr)
+                {
+                    if (auto renderer = m_graph->GetRenderer())
+                    {
+                        std::shared_ptr < MathSolverEngine::Graph::Renderer::IBitmap> BitmapOut;
+                        bool hasSomeMissingDataOut = false;
+
+                        hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
+                        if (SUCCEEDED(hr))
+                        {
+                            //Image img = ReferanceCast(Image) BitmapOut;
+                            //auto memoryStram = new MemoryStream();
+                            //BitmapOut ->Save(memoryStream, ImageFormat::Png);
+                            //memoryStream->Position = 0;
+
+
+
+
+                            //bitmapOut->SetSource(BitmapOut);
+                            //auto width = bitmapOut->PixelWidth;
+                            //auto height = bitmapOut->PixelHeight;
+                        }
+                    }
+                }
+                return bitmapOut;
+            }
+        }
+        #pragma endregion
+
+
     protected:
         #pragma region Control Overrides
         void OnApplyTemplate() override;
@@ -115,9 +160,6 @@ namespace GraphControl
         void OnPointerCanceled(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
         void OnManipulationDelta(Windows::UI::Xaml::Input::ManipulationDeltaRoutedEventArgs^ e) override;
         #pragma endregion
-
-        void Share(BitmapImage bitmapOut);
-
 
     private:
         void OnLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ args);
@@ -164,9 +206,14 @@ namespace GraphControl
 
         static Windows::UI::Xaml::DependencyProperty^ s_forceProportionalAxesTemplateProperty;
 
+        static Windows::UI::Xaml::DependencyProperty^ s_graphBitmapProperty;
+
         Windows::Foundation::EventRegistrationToken m_tokenBackgroundColorChanged;
 
         const std::unique_ptr<Graphing::IMathSolver> m_solver;
         const std::shared_ptr<Graphing::IGraph> m_graph;
+
+        public:
+            void Share();
     };
 }

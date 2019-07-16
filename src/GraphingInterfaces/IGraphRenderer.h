@@ -11,8 +11,10 @@ namespace MathSolverEngine
     {
         namespace Renderer
         {
-            struct IBitmap;
-
+            struct IBitmap
+            {
+                virtual const std::vector<BYTE>& GetData() const = 0;
+            };
         }
     }
 }

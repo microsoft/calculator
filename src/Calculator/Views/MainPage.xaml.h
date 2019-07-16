@@ -41,18 +41,11 @@ namespace CalculatorApp
 
     protected:
         virtual void OnNavigatedTo(_In_ Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
-        virtual void OnNavigatedFrom(_In_ Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
-
+   
 
     private:
         Windows::Foundation::EventRegistrationToken dataRequestedToken{};
         Windows::Foundation::EventRegistrationToken targetApplicationChosenToken{};
-
-        void OnDataRequested(Windows::ApplicationModel::DataTransfer::DataTransferManager^ sender, Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs^ e);
-        void OnTargetApplicationChosen(Windows::ApplicationModel::DataTransfer::DataTransferManager^ sender, Windows::ApplicationModel::DataTransfer::TargetApplicationChosenEventArgs^ e);
-        void OnShareCompleted(Windows::ApplicationModel::DataTransfer::DataPackage^ sender, Windows::ApplicationModel::DataTransfer::ShareCompletedEventArgs^ e);
-        // worker
-        bool GetShareContent(Windows::ApplicationModel::DataTransfer::DataRequest^ request);
 
 
     private:
