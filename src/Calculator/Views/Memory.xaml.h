@@ -15,8 +15,7 @@
 
 namespace CalculatorApp
 {
-    [Windows::Foundation::Metadata::WebHostHidden]
-    public ref class Memory sealed
+    [Windows::Foundation::Metadata::WebHostHidden] public ref class Memory sealed
     {
     public:
         Memory();
@@ -30,7 +29,8 @@ namespace CalculatorApp
         DEPENDENCY_PROPERTY_OWNER(Memory);
         DEPENDENCY_PROPERTY(Windows::UI::Xaml::GridLength, RowHeight);
 
-        property bool IsErrorVisualState {
+        property bool IsErrorVisualState
+        {
             bool get();
             void set(bool value);
         }
@@ -40,12 +40,11 @@ namespace CalculatorApp
         Windows::Foundation::Rect m_coreBounds;
         bool m_isErrorVisualState;
 
-        void MemoryListItemClick(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Controls::ItemClickEventArgs^ e);
-        void OnClearMenuItemClicked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OnMemoryAddMenuItemClicked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OnMemorySubtractMenuItemClicked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
+        void MemoryListItemClick(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Controls::ItemClickEventArgs ^ e);
+        void OnClearMenuItemClicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnMemoryAddMenuItemClicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnMemorySubtractMenuItemClicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
 
-        CalculatorApp::ViewModel::MemoryItemViewModel^ GetMemoryItemForCurrentFlyout();
-
+        CalculatorApp::ViewModel::MemoryItemViewModel ^ GetMemoryItemForCurrentFlyout();
     };
 }

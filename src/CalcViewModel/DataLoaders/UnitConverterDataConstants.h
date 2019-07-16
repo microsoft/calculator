@@ -5,7 +5,8 @@ namespace CalculatorApp
 {
     namespace ViewModel
     {
-        private enum UnitConverterUnits
+    private
+        enum UnitConverterUnits
         {
             UnitStart = 0,
             Area_Acre = UnitStart + 1,

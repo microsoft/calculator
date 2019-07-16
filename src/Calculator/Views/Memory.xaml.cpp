@@ -35,17 +35,17 @@ using namespace Windows::UI::ViewManagement;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(Memory, RowHeight);
 
-Memory::Memory() :
-    m_isErrorVisualState(false)
+Memory::Memory()
+    : m_isErrorVisualState(false)
 {
     InitializeComponent();
 
     MemoryPaneEmpty->FlowDirection = LocalizationService::GetInstance()->GetFlowDirection();
 }
 
-void Memory::MemoryListItemClick(_In_ Object^ sender, _In_ ItemClickEventArgs^ e)
+void Memory::MemoryListItemClick(_In_ Object ^ sender, _In_ ItemClickEventArgs ^ e)
 {
-    MemoryItemViewModel^ memorySlot = safe_cast<MemoryItemViewModel^>(e->ClickedItem);
+    MemoryItemViewModel ^ memorySlot = safe_cast<MemoryItemViewModel ^>(e->ClickedItem);
 
     // In case the memory list is clicked and enter is pressed,
     // On Item clicked event gets fired and e->ClickedItem is Null.
@@ -55,7 +55,7 @@ void Memory::MemoryListItemClick(_In_ Object^ sender, _In_ ItemClickEventArgs^ e
     }
 }
 
-void Memory::OnClearMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void Memory::OnClearMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     auto memoryItem = GetMemoryItemForCurrentFlyout();
     if (memoryItem != nullptr)
@@ -64,7 +64,7 @@ void Memory::OnClearMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e
     }
 }
 
-void Memory::OnMemoryAddMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void Memory::OnMemoryAddMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     auto memoryItem = GetMemoryItemForCurrentFlyout();
     if (memoryItem != nullptr)
@@ -73,7 +73,7 @@ void Memory::OnMemoryAddMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArg
     }
 }
 
-void Memory::OnMemorySubtractMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void Memory::OnMemorySubtractMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     auto memoryItem = GetMemoryItemForCurrentFlyout();
     if (memoryItem != nullptr)
@@ -92,13 +92,13 @@ void Memory::IsErrorVisualState::set(bool value)
     if (m_isErrorVisualState != value)
     {
         m_isErrorVisualState = value;
-        String^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
+        String ^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
         VisualStateManager::GoToState(this, newState, false);
     }
 }
 
-MemoryItemViewModel^ Memory::GetMemoryItemForCurrentFlyout()
+MemoryItemViewModel ^ Memory::GetMemoryItemForCurrentFlyout()
 {
     auto listViewItem = MemoryContextMenu->Target;
-    return dynamic_cast<MemoryItemViewModel^>(MemoryListView->ItemFromContainer(listViewItem));
+    return dynamic_cast<MemoryItemViewModel ^>(MemoryListView->ItemFromContainer(listViewItem));
 }

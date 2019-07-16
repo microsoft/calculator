@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -12,6 +12,8 @@
 using namespace std;
 using namespace CalculatorApp::Controls;
 using namespace Windows::Foundation;
+using namespace Windows::UI::Xaml::Automation;
+using namespace Windows::UI::Xaml::Automation::Peers;
 
 Size HorizontalNoOverflowStackPanel::MeasureOverride(Size availableSize)
 {
@@ -55,16 +57,17 @@ Size HorizontalNoOverflowStackPanel::ArrangeOverride(Size finalSize)
         float itemWidth = item->DesiredSize.Width;
         if (widthAvailable > 0 && itemWidth <= widthAvailable)
         {
-            //stack the items horizontally (left to right)
+            // stack the items horizontally (left to right)
             item->Arrange(Rect(posX, 0, itemWidth, finalSize.Height));
+            AutomationProperties::SetAccessibilityView(item, ::AccessibilityView::Content);
             posX += item->RenderSize.Width;
         }
         else
         {
-            //Not display the item
+            // Not display the item
             item->Arrange(Rect(0, 0, 0, 0));
+            AutomationProperties::SetAccessibilityView(item, ::AccessibilityView::Raw);
         }
     }
     return finalSize;
 }
-

@@ -70,11 +70,11 @@ namespace CalculatorApp
             }
         }
 
-        void LightUpButton(ButtonBase^ button)
+        void LightUpButton(ButtonBase ^ button)
         {
             // If the button is a toggle button then we don't need
             // to change the UI of the button
-            if (dynamic_cast<ToggleButton^>(button))
+            if (dynamic_cast<ToggleButton ^>(button))
             {
                 return;
             }
@@ -83,7 +83,7 @@ namespace CalculatorApp
             VisualStateManager::GoToState(button, "Pressed", true);
 
             // This timer will fire after lightUpTime and make the button
-            // go back to the normal state. 
+            // go back to the normal state.
             // This timer will only fire once after which it will be destroyed
             auto timer = ref new DispatcherTimer();
             TimeSpan lightUpTime{};
@@ -92,22 +92,20 @@ namespace CalculatorApp
 
             WeakReference timerWeakReference(timer);
             WeakReference buttonWeakReference(button);
-            timer->Tick += ref new EventHandler<Object^>(
-                [buttonWeakReference, timerWeakReference](Object^, Object^)
+            timer->Tick += ref new EventHandler<Object ^>([buttonWeakReference, timerWeakReference](Object ^, Object ^) {
+                auto button = buttonWeakReference.Resolve<ButtonBase>();
+                if (button)
                 {
-                    auto button = buttonWeakReference.Resolve<ButtonBase>();
-                    if (button)
-                    {
-                        VisualStateManager::GoToState(button, "Normal", true);
-                    }
+                    VisualStateManager::GoToState(button, "Normal", true);
+                }
 
-                    // Cancel the timer after we're done so it only fires once
-                    auto timer = timerWeakReference.Resolve<DispatcherTimer>();
-                    if (timer)
-                    {
-                        timer->Stop();
-                    }
-                });
+                // Cancel the timer after we're done so it only fires once
+                auto timer = timerWeakReference.Resolve<DispatcherTimer>();
+                if (timer)
+                {
+                    timer->Stop();
+                }
+            });
             timer->Start();
         }
 
@@ -130,7 +128,7 @@ namespace CalculatorApp
             }
         }
 
-        void RunButtonCommand(ButtonBase^ button)
+        void RunButtonCommand(ButtonBase ^ button)
         {
             if (button->IsEnabled)
             {
@@ -141,14 +139,14 @@ namespace CalculatorApp
                     command->Execute(parameter);
                 }
 
-                auto radio = dynamic_cast<RadioButton^>(button);
+                auto radio = dynamic_cast<RadioButton ^>(button);
                 if (radio)
                 {
                     radio->IsChecked = true;
                     return;
                 }
 
-                auto toggle = dynamic_cast<ToggleButton^>(button);
+                auto toggle = dynamic_cast<ToggleButton ^>(button);
                 if (toggle)
                 {
                     toggle->IsChecked = !toggle->IsChecked->Value;
@@ -163,7 +161,7 @@ static multimap<int, bool> s_ignoreNextEscape;
 static multimap<int, bool> s_keepIgnoringEscape;
 static multimap<int, bool> s_fHonorShortcuts;
 static multimap<int, bool> s_fHandledEnter;
-static multimap<int, Flyout^> s_AboutFlyout;
+static multimap<int, Flyout ^> s_AboutFlyout;
 
 void KeyboardShortcutManager::IgnoreEscape(bool onlyOnce)
 {
@@ -205,15 +203,12 @@ void KeyboardShortcutManager::HonorEscape()
     }
 }
 
-void KeyboardShortcutManager::OnCharacterPropertyChanged(
-    DependencyObject^ target,
-    String^ oldValue,
-    String^ newValue)
+void KeyboardShortcutManager::OnCharacterPropertyChanged(DependencyObject ^ target, String ^ oldValue, String ^ newValue)
 {
     // Writer lock for the static maps
     reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
-    auto button = safe_cast<ButtonBase^>(target);
+    auto button = safe_cast<ButtonBase ^>(target);
 
     int viewId = Utils::GetWindowId();
     auto iterViewMap = s_CharacterForButtons.find(viewId);
@@ -254,15 +249,12 @@ void KeyboardShortcutManager::OnCharacterPropertyChanged(
     }
 }
 
-void KeyboardShortcutManager::OnVirtualKeyPropertyChanged(
-    DependencyObject^ target,
-    MyVirtualKey /*oldValue*/,
-    MyVirtualKey newValue)
+void KeyboardShortcutManager::OnVirtualKeyPropertyChanged(DependencyObject ^ target, MyVirtualKey /*oldValue*/, MyVirtualKey newValue)
 {
     // Writer lock for the static maps
     reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
-    auto button = static_cast<ButtonBase^>(target);
+    auto button = static_cast<ButtonBase ^>(target);
 
     int viewId = Utils::GetWindowId();
     auto iterViewMap = s_VirtualKeysForButtons.find(viewId);
@@ -280,20 +272,17 @@ void KeyboardShortcutManager::OnVirtualKeyPropertyChanged(
     }
 }
 
-void KeyboardShortcutManager::OnVirtualKeyControlChordPropertyChanged(
-    DependencyObject^ target,
-    MyVirtualKey /*oldValue*/,
-    MyVirtualKey newValue)
+void KeyboardShortcutManager::OnVirtualKeyControlChordPropertyChanged(DependencyObject ^ target, MyVirtualKey /*oldValue*/, MyVirtualKey newValue)
 {
     // Writer lock for the static maps
     reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
-    Control^ control = dynamic_cast<ButtonBase^>(target);
+    Control ^ control = dynamic_cast<ButtonBase ^>(target);
 
     if (control == nullptr)
     {
         // Handling Ctrl+E shortcut for Date Calc, target would be NavigationView^ in that case
-        control = safe_cast<MUXC::NavigationView^>(target);
+        control = safe_cast<MUXC::NavigationView ^>(target);
     }
 
     int viewId = Utils::GetWindowId();
@@ -312,15 +301,12 @@ void KeyboardShortcutManager::OnVirtualKeyControlChordPropertyChanged(
     }
 }
 
-void KeyboardShortcutManager::OnVirtualKeyShiftChordPropertyChanged(
-    DependencyObject^ target,
-    MyVirtualKey /*oldValue*/,
-    MyVirtualKey newValue)
+void KeyboardShortcutManager::OnVirtualKeyShiftChordPropertyChanged(DependencyObject ^ target, MyVirtualKey /*oldValue*/, MyVirtualKey newValue)
 {
     // Writer lock for the static maps
     reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
-    auto button = safe_cast<ButtonBase^>(target);
+    auto button = safe_cast<ButtonBase ^>(target);
 
     int viewId = Utils::GetWindowId();
     auto iterViewMap = s_VirtualKeyShiftChordsForButtons.find(viewId);
@@ -338,15 +324,12 @@ void KeyboardShortcutManager::OnVirtualKeyShiftChordPropertyChanged(
     }
 }
 
-void KeyboardShortcutManager::OnVirtualKeyAltChordPropertyChanged(
-    DependencyObject^ target,
-    MyVirtualKey /*oldValue*/,
-    MyVirtualKey newValue)
+void KeyboardShortcutManager::OnVirtualKeyAltChordPropertyChanged(DependencyObject ^ target, MyVirtualKey /*oldValue*/, MyVirtualKey newValue)
 {
     // Writer lock for the static maps
     reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
-    MUXC::NavigationView^ navView = safe_cast<MUXC::NavigationView^>(target);
+    MUXC::NavigationView ^ navView = safe_cast<MUXC::NavigationView ^>(target);
 
     int viewId = Utils::GetWindowId();
     auto iterViewMap = s_VirtualKeyAltChordsForButtons.find(viewId);
@@ -364,15 +347,12 @@ void KeyboardShortcutManager::OnVirtualKeyAltChordPropertyChanged(
     }
 }
 
-void KeyboardShortcutManager::OnVirtualKeyControlShiftChordPropertyChanged(
-    DependencyObject^ target,
-    MyVirtualKey /*oldValue*/,
-    MyVirtualKey newValue)
+void KeyboardShortcutManager::OnVirtualKeyControlShiftChordPropertyChanged(DependencyObject ^ target, MyVirtualKey /*oldValue*/, MyVirtualKey newValue)
 {
     // Writer lock for the static maps
     reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
-    auto button = safe_cast<ButtonBase^>(target);
+    auto button = safe_cast<ButtonBase ^>(target);
 
     int viewId = Utils::GetWindowId();
     auto iterViewMap = s_VirtualKeyControlShiftChordsForButtons.find(viewId);
@@ -390,15 +370,12 @@ void KeyboardShortcutManager::OnVirtualKeyControlShiftChordPropertyChanged(
     }
 }
 
-void KeyboardShortcutManager::OnVirtualKeyInverseChordPropertyChanged(
-    DependencyObject^ target,
-    MyVirtualKey /*oldValue*/,
-    MyVirtualKey newValue)
+void KeyboardShortcutManager::OnVirtualKeyInverseChordPropertyChanged(DependencyObject ^ target, MyVirtualKey /*oldValue*/, MyVirtualKey newValue)
 {
     // Writer lock for the static maps
     reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
-    auto button = safe_cast<ButtonBase^>(target);
+    auto button = safe_cast<ButtonBase ^>(target);
 
     int viewId = Utils::GetWindowId();
     auto iterViewMap = s_VirtualKeyInverseChordsForButtons.find(viewId);
@@ -416,15 +393,12 @@ void KeyboardShortcutManager::OnVirtualKeyInverseChordPropertyChanged(
     }
 }
 
-void KeyboardShortcutManager::OnVirtualKeyControlInverseChordPropertyChanged(
-    DependencyObject^ target,
-    MyVirtualKey /*oldValue*/,
-    MyVirtualKey newValue)
+void KeyboardShortcutManager::OnVirtualKeyControlInverseChordPropertyChanged(DependencyObject ^ target, MyVirtualKey /*oldValue*/, MyVirtualKey newValue)
 {
     // Writer lock for the static maps
     reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
-    auto button = safe_cast<ButtonBase^>(target);
+    auto button = safe_cast<ButtonBase ^>(target);
 
     int viewId = Utils::GetWindowId();
     auto iterViewMap = s_VirtualKeyControlInverseChordsForButtons.find(viewId);
@@ -445,7 +419,7 @@ void KeyboardShortcutManager::OnVirtualKeyControlInverseChordPropertyChanged(
 // In the three event handlers below we will not mark the event as handled
 // because this is a supplemental operation and we don't want to interfere with
 // the normal keyboard handling.
-void KeyboardShortcutManager::OnCharacterReceivedHandler(CoreWindow^ sender, CharacterReceivedEventArgs^ args)
+void KeyboardShortcutManager::OnCharacterReceivedHandler(CoreWindow ^ sender, CharacterReceivedEventArgs ^ args)
 {
     int viewId = Utils::GetWindowId();
     auto currentHonorShortcuts = s_fHonorShortcuts.find(viewId);
@@ -472,7 +446,9 @@ const std::multimap<MyVirtualKey, WeakReference>& GetCurrentKeyDictionary(MyVirt
     {
         return s_VirtualKeyAltChordsForButtons.find(viewId)->second;
     }
-    else if ((s_ShiftKeyPressed.find(viewId)->second) && ((Window::Current->CoreWindow->GetKeyState(VirtualKey::Control) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down))
+    else if (
+        (s_ShiftKeyPressed.find(viewId)->second)
+        && ((Window::Current->CoreWindow->GetKeyState(VirtualKey::Control) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down))
     {
         return s_VirtualKeyControlShiftChordsForButtons.find(viewId)->second;
     }
@@ -521,7 +497,7 @@ const std::multimap<MyVirtualKey, WeakReference>& GetCurrentKeyDictionary(MyVirt
     }
 }
 
-void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow^ sender, KeyEventArgs^ args)
+void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs ^ args)
 {
     // If keyboard shortcuts like Ctrl+C or Ctrl+V are not handled
     if (!args->Handled)
@@ -536,25 +512,23 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow^ sender, KeyEventArgs^
         bool isShiftKeyPressed = (currentShiftKeyPressed != s_ShiftKeyPressed.end()) && (currentShiftKeyPressed->second);
 
         // Handle Ctrl + E for DateCalculator
-        if ((key == VirtualKey::E) &&
-            isControlKeyPressed &&
-            !isShiftKeyPressed)
+        if ((key == VirtualKey::E) && isControlKeyPressed && !isShiftKeyPressed)
         {
             const auto& lookupMap = GetCurrentKeyDictionary(static_cast<MyVirtualKey>(key));
             auto buttons = lookupMap.equal_range(static_cast<MyVirtualKey>(key));
             auto navView = buttons.first->second.Resolve<MUXC::NavigationView>();
-            auto appViewModel = safe_cast<ApplicationViewModel^>(navView->DataContext);
+            auto appViewModel = safe_cast<ApplicationViewModel ^>(navView->DataContext);
             appViewModel->Mode = ViewMode::Date;
             auto categoryName = AppResourceProvider::GetInstance().GetResourceString(L"DateCalculationModeText");
             appViewModel->CategoryName = categoryName;
 
-            auto menuItems = static_cast<IObservableVector<Object^>^>(navView->MenuItemsSource);
+            auto menuItems = static_cast<IObservableVector<Object ^> ^>(navView->MenuItemsSource);
             auto flatIndex = NavCategory::GetFlatIndex(ViewMode::Date);
             navView->SelectedItem = menuItems->GetAt(flatIndex);
             return;
         }
 
-    auto currentHonorShortcuts = s_fHonorShortcuts.find(viewId);
+        auto currentHonorShortcuts = s_fHonorShortcuts.find(viewId);
 
         auto currentIgnoreNextEscape = s_ignoreNextEscape.find(viewId);
 
@@ -615,9 +589,9 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow^ sender, KeyEventArgs^
             {
                 RunFirstEnabledButtonCommand(buttons);
 
-                // Ctrl+C and Ctrl+V shifts focus to some button because of which enter doesn't work after copy/paste. So don't shift focus if Ctrl+C or Ctrl+V is pressed.
-                // When drop down is open, pressing escape shifts focus to clear button. So dont's shift focus if drop down is open.
-                // Ctrl+Insert is equivalent to Ctrl+C and Shift+Insert is equivalent to Ctrl+V
+                // Ctrl+C and Ctrl+V shifts focus to some button because of which enter doesn't work after copy/paste. So don't shift focus if Ctrl+C or Ctrl+V
+                // is pressed. When drop down is open, pressing escape shifts focus to clear button. So dont's shift focus if drop down is open. Ctrl+Insert is
+                // equivalent to Ctrl+C and Shift+Insert is equivalent to Ctrl+V
                 if (currentIsDropDownOpen != s_IsDropDownOpen.end() && !currentIsDropDownOpen->second)
                 {
                     // Do not Light Up Buttons when Ctrl+C, Ctrl+V, Ctrl+Insert or Shift+Insert is pressed
@@ -632,7 +606,7 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow^ sender, KeyEventArgs^
     }
 }
 
-void KeyboardShortcutManager::OnKeyUpHandler(CoreWindow^ sender, KeyEventArgs^ args)
+void KeyboardShortcutManager::OnKeyUpHandler(CoreWindow ^ sender, KeyEventArgs ^ args)
 {
     int viewId = Utils::GetWindowId();
     auto key = args->VirtualKey;
@@ -665,7 +639,7 @@ void KeyboardShortcutManager::OnKeyUpHandler(CoreWindow^ sender, KeyEventArgs^ a
     }
 }
 
-void KeyboardShortcutManager::OnAcceleratorKeyActivated(CoreDispatcher^, AcceleratorKeyEventArgs^ args)
+void KeyboardShortcutManager::OnAcceleratorKeyActivated(CoreDispatcher ^, AcceleratorKeyEventArgs ^ args)
 {
     if (args->KeyStatus.IsKeyReleased)
     {
@@ -685,12 +659,12 @@ void KeyboardShortcutManager::OnAcceleratorKeyActivated(CoreDispatcher^, Acceler
             auto item = listIterator->second.Resolve<MUXC::NavigationView>();
             if (item != nullptr)
             {
-                auto navView = safe_cast<MUXC::NavigationView^> (item);
+                auto navView = safe_cast<MUXC::NavigationView ^>(item);
 
-                auto menuItems = static_cast<IObservableVector<Object^>^>(navView->MenuItemsSource);
+                auto menuItems = static_cast<IObservableVector<Object ^> ^>(navView->MenuItemsSource);
                 if (menuItems != nullptr)
                 {
-                    auto vm = safe_cast<ApplicationViewModel^>(navView->DataContext);
+                    auto vm = safe_cast<ApplicationViewModel ^>(navView->DataContext);
                     if (nullptr != vm)
                     {
                         ViewMode toMode = NavCategory::GetViewModeForVirtualKey(static_cast<MyVirtualKey>(key));
@@ -722,13 +696,11 @@ void KeyboardShortcutManager::Initialize()
 {
     auto coreWindow = Window::Current->CoreWindow;
     coreWindow->CharacterReceived +=
-        ref new TypedEventHandler<CoreWindow^, CharacterReceivedEventArgs^>(&KeyboardShortcutManager::OnCharacterReceivedHandler);
-    coreWindow->KeyDown +=
-        ref new TypedEventHandler<CoreWindow^, KeyEventArgs^>(&KeyboardShortcutManager::OnKeyDownHandler);
-    coreWindow->KeyUp +=
-        ref new TypedEventHandler<CoreWindow^, KeyEventArgs^>(&KeyboardShortcutManager::OnKeyUpHandler);
+        ref new TypedEventHandler<CoreWindow ^, CharacterReceivedEventArgs ^>(&KeyboardShortcutManager::OnCharacterReceivedHandler);
+    coreWindow->KeyDown += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(&KeyboardShortcutManager::OnKeyDownHandler);
+    coreWindow->KeyUp += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(&KeyboardShortcutManager::OnKeyUpHandler);
     coreWindow->Dispatcher->AcceleratorKeyActivated +=
-        ref new TypedEventHandler<CoreDispatcher^, AcceleratorKeyEventArgs^>(&KeyboardShortcutManager::OnAcceleratorKeyActivated);
+        ref new TypedEventHandler<CoreDispatcher ^, AcceleratorKeyEventArgs ^>(&KeyboardShortcutManager::OnAcceleratorKeyActivated);
 
     KeyboardShortcutManager::RegisterNewAppViewId();
 }
@@ -755,7 +727,7 @@ void KeyboardShortcutManager::UpdateDropDownState(bool isOpen)
     }
 }
 
-void KeyboardShortcutManager::UpdateDropDownState(Flyout^ aboutPageFlyout)
+void KeyboardShortcutManager::UpdateDropDownState(Flyout ^ aboutPageFlyout)
 {
     int viewId = Utils::GetWindowId();
 

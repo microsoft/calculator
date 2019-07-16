@@ -40,10 +40,10 @@ HistoryList::HistoryList()
     HistoryEmpty->FlowDirection = LocalizationService::GetInstance()->GetFlowDirection();
 }
 
-void HistoryList::ListView_ItemClick(_In_ Object^ sender, _In_ ItemClickEventArgs^ e)
+void HistoryList::ListView_ItemClick(_In_ Object ^ sender, _In_ ItemClickEventArgs ^ e)
 {
-    HistoryViewModel^ historyVM = dynamic_cast<HistoryViewModel^>(this->DataContext);
-    HistoryItemViewModel^ clickedItem = dynamic_cast<HistoryItemViewModel^>(e->ClickedItem);
+    HistoryViewModel^ historyVM = dynamic_cast<HistoryViewModel ^>(this->DataContext);
+    HistoryItemViewModel^ clickedItem = dynamic_cast<HistoryItemViewModel ^>(e->ClickedItem);
 
     // When the user clears the history list in the overlay view and presses enter, the clickedItem is nullptr
     if (clickedItem != nullptr && historyVM != nullptr)
@@ -52,19 +52,19 @@ void HistoryList::ListView_ItemClick(_In_ Object^ sender, _In_ ItemClickEventArg
     }
 }
 
-void HistoryList::OnDeleteMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void HistoryList::OnDeleteMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     auto listViewItem = HistoryContextMenu->Target;
-    auto itemViewModel = dynamic_cast<HistoryItemViewModel^>(HistoryListView->ItemFromContainer(listViewItem));
+    auto itemViewModel = dynamic_cast<HistoryItemViewModel ^>(HistoryListView->ItemFromContainer(listViewItem));
     if (itemViewModel != nullptr)
     {
         Model->DeleteItem(itemViewModel);
     }
 }
 
-void HistoryList::OnDeleteSwipeInvoked(_In_ MUXC::SwipeItem^ sender, _In_ MUXC::SwipeItemInvokedEventArgs^ e)
+void HistoryList::OnDeleteSwipeInvoked(_In_ MUXC::SwipeItem ^ sender, _In_ MUXC::SwipeItemInvokedEventArgs ^ e)
 {
-    auto swipedItem = dynamic_cast<HistoryItemViewModel^>(e->SwipeControl->DataContext);
+    auto swipedItem = dynamic_cast<HistoryItemViewModel ^>(e->SwipeControl->DataContext);
     if (swipedItem != nullptr)
     {
         Model->DeleteItem(swipedItem);

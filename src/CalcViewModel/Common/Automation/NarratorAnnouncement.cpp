@@ -26,23 +26,23 @@ namespace CalculatorApp::Common::Automation
 }
 
 NarratorAnnouncement::NarratorAnnouncement(
-    String^ announcement,
-    String^ activityId,
+    String ^ announcement,
+    String ^ activityId,
     AutomationNotificationKind kind,
     AutomationNotificationProcessing processing)
-    :
-    m_announcement(announcement),
-    m_activityId(activityId),
-    m_kind(kind),
-    m_processing(processing)
-{}
+    : m_announcement(announcement)
+    , m_activityId(activityId)
+    , m_kind(kind)
+    , m_processing(processing)
+{
+}
 
-String^ NarratorAnnouncement::Announcement::get()
+String ^ NarratorAnnouncement::Announcement::get()
 {
     return m_announcement;
 }
 
-String^ NarratorAnnouncement::ActivityId::get()
+String ^ NarratorAnnouncement::ActivityId::get()
 {
     return m_activityId;
 }
@@ -57,68 +57,48 @@ AutomationNotificationProcessing NarratorAnnouncement::Processing::get()
     return m_processing;
 }
 
-bool NarratorAnnouncement::IsValid(NarratorAnnouncement^ announcement)
+bool NarratorAnnouncement::IsValid(NarratorAnnouncement ^ announcement)
 {
-    return announcement != nullptr
-        && announcement->Announcement != nullptr
-        && !announcement->Announcement->IsEmpty();
+    return announcement != nullptr && announcement->Announcement != nullptr && !announcement->Announcement->IsEmpty();
 }
 
-NarratorAnnouncement^ CalculatorAnnouncement::GetDisplayUpdatedAnnouncement(String^ announcement)
+NarratorAnnouncement ^ CalculatorAnnouncement::GetDisplayUpdatedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
-        announcement,
-        CalculatorActivityIds::DisplayUpdated,
-        AutomationNotificationKind::Other,
-        AutomationNotificationProcessing::ImportantMostRecent);
+        announcement, CalculatorActivityIds::DisplayUpdated, AutomationNotificationKind::Other, AutomationNotificationProcessing::ImportantMostRecent);
 }
 
-NarratorAnnouncement^ CalculatorAnnouncement::GetMaxDigitsReachedAnnouncement(String^ announcement)
+NarratorAnnouncement ^ CalculatorAnnouncement::GetMaxDigitsReachedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
-        announcement,
-        CalculatorActivityIds::MaxDigitsReached,
-        AutomationNotificationKind::Other,
-        AutomationNotificationProcessing::ImportantMostRecent);
+        announcement, CalculatorActivityIds::MaxDigitsReached, AutomationNotificationKind::Other, AutomationNotificationProcessing::ImportantMostRecent);
 }
 
-NarratorAnnouncement^ CalculatorAnnouncement::GetMemoryClearedAnnouncement(String^ announcement)
+NarratorAnnouncement ^ CalculatorAnnouncement::GetMemoryClearedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
-        announcement,
-        CalculatorActivityIds::MemoryCleared,
-        AutomationNotificationKind::ItemRemoved,
-        AutomationNotificationProcessing::ImportantMostRecent);
+        announcement, CalculatorActivityIds::MemoryCleared, AutomationNotificationKind::ItemRemoved, AutomationNotificationProcessing::ImportantMostRecent);
 }
 
-NarratorAnnouncement^ CalculatorAnnouncement::GetMemoryItemChangedAnnouncement(String^ announcement)
+NarratorAnnouncement ^ CalculatorAnnouncement::GetMemoryItemChangedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
-        announcement,
-        CalculatorActivityIds::MemoryItemChanged,
-        AutomationNotificationKind::ActionCompleted,
-        AutomationNotificationProcessing::MostRecent);
+        announcement, CalculatorActivityIds::MemoryItemChanged, AutomationNotificationKind::ActionCompleted, AutomationNotificationProcessing::MostRecent);
 }
 
-NarratorAnnouncement^ CalculatorAnnouncement::GetMemoryItemAddedAnnouncement(String^ announcement)
+NarratorAnnouncement ^ CalculatorAnnouncement::GetMemoryItemAddedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
-        announcement,
-        CalculatorActivityIds::MemoryItemAdded,
-        AutomationNotificationKind::ItemAdded,
-        AutomationNotificationProcessing::MostRecent);
+        announcement, CalculatorActivityIds::MemoryItemAdded, AutomationNotificationKind::ItemAdded, AutomationNotificationProcessing::MostRecent);
 }
 
-NarratorAnnouncement^ CalculatorAnnouncement::GetHistoryClearedAnnouncement(String^ announcement)
+NarratorAnnouncement ^ CalculatorAnnouncement::GetHistoryClearedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
-        announcement,
-        CalculatorActivityIds::HistoryCleared,
-        AutomationNotificationKind::ItemRemoved,
-        AutomationNotificationProcessing::MostRecent);
+        announcement, CalculatorActivityIds::HistoryCleared, AutomationNotificationKind::ItemRemoved, AutomationNotificationProcessing::MostRecent);
 }
 
-NarratorAnnouncement^ CalculatorAnnouncement::GetCategoryNameChangedAnnouncement(String^ announcement)
+NarratorAnnouncement ^ CalculatorAnnouncement::GetCategoryNameChangedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
         announcement,
@@ -127,7 +107,7 @@ NarratorAnnouncement^ CalculatorAnnouncement::GetCategoryNameChangedAnnouncement
         AutomationNotificationProcessing::ImportantMostRecent);
 }
 
-NarratorAnnouncement^ CalculatorAnnouncement::GetUpdateCurrencyRatesAnnouncement(String^ announcement)
+NarratorAnnouncement ^ CalculatorAnnouncement::GetUpdateCurrencyRatesAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
         announcement,
@@ -136,16 +116,13 @@ NarratorAnnouncement^ CalculatorAnnouncement::GetUpdateCurrencyRatesAnnouncement
         AutomationNotificationProcessing::ImportantMostRecent);
 }
 
-NarratorAnnouncement^ CalculatorAnnouncement::GetDisplayCopiedAnnouncement(String^ announcement)
+NarratorAnnouncement ^ CalculatorAnnouncement::GetDisplayCopiedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
-        announcement,
-        CalculatorActivityIds::DisplayCopied,
-        AutomationNotificationKind::ActionCompleted,
-        AutomationNotificationProcessing::ImportantMostRecent);
+        announcement, CalculatorActivityIds::DisplayCopied, AutomationNotificationKind::ActionCompleted, AutomationNotificationProcessing::ImportantMostRecent);
 }
 
-NarratorAnnouncement^ CalculatorAnnouncement::GetOpenParenthesisCountChangedAnnouncement(String^ announcement)
+NarratorAnnouncement ^ CalculatorAnnouncement::GetOpenParenthesisCountChangedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
         announcement,
@@ -154,7 +131,7 @@ NarratorAnnouncement^ CalculatorAnnouncement::GetOpenParenthesisCountChangedAnno
         AutomationNotificationProcessing::ImportantMostRecent);
 }
 
-NarratorAnnouncement^ CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(String^ announcement)
+NarratorAnnouncement ^ CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
         announcement,
