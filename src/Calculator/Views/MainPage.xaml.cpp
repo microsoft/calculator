@@ -567,14 +567,12 @@ void MainPage::AnnounceCategoryName()
     NarratorAnnouncement ^ announcement = CalculatorAnnouncement::GetCategoryNameChangedAnnouncement(categoryName);
     NarratorNotifier->Announce(announcement);
 }
-
-void MainPage::OnNavItemInvoked(MUXC::NavigationView ^ /*sender*/, _In_ MUXC::NavigationViewItemInvokedEventArgs ^ e)
-{
-    NavView->IsPaneOpen = false;
+bool MainPage::GetShareContent(DataRequest^ request)
+    bool succeeded = false;
 }
 
-void MainPage::TitleBarAlwaysOnTopButtonClick(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
-{
+    requestData->Properties->Title = L"share text title";
+    requestData->Properties->Description = L"Share text description"; // The description is optional.
     auto bounds = Window::Current->Bounds;
     Model->ToggleAlwaysOnTop(bounds.Width, bounds.Height);
 }
@@ -587,9 +585,6 @@ void MainPage::AlwaysOnTopButtonClick(_In_ Object ^ /*sender*/, _In_ RoutedEvent
 void MainPage::App_Suspending(Object ^ sender, Windows::ApplicationModel::SuspendingEventArgs ^ e)
 {
     if (m_model->IsAlwaysOnTop)
-    {
         ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
         localSettings->Values->Insert(ApplicationViewModel::WidthLocalSettings, this->ActualWidth);
         localSettings->Values->Insert(ApplicationViewModel::HeightLocalSettings, this->ActualHeight);
-    }
-}

@@ -51,15 +51,11 @@ GraphingCalculator::GraphingCalculator()
 
     DataTransferManager ^ dataTransferManager = DataTransferManager::GetForCurrentView();
 
-    // Register the current control as a share source.
     m_dataRequestedToken = dataTransferManager->DataRequested +=
-        ref new TypedEventHandler<DataTransferManager ^, DataRequestedEventArgs ^>(this, &GraphingCalculator::OnDataRequested);
 
-    // Request notifications when we should be showing the trace values
     GraphingControl->TracingChangedEvent += ref new TracingChangedEventHandler(this, &GraphingCalculator::OnShowTracePopupChanged);
 
     // And when the actual trace value changes
-    GraphingControl->TracingValueChangedEvent += ref new TracingValueChangedEventHandler(this, &GraphingCalculator::OnTracePointChanged);
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
@@ -154,7 +150,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
     {
         std::wstringstream rawHtml;
         std::wstringstream equationHtml;
-
+        DataTransferManager::ShowShareUI();
         rawHtml << L"<p><img src='graph.png' width='600' alt='" << resourceLoader->GetString(L"GraphImageAltText")->Data() << "'></p>";
 
         auto equations = ViewModel->Equations;
@@ -190,25 +186,34 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
                 equationHtml << L"</div></td>";
             }
             equationHtml << L"</table>";
+//void GraphingCalculator::OnNavigatedFrom(NavigationEventArgs^ e)
         }
-
+//    DataTransferManager^ dataTransferManager = DataTransferManager::GetForCurrentView();
+//    dataTransferManager->DataRequested -= dataRequestedToken;
+//    dataTransferManager->TargetApplicationChosen -= targetApplicationChosenToken;
+//}
         if (hasEquations)
+// When share is invoked (by the user or programatically) the event handler we registered will be called to populate the datapackage with the
+// data to be shared.
+void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataRequestedEventArgs^ e)
         {
+    // Register to be notified if the share operation completes.
+    e->Request->Data->ShareCompleted += ref new TypedEventHandler<DataPackage^, ShareCompletedEventArgs^>(this, &GraphingCalculator::OnShareCompleted);
             rawHtml << equationHtml.str();
+    // Call the share worker
+    GetShareContent(e->Request);
         }
 
         auto variables = ViewModel->Variables;
-
+void GraphingCalculator::OnTargetApplicationChosen(DataTransferManager^ sender, TargetApplicationChosenEventArgs^ e)
         if (variables->Size > 0)
         {
             auto localizedSeperator = LocalizationSettings::GetInstance().GetListSeparator() + L" ";
-
+    String^ shareCompletedStatus = "target chosen";
             rawHtml << L"<span style=\"color: rgb(68, 114, 196); font-style: bold; font-size: 13pt;\">";
             rawHtml << resourceLoader->GetString(L"VariablesShareHeader")->Data();
             rawHtml << L"</span><br><span>";
-
             for (unsigned i = 0; i < variables->Size; i++)
-            {
                 auto name = variables->GetAt(i)->Name;
                 auto value = variables->GetAt(i)->Value;
 
@@ -217,32 +222,25 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
                 auto formattedValue = to_wstring(value);
                 TrimTrailingZeros(formattedValue);
                 rawHtml << formattedValue;
-
+void GraphingCalculator::OnShareCompleted(DataPackage^ sender, ShareCompletedEventArgs^ e)
                 if (variables->Size - 1 != i)
                 {
-                    rawHtml << localizedSeperator;
                 }
             }
 
             rawHtml << L"</span>";
-        }
-
+bool GraphingCalculator::GetShareContent(DataRequest^ request)
+    bool succeeded = false;
         rawHtml << L"<br><br>";
-
-        // Shortcut to the request data
-        auto requestData = args->Request->Data;
-
+    String^ TextToShare = L"Here is some text";
+    requestData->Properties->Title = L"share text title";
         DataPackage ^ dataPackage = ref new DataPackage();
         auto html = HtmlFormatHelper::CreateHtmlFormat(ref new String(rawHtml.str().c_str()));
 
-        requestData->Properties->Title = resourceLoader->GetString(L"ShareActionTitle");
-
-        requestData->SetHtmlFormat(html);
 
         auto bitmapStream = GraphingControl->GetGraphBitmapStream();
-
         requestData->ResourceMap->Insert(ref new String(L"graph.png"), bitmapStream);
-
+    if (TheGrapher != nullptr)
         // Set the thumbnail image (in case the share target can't handle HTML)
         requestData->Properties->Thumbnail = bitmapStream;
     }
@@ -250,15 +248,14 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
     {
         TraceLogger::GetInstance().LogPlatformException(ViewMode::Graphing, __FUNCTIONW__, ex);
 
-        // Something went wrong, notify the user.
+        BitmapImage^ bitmapImage = ref new BitmapImage();
+       // HRESULT hr E_FAIL;
 
-        auto errDialog = ref new ContentDialog();
         errDialog->Content = resourceLoader->GetString(L"ShareActionErrorMessage");
         errDialog->CloseButtonText = resourceLoader->GetString(L"ShareActionErrorOk");
         errDialog->ShowAsync();
-    }
 }
-
+        TheGrapher->Share(bitmapImage);
 void GraphingCalculator::GraphingControl_VariablesUpdated(Object ^, Object ^)
 {
     m_viewModel->UpdateVariables(GraphingControl->Variables);
@@ -273,9 +270,9 @@ void GraphingCalculator::SubmitTextbox(TextBox ^ sender)
 {
     auto variableViewModel = static_cast<VariableViewModel ^>(sender->DataContext);
 
+            //    auto stream = RandomAccessStreamReference.CreateFromUri(source.UriSource);
+            //    requestData->SetBitmap(stream);
     if (sender->Name == "ValueTextBox")
-    {
-        variableViewModel->SetValue(validateDouble(sender->Text, variableViewModel->Value));
     }
     else if (sender->Name == "MinTextBox")
     {
@@ -293,7 +290,6 @@ void GraphingCalculator::SubmitTextbox(TextBox ^ sender)
 
 void GraphingCalculator::TextBoxLosingFocus(TextBox ^ sender, LosingFocusEventArgs ^)
 {
-    SubmitTextbox(sender);
 }
 
 void GraphingCalculator::TextBoxKeyDown(TextBox ^ sender, KeyRoutedEventArgs ^ e)

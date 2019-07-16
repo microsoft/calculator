@@ -25,6 +25,16 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 
+using namespace Windows::Storage::Streams;
+
+typedef struct tagBITMAPFILEHEADER {
+    WORD  bfType;
+    DWORD bfSize;
+    WORD  bfReserved1;
+    WORD  bfReserved2;
+    DWORD bfOffBits;
+} BITMAPFILEHEADER, * LPBITMAPFILEHEADER, * PBITMAPFILEHEADER;
+
 namespace
 {
     constexpr auto s_defaultStyleKey = L"GraphControl.Grapher";
@@ -657,47 +667,119 @@ namespace GraphControl
         }
     }
 
-    RandomAccessStreamReference ^ Grapher::GetGraphBitmapStream()
+    void Grapher::Share(BitmapImage bitmapOut)
     {
+    public:
         RandomAccessStreamReference ^ outputStream;
-
-        if (m_renderMain != nullptr && m_graph != nullptr)
+        CBitmap(std::vector<BYTE>& bitmap) {}
+        virtual ~CBitmap() {}
+        const std::vector<BYTE>& GetData() const override
         {
-            if (auto renderer = m_graph->GetRenderer())
-            {
-                std::shared_ptr<Graphing::IBitmap> BitmapOut;
-                bool hasSomeMissingDataOut = false;
-                HRESULT hr = E_FAIL;
-                hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
-                if (SUCCEEDED(hr))
-                {
-                    // Get the raw date
-                    std::vector<BYTE> byteVector = BitmapOut->GetData();
-                    auto arr = ref new Array<BYTE>(&byteVector[0], (unsigned int)byteVector.size());
+            return m_bitmap;
+        }
+    private:
+        std::vector<BYTE> m_bitmap;
+    };
 
+    void Grapher::Share()
+    {
+
+            BitmapImage^ bitmapOut = ref new BitmapImage();
+            if (m_renderMain != nullptr && m_graph != nullptr)
+            {
+                if (auto renderer = m_graph->GetRenderer())
+                {
+                std::shared_ptr<Graphing::IBitmap> BitmapOut;
+                    bool hasSomeMissingDataOut = false;
+                HRESULT hr = E_FAIL;
+                    hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
+
+                    if (SUCCEEDED(hr))
+                    {
+                        CBitmap* pBitmap = (CBitmap*)BitmapOut.get();
+
+                        BITMAPFILEHEADER* bmhx = (BITMAPFILEHEADER*)(void*)byteVector.data();
+                        BITMAPINFO * pbmi = (BITMAPINFO*)(void*)byteVector.data();
+
+                        void* pVoid = (void*)(BitmapOut.get());
+                        BITMAPFILEHEADER* bmh = (BITMAPFILEHEADER*)((void*)BitmapOut.get());
+                        BYTE* rawBuffer = (BYTE*)((void*)BitmapOut.get());
+                        WORD type = bmh->bfType;
+                        DWORD size = bmh->bfSize;
+                        WORD r1 = bmh->bfReserved1;
+                        WORD r2 = bmh->bfReserved2;
+                        DWORD ofsetBits = bmh->bfOffBits;
+
+
+                        InMemoryRandomAccessStream^ stream = ref new InMemoryRandomAccessStream();
+                        {
+                            auto writer = ref new DataWriter(stream->GetOutputStreamAt(0));
+                            writer->StoreAsync()->GetResults();
+                            stream->Seek(0);
+
+                            auto image = ref new BitmapImage();
+                            
+                    bitmapOut.SetSource(BitmapOut);
                     // create a memory stream wrapper
                     InMemoryRandomAccessStream ^ stream = ref new InMemoryRandomAccessStream();
-
+                    auto width = bitmapOut.PixelWidth;
                     // Get a writer to transfer the data
                     auto writer = ref new DataWriter(stream->GetOutputStreamAt(0));
-
+                    auto height = bitmapOut.PixelHeight;
                     // write the data
                     writer->WriteBytes(arr);
                     writer->StoreAsync()->GetResults();
 
                     // Get a reference stream to return;
                     outputStream = RandomAccessStreamReference::CreateFromStream(stream);
-                }
+                        }
                 else
                 {
+                        //{
+                        //    using (System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(ms))
+                        //    {
+                        //        return System.Drawing.Bitmap.FromHbitmap(bmp.GetHbitmap());
+                        //    }
+                        //}
                     OutputDebugString(L"Grapher::GetGraphBitmapStream() unable to get graph image from renderer\r\n");
                     winrt::throw_hresult(hr);
+                        //DWORD* pBits = (DWORD*)(((void*)bmh) + ofsetBits);
+                        //DWORD first = pBits[0];
+                }
+                         //BitmapImage b = (BitmapImage)((void*)BitmapOut);
+                        //auto w = BitmapOut->
+                        //bitmapOut->SetSource(BitmapOut);
+                        //auto width = bitmapOut->PixelWidth;
+                        //auto height = bitmapOut->PixelHeight;
+                    }
                 }
             }
-        }
 
         return outputStream;
     }
+
+
+    //void Grapher::Share(BitmapImage bitmapOut)
+    //{
+    //    HRESULT hr E_FAIL;
+    //    if (m_renderMain != nullptr && m_graph != nullptr)
+    //    {
+    //        if (auto renderer = m_graph->GetRenderer())
+    //        {
+    //            std::shared_ptr < MathSolverEngine::Graph::Renderer::IBitmap> BitmapOut;
+    //            bool hasSomeMissingDataOut = false;
+
+    //            hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
+    //            if (SUCCEEDED(hr))
+    //            {
+    //                bitmapOut.SetSource(BitmapOut);
+    //                auto width = bitmapOut.PixelWidth;
+    //                auto height = bitmapOut.PixelHeight;
+    //            }
+    //        }
+    //    }
+
+    //}
 }
 
 void Grapher::OnCoreKeyUp(CoreWindow ^ sender, KeyEventArgs ^ e)

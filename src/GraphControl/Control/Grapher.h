@@ -213,6 +213,8 @@ public
 
         static Windows::UI::Xaml::DependencyProperty ^ s_forceProportionalAxesTemplateProperty;
 
+        static Windows::UI::Xaml::DependencyProperty^ s_graphBitmapProperty;
+
         Windows::Foundation::EventRegistrationToken m_tokenBackgroundColorChanged;
 
         const std::unique_ptr<Graphing::IMathSolver> m_solver;
