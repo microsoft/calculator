@@ -78,22 +78,13 @@ void EquationInputArea::InputTextBox_GotFocus(Object^ sender, RoutedEventArgs^ e
 void EquationInputArea::InputTextBox_LostFocus(Object^ sender, RoutedEventArgs^ e)
 {
     KeyboardShortcutManager::HonorShortcuts(true);
-    
-    auto tb = static_cast<EquationTextBox^>(sender);
-    auto eq = static_cast<EquationViewModel^>(tb->DataContext);
-    tb->SetEquationText(eq->Expression);
 }
 
-void EquationInputArea::InputTextBox_KeyUp(Object^ sender, KeyRoutedEventArgs^ e)
+void EquationInputArea::InputTextBox_Submitted(Object ^ sender, RoutedEventArgs ^ e)
 {
-    if (e->Key == VirtualKey::Enter)
-    {
-        auto tb = static_cast<EquationTextBox^>(sender);
-        auto eq = static_cast<EquationViewModel^>(tb->DataContext);
-        eq->Expression = tb->GetEquationText();
-
-        e->Handled = true;
-    }
+    auto tb = static_cast<EquationTextBox^>(sender);
+    auto eq = static_cast<EquationViewModel^>(tb->DataContext);
+    eq->Expression = tb->GetEquationText();
 }
 
 Color EquationInputArea::GetNextLineColor()
