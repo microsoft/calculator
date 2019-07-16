@@ -885,6 +885,8 @@ void UnitConverter::Calculate()
                 }
                 else
                 {
+					// Fewer digits are needed following the decimal if the number is large,
+					// we calculate the number of decimals necessary based on the number of digits in the integer part.
                     precision = max(0, max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits)) - numPreDecimal);
                 }
 

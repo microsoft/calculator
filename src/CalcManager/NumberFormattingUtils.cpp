@@ -33,7 +33,7 @@ namespace CalcManager::NumberFormattingUtils
     }
 
     /// <summary>
-    /// Get number of digits (whole number part + decinmal part)</summary>
+    /// Get number of digits (whole number part + decimal part)</summary>
     /// <param name="value">the number</param>
     unsigned int GetNumberDigits(wstring value)
     {
