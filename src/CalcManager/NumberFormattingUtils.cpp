@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "NumberFormattingUtils.h"
-#include <iostream>
-#include <math.h>
+
 using namespace std;
 
 namespace CalcManager::NumberFormattingUtils
