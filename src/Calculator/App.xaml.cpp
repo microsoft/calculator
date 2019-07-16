@@ -47,6 +47,10 @@ using namespace Windows::ApplicationModel::Activation;
 
 namespace CalculatorApp
 {
+    Platform::String ^ App::LaunchedLocalSettings = L"calculatorAlwaysOnTopLaunched";
+    Platform::String ^ App::WidthLocalSettings = L"calculatorAlwaysOnTopLastWidth";
+    Platform::String ^ App::HeightLocalSettings = L"calculatorAlwaysOnTopLastHeight";
+
     namespace ApplicationResourceKeys
     {
         StringReference AppMinWindowHeight(L"AppMinWindowHeight");
@@ -59,8 +63,7 @@ namespace CalculatorApp
 /// executed, and as such is the logical equivalent of main() or WinMain().
 /// </summary>
 App::App()
-{
-    TraceLogger::GetInstance().LogAppLaunchStart();
+{    TraceLogger::GetInstance().LogAppLaunchStart();
     InitializeComponent();
 
     m_preLaunched = false;

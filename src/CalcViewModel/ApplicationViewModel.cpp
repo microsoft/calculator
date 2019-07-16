@@ -55,7 +55,7 @@ void ApplicationViewModel::Mode::set(ViewMode value)
     {
         PreviousMode = m_mode;
         m_mode = value;
-        IsNormalMode = m_mode == ViewMode::Standard && ApplicationView::GetForCurrentView()->IsViewModeSupported(ApplicationViewMode::CompactOverlay);
+        DisplayAlwaysOnTopOption = m_mode == ViewMode::Standard && ApplicationView::GetForCurrentView()->IsViewModeSupported(ApplicationViewMode::CompactOverlay);
         OnModeChanged();
         RaisePropertyChanged(ModePropertyName);
     }

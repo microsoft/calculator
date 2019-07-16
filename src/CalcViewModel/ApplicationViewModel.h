@@ -26,7 +26,7 @@ namespace CalculatorApp
             OBSERVABLE_NAMED_PROPERTY_RW(Platform::String ^, CategoryName);
 
             // Indicates whether calculator is currently in standard mode _and_ supports CompactOverlay
-            OBSERVABLE_PROPERTY_RW(bool, IsNormalMode);
+            OBSERVABLE_PROPERTY_RW(bool, DisplayAlwaysOnTopOption);
 
             COMMAND_FOR_METHOD(CopyCommand, ApplicationViewModel::OnCopyCommand);
             COMMAND_FOR_METHOD(PasteCommand, ApplicationViewModel::OnPasteCommand);

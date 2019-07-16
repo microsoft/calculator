@@ -118,10 +118,10 @@ void MainPage::WindowSizeChanged(_In_ Platform::Object ^ /*sender*/, _In_ Window
     if (m_model->CalculatorViewModel->IsAlwaysOnTop)
     {
         Windows::Storage::ApplicationDataContainer ^ localSettings = Windows::Storage::ApplicationData::Current->LocalSettings;
-        //double width = safe_cast<float>(this->ActualWidth);
-        //double height = safe_cast<float>(this->ActualHeight);
-        localSettings->Values->Insert(AppResourceProvider::GetInstance().GetResourceString(L"CalculatorAlwaysOnTopLastWidthLocalSettings"), this->ActualWidth);
-        localSettings->Values->Insert(AppResourceProvider::GetInstance().GetResourceString(L"CalculatorAlwaysOnTopLastHeightLocalSettings"), this->ActualHeight);
+        // double width = safe_cast<float>(this->ActualWidth);
+        // double height = safe_cast<float>(this->ActualHeight);
+        localSettings->Values->Insert(App::WidthLocalSettings, this->ActualWidth);
+        localSettings->Values->Insert(App::HeightLocalSettings, this->ActualHeight);
     }
 }
 
@@ -136,7 +136,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         if (newValue == ViewMode::Standard)
         {
             EnsureCalculator();
-            EnsureAlwaysOnTopCalculator();
             m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = true;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
             m_calculator->AnimateCalculator(NavCategory::IsConverterViewMode(previousMode));
@@ -244,11 +243,10 @@ void MainPage::UpdatePanelViewState()
 
 void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
 {
-    if (!m_converter && !m_calculator && !m_dateCalculator && !m_alwaysOnTopCalculator)
+    if (!m_converter && !m_calculator && !m_dateCalculator)
     {
         // We have just launched into our default mode (standard calc) so ensure calc is loaded
         EnsureCalculator();
-        EnsureAlwaysOnTopCalculator();
         m_model->CalculatorViewModel->IsStandard = true;
     }
 
@@ -275,10 +273,6 @@ void MainPage::SetDefaultFocus()
     if (m_calculator != nullptr && m_calculator->Visibility == ::Visibility::Visible)
     {
         m_calculator->SetDefaultFocus();
-    }
-    if (m_alwaysOnTopCalculator != nullptr && m_alwaysOnTopCalculator->Visibility == ::Visibility::Visible)
-    {
-        m_alwaysOnTopCalculator->SetDefaultFocus();
     }
     if (m_dateCalculator != nullptr && m_dateCalculator->Visibility == ::Visibility::Visible)
     {
@@ -326,32 +320,6 @@ void MainPage::EnsureCalculator()
     }
 }
 
-void MainPage::EnsureAlwaysOnTopCalculator()
-{
-    if (!m_alwaysOnTopCalculator)
-    {
-        // delay load calculator.
-        m_alwaysOnTopCalculator = ref new Calculator();
-        m_alwaysOnTopCalculator->Name = L"Calculator";
-        m_alwaysOnTopCalculator->DataContext = m_model->CalculatorViewModel;
-        Binding ^ isStandardBinding = ref new Binding();
-        isStandardBinding->Path = ref new PropertyPath(L"IsStandard");
-        m_alwaysOnTopCalculator->SetBinding(m_alwaysOnTopCalculator->IsStandardProperty, isStandardBinding);
-        Binding ^ isScientificBinding = ref new Binding();
-        isScientificBinding->Path = ref new PropertyPath(L"IsScientific");
-        m_alwaysOnTopCalculator->SetBinding(m_alwaysOnTopCalculator->IsScientificProperty, isScientificBinding);
-        Binding ^ isProgramerBinding = ref new Binding();
-        isProgramerBinding->Path = ref new PropertyPath(L"IsProgrammer");
-        m_alwaysOnTopCalculator->SetBinding(m_alwaysOnTopCalculator->IsProgrammerProperty, isProgramerBinding);
-        Binding ^ isAlwaysOnTopBinding = ref new Binding();
-        isAlwaysOnTopBinding->Path = ref new PropertyPath(L"IsAlwaysOnTop");
-        m_alwaysOnTopCalculator->SetBinding(m_alwaysOnTopCalculator->IsAlwaysOnTopProperty, isAlwaysOnTopBinding);
-        m_alwaysOnTopCalculator->Style = CalculatorBaseStyle;
-
-        AlwaysOnTopCalcHolder->Child = m_alwaysOnTopCalculator;
-    }
-}
-
 void MainPage::EnsureDateCalculator()
 {
     if (!m_dateCalculator)
@@ -386,9 +354,9 @@ void MainPage::EnsureConverter()
 
 void MainPage::OnNavLoaded(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
+    auto menuItems = static_cast<IObservableVector<Object ^> ^>(NavView->MenuItemsSource);
     if (NavView->SelectedItem == nullptr)
     {
-        auto menuItems = static_cast<IObservableVector<Object ^> ^>(NavView->MenuItemsSource);
         auto itemCount = static_cast<int>(menuItems->Size);
         auto flatIndex = NavCategory::GetFlatIndex(Model->Mode);
 
@@ -405,6 +373,18 @@ void MainPage::OnNavLoaded(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
     }
     // Special case logic for Ctrl+E accelerator for Date Calculation Mode
     NavView->SetValue(Common::KeyboardShortcutManager::VirtualKeyControlChordProperty, Common::MyVirtualKey::E);
+    for (unsigned int i = 0; i < menuItems->Size; i++)
+    {
+        MUXC::NavigationViewItem ^ nvi = dynamic_cast<MUXC::NavigationViewItem ^>(menuItems->GetAt(i));
+        if (nvi != nullptr)
+        {
+            Binding ^ isEnabledBinding = ref new Binding();
+            isEnabledBinding->Source = Model->CalculatorViewModel;
+            isEnabledBinding->Path = ref new PropertyPath(L"IsAlwaysOnTop");
+            isEnabledBinding->Converter = ref new BooleanNegationConverter();
+            nvi->SetBinding(nvi->IsEnabledProperty, isEnabledBinding);
+        }
+    }
 }
 
 void MainPage::OnNavPaneOpening(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
@@ -525,10 +505,6 @@ void MainPage::UnregisterEventHandlers()
     if (m_calculator != nullptr)
     {
         m_calculator->UnregisterEventHandlers();
-    }
-    if (m_alwaysOnTopCalculator != nullptr)
-    {
-        m_alwaysOnTopCalculator->UnregisterEventHandlers();
     }
 }
 

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -34,6 +34,10 @@ namespace CalculatorApp
         static float GetAppWindowHeight();
         void RemoveWindow(_In_ WindowFrameService ^ frameService);
         void RemoveSecondaryWindow(_In_ WindowFrameService ^ frameService);
+
+        static Platform::String ^ LaunchedLocalSettings;
+        static Platform::String ^ WidthLocalSettings;
+        static Platform::String ^ HeightLocalSettings;
 
     private:
         static Windows::UI::Xaml::Controls::Frame ^ CreateFrame();

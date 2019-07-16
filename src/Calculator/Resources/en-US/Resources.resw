@@ -545,19 +545,7 @@
     <value>Insert</value>
     <comment>{Locked}This is the alternate shortcut for paste, SHIFT+Insert</comment>
   </data>
-  <data name="CalculatorAlwaysOnTopLaunchedLocalSettings" xml:space="preserve">
-    <value>calculatorAlwaysOnTopLaunched</value>
-    <comment>LocalSettings variable name for calculatorAlwaysOnTopLaunched</comment>
-  </data>
-  <data name="CalculatorAlwaysOnTopLastWidthLocalSettings" xml:space="preserve">
-    <value>calculatorAlwaysOnTopLastWidth</value>
-    <comment>LocalSettings variable name for calculatorAlwaysOnTopLastWidth</comment>
-  </data>
-  <data name="CalculatorAlwaysOnTopLastHeightLocalSettings" xml:space="preserve">
-    <value>calculatorAlwaysOnTopLastHeight</value>
-    <comment>LocalSettings variable name for calculatorAlwaysOnTopLastHeight</comment>
-  </data>
-    <data name="BitAutomationName" xml:space="preserve">
+  <data name="BitAutomationName" xml:space="preserve">
     <value>Bit </value>
     <comment>Sub-string used in automation name for each bit in bit flip</comment>
   </data>

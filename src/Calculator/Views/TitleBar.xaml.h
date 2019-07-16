@@ -18,12 +18,9 @@ public
     {
     public:
         TitleBar();
-        property CalculatorApp::ViewModel::ApplicationViewModel^ Model
-        {
-            CalculatorApp::ViewModel::ApplicationViewModel^ get() {
-                return static_cast<CalculatorApp::ViewModel::ApplicationViewModel^>(this->DataContext);
-            }
-        }
+
+        DEPENDENCY_PROPERTY_OWNER(TitleBar);
+        DEPENDENCY_PROPERTY(ViewModel::ApplicationViewModel ^, ApplicationViewModel);
 
     private:
         void OnLoaded(_In_ Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
@@ -37,7 +34,6 @@ public
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
         void OnWindowActivated(Platform::Object ^ sender, Windows::UI::Core::WindowActivatedEventArgs ^ e);
 
-
         Platform::Agile<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar ^> m_coreTitleBar;
         Windows::Foundation::EventRegistrationToken m_layoutChangedToken;
         Windows::Foundation::EventRegistrationToken m_visibilityChangedToken;
@@ -48,5 +44,6 @@ public
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         CalculatorApp::Common::ViewMode m_beforeAlwaysOnTopMode;
         void AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        Concurrency::task<void> TitleBar::HandleAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }
