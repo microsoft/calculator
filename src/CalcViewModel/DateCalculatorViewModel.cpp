@@ -60,8 +60,7 @@ DateCalculatorViewModel::DateCalculatorViewModel()
     auto today = calendar->GetDateTime();
 
     // FromDate and ToDate should be clipped (adjusted to a consistent hour in UTC)
-    m_fromDate = ClipTime(today);
-    m_toDate = ClipTime(today);
+    m_fromDate = m_toDate = ClipTime(today, true);
 
     // StartDate should not be clipped
     m_startDate = today;
@@ -84,7 +83,7 @@ DateCalculatorViewModel::DateCalculatorViewModel()
 
     DayOfWeek trueDayOfWeek = calendar->DayOfWeek;
 
-    DateTime clippedTime = ClipTime(today);
+    DateTime clippedTime = ClipTime(today, false);
     calendar->SetDateTime(clippedTime);
     if (calendar->DayOfWeek != trueDayOfWeek)
     {
@@ -119,15 +118,28 @@ void DateCalculatorViewModel::OnInputsChanged()
 
     if (m_IsDateDiffMode)
     {
-        DateTime clippedFromDate = ClipTime(FromDate);
-        DateTime clippedToDate = ClipTime(ToDate);
+        DateTime clippedFromDate = ClipTime(FromDate, true);
+        DateTime clippedToDate = ClipTime(ToDate, true);
 
         // Calculate difference between two dates
-        m_dateCalcEngine->GetDateDifference(clippedFromDate, clippedToDate, m_allDateUnitsOutputFormat, &dateDiff);
-        DateDiffResult = dateDiff;
-
-        m_dateCalcEngine->GetDateDifference(clippedFromDate, clippedToDate, m_daysOutputFormat, &dateDiff);
-        DateDiffResultInDays = dateDiff;
+        if (m_dateCalcEngine->TryGetDateDifference(clippedFromDate, clippedToDate, m_daysOutputFormat, &dateDiff))
+        {
+            DateDiffResultInDays = dateDiff;
+            if (m_dateCalcEngine->TryGetDateDifference(clippedFromDate, clippedToDate, m_allDateUnitsOutputFormat, &dateDiff))
+            {
+                DateDiffResult = dateDiff;
+            }
+            else
+            {
+                // TryGetDateDifference wasn't able to calculate the difference in days/weeks/months/years, we will instead display the difference in days.
+                DateDiffResult = DateDiffResultInDays;
+            }
+        }
+        else
+        {
+            DateDiffResult = DateDifferenceUnknown;
+            DateDiffResultInDays = DateDifferenceUnknown;
+        }
     }
     else
     {
@@ -159,14 +171,21 @@ void DateCalculatorViewModel::UpdateDisplayResult()
 {
     if (m_IsDateDiffMode)
     {
-        // Are to and from dates the same
-        if (m_dateDiffResultInDays.day == 0)
+        if (m_dateDiffResultInDays == DateDifferenceUnknown)
         {
+            IsDiffInDays = false;
+            StrDateDiffResultInDays = L"";
+            StrDateDiffResult = AppResourceProvider::GetInstance().GetResourceString(L"CalculationFailed");
+        }
+        else if (m_dateDiffResultInDays.day == 0)
+        {
+            // to and from dates the same
             IsDiffInDays = true;
             StrDateDiffResultInDays = L"";
             StrDateDiffResult = AppResourceProvider::GetInstance().GetResourceString(L"Date_SameDates");
         }
-        else if ((m_dateDiffResult.year == 0) && (m_dateDiffResult.month == 0) && (m_dateDiffResult.week == 0))
+        else if (m_dateDiffResult == DateDifferenceUnknown ||
+            (m_dateDiffResult.year == 0 && m_dateDiffResult.month == 0 && m_dateDiffResult.week == 0))
         {
             IsDiffInDays = true;
             StrDateDiffResultInDays = L"";
@@ -367,12 +386,34 @@ String ^ DateCalculatorViewModel::GetLocalizedNumberString(int value) const
     return ref new String(numberStr.c_str());
 }
 
-// Adjusts the given DateTime to 12AM (UTC) of the same day
-DateTime DateCalculatorViewModel::ClipTime(DateTime dateTime)
+/// <summary>
+/// Adjusts the given DateTime to 12AM of the same day
+/// </summary>
+/// <param name="dateTime">DateTime to clip</param>
+/// <param name="adjustUsingLocalTime">Adjust the datetime using local time (by default adjust using UTC time)</param>
+DateTime DateCalculatorViewModel::ClipTime(DateTime dateTime, bool adjustUsingLocalTime)
 {
+    DateTime referenceDateTime;
+    if (adjustUsingLocalTime)
+    {
+        FILETIME fileTime;
+        fileTime.dwLowDateTime = (DWORD)(dateTime.UniversalTime & 0xffffffff);
+        fileTime.dwHighDateTime = (DWORD)(dateTime.UniversalTime >> 32);
+
+        FILETIME localFileTime;
+        FileTimeToLocalFileTime(&fileTime, &localFileTime);
+
+        referenceDateTime.UniversalTime = (DWORD)localFileTime.dwHighDateTime;
+        referenceDateTime.UniversalTime <<= 32;
+        referenceDateTime.UniversalTime |= (DWORD)localFileTime.dwLowDateTime;
+    }
+    else
+    {
+        referenceDateTime = dateTime;
+    }
     auto calendar = ref new Calendar();
     calendar->ChangeTimeZone("UTC");
-    calendar->SetDateTime(dateTime);
+    calendar->SetDateTime(referenceDateTime);
     calendar->Period = calendar->FirstPeriodInThisDay;
     calendar->Hour = calendar->FirstHourInThisPeriod;
     calendar->Minute = 0;
