@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -527,8 +527,11 @@ bool CurrencyDataLoader::TryParseStaticData(_In_ String ^ rawJson, _Inout_ vecto
         staticData[i] = CurrencyStaticData{ countryCode, countryName, currencyCode, currencyName, currencySymbol };
     }
 
-    // TODO - MSFT 8533667: this sort will be replaced by a WinRT call to sort localized strings
-    sort(begin(staticData), end(staticData), [](CurrencyStaticData unit1, CurrencyStaticData unit2) { return unit1.countryName < unit2.countryName; });
+    auto sortCountryNames = [](const UCM::CurrencyStaticData & s) {
+        return ref new String(s.countryName.c_str());
+    };
+
+    LocalizationService::GetInstance()->Sort<UCM::CurrencyStaticData>(staticData, sortCountryNames);
 
     return true;
 }
