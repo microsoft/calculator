@@ -70,19 +70,19 @@ void GraphingCalculator::SubmitTextbox(TextBox^ sender)
 {
     auto variableViewModel = static_cast<VariableViewModel^>(sender->DataContext);
 
-    if (sender->Name == "Value")
+    if (sender->Name == "ValueTextBox")
     {
         variableViewModel->SetValue(validateDouble(sender->Text, variableViewModel->Value));
     }
-    else if (sender->Name == "Min")
+    else if (sender->Name == "MinTextBox")
     {
         variableViewModel->Min = validateDouble(sender->Text, variableViewModel->Min);
     }
-    else if (sender->Name == "Step")
+    else if (sender->Name == "MaxTextBox")
     {
         variableViewModel->Step = validateDouble(sender->Text, variableViewModel->Step);
     }
-    else if (sender->Name == "Max")
+    else if (sender->Name == "StepTextBox")
     {
         variableViewModel->Max = validateDouble(sender->Text, variableViewModel->Max);
     }

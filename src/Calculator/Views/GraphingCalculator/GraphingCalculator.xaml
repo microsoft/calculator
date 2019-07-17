@@ -118,7 +118,7 @@
                                             <TextBlock Padding="0,0,0,8"
                                                        VerticalAlignment="Bottom"
                                                        Text="{x:Bind Name}"/>
-                                            <TextBox x:Name="Value"
+                                            <TextBox x:Name="ValueTextBox"
                                                      Grid.Column="1"
                                                      HorizontalAlignment="Left"
                                                      Style="{StaticResource VariableTextBoxStyle}"
@@ -169,7 +169,7 @@
                                                            Padding="0,0,0,8"
                                                            VerticalAlignment="Bottom"
                                                            FontWeight="SemiBold"/>
-                                                <TextBox x:Name="Min"
+                                                <TextBox x:Name="MinTextBox"
                                                          MaxWidth="96"
                                                          Style="{StaticResource VariableTextBoxStyle}"
                                                          GotFocus="TextBoxGotFocus"
@@ -185,7 +185,7 @@
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Bottom"
                                                            FontWeight="SemiBold"/>
-                                                <TextBox x:Name="Step"
+                                                <TextBox x:Name="StepTextBox"
                                                          MaxWidth="96"
                                                          HorizontalAlignment="Center"
                                                          Style="{StaticResource VariableTextBoxStyle}"
@@ -199,7 +199,7 @@
                                                            Padding="0,0,0,8"
                                                            VerticalAlignment="Bottom"
                                                            FontWeight="SemiBold"/>
-                                                <TextBox x:Name="Max"
+                                                <TextBox x:Name="MaxTextBox"
                                                          MaxWidth="96"
                                                          Style="{StaticResource VariableTextBoxStyle}"
                                                          GotFocus="TextBoxGotFocus"
