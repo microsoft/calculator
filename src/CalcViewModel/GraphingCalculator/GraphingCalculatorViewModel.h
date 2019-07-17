@@ -27,6 +27,8 @@ namespace CalculatorApp::ViewModel
         OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
 
         OBSERVABLE_PROPERTY_R(Platform::String^, Name);
+
+        // TODO: Consider removing this work around and manually set the textbox text.
         OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(double, Value);
         OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(double, Min);
         OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(double, Step);
