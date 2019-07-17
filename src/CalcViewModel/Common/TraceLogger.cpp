@@ -196,6 +196,7 @@ namespace CalculatorApp
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_MEMORY_ITEM_LOAD, fields);
     }
+
     void TraceLogger::LogError(ViewMode mode, wstring_view functionName, wstring_view errorString)
     {
         if (!GetTraceLoggingProviderEnabled())
@@ -209,6 +210,7 @@ namespace CalculatorApp
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
+
     void TraceLogger::LogStandardException(ViewMode mode, wstring_view functionName, const exception& e) const
     {
         if (!GetTraceLoggingProviderEnabled())
@@ -299,7 +301,7 @@ namespace CalculatorApp
 
     void TraceLogger::LogButtonUsage()
     {
-        if (!GetTraceLoggingProviderEnabled())
+        if (!GetTraceLoggingProviderEnabled() || buttonLog.size() == 0)
             return;
 
         // Writer lock for the buttonLog resource

@@ -164,11 +164,11 @@ public
         Hyp = (int)CM::Command::CommandHYP,
 
         // Enum values below are used for Tracelogging and do not map to the Calculator engine
-        MemoryAdd,
-        MemorySubtract,
-        MemoryRecall,
-        MemoryClear,
-        BitflipButton,
-        FullKeypadButton
+        MemoryAdd = (int)CM::Command::CommandMPLUS,
+        MemorySubtract = (int)CM::Command::CommandMMINUS,
+        MemoryRecall = (int)CM::Command::CommandRECALL,
+        MemoryClear = (int)CM::Command::CommandMCLEAR,
+        BitflipButton = 1000,
+        FullKeypadButton = 1001
     };
 }
