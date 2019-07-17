@@ -302,11 +302,17 @@ namespace CalculatorApp
 
     void TraceLogger::LogButtonUsage()
     {
-        if (!GetTraceLoggingProviderEnabled() || buttonLog.size() == 0)
+        if (!GetTraceLoggingProviderEnabled())
             return;
 
         // Writer lock for the buttonLog resource
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
+
+        if (buttonLog.size() == 0)
+        {
+            return;
+        }
+
         Platform::String ^ buttonUsageString;
         for (int i = 0; i < buttonLog.size(); i++)
         {
