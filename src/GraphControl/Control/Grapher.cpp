@@ -350,14 +350,13 @@ namespace GraphControl
                     if (m_graph->TryInitialize(graphExpression.get()))
                     {
                         UpdateGraphOptions(m_graph->GetOptions(), validEqs);
-
                         m_renderMain->Graph = m_graph;
                     }
                 }
             }
             else
             {
-                if (m_graph->TryInitialize())
+                if (m_graph->TryInitialize(nullptr))
                 {
                     UpdateGraphOptions(m_graph->GetOptions(), validEqs);
 
@@ -385,6 +384,7 @@ namespace GraphControl
                     lineColor.A);
             }
             options.SetGraphColors(graphColors);
+            options.GetMarkZeros();
         }
     }
 

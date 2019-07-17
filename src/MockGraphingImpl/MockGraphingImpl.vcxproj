@@ -270,6 +270,7 @@
     <ClInclude Include="..\GraphingInterfaces\Common.h" />
     <ClInclude Include="..\GraphingInterfaces\GraphingEnums.h" />
     <ClInclude Include="..\GraphingInterfaces\IGraph.h" />
+    <ClInclude Include="..\GraphingInterfaces\IGraphAnalyzer.h" />
     <ClInclude Include="..\GraphingInterfaces\IGraphingOptions.h" />
     <ClInclude Include="..\GraphingInterfaces\IGraphRenderer.h" />
     <ClInclude Include="..\GraphingInterfaces\IMathSolver.h" />
