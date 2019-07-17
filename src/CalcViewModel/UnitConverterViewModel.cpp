@@ -502,6 +502,8 @@ void UnitConverterViewModel::OnButtonPressed(Platform::Object ^ parameter)
     }
 
     m_model->SendCommand(command);
+
+    TraceLogger::GetInstance().LogConverterInputReceived(Mode);
 }
 
 void UnitConverterViewModel::OnCopyCommand(Platform::Object ^ parameter)
@@ -1013,7 +1015,6 @@ void UnitConverterViewModel::StartConversionResultTimer()
         {
             String ^ valueFrom = m_Value1Active ? m_Value1 : m_Value2;
             String ^ valueTo = m_Value1Active ? m_Value2 : m_Value1;
-            TraceLogger::GetInstance().LogConverterInputReceived(Mode);
         }
     });
 }
