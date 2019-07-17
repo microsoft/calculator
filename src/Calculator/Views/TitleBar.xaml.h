@@ -42,8 +42,6 @@ public
         Windows::Foundation::EventRegistrationToken m_accessibilitySettingsToken;
         Windows::UI::ViewManagement::UISettings ^ m_uiSettings;
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
-        CalculatorApp::Common::ViewMode m_beforeAlwaysOnTopMode;
         void AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        Concurrency::task<void> TitleBar::HandleAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }

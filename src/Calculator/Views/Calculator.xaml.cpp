@@ -290,6 +290,7 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
     {
         RowExpression->Height = 0;
         RowHamburger->Height = 0;
+        RowMemoryControls->Height = 0;
 
         ClearMemoryButton->IsEnabled = false;
         MemRecall->IsEnabled = false;
@@ -299,8 +300,9 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
     }
     else
     {
-        RowExpression->Height = 20;
+        RowExpression->Height = GridLength(20, GridUnitType::Star);
         RowHamburger->Height = safe_cast<GridLength>(Application::Current->Resources->Lookup("HamburgerHeightGridLength"));
+        RowMemoryControls->Height = GridLength(32, GridUnitType::Star);
 
         ClearMemoryButton->IsEnabled = m_clearMemoryButtonEnabled;
         MemRecall->IsEnabled = m_memRecallEnabled;

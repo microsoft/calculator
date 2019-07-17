@@ -47,10 +47,6 @@ using namespace Windows::ApplicationModel::Activation;
 
 namespace CalculatorApp
 {
-    Platform::String ^ App::LaunchedLocalSettings = L"calculatorAlwaysOnTopLaunched";
-    Platform::String ^ App::WidthLocalSettings = L"calculatorAlwaysOnTopLastWidth";
-    Platform::String ^ App::HeightLocalSettings = L"calculatorAlwaysOnTopLastHeight";
-
     namespace ApplicationResourceKeys
     {
         StringReference AppMinWindowHeight(L"AppMinWindowHeight");

@@ -74,6 +74,8 @@ MainPage::MainPage()
 
     double sizeInInches = 0.0;
 
+    ToolTipService::SetToolTip(NormalAlwaysOnTopButton, AppResourceProvider::GetInstance().GetResourceString(L"AlwaysOnTop_Enter"));
+
     if (SUCCEEDED(GetIntegratedDisplaySize(&sizeInInches)))
     {
         if (sizeInInches < 7.0) // If device's display size (diagonal length) is less than 7 inches then keep the calc always in Portrait mode only
@@ -120,8 +122,8 @@ void MainPage::WindowSizeChanged(_In_ Platform::Object ^ /*sender*/, _In_ Window
         Windows::Storage::ApplicationDataContainer ^ localSettings = Windows::Storage::ApplicationData::Current->LocalSettings;
         // double width = safe_cast<float>(this->ActualWidth);
         // double height = safe_cast<float>(this->ActualHeight);
-        localSettings->Values->Insert(App::WidthLocalSettings, this->ActualWidth);
-        localSettings->Values->Insert(App::HeightLocalSettings, this->ActualHeight);
+        localSettings->Values->Insert(ApplicationViewModel::WidthLocalSettings, this->ActualWidth);
+        localSettings->Values->Insert(ApplicationViewModel::HeightLocalSettings, this->ActualHeight);
     }
 }
 
@@ -376,7 +378,7 @@ void MainPage::OnNavLoaded(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
     for (unsigned int i = 0; i < menuItems->Size; i++)
     {
         MUXC::NavigationViewItem ^ nvi = dynamic_cast<MUXC::NavigationViewItem ^>(menuItems->GetAt(i));
-        if (nvi != nullptr)
+        if (nvi != nullptr && nvi->IsEnabledProperty != nullptr)
         {
             Binding ^ isEnabledBinding = ref new Binding();
             isEnabledBinding->Source = Model->CalculatorViewModel;
@@ -550,4 +552,9 @@ void MainPage::AnnounceCategoryName()
 void MainPage::OnNavItemInvoked(MUXC::NavigationView ^ /*sender*/, _In_ MUXC::NavigationViewItemInvokedEventArgs ^ e)
 {
     NavView->IsPaneOpen = false;
+}
+
+void MainPage::AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    Model->AlwaysOnTopButtonClick(sender, e);
 }

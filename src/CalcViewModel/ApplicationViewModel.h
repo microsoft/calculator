@@ -25,8 +25,8 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::ViewMode, PreviousMode);
             OBSERVABLE_NAMED_PROPERTY_RW(Platform::String ^, CategoryName);
 
-            // Indicates whether calculator is currently in standard mode _and_ supports CompactOverlay
-            OBSERVABLE_PROPERTY_RW(bool, DisplayAlwaysOnTopOption);
+            // Indicates whether calculator is currently in standard mode _and_ supports CompactOverlay _and_ is not in Always-on-Top mode
+            OBSERVABLE_PROPERTY_RW(bool, DisplayNormalAlwaysOnTopOption);
 
             COMMAND_FOR_METHOD(CopyCommand, ApplicationViewModel::OnCopyCommand);
             COMMAND_FOR_METHOD(PasteCommand, ApplicationViewModel::OnPasteCommand);
@@ -67,6 +67,32 @@ namespace CalculatorApp
                 }
             }
 
+            static property Platform::String ^ LaunchedLocalSettings
+            {
+                Platform::String ^ get()
+                {
+                    return Platform::StringReference(L"calculatorAlwaysOnTopLaunched");
+                }
+            }
+
+            static property Platform::String ^ WidthLocalSettings
+            {
+                Platform::String ^ get()
+                {
+                    return Platform::StringReference(L"calculatorAlwaysOnTopLastWidth");
+                }
+            }
+
+            static property Platform::String ^ HeightLocalSettings
+            {
+                Platform::String ^ get()
+                {
+                    return Platform::StringReference(L"calculatorAlwaysOnTopLastHeight");
+                }
+            }
+
+            void AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+
         private:
             bool TryRecoverFromNavigationModeFailure();
 
@@ -78,8 +104,9 @@ namespace CalculatorApp
             void SetMenuCategories();
 
             CalculatorApp::Common::ViewMode m_mode;
-            bool m_isNormalMode;
             Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup ^> ^ m_categories;
+            Concurrency::task<void> HandleAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+            void SetDisplayNormalAlwaysOnTopOption();
         };
     }
 }

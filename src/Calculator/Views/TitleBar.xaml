@@ -6,7 +6,6 @@
              xmlns:converters="using:CalculatorApp.Converters"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot"
@@ -36,19 +35,20 @@
                    TextTrimming="CharacterEllipsis"
                    Visibility="{x:Bind ApplicationViewModel.CalculatorViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
         </Grid>
-        <Button x:Name="AlwaysOnTopButton" Grid.Row="0"
+        <Button x:Name="AoTAlwaysOnTopButton"
+                Grid.Row="0"
                 FontFamily="{StaticResource CalculatorFontFamily}"
                 Style="{ThemeResource CommandBarFlyoutEllipsisButtonStyle}"
-                Content="&#xEE49;"
+                Content="&#xEE47;"
                 Click="AlwaysOnTopButtonClick"
                 Width="46"
                 Height="32"
-                HorizontalAlignment="Right"
+                HorizontalAlignment="Left"
                 HorizontalContentAlignment="Center"
                 Background="Transparent"
                 FontWeight="Thin"
                 FontSize="14"
-                Visibility="{x:Bind ApplicationViewModel.DisplayAlwaysOnTopOption, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+                Visibility="{x:Bind ApplicationViewModel.CalculatorViewModel.IsAlwaysOnTop, Mode=OneWay}"
                 AutomationProperties.AutomationId="AlwaysOnTopButton"
                 AutomationProperties.Name="Always on top"/>
     </Grid>

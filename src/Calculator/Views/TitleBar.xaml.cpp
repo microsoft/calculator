@@ -38,9 +38,7 @@ namespace CalculatorApp
         Unloaded += ref new RoutedEventHandler(this, &TitleBar::OnUnloaded);
 
         AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
-        ToolTipService::SetToolTip(AlwaysOnTopButton, AppResourceProvider::GetInstance().GetResourceString(L"AlwaysOnTop_Enter"));
-
-        m_beforeAlwaysOnTopMode = CalculatorApp::Common::ViewMode::Standard;
+        ToolTipService::SetToolTip(AoTAlwaysOnTopButton, AppResourceProvider::GetInstance().GetResourceString(L"AlwaysOnTop_Exit"));
     }
 
     void TitleBar::OnLoaded(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
@@ -175,84 +173,6 @@ namespace CalculatorApp
 
     void TitleBar::AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
     {
-        HandleAlwaysOnTopButtonClick(sender, e);
-    }
-
-    task<void> TitleBar::HandleAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
-    {
-        if (ApplicationView::GetForCurrentView()->GetForCurrentView()->ViewMode == ApplicationViewMode::CompactOverlay)
-        {
-            ApplicationViewModel->Mode = m_beforeAlwaysOnTopMode;
-            if (ApplicationViewModel->Mode == CalculatorApp::Common::ViewMode::Standard)
-            {
-                ApplicationViewModel->CalculatorViewModel->AreHistoryShortcutsEnabled = true;
-                ApplicationViewModel->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
-            }
-            bool success = co_await ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::Default);
-            ApplicationViewModel->CalculatorViewModel->IsAlwaysOnTop = !success;
-            if (!success)
-            {
-                AlwaysOnTopButton->HorizontalAlignment = ::HorizontalAlignment::Left;
-                AlwaysOnTopButton->Content = L"\uEE47";
-                AppName->Text = "";
-                ToolTipService::SetToolTip(AlwaysOnTopButton, AppResourceProvider::GetInstance().GetResourceString(L"AlwaysOnTop_Exit"));
-            }
-            else
-            {
-                AlwaysOnTopButton->HorizontalAlignment = ::HorizontalAlignment::Right;
-                AlwaysOnTopButton->Content = L"\uEE49";
-                AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
-                ToolTipService::SetToolTip(AlwaysOnTopButton, AppResourceProvider::GetInstance().GetResourceString(L"AlwaysOnTop_Enter"));
-            }
-            this->Focus(::FocusState::Programmatic);
-        }
-        else
-        {
-            m_beforeAlwaysOnTopMode = ApplicationViewModel->Mode;
-            ApplicationViewModel->Mode = CalculatorApp::Common::ViewMode::Standard;
-            ApplicationViewModel->CalculatorViewModel->AreHistoryShortcutsEnabled = false;
-            ApplicationViewModel->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
-
-            Windows::Storage::ApplicationDataContainer ^ localSettings = Windows::Storage::ApplicationData::Current->LocalSettings;
-            ViewModePreferences ^ compactOptions = ViewModePreferences::CreateDefault(ApplicationViewMode::CompactOverlay);
-            if (!localSettings->Values->GetView()->HasKey(App::LaunchedLocalSettings))
-            {
-                compactOptions->CustomSize = Windows::Foundation::Size(320, 394);
-                localSettings->Values->Insert(App::LaunchedLocalSettings, true);
-            }
-            else
-            {
-                if (localSettings->Values->GetView()->HasKey(App::WidthLocalSettings)
-                    && localSettings->Values->GetView()->HasKey(App::HeightLocalSettings))
-                {
-                    float width = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup(App::WidthLocalSettings))
-                                      ->GetSingle();
-                    float height = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup(App::HeightLocalSettings))
-                                       ->GetSingle();
-                    compactOptions->CustomSize = Windows::Foundation::Size(width, height);
-                }
-                else
-                {
-                    compactOptions->CustomSize = Windows::Foundation::Size(320, 394);
-                }
-            }
-            bool success = co_await ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::CompactOverlay, compactOptions);
-            ApplicationViewModel->CalculatorViewModel->IsAlwaysOnTop = success;
-            if (success)
-            {
-                AlwaysOnTopButton->HorizontalAlignment = ::HorizontalAlignment::Left;
-                AlwaysOnTopButton->Content = L"\uEE47";
-                AppName->Text = "";
-                ToolTipService::SetToolTip(AlwaysOnTopButton, AppResourceProvider::GetInstance().GetResourceString(L"AlwaysOnTop_Exit"));
-            }
-            else
-            {
-                AlwaysOnTopButton->HorizontalAlignment = ::HorizontalAlignment::Right;
-                AlwaysOnTopButton->Content = L"\uEE49";
-                AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
-                ToolTipService::SetToolTip(AlwaysOnTopButton, AppResourceProvider::GetInstance().GetResourceString(L"AlwaysOnTop_Enter"));
-            }
-            this->Focus(::FocusState::Programmatic);
-        }
+        ApplicationViewModel->AlwaysOnTopButtonClick(sender, e);
     }
 }

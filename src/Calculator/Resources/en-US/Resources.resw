@@ -826,11 +826,11 @@
     <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
   </data>
   <data name="AlwaysOnTop_Enter" xml:space="preserve">
-    <value>Always on top</value>
+    <value>Keep on top</value>
     <comment>This is the tool tip automation name for the always-on-top button when out of always-on-top mode.</comment>
   </data>
   <data name="AlwaysOnTop_Exit" xml:space="preserve">
-    <value>Exit always-on-top</value>
+    <value>Back to full view</value>
     <comment>This is the tool tip automation name for the always-on-top button when in always-on-top mode.</comment>
   </data>
   <data name="MemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">

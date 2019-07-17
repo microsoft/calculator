@@ -156,7 +156,7 @@ void OverflowTextBlock::UpdateScrollButtons()
     }
 
     double editableTokenWidth = 0;
-    if (m_editableToken != nullptr)
+    if (m_editableToken != nullptr && m_editableToken->Visibility == ::Visibility::Visible)
     {
         editableTokenWidth = m_editableToken->ActualWidth;
     }

@@ -35,10 +35,6 @@ namespace CalculatorApp
         void RemoveWindow(_In_ WindowFrameService ^ frameService);
         void RemoveSecondaryWindow(_In_ WindowFrameService ^ frameService);
 
-        static Platform::String ^ LaunchedLocalSettings;
-        static Platform::String ^ WidthLocalSettings;
-        static Platform::String ^ HeightLocalSettings;
-
     private:
         static Windows::UI::Xaml::Controls::Frame ^ CreateFrame();
         static void SetMinWindowSizeAndActivate(Windows::UI::Xaml::Controls::Frame ^ rootFrame, Windows::Foundation::Size minWindowSize);

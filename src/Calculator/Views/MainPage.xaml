@@ -88,7 +88,19 @@
 
         <local:TitleBar x:Name="CustomTitleBar" Grid.Row="0"
                         ApplicationViewModel="{x:Bind Model}"/>
-
+        
+        <Grid Grid.Row="1">
+            <Border x:Name="CalcHolder">
+                <!-- PLACEHOLDER!!!! This is where the calculator goes when it is delay loaded -->
+            </Border>
+            <Border x:Name="DateCalcHolder">
+                <!-- PLACEHOLDER!!!! This is where the date calculator goes when it is delay loaded -->
+            </Border>
+            <Border x:Name="ConverterHolder">
+                <!-- PLACEHOLDER!!!! This is where the converter goes when it is delay loaded -->
+            </Border>
+        </Grid>
+        
         <muxc:NavigationView x:Name="NavView"
                              x:Uid="NavView"
                              Grid.Row="1"
@@ -149,16 +161,17 @@
                            Visibility="{x:Bind Model.CalculatorViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"
                            Style="{StaticResource SubtitleTextBlockStyle}"
                            Text="{x:Bind Model.CategoryName, Mode=OneWay}"/>
-
-                <Border x:Name="CalcHolder">
-                    <!-- PLACEHOLDER!!!! This is where the calculator goes when it is delay loaded -->
-                </Border>
-                <Border x:Name="DateCalcHolder">
-                    <!-- PLACEHOLDER!!!! This is where the date calculator goes when it is delay loaded -->
-                </Border>
-                <Border x:Name="ConverterHolder">
-                    <!-- PLACEHOLDER!!!! This is where the converter goes when it is delay loaded -->
-                </Border>
+                <Button x:Name="NormalAlwaysOnTopButton"
+                        FontFamily="{StaticResource CalculatorFontFamily}"
+                        Style="{StaticResource SquareIconButtonStyle}"
+                        Content="&#xEE49;"
+                        Click="AlwaysOnTopButtonClick"
+                        VerticalAlignment="Top"
+                        HorizontalContentAlignment="Center"
+                        Background="Transparent"
+                        Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}"
+                        AutomationProperties.AutomationId="NormalAlwaysOnTopButton"
+                        AutomationProperties.Name="Always on top"/>
             </Grid>
         </muxc:NavigationView>
     </Grid>
