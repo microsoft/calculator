@@ -314,7 +314,7 @@ namespace CalculatorApp
         }
 
         Platform::String ^ buttonUsageString;
-        for (int i = 0; i < buttonLog.size(); i++)
+        for (size_t i = 0; i < buttonLog.size(); i++)
         {
             buttonUsageString += NavCategory::GetFriendlyName(buttonLog[i].mode);
             buttonUsageString += "|";
