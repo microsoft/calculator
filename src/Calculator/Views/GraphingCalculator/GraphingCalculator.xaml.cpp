@@ -120,49 +120,35 @@ void GraphingCalculator::OnShareCompleted(DataPackage^ sender, ShareCompletedEve
 }
 
 
-
+// Used to get graph content to share by was of the OS share contract
+// This is an OS callback
 bool GraphingCalculator::GetShareContent(DataRequest^ request)
 {
-
-    WeakReference weakThis(this);
     bool succeeded = false;
-
-    //  Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([weakThis, request]()
+    if (TheGrapher != nullptr)
     {
-        auto refThis = weakThis.Resolve<GraphingCalculator>();
         String^ TextToShare = L"Here is some text";
         auto requestData = request->Data;
         requestData->Properties->Title = L"share text title";
         requestData->Properties->Description = L"Share text description"; // The description is optional.
-    //    requestData->Properties->ContentSourceApplicationLink = ApplicationLink;
         requestData->SetText(TextToShare);
 
-                
-                if (refThis->TheGrapher != nullptr)
+        WCHAR ShareFilePath[MAX_PATH] = L"";
+        succeeded = TheGrapher->GetShareFile(ShareFilePath, MAX_PATH);
+        if (succeeded)
+        {
+            String^ path = ref new String(ShareFilePath);
+
+            create_task(Windows::Storage::StorageFile::GetFileFromPathAsync(path)).then([requestData, &succeeded](Windows::Storage::StorageFile^ imageFile)
                 {
-                    {
-                        WCHAR ShareFilePath[MAX_PATH] = L"";
-                        refThis->TheGrapher->GetShareFile(ShareFilePath, MAX_PATH);
-        
-                        String^ path = ref new String(ShareFilePath);
-        
-                        create_task(Windows::Storage::StorageFile::GetFileFromPathAsync(path)).then([requestData](Windows::Storage::StorageFile^ imageFile)
-                            {
-                                auto imageStreamRef = RandomAccessStreamReference::CreateFromFile(imageFile);
-                                requestData->Properties->Thumbnail = imageStreamRef;
-                                requestData->SetBitmap(imageStreamRef);
-                            });
-        //
-                    }
-        
-        
+                    auto imageStreamRef = RandomAccessStreamReference::CreateFromFile(imageFile);
+                    requestData->Properties->Thumbnail = imageStreamRef;
+                    requestData->SetBitmap(imageStreamRef);
                     succeeded = true;
-                }
-        
-            //}//));
-        
-        
-        return succeeded;
+                });
+        }
     }
+
+    return succeeded;
 }
 
