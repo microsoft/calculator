@@ -893,6 +893,7 @@ void UnitConverterViewModel::OnPaste(String ^ stringToPaste)
         return;
     }
 
+    TraceLogger::GetInstance().LogInputPasted(Mode);
     bool isFirstLegalChar = true;
     bool sendNegate = false;
     wstring accumulation = L"";
