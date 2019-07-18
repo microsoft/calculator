@@ -121,50 +121,48 @@ void GraphingCalculator::OnShareCompleted(DataPackage^ sender, ShareCompletedEve
 
 
 
-void GraphingCalculator::GetShareContent(DataRequest^ request)
+bool GraphingCalculator::GetShareContent(DataRequest^ request)
 {
-    Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([=]()
-        {
 
-            bool succeeded = false;
-    String^ TextToShare = L"Here is some text";
-    auto requestData = request->Data;
-    requestData->Properties->Title = L"share text title";
-    requestData->Properties->Description = L"Share text description"; // The description is optional.
-//    requestData->Properties->ContentSourceApplicationLink = ApplicationLink;
-    requestData->SetText(TextToShare);
+    WeakReference weakThis(this);
+    bool succeeded = false;
 
-
-    
-    if (TheGrapher != nullptr)
+    //  Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([weakThis, request]()
     {
-        //HRESULT hr E_FAIL;
+        auto refThis = weakThis.Resolve<GraphingCalculator>();
+        String^ TextToShare = L"Here is some text";
+        auto requestData = request->Data;
+        requestData->Properties->Title = L"share text title";
+        requestData->Properties->Description = L"Share text description"; // The description is optional.
+    //    requestData->Properties->ContentSourceApplicationLink = ApplicationLink;
+        requestData->SetText(TextToShare);
 
-        if (TheGrapher != nullptr)
-        {
-            WCHAR ShareFilePath[MAX_PATH] = L"";
-            TheGrapher->GetShareFile(ShareFilePath, MAX_PATH);
-
-            String^ path = ref new String(ShareFilePath);
-
-            //auto imageFile = Windows::Storage::StorageFile::GetFileFromPathAsync(path)->GetResults();
-
-            //Windows::Storage::StorageFile^ imageFile = TheGrapher->GetShareFile();
-
-            create_task(Windows::Storage::StorageFile::GetFileFromPathAsync(path)).then([requestData](Windows::Storage::StorageFile^ imageFile)
+                
+                if (refThis->TheGrapher != nullptr)
                 {
-                    auto imageStreamRef = RandomAccessStreamReference::CreateFromFile(imageFile);
-                    requestData->Properties->Thumbnail = imageStreamRef;
-                    requestData->SetBitmap(imageStreamRef);
-                });
-
-        }
-
-
-        succeeded = true;
+                    {
+                        WCHAR ShareFilePath[MAX_PATH] = L"";
+                        refThis->TheGrapher->GetShareFile(ShareFilePath, MAX_PATH);
+        
+                        String^ path = ref new String(ShareFilePath);
+        
+                        create_task(Windows::Storage::StorageFile::GetFileFromPathAsync(path)).then([requestData](Windows::Storage::StorageFile^ imageFile)
+                            {
+                                auto imageStreamRef = RandomAccessStreamReference::CreateFromFile(imageFile);
+                                requestData->Properties->Thumbnail = imageStreamRef;
+                                requestData->SetBitmap(imageStreamRef);
+                            });
+        //
+                    }
+        
+        
+                    succeeded = true;
+                }
+        
+            //}//));
+        
+        
+        return succeeded;
     }
-
-    //return succeeded;
-        }));
-
 }
+
