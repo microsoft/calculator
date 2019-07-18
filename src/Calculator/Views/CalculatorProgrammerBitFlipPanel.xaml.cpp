@@ -170,8 +170,6 @@ void CalculatorProgrammerBitFlipPanel::OnBitToggled(_In_ Object ^ sender, _In_ R
     // which continuously alters the Display Value and the state of the Bit Flip buttons.
     if ((Model->IsBitFlipChecked) && Model->IsProgrammer)
     {
-        TraceLogger::GetInstance().LogBitFlipUsed();
-
         auto flipButton = static_cast<FlipButtons ^>(sender);
         Model->ButtonPressed->Execute(flipButton->ButtonId);
     }

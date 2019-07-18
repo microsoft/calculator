@@ -82,7 +82,7 @@ void ApplicationViewModel::Initialize(ViewMode mode)
     }
     catch (const std::exception& e)
     {
-        TraceLogger::GetInstance().LogStandardException(__FUNCTIONW__, e);
+        TraceLogger::GetInstance().LogStandardException(mode, __FUNCTIONW__, e);
         if (!TryRecoverFromNavigationModeFailure())
         {
             // Could not navigate to standard mode either.
@@ -92,7 +92,7 @@ void ApplicationViewModel::Initialize(ViewMode mode)
     }
     catch (Exception ^ e)
     {
-        TraceLogger::GetInstance().LogPlatformException(__FUNCTIONW__, e);
+        TraceLogger::GetInstance().LogPlatformException(mode, __FUNCTIONW__, e);
         if (!TryRecoverFromNavigationModeFailure())
         {
             // Could not navigate to standard mode either.
@@ -121,10 +121,8 @@ bool ApplicationViewModel::TryRecoverFromNavigationModeFailure()
 void ApplicationViewModel::OnModeChanged()
 {
     assert(NavCategory::IsValidViewMode(m_mode));
-    TraceLogger::GetInstance().LogModeChangeBegin(m_PreviousMode, m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
     if (NavCategory::IsCalculatorViewMode(m_mode))
     {
-        TraceLogger::GetInstance().LogCalculatorModeViewed(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
         if (!m_CalculatorViewModel)
         {
             m_CalculatorViewModel = ref new StandardCalculatorViewModel();
@@ -133,7 +131,6 @@ void ApplicationViewModel::OnModeChanged()
     }
     else if (NavCategory::IsDateCalculatorViewMode(m_mode))
     {
-        TraceLogger::GetInstance().LogDateCalculatorModeViewed(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
         if (!m_DateCalcViewModel)
         {
             m_DateCalcViewModel = ref new DateCalculatorViewModel();
@@ -141,7 +138,6 @@ void ApplicationViewModel::OnModeChanged()
     }
     else if (NavCategory::IsConverterViewMode(m_mode))
     {
-        TraceLogger::GetInstance().LogConverterModeViewed(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
         if (!m_ConverterViewModel)
         {
             auto dataLoader = make_shared<UnitConverterDataLoader>(ref new GeographicRegion());
@@ -155,13 +151,21 @@ void ApplicationViewModel::OnModeChanged()
     auto resProvider = AppResourceProvider::GetInstance();
     CategoryName = resProvider.GetResourceString(NavCategory::GetNameResourceKey(m_mode));
 
-    // This is the only place where a ViewMode enum should be cast to an int.
-    //
+    // Cast mode to an int in order to save it to app data.
     // Save the changed mode, so that the new window launches in this mode.
     // Don't save until after we have adjusted to the new mode, so we don't save a mode that fails to load.
     ApplicationData::Current->LocalSettings->Values->Insert(ModePropertyName, NavCategory::Serialize(m_mode));
 
-    TraceLogger::GetInstance().LogModeChangeEnd(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+    // Log ModeChange event when not first launch, log WindowCreated on first launch
+    if (NavCategory::IsValidViewMode(m_PreviousMode))
+    {
+        TraceLogger::GetInstance().LogModeChange(m_mode);
+    }
+    else
+    {
+        TraceLogger::GetInstance().LogWindowCreated(m_mode);
+    }
+
     RaisePropertyChanged(ClearMemoryVisibilityPropertyName);
 }
 

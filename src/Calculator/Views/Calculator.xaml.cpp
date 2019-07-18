@@ -450,13 +450,11 @@ void Calculator::OnHistoryItemClicked(_In_ HistoryItemViewModel ^ e)
     unsigned int tokenSize;
     assert(e->GetTokens() != nullptr);
     e->GetTokens()->GetSize(&tokenSize);
-    TraceLogger::GetInstance().LogHistoryItemLoadBegin();
     Model->SetHistoryExpressionDisplay(e->GetTokens(), e->GetCommands());
     Model->SetExpressionDisplay(e->GetTokens(), e->GetCommands());
     Model->SetPrimaryDisplay(e->Result->Data(), false);
     Model->IsFToEEnabled = false;
 
-    TraceLogger::GetInstance().LogHistoryItemLoadEnd(tokenSize);
     CloseHistoryFlyout();
     this->Focus(::FocusState::Programmatic);
 }
@@ -468,8 +466,6 @@ void Calculator::HistoryFlyout_Opened(_In_ Object ^ sender, _In_ Object ^ args)
     m_IsLastFlyoutHistory = true;
     EnableControls(false);
     AutomationProperties::SetName(HistoryButton, m_closeHistoryFlyoutAutomationName);
-    TraceLogger::GetInstance().LogHistoryFlyoutOpenEnd(Model->HistoryVM->ItemSize);
-    TraceLogger::GetInstance().LogHistoryBodyOpened();
 }
 
 void Calculator::HistoryFlyout_Closing(_In_ FlyoutBase ^ sender, _In_ FlyoutBaseClosingEventArgs ^ args)
@@ -526,7 +522,6 @@ void Calculator::ToggleHistoryFlyout(Object ^ /*parameter*/)
         }
         else
         {
-            TraceLogger::GetInstance().LogHistoryFlyoutOpenBegin(Model->HistoryVM->ItemSize);
             HistoryFlyout->Content = m_historyList;
             m_historyList->RowHeight = NumpadPanel->ActualHeight;
             FlyoutBase::ShowAttachedFlyout(HistoryButton);
@@ -545,7 +540,6 @@ void Calculator::ToggleMemoryFlyout()
         }
         else
         {
-            TraceLogger::GetInstance().LogMemoryFlyoutOpenBegin(Model->MemorizedNumbers->Size);
             MemoryFlyout->Content = GetMemory();
             m_memory->RowHeight = NumpadPanel->ActualHeight;
             FlyoutBase::ShowAttachedFlyout(MemoryButton);
@@ -555,13 +549,11 @@ void Calculator::ToggleMemoryFlyout()
 
 void Calculator::OnMemoryFlyoutOpened(_In_ Object ^ sender, _In_ Object ^ args)
 {
-    TraceLogger::GetInstance().LogMemoryFlyoutOpenEnd(Model->MemorizedNumbers->Size);
     m_IsLastFlyoutMemory = true;
     m_IsLastFlyoutHistory = false;
     m_fIsMemoryFlyoutOpen = true;
     AutomationProperties::SetName(MemoryButton, m_closeMemoryFlyoutAutomationName);
     EnableControls(false);
-    TraceLogger::GetInstance().LogMemoryBodyOpened();
 }
 
 void Calculator::OnMemoryFlyoutClosing(_In_ FlyoutBase ^ sender, _In_ FlyoutBaseClosingEventArgs ^ args)
@@ -700,14 +692,9 @@ void Calculator::OnMemoryAccessKeyInvoked(_In_ UIElement ^ sender, _In_ AccessKe
     DockPivot->SelectedItem = MemoryPivotItem;
 }
 
-void CalculatorApp::Calculator::DockPivot_SelectionChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e)
+void CalculatorApp::Calculator::OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e)
 {
-    if (DockPivot->SelectedIndex == 0)
-    {
-        TraceLogger::GetInstance().LogHistoryBodyOpened();
-    }
-    else
-    {
-        TraceLogger::GetInstance().LogMemoryBodyOpened();
-    }
+    auto mode = IsStandard ? ViewMode::Standard : IsScientific ? ViewMode::Scientific : ViewMode::Programmer;
+    auto state = std::wstring(e->NewState->Name->Begin());
+    TraceLogger::GetInstance().LogVisualStateChanged(mode, state);
 }

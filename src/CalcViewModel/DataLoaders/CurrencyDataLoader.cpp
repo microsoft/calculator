@@ -335,12 +335,12 @@ future<bool> CurrencyDataLoader::TryLoadDataFromCacheAsync()
     }
     catch (Exception ^ ex)
     {
-        TraceLogger::GetInstance().LogPlatformException(__FUNCTIONW__, ex);
+        TraceLogger::GetInstance().LogPlatformException(ViewMode::Currency, __FUNCTIONW__, ex);
         co_return false;
     }
     catch (const exception& e)
     {
-        TraceLogger::GetInstance().LogStandardException(__FUNCTIONW__, e);
+        TraceLogger::GetInstance().LogStandardException(ViewMode::Currency, __FUNCTIONW__, e);
         co_return false;
     }
     catch (...)
@@ -445,12 +445,12 @@ future<bool> CurrencyDataLoader::TryLoadDataFromWebAsync()
     }
     catch (Exception ^ ex)
     {
-        TraceLogger::GetInstance().LogPlatformException(__FUNCTIONW__, ex);
+        TraceLogger::GetInstance().LogPlatformException(ViewMode::Currency, __FUNCTIONW__, ex);
         co_return false;
     }
     catch (const exception& e)
     {
-        TraceLogger::GetInstance().LogStandardException(__FUNCTIONW__, e);
+        TraceLogger::GetInstance().LogStandardException(ViewMode::Currency, __FUNCTIONW__, e);
         co_return false;
     }
     catch (...)
@@ -466,7 +466,7 @@ future<bool> CurrencyDataLoader::TryLoadDataFromWebOverrideAsync()
     if (!didLoad)
     {
         m_loadStatus = CurrencyLoadStatus::FailedToLoad;
-        TraceLogger::GetInstance().LogUserRequestedRefreshFailed();
+        TraceLogger::GetInstance().LogError(ViewMode::Currency, L"CurrencyDataLoader::TryLoadDataFromWebOverrideAsync", L"UserRequestedRefreshFailed");
     }
 
     co_return didLoad;

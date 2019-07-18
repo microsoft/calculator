@@ -502,6 +502,8 @@ void UnitConverterViewModel::OnButtonPressed(Platform::Object ^ parameter)
     }
 
     m_model->SendCommand(command);
+
+    TraceLogger::GetInstance().LogConverterInputReceived(Mode);
 }
 
 void UnitConverterViewModel::OnCopyCommand(Platform::Object ^ parameter)
@@ -523,7 +525,7 @@ void UnitConverterViewModel::OnPasteCommand(Platform::Object ^ parameter)
     // EventWriteClipboardPaste_Start();
     // Any converter ViewMode is fine here.
     CopyPasteManager::GetStringToPaste(m_Mode, NavCategory::GetGroupType(m_Mode))
-        .then([this](String ^ pastedString) { OnPaste(pastedString, m_Mode); }, concurrency::task_continuation_context::use_current());
+        .then([this](String ^ pastedString) { OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 
 void UnitConverterViewModel::InitializeView()
@@ -882,7 +884,7 @@ NumbersAndOperatorsEnum UnitConverterViewModel::MapCharacterToButtonId(const wch
     return mappedValue;
 }
 
-void UnitConverterViewModel::OnPaste(String ^ stringToPaste, ViewMode mode)
+void UnitConverterViewModel::OnPaste(String ^ stringToPaste)
 {
     // If pastedString is invalid("NoOp") then display pasteError else process the string
     if (stringToPaste == StringReference(CopyPasteManager::PasteErrorString))
@@ -891,7 +893,6 @@ void UnitConverterViewModel::OnPaste(String ^ stringToPaste, ViewMode mode)
         return;
     }
 
-    TraceLogger::GetInstance().LogValidInputPasted(mode);
     bool isFirstLegalChar = true;
     bool sendNegate = false;
     wstring accumulation = L"";
@@ -1014,7 +1015,6 @@ void UnitConverterViewModel::StartConversionResultTimer()
         {
             String ^ valueFrom = m_Value1Active ? m_Value1 : m_Value2;
             String ^ valueTo = m_Value1Active ? m_Value2 : m_Value1;
-            TraceLogger::GetInstance().LogConversionResult(valueFrom->Data(), UnitFrom->ToString()->Data(), valueTo->Data(), UnitTo->ToString()->Data());
         }
     });
 }

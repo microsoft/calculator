@@ -341,7 +341,7 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-            <VisualStateGroup x:Name="Sizing">
+            <VisualStateGroup x:Name="Sizing" CurrentStateChanged="OnVisualStateChanged">
                 <VisualState x:Name="Wide">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="768" MinWindowWidth="1280"/>

@@ -253,7 +253,6 @@ void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
         CoreDispatcherPriority::Normal, ref new DispatchedHandler([]() {
             if (TraceLogger::GetInstance().UpdateWindowIdLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
             {
-                TraceLogger::GetInstance().LogAppLaunchComplete();
                 AppLifecycleLogger::GetInstance().LaunchUIResponsive();
                 AppLifecycleLogger::GetInstance().LaunchVisibleComplete();
             }
