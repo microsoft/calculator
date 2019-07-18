@@ -117,7 +117,7 @@ void MainPage::WindowSizeChanged(_In_ Platform::Object ^ /*sender*/, _In_ Window
 {
     // We don't use layout aware page's view states, we have our own
     UpdateViewState();
-    if (m_model->CalculatorViewModel->IsAlwaysOnTop)
+    if (m_model->IsAlwaysOnTop)
     {
         Windows::Storage::ApplicationDataContainer ^ localSettings = Windows::Storage::ApplicationData::Current->LocalSettings;
         // double width = safe_cast<float>(this->ActualWidth);
@@ -375,18 +375,6 @@ void MainPage::OnNavLoaded(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
     }
     // Special case logic for Ctrl+E accelerator for Date Calculation Mode
     NavView->SetValue(Common::KeyboardShortcutManager::VirtualKeyControlChordProperty, Common::MyVirtualKey::E);
-    for (unsigned int i = 0; i < menuItems->Size; i++)
-    {
-        MUXC::NavigationViewItem ^ nvi = dynamic_cast<MUXC::NavigationViewItem ^>(menuItems->GetAt(i));
-        if (nvi != nullptr && nvi->IsEnabledProperty != nullptr)
-        {
-            Binding ^ isEnabledBinding = ref new Binding();
-            isEnabledBinding->Source = Model->CalculatorViewModel;
-            isEnabledBinding->Path = ref new PropertyPath(L"IsAlwaysOnTop");
-            isEnabledBinding->Converter = ref new BooleanNegationConverter();
-            nvi->SetBinding(nvi->IsEnabledProperty, isEnabledBinding);
-        }
-    }
 }
 
 void MainPage::OnNavPaneOpening(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)

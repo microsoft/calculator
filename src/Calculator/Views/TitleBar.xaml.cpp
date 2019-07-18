@@ -83,7 +83,7 @@ namespace CalculatorApp
 
     void TitleBar::SetTitleBarVisibility()
     {
-        this->LayoutRoot->Visibility = m_coreTitleBar->IsVisible || ApplicationViewModel->CalculatorViewModel->IsAlwaysOnTop ? ::Visibility::Visible : ::Visibility::Collapsed;
+        this->LayoutRoot->Visibility = m_coreTitleBar->IsVisible || ApplicationViewModel->IsAlwaysOnTop ? ::Visibility::Visible : ::Visibility::Collapsed;
     }
 
     void TitleBar::SetTitleBarPadding()

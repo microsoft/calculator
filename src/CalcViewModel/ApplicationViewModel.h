@@ -91,6 +91,22 @@ namespace CalculatorApp
                 }
             }
 
+            property bool IsAlwaysOnTop
+            {
+                bool get()
+                {
+                    return m_isAlwaysOnTop;
+                }
+                void set(bool value)
+                {
+                    if (m_isAlwaysOnTop != value)
+                    {
+                        m_isAlwaysOnTop = value;
+                        RaisePropertyChanged(L"IsAlwaysOnTop");
+                    }
+                }
+            }
+
             void AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
         private:
@@ -107,6 +123,8 @@ namespace CalculatorApp
             Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup ^> ^ m_categories;
             Concurrency::task<void> HandleAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
             void SetDisplayNormalAlwaysOnTopOption();
+
+            bool m_isAlwaysOnTop;
         };
     }
 }

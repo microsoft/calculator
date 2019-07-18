@@ -134,31 +134,12 @@
                                 <StackPanel Orientation="Horizontal"
                                             Grid.Row="2"
                                             HorizontalAlignment="Right">
-                                    <ItemsControl x:Name="TokenList"
-                                                  Padding="0"
-                                                  VerticalAlignment="Stretch"
-                                                  HorizontalContentAlignment="Right"
-                                                  VerticalContentAlignment="Center"
-                                                  IsTabStop="False"
-                                                  FontWeight="SemiLight"
-                                                  ItemTemplateSelector="{StaticResource AlwaysOnTopExpressionItemTemplateSelector}"
-                                                  ItemsSource="{Binding ExpressionTokens}"
-                                                  Visibility="{Binding DoesAlwaysOnTopResultShowTokens, Mode=OneWay}">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <ItemsStackPanel HorizontalAlignment="Right"
-                                                                 VerticalAlignment="Stretch"
-                                                                 Orientation="Horizontal"/>
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                    </ItemsControl>
                                     <TextBlock x:Name="EditableToken"
                                                Text="{Binding DisplayValue, Mode=OneWay}"
                                                Margin="0,0,0,0"
                                                Padding="0"
                                                VerticalAlignment="Stretch"
-                                               FontWeight="Bold"
-                                               Visibility="{Binding DoesAlwaysOnTopResultConcatenate, Mode=OneWay}"/>
+                                               FontWeight="SemiBold"/>
                                 </StackPanel>
                             </ScrollViewer>
                             <Button x:Name="ScrollLeft"
@@ -205,31 +186,12 @@
                                 <StackPanel Orientation="Horizontal"
                                             Grid.Row="2"
                                             HorizontalAlignment="Right">
-                                    <ItemsControl x:Name="TokenList"
-                                                  Padding="0"
-                                                  VerticalAlignment="Stretch"
-                                                  HorizontalContentAlignment="Right"
-                                                  VerticalContentAlignment="Center"
-                                                  IsTabStop="False"
-                                                  FontWeight="SemiLight"
-                                                  ItemTemplateSelector="{StaticResource AlwaysOnTopExpressionItemTemplateSelector}"
-                                                  ItemsSource="{Binding ExpressionTokens}"
-                                                  Visibility="{Binding DoesAlwaysOnTopResultShowTokens, Mode=OneWay}">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <ItemsStackPanel HorizontalAlignment="Right"
-                                                                 VerticalAlignment="Stretch"
-                                                                 Orientation="Horizontal"/>
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                    </ItemsControl>
                                     <TextBlock x:Name="EditableToken"
                                                Text="{Binding DisplayValue, Mode=OneWay}"
                                                Margin="0,0,0,0"
                                                Padding="0"
                                                VerticalAlignment="Stretch"
-                                               FontWeight="Bold"
-                                               Visibility="{Binding DoesAlwaysOnTopResultConcatenate, Mode=OneWay}"/>
+                                               FontWeight="SemiBold"/>
                                 </StackPanel>
                             </ScrollViewer>
                             <Button x:Name="ScrollLeft"

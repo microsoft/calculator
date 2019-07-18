@@ -217,6 +217,7 @@ Concurrency::task<void> ApplicationViewModel::HandleAlwaysOnTopButtonClick(Platf
 
         bool success = co_await ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::Default);
         CalculatorViewModel->IsAlwaysOnTop = !success;
+        IsAlwaysOnTop = !success;
     }
     else
     {
@@ -246,18 +247,12 @@ Concurrency::task<void> ApplicationViewModel::HandleAlwaysOnTopButtonClick(Platf
 
         bool success = co_await ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::CompactOverlay, compactOptions);
         CalculatorViewModel->IsAlwaysOnTop = success;
+        IsAlwaysOnTop = success;
     }
     SetDisplayNormalAlwaysOnTopOption();
 }
 
 void ApplicationViewModel::SetDisplayNormalAlwaysOnTopOption()
 {
-    if (CalculatorViewModel != nullptr)
-    {
-        DisplayNormalAlwaysOnTopOption = m_mode == ViewMode::Standard && ApplicationView::GetForCurrentView()->IsViewModeSupported(ApplicationViewMode::CompactOverlay) && !CalculatorViewModel->IsAlwaysOnTop;
-    }
-    else
-    {
-        DisplayNormalAlwaysOnTopOption = m_mode == ViewMode::Standard && ApplicationView::GetForCurrentView()->IsViewModeSupported(ApplicationViewMode::CompactOverlay);
-    }
+    DisplayNormalAlwaysOnTopOption = m_mode == ViewMode::Standard && ApplicationView::GetForCurrentView()->IsViewModeSupported(ApplicationViewMode::CompactOverlay) && !IsAlwaysOnTop;
 }

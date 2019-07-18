@@ -33,7 +33,7 @@
                    FontSize="12"
                    TextAlignment="Left"
                    TextTrimming="CharacterEllipsis"
-                   Visibility="{x:Bind ApplicationViewModel.CalculatorViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+                   Visibility="{x:Bind ApplicationViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
         </Grid>
         <Button x:Name="AoTAlwaysOnTopButton"
                 Grid.Row="0"
@@ -48,7 +48,7 @@
                 Background="Transparent"
                 FontWeight="Thin"
                 FontSize="14"
-                Visibility="{x:Bind ApplicationViewModel.CalculatorViewModel.IsAlwaysOnTop, Mode=OneWay}"
+                Visibility="{x:Bind ApplicationViewModel.IsAlwaysOnTop, Mode=OneWay}"
                 AutomationProperties.AutomationId="AlwaysOnTopButton"
                 AutomationProperties.Name="Always on top"/>
     </Grid>

@@ -229,12 +229,6 @@ namespace CalculatorApp
                     if (m_isAlwaysOnTop != value)
                     {
                         m_isAlwaysOnTop = value;
-                        if (value)
-                        {
-                            IsStandard = true;
-                            IsScientific = false;
-                            IsProgrammer = false;
-                        }
                         RaisePropertyChanged(L"IsAlwaysOnTop");
                     }
                 }

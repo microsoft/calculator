@@ -150,7 +150,7 @@ void OverflowTextBlock::OnScrollClick(_In_ Object ^ sender, _In_ RoutedEventArgs
 
 void OverflowTextBlock::UpdateScrollButtons()
 {
-    if (m_itemsControl == nullptr || m_expressionContainer == nullptr)
+    if (m_expressionContainer == nullptr)
     {
         return;
     }
@@ -162,7 +162,7 @@ void OverflowTextBlock::UpdateScrollButtons()
     }
 
     double itemsControlWidth = 0;
-    if (m_itemsControl->Visibility == ::Visibility::Visible)
+    if (m_itemsControl != nullptr && m_itemsControl->Visibility == ::Visibility::Visible)
     {
         itemsControlWidth = m_itemsControl->ActualWidth; 
     }
