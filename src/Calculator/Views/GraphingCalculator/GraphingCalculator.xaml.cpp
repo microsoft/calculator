@@ -27,6 +27,8 @@ using namespace Windows::ApplicationModel::DataTransfer;
 using namespace Windows::Storage::Streams;
 using namespace Windows::UI::Xaml::Media;
 
+using namespace Windows::UI::Core;
+
 namespace MathSolverEngine
 {
     namespace Graph
@@ -119,42 +121,50 @@ void GraphingCalculator::OnShareCompleted(DataPackage^ sender, ShareCompletedEve
 
 
 
-bool GraphingCalculator::GetShareContent(DataRequest^ request)
+void GraphingCalculator::GetShareContent(DataRequest^ request)
 {
-    bool succeeded = false;
-    String^ TextToShare = L"Here is some text";
+    Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([=]()
+        {
 
+            bool succeeded = false;
+    String^ TextToShare = L"Here is some text";
     auto requestData = request->Data;
     requestData->Properties->Title = L"share text title";
     requestData->Properties->Description = L"Share text description"; // The description is optional.
 //    requestData->Properties->ContentSourceApplicationLink = ApplicationLink;
     requestData->SetText(TextToShare);
 
+
     
     if (TheGrapher != nullptr)
     {
-        BitmapImage^ bitmapImage = ref new BitmapImage();
-       // HRESULT hr E_FAIL;
+        //HRESULT hr E_FAIL;
 
         if (TheGrapher != nullptr)
         {
-            TheGrapher->Share();
-            //auto f = TheGrapher.:
-            //    std::shared_ptr < MathSolverEngine::Graph::Renderer::IBitmap> BitmapOut;
-            //    BitmapOut = Grapher::GraphBitmapProperty.GetValue();
+            WCHAR ShareFilePath[MAX_PATH] = L"";
+            TheGrapher->GetShareFile(ShareFilePath, MAX_PATH);
 
-            //    bitmapImage->SetSource(BitmapOut);
-            //    auto width = bitmapImage->PixelWidth;
-            //    auto height = bitmapImage->PixelHeight;
+            String^ path = ref new String(ShareFilePath);
 
-            //    auto source = bitmapImage->UriSource();
+            //auto imageFile = Windows::Storage::StorageFile::GetFileFromPathAsync(path)->GetResults();
 
-            //    auto stream = RandomAccessStreamReference.CreateFromUri(source.UriSource);
-            //    requestData->SetBitmap(stream);
+            //Windows::Storage::StorageFile^ imageFile = TheGrapher->GetShareFile();
+
+            create_task(Windows::Storage::StorageFile::GetFileFromPathAsync(path)).then([requestData](Windows::Storage::StorageFile^ imageFile)
+                {
+                    auto imageStreamRef = RandomAccessStreamReference::CreateFromFile(imageFile);
+                    requestData->Properties->Thumbnail = imageStreamRef;
+                    requestData->SetBitmap(imageStreamRef);
+                });
 
         }
+
+
         succeeded = true;
     }
 
-    return succeeded;
+    //return succeeded;
+        }));
+
 }

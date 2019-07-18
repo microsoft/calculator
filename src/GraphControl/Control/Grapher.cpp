@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Grapher.h"
+#include <fstream>
+
 using namespace Windows::UI::Xaml::Media::Imaging;
 
 using namespace Graphing;
@@ -20,6 +22,8 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 
 using namespace Windows::Storage::Streams;
+using namespace Windows::System::Threading;
+using namespace concurrency;
 
 typedef struct tagBITMAPFILEHEADER {
     WORD  bfType;
@@ -552,18 +556,18 @@ namespace GraphControl
                 {
                     // The graphing engine interprets scale amounts as the inverse of the value retrieved
                     // from the ManipulationUpdatedEventArgs. Invert the scale amount for the engine.
-                    scale = 1.0 / scale;
+scale = 1.0 / scale;
 
-                    // Convert from PointerPosition to graph position.
-                    const auto& pos = e->Position;
-                    const auto[centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, width, height);
+// Convert from PointerPosition to graph position.
+const auto& pos = e->Position;
+const auto [centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, width, height);
 
-                    if (FAILED(renderer->ScaleRange(centerX, centerY, scale)))
-                    {
-                        return;
-                    }
+if (FAILED(renderer->ScaleRange(centerX, centerY, scale)))
+{
+    return;
+}
 
-                    needsRenderPass = true;
+needsRenderPass = true;
                 }
 
                 if (needsRenderPass)
@@ -588,73 +592,80 @@ namespace GraphControl
         std::vector<BYTE> m_bitmap;
     };
 
-    void Grapher::Share()
+    //Windows::Storage::StorageFile^ Grapher::GetShareFile()
+    bool Grapher::GetShareFile(WCHAR* TempFileName, int Len)
     {
-            HRESULT hr E_FAIL;
-            BitmapImage^ bitmapOut = ref new BitmapImage();
-            if (m_renderMain != nullptr && m_graph != nullptr)
+        HRESULT hr E_FAIL;
+        //Windows::Storage::StorageFile^ tempFile;
+        //WCHAR TempFileName[MAX_PATH] = L"";
+
+        BitmapImage^ bitmapOut = ref new BitmapImage();
+        if (m_renderMain != nullptr && m_graph != nullptr)
+        {
+            if (auto renderer = m_graph->GetRenderer())
             {
-                if (auto renderer = m_graph->GetRenderer())
+                std::shared_ptr < MathSolverEngine::Graph::Renderer::IBitmap> BitmapOut;
+                bool hasSomeMissingDataOut = false;
+
+                hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
+
+                if (SUCCEEDED(hr))
                 {
-                    std::shared_ptr < MathSolverEngine::Graph::Renderer::IBitmap> BitmapOut;
-                    bool hasSomeMissingDataOut = false;
+                    MathSolverEngine::Graph::Renderer::IBitmap* pBitmap = dynamic_cast<MathSolverEngine::Graph::Renderer::IBitmap*>(BitmapOut.get());
 
-                    hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
+                    std::vector<BYTE> byteVector = pBitmap->GetData();
+                    // Write the data to a temp file for shareing
 
-                    if (SUCCEEDED(hr))
-                    {
-                        CBitmap* pBitmap = (CBitmap*)BitmapOut.get();
+                    Windows::Storage::ApplicationData^ appData = Windows::Storage::ApplicationData::Current;
+                    Windows::Storage::StorageFolder^ folder = appData->LocalFolder;
 
-                        std::vector<BYTE> byteVector = pBitmap->GetData();
+                    std::wstring wPath = folder->Path->Data();
+                    std::wstring sPath(wPath.begin(), wPath.end());
+                    GetTempFileName(wPath.c_str(), L"GRP", 0, TempFileName);
+                    OutputDebugString(TempFileName);
+                    OutputDebugString(L"\r\n");
 
-                        BITMAPFILEHEADER* bmhx = (BITMAPFILEHEADER*)(void*)byteVector.data();
-                        BITMAPINFO * pbmi = (BITMAPINFO*)(void*)byteVector.data();
+                    std::ofstream outfile(TempFileName, std::ofstream::binary | std::ofstream::trunc);
+                    outfile.write((char*)byteVector.data(), byteVector.size());
+                    outfile.flush();
+                    outfile.close();
 
-                        void* pVoid = (void*)(BitmapOut.get());
-                        BITMAPFILEHEADER* bmh = (BITMAPFILEHEADER*)((void*)BitmapOut.get());
-                        BYTE* rawBuffer = (BYTE*)((void*)BitmapOut.get());
-                        WORD type = bmh->bfType;
-                        DWORD size = bmh->bfSize;
-                        WORD r1 = bmh->bfReserved1;
-                        WORD r2 = bmh->bfReserved2;
-                        DWORD ofsetBits = bmh->bfOffBits;
+                    //String^ sTempFileName = ref new String(TempFileName);
+                    //auto dispatcher = Windows::UI::Core::CoreWindow::GetForCurrentThread()->Dispatcher;
+                    //    ThreadPool::RunAsync(ref new WorkItemHandler([=, &dispatcher, &tempFile](IAsyncAction^ operation)
+                    //        {
+                    //            tempFile = co_await folder->GetFileAsync(sTempFileName);
+                    //            OutputDebugString(L"\r\n");
+                    //            OutputDebugString(tempFile->Path->Data());
+                    //            OutputDebugString(L"\r\n");
+                    //        }));
 
+                    //String^ sfm = L"Test.bmp";
 
-                        InMemoryRandomAccessStream^ stream = ref new InMemoryRandomAccessStream();
-                        {
-                            auto writer = ref new DataWriter(stream->GetOutputStreamAt(0));
-                            writer->WriteBytes(Platform::ArrayReference<BYTE>((BYTE*)byteVector.data(), size));
-                            writer->StoreAsync()->GetResults();
-                            stream->Seek(0);
+                    //create_task(folder->GetFileAsync(sfm)).then([tempFile](Windows::Storage::StorageFile^ openedFile)
+                    //    {
+                    //        OutputDebugString(L"\r\n");
+                    //        tempFile = openedFile;
+                    //        OutputDebugString(tempFile->Path->Data());
+                    //        OutputDebugString(L"\r\n");
+                    //    });
 
-                            auto image = ref new BitmapImage();
-                            
-                            image->SetSource(stream);
-                            auto w = image->PixelWidth;
-                            auto h = image->PixelHeight;
-                        }
+                    //auto tempFileTask = Windows::Storage::StorageFile::GetFileFromPathAsync(sTempFileName);
+                    //create_task(tempFileTask).then([this])(Windows::Storage::StorageFile ^ sf) {
+                    //    OutputDebugString(sf->Path->Data());
+                    //    OutputDebugString(L"\r\n");
+                    //}
 
-                        //auto ms = new InMemoryRandomAccessStream::Create(bitmapArray);
-                        //{
-                        //    using (System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(ms))
-                        //    {
-                        //        return System.Drawing.Bitmap.FromHbitmap(bmp.GetHbitmap());
-                        //    }
-                        //}
-
-
-                        //DWORD* pBits = (DWORD*)(((void*)bmh) + ofsetBits);
-                        //DWORD first = pBits[0];
-
-                         //BitmapImage b = (BitmapImage)((void*)BitmapOut);
-                        //auto w = BitmapOut->
-                        //bitmapOut->SetSource(BitmapOut);
-                        //auto width = bitmapOut->PixelWidth;
-                        //auto height = bitmapOut->PixelHeight;
-                    }
                 }
             }
 
+            return hr = S_OK;
+            //String^ foo = ref new String(TempFileName);
+            //return ref new String(TempFileName);
+
+            //return sTempFileName;
+            //return tempFile;
+        }
     }
 
 

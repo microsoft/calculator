@@ -7,6 +7,7 @@
 #include "EquationCollection.h"
 #include "IMathSolver.h"
 using namespace Windows::UI::Xaml::Media::Imaging;
+using namespace Windows::Storage::Streams;
 
 namespace GraphControl
 {
@@ -214,6 +215,7 @@ namespace GraphControl
         const std::shared_ptr<Graphing::IGraph> m_graph;
 
         public:
-            void Share();
+            //Windows::Storage::StorageFile^ GetShareFile();
+            bool GetShareFile(WCHAR* TempFileName, int Len);
     };
 }

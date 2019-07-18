@@ -34,7 +34,7 @@ namespace CalculatorApp
         void OnTargetApplicationChosen(Windows::ApplicationModel::DataTransfer::DataTransferManager^ sender, Windows::ApplicationModel::DataTransfer::TargetApplicationChosenEventArgs^ e);
         void OnShareCompleted(Windows::ApplicationModel::DataTransfer::DataPackage^ sender, Windows::ApplicationModel::DataTransfer::ShareCompletedEventArgs^ e);
         // worker
-        bool GetShareContent(Windows::ApplicationModel::DataTransfer::DataRequest^ request);
+        void GetShareContent(Windows::ApplicationModel::DataTransfer::DataRequest^ request);
 
 	};
 }
