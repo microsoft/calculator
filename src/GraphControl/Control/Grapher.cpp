@@ -26,6 +26,8 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 
 using namespace Windows::Storage::Streams;
+using namespace Windows::System::Threading;
+using namespace concurrency;
 
 typedef struct tagBITMAPFILEHEADER {
     WORD  bfType;
