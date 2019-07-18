@@ -54,6 +54,7 @@ namespace CalculatorApp
         void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e) const;
         void LogWinRTException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ winrt::hresult_error const& e) const;
         void LogPlatformException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ Platform::Exception ^ e) const;
+        void LogInputPasted(CalculatorApp::Common::ViewMode mode) const;
 
     private:
         // Create an instance of TraceLogger

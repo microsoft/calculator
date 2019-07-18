@@ -33,6 +33,7 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_MEMORY_ITEM_LOAD = L"MemoryItemLoad";
     constexpr auto EVENT_NAME_VISUAL_STATE_CHANGED = L"VisualStateChanged";
     constexpr auto EVENT_NAME_CONVERTER_INPUT_RECEIVED = L"ConverterInputReceived";
+    constexpr auto EVENT_NAME_INPUT_PASTED = L"InputPasted";
 
     constexpr auto EVENT_NAME_EXCEPTION = L"Exception";
 
@@ -368,5 +369,17 @@ namespace CalculatorApp
         fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_NAV_BAR_OPENED, fields);
+    }
+
+    void TraceLogger::LogInputPasted(ViewMode mode) const
+    {
+        if (!GetTraceLoggingProviderEnabled())
+            return;
+
+        LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
+        fields.AddString(L"Mode", NavCategory::GetFriendlyName(mode)->Data());
+        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
+        LogLevel2Event(EVENT_NAME_INPUT_PASTED, fields);
     }
 }

@@ -765,6 +765,7 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString)
         return;
     }
 
+    TraceLogger::GetInstance().LogInputPasted(GetCalculatorMode());
     bool isFirstLegalChar = true;
     m_standardCalculatorManager.SendCommand(Command::CommandCENTR);
     bool sendNegate = false;
