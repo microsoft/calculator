@@ -37,6 +37,5 @@ namespace Graphing::Renderer
         virtual HRESULT ResetRange() = 0;
 
 		virtual HRESULT GetBitmap(std::shared_ptr<MathSolverEngine::Graph::Renderer::IBitmap>& bitmapOut, bool& hasSomeMissingDataOut) = 0;
-		//virtual HRESULT GetBitmap() = 0;
     };
 }

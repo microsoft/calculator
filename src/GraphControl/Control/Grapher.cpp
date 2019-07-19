@@ -25,14 +25,6 @@ using namespace Windows::Storage::Streams;
 using namespace Windows::System::Threading;
 using namespace concurrency;
 
-typedef struct tagBITMAPFILEHEADER {
-    WORD  bfType;
-    DWORD bfSize;
-    WORD  bfReserved1;
-    WORD  bfReserved2;
-    DWORD bfOffBits;
-} BITMAPFILEHEADER, * LPBITMAPFILEHEADER, * PBITMAPFILEHEADER;
-
 namespace
 {
     constexpr auto s_defaultStyleKey = L"GraphControl.Grapher";
@@ -42,7 +34,6 @@ namespace
     constexpr auto s_propertyName_Equations = L"Equations";
     constexpr auto s_propertyName_EquationsSource = L"EquationsSource";
     constexpr auto s_propertyName_ForceProportionalAxes = L"ForceProportionalAxes";
-    constexpr auto s_propertyName_GraphBitmap = L"GraphBitmap";
 
     // Helper function for converting a pointer position to a position that the graphing engine will understand.
     // posX/posY are the pointer position elements and width,height are the dimensions of the graph surface.
@@ -60,7 +51,6 @@ namespace GraphControl
     DependencyProperty^ Grapher::s_equationsProperty;
     DependencyProperty^ Grapher::s_equationsSourceProperty;
     DependencyProperty^ Grapher::s_forceProportionalAxesTemplateProperty;
-    DependencyProperty^ Grapher::s_graphBitmapProperty;
 
     Grapher::Grapher()
         : m_solver{ IMathSolver::CreateMathSolver() }
@@ -133,7 +123,7 @@ namespace GraphControl
         {
             s_equationsProperty = DependencyProperty::Register(
                 StringReference(s_propertyName_Equations),
-                EquationCollection::typeid ,
+                EquationCollection::typeid,
                 Grapher::typeid,
                 ref new PropertyMetadata(
                     nullptr,
@@ -172,18 +162,6 @@ namespace GraphControl
                     true,
                     ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
         }
-
-        if (!s_graphBitmapProperty)
-        {
-            s_graphBitmapProperty = DependencyProperty::Register(
-                StringReference(s_propertyName_GraphBitmap),
-                bool::typeid,
-                Grapher::typeid,
-                ref new PropertyMetadata(
-                    true,
-                    ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
-        }
-
     }
 
     void Grapher::OnCustomDependencyPropertyChanged(DependencyObject^ obj, DependencyPropertyChangedEventArgs^ args)
@@ -497,7 +475,7 @@ namespace GraphControl
         // For scaling, the graphing engine interprets x,y position between the range [-1, 1].
         // Translate the pointer position to the [-1, 1] bounds.
         const auto& pos = currentPointer->Position;
-        const auto[centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, ActualWidth, ActualHeight);
+        const auto [centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, ActualWidth, ActualHeight);
 
         ScaleRange(centerX, centerY, scale);
 
@@ -505,16 +483,16 @@ namespace GraphControl
     }
 
     void Grapher::OnPointerPressed(PointerRoutedEventArgs^ e)
-	{
+    {
         // Set the pointer capture to the element being interacted with so that only it
         // will fire pointer-related events
         CapturePointer(e->Pointer);
-	}
+    }
 
     void Grapher::OnPointerReleased(PointerRoutedEventArgs^ e)
-	{
+    {
         ReleasePointerCapture(e->Pointer);
-	}
+    }
 
     void Grapher::OnPointerCanceled(PointerRoutedEventArgs^ e)
     {
@@ -556,18 +534,18 @@ namespace GraphControl
                 {
                     // The graphing engine interprets scale amounts as the inverse of the value retrieved
                     // from the ManipulationUpdatedEventArgs. Invert the scale amount for the engine.
-scale = 1.0 / scale;
+                    scale = 1.0 / scale;
 
-// Convert from PointerPosition to graph position.
-const auto& pos = e->Position;
-const auto [centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, width, height);
+                    // Convert from PointerPosition to graph position.
+                    const auto& pos = e->Position;
+                    const auto [centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, width, height);
 
-if (FAILED(renderer->ScaleRange(centerX, centerY, scale)))
-{
-    return;
-}
+                    if (FAILED(renderer->ScaleRange(centerX, centerY, scale)))
+                    {
+                        return;
+                    }
 
-needsRenderPass = true;
+                    needsRenderPass = true;
                 }
 
                 if (needsRenderPass)
@@ -578,26 +556,19 @@ needsRenderPass = true;
         }
     }
 
-    class CBitmap : public MathSolverEngine::Graph::Renderer::IBitmap
+    String^ Grapher::GetShareFile()
     {
-    public:
+        WCHAR t[MAX_PATH] = L"";
 
-        CBitmap(std::vector<BYTE>& bitmap) {}
-        virtual ~CBitmap() {}
-        const std::vector<BYTE>& GetData() const override
-        {
-            return m_bitmap;
-        }
-    private:
-        std::vector<BYTE> m_bitmap;
-    };
+        GetShareFile(t, MAX_PATH);
+        String^ x = ref new String(t);
 
-    //Windows::Storage::StorageFile^ Grapher::GetShareFile()
+        return x;
+    }
+
     bool Grapher::GetShareFile(WCHAR* TempFileName, int Len)
     {
         HRESULT hr E_FAIL;
-        //Windows::Storage::StorageFile^ tempFile;
-        //WCHAR TempFileName[MAX_PATH] = L"";
 
         BitmapImage^ bitmapOut = ref new BitmapImage();
         if (m_renderMain != nullptr && m_graph != nullptr)
@@ -629,65 +600,15 @@ needsRenderPass = true;
                     outfile.write((char*)byteVector.data(), byteVector.size());
                     outfile.flush();
                     outfile.close();
-
-                    //String^ sTempFileName = ref new String(TempFileName);
-                    //auto dispatcher = Windows::UI::Core::CoreWindow::GetForCurrentThread()->Dispatcher;
-                    //    ThreadPool::RunAsync(ref new WorkItemHandler([=, &dispatcher, &tempFile](IAsyncAction^ operation)
-                    //        {
-                    //            tempFile = co_await folder->GetFileAsync(sTempFileName);
-                    //            OutputDebugString(L"\r\n");
-                    //            OutputDebugString(tempFile->Path->Data());
-                    //            OutputDebugString(L"\r\n");
-                    //        }));
-
-                    //String^ sfm = L"Test.bmp";
-
-                    //create_task(folder->GetFileAsync(sfm)).then([tempFile](Windows::Storage::StorageFile^ openedFile)
-                    //    {
-                    //        OutputDebugString(L"\r\n");
-                    //        tempFile = openedFile;
-                    //        OutputDebugString(tempFile->Path->Data());
-                    //        OutputDebugString(L"\r\n");
-                    //    });
-
-                    //auto tempFileTask = Windows::Storage::StorageFile::GetFileFromPathAsync(sTempFileName);
-                    //create_task(tempFileTask).then([this])(Windows::Storage::StorageFile ^ sf) {
-                    //    OutputDebugString(sf->Path->Data());
-                    //    OutputDebugString(L"\r\n");
-                    //}
-
                 }
             }
 
-            return hr = S_OK;
-            //String^ foo = ref new String(TempFileName);
+            String^ foo = ref new String(TempFileName);
             //return ref new String(TempFileName);
 
             //return sTempFileName;
             //return tempFile;
         }
+        return hr = S_OK;
     }
-
-
-    //void Grapher::Share(BitmapImage bitmapOut)
-    //{
-    //    HRESULT hr E_FAIL;
-    //    if (m_renderMain != nullptr && m_graph != nullptr)
-    //    {
-    //        if (auto renderer = m_graph->GetRenderer())
-    //        {
-    //            std::shared_ptr < MathSolverEngine::Graph::Renderer::IBitmap> BitmapOut;
-    //            bool hasSomeMissingDataOut = false;
-
-    //            hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
-    //            if (SUCCEEDED(hr))
-    //            {
-    //                bitmapOut.SetSource(BitmapOut);
-    //                auto width = bitmapOut.PixelWidth;
-    //                auto height = bitmapOut.PixelHeight;
-    //            }
-    //        }
-    //    }
-
-    //}
 }

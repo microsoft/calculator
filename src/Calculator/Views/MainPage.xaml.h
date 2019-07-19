@@ -40,13 +40,7 @@ namespace CalculatorApp
         Windows::Foundation::Collections::IObservableVector<Platform::Object^>^ CreateUIElementsForCategories(_In_ Windows::Foundation::Collections::IObservableVector<Common::NavCategoryGroup^>^ categories);
 
     protected:
-        virtual void OnNavigatedTo(_In_ Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
-   
-
-    private:
-        Windows::Foundation::EventRegistrationToken dataRequestedToken{};
-        Windows::Foundation::EventRegistrationToken targetApplicationChosenToken{};
-
+        void OnNavigatedTo(_In_ Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
 
     private:
         void WindowSizeChanged(_In_ Platform::Object^ sender, _In_ Windows::UI::Core::WindowSizeChangedEventArgs^ e);
