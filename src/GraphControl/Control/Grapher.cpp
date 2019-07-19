@@ -29,14 +29,6 @@ using namespace Windows::Storage::Streams;
 using namespace Windows::System::Threading;
 using namespace concurrency;
 
-typedef struct tagBITMAPFILEHEADER {
-    WORD  bfType;
-    DWORD bfSize;
-    WORD  bfReserved1;
-    WORD  bfReserved2;
-    DWORD bfOffBits;
-} BITMAPFILEHEADER, * LPBITMAPFILEHEADER, * PBITMAPFILEHEADER;
-
 namespace
 {
     constexpr auto s_defaultStyleKey = L"GraphControl.Grapher";
