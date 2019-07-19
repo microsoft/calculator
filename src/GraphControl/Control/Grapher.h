@@ -165,7 +165,6 @@ namespace GraphControl
         const std::shared_ptr<Graphing::IGraph> m_graph;
 
         public:
-            Platform::String^ GetShareFile();
-            bool GetShareFile(WCHAR* TempFileName, int Len);
+            Windows::Storage::Streams::RandomAccessStreamReference^ GetGraphBitmapStream();
     };
 }

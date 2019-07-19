@@ -1,8 +1,5 @@
 #include "pch.h"
 #include "Grapher.h"
-#include <fstream>
-
-using namespace Windows::UI::Xaml::Media::Imaging;
 
 using namespace Graphing;
 using namespace GraphControl;
@@ -13,6 +10,7 @@ using namespace std;
 using namespace Windows::Devices::Input;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::Storage::Streams;
 using namespace Windows::System;
 using namespace Windows::UI;
 using namespace Windows::UI::Input;
@@ -20,10 +18,6 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
-
-using namespace Windows::Storage::Streams;
-using namespace Windows::System::Threading;
-using namespace concurrency;
 
 namespace
 {
@@ -556,21 +550,10 @@ namespace GraphControl
         }
     }
 
-    String^ Grapher::GetShareFile()
+    RandomAccessStreamReference^ Grapher::GetGraphBitmapStream()
     {
-        WCHAR t[MAX_PATH] = L"";
+        RandomAccessStreamReference^ outputStream;
 
-        GetShareFile(t, MAX_PATH);
-        String^ x = ref new String(t);
-
-        return x;
-    }
-
-    bool Grapher::GetShareFile(WCHAR* TempFileName, int Len)
-    {
-        HRESULT hr E_FAIL;
-
-        BitmapImage^ bitmapOut = ref new BitmapImage();
         if (m_renderMain != nullptr && m_graph != nullptr)
         {
             if (auto renderer = m_graph->GetRenderer())
@@ -578,37 +561,33 @@ namespace GraphControl
                 std::shared_ptr < MathSolverEngine::Graph::Renderer::IBitmap> BitmapOut;
                 bool hasSomeMissingDataOut = false;
 
-                hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
-
-                if (SUCCEEDED(hr))
+                // Request the current graph image, we don't care if there is some missing data
+                if (SUCCEEDED(renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut)))
                 {
-                    MathSolverEngine::Graph::Renderer::IBitmap* pBitmap = dynamic_cast<MathSolverEngine::Graph::Renderer::IBitmap*>(BitmapOut.get());
+                    // Get the raw date
+                    std::vector<BYTE> byteVector = BitmapOut->GetData();
+                    auto arr = ref new Array<BYTE>(&byteVector[0], (unsigned int)byteVector.size());
 
-                    std::vector<BYTE> byteVector = pBitmap->GetData();
-                    // Write the data to a temp file for shareing
+                    // create a memory stream wrapper
+                    InMemoryRandomAccessStream^ stream = ref new InMemoryRandomAccessStream();
 
-                    Windows::Storage::ApplicationData^ appData = Windows::Storage::ApplicationData::Current;
-                    Windows::Storage::StorageFolder^ folder = appData->LocalFolder;
+                    // Get a writer to transfer the data 
+                    auto writer = ref new DataWriter(stream->GetOutputStreamAt(0));
 
-                    std::wstring wPath = folder->Path->Data();
-                    std::wstring sPath(wPath.begin(), wPath.end());
-                    GetTempFileName(wPath.c_str(), L"GRP", 0, TempFileName);
-                    OutputDebugString(TempFileName);
-                    OutputDebugString(L"\r\n");
+                    // write the data
+                    writer->WriteBytes(arr);
+                    writer->StoreAsync()->GetResults();
 
-                    std::ofstream outfile(TempFileName, std::ofstream::binary | std::ofstream::trunc);
-                    outfile.write((char*)byteVector.data(), byteVector.size());
-                    outfile.flush();
-                    outfile.close();
+                    // Get a reference stream to return;
+                    outputStream = RandomAccessStreamReference::CreateFromStream(stream);
+                }
+                else
+                {
+                    OutputDebugString(L"Grapher::GetGraphBitmapStream() unable to get graph image from renderer\r\n");
                 }
             }
-
-            String^ foo = ref new String(TempFileName);
-            //return ref new String(TempFileName);
-
-            //return sTempFileName;
-            //return tempFile;
         }
-        return hr = S_OK;
+
+        return outputStream;
     }
 }

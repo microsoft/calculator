@@ -28,11 +28,7 @@ namespace CalculatorApp
 
     private:
         Windows::Foundation::EventRegistrationToken dataRequestedToken{};
-        Windows::Foundation::EventRegistrationToken targetApplicationChosenToken{};
 
         void OnDataRequested(Windows::ApplicationModel::DataTransfer::DataTransferManager^ sender, Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs^ e);
-        // worker
-        bool GetShareContent(Windows::ApplicationModel::DataTransfer::DataRequest^ request);
-
 	};
 }

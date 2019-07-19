@@ -53,7 +53,9 @@
             </Grid.RowDefinitions>
 
             <StackPanel>
-                <Button x:Name="Share" Content="Share" Click="OnShareClick"/>
+                <Button x:Name="Share" Click="OnShareClick">
+    		        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;"/>
+	            </Button>
                 <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
             </StackPanel>
 

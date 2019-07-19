@@ -86,30 +86,28 @@ void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object^ sender, W
 }
 
 // When share is invoked (by the user or programatically) the event handler we registered will be called to populate the datapackage with the
-// data to be shared.
-// TODO: Cleanup temp file
+// data to be shared.  We will request the current graph image from teh grapher as a stream that will pass to the share request.
 void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataRequestedEventArgs^ args)
 {
     if (TheGrapher != nullptr)
     {
-        auto requestData = args->Request->Data;
-        requestData->Properties->Title = L"Look what I graphed";
+        // Get the current graph 
+        auto stream = TheGrapher->GetGraphBitmapStream();
 
-        WCHAR ShareFilePath[MAX_PATH] = L"";
-        TheGrapher->GetShareFile(ShareFilePath, MAX_PATH);
-        String^ s = TheGrapher->GetShareFile();
-
-        // If we got a path back
-        if (s->Length() > 0)
+        // If if didn't fail
+        if (stream != nullptr)
         {
-            String^ path = ref new String(ShareFilePath);
+            // Shortcut to the request data
+            auto requestData = args->Request->Data;
 
-            create_task(Windows::Storage::StorageFile::GetFileFromPathAsync(path)).then([requestData](Windows::Storage::StorageFile^ imageFile)
-                {
-                    auto imageStreamRef = RandomAccessStreamReference::CreateFromFile(imageFile);
-                    requestData->Properties->Thumbnail = imageStreamRef;
-                    requestData->SetBitmap(imageStreamRef);
-                });
+            // Todo: where should we get this string from?
+            requestData->Properties->Title = L"Look what I graphed";
+
+            // Set the thumbnail image
+            requestData->Properties->Thumbnail = stream;
+
+            // And the bitmap
+            requestData->SetBitmap(stream);
         }
     }
 }
