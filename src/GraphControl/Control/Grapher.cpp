@@ -25,10 +25,6 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 
-using namespace Windows::Storage::Streams;
-using namespace Windows::System::Threading;
-using namespace concurrency;
-
 namespace
 {
     constexpr auto s_defaultStyleKey = L"GraphControl.Grapher";

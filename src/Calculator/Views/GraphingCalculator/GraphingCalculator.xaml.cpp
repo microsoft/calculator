@@ -230,27 +230,30 @@ void GraphingCalculator::OnShareCompleted(DataPackage^ sender, ShareCompletedEve
 
             rawHtml << L"</span>";
 bool GraphingCalculator::GetShareContent(DataRequest^ request)
+
+    WeakReference weakThis(this);
     bool succeeded = false;
+
+        auto refThis = weakThis.Resolve<GraphingCalculator>();
         rawHtml << L"<br><br>";
-    String^ TextToShare = L"Here is some text";
-    requestData->Properties->Title = L"share text title";
+        String^ TextToShare = L"Here is some text";
+        requestData->Properties->Title = L"share text title";
         DataPackage ^ dataPackage = ref new DataPackage();
         auto html = HtmlFormatHelper::CreateHtmlFormat(ref new String(rawHtml.str().c_str()));
-
+//    requestData->Properties->ContentSourceApplicationLink = ApplicationLink;
 
         auto bitmapStream = GraphingControl->GetGraphBitmapStream();
         requestData->ResourceMap->Insert(ref new String(L"graph.png"), bitmapStream);
-    if (TheGrapher != nullptr)
+                if (refThis->TheGrapher != nullptr)
         // Set the thumbnail image (in case the share target can't handle HTML)
         requestData->Properties->Thumbnail = bitmapStream;
     }
     catch (Exception ^ ex)
-    {
+                {
         TraceLogger::GetInstance().LogPlatformException(ViewMode::Graphing, __FUNCTIONW__, ex);
 
         BitmapImage^ bitmapImage = ref new BitmapImage();
-       // HRESULT hr E_FAIL;
-
+        //HRESULT hr E_FAIL;
         errDialog->Content = resourceLoader->GetString(L"ShareActionErrorMessage");
         errDialog->CloseButtonText = resourceLoader->GetString(L"ShareActionErrorOk");
         errDialog->ShowAsync();
@@ -262,15 +265,15 @@ void GraphingCalculator::GraphingControl_VariablesUpdated(Object ^, Object ^)
 }
 
 void GraphingCalculator::OnVariableChanged(Platform::Object ^ sender, VariableChangedEventArgs args)
-{
+        {
     GraphingControl->SetVariable(args.variableName, args.newValue);
 }
 
 void GraphingCalculator::SubmitTextbox(TextBox ^ sender)
 {
     auto variableViewModel = static_cast<VariableViewModel ^>(sender->DataContext);
+            TheGrapher->GetShareFile(ShareFilePath, MAX_PATH);
 
-            //    auto stream = RandomAccessStreamReference.CreateFromUri(source.UriSource);
             //    requestData->SetBitmap(stream);
     if (sender->Name == "ValueTextBox")
     }
@@ -291,7 +294,7 @@ void GraphingCalculator::SubmitTextbox(TextBox ^ sender)
 void GraphingCalculator::TextBoxLosingFocus(TextBox ^ sender, LosingFocusEventArgs ^)
 {
 }
-
+            //auto imageFile = Windows::Storage::StorageFile::GetFileFromPathAsync(path)->GetResults();
 void GraphingCalculator::TextBoxKeyDown(TextBox ^ sender, KeyRoutedEventArgs ^ e)
 {
     if (e->Key == ::VirtualKey::Enter)
@@ -299,7 +302,7 @@ void GraphingCalculator::TextBoxKeyDown(TextBox ^ sender, KeyRoutedEventArgs ^ e
         SubmitTextbox(sender);
     }
 }
-
+            //Windows::Storage::StorageFile^ imageFile = TheGrapher->GetShareFile();
 double GraphingCalculator::validateDouble(String ^ value, double defaultValue)
 {
     try
@@ -313,7 +316,7 @@ double GraphingCalculator::validateDouble(String ^ value, double defaultValue)
 }
 
 void GraphingCalculator::TextBoxGotFocus(TextBox ^ sender, RoutedEventArgs ^ e)
-{
+                {
     sender->SelectAll();
 }
 
@@ -331,14 +334,14 @@ void GraphingCalculator::OnZoomResetCommand(Object ^ /* parameter */)
 {
     GraphingControl->ResetGrid();
 }
-
+        //
 void GraphingCalculator::OnActiveTracingClick(Object ^ sender, RoutedEventArgs ^ e)
 {
     // The focus change to this button will have turned off the tracing if it was on
     ActiveTracingOn = !ActiveTracingOn;
     GraphingControl->ActiveTracing = ActiveTracingOn;
-}
-
+        }
+        
 void GraphingCalculator::GraphingControl_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     // If the graph is losing focus while we are in active tracing we need to turn it off so we don't try to eat keys in other controls.
@@ -358,9 +361,12 @@ void GraphingCalculator::GraphingControl_LosingFocus(UIElement ^ sender, LosingF
         // we will get a null destination.  So we are going to try and cancel that request.
         // If the destination is not in our application we will also get a null destination but the cancel will fail so it doesn't hurt to try.
         args->TryCancel();
-    }
+                }
 }
-
+            //}//));
+        
+        
+        return succeeded;
 void GraphingCalculator::OnEquationKeyGraphFeaturesRequested(Object ^ sender, RoutedEventArgs ^ e)
 {
     auto equationViewModel = static_cast<EquationViewModel ^>(sender);
@@ -368,8 +374,8 @@ void GraphingCalculator::OnEquationKeyGraphFeaturesRequested(Object ^ sender, Ro
     equationViewModel->PopulateKeyGraphFeatures();
     IsKeyGraphFeaturesVisible = true;
 }
-
 void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventArgs ^ e)
 {
     IsKeyGraphFeaturesVisible = false;
 }
+
