@@ -128,6 +128,8 @@
             <x:Double x:Key="CalcStandardOperatorCaptionSizeLarge">24</x:Double>
             <!-- Numpad Standard/Scientific in Fill/Full -->
             <x:Double x:Key="CalcStandardOperatorCaptionSize">20</x:Double>
+            <x:Double x:Key="CalcStandardOperatorCaptionSizeSmall">18</x:Double>
+            <x:Double x:Key="CalcStandardOperatorCaptionSizeTiny">12</x:Double>
             <!-- Standard Operators Standard/Scientific in Fill/Full -->
             <x:Double x:Key="CalcOperatorCaptionSize">15</x:Double>
 

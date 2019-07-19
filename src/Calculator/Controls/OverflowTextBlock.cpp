@@ -27,6 +27,9 @@ using namespace Windows::UI::Xaml::Navigation;
 DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, IsActive);
 DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, TextStyle);
 DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, TokensUpdated);
+DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, ColumnWidth);
+DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, ColumnHeight);
+DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, ScrollButtonFontSize);
 
 void OverflowTextBlock::OnApplyTemplate()
 {

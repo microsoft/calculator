@@ -21,6 +21,9 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, TokensUpdated);
             DEPENDENCY_PROPERTY(bool, IsActive);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Style ^, TextStyle);
+            DEPENDENCY_PROPERTY(double, ColumnWidth);
+            DEPENDENCY_PROPERTY(double, ColumnHeight);
+            DEPENDENCY_PROPERTY(double, ScrollButtonFontSize);
 
             void OnTokensUpdatedPropertyChanged(bool oldValue, bool newValue);
             void UpdateScrollButtons();

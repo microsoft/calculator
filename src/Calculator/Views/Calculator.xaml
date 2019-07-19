@@ -114,19 +114,56 @@
             </Setter>
         </Style>
 
-        <Style x:Key="AlwaysOnTopStyleM" TargetType="controls:OverflowTextBlock">
+        <Style x:Key="AlwaysOnTopStyleS" TargetType="controls:OverflowTextBlock">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="ColumnWidth" Value="14"/>
+            <Setter Property="ColumnHeight" Value="14"/>
+            <Setter Property="ScrollButtonFontSize" Value="12"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="controls:OverflowTextBlock">
                         <Grid x:Name="TokenContainer" Background="{TemplateBinding Background}">
+                            <Grid.Resources>
+                                <ResourceDictionary>
+                                    <ResourceDictionary.ThemeDictionaries>
+                                        <ResourceDictionary x:Key="Default">
+                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonForeground" Color="#99000000"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemAccentColor}" Opacity="0.8"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemAccentColor}" Opacity="1.0"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="#33000000"/>
+                                        </ResourceDictionary>
+                                        <ResourceDictionary x:Key="Light">
+                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonForeground" Color="#99000000"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemAccentColor}" Opacity="0.8"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemAccentColor}" Opacity="1.0"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="#33000000"/>
+                                        </ResourceDictionary>
+                                        <ResourceDictionary x:Key="HighContrast">
+                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonForeground" Color="#99000000"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemAccentColor}" Opacity="0.8"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemAccentColor}" Opacity="1.0"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="#33000000"/>
+                                        </ResourceDictionary>
+                                    </ResourceDictionary.ThemeDictionaries>
+                                </ResourceDictionary>
+                            </Grid.Resources>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="28"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
-                                <ColumnDefinition Width="28"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <ScrollViewer x:Name="ExpressionContainer"
-                                          Grid.Column="1"
+                                          Grid.Column="0"
+                                          Grid.ColumnSpan="3"
                                           Padding="0,0,0,0"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           Style="{StaticResource ResultsScrollerSnapped}"
@@ -142,80 +179,44 @@
                                                FontWeight="SemiBold"/>
                                 </StackPanel>
                             </ScrollViewer>
-                            <Button x:Name="ScrollLeft"
+                            <Border Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
+                                    Grid.Column="0">
+                                <Button x:Name="ScrollLeft"
                                     x:Uid="scrollLeft"
-                                    Grid.Column="0"
-                                    Margin="-4,3,-4,0"
-                                    Style="{StaticResource AlwaysOnTopScrollButtonStyleM}">
-                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                          FontSize="28"
+                                    Margin="0,3,0,0"
+                                    Style="{StaticResource AlwaysOnTopScrollButtonStyleS}"
+                                    MinWidth="{TemplateBinding ColumnWidth}"
+                                    MinHeight="{TemplateBinding ColumnHeight}"
+                                    Background="Transparent">
+                                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                          FontSize="{TemplateBinding ScrollButtonFontSize}"
                                           Glyph="&#xE26C;"/>
-                            </Button>
-                            <Button x:Name="ScrollRight"
+                                </Button>
+                            </Border>
+                            <Border Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
+                                    Grid.Column="2">
+                                <Button x:Name="ScrollRight"
                                     x:Uid="scrollRight"
-                                    Grid.Column="2"
-                                    Margin="4,3,-4,0"
-                                    Style="{StaticResource AlwaysOnTopScrollButtonStyleM}">
-                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                          FontSize="28"
+                                    Margin="0,3,0,0"
+                                    Style="{StaticResource AlwaysOnTopScrollButtonStyleS}"
+                                    MinWidth="{TemplateBinding ColumnWidth}"
+                                    MinHeight="{TemplateBinding ColumnHeight}"
+                                    Background="Transparent">
+                                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                          FontSize="{TemplateBinding ScrollButtonFontSize}"
                                           Glyph="&#xE26B;"/>
-                            </Button>
+                                </Button>
+                            </Border>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <Style x:Key="AlwaysOnTopStyleS" TargetType="controls:OverflowTextBlock">
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="controls:OverflowTextBlock">
-                        <Grid x:Name="TokenContainer" Background="{TemplateBinding Background}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="12"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="12"/>
-                            </Grid.ColumnDefinitions>
-                            <ScrollViewer x:Name="ExpressionContainer"
-                                          Grid.Column="1"
-                                          Padding="0,0,0,0"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          Style="{StaticResource ResultsScrollerSnapped}"
-                                          AutomationProperties.AccessibilityView="Raw">
-                                <StackPanel Orientation="Horizontal"
-                                            Grid.Row="2"
-                                            HorizontalAlignment="Right">
-                                    <TextBlock x:Name="EditableToken"
-                                               Text="{Binding DisplayValue, Mode=OneWay}"
-                                               Margin="0,0,0,0"
-                                               Padding="0"
-                                               VerticalAlignment="Stretch"
-                                               FontWeight="SemiBold"/>
-                                </StackPanel>
-                            </ScrollViewer>
-                            <Button x:Name="ScrollLeft"
-                                    x:Uid="scrollLeft"
-                                    Grid.Column="0"
-                                    Margin="-4,3,-4,0"
-                                    Style="{StaticResource AlwaysOnTopScrollButtonStyleS}">
-                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                          FontSize="12"
-                                          Glyph="&#xE26C;"/>
-                            </Button>
-                            <Button x:Name="ScrollRight"
-                                    x:Uid="scrollRight"
-                                    Grid.Column="2"
-                                    Margin="0,3,0,0"
-                                    Style="{StaticResource AlwaysOnTopScrollButtonStyleS}">
-                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                          FontSize="12"
-                                          Glyph="&#xE26B;"/>
-                            </Button>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+        <Style x:Key="AlwaysOnTopStyleM" BasedOn="{StaticResource AlwaysOnTopStyleS}" TargetType="controls:OverflowTextBlock">
+            <Setter Property="ColumnWidth" Value="28"/>
+            <Setter Property="ColumnHeight" Value="280"/>
+            <Setter Property="ScrollButtonFontSize" Value="28"/>
         </Style>
 
         <!-- Calculation Result Styles -->
@@ -243,30 +244,11 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Visibility" Value="Collapsed"/>
         </Style>
-
-        <Style x:Key="AlwaysOnTopScrollButtonStyleM" TargetType="Button">
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="0,0,0,0"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="Width" Value="24"/>
-            <Setter Property="MinWidth" Value="20"/>
-            <Setter Property="MinHeight" Value="24"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Visibility" Value="Collapsed"/>
-        </Style>
-
+        
         <Style x:Key="AlwaysOnTopScrollButtonStyleS" TargetType="Button">
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="0,0,0,0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="Width" Value="12"/>
-            <Setter Property="MinWidth" Value="10"/>
-            <Setter Property="MinHeight" Value="12"/>
-            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Visibility" Value="Collapsed"/>
         </Style>
 
@@ -582,7 +564,7 @@
                         <Setter Target="Results.MaxFontSize" Value="26"/>
                         <Setter Target="Results.MaxExpressionHistoryCharacters" Value="30"/>
                         <Setter Target="RowResult.MinHeight" Value="42"/>
-                        <Setter Target="RowResult.Height" Value="72*"/>
+                        <Setter Target="RowResult.Height" Value="42*"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

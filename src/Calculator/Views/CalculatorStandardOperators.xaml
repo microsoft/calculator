@@ -74,21 +74,21 @@
                         <AdaptiveTrigger MinWindowHeight="260" MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="PercentButton.FontSize" Value="12"/>
-                        <Setter Target="SquareRootButton.FontSize" Value="12"/>
-                        <Setter Target="XPower2Button.FontSize" Value="12"/>
-                        <Setter Target="InvertButton.FontSize" Value="12"/>
-                        <Setter Target="NegateButton.FontSize" Value="12"/>
-                        <Setter Target="ClearEntryButton.FontSize" Value="12"/>
-                        <Setter Target="ClearButton.FontSize" Value="12"/>
-                        <Setter Target="BackSpaceButton.FontSize" Value="12"/>
-                        <Setter Target="DivideButton.FontSize" Value="12"/>
-                        <Setter Target="MultiplyButton.FontSize" Value="12"/>
-                        <Setter Target="MinusButton.FontSize" Value="12"/>
-                        <Setter Target="PlusButton.FontSize" Value="12"/>
-                        <Setter Target="EqualButton.FontSize" Value="12"/>
+                        <Setter Target="PercentButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
+                        <Setter Target="SquareRootButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
+                        <Setter Target="XPower2Button.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
+                        <Setter Target="InvertButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
+                        <Setter Target="NegateButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
+                        <Setter Target="ClearEntryButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
+                        <Setter Target="ClearButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
+                        <Setter Target="BackSpaceButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
+                        <Setter Target="DivideButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
+                        <Setter Target="MultiplyButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
+                        <Setter Target="MinusButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
+                        <Setter Target="PlusButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
+                        <Setter Target="EqualButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
 
-                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle12}"/>
+                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle18}"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="MinAlwaysOnTop">
@@ -96,21 +96,21 @@
                         <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="PercentButton.FontSize" Value="10"/>
-                        <Setter Target="SquareRootButton.FontSize" Value="10"/>
-                        <Setter Target="XPower2Button.FontSize" Value="10"/>
-                        <Setter Target="InvertButton.FontSize" Value="10"/>
-                        <Setter Target="NegateButton.FontSize" Value="10"/>
-                        <Setter Target="ClearEntryButton.FontSize" Value="10"/>
-                        <Setter Target="ClearButton.FontSize" Value="10"/>
-                        <Setter Target="BackSpaceButton.FontSize" Value="10"/>
-                        <Setter Target="DivideButton.FontSize" Value="10"/>
-                        <Setter Target="MultiplyButton.FontSize" Value="10"/>
-                        <Setter Target="MinusButton.FontSize" Value="10"/>
-                        <Setter Target="PlusButton.FontSize" Value="10"/>
-                        <Setter Target="EqualButton.FontSize" Value="10"/>
+                        <Setter Target="PercentButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeTiny}"/>
+                        <Setter Target="SquareRootButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeTiny}"/>
+                        <Setter Target="XPower2Button.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeTiny}"/>
+                        <Setter Target="InvertButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeTiny}"/>
+                        <Setter Target="NegateButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeTiny}"/>
+                        <Setter Target="ClearEntryButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeTiny}"/>
+                        <Setter Target="ClearButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeTiny}"/>
+                        <Setter Target="BackSpaceButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeTiny}"/>
+                        <Setter Target="DivideButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeTiny}"/>
+                        <Setter Target="MultiplyButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeTiny}"/>
+                        <Setter Target="MinusButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeTiny}"/>
+                        <Setter Target="PlusButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeTiny}"/>
+                        <Setter Target="EqualButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeTiny}"/>
 
-                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle10}"/>
+                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle12}"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
