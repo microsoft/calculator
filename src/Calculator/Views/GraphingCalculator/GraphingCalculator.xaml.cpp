@@ -40,6 +40,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::UI::Popups;
 
+using namespace Windows::UI::Popups;
 constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 
 GraphingCalculator::GraphingCalculator()

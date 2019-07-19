@@ -25,6 +25,14 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 
+namespace MathSolverEngine::Graph::Renderer
+{
+    struct IBitmap
+    {
+        virtual const std::vector<BYTE>& GetData() const = 0;
+    };
+}
+
 namespace
 {
     constexpr auto s_defaultStyleKey = L"GraphControl.Grapher";
