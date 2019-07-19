@@ -30,5 +30,7 @@ namespace CalculatorApp
         Windows::Foundation::EventRegistrationToken dataRequestedToken{};
 
         void OnDataRequested(Windows::ApplicationModel::DataTransfer::DataTransferManager^ sender, Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs^ e);
+        void CommandInvokedHandler(Windows::UI::Popups::IUICommand^ command);
+
 	};
 }

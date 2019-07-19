@@ -5,18 +5,9 @@
 struct ID2D1Factory;
 struct ID2D1RenderTarget;
 
-namespace MathSolverEngine
+namespace MathSolverEngine::Graph::Renderer
 {
-    namespace Graph
-    {
-        namespace Renderer
-        {
-            struct IBitmap
-            {
-                virtual const std::vector<BYTE>& GetData() const = 0;
-            };
-        }
-    }
+    struct IBitmap;
 }
 
 namespace Graphing::Renderer
