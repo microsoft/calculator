@@ -58,8 +58,6 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(Platform::String ^, DecDisplayValue_AutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, OctDisplayValue_AutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, BinDisplayValue_AutomationName);
-            OBSERVABLE_PROPERTY_RW(bool, DoesAlwaysOnTopResultConcatenate);
-            OBSERVABLE_PROPERTY_RW(bool, DoesAlwaysOnTopResultShowTokens);
             OBSERVABLE_PROPERTY_RW(bool, IsBinaryOperatorEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsUnaryOperatorEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsNegateEnabled);
@@ -74,7 +72,6 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, AreHEXButtonsEnabled);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationResultAutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationExpressionAutomationName);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationAlwaysOnTopResultAutomationName);
             OBSERVABLE_PROPERTY_RW(bool, IsShiftProgrammerChecked);
             OBSERVABLE_PROPERTY_RW(bool, IsQwordEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsDwordEnabled);
@@ -407,7 +404,6 @@ namespace CalculatorApp
             CalculationManager::CalculatorManager m_standardCalculatorManager;
             Platform::String ^ m_expressionAutomationNameFormat;
             Platform::String ^ m_localizedCalculationResultAutomationFormat;
-            Platform::String ^ m_localizedCalculationAlwaysOnTopResultAutomationFormat;
             Platform::String ^ m_localizedCalculationResultDecimalAutomationFormat;
             Platform::String ^ m_localizedHexaDecimalAutomationFormat;
             Platform::String ^ m_localizedDecimalAutomationFormat;
@@ -446,7 +442,6 @@ namespace CalculatorApp
                 ^ CalculateNarratorDisplayValue(_In_ std::wstring const& displayValue, _In_ Platform::String ^ localizedDisplayValue, _In_ bool isError);
             CalculatorApp::Common::Automation::NarratorAnnouncement ^ GetDisplayUpdatedNarratorAnnouncement();
             Platform::String ^ GetCalculatorExpressionAutomationName();
-            Platform::String ^ GetCalculatorAlwaysOnTopExpressionAutomationName();
             Platform::String ^ GetNarratorStringReadRawNumbers(_In_ Platform::String ^ localizedDisplayValue);
 
             CalculationManager::Command ConvertToOperatorsEnum(NumbersAndOperatorsEnum operation);

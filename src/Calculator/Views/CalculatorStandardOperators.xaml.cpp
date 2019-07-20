@@ -29,7 +29,6 @@ CalculatorStandardOperators::CalculatorStandardOperators()
     : m_isErrorVisualState(false)
 {
     InitializeComponent();
-    this->SizeChanged += ref new SizeChangedEventHandler(this, &CalculatorStandardOperators::ShowHideStandardFunctions);
 }
 
 bool CalculatorStandardOperators::IsErrorVisualState::get()
@@ -45,23 +44,5 @@ void CalculatorStandardOperators::IsErrorVisualState::set(bool value)
         String ^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
         VisualStateManager::GoToState(this, newState, false);
         NumberPad->IsErrorVisualState = m_isErrorVisualState;
-    }
-}
-
-void CalculatorStandardOperators::ShowHideStandardFunctions(Object ^ /*sender*/, SizeChangedEventArgs ^ /*e*/)
-{
-    Windows::Foundation::Rect bounds = Window::Current->Bounds;
-    if (ApplicationView::GetForCurrentView()->ViewMode == ApplicationViewMode::CompactOverlay)
-    {
-        if (bounds.Width < 320 || bounds.Height < 394)
-        {
-            R0->Height = GridLength(0, GridUnitType::Star);
-            StandardFunctions->Visibility = ::Visibility::Collapsed;
-        }
-        else
-        {
-            R0->Height = GridLength(1, GridUnitType::Star);
-            StandardFunctions->Visibility = ::Visibility::Visible;
-        }
     }
 }

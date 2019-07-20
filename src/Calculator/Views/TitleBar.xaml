@@ -48,8 +48,9 @@
                 Background="Transparent"
                 FontWeight="Thin"
                 FontSize="14"
+                AllowFocusWhenDisabled="False"
                 Visibility="{x:Bind ApplicationViewModel.IsAlwaysOnTop, Mode=OneWay}"
                 AutomationProperties.AutomationId="AlwaysOnTopButton"
-                AutomationProperties.Name="Always on top"/>
+                AutomationProperties.Name="Back to full view"/>
     </Grid>
 </UserControl>

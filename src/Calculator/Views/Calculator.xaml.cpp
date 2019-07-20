@@ -100,7 +100,7 @@ void Calculator::SetFontSizeResources()
         { L"Tibt", 104, 29.333, 20, 40, 56, 40, 56 },   { L"Default", 104, 29.333, 23, 40, 56, 40, 56 }
     };
 
-    DecimalFormatter^ formatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter();
+    DecimalFormatter ^ formatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter();
 
     const FontTable* currentItem = fontTables;
     while (currentItem->numericSystem.compare(std::wstring(L"Default")) != 0 && currentItem->numericSystem.compare(formatter->NumeralSystem->Data()) != 0)
@@ -297,6 +297,8 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
         MemPlus->IsEnabled = false;
         MemMinus->IsEnabled = false;
         MemButton->IsEnabled = false;
+
+        AlwaysOnTopResults->UpdateScrollButtons();
     }
     else
     {
@@ -309,9 +311,10 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
         MemPlus->IsEnabled = m_memPlusEnabled;
         MemMinus->IsEnabled = m_memMinusEnabled;
         MemButton->IsEnabled = m_memButtonEnabled;
+
+        Results->UpdateTextState();
     }
     Model->IsMemoryEmptyAlwaysOnTop = Model->IsMemoryEmpty || Model->IsAlwaysOnTop;
-    AlwaysOnTopResults->UpdateScrollButtons();
 }
 
 void Calculator::OnIsInErrorPropertyChanged()
@@ -834,5 +837,8 @@ void CalculatorApp::Calculator::DockPivot_SelectionChanged(Platform::Object ^ se
 
 void Calculator::Calculator_SizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ /*e*/)
 {
-    AlwaysOnTopResults->UpdateScrollButtons();
+    if (Model->IsAlwaysOnTop)
+    {
+        AlwaysOnTopResults->UpdateScrollButtons();
+    }
 }

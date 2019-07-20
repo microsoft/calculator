@@ -120,8 +120,6 @@ void MainPage::WindowSizeChanged(_In_ Platform::Object ^ /*sender*/, _In_ Window
     if (m_model->IsAlwaysOnTop)
     {
         Windows::Storage::ApplicationDataContainer ^ localSettings = Windows::Storage::ApplicationData::Current->LocalSettings;
-        // double width = safe_cast<float>(this->ActualWidth);
-        // double height = safe_cast<float>(this->ActualHeight);
         localSettings->Values->Insert(ApplicationViewModel::WidthLocalSettings, this->ActualWidth);
         localSettings->Values->Insert(ApplicationViewModel::HeightLocalSettings, this->ActualHeight);
     }

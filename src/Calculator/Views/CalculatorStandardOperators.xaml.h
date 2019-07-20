@@ -28,6 +28,5 @@ namespace CalculatorApp
 
     private:
         bool m_isErrorVisualState;
-        void ShowHideStandardFunctions(Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
     };
 }

@@ -177,7 +177,7 @@
                         Background="Transparent"
                         Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}"
                         AutomationProperties.AutomationId="NormalAlwaysOnTopButton"
-                        AutomationProperties.Name="Always on top"
+                        AutomationProperties.Name="Keep on top"
                         Grid.Column="1"/>
             </Grid>
         </muxc:NavigationView>

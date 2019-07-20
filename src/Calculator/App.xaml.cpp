@@ -59,7 +59,8 @@ namespace CalculatorApp
 /// executed, and as such is the logical equivalent of main() or WinMain().
 /// </summary>
 App::App()
-{    TraceLogger::GetInstance().LogAppLaunchStart();
+{
+    TraceLogger::GetInstance().LogAppLaunchStart();
     InitializeComponent();
 
     m_preLaunched = false;

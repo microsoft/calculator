@@ -668,8 +668,8 @@ void KeyboardShortcutManager::OnAcceleratorKeyActivated(CoreDispatcher ^, Accele
                     if (nullptr != vm)
                     {
                         ViewMode toMode = NavCategory::GetViewModeForVirtualKey(static_cast<MyVirtualKey>(key));
-                        MUXC::NavigationViewItem ^ nvi = safe_cast<MUXC::NavigationViewItem ^>(menuItems->GetAt(NavCategory::GetFlatIndex(toMode)));
-                        if (NavCategory::IsValidViewMode(toMode) && nvi->IsEnabled)
+                        auto nvi = dynamic_cast<MUXC::NavigationViewItem ^>(menuItems->GetAt(NavCategory::GetFlatIndex(toMode)));
+                        if (nvi != nullptr && NavCategory::IsValidViewMode(toMode) && nvi->IsEnabled)
                         {
                             vm->Mode = toMode;
                             navView->SelectedItem = nvi;
