@@ -71,6 +71,7 @@ MainPage::MainPage()
     KeyboardShortcutManager::Initialize();
 
     m_model->PropertyChanged += ref new PropertyChangedEventHandler(this, &MainPage::OnAppPropertyChanged);
+    m_accessibilitySettings = ref new AccessibilitySettings();
 
     double sizeInInches = 0.0;
 
@@ -251,6 +252,8 @@ void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
     }
 
     m_windowSizeEventToken = Window::Current->SizeChanged += ref new WindowSizeChangedEventHandler(this, &MainPage::WindowSizeChanged);
+    m_accessibilitySettingsToken = m_accessibilitySettings->HighContrastChanged +=
+        ref new Windows::Foundation::TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &CalculatorApp::MainPage::OnHighContrastChanged);
     UpdateViewState();
 
     SetHeaderAutomationName();
@@ -266,6 +269,15 @@ void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
                 AppLifecycleLogger::GetInstance().LaunchVisibleComplete();
             }
         }));
+}
+
+void MainPage::OnHighContrastChanged(_In_ AccessibilitySettings ^ /*sender*/, _In_ Object ^ /*args*/)
+{
+    if (Model->IsAlwaysOnTop && this->ActualHeight < 394)
+    {
+        // Sets to default always-on-top size to force re-layout
+        ApplicationView::GetForCurrentView()->TryResizeView(Size(320, 394));
+    }
 }
 
 void MainPage::SetDefaultFocus()
@@ -489,6 +501,8 @@ void MainPage::UnregisterEventHandlers()
 {
     Window::Current->SizeChanged -= m_windowSizeEventToken;
     m_windowSizeEventToken.Value = 0;
+    m_accessibilitySettings->HighContrastChanged -= m_accessibilitySettingsToken;
+    m_accessibilitySettingsToken.Value = 0;
 
     if (m_calculator != nullptr)
     {

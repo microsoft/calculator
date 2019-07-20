@@ -64,6 +64,7 @@ public
         void ShowHideControls(CalculatorApp::Common::ViewMode mode);
         void UpdateViewState();
         void UpdatePanelViewState();
+        void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
 
         void OnPageLoaded(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
 
@@ -79,5 +80,7 @@ public
         CalculatorApp::DateCalculator ^ m_dateCalculator;
         Windows::Foundation::EventRegistrationToken m_windowSizeEventToken;
         CalculatorApp::ViewModel::ApplicationViewModel ^ m_model;
+        Windows::Foundation::EventRegistrationToken m_accessibilitySettingsToken;
+        Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
     };
 }
