@@ -74,20 +74,6 @@
                         <AdaptiveTrigger MinWindowHeight="260" MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="PercentButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
-                        <Setter Target="SquareRootButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
-                        <Setter Target="XPower2Button.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
-                        <Setter Target="InvertButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
-                        <Setter Target="NegateButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
-                        <Setter Target="ClearEntryButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
-                        <Setter Target="ClearButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
-                        <Setter Target="BackSpaceButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
-                        <Setter Target="DivideButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
-                        <Setter Target="MultiplyButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
-                        <Setter Target="MinusButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
-                        <Setter Target="PlusButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
-                        <Setter Target="EqualButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeSmall}"/>
-
                         <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle18}"/>
                     </VisualState.Setters>
                 </VisualState>
