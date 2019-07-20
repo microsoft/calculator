@@ -101,6 +101,26 @@
                 </VisualState>
             </VisualStateGroup>
             <VisualStateGroup>
+                <VisualState x:Name="ShowStandardFunctions">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="394"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="R0.Height" Value="1*"/>
+                        <Setter Target="StandardFunctions.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="HideStandardFunctions">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="R0.Height" Value="0*"/>
+                        <Setter Target="StandardFunctions.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup>
                 <VisualState x:Name="Portrait768x1366">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="1366" MinWindowWidth="768"/>
@@ -306,27 +326,14 @@
                         <Setter Target="MinusButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
                         <Setter Target="PlusButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
                         <Setter Target="EqualButton.Style" Value="{StaticResource SymbolOperatorButtonStyle}"/>
-                        
+
                         <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle24}"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="DefaultAlwaysOnTop">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="394" MinWindowWidth="320"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="R0.Height" Value="1*"/>
-                        <Setter Target="StandardFunctions.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="DefaultLayout">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="R0.Height" Value="0*"/>
-                        <Setter Target="StandardFunctions.Visibility" Value="Collapsed"/>
-                    </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>

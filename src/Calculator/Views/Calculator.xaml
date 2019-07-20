@@ -618,7 +618,7 @@
             <controls:OverflowTextBlock x:Name="AlwaysOnTopResults"
                                         x:Uid="CalculatorAlwaysOnTopResults"
                                         Grid.Row="2"
-                                        Margin="6,0,2,0"
+                                        Margin="6,0,6,0"
                                         AutomationProperties.AutomationId="CalculatorAlwaysOnTopResults"
                                         AutomationProperties.HeadingLevel="Level1"
                                         AutomationProperties.Name="{x:Bind Model.CalculationResultAutomationName, Mode=OneWay}"
