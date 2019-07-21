@@ -1680,7 +1680,6 @@ void StandardCalculatorViewModel::SwitchAngleType(NumbersAndOperatorsEnum num)
 
 NumbersAndOperatorsEnum StandardCalculatorViewModel::ConvertIntegerToNumbersAndOperatorsEnum(unsigned int parameter)
 {
-    NumbersAndOperatorsEnum angletype;
     switch (parameter)
     {
     case 321:
