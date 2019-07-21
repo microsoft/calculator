@@ -772,9 +772,8 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString)
     vector<bool> negateStack;
 
     // Iterate through each character pasted, and if it's valid, send it to the model.
-    auto it = pastedString->Begin();
 
-    while (it != pastedString->End())
+    for (auto it = pastedString->Begin(); it != pastedString->End(); ++it)
     {
         bool sendCommand = true;
         bool canSendNegate = false;
@@ -783,7 +782,6 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString)
 
         if (mappedNumOp == NumbersAndOperatorsEnum::None)
         {
-            ++it;
             continue;
         }
 
@@ -898,8 +896,6 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString)
             break;
             }
         }
-
-        ++it;
     }
 }
 
@@ -1683,7 +1679,7 @@ NumbersAndOperatorsEnum StandardCalculatorViewModel::ConvertIntegerToNumbersAndO
     switch (parameter)
     {
     case 321:
-     default:
+    default:
         return NumbersAndOperatorsEnum::Degree;
     case 322:
         return NumbersAndOperatorsEnum::Radians;
