@@ -219,15 +219,13 @@ void StandardCalculatorViewModel::DisplayPasteError()
 
 void StandardCalculatorViewModel::SetParenthesisCount(_In_ unsigned int parenthesisCount)
 {
-    if (m_OpenParenthesisCount == parenthesisCount)
+    if (m_OpenParenthesisCount != parenthesisCount)
     {
-        return;
-    }
-
-    OpenParenthesisCount = parenthesisCount;
-    if (IsProgrammer || IsScientific)
-    {
-        SetOpenParenthesisCountNarratorAnnouncement();
+        OpenParenthesisCount = parenthesisCount;
+        if (IsProgrammer || IsScientific)
+        {
+            SetOpenParenthesisCountNarratorAnnouncement();
+        }
     }
 }
 
@@ -338,18 +336,18 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<CalculatorVector<
         if (SUCCEEDED(tokens->GetAt(i, &currentToken)))
         {
             Common::TokenType type;
-            bool isEditable = (currentToken.second == -1) ? false : true;
+            bool isEditable = currentToken.second != -1;
             localizer.LocalizeDisplayValue(&(currentToken.first));
 
             if (!isEditable)
             {
-                type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
-            }
-            else
-            {
                 shared_ptr<IExpressionCommand> command;
                 IFTPlatformException(m_commands->GetAt(static_cast<unsigned int>(currentToken.second), &command));
                 type = command->GetCommandType() == CommandType::OperandCommand ? TokenType::Operand : TokenType::Operator;
+            }
+            else
+            {
+                type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator
             }
 
             auto currentTokenString = ref new String(currentToken.first.c_str());
@@ -740,15 +738,13 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     {
         mode = ViewMode::Standard;
     }
-    // if there's nothing to copy early out
-    if (IsEditingEnabled || !CopyPasteManager::HasStringToPaste())
+    // if there's nothing to copy, skip the if block and leave
+    if (!IsEditingEnabled && CopyPasteManager::HasStringToPaste())
     {
-        return;
+        // Ensure that the paste happens on the UI thread
+        CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), NumberBase, bitLengthType)
+            .then([this, mode](String ^ pastedString) { OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
     }
-
-    // Ensure that the paste happens on the UI thread
-    CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), NumberBase, bitLengthType)
-        .then([this, mode](String ^ pastedString) { OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 
 CalculationManager::Command StandardCalculatorViewModel::ConvertToOperatorsEnum(NumbersAndOperatorsEnum operation)

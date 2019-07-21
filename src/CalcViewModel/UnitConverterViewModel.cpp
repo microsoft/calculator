@@ -148,7 +148,6 @@ UnitConverterViewModel::UnitConverterViewModel(const shared_ptr<UCM::IUnitConver
     Unit2AutomationName = m_localizedOutputUnitName;
     IsDecimalEnabled = true;
 
-    m_IsFirstTime = true;
     m_model->Initialize();
     PopulateData();
 }
@@ -156,7 +155,6 @@ UnitConverterViewModel::UnitConverterViewModel(const shared_ptr<UCM::IUnitConver
 void UnitConverterViewModel::ResetView()
 {
     m_model->SendCommand(UCM::Command::Reset);
-    m_IsFirstTime = true;
     OnCategoryChanged(nullptr);
 }
 
@@ -239,15 +237,8 @@ void UnitConverterViewModel::OnUnitChanged(Object ^ parameter)
         // End timer to show results immediately
         m_supplementaryResultsTimer->Cancel();
     }
-    if (!m_IsFirstTime)
-    {
-        SaveUserPreferences();
-    }
-    else
-    {
-        RestoreUserPreferences();
-        m_IsFirstTime = false;
-    }
+
+    SaveUserPreferences();
 }
 
 void UnitConverterViewModel::OnSwitchActive(Platform::Object ^ unused)
@@ -515,17 +506,15 @@ void UnitConverterViewModel::OnCopyCommand(Platform::Object ^ parameter)
 
 void UnitConverterViewModel::OnPasteCommand(Platform::Object ^ parameter)
 {
-    // if there's nothing to copy early out
-    if (!CopyPasteManager::HasStringToPaste())
+    // if there's nothing to copy, skip this block and return
+    if (CopyPasteManager::HasStringToPaste())
     {
-        return;
+        // Ensure that the paste happens on the UI thread
+        // EventWriteClipboardPaste_Start();
+        // Any converter ViewMode is fine here.
+        CopyPasteManager::GetStringToPaste(m_Mode, NavCategory::GetGroupType(m_Mode))
+            .then([this](String ^ pastedString) { OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
     }
-
-    // Ensure that the paste happens on the UI thread
-    // EventWriteClipboardPaste_Start();
-    // Any converter ViewMode is fine here.
-    CopyPasteManager::GetStringToPaste(m_Mode, NavCategory::GetGroupType(m_Mode))
-        .then([this](String ^ pastedString) { OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 
 void UnitConverterViewModel::InitializeView()
@@ -697,58 +686,39 @@ void UnitConverterViewModel::OnNetworkBehaviorChanged(_In_ NetworkAccessBehavior
 
 UnitConversionManager::Command UnitConverterViewModel::CommandFromButtonId(NumbersAndOperatorsEnum button)
 {
-    UCM::Command command;
-
     switch (button)
     {
     case NumbersAndOperatorsEnum::Zero:
-        command = UCM::Command::Zero;
-        break;
+        return UCM::Command::Zero;
     case NumbersAndOperatorsEnum::One:
-        command = UCM::Command::One;
-        break;
+        return UCM::Command::One;
     case NumbersAndOperatorsEnum::Two:
-        command = UCM::Command::Two;
-        break;
+        return UCM::Command::Two;
     case NumbersAndOperatorsEnum::Three:
-        command = UCM::Command::Three;
-        break;
+        return UCM::Command::Three;
     case NumbersAndOperatorsEnum::Four:
-        command = UCM::Command::Four;
-        break;
+        return UCM::Command::Four;
     case NumbersAndOperatorsEnum::Five:
-        command = UCM::Command::Five;
-        break;
+        return UCM::Command::Five;
     case NumbersAndOperatorsEnum::Six:
-        command = UCM::Command::Six;
-        break;
+        return UCM::Command::Six;
     case NumbersAndOperatorsEnum::Seven:
-        command = UCM::Command::Seven;
-        break;
+        return UCM::Command::Seven;
     case NumbersAndOperatorsEnum::Eight:
-        command = UCM::Command::Eight;
-        break;
+        return UCM::Command::Eight;
     case NumbersAndOperatorsEnum::Nine:
-        command = UCM::Command::Nine;
-        break;
+        return UCM::Command::Nine;
     case NumbersAndOperatorsEnum::Decimal:
-        command = UCM::Command::Decimal;
-        break;
+        return UCM::Command::Decimal;
     case NumbersAndOperatorsEnum::Negate:
-        command = UCM::Command::Negate;
-        break;
+        return UCM::Command::Negate;
     case NumbersAndOperatorsEnum::Backspace:
-        command = UCM::Command::Backspace;
-        break;
+        return UCM::Command::Backspace;
     case NumbersAndOperatorsEnum::Clear:
-        command = UCM::Command::Clear;
-        break;
+        return UCM::Command::Clear;
     default:
-        command = UCM::Command::None;
-        break;
+        return UCM::Command::None;
     }
-
-    return command;
 }
 
 void UnitConverterViewModel::SupplementaryResultsTimerTick(ThreadPoolTimer ^ timer)
