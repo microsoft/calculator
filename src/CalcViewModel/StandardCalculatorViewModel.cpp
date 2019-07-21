@@ -347,7 +347,7 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<CalculatorVector<
             }
             else
             {
-                type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator
+                type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
             }
 
             auto currentTokenString = ref new String(currentToken.first.c_str());
