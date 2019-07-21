@@ -115,9 +115,8 @@ namespace CalculatorApp
         // key have the same command
         template <typename T>
         void RunFirstEnabledButtonCommand(const T& buttons)
-        {
-            auto buttonIterator = buttons.first;
-            for (; buttonIterator != buttons.second; ++buttonIterator)
+        {  
+            for (auto buttonIterator = buttons.first; buttonIterator != buttons.second; ++buttonIterator)
             {
                 auto button = buttonIterator->second.Resolve<ButtonBase>();
                 if (button && button->IsEnabled)

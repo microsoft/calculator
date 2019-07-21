@@ -87,7 +87,7 @@ namespace CalculatorApp
     }
 }
 
-CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> client, const wchar_t * forcedResponseLanguage)
+CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> client, const wchar_t* forcedResponseLanguage)
     : m_client(move(client))
     , m_loadStatus(CurrencyLoadStatus::NotLoaded)
     , m_responseLanguage(L"en-US")
@@ -527,9 +527,7 @@ bool CurrencyDataLoader::TryParseStaticData(_In_ String ^ rawJson, _Inout_ vecto
         staticData[i] = CurrencyStaticData{ countryCode, countryName, currencyCode, currencyName, currencySymbol };
     }
 
-    auto sortCountryNames = [](const UCM::CurrencyStaticData & s) {
-        return ref new String(s.countryName.c_str());
-    };
+    auto sortCountryNames = [](const UCM::CurrencyStaticData& s) { return ref new String(s.countryName.c_str()); };
 
     LocalizationService::GetInstance()->Sort<UCM::CurrencyStaticData>(staticData, sortCountryNames);
 
@@ -554,7 +552,7 @@ bool CurrencyDataLoader::TryParseAllRatiosData(_In_ String ^ rawJson, _Inout_ Cu
         {
             obj = data->GetAt(i)->GetObject();
         }
-        catch (COMException^ e)
+        catch (COMException ^ e)
         {
             if (e->HResult == E_ILLEGAL_METHOD_CALL)
             {
@@ -628,7 +626,7 @@ task<void> CurrencyDataLoader::FinalizeUnits(_In_ const vector<UCM::CurrencyStat
             }
         }
 
-        if (!isConversionSourceSet || !isConversionTargetSet)
+        if (!(isConversionSourceSet && isConversionTargetSet))
         {
             GuaranteeSelectedUnits();
             defaultCurrencies = { DEFAULT_FROM_CURRENCY, DEFAULT_TO_CURRENCY };

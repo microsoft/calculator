@@ -458,18 +458,15 @@ size_t CopyPasteManager::StandardScientificOperandLength(const wstring& operand)
 {
     const bool hasDecimal = operand.find('.') != wstring::npos;
 
-    if (hasDecimal)
+    if (hasDecimal && operand.length() >= 2)
     {
-        if (operand.length() >= 2)
+        if ((operand[0] == L'0') && (operand[1] == L'.'))
         {
-            if ((operand[0] == L'0') && (operand[1] == L'.'))
-            {
-                return operand.length() - 2;
-            }
-            else
-            {
-                return operand.length() - 1;
-            }
+            return operand.length() - 2;
+        }
+        else
+        {
+            return operand.length() - 1;
         }
     }
 
