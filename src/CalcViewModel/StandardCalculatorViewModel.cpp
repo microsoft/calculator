@@ -339,7 +339,7 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<CalculatorVector<
             bool isEditable = currentToken.second != -1;
             localizer.LocalizeDisplayValue(&(currentToken.first));
 
-            if (!isEditable)
+            if (isEditable)
             {
                 shared_ptr<IExpressionCommand> command;
                 IFTPlatformException(m_commands->GetAt(static_cast<unsigned int>(currentToken.second), &command));
@@ -1684,18 +1684,13 @@ NumbersAndOperatorsEnum StandardCalculatorViewModel::ConvertIntegerToNumbersAndO
     switch (parameter)
     {
     case 321:
-        angletype = NumbersAndOperatorsEnum::Degree;
-        break;
+     default:
+        return NumbersAndOperatorsEnum::Degree;
     case 322:
-        angletype = NumbersAndOperatorsEnum::Radians;
-        break;
+        return NumbersAndOperatorsEnum::Radians;
     case 323:
-        angletype = NumbersAndOperatorsEnum::Grads;
-        break;
-    default:
-        angletype = NumbersAndOperatorsEnum::Degree;
+        return NumbersAndOperatorsEnum::Grads;
     };
-    return angletype;
 }
 
 void StandardCalculatorViewModel::UpdateOperand(int pos, String ^ text)
