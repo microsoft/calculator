@@ -60,7 +60,6 @@ namespace CalculatorApp
 /// </summary>
 App::App()
 {
-    TraceLogger::GetInstance().LogAppLaunchStart();
     InitializeComponent();
 
     m_preLaunched = false;
@@ -70,6 +69,8 @@ App::App()
     // TODO: MSFT 14645325: Set this directly from XAML.
     // Currently this is bugged so the property is only respected from code-behind.
     this->HighContrastAdjustment = ApplicationHighContrastAdjustment::None;
+
+    this->Suspending += ref new SuspendingEventHandler(this, &App::OnSuspending);
 
 #if _DEBUG
     this->DebugSettings->IsBindingTracingEnabled = true;
@@ -165,6 +166,7 @@ task<void> App::HandleViewReleaseAndRemoveWindowFromMap(_In_ WindowFrameService 
         task_continuation_context::use_arbitrary());
 }
 
+#pragma optimize("", off) // Turn off optimizations to work around coroutine optimization bug
 task<void> App::SetupJumpList()
 {
     try
@@ -190,7 +192,8 @@ task<void> App::SetupJumpList()
     catch (...)
     {
     }
-}
+};
+#pragma optimize("", on)
 
 void App::RemoveSecondaryWindow(_In_ WindowFrameService ^ frameService)
 {
@@ -217,21 +220,16 @@ Frame ^ App::CreateFrame()
 /// <param name="e">Details about the launch request and process.</param>
 void App::OnLaunched(LaunchActivatedEventArgs ^ args)
 {
-    TraceLogger::GetInstance().LogWindowLaunched();
     if (args->PrelaunchActivated)
     {
         // If the app got pre-launch activated, then save that state in a flag
         m_preLaunched = true;
-        TraceLogger::GetInstance().LogAppPrelaunchedBySystem();
     }
     OnAppLaunch(args, args->Arguments);
 }
 
 void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
 {
-    auto previousExecutionState = args->PreviousExecutionState;
-
-    TraceLogger::GetInstance().LogOnAppLaunch(previousExecutionState.ToString()->Data());
 
     // Uncomment the following lines to display frame-rate and per-frame CPU usage info.
     //#if _DEBUG
@@ -305,7 +303,6 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
     else
     {
         // For first launch, LaunchStart is logged in constructor, this is for subsequent launches.
-        TraceLogger::GetInstance().LogAppLaunchStart();
 
         // !Phone check is required because even in continuum mode user interaction mode is Mouse not Touch
         if ((UIViewSettings::GetForCurrentView()->UserInteractionMode == UserInteractionMode::Mouse)
@@ -317,7 +314,6 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
                 auto newCoreAppView = CoreApplication::CreateNewView();
                 newCoreAppView->Dispatcher->RunAsync(
                     CoreDispatcherPriority::Normal, ref new DispatchedHandler([args, argument, minWindowSize, weak]() {
-                        TraceLogger::GetInstance().LogNewWindowCreationBegin(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
                         auto that = weak.Resolve<App>();
                         if (that != nullptr)
                         {
@@ -370,13 +366,10 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
                                 }
                             }
                         }
-                        TraceLogger::GetInstance().LogNewWindowCreationEnd(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
                     }));
             }
             else
             {
-                TraceLogger::GetInstance().LogNewWindowCreationBegin(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
-
                 ActivationViewSwitcher ^ activationViewSwitcher;
                 auto activateEventArgs = dynamic_cast<IViewSwitcherProvider ^>(args);
                 if (activateEventArgs != nullptr)
@@ -388,12 +381,10 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
                 {
                     activationViewSwitcher->ShowAsStandaloneAsync(
                         ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()), ViewSizePreference::Default);
-                    TraceLogger::GetInstance().LogNewWindowCreationEnd(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
-                    TraceLogger::GetInstance().LogPrelaunchedAppActivatedByUser();
                 }
                 else
                 {
-                    TraceLogger::GetInstance().LogError(L"Null_ActivationViewSwitcher");
+                    TraceLogger::GetInstance().LogError(ViewMode::None, L"App::OnAppLaunch", L"Null_ActivationViewSwitcher");
                 }
             }
             // Set the preLaunched flag to false
@@ -458,11 +449,15 @@ void App::OnActivated(IActivatedEventArgs ^ args)
 {
     if (args->Kind == ActivationKind::Protocol)
     {
-        TraceLogger::GetInstance().LogWindowActivated();
         // We currently don't pass the uri as an argument,
         // and handle any protocol launch as a normal app launch.
         OnAppLaunch(args, nullptr);
     }
+}
+
+void CalculatorApp::App::OnSuspending(Object ^ sender, SuspendingEventArgs ^ args)
+{
+    TraceLogger::GetInstance().LogButtonUsage();
 }
 
 void App::DismissedEventHandler(SplashScreen ^ sender, Object ^ e)
@@ -475,3 +470,5 @@ float App::GetAppWindowHeight()
     CoreWindow ^ window = CoreWindow::GetForCurrentThread();
     return window->Bounds.Height;
 }
+
+

@@ -300,7 +300,7 @@ TEST_METHOD(TestDateDiff)
     //    }
 
     //    // Calculate the difference
-    //    m_DateCalcEngine.GetDateDifference(DateUtils::SystemTimeToDateTime(datetimeDifftest[testIndex].startDate),
+    //    m_DateCalcEngine.TryGetDateDifference(DateUtils::SystemTimeToDateTime(datetimeDifftest[testIndex].startDate),
     //    DateUtils::SystemTimeToDateTime(datetimeDifftest[testIndex].endDate), dateOutputFormat, &diff);
 
     //    // Assert for the result
@@ -1050,8 +1050,7 @@ TEST_METHOD(JaEraTransitionDifference)
     auto endTime = cal->GetDateTime();
 
     DateDifference diff;
-    viewModel->GetDateDifference(startTime, endTime, DateUnit::Day, &diff);
-
+    VERIFY_IS_TRUE(viewModel->TryGetDateDifference(startTime, endTime, DateUnit::Day, &diff));
     VERIFY_ARE_EQUAL(diff.day, 19);
 }
 }

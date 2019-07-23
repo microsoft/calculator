@@ -138,7 +138,7 @@ private:
     std::wstring m_numberString;
 
     int m_nTempCom;                          /* Holding place for the last command.          */
-    int m_openParenCount;                    // Number of open parentheses.
+    size_t m_openParenCount;                 // Number of open parentheses.
     std::array<int, MAXPRECDEPTH> m_nOp;     /* Holding array for parenthesis operations.    */
     std::array<int, MAXPRECDEPTH> m_nPrecOp; /* Holding array for precedence  operations.    */
     size_t m_precedenceOpCount;              /* Current number of precedence ops in holding. */

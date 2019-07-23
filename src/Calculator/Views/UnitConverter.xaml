@@ -321,8 +321,6 @@
                                                      Threshold="1"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="GutterTop.Height" Value="0.5*"/>
-                        <Setter Target="GutterBottom.Height" Value="0.5*"/>
                         <Setter Target="GutterLeft.Width" Value="48"/>
                         <Setter Target="GutterRight.Width" Value="48"/>
                         <Setter Target="ColumnLeft.Width" Value="1*"/>
@@ -343,7 +341,7 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-            <VisualStateGroup x:Name="Sizing">
+            <VisualStateGroup x:Name="Sizing" CurrentStateChanged="OnVisualStateChanged">
                 <VisualState x:Name="Wide">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="768" MinWindowWidth="1280"/>
@@ -644,31 +642,27 @@
         <Grid x:Name="ConverterNumPad"
               Grid.Row="6"
               Grid.Column="1"
-              Margin="0,0,0,6"
+              Margin="3,0,3,3"
               FlowDirection="LeftToRight"
               RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <CompositeTransform/>
             </Grid.RenderTransform>
             <Grid.RowDefinitions>
-                <RowDefinition x:Name="GutterTop" Height="0"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition x:Name="GutterBottom" Height="0"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.25*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="0.25*"/>
             </Grid.ColumnDefinitions>
             <Grid x:Uid="DisplayControls"
-                  Grid.Row="1"
-                  Grid.Column="2"
+                  Grid.Row="0"
+                  Grid.Column="1"
                   Grid.ColumnSpan="2"
                   AutomationProperties.HeadingLevel="Level1">
                 <Grid.ColumnDefinitions>
@@ -696,9 +690,9 @@
 
             <local:NumberPad x:Name="NumberPad"
                              x:Uid="NumberPad"
-                             Grid.Row="2"
+                             Grid.Row="1"
                              Grid.RowSpan="4"
-                             Grid.Column="1"
+                             Grid.Column="0"
                              Grid.ColumnSpan="3"
                              VerticalAlignment="Stretch"
                              AutomationProperties.HeadingLevel="Level1"
@@ -707,8 +701,8 @@
                              TabNavigation="Local"/>
             <controls:CalculatorButton x:Name="ConverterNegateButton"
                                        x:Uid="converterNegateButton"
-                                       Grid.Row="5"
-                                       Grid.Column="1"
+                                       Grid.Row="4"
+                                       Grid.Column="0"
                                        Style="{StaticResource SymbolOperatorButtonStyle}"
                                        FontSize="16"
                                        ButtonId="Negate"

@@ -51,7 +51,7 @@ namespace CalculatorApp
                 int bitLengthType);
 
         static std::vector<std::wstring>
-        ExtractOperands(const std::wstring& pasteExpression, CalculatorApp::Common::ViewMode mode, int programmerNumberBase = -1, int bitLengthType = -1);
+        ExtractOperands(const std::wstring& pasteExpression, CalculatorApp::Common::ViewMode mode);
         static bool ExpressionRegExMatch(
             std::vector<std::wstring> operands,
             CalculatorApp::Common::ViewMode mode,

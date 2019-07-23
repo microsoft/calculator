@@ -7,9 +7,11 @@
 #include <algorithm> // for std::sort
 #include "Command.h"
 #include "UnitConverter.h"
+#include "NumberFormattingUtils.h"
 
 using namespace std;
 using namespace UnitConversionManager;
+using namespace CalcManager::NumberFormattingUtils;
 
 static constexpr uint32_t EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT = 3;
 static constexpr uint32_t EXPECTEDSERIALIZEDUNITTOKENCOUNT = 6;
@@ -178,7 +180,7 @@ void UnitConverter::SwitchActive(const wstring& newValue)
     swap(m_currentHasDecimal, m_returnHasDecimal);
     m_returnDisplay = m_currentDisplay;
     m_currentDisplay = newValue;
-    m_currentHasDecimal = (m_currentDisplay.find(L'.') != m_currentDisplay.npos);
+    m_currentHasDecimal = (m_currentDisplay.find(L'.') != wstring::npos);
     m_switchedActive = true;
 
     if (m_currencyDataLoader != nullptr && m_vmCurrencyCallback != nullptr)
@@ -202,7 +204,7 @@ vector<wstring> UnitConverter::StringToVector(const wstring& w, const wchar_t* d
     size_t delimiterIndex = w.find(delimiter);
     size_t startIndex = 0;
     vector<wstring> serializedTokens = vector<wstring>();
-    while (delimiterIndex != w.npos)
+    while (delimiterIndex != wstring::npos)
     {
         serializedTokens.push_back(w.substr(startIndex, delimiterIndex - startIndex));
         startIndex = delimiterIndex + (int)wcslen(delimiter);
@@ -634,19 +636,19 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         wstring roundedString;
         if (abs(entry.value) < 100)
         {
-            roundedString = RoundSignificant(entry.value, 2);
+            roundedString = RoundSignificantDigits(entry.value, 2);
         }
         else if (abs(entry.value) < 1000)
         {
-            roundedString = RoundSignificant(entry.value, 1);
+            roundedString = RoundSignificantDigits(entry.value, 1);
         }
         else
         {
-            roundedString = RoundSignificant(entry.value, 0);
+            roundedString = RoundSignificantDigits(entry.value, 0);
         }
         if (stod(roundedString) != 0.0 || m_currentCategory.supportsNegative)
         {
-            TrimString(roundedString);
+            TrimTrailingZeros(roundedString);
             returnVector.push_back(make_tuple(roundedString, entry.type));
         }
     }
@@ -672,21 +674,21 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         wstring roundedString;
         if (abs(entry.value) < 100)
         {
-            roundedString = RoundSignificant(entry.value, 2);
+            roundedString = RoundSignificantDigits(entry.value, 2);
         }
         else if (abs(entry.value) < 1000)
         {
-            roundedString = RoundSignificant(entry.value, 1);
+            roundedString = RoundSignificantDigits(entry.value, 1);
         }
         else
         {
-            roundedString = RoundSignificant(entry.value, 0);
+            roundedString = RoundSignificantDigits(entry.value, 0);
         }
 
         // How to work out which is the best whimsical value to add to the vector?
         if (stod(roundedString) != 0.0)
         {
-            TrimString(roundedString);
+            TrimTrailingZeros(roundedString);
             whimsicalReturnVector.push_back(make_tuple(roundedString, entry.type));
         }
     }
@@ -843,98 +845,59 @@ void UnitConverter::Calculate()
     {
         m_returnDisplay = m_currentDisplay;
         m_returnHasDecimal = m_currentHasDecimal;
-        TrimString(m_returnDisplay);
+        TrimTrailingZeros(m_returnDisplay);
         UpdateViewModel();
         return;
     }
 
     unordered_map<Unit, ConversionData, UnitHash> conversionTable = m_ratioMap[m_fromType];
-    double returnValue = stod(m_currentDisplay);
-    if (conversionTable[m_toType].ratio == 1.0 && conversionTable[m_toType].offset == 0.0)
+    if (AnyUnitIsEmpty() || (conversionTable[m_toType].ratio == 1.0 && conversionTable[m_toType].offset == 0.0))
     {
         m_returnDisplay = m_currentDisplay;
         m_returnHasDecimal = m_currentHasDecimal;
-        TrimString(m_returnDisplay);
+        TrimTrailingZeros(m_returnDisplay);
     }
     else
     {
-        returnValue = Convert(returnValue, conversionTable[m_toType]);
-        m_returnDisplay = RoundSignificant(returnValue, MAXIMUMDIGITSALLOWED);
-        TrimString(m_returnDisplay);
-        int numPreDecimal = (int)m_returnDisplay.size();
-        if (m_returnDisplay.find(L'.') != m_returnDisplay.npos)
-        {
-            numPreDecimal = (int)m_returnDisplay.find(L'.');
-        }
-        if (returnValue < 0)
-        {
-            numPreDecimal--;
-        }
+        double currentValue = stod(m_currentDisplay);
+        double returnValue = Convert(currentValue, conversionTable[m_toType]);
 
-        if (numPreDecimal > MAXIMUMDIGITSALLOWED || (returnValue != 0 && abs(returnValue) < MINIMUMDECIMALALLOWED))
+        auto isCurrencyConverter = m_currencyDataLoader != nullptr && m_currencyDataLoader->SupportsCategory(this->m_currentCategory);
+        if (isCurrencyConverter)
         {
-            wstringstream out(wstringstream::out);
-            out << scientific << returnValue;
-            m_returnDisplay = out.str();
+            // We don't need to trim the value when it's a currency.
+            m_returnDisplay = RoundSignificantDigits(returnValue, MAXIMUMDIGITSALLOWED);
+            TrimTrailingZeros(m_returnDisplay);
         }
         else
         {
-            returnValue = stod(m_returnDisplay);
-            wstring returnString;
-            if (m_currentDisplay.size() <= OPTIMALDIGITSALLOWED && abs(returnValue) >= OPTIMALDECIMALALLOWED)
+            int numPreDecimal = GetNumberDigitsWholeNumberPart(returnValue);
+            if (numPreDecimal > MAXIMUMDIGITSALLOWED || (returnValue != 0 && abs(returnValue) < MINIMUMDECIMALALLOWED))
             {
-                returnString = RoundSignificant(returnValue, OPTIMALDIGITSALLOWED - min(numPreDecimal, OPTIMALDIGITSALLOWED));
+                m_returnDisplay = ToScientificNumber(returnValue);
             }
             else
             {
-                returnString = RoundSignificant(returnValue, MAXIMUMDIGITSALLOWED - min(numPreDecimal, MAXIMUMDIGITSALLOWED));
+                int currentNumberSignificantDigits = GetNumberDigits(m_currentDisplay);
+                int precision = 0;
+                if (abs(returnValue) < OPTIMALDECIMALALLOWED)
+                {
+                    precision = MAXIMUMDIGITSALLOWED;
+                }
+                else
+                {
+					// Fewer digits are needed following the decimal if the number is large,
+					// we calculate the number of decimals necessary based on the number of digits in the integer part.
+                    precision = max(0, max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits)) - numPreDecimal);
+                }
+
+                m_returnDisplay = RoundSignificantDigits(returnValue, precision);
+                TrimTrailingZeros(m_returnDisplay);
             }
-            m_returnDisplay = returnString;
-            TrimString(m_returnDisplay);
+            m_returnHasDecimal = (m_returnDisplay.find(L'.') != wstring::npos);
         }
-        m_returnHasDecimal = (m_returnDisplay.find(L'.') != m_returnDisplay.npos);
     }
     UpdateViewModel();
-}
-
-/// <summary>
-/// Trims out any trailing zeros or decimals in the given input string
-/// </summary>
-/// <param name="input">wstring to trim</param>
-void UnitConverter::TrimString(wstring& returnString)
-{
-    if (returnString.find(L'.') == m_returnDisplay.npos)
-    {
-        return;
-    }
-
-    wstring::iterator iter;
-    for (iter = returnString.end() - 1;; iter--)
-    {
-        if (*iter != L'0')
-        {
-            returnString.erase(iter + 1, returnString.end());
-            break;
-        }
-    }
-    if (*(returnString.end() - 1) == L'.')
-    {
-        returnString.erase(returnString.end() - 1, returnString.end());
-    }
-}
-
-/// <summary>
-/// Rounds the given double to the given number of significant digits
-/// </summary>
-/// <param name="num">input double</param>
-/// <param name="numSignificant">int number of significant digits to round to</param>
-wstring UnitConverter::RoundSignificant(double num, int numSignificant)
-{
-    wstringstream out(wstringstream::out);
-    out << fixed;
-    out.precision(numSignificant);
-    out << num;
-    return out.str();
 }
 
 void UnitConverter::UpdateCurrencySymbols()
