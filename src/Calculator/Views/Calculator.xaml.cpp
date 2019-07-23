@@ -738,7 +738,7 @@ void CalculatorApp::Calculator::OnVisualStateChanged(Platform::Object ^ sender, 
 {
     auto mode = IsStandard ? ViewMode::Standard : IsScientific ? ViewMode::Scientific : ViewMode::Programmer;
     auto state = std::wstring(e->NewState->Name->Begin());
-    TraceLogger::GetInstance().LogVisualStateChanged(mode, state);
+    TraceLogger::GetInstance().LogVisualStateChanged(mode, state, IsAlwaysOnTop);
 }
 
 void Calculator::Calculator_SizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ /*e*/)

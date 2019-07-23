@@ -310,25 +310,18 @@
                         <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle24}"/>
                     </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="DefaultLayout">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
-                    </VisualState.StateTriggers>
-                </VisualState>
-            </VisualStateGroup>
-            <VisualStateGroup>
                 <VisualState x:Name="ShowStandardFunctions">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="394"/>
+                        <AdaptiveTrigger MinWindowHeight="394" MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="R0.Height" Value="1*"/>
                         <Setter Target="StandardFunctions.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="HideStandardFunctions">
+                <VisualState x:Name="DefaultLayout">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="0"/>
+                        <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="R0.Height" Value="0*"/>

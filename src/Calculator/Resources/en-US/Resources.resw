@@ -1481,11 +1481,11 @@
     <value>Categories DropDown</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
   </data>
-  <data name="NormalAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Keep on top</value>
     <comment>Screen reader prompt for the Always-on-Top button when in normal mode.</comment>
   </data>
-  <data name="AoTAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Back to full view</value>
     <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>

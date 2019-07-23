@@ -153,6 +153,15 @@
                                             <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemAccentColorDark1}" Opacity="1.0"/>
                                             <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="#33FFFFFF"/>
                                         </ResourceDictionary>
+                                        <ResourceDictionary x:Key="Dark">
+                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonForeground" Color="#99FFFFFF"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemAccentColorDark1}" Opacity="0.8"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemAccentColorDark1}" Opacity="1.0"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="#33FFFFFF"/>
+                                        </ResourceDictionary>
                                     </ResourceDictionary.ThemeDictionaries>
                                 </ResourceDictionary>
                             </Grid.Resources>
