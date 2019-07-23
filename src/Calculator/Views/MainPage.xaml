@@ -168,6 +168,7 @@
                            Text="{x:Bind Model.CategoryName, Mode=OneWay}"
                            Grid.Column="0"/>
                 <Button x:Name="NormalAlwaysOnTopButton"
+                        x:Uid="NormalAlwaysOnTopButton"
                         FontFamily="{StaticResource CalculatorFontFamily}"
                         Style="{StaticResource SquareIconButtonStyle}"
                         Content="&#xEE49;"
@@ -177,7 +178,6 @@
                         Background="Transparent"
                         Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}"
                         AutomationProperties.AutomationId="NormalAlwaysOnTopButton"
-                        AutomationProperties.Name="Keep on top"
                         Grid.Column="1"/>
             </Grid>
         </muxc:NavigationView>

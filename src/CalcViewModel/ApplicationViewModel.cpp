@@ -212,18 +212,14 @@ Concurrency::task<void> ApplicationViewModel::HandleAlwaysOnTopButtonClick(Platf
 {
     if (ApplicationView::GetForCurrentView()->GetForCurrentView()->ViewMode == ApplicationViewMode::CompactOverlay)
     {
-        CalculatorViewModel->AreHistoryShortcutsEnabled = true;
-        CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
-
         bool success = co_await ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::Default);
+        CalculatorViewModel->AreHistoryShortcutsEnabled = success;
+        CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = success;
         CalculatorViewModel->IsAlwaysOnTop = !success;
         IsAlwaysOnTop = !success;
     }
     else
     {
-        CalculatorViewModel->AreHistoryShortcutsEnabled = false;
-        CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
-
         Windows::Storage::ApplicationDataContainer ^ localSettings = Windows::Storage::ApplicationData::Current->LocalSettings;
         ViewModePreferences ^ compactOptions = ViewModePreferences::CreateDefault(ApplicationViewMode::CompactOverlay);
         if (!localSettings->Values->GetView()->HasKey(LaunchedLocalSettings))
@@ -246,6 +242,8 @@ Concurrency::task<void> ApplicationViewModel::HandleAlwaysOnTopButtonClick(Platf
         }
 
         bool success = co_await ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::CompactOverlay, compactOptions);
+        CalculatorViewModel->AreHistoryShortcutsEnabled = !success;
+        CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = !success;
         CalculatorViewModel->IsAlwaysOnTop = success;
         IsAlwaysOnTop = success;
     }

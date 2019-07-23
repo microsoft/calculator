@@ -38,7 +38,6 @@ namespace CalculatorApp
         Unloaded += ref new RoutedEventHandler(this, &TitleBar::OnUnloaded);
 
         AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
-        ToolTipService::SetToolTip(AoTAlwaysOnTopButton, AppResourceProvider::GetInstance().GetResourceString(L"AlwaysOnTop_Exit"));
     }
 
     void TitleBar::OnLoaded(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)

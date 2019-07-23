@@ -75,8 +75,6 @@ MainPage::MainPage()
 
     double sizeInInches = 0.0;
 
-    ToolTipService::SetToolTip(NormalAlwaysOnTopButton, AppResourceProvider::GetInstance().GetResourceString(L"AlwaysOnTop_Enter"));
-
     if (SUCCEEDED(GetIntegratedDisplaySize(&sizeInInches)))
     {
         if (sizeInInches < 7.0) // If device's display size (diagonal length) is less than 7 inches then keep the calc always in Portrait mode only

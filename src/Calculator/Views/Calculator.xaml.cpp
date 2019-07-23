@@ -284,8 +284,6 @@ void Calculator::OnIsProgrammerPropertyChanged(bool /*oldValue*/, bool newValue)
 
 void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue)
 {
-    UpdateViewState();
-    UpdatePanelViewState();
     if (newValue)
     {
         RowExpression->Height = 0;
@@ -297,8 +295,6 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
         MemPlus->IsEnabled = false;
         MemMinus->IsEnabled = false;
         MemButton->IsEnabled = false;
-
-        AlwaysOnTopResults->UpdateScrollButtons();
     }
     else
     {
@@ -311,10 +307,14 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
         MemPlus->IsEnabled = m_memPlusEnabled;
         MemMinus->IsEnabled = m_memMinusEnabled;
         MemButton->IsEnabled = m_memButtonEnabled;
-
-        Results->UpdateTextState();
     }
     Model->IsMemoryEmptyAlwaysOnTop = Model->IsMemoryEmpty || Model->IsAlwaysOnTop;
+
+    AlwaysOnTopResults->UpdateScrollButtons();
+    Results->UpdateTextState();
+    UpdateViewState();
+    UpdatePanelViewState();
+    SetDefaultFocus();
 }
 
 void Calculator::OnIsInErrorPropertyChanged()

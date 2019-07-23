@@ -167,17 +167,16 @@
                                           Padding="0,0,0,0"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           Style="{StaticResource ResultsScrollerSnapped}"
-                                          AutomationProperties.AccessibilityView="Raw">
-                                <StackPanel Orientation="Horizontal"
-                                            Grid.Row="2"
-                                            HorizontalAlignment="Right">
-                                    <TextBlock x:Name="EditableToken"
-                                               Text="{Binding DisplayValue, Mode=OneWay}"
-                                               Margin="0,0,0,0"
-                                               Padding="0"
-                                               VerticalAlignment="Stretch"
-                                               FontWeight="SemiBold"/>
-                                </StackPanel>
+                                          AutomationProperties.AccessibilityView="Control">
+                                <TextBlock x:Name="EditableToken"
+                                           AutomationProperties.AccessibilityView="Raw"
+                                           Text="{Binding DisplayValue, Mode=OneWay}"
+                                           Margin="0,0,0,0"
+                                           Padding="0"
+                                           VerticalAlignment="Stretch"
+                                           FontWeight="SemiBold"
+                                           Grid.Row="2"
+                                           HorizontalAlignment="Right"/>
                             </ScrollViewer>
                             <Border Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
                                     Grid.Column="0">
@@ -625,7 +624,7 @@
                                         TokensUpdated="{x:Bind Model.AreAlwaysOnTopResultsUpdated, Mode=OneWay}"
                                         HorizontalContentAlignment="Right"
                                         IsActive="True"
-                                        IsTabStop="False"
+                                        UseSystemFocusVisuals="True"
                                         Visibility="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"/>
 
             <!-- Programmer display panel controls -->

@@ -1481,6 +1481,22 @@
     <value>Categories DropDown</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
   </data>
+  <data name="NormalAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Keep on top</value>
+    <comment>Screen reader prompt for the Always-on-Top button when in normal mode.</comment>
+  </data>
+  <data name="AoTAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Back to full view</value>
+    <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
+  </data>
+  <data name="NormalAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Keep on top</value>
+    <comment>This is the tool tip automation name for the Always-on-Top button when in normal mode.</comment>
+  </data>
+  <data name="AoTAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Back to full view</value>
+    <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
+  </data>
   <data name="Format_ValueFrom" xml:space="preserve">
     <value>Convert from %1 %2</value>
     <comment>Screen reader prompt for the Unit Converter Value1 i.e. top number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
