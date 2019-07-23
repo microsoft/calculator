@@ -9,9 +9,10 @@ using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Windows::UI::Xaml::Controls;
 
-LiveRegionHost::LiveRegionHost() :
-    m_host(nullptr)
-{}
+LiveRegionHost::LiveRegionHost()
+    : m_host(nullptr)
+{
+}
 
 bool LiveRegionHost::IsHostAvailable()
 {
@@ -19,12 +20,12 @@ bool LiveRegionHost::IsHostAvailable()
     return true;
 }
 
-INarratorAnnouncementHost^ LiveRegionHost::MakeHost()
+INarratorAnnouncementHost ^ LiveRegionHost::MakeHost()
 {
     return ref new LiveRegionHost();
 }
 
-void LiveRegionHost::Announce(NarratorAnnouncement^ announcement)
+void LiveRegionHost::Announce(NarratorAnnouncement ^ announcement)
 {
     if (m_host == nullptr)
     {
@@ -33,7 +34,7 @@ void LiveRegionHost::Announce(NarratorAnnouncement^ announcement)
     }
 
     AutomationProperties::SetName(m_host, announcement->Announcement);
-    AutomationPeer^ peer = FrameworkElementAutomationPeer::FromElement(m_host);
+    AutomationPeer ^ peer = FrameworkElementAutomationPeer::FromElement(m_host);
     if (peer != nullptr)
     {
         peer->RaiseAutomationEvent(AutomationEvents::LiveRegionChanged);

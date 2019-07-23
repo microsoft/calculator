@@ -442,7 +442,7 @@
     <comment>This is the tool tip automation name for the history button.</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>比特绷板键盘</value>
+    <value>位切换键盘</value>
     <comment>This is the tool tip automation name for the bitFlip button.</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -1110,7 +1110,7 @@
     <comment>Unit conversion category name called Time</comment>
   </data>
   <data name="CategoryName_VolumeText" xml:space="preserve">
-    <value>音量</value>
+    <value>体积</value>
     <comment>Unit conversion category name called Volume (eg. cups, teaspoons, milliliters)</comment>
   </data>
   <data name="CategoryName_TemperatureText" xml:space="preserve">
@@ -2636,7 +2636,7 @@
     <comment>The timestamp of currency conversion ratios fetched from an online service. %1 is the date. %2 is the time. Example: "Updated Sep 28, 2016 5:42 PM"</comment>
   </data>
   <data name="RefreshButtonText.Content" xml:space="preserve">
-    <value>更新频率</value>
+    <value>更新汇率</value>
     <comment>The text displayed for a hyperlink button that refreshes currency converter ratios.</comment>
   </data>
   <data name="DataChargesMayApply" xml:space="preserve">
@@ -2906,5 +2906,21 @@
   <data name="AboutControlServicesAgreement.Text" xml:space="preserve">
     <value>Microsoft 服务协议</value>
     <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
+  </data>
+  <data name="UnitAbbreviation_Pyeong" xml:space="preserve">
+    <value>坪</value>
+    <comment>An abbreviation for a measurement unit of area.</comment>
+  </data>
+  <data name="UnitName_Pyeong" xml:space="preserve">
+    <value>坪</value>
+    <comment>A measurement unit for area.</comment>
+  </data>
+  <data name="CalculationResultScrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>向左滚动计算结果</value>
+    <comment>Automation label for the "Scroll Left" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
+  </data>
+  <data name="CalculationResultScrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>向右滚动计算结果</value>
+    <comment>Automation label for the "Scroll Right" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
   </data>
 </root>

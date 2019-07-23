@@ -10,14 +10,17 @@ namespace CalculatorApp
 {
     namespace Common
     {
-        public ref class KeyboardShortcutManager sealed
+    public
+        ref class KeyboardShortcutManager sealed
         {
         public:
-            KeyboardShortcutManager() {}
+            KeyboardShortcutManager()
+            {
+            }
 
             DEPENDENCY_PROPERTY_OWNER(KeyboardShortcutManager);
 
-            DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(Platform::String^, Character);
+            DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(Platform::String ^, Character);
             DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(MyVirtualKey, VirtualKey);
             DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(MyVirtualKey, VirtualKeyControlChord);
             DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(MyVirtualKey, VirtualKeyShiftChord);
@@ -26,9 +29,10 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(MyVirtualKey, VirtualKeyInverseChord);
             DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(MyVirtualKey, VirtualKeyControlInverseChord);
 
-        internal:
+            internal :
 
-            static void Initialize();
+                static void
+                Initialize();
 
             // Sometimes, like with popups, escape is treated as special and even
             // though it is handled we get it passed through to us. In those cases
@@ -42,57 +46,34 @@ namespace CalculatorApp
             static void HandledEnter(bool ishandled);
             static void UpdateDropDownState(bool);
             static void ShiftButtonChecked(bool checked);
-            static void UpdateDropDownState(Windows::UI::Xaml::Controls::Flyout^ aboutPageFlyout);
+            static void UpdateDropDownState(Windows::UI::Xaml::Controls::Flyout ^ aboutPageFlyout);
 
             static void RegisterNewAppViewId();
             static void OnWindowClosed(int viewId);
 
         private:
+            static void OnCharacterPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, Platform::String ^ oldValue, Platform::String ^ newValue);
 
-            static void OnCharacterPropertyChanged(
-                Windows::UI::Xaml::DependencyObject^ target,
-                Platform::String^ oldValue,
-                Platform::String^ newValue);
+            static void OnVirtualKeyPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
 
-            static void OnVirtualKeyPropertyChanged(
-                Windows::UI::Xaml::DependencyObject^ target,
-                MyVirtualKey oldValue,
-                MyVirtualKey newValue);
+            static void OnVirtualKeyControlChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
 
-            static void OnVirtualKeyControlChordPropertyChanged(
-                Windows::UI::Xaml::DependencyObject^ target,
-                MyVirtualKey oldValue,
-                MyVirtualKey newValue);
+            static void OnVirtualKeyShiftChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
 
-            static void OnVirtualKeyShiftChordPropertyChanged(
-                Windows::UI::Xaml::DependencyObject^ target,
-                MyVirtualKey oldValue,
-                MyVirtualKey newValue);
+            static void OnVirtualKeyInverseChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
 
-            static void OnVirtualKeyInverseChordPropertyChanged(
-                Windows::UI::Xaml::DependencyObject^ target,
-                MyVirtualKey oldValue,
-                MyVirtualKey newValue);
+            static void
+            OnVirtualKeyControlInverseChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
 
-            static void OnVirtualKeyControlInverseChordPropertyChanged(
-                Windows::UI::Xaml::DependencyObject^ target,
-                MyVirtualKey oldValue,
-                MyVirtualKey newValue);
+            static void OnVirtualKeyAltChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
 
-            static void OnVirtualKeyAltChordPropertyChanged(
-                Windows::UI::Xaml::DependencyObject^ target,
-                MyVirtualKey oldValue,
-                MyVirtualKey newValue);
+            static void
+            OnVirtualKeyControlShiftChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
 
-            static void OnVirtualKeyControlShiftChordPropertyChanged(
-                Windows::UI::Xaml::DependencyObject^ target,
-                MyVirtualKey oldValue,
-                MyVirtualKey newValue);
-
-            static void OnCharacterReceivedHandler(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::CharacterReceivedEventArgs^ args);
-            static void OnKeyDownHandler(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args);
-            static void OnKeyUpHandler(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args);
-            static void OnAcceleratorKeyActivated(Windows::UI::Core::CoreDispatcher^, Windows::UI::Core::AcceleratorKeyEventArgs^ args);
+            static void OnCharacterReceivedHandler(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::CharacterReceivedEventArgs ^ args);
+            static void OnKeyDownHandler(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args);
+            static void OnKeyUpHandler(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args);
+            static void OnAcceleratorKeyActivated(Windows::UI::Core::CoreDispatcher ^, Windows::UI::Core::AcceleratorKeyEventArgs ^ args);
         };
     }
 }

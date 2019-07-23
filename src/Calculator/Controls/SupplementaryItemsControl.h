@@ -3,45 +3,52 @@
 
 #pragma once
 
-namespace CalculatorApp { namespace Controls {
-
-    public ref class SupplementaryItemsControl sealed: public Windows::UI::Xaml::Controls::ItemsControl
+namespace CalculatorApp
+{
+    namespace Controls
     {
-    public:
-        SupplementaryItemsControl()
-        { }
-
-    protected:
-        virtual Windows::UI::Xaml::DependencyObject^ GetContainerForItemOverride() override;
-        virtual void PrepareContainerForItemOverride(Windows::UI::Xaml::DependencyObject^ element, Platform::Object^ item) override;
-    };
-
-    public ref class SupplementaryContentPresenter sealed: public Windows::UI::Xaml::Controls::ContentPresenter
-    {
-    public:
-        SupplementaryContentPresenter()
-        { }
-
-    protected:
-        virtual Windows::UI::Xaml::Automation::Peers::AutomationPeer^ OnCreateAutomationPeer() override;
-    };
-
-    ref class SupplementaryContentPresenterAP sealed: public Windows::UI::Xaml::Automation::Peers::FrameworkElementAutomationPeer
-    {
-    protected:
-        virtual Windows::UI::Xaml::Automation::Peers::AutomationControlType GetAutomationControlTypeCore() override
+    public
+        ref class SupplementaryItemsControl sealed : public Windows::UI::Xaml::Controls::ItemsControl
         {
-            return Windows::UI::Xaml::Automation::Peers::AutomationControlType::Text;
-        }
+        public:
+            SupplementaryItemsControl()
+            {
+            }
 
-        virtual Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Automation::Peers::AutomationPeer^>^ GetChildrenCore() override
+        protected:
+            virtual Windows::UI::Xaml::DependencyObject ^ GetContainerForItemOverride() override;
+            virtual void PrepareContainerForItemOverride(Windows::UI::Xaml::DependencyObject ^ element, Platform::Object ^ item) override;
+        };
+
+    public
+        ref class SupplementaryContentPresenter sealed : public Windows::UI::Xaml::Controls::ContentPresenter
         {
-            return nullptr;
-        }
+        public:
+            SupplementaryContentPresenter()
+            {
+            }
 
-    internal:
-        SupplementaryContentPresenterAP(SupplementaryContentPresenter^ owner):
-            Windows::UI::Xaml::Automation::Peers::FrameworkElementAutomationPeer(owner)
-        { }
-    };
-}}
+        protected:
+            virtual Windows::UI::Xaml::Automation::Peers::AutomationPeer ^ OnCreateAutomationPeer() override;
+        };
+
+        ref class SupplementaryContentPresenterAP sealed : public Windows::UI::Xaml::Automation::Peers::FrameworkElementAutomationPeer
+        {
+        protected:
+            virtual Windows::UI::Xaml::Automation::Peers::AutomationControlType GetAutomationControlTypeCore() override
+            {
+                return Windows::UI::Xaml::Automation::Peers::AutomationControlType::Text;
+            }
+
+            virtual Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Automation::Peers::AutomationPeer ^> ^ GetChildrenCore() override
+            {
+                return nullptr;
+            }
+
+            internal : SupplementaryContentPresenterAP(SupplementaryContentPresenter ^ owner)
+                : Windows::UI::Xaml::Automation::Peers::FrameworkElementAutomationPeer(owner)
+            {
+            }
+        };
+    }
+}

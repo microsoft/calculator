@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "Header Files/CalcEngine.h"
 
 using namespace CalcEngine;
@@ -78,7 +77,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
         case IDC_DIV:
         case IDC_MOD:
         {
-            int iNumeratorSign = 1, iDenominatorSign = 1, iFinalSign = 1;
+            int iNumeratorSign = 1, iDenominatorSign = 1;
             auto temp = result;
             result = rhs;
 
@@ -107,20 +106,30 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
             if (operation == IDC_DIV)
             {
-                iFinalSign = iNumeratorSign * iDenominatorSign;
                 result /= temp;
+                if (m_fIntegerMode && (iNumeratorSign * iDenominatorSign) == -1)
+                {
+                    result = -(Integer(result));
+                }
             }
             else
             {
-                iFinalSign = iNumeratorSign;
-                result %= temp;
-            }
+                if (m_fIntegerMode)
+                {
+                    // Programmer mode, use remrat (remainder after division)
+                    result %= temp;
 
-            if (m_fIntegerMode && iFinalSign == -1)
-            {
-                result = -(Integer(result));
+                    if (iNumeratorSign == -1)
+                    {
+                        result = -(Integer(result));
+                    }
+                }
+                else
+                {
+                    // other modes, use modrat (modulus after division)
+                    result = Mod(result, temp);
+                }
             }
-
             break;
         }
 

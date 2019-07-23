@@ -18,7 +18,10 @@ namespace CalculatorApp
     public:
         int count;
         std::wstring funcName;
-        FuncLog() { count = 0; }
+        FuncLog()
+        {
+            count = 0;
+        }
         FuncLog(std::wstring fName)
         {
             funcName = fName;
@@ -30,7 +33,7 @@ namespace CalculatorApp
     {
     public:
         TraceLogger(_In_ TraceLogger const&) = delete;
-        TraceLogger const & operator= (_In_ TraceLogger const&) = delete;
+        TraceLogger const& operator=(_In_ TraceLogger const&) = delete;
         ~TraceLogger();
         static TraceLogger& GetInstance();
         bool GetTraceLoggingProviderEnabled() const;
@@ -93,21 +96,22 @@ namespace CalculatorApp
         // Trace methods for Date Calculator usage
         void LogDateDifferenceModeUsed(int windowId);
         void LogDateAddSubtractModeUsed(int windowId, bool isAddMode);
-        void LogDateClippedTimeDifferenceFound(winrt::Windows::Globalization::Calendar const& today, winrt::Windows::Foundation::DateTime const& clippedTime) const;
+        void
+        LogDateClippedTimeDifferenceFound(winrt::Windows::Globalization::Calendar const& today, winrt::Windows::Foundation::DateTime const& clippedTime) const;
 
         void LogStandardException(std::wstring_view functionName, _In_ const std::exception& e) const;
         void LogWinRTException(std::wstring_view functionName, _In_ winrt::hresult_error const& e) const;
-        void LogPlatformException(std::wstring_view functionName, _In_ Platform::Exception^ e) const;
+        void LogPlatformException(std::wstring_view functionName, _In_ Platform::Exception ^ e) const;
 
     private:
         // Create an instance of TraceLogger
         TraceLogger();
 
         // Any new Log method should
-            // a) decide the level of logging. This will help us in limiting recording of events only up to a certain level. See this link for guidance https://msdn.microsoft.com/en-us/library/windows/desktop/aa363742(v=vs.85).aspx
-            // We're using Verbose level for events that are called frequently and needed only for debugging or capturing perf for specific scenarios
-            // b) should decide whether or not to log to  telemetry and pass TraceLoggingKeyword(MICROSOFT_KEYWORD_TELEMETRY) accordingly
-            // c) Should accept a variable number of additional data arguments if needed
+        // a) decide the level of logging. This will help us in limiting recording of events only up to a certain level. See this link for guidance
+        // https://msdn.microsoft.com/en-us/library/windows/desktop/aa363742(v=vs.85).aspx We're using Verbose level for events that are called frequently and
+        // needed only for debugging or capturing perf for specific scenarios b) should decide whether or not to log to  telemetry and pass
+        // TraceLoggingKeyword(MICROSOFT_KEYWORD_TELEMETRY) accordingly c) Should accept a variable number of additional data arguments if needed
         void LogTelemetryEvent(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
         void LogMeasureEvent(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
         void LogCriticalDataEvent(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
@@ -133,7 +137,7 @@ namespace CalculatorApp
         bool isHypButtonLogged = false;
         bool isAngleButtonInitialized = false;
         unsigned int findIndex[maxFunctionSize] = { 0 };
-        bool GetIndex(int &index);
+        bool GetIndex(int& index);
         std::wstring GetProgrammerType(int index);
         size_t maxWindowCount = 0;
         bool isAppLaunchBeginLogged = false;

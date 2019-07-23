@@ -28,8 +28,9 @@ OperatorsPanel::OperatorsPanel()
     InitializeComponent();
 }
 
-StandardCalculatorViewModel^ OperatorsPanel::Model::get() {
-    return static_cast<CalculatorApp::ViewModel::StandardCalculatorViewModel^>(this->DataContext);
+StandardCalculatorViewModel ^ OperatorsPanel::Model::get()
+{
+    return static_cast<CalculatorApp::ViewModel::StandardCalculatorViewModel ^>(this->DataContext);
 }
 
 void OperatorsPanel::OnIsBitFlipCheckedPropertyChanged(bool /*oldValue*/, bool newValue)
