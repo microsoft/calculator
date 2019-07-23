@@ -101,26 +101,6 @@
                 </VisualState>
             </VisualStateGroup>
             <VisualStateGroup>
-                <VisualState x:Name="ShowStandardFunctions">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="394"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="R0.Height" Value="1*"/>
-                        <Setter Target="StandardFunctions.Visibility" Value="Visible"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="HideStandardFunctions">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="0"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="R0.Height" Value="0*"/>
-                        <Setter Target="StandardFunctions.Visibility" Value="Collapsed"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-            <VisualStateGroup>
                 <VisualState x:Name="Portrait768x1366">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="1366" MinWindowWidth="768"/>
@@ -334,6 +314,26 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup>
+                <VisualState x:Name="ShowStandardFunctions">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="394"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="R0.Height" Value="1*"/>
+                        <Setter Target="StandardFunctions.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="HideStandardFunctions">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="R0.Height" Value="0*"/>
+                        <Setter Target="StandardFunctions.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>

@@ -76,7 +76,6 @@ public
         void UpdateMemoryState();
         void UpdateHistoryState();
 
-        void CalculationResultsOnSelected(_In_ Platform::Object ^ sender);
         void OnContextRequested(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::ContextRequestedEventArgs ^ e);
         void OnContextCanceled(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnIsScientificPropertyChanged(bool oldValue, bool newValue);
@@ -102,18 +101,6 @@ public
         bool m_isLastAnimatedInProgrammer;
         bool m_IsLastFlyoutMemory = false;
         bool m_IsLastFlyoutHistory = false;
-
-        // Used for disabling/enabling behavior involving AlwaysOnTop mode
-        bool m_clearMemoryButtonErrorPrevState;
-        bool m_memRecallErrorPrevState;
-        bool m_memPlusErrorPrevState;
-        bool m_memMinusErrorPrevState;
-        bool m_memButtonErrorPrevState; 
-        bool m_clearMemoryButtonEnabled = true;
-        bool m_memRecallEnabled = true;
-        bool m_memPlusEnabled = true;
-        bool m_memMinusEnabled = true;
-        bool m_memButtonEnabled = true;
 
         Platform::String ^ m_openMemoryFlyoutAutomationName;
         Platform::String ^ m_closeMemoryFlyoutAutomationName;
@@ -150,7 +137,6 @@ public
         void OnHistoryFlyOutTapped(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         bool IsValidRegularExpression(std::wstring str);
         void DockPanelTapped(_In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
-        void OnNoErrorLayoutCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void OnErrorLayoutCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void OnHistoryAccessKeyInvoked(_In_ Windows::UI::Xaml::UIElement ^ sender, _In_ Windows::UI::Xaml::Input::AccessKeyInvokedEventArgs ^ args);
         void OnMemoryAccessKeyInvoked(_In_ Windows::UI::Xaml::UIElement ^ sender, _In_ Windows::UI::Xaml::Input::AccessKeyInvokedEventArgs ^ args);

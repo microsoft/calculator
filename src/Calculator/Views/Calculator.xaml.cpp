@@ -286,32 +286,26 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
 {
     if (newValue)
     {
-        RowExpression->Height = 0;
-        RowHamburger->Height = 0;
-        RowMemoryControls->Height = 0;
-
-        ClearMemoryButton->IsEnabled = false;
-        MemRecall->IsEnabled = false;
-        MemPlus->IsEnabled = false;
-        MemMinus->IsEnabled = false;
-        MemButton->IsEnabled = false;
+        VisualStateManager::GoToState(this, L"AlwaysOnTop", false);
     }
     else
     {
-        RowExpression->Height = GridLength(20, GridUnitType::Star);
-        RowHamburger->Height = safe_cast<GridLength>(Application::Current->Resources->Lookup("HamburgerHeightGridLength"));
-        RowMemoryControls->Height = GridLength(32, GridUnitType::Star);
-
-        ClearMemoryButton->IsEnabled = m_clearMemoryButtonEnabled;
-        MemRecall->IsEnabled = m_memRecallEnabled;
-        MemPlus->IsEnabled = m_memPlusEnabled;
-        MemMinus->IsEnabled = m_memMinusEnabled;
-        MemButton->IsEnabled = m_memButtonEnabled;
+        VisualStateManager::GoToState(this, L"Normal", false);
+        if (Model->IsInError)
+        {
+            VisualStateManager::GoToState(this, L"ErrorLayout", false);
+        }
+        else
+        {
+            EnableMemoryControls(true);
+        }
     }
+
     Model->IsMemoryEmptyAlwaysOnTop = Model->IsMemoryEmpty || Model->IsAlwaysOnTop;
 
     AlwaysOnTopResults->UpdateScrollButtons();
     Results->UpdateTextState();
+
     UpdateViewState();
     UpdatePanelViewState();
     SetDefaultFocus();
@@ -433,49 +427,36 @@ void Calculator::UpdateHistoryState()
 
 void Calculator::UpdateMemoryState()
 {
-    if (!Model->IsMemoryEmpty)
+    if (!IsAlwaysOnTop)
     {
-        if (IsAlwaysOnTop)
-        {
-            m_memRecallEnabled = true;
-            m_clearMemoryButtonEnabled = true;
-        }
-        else
+        if (!Model->IsMemoryEmpty)
         {
             MemRecall->IsEnabled = true;
             ClearMemoryButton->IsEnabled = true;
-        }
-    }
-    else
-    {
-        if (IsAlwaysOnTop)
-        {
-            m_memRecallEnabled = false;
-            m_clearMemoryButtonEnabled = false;
         }
         else
         {
             MemRecall->IsEnabled = false;
             ClearMemoryButton->IsEnabled = false;
         }
-    }
 
-    String ^ viewState = App::GetAppViewState();
-    if (viewState == ViewState::DockedView)
-    {
-        CloseMemoryFlyout();
-        SetChildAsMemory();
-        MemoryButton->Visibility = ::Visibility::Collapsed;
-
-        if (m_IsLastFlyoutMemory && !IsProgrammer)
+        String ^ viewState = App::GetAppViewState();
+        if (viewState == ViewState::DockedView)
         {
-            DockPivot->SelectedIndex = 1;
+            CloseMemoryFlyout();
+            SetChildAsMemory();
+            MemoryButton->Visibility = ::Visibility::Collapsed;
+
+            if (m_IsLastFlyoutMemory && !IsProgrammer)
+            {
+                DockPivot->SelectedIndex = 1;
+            }
         }
-    }
-    else
-    {
-        MemoryButton->Visibility = ::Visibility::Visible;
-        DockMemoryHolder->Child = nullptr;
+        else
+        {
+            MemoryButton->Visibility = ::Visibility::Visible;
+            DockMemoryHolder->Child = nullptr;
+        }
     }
 }
 
@@ -669,27 +650,13 @@ void Calculator::OnHideMemoryClicked()
 
 void Calculator::EnableMemoryControls(bool enable)
 {
-    if (IsAlwaysOnTop)
+    MemButton->IsEnabled = enable;
+    MemMinus->IsEnabled = enable;
+    MemPlus->IsEnabled = enable;
+    if (!Model->IsMemoryEmpty)
     {
-        m_memButtonEnabled = enable;
-        m_memMinusEnabled = enable;
-        m_memPlusEnabled = enable;
-        if (!Model->IsMemoryEmpty)
-        {
-            m_memRecallEnabled = enable;
-            m_clearMemoryButtonEnabled = enable;
-        }
-    }
-    else
-    {
-        MemButton->IsEnabled = enable;
-        MemMinus->IsEnabled = enable;
-        MemPlus->IsEnabled = enable;
-        if (!Model->IsMemoryEmpty)
-        {
-            MemRecall->IsEnabled = enable;
-            ClearMemoryButton->IsEnabled = enable;
-        }
+        MemRecall->IsEnabled = enable;
+        ClearMemoryButton->IsEnabled = enable;
     }
 }
 
@@ -760,56 +727,8 @@ void Calculator::UnregisterEventHandlers()
     ExpressionText->UnregisterEventHandlers();
 }
 
-void Calculator::OnNoErrorLayoutCompleted(_In_ Object ^ sender, _In_ Object ^ e)
-{
-    if (IsAlwaysOnTop)
-    {
-        m_clearMemoryButtonEnabled = m_clearMemoryButtonErrorPrevState;
-        m_memRecallEnabled = m_memRecallErrorPrevState;
-        m_memPlusEnabled = m_memPlusErrorPrevState;
-        m_memMinusEnabled = m_memMinusErrorPrevState;
-        m_memButtonEnabled = m_memButtonErrorPrevState;
-    }
-    else
-    {
-        ClearMemoryButton->IsEnabled = m_clearMemoryButtonErrorPrevState;
-        MemRecall->IsEnabled = m_memRecallErrorPrevState;
-        MemPlus->IsEnabled = m_memPlusErrorPrevState;
-        MemMinus->IsEnabled = m_memMinusErrorPrevState;
-        MemButton->IsEnabled = m_memButtonErrorPrevState;
-    }
-}
-
 void Calculator::OnErrorLayoutCompleted(_In_ Object ^ sender, _In_ Object ^ e)
 {
-    if (IsAlwaysOnTop)
-    {
-        m_clearMemoryButtonErrorPrevState = m_clearMemoryButtonEnabled;
-        m_memRecallErrorPrevState = m_memRecallEnabled;
-        m_memPlusErrorPrevState = m_memPlusEnabled;
-        m_memMinusErrorPrevState = m_memMinusEnabled;
-        m_memButtonErrorPrevState = m_memButtonEnabled;
-
-        m_clearMemoryButtonEnabled = false;
-        m_memRecallEnabled = false;
-        m_memPlusEnabled = false;
-        m_memMinusEnabled = false;
-        m_memButtonEnabled = false;
-    }
-    else
-    {
-        m_clearMemoryButtonErrorPrevState = ClearMemoryButton->IsEnabled;
-        m_memRecallErrorPrevState = MemRecall->IsEnabled;
-        m_memPlusErrorPrevState = MemPlus->IsEnabled;
-        m_memMinusErrorPrevState = MemMinus->IsEnabled;
-        m_memButtonErrorPrevState = MemButton->IsEnabled;
-
-        ClearMemoryButton->IsEnabled = false;
-        MemRecall->IsEnabled = false;
-        MemPlus->IsEnabled = false;
-        MemMinus->IsEnabled = false;
-        MemButton->IsEnabled = false;
-    }
     SetDefaultFocus();
 }
 

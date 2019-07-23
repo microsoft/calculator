@@ -412,11 +412,38 @@
         <VisualStateManager.VisualStateGroups>
             <!-- Error Layout specific -->
             <VisualStateGroup x:Name="ErrorVisualStates">
-                <VisualState x:Name="NoErrorLayout">
-                    <Storyboard Completed="OnNoErrorLayoutCompleted"/>
-                </VisualState>
+                <VisualState x:Name="NoErrorLayout"/>
                 <VisualState x:Name="ErrorLayout">
+                    <VisualState.Setters>
+                        <Setter Target="ClearMemoryButton.IsEnabled" Value="False"/>
+                        <Setter Target="MemRecall.IsEnabled" Value="False"/>
+                        <Setter Target="MemPlus.IsEnabled" Value="False"/>
+                        <Setter Target="MemMinus.IsEnabled" Value="False"/>
+                        <Setter Target="MemButton.IsEnabled" Value="False"/>
+                    </VisualState.Setters>
                     <Storyboard Completed="OnErrorLayoutCompleted"/>
+                </VisualState>
+            </VisualStateGroup>
+            <!-- Always-on-Top specific -->
+            <VisualStateGroup x:Name="AlwaysOnTopStates">
+                <VisualState x:Name="AlwaysOnTop">
+                    <VisualState.Setters>
+                        <Setter Target="ClearMemoryButton.IsEnabled" Value="False"/>
+                        <Setter Target="MemRecall.IsEnabled" Value="False"/>
+                        <Setter Target="MemPlus.IsEnabled" Value="False"/>
+                        <Setter Target="MemMinus.IsEnabled" Value="False"/>
+                        <Setter Target="MemButton.IsEnabled" Value="False"/>
+                        <Setter Target="RowExpression.Height" Value="0*"/>
+                        <Setter Target="RowHamburger.Height" Value="0"/>
+                        <Setter Target="RowMemoryControls.Height" Value="0*"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                        <Setter Target="RowExpression.Height" Value="20*"/>
+                        <Setter Target="RowHamburger.Height" Value="{StaticResource HamburgerHeightGridLength}"/>
+                        <Setter Target="RowMemoryControls.Height" Value="32*"/>
+                    </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
             <!-- Mode specific -->
