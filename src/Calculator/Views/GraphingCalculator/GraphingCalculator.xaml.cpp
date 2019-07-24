@@ -78,6 +78,26 @@ void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object^ sender, W
     }
 
 }
+//
+//"<!DOCTYPE html>" \
+//"<html lang = \"en\" xmlns = \"http://www.w3.org/1999/xhtml\">" \
+//"<head>" \
+//"<meta charset = \"utf-8\" / >" \
+//"<title>Look what I graphed!< / title>" \
+//"< / head>" \
+//"<body>" \
+//"Some text at top of body" \
+//"<img src = \"t.png\" width = \"200\" height = \"200\" / >" \
+//"<ul>" \
+//"<li>X = 4y< / li>" \
+//"<li>X = y< / li>" \
+//"<li>X = y ^ 4 < / li >" \
+//"< / ul>" \
+//"Some text at bottom of body" \
+//"< / body>";
+
+
+
 
 // When share is invoked (by the user or programatically) the event handler we registered will be called to populate the datapackage with the
 // data to be shared.  We will request the current graph image from teh grapher as a stream that will pass to the share request.
@@ -85,16 +105,37 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
 {
 
     auto htmlResources = ref new Map<String^, RandomAccessStreamReference^>();
+    std::wstring rawHtml = L"<p><img src='graph.png'></p>";
 
-    String^ rawHtml = L"<html>        <header><title>This is title< / title>< / header>        <body>        Hello world        < / body>        < / html>";
-    
+    auto equations = ViewModel->Equations;
+    for (unsigned i = 0; i < equations->Size; i++)
+    {
+        auto expression = equations->GetAt(i)->Expression->Data();
+        auto color = equations->GetAt(i)->LineColor;
+
+        if (equations->GetAt(i)->Expression->Length() == 0)
+        {
+            expression = L"empty graph equation"; // TODO: Load this string from resources
+        }
+
+        rawHtml += L"<p><ul>";
+        rawHtml += L"<li style=\"background-color:rgb(";
+        rawHtml += color.R.ToString()->Data();
+        rawHtml += L",";
+        rawHtml += color.G.ToString()->Data();
+        rawHtml += L",";
+        rawHtml += color.B.ToString()->Data();
+        rawHtml += L"); \">";
+        rawHtml += expression;
+        rawHtml += L"</li>";
+        rawHtml += L"</ul></p>";
+    }
 
     // Shortcut to the request data
     auto requestData = args->Request->Data;
 
     DataPackage^ dataPackage = ref new DataPackage();
-
-    auto html = HtmlFormatHelper::CreateHtmlFormat(rawHtml);
+    auto html = HtmlFormatHelper::CreateHtmlFormat(ref new String(rawHtml.c_str()));
 
 
     // Get our title from the localized resources
@@ -104,17 +145,14 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
 
     requestData->SetHtmlFormat(html);
 
-    htmlResources->Insert(ref new String(L"t.png"), RandomAccessStreamReference::CreateFromUri(ref new Uri("ms-appx:///Assets/CalculatorAppList.targetsize-96.png")));
+    htmlResources->Insert(ref new String(L"graph.png"), TheGrapher->GetGraphBitmapStream());
 
     for (auto pair : htmlResources)
     {
         auto k = pair->Key;
         auto v = pair->Value;
-        dataPackage->ResourceMap->Insert(k , v);
+        requestData->ResourceMap->Insert(k , v);
     }
-
-    requestData = dataPackage;
-
 
     //try
     //{
