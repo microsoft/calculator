@@ -3,6 +3,7 @@
 #include "GraphingCalculator.xaml.h"
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "Controls/CalculationResult.h"
+#include <Collection.h>
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -32,6 +33,9 @@ using namespace Windows::UI::Core;
 using namespace Windows::UI::Popups;
 
 constexpr auto sc_ViewModelPropertyName = L"ViewModel";
+
+using namespace Platform::Collections;
+
 
 GraphingCalculator::GraphingCalculator()
 {
@@ -79,38 +83,71 @@ void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object^ sender, W
 // data to be shared.  We will request the current graph image from teh grapher as a stream that will pass to the share request.
 void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataRequestedEventArgs^ args)
 {
-    try
+
+    auto htmlResources = ref new Map<String^, RandomAccessStreamReference^>();
+
+    String^ rawHtml = L"<html>        <header><title>This is title< / title>< / header>        <body>        Hello world        < / body>        < / html>";
+    
+
+    // Shortcut to the request data
+    auto requestData = args->Request->Data;
+
+    DataPackage^ dataPackage = ref new DataPackage();
+
+    auto html = HtmlFormatHelper::CreateHtmlFormat(rawHtml);
+
+
+    // Get our title from the localized resources
+    auto resourceLoader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+    auto titleString = resourceLoader->GetString(L"ShareActionTitle");
+    requestData->Properties->Title = titleString;
+
+    requestData->SetHtmlFormat(html);
+
+    htmlResources->Insert(ref new String(L"t.png"), RandomAccessStreamReference::CreateFromUri(ref new Uri("ms-appx:///Assets/CalculatorAppList.targetsize-96.png")));
+
+    for (auto pair : htmlResources)
     {
-        // Get the current graph 
-        auto stream = TheGrapher->GetGraphBitmapStream();
-
-        // Shortcut to the request data
-        auto requestData = args->Request->Data;
-
-        // Get our title from the localized resources
-        auto resourceLoader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
-        auto titleString = resourceLoader->GetString(L"ShareActionTitle");
-        requestData->Properties->Title = titleString;
-
-        // Set the thumbnail image
-        requestData->Properties->Thumbnail = stream;
-
-        // And the bitmap
-        requestData->SetBitmap(stream);
+        auto k = pair->Key;
+        auto v = pair->Value;
+        dataPackage->ResourceMap->Insert(k , v);
     }
-    catch(...)
-    {
-        // Something went wrong, notify the user.
-        auto resourceLoader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
 
-        auto errorTitleString = resourceLoader->GetString(L"ShareActionErrorMessage");
-        auto errorOkString = resourceLoader->GetString(L"ShareActionErrorOk");
-        auto errDialog = ref new Windows::UI::Xaml::Controls::ContentDialog();
+    requestData = dataPackage;
 
-        errDialog->Content = errorTitleString;
-        errDialog->CloseButtonText = "OK";
-        errDialog->ShowAsync();
-    }
+
+    //try
+    //{
+    //    // Get the current graph 
+    //    auto stream = TheGrapher->GetGraphBitmapStream();
+
+    //    // Shortcut to the request data
+    //    auto requestData = args->Request->Data;
+
+    //    // Get our title from the localized resources
+    //    auto resourceLoader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+    //    auto titleString = resourceLoader->GetString(L"ShareActionTitle");
+    //    requestData->Properties->Title = titleString;
+
+    //    // Set the thumbnail image
+    //    requestData->Properties->Thumbnail = stream;
+
+    //    // And the bitmap
+    //    requestData->SetBitmap(stream);
+    //}
+    //catch(...)
+    //{
+    //    // Something went wrong, notify the user.
+    //    auto resourceLoader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+
+    //    auto errorTitleString = resourceLoader->GetString(L"ShareActionErrorMessage");
+    //    auto errorOkString = resourceLoader->GetString(L"ShareActionErrorOk");
+    //    auto errDialog = ref new Windows::UI::Xaml::Controls::ContentDialog();
+
+    //    errDialog->Content = errorTitleString;
+    //    errDialog->CloseButtonText = "OK";
+    //    errDialog->ShowAsync();
+    //}
 }
 
 void GraphingCalculator::CommandInvokedHandler(Windows::UI::Popups::IUICommand^ command)
