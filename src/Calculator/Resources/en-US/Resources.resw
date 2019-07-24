@@ -3427,4 +3427,8 @@
     <value>Look what I graphed.</value>
     <comment>Sent as part of the shared content.  The title for the share.</comment>
   </data>
+  <data name="EmptyEquationString" xml:space="preserve">
+    <value>Empty graph equation</value>
+    <comment>When sharing and one of the equations has no content this will be shown in the graph key for that equation.</comment>
+  </data>
 </root>
