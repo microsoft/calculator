@@ -180,7 +180,7 @@
                                 <TextBlock x:Name="EditableToken"
                                            AutomationProperties.AccessibilityView="Raw"
                                            Text="{Binding DisplayValue, Mode=OneWay}"
-                                           Margin="0,0,0,0"
+                                           Margin="4,0,4,0"
                                            Padding="0"
                                            VerticalAlignment="Stretch"
                                            FontWeight="SemiBold"
