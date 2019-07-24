@@ -67,6 +67,7 @@ public
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
 
         void OnPageLoaded(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void App_Suspending(Object ^ sender, Windows::ApplicationModel::SuspendingEventArgs ^ e);
 
         void EnsureCalculator();
         void EnsureConverter();

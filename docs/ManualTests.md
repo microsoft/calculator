@@ -54,6 +54,60 @@ Steps:
 2. Select “miles” as the unit type in the output field 
 *Expected: The output starts with is “3.106856”*
 
+### Always-on-Top
+
+**Test 1**
+Steps: 
+1. From the Standard Calculator page, click the Always-on-Top button (its tooltip should say "Keep on top")
+2. Launch the "Notepad" app and put it in full-screen mode
+*Expected: Calculator is still on top of Notepad and in the Standard Calculator page*
+
+**Test 2**
+Steps: 
+1. From the Standard Calculator page, input “3”, “+”, “3” (do not press “Enter”), then click the Always-on-Top button
+*Expected: The application title, hamburger menu, calculator type title, calculation expression (the secondary line above the main display), history button and memory buttons are no longer visible. The main display should show "3"*
+2. Press “Enter”
+*Expected: The main display should show "6"*
+3. Press "Ctrl-H" on the keyboard
+*Expected: Nothing should happen (history keyboard shortcuts should be disabled)*
+4. Press "Ctrl-P" on the keyboard, then click the Always-on-Top button again (its tooltip should say "Back to full view")
+5. Open the Memory panel
+*Expected: Nothing should be stored in memory (memory keyboard shortcuts should be disabled in Always-on-Top mode)*
+
+**Test 3**
+Steps: 
+1. From the Standard Calculator page, click the Always-on-Top button
+2. Resize the window horizontally
+*Expected: The buttons automatically expand or shrink to fit the available screen size*
+3. Resize the window vertically
+*Expected: The buttons automatically expand or shrink to fit the available screen size and the percent, square-root, squared and reciprocal buttons disappear when the screen height is small*
+4. Click the Always-on-Top button again
+*Expected: The original window layout from before Step 1 should be restored*
+5. Click the Always-on-Top button again
+*Expected: The window size from after Step 3 should be restored*
+6. Close the "Calculator" app
+7. Launch the "Calculator" app again and click the Always-on-Top button
+*Expected: The window size from right before you closed the app should be restored*
+
+**Test 4**
+Steps:
+1. Change the system default app language to Arabic
+2. From the Standard Calculator page, click the Always-on-Top button
+*Expected: UI/Menu should be localized (for example, the title bar buttons should be in right-to-left order)*
+3. Input "/", "0", “Enter” on the keyboard
+*Expected: Error message should be in Arabic*
+
+**Test 5**
+Steps:
+1. Open the "Narrator" app
+2. From the Standard Calculator page, click the Always-on-Top button
+3. Tab over the Always-on-Top button
+*Expected: Narrator should read the localized version of "Back to full view"*
+4. Tab over the main results field
+*Expected: Narrator should read the localized version of exactly what's displayed (ie. "0")*
+5. Tab over the rest of the UI elements
+*Expected: Narrator should read the localized version of the UI elements' contents*
+
 
 ## Basic Verification Tests
 

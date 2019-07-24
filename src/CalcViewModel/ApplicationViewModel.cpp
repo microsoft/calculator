@@ -32,6 +32,7 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::Foundation;
+using namespace Concurrency;
 
 namespace
 {
@@ -207,15 +208,19 @@ void ApplicationViewModel::SetMenuCategories()
     Categories = NavCategoryGroup::CreateMenuOptions();
 }
 
-void ApplicationViewModel::AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void ApplicationViewModel::AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e, float width, float height)
 {
-    HandleAlwaysOnTopButtonClick(sender, e);
+    HandleAlwaysOnTopButtonClick(sender, e, width, height);
 }
 
-Concurrency::task<void> ApplicationViewModel::HandleAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+task<void> ApplicationViewModel::HandleAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e, float width, float height)
 {
-    if (ApplicationView::GetForCurrentView()->GetForCurrentView()->ViewMode == ApplicationViewMode::CompactOverlay)
+    if (ApplicationView::GetForCurrentView()->ViewMode == ApplicationViewMode::CompactOverlay)
     {
+        ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
+        localSettings->Values->Insert(WidthLocalSettings, width);
+        localSettings->Values->Insert(HeightLocalSettings, height);
+
         bool success = co_await ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::Default);
         CalculatorViewModel->AreHistoryShortcutsEnabled = success;
         CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = success;
@@ -224,24 +229,24 @@ Concurrency::task<void> ApplicationViewModel::HandleAlwaysOnTopButtonClick(Platf
     }
     else
     {
-        Windows::Storage::ApplicationDataContainer ^ localSettings = Windows::Storage::ApplicationData::Current->LocalSettings;
+        ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
         ViewModePreferences ^ compactOptions = ViewModePreferences::CreateDefault(ApplicationViewMode::CompactOverlay);
         if (!localSettings->Values->GetView()->HasKey(LaunchedLocalSettings))
         {
-            compactOptions->CustomSize = Windows::Foundation::Size(320, 394);
+            compactOptions->CustomSize = Size(320, 394);
             localSettings->Values->Insert(LaunchedLocalSettings, true);
         }
         else
         {
             if (localSettings->Values->GetView()->HasKey(WidthLocalSettings) && localSettings->Values->GetView()->HasKey(HeightLocalSettings))
             {
-                float width = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup(WidthLocalSettings))->GetSingle();
-                float height = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup(HeightLocalSettings))->GetSingle();
-                compactOptions->CustomSize = Windows::Foundation::Size(width, height);
+                float oldWidth = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup(WidthLocalSettings))->GetSingle();
+                float oldHeight = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup(HeightLocalSettings))->GetSingle();
+                compactOptions->CustomSize = Size(oldWidth, oldHeight);
             }
             else
             {
-                compactOptions->CustomSize = Windows::Foundation::Size(320, 394);
+                compactOptions->CustomSize = Size(320, 394);
             }
         }
 

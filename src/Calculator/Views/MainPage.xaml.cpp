@@ -70,6 +70,7 @@ MainPage::MainPage()
 
     KeyboardShortcutManager::Initialize();
 
+    Application::Current->Suspending += ref new SuspendingEventHandler(this, &MainPage::App_Suspending);
     m_model->PropertyChanged += ref new PropertyChangedEventHandler(this, &MainPage::OnAppPropertyChanged);
     m_accessibilitySettings = ref new AccessibilitySettings();
 
@@ -116,12 +117,6 @@ void MainPage::WindowSizeChanged(_In_ Platform::Object ^ /*sender*/, _In_ Window
 {
     // We don't use layout aware page's view states, we have our own
     UpdateViewState();
-    if (m_model->IsAlwaysOnTop)
-    {
-        Windows::Storage::ApplicationDataContainer ^ localSettings = Windows::Storage::ApplicationData::Current->LocalSettings;
-        localSettings->Values->Insert(ApplicationViewModel::WidthLocalSettings, this->ActualWidth);
-        localSettings->Values->Insert(ApplicationViewModel::HeightLocalSettings, this->ActualHeight);
-    }
 }
 
 void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e)
@@ -553,5 +548,15 @@ void MainPage::OnNavItemInvoked(MUXC::NavigationView ^ /*sender*/, _In_ MUXC::Na
 
 void MainPage::AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
-    Model->AlwaysOnTopButtonClick(sender, e);
+    Model->AlwaysOnTopButtonClick(sender, e, 0, 0);
+}
+
+void MainPage::App_Suspending(Object ^ sender, Windows::ApplicationModel::SuspendingEventArgs ^ e)
+{
+    if (m_model->IsAlwaysOnTop)
+    {
+        ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
+        localSettings->Values->Insert(ApplicationViewModel::WidthLocalSettings, this->ActualWidth);
+        localSettings->Values->Insert(ApplicationViewModel::HeightLocalSettings, this->ActualHeight);
+    }
 }

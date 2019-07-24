@@ -107,7 +107,7 @@ namespace CalculatorApp
                 }
             }
 
-            void AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+            void AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e, float width, float height);
 
         private:
             bool TryRecoverFromNavigationModeFailure();
@@ -121,7 +121,7 @@ namespace CalculatorApp
 
             CalculatorApp::Common::ViewMode m_mode;
             Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup ^> ^ m_categories;
-            Concurrency::task<void> HandleAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+            Concurrency::task<void> HandleAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e, float width, float height);
             void SetDisplayNormalAlwaysOnTopOption();
 
             bool m_isAlwaysOnTop;

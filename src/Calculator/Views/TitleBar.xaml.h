@@ -4,7 +4,7 @@
 #pragma once
 
 #include "Views/TitleBar.g.h"
-#include <CalcViewModel\ApplicationViewModel.h>
+#include "CalcViewModel\ApplicationViewModel.h"
 
 namespace CalculatorApp
 {
