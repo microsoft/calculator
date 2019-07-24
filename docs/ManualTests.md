@@ -58,21 +58,21 @@ Steps:
 
 **Test 1**
 Steps: 
-1. From the Standard Calculator page, click the Always-on-Top button (its tooltip should say "Keep on top")
+1. From the Standard Calculator page, click the Always-on-Top button (its tooltip says "Keep on top")
 2. Launch the "Notepad" app and put it in full-screen mode
-*Expected: Calculator is still on top of Notepad and in the Standard Calculator page*
+*Expected: Calculator is still on top of Notepad and in Always-on-Top mode*
 
 **Test 2**
 Steps: 
 1. From the Standard Calculator page, input “3”, “+”, “3” (do not press “Enter”), then click the Always-on-Top button
-*Expected: The application title, hamburger menu, calculator type title, calculation expression (the secondary line above the main display), history button and memory buttons are no longer visible. The main display should show "3"*
+*Expected: The application title, hamburger menu, calculator type title, calculation expression (the secondary line above the main display), history button and memory buttons are no longer visible. The main display shows "3"*
 2. Press “Enter”
-*Expected: The main display should show "6"*
+*Expected: The main display shows "6"*
 3. Press "Ctrl-H" on the keyboard
-*Expected: Nothing should happen (history keyboard shortcuts should be disabled)*
-4. Press "Ctrl-P" on the keyboard, then click the Always-on-Top button again (its tooltip should say "Back to full view")
+*Expected: Nothing happens (history keyboard shortcuts are disabled)*
+4. Press "Ctrl-P" on the keyboard, then click the Always-on-Top button again (its tooltip says "Back to full view")
 5. Open the Memory panel
-*Expected: Nothing should be stored in memory (memory keyboard shortcuts should be disabled in Always-on-Top mode)*
+*Expected: Nothing is stored in memory (memory keyboard shortcuts are disabled in Always-on-Top mode) and "6" is in history*
 
 **Test 3**
 Steps: 
@@ -82,32 +82,40 @@ Steps:
 3. Resize the window vertically
 *Expected: The buttons automatically expand or shrink to fit the available screen size and the percent, square-root, squared and reciprocal buttons disappear when the screen height is small*
 4. Click the Always-on-Top button again
-*Expected: The original window layout from before Step 1 should be restored*
+*Expected: Calculator is in Standard mode and the original window layout from before Step 1 is restored*
 5. Click the Always-on-Top button again
-*Expected: The window size from after Step 3 should be restored*
+*Expected: Calculator is in Always-on-Top mode and the window size from after Step 3 is restored*
 6. Close the "Calculator" app
 7. Launch the "Calculator" app again and click the Always-on-Top button
-*Expected: The window size from right before you closed the app should be restored*
+*Expected: The window size from right before closing from Always-on-Top mode (ie. after Step 5) is restored*
 
 **Test 4**
 Steps:
 1. Change the system default app language to Arabic
 2. From the Standard Calculator page, click the Always-on-Top button
-*Expected: UI/Menu should be localized (for example, the title bar buttons should be in right-to-left order)*
+*Expected: UI/Menu is localized (for example, the title bar buttons is in right-to-left order)*
 3. Input "/", "0", “Enter” on the keyboard
-*Expected: Error message should be in Arabic*
+*Expected: Error message is in Arabic*
+4. Click the Always-on-Top button again
+*Expected: Calculator is in Standard mode and all operator (except for "CE", "C", "Delete" and "=") and memory buttons are disabled
 
 **Test 5**
 Steps:
 1. Open the "Narrator" app
 2. From the Standard Calculator page, click the Always-on-Top button
 3. Tab over the Always-on-Top button
-*Expected: Narrator should read the localized version of "Back to full view"*
+*Expected: Narrator reads the localized version of "Back to full view"*
 4. Tab over the main results field
-*Expected: Narrator should read the localized version of exactly what's displayed (ie. "0")*
+*Expected: Narrator reads the localized version of exactly what's displayed (ie. "0")*
 5. Tab over the rest of the UI elements
-*Expected: Narrator should read the localized version of the UI elements' contents*
+*Expected: Narrator reads the localized version of the UI elements' contents*
 
+**Test 6**
+Steps:
+1. Navigate to the Scientific Calculator page
+*Expected: The Always-on-Top button is hidden*
+2. Navigate to the Standard Calculator page
+*Expected: The Always-on-Top button is visible*
 
 ## Basic Verification Tests
 
