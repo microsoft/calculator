@@ -13,7 +13,7 @@
 		<local:CalculatorStandardOperators x:Name="StandardOperators"
 																			 x:Load="False"
 																			 IsEnabled="{x:Bind Model.IsStandard, Mode=OneWay}"
-																			 Visibility="{x:Bind Model.IsStandard, Mode=OneWay}"
+																			 Visibility="{Binding IsStandard, Mode=OneWay}"
 																			 TabIndex="17" />
 
 		<local:CalculatorScientificOperators x:Name="ScientificOperators"
