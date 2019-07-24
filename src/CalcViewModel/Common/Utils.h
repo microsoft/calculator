@@ -10,6 +10,7 @@
 
 // Utility macros to make Models easier to write
 // generates a member variable called m_<n>
+
 #define PROPERTY_R(t, n)                                                                                                                                       \
     property t n                                                                                                                                               \
     {                                                                                                                                                          \
@@ -64,6 +65,25 @@ public:
                 m_##n = value;                                                                                                                                 \
                 RaisePropertyChanged(L#n);                                                                                                                     \
             }                                                                                                                                                  \
+        }                                                                                                                                                      \
+    }                                                                                                                                                          \
+                                                                                                                                                               \
+private:                                                                                                                                                       \
+    t m_##n;                                                                                                                                                   \
+                                                                                                                                                               \
+public:
+
+#define OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(t, n)                                                                                                             \
+    property t n                                                                                                                                               \
+    {                                                                                                                                                          \
+        t get()                                                                                                                                                \
+        {                                                                                                                                                      \
+            return m_##n;                                                                                                                                      \
+        }                                                                                                                                                      \
+        void set(t value)                                                                                                                                      \
+        {                                                                                                                                                      \
+            m_##n = value;                                                                                                                                     \
+            RaisePropertyChanged(L#n);                                                                                                                         \
         }                                                                                                                                                      \
     }                                                                                                                                                          \
                                                                                                                                                                \

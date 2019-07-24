@@ -3439,4 +3439,20 @@
     <value>Add Equation</value>
     <comment>Placeholder text for the equation input button</comment>
   </data>
+  <data name="VaiablesHeader.Text" xml:space="preserve">
+    <value>Variables</value>
+    <comment>Header text for variables area</comment>
+  </data>
+  <data name="StepTextBlock.Text" xml:space="preserve">
+    <value>Step</value>
+    <comment>Label text for the step text box</comment>
+  </data>
+  <data name="MinTextBlock.Text" xml:space="preserve">
+    <value>Min</value>
+    <comment>Label text for the min text box</comment>
+  </data>
+  <data name="MaxTextBlock.Text" xml:space="preserve">
+    <value>Max</value>
+    <comment>Label text for the max text box</comment>
+  </data>
 </root>
