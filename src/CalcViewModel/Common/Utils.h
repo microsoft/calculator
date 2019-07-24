@@ -73,7 +73,7 @@ private:                                                                        
                                                                                                                                                                \
 public:
 
-#define OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(t, n)
+#define OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(t, n)                                                                                                             \
     property t n                                                                                                                                               \
     {                                                                                                                                                          \
         t get()                                                                                                                                                \
@@ -81,9 +81,9 @@ public:
             return m_##n;                                                                                                                                      \
         }                                                                                                                                                      \
         void set(t value)                                                                                                                                      \
-        {                                                                                                                                                      \                                                                                                                                              \
-            m_##n = value;                                                                                                                                 \
-            RaisePropertyChanged(L#n);                                                                                                                     \                                                                                                                                            \
+        {                                                                                                                                                      \
+            m_##n = value;                                                                                                                                     \
+            RaisePropertyChanged(L#n);                                                                                                                         \
         }                                                                                                                                                      \
     }                                                                                                                                                          \
                                                                                                                                                                \
