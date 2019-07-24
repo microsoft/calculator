@@ -93,7 +93,9 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
         std::wstring rawHtml = L"<p><img src='graph.png'></p>";
 
         auto equations = ViewModel->Equations;
-        rawHtml += L"<p><ul>";
+        rawHtml += L"<p><table cellpadding=\"10\">";
+        rawHtml += L"<col width=\"60\">";
+        rawHtml += L"<row height=\"60\">";
         for (unsigned i = 0; i < equations->Size; i++)
         {
             auto expression = equations->GetAt(i)->Expression->Data();
@@ -104,17 +106,24 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
                 expression = EmptyEquationString->Data();
             }
 
-            rawHtml += L"<li style=\"background-color:rgb(";
+            rawHtml += L"<tr>";
+
+            rawHtml += L"<td style=\"background-color:rgb(";
             rawHtml += color.R.ToString()->Data();
             rawHtml += L",";
             rawHtml += color.G.ToString()->Data();
             rawHtml += L",";
             rawHtml += color.B.ToString()->Data();
             rawHtml += L"); \">";
+            rawHtml += L"&#402;(&#215;)";
+            rawHtml += L"</td>";
+            rawHtml += L"<td>";
             rawHtml += expression;
-            rawHtml += L"</li>";
+            rawHtml += L"</td>";
+
+            rawHtml += L"</tr>";
         }
-        rawHtml += L"</ul></p>";
+        rawHtml += L"</table></p>";
 
         // Shortcut to the request data
         auto requestData = args->Request->Data;
