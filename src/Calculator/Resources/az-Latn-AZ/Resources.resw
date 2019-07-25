@@ -2907,4 +2907,20 @@
     <value>Microsoft Xidmət Müqaviləsi</value>
     <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
   </data>
+  <data name="UnitAbbreviation_Pyeong" xml:space="preserve">
+    <value>Pyeong</value>
+    <comment>An abbreviation for a measurement unit of area.</comment>
+  </data>
+  <data name="UnitName_Pyeong" xml:space="preserve">
+    <value>Pyeong</value>
+    <comment>A measurement unit for area.</comment>
+  </data>
+  <data name="CalculationResultScrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hesablama nəticəsini sola sürüşdürün</value>
+    <comment>Automation label for the "Scroll Left" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
+  </data>
+  <data name="CalculationResultScrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hesablama nəticəsini sağa sürüşdürün</value>
+    <comment>Automation label for the "Scroll Right" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
+  </data>
 </root>

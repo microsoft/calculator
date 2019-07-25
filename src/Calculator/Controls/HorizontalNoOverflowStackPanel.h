@@ -13,12 +13,15 @@ namespace CalculatorApp
 {
     namespace Controls
     {
-        public ref class HorizontalNoOverflowStackPanel : public Windows::UI::Xaml::Controls::Panel
+    public
+        ref class HorizontalNoOverflowStackPanel : public Windows::UI::Xaml::Controls::Panel
         {
             DEPENDENCY_PROPERTY_OWNER(HorizontalNoOverflowStackPanel);
-            //Prioritize the last item over all other items (except the first one)
-        internal:
-            HorizontalNoOverflowStackPanel() {}
+            // Prioritize the last item over all other items (except the first one)
+            internal : HorizontalNoOverflowStackPanel()
+            {
+            }
+
         protected:
             virtual Windows::Foundation::Size MeasureOverride(Windows::Foundation::Size availableSize) override;
             virtual Windows::Foundation::Size ArrangeOverride(Windows::Foundation::Size finalSize) override;

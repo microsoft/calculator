@@ -15,10 +15,10 @@ namespace CalculationManager
 
     struct HISTORYITEMVECTOR
     {
-        std::shared_ptr<CalculatorVector <std::pair<std::wstring, int>>> spTokens;
+        std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> spTokens;
         std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> spCommands;
-        std::wstring    expression;
-        std::wstring    result;
+        std::wstring expression;
+        std::wstring result;
     };
 
     struct HISTORYITEM
@@ -26,19 +26,23 @@ namespace CalculationManager
         HISTORYITEMVECTOR historyItemVector;
     };
 
-    class CalculatorHistory :
-        public IHistoryDisplay
+    class CalculatorHistory : public IHistoryDisplay
     {
-
     public:
         CalculatorHistory(const size_t maxSize);
-        unsigned int AddToHistory(_In_ std::shared_ptr<CalculatorVector <std::pair<std::wstring, int>>> const &spTokens, _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const &spCommands, std::wstring_view result);
+        unsigned int AddToHistory(
+            _In_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& spTokens,
+            _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& spCommands,
+            std::wstring_view result);
         std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistory();
         std::shared_ptr<HISTORYITEM> const& GetHistoryItem(unsigned int uIdx);
         void ClearHistory();
-        unsigned int AddItem(_In_ std::shared_ptr<HISTORYITEM> const &spHistoryItem);
+        unsigned int AddItem(_In_ std::shared_ptr<HISTORYITEM> const& spHistoryItem);
         bool RemoveItem(unsigned int uIdx);
-        const size_t MaxHistorySize() const { return m_maxHistorySize; }
+        size_t MaxHistorySize() const
+        {
+            return m_maxHistorySize;
+        }
         ~CalculatorHistory(void);
 
     private:

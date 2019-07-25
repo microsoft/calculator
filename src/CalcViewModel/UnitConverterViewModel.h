@@ -15,99 +15,91 @@ namespace CalculatorApp
 {
     namespace ViewModel
     {
-        [Windows::UI::Xaml::Data::Bindable]
-        public ref class Category sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+        [Windows::UI::Xaml::Data::Bindable] public ref class Category sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
-        internal:
-            Category(const UnitConversionManager::Category& category) :
-                m_original(category)
-            { }
+            internal : Category(const UnitConversionManager::Category& category)
+                : m_original(category)
+            {
+            }
 
         public:
             OBSERVABLE_OBJECT();
 
-            property Platform::String^ Name
-            {
-                Platform::String^ get() { return ref new Platform::String(m_original.name.c_str()); }
-            }
+            property Platform::String
+                ^ Name { Platform::String ^ get() { return ref new Platform::String(m_original.name.c_str()); } }
 
-            property Windows::UI::Xaml::Visibility NegateVisibility
+                property Windows::UI::Xaml::Visibility NegateVisibility
             {
                 Windows::UI::Xaml::Visibility get()
                 {
-                    return m_original.supportsNegative
-                        ? Windows::UI::Xaml::Visibility::Visible
-                        : Windows::UI::Xaml::Visibility::Collapsed;
+                    return m_original.supportsNegative ? Windows::UI::Xaml::Visibility::Visible : Windows::UI::Xaml::Visibility::Collapsed;
                 }
             }
 
-        internal:
-            const UnitConversionManager::Category& GetModelCategory() const { return m_original; }
+            internal : const UnitConversionManager::Category& GetModelCategory() const
+            {
+                return m_original;
+            }
 
         private:
             const UnitConversionManager::Category m_original;
         };
 
-        [Windows::UI::Xaml::Data::Bindable]
-        public ref class Unit sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+        [Windows::UI::Xaml::Data::Bindable] public ref class Unit sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
-        internal:
-            Unit(const UnitConversionManager::Unit& unit) :
-                m_original(unit)
-            { }
+            internal : Unit(const UnitConversionManager::Unit& unit)
+                : m_original(unit)
+            {
+            }
 
         public:
             OBSERVABLE_OBJECT();
 
-            property Platform::String^ Name
-            {
-                Platform::String^ get() { return ref new Platform::String(m_original.name.c_str()); }
-            }
+            property Platform::String
+                ^ Name { Platform::String ^ get() { return ref new Platform::String(m_original.name.c_str()); } }
 
-            property Platform::String^ AccessibleName
-            {
-                Platform::String^ get() { return ref new Platform::String(m_original.accessibleName.c_str()); }
-            }
+                property Platform::String
+                ^ AccessibleName { Platform::String ^ get() { return ref new Platform::String(m_original.accessibleName.c_str()); } }
 
-            property Platform::String^ Abbreviation
-            {
-                Platform::String^ get() { return ref new Platform::String(m_original.abbreviation.c_str()); }
-            }
+                property Platform::String
+                ^ Abbreviation { Platform::String ^ get() { return ref new Platform::String(m_original.abbreviation.c_str()); } }
 
-            // This method is used to return the desired automation name for default unit in UnitConverter combo box.
-            Platform::String^ ToString() override
+                // This method is used to return the desired automation name for default unit in UnitConverter combo box.
+                Platform::String
+                ^ ToString() override
             {
                 return AccessibleName;
             }
 
-        internal:
-            const UnitConversionManager::Unit& GetModelUnit() const { return m_original; }
+            internal : const UnitConversionManager::Unit& GetModelUnit() const
+            {
+                return m_original;
+            }
 
         private:
             const UnitConversionManager::Unit m_original;
         };
 
-        [Windows::UI::Xaml::Data::Bindable]
-        public ref class SupplementaryResult sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+        [Windows::UI::Xaml::Data::Bindable] public ref class SupplementaryResult sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
-        internal:
-            SupplementaryResult(Platform::String^ value, Unit^ unit) :
-                m_Value(value),
-                m_Unit(unit)
-            {}
+            internal : SupplementaryResult(Platform::String ^ value, Unit ^ unit)
+                : m_Value(value)
+                , m_Unit(unit)
+            {
+            }
 
             bool IsWhimsical() const
             {
                 return m_Unit->GetModelUnit().isWhimsical;
             }
 
-            Platform::String^ GetLocalizedAutomationName();
+            Platform::String ^ GetLocalizedAutomationName();
 
         public:
             OBSERVABLE_OBJECT();
 
-            OBSERVABLE_PROPERTY_R(Platform::String^, Value);
-            OBSERVABLE_PROPERTY_R(CalculatorApp::ViewModel::Unit^, Unit);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, Value);
+            OBSERVABLE_PROPERTY_R(CalculatorApp::ViewModel::Unit ^, Unit);
         };
 
         interface class IActivatable
@@ -115,64 +107,68 @@ namespace CalculatorApp
             virtual property bool IsActive;
         };
 
-        template<typename TActivatable>
+        template <typename TActivatable>
         ref class Activatable sealed : public IActivatable
         {
         private:
             TActivatable m_activatable;
 
         public:
-            Activatable(TActivatable activatable) : m_activatable(activatable)
-            { }
+            Activatable(TActivatable activatable)
+                : m_activatable(activatable)
+            {
+            }
 
             virtual property bool IsActive
             {
-                bool get() { return m_activatable->IsActive; }
-                void set(bool value) { m_activatable->IsActive = value; }
+                bool get()
+                {
+                    return m_activatable->IsActive;
+                }
+                void set(bool value)
+                {
+                    m_activatable->IsActive = value;
+                }
             }
         };
 
-        template<typename TActivatable>
-        IActivatable^ AsActivatable(TActivatable activatable)
-        {
-            return ref new Activatable<TActivatable>(activatable);
-        }
+        template <typename TActivatable>
+            IActivatable
+            ^ AsActivatable(TActivatable activatable) { return ref new Activatable<TActivatable>(activatable); }
 
-        [Windows::UI::Xaml::Data::Bindable]
-        public ref class UnitConverterViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+                [Windows::UI::Xaml::Data::Bindable] public ref class UnitConverterViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
-        internal:
-            UnitConverterViewModel(const std::shared_ptr<UnitConversionManager::IUnitConverter>& model);
+            internal : UnitConverterViewModel(const std::shared_ptr<UnitConversionManager::IUnitConverter>& model);
 
         public:
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
 
-            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Category^>^, Categories);
-            OBSERVABLE_PROPERTY_RW(Category^, CurrentCategory);
+            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Category ^> ^, Categories);
+            OBSERVABLE_PROPERTY_RW(Category ^, CurrentCategory);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::ViewMode, Mode);
-            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Unit^>^, Units);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, CurrencySymbol1);
-            OBSERVABLE_PROPERTY_RW(Unit^, Unit1);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, Value1);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, CurrencySymbol2);
-            OBSERVABLE_PROPERTY_RW(Unit^, Unit2);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, Value2);
-            OBSERVABLE_NAMED_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<SupplementaryResult^>^, SupplementaryResults);
+            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Unit ^> ^, Units);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencySymbol1);
+            OBSERVABLE_PROPERTY_RW(Unit ^, Unit1);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, Value1);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencySymbol2);
+            OBSERVABLE_PROPERTY_RW(Unit ^, Unit2);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, Value2);
+            OBSERVABLE_NAMED_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<SupplementaryResult ^> ^, SupplementaryResults);
             OBSERVABLE_PROPERTY_RW(bool, Value1Active);
             OBSERVABLE_PROPERTY_RW(bool, Value2Active);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, Value1AutomationName);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, Value2AutomationName);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, Unit1AutomationName);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, Unit2AutomationName);
-            OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::Automation::NarratorAnnouncement^, Announcement);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, Value1AutomationName);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, Value2AutomationName);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, Unit1AutomationName);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, Unit2AutomationName);
+            OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::Automation::NarratorAnnouncement ^, Announcement);
             OBSERVABLE_PROPERTY_RW(bool, IsDecimalEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsDropDownOpen);
             OBSERVABLE_PROPERTY_RW(bool, IsDropDownEnabled);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsCurrencyLoadingVisible);
             OBSERVABLE_PROPERTY_RW(bool, IsCurrencyCurrentCategory);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, CurrencyRatioEquality);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, CurrencyRatioEqualityAutomationName);
-            OBSERVABLE_PROPERTY_RW(Platform::String^, CurrencyTimestamp);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencyRatioEquality);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencyRatioEqualityAutomationName);
+            OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencyTimestamp);
             OBSERVABLE_NAMED_PROPERTY_RW(CalculatorApp::NetworkAccessBehavior, NetworkBehavior);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, CurrencyDataLoadFailed);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, CurrencyDataIsWeekOld);
@@ -181,9 +177,7 @@ namespace CalculatorApp
             {
                 Windows::UI::Xaml::Visibility get()
                 {
-                    return SupplementaryResults->Size > 0
-                        ? Windows::UI::Xaml::Visibility::Visible
-                        : Windows::UI::Xaml::Visibility::Collapsed;
+                    return SupplementaryResults->Size > 0 ? Windows::UI::Xaml::Visibility::Visible : Windows::UI::Xaml::Visibility::Collapsed;
                 }
             }
 
@@ -191,9 +185,8 @@ namespace CalculatorApp
             {
                 Windows::UI::Xaml::Visibility get()
                 {
-                    return (CurrencySymbol1->IsEmpty() || CurrencySymbol2->IsEmpty())
-                        ? Windows::UI::Xaml::Visibility::Collapsed
-                        : Windows::UI::Xaml::Visibility::Visible;
+                    return (CurrencySymbol1->IsEmpty() || CurrencySymbol2->IsEmpty()) ? Windows::UI::Xaml::Visibility::Collapsed
+                                                                                      : Windows::UI::Xaml::Visibility::Visible;
                 }
             }
 
@@ -206,23 +199,26 @@ namespace CalculatorApp
 
             void AnnounceConversionResult();
 
-        internal:
-            void ResetView();
+            internal : void ResetView();
             void PopulateData();
             NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
             void DisplayPasteError();
-            void OnValueActivated(IActivatable^ control);
-            void OnPaste(Platform::String^ stringToPaste, CalculatorApp::Common::ViewMode mode);
+            void OnValueActivated(IActivatable ^ control);
+            void OnPaste(Platform::String ^ stringToPaste, CalculatorApp::Common::ViewMode mode);
 
-            void OnCopyCommand(Platform::Object^ parameter);
-            void OnPasteCommand(Platform::Object^ parameter);
+            void OnCopyCommand(Platform::Object ^ parameter);
+            void OnPasteCommand(Platform::Object ^ parameter);
 
-            Platform::String^ GetLocalizedAutomationName(_In_ Platform::String^ displayvalue, _In_ Platform::String^ unitname, _In_ Platform::String^ format);
-            Platform::String^ GetLocalizedConversionResultStringFormat(_In_ Platform::String^ fromValue, _In_ Platform::String^ fromUnit, _In_ Platform::String^ toValue, _In_ Platform::String^ toUnit);
+            Platform::String
+                ^ GetLocalizedAutomationName(_In_ Platform::String ^ displayvalue, _In_ Platform::String ^ unitname, _In_ Platform::String ^ format);
+            Platform::String
+                ^ GetLocalizedConversionResultStringFormat(
+                    _In_ Platform::String ^ fromValue,
+                    _In_ Platform::String ^ fromUnit,
+                    _In_ Platform::String ^ toValue,
+                    _In_ Platform::String ^ toUnit);
             void UpdateValue1AutomationName();
             void UpdateValue2AutomationName();
-            Platform::String^ Serialize();
-            void Deserialize(Platform::String^ state);
 
             // Saving And Restoring User Preferences of Category and Associated-Units across Sessions.
             void SaveUserPreferences();
@@ -248,24 +244,25 @@ namespace CalculatorApp
             void OnMaxDigitsReached();
 
             void BuildUnitList(const std::vector<UnitConversionManager::Unit>& modelUnitList);
-            Unit^ FindUnitInList(UnitConversionManager::Unit target);
+            Unit ^ FindUnitInList(UnitConversionManager::Unit target);
             void SetSelectedUnits();
 
         private:
             void InitializeView();
-            void OnPropertyChanged(Platform::String^ prop);
-            void OnCategoryChanged(Platform::Object^ unused);
-            void OnUnitChanged(Platform::Object^ unused);
-            void OnSwitchActive(Platform::Object^ unused);
+            void OnPropertyChanged(Platform::String ^ prop);
+            void OnCategoryChanged(Platform::Object ^ unused);
+            void OnUnitChanged(Platform::Object ^ unused);
+            void OnSwitchActive(Platform::Object ^ unused);
             UnitConversionManager::Command CommandFromButtonId(CalculatorApp::NumbersAndOperatorsEnum button);
-            void SupplementaryResultsTimerTick(Windows::System::Threading::ThreadPoolTimer^ timer);
-            void SupplementaryResultsTimerCancel(Windows::System::Threading::ThreadPoolTimer^ timer);
+            void SupplementaryResultsTimerTick(Windows::System::Threading::ThreadPoolTimer ^ timer);
+            void SupplementaryResultsTimerCancel(Windows::System::Threading::ThreadPoolTimer ^ timer);
             void RefreshSupplementaryResults();
             void UpdateInputBlocked(_In_ const std::wstring& currencyInput);
             bool UnitsAreValid();
+            void ResetCategory();
 
-            void OnButtonPressed(Platform::Object^ parameter);
-            Platform::String^ ConvertToLocalizedString(const std::wstring& stringToLocalize, bool allowPartialStrings);
+            void OnButtonPressed(Platform::Object ^ parameter);
+            Platform::String ^ ConvertToLocalizedString(const std::wstring& stringToLocalize, bool allowPartialStrings);
 
             void StartConversionResultTimer();
 
@@ -304,12 +301,12 @@ namespace CalculatorApp
 
         private:
             bool m_isInputBlocked;
-            Windows::System::Threading::ThreadPoolTimer^ m_supplementaryResultsTimer;
+            Windows::System::Threading::ThreadPoolTimer ^ m_supplementaryResultsTimer;
             bool m_resettingTimer;
             std::vector<std::tuple<std::wstring, UnitConversionManager::Unit>> m_cachedSuggestedValues;
             std::mutex m_cacheMutex;
-            Windows::Globalization::NumberFormatting::DecimalFormatter^ m_decimalFormatter;
-            Windows::Globalization::NumberFormatting::CurrencyFormatter^ m_currencyFormatter;
+            Windows::Globalization::NumberFormatting::DecimalFormatter ^ m_decimalFormatter;
+            Windows::Globalization::NumberFormatting::CurrencyFormatter ^ m_currencyFormatter;
             int m_currencyMaxFractionDigits;
             std::wstring m_valueFromUnlocalized;
             std::wstring m_valueToUnlocalized;
@@ -317,18 +314,18 @@ namespace CalculatorApp
             // For Saving the User Preferences only if the Unit converter ViewModel is initialised for the first time
             bool m_IsFirstTime;
 
-            Platform::String^ m_localizedValueFromFormat;
-            Platform::String^ m_localizedValueFromDecimalFormat;
-            Platform::String^ m_localizedValueToFormat;
-            Platform::String^ m_localizedConversionResultFormat;
-            Platform::String^ m_localizedInputUnitName;
-            Platform::String^ m_localizedOutputUnitName;
+            Platform::String ^ m_localizedValueFromFormat;
+            Platform::String ^ m_localizedValueFromDecimalFormat;
+            Platform::String ^ m_localizedValueToFormat;
+            Platform::String ^ m_localizedConversionResultFormat;
+            Platform::String ^ m_localizedInputUnitName;
+            Platform::String ^ m_localizedOutputUnitName;
 
             bool m_isValue1Updating;
             bool m_isValue2Updating;
             std::wstring m_lastAnnouncedFrom;
             std::wstring m_lastAnnouncedTo;
-            Platform::String^ m_lastAnnouncedConversionResult;
+            Platform::String ^ m_lastAnnouncedConversionResult;
 
             bool m_isCurrencyDataLoaded;
 
@@ -338,16 +335,17 @@ namespace CalculatorApp
         class UnitConverterVMCallback : public UnitConversionManager::IUnitConverterVMCallback
         {
         public:
-            UnitConverterVMCallback(UnitConverterViewModel^ viewModel) : m_viewModel(viewModel)
-            {}
+            UnitConverterVMCallback(UnitConverterViewModel ^ viewModel)
+                : m_viewModel(viewModel)
+            {
+            }
 
             void DisplayCallback(const std::wstring& from, const std::wstring& to) override
             {
                 m_viewModel->UpdateDisplay(from, to);
             }
 
-            void SuggestedValueCallback(
-                const std::vector<std::tuple<std::wstring, UnitConversionManager::Unit>>& suggestedValues) override
+            void SuggestedValueCallback(const std::vector<std::tuple<std::wstring, UnitConversionManager::Unit>>& suggestedValues) override
             {
                 m_viewModel->UpdateSupplementaryResults(suggestedValues);
             }
@@ -358,14 +356,16 @@ namespace CalculatorApp
             }
 
         private:
-            UnitConverterViewModel^ m_viewModel;
+            UnitConverterViewModel ^ m_viewModel;
         };
 
         class ViewModelCurrencyCallback : public UnitConversionManager::IViewModelCurrencyCallback
         {
         public:
-            ViewModelCurrencyCallback(UnitConverterViewModel^ viewModel) : m_viewModel(viewModel)
-            {}
+            ViewModelCurrencyCallback(UnitConverterViewModel ^ viewModel)
+                : m_viewModel(viewModel)
+            {
+            }
 
             void CurrencyDataLoadFinished(bool didLoad) override
             {
@@ -374,8 +374,8 @@ namespace CalculatorApp
 
             void CurrencySymbolsCallback(const std::wstring& symbol1, const std::wstring& symbol2) override
             {
-                Platform::String^ sym1 = Platform::StringReference(symbol1.c_str());
-                Platform::String^ sym2 = Platform::StringReference(symbol2.c_str());
+                Platform::String ^ sym1 = Platform::StringReference(symbol1.c_str());
+                Platform::String ^ sym2 = Platform::StringReference(symbol2.c_str());
 
                 bool value1Active = m_viewModel->Value1Active;
                 m_viewModel->CurrencySymbol1 = value1Active ? sym1 : sym2;
@@ -399,7 +399,7 @@ namespace CalculatorApp
             }
 
         private:
-            UnitConverterViewModel^ m_viewModel;
+            UnitConverterViewModel ^ m_viewModel;
         };
     }
 }

@@ -24,18 +24,18 @@ static constexpr bool POSITIVE_ONLY = false;
 
 // The order of items in this list determines the order of groups in the menu.
 static constexpr array<const NavCategoryGroupInitializer, 2> s_categoryGroupManifest = {
-    NavCategoryGroupInitializer { CategoryGroupType::Calculator, L"CalculatorModeTextCaps", L"CalculatorModeText", L"CalculatorModePluralText"},
-    NavCategoryGroupInitializer { CategoryGroupType::Converter,  L"ConverterModeTextCaps",  L"ConverterModeText", L"ConverterModePluralText" }
+    NavCategoryGroupInitializer{ CategoryGroupType::Calculator, L"CalculatorModeTextCaps", L"CalculatorModeText", L"CalculatorModePluralText" },
+    NavCategoryGroupInitializer{ CategoryGroupType::Converter, L"ConverterModeTextCaps", L"ConverterModeText", L"ConverterModePluralText" }
 };
 
 // vvv THESE CONSTANTS SHOULD NEVER CHANGE vvv
-static constexpr int STANDARD_ID    = 0;
-static constexpr int SCIENTIFIC_ID  = 1;
-static constexpr int PROGRAMMER_ID  = 2;
-static constexpr int DATE_ID        = 3;
-static constexpr int VOLUME_ID      = 4;
-static constexpr int LENGTH_ID      = 5;
-static constexpr int WEIGHT_ID      = 6;
+static constexpr int STANDARD_ID = 0;
+static constexpr int SCIENTIFIC_ID = 1;
+static constexpr int PROGRAMMER_ID = 2;
+static constexpr int DATE_ID = 3;
+static constexpr int VOLUME_ID = 4;
+static constexpr int LENGTH_ID = 5;
+static constexpr int WEIGHT_ID = 6;
 static constexpr int TEMPERATURE_ID = 7;
 static constexpr int ENERGY_ID      = 8;
 static constexpr int AREA_ID        = 9;
@@ -74,30 +74,23 @@ static constexpr array<const NavCategoryInitializer, 18> s_categoryManifest = {
 // This function should only be used when storing the mode to app data.
 int NavCategory::Serialize(ViewMode mode)
 {
-    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest),
-        [mode](const NavCategoryInitializer& initializer)
-    {
-        return initializer.viewMode == mode;
-    });
+    auto iter =
+        find_if(begin(s_categoryManifest), end(s_categoryManifest), [mode](const NavCategoryInitializer& initializer) { return initializer.viewMode == mode; });
 
-    return (iter != s_categoryManifest.end())
-        ? iter->serializationId
-        : -1;
+    return (iter != s_categoryManifest.end()) ? iter->serializationId : -1;
 }
 
 // This function should only be used when restoring the mode from app data.
-ViewMode NavCategory::Deserialize(Platform::Object^ obj)
+ViewMode NavCategory::Deserialize(Platform::Object ^ obj)
 {
     // If we cast directly to ViewMode we will fail
     // because we technically store an int.
     // Need to cast to int, then ViewMode.
-    auto boxed = dynamic_cast<Box<int>^>(obj);
+    auto boxed = dynamic_cast<Box<int> ^>(obj);
     if (boxed != nullptr)
     {
         int serializationId = boxed->Value;
-        auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest),
-            [serializationId](const NavCategoryInitializer& initializer)
-        {
+        auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest), [serializationId](const NavCategoryInitializer& initializer) {
             return initializer.serializationId == serializationId;
         });
 
@@ -112,11 +105,8 @@ ViewMode NavCategory::Deserialize(Platform::Object^ obj)
 
 bool NavCategory::IsValidViewMode(ViewMode mode)
 {
-    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest),
-        [mode](const NavCategoryInitializer& initializer)
-    {
-        return initializer.viewMode == mode;
-    });
+    auto iter =
+        find_if(begin(s_categoryManifest), end(s_categoryManifest), [mode](const NavCategoryInitializer& initializer) { return initializer.viewMode == mode; });
 
     return iter != s_categoryManifest.end();
 }
@@ -146,65 +136,44 @@ bool NavCategory::IsConverterViewMode(ViewMode mode)
 
 bool NavCategory::IsModeInCategoryGroup(ViewMode mode, CategoryGroupType type)
 {
-    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest),
-        [mode, type](const NavCategoryInitializer& initializer)
-    {
+    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest), [mode, type](const NavCategoryInitializer& initializer) {
         return initializer.viewMode == mode && initializer.groupType == type;
     });
 
     return iter != s_categoryManifest.end();
 }
 
-String^ NavCategory::GetFriendlyName(ViewMode mode)
+String ^ NavCategory::GetFriendlyName(ViewMode mode)
 {
-    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest),
-        [mode](const NavCategoryInitializer& initializer)
-    {
-        return initializer.viewMode == mode;
-    });
+    auto iter =
+        find_if(begin(s_categoryManifest), end(s_categoryManifest), [mode](const NavCategoryInitializer& initializer) { return initializer.viewMode == mode; });
 
-    return (iter != s_categoryManifest.end())
-        ? StringReference(iter->friendlyName)
-        : L"None";
+    return (iter != s_categoryManifest.end()) ? StringReference(iter->friendlyName) : L"None";
 }
 
-ViewMode NavCategory::GetViewModeForFriendlyName(String^ name)
+ViewMode NavCategory::GetViewModeForFriendlyName(String ^ name)
 {
-    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest),
-        [name](const NavCategoryInitializer& initializer)
-    {
+    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest), [name](const NavCategoryInitializer& initializer) {
         return wcscmp(initializer.friendlyName, name->Data()) == 0;
     });
 
-    return (iter != s_categoryManifest.end())
-        ? iter->viewMode
-        : ViewMode::None;
+    return (iter != s_categoryManifest.end()) ? iter->viewMode : ViewMode::None;
 }
 
-String^ NavCategory::GetNameResourceKey(ViewMode mode)
+String ^ NavCategory::GetNameResourceKey(ViewMode mode)
 {
-    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest),
-        [mode](const NavCategoryInitializer& initializer)
-    {
-        return initializer.viewMode == mode;
-    });
+    auto iter =
+        find_if(begin(s_categoryManifest), end(s_categoryManifest), [mode](const NavCategoryInitializer& initializer) { return initializer.viewMode == mode; });
 
-    return (iter != s_categoryManifest.end())
-        ? StringReference(iter->nameResourceKey) + "Text"
-        : nullptr;
+    return (iter != s_categoryManifest.end()) ? StringReference(iter->nameResourceKey) + "Text" : nullptr;
 }
 
 CategoryGroupType NavCategory::GetGroupType(ViewMode mode)
 {
-    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest),
-        [mode](const NavCategoryInitializer& initializer)
-    {
-        return initializer.viewMode == mode;
-    });
+    auto iter =
+        find_if(begin(s_categoryManifest), end(s_categoryManifest), [mode](const NavCategoryInitializer& initializer) { return initializer.viewMode == mode; });
 
-    return (iter != s_categoryManifest.end())
-        ? iter->groupType
-        : CategoryGroupType::None;
+    return (iter != s_categoryManifest.end()) ? iter->groupType : CategoryGroupType::None;
 }
 
 // GetIndex is 0-based, GetPosition is 1-based
@@ -218,9 +187,7 @@ int NavCategory::GetFlatIndex(ViewMode mode)
 {
     int index = -1;
     CategoryGroupType type = CategoryGroupType::None;
-    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest),
-        [mode, &type, &index](const NavCategoryInitializer& initializer)
-    {
+    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest), [mode, &type, &index](const NavCategoryInitializer& initializer) {
         index++;
         if (initializer.groupType != type)
         {
@@ -231,18 +198,14 @@ int NavCategory::GetFlatIndex(ViewMode mode)
         return initializer.viewMode == mode;
     });
 
-    return (iter != s_categoryManifest.end())
-        ? index
-        : -1;
+    return (iter != s_categoryManifest.end()) ? index : -1;
 }
 
 // GetIndex is 0-based, GetPosition is 1-based
 int NavCategory::GetIndexInGroup(ViewMode mode, CategoryGroupType type)
 {
     int index = -1;
-    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest),
-        [mode, type, &index](const NavCategoryInitializer& initializer)
-    {
+    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest), [mode, type, &index](const NavCategoryInitializer& initializer) {
         if (initializer.groupType == type)
         {
             index++;
@@ -252,38 +215,28 @@ int NavCategory::GetIndexInGroup(ViewMode mode, CategoryGroupType type)
         return false;
     });
 
-    return (iter != s_categoryManifest.end())
-        ? index
-        : -1;
+    return (iter != s_categoryManifest.end()) ? index : -1;
 }
 
 // GetIndex is 0-based, GetPosition is 1-based
 int NavCategory::GetPosition(ViewMode mode)
 {
     int position = 0;
-    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest),
-        [mode, &position](const NavCategoryInitializer& initializer)
-    {
+    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest), [mode, &position](const NavCategoryInitializer& initializer) {
         position++;
         return initializer.viewMode == mode;
     });
 
-    return (iter != s_categoryManifest.end())
-        ? position
-        : -1;
+    return (iter != s_categoryManifest.end()) ? position : -1;
 }
 
 ViewMode NavCategory::GetViewModeForVirtualKey(MyVirtualKey virtualKey)
 {
-    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest),
-        [virtualKey](const NavCategoryInitializer& initializer)
-    {
+    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest), [virtualKey](const NavCategoryInitializer& initializer) {
         return initializer.virtualKey == virtualKey;
     });
 
-    return (iter != s_categoryManifest.end())
-        ? iter->viewMode
-        : ViewMode::None;
+    return (iter != s_categoryManifest.end()) ? iter->viewMode : ViewMode::None;
 }
 
 vector<MyVirtualKey> NavCategory::GetCategoryAcceleratorKeys()
@@ -300,36 +253,33 @@ vector<MyVirtualKey> NavCategory::GetCategoryAcceleratorKeys()
     return accelerators;
 }
 
-NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupInitializer) :
-    m_Categories(ref new Vector<NavCategory^>())
+NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupInitializer)
+    : m_Categories(ref new Vector<NavCategory ^>())
 {
     m_GroupType = groupInitializer.type;
 
     auto resProvider = AppResourceProvider::GetInstance();
-    String^ headerResourceKey = StringReference(groupInitializer.headerResourceKey);
-    String^ modeResourceKey = StringReference(groupInitializer.modeResourceKey);
-    String^ automationResourceKey = StringReference(groupInitializer.automationResourceKey);
+    String ^ headerResourceKey = StringReference(groupInitializer.headerResourceKey);
+    String ^ modeResourceKey = StringReference(groupInitializer.modeResourceKey);
+    String ^ automationResourceKey = StringReference(groupInitializer.automationResourceKey);
     m_Name = resProvider.GetResourceString(headerResourceKey);
-    String^ groupMode = resProvider.GetResourceString(modeResourceKey);
-    String^ automationName = resProvider.GetResourceString(automationResourceKey);
+    String ^ groupMode = resProvider.GetResourceString(modeResourceKey);
+    String ^ automationName = resProvider.GetResourceString(automationResourceKey);
 
-    String^ navCategoryHeaderAutomationNameFormat = resProvider.GetResourceString(L"NavCategoryHeader_AutomationNameFormat");
-    m_AutomationName = ref new String(LocalizationStringUtil::GetLocalizedString(
-        navCategoryHeaderAutomationNameFormat->Data(),
-        automationName->Data()).c_str());
+    String ^ navCategoryHeaderAutomationNameFormat = resProvider.GetResourceString(L"NavCategoryHeader_AutomationNameFormat");
+    m_AutomationName =
+        ref new String(LocalizationStringUtil::GetLocalizedString(navCategoryHeaderAutomationNameFormat->Data(), automationName->Data()).c_str());
 
-    String^ navCategoryItemAutomationNameFormat = resProvider.GetResourceString(L"NavCategoryItem_AutomationNameFormat");
+    String ^ navCategoryItemAutomationNameFormat = resProvider.GetResourceString(L"NavCategoryItem_AutomationNameFormat");
 
     for (const NavCategoryInitializer& categoryInitializer : s_categoryManifest)
     {
         if (categoryInitializer.groupType == groupInitializer.type)
         {
-            String^ nameResourceKey = StringReference(categoryInitializer.nameResourceKey);
-            String^ categoryName = resProvider.GetResourceString(nameResourceKey + "Text");
-            String^ categoryAutomationName = ref new String(LocalizationStringUtil::GetLocalizedString(
-                navCategoryItemAutomationNameFormat->Data(),
-                categoryName->Data(),
-                m_Name->Data()).c_str());
+            String ^ nameResourceKey = StringReference(categoryInitializer.nameResourceKey);
+            String ^ categoryName = resProvider.GetResourceString(nameResourceKey + "Text");
+            String ^ categoryAutomationName = ref new String(
+                LocalizationStringUtil::GetLocalizedString(navCategoryItemAutomationNameFormat->Data(), categoryName->Data(), m_Name->Data()).c_str());
 
             m_Categories->Append(ref new NavCategory(
                 categoryName,
@@ -343,20 +293,20 @@ NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupIniti
     }
 }
 
-IObservableVector<NavCategoryGroup^>^ NavCategoryGroup::CreateMenuOptions()
+IObservableVector<NavCategoryGroup ^> ^ NavCategoryGroup::CreateMenuOptions()
 {
-    auto menuOptions = ref new Vector<NavCategoryGroup^>();
+    auto menuOptions = ref new Vector<NavCategoryGroup ^>();
     menuOptions->Append(CreateCalculatorCategory());
     menuOptions->Append(CreateConverterCategory());
     return menuOptions;
 }
 
-NavCategoryGroup^ NavCategoryGroup::CreateCalculatorCategory()
+NavCategoryGroup ^ NavCategoryGroup::CreateCalculatorCategory()
 {
     return ref new NavCategoryGroup(s_categoryGroupManifest.at(0));
 }
 
-NavCategoryGroup^ NavCategoryGroup::CreateConverterCategory()
+NavCategoryGroup ^ NavCategoryGroup::CreateConverterCategory()
 {
     return ref new NavCategoryGroup(s_categoryGroupManifest.at(1));
 }
@@ -364,24 +314,18 @@ NavCategoryGroup^ NavCategoryGroup::CreateConverterCategory()
 vector<NavCategoryInitializer> NavCategoryGroup::GetInitializerCategoryGroup(CategoryGroupType groupType)
 {
     vector<NavCategoryInitializer> initializers{};
-    copy_if(begin(s_categoryManifest), end(s_categoryManifest), back_inserter(initializers),
-        [groupType](const NavCategoryInitializer& initializer)
-    {
+    copy_if(begin(s_categoryManifest), end(s_categoryManifest), back_inserter(initializers), [groupType](const NavCategoryInitializer& initializer) {
         return initializer.groupType == groupType;
     });
 
     return initializers;
 }
 
-String^ NavCategoryGroup::GetHeaderResourceKey(CategoryGroupType type)
+String ^ NavCategoryGroup::GetHeaderResourceKey(CategoryGroupType type)
 {
-    auto iter = find_if(begin(s_categoryGroupManifest), end(s_categoryGroupManifest),
-        [type](const NavCategoryGroupInitializer& initializer)
-    {
+    auto iter = find_if(begin(s_categoryGroupManifest), end(s_categoryGroupManifest), [type](const NavCategoryGroupInitializer& initializer) {
         return initializer.type == type;
     });
 
-    return (iter != s_categoryGroupManifest.end())
-        ? StringReference(iter->headerResourceKey)
-        : nullptr;
+    return (iter != s_categoryGroupManifest.end()) ? StringReference(iter->headerResourceKey) : nullptr;
 }

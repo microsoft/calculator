@@ -153,7 +153,9 @@ The CalcEngine contains the logic for interpreting and performing operations acc
 
 ### RatPack
 
-The RatPack (short for Rational Pack) is the core of the Calculator model and contains the logic for performing its mathematical operations. The interface to this layer is defined in [ratpak.h][ratpak.h].
+The RatPack (short for Rational Pack) is the core of the Calculator model and contains the logic for
+performing its mathematical operations (using [infinite precision][Infinite Precision] arithmetic
+instead of regular floating point arithmetic). The interface to this layer is defined in [ratpak.h][ratpak.h].
 
 [References]:####################################################################################################
 
@@ -199,4 +201,5 @@ The RatPack (short for Rational Pack) is the core of the Calculator model and co
 [CalcManager folder]:                 ../src/CalcManager
 [CalculatorManager.h]:                ../src/CalcManager/CalculatorManager.h
 [CalcEngine.h]:                       ../src/CalcManager/Header&#32;Files/CalcEngine.h
+[Infinite Precision]:                 https://en.wikipedia.org/wiki/Arbitrary-precision_arithmetic
 [ratpak.h]:                           ../src/CalcManager/Ratpack/ratpak.h

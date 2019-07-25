@@ -43,10 +43,10 @@
                 <VisualState x:Name="NoErrorLayout"/>
                 <VisualState x:Name="ErrorLayout">
                     <VisualState.Setters>
-                        <Setter Target="qwordButton.IsEnabled" Value="False"/>
-                        <Setter Target="dwordButton.IsEnabled" Value="False"/>
-                        <Setter Target="wordButton.IsEnabled" Value="False"/>
-                        <Setter Target="byteButton.IsEnabled" Value="False"/>
+                        <Setter Target="QwordButton.IsEnabled" Value="False"/>
+                        <Setter Target="DwordButton.IsEnabled" Value="False"/>
+                        <Setter Target="WordButton.IsEnabled" Value="False"/>
+                        <Setter Target="ByteButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -59,13 +59,13 @@
                 <ColumnDefinition Width="1*" MaxWidth="80"/>
             </Grid.ColumnDefinitions>
 
-            <RadioButton x:Name="fullKeypad"
+            <RadioButton x:Name="FullKeypad"
                          x:Uid="fullKeypad"
                          Style="{StaticResource ProgKeypadRadioButtonStyle}"
                          AutomationProperties.AutomationId="fullKeypad"
                          Content="&#xe75f;"
                          IsChecked="{x:Bind Model.IsBitFlipChecked, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}"/>
-            <RadioButton x:Name="bitFlip"
+            <RadioButton x:Name="BitFlip"
                          x:Uid="bitFlip"
                          Grid.Column="1"
                          Style="{StaticResource ProgKeypadRadioButtonStyle}"
@@ -75,7 +75,7 @@
                          IsChecked="{x:Bind Model.IsBitFlipChecked, Mode=TwoWay}"/>
         </Grid>
 
-        <Button x:Name="qwordButton"
+        <Button x:Name="QwordButton"
                 x:Uid="qwordButton"
                 Grid.Column="0"
                 Grid.ColumnSpan="7"
@@ -84,7 +84,7 @@
                 Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
                 CommandParameter="0"
                 Content="QWORD"/>
-        <Button x:Name="dwordButton"
+        <Button x:Name="DwordButton"
                 x:Uid="dwordButton"
                 Grid.Column="0"
                 Grid.ColumnSpan="7"
@@ -94,7 +94,7 @@
                 CommandParameter="1"
                 Content="DWORD"
                 Visibility="Collapsed"/>
-        <Button x:Name="wordButton"
+        <Button x:Name="WordButton"
                 x:Uid="wordButton"
                 Grid.Column="0"
                 Grid.ColumnSpan="7"
@@ -104,7 +104,7 @@
                 CommandParameter="2"
                 Content="WORD"
                 Visibility="Collapsed"/>
-        <Button x:Name="byteButton"
+        <Button x:Name="ByteButton"
                 x:Uid="byteButton"
                 Grid.Column="0"
                 Grid.ColumnSpan="7"

@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-#include "pch.h"
 #include "Header Files/Rational.h"
 
 using namespace std;
 
 namespace CalcEngine
 {
-    Rational::Rational() noexcept :
-        m_p{},
-        m_q{ 1, 0, { 1 } }
-    {}
+    Rational::Rational() noexcept
+        : m_p{}
+        , m_q{ 1, 0, { 1 } }
+    {
+    }
 
     Rational::Rational(Number const& n) noexcept
     {
@@ -24,10 +24,11 @@ namespace CalcEngine
         m_q = Number(1, qExp, { 1 });
     }
 
-    Rational::Rational(Number const& p, Number const& q) noexcept :
-        m_p{ p },
-        m_q{ q }
-    {}
+    Rational::Rational(Number const& p, Number const& q) noexcept
+        : m_p{ p }
+        , m_q{ q }
+    {
+    }
 
     Rational::Rational(int32_t i)
     {
@@ -51,8 +52,8 @@ namespace CalcEngine
 
     Rational::Rational(uint64_t ui)
     {
-        uint32_t hi = HIDWORD(ui);
-        uint32_t lo = LODWORD(ui);
+        uint32_t hi = (uint32_t) (((ui) >> 32) & 0xffffffff);
+        uint32_t lo = (uint32_t) ui;
 
         Rational temp = (Rational{ hi } << 32) | lo;
 
@@ -60,10 +61,11 @@ namespace CalcEngine
         m_q = Number{ temp.Q() };
     }
 
-    Rational::Rational(PRAT prat) noexcept :
-        m_p{ Number{prat->pp} },
-        m_q{ Number{prat->pq} }
-    {}
+    Rational::Rational(PRAT prat) noexcept
+        : m_p{ Number{ prat->pp } }
+        , m_q{ Number{ prat->pq } }
+    {
+    }
 
     PRAT Rational::ToPRAT() const
     {
@@ -182,6 +184,13 @@ namespace CalcEngine
         return *this;
     }
 
+    /// <summary>
+    /// Calculate the remainder after division, the sign of a result will match the sign of the current object.
+    /// </summary>
+    /// <remarks>
+    /// This function has the same behavior as the standard C/C++ operator '%'
+    /// to calculate the modulus after division instead, use <see cref="RationalMath::Mod"/> instead.
+    /// </remarks>
     Rational& Rational::operator%=(Rational const& rhs)
     {
         PRAT lhsRat = this->ToPRAT();
@@ -189,7 +198,7 @@ namespace CalcEngine
 
         try
         {
-            modrat(&lhsRat, rhsRat);
+            remrat(&lhsRat, rhsRat);
             destroyrat(rhsRat);
         }
         catch (uint32_t error)
@@ -342,6 +351,13 @@ namespace CalcEngine
         return lhs;
     }
 
+    /// <summary>
+    /// Calculate the remainder after division, the sign of a result will match the sign of lhs.
+    /// </summary>
+    /// <remarks>
+    /// This function has the same behavior as the standard C/C++ operator '%', to calculate the modulus after division instead, use <see
+    /// cref="Rational::operator%"/> instead.
+    /// </remarks>
     Rational operator%(Rational lhs, Rational const& rhs)
     {
         lhs %= rhs;

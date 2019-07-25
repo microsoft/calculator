@@ -6,9 +6,9 @@ parameters:
 
 steps:
   - task: NuGetToolInstaller@0
-    displayName: Use NuGet 4.7.1
+    displayName: Use NuGet 5.0.2
     inputs:
-      versionSpec: 4.7.1
+      versionSpec: 5.0.2
       checkLatest: true
 
   # In most accounts, you can just use 'NuGetCommand' instead of this GUID.
@@ -29,8 +29,8 @@ steps:
     displayName: 'Build solution src/Calculator.sln'
     inputs:
       solution: src/Calculator.sln
-      vsVersion: 15.0
-      msbuildArgs: /bl:$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator.binlog /p:OutDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\ /p:GenerateProjectSpecificOutputFolder=true /p:AppVersion=$(Build.BuildNumber) ${{ parameters.extraMsBuildArgs }}
+      vsVersion: 16.0
+      msbuildArgs: /bl:$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator.binlog /p:OutDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\ /p:GenerateProjectSpecificOutputFolder=true /p:AppVersion=$(Build.BuildNumber) /t:Publish /p:PublishDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\publish\ ${{ parameters.extraMsBuildArgs }}
       platform: $(BuildPlatform)
       configuration: $(BuildConfiguration)
       clean: true

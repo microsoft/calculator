@@ -25,8 +25,8 @@ using namespace Windows::UI::Xaml::Input;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-CalculatorProgrammerBitFlipPanel::CalculatorProgrammerBitFlipPanel() :
-    m_updatingCheckedStates(false)
+CalculatorProgrammerBitFlipPanel::CalculatorProgrammerBitFlipPanel()
+    : m_updatingCheckedStates(false)
 {
     InitializeComponent();
     auto booleanToVisibilityConverter = ref new Converters::BooleanToVisibilityConverter;
@@ -35,13 +35,13 @@ CalculatorProgrammerBitFlipPanel::CalculatorProgrammerBitFlipPanel() :
     AssignFlipButtons();
 }
 
-void CalculatorProgrammerBitFlipPanel::OnLoaded(Object^ sender, RoutedEventArgs^ e)
+void CalculatorProgrammerBitFlipPanel::OnLoaded(Object ^ sender, RoutedEventArgs ^ e)
 {
     UnsubscribePropertyChanged();
     SubscribePropertyChanged();
 }
 
-void CalculatorProgrammerBitFlipPanel::OnUnloaded(Object^ sender, RoutedEventArgs^ e)
+void CalculatorProgrammerBitFlipPanel::OnUnloaded(Object ^ sender, RoutedEventArgs ^ e)
 {
     UnsubscribePropertyChanged();
 }
@@ -50,8 +50,7 @@ void CalculatorProgrammerBitFlipPanel::SubscribePropertyChanged()
 {
     if (Model != nullptr)
     {
-        m_propertyChangedToken =
-            Model->PropertyChanged += ref new PropertyChangedEventHandler(this, &CalculatorProgrammerBitFlipPanel::OnPropertyChanged);
+        m_propertyChangedToken = Model->PropertyChanged += ref new PropertyChangedEventHandler(this, &CalculatorProgrammerBitFlipPanel::OnPropertyChanged);
 
         UpdateCheckedStates();
     }
@@ -66,7 +65,7 @@ void CalculatorProgrammerBitFlipPanel::UnsubscribePropertyChanged()
     }
 }
 
-void CalculatorProgrammerBitFlipPanel::OnPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+void CalculatorProgrammerBitFlipPanel::OnPropertyChanged(Object ^ sender, PropertyChangedEventArgs ^ e)
 {
     if (e->PropertyName == StandardCalculatorViewModel::BinaryDisplayValuePropertyName)
     {
@@ -74,25 +73,25 @@ void CalculatorProgrammerBitFlipPanel::OnPropertyChanged(Object^ sender, Propert
     }
 }
 
-StandardCalculatorViewModel^ CalculatorProgrammerBitFlipPanel::Model::get()
+StandardCalculatorViewModel ^ CalculatorProgrammerBitFlipPanel::Model::get()
 {
-    return static_cast<StandardCalculatorViewModel^>(this->DataContext);
+    return static_cast<StandardCalculatorViewModel ^>(this->DataContext);
 }
 
 void CalculatorProgrammerBitFlipPanel::AssignFlipButtons()
 {
     assert(m_flipButtons.size() == 64);
 
-    m_flipButtons[0]  = this->Bit0;
-    m_flipButtons[1]  = this->Bit1;
-    m_flipButtons[2]  = this->Bit2;
-    m_flipButtons[3]  = this->Bit3;
-    m_flipButtons[4]  = this->Bit4;
-    m_flipButtons[5]  = this->Bit5;
-    m_flipButtons[6]  = this->Bit6;
-    m_flipButtons[7]  = this->Bit7;
-    m_flipButtons[8]  = this->Bit8;
-    m_flipButtons[9]  = this->Bit9;
+    m_flipButtons[0] = this->Bit0;
+    m_flipButtons[1] = this->Bit1;
+    m_flipButtons[2] = this->Bit2;
+    m_flipButtons[3] = this->Bit3;
+    m_flipButtons[4] = this->Bit4;
+    m_flipButtons[5] = this->Bit5;
+    m_flipButtons[6] = this->Bit6;
+    m_flipButtons[7] = this->Bit7;
+    m_flipButtons[8] = this->Bit8;
+    m_flipButtons[9] = this->Bit9;
     m_flipButtons[10] = this->Bit10;
     m_flipButtons[11] = this->Bit11;
     m_flipButtons[12] = this->Bit12;
@@ -149,29 +148,31 @@ void CalculatorProgrammerBitFlipPanel::AssignFlipButtons()
     m_flipButtons[63] = this->Bit63;
 }
 
-void CalculatorProgrammerBitFlipPanel::SetVisibilityBinding(_In_ FrameworkElement^ element, _In_ String^ path, _In_ IValueConverter^ converter)
+void CalculatorProgrammerBitFlipPanel::SetVisibilityBinding(_In_ FrameworkElement ^ element, _In_ String ^ path, _In_ IValueConverter ^ converter)
 {
-    Binding^ commandBinding = ref new Binding();
+    Binding ^ commandBinding = ref new Binding();
     commandBinding->Path = ref new PropertyPath(path);
     commandBinding->Converter = converter;
     element->SetBinding(VisibilityProperty, commandBinding);
 }
 
-void CalculatorProgrammerBitFlipPanel::OnBitToggled(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void CalculatorProgrammerBitFlipPanel::OnBitToggled(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    if (m_updatingCheckedStates) { return; }
+    if (m_updatingCheckedStates)
+    {
+        return;
+    }
 
     // Handle this the bit toggled event only if it is coming from BitFlip mode.
     // Any input from the Numpad may also result in toggling the bit as their state is bound to the BinaryDisplayValue.
     // Also, if the mode is switched to other Calculator modes when the BitFlip panel is open,
     // a race condition exists in which the IsProgrammerMode property is still true and the UpdatePrimaryResult() is called,
     // which continuously alters the Display Value and the state of the Bit Flip buttons.
-    if ((Model->IsBitFlipChecked)
-        && Model->IsProgrammer)
+    if ((Model->IsBitFlipChecked) && Model->IsProgrammer)
     {
         TraceLogger::GetInstance().LogBitFlipUsed();
 
-        auto flipButton = static_cast<FlipButtons^>(sender);
+        auto flipButton = static_cast<FlipButtons ^>(sender);
         Model->ButtonPressed->Execute(flipButton->ButtonId);
     }
 }
@@ -181,17 +182,15 @@ void CalculatorProgrammerBitFlipPanel::UpdateCheckedStates()
     assert(!m_updatingCheckedStates);
     assert(m_flipButtons.size() == s_numBits);
 
-    if (Model == nullptr) { return; }
+    if (Model == nullptr)
+    {
+        return;
+    }
 
     static const wchar_t ch0 = LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit(L'0');
 
     // Filter any unwanted characters from the displayed string.
-    static constexpr array<wchar_t, 4> unwantedChars = {
-        L' ',
-        Utils::LRE,
-        Utils::PDF,
-        Utils::LRO
-    };
+    static constexpr array<wchar_t, 4> unwantedChars = { L' ', Utils::LRE, Utils::PDF, Utils::LRO };
 
     wstringstream stream;
     wstring displayValue = Model->BinaryDisplayValue->Data();

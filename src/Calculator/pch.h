@@ -23,6 +23,7 @@
 #include <locale>
 #include <sal.h>
 #include <sstream>
+#include <string>
 #include <concrt.h>
 #include <regex>
 #include <string>
@@ -44,7 +45,9 @@
 // Once the app switches to min version RS3, the namespaces can be removed.
 // TODO - MSFT 12735088
 namespace StandardPeers = Windows::UI::Xaml::Automation::Peers;
-namespace CalculatorApp::Common::Automation {}
+namespace CalculatorApp::Common::Automation
+{
+}
 namespace CustomPeers = CalculatorApp::Common::Automation;
 
 // Project Headers

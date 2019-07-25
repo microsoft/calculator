@@ -372,12 +372,12 @@ namespace CalculatorUnitTests
         TEST_METHOD(CreateNavCategoryGroup);
 
     private:
-        void ValidateNavCategory(IObservableVector<NavCategory^>^ categories, unsigned int index, ViewMode expectedMode, int expectedPosition)
+        void ValidateNavCategory(IObservableVector<NavCategory ^> ^ categories, unsigned int index, ViewMode expectedMode, int expectedPosition)
         {
             VERIFY_IS_LESS_THAN(0u, categories->Size);
             VERIFY_IS_GREATER_THAN(categories->Size, index);
 
-            NavCategory^ category = categories->GetAt(index);
+            NavCategory ^ category = categories->GetAt(index);
             VERIFY_ARE_EQUAL(expectedMode, category->Mode);
             VERIFY_ARE_EQUAL(expectedPosition, category->Position);
         }
@@ -385,11 +385,11 @@ namespace CalculatorUnitTests
 
     void NavCategoryGroupUnitTests::CreateNavCategoryGroup()
     {
-        IObservableVector<NavCategoryGroup^>^ menuOptions = NavCategoryGroup::CreateMenuOptions();
+        IObservableVector<NavCategoryGroup ^> ^ menuOptions = NavCategoryGroup::CreateMenuOptions();
 
         VERIFY_ARE_EQUAL(2, menuOptions->Size);
 
-        NavCategoryGroup^ calculatorGroup = menuOptions->GetAt(0);
+        NavCategoryGroup ^ calculatorGroup = menuOptions->GetAt(0);
         VERIFY_ARE_EQUAL(CategoryGroupType::Calculator, calculatorGroup->GroupType);
 
         IObservableVector<NavCategory^>^ calculatorCategories = calculatorGroup->Categories;
@@ -400,10 +400,10 @@ namespace CalculatorUnitTests
         ValidateNavCategory(calculatorCategories, 3u, ViewMode::Date, 4);
         ValidateNavCategory(calculatorCategories, 4u, ViewMode::Graphing, 5);
 
-        NavCategoryGroup^ converterGroup = menuOptions->GetAt(1);
+        NavCategoryGroup ^ converterGroup = menuOptions->GetAt(1);
         VERIFY_ARE_EQUAL(CategoryGroupType::Converter, converterGroup->GroupType);
 
-        IObservableVector<NavCategory^>^ converterCategories = converterGroup->Categories;
+        IObservableVector<NavCategory ^> ^ converterCategories = converterGroup->Categories;
         VERIFY_ARE_EQUAL(13, converterCategories->Size);
         ValidateNavCategory(converterCategories, 0u, ViewMode::Currency, 6);
         ValidateNavCategory(converterCategories, 1u, ViewMode::Volume, 7);

@@ -9,7 +9,8 @@ namespace CalculatorApp
 {
     namespace Controls
     {
-        public ref class OverflowTextBlock sealed : public Windows::UI::Xaml::Controls::Control
+    public
+        ref class OverflowTextBlock sealed : public Windows::UI::Xaml::Controls::Control
         {
         public:
             OverflowTextBlock()
@@ -20,20 +21,21 @@ namespace CalculatorApp
 
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, TokensUpdated);
             DEPENDENCY_PROPERTY(bool, IsActive);
-            DEPENDENCY_PROPERTY(Windows::UI::Xaml::Style^, TextStyle);
+            DEPENDENCY_PROPERTY(Windows::UI::Xaml::Style ^, TextStyle);
             void UpdateScrollButtons();
             void UnregisterEventHandlers();
 
         protected:
             virtual void OnApplyTemplate() override;
-            virtual Windows::UI::Xaml::Automation::Peers::AutomationPeer^ OnCreateAutomationPeer() override;
+            virtual Windows::UI::Xaml::Automation::Peers::AutomationPeer ^ OnCreateAutomationPeer() override;
 
         private:
-            void OnScrollClick(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-            void OnPointerEntered(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e);
-            void OnPointerExited(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e);
+            void OnScrollClick(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+            void OnPointerEntered(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
+            void OnPointerExited(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
             void ShowHideScrollButtons(Windows::UI::Xaml::Visibility vLeft, Windows::UI::Xaml::Visibility vRight);
             void OnTokensUpdatedPropertyChanged(bool oldValue, bool newValue);
+            void OnViewChanged(_In_opt_ Platform::Object ^ sender, _In_opt_ Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs ^ args);
 
             void UpdateVisualState();
             void UpdateExpressionState();
@@ -44,15 +46,15 @@ namespace CalculatorApp
             double scrollRatio = 0.7;
             bool m_scrollingLeft;
             bool m_scrollingRight;
-            Windows::UI::Xaml::Controls::ListView^ m_listView;
-            Windows::UI::Xaml::Controls::ScrollViewer^ m_expressionContainer;
-            Windows::UI::Xaml::Controls::Button^ m_scrollLeft;
-            Windows::UI::Xaml::Controls::Button^ m_scrollRight;
+            bool m_isAccessibilityViewControl;
+            Windows::UI::Xaml::Controls::ItemsControl ^ m_itemsControl;
+            Windows::UI::Xaml::Controls::ScrollViewer ^ m_expressionContainer;
+            Windows::UI::Xaml::Controls::Button ^ m_scrollLeft;
+            Windows::UI::Xaml::Controls::Button ^ m_scrollRight;
 
             Windows::Foundation::EventRegistrationToken m_scrollLeftClickEventToken;
             Windows::Foundation::EventRegistrationToken m_scrollRightClickEventToken;
-            Windows::Foundation::EventRegistrationToken m_pointerEnteredEventToken;
-            Windows::Foundation::EventRegistrationToken m_pointerExitedEventToken;
+            Windows::Foundation::EventRegistrationToken m_containerViewChangedToken;
         };
     }
 }

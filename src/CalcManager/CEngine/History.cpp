@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "Header Files/CalcEngine.h"
 #include "Command.h"
 #include "CalculatorVector.h"
@@ -12,7 +11,8 @@ constexpr int ASCII_0 = 48;
 using namespace std;
 using namespace CalcEngine;
 
-namespace {
+namespace
+{
     void IFT(ResultCode hr)
     {
         if (FAILED(hr))
@@ -39,11 +39,11 @@ void CHistoryCollector::ReinitHistory()
 
 // Constructor
 // Can throw Out of memory error
-CHistoryCollector::CHistoryCollector(ICalcDisplay *pCalcDisplay, std::shared_ptr<IHistoryDisplay> pHistoryDisplay, wchar_t decimalSymbol) :
-    m_pHistoryDisplay(pHistoryDisplay),
-    m_pCalcDisplay(pCalcDisplay),
-    m_iCurLineHistStart(-1),
-    m_decimalSymbol(decimalSymbol)
+CHistoryCollector::CHistoryCollector(ICalcDisplay* pCalcDisplay, std::shared_ptr<IHistoryDisplay> pHistoryDisplay, wchar_t decimalSymbol)
+    : m_pHistoryDisplay(pHistoryDisplay)
+    , m_pCalcDisplay(pCalcDisplay)
+    , m_iCurLineHistStart(-1)
+    , m_decimalSymbol(decimalSymbol)
 {
     ReinitHistory();
 }
@@ -303,7 +303,8 @@ void CHistoryCollector::CompleteHistoryLine(wstring_view numStr)
 {
     if (nullptr != m_pCalcDisplay)
     {
-        m_pCalcDisplay->SetExpressionDisplay(std::make_shared<CalculatorVector<std::pair<std::wstring, int>>>(), std::make_shared<CalculatorVector<std::shared_ptr<IExpressionCommand>>>());
+        m_pCalcDisplay->SetExpressionDisplay(
+            std::make_shared<CalculatorVector<std::pair<std::wstring, int>>>(), std::make_shared<CalculatorVector<std::shared_ptr<IExpressionCommand>>>());
     }
 
     if (nullptr != m_pHistoryDisplay)
@@ -324,13 +325,13 @@ void CHistoryCollector::ClearHistoryLine(wstring_view errStr)
     {
         if (nullptr != m_pCalcDisplay)
         {
-            m_pCalcDisplay->SetExpressionDisplay(std::make_shared<CalculatorVector<std::pair<std::wstring, int>>>(), std::make_shared<CalculatorVector<std::shared_ptr<IExpressionCommand>>>());
+            m_pCalcDisplay->SetExpressionDisplay(
+                std::make_shared<CalculatorVector<std::pair<std::wstring, int>>>(), std::make_shared<CalculatorVector<std::shared_ptr<IExpressionCommand>>>());
         }
         m_iCurLineHistStart = -1; // It will get recomputed at the first Opnd
         ReinitHistory();
     }
 }
-
 
 // Adds the given string psz to the globally maintained current equation string at the end.
 //  Also returns the 0 based index in the string just added. Can throw out of memory error
@@ -393,14 +394,13 @@ void CHistoryCollector::SetExpressionDisplay()
     {
         m_pCalcDisplay->SetExpressionDisplay(m_spTokens, m_spCommands);
     }
-
 }
 
-int CHistoryCollector::AddCommand(_In_ const std::shared_ptr<IExpressionCommand> & spCommand)
+int CHistoryCollector::AddCommand(_In_ const std::shared_ptr<IExpressionCommand>& spCommand)
 {
     if (m_spCommands == nullptr)
     {
-        m_spCommands = std::make_shared <CalculatorVector<std::shared_ptr<IExpressionCommand>>>();
+        m_spCommands = std::make_shared<CalculatorVector<std::shared_ptr<IExpressionCommand>>>();
     }
 
     if (FAILED(m_spCommands->Append(spCommand)))

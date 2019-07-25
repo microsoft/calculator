@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "Header Files/CalcEngine.h"
 
 using namespace CalcEngine;
@@ -65,7 +64,7 @@ int32_t CCalcEngine::DwWordBitWidthFromeNumWidth(NUM_WIDTH /*numwidth*/)
 
 uint32_t CCalcEngine::NRadixFromRadixType(RADIX_TYPE radixtype)
 {
-    static constexpr uint32_t rgnRadish[4] = { 16, 10, 8, 2 };  /* Number bases in the same order as radixtype */
+    static constexpr uint32_t rgnRadish[4] = { 16, 10, 8, 2 }; /* Number bases in the same order as radixtype */
     uint32_t radix = 10;
 
     // convert special bases into symbolic values

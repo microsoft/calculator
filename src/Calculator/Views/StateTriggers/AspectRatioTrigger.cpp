@@ -24,26 +24,28 @@ AspectRatioTrigger::~AspectRatioTrigger()
     UnregisterSizeChanged(Source);
 }
 
-void AspectRatioTrigger::OnSourcePropertyChanged(FrameworkElement^ oldValue, FrameworkElement^ newValue)
+void AspectRatioTrigger::OnSourcePropertyChanged(FrameworkElement ^ oldValue, FrameworkElement ^ newValue)
 {
     UnregisterSizeChanged(oldValue);
     RegisterSizeChanged(newValue);
 }
 
-void AspectRatioTrigger::RegisterSizeChanged(FrameworkElement^ element)
+void AspectRatioTrigger::RegisterSizeChanged(FrameworkElement ^ element)
 {
-    if (element == nullptr) { return; }
+    if (element == nullptr)
+    {
+        return;
+    }
 
     if (element != Source)
     {
         UnregisterSizeChanged(Source);
     }
 
-    m_sizeChangedToken =
-        element->SizeChanged += ref new SizeChangedEventHandler(this, &AspectRatioTrigger::OnSizeChanged);
+    m_sizeChangedToken = element->SizeChanged += ref new SizeChangedEventHandler(this, &AspectRatioTrigger::OnSizeChanged);
 }
 
-void AspectRatioTrigger::UnregisterSizeChanged(FrameworkElement^ element)
+void AspectRatioTrigger::UnregisterSizeChanged(FrameworkElement ^ element)
 {
     if ((element != nullptr) && (m_sizeChangedToken.Value != 0))
     {
@@ -52,7 +54,7 @@ void AspectRatioTrigger::UnregisterSizeChanged(FrameworkElement^ element)
     }
 }
 
-void AspectRatioTrigger::OnSizeChanged(Object^ sender, SizeChangedEventArgs^ e)
+void AspectRatioTrigger::OnSizeChanged(Object ^ sender, SizeChangedEventArgs ^ e)
 {
     UpdateIsActive(e->NewSize);
 }

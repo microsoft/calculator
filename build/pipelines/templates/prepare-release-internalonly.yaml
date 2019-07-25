@@ -1,5 +1,5 @@
 # This template contains a job which builds artifacts needed to release the app to the store and to
-# Windows using Microsoft-internal systems. It relies Microsoft-internal resources and will not
+# Windows using Microsoft-internal systems. It relies on Microsoft-internal resources and will not
 # work outside of Microsoft.
 # Specifically, this job:
 # - Signs the bundle using a secure system. If you want to build your own, use SignTool following
@@ -28,8 +28,8 @@ jobs:
   - task: PkgESSetupBuild@10
     displayName: Initialize Package ES
     inputs:
-        productName: Calculator
-        disableWorkspace: true
+      productName: Calculator
+      disableWorkspace: true
     env:
       XES_DISABLEPROV: true
 
@@ -46,6 +46,8 @@ jobs:
 
   - task: PkgESCodeSign@10
     displayName: Send bundle to Package ES code signing service
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     inputs:
       signConfigXml: build\config\SignConfig.xml
       inPathRoot: $(Build.ArtifactStagingDirectory)\appxBundle
@@ -60,25 +62,25 @@ jobs:
   - task: CopyFiles@2
     displayName: Copy signed AppxBundle to vpack staging folder
     inputs:
-        sourceFolder: $(Build.ArtifactStagingDirectory)\appxBundleSigned
-        targetFolder: $(Build.ArtifactStagingDirectory)\vpack\appxBundle
+      sourceFolder: $(Build.ArtifactStagingDirectory)\appxBundleSigned
+      targetFolder: $(Build.ArtifactStagingDirectory)\vpack\appxBundle
 
   - task: PkgESVPack@10
     displayName: Create and push vpack for app
     env:
-        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     inputs:
-        sourceDirectory: $(Build.ArtifactStagingDirectory)\vpack\appxBundle
-        description: VPack for the Calculator Application
-        pushPkgName: calculator.app
-        version: $(versionMajor).$(versionMinor).$(versionBuild)
-        owner: paxeeapps
+      sourceDirectory: $(Build.ArtifactStagingDirectory)\vpack\appxBundle
+      description: VPack for the Calculator Application
+      pushPkgName: calculator.app
+      version: $(versionMajor).$(versionMinor).$(versionBuild)
+      owner: paxeeapps
 
   - task: PublishBuildArtifacts@1
     displayName: Publish vpack\app artifact with vpack manifest
     inputs:
-        pathtoPublish: $(XES_VPACKMANIFESTDIRECTORY)\$(XES_VPACKMANIFESTNAME)
-        artifactName: vpack\app
+      pathtoPublish: $(XES_VPACKMANIFESTDIRECTORY)\$(XES_VPACKMANIFESTNAME)
+      artifactName: vpack\app
 
     # TODO (macool): create and push internal test packages and test config
 
@@ -89,7 +91,7 @@ jobs:
       downloadDirectory: $(Build.SourcesDirectory)
       vstsFeed: WindowsApps
       vstsFeedPackage: calculator-internals
-      vstsPackageVersion: 0.0.10
+      vstsPackageVersion: 0.0.11
 
   - task: PkgESStoreBrokerPackage@10
     displayName: Create StoreBroker Packages
