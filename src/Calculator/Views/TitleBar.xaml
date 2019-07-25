@@ -36,7 +36,7 @@
                    Visibility="{x:Bind ApplicationViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
         </Grid>
         <Button x:Name="AoTAlwaysOnTopButton"
-                x:Uid="AoTAlwaysOnTopButton"
+                x:Uid="ExitAlwaysOnTopButton"
                 Grid.Row="0"
                 FontFamily="{StaticResource CalculatorFontFamily}"
                 Style="{ThemeResource CommandBarFlyoutEllipsisButtonStyle}"

@@ -168,7 +168,7 @@
                            Text="{x:Bind Model.CategoryName, Mode=OneWay}"
                            Grid.Column="0"/>
                 <Button x:Name="NormalAlwaysOnTopButton"
-                        x:Uid="NormalAlwaysOnTopButton"
+                        x:Uid="EnterAlwaysOnTopButton"
                         FontFamily="{StaticResource CalculatorFontFamily}"
                         Style="{StaticResource SquareIconButtonStyle}"
                         Content="&#xEE49;"
