@@ -65,7 +65,6 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, IsCurrentViewPinned);
             OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IVector<MemoryItemViewModel ^> ^, MemorizedNumbers);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsMemoryEmpty);
-            OBSERVABLE_NAMED_PROPERTY_RW(bool, IsMemoryEmptyAlwaysOnTop);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEChecked);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsHyperbolicChecked);

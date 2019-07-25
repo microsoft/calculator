@@ -786,7 +786,7 @@
                         Click="ToggleMemoryFlyout"
                         Content="M0,9.46968e-006L1.96199,9.46968e-006L4.17099,5.59502C4.33899,6.02501 4.44899,6.34502 4.5,6.55602L4.52899,6.55602C4.67299,6.11501 4.791,5.78701 4.87999,5.57201L7.12999,9.46968e-006L9.023,9.46968e-006L9.023,8.402L7.64,8.402L7.64,2.96501C7.64,2.519 7.668,1.97401 7.722,1.33L7.69899,1.33C7.613,1.697 7.53699,1.96101 7.46999,2.12102L4.96199,8.402L4.002,8.402L1.48799,2.16801C1.418,1.98399 1.34299,1.705 1.265,1.33L1.24199,1.33C1.273,1.666 1.28899,2.21501 1.28899,2.976L1.28899,8.402L0,8.402zM10.5,0L15.5,0L12.99,2.5z"
                         ExitDisplayModeOnAccessKeyInvoked="False"
-                        IsEnabled="{x:Bind Model.IsMemoryEmptyAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
+                        IsEnabled="{x:Bind Model.IsMemoryEmpty, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                         TabIndex="15">
                     <FlyoutBase.AttachedFlyout>
                         <Flyout x:Name="MemoryFlyout"

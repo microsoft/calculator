@@ -301,7 +301,7 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
         }
     }
 
-    Model->IsMemoryEmptyAlwaysOnTop = Model->IsMemoryEmpty || Model->IsAlwaysOnTop;
+    Model->IsMemoryEmpty = (Model->MemorizedNumbers->Size == 0) || IsAlwaysOnTop;
 
     AlwaysOnTopResults->UpdateScrollButtons();
     Results->UpdateTextState();
