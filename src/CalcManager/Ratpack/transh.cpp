@@ -14,25 +14,21 @@
 //
 //
 //-----------------------------------------------------------------------------
-#include "pch.h"
 #include "ratpak.h"
-
-
 
 bool IsValidForHypFunc(PRAT px, int32_t precision)
 {
     PRAT ptmp = nullptr;
     bool bRet = true;
 
-    DUPRAT(ptmp,rat_min_exp);
+    DUPRAT(ptmp, rat_min_exp);
     divrat(&ptmp, rat_ten, precision);
-    if ( rat_lt( px, ptmp, precision) )
+    if (rat_lt(px, ptmp, precision))
     {
         bRet = false;
     }
-    destroyrat( ptmp );
+    destroyrat(ptmp);
     return bRet;
-
 }
 
 //-----------------------------------------------------------------------------
@@ -68,49 +64,49 @@ bool IsValidForHypFunc(PRAT px, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-
-void _sinhrat( PRAT *px, int32_t precision)
+void _sinhrat(PRAT* px, int32_t precision)
 
 {
-    if ( !IsValidForHypFunc(*px, precision))
-        {
+    if (!IsValidForHypFunc(*px, precision))
+    {
         // Don't attempt exp of anything large or small
-        throw( CALC_E_DOMAIN );
-        }
+        throw(CALC_E_DOMAIN);
+    }
 
     CREATETAYLOR();
 
-    DUPRAT(pret,*px);
-    DUPRAT(thisterm,pret);
+    DUPRAT(pret, *px);
+    DUPRAT(thisterm, pret);
 
-    DUPNUM(n2,num_one);
+    DUPNUM(n2, num_one);
 
-    do    {
-        NEXTTERM(xx,INC(n2) DIVNUM(n2) INC(n2) DIVNUM(n2), precision);
-        } while ( !SMALL_ENOUGH_RAT( thisterm, precision) );
+    do
+    {
+        NEXTTERM(xx, INC(n2) DIVNUM(n2) INC(n2) DIVNUM(n2), precision);
+    } while (!SMALL_ENOUGH_RAT(thisterm, precision));
 
     DESTROYTAYLOR();
 }
 
-void sinhrat( PRAT *px, uint32_t radix, int32_t precision)
+void sinhrat(PRAT* px, uint32_t radix, int32_t precision)
 
 {
-    PRAT tmpx= nullptr;
+    PRAT tmpx = nullptr;
 
-    if ( rat_ge( *px, rat_one, precision) )
-        {
-        DUPRAT(tmpx,*px);
+    if (rat_ge(*px, rat_one, precision))
+    {
+        DUPRAT(tmpx, *px);
         exprat(px, radix, precision);
         tmpx->pp->sign *= -1;
         exprat(&tmpx, radix, precision);
-        subrat( px, tmpx, precision);
-        divrat( px, rat_two, precision);
-        destroyrat( tmpx );
-        }
+        subrat(px, tmpx, precision);
+        divrat(px, rat_two, precision);
+        destroyrat(tmpx);
+    }
     else
-        {
-        _sinhrat( px, precision);
-        }
+    {
+        _sinhrat(px, precision);
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -147,59 +143,59 @@ void sinhrat( PRAT *px, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-
-void _coshrat( PRAT *px, uint32_t radix, int32_t precision)
+void _coshrat(PRAT* px, uint32_t radix, int32_t precision)
 
 {
-    if ( !IsValidForHypFunc(*px, precision))
-        {
+    if (!IsValidForHypFunc(*px, precision))
+    {
         // Don't attempt exp of anything large or small
-        throw( CALC_E_DOMAIN );
-        }
+        throw(CALC_E_DOMAIN);
+    }
 
     CREATETAYLOR();
 
-    pret->pp=i32tonum( 1L, radix);
-    pret->pq=i32tonum( 1L, radix);
+    pret->pp = i32tonum(1L, radix);
+    pret->pq = i32tonum(1L, radix);
 
-    DUPRAT(thisterm,pret)
+    DUPRAT(thisterm, pret)
 
-    n2=i32tonum(0L, radix);
+    n2 = i32tonum(0L, radix);
 
-    do    {
-        NEXTTERM(xx,INC(n2) DIVNUM(n2) INC(n2) DIVNUM(n2), precision);
-        } while ( !SMALL_ENOUGH_RAT( thisterm, precision) );
+    do
+    {
+        NEXTTERM(xx, INC(n2) DIVNUM(n2) INC(n2) DIVNUM(n2), precision);
+    } while (!SMALL_ENOUGH_RAT(thisterm, precision));
 
     DESTROYTAYLOR();
 }
 
-void coshrat( PRAT *px, uint32_t radix, int32_t precision)
+void coshrat(PRAT* px, uint32_t radix, int32_t precision)
 
 {
-    PRAT tmpx= nullptr;
+    PRAT tmpx = nullptr;
 
     (*px)->pp->sign = 1;
     (*px)->pq->sign = 1;
-    if ( rat_ge( *px, rat_one, precision) )
-        {
-        DUPRAT(tmpx,*px);
+    if (rat_ge(*px, rat_one, precision))
+    {
+        DUPRAT(tmpx, *px);
         exprat(px, radix, precision);
         tmpx->pp->sign *= -1;
         exprat(&tmpx, radix, precision);
-        addrat( px, tmpx, precision);
-        divrat( px, rat_two, precision);
-        destroyrat( tmpx );
-        }
+        addrat(px, tmpx, precision);
+        divrat(px, rat_two, precision);
+        destroyrat(tmpx);
+    }
     else
-        {
-        _coshrat( px, radix, precision);
-        }
+    {
+        _coshrat(px, radix, precision);
+    }
     // Since *px might be epsilon below 1 due to TRIMIT
     // we need this trick here.
-    if ( rat_lt(*px, rat_one, precision) )
-        {
-        DUPRAT(*px,rat_one);
-        }
+    if (rat_lt(*px, rat_one, precision))
+    {
+        DUPRAT(*px, rat_one);
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -215,17 +211,16 @@ void coshrat( PRAT *px, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void tanhrat( PRAT *px, uint32_t radix, int32_t precision)
+void tanhrat(PRAT* px, uint32_t radix, int32_t precision)
 
 {
-    PRAT ptmp= nullptr;
+    PRAT ptmp = nullptr;
 
-    DUPRAT(ptmp,*px);
+    DUPRAT(ptmp, *px);
     sinhrat(px, radix, precision);
     coshrat(&ptmp, radix, precision);
-    mulnumx(&((*px)->pp),ptmp->pq);
-    mulnumx(&((*px)->pq),ptmp->pp);
+    mulnumx(&((*px)->pp), ptmp->pq);
+    mulnumx(&((*px)->pq), ptmp->pp);
 
     destroyrat(ptmp);
-
 }

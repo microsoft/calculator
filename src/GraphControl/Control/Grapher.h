@@ -5,6 +5,7 @@
 #include "Equation.h"
 #include "EquationCollection.h"
 #include "IMathSolver.h"
+#include "Common.h"
 
 namespace GraphControl
 {
@@ -78,6 +79,29 @@ namespace GraphControl
         }
         #pragma endregion
 
+        #pragma region Windows::Foundation::Collections::IObservableMap<Platform::String^, double>^ Variables DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty^ VariablesProperty
+        {
+            Windows::UI::Xaml::DependencyProperty^ get()
+            {
+                return s_variablesProperty;
+            }
+        }
+
+        property Windows::Foundation::Collections::IObservableMap<Platform::String^, double>^ Variables
+        {
+            Windows::Foundation::Collections::IObservableMap<Platform::String^, double>^ get()
+            {
+                return static_cast<Windows::Foundation::Collections::IObservableMap<Platform::String^, double>^>(GetValue(s_variablesProperty));
+            }
+
+            void set(Windows::Foundation::Collections::IObservableMap<Platform::String^, double>^ value)
+            {
+                SetValue(s_variablesProperty, value);
+            }
+        }
+        #pragma endregion
+
         #pragma region Windows::UI::Xaml::DataTemplate^ ForceProportionalAxes DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ ForceProportionalAxesTemplateProperty
         {
@@ -99,6 +123,10 @@ namespace GraphControl
             }
         }
         #pragma endregion
+
+        event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String^, double>^>^ VariablesUpdated;
+
+        void SetVariable(Platform::String^ variableName, double newValue);
 
     protected:
         #pragma region Control Overrides
@@ -127,12 +155,14 @@ namespace GraphControl
         void OnDataSourceChanged(GraphControl::InspectingDataSource^ sender, GraphControl::DataSourceChangedEventArgs args);
 
         void OnEquationsChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ args);
-        void OnEquationsVectorChanged(Windows::Foundation::Collections::IObservableVector<GraphControl::Equation ^> ^sender, Windows::Foundation::Collections::IVectorChangedEventArgs ^event);
+        void OnEquationsVectorChanged(Windows::Foundation::Collections::IObservableVector<GraphControl::Equation ^> ^sender, Windows::Foundation::Collections::IVectorChangedEventArgs^ event);
         void OnEquationChanged();
 
         void UpdateGraph();
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation^>& validEqs);
         std::vector<Equation^> GetValidEquations();
+        void SetGraphArgs();
+        void UpdateVariables();
 
         void OnForceProportionalAxesChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ args);
 
@@ -154,6 +184,7 @@ namespace GraphControl
         Windows::Foundation::EventRegistrationToken m_tokenDataSourceChanged;
 
         static Windows::UI::Xaml::DependencyProperty^ s_equationsProperty;
+        static Windows::UI::Xaml::DependencyProperty^ s_variablesProperty;
         Windows::Foundation::EventRegistrationToken m_tokenEquationsChanged;
         Windows::Foundation::EventRegistrationToken m_tokenEquationChanged;
 

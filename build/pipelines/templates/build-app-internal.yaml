@@ -12,7 +12,7 @@ jobs:
   displayName: Build ${{ parameters.platform }}
   condition: ${{ parameters.condition }}
   pool:
-    vmImage: vs2017-win2016
+    vmImage: windows-2019
   variables:
     BuildConfiguration: Release
     BuildPlatform: ${{ parameters.platform }}
@@ -29,7 +29,7 @@ jobs:
       downloadDirectory: $(Build.SourcesDirectory)
       vstsFeed: WindowsApps
       vstsFeedPackage: calculator-internals
-      vstsPackageVersion: 0.0.10
+      vstsPackageVersion: 0.0.11
 
   - template: ./build-single-architecture.yaml
     parameters:

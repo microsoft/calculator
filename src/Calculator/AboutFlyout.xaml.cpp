@@ -37,15 +37,15 @@ AboutFlyout::AboutFlyout()
 
     Header->Text = resourceLoader.GetResourceString("AboutButton/Content");
 
-    auto copyrightText = LocalizationStringUtil::GetLocalizedString(resourceLoader.GetResourceString("AboutControlCopyright")->Data(), to_wstring(BUILD_YEAR).c_str());
+    auto copyrightText =
+        LocalizationStringUtil::GetLocalizedString(resourceLoader.GetResourceString("AboutControlCopyright")->Data(), to_wstring(BUILD_YEAR).c_str());
     AboutControlCopyrightRun->Text = ref new String(copyrightText.c_str());
-
 }
 
-void AboutFlyout::FeedbackButton_Click(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void AboutFlyout::FeedbackButton_Click(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     PackageVersion version = Package::Current->Id->Version;
-    String^ versionNumber = ref new String(L"Version ");
+    String ^ versionNumber = ref new String(L"Version ");
     versionNumber = versionNumber + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision;
     Launcher::LaunchUriAsync(ref new Uri("windows-feedback:?contextid=130&metadata=%7B%22Metadata%22:[%7B%22AppBuild%22:%22" + versionNumber + "%22%7D]%7D"));
 }
@@ -53,7 +53,7 @@ void AboutFlyout::FeedbackButton_Click(_In_ Object^ sender, _In_ RoutedEventArgs
 void AboutFlyout::SetVersionString()
 {
     PackageVersion version = Package::Current->Id->Version;
-    String^ appName = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
+    String ^ appName = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
     AboutFlyoutVersion->Text = appName + L" " + version.Major + L"." + version.Minor + L"." + version.Build + L"." + version.Revision;
 }
 
@@ -62,7 +62,7 @@ void AboutFlyout::SetDefaultFocus()
     AboutFlyoutEULA->Focus(::FocusState::Programmatic);
 }
 
-void CalculatorApp::AboutFlyout::UserControl_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void CalculatorApp::AboutFlyout::UserControl_Loaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     TraceLogger::GetInstance().LogAboutFlyoutOpened();
 }

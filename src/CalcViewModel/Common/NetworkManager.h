@@ -5,29 +5,32 @@
 
 namespace CalculatorApp
 {
-    public enum class NetworkAccessBehavior
+public
+    enum class NetworkAccessBehavior
     {
         Normal = 0,
         OptIn = 1,
         Offline = 2
     };
 
-    public delegate void NetworkBehaviorChangedHandler(NetworkAccessBehavior behavior);
+public
+    delegate void NetworkBehaviorChangedHandler(NetworkAccessBehavior behavior);
 
-    public ref class NetworkManager sealed
+public
+    ref class NetworkManager sealed
     {
     public:
         NetworkManager();
 
         static NetworkAccessBehavior GetNetworkAccessBehavior();
 
-        event NetworkBehaviorChangedHandler^ NetworkBehaviorChanged;
+        event NetworkBehaviorChangedHandler ^ NetworkBehaviorChanged;
 
     private:
         ~NetworkManager();
 
-        void OnNetworkStatusChange(_In_ Platform::Object^ sender);
-        static NetworkAccessBehavior ConvertCostInfoToBehavior(_In_ Windows::Networking::Connectivity::ConnectionCost^ connectionCost);
+        void OnNetworkStatusChange(_In_ Platform::Object ^ sender);
+        static NetworkAccessBehavior ConvertCostInfoToBehavior(_In_ Windows::Networking::Connectivity::ConnectionCost ^ connectionCost);
 
     private:
         Windows::Foundation::EventRegistrationToken m_NetworkStatusChangedToken;

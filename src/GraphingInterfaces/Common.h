@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 
 #ifndef GRAPHINGAPI
 #ifdef GRAPHING_ENGINE_IMPL
@@ -36,6 +37,14 @@ namespace Graphing
 
         virtual unsigned int GetExpressionID() const = 0;
         virtual bool IsEmptySet() const = 0;
+    };
+
+    struct IVariable
+    {
+        virtual ~IVariable() = default;
+
+        virtual int GetVariableID() const = 0;
+        virtual const std::wstring& GetVariableName() = 0;
     };
 
     struct IExpressible

@@ -7,11 +7,10 @@ namespace CalculatorApp
 {
     namespace Converters
     {
-        [Windows::UI::Xaml::Data::Bindable]
-        public ref class ExpressionItemTemplateSelector sealed : public Windows::UI::Xaml::Controls::DataTemplateSelector
+        [Windows::UI::Xaml::Data::Bindable] public ref class ExpressionItemTemplateSelector sealed : public Windows::UI::Xaml::Controls::DataTemplateSelector
         {
         public:
-            virtual Windows::UI::Xaml::DataTemplate^ SelectTemplateCore(Platform::Object^ item, Windows::UI::Xaml::DependencyObject^ container) override;
+            virtual Windows::UI::Xaml::DataTemplate ^ SelectTemplateCore(Platform::Object ^ item, Windows::UI::Xaml::DependencyObject ^ container) override;
 
             property Windows::UI::Xaml::DataTemplate^ OperatorTemplate
             {
@@ -51,8 +50,8 @@ namespace CalculatorApp
 
         private:
             Windows::UI::Xaml::DataTemplate^ m_operatorTemplate;
-            Windows::UI::Xaml::DataTemplate^ m_operandTemplate;
-            Windows::UI::Xaml::DataTemplate^ m_separatorTemplate;
+            Windows::UI::Xaml::DataTemplate ^ m_operandTemplate;
+            Windows::UI::Xaml::DataTemplate ^ m_separatorTemplate;
         };
     }
 }

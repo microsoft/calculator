@@ -11,17 +11,14 @@
 
 namespace CalculatorApp
 {
-    [Windows::Foundation::Metadata::WebHostHidden]
-    public ref class OperatorsPanel sealed
+    [Windows::Foundation::Metadata::WebHostHidden] public ref class OperatorsPanel sealed
     {
     public:
         OperatorsPanel();
-        property CalculatorApp::ViewModel::StandardCalculatorViewModel^ Model
-        {
-            CalculatorApp::ViewModel::StandardCalculatorViewModel^ get();
-        }
+        property CalculatorApp::ViewModel::StandardCalculatorViewModel
+            ^ Model { CalculatorApp::ViewModel::StandardCalculatorViewModel ^ get(); }
 
-        DEPENDENCY_PROPERTY_OWNER(OperatorsPanel);
+            DEPENDENCY_PROPERTY_OWNER(OperatorsPanel);
         DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, IsBitFlipChecked);
         DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, IsErrorVisualState);
 

@@ -26,7 +26,7 @@ using namespace Windows::UI::Xaml::Navigation;
 
 namespace CalculatorApp
 {
-    WindowFrameService^ WindowFrameService::CreateNewWindowFrameService(_In_ Frame^ viewFrame, bool createdByUs, Platform::WeakReference parent)
+    WindowFrameService ^ WindowFrameService::CreateNewWindowFrameService(_In_ Frame ^ viewFrame, bool createdByUs, Platform::WeakReference parent)
     {
         assert(CoreWindow::GetForCurrentThread() != nullptr);
         auto frameService = ref new WindowFrameService(viewFrame, parent);
@@ -34,7 +34,7 @@ namespace CalculatorApp
         return frameService;
     }
 
-    WindowFrameService::WindowFrameService(_In_ Frame^ frame, WeakReference parent)
+    WindowFrameService::WindowFrameService(_In_ Frame ^ frame, WeakReference parent)
         : m_currentWindow(CoreWindow::GetForCurrentThread())
         , m_coreDispatcher(m_currentWindow->Dispatcher)
         , m_frame(frame)
@@ -57,7 +57,7 @@ namespace CalculatorApp
         }
     }
 
-    CoreDispatcher^ WindowFrameService::GetCoreDispatcher()
+    CoreDispatcher ^ WindowFrameService::GetCoreDispatcher()
     {
         return m_coreDispatcher.Get();
     }
@@ -67,17 +67,17 @@ namespace CalculatorApp
         return m_viewId;
     }
 
-    Frame^ WindowFrameService::GetFrame()
+    Frame ^ WindowFrameService::GetFrame()
     {
         return m_frame;
     }
 
-    Page^ WindowFrameService::GetCurrentPage()
+    Page ^ WindowFrameService::GetCurrentPage()
     {
-        return dynamic_cast<Page^>(m_frame->Content);
+        return dynamic_cast<Page ^>(m_frame->Content);
     }
 
-    void WindowFrameService::SetNewFrame(_In_ Windows::UI::Xaml::Controls::Frame^ frame)
+    void WindowFrameService::SetNewFrame(_In_ Windows::UI::Xaml::Controls::Frame ^ frame)
     {
         assert(frame->BackStackDepth == 0);
         m_frame = frame;
@@ -102,22 +102,21 @@ namespace CalculatorApp
     {
         auto that(this);
         task_completion_event<void> closingHandlersCompletedEvent;
-        m_coreDispatcher->RunAsync(CoreDispatcherPriority::Low, ref new DispatchedHandler([that, closingHandlersCompletedEvent]()
-        {
-            KeyboardShortcutManager::OnWindowClosed(that->m_viewId);
-            Window::Current->Content = nullptr;
-            that->InvokeWindowClosingHandlers();
-            // This is to ensure InvokeWindowClosingHandlers is be done before RemoveWindowFromMap
-            // If InvokeWindowClosingHandlers throws any exception we want it to crash the application
-            // so we are OK not setting closingHandlersCompletedEvent in that case
-            closingHandlersCompletedEvent.set();
-            that->m_coreDispatcher->StopProcessEvents();
-            Window::Current->Close();
-        }));
+        m_coreDispatcher->RunAsync(CoreDispatcherPriority::Low, ref new DispatchedHandler([that, closingHandlersCompletedEvent]() {
+                                       KeyboardShortcutManager::OnWindowClosed(that->m_viewId);
+                                       Window::Current->Content = nullptr;
+                                       that->InvokeWindowClosingHandlers();
+                                       // This is to ensure InvokeWindowClosingHandlers is be done before RemoveWindowFromMap
+                                       // If InvokeWindowClosingHandlers throws any exception we want it to crash the application
+                                       // so we are OK not setting closingHandlersCompletedEvent in that case
+                                       closingHandlersCompletedEvent.set();
+                                       that->m_coreDispatcher->StopProcessEvents();
+                                       Window::Current->Close();
+                                   }));
         return create_task(closingHandlersCompletedEvent);
     }
 
-    void WindowFrameService::OnConsolidated(_In_ ApplicationView^ sender, _In_ ApplicationViewConsolidatedEventArgs^ e)
+    void WindowFrameService::OnConsolidated(_In_ ApplicationView ^ sender, _In_ ApplicationViewConsolidatedEventArgs ^ e)
     {
         LogOnViewClosed(CoreWindow::GetForCurrentThread());
         auto parent = m_parent.Resolve<App>();
@@ -127,7 +126,7 @@ namespace CalculatorApp
         }
     }
 
-    void WindowFrameService::OnClosed(_In_ CoreWindow^ sender, _In_ CoreWindowEventArgs^ args)
+    void WindowFrameService::OnClosed(_In_ CoreWindow ^ sender, _In_ CoreWindowEventArgs ^ args)
     {
         LogOnViewClosed(sender);
         auto parent = m_parent.Resolve<App>();
@@ -137,7 +136,7 @@ namespace CalculatorApp
         }
     }
 
-    void WindowFrameService::LogOnViewClosed(_In_ CoreWindow^ coreWindow)
+    void WindowFrameService::LogOnViewClosed(_In_ CoreWindow ^ coreWindow)
     {
         if (coreWindow)
         {
@@ -149,7 +148,7 @@ namespace CalculatorApp
         }
     }
 
-    void WindowFrameService::RegisterRuntimeWindowService(TypeName serviceId, _In_opt_ Object^ service)
+    void WindowFrameService::RegisterRuntimeWindowService(TypeName serviceId, _In_opt_ Object ^ service)
     {
         if (TryResolveRuntimeWindowService(serviceId))
         {
@@ -164,7 +163,7 @@ namespace CalculatorApp
         return m_runtimeServicesMap.erase(serviceId.Name) > 0;
     }
 
-    Object^ WindowFrameService::ResolveRuntimeWindowService(TypeName serviceId)
+    Object ^ WindowFrameService::ResolveRuntimeWindowService(TypeName serviceId)
     {
         auto service = TryResolveRuntimeWindowService(serviceId);
 
@@ -178,7 +177,7 @@ namespace CalculatorApp
         }
     }
 
-    _Ret_maybenull_ Object^ WindowFrameService::TryResolveRuntimeWindowService(TypeName serviceId)
+    _Ret_maybenull_ Object ^ WindowFrameService::TryResolveRuntimeWindowService(TypeName serviceId)
     {
         auto entry = m_runtimeServicesMap.find(serviceId.Name);
 

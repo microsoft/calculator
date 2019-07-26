@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Views\GraphingCalculator\GraphingCalculator.g.h"
-#include "CalcViewModel/GraphingCalculator/GraphingCalculatorViewModel.h"
+#include "CalcViewModel\GraphingCalculator\GraphingCalculatorViewModel.h"
 #include "Views\NumberPad.xaml.h"
 
 namespace CalculatorApp
@@ -22,9 +22,18 @@ namespace CalculatorApp
     private:
         void GraphingCalculator_DataContextChanged(Windows::UI::Xaml::FrameworkElement^ sender, Windows::UI::Xaml::DataContextChangedEventArgs^ args);
 
-    private:
+        void GraphVariablesUpdated(Platform::Object^ sender, Object^ args);
+        void OnVariableChanged(Platform::Object^ sender, CalculatorApp::ViewModel::VariableChangedEventArgs args);
+
+        void TextBoxLosingFocus(Windows::UI::Xaml::Controls::TextBox^ textbox, Windows::UI::Xaml::Input::LosingFocusEventArgs^ args);
+        void TextBoxKeyDown(Windows::UI::Xaml::Controls::TextBox^ textbox, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e);
+        void SubmitTextbox(Windows::UI::Xaml::Controls::TextBox^ textbox);
+
+        double validateDouble(Platform::String^ value, double defaultValue);
+
         CalculatorApp::ViewModel::GraphingCalculatorViewModel^ m_viewModel;
-		void OnShareClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+
+     		void OnShareClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
     private:
         Windows::Foundation::EventRegistrationToken dataRequestedToken{};
@@ -32,5 +41,7 @@ namespace CalculatorApp
         void OnDataRequested(Windows::ApplicationModel::DataTransfer::DataTransferManager^ sender, Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs^ e);
         void CommandInvokedHandler(Windows::UI::Popups::IUICommand^ command);
 
-	};
+        void TextBoxGotFocus(Windows::UI::Xaml::Controls::TextBox^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+    };
+
 }

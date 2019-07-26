@@ -65,4 +65,7 @@
       <Filter>Themes</Filter>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="$(ProjectDir)\GraphingImplOverrides.props" />
+  </ItemGroup>
 </Project>

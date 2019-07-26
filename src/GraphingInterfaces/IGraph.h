@@ -16,6 +16,10 @@ namespace Graphing
 
         virtual IGraphingOptions& GetOptions() = 0;
 
+        virtual std::vector<std::shared_ptr<IVariable>> GetVariables() = 0;
+
+        virtual void SetArgValue(std::wstring variableName, double value) = 0;
+
         virtual std::shared_ptr< Renderer::IGraphRenderer > GetRenderer() const = 0;
 
         virtual bool TryResetSelection() = 0;

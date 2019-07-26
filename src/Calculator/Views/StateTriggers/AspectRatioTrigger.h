@@ -13,13 +13,15 @@
 
 namespace CalculatorApp::Views::StateTriggers
 {
-    public enum class Aspect
+public
+    enum class Aspect
     {
         Height,
         Width
     };
 
-    public ref class AspectRatioTrigger sealed : public Windows::UI::Xaml::StateTriggerBase
+public
+    ref class AspectRatioTrigger sealed : public Windows::UI::Xaml::StateTriggerBase
     {
     public:
         AspectRatioTrigger();
@@ -27,7 +29,7 @@ namespace CalculatorApp::Views::StateTriggers
         DEPENDENCY_PROPERTY_OWNER(AspectRatioTrigger);
 
         /* The source for which this class will respond to size changed events. */
-        DEPENDENCY_PROPERTY_WITH_CALLBACK(Windows::UI::Xaml::FrameworkElement^, Source);
+        DEPENDENCY_PROPERTY_WITH_CALLBACK(Windows::UI::Xaml::FrameworkElement ^, Source);
 
         /* Either Height or Width. The property will determine which aspect is used as the numerator when calculating
            the aspect ratio. */
@@ -42,11 +44,11 @@ namespace CalculatorApp::Views::StateTriggers
     private:
         ~AspectRatioTrigger();
 
-        void OnSourcePropertyChanged(Windows::UI::Xaml::FrameworkElement^ oldValue, Windows::UI::Xaml::FrameworkElement^ newValue);
+        void OnSourcePropertyChanged(Windows::UI::Xaml::FrameworkElement ^ oldValue, Windows::UI::Xaml::FrameworkElement ^ newValue);
 
-        void RegisterSizeChanged(Windows::UI::Xaml::FrameworkElement^ element);
-        void UnregisterSizeChanged(Windows::UI::Xaml::FrameworkElement^ element);
-        void OnSizeChanged(Platform::Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e);
+        void RegisterSizeChanged(Windows::UI::Xaml::FrameworkElement ^ element);
+        void UnregisterSizeChanged(Windows::UI::Xaml::FrameworkElement ^ element);
+        void OnSizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
 
         void UpdateIsActive(Windows::Foundation::Size sourceSize);
 
