@@ -135,7 +135,7 @@ namespace CalculatorApp
     void TraceLogger::LogWindowCreated(ViewMode mode, int windowId)
     {
         // store windowId in windowIdLog which says we have logged mode for the present windowId.
-        if (find(windowIdLog.begin(), windowIdLog.end(), windowId) == windowIdLog.end())
+        if (!IsWindowIdInLog(windowId))
         {
             windowIdLog.push_back(windowId);
         }
