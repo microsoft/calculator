@@ -44,9 +44,9 @@ namespace CalculatorApp
         void LogButtonUsage();
         void LogDateCalculationModeUsed(bool AddSubtractMode);
         void UpdateWindowCount(size_t windowCount = 0);
-        bool UpdateWindowIdLog(int windowId);
+        bool IsWindowIdInLog(int windowId);
         void LogVisualStateChanged(CalculatorApp::Common::ViewMode mode, std::wstring_view state) const;
-        void LogWindowCreated(CalculatorApp::Common::ViewMode mode) const;
+        void LogWindowCreated(CalculatorApp::Common::ViewMode mode, int windowId);
         void LogConverterInputReceived(CalculatorApp::Common::ViewMode mode) const;
         void LogNavBarOpened() const;
 
@@ -73,7 +73,7 @@ namespace CalculatorApp
         winrt::Windows::Foundation::Diagnostics::LoggingChannel g_calculatorProvider;
 
         std::vector<ButtonLog> buttonLog;
-        std::map<int, bool> windowIdLog;
+        std::vector<int> windowIdLog;
 
         GUID sessionGuid;
         size_t currentWindowCount = 0;

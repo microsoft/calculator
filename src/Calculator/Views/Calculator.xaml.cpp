@@ -135,7 +135,7 @@ void Calculator::OnLoaded(_In_ Object ^, _In_ RoutedEventArgs ^)
     WeakReference weakThis(this);
     this->Dispatcher->RunAsync(
         CoreDispatcherPriority::Normal, ref new DispatchedHandler([weakThis]() {
-            if (TraceLogger::GetInstance().UpdateWindowIdLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
+            if (TraceLogger::GetInstance().IsWindowIdInLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
             {
                 auto refThis = weakThis.Resolve<Calculator>();
                 if (refThis != nullptr)
