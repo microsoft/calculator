@@ -3439,6 +3439,22 @@
     <value>Add Equation</value>
     <comment>Placeholder text for the equation input button</comment>
   </data>
+  <data name="ShareActionErrorMessage" xml:space="preserve">
+    <value>Unable to share at this time.</value>
+    <comment>If there is an error in the sharing action will display a dialog with this text.</comment>
+  </data>
+  <data name="ShareActionErrorOk" xml:space="preserve">
+    <value>OK</value>
+    <comment>Used on the dismiss button of the share acction error dialog.</comment>
+  </data>
+  <data name="ShareActionTitle" xml:space="preserve">
+    <value>Look what I graphed.</value>
+    <comment>Sent as part of the shared content.  The title for the share.</comment>
+  </data>
+  <data name="EmptyEquationString" xml:space="preserve">
+    <value>Empty graph equation</value>
+    <comment>When sharing and one of the equations has no content this will be shown in the graph key for that equation.</comment>
+  </data>
   <data name="VaiablesHeader.Text" xml:space="preserve">
     <value>Variables</value>
     <comment>Header text for variables area</comment>

@@ -5,6 +5,11 @@
 struct ID2D1Factory;
 struct ID2D1RenderTarget;
 
+namespace MathSolverEngine::Graph::Renderer
+{
+    struct IBitmap;
+}
+
 namespace Graphing::Renderer
 {
     struct IGraphRenderer : public NonCopyable, public NonMoveable
@@ -21,5 +26,7 @@ namespace Graphing::Renderer
         virtual HRESULT ChangeRange(ChangeRangeAction action) = 0;
         virtual HRESULT MoveRangeByRatio(double ratioX, double ratioY) = 0;
         virtual HRESULT ResetRange() = 0;
+
+		virtual HRESULT GetBitmap(std::shared_ptr<MathSolverEngine::Graph::Renderer::IBitmap>& bitmapOut, bool& hasSomeMissingDataOut) = 0;
     };
 }

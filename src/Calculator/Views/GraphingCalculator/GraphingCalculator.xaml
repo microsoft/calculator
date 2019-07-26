@@ -31,7 +31,7 @@
               Grid.Row="1"
               Grid.Column="0">
 
-            <graphControl:Grapher Name="GraphingControl"
+            <graphControl:Grapher Name="GraphingControl" Grid.Row="0"
                                   Margin="4,7,4,4"
                                   EquationsSource="{x:Bind ViewModel.Equations, Mode=OneWay}"
                                   ForceProportionalAxes="True"
@@ -229,7 +229,12 @@
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
 
-            <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
+            <StackPanel>
+                <Button x:Name="Share" Click="OnShareClick">
+    		        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;"/>
+	            </Button>
+                <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
+            </StackPanel>
 
             <Grid x:Name="ButtonContainerGrid"
                   Grid.Row="2"

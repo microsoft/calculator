@@ -194,5 +194,8 @@ namespace GraphControl
 
         const std::unique_ptr<Graphing::IMathSolver> m_solver;
         const std::shared_ptr<Graphing::IGraph> m_graph;
+
+        public:
+            Windows::Storage::Streams::RandomAccessStreamReference^ GetGraphBitmapStream();
     };
 }

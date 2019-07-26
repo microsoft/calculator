@@ -10,6 +10,7 @@ using namespace std;
 using namespace Windows::Devices::Input;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::Storage::Streams;
 using namespace Windows::System;
 using namespace Windows::UI;
 using namespace Windows::UI::Input;
@@ -17,6 +18,14 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
+
+namespace MathSolverEngine::Graph::Renderer
+{
+    struct IBitmap
+    {
+        virtual const std::vector<BYTE>& GetData() const = 0;
+    };
+}
 
 namespace
 {
@@ -49,7 +58,7 @@ namespace GraphControl
     DependencyProperty^ Grapher::s_equationsSourceProperty;
     DependencyProperty^ Grapher::s_variablesProperty;
     DependencyProperty^ Grapher::s_forceProportionalAxesTemplateProperty;
-    
+
     Grapher::Grapher()
         : m_solver{ IMathSolver::CreateMathSolver() }
         , m_graph{ m_solver->CreateGrapher() }
@@ -122,7 +131,7 @@ namespace GraphControl
         {
             s_equationsProperty = DependencyProperty::Register(
                 StringReference(s_propertyName_Equations),
-                EquationCollection::typeid ,
+                EquationCollection::typeid,
                 Grapher::typeid,
                 ref new PropertyMetadata(
                     nullptr,
@@ -555,7 +564,7 @@ namespace GraphControl
         // For scaling, the graphing engine interprets x,y position between the range [-1, 1].
         // Translate the pointer position to the [-1, 1] bounds.
         const auto& pos = currentPointer->Position;
-        const auto[centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, ActualWidth, ActualHeight);
+        const auto [centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, ActualWidth, ActualHeight);
 
         ScaleRange(centerX, centerY, scale);
 
@@ -563,16 +572,16 @@ namespace GraphControl
     }
 
     void Grapher::OnPointerPressed(PointerRoutedEventArgs^ e)
-	{
+    {
         // Set the pointer capture to the element being interacted with so that only it
         // will fire pointer-related events
         CapturePointer(e->Pointer);
-	}
+    }
 
     void Grapher::OnPointerReleased(PointerRoutedEventArgs^ e)
-	{
+    {
         ReleasePointerCapture(e->Pointer);
-	}
+    }
 
     void Grapher::OnPointerCanceled(PointerRoutedEventArgs^ e)
     {
@@ -618,7 +627,7 @@ namespace GraphControl
 
                     // Convert from PointerPosition to graph position.
                     const auto& pos = e->Position;
-                    const auto[centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, width, height);
+                    const auto [centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, width, height);
 
                     if (FAILED(renderer->ScaleRange(centerX, centerY, scale)))
                     {
@@ -634,5 +643,46 @@ namespace GraphControl
                 }
             }
         }
+    }
+
+    RandomAccessStreamReference^ Grapher::GetGraphBitmapStream()
+    {
+        RandomAccessStreamReference^ outputStream;
+
+        if (m_renderMain != nullptr && m_graph != nullptr)
+        {
+            if (auto renderer = m_graph->GetRenderer())
+            {
+                std::shared_ptr < MathSolverEngine::Graph::Renderer::IBitmap> BitmapOut;
+                bool hasSomeMissingDataOut = false;
+
+                // Request the current graph image, we don't care if there is some missing data
+                if (SUCCEEDED(renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut)))
+                {
+                    // Get the raw date
+                    std::vector<BYTE> byteVector = BitmapOut->GetData();
+                    auto arr = ref new Array<BYTE>(&byteVector[0], (unsigned int)byteVector.size());
+
+                    // create a memory stream wrapper
+                    InMemoryRandomAccessStream^ stream = ref new InMemoryRandomAccessStream();
+
+                    // Get a writer to transfer the data 
+                    auto writer = ref new DataWriter(stream->GetOutputStreamAt(0));
+
+                    // write the data
+                    writer->WriteBytes(arr);
+                    writer->StoreAsync()->GetResults();
+
+                    // Get a reference stream to return;
+                    outputStream = RandomAccessStreamReference::CreateFromStream(stream);
+                }
+                else
+                {
+                    OutputDebugString(L"Grapher::GetGraphBitmapStream() unable to get graph image from renderer\r\n");
+                }
+            }
+        }
+
+        return outputStream;
     }
 }
