@@ -104,24 +104,17 @@ namespace CalculatorApp
 #pragma endregion
 
     // return true if windowId is logged once else return false
-    bool TraceLogger::UpdateWindowIdLog(int windowId)
+    bool TraceLogger::IsWindowIdInLog(int windowId)
     {
         // Writer lock for the windowIdLog resource
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
 
-        if (windowIdLog.find(windowId) == windowIdLog.end())
+        if (find(windowIdLog.begin(), windowIdLog.end(), windowId) == windowIdLog.end())
         {
             return false;
         }
-        if (windowIdLog[windowId] == false)
-        {
-            windowIdLog[windowId] = true;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+
+        return true;
     }
 
     void TraceLogger::LogVisualStateChanged(ViewMode mode, wstring_view state) const
@@ -139,8 +132,14 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_VISUAL_STATE_CHANGED, fields);
     }
 
-    void TraceLogger::LogWindowCreated(ViewMode mode) const
+    void TraceLogger::LogWindowCreated(ViewMode mode, int windowId)
     {
+        // store windowId in windowIdLog which says we have logged mode for the present windowId.
+        if (!IsWindowIdInLog(windowId))
+        {
+            windowIdLog.push_back(windowId);
+        }
+
         if (!GetTraceLoggingProviderEnabled())
             return;
 
