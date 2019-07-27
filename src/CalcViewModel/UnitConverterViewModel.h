@@ -314,8 +314,6 @@ namespace CalculatorApp
             std::wstring m_valueFromUnlocalized;
             std::wstring m_valueToUnlocalized;
             bool m_relocalizeStringOnSwitch;
-            // For Saving the User Preferences only if the Unit converter ViewModel is initialised for the first time
-            bool m_IsFirstTime;
 
             Platform::String^ m_localizedValueFromFormat;
             Platform::String^ m_localizedValueFromDecimalFormat;
