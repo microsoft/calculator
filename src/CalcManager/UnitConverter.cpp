@@ -791,17 +791,27 @@ void UnitConverter::InitializeSelectedUnits()
     vector<Unit> curUnits = itr->second;
     if (!curUnits.empty())
     {
+        // Units may already have been initialized through UnitConverter::RestoreUserPreferences().
+        // Check if they have been, and if so, do not override restored units.
+        bool isFromUnitValid = m_fromType != EMPTY_UNIT && find(curUnits.begin(), curUnits.end(), m_fromType) != curUnits.end();
+        bool isToUnitValid = m_toType != EMPTY_UNIT && find(curUnits.begin(), curUnits.end(), m_toType) != curUnits.end();
+
+        if (isFromUnitValid && isToUnitValid)
+        {
+            return;
+        }
+
         bool conversionSourceSet = false;
         bool conversionTargetSet = false;
         for (const Unit& cur : curUnits)
         {
-            if (!conversionSourceSet && cur.isConversionSource)
+            if (!conversionSourceSet && cur.isConversionSource && !isFromUnitValid)
             {
                 m_fromType = cur;
                 conversionSourceSet = true;
             }
 
-            if (!conversionTargetSet && cur.isConversionTarget)
+            if (!conversionTargetSet && cur.isConversionTarget && !isToUnitValid)
             {
                 m_toType = cur;
                 conversionTargetSet = true;
