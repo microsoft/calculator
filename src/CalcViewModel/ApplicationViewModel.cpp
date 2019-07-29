@@ -163,7 +163,7 @@ void ApplicationViewModel::OnModeChanged()
     }
     else
     {
-        TraceLogger::GetInstance().LogWindowCreated(m_mode);
+        TraceLogger::GetInstance().LogWindowCreated(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
     }
 
     RaisePropertyChanged(ClearMemoryVisibilityPropertyName);
