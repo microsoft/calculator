@@ -30,9 +30,8 @@
         <Grid x:Name="LeftGrid"
               Grid.Row="1"
               Grid.Column="0">
-
-            <graphControl:Grapher Name="GraphingControl" Grid.Row="0"
-                                  Margin="4,7,4,4"
+            <Grid Grid.Row="0" Margin="4,7,4,4">
+                <graphControl:Grapher Name="GraphingControl" 
                                   EquationsSource="{x:Bind ViewModel.Equations, Mode=OneWay}"
                                   ForceProportionalAxes="True"
                                   UseSystemFocusVisuals="True"
@@ -45,7 +44,13 @@
                         <graphControl:Equation Expression="{x:Bind Expression, Mode=OneWay}" LineColor="{x:Bind LineColor, Mode=OneWay}"/>
                     </DataTemplate>
                 </graphControl:Grapher.EquationTemplate>
+
             </graphControl:Grapher>
+            <ToolTipService.ToolTip>
+                <ToolTip x:Name="ValueToolTip" Content="ToolTip."/>
+            </ToolTipService.ToolTip>
+            </Grid>
+
 
             <!-- Temporary button until the final UI is created -->
             <Button Margin="12,0,0,12"

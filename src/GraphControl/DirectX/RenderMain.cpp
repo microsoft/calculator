@@ -152,6 +152,13 @@ namespace GraphControl::DX
                     if (!isnan(nearestPointLocation.X) && !isnan(nearestPointLocation.Y))
                     {
                         m_nearestPointRenderer.Render(nearestPointLocation);
+                        std::wstring toolTip;
+                        toolTip += std::to_wstring(nearestPointLocation.X);
+                        toolTip += L", ";
+                        toolTip += std::to_wstring(nearestPointLocation.Y);
+                        toolTip += L"\r\n";
+
+                        OutputDebugString(toolTip.c_str());
                     }
                 }
             }
