@@ -69,6 +69,8 @@ namespace CalculatorUITestFramework
                 this.CalculatorSession = new WindowsDriver<WindowsElement>(this.windowsDriverService.ServiceUrl, options);
                 this.CalculatorSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 Assert.IsNotNull(this.CalculatorSession);
+                this.CalculatorSession.Manage().Window.Maximize();
+                var windowSize = this.CalculatorSession.Manage().Window.Size;
             }
         }
 

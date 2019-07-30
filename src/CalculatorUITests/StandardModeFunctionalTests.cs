@@ -319,5 +319,14 @@ namespace CalculatorUITests
             Assert.IsNotNull(page.MemoryPanel.MemoryPaneEmptyLabel);
         }
         #endregion
+
+        #region Error Tests
+        [TestMethod]
+        public void Error_DivideByZero()
+        {
+            page.StandardOperators.InvertButton.Click();
+            Assert.IsTrue(page.GetCalculatorResultText() == "Cannot divide by zero");
+        }
+        #endregion
     }
 }
