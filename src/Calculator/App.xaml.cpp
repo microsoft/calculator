@@ -404,27 +404,30 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
                     throw std::bad_exception();
                 }
             }
-            if (!Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+            if (ApplicationView::GetForCurrentView()->ViewMode != ApplicationViewMode::CompactOverlay)
             {
-                // for tablet mode: since system view activation policy is disabled so do ShowAsStandaloneAsync if activationViewSwitcher exists in
-                // activationArgs
-                ActivationViewSwitcher ^ activationViewSwitcher;
-                auto activateEventArgs = dynamic_cast<IViewSwitcherProvider ^>(args);
-                if (activateEventArgs != nullptr)
+                if (!Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
                 {
-                    activationViewSwitcher = activateEventArgs->ViewSwitcher;
-                }
-                if (activationViewSwitcher != nullptr)
-                {
-                    auto viewId = safe_cast<IApplicationViewActivatedEventArgs ^>(args)->CurrentlyShownApplicationViewId;
-                    if (viewId != 0)
+                    // for tablet mode: since system view activation policy is disabled so do ShowAsStandaloneAsync if activationViewSwitcher exists in
+                    // activationArgs
+                    ActivationViewSwitcher ^ activationViewSwitcher;
+                    auto activateEventArgs = dynamic_cast<IViewSwitcherProvider ^>(args);
+                    if (activateEventArgs != nullptr)
                     {
-                        activationViewSwitcher->ShowAsStandaloneAsync(viewId);
+                        activationViewSwitcher = activateEventArgs->ViewSwitcher;
+                    }
+                    if (activationViewSwitcher != nullptr)
+                    {
+                        auto viewId = safe_cast<IApplicationViewActivatedEventArgs ^>(args)->CurrentlyShownApplicationViewId;
+                        if (viewId != 0)
+                        {
+                            activationViewSwitcher->ShowAsStandaloneAsync(viewId);
+                        }
                     }
                 }
+                // Ensure the current window is active
+                Window::Current->Activate();
             }
-            // Ensure the current window is active
-            Window::Current->Activate();
         }
     }
 }

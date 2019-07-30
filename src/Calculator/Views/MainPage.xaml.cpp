@@ -358,9 +358,9 @@ void MainPage::EnsureConverter()
 
 void MainPage::OnNavLoaded(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    auto menuItems = static_cast<IObservableVector<Object ^> ^>(NavView->MenuItemsSource);
     if (NavView->SelectedItem == nullptr)
     {
+        auto menuItems = static_cast<IObservableVector<Object ^> ^>(NavView->MenuItemsSource);
         auto itemCount = static_cast<int>(menuItems->Size);
         auto flatIndex = NavCategory::GetFlatIndex(Model->Mode);
 

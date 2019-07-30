@@ -405,7 +405,7 @@ void StandardCalculatorViewModel::SetMemorizedNumbers(const vector<wstring>& new
     if (newMemorizedNumbers.size() == 0) // Memory has been cleared
     {
         MemorizedNumbers->Clear();
-        IsMemoryEmpty = true || IsAlwaysOnTop;
+        IsMemoryEmpty = true;
     }
     // A new value is added to the memory
     else if (newMemorizedNumbers.size() > MemorizedNumbers->Size)
@@ -421,7 +421,7 @@ void StandardCalculatorViewModel::SetMemorizedNumbers(const vector<wstring>& new
             memorySlot->Value = Utils::LRO + ref new String(stringValue.c_str()) + Utils::PDF;
 
             MemorizedNumbers->InsertAt(0, memorySlot);
-            IsMemoryEmpty = false || IsAlwaysOnTop;
+            IsMemoryEmpty = IsAlwaysOnTop;
 
             // Update the slot position for the rest of the slots
             for (unsigned int i = 1; i < MemorizedNumbers->Size; i++)
@@ -1131,7 +1131,7 @@ void StandardCalculatorViewModel::OnMemoryClear(_In_ Object ^ memoryItemPosition
 
             if (MemorizedNumbers->Size == 0)
             {
-                IsMemoryEmpty = true || IsAlwaysOnTop;
+                IsMemoryEmpty = true;
             }
             TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
 

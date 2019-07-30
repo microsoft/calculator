@@ -261,5 +261,6 @@ task<void> ApplicationViewModel::HandleAlwaysOnTopButtonClick(Platform::Object ^
 
 void ApplicationViewModel::SetDisplayNormalAlwaysOnTopOption()
 {
-    DisplayNormalAlwaysOnTopOption = m_mode == ViewMode::Standard && ApplicationView::GetForCurrentView()->IsViewModeSupported(ApplicationViewMode::CompactOverlay) && !IsAlwaysOnTop;
+    DisplayNormalAlwaysOnTopOption =
+        m_mode == ViewMode::Standard && ApplicationView::GetForCurrentView()->IsViewModeSupported(ApplicationViewMode::CompactOverlay) && !IsAlwaysOnTop;
 }
