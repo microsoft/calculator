@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common.h"
+#include "IBitmap.h"
 
 struct ID2D1Factory;
 struct ID2D1RenderTarget;
