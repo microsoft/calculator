@@ -117,6 +117,32 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
         }
         rawHtml += L"</table></p>";
 
+        auto variables = ViewModel->Variables;
+        rawHtml += L"<p><table cellpadding=\"10\">";
+        rawHtml += L"<col width=\"20\">";
+        rawHtml += L"<row height=\"20\">";
+        for (unsigned i = 0; i < variables->Size; i++)
+        {
+            auto name = variables->GetAt(i)->Name;
+            auto value = variables->GetAt(i)->Value;
+
+            if (name->Length() >= 0)
+            {
+                rawHtml += L"<tr>";
+
+                rawHtml += L"<td>";
+                rawHtml += name->Data();
+                rawHtml += L"</td>";
+                rawHtml += L"<td>";
+                rawHtml += std::to_wstring(value);
+                rawHtml += L"</td>";
+
+                rawHtml += L"</tr>";
+            }
+        }
+        rawHtml += L"</table></p>";
+
+
         // Shortcut to the request data
         auto requestData = args->Request->Data;
 
