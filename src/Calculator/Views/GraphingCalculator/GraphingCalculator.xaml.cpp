@@ -1,9 +1,9 @@
 
 #include "pch.h"
+#include "CalcViewModel/Common/TraceLogger.h"
 #include "GraphingCalculator.xaml.h"
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "Controls/CalculationResult.h"
-#include <Collection.h>
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -12,32 +12,26 @@ using namespace CalculatorApp::ViewModel;
 using namespace concurrency;
 using namespace GraphControl;
 using namespace Platform;
+using namespace Platform::Collections;
 using namespace std;
 using namespace std::chrono;
 using namespace Utils;
+using namespace Windows::ApplicationModel::DataTransfer;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage::Streams;
 using namespace Windows::System;
+using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
-
-using namespace Windows::Foundation;
-using namespace Windows::ApplicationModel::DataTransfer;
-using namespace Windows::Storage::Streams;
-using namespace Windows::UI::Xaml::Media;
-
-using namespace Windows::UI::Core;
-
 using namespace Windows::UI::Popups;
 
-constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 
-using namespace Platform::Collections;
+constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 
 
 GraphingCalculator::GraphingCalculator()
@@ -49,7 +43,7 @@ GraphingCalculator::GraphingCalculator()
     DataTransferManager^ dataTransferManager = DataTransferManager::GetForCurrentView();
 
     // Register the current control as a share source.
-    dataRequestedToken = dataTransferManager->DataRequested += ref new TypedEventHandler<DataTransferManager^, DataRequestedEventArgs^>(this, &GraphingCalculator::OnDataRequested);
+    m_dataRequestedToken = dataTransferManager->DataRequested += ref new TypedEventHandler<DataTransferManager^, DataRequestedEventArgs^>(this, &GraphingCalculator::OnDataRequested);
 }
 
 void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement^ sender, DataContextChangedEventArgs^ args)
@@ -79,8 +73,8 @@ void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object^ sender, W
     DataTransferManager::ShowShareUI();
 }
 
-// When share is invoked (by the user or programatically) the event handler we registered will be called to populate the datapackage with the
-// data to be shared.  We will request the current graph image from teh grapher as a stream that will pass to the share request.
+// When share is invoked (by the user or programmatically) the event handler we registered will be called to populate the data package with the
+// data to be shared. We will request the current graph image from the grapher as a stream that will pass to the share request.
 void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataRequestedEventArgs^ args)
 {
     try
@@ -89,13 +83,12 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
         auto resourceLoader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
         auto EmptyEquationString = resourceLoader->GetString(L"EmptyEquationString");
 
-        auto htmlResources = ref new Map<String^, RandomAccessStreamReference^>();
         std::wstring rawHtml = L"<p><img src='graph.png'></p>";
 
         auto equations = ViewModel->Equations;
         rawHtml += L"<p><table cellpadding=\"10\">";
-        rawHtml += L"<col width=\"60\">";
-        rawHtml += L"<row height=\"60\">";
+        rawHtml += L"<col width=\"20\">";
+        rawHtml += L"<row height=\"20\">";
         for (unsigned i = 0; i < equations->Size; i++)
         {
             auto expression = equations->GetAt(i)->Expression->Data();
@@ -115,7 +108,6 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
             rawHtml += L",";
             rawHtml += color.B.ToString()->Data();
             rawHtml += L"); \">";
-            rawHtml += L"&#402;(&#215;)";
             rawHtml += L"</td>";
             rawHtml += L"<td>";
             rawHtml += expression;
@@ -136,17 +128,20 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
 
         requestData->SetHtmlFormat(html);
 
-        htmlResources->Insert(ref new String(L"graph.png"), GraphingControl->GetGraphBitmapStream());
+        auto bitmapStream = GraphingControl->GetGraphBitmapStream();
 
-        for (auto pair : htmlResources)
-        {
-            auto k = pair->Key;
-            auto v = pair->Value;
-            requestData->ResourceMap->Insert(k, v);
-        }
+        requestData->ResourceMap->Insert(ref new String(L"graph.png"), bitmapStream);
+
+        // Set the thumbnail image (in case the share target can't handle HTML)
+        requestData->Properties->Thumbnail = bitmapStream;
+
+        // And the bitmap (in case the share target can't handle HTML)
+        requestData->SetBitmap(bitmapStream);
     }
-    catch(...)
+    catch(Exception ^ ex)
     {
+        TraceLogger::GetInstance().LogPlatformException(__FUNCTIONW__, ex);
+
         // Something went wrong, notify the user.
         auto resourceLoader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
 
@@ -155,7 +150,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
         auto errDialog = ref new Windows::UI::Xaml::Controls::ContentDialog();
 
         errDialog->Content = errorTitleString;
-        errDialog->CloseButtonText = "OK";
+        errDialog->CloseButtonText = errorOkString;
         errDialog->ShowAsync();
     }
 }

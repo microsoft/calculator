@@ -33,10 +33,10 @@ namespace CalculatorApp
 
         CalculatorApp::ViewModel::GraphingCalculatorViewModel^ m_viewModel;
 
-	        void OnShareClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void OnShareClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
     private:
-        Windows::Foundation::EventRegistrationToken dataRequestedToken{};
+        Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
 
         void OnDataRequested(Windows::ApplicationModel::DataTransfer::DataTransferManager^ sender, Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs^ e);
         void CommandInvokedHandler(Windows::UI::Popups::IUICommand^ command);
