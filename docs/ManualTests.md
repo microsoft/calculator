@@ -423,7 +423,7 @@ Steps:
 
 ### Always-on-Top
 
-**Test 2**
+**Test 1**
 Steps:
 1. Open the "Narrator" app
 2. Launch the "Calculator" app and from "Standard" Calculator, click the Always-on-Top button
