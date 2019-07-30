@@ -208,12 +208,12 @@ void ApplicationViewModel::SetMenuCategories()
     Categories = NavCategoryGroup::CreateMenuOptions();
 }
 
-void ApplicationViewModel::AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e, float width, float height)
+void ApplicationViewModel::AlwaysOnTopButtonClick(float width, float height)
 {
-    HandleAlwaysOnTopButtonClick(sender, e, width, height);
+    HandleAlwaysOnTopButtonClick(width, height);
 }
 
-task<void> ApplicationViewModel::HandleAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e, float width, float height)
+task<void> ApplicationViewModel::HandleAlwaysOnTopButtonClick(float width, float height)
 {
     if (ApplicationView::GetForCurrentView()->ViewMode == ApplicationViewMode::CompactOverlay)
     {
