@@ -5,7 +5,7 @@ jobs:
     name: Default
     demands:
     - Agent.OS -equals Darwin
-    - Xamarin.iOS -equals Latest
+    - Xamarin.iOS -equals Stable
 
   variables:
     NUGET_PACKAGES: $(build.sourcesdirectory)/.nuget
