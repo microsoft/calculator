@@ -19,14 +19,6 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 
-namespace MathSolverEngine::Graph::Renderer
-{
-    struct IBitmap
-    {
-        virtual const std::vector<BYTE>& GetData() const = 0;
-    };
-}
-
 namespace
 {
     constexpr auto s_defaultStyleKey = L"GraphControl.Grapher";
@@ -645,6 +637,7 @@ namespace GraphControl
         }
     }
 
+
     RandomAccessStreamReference^ Grapher::GetGraphBitmapStream()
     {
         RandomAccessStreamReference^ outputStream;
@@ -653,10 +646,9 @@ namespace GraphControl
         {
             if (auto renderer = m_graph->GetRenderer())
             {
-                std::shared_ptr < MathSolverEngine::Graph::Renderer::IBitmap> BitmapOut;
+                std::shared_ptr < Graphing::IBitmap> BitmapOut;
                 bool hasSomeMissingDataOut = false;
 
-                // Request the current graph image, we don't care if there is some missing data
                 if (SUCCEEDED(renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut)))
                 {
                     // Get the raw date
