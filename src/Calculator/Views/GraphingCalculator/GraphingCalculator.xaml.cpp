@@ -76,11 +76,7 @@ void GraphingCalculator::ViewModel::set(GraphingCalculatorViewModel^ vm)
 void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
     // Ask the OS to start a share action.
-    if (TheGrapher != nullptr)
-    {
-        DataTransferManager::ShowShareUI();
-    }
-
+    DataTransferManager::ShowShareUI();
 }
 
 // When share is invoked (by the user or programatically) the event handler we registered will be called to populate the datapackage with the
@@ -140,7 +136,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
 
         requestData->SetHtmlFormat(html);
 
-        htmlResources->Insert(ref new String(L"graph.png"), TheGrapher->GetGraphBitmapStream());
+        htmlResources->Insert(ref new String(L"graph.png"), GraphingControl->GetGraphBitmapStream());
 
         for (auto pair : htmlResources)
         {
@@ -163,9 +159,6 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
         errDialog->ShowAsync();
     }
 }
-
-void GraphingCalculator::CommandInvokedHandler(Windows::UI::Popups::IUICommand^ command)
-{
 
 void GraphingCalculator::GraphVariablesUpdated(Object^, Object^)
 {
