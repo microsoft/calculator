@@ -255,7 +255,7 @@ void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
     // Delay load things later when we get a chance.
     this->Dispatcher->RunAsync(
         CoreDispatcherPriority::Normal, ref new DispatchedHandler([]() {
-            if (TraceLogger::GetInstance().UpdateWindowIdLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
+            if (TraceLogger::GetInstance().IsWindowIdInLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
             {
                 AppLifecycleLogger::GetInstance().LaunchUIResponsive();
                 AppLifecycleLogger::GetInstance().LaunchVisibleComplete();
