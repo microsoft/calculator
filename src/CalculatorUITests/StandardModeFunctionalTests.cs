@@ -780,6 +780,16 @@ namespace CalculatorUITests
             page.StandardOperators.InvertButton.Click();
             Assert.IsTrue(page.GetCalculatorResultText() == "Cannot divide by zero");
         }
+        [TestMethod]
+        public void Error_CubedNegativeNumber()
+        {
+            page.StandardOperators.NumberPad.Input(9);
+            page.StandardOperators.NegateButton.Click();
+            page.StandardOperators.SquareRootButton.Click();
+            Assert.IsTrue(page.GetCalculatorResultText() == "Invalid input");
+            page.StandardOperators.EnterAlwaysOnTopButton.Click();
+            page.StandardOperators.ExitAlwaysOnTopButton.Click();
+        }
         #endregion
     }
 }
