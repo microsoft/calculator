@@ -176,6 +176,6 @@ namespace CalculatorApp
     void TitleBar::AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
     {
         auto bounds = Window::Current->Bounds;
-        ApplicationViewModel->SwitchViewModel(bounds.Width, bounds.Height);
+        ApplicationViewModel->ToggleAlwaysOnTop(bounds.Width, bounds.Height);
     }
 }

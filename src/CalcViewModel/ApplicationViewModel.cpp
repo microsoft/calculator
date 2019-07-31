@@ -208,12 +208,12 @@ void ApplicationViewModel::SetMenuCategories()
     Categories = NavCategoryGroup::CreateMenuOptions();
 }
 
-void ApplicationViewModel::SwitchViewModel(float width, float height)
+void ApplicationViewModel::ToggleAlwaysOnTop(float width, float height)
 {
-    HandleSwitchViewModel(width, height);
+    HandleToggleAlwaysOnTop(width, height);
 }
 
-task<void> ApplicationViewModel::HandleSwitchViewModel(float width, float height)
+task<void> ApplicationViewModel::HandleToggleAlwaysOnTop(float width, float height)
 {
     if (ApplicationView::GetForCurrentView()->ViewMode == ApplicationViewMode::CompactOverlay)
     {

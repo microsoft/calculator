@@ -548,7 +548,7 @@ void MainPage::OnNavItemInvoked(MUXC::NavigationView ^ /*sender*/, _In_ MUXC::Na
 
 void MainPage::AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
-    Model->SwitchViewModel(0, 0);
+    Model->ToggleAlwaysOnTop(0, 0);
 }
 
 void MainPage::App_Suspending(Object ^ sender, Windows::ApplicationModel::SuspendingEventArgs ^ e)
