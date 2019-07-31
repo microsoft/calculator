@@ -117,7 +117,7 @@ namespace CalculatorApp
         return true;
     }
 
-    void TraceLogger::LogVisualStateChanged(ViewMode mode, wstring_view state) const
+    void TraceLogger::LogVisualStateChanged(ViewMode mode, wstring_view state, bool isAlwaysOnTop) const
     {
         if (!GetTraceLoggingProviderEnabled())
         {
@@ -128,6 +128,7 @@ namespace CalculatorApp
         fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddString(L"CalcMode", NavCategory::GetFriendlyName(mode)->Data());
         fields.AddString(L"VisualState", state);
+        fields.AddBoolean(L"IsAlwaysOnTop", isAlwaysOnTop);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_VISUAL_STATE_CHANGED, fields);
     }

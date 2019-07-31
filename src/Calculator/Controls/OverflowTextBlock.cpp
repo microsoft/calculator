@@ -27,6 +27,9 @@ using namespace Windows::UI::Xaml::Navigation;
 DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, IsActive);
 DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, TextStyle);
 DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, TokensUpdated);
+DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, ColumnWidth);
+DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, ColumnHeight);
+DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, ScrollButtonFontSize);
 
 void OverflowTextBlock::OnApplyTemplate()
 {
@@ -62,6 +65,12 @@ void OverflowTextBlock::OnApplyTemplate()
     if (uiElement != nullptr)
     {
         m_itemsControl = safe_cast<ItemsControl ^>(uiElement);
+    }
+
+    uiElement = GetTemplateChild("EditableToken");
+    if (uiElement != nullptr)
+    {
+        m_editableToken = safe_cast<TextBlock ^>(uiElement);
     }
 
     UpdateAllState();
@@ -144,13 +153,25 @@ void OverflowTextBlock::OnScrollClick(_In_ Object ^ sender, _In_ RoutedEventArgs
 
 void OverflowTextBlock::UpdateScrollButtons()
 {
-    if (m_itemsControl == nullptr || m_expressionContainer == nullptr)
+    if (m_expressionContainer == nullptr)
     {
         return;
     }
 
+    double editableTokenWidth = 0;
+    if (m_editableToken != nullptr && m_editableToken->Visibility == ::Visibility::Visible)
+    {
+        editableTokenWidth = m_editableToken->ActualWidth;
+    }
+
+    double itemsControlWidth = 0;
+    if (m_itemsControl != nullptr && m_itemsControl->Visibility == ::Visibility::Visible)
+    {
+        itemsControlWidth = m_itemsControl->ActualWidth; 
+    }
+
     // When the width is smaller than the container, don't show any
-    if (m_itemsControl->ActualWidth <= m_expressionContainer->ActualWidth)
+    if (itemsControlWidth + editableTokenWidth <= m_expressionContainer->ActualWidth)
     {
         ShowHideScrollButtons(::Visibility::Collapsed, ::Visibility::Collapsed);
     }
@@ -161,7 +182,7 @@ void OverflowTextBlock::UpdateScrollButtons()
     {
         ShowHideScrollButtons(::Visibility::Visible, ::Visibility::Visible);
     }
-    // Width is larger than the container and left most part of the number is shown. Should be able to scroll left.
+    // Width is larger than the container and left most part of the number is shown. Should be able to scroll right.
     else if (m_expressionContainer->HorizontalOffset == 0)
     {
         ShowHideScrollButtons(::Visibility::Collapsed, ::Visibility::Visible);

@@ -31,6 +31,8 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
+using namespace Windows::Foundation;
+using namespace Concurrency;
 
 namespace
 {
@@ -55,6 +57,7 @@ void ApplicationViewModel::Mode::set(ViewMode value)
     {
         PreviousMode = m_mode;
         m_mode = value;
+        SetDisplayNormalAlwaysOnTopOption();
         OnModeChanged();
         RaisePropertyChanged(ModePropertyName);
     }
@@ -203,4 +206,61 @@ void ApplicationViewModel::SetMenuCategories()
     // because we want to take advantage of binding updates and
     // property setter logic.
     Categories = NavCategoryGroup::CreateMenuOptions();
+}
+
+void ApplicationViewModel::ToggleAlwaysOnTop(float width, float height)
+{
+    HandleToggleAlwaysOnTop(width, height);
+}
+
+task<void> ApplicationViewModel::HandleToggleAlwaysOnTop(float width, float height)
+{
+    if (ApplicationView::GetForCurrentView()->ViewMode == ApplicationViewMode::CompactOverlay)
+    {
+        ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
+        localSettings->Values->Insert(WidthLocalSettings, width);
+        localSettings->Values->Insert(HeightLocalSettings, height);
+
+        bool success = co_await ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::Default);
+        CalculatorViewModel->AreHistoryShortcutsEnabled = success;
+        CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = success;
+        CalculatorViewModel->IsAlwaysOnTop = !success;
+        IsAlwaysOnTop = !success;
+    }
+    else
+    {
+        ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
+        ViewModePreferences ^ compactOptions = ViewModePreferences::CreateDefault(ApplicationViewMode::CompactOverlay);
+        if (!localSettings->Values->GetView()->HasKey(LaunchedLocalSettings))
+        {
+            compactOptions->CustomSize = Size(320, 394);
+            localSettings->Values->Insert(LaunchedLocalSettings, true);
+        }
+        else
+        {
+            if (localSettings->Values->GetView()->HasKey(WidthLocalSettings) && localSettings->Values->GetView()->HasKey(HeightLocalSettings))
+            {
+                float oldWidth = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup(WidthLocalSettings))->GetSingle();
+                float oldHeight = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup(HeightLocalSettings))->GetSingle();
+                compactOptions->CustomSize = Size(oldWidth, oldHeight);
+            }
+            else
+            {
+                compactOptions->CustomSize = Size(320, 394);
+            }
+        }
+
+        bool success = co_await ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::CompactOverlay, compactOptions);
+        CalculatorViewModel->AreHistoryShortcutsEnabled = !success;
+        CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = !success;
+        CalculatorViewModel->IsAlwaysOnTop = success;
+        IsAlwaysOnTop = success;
+    }
+    SetDisplayNormalAlwaysOnTopOption();
+}
+
+void ApplicationViewModel::SetDisplayNormalAlwaysOnTopOption()
+{
+    DisplayNormalAlwaysOnTopOption =
+        m_mode == ViewMode::Standard && ApplicationView::GetForCurrentView()->IsViewModeSupported(ApplicationViewMode::CompactOverlay) && !IsAlwaysOnTop;
 }

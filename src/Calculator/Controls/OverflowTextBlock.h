@@ -18,10 +18,14 @@ namespace CalculatorApp
             }
 
             DEPENDENCY_PROPERTY_OWNER(OverflowTextBlock);
-
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, TokensUpdated);
             DEPENDENCY_PROPERTY(bool, IsActive);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Style ^, TextStyle);
+            DEPENDENCY_PROPERTY(double, ColumnWidth);
+            DEPENDENCY_PROPERTY(double, ColumnHeight);
+            DEPENDENCY_PROPERTY(double, ScrollButtonFontSize);
+
+            void OnTokensUpdatedPropertyChanged(bool oldValue, bool newValue);
             void UpdateScrollButtons();
             void UnregisterEventHandlers();
 
@@ -34,7 +38,6 @@ namespace CalculatorApp
             void OnPointerEntered(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
             void OnPointerExited(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
             void ShowHideScrollButtons(Windows::UI::Xaml::Visibility vLeft, Windows::UI::Xaml::Visibility vRight);
-            void OnTokensUpdatedPropertyChanged(bool oldValue, bool newValue);
             void OnViewChanged(_In_opt_ Platform::Object ^ sender, _In_opt_ Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs ^ args);
 
             void UpdateVisualState();
@@ -47,6 +50,7 @@ namespace CalculatorApp
             bool m_scrollingLeft;
             bool m_scrollingRight;
             bool m_isAccessibilityViewControl;
+            Windows::UI::Xaml::Controls::TextBlock ^ m_editableToken;
             Windows::UI::Xaml::Controls::ItemsControl ^ m_itemsControl;
             Windows::UI::Xaml::Controls::ScrollViewer ^ m_expressionContainer;
             Windows::UI::Xaml::Controls::Button ^ m_scrollLeft;

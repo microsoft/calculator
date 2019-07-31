@@ -825,6 +825,14 @@
     <value>Close memory flyout</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
   </data>
+  <data name="AlwaysOnTop_Enter" xml:space="preserve">
+    <value>Keep on top</value>
+    <comment>This is the tool tip automation name for the always-on-top button when out of always-on-top mode.</comment>
+  </data>
+  <data name="AlwaysOnTop_Exit" xml:space="preserve">
+    <value>Back to full view</value>
+    <comment>This is the tool tip automation name for the always-on-top button when in always-on-top mode.</comment>
+  </data>
   <data name="MemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Memory</value>
     <comment>This is the tool tip automation name for the memory button.</comment>
@@ -956,6 +964,10 @@
   <data name="Format_CalculatorResults" xml:space="preserve">
     <value>Display is %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator results text block. %1 = Localized display value, e.g. "50".</comment>
+  </data>
+  <data name="Format_CalculatorAlwaysOnTopResults" xml:space="preserve">
+    <value>Expression is %1, Current input is %2</value>
+    <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
     <value>Display is %1 point</value>
@@ -1468,6 +1480,22 @@
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Categories DropDown</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
+  </data>
+  <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Keep on top</value>
+    <comment>Screen reader prompt for the Always-on-Top button when in normal mode.</comment>
+  </data>
+  <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Back to full view</value>
+    <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
+  </data>
+  <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Keep on top</value>
+    <comment>This is the tool tip automation name for the Always-on-Top button when in normal mode.</comment>
+  </data>
+  <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Back to full view</value>
+    <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
     <value>Convert from %1 %2</value>
