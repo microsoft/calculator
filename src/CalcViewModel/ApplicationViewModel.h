@@ -107,7 +107,7 @@ namespace CalculatorApp
                 }
             }
 
-            void AlwaysOnTopButtonClick(float width, float height);
+            void SwitchViewModel(float width, float height);
 
         private:
             bool TryRecoverFromNavigationModeFailure();
@@ -121,7 +121,7 @@ namespace CalculatorApp
 
             CalculatorApp::Common::ViewMode m_mode;
             Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup ^> ^ m_categories;
-            Concurrency::task<void> HandleAlwaysOnTopButtonClick(float width, float height);
+            Concurrency::task<void> HandleSwitchViewModel(float width, float height);
             void SetDisplayNormalAlwaysOnTopOption();
 
             bool m_isAlwaysOnTop;

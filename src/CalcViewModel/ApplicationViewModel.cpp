@@ -208,12 +208,12 @@ void ApplicationViewModel::SetMenuCategories()
     Categories = NavCategoryGroup::CreateMenuOptions();
 }
 
-void ApplicationViewModel::AlwaysOnTopButtonClick(float width, float height)
+void ApplicationViewModel::SwitchViewModel(float width, float height)
 {
-    HandleAlwaysOnTopButtonClick(width, height);
+    HandleSwitchViewModel(width, height);
 }
 
-task<void> ApplicationViewModel::HandleAlwaysOnTopButtonClick(float width, float height)
+task<void> ApplicationViewModel::HandleSwitchViewModel(float width, float height)
 {
     if (ApplicationView::GetForCurrentView()->ViewMode == ApplicationViewMode::CompactOverlay)
     {
