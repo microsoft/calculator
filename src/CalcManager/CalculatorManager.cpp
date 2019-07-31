@@ -38,15 +38,6 @@ namespace CalculationManager
     }
 
     /// <summary>
-    /// Destructor for CalculatorManager
-    /// Ends two CCalcEngine
-    /// </summary>
-    CalculatorManager::~CalculatorManager()
-    {
-        this->MemorizedNumberClearAll();
-    }
-
-    /// <summary>
     /// Call the callback function using passed in IDisplayHelper.
     /// Used to set the primary display value on ViewModel
     /// </summary>
