@@ -40,6 +40,7 @@ using namespace Windows::UI::ViewManagement;
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsStandard);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsScientific);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsProgrammer);
+DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsAlwaysOnTop);
 
 Calculator::Calculator()
     : m_doAnimate(false)
@@ -60,6 +61,8 @@ Calculator::Calculator()
     auto resLoader = AppResourceProvider::GetInstance();
     CopyMenuItem->Text = resLoader.GetResourceString(L"copyMenuItem");
     PasteMenuItem->Text = resLoader.GetResourceString(L"pasteMenuItem");
+
+    this->SizeChanged += ref new SizeChangedEventHandler(this, &Calculator::Calculator_SizeChanged);
 }
 
 void Calculator::LoadResourceStrings()
@@ -97,7 +100,7 @@ void Calculator::SetFontSizeResources()
         { L"Tibt", 104, 29.333, 20, 40, 56, 40, 56 },   { L"Default", 104, 29.333, 23, 40, 56, 40, 56 }
     };
 
-    DecimalFormatter^ formatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter();
+    DecimalFormatter ^ formatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter();
 
     const FontTable* currentItem = fontTables;
     while (currentItem->numericSystem.compare(std::wstring(L"Default")) != 0 && currentItem->numericSystem.compare(formatter->NumeralSystem->Data()) != 0)
@@ -279,6 +282,35 @@ void Calculator::OnIsProgrammerPropertyChanged(bool /*oldValue*/, bool newValue)
     UpdatePanelViewState();
 }
 
+void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue)
+{
+    if (newValue)
+    {
+        VisualStateManager::GoToState(this, L"AlwaysOnTop", false);
+    }
+    else
+    {
+        VisualStateManager::GoToState(this, L"Normal", false);
+        if (Model->IsInError)
+        {
+            VisualStateManager::GoToState(this, L"ErrorLayout", false);
+        }
+        else
+        {
+            EnableMemoryControls(true);
+        }
+    }
+
+    Model->IsMemoryEmpty = (Model->MemorizedNumbers->Size == 0) || IsAlwaysOnTop;
+
+    AlwaysOnTopResults->UpdateScrollButtons();
+    Results->UpdateTextState();
+
+    UpdateViewState();
+    UpdatePanelViewState();
+    SetDefaultFocus();
+}
+
 void Calculator::OnIsInErrorPropertyChanged()
 {
     bool isError = Model->IsInError;
@@ -395,33 +427,36 @@ void Calculator::UpdateHistoryState()
 
 void Calculator::UpdateMemoryState()
 {
-    if (!Model->IsMemoryEmpty)
+    if (!IsAlwaysOnTop)
     {
-        MemRecall->IsEnabled = true;
-        ClearMemoryButton->IsEnabled = true;
-    }
-    else
-    {
-        MemRecall->IsEnabled = false;
-        ClearMemoryButton->IsEnabled = false;
-    }
-
-    String ^ viewState = App::GetAppViewState();
-    if (viewState == ViewState::DockedView)
-    {
-        CloseMemoryFlyout();
-        SetChildAsMemory();
-        MemoryButton->Visibility = ::Visibility::Collapsed;
-
-        if (m_IsLastFlyoutMemory && !IsProgrammer)
+        if (!Model->IsMemoryEmpty)
         {
-            DockPivot->SelectedIndex = 1;
+            MemRecall->IsEnabled = true;
+            ClearMemoryButton->IsEnabled = true;
         }
-    }
-    else
-    {
-        MemoryButton->Visibility = ::Visibility::Visible;
-        DockMemoryHolder->Child = nullptr;
+        else
+        {
+            MemRecall->IsEnabled = false;
+            ClearMemoryButton->IsEnabled = false;
+        }
+
+        String ^ viewState = App::GetAppViewState();
+        if (viewState == ViewState::DockedView)
+        {
+            CloseMemoryFlyout();
+            SetChildAsMemory();
+            MemoryButton->Visibility = ::Visibility::Collapsed;
+
+            if (m_IsLastFlyoutMemory && !IsProgrammer)
+            {
+                DockPivot->SelectedIndex = 1;
+            }
+        }
+        else
+        {
+            MemoryButton->Visibility = ::Visibility::Visible;
+            DockMemoryHolder->Child = nullptr;
+        }
     }
 }
 
@@ -507,7 +542,14 @@ void Calculator::CloseMemoryFlyout()
 
 void Calculator::SetDefaultFocus()
 {
-    Results->Focus(::FocusState::Programmatic);
+    if (!IsAlwaysOnTop)
+    {
+        Results->Focus(::FocusState::Programmatic);
+    }
+    else
+    {
+        AlwaysOnTopResults->Focus(::FocusState::Programmatic);
+    }
 }
 
 void Calculator::ToggleHistoryFlyout(Object ^ /*parameter*/)
@@ -696,5 +738,13 @@ void CalculatorApp::Calculator::OnVisualStateChanged(Platform::Object ^ sender, 
 {
     auto mode = IsStandard ? ViewMode::Standard : IsScientific ? ViewMode::Scientific : ViewMode::Programmer;
     auto state = std::wstring(e->NewState->Name->Begin());
-    TraceLogger::GetInstance().LogVisualStateChanged(mode, state);
+    TraceLogger::GetInstance().LogVisualStateChanged(mode, state, IsAlwaysOnTop);
+}
+
+void Calculator::Calculator_SizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ /*e*/)
+{
+    if (Model->IsAlwaysOnTop)
+    {
+        AlwaysOnTopResults->UpdateScrollButtons();
+    }
 }

@@ -35,6 +35,7 @@ namespace
     StringReference IsStandardPropertyName(L"IsStandard");
     StringReference IsScientificPropertyName(L"IsScientific");
     StringReference IsProgrammerPropertyName(L"IsProgrammer");
+    StringReference IsAlwaysOnTopPropertyName(L"IsAlwaysOnTop");
     StringReference DisplayValuePropertyName(L"DisplayValue");
     StringReference CalculationResultAutomationNamePropertyName(L"CalculationResultAutomationName");
     StringReference IsBitFlipCheckedPropertyName(L"IsBitFlipChecked");
@@ -202,7 +203,12 @@ void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ wstring const& displayS
     // not match what the narrator is saying
     m_CalculationResultAutomationName = CalculateNarratorDisplayValue(displayStringValue, localizedDisplayStringValue, isError);
 
-    DisplayValue = localizedDisplayStringValue;
+    AreAlwaysOnTopResultsUpdated = false;
+    if (DisplayValue != localizedDisplayStringValue)
+    {
+        DisplayValue = localizedDisplayStringValue;
+        AreAlwaysOnTopResultsUpdated = true;
+    }
 
     IsInError = isError;
 
@@ -415,7 +421,7 @@ void StandardCalculatorViewModel::SetMemorizedNumbers(const vector<wstring>& new
             memorySlot->Value = Utils::LRO + ref new String(stringValue.c_str()) + Utils::PDF;
 
             MemorizedNumbers->InsertAt(0, memorySlot);
-            IsMemoryEmpty = false;
+            IsMemoryEmpty = IsAlwaysOnTop;
 
             // Update the slot position for the rest of the slots
             for (unsigned int i = 1; i < MemorizedNumbers->Size; i++)

@@ -15,17 +15,24 @@ using namespace Windows::UI;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::Foundation::Collections;
+using namespace Concurrency;
 
 namespace CalculatorApp
 {
+    DEPENDENCY_PROPERTY_INITIALIZATION(TitleBar, ApplicationViewModel);
+
     TitleBar::TitleBar()
         : m_coreTitleBar(CoreApplication::GetCurrentView()->TitleBar)
     {
         m_uiSettings = ref new UISettings();
         m_accessibilitySettings = ref new AccessibilitySettings();
         InitializeComponent();
+
+        m_coreTitleBar->ExtendViewIntoTitleBar = true;
+        Window::Current->SetTitleBar(BackgroundElement);
 
         Loaded += ref new RoutedEventHandler(this, &TitleBar::OnLoaded);
         Unloaded += ref new RoutedEventHandler(this, &TitleBar::OnUnloaded);
@@ -55,7 +62,7 @@ namespace CalculatorApp
         // Set properties
         LayoutRoot->Height = m_coreTitleBar->Height;
         SetTitleBarControlColors();
-        SetTitleBarExtendView();
+
         SetTitleBarVisibility();
         SetTitleBarPadding();
     }
@@ -75,14 +82,10 @@ namespace CalculatorApp
         m_windowActivatedToken.Value = 0;
     }
 
-    void TitleBar::SetTitleBarExtendView()
-    {
-        m_coreTitleBar->ExtendViewIntoTitleBar = !m_accessibilitySettings->HighContrast;
-    }
 
     void TitleBar::SetTitleBarVisibility()
     {
-        this->LayoutRoot->Visibility = m_coreTitleBar->IsVisible && !m_accessibilitySettings->HighContrast ? ::Visibility::Visible : ::Visibility::Collapsed;
+        this->LayoutRoot->Visibility = m_coreTitleBar->IsVisible || ApplicationViewModel->IsAlwaysOnTop ? ::Visibility::Visible : ::Visibility::Collapsed;
     }
 
     void TitleBar::SetTitleBarPadding()
@@ -160,7 +163,6 @@ namespace CalculatorApp
     {
         Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]() {
                                  SetTitleBarControlColors();
-                                 SetTitleBarExtendView();
                                  SetTitleBarVisibility();
                              }));
     }
@@ -169,5 +171,11 @@ namespace CalculatorApp
     {
         VisualStateManager::GoToState(
             this, e->WindowActivationState == CoreWindowActivationState::Deactivated ? WindowNotFocused->Name : WindowFocused->Name, false);
+    }
+
+    void TitleBar::AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+    {
+        auto bounds = Window::Current->Bounds;
+        ApplicationViewModel->ToggleAlwaysOnTop(bounds.Width, bounds.Height);
     }
 }

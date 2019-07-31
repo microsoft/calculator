@@ -45,7 +45,7 @@ namespace CalculatorApp
         void LogDateCalculationModeUsed(bool AddSubtractMode);
         void UpdateWindowCount(size_t windowCount = 0);
         bool IsWindowIdInLog(int windowId);
-        void LogVisualStateChanged(CalculatorApp::Common::ViewMode mode, std::wstring_view state) const;
+        void LogVisualStateChanged(CalculatorApp::Common::ViewMode mode, std::wstring_view state, bool isAlwaysOnTop = false) const;
         void LogWindowCreated(CalculatorApp::Common::ViewMode mode, int windowId);
         void LogConverterInputReceived(CalculatorApp::Common::ViewMode mode) const;
         void LogNavBarOpened() const;
