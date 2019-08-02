@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -75,7 +75,6 @@ namespace CalculatorApp
             std::pair<std::wstring, std::wstring>
             GetCurrencyRatioEquality(_In_ const UnitConversionManager::Unit& unit1, _In_ const UnitConversionManager::Unit& unit2) override;
             std::wstring GetCurrencyTimestamp() override;
-            static double RoundCurrencyRatio(double ratio);
 
             std::future<bool> TryLoadDataFromCacheAsync() override;
             std::future<bool> TryLoadDataFromWebAsync() override;
