@@ -1,5 +1,6 @@
-#include "pch.h"
 #include "NumberFormattingUtils.h"
+#include <cmath>
+#include <sstream>
 
 using namespace std;
 

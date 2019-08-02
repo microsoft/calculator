@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "sal_cross_platform.h"
 #include <string>
 
 namespace CalcManager::NumberFormattingUtils
