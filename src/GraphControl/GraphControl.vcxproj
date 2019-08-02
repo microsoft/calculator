@@ -308,6 +308,7 @@
     <ClInclude Include="Control\EquationCollection.h" />
     <ClInclude Include="Control\Grapher.h" />
     <ClInclude Include="Control\InspectingDataSource.h" />
+    <ClInclude Include="DirectX\ActiveTracingPointRenderer.h" />
     <ClInclude Include="DirectX\DeviceResources.h" />
     <ClInclude Include="DirectX\DirectXHelper.h" />
     <ClInclude Include="DirectX\NearestPointRenderer.h" />
@@ -319,6 +320,7 @@
     <ClCompile Include="Control\Equation.cpp" />
     <ClCompile Include="Control\Grapher.cpp" />
     <ClCompile Include="Control\InspectingDataSource.cpp" />
+    <ClCompile Include="DirectX\ActiveTracingPointRenderer.cpp" />
     <ClCompile Include="DirectX\DeviceResources.cpp" />
     <ClCompile Include="DirectX\NearestPointRenderer.cpp" />
     <ClCompile Include="DirectX\RenderMain.cpp" />

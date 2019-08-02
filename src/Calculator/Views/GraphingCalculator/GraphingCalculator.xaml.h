@@ -39,9 +39,9 @@ namespace CalculatorApp
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
 
         void OnDataRequested(Windows::ApplicationModel::DataTransfer::DataTransferManager^ sender, Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs^ e);
-        void CommandInvokedHandler(Windows::UI::Popups::IUICommand^ command);
 
         void TextBoxGotFocus(Windows::UI::Xaml::Controls::TextBox^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void OnCoreKeyDown(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ e);
     };
 
 }

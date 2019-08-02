@@ -31,6 +31,9 @@
     <ClCompile Include="DirectX\NearestPointRenderer.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
+    <ClCompile Include="DirectX\ActiveTracingPointRenderer.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -59,6 +62,9 @@
     <ClInclude Include="DirectX\NearestPointRenderer.h">
       <Filter>DirectX</Filter>
     </ClInclude>
+    <ClInclude Include="DirectX\ActiveTracingPointRenderer.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\generic.xaml">
@@ -67,5 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ProjectDir)\GraphingImplOverrides.props" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>
 </Project>

@@ -29,6 +29,7 @@ namespace GraphControl::DX
     RenderMain::RenderMain(SwapChainPanel^ panel) :
         m_deviceResources{ panel },
         m_nearestPointRenderer{ &m_deviceResources },
+        m_ActiveTracingPointRenderer{ &m_deviceResources },
         m_backgroundColor{ {} },
         m_swapChainPanel{ panel }
     {
@@ -36,6 +37,10 @@ namespace GraphControl::DX
         m_deviceResources.RegisterDeviceNotify(this);
 
         RegisterEventHandlers();
+
+        m_drawActiveTracing = false;
+        m_activeTracingPointerLocation.X = 50;
+        m_activeTracingPointerLocation.Y = 50;
     }
 
     RenderMain::~RenderMain()
@@ -90,6 +95,23 @@ namespace GraphControl::DX
             RunRenderPass();
         }
     }
+
+    void RenderMain::ActiveTracing::set(bool value)
+    {
+        if (m_drawActiveTracing != value)
+        {
+            m_drawActiveTracing = value;
+            RunRenderPass();
+        }
+    }
+
+    bool RenderMain::ActiveTracing::get()
+    {
+        return m_drawActiveTracing;
+    }
+
+
+
 
     // Updates application state when the window size changes (e.g. device orientation change)
     void RenderMain::CreateWindowSizeDependentResources()
@@ -160,6 +182,13 @@ namespace GraphControl::DX
 
                         OutputDebugString(toolTip.c_str());
                     }
+                }
+
+                if (successful && m_drawActiveTracing)
+                {
+                    Point ActiveTracingPointLocation(m_activeTracingPointerLocation.X, m_activeTracingPointerLocation.Y);
+
+                    m_ActiveTracingPointRenderer.Render(ActiveTracingPointLocation);
                 }
             }
         }
