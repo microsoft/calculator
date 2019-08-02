@@ -30,7 +30,7 @@
         <Grid x:Name="LeftGrid"
               Grid.Row="1"
               Grid.Column="0">
-            <Grid Grid.Row="0" Margin="4,7,4,4">
+             <Grid Grid.Row="0" Margin="4,7,4,4">
                 <graphControl:Grapher Name="GraphingControl" 
                                   EquationsSource="{x:Bind ViewModel.Equations, Mode=OneWay}"
                                   ForceProportionalAxes="True"
@@ -45,10 +45,12 @@
                     </DataTemplate>
                 </graphControl:Grapher.EquationTemplate>
 
-            </graphControl:Grapher>
-            <ToolTipService.ToolTip>
-                <ToolTip x:Name="ValueToolTip" Content="ToolTip."/>
-            </ToolTipService.ToolTip>
+                </graphControl:Grapher>
+
+                <Popup x:Name="TraceValuePopup" Grid.Row="0" Margin="15,15">
+                    <TextBlock x:Name="TraceValue" Text="x=0,y=0"/>
+                </Popup>
+
             </Grid>
 
 

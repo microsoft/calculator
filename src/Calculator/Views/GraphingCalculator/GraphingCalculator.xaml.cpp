@@ -22,6 +22,7 @@ using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage::Streams;
 using namespace Windows::System;
 using namespace Windows::UI::Core;
+using namespace Windows::UI::Input;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Controls;
@@ -30,9 +31,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::UI::Popups;
 
-
 constexpr auto sc_ViewModelPropertyName = L"ViewModel";
-
 
 GraphingCalculator::GraphingCalculator()
 {
@@ -40,25 +39,42 @@ GraphingCalculator::GraphingCalculator()
     Grapher::RegisterDependencyProperties();
     InitializeComponent();
 
-    DataTransferManager^ dataTransferManager = DataTransferManager::GetForCurrentView();
+    DataTransferManager ^ dataTransferManager = DataTransferManager::GetForCurrentView();
 
     // Register the current control as a share source.
-    m_dataRequestedToken = dataTransferManager->DataRequested += ref new TypedEventHandler<DataTransferManager^, DataRequestedEventArgs^>(this, &GraphingCalculator::OnDataRequested);
+    m_dataRequestedToken = dataTransferManager->DataRequested += ref new TypedEventHandler<DataTransferManager ^, DataRequestedEventArgs ^>(this, &GraphingCalculator::OnDataRequested);
+
+    // Request notifications when we should be showing the trace values
+    m_drawChangedToken = GraphingControl->TracingChangedEvent += ref new TracingChangedEventHandler(this, &GraphingCalculator::OnDrawChanged);
+    // And whenthe actual trace value changes
+    m_tracePointChangedToken = GraphingControl->TracingValueChangedEvent += ref new TracingValueChangedEventHandler(this, &GraphingCalculator::OnTracePointChanged);
 }
 
-void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement^ sender, DataContextChangedEventArgs^ args)
+void GraphingCalculator::OnDrawChanged(bool newValue)
 {
-    ViewModel = dynamic_cast<GraphingCalculatorViewModel^>(args->NewValue);
+    TraceValuePopup->IsOpen = newValue;
+}
+
+void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
+{
+    auto p = GraphingControl->TraceValue;
+
+    TraceValue->Text = "x=" + newPoint.X.ToString() + ", y=" + newPoint.Y.ToString();
+}
+
+void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement ^ sender, DataContextChangedEventArgs ^ args)
+{
+    ViewModel = dynamic_cast<GraphingCalculatorViewModel ^>(args->NewValue);
 
     ViewModel->VariableUpdated += ref new EventHandler<VariableChangedEventArgs>(this, &CalculatorApp::GraphingCalculator::OnVariableChanged);
 }
 
-GraphingCalculatorViewModel^ GraphingCalculator::ViewModel::get()
+GraphingCalculatorViewModel ^ GraphingCalculator::ViewModel::get()
 {
     return m_viewModel;
 }
 
-void GraphingCalculator::ViewModel::set(GraphingCalculatorViewModel^ vm)
+void GraphingCalculator::ViewModel::set(GraphingCalculatorViewModel ^ vm)
 {
     if (m_viewModel != vm)
     {
@@ -67,7 +83,7 @@ void GraphingCalculator::ViewModel::set(GraphingCalculatorViewModel^ vm)
     }
 }
 
-void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     // Ask the OS to start a share action.
     DataTransferManager::ShowShareUI();
@@ -75,7 +91,7 @@ void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object^ sender, W
 
 // When share is invoked (by the user or programmatically) the event handler we registered will be called to populate the data package with the
 // data to be shared. We will request the current graph image from the grapher as a stream that will pass to the share request.
-void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataRequestedEventArgs^ args)
+void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataRequestedEventArgs ^ args)
 {
     try
     {
@@ -142,11 +158,10 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
         }
         rawHtml += L"</table></p>";
 
-
         // Shortcut to the request data
         auto requestData = args->Request->Data;
 
-        DataPackage^ dataPackage = ref new DataPackage();
+        DataPackage ^ dataPackage = ref new DataPackage();
         auto html = HtmlFormatHelper::CreateHtmlFormat(ref new String(rawHtml.c_str()));
 
         auto titleString = resourceLoader->GetString(L"ShareActionTitle");
@@ -164,7 +179,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
         // And the bitmap (in case the share target can't handle HTML)
         requestData->SetBitmap(bitmapStream);
     }
-    catch(Exception ^ ex)
+    catch (Exception ^ ex)
     {
         TraceLogger::GetInstance().LogPlatformException(__FUNCTIONW__, ex);
 
@@ -181,20 +196,19 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
     }
 }
 
-void GraphingCalculator::GraphVariablesUpdated(Object^, Object^)
+void GraphingCalculator::GraphVariablesUpdated(Object ^, Object ^)
 {
     m_viewModel->UpdateVariables(GraphingControl->Variables);
 }
 
-void GraphingCalculator::OnVariableChanged(Platform::Object^ sender, VariableChangedEventArgs args)
+void GraphingCalculator::OnVariableChanged(Platform::Object ^ sender, VariableChangedEventArgs args)
 {
     GraphingControl->SetVariable(args.variableName, args.newValue);
 }
 
-
-void GraphingCalculator::SubmitTextbox(TextBox^ sender)
+void GraphingCalculator::SubmitTextbox(TextBox ^ sender)
 {
-    auto variableViewModel = static_cast<VariableViewModel^>(sender->DataContext);
+    auto variableViewModel = static_cast<VariableViewModel ^>(sender->DataContext);
 
     if (sender->Name == "ValueTextBox")
     {
@@ -214,13 +228,12 @@ void GraphingCalculator::SubmitTextbox(TextBox^ sender)
     }
 }
 
-void GraphingCalculator::TextBoxLosingFocus(TextBox^ sender, LosingFocusEventArgs^)
+void GraphingCalculator::TextBoxLosingFocus(TextBox ^ sender, LosingFocusEventArgs ^)
 {
     SubmitTextbox(sender);
 }
 
-
-void GraphingCalculator::TextBoxKeyDown(TextBox^ sender, KeyRoutedEventArgs^ e)
+void GraphingCalculator::TextBoxKeyDown(TextBox ^ sender, KeyRoutedEventArgs ^ e)
 {
     if (e->Key == ::VirtualKey::Enter)
     {
@@ -228,7 +241,7 @@ void GraphingCalculator::TextBoxKeyDown(TextBox^ sender, KeyRoutedEventArgs^ e)
     }
 }
 
-double GraphingCalculator::validateDouble(String^ value, double defaultValue)
+double GraphingCalculator::validateDouble(String ^ value, double defaultValue)
 {
     try
     {
@@ -240,7 +253,7 @@ double GraphingCalculator::validateDouble(String^ value, double defaultValue)
     }
 }
 
-void GraphingCalculator::TextBoxGotFocus(TextBox^ sender, RoutedEventArgs^ e)
+void GraphingCalculator::TextBoxGotFocus(TextBox ^ sender, RoutedEventArgs ^ e)
 {
     sender->SelectAll();
 }

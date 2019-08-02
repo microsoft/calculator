@@ -26,11 +26,13 @@ namespace
 
 namespace GraphControl::DX
 {
-    RenderMain::RenderMain(SwapChainPanel^ panel) :
-        m_deviceResources{ panel },
-        m_nearestPointRenderer{ &m_deviceResources },
-        m_backgroundColor{ {} },
-        m_swapChainPanel{ panel }
+    RenderMain::RenderMain(SwapChainPanel ^ panel)
+        : m_deviceResources{ panel }
+        , m_nearestPointRenderer{ &m_deviceResources }
+        , m_backgroundColor{ {} }
+        , m_swapChainPanel{ panel }
+        , m_TraceValue(Point(0, 0))
+        , m_Tracing(false)
     {
         // Register to be notified if the Device is lost or recreated
         m_deviceResources.RegisterDeviceNotify(this);
@@ -43,7 +45,7 @@ namespace GraphControl::DX
         UnregisterEventHandlers();
     }
 
-    void RenderMain::Graph::set(shared_ptr< IGraph > graph)
+    void RenderMain::Graph::set(shared_ptr<IGraph> graph)
     {
         m_graph = move(graph);
 
@@ -54,9 +56,7 @@ namespace GraphControl::DX
                 float dpi = m_deviceResources.GetDpi();
                 renderer->SetDpi(dpi, dpi);
 
-                renderer->SetGraphSize(
-                    static_cast<unsigned int>(m_swapChainPanel->ActualWidth),
-                    static_cast<unsigned int>(m_swapChainPanel->ActualHeight));
+                renderer->SetGraphSize(static_cast<unsigned int>(m_swapChainPanel->ActualWidth), static_cast<unsigned int>(m_swapChainPanel->ActualHeight));
             }
         }
 
@@ -65,9 +65,9 @@ namespace GraphControl::DX
 
     void RenderMain::BackgroundColor::set(Windows::UI::Color backgroundColor)
     {
-        m_backgroundColor[s_RedChannelIndex]   = static_cast<float>(backgroundColor.R) / s_MaxChannelValue;
+        m_backgroundColor[s_RedChannelIndex] = static_cast<float>(backgroundColor.R) / s_MaxChannelValue;
         m_backgroundColor[s_GreenChannelIndex] = static_cast<float>(backgroundColor.G) / s_MaxChannelValue;
-        m_backgroundColor[s_BlueChannelIndex]  = static_cast<float>(backgroundColor.B) / s_MaxChannelValue;
+        m_backgroundColor[s_BlueChannelIndex] = static_cast<float>(backgroundColor.B) / s_MaxChannelValue;
         m_backgroundColor[s_AlphaChannelIndex] = static_cast<float>(backgroundColor.A) / s_MaxChannelValue;
 
         RunRenderPass();
@@ -78,6 +78,10 @@ namespace GraphControl::DX
         if (m_drawNearestPoint != value)
         {
             m_drawNearestPoint = value;
+            if (!m_drawNearestPoint)
+            {
+                m_Tracing = false;
+            }
             RunRenderPass();
         }
     }
@@ -113,8 +117,8 @@ namespace GraphControl::DX
         bool successful = true;
 
         // Must call BeginDraw before any draw commands.
-        ID2D1Factory3 *pFactory = m_deviceResources.GetD2DFactory();
-        ID2D1DeviceContext *pRenderTarget = m_deviceResources.GetD2DDeviceContext();
+        ID2D1Factory3* pFactory = m_deviceResources.GetD2DFactory();
+        ID2D1DeviceContext* pRenderTarget = m_deviceResources.GetD2DDeviceContext();
 
         auto context = m_deviceResources.GetD3DDeviceContext();
 
@@ -144,21 +148,23 @@ namespace GraphControl::DX
                     Point nearestPointLocation;
                     pair<float, float> nearestPointValue;
                     renderer->GetClosePointData(
-                        m_pointerLocation.X, m_pointerLocation.Y,
+                        m_pointerLocation.X,
+                        m_pointerLocation.Y,
                         formulaId,
-                        nearestPointLocation.X, nearestPointLocation.Y,
-                        nearestPointValue.first, nearestPointValue.second);
+                        nearestPointLocation.X,
+                        nearestPointLocation.Y,
+                        nearestPointValue.first,
+                        nearestPointValue.second);
 
                     if (!isnan(nearestPointLocation.X) && !isnan(nearestPointLocation.Y))
                     {
                         m_nearestPointRenderer.Render(nearestPointLocation);
-                        std::wstring toolTip;
-                        toolTip += std::to_wstring(nearestPointLocation.X);
-                        toolTip += L", ";
-                        toolTip += std::to_wstring(nearestPointLocation.Y);
-                        toolTip += L"\r\n";
-
-                        OutputDebugString(toolTip.c_str());
+                        m_Tracing = true;
+                        m_TraceValue = Point(nearestPointValue.first, nearestPointValue.second);
+                    }
+                    else
+                    {
+                        m_Tracing = false;
                     }
                 }
             }
@@ -167,7 +173,7 @@ namespace GraphControl::DX
         return successful;
     }
 
-    void RenderMain::OnLoaded(Object^ sender, RoutedEventArgs^ e)
+    void RenderMain::OnLoaded(Object ^ sender, RoutedEventArgs ^ e)
     {
         RunRenderPass();
     }
@@ -180,39 +186,30 @@ namespace GraphControl::DX
         m_coreWindow = Agile<CoreWindow>(Window::Current->CoreWindow);
         if (m_coreWindow != nullptr)
         {
-            m_tokenVisibilityChanged =
-                m_coreWindow->VisibilityChanged +=
-                    ref new TypedEventHandler<CoreWindow^, VisibilityChangedEventArgs^>(this, &RenderMain::OnVisibilityChanged);
+            m_tokenVisibilityChanged = m_coreWindow->VisibilityChanged +=
+                ref new TypedEventHandler<CoreWindow ^, VisibilityChangedEventArgs ^>(this, &RenderMain::OnVisibilityChanged);
         }
 
         m_displayInformation = DisplayInformation::GetForCurrentView();
         if (m_displayInformation != nullptr)
         {
-            m_tokenDpiChanged =
-                m_displayInformation->DpiChanged +=
-                    ref new TypedEventHandler<DisplayInformation^, Object^>(this, &RenderMain::OnDpiChanged);
+            m_tokenDpiChanged = m_displayInformation->DpiChanged += ref new TypedEventHandler<DisplayInformation ^, Object ^>(this, &RenderMain::OnDpiChanged);
 
-            m_tokenOrientationChanged =
-                m_displayInformation->OrientationChanged +=
-                    ref new TypedEventHandler<DisplayInformation^, Object^>(this, &RenderMain::OnOrientationChanged);
+            m_tokenOrientationChanged = m_displayInformation->OrientationChanged +=
+                ref new TypedEventHandler<DisplayInformation ^, Object ^>(this, &RenderMain::OnOrientationChanged);
         }
 
-        m_tokenDisplayContentsInvalidated =
-            DisplayInformation::DisplayContentsInvalidated +=
-                ref new TypedEventHandler<DisplayInformation^, Object^>(this, &RenderMain::OnDisplayContentsInvalidated);
+        m_tokenDisplayContentsInvalidated = DisplayInformation::DisplayContentsInvalidated +=
+            ref new TypedEventHandler<DisplayInformation ^, Object ^>(this, &RenderMain::OnDisplayContentsInvalidated);
 
         if (m_swapChainPanel != nullptr)
         {
-            m_tokenLoaded =
-                m_swapChainPanel->Loaded += ref new RoutedEventHandler(this, &RenderMain::OnLoaded);
+            m_tokenLoaded = m_swapChainPanel->Loaded += ref new RoutedEventHandler(this, &RenderMain::OnLoaded);
 
-            m_tokenCompositionScaleChanged =
-                m_swapChainPanel->CompositionScaleChanged +=
-                    ref new TypedEventHandler< SwapChainPanel^, Object^ >(this, &RenderMain::OnCompositionScaleChanged);
+            m_tokenCompositionScaleChanged = m_swapChainPanel->CompositionScaleChanged +=
+                ref new TypedEventHandler<SwapChainPanel ^, Object ^>(this, &RenderMain::OnCompositionScaleChanged);
 
-            m_tokenSizeChanged =
-                m_swapChainPanel->SizeChanged +=
-                    ref new SizeChangedEventHandler(this, &RenderMain::OnSizeChanged);
+            m_tokenSizeChanged = m_swapChainPanel->SizeChanged += ref new SizeChangedEventHandler(this, &RenderMain::OnSizeChanged);
         }
     }
 
@@ -269,7 +266,7 @@ namespace GraphControl::DX
         }
     }
 
-    void RenderMain::OnVisibilityChanged(CoreWindow^ sender, VisibilityChangedEventArgs^ args)
+    void RenderMain::OnVisibilityChanged(CoreWindow ^ sender, VisibilityChangedEventArgs ^ args)
     {
         if (args->Visible)
         {
@@ -277,7 +274,7 @@ namespace GraphControl::DX
         }
     }
 
-    void RenderMain::OnDpiChanged(DisplayInformation^ sender, Object^ args)
+    void RenderMain::OnDpiChanged(DisplayInformation ^ sender, Object ^ args)
     {
         // Note: The value for LogicalDpi retrieved here may not match the effective DPI of the app
         // if it is being scaled for high resolution devices. Once the DPI is set on DeviceResources,
@@ -297,24 +294,24 @@ namespace GraphControl::DX
         CreateWindowSizeDependentResources();
     }
 
-    void RenderMain::OnOrientationChanged(DisplayInformation^ sender, Object^ args)
+    void RenderMain::OnOrientationChanged(DisplayInformation ^ sender, Object ^ args)
     {
         m_deviceResources.SetCurrentOrientation(sender->CurrentOrientation);
         CreateWindowSizeDependentResources();
     }
 
-    void RenderMain::OnDisplayContentsInvalidated(DisplayInformation^ sender, Object^ args)
+    void RenderMain::OnDisplayContentsInvalidated(DisplayInformation ^ sender, Object ^ args)
     {
         m_deviceResources.ValidateDevice();
     }
 
-    void RenderMain::OnCompositionScaleChanged(SwapChainPanel^ sender, Object^ args)
+    void RenderMain::OnCompositionScaleChanged(SwapChainPanel ^ sender, Object ^ args)
     {
         m_deviceResources.SetCompositionScale(sender->CompositionScaleX, sender->CompositionScaleY);
         CreateWindowSizeDependentResources();
     }
 
-    void RenderMain::OnSizeChanged(Object^ sender, SizeChangedEventArgs^ e)
+    void RenderMain::OnSizeChanged(Object ^ sender, SizeChangedEventArgs ^ e)
     {
         m_deviceResources.SetLogicalSize(e->NewSize);
 
@@ -323,9 +320,7 @@ namespace GraphControl::DX
             if (auto renderer = m_graph->GetRenderer())
             {
                 const auto& newSize = e->NewSize;
-                renderer->SetGraphSize(
-                    static_cast<unsigned int>(newSize.Width),
-                    static_cast<unsigned int>(newSize.Height));
+                renderer->SetGraphSize(static_cast<unsigned int>(newSize.Width), static_cast<unsigned int>(newSize.Height));
             }
         }
 

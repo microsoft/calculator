@@ -35,11 +35,16 @@ namespace CalculatorApp
 
         void OnShareClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
+        void OnDrawChanged(bool newValue);
+        void OnTracePointChanged(Windows::Foundation::Point newPoint);
+
+
     private:
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
+        Windows::Foundation::EventRegistrationToken m_drawChangedToken;
+        Windows::Foundation::EventRegistrationToken m_tracePointChangedToken;
 
         void OnDataRequested(Windows::ApplicationModel::DataTransfer::DataTransferManager^ sender, Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs^ e);
-        void CommandInvokedHandler(Windows::UI::Popups::IUICommand^ command);
 
         void TextBoxGotFocus(Windows::UI::Xaml::Controls::TextBox^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
     };
