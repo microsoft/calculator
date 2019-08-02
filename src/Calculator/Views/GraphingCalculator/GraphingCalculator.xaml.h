@@ -54,7 +54,6 @@ namespace CalculatorApp
 
         void OnShareClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
-        void OnShowTracePopupChanged(bool newValue);
         void OnTracePointChanged(Windows::Foundation::Point newPoint);
 
 

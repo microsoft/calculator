@@ -271,7 +271,8 @@ namespace GraphControl
             if (m_tokenEquationStyleChanged.Value != 0)
             {
                 older->EquationStyleChanged -= m_tokenEquationStyleChanged;
-                m_tokenEquationStyleChanged.Value = 0;
+            m_tokenDataSourceChanged =
+                m_dataSource->DataSourceChanged += ref new TypedEventHandler<InspectingDataSource^, DataSourceChangedEventArgs>(this, &Grapher::OnDataSourceChanged);
             }
         }
 
