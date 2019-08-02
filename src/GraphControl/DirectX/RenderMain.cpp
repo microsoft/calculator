@@ -204,6 +204,13 @@ namespace GraphControl::DX
                         }
                     }
                 }
+
+                if (successful && m_drawActiveTracing)
+                {
+                    Point ActiveTracingPointLocation(m_activeTracingPointerLocation.X, m_activeTracingPointerLocation.Y);
+
+                    m_ActiveTracingPointRenderer.Render(ActiveTracingPointLocation);
+                }
             }
         }
 

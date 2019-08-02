@@ -9,7 +9,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:CalculatorApp.ViewModel"
              DataContextChanged="GraphingCalculator_DataContextChanged"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             >
 
     <UserControl.Resources>
         <Style x:Key="GraphButtonStyle" TargetType="Button">
@@ -166,7 +167,7 @@
         <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
     </UserControl.Resources>
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" >
         <Grid.RowDefinitions>
             <RowDefinition x:Name="RowHamburger" Height="{StaticResource HamburgerHeightGridLength}"/>
             <RowDefinition/>
