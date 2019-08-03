@@ -16,6 +16,8 @@
     <!-- We want to automatic replace of MinVersion/MaxVersionTested for unit tests. -->
     <AppxOSMinVersionReplaceManifestVersion>true</AppxOSMinVersionReplaceManifestVersion>
     <AppxOSMaxVersionTestedReplaceManifestVersion>true</AppxOSMaxVersionTestedReplaceManifestVersion>
+    <PackageCertificateKeyFile>CalculatorUnitTests_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>be776c83699dbce4969de9ee730aeaf66c5d5182</PackageCertificateThumbprint>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -128,10 +130,6 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros">
-    <PackageCertificateKeyFile>CalculatorUnitTests_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>3F0C32266A4D995CC08C9AEC3960CFF3EF0D1853</PackageCertificateThumbprint>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /await /std:c++17 /permissive- /Zc:twoPhase- /utf-8 %(AdditionalOptions)</AdditionalOptions>
