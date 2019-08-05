@@ -1725,6 +1725,16 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <Style x:Key="VariableTextBoxStyle" TargetType="TextBox">
+                <Setter Property="Margin" Value="12,4,4,4"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="AcceptsReturn" Value="False"/>
+                <Setter Property="InputScope" Value="Number"/>
+                <Setter Property="TextWrapping" Value="NoWrap"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
