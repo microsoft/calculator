@@ -336,11 +336,9 @@ void GraphingCalculator::OnZoomResetCommand(Object ^ /* parameter */)
     GraphingControl->ResetGrid();
 }
         //
-void GraphingCalculator::OnActiveTracingClick(Object ^ sender, RoutedEventArgs ^ e)
 {
     // The focus change to this button will have turned off the tracing if it was on
     ActiveTracingOn = !ActiveTracingOn;
-    GraphingControl->ActiveTracing = ActiveTracingOn;
         }
         
 void GraphingCalculator::GraphingControl_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
