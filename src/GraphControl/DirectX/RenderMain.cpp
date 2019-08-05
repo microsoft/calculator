@@ -117,7 +117,6 @@ namespace GraphControl::DX
     {
         return m_drawActiveTracing;
     }
-
     // Updates application state when the window size changes (e.g. device orientation change)
     void RenderMain::CreateWindowSizeDependentResources()
     {
