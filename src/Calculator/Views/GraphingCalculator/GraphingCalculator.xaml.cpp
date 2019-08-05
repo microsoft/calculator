@@ -240,3 +240,8 @@ void GraphingCalculator::TextBoxGotFocus(TextBox ^ sender, RoutedEventArgs ^ e)
 {
     sender->SelectAll();
 }
+
+void GraphingCalculator::OnActiveTracingClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    GraphingControl->ActiveTracing = !GraphingControl->ActiveTracing;
+}

@@ -599,6 +599,7 @@
     <PRIResource Include="Resources\zh-tw\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\Active.Tracking-32_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.contrast-black_scale-100.png" />
     <Image Include="Assets\CalculatorAppList.contrast-black_scale-125.png" />
     <Image Include="Assets\CalculatorAppList.contrast-black_scale-150.png" />

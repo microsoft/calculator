@@ -236,9 +236,14 @@
             </Grid.RowDefinitions>
 
             <StackPanel>
-                <Button x:Name="Share" Click="OnShareClick">
-                    <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
-	            </Button>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="ActiveTracing" Click="OnActiveTracingClick" Width="40" Height="40" Margin="0,0,10,0">
+                        <Image Source="ms-appx:///Assets/Active.Tracking-32_contrast-white.png"/>
+                    </Button>
+                    <Button x:Name="Share" Click="OnShareClick" Width="40" Height="40">
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
+	                </Button>
+                </StackPanel>
                 <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
             </StackPanel>
 

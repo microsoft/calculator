@@ -733,18 +733,6 @@ void Grapher::OnCoreKeyDown(CoreWindow ^ sender, KeyEventArgs ^ e)
 
     switch (e->VirtualKey)
     {
-    case VirtualKey::A:
-    {
-        ActiveTracing = true;
-    }
-    break;
-
-    case VirtualKey::B:
-    {
-        ActiveTracing = false;
-    }
-    break;
-
     case VirtualKey::Left:
     {
         auto curPos = ActiveTraceCursorPosition;
