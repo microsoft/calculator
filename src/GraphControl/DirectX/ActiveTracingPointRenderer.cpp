@@ -42,10 +42,11 @@ void ActiveTracingPointRenderer::ReleaseDeviceDependentResources()
 
 void ActiveTracingPointRenderer::Render(const Point& location)
 {
+    // We want to center this around the location
     if (ID2D1DeviceContext* context = m_deviceResources->GetD2DDeviceContext())
     {
-        m_RoundedRect.rect.bottom = location.X;
-        m_RoundedRect.rect.left = location.Y;
+        m_RoundedRect.rect.bottom = location.Y - m_height / 2;
+        m_RoundedRect.rect.left = location.X - m_width / 2;
         m_RoundedRect.rect.top = m_RoundedRect.rect.bottom + m_height;
         m_RoundedRect.rect.right = m_RoundedRect.rect.left + m_width;
 

@@ -748,30 +748,6 @@ void Grapher::OnCoreKeyDown(CoreWindow ^ sender, KeyEventArgs ^ e)
     case VirtualKey::Left:
     {
         auto curPos = ActiveTraceCursorPosition;
-        curPos.Y -= 10;
-        if (curPos.Y < 0)
-        {
-            curPos.Y = 0;
-        }
-        ActiveTraceCursorPosition = curPos;
-    }
-    break;
-
-    case VirtualKey::Right:
-    {
-        auto curPos = ActiveTraceCursorPosition;
-        curPos.Y += 10;
-        if (curPos.Y > ActualWidth - 10)
-        {
-            curPos.Y = (float)ActualWidth - 10; // TODO change this to deal with size of cursor
-        }
-        ActiveTraceCursorPosition = curPos;
-    }
-    break;
-
-    case VirtualKey::Up:
-    {
-        auto curPos = ActiveTraceCursorPosition;
         curPos.X -= 10;
         if (curPos.X < 0)
         {
@@ -781,13 +757,37 @@ void Grapher::OnCoreKeyDown(CoreWindow ^ sender, KeyEventArgs ^ e)
     }
     break;
 
-    case VirtualKey::Down:
+    case VirtualKey::Right:
     {
         auto curPos = ActiveTraceCursorPosition;
         curPos.X += 10;
-        if (curPos.X > ActualHeight - 10)
+        if (curPos.X > ActualWidth - 10)
         {
-            curPos.X = (float)ActualHeight - 10; // TODO change this to deal with size of cursor
+            curPos.X = (float)ActualWidth - 10; // TODO change this to deal with size of cursor
+        }
+        ActiveTraceCursorPosition = curPos;
+    }
+    break;
+
+    case VirtualKey::Up:
+    {
+        auto curPos = ActiveTraceCursorPosition;
+        curPos.Y -= 10;
+        if (curPos.Y < 0)
+        {
+            curPos.Y = 0;
+        }
+        ActiveTraceCursorPosition = curPos;
+    }
+    break;
+
+    case VirtualKey::Down:
+    {
+        auto curPos = ActiveTraceCursorPosition;
+        curPos.Y += 10;
+        if (curPos.Y > ActualHeight - 10)
+        {
+            curPos.Y = (float)ActualHeight - 10; // TODO change this to deal with size of cursor
         }
         ActiveTraceCursorPosition = curPos;
     }
