@@ -204,6 +204,8 @@ namespace GraphControl
 
         void ScaleRange(double centerX, double centerY, double scale);
 
+        void OnCoreKeyDown(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ e);
+
     private:
         DX::RenderMain ^ m_renderMain = nullptr;
 

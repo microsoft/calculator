@@ -22,8 +22,8 @@ ActiveTracingPointRenderer::ActiveTracingPointRenderer(DeviceResources* deviceRe
     m_RoundedRect.rect.left = 0;
     m_RoundedRect.rect.right = 10;
     m_RoundedRect.rect.top = 10;
-    m_width = m_RoundedRect.rect.right - m_RoundedRect.rect.left;
-    m_height = m_RoundedRect.rect.top - m_RoundedRect.rect.bottom;
+    m_width = (int)(m_RoundedRect.rect.right - m_RoundedRect.rect.left);
+    m_height = (int)(m_RoundedRect.rect.top - m_RoundedRect.rect.bottom);
     m_RoundedRect.radiusX = c_ActiveTracingPointRadius;
     m_RoundedRect.radiusY = c_ActiveTracingPointRadius;
 

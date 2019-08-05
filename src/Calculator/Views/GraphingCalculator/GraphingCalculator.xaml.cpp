@@ -21,7 +21,7 @@ using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage::Streams;
 using namespace Windows::System;
-using namespace Windows::UI::Core;
+//using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Controls;
@@ -43,9 +43,6 @@ GraphingCalculator::GraphingCalculator()
     // Register the current control as a share source.
     m_dataRequestedToken = dataTransferManager->DataRequested +=
         ref new TypedEventHandler<DataTransferManager ^, DataRequestedEventArgs ^>(this, &GraphingCalculator::OnDataRequested);
-
-    auto cw = CoreWindow::GetForCurrentThread();
-    cw->KeyDown += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &GraphingCalculator::OnCoreKeyDown);
 }
 
 void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement ^ sender, DataContextChangedEventArgs ^ args)
@@ -242,72 +239,4 @@ double GraphingCalculator::validateDouble(String ^ value, double defaultValue)
 void GraphingCalculator::TextBoxGotFocus(TextBox ^ sender, RoutedEventArgs ^ e)
 {
     sender->SelectAll();
-}
-
-void CalculatorApp::GraphingCalculator::OnCoreKeyDown(CoreWindow ^ sender, KeyEventArgs ^ e)
-{
-    FocusManager::GetFocusedElement();
-    auto key = e->VirtualKey;
-    switch (key)
-    {
-    case VirtualKey::A:
-    {
-        GraphingControl->ActiveTracing = true;
-    }
-    break;
-
-    case VirtualKey::B:
-    {
-        GraphingControl->ActiveTracing = false;
-    }
-    break;
-
-    case VirtualKey::Left:
-    {
-        auto curPos = GraphingControl->ActiveTraceCursorPosition;
-        curPos.Y -= 10;
-        if (curPos.Y < 0)
-        {
-            curPos.Y = 0;
-        }
-        GraphingControl->ActiveTraceCursorPosition = curPos;
-    }
-    break;
-
-    case VirtualKey::Right:
-    {
-        auto curPos = GraphingControl->ActiveTraceCursorPosition;
-        curPos.Y += 10;
-        if (curPos.Y > GraphingControl->ActualWidth - 10)
-        {
-            curPos.Y = (float)GraphingControl->ActualWidth -  10;  // TODO change this to deal with size of cursor
-        }
-        GraphingControl->ActiveTraceCursorPosition = curPos;
-    }
-    break;
-
-    case VirtualKey::Up:
-    {
-        auto curPos = GraphingControl->ActiveTraceCursorPosition;
-        curPos.X -= 10;
-        if (curPos.X < 0)
-        {
-            curPos.X = 0;
-        }
-        GraphingControl->ActiveTraceCursorPosition = curPos;
-    }
-    break;
-
-    case VirtualKey::Down:
-    {
-        auto curPos = GraphingControl->ActiveTraceCursorPosition;
-        curPos.X += 10;
-        if (curPos.X > GraphingControl->ActualHeight - 10)
-        {
-            curPos.X = (float)GraphingControl->ActualHeight - 10; // TODO change this to deal with size of cursor
-        }
-        GraphingControl->ActiveTraceCursorPosition = curPos;
-    }
-    break;
-    }
 }

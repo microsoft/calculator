@@ -13,6 +13,7 @@ using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage::Streams;
 using namespace Windows::System;
 using namespace Windows::UI;
+using namespace Windows::UI::Core;
 using namespace Windows::UI::Input;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
@@ -21,6 +22,64 @@ using namespace Windows::UI::Xaml::Media;
 
 namespace
 {
+    template <class T>
+    T FindChild(DependencyObject parent, string childName)
+    {
+        // Confirm parent and childName are valid.
+        if (parent == null)
+        {
+            return null;
+        }
+
+        T foundChild = null;
+
+        int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+        for (int i = 0; i < childrenCount; i++)
+        {
+            DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+            // If the child is not of the request child type child
+            var childType = child as T;
+            if (childType == null)
+            {
+                // recursively drill down the tree
+                foundChild = FindChild<T>(child, childName);
+
+                // If the child is found, break so we do not overwrite the found child.
+                if (foundChild != null)
+                {
+                    break;
+                }
+            }
+            else if (!string.IsNullOrEmpty(childName))
+            {
+                var frameworkElement = child as FrameworkElement;
+                // If the child's name is set for search
+                if (frameworkElement != null && frameworkElement.Name == childName)
+                {
+                    // if the child's name is of the request name
+                    foundChild = (T)child;
+                    break;
+                }
+
+                // Need this in case the element we want is nested
+                // in another element of the same type
+                foundChild = FindChild<T>(child, childName);
+            }
+            else
+            {
+                // child element found.
+                foundChild = (T)child;
+                break;
+            }
+        }
+
+        return foundChild;
+    }
+
+
+
+
+
     constexpr auto s_defaultStyleKey = L"GraphControl.Grapher";
     constexpr auto s_templateKey_SwapChainPanel = L"GraphSurface";
 
@@ -39,17 +98,17 @@ namespace
     // Translate the pointer position to the [-1, 1] bounds.
     __inline pair<double, double> PointerPositionToGraphPosition(double posX, double posY, double width, double height)
     {
-        return make_pair(( 2 * posX / width - 1 ), ( 1 - 2 * posY / height ));
+        return make_pair((2 * posX / width - 1), (1 - 2 * posY / height));
     }
 }
 
 namespace GraphControl
 {
-    DependencyProperty^ Grapher::s_equationTemplateProperty;
-    DependencyProperty^ Grapher::s_equationsProperty;
-    DependencyProperty^ Grapher::s_equationsSourceProperty;
-    DependencyProperty^ Grapher::s_variablesProperty;
-    DependencyProperty^ Grapher::s_forceProportionalAxesTemplateProperty;
+    DependencyProperty ^ Grapher::s_equationTemplateProperty;
+    DependencyProperty ^ Grapher::s_equationsProperty;
+    DependencyProperty ^ Grapher::s_equationsSourceProperty;
+    DependencyProperty ^ Grapher::s_variablesProperty;
+    DependencyProperty ^ Grapher::s_forceProportionalAxesTemplateProperty;
 
     Grapher::Grapher()
         : m_solver{ IMathSolver::CreateMathSolver() }
@@ -60,33 +119,32 @@ namespace GraphControl
         DefaultStyleKey = StringReference(s_defaultStyleKey);
 
         this->SetValue(EquationsProperty, ref new EquationCollection());
-        this->SetValue(VariablesProperty, ref new Map<String^, double>());
+        this->SetValue(VariablesProperty, ref new Map<String ^, double>());
 
         this->Loaded += ref new RoutedEventHandler(this, &Grapher::OnLoaded);
         this->Unloaded += ref new RoutedEventHandler(this, &Grapher::OnUnloaded);
 
-        this->ManipulationMode =
-            ManipulationModes::TranslateX |
-            ManipulationModes::TranslateY |
-            ManipulationModes::TranslateInertia |
-            ManipulationModes::Scale |
-            ManipulationModes::ScaleInertia;
+        this->ManipulationMode = ManipulationModes::TranslateX | ManipulationModes::TranslateY | ManipulationModes::TranslateInertia | ManipulationModes::Scale
+                                 | ManipulationModes::ScaleInertia;
+
+        auto cw = CoreWindow::GetForCurrentThread();
+        cw->KeyDown += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &Grapher::OnCoreKeyDown);
     }
 
-    void Grapher::OnLoaded(Object^ sender, RoutedEventArgs^ args)
+    void Grapher::OnLoaded(Object ^ sender, RoutedEventArgs ^ args)
     {
-        if (auto backgroundBrush = safe_cast<SolidColorBrush^>(this->Background))
+        if (auto backgroundBrush = safe_cast<SolidColorBrush ^>(this->Background))
         {
-            m_tokenBackgroundColorChanged.Value =
-                backgroundBrush->RegisterPropertyChangedCallback(SolidColorBrush::ColorProperty, ref new DependencyPropertyChangedCallback(this, &Grapher::OnDependencyPropertyChanged));
+            m_tokenBackgroundColorChanged.Value = backgroundBrush->RegisterPropertyChangedCallback(
+                SolidColorBrush::ColorProperty, ref new DependencyPropertyChangedCallback(this, &Grapher::OnDependencyPropertyChanged));
 
             OnBackgroundColorChanged(backgroundBrush->Color);
         }
     }
 
-    void Grapher::OnUnloaded(Object^ sender, RoutedEventArgs^ args)
+    void Grapher::OnUnloaded(Object ^ sender, RoutedEventArgs ^ args)
     {
-        if (auto backgroundBrush = safe_cast<SolidColorBrush^>(this->Background))
+        if (auto backgroundBrush = safe_cast<SolidColorBrush ^>(this->Background))
         {
             this->UnregisterPropertyChangedCallback(BackgroundProperty, m_tokenBackgroundColorChanged.Value);
         }
@@ -108,7 +166,7 @@ namespace GraphControl
 
     void Grapher::OnApplyTemplate()
     {
-        auto swapChainPanel = dynamic_cast<SwapChainPanel^>(GetTemplateChild(StringReference(s_templateKey_SwapChainPanel)));
+        auto swapChainPanel = dynamic_cast<SwapChainPanel ^>(GetTemplateChild(StringReference(s_templateKey_SwapChainPanel)));
         if (swapChainPanel)
         {
             m_renderMain = ref new RenderMain(swapChainPanel);
@@ -125,9 +183,7 @@ namespace GraphControl
                 StringReference(s_propertyName_Equations),
                 EquationCollection::typeid,
                 Grapher::typeid,
-                ref new PropertyMetadata(
-                    nullptr,
-                    ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_equationsSourceProperty)
@@ -136,9 +192,7 @@ namespace GraphControl
                 StringReference(s_propertyName_EquationsSource),
                 Object::typeid,
                 Grapher::typeid,
-                ref new PropertyMetadata(
-                    nullptr,
-                    ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_equationTemplateProperty)
@@ -147,37 +201,31 @@ namespace GraphControl
                 StringReference(s_propertyName_EquationTemplate),
                 DataTemplate::typeid,
                 Grapher::typeid,
-                ref new PropertyMetadata(
-                    nullptr,
-                    ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_variablesProperty)
         {
             s_variablesProperty = DependencyProperty::Register(
                 StringReference(s_propertyName_Variables),
-                IObservableMap<String^, double>::typeid,
+                IObservableMap<String ^, double>::typeid,
                 Grapher::typeid,
-                ref new PropertyMetadata(
-                    nullptr,
-                    ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_forceProportionalAxesTemplateProperty)
         {
             s_forceProportionalAxesTemplateProperty = DependencyProperty::Register(
                 StringReference(s_propertyName_ForceProportionalAxes),
-                bool::typeid,
+                bool ::typeid,
                 Grapher::typeid,
-                ref new PropertyMetadata(
-                    true,
-                    ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
+                ref new PropertyMetadata(true, ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
         }
     }
 
-    void Grapher::OnCustomDependencyPropertyChanged(DependencyObject^ obj, DependencyPropertyChangedEventArgs^ args)
+    void Grapher::OnCustomDependencyPropertyChanged(DependencyObject ^ obj, DependencyPropertyChangedEventArgs ^ args)
     {
-        auto self = static_cast<Grapher^>(obj);
+        auto self = static_cast<Grapher ^>(obj);
         if (self)
         {
             if (args->Property == EquationsProperty)
@@ -199,21 +247,21 @@ namespace GraphControl
         }
     }
 
-    void Grapher::OnDependencyPropertyChanged(DependencyObject^ obj, DependencyProperty^ p)
+    void Grapher::OnDependencyPropertyChanged(DependencyObject ^ obj, DependencyProperty ^ p)
     {
         if (p == SolidColorBrush::ColorProperty)
         {
-            auto brush = static_cast<SolidColorBrush^>(obj);
+            auto brush = static_cast<SolidColorBrush ^>(obj);
             OnBackgroundColorChanged(brush->Color);
         }
     }
 
-    void Grapher::OnEquationTemplateChanged(DependencyPropertyChangedEventArgs^ args)
+    void Grapher::OnEquationTemplateChanged(DependencyPropertyChangedEventArgs ^ args)
     {
         SyncEquationsWithItemsSource();
     }
 
-    void Grapher::OnEquationsSourceChanged(DependencyPropertyChangedEventArgs^ args)
+    void Grapher::OnEquationsSourceChanged(DependencyPropertyChangedEventArgs ^ args)
     {
         if (m_dataSource && m_tokenDataSourceChanged.Value != 0)
         {
@@ -223,14 +271,14 @@ namespace GraphControl
         m_dataSource = args->NewValue ? ref new InspectingDataSource(args->NewValue) : nullptr;
         if (m_dataSource)
         {
-            m_tokenDataSourceChanged =
-                m_dataSource->DataSourceChanged += ref new TypedEventHandler<InspectingDataSource^, DataSourceChangedEventArgs>(this, &Grapher::OnDataSourceChanged);
+            m_tokenDataSourceChanged = m_dataSource->DataSourceChanged +=
+                ref new TypedEventHandler<InspectingDataSource ^, DataSourceChangedEventArgs>(this, &Grapher::OnDataSourceChanged);
         }
 
         SyncEquationsWithItemsSource();
     }
 
-    void Grapher::OnDataSourceChanged(InspectingDataSource^ sender, DataSourceChangedEventArgs args)
+    void Grapher::OnDataSourceChanged(InspectingDataSource ^ sender, DataSourceChangedEventArgs args)
     {
         switch (args.Action)
         {
@@ -257,7 +305,7 @@ namespace GraphControl
     {
         for (int i = index + count - 1; i >= index; i--)
         {
-            auto eq = safe_cast<Equation^>(EquationTemplate->LoadContent());
+            auto eq = safe_cast<Equation ^>(EquationTemplate->LoadContent());
             eq->DataContext = m_dataSource->GetAt(i);
 
             Equations->InsertAt(index, eq);
@@ -280,7 +328,7 @@ namespace GraphControl
             auto size = m_dataSource->GetSize();
             for (auto i = 0u; i < size; i++)
             {
-                auto eq = safe_cast<Equation^>(EquationTemplate->LoadContent());
+                auto eq = safe_cast<Equation ^>(EquationTemplate->LoadContent());
                 eq->DataContext = m_dataSource->GetAt(i);
 
                 Equations->Append(eq);
@@ -288,9 +336,9 @@ namespace GraphControl
         }
     }
 
-    void Grapher::OnEquationsChanged(DependencyPropertyChangedEventArgs^ args)
+    void Grapher::OnEquationsChanged(DependencyPropertyChangedEventArgs ^ args)
     {
-        if (auto older = static_cast<EquationCollection^>(args->OldValue))
+        if (auto older = static_cast<EquationCollection ^>(args->OldValue))
         {
             if (m_tokenEquationsChanged.Value != 0)
             {
@@ -304,19 +352,17 @@ namespace GraphControl
             }
         }
 
-        if (auto newer = static_cast<EquationCollection^>(args->NewValue))
+        if (auto newer = static_cast<EquationCollection ^>(args->NewValue))
         {
-            m_tokenEquationsChanged =
-                newer->VectorChanged += ref new VectorChangedEventHandler<Equation^>(this, &Grapher::OnEquationsVectorChanged);
+            m_tokenEquationsChanged = newer->VectorChanged += ref new VectorChangedEventHandler<Equation ^>(this, &Grapher::OnEquationsVectorChanged);
 
-            m_tokenEquationChanged =
-                newer->EquationChanged += ref new EquationChangedEventHandler(this, &Grapher::OnEquationChanged);
+            m_tokenEquationChanged = newer->EquationChanged += ref new EquationChangedEventHandler(this, &Grapher::OnEquationChanged);
         }
 
         UpdateGraph();
     }
 
-    void Grapher::OnEquationsVectorChanged(IObservableVector<Equation^>^ sender, IVectorChangedEventArgs^ event)
+    void Grapher::OnEquationsVectorChanged(IObservableVector<Equation ^> ^ sender, IVectorChangedEventArgs ^ event)
     {
         if (event->CollectionChange == ::CollectionChange::ItemInserted || event->CollectionChange == ::CollectionChange::ItemChanged)
         {
@@ -349,7 +395,7 @@ namespace GraphControl
                 ss << L"show2d(";
 
                 int numValidEquations = 0;
-                for (Equation^ eq : validEqs)
+                for (Equation ^ eq : validEqs)
                 {
                     if (numValidEquations++ > 0)
                     {
@@ -404,7 +450,7 @@ namespace GraphControl
 
     void Grapher::UpdateVariables()
     {
-        auto updatedVariables = ref new Map<String^, double>();
+        auto updatedVariables = ref new Map<String ^, double>();
         if (m_graph)
         {
             auto graphVariables = m_graph->GetVariables();
@@ -430,7 +476,7 @@ namespace GraphControl
         VariablesUpdated(this, Variables);
     }
 
-    void Grapher::SetVariable(Platform::String^ variableName, double newValue)
+    void Grapher::SetVariable(Platform::String ^ variableName, double newValue)
     {
         if (Variables->HasKey(variableName))
         {
@@ -455,7 +501,7 @@ namespace GraphControl
         }
     }
 
-    void Grapher::UpdateGraphOptions(IGraphingOptions& options, const vector<Equation^>& validEqs)
+    void Grapher::UpdateGraphOptions(IGraphingOptions& options, const vector<Equation ^>& validEqs)
     {
         options.SetForceProportional(ForceProportionalAxes);
 
@@ -463,24 +509,20 @@ namespace GraphControl
         {
             vector<Graphing::Color> graphColors;
             graphColors.reserve(validEqs.size());
-            for (Equation^ eq : validEqs)
+            for (Equation ^ eq : validEqs)
             {
                 auto lineColor = eq->LineColor;
-                graphColors.emplace_back(
-                    lineColor.R,
-                    lineColor.G,
-                    lineColor.B,
-                    lineColor.A);
+                graphColors.emplace_back(lineColor.R, lineColor.G, lineColor.B, lineColor.A);
             }
             options.SetGraphColors(graphColors);
         }
     }
 
-    vector<Equation^> Grapher::GetValidEquations()
+    vector<Equation ^> Grapher::GetValidEquations()
     {
-        vector<Equation^> validEqs;
+        vector<Equation ^> validEqs;
 
-        for (Equation^ eq : Equations)
+        for (Equation ^ eq : Equations)
         {
             if (!eq->Expression->IsEmpty())
             {
@@ -491,7 +533,7 @@ namespace GraphControl
         return validEqs;
     }
 
-    void Grapher::OnForceProportionalAxesChanged(DependencyPropertyChangedEventArgs^ args)
+    void Grapher::OnForceProportionalAxesChanged(DependencyPropertyChangedEventArgs ^ args)
     {
         UpdateGraph();
     }
@@ -504,7 +546,7 @@ namespace GraphControl
         }
     }
 
-    void Grapher::OnPointerEntered(PointerRoutedEventArgs^ e)
+    void Grapher::OnPointerEntered(PointerRoutedEventArgs ^ e)
     {
         if (m_renderMain)
         {
@@ -515,18 +557,18 @@ namespace GraphControl
         }
     }
 
-    void Grapher::OnPointerMoved(PointerRoutedEventArgs^ e)
+    void Grapher::OnPointerMoved(PointerRoutedEventArgs ^ e)
     {
         if (m_renderMain)
         {
-            PointerPoint^ currPoint = e->GetCurrentPoint(/* relativeTo */ this);
+            PointerPoint ^ currPoint = e->GetCurrentPoint(/* relativeTo */ this);
             m_renderMain->PointerLocation = currPoint->Position;
 
             e->Handled = true;
         }
     }
 
-    void Grapher::OnPointerExited(PointerRoutedEventArgs^ e)
+    void Grapher::OnPointerExited(PointerRoutedEventArgs ^ e)
     {
         if (m_renderMain)
         {
@@ -535,9 +577,9 @@ namespace GraphControl
         }
     }
 
-    void Grapher::OnPointerWheelChanged(PointerRoutedEventArgs^ e)
+    void Grapher::OnPointerWheelChanged(PointerRoutedEventArgs ^ e)
     {
-        PointerPoint^ currentPointer = e->GetCurrentPoint(/*relative to*/ this);
+        PointerPoint ^ currentPointer = e->GetCurrentPoint(/*relative to*/ this);
 
         double delta = currentPointer->Properties->MouseWheelDelta;
 
@@ -563,24 +605,24 @@ namespace GraphControl
         e->Handled = true;
     }
 
-    void Grapher::OnPointerPressed(PointerRoutedEventArgs^ e)
+    void Grapher::OnPointerPressed(PointerRoutedEventArgs ^ e)
     {
         // Set the pointer capture to the element being interacted with so that only it
         // will fire pointer-related events
         CapturePointer(e->Pointer);
     }
 
-    void Grapher::OnPointerReleased(PointerRoutedEventArgs^ e)
+    void Grapher::OnPointerReleased(PointerRoutedEventArgs ^ e)
     {
         ReleasePointerCapture(e->Pointer);
     }
 
-    void Grapher::OnPointerCanceled(PointerRoutedEventArgs^ e)
+    void Grapher::OnPointerCanceled(PointerRoutedEventArgs ^ e)
     {
         ReleasePointerCapture(e->Pointer);
     }
 
-    void Grapher::OnManipulationDelta(ManipulationDeltaRoutedEventArgs^ e)
+    void Grapher::OnManipulationDelta(ManipulationDeltaRoutedEventArgs ^ e)
     {
         if (m_renderMain != nullptr && m_graph != nullptr)
         {
@@ -637,16 +679,15 @@ namespace GraphControl
         }
     }
 
-
-    RandomAccessStreamReference^ Grapher::GetGraphBitmapStream()
+    RandomAccessStreamReference ^ Grapher::GetGraphBitmapStream()
     {
-        RandomAccessStreamReference^ outputStream;
+        RandomAccessStreamReference ^ outputStream;
 
         if (m_renderMain != nullptr && m_graph != nullptr)
         {
             if (auto renderer = m_graph->GetRenderer())
             {
-                std::shared_ptr < Graphing::IBitmap> BitmapOut;
+                std::shared_ptr<Graphing::IBitmap> BitmapOut;
                 bool hasSomeMissingDataOut = false;
 
                 if (SUCCEEDED(renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut)))
@@ -656,9 +697,9 @@ namespace GraphControl
                     auto arr = ref new Array<BYTE>(&byteVector[0], (unsigned int)byteVector.size());
 
                     // create a memory stream wrapper
-                    InMemoryRandomAccessStream^ stream = ref new InMemoryRandomAccessStream();
+                    InMemoryRandomAccessStream ^ stream = ref new InMemoryRandomAccessStream();
 
-                    // Get a writer to transfer the data 
+                    // Get a writer to transfer the data
                     auto writer = ref new DataWriter(stream->GetOutputStreamAt(0));
 
                     // write the data
@@ -676,5 +717,80 @@ namespace GraphControl
         }
 
         return outputStream;
+    }
+}
+
+void Grapher::OnCoreKeyDown(CoreWindow ^ sender, KeyEventArgs ^ e)
+{
+    // We don't want to eat keys when the user is in the equation text box.
+    FrameworkElement ^ whoHasFocus = (FrameworkElement ^) FocusManager::GetFocusedElement();
+    String ^ wName = whoHasFocus->Name;
+    String^ ETBName = L"EquationTextBox";
+    if (wName == ETBName)
+    {
+        return;
+    }
+
+    switch (e->VirtualKey)
+    {
+    case VirtualKey::A:
+    {
+        ActiveTracing = true;
+    }
+    break;
+
+    case VirtualKey::B:
+    {
+        ActiveTracing = false;
+    }
+    break;
+
+    case VirtualKey::Left:
+    {
+        auto curPos = ActiveTraceCursorPosition;
+        curPos.Y -= 10;
+        if (curPos.Y < 0)
+        {
+            curPos.Y = 0;
+        }
+        ActiveTraceCursorPosition = curPos;
+    }
+    break;
+
+    case VirtualKey::Right:
+    {
+        auto curPos = ActiveTraceCursorPosition;
+        curPos.Y += 10;
+        if (curPos.Y > ActualWidth - 10)
+        {
+            curPos.Y = (float)ActualWidth - 10; // TODO change this to deal with size of cursor
+        }
+        ActiveTraceCursorPosition = curPos;
+    }
+    break;
+
+    case VirtualKey::Up:
+    {
+        auto curPos = ActiveTraceCursorPosition;
+        curPos.X -= 10;
+        if (curPos.X < 0)
+        {
+            curPos.X = 0;
+        }
+        ActiveTraceCursorPosition = curPos;
+    }
+    break;
+
+    case VirtualKey::Down:
+    {
+        auto curPos = ActiveTraceCursorPosition;
+        curPos.X += 10;
+        if (curPos.X > ActualHeight - 10)
+        {
+            curPos.X = (float)ActualHeight - 10; // TODO change this to deal with size of cursor
+        }
+        ActiveTraceCursorPosition = curPos;
+    }
+    break;
     }
 }
