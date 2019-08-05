@@ -564,6 +564,17 @@ namespace GraphControl
             PointerPoint ^ currPoint = e->GetCurrentPoint(/* relativeTo */ this);
             m_renderMain->PointerLocation = currPoint->Position;
 
+            if (m_renderMain->Tracing)
+            {
+                TracingChangedEvent(true);
+
+                TracingValueChangedEvent(m_renderMain->TraceValue);
+            }
+            else
+            {
+                TracingChangedEvent(false);
+            }
+
             e->Handled = true;
         }
     }
@@ -573,6 +584,7 @@ namespace GraphControl
         if (m_renderMain)
         {
             m_renderMain->DrawNearestPoint = false;
+            TracingChangedEvent(false);
             e->Handled = true;
         }
     }

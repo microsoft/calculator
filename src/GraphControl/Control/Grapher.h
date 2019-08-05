@@ -9,8 +9,18 @@
 
 namespace GraphControl
 {
+    public
+        delegate void TracingChangedEventHandler(bool newValue);
+
+    public
+        delegate void TracingValueChangedEventHandler(Windows::Foundation::Point value);
+
     [Windows::UI::Xaml::Markup::ContentPropertyAttribute(Name = L"Equations")] public ref class Grapher sealed : public Windows::UI::Xaml::Controls::Control
     {
+    public:
+        event TracingValueChangedEventHandler ^ TracingValueChangedEvent;
+        event TracingChangedEventHandler ^ TracingChangedEvent;
+
     public:
         Grapher();
 
@@ -137,6 +147,16 @@ namespace GraphControl
             }
         }
 
+
+        property Windows::Foundation::Point TraceValue
+        {
+            Windows::Foundation::Point get()
+            {
+                return m_renderMain->TraceValue;
+            }
+        }
+
+
         property Windows::Foundation::Point ActiveTraceCursorPosition
         {
             Windows::Foundation::Point get()
@@ -150,12 +170,17 @@ namespace GraphControl
             }
         }
 
+        property Windows::Foundation::Point TraceValue
+        {
+            Windows::Foundation::Point get()
+            {
+                return m_renderMain->TraceValue;
+            }
+        }
 
 
         event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String ^, double> ^> ^ VariablesUpdated;
-
         void SetVariable(Platform::String ^ variableName, double newValue);
-
     protected:
 #pragma region Control Overrides
         void OnApplyTemplate() override;

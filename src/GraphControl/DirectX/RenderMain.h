@@ -69,6 +69,22 @@ namespace GraphControl::DX
             }
         }
 
+        property Windows::Foundation::Point TraceValue
+        {
+            Windows::Foundation::Point get()
+            {
+                return m_TraceValue;
+            }
+        }
+
+        property bool Tracing
+        {
+            bool get()
+            {
+                return m_Tracing;
+            }
+        }
+
     private:
         bool Render();
 
@@ -127,5 +143,11 @@ namespace GraphControl::DX
         // Track our independent input on a background worker thread.
         Windows::Foundation::IAsyncAction ^ m_inputLoopWorker = nullptr;
         Windows::UI::Core::CoreIndependentInputSource ^ m_coreInput = nullptr;
+
+        // What is the current trace value
+        Windows::Foundation::Point& m_TraceValue;
+
+        // Are we currently showing the tracing value
+        bool m_Tracing;
     };
 }

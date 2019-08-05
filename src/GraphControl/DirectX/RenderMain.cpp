@@ -29,9 +29,11 @@ namespace GraphControl::DX
     RenderMain::RenderMain(SwapChainPanel ^ panel)
         : m_deviceResources{ panel }
         , m_nearestPointRenderer{ &m_deviceResources }
-        , m_ActiveTracingPointRenderer{ &m_deviceResources }
         , m_backgroundColor{ {} }
         , m_swapChainPanel{ panel }
+        , m_TraceValue(Point(0, 0))
+        , m_Tracing(false)
+        , m_ActiveTracingPointRenderer{ &m_deviceResources }
     {
         // Register to be notified if the Device is lost or recreated
         m_deviceResources.RegisterDeviceNotify(this);
@@ -81,6 +83,10 @@ namespace GraphControl::DX
         if (m_drawNearestPoint != value)
         {
             m_drawNearestPoint = value;
+            if (!m_drawNearestPoint)
+            {
+                m_Tracing = false;
+            }
             RunRenderPass();
         }
     }
@@ -184,7 +190,12 @@ namespace GraphControl::DX
                         if (!isnan(nearestPointLocation.X) && !isnan(nearestPointLocation.Y))
                         {
                             m_nearestPointRenderer.Render(nearestPointLocation);
+                            m_Tracing = true;
+                            m_TraceValue = Point(nearestPointValue.first, nearestPointValue.second);
                         }
+                    else
+                    {
+                        m_Tracing = false;
                     }
                 }
             }

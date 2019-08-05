@@ -21,7 +21,8 @@ using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage::Streams;
 using namespace Windows::System;
-//using namespace Windows::UI::Core;
+using namespace Windows::UI::Core;
+using namespace Windows::UI::Input;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Controls;
@@ -41,8 +42,30 @@ GraphingCalculator::GraphingCalculator()
     DataTransferManager ^ dataTransferManager = DataTransferManager::GetForCurrentView();
 
     // Register the current control as a share source.
-    m_dataRequestedToken = dataTransferManager->DataRequested +=
-        ref new TypedEventHandler<DataTransferManager ^, DataRequestedEventArgs ^>(this, &GraphingCalculator::OnDataRequested);
+    m_dataRequestedToken = dataTransferManager->DataRequested += ref new TypedEventHandler<DataTransferManager ^, DataRequestedEventArgs ^>(this, &GraphingCalculator::OnDataRequested);
+
+    // Request notifications when we should be showing the trace values
+    m_drawChangedToken = GraphingControl->TracingChangedEvent += ref new TracingChangedEventHandler(this, &GraphingCalculator::OnDrawChanged);
+    // And whenthe actual trace value changes
+    m_tracePointChangedToken = GraphingControl->TracingValueChangedEvent += ref new TracingValueChangedEventHandler(this, &GraphingCalculator::OnTracePointChanged);
+}
+
+void GraphingCalculator::OnDrawChanged(bool newValue)
+{
+    TraceValuePopup->IsOpen = newValue;
+}
+
+void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement ^ sender, DataContextChangedEventArgs ^ args)
+{
+    ViewModel = dynamic_cast<GraphingCalculatorViewModel ^>(args->NewValue);
+
+    ViewModel->VariableUpdated += ref new EventHandler<VariableChangedEventArgs>(this, &CalculatorApp::GraphingCalculator::OnVariableChanged);
+}
+void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
+{
+    auto p = GraphingControl->TraceValue;
+
+    TraceValue->Text = "x=" + newPoint.X.ToString() + ", y=" + newPoint.Y.ToString();
 }
 
 void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement ^ sender, DataContextChangedEventArgs ^ args)
