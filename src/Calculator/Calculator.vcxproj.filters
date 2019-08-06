@@ -240,9 +240,6 @@
     <ClCompile Include="Converters\BooleanNegationConverter.cpp">
       <Filter>Converters</Filter>
     </ClCompile>
-    <ClCompile Include="Converters\BooleanToDoubleNegationConverter.cpp">
-      <Filter>Converters</Filter>
-    </ClCompile>
     <ClCompile Include="Converters\BooleanToVisibilityConverter.cpp">
       <Filter>Converters</Filter>
     </ClCompile>
@@ -325,9 +322,6 @@
       <Filter>Converters</Filter>
     </ClCompile>
     <ClInclude Include="Converters\BooleanNegationConverter.h">
-      <Filter>Converters</Filter>
-    </ClInclude>
-    <ClInclude Include="Converters\BooleanToDoubleNegationConverter.h">
       <Filter>Converters</Filter>
     </ClInclude>
     <ClInclude Include="Converters\BooleanToVisibilityConverter.h">

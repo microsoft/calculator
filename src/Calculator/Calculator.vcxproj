@@ -242,7 +242,6 @@
     <ClInclude Include="Controls\SupplementaryItemsControl.h" />
     <ClInclude Include="Converters\BitFlipAutomationNameConverter.h" />
     <ClInclude Include="Converters\BooleanNegationConverter.h" />
-    <ClInclude Include="Converters\BooleanToDoubleNegationConverter.h" />
     <ClInclude Include="Converters\BooleanToVisibilityConverter.h" />
     <ClInclude Include="Converters\ExpressionItemTemplateSelector.h" />
     <ClInclude Include="Converters\ItemSizeToVisibilityConverter.h" />
@@ -373,7 +372,6 @@
     <ClCompile Include="Controls\SupplementaryItemsControl.cpp" />
     <ClCompile Include="Converters\BitFlipAutomationNameConverter.cpp" />
     <ClCompile Include="Converters\BooleanNegationConverter.cpp" />
-    <ClCompile Include="Converters\BooleanToDoubleNegationConverter.cpp" />
     <ClCompile Include="Converters\BooleanToVisibilityConverter.cpp" />
     <ClCompile Include="Converters\ExpressionItemTemplateSelector.cpp" />
     <ClCompile Include="Converters\ItemSizeToVisibilityConverter.cpp" />

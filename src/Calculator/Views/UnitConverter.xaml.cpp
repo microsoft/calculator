@@ -325,16 +325,16 @@ void UnitConverter::OnIsDisplayVisibleChanged()
 {
     if (Model->IsCurrencyLoadingVisible)
     {
+        VisualStateManager::GoToState(this, L"CurrencyLoadingState", false);
         StartProgressRingWithDelay();
     }
     else
     {
         HideProgressRing();
 
-        if (m_isAnimationEnabled && Model->IsCurrencyCurrentCategory && !Model->CurrencyTimestamp->IsEmpty())
+        if (Model->IsCurrencyCurrentCategory && !Model->CurrencyTimestamp->IsEmpty())
         {
-            TimestampFadeInAnimation->Begin();
-            CurrencyRatioFadeInAnimation->Begin();
+            VisualStateManager::GoToState(this, L"CurrencyLoadedState", m_isAnimationEnabled);
         }
     }
 }

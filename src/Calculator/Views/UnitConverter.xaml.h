@@ -9,7 +9,6 @@
 #include "Views/UnitConverter.g.h"
 #include "Common/AlwaysSelectedCollectionView.h"
 #include "CalcViewModel/Common/ValidatingConverters.h"
-#include "Converters/BooleanToDoubleNegationConverter.h"
 #include "Converters/BooleanToVisibilityConverter.h"
 #include "Converters/VisibilityNegationConverter.h"
 #include "CalcViewModel/UnitConverterViewModel.h"
