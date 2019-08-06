@@ -216,7 +216,7 @@
                       FontSize="16"
                       AutomationProperties.AutomationId="shiftButton"
                       Checked="Shift_Clicked"
-                      Content="&#xE752;"
+                      Content="&#xF897;"
                       Unchecked="Shift_Clicked"/>
         <controls:CalculatorButton x:Name="ModButton"
                                    x:Uid="modButton"
@@ -430,6 +430,6 @@
                                    FontSize="12"
                                    AutomationProperties.AutomationId="negateButton"
                                    ButtonId="Negate"
-                                   Content="&#xE94D;"/>
+                                   Content="&#xF898;"/>
     </Grid>
 </UserControl>

@@ -103,7 +103,6 @@ namespace CalculationManager
         void MemoryItemChanged(unsigned int indexOfMemory) override;
 
         CalculatorManager(ICalcDisplay* displayCallback, IResourceProvider* resourceProvider);
-        ~CalculatorManager();
 
         void Reset(bool clearMemory = true);
         void SetStandardMode();

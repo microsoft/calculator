@@ -78,6 +78,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, IsByteEnabled);
             OBSERVABLE_PROPERTY_RW(int, CurrentRadixType);
             OBSERVABLE_PROPERTY_RW(bool, AreTokensUpdated);
+            OBSERVABLE_PROPERTY_RW(bool, AreAlwaysOnTopResultsUpdated);
             OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
             OBSERVABLE_PROPERTY_RW(bool, AreProgrammerRadixOperatorsEnabled);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::Automation::NarratorAnnouncement ^, Announcement);
@@ -213,6 +214,22 @@ namespace CalculatorApp
                 }
             }
 
+            property bool IsAlwaysOnTop
+            {
+                bool get()
+                {
+                    return m_isAlwaysOnTop;
+                }
+                void set(bool value)
+                {
+                    if (m_isAlwaysOnTop != value)
+                    {
+                        m_isAlwaysOnTop = value;
+                        RaisePropertyChanged(L"IsAlwaysOnTop");
+                    }
+                }
+            }
+
             property bool IsEditingEnabled
             {
                 bool get()
@@ -317,7 +334,7 @@ namespace CalculatorApp
                 }
             }
 
-            internal : void OnPaste(Platform::String ^ pastedString, CalculatorApp::Common::ViewMode mode);
+            internal : void OnPaste(Platform::String ^ pastedString);
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);
 
@@ -347,7 +364,6 @@ namespace CalculatorApp
             void OnMaxDigitsReached();
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
-
 
             Platform::String ^ GetLocalizedStringFormat(Platform::String ^ format, Platform::String ^ displayValue);
             void OnPropertyChanged(Platform::String ^ propertyname);
@@ -407,6 +423,7 @@ namespace CalculatorApp
             bool m_isStandard;
             bool m_isScientific;
             bool m_isProgrammer;
+            bool m_isAlwaysOnTop;
             bool m_isBinaryBitFlippingEnabled;
             bool m_isBitFlipChecked;
             bool m_isShiftChecked;
@@ -450,6 +467,8 @@ namespace CalculatorApp
 
             bool IsViewPinned();
             void SetViewPinnedState(bool pinned);
+
+            CalculatorApp::Common::ViewMode GetCalculatorMode();
 
             friend class CalculatorDisplay;
             friend class CalculatorFunctionalTests::HistoryTests;

@@ -308,7 +308,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(IsStoreBuild)' == 'True'">
     <ClCompile>
-      <AdditionalOptions>/DSEND_TELEMETRY %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/DSEND_DIAGNOSTICS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

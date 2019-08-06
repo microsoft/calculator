@@ -576,7 +576,7 @@ namespace CalculatorUnitTests
         for (String ^ &input : inputs)
         {
             // paste number in standard mode and then validate the pastability of displayed number for other modes
-            scvm->OnPaste(input, ViewMode::Standard);
+            scvm->OnPaste(input);
             VERIFY_ARE_EQUAL(ValidateStandardPasteExpression(scvm->DisplayValue), scvm->DisplayValue);
             VERIFY_ARE_EQUAL(ValidateScientificPasteExpression(scvm->DisplayValue), scvm->DisplayValue);
             VERIFY_ARE_EQUAL(ValidateProgrammerHexQwordPasteExpression(scvm->DisplayValue), scvm->DisplayValue);
