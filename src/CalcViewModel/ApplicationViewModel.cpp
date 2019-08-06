@@ -213,6 +213,7 @@ void ApplicationViewModel::ToggleAlwaysOnTop(float width, float height)
     HandleToggleAlwaysOnTop(width, height);
 }
 
+#pragma optimize("", off)
 task<void> ApplicationViewModel::HandleToggleAlwaysOnTop(float width, float height)
 {
     if (ApplicationView::GetForCurrentView()->ViewMode == ApplicationViewMode::CompactOverlay)
@@ -257,7 +258,8 @@ task<void> ApplicationViewModel::HandleToggleAlwaysOnTop(float width, float heig
         IsAlwaysOnTop = success;
     }
     SetDisplayNormalAlwaysOnTopOption();
-}
+};
+#pragma optimize("", on)
 
 void ApplicationViewModel::SetDisplayNormalAlwaysOnTopOption()
 {
