@@ -21,6 +21,7 @@
         <common:VisibilityNegationConverter x:Name="VisibilityNegationConverter"/>
         <common:AlwaysSelectedCollectionViewConverter x:Name="AlwaysSelectedConverter"/>
         <common:ValidSelectedItemConverter x:Name="ValidSelectedItemConverter"/>
+        <converters:BooleanToDoubleNegationConverter x:Name="BooleanToDoubleNegationConverter"/>
         <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter"/>
         <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
         <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind Model.Announcement, Mode=OneWay}"/>
@@ -258,6 +259,14 @@
                     </EasingDoubleKeyFrame.EasingFunction>
                 </EasingDoubleKeyFrame>
             </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Storyboard x:Name="CurrencyRatioFadeInAnimation">
+            <DoubleAnimation Duration="0:0:1"
+                             From="0"
+                             Storyboard.TargetName="CurrencyRatioEqualityBlock"
+                             Storyboard.TargetProperty="Opacity"
+                             To="1"/>
         </Storyboard>
 
         <Storyboard x:Name="TimestampFadeInAnimation">
@@ -583,8 +592,7 @@
                     HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
                     VerticalAlignment="Top"
                     FlowDirection="{x:Bind LayoutDirection}"
-                    SizeChanged="SupplementaryResultsPanelInGrid_SizeChanged"
-                    Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+                    SizeChanged="SupplementaryResultsPanelInGrid_SizeChanged">
             <local:SupplementaryResults x:Name="SupplementaryResults"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
@@ -595,12 +603,14 @@
                 <TextBlock x:Name="CurrencyRatioEqualityBlock"
                            Style="{ThemeResource CaptionTextBlockStyle}"
                            Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                           Opacity="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToDoubleNegationConverter}}"
                            AutomationProperties.Name="{x:Bind Model.CurrencyRatioEqualityAutomationName, Mode=OneWay}"
                            Text="{x:Bind Model.CurrencyRatioEquality, Mode=OneWay}"/>
 
                 <!-- Currency Timestamp -->
                 <TextBlock x:Name="CurrencyTimestampTextBlock"
                            Style="{ThemeResource CaptionTextBlockStyle}"
+                           Opacity="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToDoubleNegationConverter}}"
                            Text="{x:Bind Model.CurrencyTimestamp, Mode=OneWay}"/>
 
                 <!-- Currency Refresh button and additional status text -->
