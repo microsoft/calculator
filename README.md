@@ -38,8 +38,9 @@ Prerequisites:
 
 - Open [src\Calculator.sln](/src/Calculator.sln) in Visual Studio to build and run the Calculator app.
 - For a general description of the Calculator project architecture see [ApplicationArchitecture.md](docs/ApplicationArchitecture.md).
-- To run the UI Tests, you need to install
-  [Windows Application Driver (WinAppDriver)](https://github.com/microsoft/WinAppDriver#installing-and-running-windows-application-driver).
+- To run the UI Tests, you need to make sure that
+  [Windows Application Driver (WinAppDriver)](https://github.com/microsoft/WinAppDriver/releases/latest)
+  is installed.
 
 ## Contributing
 Want to contribute? The team encourages community feedback and contributions. Please follow our [contributing guidelines](CONTRIBUTING.md).
