@@ -491,7 +491,7 @@
             <!-- Ideally the KeyGraphFeaturesPanel should be a frame so that navigation to and from the panel could be handled nicely -->
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="ActiveTracing" Click="OnActiveTracingClick" Width="40" Height="40" Margin="0,0,10,0">
-                        <Image Source="ms-appx:///Assets/Active.Tracking-32_contrast-white.png"/>
+                        <Image Source="ms-appx:///Assets/ActiveTracking-32_contrast-white.png"/>
                     </Button>
                 <Button x:Name="Share" Click="OnShareClick">
                                          Grid.RowSpan="2"

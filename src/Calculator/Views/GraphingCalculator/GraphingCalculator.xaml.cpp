@@ -54,7 +54,7 @@ GraphingCalculator::GraphingCalculator()
 
     m_dataRequestedToken = dataTransferManager->DataRequested +=
 
-    GraphingControl->TracingChangedEvent += ref new TracingChangedEventHandler(this, &GraphingCalculator::OnShowTracePopupChanged);
+    m_drawChangedToken = GraphingControl->TracingChangedEvent += ref new TracingChangedEventHandler(this, &GraphingCalculator::OnDrawChanged);
 
     // And when the actual trace value changes
 }
