@@ -155,6 +155,15 @@ public
             }
         }
 
+        property Windows::Foundation::Point TraceLocation 
+        {
+            Windows::Foundation::Point get()
+            {
+                return m_renderMain->TraceLocation;
+            }
+        }
+
+
         property Windows::Foundation::Point ActiveTraceCursorPosition
         {
             Windows::Foundation::Point get()
@@ -259,11 +268,11 @@ public
             Right,
             Down,
             Up,
-            Alt
+            Accelerator
         };
 
         bool m_KeysPressed[5];
-        int m_currentKeysPressed;
+        bool m_Moving;
 
        Windows::UI::Xaml::DispatcherTimer ^ m_TraceingTrackingTimer;
 

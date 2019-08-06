@@ -31,24 +31,27 @@
         <Grid x:Name="LeftGrid"
               Grid.Row="1"
               Grid.Column="0">
-             <Grid Grid.Row="0" Margin="4,7,4,4">
+            <Grid Grid.Row="0" Margin="4,7,4,4">
                 <graphControl:Grapher Name="GraphingControl" 
                                   EquationsSource="{x:Bind ViewModel.Equations, Mode=OneWay}"
                                   ForceProportionalAxes="True"
                                   UseSystemFocusVisuals="True"
                                   VariablesUpdated="GraphVariablesUpdated">
-                <graphControl:Grapher.Background>
-                    <SolidColorBrush Color="White"/>
-                </graphControl:Grapher.Background>
-                <graphControl:Grapher.EquationTemplate>
-                    <DataTemplate x:DataType="vm:EquationViewModel">
-                        <graphControl:Equation Expression="{x:Bind Expression, Mode=OneWay}" LineColor="{x:Bind LineColor, Mode=OneWay}"/>
-                    </DataTemplate>
-                </graphControl:Grapher.EquationTemplate>
+                    <graphControl:Grapher.Background>
+                        <SolidColorBrush Color="White"/>
+                    </graphControl:Grapher.Background>
+                    <graphControl:Grapher.EquationTemplate>
+                        <DataTemplate x:DataType="vm:EquationViewModel">
+                            <graphControl:Equation Expression="{x:Bind Expression, Mode=OneWay}" LineColor="{x:Bind LineColor, Mode=OneWay}"/>
+                        </DataTemplate>
+                    </graphControl:Grapher.EquationTemplate>
 
                 </graphControl:Grapher>
 
-                <Popup x:Name="TraceValuePopup" Grid.Row="0" Margin="15,15">
+                <Popup x:Name="TraceValuePopup" Grid.Row="0" RenderTransformOrigin="0,1">
+                    <Popup.RenderTransform>
+                        <TranslateTransform x:Name="TraceValuePopupTransform" X="50" Y="150"/>
+                    </Popup.RenderTransform>
                     <TextBlock x:Name="TraceValue" Text="x=0,y=0"/>
                 </Popup>
 
@@ -244,7 +247,7 @@
                     </Button>
                     <Button x:Name="Share" Click="OnShareClick" Width="40" Height="40">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
-	                </Button>
+                    </Button>
                 </StackPanel>
                 <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
             </StackPanel>

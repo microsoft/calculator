@@ -66,6 +66,9 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
 void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
 {
     auto p = GraphingControl->TraceValue;
+    auto l = GraphingControl->TraceLocation;
+    TraceValuePopupTransform->X = (int)l.X + 15;
+    TraceValuePopupTransform->Y = (int)l.Y - 30;
 
     TraceValue->Text = "x=" + newPoint.X.ToString() + ", y=" + newPoint.Y.ToString();
 }

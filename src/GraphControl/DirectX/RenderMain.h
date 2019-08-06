@@ -77,6 +77,14 @@ namespace GraphControl::DX
             }
         }
 
+        property Windows::Foundation::Point TraceLocation
+        {
+            Windows::Foundation::Point get()
+            {
+                return m_TraceLocation;
+            }
+        }
+
         property bool Tracing
         {
             bool get()
@@ -146,6 +154,9 @@ namespace GraphControl::DX
 
         // What is the current trace value
         Windows::Foundation::Point& m_TraceValue;
+
+        // And where is it located on screen
+        Windows::Foundation::Point& m_TraceLocation;
 
         // Are we currently showing the tracing value
         bool m_Tracing;

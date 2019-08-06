@@ -55,7 +55,7 @@ namespace GraphControl
     Grapher::Grapher()
         : m_solver{ IMathSolver::CreateMathSolver() }
         , m_graph{ m_solver->CreateGrapher() }
-        , m_currentKeysPressed{ 0 }
+        , m_Moving{ false }
     {
         m_solver->ParsingOptions().SetFormatType(FormatType::Linear);
 
@@ -732,53 +732,49 @@ void Grapher::OnCoreKeyDown(CoreWindow ^ sender, KeyEventArgs ^ e)
 
 void Grapher::HandleKey(bool keyDown, VirtualKey key)
 {
+    int pressedKeys = 0;
     if (key == VirtualKey::Left)
     {
         m_KeysPressed[KeysPressedSlots::Left] = keyDown;
-        keyDown ? m_currentKeysPressed++ : m_currentKeysPressed--;
+        if (keyDown)
+            pressedKeys++;
     }
     if (key == VirtualKey::Right)
     {
         m_KeysPressed[KeysPressedSlots::Right] = keyDown;
-        keyDown ? m_currentKeysPressed++ : m_currentKeysPressed--;
+        if (keyDown)
+            pressedKeys++;
     }
     if (key == VirtualKey::Up)
     {
         m_KeysPressed[KeysPressedSlots::Up] = keyDown;
-        keyDown ? m_currentKeysPressed++ : m_currentKeysPressed--;
+        if (keyDown)
+            pressedKeys++;
     }
     if (key == VirtualKey::Down)
     {
         m_KeysPressed[KeysPressedSlots::Down] = keyDown;
-        keyDown ? m_currentKeysPressed++ : m_currentKeysPressed--;
+        if (keyDown)
+            pressedKeys++;
     }
     if (key == VirtualKey::Shift)
     {
-        m_KeysPressed[KeysPressedSlots::Alt] = keyDown;
-        keyDown ? m_currentKeysPressed++ : m_currentKeysPressed--;
+        m_KeysPressed[KeysPressedSlots::Accelerator] = keyDown;
     }
 
-    if (m_currentKeysPressed == 0)
+    if (pressedKeys > 0 && !m_Moving)
     {
-        // Non of the keys we care about are being hit any longer so shut down our timer
-        m_TraceingTrackingTimer->Stop();
-    }
-    else
-    {
-        // Key we care about, so ensure we are ticking our timer (and that we have one to tick)
+        m_Moving = true;
+        // Key(s) we care about, so ensure we are ticking our timer (and that we have one to tick)
         if (m_TraceingTrackingTimer == nullptr)
         {
             m_TraceingTrackingTimer = ref new Windows::UI::Xaml::DispatcherTimer();
 
             m_TraceingTrackingTimer->Tick += ref new EventHandler<Object ^>(this, &Grapher::HandleTracingMovementTick);
-            int64 interval = 1 * 1000 * 10000;
-            m_TraceingTrackingTimer->Interval = TimeSpan{ interval };
+            TimeSpan ts;
+            ts.Duration = 100000; // .1 second
+            m_TraceingTrackingTimer->Interval = ts;
             auto i = m_TraceingTrackingTimer->Interval;
-            //TimeSpan ts;
-            //ts.Duration = 50;
-            //m_TraceingTrackingTimer->Interval = ts;
-            //auto d = m_TraceingTrackingTimer->Interval;
-            OutputDebugString(L"Annoying");
         }
         m_TraceingTrackingTimer->Start();
     }
@@ -786,17 +782,19 @@ void Grapher::HandleKey(bool keyDown, VirtualKey key)
 
 void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
 {
-    int delta = 1;
+    int delta = 5;
+    int liveKeys = 0;
 
-    if (m_KeysPressed[KeysPressedSlots::Alt])
+    if (m_KeysPressed[KeysPressedSlots::Accelerator])
     {
-        delta = 10;
+        delta = 1;
     }
 
     auto curPos = ActiveTraceCursorPosition;
 
     if (m_KeysPressed[KeysPressedSlots::Left])
     {
+        liveKeys++;
         curPos.X -= delta;
         if (curPos.X < 0)
         {
@@ -806,6 +804,7 @@ void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
 
     if (m_KeysPressed[KeysPressedSlots::Right])
     {
+        liveKeys++;
         curPos.X += delta;
         if (curPos.X > ActualWidth - delta)
         {
@@ -815,6 +814,7 @@ void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
 
     if (m_KeysPressed[KeysPressedSlots::Up])
     {
+        liveKeys++;
         curPos.Y -= delta;
         if (curPos.Y < 0)
         {
@@ -824,6 +824,7 @@ void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
 
     if (m_KeysPressed[KeysPressedSlots::Down])
     {
+        liveKeys++;
         curPos.Y += delta;
         if (curPos.Y > ActualHeight - delta)
         {
@@ -831,5 +832,15 @@ void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
         }
     }
 
-    ActiveTraceCursorPosition = curPos;
+    if (liveKeys == 0)
+    {
+        m_Moving = false;
+
+        // Non of the keys we care about are being hit any longer so shut down our timer
+        m_TraceingTrackingTimer->Stop();
+    }
+    else
+    {
+        ActiveTraceCursorPosition = curPos;
+    }
 }
