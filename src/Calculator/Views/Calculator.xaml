@@ -34,26 +34,6 @@
                        Text="{x:Bind Token, Mode=OneWay}"/>
         </DataTemplate>
 
-        <DataTemplate x:Key="AlwaysOnTopOperand" x:DataType="common:DisplayExpressionToken">
-            <TextBlock Margin="2,0,0,0"
-                       Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{x:Bind Token, Mode=OneWay}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="AlwaysOnTopOperator" x:DataType="common:DisplayExpressionToken">
-            <TextBlock Margin="2,0,0,0"
-                       Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{x:Bind Token, Mode=OneWay}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="AlwaysOnTopSeparator" x:DataType="common:DisplayExpressionToken">
-            <TextBlock x:Name="MainText"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{x:Bind Token, Mode=OneWay}"/>
-        </DataTemplate>
-
         <!-- TextBox Styles -->
 
         <Style x:Key="NormalStyle" TargetType="controls:OverflowTextBlock">
@@ -376,11 +356,6 @@
                                                    OperandTemplate="{StaticResource Operand}"
                                                    OperatorTemplate="{StaticResource Operator}"
                                                    SeparatorTemplate="{StaticResource Separator}"/>
-
-        <converters:ExpressionItemTemplateSelector x:Key="AlwaysOnTopExpressionItemTemplateSelector"
-                                                   OperandTemplate="{StaticResource AlwaysOnTopOperand}"
-                                                   OperatorTemplate="{StaticResource AlwaysOnTopOperator}"
-                                                   SeparatorTemplate="{StaticResource AlwaysOnTopSeparator}"/>
 
         <!-- Miscellaneous Resources -->
 
