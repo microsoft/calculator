@@ -126,6 +126,15 @@ public
             }
         }
 
+        property Windows::Foundation::Point TraceLocation 
+        {
+            Windows::Foundation::Point get()
+            {
+                return m_renderMain->TraceLocation;
+            }
+        }
+
+
         property Windows::Foundation::Point ActiveTraceCursorPosition
         {
             Windows::Foundation::Point get()
