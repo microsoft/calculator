@@ -9,11 +9,11 @@
 
 namespace GraphControl
 {
-    public
-        delegate void TracingChangedEventHandler(bool newValue);
+public
+    delegate void TracingChangedEventHandler(bool newValue);
 
-    public
-        delegate void TracingValueChangedEventHandler(Windows::Foundation::Point value);
+public
+    delegate void TracingValueChangedEventHandler(Windows::Foundation::Point value);
 
     [Windows::UI::Xaml::Markup::ContentPropertyAttribute(Name = L"Equations")] public ref class Grapher sealed : public Windows::UI::Xaml::Controls::Control
     {
@@ -147,7 +147,6 @@ namespace GraphControl
             }
         }
 
-
         property Windows::Foundation::Point TraceValue
         {
             Windows::Foundation::Point get()
@@ -155,7 +154,6 @@ namespace GraphControl
                 return m_renderMain->TraceValue;
             }
         }
-
 
         property Windows::Foundation::Point ActiveTraceCursorPosition
         {
@@ -166,21 +164,17 @@ namespace GraphControl
 
             void set(Windows::Foundation::Point newValue)
             {
-                m_renderMain->ActiveTraceCursorPosition = newValue;
+                if (m_renderMain->ActiveTraceCursorPosition != newValue)
+                {
+                    m_renderMain->ActiveTraceCursorPosition = newValue;
+                    UpdateTracingChanged();
+                }
             }
         }
-
-        property Windows::Foundation::Point TraceValue
-        {
-            Windows::Foundation::Point get()
-            {
-                return m_renderMain->TraceValue;
-            }
-        }
-
 
         event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String ^, double> ^> ^ VariablesUpdated;
         void SetVariable(Platform::String ^ variableName, double newValue);
+
     protected:
 #pragma region Control Overrides
         void OnApplyTemplate() override;
@@ -230,6 +224,12 @@ namespace GraphControl
         void ScaleRange(double centerX, double centerY, double scale);
 
         void OnCoreKeyDown(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ e);
+        void OnCoreKeyUp(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ e);
+
+        void UpdateTracingChanged();
+        void HandleTracingMovementTick(Object ^ sender, Object ^ e);
+        void HandleKey(bool keyDown, Windows::System::VirtualKey key);
+
 
     private:
         DX::RenderMain ^ m_renderMain = nullptr;
@@ -251,6 +251,21 @@ namespace GraphControl
 
         const std::unique_ptr<Graphing::IMathSolver> m_solver;
         const std::shared_ptr<Graphing::IGraph> m_graph;
+
+        bool m_tracingTracking;
+        enum KeysPressedSlots
+        {
+            Left,
+            Right,
+            Down,
+            Up,
+            Alt
+        };
+
+        bool m_KeysPressed[5];
+        int m_currentKeysPressed;
+
+       Windows::UI::Xaml::DispatcherTimer ^ m_TraceingTrackingTimer;
 
     public:
         Windows::Storage::Streams::RandomAccessStreamReference ^ GetGraphBitmapStream();

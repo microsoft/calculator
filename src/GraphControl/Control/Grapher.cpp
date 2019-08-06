@@ -22,64 +22,6 @@ using namespace Windows::UI::Xaml::Media;
 
 namespace
 {
-    template <class T>
-    T FindChild(DependencyObject parent, string childName)
-    {
-        // Confirm parent and childName are valid.
-        if (parent == null)
-        {
-            return null;
-        }
-
-        T foundChild = null;
-
-        int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-        for (int i = 0; i < childrenCount; i++)
-        {
-            DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-            // If the child is not of the request child type child
-            var childType = child as T;
-            if (childType == null)
-            {
-                // recursively drill down the tree
-                foundChild = FindChild<T>(child, childName);
-
-                // If the child is found, break so we do not overwrite the found child.
-                if (foundChild != null)
-                {
-                    break;
-                }
-            }
-            else if (!string.IsNullOrEmpty(childName))
-            {
-                var frameworkElement = child as FrameworkElement;
-                // If the child's name is set for search
-                if (frameworkElement != null && frameworkElement.Name == childName)
-                {
-                    // if the child's name is of the request name
-                    foundChild = (T)child;
-                    break;
-                }
-
-                // Need this in case the element we want is nested
-                // in another element of the same type
-                foundChild = FindChild<T>(child, childName);
-            }
-            else
-            {
-                // child element found.
-                foundChild = (T)child;
-                break;
-            }
-        }
-
-        return foundChild;
-    }
-
-
-
-
-
     constexpr auto s_defaultStyleKey = L"GraphControl.Grapher";
     constexpr auto s_templateKey_SwapChainPanel = L"GraphSurface";
 
@@ -113,6 +55,7 @@ namespace GraphControl
     Grapher::Grapher()
         : m_solver{ IMathSolver::CreateMathSolver() }
         , m_graph{ m_solver->CreateGrapher() }
+        , m_currentKeysPressed{ 0 }
     {
         m_solver->ParsingOptions().SetFormatType(FormatType::Linear);
 
@@ -129,6 +72,7 @@ namespace GraphControl
 
         auto cw = CoreWindow::GetForCurrentThread();
         cw->KeyDown += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &Grapher::OnCoreKeyDown);
+        cw->KeyUp += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &Grapher::OnCoreKeyUp);
     }
 
     void Grapher::OnLoaded(Object ^ sender, RoutedEventArgs ^ args)
@@ -557,23 +501,27 @@ namespace GraphControl
         }
     }
 
+    void Grapher::UpdateTracingChanged()
+    {
+        if (m_renderMain->Tracing)
+        {
+            TracingChangedEvent(true);
+
+            TracingValueChangedEvent(m_renderMain->TraceValue);
+        }
+        else
+        {
+            TracingChangedEvent(false);
+        }
+    }
+
     void Grapher::OnPointerMoved(PointerRoutedEventArgs ^ e)
     {
         if (m_renderMain)
         {
             PointerPoint ^ currPoint = e->GetCurrentPoint(/* relativeTo */ this);
             m_renderMain->PointerLocation = currPoint->Position;
-
-            if (m_renderMain->Tracing)
-            {
-                TracingChangedEvent(true);
-
-                TracingValueChangedEvent(m_renderMain->TraceValue);
-            }
-            else
-            {
-                TracingChangedEvent(false);
-            }
+            UpdateTracingChanged();
 
             e->Handled = true;
         }
@@ -732,12 +680,12 @@ namespace GraphControl
     }
 }
 
-void Grapher::OnCoreKeyDown(CoreWindow ^ sender, KeyEventArgs ^ e)
+void Grapher::OnCoreKeyUp(CoreWindow ^ sender, KeyEventArgs ^ e)
 {
     // We don't want to eat keys when the user is in the equation text box.
     FrameworkElement ^ whoHasFocus = (FrameworkElement ^) FocusManager::GetFocusedElement();
     String ^ wName = whoHasFocus->Name;
-    String^ ETBName = L"EquationTextBox";
+    String ^ ETBName = L"EquationTextBox";
     if (wName == ETBName)
     {
         return;
@@ -746,51 +694,142 @@ void Grapher::OnCoreKeyDown(CoreWindow ^ sender, KeyEventArgs ^ e)
     switch (e->VirtualKey)
     {
     case VirtualKey::Left:
+    case VirtualKey::Right:
+    case VirtualKey::Down:
+    case VirtualKey::Up:
+    case VirtualKey::Shift:
     {
-        auto curPos = ActiveTraceCursorPosition;
-        curPos.X -= 10;
+        HandleKey(false, e->VirtualKey);
+    }
+    break;
+    }
+}
+
+void Grapher::OnCoreKeyDown(CoreWindow ^ sender, KeyEventArgs ^ e)
+{
+    // We don't want to eat keys when the user is in the equation text box.
+    FrameworkElement ^ whoHasFocus = (FrameworkElement ^) FocusManager::GetFocusedElement();
+    String ^ wName = whoHasFocus->Name;
+    String ^ ETBName = L"EquationTextBox";
+    if (wName == ETBName)
+    {
+        return;
+    }
+
+    switch (e->VirtualKey)
+    {
+    case VirtualKey::Left:
+    case VirtualKey::Right:
+    case VirtualKey::Down:
+    case VirtualKey::Up:
+    case VirtualKey::Shift:
+    {
+        HandleKey(true, e->VirtualKey);
+    }
+    break;
+    }
+}
+
+void Grapher::HandleKey(bool keyDown, VirtualKey key)
+{
+    if (key == VirtualKey::Left)
+    {
+        m_KeysPressed[KeysPressedSlots::Left] = keyDown;
+        keyDown ? m_currentKeysPressed++ : m_currentKeysPressed--;
+    }
+    if (key == VirtualKey::Right)
+    {
+        m_KeysPressed[KeysPressedSlots::Right] = keyDown;
+        keyDown ? m_currentKeysPressed++ : m_currentKeysPressed--;
+    }
+    if (key == VirtualKey::Up)
+    {
+        m_KeysPressed[KeysPressedSlots::Up] = keyDown;
+        keyDown ? m_currentKeysPressed++ : m_currentKeysPressed--;
+    }
+    if (key == VirtualKey::Down)
+    {
+        m_KeysPressed[KeysPressedSlots::Down] = keyDown;
+        keyDown ? m_currentKeysPressed++ : m_currentKeysPressed--;
+    }
+    if (key == VirtualKey::Shift)
+    {
+        m_KeysPressed[KeysPressedSlots::Alt] = keyDown;
+        keyDown ? m_currentKeysPressed++ : m_currentKeysPressed--;
+    }
+
+    if (m_currentKeysPressed == 0)
+    {
+        // Non of the keys we care about are being hit any longer so shut down our timer
+        m_TraceingTrackingTimer->Stop();
+    }
+    else
+    {
+        // Key we care about, so ensure we are ticking our timer (and that we have one to tick)
+        if (m_TraceingTrackingTimer == nullptr)
+        {
+            m_TraceingTrackingTimer = ref new Windows::UI::Xaml::DispatcherTimer();
+
+            m_TraceingTrackingTimer->Tick += ref new EventHandler<Object ^>(this, &Grapher::HandleTracingMovementTick);
+            int64 interval = 1 * 1000 * 10000;
+            m_TraceingTrackingTimer->Interval = TimeSpan{ interval };
+            auto i = m_TraceingTrackingTimer->Interval;
+            //TimeSpan ts;
+            //ts.Duration = 50;
+            //m_TraceingTrackingTimer->Interval = ts;
+            //auto d = m_TraceingTrackingTimer->Interval;
+            OutputDebugString(L"Annoying");
+        }
+        m_TraceingTrackingTimer->Start();
+    }
+}
+
+void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
+{
+    int delta = 1;
+
+    if (m_KeysPressed[KeysPressedSlots::Alt])
+    {
+        delta = 10;
+    }
+
+    auto curPos = ActiveTraceCursorPosition;
+
+    if (m_KeysPressed[KeysPressedSlots::Left])
+    {
+        curPos.X -= delta;
         if (curPos.X < 0)
         {
             curPos.X = 0;
         }
-        ActiveTraceCursorPosition = curPos;
     }
-    break;
 
-    case VirtualKey::Right:
+    if (m_KeysPressed[KeysPressedSlots::Right])
     {
-        auto curPos = ActiveTraceCursorPosition;
-        curPos.X += 10;
-        if (curPos.X > ActualWidth - 10)
+        curPos.X += delta;
+        if (curPos.X > ActualWidth - delta)
         {
-            curPos.X = (float)ActualWidth - 10; // TODO change this to deal with size of cursor
+            curPos.X = (float)ActualWidth - delta; // TODO change this to deal with size of cursor
         }
-        ActiveTraceCursorPosition = curPos;
     }
-    break;
 
-    case VirtualKey::Up:
+    if (m_KeysPressed[KeysPressedSlots::Up])
     {
-        auto curPos = ActiveTraceCursorPosition;
-        curPos.Y -= 10;
+        curPos.Y -= delta;
         if (curPos.Y < 0)
         {
             curPos.Y = 0;
         }
-        ActiveTraceCursorPosition = curPos;
     }
-    break;
 
-    case VirtualKey::Down:
+    if (m_KeysPressed[KeysPressedSlots::Down])
     {
-        auto curPos = ActiveTraceCursorPosition;
-        curPos.Y += 10;
-        if (curPos.Y > ActualHeight - 10)
+        curPos.Y += delta;
+        if (curPos.Y > ActualHeight - delta)
         {
-            curPos.Y = (float)ActualHeight - 10; // TODO change this to deal with size of cursor
+            curPos.Y = (float)ActualHeight - delta; // TODO change this to deal with size of cursor
         }
-        ActiveTraceCursorPosition = curPos;
     }
-    break;
-    }
+
+    ActiveTraceCursorPosition = curPos;
 }

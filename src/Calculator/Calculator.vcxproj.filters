@@ -1557,7 +1557,7 @@
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-lightunplated.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\Active.Tracking-32_contrast-white.png">
+    <Image Include="Assets\ActiveTracking-32_contrast-white.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
@@ -1570,6 +1570,8 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />

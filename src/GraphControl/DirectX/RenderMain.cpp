@@ -193,9 +193,10 @@ namespace GraphControl::DX
                             m_Tracing = true;
                             m_TraceValue = Point(nearestPointValue.first, nearestPointValue.second);
                         }
-                    else
-                    {
-                        m_Tracing = false;
+                        else
+                        {
+                            m_Tracing = false;
+                        }
                     }
                 }
             }

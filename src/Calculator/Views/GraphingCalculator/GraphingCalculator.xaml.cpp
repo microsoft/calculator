@@ -45,12 +45,13 @@ GraphingCalculator::GraphingCalculator()
     m_dataRequestedToken = dataTransferManager->DataRequested += ref new TypedEventHandler<DataTransferManager ^, DataRequestedEventArgs ^>(this, &GraphingCalculator::OnDataRequested);
 
     // Request notifications when we should be showing the trace values
-    m_drawChangedToken = GraphingControl->TracingChangedEvent += ref new TracingChangedEventHandler(this, &GraphingCalculator::OnDrawChanged);
-    // And whenthe actual trace value changes
+    m_showTracePopupChangedToken = GraphingControl->TracingChangedEvent += ref new TracingChangedEventHandler(this, &GraphingCalculator::OnShowTracePopupChanged);
+
+    // And when the actual trace value changes
     m_tracePointChangedToken = GraphingControl->TracingValueChangedEvent += ref new TracingValueChangedEventHandler(this, &GraphingCalculator::OnTracePointChanged);
 }
 
-void GraphingCalculator::OnDrawChanged(bool newValue)
+void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
 {
     TraceValuePopup->IsOpen = newValue;
 }
@@ -61,18 +62,12 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
 
     ViewModel->VariableUpdated += ref new EventHandler<VariableChangedEventArgs>(this, &CalculatorApp::GraphingCalculator::OnVariableChanged);
 }
+
 void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
 {
     auto p = GraphingControl->TraceValue;
 
     TraceValue->Text = "x=" + newPoint.X.ToString() + ", y=" + newPoint.Y.ToString();
-}
-
-void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement ^ sender, DataContextChangedEventArgs ^ args)
-{
-    ViewModel = dynamic_cast<GraphingCalculatorViewModel ^>(args->NewValue);
-
-    ViewModel->VariableUpdated += ref new EventHandler<VariableChangedEventArgs>(this, &CalculatorApp::GraphingCalculator::OnVariableChanged);
 }
 
 GraphingCalculatorViewModel ^ GraphingCalculator::ViewModel::get()
