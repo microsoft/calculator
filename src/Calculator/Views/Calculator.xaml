@@ -162,9 +162,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <ScrollViewer x:Name="ExpressionContainer"
-                                          Grid.Column="0"
-                                          Grid.ColumnSpan="3"
-                                          Padding="0,0,0,0"
+                                          Grid.Column="1"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           Style="{StaticResource ResultsScrollerSnapped}"
                                           AutomationProperties.AccessibilityView="Control">
@@ -178,34 +176,30 @@
                                            Grid.Row="2"
                                            HorizontalAlignment="Right"/>
                             </ScrollViewer>
-                            <Border Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
-                                    Grid.Column="0">
-                                <Button x:Name="ScrollLeft"
+                            <Button x:Name="ScrollLeft"
                                     x:Uid="scrollLeft"
-                                    Margin="0,3,0,0"
-                                    Style="{StaticResource AlwaysOnTopScrollButtonStyleS}"
+                                    Grid.Column="0"
                                     MinWidth="{TemplateBinding ColumnWidth}"
                                     MinHeight="{TemplateBinding ColumnHeight}"
+                                    Margin="0,3,0,0"
+                                    Style="{StaticResource AlwaysOnTopScrollButtonStyleS}"
                                     Background="Transparent">
-                                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                           FontSize="{TemplateBinding ScrollButtonFontSize}"
                                           Glyph="&#xE26C;"/>
-                                </Button>
-                            </Border>
-                            <Border Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
-                                    Grid.Column="2">
-                                <Button x:Name="ScrollRight"
+                            </Button>
+                            <Button x:Name="ScrollRight"
                                     x:Uid="scrollRight"
-                                    Margin="0,3,0,0"
-                                    Style="{StaticResource AlwaysOnTopScrollButtonStyleS}"
+                                    Grid.Column="2"
                                     MinWidth="{TemplateBinding ColumnWidth}"
                                     MinHeight="{TemplateBinding ColumnHeight}"
+                                    Margin="0,3,0,0"
+                                    Style="{StaticResource AlwaysOnTopScrollButtonStyleS}"
                                     Background="Transparent">
-                                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                           FontSize="{TemplateBinding ScrollButtonFontSize}"
                                           Glyph="&#xE26B;"/>
-                                </Button>
-                            </Border>
+                            </Button>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
