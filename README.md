@@ -38,6 +38,8 @@ Prerequisites:
 
 - Open [src\Calculator.sln](/src/Calculator.sln) in Visual Studio to build and run the Calculator app.
 - For a general description of the Calculator project architecture see [ApplicationArchitecture.md](docs/ApplicationArchitecture.md).
+- To run the UI Tests, you need to install
+  [Windows Application Driver (WinAppDriver)](https://github.com/microsoft/WinAppDriver#installing-and-running-windows-application-driver).
 
 ## Contributing
 Want to contribute? The team encourages community feedback and contributions. Please follow our [contributing guidelines](CONTRIBUTING.md).
@@ -55,9 +57,9 @@ Diagnostic data is disabled in development builds by default, and can be enabled
 build flag.
 
 ## Currency Converter
-Windows Calculator includes a currency converter feature that uses mock data in developer builds. The data that 
-Microsoft uses for the currency converter feature (e.g., in the retail version of the application) is not licensed 
-for your use. The mock data will be clearly identifiable as it references planets instead of countries, 
+Windows Calculator includes a currency converter feature that uses mock data in developer builds. The data that
+Microsoft uses for the currency converter feature (e.g., in the retail version of the application) is not licensed
+for your use. The mock data will be clearly identifiable as it references planets instead of countries,
 and remains static regardless of selected inputs.
 
 ## Reporting Security Issues
