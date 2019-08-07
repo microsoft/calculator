@@ -12,8 +12,7 @@
           Height="32"
           HorizontalAlignment="Stretch">
         <Grid x:Name="BackgroundElement"
-              Background="Transparent"
-              Height="32">
+              Background="Transparent">
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="WindowFocusStates">
                     <VisualState x:Name="WindowFocused"/>
@@ -31,7 +30,6 @@
                    VerticalAlignment="Center"
                    Foreground="{ThemeResource TitleBarForegroundBaseHighBrush}"
                    FontSize="12"
-                   TextAlignment="Left"
                    TextTrimming="CharacterEllipsis"
                    Visibility="{x:Bind ApplicationViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
         </Grid>
