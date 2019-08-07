@@ -178,7 +178,7 @@ namespace CalculatorApp
         VisualStateManager::GoToState(this, newValue ? "AOTMiniState" : "AOTNormalState", false);
     }
 
-    void TitleBar::AlwaysOnTopButton_Click(Platform::Object ^ /*sender*/, Windows::UI::Xaml::RoutedEventArgs ^ e)
+    void TitleBar::AlwaysOnTopButton_Click(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ e)
     {
         AlwaysOnTopClick(this, e);
     }
