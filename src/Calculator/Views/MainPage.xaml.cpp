@@ -546,6 +546,12 @@ void MainPage::OnNavItemInvoked(MUXC::NavigationView ^ /*sender*/, _In_ MUXC::Na
     NavView->IsPaneOpen = false;
 }
 
+void MainPage::TitleBarAlwaysOnTopButtonClick(Platform::Object ^ /*sender*/, Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
+{
+    auto bounds = Window::Current->Bounds;
+    Model->ToggleAlwaysOnTop(bounds.Width, bounds.Height);
+}
+
 void MainPage::AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     Model->ToggleAlwaysOnTop(0, 0);

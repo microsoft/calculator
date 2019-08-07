@@ -86,9 +86,9 @@
                     Command="{x:Bind Model.PasteCommand}"/>
         </StackPanel>
 
-        <local:TitleBar x:Name="CustomTitleBar" Grid.Row="0"
-                        ApplicationViewModel="{x:Bind Model}"/>
-        
+        <local:TitleBar Grid.Row="0" IsAlwaysOnTopMode="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"
+                        AlwaysOnTopClick="TitleBarAlwaysOnTopButtonClick"/>
+
         <Grid Grid.Row="1">
             <Border x:Name="CalcHolder">
                 <!-- PLACEHOLDER!!!! This is where the calculator goes when it is delay loaded -->

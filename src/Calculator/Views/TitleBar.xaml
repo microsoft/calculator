@@ -3,27 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:converters="using:CalculatorApp.Converters"
              mc:Ignorable="d">
-    <UserControl.Resources>
-        <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
-    </UserControl.Resources>
     <Grid x:Name="LayoutRoot"
           Height="32"
           HorizontalAlignment="Stretch">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowFocusStates">
+                <VisualState x:Name="WindowFocused"/>
+                <VisualState x:Name="WindowNotFocused">
+                    <VisualState.Setters>
+                        <Setter Target="AppName.Foreground" Value="{ThemeResource SystemControlForegroundChromeDisabledLowBrush}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="AOTStates">
+                <VisualState x:Name="AOTNormalState"/>
+                <VisualState x:Name="AOTMiniState">
+                    <VisualState.Setters>
+                        <Setter Target="AppName.Visibility" Value="Collapsed" />
+                        <Setter Target="ExitAlwaysOnTopButton.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid x:Name="BackgroundElement"
               Background="Transparent"
               Height="32">
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroup x:Name="WindowFocusStates">
-                    <VisualState x:Name="WindowFocused"/>
-                    <VisualState x:Name="WindowNotFocused">
-                        <VisualState.Setters>
-                            <Setter Target="AppName.Foreground" Value="{ThemeResource SystemControlForegroundChromeDisabledLowBrush}"/>
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateManager.VisualStateGroups>
             <TextBlock x:Name="AppName"
                    x:Uid="AppName"
                    Margin="12,0,12,0"
@@ -32,25 +37,22 @@
                    Foreground="{ThemeResource TitleBarForegroundBaseHighBrush}"
                    FontSize="12"
                    TextAlignment="Left"
-                   TextTrimming="CharacterEllipsis"
-                   Visibility="{x:Bind ApplicationViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+                   TextTrimming="CharacterEllipsis"/>
         </Grid>
-        <Button x:Name="AoTAlwaysOnTopButton"
+        <Button x:Name="ExitAlwaysOnTopButton"
                 x:Uid="ExitAlwaysOnTopButton"
-                Grid.Row="0"
+                x:Load="False"
                 FontFamily="{StaticResource CalculatorFontFamily}"
                 Style="{ThemeResource CommandBarFlyoutEllipsisButtonStyle}"
                 Content="&#xEE47;"
-                Click="AlwaysOnTopButtonClick"
+                Click="AlwaysOnTopButton_Click"
                 Width="46"
-                Height="32"
+                Height="Auto"
+                Visibility="Collapsed"
                 HorizontalAlignment="Left"
                 HorizontalContentAlignment="Center"
                 Background="Transparent"
-                FontWeight="Thin"
                 FontSize="14"
-                AllowFocusWhenDisabled="False"
-                Visibility="{x:Bind ApplicationViewModel.IsAlwaysOnTop, Mode=OneWay}"
-                AutomationProperties.AutomationId="AoTAlwaysOnTopButton"/>
+                AutomationProperties.AutomationId="ExitAlwaysOnTopButton"/>
     </Grid>
 </UserControl>
