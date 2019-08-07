@@ -19,6 +19,14 @@ namespace CalculatorApp
             void set(CalculatorApp::ViewModel::GraphingCalculatorViewModel^ vm);
         }
 
+        static property double zoomButtonDelta
+        {
+            double get()
+            {
+                return 120;
+            }
+        }
+
     private:
         void GraphingCalculator_DataContextChanged(Windows::UI::Xaml::FrameworkElement^ sender, Windows::UI::Xaml::DataContextChangedEventArgs^ args);
 
@@ -28,6 +36,10 @@ namespace CalculatorApp
         void TextBoxLosingFocus(Windows::UI::Xaml::Controls::TextBox^ textbox, Windows::UI::Xaml::Input::LosingFocusEventArgs^ args);
         void TextBoxKeyDown(Windows::UI::Xaml::Controls::TextBox^ textbox, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e);
         void SubmitTextbox(Windows::UI::Xaml::Controls::TextBox^ textbox);
+
+        void ZoomInButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void ZoomOutButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void ZoomResetButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
         double validateDouble(Platform::String^ value, double defaultValue);
 

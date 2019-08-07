@@ -105,6 +105,20 @@ namespace GraphControl
         }
     }
 
+    void Grapher::ResetGrid()
+    {
+        if (m_graph != nullptr && m_renderMain != nullptr)
+        {
+            if (auto renderer = m_graph->GetRenderer())
+            {
+                if (SUCCEEDED(renderer->ResetRange()))
+                {
+                    m_renderMain->RunRenderPass();
+                }
+            }
+        }
+    }
+
     void Grapher::OnApplyTemplate()
     {
         auto swapChainPanel = dynamic_cast<SwapChainPanel^>(GetTemplateChild(StringReference(s_templateKey_SwapChainPanel)));

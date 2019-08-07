@@ -215,6 +215,91 @@
                     </Flyout>
                 </Button.Flyout>
             </Button>
+
+            <Button Margin="0,0,12,12"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    FontFamily="{StaticResource SymbolThemeFontFamily}"
+                    FontSize="12"
+                    Content="&#xE738;"
+                    RequestedTheme="Light"
+                    Click="ZoomOutButtonClick"
+                    Width="36"
+                    Height="36"
+                    CornerRadius="18"
+                    Background="White"
+                    BorderThickness="1">
+                <Button.Resources>
+                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="White"/>
+                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="White"/>
+                    <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="White"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrush" Color="Black" Opacity="0.6"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{ThemeResource SystemAccentColor}" Opacity="0.8"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{ThemeResource SystemAccentColor}" Opacity="1.0"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="Black" Opacity="0.2"/>
+                    <SolidColorBrush x:Key="ButtonForeground" Color="Black" Opacity="0.6"/>
+                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemAccentColor}" Opacity="0.8"/>
+                    <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemAccentColor}" Opacity="1.0"/>
+                    <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="Black" Opacity="0.2"/>
+                </Button.Resources>
+            </Button>
+
+            <Button Margin="0,0,12,60"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    FontFamily="{StaticResource SymbolThemeFontFamily}"
+                    FontSize="12"
+                    Content="&#xE710;"
+                    RequestedTheme="Light"
+                    Click="ZoomInButtonClick"
+                    Width="36"
+                    Height="36"
+                    CornerRadius="18"
+                    Background="White"
+                    BorderThickness="1">
+                <Button.Resources>
+                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="White"/>
+                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="White"/>
+                    <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="White"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrush" Color="Black" Opacity="0.6"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{ThemeResource SystemAccentColor}" Opacity="0.8"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{ThemeResource SystemAccentColor}" Opacity="1.0"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="Black" Opacity="0.2"/>
+                    <SolidColorBrush x:Key="ButtonForeground" Color="Black" Opacity="0.6"/>
+                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemAccentColor}" Opacity="0.8"/>
+                    <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemAccentColor}" Opacity="1.0"/>
+                    <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="Black" Opacity="0.2"/>
+                </Button.Resources>
+            </Button>
+
+            <Button Margin="0,0,12,108"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    FontFamily="{StaticResource SymbolThemeFontFamily}"
+                    FontSize="12"
+                    Content="&#xE895;"
+                    RequestedTheme="Light"
+                    Click="ZoomResetButtonClick"
+                    Width="36"
+                    Height="36"
+                    CornerRadius="18"
+                    Background="White"
+                    BorderThickness="1">
+                <Button.Resources>
+                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="White"/>
+                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="White"/>
+                    <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="White"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrush" Color="Black" Opacity="0.6"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{ThemeResource SystemAccentColor}" Opacity="0.8"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{ThemeResource SystemAccentColor}" Opacity="1.0"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="Black" Opacity="0.2"/>
+                    <SolidColorBrush x:Key="ButtonForeground" Color="Black" Opacity="0.6"/>
+                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemAccentColor}" Opacity="0.8"/>
+                    <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemAccentColor}" Opacity="1.0"/>
+                    <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="Black" Opacity="0.2"/>
+                </Button.Resources>
+            </Button>
+
         </Grid>
 
         <!-- Right portion of the screen -->
