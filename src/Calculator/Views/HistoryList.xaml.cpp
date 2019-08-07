@@ -8,6 +8,7 @@
 
 #include "pch.h"
 #include "HistoryList.xaml.h"
+#include "CalcViewModel/Common/CopyPasteManager.h"
 #include "CalcViewModel/Common/LocalizationService.h"
 
 using namespace CalculatorApp;
@@ -37,6 +38,8 @@ HistoryList::HistoryList()
 {
     InitializeComponent();
 
+    CopyHistoryMenuItem->Text = AppResourceProvider::GetInstance().GetResourceString(L"copyMenuItem");
+
     HistoryEmpty->FlowDirection = LocalizationService::GetInstance()->GetFlowDirection();
 }
 
@@ -49,6 +52,16 @@ void HistoryList::ListView_ItemClick(_In_ Object ^ sender, _In_ ItemClickEventAr
     if (clickedItem != nullptr && historyVM != nullptr)
     {
         historyVM->ShowItem(clickedItem);
+    }
+}
+
+void HistoryList::OnCopyMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
+{
+    auto listViewItem = HistoryContextMenu->Target;
+    auto itemViewModel = dynamic_cast<HistoryItemViewModel ^>(HistoryListView->ItemFromContainer(listViewItem));
+    if (itemViewModel != nullptr)
+    {
+        CopyPasteManager::CopyToClipboard(itemViewModel->Result);
     }
 }
 

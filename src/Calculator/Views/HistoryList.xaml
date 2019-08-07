@@ -50,6 +50,10 @@
             </muxc:SwipeItems>
 
             <MenuFlyout x:Name="HistoryContextMenu">
+                <MenuFlyoutItem x:Name="CopyHistoryMenuItem"
+                                x:Uid="CopyHistoryMenuItem"
+                                Click="OnCopyMenuItemClicked"
+                                Icon="Copy"/>
                 <MenuFlyoutItem x:Uid="DeleteHistoryMenuItem"
                                 Click="OnDeleteMenuItemClicked"
                                 Icon="Delete"/>
