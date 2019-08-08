@@ -648,8 +648,9 @@ namespace GraphControl
             {
                 std::shared_ptr < Graphing::IBitmap> BitmapOut;
                 bool hasSomeMissingDataOut = false;
-
-                if (SUCCEEDED(renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut)))
+                HRESULT hr = E_FAIL;
+                hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
+                if (SUCCEEDED(hr))
                 {
                     // Get the raw date
                     std::vector<BYTE> byteVector = BitmapOut->GetData();
@@ -671,6 +672,7 @@ namespace GraphControl
                 else
                 {
                     OutputDebugString(L"Grapher::GetGraphBitmapStream() unable to get graph image from renderer\r\n");
+                    winrt::throw_hresult(hr);
                 }
             }
         }

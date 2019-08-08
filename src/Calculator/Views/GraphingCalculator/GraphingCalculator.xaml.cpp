@@ -77,10 +77,10 @@ void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object^ sender, W
 // data to be shared. We will request the current graph image from the grapher as a stream that will pass to the share request.
 void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataRequestedEventArgs^ args)
 {
+    auto resourceLoader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
     try
     {
         // Get our title from the localized resources
-        auto resourceLoader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
         auto EmptyEquationString = resourceLoader->GetString(L"EmptyEquationString");
 
         std::wstring rawHtml = L"<p><img src='graph.png'></p>";
@@ -143,8 +143,6 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
         TraceLogger::GetInstance().LogPlatformException(__FUNCTIONW__, ex);
 
         // Something went wrong, notify the user.
-        auto resourceLoader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
-
         auto errorTitleString = resourceLoader->GetString(L"ShareActionErrorMessage");
         auto errorOkString = resourceLoader->GetString(L"ShareActionErrorOk");
         auto errDialog = ref new Windows::UI::Xaml::Controls::ContentDialog();
