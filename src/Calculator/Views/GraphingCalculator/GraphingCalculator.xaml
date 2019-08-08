@@ -286,7 +286,7 @@
                     FontFamily="{StaticResource SymbolThemeFontFamily}"
                     Content="&#xE895;"
                     RequestedTheme="Light"
-                          Command="{x:Bind ZoomResetButtonPressed, Mode=OneTime}"
+                    Command="{x:Bind ZoomResetButtonPressed, Mode=OneTime}"
                     Style="{ThemeResource ZoomButtonStyle}">
             </Button>
 
