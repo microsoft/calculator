@@ -433,6 +433,14 @@
     <value>ปิดแถบลอยหน่วยความจำ</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
   </data>
+  <data name="AlwaysOnTop_Enter" xml:space="preserve">
+    <value>อยู่ด้านบนเสมอ</value>
+    <comment>This is the tool tip automation name for the always-on-top button when out of always-on-top mode.</comment>
+  </data>
+  <data name="AlwaysOnTop_Exit" xml:space="preserve">
+    <value>กลับไปยังมุมมองแบบเต็ม</value>
+    <comment>This is the tool tip automation name for the always-on-top button when in always-on-top mode.</comment>
+  </data>
   <data name="MemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>หน่วยความจำ</value>
     <comment>This is the tool tip automation name for the memory button.</comment>
@@ -544,6 +552,10 @@
   <data name="Format_CalculatorResults" xml:space="preserve">
     <value>การแสดงผลเป็น %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator results text block. %1 = Localized display value, e.g. "50".</comment>
+  </data>
+  <data name="Format_CalculatorAlwaysOnTopResults" xml:space="preserve">
+    <value>นิพจน์คือ %1 ข้อมูลป้อนเข้าปัจจุบันคือ %2</value>
+    <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
     <value>การแสดงผลเป็นจุด %1</value>
@@ -1056,6 +1068,22 @@
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ดรอปดาวน์ประเภท</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
+  </data>
+  <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>อยู่ด้านบนเสมอ</value>
+    <comment>Screen reader prompt for the Always-on-Top button when in normal mode.</comment>
+  </data>
+  <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>กลับไปยังมุมมองแบบเต็ม</value>
+    <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
+  </data>
+  <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>อยู่ด้านบนเสมอ</value>
+    <comment>This is the tool tip automation name for the Always-on-Top button when in normal mode.</comment>
+  </data>
+  <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>กลับไปยังมุมมองแบบเต็ม</value>
+    <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
     <value>แปลงจาก %1 %2</value>
@@ -2432,9 +2460,9 @@
     <value>ค่าความต่าง</value>
     <comment>Difference result label</comment>
   </data>
-  <data name="Date_FromLabel.Text" xml:space="preserve">
-    <value>จาก</value>
-    <comment>From Date label for Date Picker</comment>
+  <data name="DateDiff_FromHeader.Header" xml:space="preserve">
+    <value>ตั้งแต่</value>
+    <comment>From Date Header for Difference Date Picker</comment>
   </data>
   <data name="MonthsLabel.Text" xml:space="preserve">
     <value>เดือน</value>
@@ -2444,9 +2472,9 @@
     <value>ลบ</value>
     <comment>Subtract toggle button text</comment>
   </data>
-  <data name="Date_ToLabel.Text" xml:space="preserve">
+  <data name="DateDiff_ToHeader.Header" xml:space="preserve">
     <value>ถึง</value>
-    <comment>To Date label for Date Picker</comment>
+    <comment>To Date Header for Difference Date Picker</comment>
   </data>
   <data name="YearsLabel.Text" xml:space="preserve">
     <value>ปี</value>
@@ -2915,6 +2943,10 @@
     <value>พยอง</value>
     <comment>A measurement unit for area.</comment>
   </data>
+  <data name="AddSubtract_Date_FromHeader.Header" xml:space="preserve">
+    <value>ตั้งแต่</value>
+    <comment>From Date Header for AddSubtract Date Picker</comment>
+  </data>
   <data name="CalculationResultScrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>เลื่อนผลการคำนวณไปทางซ้าย</value>
     <comment>Automation label for the "Scroll Left" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
@@ -2922,5 +2954,9 @@
   <data name="CalculationResultScrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>เลื่อนผลการคำนวณไปทางขวา</value>
     <comment>Automation label for the "Scroll Right" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
+  </data>
+  <data name="CalculationFailed" xml:space="preserve">
+    <value>ไม่สามารถคำนวณได้</value>
+    <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
 </root>
