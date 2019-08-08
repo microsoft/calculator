@@ -23,7 +23,7 @@ namespace CalculatorApp
         {
             double get()
             {
-                return 120;
+                return 50;
             }
         }
 
