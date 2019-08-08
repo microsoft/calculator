@@ -12,6 +12,9 @@ namespace CalculatorApp
         GraphingCalculator();
 
         OBSERVABLE_OBJECT();
+        COMMAND_FOR_METHOD(ZoomOutButtonPressed, GraphingCalculator::ZoomOutButtonClick);
+        COMMAND_FOR_METHOD(ZoomInButtonPressed, GraphingCalculator::ZoomInButtonClick);
+        COMMAND_FOR_METHOD(ZoomResetButtonPressed, GraphingCalculator::ZoomResetButtonClick);
 
         property CalculatorApp::ViewModel::GraphingCalculatorViewModel^ ViewModel
         {
@@ -37,9 +40,9 @@ namespace CalculatorApp
         void TextBoxKeyDown(Windows::UI::Xaml::Controls::TextBox^ textbox, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e);
         void SubmitTextbox(Windows::UI::Xaml::Controls::TextBox^ textbox);
 
-        void ZoomInButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void ZoomOutButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void ZoomResetButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void ZoomInButtonClick(Object ^ parameter);
+        void ZoomOutButtonClick(Object ^ parameter);
+        void ZoomResetButtonClick(Object ^ parameter);
 
         double validateDouble(Platform::String^ value, double defaultValue);
 

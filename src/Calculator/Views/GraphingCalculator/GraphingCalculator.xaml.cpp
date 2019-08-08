@@ -119,7 +119,7 @@ void GraphingCalculator::TextBoxGotFocus(TextBox^ sender, RoutedEventArgs^ e)
     sender->SelectAll();
 }
 
-void GraphingCalculator::ZoomInButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void GraphingCalculator::ZoomInButtonClick(Object ^ /* parameter */)
 {
     constexpr double scrollDamper = 0.15;
     double scale = 1.0 + (abs(zoomButtonDelta) / WHEEL_DELTA) * scrollDamper;
@@ -128,7 +128,7 @@ void GraphingCalculator::ZoomInButtonClick(Platform::Object ^ sender, Windows::U
     GraphingControl->ScaleRange(0, 0, scale);
 }
 
-void GraphingCalculator::ZoomOutButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void GraphingCalculator::ZoomOutButtonClick(Object ^ /* parameter */)
 {
     constexpr double scrollDamper = 0.15;
     double scale = 1.0 + (abs(zoomButtonDelta) / WHEEL_DELTA) * scrollDamper;
@@ -136,7 +136,7 @@ void GraphingCalculator::ZoomOutButtonClick(Platform::Object ^ sender, Windows::
     GraphingControl->ScaleRange(0, 0, scale);
 }
 
-void GraphingCalculator::ZoomResetButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void GraphingCalculator::ZoomResetButtonClick(Object ^ /* parameter */)
 {
     GraphingControl->ResetGrid();
 }

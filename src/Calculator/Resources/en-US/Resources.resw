@@ -3439,6 +3439,14 @@
     <value>Home</value>
     <comment>{Locked}This is the shortcut for the zoom reset button.</comment>
   </data>
+  <data name="zoomInButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
+    <value>Add</value>
+    <comment>{Locked}This is the shortcut for the zoom in button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
+    <value>Subtract</value>
+    <comment>{Locked}This is the shortcut for the zoom out button.</comment>
+  </data>
   <data name="EquationInputButtonPlaceholderText" xml:space="preserve">
     <value>Add Equation</value>
     <comment>Placeholder text for the equation input button</comment>

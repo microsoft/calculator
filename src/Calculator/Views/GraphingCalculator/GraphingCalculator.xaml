@@ -268,7 +268,7 @@
                           FontFamily="{StaticResource SymbolThemeFontFamily}"
                           Content="&#xE738;"
                           RequestedTheme="Light"
-                          Click="ZoomOutButtonClick"
+                          Command="{x:Bind ZoomOutButtonPressed, Mode=OneTime}"
                           Style="{ThemeResource ZoomRepeatButtonStyle}">
             </RepeatButton>
 
@@ -277,7 +277,7 @@
                           FontFamily="{StaticResource SymbolThemeFontFamily}"
                           Content="&#xE710;"
                           RequestedTheme="Light"
-                          Click="ZoomInButtonClick"
+                          Command="{x:Bind ZoomInButtonPressed, Mode=OneTime}"
                           Style="{ThemeResource ZoomRepeatButtonStyle}">  
             </RepeatButton>
 
@@ -286,7 +286,7 @@
                     FontFamily="{StaticResource SymbolThemeFontFamily}"
                     Content="&#xE895;"
                     RequestedTheme="Light"
-                    Click="ZoomResetButtonClick"
+                          Command="{x:Bind ZoomResetButtonPressed, Mode=OneTime}"
                     Style="{ThemeResource ZoomButtonStyle}">
             </Button>
 
