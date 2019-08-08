@@ -23,10 +23,11 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(DateCalculatorViewModel ^, DateCalcViewModel);
             OBSERVABLE_PROPERTY_RW(UnitConverterViewModel ^, ConverterViewModel);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::ViewMode, PreviousMode);
+            OBSERVABLE_PROPERTY_R(bool, IsAlwaysOnTop);
             OBSERVABLE_NAMED_PROPERTY_RW(Platform::String ^, CategoryName);
 
             // Indicates whether calculator is currently in standard mode _and_ supports CompactOverlay _and_ is not in Always-on-Top mode
-            OBSERVABLE_PROPERTY_RW(bool, DisplayNormalAlwaysOnTopOption);
+            OBSERVABLE_PROPERTY_R(bool, DisplayNormalAlwaysOnTopOption);
 
             COMMAND_FOR_METHOD(CopyCommand, ApplicationViewModel::OnCopyCommand);
             COMMAND_FOR_METHOD(PasteCommand, ApplicationViewModel::OnPasteCommand);
@@ -91,22 +92,6 @@ namespace CalculatorApp
                 }
             }
 
-            property bool IsAlwaysOnTop
-            {
-                bool get()
-                {
-                    return m_isAlwaysOnTop;
-                }
-                void set(bool value)
-                {
-                    if (m_isAlwaysOnTop != value)
-                    {
-                        m_isAlwaysOnTop = value;
-                        RaisePropertyChanged(L"IsAlwaysOnTop");
-                    }
-                }
-            }
-
             void ToggleAlwaysOnTop(float width, float height);
 
         private:
@@ -123,8 +108,6 @@ namespace CalculatorApp
             Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup ^> ^ m_categories;
             Concurrency::task<void> HandleToggleAlwaysOnTop(float width, float height);
             void SetDisplayNormalAlwaysOnTopOption();
-
-            bool m_isAlwaysOnTop;
         };
     }
 }
