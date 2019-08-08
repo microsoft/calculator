@@ -322,6 +322,7 @@
     <ClInclude Include="Common\Automation\NarratorNotifier.h" />
     <ClInclude Include="Common\Automation\NotificationHost.h" />
     <ClInclude Include="Common\BindableBase.h" />
+    <ClInclude Include="Common\BitLength.h" />
     <ClInclude Include="Common\CalculatorButtonPressedEventArgs.h" />
     <ClInclude Include="Common\CalculatorButtonUser.h" />
     <ClInclude Include="Common\CalculatorDisplay.h" />

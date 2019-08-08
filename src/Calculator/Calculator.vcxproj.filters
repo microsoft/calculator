@@ -318,9 +318,6 @@
     <ClInclude Include="Controls\OverflowTextBlock.h">
       <Filter>Controls</Filter>
     </ClInclude>
-    <ClCompile Include="Converters\BitFlipAutomationNameConverter.cpp">
-      <Filter>Converters</Filter>
-    </ClCompile>
     <ClInclude Include="Converters\BooleanNegationConverter.h">
       <Filter>Converters</Filter>
     </ClInclude>
@@ -362,9 +359,6 @@
     </ClInclude>
     <ClInclude Include="WindowFrameService.h" />
     <ClInclude Include="Views\DateCalculator.xaml.h" />
-    <ClInclude Include="Converters\BitFlipAutomationNameConverter.h">
-      <Filter>Converters</Filter>
-    </ClInclude>
     <ClInclude Include="Controls\CalculationResultAutomationPeer.h">
       <Filter>Controls</Filter>
     </ClInclude>
