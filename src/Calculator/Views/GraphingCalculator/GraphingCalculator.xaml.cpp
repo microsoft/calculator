@@ -254,7 +254,7 @@ bool GraphingCalculator::GetShareContent(DataRequest^ request)
         TraceLogger::GetInstance().LogPlatformException(ViewMode::Graphing, __FUNCTIONW__, ex);
 
         BitmapImage^ bitmapImage = ref new BitmapImage();
-        //HRESULT hr E_FAIL;
+
         errDialog->Content = resourceLoader->GetString(L"ShareActionErrorMessage");
         errDialog->CloseButtonText = resourceLoader->GetString(L"ShareActionErrorOk");
         errDialog->ShowAsync();
