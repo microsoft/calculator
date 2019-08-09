@@ -19,6 +19,8 @@ namespace CalculatorUITestFramework
         public WindowsElement Header => this.session.TryFindElementByAccessibilityId("Header");
 
         public WindowsElement CalculatorResult => this.session.TryFindElementByAccessibilityId("CalculatorResults");
+        public WindowsElement EnterAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("NormalAlwaysOnTopButton");
+        public WindowsElement ExitAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("AoTAlwaysOnTopButton");
 
         public void NavigateToStandardCalculator()
         {

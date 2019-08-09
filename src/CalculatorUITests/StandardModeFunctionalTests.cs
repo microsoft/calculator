@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using CalculatorUITestFramework;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium.Appium.Windows;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace CalculatorUITests
 {
@@ -52,6 +55,7 @@ namespace CalculatorUITests
         [TestCleanup]
         public void TestCleanup()
         {
+            page.StandardOperators.EqualButton.Click();
             page.ClearAll();
         }
 
@@ -334,8 +338,15 @@ namespace CalculatorUITests
             page.StandardOperators.NegateButton.Click();
             page.StandardOperators.SquareRootButton.Click();
             Assert.IsTrue(page.GetCalculatorResultText() == "Invalid input");
-            page.StandardOperators.EnterAlwaysOnTopButton.Click();
-            page.StandardOperators.ExitAlwaysOnTopButton.Click();
+        }
+        #endregion
+
+        #region AoT Tests
+        [TestMethod]
+        public void AoT_EnterAlwaysOnTop()
+        {
+           page.EnterAlwaysOnTopButton.Click();
+           page.ExitAlwaysOnTopButton.Click();
         }
         #endregion
     }
