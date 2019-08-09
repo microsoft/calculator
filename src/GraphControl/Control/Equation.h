@@ -85,27 +85,6 @@ namespace GraphControl
         }
         #pragma endregion
 
-        #pragma region Platform::String ^ XIntercept DependencyProperty
-        static property Windows::UI::Xaml::DependencyProperty^ XInterceptProperty
-        {
-            Windows::UI::Xaml::DependencyProperty^ get()
-            {
-                return s_xInterceptProperty;
-            }
-        }
-        property Platform::String^ XIntercept
-        {
-            Platform::String^ get()
-            {
-                return static_cast<Platform::String^>(GetValue(s_xInterceptProperty));
-            }
-            void set(Platform::String^ value)
-            {
-                SetValue(s_xInterceptProperty, value);
-            }
-        }
-        #pragma endregion
-
         #pragma region Platform::String ^ YIntercept DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ YInterceptProperty
         {
@@ -123,6 +102,48 @@ namespace GraphControl
             void set(Platform::String^ value)
             {
                 SetValue(s_yInterceptProperty, value);
+            }
+        }
+        #pragma endregion
+
+        #pragma region Platform::String ^ Parity DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty^ ParityProperty
+        {
+            Windows::UI::Xaml::DependencyProperty^ get()
+            {
+                return s_parityProperty;
+            }
+        }
+        property Platform::String^ Parity
+        {
+            Platform::String^ get()
+            {
+                return static_cast<Platform::String^>(GetValue(s_parityProperty));
+            }
+            void set(Platform::String^ value)
+            {
+                SetValue(s_parityProperty, value);
+            }
+        }
+        #pragma endregion
+
+        #pragma region Platform::String ^ Periodicity DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty^ PeriodicityProperty
+        {
+            Windows::UI::Xaml::DependencyProperty^ get()
+            {
+                return s_periodicityProperty;
+            }
+        }
+        property Platform::String^ Periodicity
+        {
+            Platform::String^ get()
+            {
+                return static_cast<Platform::String^>(GetValue(s_periodicityProperty));
+            }
+            void set(Platform::String^ value)
+            {
+                SetValue(s_periodicityProperty, value);
             }
         }
         #pragma endregion
@@ -271,8 +292,9 @@ namespace GraphControl
         static Windows::UI::Xaml::DependencyProperty ^ s_expressionProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_lineColorProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_zerosProperty;
-        static Windows::UI::Xaml::DependencyProperty ^ s_xInterceptProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_yInterceptProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_parityProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_periodicityProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_minimaProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_maximaProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_domainProperty;

@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Common.h"
+#include "IGraphAnalyzer.h"
 #include "IGraphingOptions.h"
 #include "IGraphRenderer.h"
-#include "IGraphAnalyzer.h"
+#include "IEquation.h"
+#include <optional>
 
 namespace Graphing
 {
@@ -11,7 +13,7 @@ namespace Graphing
     {
         virtual ~IGraph() = default;
 
-        virtual bool TryInitialize(const IExpression* graphingExp) = 0;
+        virtual std::optional<std::vector<std::shared_ptr<IEquation>>> TryInitialize(const IExpression* graphingExp = nullptr) = 0;
 
         virtual IGraphingOptions& GetOptions() = 0;
 
@@ -19,8 +21,10 @@ namespace Graphing
 
         virtual void SetArgValue(std::wstring variableName, double value) = 0;
 
-        virtual std::shared_ptr< Renderer::IGraphRenderer > GetRenderer() const = 0;
+        virtual std::shared_ptr<Renderer::IGraphRenderer> GetRenderer() const = 0;
 
-		virtual std::shared_ptr< Analyzer::IGraphAnalyzer > GetAnalyzer() const = 0;
+        virtual bool TryResetSelection() = 0;
+
+        virtual std::shared_ptr<Analyzer::IGraphAnalyzer> GetAnalyzer() const = 0;
     };
 }

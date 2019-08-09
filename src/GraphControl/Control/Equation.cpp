@@ -15,46 +15,50 @@ namespace GraphControl
     DependencyProperty^ Equation::s_lineColorProperty;
     static constexpr auto s_propertyName_LineColor = L"LineColor";
 
-    DependencyProperty ^ Equation::s_zerosProperty;
+    DependencyProperty^ Equation::s_zerosProperty;
     static constexpr auto s_propertyName_Zeros = L"Zeros";
 
-    DependencyProperty ^ Equation::s_xInterceptProperty;
-    static constexpr auto s_propertyName_XIntercept = L"XIntercept";
-
-    DependencyProperty ^ Equation::s_yInterceptProperty;
+    DependencyProperty^ Equation::s_yInterceptProperty;
     static constexpr auto s_propertyName_YIntercept = L"YIntercept";
 
-    DependencyProperty ^ Equation::s_minimaProperty;
+        DependencyProperty ^ Equation::s_parityProperty;
+    static constexpr auto s_propertyName_Parity = L"Parity";
+
+        DependencyProperty ^ Equation::s_periodicityProperty;
+    static constexpr auto s_propertyName_Periodicity = L"Periodicity";
+
+    DependencyProperty^ Equation::s_minimaProperty;
     static constexpr auto s_propertyName_Minima = L"Minima";
 
-    DependencyProperty ^ Equation::s_maximaProperty;
+    DependencyProperty^ Equation::s_maximaProperty;
     static constexpr auto s_propertyName_Maxima = L"Maxima";
 
-    DependencyProperty ^ Equation::s_domainProperty;
+    DependencyProperty^ Equation::s_domainProperty;
     static constexpr auto s_propertyName_Domain = L"Domain";
 
-    DependencyProperty ^ Equation::s_rangeProperty;
+    DependencyProperty^ Equation::s_rangeProperty;
     static constexpr auto s_propertyName_Range = L"Range";
 
-    DependencyProperty ^ Equation::s_inflectionPointsProperty;
+    DependencyProperty^ Equation::s_inflectionPointsProperty;
     static constexpr auto s_propertyName_InflectionPoints = L"InflectionPoints";
 
-    DependencyProperty ^ Equation::s_monotonicityProperty;
+    DependencyProperty^ Equation::s_monotonicityProperty;
     static constexpr auto s_propertyName_Monotonicity = L"Monotonicity";
 
     namespace EquationProperties
     {
         String^ Expression = StringReference(s_propertyName_Expression);
         String^ LineColor = StringReference(s_propertyName_LineColor);
-        String ^ Zeros = StringReference(s_propertyName_Zeros);
-        String ^ XIntercept = StringReference(s_propertyName_XIntercept);
-        String ^ YIntercept = StringReference(s_propertyName_YIntercept);
-        String ^ Minima = StringReference(s_propertyName_Minima);
-        String ^ Maxima = StringReference(s_propertyName_Maxima);
-        String ^ Domain = StringReference(s_propertyName_Domain);
-        String ^ Range = StringReference(s_propertyName_Range);
-        String ^ InflectionPoints = StringReference(s_propertyName_InflectionPoints);
-        String ^ Monotonicity = StringReference(s_propertyName_Monotonicity);
+        String^ Zeros = StringReference(s_propertyName_Zeros);
+        String^ YIntercept = StringReference(s_propertyName_YIntercept);
+        String ^ Parity = StringReference(s_propertyName_Parity);
+        String ^ Periodicity = StringReference(s_propertyName_Periodicity);
+        String^ Minima = StringReference(s_propertyName_Minima);
+        String^ Maxima = StringReference(s_propertyName_Maxima);
+        String^ Domain = StringReference(s_propertyName_Domain);
+        String^ Range = StringReference(s_propertyName_Range);
+        String^ InflectionPoints = StringReference(s_propertyName_InflectionPoints);
+        String^ Monotonicity = StringReference(s_propertyName_Monotonicity);
     }
 
     void Equation::RegisterDependencyProperties()
@@ -94,19 +98,28 @@ namespace GraphControl
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
-        if (!s_xInterceptProperty)
+        if (!s_yInterceptProperty)
         {
-            s_xInterceptProperty = DependencyProperty::Register(
-                EquationProperties::XIntercept,
+            s_yInterceptProperty = DependencyProperty::Register(
+                EquationProperties::YIntercept,
                 String::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
-        if (!s_yInterceptProperty)
+        if (!s_parityProperty)
         {
-            s_yInterceptProperty = DependencyProperty::Register(
-                EquationProperties::YIntercept,
+            s_parityProperty = DependencyProperty::Register(
+                EquationProperties::Parity,
+                String::typeid,
+                Equation::typeid,
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
+        }
+
+        if (!s_periodicityProperty)
+        {
+            s_periodicityProperty = DependencyProperty::Register(
+                EquationProperties::Periodicity,
                 String::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
@@ -184,13 +197,17 @@ namespace GraphControl
             {
                 propertyName = EquationProperties::Zeros;
             }
-            else if (args->Property == s_xInterceptProperty)
-            {
-                propertyName = EquationProperties::XIntercept;
-            }
             else if (args->Property == s_yInterceptProperty)
             {
                 propertyName = EquationProperties::YIntercept;
+            }
+            else if (args->Property == s_parityProperty)
+            {
+                propertyName = EquationProperties::Parity;
+            }
+            else if (args->Property == s_periodicityProperty)
+            {
+                propertyName = EquationProperties::Periodicity;
             }
             else if (args->Property == s_minimaProperty)
             {

@@ -4,6 +4,7 @@
 #include "DirectX/RenderMain.h"
 #include "Equation.h"
 #include "EquationCollection.h"
+#include "IGraphAnalyzer.h"
 #include "IMathSolver.h"
 #include "Common.h"
 
@@ -162,6 +163,8 @@ namespace GraphControl
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation^>& validEqs);
         std::vector<Equation^> GetValidEquations();
         void SetGraphArgs();
+        std::shared_ptr<Graphing::IGraph> GetGraph(GraphControl::Equation ^ equation);
+        void UpdateKeyGraphFeatures();
         void UpdateVariables();
 
         void OnForceProportionalAxesChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ args);
