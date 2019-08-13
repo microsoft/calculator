@@ -312,7 +312,38 @@
                                 <TextBox Margin="4,0,0,0"
                                          Grid.Column="1"
                                          Grid.Row="1"/>
-                                
+                                <TextBlock Margin="0,0,4,0"
+                                           Grid.Column="0"
+                                           Grid.Row="2"
+                                           Text="Y-Min"/>
+                                <TextBlock Margin="4,0,0,0"
+                                           Grid.Column="1"
+                                           Grid.Row="2"
+                                           Text="Y-Max"/>
+                                <TextBox Margin="0,0,4,0"
+                                         Grid.Column="0"
+                                         Grid.Row="3"/>
+                                <TextBox Margin="4,0,0,0"
+                                         Grid.Column="1"
+                                         Grid.Row="3"/>
+                            </Grid>
+                            <TextBlock Text="Axes"/>
+                            <TextBox PlaceholderText="X-Axis Label"/>
+                            <TextBox PlaceholderText="Y-Axis Label"/>
+                            <TextBlock Text="Units"/>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Margin="0,0,4,0"
+                                        Grid.Column="0"
+                                        Background="Transparent"
+                                        Content="Degrees"/>
+                                <Button Margin="4,0,0,0"
+                                        Grid.Column="1"
+                                        Background="Transparent"
+                                        Content="Radians"/>
                             </Grid>
                         </StackPanel>
                     </Flyout>
