@@ -19,8 +19,6 @@
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontSize" Value="12"/>
-            <Setter Property="VerticalAlignment" Value="Bottom"/>
-            <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="Delay" Value="500"/>
             <Setter Property="Interval" Value="40"/>
         </Style>
@@ -31,8 +29,13 @@
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontSize" Value="12"/>
-            <Setter Property="VerticalAlignment" Value="Bottom"/>
-            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="36"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="18"/>
         </Style>
         <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter"/>
         <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
@@ -263,13 +266,68 @@
                 </Button.Flyout>
             </Button>
 
+            <Button Margin="0,12,60,0"
+                    x:Uid="settingsButton"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    FontFamily="{StaticResource SymbolThemeFontFamily}"
+                    Content="&#xE713;"
+                    RequestedTheme="Light"
+                    Style="{ThemeResource ActionButtonStyle}">
+                <Button.Flyout>
+                    <Flyout Placement="BottomEdgeAlignedRight">
+                        <Flyout.FlyoutPresenterStyle>
+                            <Style TargetType="FlyoutPresenter">
+                                <Setter Property="RequestedTheme" Value="Default"/>
+                                <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
+                                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+                                <Setter Property="Margin" Value="0,0,12,0"/>
+                            </Style>
+                        </Flyout.FlyoutPresenterStyle>
+                        <StackPanel>
+                            <TextBlock Text="Grid"/>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Margin="0,0,4,0"
+                                           Grid.Column="0"
+                                           Grid.Row="0"
+                                           Text="X-Min"/>
+                                <TextBlock Margin="4,0,0,0"
+                                           Grid.Column="1"
+                                           Grid.Row="0"
+                                           Text="X-Max"/>
+                                <TextBox Margin="0,0,4,0"
+                                         Grid.Column="0"
+                                         Grid.Row="1"/>
+                                <TextBox Margin="4,0,0,0"
+                                         Grid.Column="1"
+                                         Grid.Row="1"/>
+                                
+                            </Grid>
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+
             <RepeatButton Margin="0,0,12,12"
                           x:Uid="zoomOutButton"
                           FontFamily="{StaticResource SymbolThemeFontFamily}"
                           Content="&#xE738;"
                           RequestedTheme="Light"
                           Command="{x:Bind ZoomOutButtonPressed, Mode=OneTime}"
-                          Style="{ThemeResource ZoomRepeatButtonStyle}">
+                          Style="{ThemeResource ZoomRepeatButtonStyle}"
+                          VerticalAlignment="Bottom"
+                          HorizontalAlignment="Right">
             </RepeatButton>
 
             <RepeatButton Margin="0,0,12,60"
@@ -278,7 +336,9 @@
                           Content="&#xE710;"
                           RequestedTheme="Light"
                           Command="{x:Bind ZoomInButtonPressed, Mode=OneTime}"
-                          Style="{ThemeResource ZoomRepeatButtonStyle}">  
+                          Style="{ThemeResource ZoomRepeatButtonStyle}"
+                          VerticalAlignment="Bottom"
+                          HorizontalAlignment="Right">  
             </RepeatButton>
 
             <Button Margin="0,0,12,108"
@@ -287,7 +347,9 @@
                     Content="&#xE895;"
                     RequestedTheme="Light"
                     Command="{x:Bind ZoomResetButtonPressed, Mode=OneTime}"
-                    Style="{ThemeResource ZoomButtonStyle}">
+                    Style="{ThemeResource ZoomButtonStyle}"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right">
             </Button>
 
         </Grid>
