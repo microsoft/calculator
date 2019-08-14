@@ -1665,8 +1665,7 @@ void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
     int i = 0;
     for (std::wstring::reverse_iterator it = binaryValue.rbegin(); it != binaryValue.rend(); ++it)
     {
-        binaryValueArray->SetAt(i, *it == L'1');
-        ++i;
+        binaryValueArray->SetAt(i++, *it == L'1');
     }
     BinaryDigits = binaryValueArray;
 }

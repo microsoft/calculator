@@ -38,7 +38,7 @@ namespace CalculatorApp
 
     private:
         Windows::Foundation::EventRegistrationToken m_propertyChangedToken;
-        Platform::String ^ GenerateAutomationPropertiesName(int position, bool value);
+        Platform::String ^ GenerateAutomationPropertiesName(int position, bool value) const;
 
         static const unsigned int s_numBits = 64;
         std::array<CalculatorApp::Controls::FlipButtons ^, s_numBits> m_flipButtons;

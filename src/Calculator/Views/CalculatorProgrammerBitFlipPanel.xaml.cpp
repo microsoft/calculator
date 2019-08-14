@@ -195,7 +195,7 @@ void CalculatorProgrammerBitFlipPanel::UpdateCheckedStates(bool forceUpdate)
     m_updatingCheckedStates = false;
 }
 
-bool CalculatorProgrammerBitFlipPanel::ShouldEnableBit(CalculatorApp::Common::BitLength length, int index)
+bool CalculatorProgrammerBitFlipPanel::ShouldEnableBit(BitLength length, int index)
 {
     switch (length)
     {
@@ -211,7 +211,7 @@ bool CalculatorProgrammerBitFlipPanel::ShouldEnableBit(CalculatorApp::Common::Bi
     return false;
 }
 
-String ^ CalculatorProgrammerBitFlipPanel::GenerateAutomationPropertiesName(int position, bool value)
+String ^ CalculatorProgrammerBitFlipPanel::GenerateAutomationPropertiesName(int position, bool value) const
 {
     auto resourceLoader = AppResourceProvider::GetInstance();
 
