@@ -368,7 +368,12 @@
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
 
-            <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
+            <StackPanel>
+                <Button x:Name="Share" Click="OnShareClick">
+                    <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
+	            </Button>
+                <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
+            </StackPanel>
 
             <Grid x:Name="ButtonContainerGrid"
                   Grid.Row="2"
