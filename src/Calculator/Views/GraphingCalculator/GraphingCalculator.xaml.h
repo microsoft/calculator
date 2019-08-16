@@ -6,12 +6,18 @@
 
 namespace CalculatorApp
 {
+    constexpr double zoomInScale = 1 / 1.0625;
+    constexpr double zoomOutScale = 1.0625;
+
     public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
     {
     public:
         GraphingCalculator();
 
         OBSERVABLE_OBJECT();
+        COMMAND_FOR_METHOD(ZoomOutButtonPressed, GraphingCalculator::OnZoomOutCommand);
+        COMMAND_FOR_METHOD(ZoomInButtonPressed, GraphingCalculator::OnZoomInCommand);
+        COMMAND_FOR_METHOD(ZoomResetButtonPressed, GraphingCalculator::OnZoomResetCommand);
 
         property CalculatorApp::ViewModel::GraphingCalculatorViewModel^ ViewModel
         {
@@ -28,6 +34,10 @@ namespace CalculatorApp
         void TextBoxLosingFocus(Windows::UI::Xaml::Controls::TextBox^ textbox, Windows::UI::Xaml::Input::LosingFocusEventArgs^ args);
         void TextBoxKeyDown(Windows::UI::Xaml::Controls::TextBox^ textbox, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e);
         void SubmitTextbox(Windows::UI::Xaml::Controls::TextBox^ textbox);
+
+        void OnZoomInCommand(Object ^ parameter);
+        void OnZoomOutCommand(Object ^ parameter);
+        void OnZoomResetCommand(Object ^ parameter);
 
         double validateDouble(Platform::String^ value, double defaultValue);
 

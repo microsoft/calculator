@@ -127,6 +127,8 @@ namespace GraphControl
         event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String^, double>^>^ VariablesUpdated;
 
         void SetVariable(Platform::String^ variableName, double newValue);
+        void ZoomFromCenter(double scale);
+        void ResetGrid();
 
     protected:
         #pragma region Control Overrides

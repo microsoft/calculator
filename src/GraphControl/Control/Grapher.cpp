@@ -92,6 +92,11 @@ namespace GraphControl
         }
     }
 
+    void Grapher::ZoomFromCenter(double scale)
+    {
+        ScaleRange(0, 0, scale);
+    }
+
     void Grapher::ScaleRange(double centerX, double centerY, double scale)
     {
         if (m_graph != nullptr && m_renderMain != nullptr)
@@ -99,6 +104,20 @@ namespace GraphControl
             if (auto renderer = m_graph->GetRenderer())
             {
                 if (SUCCEEDED(renderer->ScaleRange(centerX, centerY, scale)))
+                {
+                    m_renderMain->RunRenderPass();
+                }
+            }
+        }
+    }
+
+    void Grapher::ResetGrid()
+    {
+        if (m_graph != nullptr && m_renderMain != nullptr)
+        {
+            if (auto renderer = m_graph->GetRenderer())
+            {
+                if (SUCCEEDED(renderer->ResetRange()))
                 {
                     m_renderMain->RunRenderPass();
                 }

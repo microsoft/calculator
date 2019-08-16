@@ -242,3 +242,18 @@ void GraphingCalculator::TextBoxGotFocus(TextBox^ sender, RoutedEventArgs^ e)
 {
     sender->SelectAll();
 }
+
+void GraphingCalculator::OnZoomInCommand(Object ^ /* parameter */)
+{
+    GraphingControl->ZoomFromCenter(zoomInScale);
+}
+
+void GraphingCalculator::OnZoomOutCommand(Object ^ /* parameter */)
+{
+    GraphingControl->ZoomFromCenter(zoomOutScale);
+}
+
+void GraphingCalculator::OnZoomResetCommand(Object ^ /* parameter */)
+{
+    GraphingControl->ResetGrid();
+}
