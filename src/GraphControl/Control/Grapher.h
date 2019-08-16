@@ -127,7 +127,7 @@ namespace GraphControl
         event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String^, double>^>^ VariablesUpdated;
 
         void SetVariable(Platform::String^ variableName, double newValue);
-        void ScaleRange(double centerX, double centerY, double scale);
+        void ZoomFromCenter(double scale);
         void ResetGrid();
 
     protected:
@@ -173,6 +173,8 @@ namespace GraphControl
         void SyncEquationsWithItemsSource();
         void OnItemsAdded(int index, int count);
         void OnItemsRemoved(int index, int count);
+
+        void ScaleRange(double centerX, double centerY, double scale);
 
     private:
         DX::RenderMain^ m_renderMain = nullptr;

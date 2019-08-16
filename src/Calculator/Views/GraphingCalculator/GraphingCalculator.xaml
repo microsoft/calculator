@@ -16,7 +16,6 @@
             <Setter Property="Width" Value="36"/>
             <Setter Property="Height" Value="36"/>
             <Setter Property="CornerRadius" Value="18"/>
-            <Setter Property="Background" Value="White"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Delay" Value="500"/>
@@ -26,16 +25,8 @@
             <Setter Property="Width" Value="36"/>
             <Setter Property="Height" Value="36"/>
             <Setter Property="CornerRadius" Value="18"/>
-            <Setter Property="Background" Value="White"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontSize" Value="12"/>
-        </Style>
-        <Style x:Key="ActionButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="36"/>
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize" Value="18"/>
         </Style>
         <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter"/>
         <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
@@ -55,31 +46,6 @@
         <Grid x:Name="LeftGrid"
               Grid.Row="1"
               Grid.Column="0">
-            <Grid.Resources>
-                <SolidColorBrush x:Key="RepeatButtonBackgroundPointerOver" Color="White"/>
-                <SolidColorBrush x:Key="RepeatButtonBackgroundPressed" Color="White"/>
-                <SolidColorBrush x:Key="RepeatButtonBackgroundDisabled" Color="White"/>
-                <SolidColorBrush x:Key="RepeatButtonBorderBrush" Color="Black" Opacity="0.6"/>
-                <SolidColorBrush x:Key="RepeatButtonBorderBrushPointerOver" Color="{ThemeResource SystemAccentColor}" Opacity="0.8"/>
-                <SolidColorBrush x:Key="RepeatButtonBorderBrushPressed" Color="{ThemeResource SystemAccentColor}" Opacity="1.0"/>
-                <SolidColorBrush x:Key="RepeatButtonBorderBrushDisabled" Color="Black" Opacity="0.2"/>
-                <SolidColorBrush x:Key="RepeatButtonForeground" Color="Black" Opacity="0.6"/>
-                <SolidColorBrush x:Key="RepeatButtonForegroundPointerOver" Color="{ThemeResource SystemAccentColor}" Opacity="0.8"/>
-                <SolidColorBrush x:Key="RepeatButtonForegroundPressed" Color="{ThemeResource SystemAccentColor}" Opacity="1.0"/>
-                <SolidColorBrush x:Key="RepeatButtonForegroundDisabled" Color="Black" Opacity="0.2"/>
-                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="White"/>
-                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="White"/>
-                <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="White"/>
-                <SolidColorBrush x:Key="ButtonBorderBrush" Color="Black" Opacity="0.6"/>
-                <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{ThemeResource SystemAccentColor}" Opacity="0.8"/>
-                <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{ThemeResource SystemAccentColor}" Opacity="1.0"/>
-                <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="Black" Opacity="0.2"/>
-                <SolidColorBrush x:Key="ButtonForeground" Color="Black" Opacity="0.6"/>
-                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemAccentColor}" Opacity="0.8"/>
-                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemAccentColor}" Opacity="1.0"/>
-                <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="Black" Opacity="0.2"/>
-            </Grid.Resources>
-
             <graphControl:Grapher Name="GraphingControl"
                                   Margin="4,7,4,4"
                                   EquationsSource="{x:Bind ViewModel.Equations, Mode=OneWay}"
@@ -102,8 +68,7 @@
                     FontFamily="{StaticResource SymbolThemeFontFamily}"
                     FontSize="18"
                     Content="&#xE70F;"
-                    RequestedTheme="Light"
-                    Background="White">
+                    RequestedTheme="Light">
                 <Button.Flyout>
                     <Flyout Placement="TopEdgeAlignedRight">
                         <Flyout.FlyoutPresenterStyle>
@@ -266,122 +231,128 @@
                 </Button.Flyout>
             </Button>
 
-            <Button Margin="0,12,60,0"
-                    x:Uid="settingsButton"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    FontFamily="{StaticResource SymbolThemeFontFamily}"
-                    Content="&#xE713;"
-                    RequestedTheme="Light"
-                    Style="{ThemeResource ActionButtonStyle}">
-                <Button.Flyout>
-                    <Flyout Placement="BottomEdgeAlignedRight">
-                        <Flyout.FlyoutPresenterStyle>
-                            <Style TargetType="FlyoutPresenter">
-                                <Setter Property="RequestedTheme" Value="Default"/>
-                                <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
-                                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
-                                <Setter Property="Margin" Value="0,0,12,0"/>
-                            </Style>
-                        </Flyout.FlyoutPresenterStyle>
-                        <StackPanel>
-                            <TextBlock Text="Grid"/>
-                            <Grid HorizontalAlignment="Stretch">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Margin="0,0,4,0"
-                                           Grid.Column="0"
-                                           Grid.Row="0"
-                                           Text="X-Min"/>
-                                <TextBlock Margin="4,0,0,0"
-                                           Grid.Column="1"
-                                           Grid.Row="0"
-                                           Text="X-Max"/>
-                                <TextBox Margin="0,0,4,0"
-                                         Grid.Column="0"
-                                         Grid.Row="1"/>
-                                <TextBox Margin="4,0,0,0"
-                                         Grid.Column="1"
-                                         Grid.Row="1"/>
-                                <TextBlock Margin="0,0,4,0"
-                                           Grid.Column="0"
-                                           Grid.Row="2"
-                                           Text="Y-Min"/>
-                                <TextBlock Margin="4,0,0,0"
-                                           Grid.Column="1"
-                                           Grid.Row="2"
-                                           Text="Y-Max"/>
-                                <TextBox Margin="0,0,4,0"
-                                         Grid.Column="0"
-                                         Grid.Row="3"/>
-                                <TextBox Margin="4,0,0,0"
-                                         Grid.Column="1"
-                                         Grid.Row="3"/>
-                            </Grid>
-                            <TextBlock Text="Axes"/>
-                            <TextBox PlaceholderText="X-Axis Label"/>
-                            <TextBox PlaceholderText="Y-Axis Label"/>
-                            <TextBlock Text="Units"/>
-                            <Grid HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Margin="0,0,4,0"
-                                        Grid.Column="0"
-                                        Background="Transparent"
-                                        Content="Degrees"/>
-                                <Button Margin="4,0,0,0"
-                                        Grid.Column="1"
-                                        Background="Transparent"
-                                        Content="Radians"/>
-                            </Grid>
-                        </StackPanel>
-                    </Flyout>
-                </Button.Flyout>
-            </Button>
+            <Grid>
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Default">
+                                <SolidColorBrush x:Key="RepeatButtonBackground" Color="White"/>
+                                <SolidColorBrush x:Key="RepeatButtonBackgroundPointerOver" Color="White"/>
+                                <SolidColorBrush x:Key="RepeatButtonBackgroundPressed" Color="White"/>
+                                <SolidColorBrush x:Key="RepeatButtonBackgroundDisabled" Color="White"/>
+                                <SolidColorBrush x:Key="RepeatButtonBorderBrush"
+                                                 Opacity="0.6"
+                                                 Color="Black"/>
+                                <SolidColorBrush x:Key="RepeatButtonBorderBrushPointerOver"
+                                                 Opacity="0.8"
+                                                 Color="{ThemeResource SystemAccentColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonBorderBrushPressed"
+                                                 Opacity="1.0"
+                                                 Color="{ThemeResource SystemAccentColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonBorderBrushDisabled"
+                                                 Opacity="0.2"
+                                                 Color="Black"/>
+                                <SolidColorBrush x:Key="RepeatButtonForeground"
+                                                 Opacity="0.6"
+                                                 Color="Black"/>
+                                <SolidColorBrush x:Key="RepeatButtonForegroundPointerOver"
+                                                 Opacity="0.8"
+                                                 Color="{ThemeResource SystemAccentColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonForegroundPressed"
+                                                 Opacity="1.0"
+                                                 Color="{ThemeResource SystemAccentColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonForegroundDisabled"
+                                                 Opacity="0.2"
+                                                 Color="Black"/>
+                                <SolidColorBrush x:Key="ButtonBackground" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="White"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrush"
+                                                 Opacity="0.6"
+                                                 Color="Black"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushPointerOver"
+                                                 Opacity="0.8"
+                                                 Color="{ThemeResource SystemAccentColor}"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushPressed"
+                                                 Opacity="1.0"
+                                                 Color="{ThemeResource SystemAccentColor}"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushDisabled"
+                                                 Opacity="0.2"
+                                                 Color="Black"/>
+                                <SolidColorBrush x:Key="ButtonForeground"
+                                                 Opacity="0.6"
+                                                 Color="Black"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver"
+                                                 Opacity="0.8"
+                                                 Color="{ThemeResource SystemAccentColor}"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed"
+                                                 Opacity="1.0"
+                                                 Color="{ThemeResource SystemAccentColor}"/>
+                                <SolidColorBrush x:Key="ButtonForegroundDisabled"
+                                                 Opacity="0.2"
+                                                 Color="Black"/>
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="HighContrast">
+                                <SolidColorBrush x:Key="RepeatButtonBackground" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonBackgroundPointerOver" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonBackgroundPressed" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonBackgroundDisabled" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonBorderBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonBorderBrushPointerOver" Color="{ThemeResource SystemColorHighlightColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonBorderBrushPressed" Color="{ThemeResource SystemColorHighlightColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonBorderBrushDisabled" Color="{ThemeResource SystemColorGrayTextColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonForeground" Color="{ThemeResource SystemColorWindowTextColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonForegroundPointerOver" Color="{ThemeResource SystemColorHighlightColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonForegroundPressed" Color="{ThemeResource SystemColorHighlightColor}"/>
+                                <SolidColorBrush x:Key="RepeatButtonForegroundDisabled" Color="{ThemeResource SystemColorGrayTextColor}"/>
+                                <SolidColorBrush x:Key="ButtonBackground" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{ThemeResource SystemColorHighlightColor}"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{ThemeResource SystemColorHighlightColor}"/>
+                                <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="{ThemeResource SystemColorGrayTextColor}"/>
+                                <SolidColorBrush x:Key="ButtonForeground" Color="{ThemeResource SystemColorWindowTextColor}"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemColorHighlightColor}"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemColorHighlightColor}"/>
+                                <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="{ThemeResource SystemColorGrayTextColor}"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Grid.Resources>
 
-            <RepeatButton Margin="0,0,12,12"
-                          x:Uid="zoomOutButton"
-                          FontFamily="{StaticResource SymbolThemeFontFamily}"
-                          Content="&#xE738;"
-                          RequestedTheme="Light"
-                          Command="{x:Bind ZoomOutButtonPressed, Mode=OneTime}"
-                          Style="{ThemeResource ZoomRepeatButtonStyle}"
-                          VerticalAlignment="Bottom"
-                          HorizontalAlignment="Right">
-            </RepeatButton>
+                <RepeatButton x:Uid="zoomInButton"
+                              Margin="0,0,12,108"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Bottom"
+                              Style="{ThemeResource ZoomRepeatButtonStyle}"
+                              FontFamily="{StaticResource SymbolThemeFontFamily}"
+                              AutomationProperties.AutomationId="zoomInButton"
+                              Command="{x:Bind ZoomInButtonPressed, Mode=OneTime}"
+                              Content="&#xE710;"/>
 
-            <RepeatButton Margin="0,0,12,60"
-                          x:Uid="zoomInButton"
-                          FontFamily="{StaticResource SymbolThemeFontFamily}"
-                          Content="&#xE710;"
-                          RequestedTheme="Light"
-                          Command="{x:Bind ZoomInButtonPressed, Mode=OneTime}"
-                          Style="{ThemeResource ZoomRepeatButtonStyle}"
-                          VerticalAlignment="Bottom"
-                          HorizontalAlignment="Right">  
-            </RepeatButton>
+                <RepeatButton x:Uid="zoomOutButton"
+                              Margin="0,0,12,60"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Bottom"
+                              Style="{ThemeResource ZoomRepeatButtonStyle}"
+                              FontFamily="{StaticResource SymbolThemeFontFamily}"
+                              AutomationProperties.AutomationId="zoomOutButton"
+                              Command="{x:Bind ZoomOutButtonPressed, Mode=OneTime}"
+                              Content="&#xE738;"/>
 
-            <Button Margin="0,0,12,108"
-                    x:Uid="zoomResetButton"
-                    FontFamily="{StaticResource SymbolThemeFontFamily}"
-                    Content="&#xE895;"
-                    RequestedTheme="Light"
-                    Command="{x:Bind ZoomResetButtonPressed, Mode=OneTime}"
-                    Style="{ThemeResource ZoomButtonStyle}"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Right">
-            </Button>
+                <Button x:Uid="zoomResetButton"
+                        Margin="0,0,12,12"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Style="{ThemeResource ZoomButtonStyle}"
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        AutomationProperties.AutomationId="zoomResetButton"
+                        Command="{x:Bind ZoomResetButtonPressed, Mode=OneTime}"
+                        Content="&#xE895;"/>
+            </Grid>
 
         </Grid>
 

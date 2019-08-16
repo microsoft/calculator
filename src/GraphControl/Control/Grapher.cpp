@@ -91,6 +91,11 @@ namespace GraphControl
         }
     }
 
+    void Grapher::ZoomFromCenter(double scale)
+    {
+        ScaleRange(0, 0, scale);
+    }
+
     void Grapher::ScaleRange(double centerX, double centerY, double scale)
     {
         if (m_graph != nullptr && m_renderMain != nullptr)
