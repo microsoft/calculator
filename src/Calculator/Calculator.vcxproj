@@ -216,7 +216,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(IsStoreBuild)' == 'True'">
     <ClCompile>
-      <AdditionalOptions>/DSEND_DIAGNOSTICS %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/DSEND_DIAGNOSTICS /DIS_STORE_BUILD %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup>
