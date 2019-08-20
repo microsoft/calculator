@@ -34,17 +34,8 @@ CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators()
 
 void CalculatorProgrammerRadixOperators::OnLoaded(Object ^, RoutedEventArgs ^)
 {
-    m_progModeRadixChangeToken = Model->ProgModeRadixChange +=
+    Model->ProgModeRadixChange +=
         ref new ProgModeRadixChangeHandler(this, &CalculatorProgrammerRadixOperators::ProgModeRadixChange);
-}
-void CalculatorProgrammerRadixOperators::OnUnloaded(Object ^, RoutedEventArgs ^)
-{
-
-    if (Model != nullptr && m_progModeRadixChangeToken.Value != 0)
-    {
-        Model->ProgModeRadixChange -= m_progModeRadixChangeToken;
-        m_progModeRadixChangeToken.Value = 0;
-    }
 }
 
 void CalculatorProgrammerRadixOperators::Shift_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
