@@ -34,26 +34,6 @@
                        Text="{x:Bind Token, Mode=OneWay}"/>
         </DataTemplate>
 
-        <DataTemplate x:Key="AlwaysOnTopOperand" x:DataType="common:DisplayExpressionToken">
-            <TextBlock Margin="2,0,0,0"
-                       Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{x:Bind Token, Mode=OneWay}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="AlwaysOnTopOperator" x:DataType="common:DisplayExpressionToken">
-            <TextBlock Margin="2,0,0,0"
-                       Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{x:Bind Token, Mode=OneWay}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="AlwaysOnTopSeparator" x:DataType="common:DisplayExpressionToken">
-            <TextBlock x:Name="MainText"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{x:Bind Token, Mode=OneWay}"/>
-        </DataTemplate>
-
         <!-- TextBox Styles -->
 
         <Style x:Key="NormalStyle" TargetType="controls:OverflowTextBlock">
@@ -377,11 +357,6 @@
                                                    OperatorTemplate="{StaticResource Operator}"
                                                    SeparatorTemplate="{StaticResource Separator}"/>
 
-        <converters:ExpressionItemTemplateSelector x:Key="AlwaysOnTopExpressionItemTemplateSelector"
-                                                   OperandTemplate="{StaticResource AlwaysOnTopOperand}"
-                                                   OperatorTemplate="{StaticResource AlwaysOnTopOperator}"
-                                                   SeparatorTemplate="{StaticResource AlwaysOnTopSeparator}"/>
-
         <!-- Miscellaneous Resources -->
 
         <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind Model.Announcement, Mode=OneWay}"/>
@@ -544,7 +519,7 @@
                         <Setter Target="RowResult.MinHeight" Value="54"/>
                         <Setter Target="RowResult.Height" Value="72*"/>
                         <Setter Target="AlwaysOnTopResults.FontSize" Value="40"/>
-                        <Setter Target="AlwaysOnTopResults.Style" Value="{ThemeResource AlwaysOnTopStyleM}"/>
+                        <Setter Target="AlwaysOnTopResults.Style" Value="{StaticResource AlwaysOnTopStyleM}"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="MinAlwaysOnTop">
@@ -555,7 +530,7 @@
                         <Setter Target="RowResult.MinHeight" Value="20"/>
                         <Setter Target="RowResult.Height" Value="72*"/>
                         <Setter Target="AlwaysOnTopResults.FontSize" Value="18"/>
-                        <Setter Target="AlwaysOnTopResults.Style" Value="{ThemeResource AlwaysOnTopStyleS}"/>
+                        <Setter Target="AlwaysOnTopResults.Style" Value="{StaticResource AlwaysOnTopStyleS}"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -617,7 +592,7 @@
             <controls:OverflowTextBlock x:Name="ExpressionText"
                                         Grid.Row="1"
                                         Margin="6,0,6,0"
-                                        Style="{ThemeResource NormalStyle}"
+                                        Style="{StaticResource NormalStyle}"
                                         VerticalAlignment="Bottom"
                                         AutomationProperties.AutomationId="CalculatorExpression"
                                         AutomationProperties.Name="{x:Bind Model.CalculationExpressionAutomationName, Mode=OneWay}"
@@ -628,7 +603,7 @@
                                         x:Uid="CalculatorResults"
                                         Grid.Row="2"
                                         Margin="0,0,0,0"
-                                        Style="{ThemeResource ResultsStyle}"
+                                        Style="{StaticResource ResultsStyle}"
                                         AutomationProperties.AutomationId="CalculatorResults"
                                         AutomationProperties.HeadingLevel="Level1"
                                         AutomationProperties.Name="{x:Bind Model.CalculationResultAutomationName, Mode=OneWay}"
@@ -685,7 +660,7 @@
                         <Flyout x:Name="HistoryFlyout"
                                 AutomationProperties.AutomationId="HistoryFlyout"
                                 Closed="HistoryFlyout_Closed"
-                                FlyoutPresenterStyle="{ThemeResource HistoryFlyoutStyle}"
+                                FlyoutPresenterStyle="{StaticResource HistoryFlyoutStyle}"
                                 Opened="HistoryFlyout_Opened"
                                 Placement="Full"/>
                     </FlyoutBase.AttachedFlyout>
@@ -784,7 +759,7 @@
                                 x:Uid="MemoryFlyout"
                                 AutomationProperties.AutomationId="MemoryFlyout"
                                 Closed="OnMemoryFlyoutClosed"
-                                FlyoutPresenterStyle="{ThemeResource MemoryFlyoutStyle}"
+                                FlyoutPresenterStyle="{StaticResource MemoryFlyoutStyle}"
                                 Opened="OnMemoryFlyoutOpened"
                                 Placement="Full"/>
                     </FlyoutBase.AttachedFlyout>
