@@ -16,9 +16,22 @@ using namespace CalculatorApp::Common;
 using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace Windows::Foundation::Collections;
 
 namespace CalculatorUnitTests
 {
+    template <typename T>
+    void CompareVector(IVector<T> ^ vecA, IVector<T> ^ vecB)
+    {
+        if (vecA->Size != vecB->Size)
+            Assert::Fail();
+
+        for (unsigned int i = 0; i < vecA->Size; ++i)
+        {
+            VERIFY_ARE_EQUAL(vecA->GetAt(i), vecB->GetAt(i));
+        }
+    }
+
     void ChangeMode(StandardCalculatorViewModel ^ viewModel, int mode)
     {
         if (mode == 0)
@@ -501,7 +514,7 @@ namespace CalculatorUnitTests
             val->SetAt(1, true);
             val->SetAt(2, true);
             val->SetAt(3, true);
-            VERIFY_ARE_EQUAL(m_viewModel->BinaryDigits, val);
+            CompareVector<bool>(m_viewModel->BinaryDigits, val);
         }
 
         // Test Button disabling in different Radixes
@@ -566,7 +579,7 @@ namespace CalculatorUnitTests
             val->SetAt(24, true);
             val->SetAt(25, true);
             val->SetAt(26, true);
-            VERIFY_ARE_EQUAL(m_viewModel->BinaryDigits, val);
+            CompareVector<bool>(m_viewModel->BinaryDigits, val);
         }
 
         // Test Not functionality
@@ -588,7 +601,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(m_viewModel->DisplayValue, StringReference(L"-2"));
             auto val = ref new PC::Vector<bool>(64, true);
             val->SetAt(0, false);
-            VERIFY_ARE_EQUAL(m_viewModel->BinaryDigits, val);
+            CompareVector<bool>(m_viewModel->BinaryDigits, val);
         }
 
         // Test And Or functionality
