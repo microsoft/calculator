@@ -65,8 +65,7 @@ void CopyPasteManager::CopyToClipboard(String ^ stringToCopy)
     Clipboard::SetContent(dataPackage);
 }
 
-task<String ^>
-CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, BitLength bitLengthType)
+task<String ^> CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, BitLength bitLengthType)
 {
     // Retrieve the text in the clipboard
     auto dataPackageView = Clipboard::GetContent();

@@ -12,6 +12,7 @@
 #include "CalcViewModel/Common/LocalizationSettings.h"
 #include "Converters/BooleanToVisibilityConverter.h"
 #include <CalcViewModel/Common/AppResourceProvider.h>
+#include "CalcViewModel/Common/LocalizationStringUtil.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -179,8 +180,6 @@ void CalculatorProgrammerBitFlipPanel::UpdateCheckedStates(bool forceUpdate)
     auto it = m_flipButtons.begin();
     for (bool val : Model->BinaryDigits)
     {
-        // Highest bit (64) is at index 0 in bit string.
-        // To get bit 0, grab from opposite end of string.
         auto checkbox = *it;
         if (forceUpdate || checkbox->IsChecked->Value != val)
         {
@@ -216,9 +215,9 @@ String ^ CalculatorProgrammerBitFlipPanel::GenerateAutomationPropertiesName(int 
     auto resourceLoader = AppResourceProvider::GetInstance();
 
     String ^ indexName = resourceLoader.GetResourceString(ref new Platform::String(to_wstring(position).c_str()));
-    String ^ bitName = resourceLoader.GetResourceString(L"BitAutomationName");
-    String ^ valueName = resourceLoader.GetResourceString(L"ValueAutomationName");
+    String ^ automationNameTemplate = resourceLoader.GetResourceString(L"BitFlipItemAutomationName");
+    String ^ bitPositionTemplate = resourceLoader.GetResourceString(L"BitPosition");
 
-    return indexName + bitName + valueName
-           + (value ? resourceLoader.GetResourceString(L"BinaryOneValueAutomationName") : resourceLoader.GetResourceString(L"BinaryZeroValueAutomationName"));
+    wstring bitPosition = LocalizationStringUtil::GetLocalizedString(bitPositionTemplate->Data(), indexName->Data());
+    return ref new String(LocalizationStringUtil::GetLocalizedString(automationNameTemplate->Data(), bitPosition.c_str(), value ? L"1" : L"0").c_str());
 }

@@ -1663,6 +1663,8 @@ void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
     auto binaryValueArray = ref new Vector<bool>(64, false);
     auto binaryValue = m_standardCalculatorManager.GetResultForRadix(2, precision, false);
     int i = 0;
+
+    // To get bit 0, grab from opposite end of string.
     for (std::wstring::reverse_iterator it = binaryValue.rbegin(); it != binaryValue.rend(); ++it)
     {
         binaryValueArray->SetAt(i++, *it == L'1');
