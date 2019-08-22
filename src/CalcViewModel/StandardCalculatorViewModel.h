@@ -125,6 +125,13 @@ namespace CalculatorApp
                     }
                 }
             }
+            static property Platform::String ^ IsBitFlipCheckedPropertyName
+            {
+                Platform::String ^ get()
+                {
+                    return Platform::StringReference(L"IsBitFlipChecked");
+                }
+            }
 
             property bool IsBinaryBitFlippingEnabled
             {
@@ -217,6 +224,13 @@ namespace CalculatorApp
                         }
                         RaisePropertyChanged(L"IsProgrammer");
                     }
+                }
+            }
+            static property Platform::String ^ IsProgrammerPropertyName
+            {
+                Platform::String ^ get()
+                {
+                    return Platform::StringReference(L"IsProgrammer");
                 }
             }
 

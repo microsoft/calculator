@@ -34,11 +34,12 @@ namespace CalculatorApp
         void AssignFlipButtons();
 
         void OnBitToggled(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void UpdateCheckedStates(bool forceUpdate);
 
     private:
         Windows::Foundation::EventRegistrationToken m_propertyChangedToken;
         Platform::String ^ GenerateAutomationPropertiesName(int position, bool value) const;
+        void UpdateCheckedStates(bool updateAutomationPropertiesNames);
+        void UpdateAutomationPropertiesNames();
 
         static const unsigned int s_numBits = 64;
         std::array<CalculatorApp::Controls::FlipButtons ^, s_numBits> m_flipButtons;

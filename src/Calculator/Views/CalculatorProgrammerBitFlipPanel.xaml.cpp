@@ -69,6 +69,16 @@ void CalculatorProgrammerBitFlipPanel::OnPropertyChanged(Object ^ sender, Proper
     {
         UpdateCheckedStates(false);
     }
+    else if (e->PropertyName == StandardCalculatorViewModel::IsBitFlipCheckedPropertyName
+        || e->PropertyName == StandardCalculatorViewModel::IsProgrammerPropertyName)
+    {
+        if (Model->IsBitFlipChecked && Model->IsProgrammer)
+        {
+            // OnBitToggle won't update the automation properties when this control isn't displayed
+            // We need to update all automation properties names manually when the BitFlipPanel is displayed again
+            UpdateAutomationPropertiesNames();
+        }
+    }
 }
 
 StandardCalculatorViewModel ^ CalculatorProgrammerBitFlipPanel::Model::get()
@@ -158,14 +168,16 @@ void CalculatorProgrammerBitFlipPanel::OnBitToggled(_In_ Object ^ sender, _In_ R
     // Also, if the mode is switched to other Calculator modes when the BitFlip panel is open,
     // a race condition exists in which the IsProgrammerMode property is still true and the UpdatePrimaryResult() is called,
     // which continuously alters the Display Value and the state of the Bit Flip buttons.
-    if ((Model->IsBitFlipChecked) && Model->IsProgrammer)
+    if (Model->IsBitFlipChecked && Model->IsProgrammer)
     {
         auto flipButton = static_cast<FlipButtons ^>(sender);
+        int index = static_cast<int>(flipButton->Tag);
+        flipButton->SetValue(AutomationProperties::NameProperty, GenerateAutomationPropertiesName(index, flipButton->IsChecked->Value));
         Model->ButtonPressed->Execute(flipButton->ButtonId);
     }
 }
 
-void CalculatorProgrammerBitFlipPanel::UpdateCheckedStates(bool forceUpdate)
+void CalculatorProgrammerBitFlipPanel::UpdateCheckedStates(bool updateAutomationPropertiesNames)
 {
     assert(!m_updatingCheckedStates);
     assert(m_flipButtons.size() == s_numBits);
@@ -176,22 +188,30 @@ void CalculatorProgrammerBitFlipPanel::UpdateCheckedStates(bool forceUpdate)
     }
 
     m_updatingCheckedStates = true;
-    unsigned int bitIndex = 0;
     auto it = m_flipButtons.begin();
+    int index = 0;
     for (bool val : Model->BinaryDigits)
     {
-        auto checkbox = *it;
-        if (forceUpdate || checkbox->IsChecked->Value != val)
+        FlipButtons ^ flipButton = *it;
+        if (updateAutomationPropertiesNames)
         {
-            checkbox->IsChecked = val;
-            // Only generate the string when the value changed
-            checkbox->SetValue(AutomationProperties::NameProperty, GenerateAutomationPropertiesName(bitIndex, val));
+            flipButton->SetValue(AutomationProperties::NameProperty, GenerateAutomationPropertiesName(index, flipButton->IsChecked->Value));
         }
-        ++bitIndex;
+        flipButton->IsChecked = val;
         ++it;
+        ++index;
     }
 
     m_updatingCheckedStates = false;
+}
+
+void CalculatorProgrammerBitFlipPanel::UpdateAutomationPropertiesNames()
+{
+    for (FlipButtons ^ flipButton : m_flipButtons)
+    {
+        int index = static_cast<int>(flipButton->Tag);
+        flipButton->SetValue(AutomationProperties::NameProperty, GenerateAutomationPropertiesName(index, flipButton->IsChecked->Value));
+    }
 }
 
 bool CalculatorProgrammerBitFlipPanel::ShouldEnableBit(BitLength length, int index)
