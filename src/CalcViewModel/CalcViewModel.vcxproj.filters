@@ -219,6 +219,9 @@
     <ClInclude Include="DataLoaders\DataLoaderConstants.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
+    <ClInclude Include="Common\BitLength.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="DataLoaders\DefaultFromToCurrency.json">
