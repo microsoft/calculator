@@ -100,7 +100,7 @@
                 <!-- PLACEHOLDER!!!! This is where the converter goes when it is delay loaded -->
             </Border>
         </Grid>
-        
+
         <muxc:NavigationView x:Name="NavView"
                              x:Uid="NavView"
                              Grid.Row="1"
@@ -108,9 +108,10 @@
                              DataContext="{x:Bind Model}"
                              ExpandedModeThresholdWidth="Infinity"
                              IsBackButtonVisible="Collapsed"
-                             IsPaneToggleButtonVisible="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                              IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
+                             IsPaneToggleButtonVisible="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                              IsSettingsVisible="False"
+                             ItemInvoked="OnNavItemInvoked"
                              Loaded="OnNavLoaded"
                              MenuItemsSource="{x:Bind CreateUIElementsForCategories(Model.Categories), Mode=OneWay}"
                              OpenPaneLength="{StaticResource SplitViewOpenPaneLength}"
@@ -118,7 +119,6 @@
                              PaneOpened="OnNavPaneOpened"
                              PaneOpening="OnNavPaneOpening"
                              SelectionChanged="OnNavSelectionChanged"
-                             ItemInvoked="OnNavItemInvoked"
                              TabIndex="1"
                              UseSystemFocusVisuals="True">
 
@@ -156,29 +156,29 @@
             </muxc:NavigationView.PaneFooter>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="Header"
+                           Grid.Column="0"
                            Margin="52,6,12,0"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Top"
-                           Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"
                            Style="{StaticResource SubtitleTextBlockStyle}"
                            Text="{x:Bind Model.CategoryName, Mode=OneWay}"
-                           Grid.Column="0"/>
+                           Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
                 <Button x:Name="NormalAlwaysOnTopButton"
                         x:Uid="EnterAlwaysOnTopButton"
-                        FontFamily="{StaticResource CalculatorFontFamily}"
-                        Style="{StaticResource SquareIconButtonStyle}"
-                        Content="&#xEE49;"
-                        Click="AlwaysOnTopButtonClick"
+                        Grid.Column="1"
                         VerticalAlignment="Top"
                         HorizontalContentAlignment="Center"
+                        Style="{StaticResource SquareIconButtonStyle}"
                         Background="Transparent"
-                        Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}"
+                        FontFamily="{StaticResource CalculatorFontFamily}"
                         AutomationProperties.AutomationId="NormalAlwaysOnTopButton"
-                        Grid.Column="1"/>
+                        Click="AlwaysOnTopButtonClick"
+                        Content="&#xEE49;"
+                        Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}"/>
             </Grid>
         </muxc:NavigationView>
     </Grid>

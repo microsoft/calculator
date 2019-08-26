@@ -37,42 +37,29 @@ void CalculatorProgrammerDisplayPanel::OnBitLengthButtonPressed(Object ^ paramet
     ByteButton->Visibility = ::Visibility::Collapsed;
     if (buttonId == "0")
     {
-        Model->ButtonPressed->Execute(NumbersAndOperatorsEnum::Dword);
+        Model->ValueBitLength = BitLength::BitLengthDWord;
         DwordButton->Visibility = ::Visibility::Visible;
         DwordButton->Focus(::FocusState::Programmatic);
-        Model->IsQwordEnabled = false;
-        Model->IsDwordEnabled = true;
-        Model->IsWordEnabled = true;
     }
     else if (buttonId == "1")
     {
-        Model->ButtonPressed->Execute(NumbersAndOperatorsEnum::Word);
+        Model->ValueBitLength = BitLength::BitLengthWord;
         WordButton->Visibility = ::Visibility::Visible;
         WordButton->Focus(::FocusState::Programmatic);
-        Model->IsQwordEnabled = false;
-        Model->IsDwordEnabled = false;
-        Model->IsWordEnabled = true;
     }
     else if (buttonId == "2")
     {
-        Model->ButtonPressed->Execute(NumbersAndOperatorsEnum::Byte);
+        Model->ValueBitLength = BitLength::BitLengthByte;
         ByteButton->Visibility = ::Visibility::Visible;
         ByteButton->Focus(::FocusState::Programmatic);
-        Model->IsQwordEnabled = false;
-        Model->IsDwordEnabled = false;
-        Model->IsWordEnabled = false;
     }
     else if (buttonId == "3")
     {
-        Model->ButtonPressed->Execute(NumbersAndOperatorsEnum::Qword);
+        Model->ValueBitLength = BitLength::BitLengthQWord;
         QwordButton->Visibility = ::Visibility::Visible;
         QwordButton->Focus(::FocusState::Programmatic);
-        Model->IsQwordEnabled = true;
-        Model->IsDwordEnabled = true;
-        Model->IsWordEnabled = true;
     }
-    // update memory list according to bit length
-    Model->SetMemorizedNumbersString();
+
 }
 
 bool CalculatorProgrammerDisplayPanel::IsErrorVisualState::get()
