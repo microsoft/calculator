@@ -130,7 +130,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
     <PackageCertificateKeyFile>CalculatorUnitTests_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>3F0C32266A4D995CC08C9AEC3960CFF3EF0D1853</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>BE776C83699DBCE4969DE9EE730AEAF66C5D5182</PackageCertificateThumbprint>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
