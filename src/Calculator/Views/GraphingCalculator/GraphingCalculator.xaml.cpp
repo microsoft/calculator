@@ -31,7 +31,9 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::UI::Popups;
 
+
 constexpr auto sc_ViewModelPropertyName = L"ViewModel";
+
 
 GraphingCalculator::GraphingCalculator()
 {
@@ -87,7 +89,7 @@ void GraphingCalculator::ViewModel::set(GraphingCalculatorViewModel ^ vm)
     }
 }
 
-void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
     // Ask the OS to start a share action.
     DataTransferManager::ShowShareUI();
@@ -258,6 +260,21 @@ double GraphingCalculator::validateDouble(String ^ value, double defaultValue)
 void GraphingCalculator::TextBoxGotFocus(TextBox ^ sender, RoutedEventArgs ^ e)
 {
     sender->SelectAll();
+}
+
+void GraphingCalculator::OnZoomInCommand(Object ^ /* parameter */)
+{
+    GraphingControl->ZoomFromCenter(zoomInScale);
+}
+
+void GraphingCalculator::OnZoomOutCommand(Object ^ /* parameter */)
+{
+    GraphingControl->ZoomFromCenter(zoomOutScale);
+}
+
+void GraphingCalculator::OnZoomResetCommand(Object ^ /* parameter */)
+{
+    GraphingControl->ResetGrid();
 }
 
 void GraphingCalculator::OnActiveTracingClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)

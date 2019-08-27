@@ -147,6 +147,9 @@ public
             }
         }
 
+        void ZoomFromCenter(double scale);
+        void ResetGrid();
+
         property Windows::Foundation::Point TraceValue
         {
             Windows::Foundation::Point get()
