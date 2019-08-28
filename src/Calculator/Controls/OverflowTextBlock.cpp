@@ -186,14 +186,20 @@ void OverflowTextBlock::UpdateScrollButtons()
         m_scrollRight->Focus(::FocusState::Programmatic);
     }
 
-    if (ScrollButtonsPlacement == OverflowButtonPlacement::Above && m_expressionContainer != nullptr && m_expressionContent != nullptr)
+    if (ScrollButtonsPlacement == OverflowButtonPlacement::Above && m_expressionContent != nullptr)
     {
         double left = m_scrollLeft != nullptr && m_scrollLeft->Visibility == ::Visibility::Visible ? ScrollButtonsWidth : 0;
         double right = m_scrollRight != nullptr && m_scrollRight->Visibility == ::Visibility::Visible ? ScrollButtonsWidth : 0;
         if (m_expressionContainer->Padding.Left != left || m_expressionContainer->Padding.Right != right)
         {
+            m_expressionContainer->ViewChanged -= m_containerViewChangedToken;
+
             m_expressionContainer->Padding = Thickness(left, 0, right, 0);
             m_expressionContent->Margin = Thickness(-left, 0, -right, 0);
+            m_expressionContainer->UpdateLayout();
+
+            m_containerViewChangedToken = m_expressionContainer->ViewChanged +=
+                ref new EventHandler<ScrollViewerViewChangedEventArgs ^>(this, &OverflowTextBlock::OnViewChanged);
         }
     }
 }
