@@ -194,7 +194,6 @@ void OverflowTextBlock::UpdateScrollButtons()
         {
             m_expressionContainer->Padding = Thickness(left, 0, right, 0);
             m_expressionContent->Margin = Thickness(-left, 0, -right, 0);
-            //   m_ignoreNextViewChangedEvent = true;
         }
     }
 }
