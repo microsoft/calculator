@@ -32,6 +32,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, ScrollButtonsFontSize);
 DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, ScrollButtonsPlacement);
 
 static constexpr unsigned int SCROLL_BUTTONS_APPROXIMATION_RANGE = 4;
+static constexpr double SCROLL_RATIO = 0.7;
 
 void OverflowTextBlock::OnApplyTemplate()
 {
@@ -65,9 +66,6 @@ void OverflowTextBlock::OnApplyTemplate()
         m_scrollRight = safe_cast<Button ^>(uiElement);
         m_scrollRightClickEventToken = m_scrollRight->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollRightClick);
     }
-
-    m_scrollingLeft = false;
-    m_scrollingRight = false;
 
     uiElement = GetTemplateChild("TokenList");
     if (uiElement != nullptr)
@@ -120,8 +118,7 @@ void OverflowTextBlock::ScrollLeft()
 {
     if (m_expressionContainer != nullptr && m_expressionContainer->HorizontalOffset > 0)
     {
-        m_scrollingLeft = true;
-        double offset = m_expressionContainer->HorizontalOffset - (scrollRatio * m_expressionContainer->ViewportWidth);
+        double offset = m_expressionContainer->HorizontalOffset - (SCROLL_RATIO * m_expressionContainer->ViewportWidth);
         m_expressionContainer->ChangeView(offset, nullptr, nullptr);
         m_expressionContainer->UpdateLayout();
         UpdateScrollButtons();
@@ -133,8 +130,7 @@ void OverflowTextBlock::ScrollRight()
     auto realOffset = m_expressionContainer->HorizontalOffset + m_expressionContainer->Padding.Left + m_expressionContent->Margin.Left;
     if (m_expressionContainer != nullptr && realOffset + m_expressionContainer->ActualWidth < m_expressionContent->ActualWidth)
     {
-        m_scrollingRight = true;
-        double offset = m_expressionContainer->HorizontalOffset + (scrollRatio * m_expressionContainer->ViewportWidth);
+        double offset = m_expressionContainer->HorizontalOffset + (SCROLL_RATIO * m_expressionContainer->ViewportWidth);
         m_expressionContainer->ChangeView(offset, nullptr, nullptr);
         m_expressionContainer->UpdateLayout();
         UpdateScrollButtons();
@@ -159,10 +155,36 @@ void OverflowTextBlock::UpdateScrollButtons()
     }
 
     auto realOffset = m_expressionContainer->HorizontalOffset + m_expressionContainer->Padding.Left + m_expressionContent->Margin.Left;
-    m_scrollLeft->Visibility = realOffset > SCROLL_BUTTONS_APPROXIMATION_RANGE ? ::Visibility::Visible : ::Visibility::Collapsed;
-    m_scrollRight->Visibility = realOffset + m_expressionContainer->ActualWidth + SCROLL_BUTTONS_APPROXIMATION_RANGE < m_expressionContent->ActualWidth
-                                    ? ::Visibility::Visible
-                                    : ::Visibility::Collapsed;
+    auto scrollLeftVisibility = realOffset > SCROLL_BUTTONS_APPROXIMATION_RANGE ? ::Visibility::Visible : ::Visibility::Collapsed;
+    auto scrollRightVisibility = realOffset + m_expressionContainer->ActualWidth + SCROLL_BUTTONS_APPROXIMATION_RANGE < m_expressionContent->ActualWidth
+                                     ? ::Visibility::Visible
+                                     : ::Visibility::Collapsed;
+
+    bool shouldTryFocusScrollRight = false;
+    if (m_scrollLeft->Visibility != scrollLeftVisibility)
+    {
+        if (scrollLeftVisibility == ::Visibility::Collapsed)
+        {
+            shouldTryFocusScrollRight = m_scrollLeft->Equals(FocusManager::GetFocusedElement());
+        }
+
+        m_scrollLeft->Visibility = scrollLeftVisibility;
+    }
+
+    if (m_scrollRight->Visibility != scrollRightVisibility)
+    {
+        if (scrollRightVisibility == ::Visibility::Collapsed && m_scrollLeft->Visibility == ::Visibility::Visible
+            && m_scrollRight->Equals(FocusManager::GetFocusedElement()))
+        {
+            m_scrollLeft->Focus(::FocusState::Programmatic);
+        }
+        m_scrollRight->Visibility = scrollRightVisibility;
+    }
+
+    if (shouldTryFocusScrollRight && scrollRightVisibility == ::Visibility::Visible)
+    {
+        m_scrollRight->Focus(::FocusState::Programmatic);
+    }
 
     if (ScrollButtonsPlacement == OverflowButtonPlacement::Above && m_expressionContainer != nullptr && m_expressionContent != nullptr)
     {

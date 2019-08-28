@@ -51,9 +51,6 @@ namespace CalculatorApp
             void ScrollLeft();
             void ScrollRight();
 
-            double scrollRatio = 0.7;
-            bool m_scrollingLeft;
-            bool m_scrollingRight;
             bool m_isAccessibilityViewControl;
             Windows::UI::Xaml::FrameworkElement ^ m_expressionContent;
             Windows::UI::Xaml::Controls::ItemsControl ^ m_itemsControl;
