@@ -46,7 +46,6 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(HistoryViewModel ^, HistoryVM);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsInError);
             OBSERVABLE_PROPERTY_RW(bool, IsOperatorCommand);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, DisplayStringExpression);
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Common::DisplayExpressionToken ^> ^, ExpressionTokens);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, DecimalDisplayValue);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, HexDisplayValue);

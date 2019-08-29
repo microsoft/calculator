@@ -547,7 +547,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Results.MaxFontSize" Value="72"/>
-                        <Setter Target="Results.MaxExpressionHistoryCharacters" Value="51"/>
                         <Setter Target="RowResult.MinHeight" Value="108"/>
                         <Setter Target="RowResult.Height" Value="72*"/>
                     </VisualState.Setters>
@@ -558,7 +557,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Results.MaxFontSize" Value="46"/>
-                        <Setter Target="Results.MaxExpressionHistoryCharacters" Value="30"/>
                         <Setter Target="RowResult.MinHeight" Value="72"/>
                         <Setter Target="RowResult.Height" Value="72*"/>
                     </VisualState.Setters>
@@ -569,7 +567,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Results.MaxFontSize" Value="26"/>
-                        <Setter Target="Results.MaxExpressionHistoryCharacters" Value="30"/>
                         <Setter Target="RowResult.MinHeight" Value="42"/>
                         <Setter Target="RowResult.Height" Value="42*"/>
                     </VisualState.Setters>
@@ -615,9 +612,7 @@
                                         AutomationProperties.Name="{x:Bind Model.CalculationResultAutomationName, Mode=OneWay}"
                                         ContextCanceled="OnContextCanceled"
                                         ContextRequested="OnContextRequested"
-                                        DisplayStringExpression="{x:Bind Model.DisplayStringExpression, Mode=OneWay}"
                                         DisplayValue="{x:Bind Model.DisplayValue, Mode=OneWay}"
-                                        ExpressionVisibility="Visible"
                                         IsInError="{x:Bind Model.IsInError, Mode=OneWay}"
                                         IsOperatorCommand="{x:Bind Model.IsOperatorCommand, Mode=OneWay}"
                                         TabIndex="1"
