@@ -59,7 +59,6 @@ namespace CalculatorApp
             void OnTextContainerLayoutUpdated(Object ^ sender, Object ^ e);
             void OnTextContainerOnViewChanged(Object ^ sender, Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs ^ e);
             void UpdateVisualState();
-            void UpdateAllState();
             void OnScrollClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
             void ModifyFontAndMargin(Windows::UI::Xaml::Controls::TextBlock ^ textBlock, double fontChange);
             void UpdateScrollButtons();
@@ -81,6 +80,8 @@ namespace CalculatorApp
             Windows::Foundation::EventRegistrationToken m_textContainerLayoutChangedToken;
             Windows::Foundation::EventRegistrationToken m_textContainerViewChangedToken;
             Windows::Foundation::EventRegistrationToken m_textContainerSizeChangedToken;
+            Windows::Foundation::EventRegistrationToken m_scrollRightClickToken;
+            Windows::Foundation::EventRegistrationToken m_scrollLeftClickToken;
         };
     }
 }

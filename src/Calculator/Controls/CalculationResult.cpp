@@ -68,22 +68,37 @@ Platform::String ^ CalculationResult::GetRawDisplayValue()
 
 void CalculationResult::OnApplyTemplate()
 {
-    assert((m_scrollLeft == nullptr && m_scrollRight == nullptr) || (m_scrollLeft != nullptr && m_scrollRight != nullptr));
     if (m_textContainer)
     {
         if (m_textContainerLayoutChangedToken.Value != 0)
         {
             m_textContainer->LayoutUpdated -= m_textContainerLayoutChangedToken;
+            m_textContainerLayoutChangedToken.Value = 0;
         }
         if (m_textContainerSizeChangedToken.Value != 0)
         {
             m_textContainer->SizeChanged -= m_textContainerSizeChangedToken;
+            m_textContainerSizeChangedToken.Value = 0;
         }
         if (m_textContainerViewChangedToken.Value != 0)
         {
             m_textContainer->ViewChanged -= m_textContainerViewChangedToken;
+            m_textContainerViewChangedToken.Value = 0;
         }
     }
+
+    if (m_scrollLeft != nullptr && m_scrollLeftClickToken.Value != 0)
+    {
+        m_scrollLeft->Click -= m_scrollLeftClickToken;
+        m_scrollLeftClickToken.Value = 0;
+    }
+
+    if (m_scrollRight != nullptr && m_scrollRightClickToken.Value != 0)
+    {
+        m_scrollRight->Click -= m_scrollRightClickToken;
+        m_scrollRightClickToken.Value = 0;
+    }
+
     m_textContainer = dynamic_cast<ScrollViewer ^>(GetTemplateChild("TextContainer"));
     if (m_textContainer)
     {
@@ -102,20 +117,21 @@ void CalculationResult::OnApplyTemplate()
         m_scrollLeft = dynamic_cast<HyperlinkButton ^>(GetTemplateChild("ScrollLeft"));
         if (m_scrollLeft)
         {
-            m_scrollLeft->Click += ref new RoutedEventHandler(this, &CalculationResult::OnScrollClick);
+            m_scrollLeftClickToken = m_scrollLeft->Click += ref new RoutedEventHandler(this, &CalculationResult::OnScrollClick);
         }
         m_scrollRight = dynamic_cast<HyperlinkButton ^>(GetTemplateChild("ScrollRight"));
         if (m_scrollRight)
         {
-            m_scrollRight->Click += ref new RoutedEventHandler(this, &CalculationResult::OnScrollClick);
+            m_scrollRightClickToken = m_scrollRight->Click += ref new RoutedEventHandler(this, &CalculationResult::OnScrollClick);
         }
-        m_textBlock = dynamic_cast<TextBlock ^>(m_textContainer->FindName("NormalOutput"));
+        m_textBlock = dynamic_cast<TextBlock ^>(GetTemplateChild("NormalOutput"));
         if (m_textBlock)
         {
             m_textBlock->Visibility = ::Visibility::Visible;
         }
     }
-    UpdateAllState();
+    UpdateVisualState();
+    UpdateTextState();
     VisualStateManager::GoToState(this, s_UnfocusedState, false);
 }
 
@@ -347,12 +363,6 @@ void CalculationResult::ModifyFontAndMargin(TextBlock ^ textBox, double fontChan
     newFontSize = min(max(cur + fontChange, MinFontSize), MaxFontSize);
     m_textContainer->Padding = Thickness(0, 0, 0, scaleFactor * abs(cur - newFontSize));
     textBox->FontSize = newFontSize;
-}
-
-void CalculationResult::UpdateAllState()
-{
-    UpdateVisualState();
-    UpdateTextState();
 }
 
 void CalculationResult::OnTapped(TappedRoutedEventArgs ^ e)
