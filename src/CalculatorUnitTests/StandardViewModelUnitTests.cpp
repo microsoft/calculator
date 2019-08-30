@@ -101,10 +101,6 @@ namespace CalculatorUnitTests
             {
                 VERIFY_ARE_EQUAL(Platform::StringReference(currentItem->expectedPrimaryDisplay.c_str()), viewModel->DisplayValue);
             }
-            if (currentItem->expectedExpressions != L"N/A" && viewModel->DisplayStringExpression != nullptr)
-            {
-                VERIFY_ARE_EQUAL(Platform::StringReference(currentItem->expectedExpressions.c_str()), viewModel->DisplayStringExpression);
-            }
             currentItem++;
         }
     }
@@ -123,15 +119,9 @@ namespace CalculatorUnitTests
         void ValidateViewModelValueAndExpression(String ^ value, String ^ expression = nullptr)
         {
             String ^ displayValue = m_viewModel->DisplayValue;
-            String ^ displayExpression = m_viewModel->DisplayStringExpression;
             if (value != nullptr)
             {
                 VERIFY_ARE_EQUAL(value, displayValue);
-            }
-
-            if (expression != nullptr)
-            {
-                VERIFY_ARE_EQUAL(expression, displayExpression);
             }
         }
 
@@ -165,7 +155,6 @@ namespace CalculatorUnitTests
             StandardCalculatorViewModel ^ vmconstructortest = ref new StandardCalculatorViewModel();
             vmconstructortest->IsStandard = true;
             String ^ displayValue = vmconstructortest->DisplayValue;
-            String ^ displayExpression = vmconstructortest->DisplayStringExpression;
             String ^ calculationResultAutomationName = vmconstructortest->CalculationResultAutomationName;
 
             VERIFY_ARE_EQUAL(StringReference(L"0"), displayValue);
