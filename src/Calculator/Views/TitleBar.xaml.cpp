@@ -22,7 +22,7 @@ using namespace Concurrency;
 
 namespace CalculatorApp
 {
-    DEPENDENCY_PROPERTY_INITIALIZATION(TitleBar, ApplicationViewModel);
+    DEPENDENCY_PROPERTY_INITIALIZATION(TitleBar, IsAlwaysOnTopMode);
 
     TitleBar::TitleBar()
         : m_coreTitleBar(CoreApplication::GetCurrentView()->TitleBar)
@@ -40,7 +40,7 @@ namespace CalculatorApp
         AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
 #else
         AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"DevAppName");
-#endif //IS_STORE_BUILD
+#endif // IS_STORE_BUILD
     }
 
     void TitleBar::OnLoaded(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
@@ -82,10 +82,9 @@ namespace CalculatorApp
         m_windowActivatedToken.Value = 0;
     }
 
-
     void TitleBar::SetTitleBarVisibility()
     {
-        this->LayoutRoot->Visibility = m_coreTitleBar->IsVisible || ApplicationViewModel->IsAlwaysOnTop ? ::Visibility::Visible : ::Visibility::Collapsed;
+        this->LayoutRoot->Visibility = m_coreTitleBar->IsVisible || IsAlwaysOnTopMode ? ::Visibility::Visible : ::Visibility::Collapsed;
     }
 
     void TitleBar::SetTitleBarPadding()
@@ -173,9 +172,14 @@ namespace CalculatorApp
             this, e->WindowActivationState == CoreWindowActivationState::Deactivated ? WindowNotFocused->Name : WindowFocused->Name, false);
     }
 
-    void TitleBar::AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+    void TitleBar::OnIsAlwaysOnTopModePropertyChanged(bool /*oldValue*/, bool newValue)
     {
-        auto bounds = Window::Current->Bounds;
-        ApplicationViewModel->ToggleAlwaysOnTop(bounds.Width, bounds.Height);
+        SetTitleBarVisibility();
+        VisualStateManager::GoToState(this, newValue ? "AOTMiniState" : "AOTNormalState", false);
+    }
+
+    void TitleBar::AlwaysOnTopButton_Click(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ e)
+    {
+        AlwaysOnTopClick(this, e);
     }
 }
