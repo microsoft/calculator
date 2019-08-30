@@ -31,9 +31,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::UI::Popups;
 
-
 constexpr auto sc_ViewModelPropertyName = L"ViewModel";
-
 
 GraphingCalculator::GraphingCalculator()
 {
@@ -44,13 +42,16 @@ GraphingCalculator::GraphingCalculator()
     DataTransferManager ^ dataTransferManager = DataTransferManager::GetForCurrentView();
 
     // Register the current control as a share source.
-    m_dataRequestedToken = dataTransferManager->DataRequested += ref new TypedEventHandler<DataTransferManager ^, DataRequestedEventArgs ^>(this, &GraphingCalculator::OnDataRequested);
+    m_dataRequestedToken = dataTransferManager->DataRequested +=
+        ref new TypedEventHandler<DataTransferManager ^, DataRequestedEventArgs ^>(this, &GraphingCalculator::OnDataRequested);
 
     // Request notifications when we should be showing the trace values
-    m_showTracePopupChangedToken = GraphingControl->TracingChangedEvent += ref new TracingChangedEventHandler(this, &GraphingCalculator::OnShowTracePopupChanged);
+    m_showTracePopupChangedToken = GraphingControl->TracingChangedEvent +=
+        ref new TracingChangedEventHandler(this, &GraphingCalculator::OnShowTracePopupChanged);
 
     // And when the actual trace value changes
-    m_tracePointChangedToken = GraphingControl->TracingValueChangedEvent += ref new TracingValueChangedEventHandler(this, &GraphingCalculator::OnTracePointChanged);
+    m_tracePointChangedToken = GraphingControl->TracingValueChangedEvent +=
+        ref new TracingValueChangedEventHandler(this, &GraphingCalculator::OnTracePointChanged);
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
@@ -89,7 +90,7 @@ void GraphingCalculator::ViewModel::set(GraphingCalculatorViewModel ^ vm)
     }
 }
 
-void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     // Ask the OS to start a share action.
     DataTransferManager::ShowShareUI();
@@ -280,4 +281,10 @@ void GraphingCalculator::OnZoomResetCommand(Object ^ /* parameter */)
 void GraphingCalculator::OnActiveTracingClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     GraphingControl->ActiveTracing = !GraphingControl->ActiveTracing;
+}
+
+void CalculatorApp::GraphingCalculator::OnSettingsClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    // Hide or show the settings popup
+    SettingsPopup->IsOpen = SettingsPopup->IsOpen ? false : true;
 }

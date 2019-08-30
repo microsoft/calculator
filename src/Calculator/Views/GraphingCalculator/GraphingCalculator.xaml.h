@@ -59,6 +59,7 @@ namespace CalculatorApp
 
         void TextBoxGotFocus(Windows::UI::Xaml::Controls::TextBox^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void OnActiveTracingClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnSettingsClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 
 }

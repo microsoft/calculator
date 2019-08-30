@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props" Condition="Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props')" />
   <PropertyGroup Label="Globals">
@@ -252,6 +252,9 @@
     <ClInclude Include="Converters\VisibilityNegationConverter.h" />
     <ClInclude Include="Controls\HorizontalNoOverflowStackPanel.h" />
     <ClInclude Include="Controls\EquationTextBox.h" />
+    <ClInclude Include="GraphingSettings.xaml.h">
+      <DependentUpon>GraphingSettings.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -324,6 +327,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="AboutFlyout.xaml" />
+    <Page Include="GraphingSettings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Calculator.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -391,6 +397,9 @@
     <ClCompile Include="Converters\VisibilityNegationConverter.cpp" />
     <ClCompile Include="Controls\HorizontalNoOverflowStackPanel.cpp" />
     <ClCompile Include="Controls\EquationTextBox.cpp" />
+    <ClCompile Include="GraphingSettings.xaml.cpp">
+      <DependentUpon>GraphingSettings.xaml</DependentUpon>
+    </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
