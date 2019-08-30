@@ -1,0 +1,48 @@
+<Page
+    x:Class="CalculatorApp.GraphingSettings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CalculatorApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid BorderBrush="Black" BorderThickness="3">
+        <StackPanel Margin="10,10,10,10">
+            <TextBlock Text="Grid" FontSize="28"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="70"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="x-min"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="x-max"/>
+                <TextBox Grid.Row="1" Grid.Column="0" x:Name="x_min"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="x_max"/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="y-min"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="y-min"/>
+                <TextBox Grid.Row="4" Grid.Column="0" x:Name="y_min"/>
+                <TextBox Grid.Row="4" Grid.Column="1" x:Name="y_max"/>
+
+                <Polyline Grid.Column="2" Grid.RowSpan="5" Points="0,20 50,20 50,110 0,110" Stroke="Blue" StrokeThickness="3" VerticalAlignment="Center"/>
+                <CheckBox Grid.Column="2" Grid.RowSpan="5" Margin="40,20,0,0" x:Name="PreserveAspectRatio" IsChecked="True" VerticalAlignment="Center" Opacity="100"/>
+            </Grid>
+
+            <TextBlock Text="Units" FontSize="28" Margin="0,10"/>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Content="Degrees" IsChecked="True"/>
+                <RadioButton Content="Radians"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -30,5 +30,8 @@ namespace Graphing::Renderer
 
 		virtual HRESULT GetBitmap(std::shared_ptr<Graphing::IBitmap>& bitmapOut, bool& hasSomeMissingDataOut) = 0;
 
+        virtual HRESULT GetDisplayRanges(double& xMin, double& xMax, double& yMin, double& yMax) = 0;
+
+        virtual HRESULT SetDisplayRanges(double& xMin, double& xMax, double& yMin, double& yMax) = 0;
 	};
 }
