@@ -57,8 +57,6 @@ void CalculatorProgrammerRadixOperators::Shift_Clicked(Platform::Object ^ sender
     }
 }
 
-}
-
 bool CalculatorProgrammerRadixOperators::IsErrorVisualState::get()
 {
     return m_isErrorVisualState;
