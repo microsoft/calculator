@@ -951,7 +951,7 @@ int CCalcEngine::GetCurrentRadix()
     return m_radix;
 }
 
-wstring CCalcEngine::GetCurrentResultForRadix(uint32_t radix, int32_t precision)
+wstring CCalcEngine::GetCurrentResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix)
 {
     Rational rat = (m_bRecord ? m_input.ToRational(m_radix, m_precision) : m_currentVal);
 
@@ -964,7 +964,14 @@ wstring CCalcEngine::GetCurrentResultForRadix(uint32_t radix, int32_t precision)
         ChangeConstants(m_radix, m_precision);
     }
 
-    return GroupDigitsPerRadix(numberString, radix);
+    if (groupDigitsPerRadix)
+    {
+        return GroupDigitsPerRadix(numberString, radix);
+    }
+    else
+    {
+        return numberString;
+    }
 }
 
 wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)

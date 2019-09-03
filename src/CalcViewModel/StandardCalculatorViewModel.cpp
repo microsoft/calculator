@@ -67,6 +67,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_HexDisplayValue(L"0")
     , m_BinaryDisplayValue(L"0")
     , m_OctalDisplayValue(L"0")
+    , m_BinaryDigits(ref new Vector<bool>(64, false))
     , m_standardCalculatorManager(&m_calculatorDisplay, &m_resourceProvider)
     , m_ExpressionTokens(ref new Vector<DisplayExpressionToken ^>())
     , m_MemorizedNumbers(ref new Vector<MemoryItemViewModel ^>())
@@ -74,10 +75,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_IsFToEChecked(false)
     , m_isShiftChecked(false)
     , m_IsShiftProgrammerChecked(false)
-    , m_IsQwordEnabled(true)
-    , m_IsDwordEnabled(true)
-    , m_IsWordEnabled(true)
-    , m_IsByteEnabled(true)
+    , m_valueBitLength(BitLength::BitLengthQWord)
     , m_isBitFlipChecked(false)
     , m_isBinaryBitFlippingEnabled(false)
     , m_CurrentRadixType(RADIX_TYPE::DEC_RADIX)
@@ -679,26 +677,6 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
     }
 }
 
-int StandardCalculatorViewModel::GetBitLengthType()
-{
-    if (IsQwordEnabled)
-    {
-        return QwordType;
-    }
-    else if (IsDwordEnabled)
-    {
-        return DwordType;
-    }
-    else if (IsWordEnabled)
-    {
-        return WordType;
-    }
-    else
-    {
-        return ByteType;
-    }
-}
-
 int StandardCalculatorViewModel::GetNumberBase()
 {
     if (CurrentRadixType == HEX_RADIX)
@@ -729,9 +707,10 @@ void StandardCalculatorViewModel::OnCopyCommand(Object ^ parameter)
 
 void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
 {
+    auto that(this);
     ViewMode mode;
     int NumberBase = -1;
-    int bitLengthType = -1;
+    BitLength bitLengthType = BitLength::BitLengthUnknown;
     if (IsScientific)
     {
         mode = ViewMode::Scientific;
@@ -740,7 +719,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     {
         mode = ViewMode::Programmer;
         NumberBase = GetNumberBase();
-        bitLengthType = GetBitLengthType();
+        bitLengthType = m_valueBitLength;
     }
     else
     {
@@ -754,7 +733,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
 
     // Ensure that the paste happens on the UI thread
     CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), NumberBase, bitLengthType)
-        .then([this, mode](String ^ pastedString) { OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
+        .then([that, mode](String ^ pastedString) { that->OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 
 CalculationManager::Command StandardCalculatorViewModel::ConvertToOperatorsEnum(NumbersAndOperatorsEnum operation)
@@ -1640,6 +1619,7 @@ wstring StandardCalculatorViewModel::AddPadding(wstring binaryString)
 
 void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
 {
+    constexpr int32_t precision = 64;
     wstring hexDisplayString;
     wstring decimalDisplayString;
     wstring octalDisplayString;
@@ -1647,8 +1627,7 @@ void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
     if (!IsInError)
     {
         // we want the precision to be set to maximum value so that the autoconversions result as desired
-        int32_t precision = 64;
-        if (m_standardCalculatorManager.GetResultForRadix(16, precision) == L"")
+        if ((hexDisplayString = m_standardCalculatorManager.GetResultForRadix(16, precision, true)) == L"")
         {
             hexDisplayString = DisplayValue->Data();
             decimalDisplayString = DisplayValue->Data();
@@ -1657,10 +1636,9 @@ void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
         }
         else
         {
-            hexDisplayString = m_standardCalculatorManager.GetResultForRadix(16, precision);
-            decimalDisplayString = m_standardCalculatorManager.GetResultForRadix(10, precision);
-            octalDisplayString = m_standardCalculatorManager.GetResultForRadix(8, precision);
-            binaryDisplayString = m_standardCalculatorManager.GetResultForRadix(2, precision);
+            decimalDisplayString = m_standardCalculatorManager.GetResultForRadix(10, precision, true);
+            octalDisplayString = m_standardCalculatorManager.GetResultForRadix(8, precision, true);
+            binaryDisplayString = m_standardCalculatorManager.GetResultForRadix(2, precision, true);
         }
     }
     const auto& localizer = LocalizationSettings::GetInstance();
@@ -1679,6 +1657,17 @@ void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
     DecDisplayValue_AutomationName = GetLocalizedStringFormat(m_localizedDecimalAutomationFormat, DecimalDisplayValue);
     OctDisplayValue_AutomationName = GetLocalizedStringFormat(m_localizedOctalAutomationFormat, GetNarratorStringReadRawNumbers(OctalDisplayValue));
     BinDisplayValue_AutomationName = GetLocalizedStringFormat(m_localizedBinaryAutomationFormat, GetNarratorStringReadRawNumbers(BinaryDisplayValue));
+
+    auto binaryValueArray = ref new Vector<bool>(64, false);
+    auto binaryValue = m_standardCalculatorManager.GetResultForRadix(2, precision, false);
+    int i = 0;
+
+    // To get bit 0, grab from opposite end of string.
+    for (std::wstring::reverse_iterator it = binaryValue.rbegin(); it != binaryValue.rend(); ++it)
+    {
+        binaryValueArray->SetAt(i++, *it == L'1');
+    }
+    BinaryDigits = binaryValueArray;
 }
 
 void StandardCalculatorViewModel::SwitchAngleType(NumbersAndOperatorsEnum num)
@@ -1882,4 +1871,32 @@ ViewMode StandardCalculatorViewModel::GetCalculatorMode()
         return ViewMode::Scientific;
     }
     return ViewMode::Programmer;
+}
+
+void StandardCalculatorViewModel::ValueBitLength::set(CalculatorApp::Common::BitLength value)
+{
+    if (m_valueBitLength != value)
+    {
+        m_valueBitLength = value;
+        RaisePropertyChanged(L"ValueBitLength");
+
+        switch (value)
+        {
+        case BitLength::BitLengthQWord:
+            ButtonPressed->Execute(NumbersAndOperatorsEnum::Qword);
+            break;
+        case BitLength::BitLengthDWord:
+            ButtonPressed->Execute(NumbersAndOperatorsEnum::Dword);
+            break;
+        case BitLength::BitLengthWord:
+            ButtonPressed->Execute(NumbersAndOperatorsEnum::Word);
+            break;
+        case BitLength::BitLengthByte:
+            ButtonPressed->Execute(NumbersAndOperatorsEnum::Byte);
+            break;
+        }
+
+        // update memory list according to bit length
+        SetMemorizedNumbersString();
+    }
 }

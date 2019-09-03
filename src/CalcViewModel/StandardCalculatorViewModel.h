@@ -9,6 +9,7 @@
 #include "Common/CalculatorButtonUser.h"
 #include "HistoryViewModel.h"
 #include "MemoryItemViewModel.h"
+#include "Common/BitLength.h"
 
 namespace CalculatorFunctionalTests
 {
@@ -38,7 +39,6 @@ namespace CalculatorApp
             StandardCalculatorViewModel();
             void UpdateOperand(int pos, Platform::String ^ text);
             void UpdatecommandsInRecordingMode();
-            int GetBitLengthType();
             int GetNumberBase();
 
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
@@ -52,6 +52,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(Platform::String ^, HexDisplayValue);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, OctalDisplayValue);
             OBSERVABLE_NAMED_PROPERTY_RW(Platform::String ^, BinaryDisplayValue);
+            OBSERVABLE_NAMED_PROPERTY_R(Windows::Foundation::Collections::IVector<bool> ^, BinaryDigits);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, HexDisplayValue_AutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, DecDisplayValue_AutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, OctDisplayValue_AutomationName);
@@ -70,10 +71,6 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationResultAutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationExpressionAutomationName);
             OBSERVABLE_PROPERTY_RW(bool, IsShiftProgrammerChecked);
-            OBSERVABLE_PROPERTY_RW(bool, IsQwordEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsDwordEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsWordEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsByteEnabled);
             OBSERVABLE_PROPERTY_RW(int, CurrentRadixType);
             OBSERVABLE_PROPERTY_RW(bool, AreTokensUpdated);
             OBSERVABLE_PROPERTY_RW(bool, AreAlwaysOnTopResultsUpdated);
@@ -125,6 +122,13 @@ namespace CalculatorApp
                     }
                 }
             }
+            static property Platform::String ^ IsBitFlipCheckedPropertyName
+            {
+                Platform::String ^ get()
+                {
+                    return Platform::StringReference(L"IsBitFlipChecked");
+                }
+            }
 
             property bool IsBinaryBitFlippingEnabled
             {
@@ -140,6 +144,15 @@ namespace CalculatorApp
                         RaisePropertyChanged(L"IsBinaryBitFlippingEnabled");
                     }
                 }
+            }
+
+            property CalculatorApp::Common::BitLength ValueBitLength
+            {
+                CalculatorApp::Common::BitLength get()
+                {
+                    return m_valueBitLength;
+                }
+                void set(CalculatorApp::Common::BitLength value);
             }
 
             property bool IsStandard
@@ -208,6 +221,13 @@ namespace CalculatorApp
                         }
                         RaisePropertyChanged(L"IsProgrammer");
                     }
+                }
+            }
+            static property Platform::String ^ IsProgrammerPropertyName
+            {
+                Platform::String ^ get()
+                {
+                    return Platform::StringReference(L"IsProgrammer");
                 }
             }
 
@@ -430,6 +450,7 @@ namespace CalculatorApp
             bool m_operandUpdated;
             bool m_completeTextSelection;
             bool m_isLastOperationHistoryLoad;
+            CalculatorApp::Common::BitLength m_valueBitLength;
             Platform::String ^ m_selectedExpressionLastData;
             Common::DisplayExpressionToken ^ m_selectedExpressionToken;
 

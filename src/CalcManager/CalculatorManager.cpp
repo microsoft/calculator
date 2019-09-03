@@ -613,9 +613,9 @@ namespace CalculationManager
         }
     }
 
-    wstring CalculatorManager::GetResultForRadix(uint32_t radix, int32_t precision)
+    wstring CalculatorManager::GetResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix)
     {
-        return m_currentCalculatorEngine ? m_currentCalculatorEngine->GetCurrentResultForRadix(radix, precision) : L"";
+        return m_currentCalculatorEngine ? m_currentCalculatorEngine->GetCurrentResultForRadix(radix, precision, groupDigitsPerRadix) : L"";
     }
 
     void CalculatorManager::SetPrecision(int32_t precision)
