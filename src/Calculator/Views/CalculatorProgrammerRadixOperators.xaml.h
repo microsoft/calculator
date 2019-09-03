@@ -33,8 +33,6 @@ namespace CalculatorApp
     private:
         void Shift_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void SetVisibilityBinding(Windows::UI::Xaml::FrameworkElement ^ element, Platform::String ^ path, Windows::UI::Xaml::Data::IValueConverter ^ converter);
-        void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void ProgModeRadixChange();
 
         bool m_isErrorVisualState;
         void OpenParenthesisButton_GotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);

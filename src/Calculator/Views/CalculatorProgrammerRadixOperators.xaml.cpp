@@ -32,12 +32,6 @@ CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators()
     SetVisibilityBinding(ProgRadixOps, L"IsBinaryBitFlippingEnabled", booleanToVisibilityNegationConverter);
 }
 
-void CalculatorProgrammerRadixOperators::OnLoaded(Object ^, RoutedEventArgs ^)
-{
-    Model->ProgModeRadixChange +=
-        ref new ProgModeRadixChangeHandler(this, &CalculatorProgrammerRadixOperators::ProgModeRadixChange);
-}
-
 void CalculatorProgrammerRadixOperators::Shift_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     bool isShiftChecked = static_cast<ToggleButton ^>(sender)->IsChecked->Value;
@@ -72,11 +66,6 @@ void CalculatorProgrammerRadixOperators::SetVisibilityBinding(FrameworkElement ^
     commandBinding->Path = ref new PropertyPath(path);
     commandBinding->Converter = converter;
     element->SetBinding(VisibilityProperty, commandBinding);
-}
-
-void CalculatorProgrammerRadixOperators::ProgModeRadixChange()
-{
-    NumberPad->ProgModeRadixChange();
 }
 
 bool CalculatorProgrammerRadixOperators::IsErrorVisualState::get()
