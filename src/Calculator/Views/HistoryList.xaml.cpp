@@ -38,8 +38,6 @@ HistoryList::HistoryList()
 {
     InitializeComponent();
 
-    CopyHistoryMenuItem->Text = AppResourceProvider::GetInstance().GetResourceString(L"copyMenuItem");
-
     HistoryEmpty->FlowDirection = LocalizationService::GetInstance()->GetFlowDirection();
 }
 
