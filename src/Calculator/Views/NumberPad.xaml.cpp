@@ -85,7 +85,6 @@ void NumberPad::OnCurrentRadixTypePropertyChanged(int /* oldValue */, int newVal
     }
 }
 
-
 bool NumberPad::IsErrorVisualState::get()
 {
     return m_isErrorVisualState;
