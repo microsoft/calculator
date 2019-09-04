@@ -70,7 +70,6 @@
                          Grid.Column="1"
                          Style="{StaticResource ProgKeypadRadioButtonStyle}"
                          AutomationProperties.AutomationId="bitFlip"
-                         Checked="ShowBitFlip"
                          Content="&#xf7d0;"
                          IsChecked="{x:Bind Model.IsBitFlipChecked, Mode=TwoWay}"/>
         </Grid>

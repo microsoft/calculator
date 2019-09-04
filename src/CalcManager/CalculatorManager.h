@@ -103,7 +103,6 @@ namespace CalculationManager
         void MemoryItemChanged(unsigned int indexOfMemory) override;
 
         CalculatorManager(ICalcDisplay* displayCallback, IResourceProvider* resourceProvider);
-        ~CalculatorManager();
 
         void Reset(bool clearMemory = true);
         void SetStandardMode();
@@ -125,7 +124,7 @@ namespace CalculationManager
         }
         void SetRadix(RADIX_TYPE iRadixType);
         void SetMemorizedNumbersString();
-        std::wstring GetResultForRadix(uint32_t radix, int32_t precision);
+        std::wstring GetResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix);
         void SetPrecision(int32_t precision);
         void UpdateMaxIntDigits();
         wchar_t DecimalSeparator();

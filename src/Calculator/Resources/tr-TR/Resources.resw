@@ -433,6 +433,14 @@
     <value>Bellek açılır ögesini kapat</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
   </data>
+  <data name="AlwaysOnTop_Enter" xml:space="preserve">
+    <value>Üstte tut</value>
+    <comment>This is the tool tip automation name for the always-on-top button when out of always-on-top mode.</comment>
+  </data>
+  <data name="AlwaysOnTop_Exit" xml:space="preserve">
+    <value>Tam görünüme geri dön</value>
+    <comment>This is the tool tip automation name for the always-on-top button when in always-on-top mode.</comment>
+  </data>
   <data name="MemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Bellek</value>
     <comment>This is the tool tip automation name for the memory button.</comment>
@@ -544,6 +552,10 @@
   <data name="Format_CalculatorResults" xml:space="preserve">
     <value>Ekran değeri %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator results text block. %1 = Localized display value, e.g. "50".</comment>
+  </data>
+  <data name="Format_CalculatorAlwaysOnTopResults" xml:space="preserve">
+    <value>İfade %1, Geçerli girdi %2</value>
+    <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
     <value>Ekran puanı %1</value>
@@ -1056,6 +1068,22 @@
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Kategoriler Açılan Menüsü</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
+  </data>
+  <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Üstte tut</value>
+    <comment>Screen reader prompt for the Always-on-Top button when in normal mode.</comment>
+  </data>
+  <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tam görünüme geri dön</value>
+    <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
+  </data>
+  <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Üstte tut</value>
+    <comment>This is the tool tip automation name for the Always-on-Top button when in normal mode.</comment>
+  </data>
+  <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tam görünüme geri dön</value>
+    <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
     <value>%1 %2 öğesinden dönüştür</value>
@@ -2433,9 +2461,9 @@
     <value>Fark</value>
     <comment>Difference result label</comment>
   </data>
-  <data name="Date_FromLabel.Text" xml:space="preserve">
-    <value>Kimden</value>
-    <comment>From Date label for Date Picker</comment>
+  <data name="DateDiff_FromHeader.Header" xml:space="preserve">
+    <value>Şu tarihten:</value>
+    <comment>From Date Header for Difference Date Picker</comment>
   </data>
   <data name="MonthsLabel.Text" xml:space="preserve">
     <value>Ay</value>
@@ -2445,9 +2473,9 @@
     <value>Çıkar</value>
     <comment>Subtract toggle button text</comment>
   </data>
-  <data name="Date_ToLabel.Text" xml:space="preserve">
-    <value>Kime</value>
-    <comment>To Date label for Date Picker</comment>
+  <data name="DateDiff_ToHeader.Header" xml:space="preserve">
+    <value>Şu tarihe:</value>
+    <comment>To Date Header for Difference Date Picker</comment>
   </data>
   <data name="YearsLabel.Text" xml:space="preserve">
     <value>Yıl</value>
@@ -2907,6 +2935,30 @@
   <data name="AboutControlServicesAgreement.Text" xml:space="preserve">
     <value>Microsoft Hizmet Sözleşmesi</value>
     <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
+  </data>
+  <data name="UnitAbbreviation_Pyeong" xml:space="preserve">
+    <value>Pyeong</value>
+    <comment>An abbreviation for a measurement unit of area.</comment>
+  </data>
+  <data name="UnitName_Pyeong" xml:space="preserve">
+    <value>Pyeong</value>
+    <comment>A measurement unit for area.</comment>
+  </data>
+  <data name="AddSubtract_Date_FromHeader.Header" xml:space="preserve">
+    <value>Şu tarihten:</value>
+    <comment>From Date Header for AddSubtract Date Picker</comment>
+  </data>
+  <data name="CalculationResultScrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hesaplama Sonucunu Sola Kaydır</value>
+    <comment>Automation label for the "Scroll Left" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
+  </data>
+  <data name="CalculationResultScrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hesaplama Sonucunu Sağa Kaydır</value>
+    <comment>Automation label for the "Scroll Right" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
+  </data>
+  <data name="CalculationFailed" xml:space="preserve">
+    <value>Hesaplama başarısız oldu</value>
+    <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
   <data name="UnitAbbreviation_Pyeong" xml:space="preserve">
     <value>Pyeong</value>

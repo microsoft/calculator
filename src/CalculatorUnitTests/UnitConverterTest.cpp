@@ -441,7 +441,7 @@ namespace UnitConverterUnitTests
         s_unitConverter->SendCommand(Command::Six);
         s_unitConverter->SendCommand(Command::Seven);
         s_unitConverter->SendCommand(Command::Eight);
-        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"12345678"), wstring(L"27217528.63236")));
+        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"12345678"), wstring(L"27217529")));
     }
 
     // Test large values

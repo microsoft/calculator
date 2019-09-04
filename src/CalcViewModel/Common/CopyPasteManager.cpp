@@ -65,7 +65,7 @@ void CopyPasteManager::CopyToClipboard(String ^ stringToCopy)
     Clipboard::SetContent(dataPackage);
 }
 
-task<String ^> CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, int bitLengthType)
+task<String ^> CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, BitLength bitLengthType)
 {
     // Retrieve the text in the clipboard
     auto dataPackageView = Clipboard::GetContent();
@@ -97,19 +97,19 @@ int CopyPasteManager::ClipboardTextFormat()
     return -1;
 }
 
-String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode mode, int programmerNumberBase, int bitLengthType)
+String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode mode, int programmerNumberBase, BitLength bitLengthType)
 {
     return CopyPasteManager::ValidatePasteExpression(pastedText, mode, NavCategory::GetGroupType(mode), programmerNumberBase, bitLengthType);
 }
 
 // return "NoOp" if pastedText is invalid else return pastedText
 
-String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, int bitLengthType)
+String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, BitLength bitLengthType)
 {
     if (pastedText->Length() > MaxPasteableLength)
     {
         // return NoOp to indicate don't paste anything.
-        TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"PastedExpressionSizeGreaterThanMaxAllowed", mode, programmerNumberBase, bitLengthType);
+        TraceLogger::GetInstance().LogError(mode, L"CopyPasteManager::ValidatePasteExpression", L"PastedExpressionSizeGreaterThanMaxAllowed");
         return StringReference(PasteErrorString);
     }
 
@@ -129,7 +129,7 @@ String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode
 
     // Extract operands from the expression to make regex comparison easy and quick. For whole expression it was taking too much of time.
     // Operands vector will have the list of operands in the pasteExpression
-    vector<wstring> operands = ExtractOperands(pasteExpression, mode, programmerNumberBase, bitLengthType);
+    vector<wstring> operands = ExtractOperands(pasteExpression, mode);
     if (operands.empty())
     {
         // return NoOp to indicate don't paste anything.
@@ -144,14 +144,14 @@ String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode
     // validate each operand with patterns for different modes
     if (!ExpressionRegExMatch(operands, mode, modeType, programmerNumberBase, bitLengthType))
     {
-        TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"InvalidExpressionForPresentMode", mode, programmerNumberBase, bitLengthType);
+        TraceLogger::GetInstance().LogError(mode, L"CopyPasteManager::ValidatePasteExpression", L"InvalidExpressionForPresentMode");
         return StringReference(PasteErrorString);
     }
 
     return ref new String(pastedText->Data());
 }
 
-vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression, ViewMode mode, int programmerNumberBase, int bitLengthType)
+vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression, ViewMode mode)
 {
     vector<wstring> operands{};
     size_t lastIndex = 0;
@@ -173,7 +173,7 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
 
         if (operands.size() >= MaxOperandCount)
         {
-            TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"OperandCountGreaterThanMaxCount", mode, programmerNumberBase, bitLengthType);
+            TraceLogger::GetInstance().LogError(mode, L"CopyPasteManager::ExtractOperands", L"OperandCountGreaterThanMaxCount");
             operands.clear();
             return operands;
         }
@@ -187,7 +187,7 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
                 // to disallow pasting of 1e+12345 as 1e+1234, max exponent that can be pasted is 9999.
                 if (expLength > MaxExponentLength)
                 {
-                    TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"ExponentLengthGreaterThanMaxLength", mode, programmerNumberBase, bitLengthType);
+                    TraceLogger::GetInstance().LogError(mode, L"CopyPasteManager::ExtractOperands", L"ExponentLengthGreaterThanMaxLength");
                     operands.clear();
                     return operands;
                 }
@@ -241,7 +241,7 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
     return operands;
 }
 
-bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, int bitLengthType)
+bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, BitLength bitLengthType)
 {
     if (operands.empty())
     {
@@ -317,7 +317,7 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
     return expMatched;
 }
 
-pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, int bitLengthType)
+pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, BitLength bitLengthType)
 {
     constexpr size_t defaultMaxOperandLength = 0;
     constexpr uint64_t defaultMaxValue = 0;
@@ -335,16 +335,16 @@ pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mo
         unsigned int bitLength = 0;
         switch (bitLengthType)
         {
-        case QwordType:
+        case BitLength::BitLengthQWord:
             bitLength = 64;
             break;
-        case DwordType:
+        case BitLength::BitLengthDWord:
             bitLength = 32;
             break;
-        case WordType:
+        case BitLength::BitLengthWord:
             bitLength = 16;
             break;
-        case ByteType:
+        case BitLength::BitLengthByte:
             bitLength = 8;
             break;
         }

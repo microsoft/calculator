@@ -511,7 +511,7 @@
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
                                            AutomationProperties.AutomationId="squareRootButton"
                                            ButtonId="Sqrt"
-                                           Content="&#xE94B;"/>
+                                           Content="&#xF899;"/>
                 <controls:CalculatorButton x:Name="PowerOf10Button"
                                            x:Uid="powerOf10Button"
                                            Grid.Column="1"
@@ -600,7 +600,7 @@
                       FontSize="20"
                       AutomationProperties.AutomationId="shiftButton"
                       Checked="shiftButton_Check"
-                      Content="&#xE752;"
+                      Content="&#xF897;"
                       IsEnabled="{x:Bind IsShiftEnabled(IsWideLayout, IsErrorVisualState), Mode=OneWay}"
                       IsEnabledChanged="shiftButton_IsEnabledChanged"
                       Unchecked="shiftButton_Check"/>
@@ -718,7 +718,7 @@
                                    FontSize="16"
                                    AutomationProperties.AutomationId="negateButton"
                                    ButtonId="Negate"
-                                   Content="&#xE94D;"
+                                   Content="&#xF898;"
                                    IsEnabled="{x:Bind Model.IsNegateEnabled, Mode=OneWay}"/>
         <controls:CalculatorButton x:Name="OpenParenthesisButton"
                                    x:Uid="openParenthesisButton"

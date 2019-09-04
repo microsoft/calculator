@@ -87,6 +87,15 @@
     <ClInclude Include="UnitConverterViewModel.h" />
     <ClInclude Include="ViewState.h" />
     <ClInclude Include="DataLoaders\DataLoaderMockConstants.h" />
+    <ClInclude Include="DataLoaders\DataLoaderMockConstants.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLoaders\DataLoaderConstants.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\BitLength.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="DataLoaders\DefaultFromToCurrency.json" />
