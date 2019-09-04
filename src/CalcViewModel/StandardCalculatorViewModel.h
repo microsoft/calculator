@@ -32,8 +32,6 @@ namespace CalculatorApp
 #define ASCII_0 48
     public
         delegate void HideMemoryClickedHandler();
-    public
-        delegate void ProgModeRadixChangeHandler();
 
         [Windows::UI::Xaml::Data::Bindable] public ref class StandardCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
@@ -90,7 +88,6 @@ namespace CalculatorApp
             COMMAND_FOR_METHOD(MemorySubtract, StandardCalculatorViewModel::OnMemorySubtract);
 
             event HideMemoryClickedHandler ^ HideMemoryClicked;
-            event ProgModeRadixChangeHandler ^ ProgModeRadixChange;
 
             property bool IsShiftChecked
             {

@@ -1218,7 +1218,6 @@ void StandardCalculatorViewModel::ResetDisplay()
     AreHEXButtonsEnabled = false;
     CurrentRadixType = (int)RADIX_TYPE::DEC_RADIX;
     m_standardCalculatorManager.SetRadix(DEC_RADIX);
-    ProgModeRadixChange();
 }
 
 void StandardCalculatorViewModel::SetPrecision(int32_t precision)
@@ -1236,7 +1235,6 @@ void StandardCalculatorViewModel::SwitchProgrammerModeBase(RADIX_TYPE radixType)
     AreHEXButtonsEnabled = (radixType == RADIX_TYPE::HEX_RADIX);
     CurrentRadixType = (int)radixType;
     m_standardCalculatorManager.SetRadix(radixType);
-    ProgModeRadixChange();
 }
 
 void StandardCalculatorViewModel::SetMemorizedNumbersString()

@@ -32,12 +32,8 @@ namespace CalculatorApp
 
     private:
         void Shift_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void OnUnloaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void ProgModeRadixChange();
 
         bool m_isErrorVisualState;
-        Windows::Foundation::EventRegistrationToken m_progModeRadixChangeToken;
         void OpenParenthesisButton_GotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }
