@@ -63,10 +63,6 @@ public
         IsStandardMode = (int)CM::Command::ModeBasic,
         None = (int)CM::Command::CommandNULL,
         IsProgrammerMode = (int)CM::Command::ModeProgrammer,
-        DecButton = (int)CM::Command::CommandDec,
-        OctButton = (int)CM::Command::CommandOct,
-        HexButton = (int)CM::Command::CommandHex,
-        BinButton = (int)CM::Command::CommandBin,
         And = (int)CM::Command::CommandAnd,
         Ror = (int)CM::Command::CommandROR,
         Rol = (int)CM::Command::CommandROL,
@@ -99,8 +95,6 @@ public
         Dword = (int)CM::Command::CommandDword,
         Word = (int)CM::Command::CommandWord,
         Byte = (int)CM::Command::CommandByte,
-        Cube = (int)CM::Command::CommandCUB,
-        DMS = (int)CM::Command::CommandDMS,
 
         Plot,
         X,
@@ -172,7 +166,6 @@ public
         BINPOS62 = (int)CM::Command::CommandBINPOS62,
         BINPOS63 = (int)CM::Command::CommandBINPOS63,
         BINEND = (int)CM::Command::CommandBINEDITEND,
-        Hyp = (int)CM::Command::CommandHYP,
 
         // Enum values below are used for Tracelogging and do not map to the Calculator engine
         MemoryAdd = (int)CM::Command::CommandMPLUS,
