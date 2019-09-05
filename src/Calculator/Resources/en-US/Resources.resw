@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppName" xml:space="preserve">
-    <value>Graphing Calculator</value>
+    <value>Calculator</value>
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the title of the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppName" xml:space="preserve">
@@ -1275,7 +1275,7 @@
   </data>
   <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Equals</value>
-    <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
+    <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Inverse Function</value>
@@ -3422,109 +3422,5 @@
   <data name="CalculationFailed" xml:space="preserve">
     <value>Calculation failed</value>
     <comment>Text displayed when the application is not able to do a calculation</comment>
-  </data>
-  <data name="GraphingCalculatorModeText" xml:space="preserve">
-    <value>Graphing</value>
-    <comment>Name of the Graphing mode of the Calculator app. Displayed in the navigation menu.</comment>
-  </data>
-  <data name="graphingEqualButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
-    <value>=</value>
-    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
-  </data>
-  <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Equals</value>
-    <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
-  </data>
-  <data name="plotButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
-    <value>Enter</value>
-    <comment>{Locked}This is the value from the VirtualKey enum that maps to this button</comment>
-  </data>
-  <data name="plotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Plot</value>
-    <comment>Screen reader prompt for the plot button on the graphing calculator operator keypad</comment>
-  </data>
-  <data name="xButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
-    <value>X</value>
-    <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
-  </data>
-  <data name="yButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
-    <value>Y</value>
-    <comment>{Locked}This is the value that comes from the VirtualKey enum that represents the button. This value is not localized and must be one value that comes from the Windows::System::VirtualKey enum.</comment>
-  </data>
-  <data name="graphingPowerButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
-    <value>^</value>
-    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
-  </data>
-  <data name="zoomResetButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
-    <value>Home</value>
-    <comment>{Locked}This is the shortcut for the zoom reset button.</comment>
-  </data>
-  <data name="zoomResetButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Reset View</value>
-    <comment>This is the tool tip automation name for the Calculator zoom reset button.</comment>
-  </data>
-  <data name="zoomResetButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Reset View</value>
-    <comment>Screen reader prompt for the reset zoom button.</comment>
-  </data>
-  <data name="zoomInButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
-    <value>Add</value>
-    <comment>{Locked}This is the shortcut for the zoom in button.</comment>
-  </data>
-  <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Zoom In</value>
-    <comment>This is the tool tip automation name for the Calculator zoom in button.</comment>
-  </data>
-  <data name="zoomInButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Zoom In</value>
-    <comment>Screen reader prompt for the zoom in button.</comment>
-  </data>
-  <data name="zoomOutButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
-    <value>Subtract</value>
-    <comment>{Locked}This is the shortcut for the zoom out button.</comment>
-  </data>
-  <data name="zoomOutButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Zoom Out</value>
-    <comment>This is the tool tip automation name for the Calculator zoom out button.</comment>
-  </data>
-  <data name="zoomOutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Zoom Out</value>
-    <comment>Screen reader prompt for the zoom out button.</comment>
-  </data>
-  <data name="EquationInputButtonPlaceholderText" xml:space="preserve">
-    <value>Add Equation</value>
-    <comment>Placeholder text for the equation input button</comment>
-  </data>
-  <data name="ShareActionErrorMessage" xml:space="preserve">
-    <value>Unable to share at this time.</value>
-    <comment>If there is an error in the sharing action will display a dialog with this text.</comment>
-  </data>
-  <data name="ShareActionErrorOk" xml:space="preserve">
-    <value>OK</value>
-    <comment>Used on the dismiss button of the share action error dialog.</comment>
-  </data>
-  <data name="ShareActionTitle" xml:space="preserve">
-    <value>Look what I graphed.</value>
-    <comment>Sent as part of the shared content. The title for the share.</comment>
-  </data>
-  <data name="EmptyEquationString" xml:space="preserve">
-    <value>Empty graph equation</value>
-    <comment>When sharing and one of the equations has no content this will be shown in the graph key for that equation.</comment>
-  </data>
-  <data name="VaiablesHeader.Text" xml:space="preserve">
-    <value>Variables</value>
-    <comment>Header text for variables area</comment>
-  </data>
-  <data name="StepTextBlock.Text" xml:space="preserve">
-    <value>Step</value>
-    <comment>Label text for the step text box</comment>
-  </data>
-  <data name="MinTextBlock.Text" xml:space="preserve">
-    <value>Min</value>
-    <comment>Label text for the min text box</comment>
-  </data>
-  <data name="MaxTextBlock.Text" xml:space="preserve">
-    <value>Max</value>
-    <comment>Label text for the max text box</comment>
   </data>
 </root>
