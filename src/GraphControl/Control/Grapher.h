@@ -158,15 +158,16 @@ namespace GraphControl
         void OnEquationsChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ args);
         void OnEquationsVectorChanged(Windows::Foundation::Collections::IObservableVector<GraphControl::Equation ^> ^sender, Windows::Foundation::Collections::IVectorChangedEventArgs^ event);
         void OnEquationChanged();
+        void OnKeyGraphFeaturesVisibilityChanged(GraphControl::Equation ^ sender);
 
         void UpdateGraph();
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation^>& validEqs);
         std::vector<Equation^> GetValidEquations();
         void SetGraphArgs();
         std::shared_ptr<Graphing::IGraph> GetGraph(GraphControl::Equation ^ equation);
-        void UpdateKeyGraphFeatures();
         void UpdateVariables();
 
+        void UpdateKeyGraphFeatures();
         void OnForceProportionalAxesChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ args);
 
         void OnBackgroundColorChanged(const Windows::UI::Color& color);
@@ -176,6 +177,8 @@ namespace GraphControl
         void OnItemsRemoved(int index, int count);
 
         void ScaleRange(double centerX, double centerY, double scale);
+
+        Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^ ConvertVectorToIObservableVector(std::vector<std::wstring> inVector);
 
     private:
         DX::RenderMain^ m_renderMain = nullptr;

@@ -320,6 +320,11 @@ namespace GraphControl
         UpdateGraph();
     }
 
+    void Grapher::OnKeyGraphFeaturesVisibilityChanged(Equation ^ sender)
+    {
+        // UpdateKeyGraphFeatures(sender);
+    }
+
     void Grapher::UpdateGraph()
     {
         if (m_renderMain && m_graph != nullptr)
@@ -411,7 +416,8 @@ namespace GraphControl
 
     void Grapher::UpdateKeyGraphFeatures()
     {
-        for (Equation ^ equation : GetValidEquations())
+        auto equations = GetValidEquations();
+        for (auto equation : GetValidEquations())
         {
             if (auto graph = GetGraph(equation))
             {
@@ -425,20 +431,21 @@ namespace GraphControl
                         m_solver->FormatOptions().SetFormatType(FormatType::MathML);
                         if (S_OK
                             == analyzer->PerformFunctionAnalysis(
-                                   (Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All))
+                                (Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All))
                         {
-                           if (S_OK == analyzer->GetFunctionAnalysisData(functionAnalysisDataOut))
+                            if (S_OK == analyzer->GetFunctionAnalysisData(functionAnalysisDataOut))
                             {
-                                equation->Domain = ref new Platform::String(functionAnalysisDataOut[0].Domain.c_str());
-                                equation->Range = ref new Platform::String(functionAnalysisDataOut[0].Range.c_str());
-                                equation->Parity = ref new Platform::String(functionAnalysisDataOut[0].Parity.c_str());
-                                equation->Periodicity = ref new Platform::String(functionAnalysisDataOut[0].Periodicity.c_str());
-                                equation->Zeros = ref new Platform::String(functionAnalysisDataOut[0].Zeros.c_str());
-                                equation->YIntercept = ref new Platform::String(functionAnalysisDataOut[0].YIntercept.c_str());
-
-
-                                // to do write other key graph functions into the equation object
-                                break;
+                                equation->Domain = ref new String(functionAnalysisDataOut[0].Domain.c_str());
+                                equation->Range = ref new String(functionAnalysisDataOut[0].Range.c_str());
+                                equation->Parity = ref new String(functionAnalysisDataOut[0].Parity.c_str());
+                                equation->Periodicity = ref new String(functionAnalysisDataOut[0].Periodicity.c_str());
+                                equation->Zeros = ref new String(functionAnalysisDataOut[0].Zeros.c_str());
+                                equation->YIntercept = ref new String(functionAnalysisDataOut[0].YIntercept.c_str());
+                                equation->Minima = ConvertVectorToIObservableVector(functionAnalysisDataOut[0].Maxima);
+                                equation->Maxima = ConvertVectorToIObservableVector(functionAnalysisDataOut[0].Maxima);
+                                equation->InflectionPoints = ConvertVectorToIObservableVector(functionAnalysisDataOut[0].InflectionPoints);
+                                equation->Monotonicity = ConvertVectorToIObservableVector(functionAnalysisDataOut[0].MonotoneIntervals);
+                                continue;
                             }
                         }
 
@@ -449,6 +456,18 @@ namespace GraphControl
                 }
             }
         }
+    }
+
+    IObservableVector<String ^> ^ Grapher::ConvertVectorToIObservableVector(vector<wstring> inVector)
+    {
+        IObservableVector<String ^> ^ outVector = ref new Platform::Collections::Vector<String ^>();
+
+        for (auto value : inVector)
+        {
+            outVector->Append(ref new Platform::String(value.c_str()));
+        }
+
+        return outVector;
     }
 
     void Grapher::UpdateVariables()

@@ -148,7 +148,7 @@ namespace GraphControl
         }
         #pragma endregion
 
-        #pragma region Platform::String ^ Minima DependencyProperty
+        #pragma region Windows::Foundation::Collections::IObservableVector <Platform::String^>^ Minima DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ MinimaProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -156,20 +156,20 @@ namespace GraphControl
                 return s_minimaProperty;
             }
         }
-        property Platform::String^ Minima
+        property Windows::Foundation::Collections::IObservableVector<Platform::String^>^ Minima
         {
-            Platform::String^ get()
+            Windows::Foundation::Collections::IObservableVector<Platform::String^>^ get()
             {
-                return static_cast<Platform::String^>(GetValue(s_minimaProperty));
+                return static_cast<Windows::Foundation::Collections::IObservableVector<Platform::String^>^>(GetValue(s_minimaProperty));
             }
-            void set(Platform::String^ value)
+            void set(Windows::Foundation::Collections::IObservableVector<Platform::String^>^ value)
             {
                 SetValue(s_minimaProperty, value);
             }
         }
         #pragma endregion
 
-        #pragma region Platform::String ^ Maxima DependencyProperty
+        #pragma region Windows::Foundation::Collections::IObservableVector < Platform::String ^ > ^ Maxima DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ MaximaProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -177,13 +177,13 @@ namespace GraphControl
                 return s_maximaProperty;
             }
         }
-        property Platform::String^ Maxima
+        property Windows::Foundation::Collections::IObservableVector<Platform::String^>^ Maxima
         {
-            Platform::String^ get()
+            Windows::Foundation::Collections::IObservableVector<Platform::String^>^ get()
             {
-                return static_cast<Platform::String^>(GetValue(s_maximaProperty));
+                return static_cast<Windows::Foundation::Collections::IObservableVector<Platform::String^>^>(GetValue(s_maximaProperty));
             }
-            void set(Platform::String^ value)
+            void set(Windows::Foundation::Collections::IObservableVector<Platform::String^>^ value)
             {
                 SetValue(s_maximaProperty, value);
             }
@@ -232,7 +232,7 @@ namespace GraphControl
         }
         #pragma endregion
 
-        #pragma region Platform::String ^ InflectionPoints DependencyProperty
+        #pragma region Windows::Foundation::Collections::IObservableVector < Platform::String ^ > ^ InflectionPoints DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ InflectionPointsProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -240,20 +240,20 @@ namespace GraphControl
                 return s_inflectionPointsProperty;
             }
         }
-        property Platform::String^ InflectionPoints
+        property Windows::Foundation::Collections::IObservableVector<Platform::String^>^ InflectionPoints
         {
-            Platform::String^ get()
+            Windows::Foundation::Collections::IObservableVector<Platform::String^>^ get()
             {
-                return static_cast<Platform::String^>(GetValue(s_inflectionPointsProperty));
+                return static_cast<Windows::Foundation::Collections::IObservableVector<Platform::String^>^>(GetValue(s_inflectionPointsProperty));
             }
-            void set(Platform::String^ value)
+            void set(Windows::Foundation::Collections::IObservableVector<Platform::String^>^ value)
             {
                 SetValue(s_inflectionPointsProperty, value);
             }
         }
         #pragma endregion
 
-        #pragma region Platform::String ^ Monotonicity DependencyProperty
+        #pragma region Windows::Foundation::Collections::IObservableVector < Platform::String ^ > ^ Monotonicity DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ MonotonicityProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -261,13 +261,13 @@ namespace GraphControl
                 return s_monotonicityProperty;
             }
         }
-        property Platform::String^ Monotonicity
+        property Windows::Foundation::Collections::IObservableVector<Platform::String^>^ Monotonicity
         {
-            Platform::String^ get()
+            Windows::Foundation::Collections::IObservableVector<Platform::String^>^ get()
             {
-                return static_cast<Platform::String^>(GetValue(s_monotonicityProperty));
+                return static_cast<Windows::Foundation::Collections::IObservableVector<Platform::String^>^>(GetValue(s_monotonicityProperty));
             }
-            void set(Platform::String^ value)
+            void set(Windows::Foundation::Collections::IObservableVector<Platform::String^>^ value)
             {
                 SetValue(s_monotonicityProperty, value);
             }
@@ -278,11 +278,13 @@ namespace GraphControl
 
     internal:
         event PropertyChangedEventHandler^ PropertyChanged;
+        event PropertyChangedEventHandler^ KeyGraphFeaturesPropertyChanged;
 
         std::wstring GetRequest();
 
     private:
         static void OnCustomDependencyPropertyChanged(Windows::UI::Xaml::DependencyObject ^ obj, Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
+        static void OnKeyGraphFeaturesPropertyChanged(Windows::UI::Xaml::DependencyObject ^ obj, Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
 
         std::wstring GetRequestHeader();
         std::wstring GetExpression();
