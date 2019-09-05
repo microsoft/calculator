@@ -225,6 +225,9 @@
     <ClInclude Include="DataLoaders\DataLoaderMockConstants.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
+    <ClInclude Include="DataLoaders\DataLoaderConstants.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
     <ClInclude Include="Common\BitLength.h">
       <Filter>Common</Filter>
     </ClInclude>
