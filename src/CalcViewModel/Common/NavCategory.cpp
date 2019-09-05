@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -55,14 +55,16 @@ static constexpr array<const NavCategoryInitializer, 18> s_categoryManifest = { 
                                                                                                         L"Standard",
                                                                                                         L"StandardMode",
                                                                                                         L"\uE8EF",
+                                                                                                        CategoryGroupType::Calculator,
+                                                                                                        MyVirtualKey::Number1,
+                                                                                                        SUPPORTS_ALL },
 																				NavCategoryInitializer{ ViewMode::Graphing,
 																										GRAPHING_ID,
 																										L"Graphing",
 																										L"GraphingCalculatorMode",
 																										L"\uF770",
 																										CategoryGroupType::Calculator,
-																										MyVirtualKey::Number5, SUPPORTS_ALL },
-                                                                                                        MyVirtualKey::Number1,
+																										MyVirtualKey::Number5,
                                                                                                         SUPPORTS_ALL },
                                                                                 NavCategoryInitializer{ ViewMode::Scientific,
                                                                                                         SCIENTIFIC_ID,
