@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -39,7 +39,9 @@ static constexpr auto CURRENCY_UNIT_TO_KEY = L"CURRENCY_UNIT_TO_KEY";
 static constexpr long long DAY_DURATION = 1LL * 60 * 60 * 24 * 10000000;
 static constexpr long long WEEK_DURATION = DAY_DURATION * 7;
 
-static constexpr int FORMATTER_DIGIT_COUNT = 4;
+static constexpr int FORMATTER_RATE_FRACTION_PADDING = 2;
+static constexpr int FORMATTER_RATE_MIN_DECIMALS = 4;
+static constexpr int FORMATTER_RATE_MIN_SIGNIFICANT_DECIMALS = 4;
 
 static constexpr auto CACHE_TIMESTAMP_KEY = L"CURRENCY_CONVERTER_TIMESTAMP";
 static constexpr auto CACHE_LANGCODE_KEY = L"CURRENCY_CONVERTER_LANGCODE";
@@ -128,7 +130,7 @@ CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> clie
     m_ratioFormatter = localizationService->GetRegionalSettingsAwareDecimalFormatter();
     m_ratioFormatter->IsGrouped = true;
     m_ratioFormatter->IsDecimalPointAlwaysDisplayed = true;
-    m_ratioFormatter->FractionDigits = FORMATTER_DIGIT_COUNT;
+    m_ratioFormatter->FractionDigits = FORMATTER_RATE_FRACTION_PADDING;
 
     m_ratioFormat = AppResourceProvider::GetInstance().GetResourceString(L"CurrencyFromToRatioFormat")->Data();
     m_timestampFormat = AppResourceProvider::GetInstance().GetResourceString(L"CurrencyTimestampFormat")->Data();
@@ -267,6 +269,23 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencySymbols(const UCM::Unit& u
     return make_pair(symbol1, symbol2);
 }
 
+double CurrencyDataLoader::RoundCurrencyRatio(double ratio)
+{
+    // Compute how many decimals we need to display two meaningful digits at minimum
+    // For example: 0.00000000342334 -> 0.000000003423, 0.000212 -> 0.000212
+    int numberDecimals = FORMATTER_RATE_MIN_DECIMALS;
+    if (ratio < 1)
+    {
+        numberDecimals = max(
+            FORMATTER_RATE_MIN_DECIMALS,
+            (int)(-log10(ratio)) + FORMATTER_RATE_MIN_SIGNIFICANT_DECIMALS);
+    }
+
+    unsigned long long scale = (unsigned long long)powl(10l, numberDecimals);
+
+    return (double)(round(ratio * scale) / scale);
+}
+
 pair<wstring, wstring> CurrencyDataLoader::GetCurrencyRatioEquality(_In_ const UCM::Unit& unit1, _In_ const UCM::Unit& unit2)
 {
     try
@@ -279,12 +298,7 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencyRatioEquality(_In_ const U
             if (iter2 != ratioMap.end())
             {
                 double ratio = (iter2->second).ratio;
-
-                // Round the ratio to FORMATTER_DIGIT_COUNT digits using int math.
-                // Ex: to round 1.23456 to three digits, use
-                //     ((int) 1.23456 * (10^3)) / (10^3)
-                double scale = pow(10, FORMATTER_DIGIT_COUNT);
-                double rounded = static_cast<int>(ratio * static_cast<int>(scale)) / scale;
+                double rounded = RoundCurrencyRatio(ratio);
 
                 wstring digitSymbol = wstring{ LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit(L'1') };
                 wstring roundedFormat = m_ratioFormatter->Format(rounded)->Data();
@@ -335,12 +349,12 @@ future<bool> CurrencyDataLoader::TryLoadDataFromCacheAsync()
     }
     catch (Exception ^ ex)
     {
-        TraceLogger::GetInstance().LogPlatformException(__FUNCTIONW__, ex);
+        TraceLogger::GetInstance().LogPlatformException(ViewMode::Currency, __FUNCTIONW__, ex);
         co_return false;
     }
     catch (const exception& e)
     {
-        TraceLogger::GetInstance().LogStandardException(__FUNCTIONW__, e);
+        TraceLogger::GetInstance().LogStandardException(ViewMode::Currency, __FUNCTIONW__, e);
         co_return false;
     }
     catch (...)
@@ -445,12 +459,12 @@ future<bool> CurrencyDataLoader::TryLoadDataFromWebAsync()
     }
     catch (Exception ^ ex)
     {
-        TraceLogger::GetInstance().LogPlatformException(__FUNCTIONW__, ex);
+        TraceLogger::GetInstance().LogPlatformException(ViewMode::Currency, __FUNCTIONW__, ex);
         co_return false;
     }
     catch (const exception& e)
     {
-        TraceLogger::GetInstance().LogStandardException(__FUNCTIONW__, e);
+        TraceLogger::GetInstance().LogStandardException(ViewMode::Currency, __FUNCTIONW__, e);
         co_return false;
     }
     catch (...)
@@ -466,7 +480,7 @@ future<bool> CurrencyDataLoader::TryLoadDataFromWebOverrideAsync()
     if (!didLoad)
     {
         m_loadStatus = CurrencyLoadStatus::FailedToLoad;
-        TraceLogger::GetInstance().LogUserRequestedRefreshFailed();
+        TraceLogger::GetInstance().LogError(ViewMode::Currency, L"CurrencyDataLoader::TryLoadDataFromWebOverrideAsync", L"UserRequestedRefreshFailed");
     }
 
     co_return didLoad;
@@ -527,8 +541,11 @@ bool CurrencyDataLoader::TryParseStaticData(_In_ String ^ rawJson, _Inout_ vecto
         staticData[i] = CurrencyStaticData{ countryCode, countryName, currencyCode, currencyName, currencySymbol };
     }
 
-    // TODO - MSFT 8533667: this sort will be replaced by a WinRT call to sort localized strings
-    sort(begin(staticData), end(staticData), [](CurrencyStaticData unit1, CurrencyStaticData unit2) { return unit1.countryName < unit2.countryName; });
+    auto sortCountryNames = [](const UCM::CurrencyStaticData & s) {
+        return ref new String(s.countryName.c_str());
+    };
+
+    LocalizationService::GetInstance()->Sort<UCM::CurrencyStaticData>(staticData, sortCountryNames);
 
     return true;
 }

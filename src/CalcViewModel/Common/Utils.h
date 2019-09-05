@@ -416,8 +416,12 @@ namespace Utils
     Windows::Foundation::DateTime GetUniversalSystemTime();
     bool IsDateTimeOlderThan(Windows::Foundation::DateTime dateTime, const long long duration);
 
-    concurrency::task<void> WriteFileToFolder(Windows::Storage::IStorageFolder^ folder, Platform::String^ fileName, Platform::String^ contents, Windows::Storage::CreationCollisionOption collisionOption);
-    concurrency::task<Platform::String^> ReadFileFromFolder(Windows::Storage::IStorageFolder^ folder, Platform::String^ fileName);
+    concurrency::task<void> WriteFileToFolder(
+        Windows::Storage::IStorageFolder ^ folder,
+        Platform::String ^ fileName,
+        Platform::String ^ contents,
+        Windows::Storage::CreationCollisionOption collisionOption);
+    concurrency::task<Platform::String ^> ReadFileFromFolder(Windows::Storage::IStorageFolder ^ folder, Platform::String ^ fileName);
 
     bool AreColorsEqual(const Windows::UI::Color& color1, const Windows::UI::Color& color2);
 

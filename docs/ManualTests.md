@@ -54,6 +54,59 @@ Steps:
 2. Select “miles” as the unit type in the output field 
 *Expected: The output starts with is “3.106856”*
 
+### Always-on-Top
+
+**Test 1**
+Steps:
+1. Launch the "Calculator" app and navigate to "Standard" Calculator
+*Expected: Always-on-Top button's tooltip says "Keep on top"*
+2. Click the Always-on-Top button
+*Expected: Always-on-Top button's tooltip now says "Back to full view"*
+3. Launch the "Notepad" app and put it in full-screen mode
+*Expected: Calculator is still on top of Notepad and in Always-on-Top mode*
+
+**Test 2**
+Steps: 
+1. Launch the "Calculator" app and from "Standard" Calculator, input “3”, “+”, “3” (do not press “Enter”)
+2. Tab over the Always-on-Top button and press "Enter" on the keyboard
+*Expected: The application title, hamburger menu, calculator type title, calculation expression (the secondary line above the main display), history button and memory buttons are no longer visible. The main display shows "3"*
+2. Press “Enter”
+*Expected: The main display shows "6"*
+3. Press "Ctrl-H" on the keyboard
+*Expected: Nothing happens (history keyboard shortcuts are disabled)*
+4. Press "Ctrl-P" on the keyboard, then tab over the Always-on-Top button and press "Enter" on the keyboard again
+5. Open the Memory panel
+*Expected: Nothing is stored in memory (memory keyboard shortcuts are disabled in Always-on-Top mode) and "6" is in history*
+
+**Test 3**
+Steps: 
+1. Launch the "Calculator" app and from "Standard" Calculator, click the Always-on-Top button
+2. Resize the window horizontally
+*Expected: The buttons automatically expand or shrink to fit the available screen size*
+3. Resize the window vertically
+*Expected: The buttons automatically expand or shrink to fit the available screen size and the percent, square-root, squared and reciprocal buttons disappear when the screen height is small*
+4. Click the Always-on-Top button again
+*Expected: Calculator is in Standard mode and the original window layout from before Step 1 is restored*
+5. Click the Always-on-Top button again
+*Expected: Calculator is in Always-on-Top mode and the window size from after Step 3 is restored*
+6. Close the "Calculator" app
+7. Launch the "Calculator" app again and click the Always-on-Top button
+*Expected: The window size from right before closing from Always-on-Top mode (ie. after Step 5) is restored*
+
+**Test 4**
+Steps:
+1. Launch the "Calculator" app and from "Standard" Calculator, click the Always-on-Top button
+2. Input "/", "0", “Enter” on the keyboard
+*Expected: "Result is undefined" is displayed in the system default app language*
+3. Click the Always-on-Top button again
+*Expected: Calculator is in Standard mode and all operator (except for "CE", "C", "Delete" and "=") and memory buttons are disabled
+
+**Test 5**
+Steps:
+1. Launch the "Calculator" app and navigate to "Scientific" Calculator
+*Expected: The Always-on-Top button is hidden*
+2. Navigate to "Standard" Calculator
+*Expected: The Always-on-Top button is visible*
 
 ## Basic Verification Tests
 
@@ -278,7 +331,7 @@ Steps:
 Steps:
 1.	Launch the "Calculator" app.
 
-    For All Applicable Modes verify the following:
+    For All Applicable Modes verify the following (note: only 11-15 and 20 work in Always-on-Top mode):
 2.	Press **Alt +1** to Enter "Standard" mode
 *Expected: Move to "Standard" screen.*
 3.	Press **Alt +2** to Enter "Scientific" mode
@@ -353,3 +406,30 @@ Steps:
 61.	Press **|** to Select 'Or'
 62.	Press **~** to Select 'Not'
 63.	Press **&** to Select 'And'
+
+## Localization Tests
+
+### Always-on-Top
+
+**Test 1**
+Steps:
+1. Change the system default app language to Arabic
+2. Launch the "Calculator" app and from "Standard" Calculator, click the Always-on-Top button
+*Expected: UI/Menu is localized (for example, the title bar buttons is in right-to-left order)*
+3. Input "/", "0", “Enter” on the keyboard
+*Expected: Error message is in Arabic*
+
+## Ease of Access Tests
+
+### Always-on-Top
+
+**Test 1**
+Steps:
+1. Open the "Narrator" app
+2. Launch the "Calculator" app and from "Standard" Calculator, click the Always-on-Top button
+3. Tab over the Always-on-Top button
+*Expected: Narrator reads the localized version of "Back to full view"*
+4. Tab over the main results field
+*Expected: Narrator reads the localized version of exactly what's displayed (ie. "0")*
+5. Tab over the rest of the UI elements
+*Expected: Narrator reads the localized version of the UI elements' contents*

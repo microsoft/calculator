@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -46,8 +46,6 @@ public
         void
         OnConsolidated(_In_ Windows::UI::ViewManagement::ApplicationView ^ sender, _In_ Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs ^ e);
         void OnClosed(_In_ Windows::UI::Core::CoreWindow ^ sender, _In_ Windows::UI::Core::CoreWindowEventArgs ^ args);
-
-        void LogOnViewClosed(_In_ Windows::UI::Core::CoreWindow ^ coreWindow);
 
     private:
         Platform::Agile<Windows::UI::Core::CoreWindow ^> m_currentWindow;

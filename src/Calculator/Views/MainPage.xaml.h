@@ -57,6 +57,8 @@ public
         void OnAboutButtonClick(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Controls::ItemClickEventArgs ^ e);
         void OnAboutFlyoutOpened(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void OnAboutFlyoutClosed(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
+        void AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void TitleBarAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
         Microsoft::UI::Xaml::Controls::NavigationViewItemHeader ^ CreateNavViewHeaderFromGroup(CalculatorApp::Common::NavCategoryGroup ^ group);
         Microsoft::UI::Xaml::Controls::NavigationViewItem ^ CreateNavViewItemFromCategory(CalculatorApp::Common::NavCategory ^ category);
@@ -64,8 +66,10 @@ public
         void ShowHideControls(CalculatorApp::Common::ViewMode mode);
         void UpdateViewState();
         void UpdatePanelViewState();
+        void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
 
         void OnPageLoaded(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void App_Suspending(Object ^ sender, Windows::ApplicationModel::SuspendingEventArgs ^ e);
 
         void EnsureCalculator();
         void EnsureDateCalculator();
@@ -75,14 +79,13 @@ public
 
         void AnnounceCategoryName();
 
-        Calculator^ m_calculator;
-        GraphingCalculator^ m_graphingCalculator;
-        UnitConverter^ m_converter;
-        DateCalculator^ m_dateCalculator;
-        Windows::Foundation::EventRegistrationToken _windowSizeEventToken;
-        Windows::Foundation::EventRegistrationToken m_hardwareButtonsBackPressedToken;
-        Windows::Foundation::EventRegistrationToken m_colorValuesChangedToken;
+        CalculatorApp::Calculator ^ m_calculator;
+        CalculatorApp::UnitConverter ^ m_converter;
+        CalculatorApp::DateCalculator ^ m_dateCalculator;
+        CalculatorApp::GraphingCalculator^ m_graphingCalculator;
         Windows::Foundation::EventRegistrationToken m_windowSizeEventToken;
-        ViewModel::ApplicationViewModel^ m_model;
+        CalculatorApp::ViewModel::ApplicationViewModel ^ m_model;
+        Windows::Foundation::EventRegistrationToken m_accessibilitySettingsToken;
+        Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
     };
 }

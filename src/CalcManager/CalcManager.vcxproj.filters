@@ -89,6 +89,7 @@
     <ClCompile Include="CEngine\RationalMath.cpp">
       <Filter>CEngine</Filter>
     </ClCompile>
+    <ClCompile Include="NumberFormattingUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h" />
@@ -160,5 +161,6 @@
     <ClInclude Include="Header Files\RationalMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NumberFormattingUtils.h" />
   </ItemGroup>
 </Project>
