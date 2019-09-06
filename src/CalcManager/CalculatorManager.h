@@ -101,7 +101,7 @@ namespace CalculationManager
         void MaxDigitsReached() override;
         void BinaryOperatorReceived() override;
         void MemoryItemChanged(unsigned int indexOfMemory) override;
-
+        void InputChanged() override;
         CalculatorManager(ICalcDisplay* displayCallback, IResourceProvider* resourceProvider);
 
         void Reset(bool clearMemory = true);
@@ -118,6 +118,7 @@ namespace CalculationManager
         void MemorizedNumberClearAll();
 
         bool IsEngineRecording();
+        bool IsInputEmpty();
         std::vector<unsigned char> GetSavedCommands()
         {
             return m_savedCommands;

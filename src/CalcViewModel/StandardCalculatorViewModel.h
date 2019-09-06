@@ -105,6 +105,22 @@ namespace CalculatorApp
                 }
             }
 
+            property bool IsInputEmpty
+            {
+                bool get()
+                {
+                    return m_isInputEmpty;
+                }
+                void set(bool value)
+                {
+                    if (m_isInputEmpty != value)
+                    {
+                        m_isInputEmpty = value;
+                        RaisePropertyChanged(L"IsInputEmpty");
+                    }
+                }
+            }
+
             property bool IsBitFlipChecked
             {
                 bool get()
@@ -122,13 +138,8 @@ namespace CalculatorApp
                     }
                 }
             }
-            static property Platform::String ^ IsBitFlipCheckedPropertyName
-            {
-                Platform::String ^ get()
-                {
-                    return Platform::StringReference(L"IsBitFlipChecked");
-                }
-            }
+            static property Platform::String
+                ^ IsBitFlipCheckedPropertyName { Platform::String ^ get() { return Platform::StringReference(L"IsBitFlipChecked"); } }
 
             property bool IsBinaryBitFlippingEnabled
             {
@@ -223,13 +234,8 @@ namespace CalculatorApp
                     }
                 }
             }
-            static property Platform::String ^ IsProgrammerPropertyName
-            {
-                Platform::String ^ get()
-                {
-                    return Platform::StringReference(L"IsProgrammer");
-                }
-            }
+            static property Platform::String
+                ^ IsProgrammerPropertyName { Platform::String ^ get() { return Platform::StringReference(L"IsProgrammer"); } }
 
             property bool IsAlwaysOnTop
             {
@@ -365,6 +371,7 @@ namespace CalculatorApp
             void OnMemoryClear(_In_ Platform::Object ^ memoryItemPosition);
             void OnPinUnpinCommand(Platform::Object ^ parameter);
 
+            void OnInputChanged();
             void SetPrimaryDisplay(_In_ std::wstring const& displayString, _In_ bool isError);
             void DisplayPasteError();
             void SetTokens(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens);
@@ -442,6 +449,7 @@ namespace CalculatorApp
             bool m_isProgrammer;
             bool m_isAlwaysOnTop;
             bool m_isBinaryBitFlippingEnabled;
+            bool m_isInputEmpty;
             bool m_isBitFlipChecked;
             bool m_isShiftChecked;
             bool m_isRtlLanguage;

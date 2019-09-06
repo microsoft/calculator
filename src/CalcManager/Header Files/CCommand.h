@@ -81,6 +81,7 @@
 #define IDC_ROL 99
 #define IDC_ROR 100
 #define IDC_COM 101
+
 #define IDC_SIN 102
 #define IDC_COS 103
 #define IDC_TAN 104
@@ -136,7 +137,39 @@
 #define IDC_INV 146
 #define IDC_SET_RESULT 147
 
-#define IDC_LASTCONTROL IDC_SET_RESULT
+#define IDC_STRING_MAPPED_VALUES  400
+#define IDC_UNARYEXTENDEDFIRST  IDC_STRING_MAPPED_VALUES
+#define IDC_SEC          400 // 401 reserved for inverse
+#define IDC_CSC          402 // 403 reserved for inverse
+#define IDC_COT          404 // 405 reserved for inverse
+
+#define IDC_SECH          406 // 407 reserved for inverse
+#define IDC_CSCH          408 // 409 reserved for inverse
+#define IDC_COTH          410 // 411 reserved for inverse
+
+#define IDC_POW2          412 // 2 ^ x
+#define IDC_ABS           413
+#define IDC_FLOOR         414
+#define IDC_CEIL          415
+
+#define IDC_ROLC          416
+#define IDC_RORC          417
+
+#define IDC_UNARYEXTENDEDLAST  IDC_RORC
+
+#define IDC_LASTCONTROL IDC_CEIL
+
+#define IDC_BINARYEXTENDEDFIRST 500
+#define IDC_LOGBASEX            500 //logx(y)
+#define IDC_NAND                501
+#define IDC_NOR                 502
+
+#define IDC_LSHFL               504
+#define IDC_RSHFL               505
+#define IDC_BINARYEXTENDEDLAST  IDC_RSHFL
+
+#define IDC_RAND            600
+#define IDC_EULER           601
 
 #define IDC_BINEDITSTART 700
 #define IDC_BINPOS0 700
