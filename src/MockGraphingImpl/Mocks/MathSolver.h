@@ -8,18 +8,23 @@ namespace MockGraphingImpl
     {
     public:
         void SetFormatType(Graphing::FormatType type) override
-        { }
+        {
+        }
     };
 
     class EvalOptions : public Graphing::IEvalOptions
     {
+        void SetTrigUnitMode(Graphing::EvalTrigUnitMode value) override
+        {
+        }
     };
 
     class FormatOptions : public Graphing::IFormatOptions
     {
     public:
         void SetFormatType(Graphing::FormatType type) override
-        { }
+        {
+        }
     };
 
     class MathSolver : public Graphing::IMathSolver

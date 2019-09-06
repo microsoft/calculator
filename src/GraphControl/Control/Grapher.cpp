@@ -59,6 +59,21 @@ namespace GraphControl
     {
         m_solver->ParsingOptions().SetFormatType(FormatType::Linear);
 
+        //pair<double, double> x;
+        //x = m_graph->GetOptions().GetDefaultXRange();
+        //pair<double, double> newx;
+        //newx.first = -10;
+        //newx.second = 40;
+        //m_graph->GetOptions().SetDefaultXRange(newx);
+        //pair<double, double> afterx;
+        //afterx = m_graph->GetOptions().GetDefaultXRange();
+
+        //m_graph->GetOptions().GetDefaultXRange();
+
+        //EvalTrigUnitMode z;
+        //z = EvalTrigUnitMode::Radians;
+        //m_solver->EvalOptions().SetTrigUnitMode(z);
+
         DefaultStyleKey = StringReference(s_defaultStyleKey);
 
         this->SetValue(EquationsProperty, ref new EquationCollection());
