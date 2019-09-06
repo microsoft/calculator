@@ -66,7 +66,6 @@ namespace CalculatorApp
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsMemoryEmpty);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEChecked);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsHyperbolicChecked);
             OBSERVABLE_PROPERTY_RW(bool, AreHEXButtonsEnabled);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationResultAutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationExpressionAutomationName);
@@ -89,18 +88,14 @@ namespace CalculatorApp
 
             event HideMemoryClickedHandler ^ HideMemoryClicked;
 
-            property bool IsShiftChecked
-            {
-                bool get()
-                {
-                    return m_isShiftChecked;
-                }
+            property bool IsInputEmpty {
+                bool get() { return m_isInputEmpty;  }
                 void set(bool value)
                 {
-                    if (m_isShiftChecked != value)
+                    if (m_isInputEmpty != value)
                     {
-                        m_isShiftChecked = value;
-                        RaisePropertyChanged(L"IsShiftChecked");
+                        m_isInputEmpty = value;
+                        RaisePropertyChanged(L"IsInputEmpty");
                     }
                 }
             }
@@ -365,6 +360,7 @@ namespace CalculatorApp
             void OnMemoryClear(_In_ Platform::Object ^ memoryItemPosition);
             void OnPinUnpinCommand(Platform::Object ^ parameter);
 
+            void OnInputChanged();
             void SetPrimaryDisplay(_In_ std::wstring const& displayString, _In_ bool isError);
             void DisplayPasteError();
             void SetTokens(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens);
@@ -442,8 +438,8 @@ namespace CalculatorApp
             bool m_isProgrammer;
             bool m_isAlwaysOnTop;
             bool m_isBinaryBitFlippingEnabled;
+            bool m_isInputEmpty;
             bool m_isBitFlipChecked;
-            bool m_isShiftChecked;
             bool m_isRtlLanguage;
             int m_tokenPosition;
             bool m_keyPressed;

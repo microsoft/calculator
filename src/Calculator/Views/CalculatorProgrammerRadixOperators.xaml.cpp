@@ -29,32 +29,92 @@ CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators()
     InitializeComponent();
 }
 
-void CalculatorProgrammerRadixOperators::Shift_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void CalculatorProgrammerRadixOperators::flyoutButton_Clicked(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
 {
-    bool isShiftChecked = static_cast<ToggleButton ^>(sender)->IsChecked->Value;
-    auto scvm = safe_cast<StandardCalculatorViewModel ^>(this->DataContext);
-    scvm->IsShiftProgrammerChecked = isShiftChecked;
+    this->BitwiseFlyout->Hide();
+}
 
+void CalculatorProgrammerRadixOperators::checkDefaultBitShift()
+{
+    this->ArithmeticShiftButton->IsChecked = true;
+}
+
+void CalculatorProgrammerRadixOperators::bitshiftFlyout_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+    // Load deferred load buttons
     if (RolButton == nullptr)
     {
         FindName("RolButton");
         FindName("RorButton");
+        FindName("RolCarryButton");
+        FindName("RorCarryButton");
+        FindName("LshLogicalButton");
+        FindName("RshLogicalButton");
     }
 
-    if (isShiftChecked)
+    // Since arithmeticShiftButton defaults to IsChecked = true, this event an fire before we can load the deferred loaded controls. If that is the case, just return and do nothing.
+    if (RolButton == nullptr || RorButton == nullptr || RolCarryButton == nullptr || RorCarryButton == nullptr || LshLogicalButton == nullptr
+        || RshLogicalButton == nullptr)
+    {
+        return;
+    }
+
+    collapseBitshiftButtons();
+
+    auto radioButton = static_cast<RadioButton^>(sender);
+
+    if (radioButton == ArithmeticShiftButton)
+    {
+        LshButton->Visibility = ::Visibility::Visible;
+        RshButton->Visibility = ::Visibility::Visible;
+        LshButton->IsEnabled = true;
+        RshButton->IsEnabled = true;
+    }
+    else if (radioButton == LogicalShiftButton)
+    {
+        LshLogicalButton->Visibility = ::Visibility::Visible;
+        RshLogicalButton->Visibility = ::Visibility::Visible;
+        LshLogicalButton->IsEnabled = true;
+        RshLogicalButton->IsEnabled = true;
+    }
+    else if (radioButton == RotateCircularButton)
     {
         RolButton->Visibility = ::Visibility::Visible;
         RorButton->Visibility = ::Visibility::Visible;
-        LshButton->Visibility = ::Visibility::Collapsed;
-        RshButton->Visibility = ::Visibility::Collapsed;
+        RolButton->IsEnabled = true;
+        RorButton->IsEnabled = true;
     }
-    else
+    else if (radioButton == RotateCarryShiftButton)
     {
-        RolButton->Visibility = ::Visibility::Collapsed;
-        RorButton->Visibility = ::Visibility::Collapsed;
-        LshButton->Visibility = ::Visibility::Visible;
-        RshButton->Visibility = ::Visibility::Visible;
+        RolCarryButton->Visibility = ::Visibility::Visible;
+        RorCarryButton->Visibility = ::Visibility::Visible;
+        RolCarryButton->IsEnabled = true;
+        RorCarryButton->IsEnabled = true;
     }
+
+    this->BitShiftFlyout->Hide();
+}
+
+void CalculatorProgrammerRadixOperators::collapseBitshiftButtons()
+{
+    RolButton->Visibility = ::Visibility::Collapsed;
+    RorButton->Visibility = ::Visibility::Collapsed;
+    RolCarryButton->Visibility = ::Visibility::Collapsed;
+    RorCarryButton->Visibility = ::Visibility::Collapsed;
+    LshButton->Visibility = ::Visibility::Collapsed;
+    RshButton->Visibility = ::Visibility::Collapsed;
+    LshLogicalButton->Visibility = ::Visibility::Collapsed;
+    RshLogicalButton->Visibility = ::Visibility::Collapsed;
+
+    // We need to set the collapsed buttons to disabled so that the KeyboardShortcutManager can skip the keybinds for the disabled buttons
+    RolButton->IsEnabled = false;
+    RorButton->IsEnabled = false;
+    RolCarryButton->IsEnabled = false;
+    RorCarryButton->IsEnabled = false;
+    LshButton->IsEnabled = false;
+    RshButton->IsEnabled = false;
+    LshLogicalButton->IsEnabled = false;
+    RshLogicalButton->IsEnabled = false;
 }
 
 bool CalculatorProgrammerRadixOperators::IsErrorVisualState::get()

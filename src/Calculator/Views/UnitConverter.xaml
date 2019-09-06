@@ -644,7 +644,8 @@
               Grid.Column="1"
               Margin="3,0,3,3"
               FlowDirection="LeftToRight"
-              RenderTransformOrigin="0.5,0.5">
+              RenderTransformOrigin="0.5,0.5"
+              XYFocusKeyboardNavigation="Enabled">
             <Grid.RenderTransform>
                 <CompositeTransform/>
             </Grid.RenderTransform>
@@ -703,7 +704,7 @@
                                        x:Uid="converterNegateButton"
                                        Grid.Row="4"
                                        Grid.Column="0"
-                                       Style="{StaticResource SymbolOperatorButtonStyle}"
+                                       Style="{StaticResource SymbolOperatorKeypadButtonStyle}"
                                        FontSize="16"
                                        ButtonId="Negate"
                                        Content="&#xF898;"

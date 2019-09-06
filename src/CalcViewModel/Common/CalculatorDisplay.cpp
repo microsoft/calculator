@@ -136,3 +136,14 @@ void CalculatorDisplay::MemoryItemChanged(unsigned int indexOfMemory)
         }
     }
 }
+
+void CalculatorDisplay::InputChanged()
+{
+    if (m_callbackReference != nullptr)
+    {
+        if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
+        {
+            calcVM->OnInputChanged();
+        }
+    }
+}

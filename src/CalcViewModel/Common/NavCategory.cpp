@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -160,7 +160,7 @@ static constexpr array<const NavCategoryInitializer, 17> s_categoryManifest = { 
                                                                                                         L"\uE945",
                                                                                                         CategoryGroupType::Converter,
                                                                                                         MyVirtualKey::None,
-                                                                                                        POSITIVE_ONLY },
+                                                                                                        SUPPORTS_NEGATIVE },
                                                                                 NavCategoryInitializer{ ViewMode::Data,
                                                                                                         DATA_ID,
                                                                                                         L"Data",
@@ -184,7 +184,7 @@ static constexpr array<const NavCategoryInitializer, 17> s_categoryManifest = { 
                                                                                                         L"\uF515",
                                                                                                         CategoryGroupType::Converter,
                                                                                                         MyVirtualKey::None,
-                                                                                                        POSITIVE_ONLY } };
+                                                                                                        SUPPORTS_NEGATIVE } };
 
 // This function should only be used when storing the mode to app data.
 int NavCategory::Serialize(ViewMode mode)

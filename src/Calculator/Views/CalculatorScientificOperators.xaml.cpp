@@ -9,6 +9,7 @@
 #include "pch.h"
 #include "CalculatorScientificOperators.xaml.h"
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "CalcViewModel/Common/TraceLogger.h"
 #include "Controls/CalculatorButton.h"
 #include "CalcViewModel/StandardCalculatorViewModel.h"
 
@@ -20,6 +21,8 @@ using namespace std;
 using namespace Platform;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::UI::Core;
+using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Controls::Primitives;
@@ -27,9 +30,9 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
+using namespace Windows::UI::Core;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculatorScientificOperators, IsErrorVisualState);
-DEPENDENCY_PROPERTY_INITIALIZATION(CalculatorScientificOperators, IsWideLayout);
 
 CalculatorScientificOperators::CalculatorScientificOperators()
 {
@@ -39,20 +42,6 @@ CalculatorScientificOperators::CalculatorScientificOperators()
     Common::KeyboardShortcutManager::ShiftButtonChecked(false);
 }
 
-void CalculatorScientificOperators::ShortLayout_Completed(_In_ Platform::Object ^ /*sender*/, _In_ Platform::Object ^ /*e*/)
-{
-    IsWideLayout = false;
-    SetOperatorRowVisibility();
-    Common::KeyboardShortcutManager::ShiftButtonChecked(Model->IsShiftChecked);
-}
-
-void CalculatorScientificOperators::WideLayout_Completed(_In_ Platform::Object ^ /*sender*/, _In_ Platform::Object ^ /*e*/)
-{
-    IsWideLayout = true;
-    SetOperatorRowVisibility();
-    Common::KeyboardShortcutManager::ShiftButtonChecked(Model->IsShiftChecked);
-}
-
 void CalculatorScientificOperators::OnIsErrorVisualStatePropertyChanged(bool /*oldValue*/, bool newValue)
 {
     String ^ newState = newValue ? L"ErrorLayout" : L"NoErrorLayout";
@@ -60,12 +49,35 @@ void CalculatorScientificOperators::OnIsErrorVisualStatePropertyChanged(bool /*o
     NumberPad->IsErrorVisualState = newValue;
 }
 
-void CalculatorScientificOperators::shiftButton_Check(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
+void CalculatorScientificOperators::shiftButton_Check(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
 {
-    bool isChecked = ShiftButton->IsChecked->Value;
-    Model->IsShiftChecked = isChecked;
-    Common::KeyboardShortcutManager::ShiftButtonChecked(isChecked);
     SetOperatorRowVisibility();
+}
+
+void CalculatorScientificOperators::shiftButton_Uncheck(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
+{
+    ShiftButton->IsChecked = false;
+    SetOperatorRowVisibility();
+    ShiftButton->Focus(::FocusState::Programmatic);
+}
+
+void CalculatorScientificOperators::trigFlyoutShift_Toggle(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
+{
+    SetTrigRowVisibility();
+    Common::KeyboardShortcutManager::ShiftButtonChecked(TrigShiftButton->IsEnabled && TrigShiftButton->IsChecked->Value);
+}
+
+void CalculatorScientificOperators::trigFlyoutHyp_Toggle(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
+{
+    SetTrigRowVisibility();
+}
+
+void CalculatorScientificOperators::flyoutButton_Clicked(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
+{
+    this->HypButton->IsChecked = false;
+    this->TrigShiftButton->IsChecked = false;
+    this->Trigflyout->Hide();
+    this->FuncFlyout->Hide();
 }
 
 void CalculatorScientificOperators::shiftButton_IsEnabledChanged(
@@ -73,18 +85,40 @@ void CalculatorScientificOperators::shiftButton_IsEnabledChanged(
     _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ /*e*/)
 {
     SetOperatorRowVisibility();
-    Common::KeyboardShortcutManager::ShiftButtonChecked(ShiftButton->IsEnabled && ShiftButton->IsChecked->Value);
+}
+
+void CalculatorScientificOperators::SetTrigRowVisibility()
+{
+    bool isShiftChecked = TrigShiftButton->IsChecked->Value;
+    bool isHypeChecked = HypButton->IsChecked->Value;
+
+    InverseHyperbolicTrigFunctions->Visibility = ::Visibility::Collapsed;
+    InverseTrigFunctions->Visibility = ::Visibility::Collapsed;
+    HyperbolicTrigFunctions->Visibility = ::Visibility::Collapsed;
+    TrigFunctions->Visibility = ::Visibility::Collapsed;
+
+    if (isShiftChecked && isHypeChecked)
+    {
+        InverseHyperbolicTrigFunctions->Visibility = ::Visibility::Visible;
+    }
+    else if (isShiftChecked && !isHypeChecked)
+    {
+        InverseTrigFunctions->Visibility = ::Visibility::Visible;
+    }
+    else if (!isShiftChecked && isHypeChecked)
+    {
+        HyperbolicTrigFunctions->Visibility = ::Visibility::Visible;
+    }
+    else
+    {
+        TrigFunctions->Visibility = ::Visibility::Visible;
+    }
 }
 
 void CalculatorScientificOperators::SetOperatorRowVisibility()
 {
     ::Visibility rowVis, invRowVis;
-    if (IsWideLayout)
-    {
-        rowVis = ::Visibility::Visible;
-        invRowVis = ::Visibility::Visible;
-    }
-    else if (ShiftButton->IsChecked->Value)
+    if (ShiftButton->IsChecked->Value)
     {
         rowVis = ::Visibility::Collapsed;
         invRowVis = ::Visibility::Visible;
@@ -96,9 +130,7 @@ void CalculatorScientificOperators::SetOperatorRowVisibility()
     }
 
     Row1->Visibility = rowVis;
-    Row2->Visibility = rowVis;
     InvRow1->Visibility = invRowVis;
-    InvRow2->Visibility = invRowVis;
 }
 
 void CalculatorScientificOperators::OpenParenthesisButton_GotFocus(Object ^ sender, RoutedEventArgs ^ e)

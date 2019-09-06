@@ -11,6 +11,8 @@
 #include "Controls/CalculatorButton.h"
 #include "Controls/CalculationResult.h"
 #include "Controls/OverflowTextBlock.h"
+#include "Controls/OperatorPanelListView.h"
+#include "Controls/OperatorPanelButton.h"
 #include "CalcViewModel/HistoryViewModel.h"
 #include "Views/CalculatorProgrammerDisplayPanel.xaml.h"
 #include "Views/CalculatorProgrammerOperators.xaml.h"
@@ -18,6 +20,7 @@
 #include "Views/HistoryList.xaml.h"
 #include "Views/Memory.xaml.h"
 #include "Views/OperatorsPanel.xaml.h"
+#include "Views/StateTriggers/ControlSizeTrigger.h"
 
 namespace CalculatorApp
 {

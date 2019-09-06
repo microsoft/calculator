@@ -503,16 +503,49 @@ unordered_map<wstring, wstring> LocalizationService::GetTokenToReadableNameMap()
                                                                           make_pair<wstring, wstring>(L"27", L"HyperbolicTangent"),
                                                                           make_pair<wstring, wstring>(L"87", L"InverseHyperbolicTangent"),
 
+                                                                          // Secant permutations
+                                                                          make_pair<wstring, wstring>(L"SecDeg", L"SecantDegrees"),
+                                                                          make_pair<wstring, wstring>(L"SecRad", L"SecantRadians"),
+                                                                          make_pair<wstring, wstring>(L"SecGrad", L"SecantGradians"),
+                                                                          make_pair<wstring, wstring>(L"InverseSecDeg", L"InverseSecantDegrees"),
+                                                                          make_pair<wstring, wstring>(L"InverseSecRad", L"InverseSecantRadians"),
+                                                                          make_pair<wstring, wstring>(L"InverseSecGrad", L"InverseSecantGradians"),
+                                                                          make_pair<wstring, wstring>(L"Sech", L"HyperbolicSecant"),
+                                                                          make_pair<wstring, wstring>(L"InverseSech", L"InverseHyperbolicSecant"),
+
+                                                                          // Cosecant permutations
+                                                                          make_pair<wstring, wstring>(L"CscDeg", L"CosecantDegrees"),
+                                                                          make_pair<wstring, wstring>(L"CscRad", L"CosecantRadians"),
+                                                                          make_pair<wstring, wstring>(L"CscGrad", L"CosecantGradians"),
+                                                                          make_pair<wstring, wstring>(L"InverseCscDeg", L"InverseCosecantDegrees"),
+                                                                          make_pair<wstring, wstring>(L"InverseCscRad", L"InverseCosecantRadians"),
+                                                                          make_pair<wstring, wstring>(L"InverseCscGrad", L"InverseCosecantGradians"),
+                                                                          make_pair<wstring, wstring>(L"Csch", L"HyperbolicCosecant"),
+                                                                          make_pair<wstring, wstring>(L"InverseCsch", L"InverseHyperbolicCosecant"),
+
+                                                                          // Cotangent permutations
+                                                                          make_pair<wstring, wstring>(L"CotDeg", L"CotangentDegrees"),
+                                                                          make_pair<wstring, wstring>(L"CotRad", L"CotangentRadians"),
+                                                                          make_pair<wstring, wstring>(L"CotGrad", L"CotangentGradians"),
+                                                                          make_pair<wstring, wstring>(L"InverseCotDeg", L"InverseCotangentDegrees"),
+                                                                          make_pair<wstring, wstring>(L"InverseCotRad", L"InverseCotangentRadians"),
+                                                                          make_pair<wstring, wstring>(L"InverseCotGrad", L"InverseCotangentGradians"),
+                                                                          make_pair<wstring, wstring>(L"Coth", L"HyperbolicCotangent"),
+                                                                          make_pair<wstring, wstring>(L"InverseCoth", L"InverseHyperbolicCotangent"),
+
                                                                           // Miscellaneous Scientific functions
                                                                           make_pair<wstring, wstring>(L"94", L"Factorial"),
                                                                           make_pair<wstring, wstring>(L"35", L"DegreeMinuteSecond"),
                                                                           make_pair<wstring, wstring>(L"28", L"NaturalLog"),
-                                                                          make_pair<wstring, wstring>(L"91", L"Square")
+                                                                          make_pair<wstring, wstring>(L"91", L"Square"),
+                                                                          make_pair<wstring, wstring>(L"CubeRoot", L"CubeRoot"),
+                                                                          make_pair<wstring, wstring>(L"Abs", L"AbsoluteValue")
     };
 
     static vector<pair<wstring, wstring>> s_noParenEngineKeyResourceMap = { // Programmer mode functions
                                                                             make_pair<wstring, wstring>(L"9", L"LeftShift"),
                                                                             make_pair<wstring, wstring>(L"10", L"RightShift"),
+                                                                            make_pair<wstring, wstring>(L"LogBaseX", L"Logx"),
 
                                                                             // Y Root scientific function
                                                                             make_pair<wstring, wstring>(L"16", L"YRoot")

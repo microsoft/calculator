@@ -299,6 +299,15 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="Views\TitleBar.xaml.cpp" />
+    <ClCompile Include="Views\StateTriggers\ControlSizeTrigger.cpp">
+      <Filter>Views\StateTriggers</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\OperatorPanelListView.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\OperatorPanelButton.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -379,7 +388,16 @@
     <ClInclude Include="Controls\HorizontalNoOverflowStackPanel.h">
       <Filter>Controls</Filter>
     </ClInclude>
+    <ClInclude Include="Views\StateTriggers\ControlSizeTrigger.h">
+      <Filter>Views\StateTriggers</Filter>
+    </ClInclude>
     <ClInclude Include="Views\TitleBar.xaml.h" />
+    <ClInclude Include="Controls\OperatorPanelListView.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\OperatorPanelButton.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

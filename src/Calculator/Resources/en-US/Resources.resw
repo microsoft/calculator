@@ -3359,6 +3359,114 @@
     <value>inverse hyperbolic tangent</value>
     <comment>Name for the inverse hyperbolic tangent function. Used by screen readers.</comment>
   </data>
+  <data name="SecantDegrees" xml:space="preserve">
+    <value>secant degrees</value>
+    <comment>Name for the secant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="SecantRadians" xml:space="preserve">
+    <value>secant radians</value>
+    <comment>Name for the secant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="SecantGradians" xml:space="preserve">
+    <value>secant gradians</value>
+    <comment>Name for the secant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantDegrees" xml:space="preserve">
+    <value>inverse secant degrees</value>
+    <comment>Name for the inverse secant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantRadians" xml:space="preserve">
+    <value>inverse secant radians</value>
+    <comment>Name for the inverse secant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantGradians" xml:space="preserve">
+    <value>inverse secant gradians</value>
+    <comment>Name for the inverse secant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicSecant" xml:space="preserve">
+    <value>hyperbolic secant</value>
+    <comment>Name for the hyperbolic secant function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicSecant" xml:space="preserve">
+    <value>inverse hyperbolic secant</value>
+    <comment>Name for the inverse hyperbolic secant function. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantDegrees" xml:space="preserve">
+    <value>cosecant degrees</value>
+    <comment>Name for the cosecant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantRadians" xml:space="preserve">
+    <value>cosecant radians</value>
+    <comment>Name for the cosecant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantGradians" xml:space="preserve">
+    <value>cosecant gradians</value>
+    <comment>Name for the cosecant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantDegrees" xml:space="preserve">
+    <value>inverse cosecant degrees</value>
+    <comment>Name for the inverse cosecant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantRadians" xml:space="preserve">
+    <value>inverse cosecant radians</value>
+    <comment>Name for the inverse cosecant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantGradians" xml:space="preserve">
+    <value>inverse cosecant gradians</value>
+    <comment>Name for the inverse cosecant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicCosecant" xml:space="preserve">
+    <value>hyperbolic cosecant</value>
+    <comment>Name for the hyperbolic cosecant function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicCosecant" xml:space="preserve">
+    <value>inverse hyperbolic cosecant</value>
+    <comment>Name for the inverse hyperbolic cosecant function. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentDegrees" xml:space="preserve">
+    <value>cotangent degrees</value>
+    <comment>Name for the cotangent function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentRadians" xml:space="preserve">
+    <value>Cotangent radians</value>
+    <comment>Name for the cotangent function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentGradians" xml:space="preserve">
+    <value>cotangent gradians</value>
+    <comment>Name for the cotangent function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentDegrees" xml:space="preserve">
+    <value>inverse cotangent degrees</value>
+    <comment>Name for the inverse cotangent function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentRadians" xml:space="preserve">
+    <value>inverse cotangent radians</value>
+    <comment>Name for the inverse cotangent function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentGradians" xml:space="preserve">
+    <value>inverse cotangent gradians</value>
+    <comment>Name for the inverse cotangent function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicCotangent" xml:space="preserve">
+    <value>hyperbolic cotangent</value>
+    <comment>Name for the hyperbolic cotangent function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicCotangent" xml:space="preserve">
+    <value>inverse hyperbolic cotangent</value>
+    <comment>Name for the inverse hyperbolic cotangent function. Used by screen readers.</comment>
+  </data>
+  <data name="CubeRoot" xml:space="preserve">
+    <value>Cube Root</value>
+    <comment>Name for the cube root function. Used by screen readers.</comment>
+  </data>
+  <data name="Logx" xml:space="preserve">
+    <value>Base Log</value>
+    <comment>Name for the logbasex function. Used by screen readers.</comment>
+  </data>
+  <data name="AbsoluteValue" xml:space="preserve">
+    <value>Absolute Value</value>
+    <comment>Name for the absolute value function. Used by screen readers.</comment>
+  </data>
   <data name="LeftShift" xml:space="preserve">
     <value>left shift</value>
     <comment>Name for the programmer function that shifts bits to the left. Used by screen readers.</comment>
@@ -3421,6 +3529,294 @@
   </data>
   <data name="CalculationFailed" xml:space="preserve">
     <value>Calculation failed</value>
-    <comment>Text displayed when the application is not able to do a calculation</comment>
+    <comment>Text displayed when the application is not able to do a calculation</comment>  
+  </data>
+  <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Log base X</value>
+    <comment>Screen reader prompt for the logBaseX button</comment>
+  </data>
+  <data name="logBaseX.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+    <value>L</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="trigButton.Text" xml:space="preserve">
+    <value>Trigonometry</value>
+    <comment>Displayed on the button that contains a flyout for the trig functions in scientific mode.</comment>
+  </data>
+  <data name="funcButton.Text" xml:space="preserve">
+    <value>Function</value>
+    <comment>Displayed on the button that contains a flyout for the general functions in scientific mode.</comment>
+  </data>
+  <data name="bitwiseButton.Text" xml:space="preserve">
+    <value>Bitwise</value>
+    <comment>Displayed on the button that contains a flyout for the bitwise functions in programmer mode.</comment>
+  </data>
+  <data name="bitShiftButton.Text" xml:space="preserve">
+    <value>Bit Shift</value>
+    <comment>Displayed on the button that contains a flyout for the bit shift functions in programmer mode.</comment>
+  </data>
+  <data name="trigShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Inverse Function</value>
+    <comment>Screen Reader prompt for the shift button in the trig flyout in scientific mode.</comment>
+  </data>
+  <data name="hypButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hyperbolic function</value>
+    <comment>Screen reader prompt for the Calculator button HYP in the scientific flyout keypad</comment>
+  </data>
+  <data name="secButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Secant</value>
+    <comment>Screen reader prompt for the Calculator button sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="secButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+    <value>U</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="sechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hyperbolic Secant</value>
+    <comment>Screen reader prompt for the Calculator button sech in the scientific flyout keypad</comment>
+  </data>
+  <data name="sechButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
+    <value>U</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="invsecButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc Secant</value>
+    <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="invsecButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyInverseChord" xml:space="preserve">
+    <value>U</value>
+    <comment>{Locked}The shortcut for the inverted sec button</comment>
+  </data>
+  <data name="invsechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hyperbolic Arc Secant</value>
+    <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="invsechButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlInverseChord" xml:space="preserve">
+    <value>U</value>
+    <comment>{Locked}The shortcut for the inverted sech button</comment>
+  </data>
+  <data name="cscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Cosecant</value>
+    <comment>Screen reader prompt for the Calculator button csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="cscButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+    <value>I</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="cschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hyperbolic Cosecant</value>
+    <comment>Screen reader prompt for the Calculator button csch in the scientific flyout keypad</comment>
+  </data>
+  <data name="cschButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
+    <value>I</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="invcscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc Cosecant</value>
+    <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcscButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyInverseChord" xml:space="preserve">
+    <value>I</value>
+    <comment>{Locked}The shortcut for the inverted sec button</comment>
+  </data>
+  <data name="invcschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hyperbolic Arc Cosecant</value>
+    <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcschButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlInverseChord" xml:space="preserve">
+    <value>I</value>
+    <comment>{Locked}The shortcut for the inverted sech button</comment>
+  </data>
+  <data name="cotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Cotangent</value>
+    <comment>Screen reader prompt for the Calculator button cot in the scientific flyout keypad</comment>
+  </data>
+  <data name="cotButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+    <value>J</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="cothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hyperbolic Cotangent</value>
+    <comment>Screen reader prompt for the Calculator button coth in the scientific flyout keypad</comment>
+  </data>
+  <data name="cothButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
+    <value>J</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="invcotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc Cotangent</value>
+    <comment>Screen reader prompt for the Calculator button arc cot in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcotButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyInverseChord" xml:space="preserve">
+    <value>J</value>
+    <comment>{Locked}The shortcut for the inverted sec button</comment>
+  </data>
+  <data name="invcothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hyperbolic Arc Cotangent</value>
+    <comment>Screen reader prompt for the Calculator button arc coth in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcothButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlInverseChord" xml:space="preserve">
+    <value>J</value>
+    <comment>{Locked}The shortcut for the inverted sech button</comment>
+  </data>
+  <data name="floorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Floor</value>
+    <comment>Screen reader prompt for the Calculator button floor in the scientific flyout keypad</comment>
+  </data>
+  <data name="floorButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+    <value>[</value>
+    <comment>{Locked}The shortcut for the inverted sech button</comment>
+  </data>
+  <data name="ceilButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ceiling</value>
+    <comment>Screen reader prompt for the Calculator button ceiling in the scientific flyout keypad</comment>
+  </data>
+  <data name="ceilButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+    <value>]</value>
+    <comment>{Locked}The shortcut for the inverted sech button</comment>
+  </data>
+  <data name="randButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Random</value>
+    <comment>Screen reader prompt for the Calculator button random in the scientific flyout keypad</comment>
+  </data>
+  <data name="randButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+    <value>R</value>
+    <comment>{Locked}The shortcut for the inverted sech button</comment>
+  </data>
+  <data name="absButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Absolute Value</value>
+    <comment>Screen reader prompt for the Calculator button abs in the scientific flyout keypad</comment>
+  </data>
+  <data name="absButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+    <value>|</value>
+    <comment>{Locked}The shortcut for the inverted sech button</comment>
+  </data>
+  <data name="eulerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Euler's number</value>
+    <comment>Screen reader prompt for the Calculator button e in the scientific flyout keypad</comment>
+  </data>
+  <data name="eulerButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+    <value>E</value>
+    <comment>{Locked}The shortcut for the inverted sech button</comment>
+  </data>
+  <data name="twoPowerXButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Two to the exponent</value>
+    <comment>Screen reader prompt for the Calculator button 2^x in the scientific flyout keypad</comment>
+  </data>
+  <data name="twoPowerXButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+    <value>G</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="nandButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Nand</value>
+    <comment>Screen reader prompt for the Calculator button nand in the scientific flyout keypad</comment>
+  </data>
+  <data name="nandButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+    <value>.</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="nandButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Nand</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="norButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Nor</value>
+    <comment>Screen reader prompt for the Calculator button nor in the scientific flyout keypad</comment>
+  </data>
+  <data name="norButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+    <value>\</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="norButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Nor</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="rolCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Rotate on left with carry</value>
+    <comment>Screen reader prompt for the Calculator button rol with carry in the scientific flyout keypad</comment>
+  </data>
+  <data name="rolCarryButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+    <value>J</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="rorCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Rotate on right with carry</value>
+    <comment>Screen reader prompt for the Calculator button ror with carry in the scientific flyout keypad</comment>
+  </data>
+  <data name="rorCarryButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+    <value>K</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="lshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Left Shift</value>
+    <comment>Screen reader prompt for the Calculator button lshLogical in the scientific flyout keypad</comment>
+  </data>
+  <data name="lshLogicalButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+    <value>&lt;</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="lshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Left shift</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="rshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Right Shift</value>
+    <comment>Screen reader prompt for the Calculator button rshLogical in the scientific flyout keypad</comment>
+  </data>
+  <data name="rshLogicalButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+    <value>&gt;</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="rshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Right shift</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="arithmeticShiftButton.Content" xml:space="preserve">
+    <value>Arithmetic Shift</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButton.Content" xml:space="preserve">
+    <value>Logical Shift</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButton.Content" xml:space="preserve">
+    <value>Rotate Circular Shift</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButton.Content" xml:space="preserve">
+    <value>Rotate Through Carry Circular Shift</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
+  <data name="cubeRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Cube root</value>
+    <comment>Screen reader prompt for the cube root button on the scientific operator keypad</comment>
+  </data>
+  <data name="cubeRootButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
+    <value>B</value>
+    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
+  </data>
+  <data name="trigButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Trigonometry</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="funcButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Functions</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="bitwiseButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Bitwise</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="bitShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Bitshift</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="ScientificOperatorPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Scientific Operator Panels</value>
+    <comment>Screen reader prompt for the Scientific Operator Panels on the scientific operator keypad</comment>
+  </data>
+  <data name="ProgrammerOperatorPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Programmer Operator Panels</value>
+    <comment>Screen reader prompt for the Programmer Operator Panels on the programmer operator keypad</comment>
   </data>
 </root>

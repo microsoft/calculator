@@ -73,7 +73,6 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_MemorizedNumbers(ref new Vector<MemoryItemViewModel ^>())
     , m_IsMemoryEmpty(true)
     , m_IsFToEChecked(false)
-    , m_isShiftChecked(false)
     , m_IsShiftProgrammerChecked(false)
     , m_valueBitLength(BitLength::BitLengthQWord)
     , m_isBitFlipChecked(false)
@@ -1024,6 +1023,11 @@ NumbersAndOperatorsEnum StandardCalculatorViewModel::MapCharacterToButtonId(cons
     }
 
     return mappedValue;
+}
+
+void StandardCalculatorViewModel::OnInputChanged()
+{
+    IsInputEmpty = m_standardCalculatorManager.IsInputEmpty();
 }
 
 void StandardCalculatorViewModel::OnMemoryButtonPressed()
