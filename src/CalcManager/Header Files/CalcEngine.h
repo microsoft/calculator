@@ -68,6 +68,10 @@ public:
     {
         return m_bError;
     }
+    bool IsInputEmpty()
+    {
+        return m_input.IsEmpty() && (m_numberString.empty() || m_numberString == L"0");
+    }
     bool FInRecordingState()
     {
         return m_bRecord;
@@ -103,6 +107,7 @@ public:
         return GetString(IdStrFromCmdId(nOpCode));
     }
     static std::wstring_view OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE angletype);
+    static std::wstring_view OpCodeToBinaryString(int nOpCode, bool isIntegerMode);
 
 private:
     bool m_fPrecedence;
@@ -146,6 +151,8 @@ private:
     ANGLE_TYPE m_angletype;                  // Current Angle type when in dec mode. one of deg, rad or grad
     NUM_WIDTH m_numwidth;                    // one of qword, dword, word or byte mode.
     int32_t m_dwWordBitWidth;                // # of bits in currently selected word size
+
+    uint64_t m_carryBit;
 
     CHistoryCollector m_HistoryCollector; // Accumulator of each line of history as various commands are processed
 

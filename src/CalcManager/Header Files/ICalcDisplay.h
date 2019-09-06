@@ -22,4 +22,5 @@ public:
     virtual void OnHistoryItemAdded(_In_ unsigned int addedItemIndex) = 0;
     virtual void SetMemorizedNumbers(const std::vector<std::wstring>& memorizedNumbers) = 0;
     virtual void MemoryItemChanged(unsigned int indexOfMemory) = 0;
+    virtual void InputChanged() = 0;
 };
