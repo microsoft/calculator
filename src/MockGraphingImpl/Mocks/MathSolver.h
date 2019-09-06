@@ -17,6 +17,9 @@ namespace MockGraphingImpl
 
     class EvalOptions : public Graphing::IEvalOptions
     {
+        void SetTrigUnitMode(Graphing::EvalTrigUnitMode value) override
+        {
+        }
     };
 
     class FormatOptions : public Graphing::IFormatOptions
