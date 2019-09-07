@@ -46,6 +46,10 @@ DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, DisplayStringExpression);
 #define WIDTHTOFONTOFFSET 3
 #define WIDTHCUTOFF 50
 #define FONTTOLERANCE 0.001
+
+// We need a safety margin to guarantee we correctly always show/hide ScrollLeft and ScrollRight buttons when necessary.
+// In rare cases, ScrollViewer::HorizontalOffset is a little low by a few (sub)pixels when users scroll to one of the extremity
+// and no events are launched when they scroll again in the same direction
 #define SCROLL_BUTTONS_APPROXIMATION_RANGE 4
 
 StringReference CalculationResult::s_FocusedState(L"Focused");
