@@ -455,6 +455,7 @@ namespace GraphControl
             if (m_renderMain)
             {
                 m_renderMain->RunRenderPass();
+                UpdateKeyGraphFeatures();
             }
         }
     }
