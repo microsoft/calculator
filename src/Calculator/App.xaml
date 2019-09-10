@@ -1477,6 +1477,7 @@
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
+
                                     </VisualStateGroup>
 
                                     <VisualStateGroup x:Name="ButtonStates">
