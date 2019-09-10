@@ -307,6 +307,7 @@
     <ClCompile Include="Controls\EquationTextBox.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
+    <ClCompile Include="Controls\KeyGraphFeaturesControl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -399,6 +400,7 @@
     <ClInclude Include="Controls\EquationTextBox.h">
       <Filter>Controls</Filter>
     </ClInclude>
+    <ClInclude Include="Controls\KeyGraphFeaturesControl.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -1567,6 +1569,10 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>

@@ -1081,6 +1081,35 @@
                 </Setter>
             </Style>
 
+            <Style x:Name="KeyGraphFeaturesControlStyle" TargetType="Controls:KeyGraphFeaturesControl">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Controls:KeyGraphFeaturesControl">
+                            <StackPanel>
+                                <Controls:EquationTextBox x:Uid="EquationInputButton"
+                                                          Grid.Column="1"
+                                                          Margin="0,0,3,0"
+                                                          Style="{StaticResource EquationTextBoxStyle}"/>
+                                <RichEditBox x:Name="KeyGraphFeaturesBox"
+                                             MinHeight="42"
+                                             Padding="{TemplateBinding Padding}"
+                                             VerticalAlignment="Stretch"
+                                             BorderThickness="0"
+                                             FontFamily="{TemplateBinding FontFamily}"
+                                             FontSize="{TemplateBinding FontSize}"
+                                             FontWeight="{TemplateBinding FontWeight}"
+                                             AcceptsReturn="false"
+                                             InputScope="Text"
+                                             IsReadOnly="True"
+                                             MaxLength="2048"
+                                             TextWrapping="NoWrap"/>
+
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <Style x:Key="EquationTextBoxStyle" TargetType="Controls:EquationTextBox">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="BorderThickness" Value="0,1,1,1"/>
@@ -1593,6 +1622,7 @@
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
+
                                     </VisualStateGroup>
 
                                     <VisualStateGroup x:Name="ButtonStates">
@@ -1713,13 +1743,6 @@
                                                 Visibility="Collapsed"/>
                                     </Grid>
                                 </Border>
-
-                                <ContentPresenter x:Name="KeyGraphFeaturesContentPresenter"
-                                                  Grid.Row="1"
-                                                  Grid.Column="0"
-                                                  Grid.ColumnSpan="2"
-                                                  AutomationProperties.AccessibilityView="Raw"
-                                                  Content="{TemplateBinding KeyGraphFeaturesContent}"/>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>

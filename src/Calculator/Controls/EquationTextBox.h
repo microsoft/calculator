@@ -18,10 +18,10 @@ namespace CalculatorApp
 
             DEPENDENCY_PROPERTY_OWNER(EquationTextBox);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::SolidColorBrush^, EquationColor);
-            DEPENDENCY_PROPERTY(Windows::UI::Xaml::UIElement^, KeyGraphFeaturesContent);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Controls::Flyout^, ColorChooserFlyout);
 
             event Windows::UI::Xaml::RoutedEventHandler^ RemoveButtonClicked;
+            event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesButtonClicked;
 
             Platform::String^ GetEquationText();
             void SetEquationText(Platform::String^ equationText);

@@ -3,6 +3,7 @@
 #include "Views/GraphingCalculator/EquationInputArea.g.h"
 #include "CalcViewModel/Common/Utils.h"
 #include "CalcViewModel/GraphingCalculator/EquationViewModel.h"
+#include "Converters/BooleanNegationConverter.h"
 
 namespace CalculatorApp
 {
@@ -13,6 +14,8 @@ namespace CalculatorApp
 
         OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector< ViewModel::EquationViewModel^ >^, Equations);
+        OBSERVABLE_PROPERTY_RW(bool, IsKeyGraphFeaturesVisible)
+        OBSERVABLE_PROPERTY_RW(ViewModel::EquationViewModel ^, KeyGraphFeaturesVM);
 
     private:
         void OnPropertyChanged(Platform::String^ propertyName);
@@ -30,5 +33,6 @@ namespace CalculatorApp
     private:
         int m_lastLineColorIndex;
         void EquationTextBox_RemoveButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void EquationTextBox_KeyGraphFeaturesButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);        
     };
 }

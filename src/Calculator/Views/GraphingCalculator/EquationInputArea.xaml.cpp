@@ -20,16 +20,8 @@ using namespace Windows::UI::Xaml::Input;
 namespace
 {
     const Color accentColor = (ref new UISettings())->GetColorValue(UIColorType::Accent);
-    const Color lineColors[] = {
-        accentColor,
-        Colors::DarkOrange,
-        Colors::MediumPurple,
-        Colors::ForestGreen,
-        Colors::BlueViolet,
-        Colors::DarkRed,
-        Colors::LightGoldenrodYellow,
-        Colors::DarkOliveGreen
-    };
+    const Color lineColors[] = { accentColor,        Colors::DarkOrange, Colors::MediumPurple,         Colors::ForestGreen,
+                                 Colors::BlueViolet, Colors::DarkRed,    Colors::LightGoldenrodYellow, Colors::DarkOliveGreen };
     const size_t lineColorsSize = std::size(lineColors);
 
     StringReference EquationsPropertyName(L"Equations");
@@ -38,10 +30,10 @@ namespace
 EquationInputArea::EquationInputArea()
     : m_lastLineColorIndex{ -1 }
 {
-	InitializeComponent();
+    InitializeComponent();
 }
 
-void EquationInputArea::OnPropertyChanged(String^ propertyName)
+void EquationInputArea::OnPropertyChanged(String ^ propertyName)
 {
     if (propertyName == EquationsPropertyName)
     {
@@ -57,7 +49,7 @@ void EquationInputArea::OnEquationsPropertyChanged()
     }
 }
 
-void EquationInputArea::AddEquationButton_Click(Object^ sender, RoutedEventArgs^ e)
+void EquationInputArea::AddEquationButton_Click(Object ^ sender, RoutedEventArgs ^ e)
 {
     AddNewEquation();
 }
@@ -70,26 +62,26 @@ void EquationInputArea::AddNewEquation()
     Equations->Append(eq);
 }
 
-void EquationInputArea::InputTextBox_GotFocus(Object^ sender, RoutedEventArgs^ e)
+void EquationInputArea::InputTextBox_GotFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     KeyboardShortcutManager::HonorShortcuts(false);
 }
 
-void EquationInputArea::InputTextBox_LostFocus(Object^ sender, RoutedEventArgs^ e)
+void EquationInputArea::InputTextBox_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     KeyboardShortcutManager::HonorShortcuts(true);
-    
-    auto tb = static_cast<EquationTextBox^>(sender);
-    auto eq = static_cast<EquationViewModel^>(tb->DataContext);
+
+    auto tb = static_cast<EquationTextBox ^>(sender);
+    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
     tb->SetEquationText(eq->Expression);
 }
 
-void EquationInputArea::InputTextBox_KeyUp(Object^ sender, KeyRoutedEventArgs^ e)
+void EquationInputArea::InputTextBox_KeyUp(Object ^ sender, KeyRoutedEventArgs ^ e)
 {
     if (e->Key == VirtualKey::Enter)
     {
-        auto tb = static_cast<EquationTextBox^>(sender);
-        auto eq = static_cast<EquationViewModel^>(tb->DataContext);
+        auto tb = static_cast<EquationTextBox ^>(sender);
+        auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
         eq->Expression = tb->GetEquationText();
 
         e->Handled = true;
@@ -102,14 +94,23 @@ Color EquationInputArea::GetNextLineColor()
     return lineColors[m_lastLineColorIndex];
 }
 
-
-void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object^ sender, RoutedEventArgs^ e)
+void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
-    auto tb = static_cast<EquationTextBox^>(sender);
-    auto eq = static_cast<EquationViewModel^>(tb->DataContext);
+    auto tb = static_cast<EquationTextBox ^>(sender);
+    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
     unsigned int index;
     if (Equations->IndexOf(eq, &index))
     {
         Equations->RemoveAt(index);
     }
 }
+
+void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    auto tb = static_cast<EquationTextBox ^>(sender);
+    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
+    KeyGraphFeaturesVM = eq;
+    IsKeyGraphFeaturesVisible = true;
+}
+
+

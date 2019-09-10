@@ -5,11 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:CalculatorApp.ViewModel"
+             xmlns:converters="using:CalculatorApp.Converters"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
+    </UserControl.Resources>
 
-    <Grid>
+    <Grid x:Name="EquationInputAreaGrid">
+        <Grid Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -48,17 +53,12 @@
                                                   GotFocus="InputTextBox_GotFocus"
                                                   KeyUp="InputTextBox_KeyUp"
                                                   LostFocus="InputTextBox_LostFocus"
-                                                  RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
-                            <controls:EquationTextBox.EquationColor>
-                                <SolidColorBrush x:Name="EquationLineColor" Color="{x:Bind LineColor, Mode=OneWay}"/>
-                            </controls:EquationTextBox.EquationColor>
-                            <controls:EquationTextBox.KeyGraphFeaturesContent>
-                                <StackPanel x:Name="KeyGraphFeaturesGrid" Visibility="{x:Bind KeyGraphFeaturesVisibility, Mode=OneWay}">
-                                    <TextBlock Text="Key Graph Features"/>
-                                    <TextBlock Text="{x:Bind Expression, Mode=OneWay}"/>
-                                </StackPanel>
-                            </controls:EquationTextBox.KeyGraphFeaturesContent>
-                            <controls:EquationTextBox.ColorChooserFlyout>
+                                                  RemoveButtonClicked="EquationTextBox_RemoveButtonClicked"
+                                                  KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked">
+                                <controls:EquationTextBox.EquationColor>
+                                    <SolidColorBrush x:Name="EquationLineColor" Color="{x:Bind LineColor, Mode=OneWay}"/>
+                                </controls:EquationTextBox.EquationColor>
+                                <controls:EquationTextBox.ColorChooserFlyout>
                                 <Flyout x:Name="ColorChooserFlyout"
                                         x:Uid="ColorChooserFlyout"
                                         Placement="Bottom">
@@ -78,5 +78,11 @@
                 Margin="4"
                 Click="AddEquationButton_Click"
                 Content="+"/>
+        </Grid>
+        <controls:KeyGraphFeaturesControl x:Name="KeyGraphFeaturesPanel" Grid.Row="0" Grid.RowSpan="2" Style="{StaticResource KeyGraphFeaturesControlStyle}"
+                                          Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"
+                                          DataContext="{x:Bind KeyGraphFeaturesVM, Mode=OneWay}"
+                                          />
+
     </Grid>
 </UserControl>
