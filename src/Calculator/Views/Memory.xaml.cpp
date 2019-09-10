@@ -39,7 +39,6 @@ Memory::Memory()
     : m_isErrorVisualState(false)
 {
     InitializeComponent();
-    m_memoryItemFlyout = safe_cast<MenuFlyout ^>(Resources->Lookup("MemoryContextMenu"));
 
     MemoryPaneEmpty->FlowDirection = LocalizationService::GetInstance()->GetFlowDirection();
 }
@@ -56,53 +55,31 @@ void Memory::MemoryListItemClick(_In_ Object ^ sender, _In_ ItemClickEventArgs ^
     }
 }
 
-void Memory::OnContextRequested(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::ContextRequestedEventArgs ^ e)
-{
-    // Walk up the tree to find the ListViewItem.
-    // There may not be one if the click wasn't on an item.
-    auto requestedElement = safe_cast<FrameworkElement ^>(e->OriginalSource);
-    while ((requestedElement != sender) && !dynamic_cast<ListViewItem ^>(requestedElement))
-    {
-        requestedElement = safe_cast<FrameworkElement ^>(VisualTreeHelper::GetParent(requestedElement));
-    }
-
-    if (requestedElement != sender)
-    {
-        // The context menu request was for a ListViewItem.
-        auto memorySlot = safe_cast<MemoryItemViewModel ^>(MemoryListView->ItemFromContainer(requestedElement));
-        Point point;
-        if (e->TryGetPosition(requestedElement, &point))
-        {
-            m_memoryItemFlyout->ShowAt(requestedElement, point);
-        }
-        else
-        {
-            // Not invoked via pointer, so let XAML choose a default location.
-            m_memoryItemFlyout->ShowAt(requestedElement);
-        }
-
-        e->Handled = true;
-    }
-}
-
-void Memory::OnContextCanceled(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
-{
-    m_memoryItemFlyout->Hide();
-}
-
 void Memory::OnClearMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    GetMemoryItemForCurrentFlyout()->Clear();
+    auto memoryItem = GetMemoryItemForCurrentFlyout();
+    if (memoryItem != nullptr)
+    {
+        memoryItem->Clear();
+    }
 }
 
 void Memory::OnMemoryAddMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    GetMemoryItemForCurrentFlyout()->MemoryAdd();
+    auto memoryItem = GetMemoryItemForCurrentFlyout();
+    if (memoryItem != nullptr)
+    {
+        memoryItem->MemoryAdd();
+    }
 }
 
 void Memory::OnMemorySubtractMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    GetMemoryItemForCurrentFlyout()->MemorySubtract();
+    auto memoryItem = GetMemoryItemForCurrentFlyout();
+    if (memoryItem != nullptr)
+    {
+        memoryItem->MemorySubtract();
+    }
 }
 
 bool Memory::IsErrorVisualState::get()
@@ -122,7 +99,6 @@ void Memory::IsErrorVisualState::set(bool value)
 
 MemoryItemViewModel ^ Memory::GetMemoryItemForCurrentFlyout()
 {
-    auto listViewItem = m_memoryItemFlyout->Target;
-
-    return safe_cast<MemoryItemViewModel ^>(MemoryListView->ItemFromContainer(listViewItem));
+    auto listViewItem = MemoryContextMenu->Target;
+    return dynamic_cast<MemoryItemViewModel ^>(MemoryListView->ItemFromContainer(listViewItem));
 }

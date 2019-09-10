@@ -279,9 +279,7 @@ namespace UnitConversionManager
         double Convert(double value, ConversionData conversionData);
         std::vector<std::tuple<std::wstring, Unit>> CalculateSuggested();
         void ClearValues();
-        void TrimString(std::wstring& input);
         void InitializeSelectedUnits();
-        std::wstring RoundSignificant(double num, int numSignificant);
         Category StringToCategory(const std::wstring& w);
         std::wstring CategoryToString(const Category& c, const wchar_t* delimiter);
         std::wstring UnitToString(const Unit& u, const wchar_t* delimiter);

@@ -128,6 +128,8 @@ namespace GraphControl
         event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String^, double>^>^ VariablesUpdated;
 
         void SetVariable(Platform::String^ variableName, double newValue);
+        void ZoomFromCenter(double scale);
+        void ResetGrid();
 
     protected:
         #pragma region Control Overrides
@@ -200,5 +202,8 @@ namespace GraphControl
 
         const std::unique_ptr<Graphing::IMathSolver> m_solver;
         const std::shared_ptr<Graphing::IGraph> m_graph;
+
+        public:
+            Windows::Storage::Streams::RandomAccessStreamReference^ GetGraphBitmapStream();
     };
 }

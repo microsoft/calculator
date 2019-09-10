@@ -118,7 +118,7 @@ namespace CalculatorApp
 
     void WindowFrameService::OnConsolidated(_In_ ApplicationView ^ sender, _In_ ApplicationViewConsolidatedEventArgs ^ e)
     {
-        LogOnViewClosed(CoreWindow::GetForCurrentThread());
+        TraceLogger::GetInstance().UpdateWindowCount();
         auto parent = m_parent.Resolve<App>();
         if (parent != nullptr)
         {
@@ -128,23 +128,10 @@ namespace CalculatorApp
 
     void WindowFrameService::OnClosed(_In_ CoreWindow ^ sender, _In_ CoreWindowEventArgs ^ args)
     {
-        LogOnViewClosed(sender);
         auto parent = m_parent.Resolve<App>();
         if (parent != nullptr)
         {
             parent->RemoveSecondaryWindow(this);
-        }
-    }
-
-    void WindowFrameService::LogOnViewClosed(_In_ CoreWindow ^ coreWindow)
-    {
-        if (coreWindow)
-        {
-            TraceLogger::GetInstance().LogViewClosingTelemetry(ApplicationView::GetApplicationViewIdForWindow(coreWindow));
-        }
-        else
-        {
-            TraceLogger::GetInstance().LogCoreWindowWasNull();
         }
     }
 
