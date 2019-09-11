@@ -107,6 +107,13 @@ public
             }
         }
 
+        int GetTrigUnitMode()
+        {
+            return (int)m_solver->EvalOptions().GetTrigUnitMode();
+        }
+
+        void SetTrigUnitMode(int value);
+
         void ZoomFromCenter(double scale);
         void ResetGrid();
 
@@ -126,14 +133,13 @@ public
             }
         }
 
-        property Windows::Foundation::Point TraceLocation 
+        property Windows::Foundation::Point TraceLocation
         {
             Windows::Foundation::Point get()
             {
                 return m_renderMain->TraceLocation;
             }
         }
-
 
         property Windows::Foundation::Point ActiveTraceCursorPosition
         {

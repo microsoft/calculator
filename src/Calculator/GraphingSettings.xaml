@@ -40,8 +40,8 @@
 
             <TextBlock Text="Units" FontSize="28" Margin="0,10"/>
             <StackPanel Orientation="Horizontal">
-                <RadioButton Content="Degrees" IsChecked="True"/>
-                <RadioButton Content="Radians"/>
+                <RadioButton Content="Degrees" IsChecked="True" Click="TrigUnitModeClick"/>
+                <RadioButton Content="Radians" Click="TrigUnitModeClick"/>
             </StackPanel>
         </StackPanel>
     </Grid>

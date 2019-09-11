@@ -378,3 +378,15 @@ void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventAr
     IsKeyGraphFeaturesVisible = false;
 }
 
+void CalculatorApp::GraphingCalculator::TrigUnitModeClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    if (Degrees->IsChecked->Value == true)
+    {
+        GraphingControl->SetTrigUnitMode((int)Graphing::EvalTrigUnitMode::Degrees);
+    }
+
+    if (Radians->IsChecked->Value == true)
+    {
+        GraphingControl->SetTrigUnitMode((int)Graphing::EvalTrigUnitMode::Radians);
+    }
+}
