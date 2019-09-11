@@ -52,6 +52,7 @@ namespace CalculatorApp
         void CommandInvokedHandler(Windows::UI::Popups::IUICommand^ command);
 
         void TextBoxGotFocus(Windows::UI::Xaml::Controls::TextBox^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void OnEquationKeyGraphFeaturesChanged(GraphControl::Equation ^ equation, Platform::String ^ propertyName);
     };
 
 }

@@ -160,7 +160,6 @@ namespace GraphControl
         void OnEquationsChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ args);
         void OnEquationsVectorChanged(Windows::Foundation::Collections::IObservableVector<GraphControl::Equation ^> ^sender, Windows::Foundation::Collections::IVectorChangedEventArgs^ event);
         void OnEquationChanged();
-        void OnKeyGraphFeaturesVisibilityChanged(GraphControl::Equation ^ sender);
 
         void UpdateGraph();
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation^>& validEqs);
@@ -180,7 +179,7 @@ namespace GraphControl
 
         void ScaleRange(double centerX, double centerY, double scale);
 
-        Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^ ConvertVectorToIObservableVector(std::vector<std::wstring> inVector);
+        Platform::String ^ ConvertVectorToString(std::vector<std::wstring> inVector);
 
     private:
         DX::RenderMain^ m_renderMain = nullptr;

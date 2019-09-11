@@ -308,6 +308,7 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="Controls\KeyGraphFeaturesControl.cpp" />
+    <ClCompile Include="Controls\MathRichEditBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -395,6 +396,7 @@
       <Filter>Controls</Filter>
     </ClInclude>
     <ClInclude Include="Controls\KeyGraphFeaturesControl.h" />
+    <ClInclude Include="Controls\MathRichEditBox.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -1479,6 +1481,10 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />

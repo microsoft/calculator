@@ -17,9 +17,8 @@ namespace GraphControl
         Equation()
         {
         }
-
         static void RegisterDependencyProperties();
-
+        
         #pragma region Platform::String ^ Expression DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ ExpressionProperty
         {
@@ -64,23 +63,23 @@ namespace GraphControl
 
         #pragma region Key Graph Features
 
-        #pragma region Platform::String ^ Zeros DependencyProperty
-        static property Windows::UI::Xaml::DependencyProperty^ ZerosProperty
+        #pragma region Platform::String ^ XIntercept DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty^ XInterceptProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
             {
-                return s_zerosProperty;
+                return s_xInterceptProperty;
             }
         }
-        property Platform::String^ Zeros
+        property Platform::String^ XIntercept
         {
             Platform::String^ get()
             {
-                return static_cast<Platform::String^>(GetValue(s_zerosProperty));
+                return static_cast<Platform::String^>(GetValue(s_xInterceptProperty));
             }
             void set(Platform::String^ value)
             {
-                SetValue(s_zerosProperty, value);
+                SetValue(s_xInterceptProperty, value);
             }
         }
         #pragma endregion
@@ -156,13 +155,13 @@ namespace GraphControl
                 return s_minimaProperty;
             }
         }
-        property Windows::Foundation::Collections::IObservableVector<Platform::String^>^ Minima
+        property Platform::String^ Minima
         {
-            Windows::Foundation::Collections::IObservableVector<Platform::String^>^ get()
+            Platform::String^ get()
             {
-                return static_cast<Windows::Foundation::Collections::IObservableVector<Platform::String^>^>(GetValue(s_minimaProperty));
+                return static_cast<Platform::String^>(GetValue(s_minimaProperty));
             }
-            void set(Windows::Foundation::Collections::IObservableVector<Platform::String^>^ value)
+            void set(Platform::String^ value)
             {
                 SetValue(s_minimaProperty, value);
             }
@@ -177,13 +176,13 @@ namespace GraphControl
                 return s_maximaProperty;
             }
         }
-        property Windows::Foundation::Collections::IObservableVector<Platform::String^>^ Maxima
+        property Platform::String^ Maxima
         {
-            Windows::Foundation::Collections::IObservableVector<Platform::String^>^ get()
+            Platform::String^ get()
             {
-                return static_cast<Windows::Foundation::Collections::IObservableVector<Platform::String^>^>(GetValue(s_maximaProperty));
+                return static_cast<Platform::String^>(GetValue(s_maximaProperty));
             }
-            void set(Windows::Foundation::Collections::IObservableVector<Platform::String^>^ value)
+            void set(Platform::String^ value)
             {
                 SetValue(s_maximaProperty, value);
             }
@@ -240,13 +239,13 @@ namespace GraphControl
                 return s_inflectionPointsProperty;
             }
         }
-        property Windows::Foundation::Collections::IObservableVector<Platform::String^>^ InflectionPoints
+        property Platform::String^ InflectionPoints
         {
-            Windows::Foundation::Collections::IObservableVector<Platform::String^>^ get()
+            Platform::String^ get()
             {
-                return static_cast<Windows::Foundation::Collections::IObservableVector<Platform::String^>^>(GetValue(s_inflectionPointsProperty));
+                return static_cast<Platform::String^>(GetValue(s_inflectionPointsProperty));
             }
-            void set(Windows::Foundation::Collections::IObservableVector<Platform::String^>^ value)
+            void set(Platform::String^ value)
             {
                 SetValue(s_inflectionPointsProperty, value);
             }
@@ -261,13 +260,13 @@ namespace GraphControl
                 return s_monotonicityProperty;
             }
         }
-        property Windows::Foundation::Collections::IObservableVector<Platform::String^>^ Monotonicity
+        property Platform::String^ Monotonicity
         {
-            Windows::Foundation::Collections::IObservableVector<Platform::String^>^ get()
+            Platform::String^ get()
             {
-                return static_cast<Windows::Foundation::Collections::IObservableVector<Platform::String^>^>(GetValue(s_monotonicityProperty));
+                return static_cast<Platform::String^>(GetValue(s_monotonicityProperty));
             }
-            void set(Windows::Foundation::Collections::IObservableVector<Platform::String^>^ value)
+            void set(Platform::String^ value)
             {
                 SetValue(s_monotonicityProperty, value);
             }
@@ -278,13 +277,11 @@ namespace GraphControl
 
     internal:
         event PropertyChangedEventHandler^ PropertyChanged;
-        event PropertyChangedEventHandler^ KeyGraphFeaturesPropertyChanged;
 
         std::wstring GetRequest();
 
     private:
         static void OnCustomDependencyPropertyChanged(Windows::UI::Xaml::DependencyObject ^ obj, Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
-        static void OnKeyGraphFeaturesPropertyChanged(Windows::UI::Xaml::DependencyObject ^ obj, Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
 
         std::wstring GetRequestHeader();
         std::wstring GetExpression();
@@ -293,7 +290,7 @@ namespace GraphControl
     private:
         static Windows::UI::Xaml::DependencyProperty ^ s_expressionProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_lineColorProperty;
-        static Windows::UI::Xaml::DependencyProperty ^ s_zerosProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_xInterceptProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_yInterceptProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_parityProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_periodicityProperty;

@@ -15,8 +15,8 @@ namespace GraphControl
     DependencyProperty ^ Equation::s_lineColorProperty;
     static constexpr auto s_propertyName_LineColor = L"LineColor";
 
-    DependencyProperty ^ Equation::s_zerosProperty;
-    static constexpr auto s_propertyName_Zeros = L"Zeros";
+    DependencyProperty ^ Equation::s_xInterceptProperty;
+    static constexpr auto s_propertyName_XIntercept = L"XIntercept";
 
     DependencyProperty ^ Equation::s_yInterceptProperty;
     static constexpr auto s_propertyName_YIntercept = L"YIntercept";
@@ -49,7 +49,7 @@ namespace GraphControl
     {
         String ^ Expression = StringReference(s_propertyName_Expression);
         String ^ LineColor = StringReference(s_propertyName_LineColor);
-        String ^ Zeros = StringReference(s_propertyName_Zeros);
+        String ^ XIntercept = StringReference(s_propertyName_XIntercept);
         String ^ YIntercept = StringReference(s_propertyName_YIntercept);
         String ^ Parity = StringReference(s_propertyName_Parity);
         String ^ Periodicity = StringReference(s_propertyName_Periodicity);
@@ -85,13 +85,13 @@ namespace GraphControl
                 ref new PropertyMetadata(accentColor, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
-        if (!s_zerosProperty)
+        if (!s_xInterceptProperty)
         {
-            s_zerosProperty = DependencyProperty::Register(
-                EquationProperties::Zeros,
+            s_xInterceptProperty = DependencyProperty::Register(
+                EquationProperties::XIntercept,
                 String::typeid,
                 Equation::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnKeyGraphFeaturesPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_yInterceptProperty)
@@ -100,7 +100,7 @@ namespace GraphControl
                 EquationProperties::YIntercept,
                 String::typeid,
                 Equation::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnKeyGraphFeaturesPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_parityProperty)
@@ -109,7 +109,7 @@ namespace GraphControl
                 EquationProperties::Parity,
                 String::typeid,
                 Equation::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnKeyGraphFeaturesPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_periodicityProperty)
@@ -118,7 +118,7 @@ namespace GraphControl
                 EquationProperties::Periodicity,
                 String::typeid,
                 Equation::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnKeyGraphFeaturesPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_minimaProperty)
@@ -127,7 +127,7 @@ namespace GraphControl
                 EquationProperties::Minima,
                 String::typeid,
                 Equation::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnKeyGraphFeaturesPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_maximaProperty)
@@ -136,7 +136,7 @@ namespace GraphControl
                 EquationProperties::Maxima,
                 String::typeid,
                 Equation::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnKeyGraphFeaturesPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_domainProperty)
@@ -145,7 +145,7 @@ namespace GraphControl
                 EquationProperties::Domain,
                 String::typeid,
                 Equation::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnKeyGraphFeaturesPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_rangeProperty)
@@ -154,7 +154,7 @@ namespace GraphControl
                 EquationProperties::Range,
                 String::typeid,
                 Equation::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnKeyGraphFeaturesPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_inflectionPointsProperty)
@@ -163,7 +163,7 @@ namespace GraphControl
                 EquationProperties::InflectionPoints,
                 String::typeid,
                 Equation::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnKeyGraphFeaturesPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_monotonicityProperty)
@@ -172,7 +172,7 @@ namespace GraphControl
                 EquationProperties::Monotonicity,
                 String::typeid,
                 Equation::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnKeyGraphFeaturesPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
     }
 
@@ -189,18 +189,9 @@ namespace GraphControl
             {
                 propertyName = EquationProperties::LineColor;
             }
-            eq->PropertyChanged(eq, propertyName);
-        }
-    }
-
-    void Equation::OnKeyGraphFeaturesPropertyChanged(DependencyObject ^ obj, DependencyPropertyChangedEventArgs ^ args)
-    {
-        if (auto eq = static_cast<Equation ^>(obj))
-        {
-            String ^ propertyName = nullptr;
-            if (args->Property == s_zerosProperty)
+            else if (args->Property == s_xInterceptProperty)
             {
-                propertyName = EquationProperties::Zeros;
+                propertyName = EquationProperties::XIntercept;
             }
             else if (args->Property == s_yInterceptProperty)
             {
@@ -239,7 +230,7 @@ namespace GraphControl
                 propertyName = EquationProperties::Monotonicity;
             }
 
-            eq->KeyGraphFeaturesPropertyChanged(eq, propertyName);
+            eq->PropertyChanged(eq, propertyName);
         }
     }
 

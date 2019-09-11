@@ -98,10 +98,10 @@
     </ClCompile>
     <ClCompile Include="GraphingCalculator\EquationViewModel.cpp">
       <Filter>GraphingCalculator</Filter>
-    </ClInclude>
+    </ClCompile>
     <ClCompile Include="GraphingCalculator\GraphingCalculatorViewModel.cpp">
       <Filter>GraphingCalculator</Filter>
-    </ClInclude>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
