@@ -1,7 +1,5 @@
-//
-// StylePanel.xaml.cpp
-// Implementation of the StylePanel class
-//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 #include "pch.h"
 #include "StylePanel.xaml.h"
