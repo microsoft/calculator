@@ -365,18 +365,21 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
                 <Button x:Name="Share" Click="OnShareClick">
                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
-	            </Button>
-                <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
-            </StackPanel>
+                </Button>
+                <local:EquationInputArea Grid.Row="1" Equations="{x:Bind ViewModel.Equations}"/>
+            </Grid>
 
             <Grid x:Name="ButtonContainerGrid"
-                  Grid.Row="2"
+                  Grid.Row="1"
                   Margin="3,0,3,3"
                   UseLayoutRounding="False">
                 <Grid.RowDefinitions>

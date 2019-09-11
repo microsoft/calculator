@@ -1,0 +1,60 @@
+<Page x:Class="CalculatorApp.StylePanel"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:CalculatorApp"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
+
+    <GridView x:Name="ColorChooser"
+              Loaded="ColorChooserLoaded"
+              SelectionChanged="SelectionChanged"
+              SingleSelectionFollowsFocus="False">
+        <GridView.Resources>
+            <SolidColorBrush x:Name="GridViewItemForegroundSelected" Color="Transparent"/>
+            <SolidColorBrush x:Name="GridViewItemBackgroundSelected" Color="Transparent"/>
+            <SolidColorBrush x:Name="GridViewItemBackgroundSelectedPointerOver" Color="Transparent"/>
+            <SolidColorBrush x:Name="GridViewItemBackgroundSelectedPressed" Color="Transparent"/>
+            <SolidColorBrush x:Name="GridViewItemRevealBorderBrush" Color="Transparent"/>
+            <SolidColorBrush x:Name="GridViewItemBackgroundPointerOver" Color="Transparent"/>
+            <SolidColorBrush x:Name="GridViewItemBackgroundPressed" Color="Transparent"/>
+        </GridView.Resources>
+        <GridView.Header>
+            <TextBlock x:Uid="LineColorText" Margin="8,0,8,8"/>
+        </GridView.Header>
+        <GridView.ItemTemplate>
+            <DataTemplate x:DataType="Brush">
+                <Grid>
+                    <Ellipse Width="32"
+                             Height="32"
+                             Fill="{Binding}"
+                             Stroke="{ThemeResource StylePanelSelectedBrush}"
+                             StrokeThickness="0"/>
+                </Grid>
+            </DataTemplate>
+        </GridView.ItemTemplate>
+        <GridView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <ItemsWrapGrid MaximumRowsOrColumns="7" Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </GridView.ItemsPanel>
+        <GridView.Items>
+            <SolidColorBrush Color="{ThemeResource EquationColor1}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor2}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor3}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor4}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor5}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor6}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor7}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor8}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor9}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor10}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor11}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor12}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor13}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor14}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor15}"/>
+            <SolidColorBrush Color="{ThemeResource EquationColor16}"/>
+        </GridView.Items>
+    </GridView>
+</Page>

@@ -3,6 +3,9 @@
 #include "Views/GraphingCalculator/EquationInputArea.g.h"
 #include "CalcViewModel/Common/Utils.h"
 #include "CalcViewModel/GraphingCalculator/EquationViewModel.h"
+#include "StylePanel.xaml.h"
+#include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "Controls/EquationTextBox.h"
 
 namespace CalculatorApp
 {
@@ -25,7 +28,7 @@ namespace CalculatorApp
         void InputTextBox_LostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void InputTextBox_KeyUp(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e);
 
-        Windows::UI::Color GetNextLineColor();
+        Windows::UI::Xaml::Media::SolidColorBrush ^ GetNextLineColor();
 
     private:
         int m_lastLineColorIndex;

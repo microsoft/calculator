@@ -3,80 +3,68 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="using:CalculatorApp.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:CalculatorApp.ViewModel"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <ListView x:Name="EquationInputList"
+              Grid.Row="0"
+              Margin="0,8,0,0"
+              VerticalContentAlignment="Top"
+              IsItemClickEnabled="False"
+              ItemsSource="{x:Bind Equations}"
+              SelectionMode="None">
 
-        <ListView x:Name="EquationInputList"
-                  Grid.Row="0"
-                  Margin="0,8,0,0"
-                  IsItemClickEnabled="False"
-                  ItemsSource="{x:Bind Equations}"
-                  SelectionMode="None">
+        <ListView.ItemContainerStyle>
+            <Style TargetType="ListViewItem">
+                <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="0,0,0,2"/>
+            </Style>
+        </ListView.ItemContainerStyle>
 
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="IsTabStop" Value="False"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="Padding" Value="0"/>
-                    <Setter Property="Margin" Value="0,0,0,2"/>
-                </Style>
-            </ListView.ItemContainerStyle>
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="vm:EquationViewModel">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="vm:EquationViewModel">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.Resources>
-                            <SolidColorBrush x:Key="LineColorBrush" Color="{x:Bind LineColor, Mode=OneWay}"/>
-                        </Grid.Resources>
+                    <controls:EquationTextBox x:Uid="EquationInputButton"
+                                              Grid.Column="1"
+                                              Margin="0,0,3,0"
+                                              Style="{StaticResource EquationTextBoxStyle}"
+                                              EquationColor="{x:Bind LineColor, Mode=OneWay}"
+                                              GotFocus="InputTextBox_GotFocus"
+                                              KeyUp="InputTextBox_KeyUp"
+                                              LostFocus="InputTextBox_LostFocus"
+                                              RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
+                        <controls:EquationTextBox.KeyGraphFeaturesContent>
+                            <StackPanel x:Name="KeyGraphFeaturesGrid" Visibility="{x:Bind KeyGraphFeaturesVisibility, Mode=OneWay}">
+                                <TextBlock Text="Key Graph Features"/>
+                                <TextBlock Text="{x:Bind Expression, Mode=OneWay}"/>
+                            </StackPanel>
+                        </controls:EquationTextBox.KeyGraphFeaturesContent>
+                        <controls:EquationTextBox.ColorChooserFlyout>
+                            <Flyout x:Name="ColorChooserFlyout"
+                                    x:Uid="ColorChooserFlyout"
+                                    Placement="Bottom">
+                                <local:StylePanel SelectedColor="{x:Bind LineColor, Mode=TwoWay}"/>
+                            </Flyout>
+                        </controls:EquationTextBox.ColorChooserFlyout>
+                    </controls:EquationTextBox>
 
-                        <controls:EquationTextBox x:Uid="EquationInputButton"
-                                                  Grid.Column="1"
-                                                  Margin="0,0,3,0"
-                                                  Style="{StaticResource EquationTextBoxStyle}"
-                                                  GotFocus="InputTextBox_GotFocus"
-                                                  KeyUp="InputTextBox_KeyUp"
-                                                  LostFocus="InputTextBox_LostFocus"
-                                                  RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
-                            <controls:EquationTextBox.EquationColor>
-                                <SolidColorBrush x:Name="EquationLineColor" Color="{x:Bind LineColor, Mode=OneWay}"/>
-                            </controls:EquationTextBox.EquationColor>
-                            <controls:EquationTextBox.KeyGraphFeaturesContent>
-                                <StackPanel x:Name="KeyGraphFeaturesGrid" Visibility="{x:Bind KeyGraphFeaturesVisibility, Mode=OneWay}">
-                                    <TextBlock Text="Key Graph Features"/>
-                                    <TextBlock Text="{x:Bind Expression, Mode=OneWay}"/>
-                                </StackPanel>
-                            </controls:EquationTextBox.KeyGraphFeaturesContent>
-                            <controls:EquationTextBox.ColorChooserFlyout>
-                                <Flyout x:Name="ColorChooserFlyout"
-                                        x:Uid="ColorChooserFlyout"
-                                        Placement="Bottom">
-                                    <StackPanel>
-                                        <ColorPicker x:Name="EquationColorPicker" Color="{x:Bind LineColor, Mode=TwoWay}"/>
-                                    </StackPanel>
-                                </Flyout>
-                            </controls:EquationTextBox.ColorChooserFlyout>
-                        </controls:EquationTextBox>
-
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
-        <Button Grid.Row="1"
-                Margin="4"
-                Click="AddEquationButton_Click"
-                Content="+"/>
-    </Grid>
+                </Grid>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+        <ListView.Footer>
+            <Button Margin="4"
+                    Click="AddEquationButton_Click"
+                    Content="+"/>
+        </ListView.Footer>
+    </ListView>
 </UserControl>

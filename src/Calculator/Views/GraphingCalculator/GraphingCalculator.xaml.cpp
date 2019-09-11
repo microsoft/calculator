@@ -92,7 +92,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
         for (unsigned i = 0; i < equations->Size; i++)
         {
             auto expression = equations->GetAt(i)->Expression->Data();
-            auto color = equations->GetAt(i)->LineColor;
+            auto color = equations->GetAt(i)->LineColor->Color;
 
             if (equations->GetAt(i)->Expression->Length() == 0)
             {

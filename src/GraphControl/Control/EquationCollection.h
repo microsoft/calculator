@@ -6,21 +6,22 @@ namespace GraphControl
 {
     delegate void EquationChangedEventHandler();
 
-    public ref class EquationCollection sealed : public Windows::Foundation::Collections::IObservableVector< GraphControl::Equation^ >
+public
+    ref class EquationCollection sealed : public Windows::Foundation::Collections::IObservableVector<GraphControl::Equation ^>
     {
     public:
         virtual ~EquationCollection()
         {
         }
 
-        #pragma region IIterable
+#pragma region IIterable
         virtual Windows::Foundation::Collections::IIterator< GraphControl::Equation^ >^ First()
         {
             return m_vector->First();
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region IVector
+#pragma region IVector
         virtual property unsigned int Size
         {
             unsigned int get()
@@ -29,12 +30,11 @@ namespace GraphControl
             }
         }
 
-        virtual void Append(GraphControl::Equation^ value)
+        virtual void Append(GraphControl::Equation ^ value)
         {
             m_vector->Append(value);
             m_tokens.emplace_back(
-                value->PropertyChanged += ref new GraphControl::PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged)
-            );
+                value->PropertyChanged += ref new GraphControl::PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged));
         }
 
         virtual void Clear()
@@ -49,12 +49,10 @@ namespace GraphControl
             m_tokens.clear();
         }
 
-        virtual GraphControl::Equation^ GetAt(unsigned int index)
-        {
-            return m_vector->GetAt(index);
-        }
+        virtual GraphControl::Equation
+            ^ GetAt(unsigned int index) { return m_vector->GetAt(index); }
 
-        virtual unsigned int GetMany(unsigned int startIndex, Platform::WriteOnlyArray< GraphControl::Equation^ >^ items)
+            virtual unsigned int GetMany(unsigned int startIndex, Platform::WriteOnlyArray<GraphControl::Equation ^> ^ items)
         {
             return m_vector->GetMany(startIndex, items);
         }
@@ -69,13 +67,11 @@ namespace GraphControl
             return m_vector->IndexOf(value, index);
         }
 
-        virtual void InsertAt(unsigned int index, GraphControl::Equation^ value)
+        virtual void InsertAt(unsigned int index, GraphControl::Equation ^ value)
         {
             m_vector->InsertAt(index, value);
             m_tokens.insert(
-                m_tokens.begin() + index,
-                value->PropertyChanged += ref new PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged)
-            );
+                m_tokens.begin() + index, value->PropertyChanged += ref new PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged));
         }
 
         virtual void RemoveAt(unsigned int index)
@@ -98,7 +94,7 @@ namespace GraphControl
             m_vector->RemoveAtEnd();
         }
 
-        virtual void ReplaceAll(const Platform::Array< GraphControl::Equation^ >^ items)
+        virtual void ReplaceAll(const Platform::Array<GraphControl::Equation ^> ^ items)
         {
             auto size = m_vector->Size;
             for (auto i = 0u; i < size; i++)
@@ -116,17 +112,16 @@ namespace GraphControl
             m_vector->ReplaceAll(items);
         }
 
-        virtual void SetAt(unsigned int index, GraphControl::Equation^ value)
+        virtual void SetAt(unsigned int index, GraphControl::Equation ^ value)
         {
             m_vector->GetAt(index)->PropertyChanged -= m_tokens[index];
 
             m_vector->SetAt(index, value);
-            m_tokens[index] =
-                value->PropertyChanged += ref new PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged);
+            m_tokens[index] = value->PropertyChanged += ref new PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged);
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region IObservableVector
+#pragma region IObservableVector
         virtual event Windows::Foundation::Collections::VectorChangedEventHandler< GraphControl::Equation^ >^ VectorChanged
         {
             Windows::Foundation::EventRegistrationToken add(Windows::Foundation::Collections::VectorChangedEventHandler< GraphControl::Equation^ >^ handler)
@@ -139,7 +134,7 @@ namespace GraphControl
                 m_vector->VectorChanged -= token;
             }
         }
-        #pragma endregion
+#pragma endregion
 
     internal:
         EquationCollection() :
@@ -147,16 +142,24 @@ namespace GraphControl
         {
         }
 
-        event EquationChangedEventHandler^ EquationChanged;
+        event EquationChangedEventHandler ^ EquationChanged;
+        event EquationChangedEventHandler ^ EquationStyleChanged;
 
     private:
-        void OnEquationPropertyChanged(GraphControl::Equation^, Platform::String^ propertyName)
+        void OnEquationPropertyChanged(GraphControl::Equation ^, Platform::String ^ propertyName)
         {
-            EquationChanged();
+            if (propertyName == L"LineColor")
+            {
+                EquationStyleChanged();
+            }
+            else
+            {
+                EquationChanged();
+            }
         }
 
     private:
-        Platform::Collections::Vector< GraphControl::Equation^ >^ m_vector;
+        Platform::Collections::Vector<GraphControl::Equation ^> ^ m_vector;
         std::vector<Windows::Foundation::EventRegistrationToken> m_tokens;
     };
 }

@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "EquationInputArea.xaml.h"
-#include "CalcViewModel/Common/KeyboardShortcutManager.h"
-#include "Controls/EquationTextBox.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -13,26 +11,16 @@ using namespace Windows::System;
 using namespace Windows::UI;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Input;
+using namespace GraphControl;
 
 namespace
 {
-    const Color accentColor = (ref new UISettings())->GetColorValue(UIColorType::Accent);
-    const Color lineColors[] = {
-        accentColor,
-        Colors::DarkOrange,
-        Colors::MediumPurple,
-        Colors::ForestGreen,
-        Colors::BlueViolet,
-        Colors::DarkRed,
-        Colors::LightGoldenrodYellow,
-        Colors::DarkOliveGreen
-    };
-    const size_t lineColorsSize = std::size(lineColors);
-
     StringReference EquationsPropertyName(L"Equations");
+    const int numberOfEquationColors = 16;
 }
 
 EquationInputArea::EquationInputArea()
@@ -91,15 +79,17 @@ void EquationInputArea::InputTextBox_KeyUp(Object^ sender, KeyRoutedEventArgs^ e
         auto tb = static_cast<EquationTextBox^>(sender);
         auto eq = static_cast<EquationViewModel^>(tb->DataContext);
         eq->Expression = tb->GetEquationText();
-
+        FocusManager::TryMoveFocus(::FocusNavigationDirection::Left);
         e->Handled = true;
     }
 }
 
-Color EquationInputArea::GetNextLineColor()
+SolidColorBrush^ EquationInputArea::GetNextLineColor()
 {
-    m_lastLineColorIndex = (m_lastLineColorIndex + 1) % lineColorsSize;
-    return lineColors[m_lastLineColorIndex];
+    m_lastLineColorIndex = (m_lastLineColorIndex + 1) % numberOfEquationColors;
+
+    // TODO: Is there a better way to do this?
+    return ref new SolidColorBrush(static_cast<Color>(Application::Current->Resources->Lookup("EquationColor" + (m_lastLineColorIndex + 1))));
 }
 
 
