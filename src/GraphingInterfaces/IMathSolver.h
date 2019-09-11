@@ -17,6 +17,7 @@ namespace Graphing
     {
         virtual ~IEvalOptions() = default;
 
+        virtual Graphing::EvalTrigUnitMode GetTrigUnitMode() = 0;
         virtual void SetTrigUnitMode(Graphing::EvalTrigUnitMode value) = 0;
 
     };

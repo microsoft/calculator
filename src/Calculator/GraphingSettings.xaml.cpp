@@ -25,3 +25,8 @@ GraphingSettings::GraphingSettings()
 {
 	InitializeComponent();
 }
+
+void CalculatorApp::GraphingSettings::TrigUnitModeClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    //m_solver->EvalOptions().SetTrigUnitMode(z);
+}

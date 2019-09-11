@@ -59,20 +59,34 @@ namespace GraphControl
     {
         m_solver->ParsingOptions().SetFormatType(FormatType::Linear);
 
-        //pair<double, double> x;
-        //x = m_graph->GetOptions().GetDefaultXRange();
-        //pair<double, double> newx;
-        //newx.first = -10;
-        //newx.second = 40;
-        //m_graph->GetOptions().SetDefaultXRange(newx);
-        //pair<double, double> afterx;
-        //afterx = m_graph->GetOptions().GetDefaultXRange();
+        // pair<double, double> x;
+        // x = m_graph->GetOptions().GetDefaultXRange();
+        // pair<double, double> newx;
+        // newx.first = -10;
+        // newx.second = 40;
+        // m_graph->GetOptions().SetDefaultXRange(newx);
+        // pair<double, double> afterx;
+        // afterx = m_graph->GetOptions().GetDefaultXRange();
 
-        //m_graph->GetOptions().GetDefaultXRange();
+        // m_graph->GetOptions().GetDefaultXRange();
 
-        //EvalTrigUnitMode z;
-        //z = EvalTrigUnitMode::Radians;
-        //m_solver->EvalOptions().SetTrigUnitMode(z);
+        // EvalTrigUnitMode z;
+        // z = EvalTrigUnitMode::Radians;
+        // m_solver->EvalOptions().SetTrigUnitMode(z);
+
+        // auto beforetum = m_solver->EvalOptions().GetTrigUnitMode();
+
+        // EvalTrigUnitMode z;
+
+        // z = EvalTrigUnitMode::Degrees;
+        // m_solver->EvalOptions().SetTrigUnitMode(z);
+
+        // auto aftertum = m_solver->EvalOptions().GetTrigUnitMode();
+
+        // z = EvalTrigUnitMode::Radians;
+        // m_solver->EvalOptions().SetTrigUnitMode(z);
+
+        // auto saftertum = m_solver->EvalOptions().GetTrigUnitMode();
 
         DefaultStyleKey = StringReference(s_defaultStyleKey);
 
@@ -878,5 +892,14 @@ void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
     else
     {
         ActiveTraceCursorPosition = curPos;
+    }
+}
+
+void Grapher::SetTrigUnitMode(int value)
+{
+    if (value != (int)m_solver->EvalOptions().GetTrigUnitMode())
+    {
+        m_solver->EvalOptions().SetTrigUnitMode((Graphing::EvalTrigUnitMode)value);
+        UpdateGraph();
     }
 }

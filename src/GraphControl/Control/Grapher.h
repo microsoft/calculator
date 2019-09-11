@@ -147,6 +147,13 @@ public
             }
         }
 
+        int GetTrigUnitMode()
+        {
+            return (int)m_solver->EvalOptions().GetTrigUnitMode();
+        }
+
+        void SetTrigUnitMode(int value);
+
         void ZoomFromCenter(double scale);
         void ResetGrid();
 
@@ -158,14 +165,13 @@ public
             }
         }
 
-        property Windows::Foundation::Point TraceLocation 
+        property Windows::Foundation::Point TraceLocation
         {
             Windows::Foundation::Point get()
             {
                 return m_renderMain->TraceLocation;
             }
         }
-
 
         property Windows::Foundation::Point ActiveTraceCursorPosition
         {
@@ -242,7 +248,6 @@ public
         void HandleTracingMovementTick(Object ^ sender, Object ^ e);
         void HandleKey(bool keyDown, Windows::System::VirtualKey key);
 
-
     private:
         DX::RenderMain ^ m_renderMain = nullptr;
 
@@ -277,7 +282,7 @@ public
         bool m_KeysPressed[5];
         bool m_Moving;
 
-       Windows::UI::Xaml::DispatcherTimer ^ m_TraceingTrackingTimer;
+        Windows::UI::Xaml::DispatcherTimer ^ m_TraceingTrackingTimer;
 
     public:
         Windows::Storage::Streams::RandomAccessStreamReference ^ GetGraphBitmapStream();

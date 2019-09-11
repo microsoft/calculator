@@ -52,6 +52,8 @@ GraphingCalculator::GraphingCalculator()
     // And when the actual trace value changes
     m_tracePointChangedToken = GraphingControl->TracingValueChangedEvent +=
         ref new TracingValueChangedEventHandler(this, &GraphingCalculator::OnTracePointChanged);
+
+    Radians->IsChecked = true;
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
@@ -287,4 +289,17 @@ void CalculatorApp::GraphingCalculator::OnSettingsClick(Platform::Object ^ sende
 {
     // Hide or show the settings popup
     SettingsPopup->IsOpen = SettingsPopup->IsOpen ? false : true;
+}
+
+void CalculatorApp::GraphingCalculator::TrigUnitModeClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    if (Degrees->IsChecked->Value == true)
+    {
+        GraphingControl->SetTrigUnitMode((int)Graphing::EvalTrigUnitMode::Degrees);
+    }
+
+    if (Radians->IsChecked->Value == true)
+    {
+        GraphingControl->SetTrigUnitMode((int)Graphing::EvalTrigUnitMode::Radians);
+    }
 }

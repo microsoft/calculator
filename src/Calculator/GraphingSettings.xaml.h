@@ -13,5 +13,8 @@ namespace CalculatorApp
 	{
 	public:
         GraphingSettings();
-	};
+
+    private:
+        void TrigUnitModeClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+    };
 }

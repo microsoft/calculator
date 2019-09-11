@@ -394,6 +394,12 @@
                         <Button x:Name="Share" Click="OnShareClick" Width="40" Height="40"  Margin="0,0,10,0">
                             <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
                         </Button>
+
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton x:Name="Degrees"  Content="Degrees" Click="TrigUnitModeClick"/>
+                            <RadioButton x:Name="Radians" Content="Radians" IsChecked="True" Click="TrigUnitModeClick"/>
+                        </StackPanel>
+
                     </StackPanel>
                 </StackPanel>
                 <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
