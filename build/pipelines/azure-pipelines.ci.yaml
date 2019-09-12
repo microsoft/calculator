@@ -38,11 +38,11 @@ jobs:
     platform: x64
     runsettingsFileName: CalculatorUITests.ci.runsettings
 
-- template: ./templates/run-unit-tests2.yaml
+- template: ./templates/run-unit-tests.yaml
   parameters:
     platform: x64
 
-- template: ./templates/run-unit-tests2.yaml
+- template: ./templates/run-unit-tests.yaml
   parameters:
     platform: x86
 
