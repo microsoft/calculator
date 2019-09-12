@@ -46,4 +46,4 @@ jobs:
 #  parameters:
 #    platform: x86
 
-- template: ./templates/package-appxbundle.yaml
+#- template: ./templates/package-appxbundle.yaml
