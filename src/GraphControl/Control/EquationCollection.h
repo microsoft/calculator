@@ -15,8 +15,6 @@ public
         {
         }
 
-        event PropertyChangedEventHandler ^ KeyGraphFeaturesPropertyChanged;
-
 #pragma region IIterable
         virtual Windows::Foundation::Collections::IIterator< GraphControl::Equation^ >^ First()
         {
@@ -150,14 +148,7 @@ public
     private:
         void OnEquationPropertyChanged(GraphControl::Equation ^ equation, Platform::String ^ propertyName)
         {
-            if (propertyName == L"Expression" || propertyName == L"LineColor")
-            {
-                EquationChanged();
-            }
-            else
-            {
-                KeyGraphFeaturesPropertyChanged(equation, propertyName);
-            }
+            EquationChanged();
         }
 
     private:

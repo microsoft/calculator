@@ -12,6 +12,8 @@ namespace CalculatorApp::ViewModel
         , m_Range{ "" }
         , m_XIntercept{ "" }
         , m_YIntercept{ "" }
+        , m_Parity{ "" }
+        , m_Periodicity{ "" }
         , m_Minima{ "" }
         , m_Maxima{ "" }
         , m_InflectionPoints{ "" }
