@@ -1,0 +1,35 @@
+# This template contains jobs to run unit tests.
+
+parameters:
+  platform: ''
+  runsettingsFileName: ''
+
+jobs:
+- job: UnitTests${{ parameters.platform }}
+  displayName: UnitTests ${{ parameters.platform }}
+  dependsOn: Build${{ parameters.platform }}
+  condition: succeeded()
+  pool:
+    vmImage: windows-2019
+  variables:
+    skipComponentGovernanceDetection: true
+  steps:
+  - checkout: none
+  
+  - task: DownloadBuildArtifacts@0
+    displayName: Download CalculatorUnitTests
+    inputs:
+      artifactName: drop
+      itemPattern: drop/Release/${{ parameters.platform }}/CalculatorUnitTests/AppPackages/CalculatorUnitTests_Test/**
+
+  - task: PowerShell@2
+    displayName: Install Certificate
+    inputs:
+      filePath: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\Add-AppDevPackage.ps1
+      arguments: -CertificatePath $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.cer -Force
+
+  - task: VSTest@2
+    displayName: Run CalculatorUnitTests
+    inputs:
+      testAssemblyVer2: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.appx
+      otherConsoleOptions: /Platform:${{ parameters.platform }}
