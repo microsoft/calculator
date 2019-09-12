@@ -48,16 +48,10 @@ jobs:
 - template: ./templates/run-unit-tests.yaml
   parameters:
     platform: x64
-    reimageServiceConnection: macool-sandbox-interactiveDesktopRS5
-    reimageSubscriptionId: 012a8008-c00f-45b3-9828-41ebba30141d
-    reimageResourceGroup: interactiveDesktopRS5
 
 - template: ./templates/run-unit-tests.yaml
   parameters:
     platform: x86
-    reimageServiceConnection: macool-sandbox-interactiveDesktopRS5
-    reimageSubscriptionId: 012a8008-c00f-45b3-9828-41ebba30141d
-    reimageResourceGroup: interactiveDesktopRS5
 
 - template: ./templates/package-appxbundle.yaml
 
