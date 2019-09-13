@@ -29,16 +29,6 @@ CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators()
     InitializeComponent();
 }
 
-void CalculatorProgrammerRadixOperators::OnLoaded(Object ^, RoutedEventArgs ^)
-{
-    m_progModeRadixChangeToken = Model->ProgModeRadixChange +=
-        ref new ProgModeRadixChangeHandler(this, &CalculatorProgrammerRadixOperators::ProgModeRadixChange);
-}
-void CalculatorProgrammerRadixOperators::OnUnloaded(Object ^, RoutedEventArgs ^)
-{
-    Model->ProgModeRadixChange -= m_progModeRadixChangeToken;
-}
-
 void CalculatorProgrammerRadixOperators::Shift_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     bool isShiftChecked = static_cast<ToggleButton ^>(sender)->IsChecked->Value;
@@ -65,11 +55,6 @@ void CalculatorProgrammerRadixOperators::Shift_Clicked(Platform::Object ^ sender
         LshButton->Visibility = ::Visibility::Visible;
         RshButton->Visibility = ::Visibility::Visible;
     }
-}
-
-void CalculatorProgrammerRadixOperators::ProgModeRadixChange()
-{
-    NumberPad->ProgModeRadixChange();
 }
 
 bool CalculatorProgrammerRadixOperators::IsErrorVisualState::get()

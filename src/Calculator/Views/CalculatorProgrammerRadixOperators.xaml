@@ -9,8 +9,6 @@
              x:Name="ControlRoot"
              d:DesignHeight="395"
              d:DesignWidth="315"
-             Loaded="OnLoaded"
-             Unloaded="OnUnloaded"
              mc:Ignorable="d">
 
     <Grid x:Name="ProgRadixOps">
@@ -344,7 +342,8 @@
                              Grid.RowSpan="4"
                              Grid.Column="2"
                              Grid.ColumnSpan="3"
-                             ButtonStyle="{StaticResource NumericButtonStyle18}"/>
+                             ButtonStyle="{StaticResource NumericButtonStyle18}"
+                             CurrentRadixType="{x:Bind Model.CurrentRadixType, Mode=OneWay}"/>
 
             <controls:CalculatorButton x:Name="AButton"
                                        x:Uid="aButton"
