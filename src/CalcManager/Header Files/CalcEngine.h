@@ -14,6 +14,7 @@
 *
 \****************************************************************************/
 
+#include <random>
 #include "CCommand.h"
 #include "EngineStrings.h"
 #include "../Command.h"
@@ -151,6 +152,9 @@ private:
     ANGLE_TYPE m_angletype;                  // Current Angle type when in dec mode. one of deg, rad or grad
     NUM_WIDTH m_numwidth;                    // one of qword, dword, word or byte mode.
     int32_t m_dwWordBitWidth;                // # of bits in currently selected word size
+
+    std::random_device rd;
+    std::mt19937 m_randomGeneratorEngine = std::mt19937(rd());
 
     uint64_t m_carryBit;
 

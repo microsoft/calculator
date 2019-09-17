@@ -76,6 +76,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, AreAlwaysOnTopResultsUpdated);
             OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
             OBSERVABLE_PROPERTY_RW(bool, AreProgrammerRadixOperatorsEnabled);
+            OBSERVABLE_PROPERTY_RW(bool, IsInputEmpty);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::Automation::NarratorAnnouncement ^, Announcement);
             OBSERVABLE_PROPERTY_R(unsigned int, OpenParenthesisCount);
 
@@ -101,22 +102,6 @@ namespace CalculatorApp
                     {
                         m_isShiftChecked = value;
                         RaisePropertyChanged(L"IsShiftChecked");
-                    }
-                }
-            }
-
-            property bool IsInputEmpty
-            {
-                bool get()
-                {
-                    return m_isInputEmpty;
-                }
-                void set(bool value)
-                {
-                    if (m_isInputEmpty != value)
-                    {
-                        m_isInputEmpty = value;
-                        RaisePropertyChanged(L"IsInputEmpty");
                     }
                 }
             }
@@ -449,7 +434,6 @@ namespace CalculatorApp
             bool m_isProgrammer;
             bool m_isAlwaysOnTop;
             bool m_isBinaryBitFlippingEnabled;
-            bool m_isInputEmpty;
             bool m_isBitFlipChecked;
             bool m_isShiftChecked;
             bool m_isRtlLanguage;
