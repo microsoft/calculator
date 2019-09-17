@@ -74,6 +74,18 @@ public
         OBSERVABLE_PROPERTY_R(bool, IsDecimalEnabled);
         OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<EquationViewModel ^> ^, Equations);
         OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<VariableViewModel ^> ^, Variables);
+        //OBSERVABLE_PROPERTY_R(ViewStateViewModel^, ViewState);
+
+        property ViewStateViewModel^ ViewState
+        {
+            ViewStateViewModel^ get() {return m_ViewState;}
+            void set(ViewStateViewModel^ value)
+            {
+                m_ViewState = value;
+            }
+
+        }
+
 
         COMMAND_FOR_METHOD(ButtonPressed, GraphingCalculatorViewModel::OnButtonPressed);
 
@@ -83,5 +95,9 @@ public
 
     private:
         void OnButtonPressed(Platform::Object ^ parameter);
+        ViewStateViewModel ^ m_ViewState;
+
     };
+
+
 }
