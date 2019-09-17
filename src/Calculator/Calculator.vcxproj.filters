@@ -474,7 +474,7 @@
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)DensityStyles\Compact.xaml" />
     <Page Include="GraphingSettings.xaml">
-      <Filter>Views</Filter>
+      <Filter>Controls</Filter>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -1573,6 +1573,8 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />

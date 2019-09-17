@@ -405,7 +405,7 @@
                 <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
             </StackPanel>
             <Popup  Grid.Row="0" x:Name="SettingsPopup" IsOpen="False" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 50">
-                <local:GraphingSettings/>
+                <controls:GraphingSettings x:Name="GraphSettings"  ViewState="{x:Bind ViewModel.ViewState}"/>
             </Popup>
 
             <Grid x:Name="ButtonContainerGrid"

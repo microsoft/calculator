@@ -4,6 +4,7 @@
 #include "GraphingCalculator.xaml.h"
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "Controls/CalculationResult.h"
+#include "GraphingSettings.xaml.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -66,6 +67,11 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
     ViewModel = dynamic_cast<GraphingCalculatorViewModel ^>(args->NewValue);
 
     ViewModel->VariableUpdated += ref new EventHandler<VariableChangedEventArgs>(this, &CalculatorApp::GraphingCalculator::OnVariableChanged);
+
+    auto t = ViewModel->ViewState;
+
+    GraphSettings->DataContext = ViewModel->ViewState;
+
 }
 
 void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
