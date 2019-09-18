@@ -3423,4 +3423,8 @@
     <value>Calculation failed</value>
     <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
+  <data name="MostSignificantBit" xml:space="preserve">
+    <value>most significant bit</value>
+    <comment>Used to describe the last bit of a binary number. Used in bit flip</comment>
+  </data>
 </root>
