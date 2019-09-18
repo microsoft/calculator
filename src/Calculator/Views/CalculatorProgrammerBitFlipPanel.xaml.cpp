@@ -69,7 +69,8 @@ void CalculatorProgrammerBitFlipPanel::OnPropertyChanged(Object ^ sender, Proper
     {
         UpdateCheckedStates(false);
     }
-    else if (e->PropertyName == StandardCalculatorViewModel::IsBitFlipCheckedPropertyName
+    else if (
+        e->PropertyName == StandardCalculatorViewModel::IsBitFlipCheckedPropertyName
         || e->PropertyName == StandardCalculatorViewModel::IsProgrammerPropertyName)
     {
         if (Model->IsBitFlipChecked && Model->IsProgrammer)
@@ -233,11 +234,17 @@ bool CalculatorProgrammerBitFlipPanel::ShouldEnableBit(BitLength length, int ind
 String ^ CalculatorProgrammerBitFlipPanel::GenerateAutomationPropertiesName(int position, bool value) const
 {
     auto resourceLoader = AppResourceProvider::GetInstance();
-
-    String ^ indexName = resourceLoader.GetResourceString(ref new Platform::String(to_wstring(position).c_str()));
     String ^ automationNameTemplate = resourceLoader.GetResourceString(L"BitFlipItemAutomationName");
-    String ^ bitPositionTemplate = resourceLoader.GetResourceString(L"BitPosition");
-
-    wstring bitPosition = LocalizationStringUtil::GetLocalizedString(bitPositionTemplate->Data(), indexName->Data());
+    wstring bitPosition; 
+    if (position == 0)
+    {
+        bitPosition = wstring(resourceLoader.GetResourceString(L"LeastSignificantBit")->Data());
+    }
+    else
+    {
+        String ^ indexName = resourceLoader.GetResourceString(ref new Platform::String(to_wstring(position).c_str()));
+        String ^ bitPositionTemplate = resourceLoader.GetResourceString(L"BitPosition");
+        bitPosition = LocalizationStringUtil::GetLocalizedString(bitPositionTemplate->Data(), indexName->Data());
+    }
     return ref new String(LocalizationStringUtil::GetLocalizedString(automationNameTemplate->Data(), bitPosition.c_str(), value ? L"1" : L"0").c_str());
 }
