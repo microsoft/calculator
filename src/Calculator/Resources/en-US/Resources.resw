@@ -1109,6 +1109,10 @@
     <value>Delete</value>
     <comment>Text string for the Calculator Delete swipe button in the History list</comment>
   </data>
+  <data name="CopyHistoryMenuItem.Text" xml:space="preserve"> 
+     <value>Copy</value> 
+     <comment>Text string for the Calculator Copy option in the History list context menu</comment> 
+  </data>
   <data name="DeleteHistoryMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
     <comment>Text string for the Calculator Delete option in the History list context menu</comment>
