@@ -554,21 +554,21 @@ void Calculator::SetDefaultFocus()
 
 void Calculator::ToggleHistoryFlyout(Object ^ /*parameter*/)
 {
-    String ^ viewState = App::GetAppViewState();
-    // If app starts correctly in snap mode and shortcut is used for history then we need to load history if not yet initialized.
-    if (viewState != ViewState::DockedView)
+    if (Model->IsProgrammer || App::GetAppViewState() == ViewState::DockedView)
     {
-        if (m_fIsHistoryFlyoutOpen)
-        {
-            HistoryFlyout->Hide();
-        }
-        else
-        {
-            HistoryFlyout->Content = m_historyList;
-            m_historyList->RowHeight = NumpadPanel->ActualHeight;
-            FlyoutBase::ShowAttachedFlyout(HistoryButton);
-        }
+        return;
     }
+    
+    if (m_fIsHistoryFlyoutOpen)
+    {
+        HistoryFlyout->Hide();
+    }
+    else
+    {
+        HistoryFlyout->Content = m_historyList;
+        m_historyList->RowHeight = NumpadPanel->ActualHeight;
+        FlyoutBase::ShowAttachedFlyout(HistoryButton);
+    }   
 }
 
 void Calculator::ToggleMemoryFlyout()
