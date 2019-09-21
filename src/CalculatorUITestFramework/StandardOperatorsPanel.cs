@@ -27,6 +27,7 @@ namespace CalculatorUITestFramework
         public WindowsElement ClearButton => this.session.TryFindElementByAccessibilityId("clearButton");
         public WindowsElement BackSpaceButton => this.session.TryFindElementByAccessibilityId("backSpaceButton");
         public WindowsElement NegateButton => this.session.TryFindElementByAccessibilityId("negateButton");
+        public WindowsElement HistoryButton => this.session.TryFindElementByAccessibilityId("HistoryButton");
 
     }
 }
