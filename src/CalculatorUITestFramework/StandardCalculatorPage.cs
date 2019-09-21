@@ -3,6 +3,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium.Windows;
+using System;
 
 namespace CalculatorUITestFramework
 {
@@ -17,8 +18,12 @@ namespace CalculatorUITestFramework
         public HistoryPanel HistoryPanel = new HistoryPanel();
         public NavigationMenu NavigationMenu = new NavigationMenu();
         public WindowsElement Header => this.session.TryFindElementByAccessibilityId("Header");
+        public WindowsElement Minimize => this.session.TryFindElementByAccessibilityId("Minimize");
+        public WindowsElement Maximize => this.session.TryFindElementByAccessibilityId("Maximize");
+        public WindowsElement AppName => this.session.TryFindElementByAccessibilityId("AppName");
 
         public WindowsElement CalculatorResult => this.session.TryFindElementByAccessibilityId("CalculatorResults");
+        public WindowsElement CalculatorExpression => this.session.TryFindElementByAccessibilityId("CalculatorExpression");
         public WindowsElement EnterAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("NormalAlwaysOnTopButton");
         public WindowsElement ExitAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("ExitAlwaysOnTopButton");
 
@@ -47,5 +52,22 @@ namespace CalculatorUITestFramework
         {
             return this.CalculatorResult.Text.Replace("Display is", string.Empty).Trim();
         }
+        /// <summary>
+        /// Gets the text from the Header
+        /// </summary>
+        /// <returns>The string shown in the UI.</returns>
+        public string GetCalculatorHeaderText()
+        {
+            return this.Header.Text;
+        }
+        /// <summary>
+        /// Gets the text from the Calculator Expression control and removes narrator text that is not displayed in the UI.
+        /// </summary>
+        /// <returns>The string shown in the UI.</returns>
+        public string GetCalculatorExpressionText()
+        {
+            return this.CalculatorExpression.Text.Replace("Expression is", string.Empty).Trim();
+        }
     }
+
 }

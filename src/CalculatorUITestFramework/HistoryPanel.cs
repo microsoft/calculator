@@ -24,7 +24,7 @@ namespace CalculatorUITestFramework
         /// <returns>A readonly collection of history items.</returns>
         public ReadOnlyCollection<AppiumWebElement> GetAllHistoryListViewItems()
         {
-            this.HistoryLabel.Click();
+ //           this.HistoryLabel.Click();
             this.HistoryListView.WaitForDisplayed();
             return this.HistoryListView.FindElementsByClassName("ListViewItem");
         }

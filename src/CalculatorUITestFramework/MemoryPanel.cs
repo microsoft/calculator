@@ -19,6 +19,11 @@ namespace CalculatorUITestFramework
         public WindowsElement MemoryLabel => this.session.TryFindElementByAccessibilityId("MemoryLabel");
         public WindowsElement MemoryListView => this.session.TryFindElementByAccessibilityId("MemoryListView");
         public WindowsElement MemoryPaneEmptyLabel => this.session.TryFindElementByAccessibilityId("MemoryPaneEmpty");
+  //      public WindowsElement MemPlusItem => this.session.TryFindElementByAccessibilityId("MAddButton");
+        public WindowsElement ClearMemoryItemButton => this.session.TryFindElementByAccessibilityId("MClearButton");
+        public WindowsElement MemMinusItem => this.session.TryFindElementByAccessibilityId("MSubButton");
+        public WindowsElement MemPlusItem => this.session.TryFindElementByAccessibilityId("MAddButton");
+        public WindowsElement ListViewItem => this.session.FindElementByClassName("ListViewItem");
 
         /// <summary>
         /// Opens the Memory Pane by clicking the Memory pivot label.
