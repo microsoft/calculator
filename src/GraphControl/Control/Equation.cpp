@@ -9,6 +9,7 @@ using namespace Windows::UI::Xaml;
 
 namespace GraphControl
 {
+    // Remove mml: formatting specific to RichEditBox control, which is not understood by the graph engine.
     static constexpr wstring_view s_mathPrefix = L"mml:";
 
     DependencyProperty^ Equation::s_expressionProperty;
