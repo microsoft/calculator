@@ -346,6 +346,7 @@ namespace GraphControl
     {
         wstringstream ss{};
         ss << GetRequestHeader() << GetExpression() << GetLineColor() << L"</mfenced></mrow>";
+            << L")";
 
         return ss.str();
     }

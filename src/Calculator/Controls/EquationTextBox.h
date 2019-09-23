@@ -46,8 +46,10 @@ namespace CalculatorApp
             void UpdateDeleteButtonVisualState();
             bool ShouldDeleteButtonBeVisible();
 
+            void OnRichEditBoxLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnRichEditBoxGotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnRichEditBoxLostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+            void OnRichEditBoxLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ e);
             void OnRichEditBoxTextChanged(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
             void OnDeleteButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);

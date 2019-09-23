@@ -33,6 +33,7 @@ void EquationTextBox::OnApplyTemplate()
 
     if (m_richEditBox != nullptr)
     {
+        m_richEditBox->Loaded += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxLoaded);
         m_richEditBox->GotFocus += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxGotFocus);
         m_richEditBox->LostFocus += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxLostFocus);
         m_richEditBox->TextChanged += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxTextChanged);
@@ -133,6 +134,15 @@ void EquationTextBox::OnColorFlyoutClosed(Object ^ sender, Object ^ e)
     m_colorChooserButton->IsChecked = false;
     m_isColorChooserFlyoutOpen = false;
     UpdateCommonVisualState();
+}
+
+void EquationTextBox::OnRichEditBoxLoaded(Object ^ sender, RoutedEventArgs ^ e)
+{
+    LimitedAccessFeatures::TryUnlockFeature(
+        "com.microsoft.windows.richeditmath",
+        "H6wflFFz3gkOsAHtG/D9Tg==",
+        "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.");
+    m_richEditBox->TextDocument->SetMathMode(::RichEditMathMode::MathOnly);
 }
 
 void EquationTextBox::OnRichEditBoxTextChanged(Object ^ sender, RoutedEventArgs ^ e)
