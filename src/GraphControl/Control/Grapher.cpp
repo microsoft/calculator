@@ -703,11 +703,12 @@ namespace GraphControl
 
 void Grapher::OnCoreKeyUp(CoreWindow ^ sender, KeyEventArgs ^ e)
 {
-    // We don't want to eat keys when the user is in the equation text box.
+    // We don't want to react to keyboard input unless the graph control has the focus.
+    // NOTE: you can't select the graph control from the mouse for focus but you can tab to it.
     FrameworkElement ^ whoHasFocus = (FrameworkElement ^) FocusManager::GetFocusedElement();
     String ^ wName = whoHasFocus->Name;
-    String ^ ETBName = L"EquationTextBox";
-    if (wName == ETBName)
+    String ^ ETBName = L"GraphingControl";
+    if (wName != ETBName)
     {
         return;
     }
@@ -758,25 +759,33 @@ void Grapher::HandleKey(bool keyDown, VirtualKey key)
     {
         m_KeysPressed[KeysPressedSlots::Left] = keyDown;
         if (keyDown)
+        {
             pressedKeys++;
+        }
     }
     if (key == VirtualKey::Right)
     {
         m_KeysPressed[KeysPressedSlots::Right] = keyDown;
         if (keyDown)
+        {
             pressedKeys++;
+        }
     }
     if (key == VirtualKey::Up)
     {
         m_KeysPressed[KeysPressedSlots::Up] = keyDown;
         if (keyDown)
+        {
             pressedKeys++;
+        }
     }
     if (key == VirtualKey::Down)
     {
         m_KeysPressed[KeysPressedSlots::Down] = keyDown;
         if (keyDown)
+        {
             pressedKeys++;
+        }
     }
     if (key == VirtualKey::Shift)
     {
@@ -787,17 +796,17 @@ void Grapher::HandleKey(bool keyDown, VirtualKey key)
     {
         m_Moving = true;
         // Key(s) we care about, so ensure we are ticking our timer (and that we have one to tick)
-        if (m_TraceingTrackingTimer == nullptr)
+        if (m_TracingTrackingTimer == nullptr)
         {
-            m_TraceingTrackingTimer = ref new Windows::UI::Xaml::DispatcherTimer();
+            m_TracingTrackingTimer = ref new DispatcherTimer();
 
-            m_TraceingTrackingTimer->Tick += ref new EventHandler<Object ^>(this, &Grapher::HandleTracingMovementTick);
+            m_TracingTrackingTimer->Tick += ref new EventHandler<Object ^>(this, &Grapher::HandleTracingMovementTick);
             TimeSpan ts;
             ts.Duration = 100000; // .1 second
-            m_TraceingTrackingTimer->Interval = ts;
-            auto i = m_TraceingTrackingTimer->Interval;
+            m_TracingTrackingTimer->Interval = ts;
+            auto i = m_TracingTrackingTimer->Interval;
         }
-        m_TraceingTrackingTimer->Start();
+        m_TracingTrackingTimer->Start();
     }
 }
 
@@ -858,7 +867,7 @@ void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
         m_Moving = false;
 
         // Non of the keys we care about are being hit any longer so shut down our timer
-        m_TraceingTrackingTimer->Stop();
+        m_TracingTrackingTimer->Stop();
     }
     else
     {

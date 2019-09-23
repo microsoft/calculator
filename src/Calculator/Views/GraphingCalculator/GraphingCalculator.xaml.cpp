@@ -31,9 +31,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::UI::Popups;
 
-
 constexpr auto sc_ViewModelPropertyName = L"ViewModel";
-
 
 GraphingCalculator::GraphingCalculator()
 {
@@ -44,18 +42,21 @@ GraphingCalculator::GraphingCalculator()
     DataTransferManager ^ dataTransferManager = DataTransferManager::GetForCurrentView();
 
     // Register the current control as a share source.
-    m_dataRequestedToken = dataTransferManager->DataRequested += ref new TypedEventHandler<DataTransferManager ^, DataRequestedEventArgs ^>(this, &GraphingCalculator::OnDataRequested);
+    m_dataRequestedToken = dataTransferManager->DataRequested +=
+        ref new TypedEventHandler<DataTransferManager ^, DataRequestedEventArgs ^>(this, &GraphingCalculator::OnDataRequested);
 
     // Request notifications when we should be showing the trace values
-    m_showTracePopupChangedToken = GraphingControl->TracingChangedEvent += ref new TracingChangedEventHandler(this, &GraphingCalculator::OnShowTracePopupChanged);
+    GraphingControl->TracingChangedEvent += ref new TracingChangedEventHandler(this, &GraphingCalculator::OnShowTracePopupChanged);
 
     // And when the actual trace value changes
-    m_tracePointChangedToken = GraphingControl->TracingValueChangedEvent += ref new TracingValueChangedEventHandler(this, &GraphingCalculator::OnTracePointChanged);
+    GraphingControl->TracingValueChangedEvent += ref new TracingValueChangedEventHandler(this, &GraphingCalculator::OnTracePointChanged);
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
 {
     TraceValuePopup->IsOpen = newValue;
+    // Set the keyboard focus to the graph control so we can use the arrow keys safely.
+    GraphingControl->Focus(::FocusState::Programmatic);
 }
 
 void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement ^ sender, DataContextChangedEventArgs ^ args)
@@ -67,10 +68,8 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
 
 void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
 {
-    auto p = GraphingControl->TraceValue;
-    auto l = GraphingControl->TraceLocation;
-    TraceValuePopupTransform->X = (int)l.X + 15;
-    TraceValuePopupTransform->Y = (int)l.Y - 30;
+    TraceValuePopupTransform->X = (int)GraphingControl->TraceLocation.X + 15;
+    TraceValuePopupTransform->Y = (int)GraphingControl->TraceLocation.Y - 30;
 
     TraceValue->Text = "x=" + newPoint.X.ToString() + ", y=" + newPoint.Y.ToString();
 }
@@ -89,7 +88,7 @@ void GraphingCalculator::ViewModel::set(GraphingCalculatorViewModel ^ vm)
     }
 }
 
-void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     // Ask the OS to start a share action.
     DataTransferManager::ShowShareUI();
@@ -280,4 +279,15 @@ void GraphingCalculator::OnZoomResetCommand(Object ^ /* parameter */)
 void GraphingCalculator::OnActiveTracingClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     GraphingControl->ActiveTracing = !GraphingControl->ActiveTracing;
+}
+
+void CalculatorApp::GraphingCalculator::OnGraphLoosingFocus(
+    Windows::UI::Xaml::Controls::Control ^ sender,
+    Windows::UI::Xaml::Controls::FocusDisengagedEventArgs ^ args)
+{
+    // If the graph is losing focus while we are in active tracing we need to turn it off so we don't try to eat keys in other controls.
+    if (GraphingControl->ActiveTracing)
+    {
+        GraphingControl->ActiveTracing = false;
+    }
 }
