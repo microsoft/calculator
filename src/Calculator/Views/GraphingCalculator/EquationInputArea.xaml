@@ -45,8 +45,8 @@
                                                   Grid.Column="1"
                                                   Margin="0,0,3,0"
                                                   Style="{StaticResource EquationTextBoxStyle}"
+                                                  EquationSubmitted="InputTextBox_Submitted"
                                                   GotFocus="InputTextBox_GotFocus"
-                                                  KeyUp="InputTextBox_KeyUp"
                                                   LostFocus="InputTextBox_LostFocus"
                                                   RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
                             <controls:EquationTextBox.EquationColor>

@@ -1628,6 +1628,7 @@
                                 <Button x:Name="EquationButton"
                                         MinWidth="44"
                                         MinHeight="44"
+                                        VerticalAlignment="Stretch"
                                         Background="{TemplateBinding EquationColor}"
                                         Foreground="{StaticResource SystemChromeWhiteColor}"
                                         Content="ƒₓ">
@@ -1651,7 +1652,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <RichEditBox x:Name="EquationTextBox"
-                                                     MinHeight="42"
+                                                     MinHeight="44"
                                                      Padding="{TemplateBinding Padding}"
                                                      VerticalAlignment="Stretch"
                                                      Style="{StaticResource EquationTextBoxStyle}"
