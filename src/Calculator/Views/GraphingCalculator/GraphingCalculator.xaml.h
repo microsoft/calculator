@@ -51,16 +51,14 @@ namespace CalculatorApp
 
     private:
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
-        Windows::Foundation::EventRegistrationToken m_showTracePopupChangedToken;
-        Windows::Foundation::EventRegistrationToken m_tracePointChangedToken;
-
         void OnDataRequested(Windows::ApplicationModel::DataTransfer::DataTransferManager^ sender, Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs^ e);
-
 
         void TextBoxGotFocus(Windows::UI::Xaml::Controls::TextBox^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void OnActiveTracingClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnSettingsClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void TrigUnitModeClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnGraphLoosingFocus(Windows::UI::Xaml::Controls::Control ^ sender, Windows::UI::Xaml::Controls::FocusDisengagedEventArgs ^ args);
+
     };
 
 }

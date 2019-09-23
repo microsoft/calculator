@@ -326,6 +326,9 @@
     <ClInclude Include="Controls\OverflowTextBlock.h">
       <Filter>Controls</Filter>
     </ClInclude>
+    <ClCompile Include="Converters\BitFlipAutomationNameConverter.cpp">
+      <Filter>Converters</Filter>
+    </ClCompile>
     <ClInclude Include="Converters\BooleanNegationConverter.h">
       <Filter>Converters</Filter>
     </ClInclude>
@@ -1468,9 +1471,6 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-lightunplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\ActiveTracking-32_contrast-white.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>

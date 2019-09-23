@@ -365,7 +365,7 @@ public
         bool m_KeysPressed[5];
         bool m_Moving;
 
-        Windows::UI::Xaml::DispatcherTimer ^ m_TraceingTrackingTimer;
+       Windows::UI::Xaml::DispatcherTimer ^ m_TracingTrackingTimer;
 
     public:
         Windows::Storage::Streams::RandomAccessStreamReference ^ GetGraphBitmapStream();

@@ -58,6 +58,8 @@ GraphingCalculator::GraphingCalculator()
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
 {
     TraceValuePopup->IsOpen = newValue;
+    // Set the keyboard focus to the graph control so we can use the arrow keys safely.
+    GraphingControl->Focus(::FocusState::Programmatic);
 }
 
 void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement ^ sender, DataContextChangedEventArgs ^ args)
@@ -75,10 +77,8 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
 
 void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
 {
-    auto p = GraphingControl->TraceValue;
-    auto l = GraphingControl->TraceLocation;
-    TraceValuePopupTransform->X = (int)l.X + 15;
-    TraceValuePopupTransform->Y = (int)l.Y - 30;
+    TraceValuePopupTransform->X = (int)GraphingControl->TraceLocation.X + 15;
+    TraceValuePopupTransform->Y = (int)GraphingControl->TraceLocation.Y - 30;
 
     TraceValue->Text = "x=" + newPoint.X.ToString() + ", y=" + newPoint.Y.ToString();
 }
@@ -290,8 +290,20 @@ void GraphingCalculator::OnActiveTracingClick(Platform::Object ^ sender, Windows
     GraphingControl->ActiveTracing = !GraphingControl->ActiveTracing;
 }
 
+void CalculatorApp::GraphingCalculator::OnGraphLoosingFocus(
+    Windows::UI::Xaml::Controls::Control ^ sender,
+    Windows::UI::Xaml::Controls::FocusDisengagedEventArgs ^ args)
+{
+    // If the graph is losing focus while we are in active tracing we need to turn it off so we don't try to eat keys in other controls.
+    if (GraphingControl->ActiveTracing)
+    {
+        GraphingControl->ActiveTracing = false;
+    }
+}
+
 void CalculatorApp::GraphingCalculator::OnSettingsClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     // Hide or show the settings popup
     SettingsPopup->IsOpen = SettingsPopup->IsOpen ? false : true;
 }
+

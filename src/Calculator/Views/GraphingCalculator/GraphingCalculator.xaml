@@ -52,7 +52,8 @@
                                   EquationsSource="{x:Bind ViewModel.Equations, Mode=OneWay}"
                                   ForceProportionalAxes="True"
                                   UseSystemFocusVisuals="True"
-                                  VariablesUpdated="GraphVariablesUpdated">
+                                  VariablesUpdated="GraphVariablesUpdated"
+                                  FocusDisengaged="OnGraphLoosingFocus">
                     <graphControl:Grapher.Background>
                         <SolidColorBrush Color="White"/>
                     </graphControl:Grapher.Background>
@@ -64,6 +65,15 @@
 
                 </graphControl:Grapher>
 
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,10,10">
+                    <Button x:Name="ActiveTracing" Click="OnActiveTracingClick" Width="40" Height="40" Margin="0,0,10,0">
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE73F;"/>
+                    </Button>
+                    <Button x:Name="Share" Click="OnShareClick" Width="40" Height="40">
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
+                    </Button>
+                </StackPanel>
+                
                 <Popup x:Name="TraceValuePopup" Grid.Row="0" RenderTransformOrigin="0,1">
                     <Popup.RenderTransform>
                         <TranslateTransform x:Name="TraceValuePopupTransform" X="50" Y="150"/>
