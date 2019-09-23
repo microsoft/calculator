@@ -488,6 +488,7 @@ namespace GraphControl
 
         return outString;
     }
+
     void Grapher::UpdateVariables()
     {
         auto updatedVariables = ref new Map<String ^, double>();

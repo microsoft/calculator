@@ -15,7 +15,7 @@ MathRichEditBox::MathRichEditBox()
 {
     m_lafAccess = Windows::ApplicationModel::LimitedAccessFeatures::TryUnlockFeature(
         "com.microsoft.windows.richeditmath",
-        "BeDD/jxKhz/yfVNA11t4uA==",
+        "H6wflFFz3gkOsAHtG/D9Tg==",
         "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.");
 
     TextDocument->SetMathMode(Windows::UI::Text::RichEditMathMode::MathOnly);

@@ -57,7 +57,18 @@
                 </graphControl:Grapher.Background>
                 <graphControl:Grapher.EquationTemplate>
                     <DataTemplate x:DataType="vm:EquationViewModel">
-                        <graphControl:Equation Expression="{x:Bind Expression, Mode=OneWay}" LineColor="{x:Bind LineColor, Mode=OneWay}"/>
+                        <graphControl:Equation Domain="{x:Bind Domain, Mode=TwoWay}"
+                                               Expression="{x:Bind Expression, Mode=OneWay}"
+                                               InflectionPoints="{x:Bind InflectionPoints, Mode=TwoWay}"
+                                               LineColor="{x:Bind LineColor, Mode=OneWay}"
+                                               Maxima="{x:Bind Maxima, Mode=TwoWay}"
+                                               Minima="{x:Bind Minima, Mode=TwoWay}"
+                                               Monotonicity="{x:Bind Monotonicity, Mode=TwoWay}"
+                                               Parity="{x:Bind Parity, Mode=TwoWay}"
+                                               Periodicity="{x:Bind Periodicity, Mode=TwoWay}"
+                                               Range="{x:Bind Range, Mode=TwoWay}"
+                                               XIntercept="{x:Bind XIntercept, Mode=TwoWay}"
+                                               YIntercept="{x:Bind YIntercept, Mode=TwoWay}"/>
                     </DataTemplate>
                 </graphControl:Grapher.EquationTemplate>
             </graphControl:Grapher>
@@ -371,7 +382,7 @@
             <StackPanel>
                 <Button x:Name="Share" Click="OnShareClick">
                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
-	            </Button>
+                </Button>
                 <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
             </StackPanel>
 

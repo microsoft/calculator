@@ -148,7 +148,10 @@ public
     private:
         void OnEquationPropertyChanged(GraphControl::Equation ^ equation, Platform::String ^ propertyName)
         {
-            EquationChanged();
+            if (propertyName == EquationProperties::Expression)
+            {
+                EquationChanged();
+            }
         }
 
     private:

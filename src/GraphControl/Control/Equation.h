@@ -147,7 +147,7 @@ namespace GraphControl
         }
         #pragma endregion
 
-        #pragma region Windows::Foundation::Collections::IObservableVector <Platform::String^>^ Minima DependencyProperty
+        #pragma region Platform::String^ Minima DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ MinimaProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -168,7 +168,7 @@ namespace GraphControl
         }
         #pragma endregion
 
-        #pragma region Windows::Foundation::Collections::IObservableVector < Platform::String ^ > ^ Maxima DependencyProperty
+        #pragma region Platform::String ^ Maxima DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ MaximaProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -231,7 +231,7 @@ namespace GraphControl
         }
         #pragma endregion
 
-        #pragma region Windows::Foundation::Collections::IObservableVector < Platform::String ^ > ^ InflectionPoints DependencyProperty
+        #pragma region Platform::String ^ InflectionPoints DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ InflectionPointsProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -252,7 +252,7 @@ namespace GraphControl
         }
         #pragma endregion
 
-        #pragma region Windows::Foundation::Collections::IObservableVector < Platform::String ^ > ^ Monotonicity DependencyProperty
+        #pragma regionPlatform::String ^ Monotonicity DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ MonotonicityProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()

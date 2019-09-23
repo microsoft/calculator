@@ -82,14 +82,14 @@
         <StackPanel x:Name="KeyGraphFeaturesPanel"
                     DataContext="{x:Bind KeyGraphFeaturesVM, Mode=OneWay}"
                     Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}">
-            <controls:MathRichEditBox IsReadOnly="True" Text="{x:Bind KeyGraphFeaturesVM.Domain, Mode=OneWay}"/>
-            <controls:MathRichEditBox IsReadOnly="True" Text="{x:Bind KeyGraphFeaturesVM.Range, Mode=OneWay}"/>
-            <controls:MathRichEditBox IsReadOnly="True" Text="{x:Bind KeyGraphFeaturesVM.XIntercept, Mode=OneWay}"/>
-            <controls:MathRichEditBox IsReadOnly="True" Text="{x:Bind KeyGraphFeaturesVM.YIntercept, Mode=OneWay}"/>
-            <controls:MathRichEditBox IsReadOnly="True" Text="{x:Bind KeyGraphFeaturesVM.Minima, Mode=OneWay}"/>
-            <controls:MathRichEditBox IsReadOnly="True" Text="{x:Bind KeyGraphFeaturesVM.Maxima, Mode=OneWay}"/>
-            <controls:MathRichEditBox IsReadOnly="True" Text="{x:Bind KeyGraphFeaturesVM.InflectionPoints, Mode=OneWay}"/>
-            <controls:MathRichEditBox IsReadOnly="True" Text="{x:Bind KeyGraphFeaturesVM.Monotonicity, Mode=OneWay}"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Domain, Mode=OneWay}"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Range, Mode=OneWay}"/>
+            <controls:MathRichEditBox  Text="{x:Bind KeyGraphFeaturesVM.XIntercept, Mode=OneWay}"/>
+            <controls:MathRichEditBox  Text="{x:Bind KeyGraphFeaturesVM.YIntercept, Mode=OneWay}"/>
+            <controls:MathRichEditBox  Text="{x:Bind KeyGraphFeaturesVM.Minima, Mode=OneWay}"/>
+            <controls:MathRichEditBox  Text="{x:Bind KeyGraphFeaturesVM.Maxima, Mode=OneWay}"/>
+            <controls:MathRichEditBox  Text="{x:Bind KeyGraphFeaturesVM.InflectionPoints, Mode=OneWay}"/>
+            <controls:MathRichEditBox  Text="{x:Bind KeyGraphFeaturesVM.Monotonicity, Mode=OneWay}"/>
         </StackPanel>
 
 
