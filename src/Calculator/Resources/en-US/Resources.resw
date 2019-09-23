@@ -449,12 +449,12 @@
     <value>^</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="rolButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
-    <value>J</value>
+  <data name="rolButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+    <value>&lt;</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="rorButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
-    <value>K</value>
+  <data name="rorButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+    <value>&gt;</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
   <data name="decimalButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
@@ -3735,16 +3735,16 @@
     <value>Rotate on left with carry</value>
     <comment>Screen reader prompt for the Calculator button rol with carry in the scientific flyout keypad</comment>
   </data>
-  <data name="rolCarryButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
-    <value>J</value>
+  <data name="rolCarryButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+    <value>&lt;</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
   <data name="rorCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Rotate on right with carry</value>
     <comment>Screen reader prompt for the Calculator button ror with carry in the scientific flyout keypad</comment>
   </data>
-  <data name="rorCarryButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
-    <value>K</value>
+  <data name="rorCarryButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
+    <value>&gt;</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
   <data name="lshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
