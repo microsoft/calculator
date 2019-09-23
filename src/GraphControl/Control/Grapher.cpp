@@ -55,7 +55,7 @@ namespace GraphControl
         : m_solver{ IMathSolver::CreateMathSolver() }
         , m_graph{ m_solver->CreateGrapher() }
     {
-        m_solver->ParsingOptions().SetFormatType(FormatType::Linear);
+        m_solver->ParsingOptions().SetFormatType(FormatType::MathML);
 
         DefaultStyleKey = StringReference(s_defaultStyleKey);
 
@@ -349,20 +349,20 @@ namespace GraphControl
             if (!validEqs.empty())
             {
                 wstringstream ss{};
-                ss << L"show2d(";
+                ss << L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>show2d</mi><mfenced separators=\"\">";
 
                 int numValidEquations = 0;
                 for (Equation ^ eq : validEqs)
                 {
                     if (numValidEquations++ > 0)
                     {
-                        ss << L",";
+                        ss << L"<mo>,</mo>";
                     }
 
                     ss << eq->GetRequest();
                 }
 
-                ss << L")";
+                ss << L"</mfenced></mrow></math>";
 
                 wstring request = ss.str();
                 unique_ptr<IExpression> graphExpression;
@@ -412,9 +412,9 @@ namespace GraphControl
         std::shared_ptr<Graphing::IGraph> graph = m_solver->CreateGrapher();
 
         wstringstream ss{};
-        ss << L"show2d(";
+        ss << L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>show2d</mi><mfenced separators=\"\">";
         ss << equation->GetRequest();
-        ss << L")";
+        ss << L"</mfenced></mrow></math>";
 
         wstring request = ss.str();
         unique_ptr<IExpression> graphExpression;
@@ -443,7 +443,7 @@ namespace GraphControl
                     analyzer->CanFunctionAnalysisBePerformed(result);
                     if (result)
                     {
-                        m_solver->FormatOptions().SetFormatType(FormatType::MathML);
+                        m_solver->FormatOptions().SetFormatType(FormatType::MathRichEdit);
                         if (S_OK
                             == analyzer->PerformFunctionAnalysis(
                                 (Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All))
@@ -476,7 +476,7 @@ namespace GraphControl
     String ^ Grapher::ConvertVectorToString(vector<wstring> inVector)
     {
         String ^ outString = ref new String();
-        int vectorSize = inVector.size();
+        int vectorSize = (int)inVector.size();
         for (int i = 0; i < vectorSize; i++)
         {
             outString += ref new String(inVector[i].c_str());

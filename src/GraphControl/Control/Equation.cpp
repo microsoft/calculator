@@ -9,6 +9,9 @@ using namespace Windows::UI::Xaml;
 
 namespace GraphControl
 {
+    // Remove mml: formatting specific to RichEditBox control, which is not understood by the graph engine.
+    static constexpr wstring_view s_mathPrefix = L"mml:";
+
     DependencyProperty ^ Equation::s_expressionProperty;
     static constexpr auto s_propertyName_Expression = L"Expression";
 
@@ -237,7 +240,10 @@ namespace GraphControl
     wstring Equation::GetRequest()
     {
         wstringstream ss{};
-        ss << GetRequestHeader() << GetExpression() << GetLineColor() << L")";
+        ss  << GetRequestHeader()
+            << GetExpression()
+            << GetLineColor()
+            << L"</mfenced></mrow>";
 
         return ss.str();
     }
@@ -245,19 +251,28 @@ namespace GraphControl
     wstring Equation::GetRequestHeader()
     {
         wstring expr{ Expression->Data() };
-        if (expr.find(L"=") != wstring::npos)
+        if (expr.find(L">=<") != wstring::npos)
         {
-            return L"plotEq2d("s;
+            return L"<mrow><mi>plotEq2d</mi><mfenced separators=\"\">"s;
         }
         else
         {
-            return L"plot2d("s;
+            return L"<mrow><mi>plot2d</mi><mfenced separators=\"\">"s;
         }
     }
 
     wstring Equation::GetExpression()
     {
-        return Expression->Data();
+        wstring mathML = Expression->Data();
+
+        size_t mathPrefix = 0;
+        while ((mathPrefix = mathML.find(s_mathPrefix, mathPrefix)) != std::string::npos)
+        {
+            mathML.replace(mathPrefix, s_mathPrefix.length(), L"");
+            mathPrefix += s_mathPrefix.length();
+        }
+
+        return mathML;
     }
 
     wstring Equation::GetLineColor()

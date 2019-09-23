@@ -23,5 +23,5 @@ MathRichEditBox::MathRichEditBox()
 
 void MathRichEditBox::OnTextPropertyChanged(String ^, String ^ newValue)
 {
-    TextDocument->SetMath(newValue);
+    TextDocument->SetText(::Windows::UI::Text::TextSetOptions::None, newValue);
 }

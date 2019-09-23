@@ -22,6 +22,7 @@ namespace CalculatorApp
 
             event Windows::UI::Xaml::RoutedEventHandler^ RemoveButtonClicked;
             event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesButtonClicked;
+            event Windows::UI::Xaml::RoutedEventHandler ^ EquationSubmitted;
 
             Platform::String^ GetEquationText();
             void SetEquationText(Platform::String^ equationText);
@@ -32,14 +33,18 @@ namespace CalculatorApp
             virtual void OnPointerExited(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
             virtual void OnPointerCanceled(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
             virtual void OnPointerCaptureLost(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
+            virtual void OnKeyDown(Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e) override;
+            virtual void OnLostFocus(Windows::UI::Xaml::RoutedEventArgs^ e) override;
 
         private:
             void UpdateCommonVisualState();
             void UpdateDeleteButtonVisualState();
             bool ShouldDeleteButtonBeVisible();
 
+            void OnRichEditBoxLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnRichEditBoxGotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnRichEditBoxLostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+            void OnRichEditBoxLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ e);
             void OnRichEditBoxTextChanged(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
             void OnDeleteButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);

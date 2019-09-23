@@ -50,9 +50,9 @@
                                                       Grid.Column="1"
                                                       Margin="0,0,3,0"
                                                       Style="{StaticResource EquationTextBoxStyle}"
+                                                      EquationSubmitted="InputTextBox_Submitted"
                                                       GotFocus="InputTextBox_GotFocus"
                                                       KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked"
-                                                      KeyUp="InputTextBox_KeyUp"
                                                       LostFocus="InputTextBox_LostFocus"
                                                       RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
                                 <controls:EquationTextBox.EquationColor>
@@ -84,12 +84,12 @@
                     Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}">
             <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Domain, Mode=OneWay}"/>
             <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Range, Mode=OneWay}"/>
-            <controls:MathRichEditBox  Text="{x:Bind KeyGraphFeaturesVM.XIntercept, Mode=OneWay}"/>
-            <controls:MathRichEditBox  Text="{x:Bind KeyGraphFeaturesVM.YIntercept, Mode=OneWay}"/>
-            <controls:MathRichEditBox  Text="{x:Bind KeyGraphFeaturesVM.Minima, Mode=OneWay}"/>
-            <controls:MathRichEditBox  Text="{x:Bind KeyGraphFeaturesVM.Maxima, Mode=OneWay}"/>
-            <controls:MathRichEditBox  Text="{x:Bind KeyGraphFeaturesVM.InflectionPoints, Mode=OneWay}"/>
-            <controls:MathRichEditBox  Text="{x:Bind KeyGraphFeaturesVM.Monotonicity, Mode=OneWay}"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.XIntercept, Mode=OneWay}"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.YIntercept, Mode=OneWay}"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Minima, Mode=OneWay}"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Maxima, Mode=OneWay}"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.InflectionPoints, Mode=OneWay}"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Monotonicity, Mode=OneWay}"/>
         </StackPanel>
 
 
