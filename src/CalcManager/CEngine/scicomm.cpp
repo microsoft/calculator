@@ -20,7 +20,6 @@
 
 using namespace std;
 using namespace CalcEngine;
-using namespace CalcManager::NumberFormattingUtils;
 
 namespace
 {
@@ -738,9 +737,10 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         {
             CheckAndAddLastBinOpToHistory(); // rand is like entering the number
 
-            uniform_real_distribution<> distr(0, 1);
+            wstringstream str;
+            str << fixed << setprecision(m_precision) << GenerateRandomNumber();
 
-            auto rat = StringToRat(false, RoundSignificantDigits(distr(m_randomGeneratorEngine), m_precision), false, L"", m_radix, m_precision);
+            auto rat = StringToRat(false, str.str(), false, L"", m_radix, m_precision);
             if (rat != nullptr)
             {
                 m_currentVal = Rational{ rat };
@@ -1110,4 +1110,15 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
     }
 
     return result;
+}
+
+double CCalcEngine::GenerateRandomNumber()
+{
+    if (m_randomGeneratorEngine == nullptr)
+    {
+        random_device rd;
+        m_randomGeneratorEngine = std::make_unique<std::mt19937>(rd());
+        m_distr = std::make_unique<std::uniform_real_distribution<>>(0, 1);
+    }
+    return (*m_distr.get())(*m_randomGeneratorEngine.get());
 }

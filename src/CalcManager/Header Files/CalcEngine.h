@@ -153,8 +153,8 @@ private:
     NUM_WIDTH m_numwidth;                    // one of qword, dword, word or byte mode.
     int32_t m_dwWordBitWidth;                // # of bits in currently selected word size
 
-    std::random_device rd;
-    std::mt19937 m_randomGeneratorEngine = std::mt19937(rd());
+    std::unique_ptr<std::mt19937> m_randomGeneratorEngine;
+    std::unique_ptr<std::uniform_real_distribution<>> m_distr;
 
     uint64_t m_carryBit;
 
@@ -182,6 +182,7 @@ private:
     void SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwidth);
     int32_t DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
     uint32_t NRadixFromRadixType(RADIX_TYPE radixtype);
+    double GenerateRandomNumber();
 
     bool TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno);
     void CheckAndAddLastBinOpToHistory(bool addToHistory = true);
