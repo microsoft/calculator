@@ -69,15 +69,6 @@
                 </Setter>
             </Style>
         </GridView.ItemContainerStyle>
-        <GridView.Resources>
-            <SolidColorBrush x:Name="GridViewItemForegroundSelected" Color="Transparent"/>
-            <SolidColorBrush x:Name="GridViewItemBackgroundSelected" Color="Transparent"/>
-            <SolidColorBrush x:Name="GridViewItemBackgroundSelectedPointerOver" Color="Transparent"/>
-            <SolidColorBrush x:Name="GridViewItemBackgroundSelectedPressed" Color="Transparent"/>
-            <SolidColorBrush x:Name="GridViewItemRevealBorderBrush" Color="Transparent"/>
-            <SolidColorBrush x:Name="GridViewItemBackgroundPointerOver" Color="Transparent"/>
-            <SolidColorBrush x:Name="GridViewItemBackgroundPressed" Color="Transparent"/>
-        </GridView.Resources>
         <GridView.Header>
             <TextBlock x:Uid="LineColorText" Margin="8,0,8,8"/>
         </GridView.Header>
@@ -87,7 +78,6 @@
                          HorizontalAlignment="Stretch"
                          VerticalAlignment="Stretch"
                          Fill="{x:Bind}"
-                         Stroke="{ThemeResource StylePanelSelectedBrush}"
                          StrokeThickness="0"
                          UseLayoutRounding="false"/>
             </DataTemplate>

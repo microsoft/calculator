@@ -50,7 +50,6 @@
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemControlBackgroundAltMediumBrush}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource TextControlBackground}"/>
-                    <SolidColorBrush x:Key="StylePanelSelectedBrush" Color="#FFCCCCCC"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
 
                     <SolidColorBrush x:Key="EquationBrush1" Color="#FF0078D7"/>
@@ -107,7 +106,6 @@
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemControlBackgroundAltMediumBrush}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource TextControlBackground}"/>
-                    <SolidColorBrush x:Key="StylePanelSelectedBrush" Color="#CC000000"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
 
                     <SolidColorBrush x:Key="EquationBrush1" Color="#FF0078D7"/>
@@ -150,7 +148,6 @@
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
-                    <SolidColorBrush x:Key="StylePanelSelectedBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
 
                     <!-- TODO: Add high contrast colors mapping -->
