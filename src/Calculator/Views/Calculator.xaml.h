@@ -53,6 +53,7 @@ public
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, IsStandard, false);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, IsScientific, false);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, IsProgrammer, false);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, IsAlwaysOnTop, false);
 
         COMMAND_FOR_METHOD(HistoryButtonPressed, Calculator::ToggleHistoryFlyout);
 
@@ -75,12 +76,12 @@ public
         void UpdateMemoryState();
         void UpdateHistoryState();
 
-        void CalculationResultsOnSelected(_In_ Platform::Object ^ sender);
         void OnContextRequested(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::ContextRequestedEventArgs ^ e);
         void OnContextCanceled(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnIsScientificPropertyChanged(bool oldValue, bool newValue);
         void OnIsProgrammerPropertyChanged(bool oldValue, bool newValue);
         void OnIsStandardPropertyChanged(bool oldValue, bool newValue);
+        void OnIsAlwaysOnTopPropertyChanged(bool oldValue, bool newValue);
         void OnIsInErrorPropertyChanged();
         void OnCalcPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e);
         void OnStoryboardCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
@@ -89,6 +90,7 @@ public
         void EnsureProgrammer();
         void SetFontSizeResources();
         std::wstring GetCurrentLayoutState();
+        void Calculator_SizeChanged(Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
 
     private:
         Windows::UI::Xaml::Controls::ListView ^ m_tokenList;
@@ -138,6 +140,6 @@ public
         void OnErrorLayoutCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void OnHistoryAccessKeyInvoked(_In_ Windows::UI::Xaml::UIElement ^ sender, _In_ Windows::UI::Xaml::Input::AccessKeyInvokedEventArgs ^ args);
         void OnMemoryAccessKeyInvoked(_In_ Windows::UI::Xaml::UIElement ^ sender, _In_ Windows::UI::Xaml::Input::AccessKeyInvokedEventArgs ^ args);
-        void DockPivot_SelectionChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e);
+        void OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e);
     };
 }

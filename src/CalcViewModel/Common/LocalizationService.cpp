@@ -75,9 +75,24 @@ LocalizationService::LocalizationService(_In_ const wchar_t * const overridedLan
 {
     m_isLanguageOverrided = overridedLanguage != nullptr;
     m_language = m_isLanguageOverrided ? ref new Platform::String(overridedLanguage) : ApplicationLanguages::Languages->GetAt(0);
-    m_flowDirection = ResourceContext::GetForCurrentView()->QualifierValues->Lookup(L"LayoutDirection")
+    m_flowDirection = ResourceContext::GetForViewIndependentUse()->QualifierValues->Lookup(L"LayoutDirection")
         != L"LTR" ? FlowDirection::RightToLeft : FlowDirection::LeftToRight;
+    wstring localeName = wstring(m_language->Data());
+    localeName += L".UTF8";
 
+    try
+    {
+        // Convert wstring to string for locale
+        int size_needed = WideCharToMultiByte(CP_UTF8, 0, &localeName[0], (int)localeName.size(), NULL, 0, NULL, NULL);
+        string localeNameStr(size_needed, 0);
+        WideCharToMultiByte(CP_UTF8, 0, &localeName[0], (int)localeName.size(), &localeNameStr[0], size_needed, NULL, NULL);
+
+        m_locale = locale(localeNameStr.data());
+    }
+    catch (...)
+    {
+        m_locale = locale("");
+    }
     auto resourceLoader = AppResourceProvider::GetInstance();
     m_fontFamilyOverride = resourceLoader.GetResourceString(L"LocalizedFontFamilyOverride");
 
@@ -371,7 +386,7 @@ DecimalFormatter ^ LocalizationService::GetRegionalSettingsAwareDecimalFormatter
 // as configured by running intl.cpl.
 //
 // This helper function creates a DateTimeFormatter with a TwentyFour hour clock
-DateTimeFormatter ^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String^ format) const
+DateTimeFormatter ^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String ^ format) const
 {
     IIterable<String ^> ^ languageIdentifiers = LocalizationService::GetLanguageIdentifiers();
     if (languageIdentifiers == nullptr)
@@ -384,7 +399,7 @@ DateTimeFormatter ^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatt
 
 // If successful, returns a formatter that respects the user's regional format settings,
 // as configured by running intl.cpl.
-DateTimeFormatter^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String ^ format, _In_ String ^ calendarIdentifier, _In_ String ^ clockIdentifier) const
+DateTimeFormatter ^ LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(_In_ String ^ format, _In_ String ^ calendarIdentifier, _In_ String ^ clockIdentifier) const
 {
     IIterable<String ^> ^ languageIdentifiers = LocalizationService::GetLanguageIdentifiers();
     if (languageIdentifiers == nullptr)
@@ -421,7 +436,7 @@ IIterable<String ^> ^ LocalizationService::GetLanguageIdentifiers() const
 
     if (m_isLanguageOverrided)
     {
-        auto overridedLanguageList = ref new Vector<String^>();
+        auto overridedLanguageList = ref new Vector<String ^>();
         overridedLanguageList->Append(m_language);
         return overridedLanguageList;
     }
@@ -561,4 +576,12 @@ String ^ LocalizationService::GetNarratorReadableString(String ^ rawString)
     }
 
     return ref new String(readableString.str().c_str());
+}
+
+void LocalizationService::Sort(std::vector<Platform::String ^>& source)
+{
+    const collate<wchar_t>& coll = use_facet<collate<wchar_t>>(m_locale);
+    sort(source.begin(), source.end(), [&coll](Platform::String ^ str1, Platform::String ^ str2) {
+        return coll.compare(str1->Begin(), str1->End(), str2->Begin(), str2->End()) < 0;
+    });
 }

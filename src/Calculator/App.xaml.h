@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -42,6 +42,8 @@ namespace CalculatorApp
         void OnAppLaunch(Windows::ApplicationModel::Activation::IActivatedEventArgs ^ args, Platform::String ^ argument);
         void DismissedEventHandler(Windows::ApplicationModel::Activation::SplashScreen ^ sender, Platform::Object ^ e);
         void RegisterDependencyProperties();
+        void OnSuspending(Platform::Object ^ sender, Windows::ApplicationModel::SuspendingEventArgs ^ args);
+
 
         class SafeFrameWindowCreation final
         {

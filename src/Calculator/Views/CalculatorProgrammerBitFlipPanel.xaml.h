@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -10,9 +10,6 @@
 
 #include "Views/CalculatorProgrammerBitFlipPanel.g.h"
 #include "Controls/FlipButtons.h"
-#include "Converters/BitFlipAutomationNameConverter.h"
-#include "Converters/BooleanNegationConverter.h"
-#include "Converters/VisibilityNegationConverter.h"
 #include "CalcViewModel/StandardCalculatorViewModel.h"
 
 namespace CalculatorApp
@@ -21,6 +18,8 @@ namespace CalculatorApp
     {
     public:
         CalculatorProgrammerBitFlipPanel();
+
+        bool ShouldEnableBit(CalculatorApp::Common::BitLength length, int index);
 
         property CalculatorApp::ViewModel::StandardCalculatorViewModel
             ^ Model { CalculatorApp::ViewModel::StandardCalculatorViewModel ^ get(); }
@@ -34,15 +33,13 @@ namespace CalculatorApp
 
         void AssignFlipButtons();
 
-        void SetVisibilityBinding(
-            _In_ Windows::UI::Xaml::FrameworkElement ^ element,
-            _In_ Platform::String ^ path,
-            _In_ Windows::UI::Xaml::Data::IValueConverter ^ converter);
         void OnBitToggled(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void UpdateCheckedStates();
 
     private:
         Windows::Foundation::EventRegistrationToken m_propertyChangedToken;
+        Platform::String ^ GenerateAutomationPropertiesName(int position, bool value) const;
+        void UpdateCheckedStates(bool updateAutomationPropertiesNames);
+        void UpdateAutomationPropertiesNames();
 
         static const unsigned int s_numBits = 64;
         std::array<CalculatorApp::Controls::FlipButtons ^, s_numBits> m_flipButtons;

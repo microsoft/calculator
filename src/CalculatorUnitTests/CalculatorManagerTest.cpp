@@ -7,9 +7,11 @@
 
 #include "CalcManager/CalculatorHistory.h"
 #include "CalcViewModel/Common/EngineResourceProvider.h"
+#include "CalcManager/NumberFormattingUtils.h"
 
 using namespace CalculatorApp;
 using namespace CalculationManager;
+using namespace CalcManager::NumberFormattingUtils;
 using namespace Platform;
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -185,6 +187,11 @@ namespace CalculatorManagerTest
         TEST_METHOD(CalculatorManagerTestMaxDigitsReached_LeadingDecimal);
         TEST_METHOD(CalculatorManagerTestMaxDigitsReached_TrailingDecimal);
 
+        TEST_METHOD(CalculatorManagerNumberFormattingUtils_TrimTrailingZeros);
+        TEST_METHOD(CalculatorManagerNumberFormattingUtils_GetNumberDigits);
+        TEST_METHOD(CalculatorManagerNumberFormattingUtils_GetNumberDigitsWholeNumberPart);
+        TEST_METHOD(CalculatorManagerNumberFormattingUtils_RoundSignificantDigits);
+        TEST_METHOD(CalculatorManagerNumberFormattingUtils_ToScientificNumber);
         // TODO re-enable when cause of failure is determined. Bug 20226670
         // TEST_METHOD(CalculatorManagerTestBinaryOperatorReceived);
         // TEST_METHOD(CalculatorManagerTestBinaryOperatorReceived_Multiple);
@@ -805,6 +812,102 @@ namespace CalculatorManagerTest
     void CalculatorManagerTest::CalculatorManagerTestMaxDigitsReached_TrailingDecimal()
     {
         TestMaxDigitsReachedScenario(L"123,456,789,101,112.13");
+    }
+
+    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_TrimTrailingZeros()
+    {
+        wstring number = L"2.1032100000000";
+        TrimTrailingZeros(number);
+        VERIFY_ARE_EQUAL(number, L"2.10321");
+        number = L"-122.123200";
+        TrimTrailingZeros(number);
+        VERIFY_ARE_EQUAL(number, L"-122.1232");
+        number = L"0.0001200";
+        TrimTrailingZeros(number);
+        VERIFY_ARE_EQUAL(number, L"0.00012");
+        number = L"12.000";
+        TrimTrailingZeros(number);
+        VERIFY_ARE_EQUAL(number, L"12");
+        number = L"-12.00000";
+        TrimTrailingZeros(number);
+        VERIFY_ARE_EQUAL(number, L"-12");
+        number = L"0.000";
+        TrimTrailingZeros(number);
+        VERIFY_ARE_EQUAL(number, L"0");
+        number = L"322423";
+        TrimTrailingZeros(number);
+        VERIFY_ARE_EQUAL(number, L"322423");
+    }
+
+    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_GetNumberDigits()
+    {
+        wstring number = L"2.10321";
+        unsigned int digitsCount = GetNumberDigits(number);
+        VERIFY_ARE_EQUAL(digitsCount, 6);
+        number = L"-122.1232";
+        digitsCount = GetNumberDigits(number);
+        VERIFY_ARE_EQUAL(digitsCount, 7);
+        number = L"-3432";
+        digitsCount = GetNumberDigits(number);
+        VERIFY_ARE_EQUAL(digitsCount, 4);
+        number = L"0";
+        digitsCount = GetNumberDigits(number);
+        VERIFY_ARE_EQUAL(digitsCount, 1);
+        number = L"0.0001223";
+        digitsCount = GetNumberDigits(number);
+        VERIFY_ARE_EQUAL(digitsCount, 8);
+    }
+
+    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_GetNumberDigitsWholeNumberPart()
+    {
+        unsigned int digitsCount = GetNumberDigitsWholeNumberPart(2.10321);
+        VERIFY_ARE_EQUAL(digitsCount, 1);
+        digitsCount = GetNumberDigitsWholeNumberPart(-122.1232);
+        VERIFY_ARE_EQUAL(digitsCount, 3);
+        digitsCount = GetNumberDigitsWholeNumberPart(-3432);
+        VERIFY_ARE_EQUAL(digitsCount, 4);
+        digitsCount = GetNumberDigitsWholeNumberPart(0);
+        VERIFY_ARE_EQUAL(digitsCount, 1);
+        digitsCount = GetNumberDigitsWholeNumberPart(324328412837382);
+        VERIFY_ARE_EQUAL(digitsCount, 15);
+        digitsCount = GetNumberDigitsWholeNumberPart(324328412837382.232213214324234);
+        VERIFY_ARE_EQUAL(digitsCount, 15);
+    }
+
+    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_RoundSignificantDigits()
+    {
+        wstring result = RoundSignificantDigits(12.342343242, 3);
+        VERIFY_ARE_EQUAL(result, L"12.342");
+        result = RoundSignificantDigits(12.3429999, 3);
+        VERIFY_ARE_EQUAL(result, L"12.343");
+        result = RoundSignificantDigits(12.342500001, 3);
+        VERIFY_ARE_EQUAL(result, L"12.343");
+        result = RoundSignificantDigits(-2312.1244243346454345, 5);
+        VERIFY_ARE_EQUAL(result, L"-2312.12442");
+        result = RoundSignificantDigits(0.3423432423, 5);
+        VERIFY_ARE_EQUAL(result, L"0.34234");
+        result = RoundSignificantDigits(0.3423, 7);
+        VERIFY_ARE_EQUAL(result, L"0.3423000");
+    }
+
+    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_ToScientificNumber()
+    {
+        wstring result = ToScientificNumber(3423);
+        VERIFY_ARE_EQUAL(result, L"3.423000e+03");
+        result = ToScientificNumber(-21);
+        VERIFY_ARE_EQUAL(result, L"-2.100000e+01");
+        result = ToScientificNumber(0.0232);
+        VERIFY_ARE_EQUAL(result, L"2.320000e-02");
+        result = ToScientificNumber(-0.00921);
+        VERIFY_ARE_EQUAL(result, L"-9.210000e-03");
+        result = ToScientificNumber(2343243345677);
+        VERIFY_ARE_EQUAL(result, L"2.343243e+12");
+        result = ToScientificNumber(-3432474247332942);
+        VERIFY_ARE_EQUAL(result, L"-3.432474e+15");
+        result = ToScientificNumber(0.000000003432432);
+        VERIFY_ARE_EQUAL(result, L"3.432432e-09");
+        result = ToScientificNumber(-0.000000003432432);
+        VERIFY_ARE_EQUAL(result, L"-3.432432e-09");
     }
 
     // TODO re-enable when cause of failure is determined. Bug 20226670

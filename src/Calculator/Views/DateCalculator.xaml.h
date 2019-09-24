@@ -48,7 +48,9 @@ namespace CalculatorApp
         void OffsetDropDownClosed(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void CalendarFlyoutClosed(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void RaiseLiveRegionChangedAutomationEvent(_In_ bool isDateDiffMode);
+        void OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e);
 
         Windows::Foundation::EventRegistrationToken m_dateCalcOptionChangedEventToken;
+
     };
 }
