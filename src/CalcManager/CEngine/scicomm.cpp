@@ -776,29 +776,19 @@ void CCalcEngine::ResolveHighestPrecedenceOperation()
                 m_HistoryCollector.AddBinOpToHistory(m_nOpCode, false);
                 m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal); // Adding the repeated last op to history
             }
-            else if (m_nOpCode == IDC_SIGN || IsUnaryOpCode(m_nOpCode))
+            else if (IsUnaryOpCode(m_nOpCode))
             {
                 m_HistoryCollector.AddUnaryOpToHistory(m_nOpCode, m_bInv, m_angletype);
             }
         }
 
         // Do the current or last operation.
-        if (!m_bNoPrevEqu && (m_nOpCode == IDC_SIGN || IsUnaryOpCode(m_nOpCode)))
+        if (!m_bNoPrevEqu && (IsUnaryOpCode(m_nOpCode)))
         {
-            if (m_nOpCode == IDC_SIGN)
-            {
-                m_currentVal = -m_currentVal;
-            }
-            else
-            {
-                m_currentVal = SciCalcFunctions(m_currentVal, (DWORD)m_nOpCode);
-            }
+            m_currentVal = SciCalcFunctions(m_currentVal, (DWORD)m_nOpCode);
             m_holdVal = m_currentVal;
         }
-        else
-        {
-            m_currentVal = DoOperation(m_nOpCode, m_currentVal, m_lastVal);
-        }
+
         m_nPrevOpCode = m_nOpCode;
         m_lastVal = m_currentVal;
 
