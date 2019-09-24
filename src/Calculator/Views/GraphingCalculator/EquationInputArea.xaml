@@ -31,8 +31,8 @@
                                           Margin="0,0,3,0"
                                           Style="{StaticResource EquationTextBoxStyle}"
                                           EquationColor="{x:Bind LineColor, Mode=OneWay}"
+                                          EquationSubmitted="InputTextBox_Submitted"
                                           GotFocus="InputTextBox_GotFocus"
-                                          KeyUp="InputTextBox_KeyUp"
                                           Loaded="EquationTextBoxLoaded"
                                           LostFocus="InputTextBox_LostFocus"
                                           RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">

@@ -64,32 +64,15 @@ void EquationInputArea::InputTextBox_GotFocus(Object^ sender, RoutedEventArgs^ e
 void EquationInputArea::InputTextBox_LostFocus(Object^ sender, RoutedEventArgs^ e)
 {
     KeyboardShortcutManager::HonorShortcuts(true);
-    
+}
+
+void EquationInputArea::InputTextBox_Submitted(Object ^ sender, RoutedEventArgs ^ e)
+{
     auto tb = static_cast<EquationTextBox^>(sender);
     auto eq = static_cast<EquationViewModel^>(tb->DataContext);
-    tb->SetEquationText(eq->Expression);
+    eq->Expression = tb->GetEquationText();
+    FocusManager::TryMoveFocus(::FocusNavigationDirection::Left);
 }
-
-void EquationInputArea::InputTextBox_KeyUp(Object^ sender, KeyRoutedEventArgs^ e)
-{
-    if (e->Key == VirtualKey::Enter)
-    {
-        auto tb = static_cast<EquationTextBox^>(sender);
-        auto eq = static_cast<EquationViewModel^>(tb->DataContext);
-        eq->Expression = tb->GetEquationText();
-        FocusManager::TryMoveFocus(::FocusNavigationDirection::Left);
-        e->Handled = true;
-    }
-}
-
-SolidColorBrush^ EquationInputArea::GetNextLineColor()
-{
-    m_lastLineColorIndex = (m_lastLineColorIndex + 1) % numberOfEquationColors;
-
-    // TODO: Is there a better way to do this?
-    return ref new SolidColorBrush(static_cast<Color>(Application::Current->Resources->Lookup("EquationColor" + (m_lastLineColorIndex + 1))));
-}
-
 
 void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object^ sender, RoutedEventArgs^ e)
 {

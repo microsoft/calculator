@@ -55,7 +55,7 @@ namespace GraphControl
         : m_solver{ IMathSolver::CreateMathSolver() }
         , m_graph{ m_solver->CreateGrapher() }
     {
-        m_solver->ParsingOptions().SetFormatType(FormatType::Linear);
+        m_solver->ParsingOptions().SetFormatType(FormatType::MathML);
 
         DefaultStyleKey = StringReference(s_defaultStyleKey);
 
@@ -370,20 +370,20 @@ namespace GraphControl
             if (!validEqs.empty())
             {
                 wstringstream ss{};
-                ss << L"show2d(";
+                ss << L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>show2d</mi><mfenced separators=\"\">";
 
                 int numValidEquations = 0;
                 for (Equation ^ eq : validEqs)
                 {
                     if (numValidEquations++ > 0)
                     {
-                        ss << L",";
+                        ss << L"<mo>,</mo>";
                     }
 
                     ss << eq->GetRequest();
                 }
 
-                ss << L")";
+                ss << L"</mfenced></mrow></math>";
 
                 wstring request = ss.str();
                 unique_ptr<IExpression> graphExpression;
