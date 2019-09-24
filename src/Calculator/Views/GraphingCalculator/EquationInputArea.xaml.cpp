@@ -20,7 +20,6 @@ using namespace GraphControl;
 namespace
 {
     StringReference EquationsPropertyName(L"Equations");
-    const int numberOfEquationColors = 16;
 }
 
 EquationInputArea::EquationInputArea()
