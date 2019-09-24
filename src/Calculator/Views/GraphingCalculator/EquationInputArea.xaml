@@ -11,8 +11,6 @@
              mc:Ignorable="d">
 
     <ListView x:Name="EquationInputList"
-              Grid.Row="0"
-              Margin="0,8,0,0"
               VerticalContentAlignment="Top"
               IsItemClickEnabled="False"
               ItemsSource="{x:Bind Equations}"
@@ -29,36 +27,29 @@
 
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="vm:EquationViewModel">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <controls:EquationTextBox x:Uid="EquationInputButton"
-                                              Grid.Column="1"
-                                              Margin="0,0,3,0"
-                                              Style="{StaticResource EquationTextBoxStyle}"
-                                              EquationColor="{x:Bind LineColor, Mode=OneWay}"
-                                              GotFocus="InputTextBox_GotFocus"
-                                              KeyUp="InputTextBox_KeyUp"
-                                              LostFocus="InputTextBox_LostFocus"
-                                              RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
-                        <controls:EquationTextBox.KeyGraphFeaturesContent>
-                            <StackPanel x:Name="KeyGraphFeaturesGrid" Visibility="{x:Bind KeyGraphFeaturesVisibility, Mode=OneWay}">
-                                <TextBlock Text="Key Graph Features"/>
-                                <TextBlock Text="{x:Bind Expression, Mode=OneWay}"/>
-                            </StackPanel>
-                        </controls:EquationTextBox.KeyGraphFeaturesContent>
-                        <controls:EquationTextBox.ColorChooserFlyout>
-                            <Flyout x:Name="ColorChooserFlyout"
-                                    x:Uid="ColorChooserFlyout"
-                                    Placement="Bottom">
-                                <local:StylePanel SelectedColor="{x:Bind LineColor, Mode=TwoWay}"/>
-                            </Flyout>
-                        </controls:EquationTextBox.ColorChooserFlyout>
-                    </controls:EquationTextBox>
-
-                </Grid>
+                <controls:EquationTextBox x:Uid="EquationInputButton"
+                                          Margin="0,0,3,0"
+                                          Style="{StaticResource EquationTextBoxStyle}"
+                                          EquationColor="{x:Bind LineColor, Mode=OneWay}"
+                                          GotFocus="InputTextBox_GotFocus"
+                                          KeyUp="InputTextBox_KeyUp"
+                                          Loaded="EquationTextBoxLoaded"
+                                          LostFocus="InputTextBox_LostFocus"
+                                          RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
+                    <controls:EquationTextBox.KeyGraphFeaturesContent>
+                        <StackPanel x:Name="KeyGraphFeaturesGrid" Visibility="{x:Bind KeyGraphFeaturesVisibility, Mode=OneWay}">
+                            <TextBlock Text="Key Graph Features"/>
+                            <TextBlock Text="{x:Bind Expression, Mode=OneWay}"/>
+                        </StackPanel>
+                    </controls:EquationTextBox.KeyGraphFeaturesContent>
+                    <controls:EquationTextBox.ColorChooserFlyout>
+                        <Flyout x:Name="ColorChooserFlyout"
+                                x:Uid="ColorChooserFlyout"
+                                Placement="Bottom">
+                            <local:EquationStylePanelControl SelectedColor="{x:Bind LineColor, Mode=TwoWay}"/>
+                        </Flyout>
+                    </controls:EquationTextBox.ColorChooserFlyout>
+                </controls:EquationTextBox>
             </DataTemplate>
         </ListView.ItemTemplate>
         <ListView.Footer>

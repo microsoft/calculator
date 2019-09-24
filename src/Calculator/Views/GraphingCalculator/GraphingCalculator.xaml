@@ -375,7 +375,9 @@
                 <Button x:Name="Share" Click="OnShareClick">
                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
                 </Button>
-                <local:EquationInputArea Grid.Row="1" Equations="{x:Bind ViewModel.Equations}"/>
+                <local:EquationInputArea Grid.Row="1"
+                                         Margin="0,8,0,0"
+                                         Equations="{x:Bind ViewModel.Equations}"/>
             </Grid>
 
             <Grid x:Name="ButtonContainerGrid"

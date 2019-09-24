@@ -59,19 +59,19 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp">
-      <Filter>Common%255cAutomation</Filter>
+      <Filter>Common\Automation</Filter>
     </ClCompile>
     <ClCompile Include="Common\Automation\NarratorAnnouncementHostFactory.cpp">
-      <Filter>Common%255cAutomation</Filter>
+      <Filter>Common\Automation</Filter>
     </ClCompile>
     <ClCompile Include="Common\Automation\NarratorNotifier.cpp">
-      <Filter>Common%255cAutomation</Filter>
+      <Filter>Common\Automation</Filter>
     </ClCompile>
     <ClCompile Include="Common\Automation\NotificationHost.cpp">
-      <Filter>Common%255cAutomation</Filter>
+      <Filter>Common\Automation</Filter>
     </ClCompile>
     <ClCompile Include="Common\Automation\LiveRegionHost.cpp">
-      <Filter>Common%255cAutomation</Filter>
+      <Filter>Common\Automation</Filter>
     </ClCompile>
     <ClCompile Include="DataLoaders\UnitConverterDataLoader.cpp">
       <Filter>DataLoaders</Filter>
@@ -179,22 +179,22 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\Automation\NarratorAnnouncement.h">
-      <Filter>Common%255cAutomation</Filter>
+      <Filter>Common\Automation</Filter>
     </ClInclude>
     <ClInclude Include="Common\Automation\NarratorAnnouncementHostFactory.h">
-      <Filter>Common%255cAutomation</Filter>
+      <Filter>Common\Automation</Filter>
     </ClInclude>
     <ClInclude Include="Common\Automation\NarratorNotifier.h">
-      <Filter>Common%255cAutomation</Filter>
+      <Filter>Common\Automation</Filter>
     </ClInclude>
     <ClInclude Include="Common\Automation\NotificationHost.h">
-      <Filter>Common%255cAutomation</Filter>
+      <Filter>Common\Automation</Filter>
     </ClInclude>
     <ClInclude Include="Common\Automation\INarratorAnnouncementHost.h">
-      <Filter>Common%255cAutomation</Filter>
+      <Filter>Common\Automation</Filter>
     </ClInclude>
     <ClInclude Include="Common\Automation\LiveRegionHost.h">
-      <Filter>Common%255cAutomation</Filter>
+      <Filter>Common\Automation</Filter>
     </ClInclude>
     <ClInclude Include="DataLoaders\ICurrencyHttpClient.h">
       <Filter>DataLoaders</Filter>
@@ -228,7 +228,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Common%255cAutomation">
+    <Filter Include="Common\Automation">
       <UniqueIdentifier>{98717b14-c8c7-4fb6-9861-abb9124b34f0}</UniqueIdentifier>
     </Filter>
     <Filter Include="GraphingCalculator">

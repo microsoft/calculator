@@ -53,8 +53,6 @@ void EquationInputArea::AddEquationButton_Click(Object^ sender, RoutedEventArgs^
 void EquationInputArea::AddNewEquation()
 {
     auto eq = ref new EquationViewModel();
-    eq->LineColor = GetNextLineColor();
-
     Equations->Append(eq);
 }
 
@@ -102,4 +100,16 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object^ sender, Rout
     {
         Equations->RemoveAt(index);
     }
+}
+
+void EquationInputArea::EquationTextBoxLoaded(Object ^ sender, RoutedEventArgs ^ e)
+{
+    auto tb = static_cast<EquationTextBox ^>(sender);
+    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
+
+    auto colorChooser = static_cast<EquationStylePanelControl ^>(tb->ColorChooserFlyout->Content);
+
+    m_lastLineColorIndex = (m_lastLineColorIndex + 1) % colorChooser->AvailableColors->Size;
+
+    eq->LineColor = colorChooser->AvailableColors->GetAt(m_lastLineColorIndex);
 }

@@ -3,7 +3,7 @@
 #include "Views/GraphingCalculator/EquationInputArea.g.h"
 #include "CalcViewModel/Common/Utils.h"
 #include "CalcViewModel/GraphingCalculator/EquationViewModel.h"
-#include "StylePanel.xaml.h"
+#include "EquationStylePanelControl.xaml.h"
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "Controls/EquationTextBox.h"
 
@@ -33,5 +33,6 @@ namespace CalculatorApp
     private:
         int m_lastLineColorIndex;
         void EquationTextBox_RemoveButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void EquationTextBoxLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }

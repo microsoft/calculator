@@ -53,22 +53,22 @@
                     <SolidColorBrush x:Key="StylePanelSelectedBrush" Color="#FFCCCCCC"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
 
-                    <Color x:Key="EquationColor1">#FF0078D7</Color>
-                    <Color x:Key="EquationColor2">#FFFFB900</Color>
-                    <Color x:Key="EquationColor3">#FFFF8C00</Color>
-                    <Color x:Key="EquationColor4">#FFF7630C</Color>
-                    <Color x:Key="EquationColor5">#FFCA5010</Color>
-                    <Color x:Key="EquationColor6">#FFE3008C</Color>
-                    <Color x:Key="EquationColor7">#FFBF0077</Color>
-                    <Color x:Key="EquationColor8">#FFC239B3</Color>
-                    <Color x:Key="EquationColor9">#FF0063B1</Color>
-                    <Color x:Key="EquationColor10">#FF2D7D9A</Color>
-                    <Color x:Key="EquationColor11">#FF00B7C3</Color>
-                    <Color x:Key="EquationColor12">#FF00CC6A</Color>
-                    <Color x:Key="EquationColor13">#FF00B294</Color>
-                    <Color x:Key="EquationColor14">#FF018574</Color>
-                    <Color x:Key="EquationColor15">#FF10893E</Color>
-                    <Color x:Key="EquationColor16">#FF000000</Color>
+                    <SolidColorBrush x:Key="EquationBrush1" Color="#FF0078D7"/>
+                    <SolidColorBrush x:Key="EquationBrush2" Color="#FFFFB900"/>
+                    <SolidColorBrush x:Key="EquationBrush3" Color="#FFFF8C00"/>
+                    <SolidColorBrush x:Key="EquationBrush4" Color="#FFF7630C"/>
+                    <SolidColorBrush x:Key="EquationBrush5" Color="#FFCA5010"/>
+                    <SolidColorBrush x:Key="EquationBrush6" Color="#FFE3008C"/>
+                    <SolidColorBrush x:Key="EquationBrush7" Color="#FFBF0077"/>
+                    <SolidColorBrush x:Key="EquationBrush8" Color="#FFC239B3"/>
+                    <SolidColorBrush x:Key="EquationBrush9" Color="#FF0063B1"/>
+                    <SolidColorBrush x:Key="EquationBrush10" Color="#FF2D7D9A"/>
+                    <SolidColorBrush x:Key="EquationBrush11" Color="#FF00B7C3"/>
+                    <SolidColorBrush x:Key="EquationBrush12" Color="#FF00CC6A"/>
+                    <SolidColorBrush x:Key="EquationBrush13" Color="#FF00B294"/>
+                    <SolidColorBrush x:Key="EquationBrush14" Color="#FF018574"/>
+                    <SolidColorBrush x:Key="EquationBrush15" Color="#FF10893E"/>
+                    <SolidColorBrush x:Key="EquationBrush16" Color="#FF000000"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
                     <Thickness x:Key="HighContrastThicknessTop">0,0,0,0</Thickness>
@@ -110,22 +110,22 @@
                     <SolidColorBrush x:Key="StylePanelSelectedBrush" Color="#CC000000"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
 
-                    <Color x:Key="EquationColor1">#FF0078D7</Color>
-                    <Color x:Key="EquationColor2">#FFFFB900</Color>
-                    <Color x:Key="EquationColor3">#FFFF8C00</Color>
-                    <Color x:Key="EquationColor4">#FFF7630C</Color>
-                    <Color x:Key="EquationColor5">#FFCA5010</Color>
-                    <Color x:Key="EquationColor6">#FFE3008C</Color>
-                    <Color x:Key="EquationColor7">#FFBF0077</Color>
-                    <Color x:Key="EquationColor8">#FFC239B3</Color>
-                    <Color x:Key="EquationColor9">#FF0063B1</Color>
-                    <Color x:Key="EquationColor10">#FF2D7D9A</Color>
-                    <Color x:Key="EquationColor11">#FF00B7C3</Color>
-                    <Color x:Key="EquationColor12">#FF00CC6A</Color>
-                    <Color x:Key="EquationColor13">#FF00B294</Color>
-                    <Color x:Key="EquationColor14">#FF018574</Color>
-                    <Color x:Key="EquationColor15">#FF10893E</Color>
-                    <Color x:Key="EquationColor16">#FF000000</Color>
+                    <SolidColorBrush x:Key="EquationBrush1" Color="#FF0078D7"/>
+                    <SolidColorBrush x:Key="EquationBrush2" Color="#FFFFB900"/>
+                    <SolidColorBrush x:Key="EquationBrush3" Color="#FFFF8C00"/>
+                    <SolidColorBrush x:Key="EquationBrush4" Color="#FFF7630C"/>
+                    <SolidColorBrush x:Key="EquationBrush5" Color="#FFCA5010"/>
+                    <SolidColorBrush x:Key="EquationBrush6" Color="#FFE3008C"/>
+                    <SolidColorBrush x:Key="EquationBrush7" Color="#FFBF0077"/>
+                    <SolidColorBrush x:Key="EquationBrush8" Color="#FFC239B3"/>
+                    <SolidColorBrush x:Key="EquationBrush9" Color="#FF0063B1"/>
+                    <SolidColorBrush x:Key="EquationBrush10" Color="#FF2D7D9A"/>
+                    <SolidColorBrush x:Key="EquationBrush11" Color="#FF00B7C3"/>
+                    <SolidColorBrush x:Key="EquationBrush12" Color="#FF00CC6A"/>
+                    <SolidColorBrush x:Key="EquationBrush13" Color="#FF00B294"/>
+                    <SolidColorBrush x:Key="EquationBrush14" Color="#FF018574"/>
+                    <SolidColorBrush x:Key="EquationBrush15" Color="#FF10893E"/>
+                    <SolidColorBrush x:Key="EquationBrush16" Color="#FF000000"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
                     <Thickness x:Key="HighContrastThicknessTop">0,1,0,0</Thickness>
@@ -153,22 +153,23 @@
                     <SolidColorBrush x:Key="StylePanelSelectedBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
 
-                    <Color x:Key="EquationColor1">#FF0078D7</Color>
-                    <Color x:Key="EquationColor2">#FFFFB900</Color>
-                    <Color x:Key="EquationColor3">#FFFF8C00</Color>
-                    <Color x:Key="EquationColor4">#FFF7630C</Color>
-                    <Color x:Key="EquationColor5">#FFCA5010</Color>
-                    <Color x:Key="EquationColor6">#FFE3008C</Color>
-                    <Color x:Key="EquationColor7">#FFBF0077</Color>
-                    <Color x:Key="EquationColor8">#FFC239B3</Color>
-                    <Color x:Key="EquationColor9">#FF0063B1</Color>
-                    <Color x:Key="EquationColor10">#FF2D7D9A</Color>
-                    <Color x:Key="EquationColor11">#FF00B7C3</Color>
-                    <Color x:Key="EquationColor12">#FF00CC6A</Color>
-                    <Color x:Key="EquationColor13">#FF00B294</Color>
-                    <Color x:Key="EquationColor14">#FF018574</Color>
-                    <Color x:Key="EquationColor15">#FF10893E</Color>
-                    <Color x:Key="EquationColor16">#FF000000</Color>
+                    <!-- TODO: Add high contrast colors mapping -->
+                    <SolidColorBrush x:Key="EquationBrush1" Color="#FFFF0000"/>
+                    <SolidColorBrush x:Key="EquationBrush2" Color="#FFFFB900"/>
+                    <SolidColorBrush x:Key="EquationBrush3" Color="#FFFF8C00"/>
+                    <SolidColorBrush x:Key="EquationBrush4" Color="#FFF7630C"/>
+                    <SolidColorBrush x:Key="EquationBrush5" Color="#FFCA5010"/>
+                    <SolidColorBrush x:Key="EquationBrush6" Color="#FFE3008C"/>
+                    <SolidColorBrush x:Key="EquationBrush7" Color="#FFBF0077"/>
+                    <SolidColorBrush x:Key="EquationBrush8" Color="#FFC239B3"/>
+                    <SolidColorBrush x:Key="EquationBrush9" Color="#FF0063B1"/>
+                    <SolidColorBrush x:Key="EquationBrush10" Color="#FF2D7D9A"/>
+                    <SolidColorBrush x:Key="EquationBrush11" Color="#FF00B7C3"/>
+                    <SolidColorBrush x:Key="EquationBrush12" Color="#FF00CC6A"/>
+                    <SolidColorBrush x:Key="EquationBrush13" Color="#FF00B294"/>
+                    <SolidColorBrush x:Key="EquationBrush14" Color="#FF018574"/>
+                    <SolidColorBrush x:Key="EquationBrush15" Color="#FF10893E"/>
+                    <SolidColorBrush x:Key="EquationBrush16" Color="#FF000000"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 

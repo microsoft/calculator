@@ -255,8 +255,8 @@
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="StylePanel.xaml.h">
-      <DependentUpon>StylePanel.xaml</DependentUpon>
+    <ClInclude Include="EquationStylePanelControl.xaml.h">
+      <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Views\Calculator.xaml.h">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
@@ -326,7 +326,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="AboutFlyout.xaml" />
-    <Page Include="StylePanel.xaml">
+    <Page Include="EquationStylePanelControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Calculator.xaml">
@@ -405,8 +405,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="StylePanel.xaml.cpp">
-      <DependentUpon>StylePanel.xaml</DependentUpon>
+    <ClCompile Include="EquationStylePanelControl.xaml.cpp">
+      <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Views\Calculator.xaml.cpp">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
