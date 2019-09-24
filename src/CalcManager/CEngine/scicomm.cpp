@@ -650,11 +650,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             }
             break;
         }
-        else
-        {
-            m_nOpCode = IDC_SIGN;
-            m_bNoPrevEqu = true;
-        }
+
         // Doing +/- while in Record mode is not a unary operation
         if (IsBinOpCode(m_nLastCom))
         {
@@ -783,10 +779,14 @@ void CCalcEngine::ResolveHighestPrecedenceOperation()
         }
 
         // Do the current or last operation.
-        if (!m_bNoPrevEqu && (IsUnaryOpCode(m_nOpCode)))
+        if (!m_bNoPrevEqu && IsUnaryOpCode(m_nOpCode))
         {
             m_currentVal = SciCalcFunctions(m_currentVal, (DWORD)m_nOpCode);
             m_holdVal = m_currentVal;
+        }
+        else
+        {
+            m_currentVal = DoOperation(m_nOpCode, m_currentVal, m_lastVal);
         }
 
         m_nPrevOpCode = m_nOpCode;
