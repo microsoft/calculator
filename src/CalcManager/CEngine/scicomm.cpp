@@ -285,9 +285,6 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     {
         m_bNoPrevEqu = true;
         m_bChangeOp = false;
-        m_nPrevOpCode = m_nOpCode;
-        m_nOpCode = (INT)wParam;
-
         /* Functions are unary operations.                            */
         /* If the last thing done was an operator, m_currentVal was cleared. */
         /* In that case we better use the number before the operator  */
@@ -302,6 +299,8 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         // instead, we add the result of applying %.
         if (wParam != IDC_PERCENT)
         {
+            m_nPrevOpCode = m_nOpCode;
+            m_nOpCode = (INT)wParam;
             if (!m_HistoryCollector.FOpndAddedToHistory())
             {
                 m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
@@ -772,7 +771,7 @@ void CCalcEngine::ResolveHighestPrecedenceOperation()
                 m_HistoryCollector.AddBinOpToHistory(m_nOpCode, false);
                 m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal); // Adding the repeated last op to history
             }
-            else if (IsUnaryOpCode(m_nOpCode))
+            else if (IsUnaryOpCode(m_nOpCode) && m_nOpCode != IDC_PERCENT)
             {
                 m_HistoryCollector.AddUnaryOpToHistory(m_nOpCode, m_bInv, m_angletype);
             }
