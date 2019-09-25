@@ -1211,7 +1211,6 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
             <Style x:Key="MathRichEdit_EquationTextBoxStyle" TargetType="Controls:MathRichEditBox">
                 <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}"/>
                 <Setter Property="Background" Value="Transparent"/>

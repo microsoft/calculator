@@ -340,6 +340,9 @@
     <Page Include="EquationStylePanelControl.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="EquationStylePanelControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Calculator.xaml">
       <SubType>Designer</SubType>
     </Page>

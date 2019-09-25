@@ -18,9 +18,12 @@ namespace CalculatorApp
         DEPENDENCY_PROPERTY_WITH_DEFAULT(Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::SolidColorBrush ^> ^, AvailableColors, nullptr);
 
 	private:
+        void InitializeAvailableColors();
         void SelectionChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e);
         void OnSelectedColorPropertyChanged(Windows::UI::Xaml::Media::SolidColorBrush ^ oldValue, Windows::UI::Xaml::Media::SolidColorBrush ^ newValue);
         void ColorChooserLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void SelectColor(Windows::UI::Xaml::Media::SolidColorBrush ^ selectedColor);
+
+        Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::SolidColorBrush ^>^ m_AvailableColors;
     };
 }
