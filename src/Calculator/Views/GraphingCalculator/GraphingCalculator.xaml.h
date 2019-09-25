@@ -57,6 +57,7 @@ namespace CalculatorApp
         void OnActiveTracingClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnSettingsClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void TrigUnitModeClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnGraphLostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnGraphLoosingFocus(Windows::UI::Xaml::Controls::Control ^ sender, Windows::UI::Xaml::Controls::FocusDisengagedEventArgs ^ args);
 
     };

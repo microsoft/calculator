@@ -153,10 +153,10 @@ namespace GraphControl::DX
         Windows::UI::Core::CoreIndependentInputSource ^ m_coreInput = nullptr;
 
         // What is the current trace value
-        Windows::Foundation::Point& m_TraceValue;
+        Windows::Foundation::Point m_TraceValue;
 
         // And where is it located on screen
-        Windows::Foundation::Point& m_TraceLocation;
+        Windows::Foundation::Point m_TraceLocation;
 
         // Are we currently showing the tracing value
         bool m_Tracing;

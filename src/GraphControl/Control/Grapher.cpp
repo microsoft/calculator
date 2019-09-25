@@ -143,6 +143,7 @@ namespace GraphControl
         auto swapChainPanel = dynamic_cast<SwapChainPanel ^>(GetTemplateChild(StringReference(s_templateKey_SwapChainPanel)));
         if (swapChainPanel)
         {
+            swapChainPanel->AllowFocusOnInteraction = true;
             m_renderMain = ref new RenderMain(swapChainPanel);
         }
 
@@ -562,7 +563,11 @@ namespace GraphControl
         if (m_renderMain)
         {
             m_renderMain->DrawNearestPoint = false;
-            TracingChangedEvent(false);
+            if (ActiveTracing == false)
+            {
+                // IF we are active tracing we never want to hide the popup..
+                TracingChangedEvent(false);
+            }
             e->Handled = true;
         }
     }

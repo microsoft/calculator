@@ -53,7 +53,8 @@
                                   ForceProportionalAxes="True"
                                   UseSystemFocusVisuals="True"
                                   VariablesUpdated="GraphVariablesUpdated"
-                                  FocusDisengaged="OnGraphLoosingFocus">
+                                  LostFocus="OnGraphLostFocus"
+                                  LosingFocus="OnLoosingFocus">
                     <graphControl:Grapher.Background>
                         <SolidColorBrush Color="White"/>
                     </graphControl:Grapher.Background>
@@ -66,10 +67,10 @@
                 </graphControl:Grapher>
 
                 <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,10,10">
-                    <Button x:Name="ActiveTracing" Click="OnActiveTracingClick" Width="40" Height="40" Margin="0,0,10,0">
+                    <Button x:Name="ActiveTracing" Click="OnActiveTracingClick" MinWidth="40" MinHeight="40" Margin="0,0,10,0">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE73F;"/>
                     </Button>
-                    <Button x:Name="Share" Click="OnShareClick" Width="40" Height="40">
+                    <Button x:Name="Share" Click="OnShareClick" MinWidth="40" MinHeight="40">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
                     </Button>
                 </StackPanel>

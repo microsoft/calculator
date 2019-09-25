@@ -144,6 +144,7 @@ public
             void set(bool value)
             {
                 m_renderMain->ActiveTracing = value;
+                UpdateTracingChanged();
             }
         }
 
