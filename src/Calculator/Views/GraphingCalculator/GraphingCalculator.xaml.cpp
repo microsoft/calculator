@@ -55,8 +55,11 @@ GraphingCalculator::GraphingCalculator()
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
 {
     TraceValuePopup->IsOpen = newValue;
-    // Set the keyboard focus to the graph control so we can use the arrow keys safely.
-    GraphingControl->Focus(::FocusState::Programmatic);
+    if (TraceValuePopup->IsOpen)
+    {
+        // Set the keyboard focus to the graph control so we can use the arrow keys safely.
+        GraphingControl->Focus(::FocusState::Programmatic);
+    }
 }
 
 void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement ^ sender, DataContextChangedEventArgs ^ args)
@@ -281,13 +284,24 @@ void GraphingCalculator::OnActiveTracingClick(Platform::Object ^ sender, Windows
     GraphingControl->ActiveTracing = !GraphingControl->ActiveTracing;
 }
 
-void CalculatorApp::GraphingCalculator::OnGraphLoosingFocus(
-    Windows::UI::Xaml::Controls::Control ^ sender,
-    Windows::UI::Xaml::Controls::FocusDisengagedEventArgs ^ args)
+void CalculatorApp::GraphingCalculator::OnGraphLostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     // If the graph is losing focus while we are in active tracing we need to turn it off so we don't try to eat keys in other controls.
     if (GraphingControl->ActiveTracing)
     {
         GraphingControl->ActiveTracing = false;
+        OnShowTracePopupChanged(false);
+    }
+}
+
+void CalculatorApp::GraphingCalculator::OnLoosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args)
+{
+    FrameworkElement ^ newFocusElement = (FrameworkElement ^) args->NewFocusedElement;
+    if (newFocusElement == nullptr || newFocusElement->Name == nullptr)
+    {
+        // Because clicking on the swap chain panel will try to move focus to a control that can't actually take focus
+        // we will get a null destination.  So we are going to try and cancel that request.
+        // If the destination is not in our application we will also get a null destination but the cancel will fail so it doesn't hurt to try.
+        args->TryCancel();
     }
 }
