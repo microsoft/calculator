@@ -40,6 +40,7 @@ using namespace Windows::UI::ViewManagement;
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsStandard);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsScientific);
 DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsProgrammer);
+DEPENDENCY_PROPERTY_INITIALIZATION(Calculator, IsAlwaysOnTop);
 
 Calculator::Calculator()
     : m_doAnimate(false)
@@ -60,6 +61,8 @@ Calculator::Calculator()
     auto resLoader = AppResourceProvider::GetInstance();
     CopyMenuItem->Text = resLoader.GetResourceString(L"copyMenuItem");
     PasteMenuItem->Text = resLoader.GetResourceString(L"pasteMenuItem");
+
+    this->SizeChanged += ref new SizeChangedEventHandler(this, &Calculator::Calculator_SizeChanged);
 }
 
 void Calculator::LoadResourceStrings()
@@ -97,7 +100,7 @@ void Calculator::SetFontSizeResources()
         { L"Tibt", 104, 29.333, 20, 40, 56, 40, 56 },   { L"Default", 104, 29.333, 23, 40, 56, 40, 56 }
     };
 
-    DecimalFormatter^ formatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter();
+    DecimalFormatter ^ formatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter();
 
     const FontTable* currentItem = fontTables;
     while (currentItem->numericSystem.compare(std::wstring(L"Default")) != 0 && currentItem->numericSystem.compare(formatter->NumeralSystem->Data()) != 0)
@@ -135,7 +138,7 @@ void Calculator::OnLoaded(_In_ Object ^, _In_ RoutedEventArgs ^)
     WeakReference weakThis(this);
     this->Dispatcher->RunAsync(
         CoreDispatcherPriority::Normal, ref new DispatchedHandler([weakThis]() {
-            if (TraceLogger::GetInstance().UpdateWindowIdLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
+            if (TraceLogger::GetInstance().IsWindowIdInLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
             {
                 auto refThis = weakThis.Resolve<Calculator>();
                 if (refThis != nullptr)
@@ -279,6 +282,35 @@ void Calculator::OnIsProgrammerPropertyChanged(bool /*oldValue*/, bool newValue)
     UpdatePanelViewState();
 }
 
+void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue)
+{
+    if (newValue)
+    {
+        VisualStateManager::GoToState(this, L"AlwaysOnTop", false);
+    }
+    else
+    {
+        VisualStateManager::GoToState(this, L"Normal", false);
+        if (Model->IsInError)
+        {
+            VisualStateManager::GoToState(this, L"ErrorLayout", false);
+        }
+        else
+        {
+            EnableMemoryControls(true);
+        }
+    }
+
+    Model->IsMemoryEmpty = (Model->MemorizedNumbers->Size == 0) || IsAlwaysOnTop;
+
+    AlwaysOnTopResults->UpdateScrollButtons();
+    Results->UpdateTextState();
+
+    UpdateViewState();
+    UpdatePanelViewState();
+    SetDefaultFocus();
+}
+
 void Calculator::OnIsInErrorPropertyChanged()
 {
     bool isError = Model->IsInError;
@@ -395,33 +427,36 @@ void Calculator::UpdateHistoryState()
 
 void Calculator::UpdateMemoryState()
 {
-    if (!Model->IsMemoryEmpty)
+    if (!IsAlwaysOnTop)
     {
-        MemRecall->IsEnabled = true;
-        ClearMemoryButton->IsEnabled = true;
-    }
-    else
-    {
-        MemRecall->IsEnabled = false;
-        ClearMemoryButton->IsEnabled = false;
-    }
-
-    String ^ viewState = App::GetAppViewState();
-    if (viewState == ViewState::DockedView)
-    {
-        CloseMemoryFlyout();
-        SetChildAsMemory();
-        MemoryButton->Visibility = ::Visibility::Collapsed;
-
-        if (m_IsLastFlyoutMemory && !IsProgrammer)
+        if (!Model->IsMemoryEmpty)
         {
-            DockPivot->SelectedIndex = 1;
+            MemRecall->IsEnabled = true;
+            ClearMemoryButton->IsEnabled = true;
         }
-    }
-    else
-    {
-        MemoryButton->Visibility = ::Visibility::Visible;
-        DockMemoryHolder->Child = nullptr;
+        else
+        {
+            MemRecall->IsEnabled = false;
+            ClearMemoryButton->IsEnabled = false;
+        }
+
+        String ^ viewState = App::GetAppViewState();
+        if (viewState == ViewState::DockedView)
+        {
+            CloseMemoryFlyout();
+            SetChildAsMemory();
+            MemoryButton->Visibility = ::Visibility::Collapsed;
+
+            if (m_IsLastFlyoutMemory && !IsProgrammer)
+            {
+                DockPivot->SelectedIndex = 1;
+            }
+        }
+        else
+        {
+            MemoryButton->Visibility = ::Visibility::Visible;
+            DockMemoryHolder->Child = nullptr;
+        }
     }
 }
 
@@ -450,13 +485,11 @@ void Calculator::OnHistoryItemClicked(_In_ HistoryItemViewModel ^ e)
     unsigned int tokenSize;
     assert(e->GetTokens() != nullptr);
     e->GetTokens()->GetSize(&tokenSize);
-    TraceLogger::GetInstance().LogHistoryItemLoadBegin();
     Model->SetHistoryExpressionDisplay(e->GetTokens(), e->GetCommands());
     Model->SetExpressionDisplay(e->GetTokens(), e->GetCommands());
     Model->SetPrimaryDisplay(e->Result->Data(), false);
     Model->IsFToEEnabled = false;
 
-    TraceLogger::GetInstance().LogHistoryItemLoadEnd(tokenSize);
     CloseHistoryFlyout();
     this->Focus(::FocusState::Programmatic);
 }
@@ -468,8 +501,6 @@ void Calculator::HistoryFlyout_Opened(_In_ Object ^ sender, _In_ Object ^ args)
     m_IsLastFlyoutHistory = true;
     EnableControls(false);
     AutomationProperties::SetName(HistoryButton, m_closeHistoryFlyoutAutomationName);
-    TraceLogger::GetInstance().LogHistoryFlyoutOpenEnd(Model->HistoryVM->ItemSize);
-    TraceLogger::GetInstance().LogHistoryBodyOpened();
 }
 
 void Calculator::HistoryFlyout_Closing(_In_ FlyoutBase ^ sender, _In_ FlyoutBaseClosingEventArgs ^ args)
@@ -511,27 +542,33 @@ void Calculator::CloseMemoryFlyout()
 
 void Calculator::SetDefaultFocus()
 {
-    Results->Focus(::FocusState::Programmatic);
+    if (!IsAlwaysOnTop)
+    {
+        Results->Focus(::FocusState::Programmatic);
+    }
+    else
+    {
+        AlwaysOnTopResults->Focus(::FocusState::Programmatic);
+    }
 }
 
 void Calculator::ToggleHistoryFlyout(Object ^ /*parameter*/)
 {
-    String ^ viewState = App::GetAppViewState();
-    // If app starts correctly in snap mode and shortcut is used for history then we need to load history if not yet initialized.
-    if (viewState != ViewState::DockedView)
+    if (Model->IsProgrammer || App::GetAppViewState() == ViewState::DockedView)
     {
-        if (m_fIsHistoryFlyoutOpen)
-        {
-            HistoryFlyout->Hide();
-        }
-        else
-        {
-            TraceLogger::GetInstance().LogHistoryFlyoutOpenBegin(Model->HistoryVM->ItemSize);
-            HistoryFlyout->Content = m_historyList;
-            m_historyList->RowHeight = NumpadPanel->ActualHeight;
-            FlyoutBase::ShowAttachedFlyout(HistoryButton);
-        }
+        return;
     }
+    
+    if (m_fIsHistoryFlyoutOpen)
+    {
+        HistoryFlyout->Hide();
+    }
+    else
+    {
+        HistoryFlyout->Content = m_historyList;
+        m_historyList->RowHeight = NumpadPanel->ActualHeight;
+        FlyoutBase::ShowAttachedFlyout(HistoryButton);
+    }   
 }
 
 void Calculator::ToggleMemoryFlyout()
@@ -545,7 +582,6 @@ void Calculator::ToggleMemoryFlyout()
         }
         else
         {
-            TraceLogger::GetInstance().LogMemoryFlyoutOpenBegin(Model->MemorizedNumbers->Size);
             MemoryFlyout->Content = GetMemory();
             m_memory->RowHeight = NumpadPanel->ActualHeight;
             FlyoutBase::ShowAttachedFlyout(MemoryButton);
@@ -555,13 +591,11 @@ void Calculator::ToggleMemoryFlyout()
 
 void Calculator::OnMemoryFlyoutOpened(_In_ Object ^ sender, _In_ Object ^ args)
 {
-    TraceLogger::GetInstance().LogMemoryFlyoutOpenEnd(Model->MemorizedNumbers->Size);
     m_IsLastFlyoutMemory = true;
     m_IsLastFlyoutHistory = false;
     m_fIsMemoryFlyoutOpen = true;
     AutomationProperties::SetName(MemoryButton, m_closeMemoryFlyoutAutomationName);
     EnableControls(false);
-    TraceLogger::GetInstance().LogMemoryBodyOpened();
 }
 
 void Calculator::OnMemoryFlyoutClosing(_In_ FlyoutBase ^ sender, _In_ FlyoutBaseClosingEventArgs ^ args)
@@ -700,14 +734,17 @@ void Calculator::OnMemoryAccessKeyInvoked(_In_ UIElement ^ sender, _In_ AccessKe
     DockPivot->SelectedItem = MemoryPivotItem;
 }
 
-void CalculatorApp::Calculator::DockPivot_SelectionChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e)
+void CalculatorApp::Calculator::OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e)
 {
-    if (DockPivot->SelectedIndex == 0)
+    auto mode = IsStandard ? ViewMode::Standard : IsScientific ? ViewMode::Scientific : ViewMode::Programmer;
+    auto state = std::wstring(e->NewState->Name->Begin());
+    TraceLogger::GetInstance().LogVisualStateChanged(mode, state, IsAlwaysOnTop);
+}
+
+void Calculator::Calculator_SizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ /*e*/)
+{
+    if (Model->IsAlwaysOnTop)
     {
-        TraceLogger::GetInstance().LogHistoryBodyOpened();
-    }
-    else
-    {
-        TraceLogger::GetInstance().LogMemoryBodyOpened();
+        AlwaysOnTopResults->UpdateScrollButtons();
     }
 }

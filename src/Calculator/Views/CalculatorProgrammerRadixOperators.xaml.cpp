@@ -27,19 +27,6 @@ CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators()
     : m_isErrorVisualState(false)
 {
     InitializeComponent();
-
-    auto booleanToVisibilityNegationConverter = ref new Converters::BooleanToVisibilityNegationConverter;
-    SetVisibilityBinding(ProgRadixOps, L"IsBinaryBitFlippingEnabled", booleanToVisibilityNegationConverter);
-}
-
-void CalculatorProgrammerRadixOperators::OnLoaded(Object ^, RoutedEventArgs ^)
-{
-    m_progModeRadixChangeToken = Model->ProgModeRadixChange +=
-        ref new ProgModeRadixChangeHandler(this, &CalculatorProgrammerRadixOperators::ProgModeRadixChange);
-}
-void CalculatorProgrammerRadixOperators::OnUnloaded(Object ^, RoutedEventArgs ^)
-{
-    Model->ProgModeRadixChange -= m_progModeRadixChangeToken;
 }
 
 void CalculatorProgrammerRadixOperators::Shift_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
@@ -68,19 +55,6 @@ void CalculatorProgrammerRadixOperators::Shift_Clicked(Platform::Object ^ sender
         LshButton->Visibility = ::Visibility::Visible;
         RshButton->Visibility = ::Visibility::Visible;
     }
-}
-
-void CalculatorProgrammerRadixOperators::SetVisibilityBinding(FrameworkElement ^ element, String ^ path, IValueConverter ^ converter)
-{
-    Binding ^ commandBinding = ref new Binding();
-    commandBinding->Path = ref new PropertyPath(path);
-    commandBinding->Converter = converter;
-    element->SetBinding(VisibilityProperty, commandBinding);
-}
-
-void CalculatorProgrammerRadixOperators::ProgModeRadixChange()
-{
-    NumberPad->ProgModeRadixChange();
 }
 
 bool CalculatorProgrammerRadixOperators::IsErrorVisualState::get()

@@ -49,7 +49,10 @@
                                 Invoked="OnDeleteSwipeInvoked"/>
             </muxc:SwipeItems>
 
-            <MenuFlyout x:Key="HistoryContextMenu">
+            <MenuFlyout x:Name="HistoryContextMenu">
+                <MenuFlyoutItem x:Uid="CopyHistoryMenuItem"
+                                Click="OnCopyMenuItemClicked"
+                                Icon="Copy"/>
                 <MenuFlyoutItem x:Uid="DeleteHistoryMenuItem"
                                 Click="OnDeleteMenuItemClicked"
                                 Icon="Delete"/>
@@ -57,9 +60,7 @@
 
             <DataTemplate x:Key="HistoryItemTemplate" x:DataType="model:HistoryItemViewModel">
                 <muxc:SwipeControl RightItems="{StaticResource HistorySwipeItems}">
-                    <StackPanel Margin="0,6,4,6"
-                                Background="Transparent"
-                                ContextFlyout="{StaticResource HistoryContextMenu}">
+                    <StackPanel Margin="0,6,4,6" Background="Transparent">
                         <TextBlock x:Name="ExprTextBlock"
                                    Margin="0,0,0,4"
                                    HorizontalAlignment="Right"
@@ -85,6 +86,7 @@
                    BasedOn="{StaticResource HistoryMemoryItemContainerStyle}"
                    TargetType="ListViewItem">
                 <Setter Property="Margin" Value="0,0,0,20"/>
+                <Setter Property="ContextFlyout" Value="{StaticResource HistoryContextMenu}"/>
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>

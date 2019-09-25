@@ -2061,10 +2061,6 @@
     <value>Bambanci</value>
     <comment>Difference result label</comment>
   </data>
-  <data name="Date_FromLabel.Text" xml:space="preserve">
-    <value>Daga</value>
-    <comment>From Date label for Date Picker</comment>
-  </data>
   <data name="MonthsLabel.Text" xml:space="preserve">
     <value>Watanni</value>
     <comment>Add/Subtract Months label</comment>
@@ -2072,10 +2068,6 @@
   <data name="SubtractOption.Content" xml:space="preserve">
     <value>Ɗebe</value>
     <comment>Subtract toggle button text</comment>
-  </data>
-  <data name="Date_ToLabel.Text" xml:space="preserve">
-    <value>Zuwa</value>
-    <comment>To Date label for Date Picker</comment>
   </data>
   <data name="YearsLabel.Text" xml:space="preserve">
     <value>Shekaru</value>

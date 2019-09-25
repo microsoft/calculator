@@ -38,15 +38,6 @@ namespace CalculationManager
     }
 
     /// <summary>
-    /// Destructor for CalculatorManager
-    /// Ends two CCalcEngine
-    /// </summary>
-    CalculatorManager::~CalculatorManager()
-    {
-        this->MemorizedNumberClearAll();
-    }
-
-    /// <summary>
     /// Call the callback function using passed in IDisplayHelper.
     /// Used to set the primary display value on ViewModel
     /// </summary>
@@ -622,9 +613,9 @@ namespace CalculationManager
         }
     }
 
-    wstring CalculatorManager::GetResultForRadix(uint32_t radix, int32_t precision)
+    wstring CalculatorManager::GetResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix)
     {
-        return m_currentCalculatorEngine ? m_currentCalculatorEngine->GetCurrentResultForRadix(radix, precision) : L"";
+        return m_currentCalculatorEngine ? m_currentCalculatorEngine->GetCurrentResultForRadix(radix, precision, groupDigitsPerRadix) : L"";
     }
 
     void CalculatorManager::SetPrecision(int32_t precision)

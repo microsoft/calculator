@@ -852,69 +852,68 @@ TEST_METHOD(TestOnPaste)
 
     // Call count is being set to 1 because we send 'CE' command as the first call in OnPaste method of the ViewModel
     UINT callCount = 1;
-    ViewMode mode = ViewMode::Volume; // Some temp mode for UnitConverter
 
     // Paste an invalid character - verify that call count doesn't increment
-    vm.OnPaste("z", mode);
+    vm.OnPaste("z");
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
 
     // Test all valid characters. Verify that two commands are sent for each character
-    vm.OnPaste("0", mode);
+    vm.OnPaste("0");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Zero == mock->m_lastCommand);
 
-    vm.OnPaste("1", mode);
+    vm.OnPaste("1");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::One == mock->m_lastCommand);
 
-    vm.OnPaste("2", mode);
+    vm.OnPaste("2");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Two == mock->m_lastCommand);
 
-    vm.OnPaste("3", mode);
+    vm.OnPaste("3");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Three == mock->m_lastCommand);
 
-    vm.OnPaste("4", mode);
+    vm.OnPaste("4");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Four == mock->m_lastCommand);
 
-    vm.OnPaste("5", mode);
+    vm.OnPaste("5");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Five == mock->m_lastCommand);
 
-    vm.OnPaste("6", mode);
+    vm.OnPaste("6");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Six == mock->m_lastCommand);
 
-    vm.OnPaste("7", mode);
+    vm.OnPaste("7");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Seven == mock->m_lastCommand);
 
-    vm.OnPaste("8", mode);
+    vm.OnPaste("8");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Eight == mock->m_lastCommand);
 
-    vm.OnPaste("9", mode);
+    vm.OnPaste("9");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Nine == mock->m_lastCommand);
 
-    vm.OnPaste(".", mode);
+    vm.OnPaste(".");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Decimal == mock->m_lastCommand);
 
-    vm.OnPaste("-", mode);
+    vm.OnPaste("-");
     // Call count should increment by one (the Clear command) since negate isn't
     // sent by itself, only after another legal character
     ++callCount;
@@ -922,7 +921,7 @@ TEST_METHOD(TestOnPaste)
 
     // Send an invalid character
 
-    vm.OnPaste("a", mode);
+    vm.OnPaste("a");
     // Count should remain the same
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     // Last command should remain the same

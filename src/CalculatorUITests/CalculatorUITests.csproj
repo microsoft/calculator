@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -14,7 +14,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="CalculatorUITests.runsettings">
+    <ProjectReference Include="..\CalculatorUITestFramework\CalculatorUITestFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="CalculatorUITests.release.runsettings">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CalculatorUITests.ci.runsettings">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

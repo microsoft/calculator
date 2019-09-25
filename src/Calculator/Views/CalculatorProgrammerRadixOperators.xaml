@@ -9,8 +9,6 @@
              x:Name="ControlRoot"
              d:DesignHeight="395"
              d:DesignWidth="315"
-             Loaded="OnLoaded"
-             Unloaded="OnUnloaded"
              mc:Ignorable="d">
 
     <Grid x:Name="ProgRadixOps">
@@ -216,7 +214,7 @@
                       FontSize="16"
                       AutomationProperties.AutomationId="shiftButton"
                       Checked="Shift_Clicked"
-                      Content="&#xE752;"
+                      Content="&#xF897;"
                       Unchecked="Shift_Clicked"/>
         <controls:CalculatorButton x:Name="ModButton"
                                    x:Uid="modButton"
@@ -344,7 +342,8 @@
                              Grid.RowSpan="4"
                              Grid.Column="2"
                              Grid.ColumnSpan="3"
-                             ButtonStyle="{StaticResource NumericButtonStyle18}"/>
+                             ButtonStyle="{StaticResource NumericButtonStyle18}"
+                             CurrentRadixType="{x:Bind Model.CurrentRadixType, Mode=OneWay}"/>
 
             <controls:CalculatorButton x:Name="AButton"
                                        x:Uid="aButton"
@@ -430,6 +429,6 @@
                                    FontSize="12"
                                    AutomationProperties.AutomationId="negateButton"
                                    ButtonId="Negate"
-                                   Content="&#xE94D;"/>
+                                   Content="&#xF898;"/>
     </Grid>
 </UserControl>
