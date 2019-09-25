@@ -325,6 +325,12 @@ namespace GraphControl
                 older->EquationChanged -= m_tokenEquationChanged;
                 m_tokenEquationChanged.Value = 0;
             }
+
+            if (m_tokenEquationStyleChanged.Value != 0)
+            {
+                older->EquationStyleChanged -= m_tokenEquationStyleChanged;
+                m_tokenEquationStyleChanged.Value = 0;
+            }
         }
 
         if (auto newer = static_cast<EquationCollection ^>(args->NewValue))
@@ -332,6 +338,8 @@ namespace GraphControl
             m_tokenEquationsChanged = newer->VectorChanged += ref new VectorChangedEventHandler<Equation ^>(this, &Grapher::OnEquationsVectorChanged);
 
             m_tokenEquationChanged = newer->EquationChanged += ref new EquationChangedEventHandler(this, &Grapher::OnEquationChanged);
+
+            m_tokenEquationStyleChanged = newer->EquationStyleChanged += ref new EquationChangedEventHandler(this, &Grapher::OnEquationStyleChanged);
         }
 
         UpdateGraph();
@@ -356,6 +364,19 @@ namespace GraphControl
     void Grapher::OnEquationChanged()
     {
         UpdateGraph();
+    }
+
+    void Grapher::OnEquationStyleChanged()
+    {
+        if (m_graph)
+        {
+            UpdateGraphOptions(m_graph->GetOptions(), GetValidEquations());
+        }
+
+        if (m_renderMain)
+        {
+            m_renderMain->RunRenderPass();
+        }
     }
 
     void Grapher::UpdateGraph()
@@ -486,7 +507,7 @@ namespace GraphControl
             graphColors.reserve(validEqs.size());
             for (Equation ^ eq : validEqs)
             {
-                auto lineColor = eq->LineColor;
+                auto lineColor = eq->LineColor->Color;
                 graphColors.emplace_back(lineColor.R, lineColor.G, lineColor.B, lineColor.A);
             }
             options.SetGraphColors(graphColors);

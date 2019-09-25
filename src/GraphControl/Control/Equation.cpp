@@ -6,6 +6,7 @@ using namespace std;
 using namespace Windows::UI;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Media;
 
 namespace GraphControl
 {
@@ -41,14 +42,13 @@ namespace GraphControl
         {
             // Default line color should be the user's accent color
             auto uiSettings = ref new UISettings();
-            Color accentColor = uiSettings->GetColorValue(UIColorType::Accent);
 
             s_lineColorProperty = DependencyProperty::Register(
                 EquationProperties::LineColor,
-                Color::typeid,
+                SolidColorBrush::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(
-                    accentColor,
+                    nullptr,
                     ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
     }

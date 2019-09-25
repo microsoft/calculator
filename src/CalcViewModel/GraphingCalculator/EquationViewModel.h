@@ -11,7 +11,7 @@ namespace CalculatorApp::ViewModel
 
         OBSERVABLE_OBJECT();
         OBSERVABLE_PROPERTY_RW(Platform::String^, Expression);
-        OBSERVABLE_PROPERTY_RW(Windows::UI::Color, LineColor);
+        OBSERVABLE_PROPERTY_RW(Windows::UI::Xaml::Media::SolidColorBrush ^, LineColor);
         OBSERVABLE_PROPERTY_RW(Windows::UI::Xaml::Visibility, KeyGraphFeaturesVisibility);
     };
 }

@@ -309,6 +309,7 @@ public
             Windows::Foundation::Collections::IObservableVector<GraphControl::Equation ^> ^ sender,
             Windows::Foundation::Collections::IVectorChangedEventArgs ^ event);
         void OnEquationChanged();
+        void OnEquationStyleChanged();
 
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
         std::vector<Equation ^> GetValidEquations();
@@ -344,6 +345,7 @@ public
         static Windows::UI::Xaml::DependencyProperty ^ s_equationsProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_variablesProperty;
         Windows::Foundation::EventRegistrationToken m_tokenEquationsChanged;
+        Windows::Foundation::EventRegistrationToken m_tokenEquationStyleChanged;
         Windows::Foundation::EventRegistrationToken m_tokenEquationChanged;
 
         static Windows::UI::Xaml::DependencyProperty ^ s_forceProportionalAxesTemplateProperty;
