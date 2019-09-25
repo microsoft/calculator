@@ -92,7 +92,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager^ sender, DataReques
         for (unsigned i = 0; i < equations->Size; i++)
         {
             auto expression = equations->GetAt(i)->Expression->Data();
-            auto color = equations->GetAt(i)->LineColor;
+            auto color = equations->GetAt(i)->LineColor->Color;
 
             if (equations->GetAt(i)->Expression->Length() == 0)
             {
@@ -204,11 +204,11 @@ void GraphingCalculator::SubmitTextbox(TextBox^ sender)
     }
     else if (sender->Name == "MaxTextBox")
     {
-        variableViewModel->Step = validateDouble(sender->Text, variableViewModel->Step);
+        variableViewModel->Max = validateDouble(sender->Text, variableViewModel->Max);
     }
     else if (sender->Name == "StepTextBox")
     {
-        variableViewModel->Max = validateDouble(sender->Text, variableViewModel->Max);
+        variableViewModel->Step = validateDouble(sender->Text, variableViewModel->Step);
     }
 }
 

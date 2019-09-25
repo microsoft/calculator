@@ -467,6 +467,9 @@
       <Filter>Views\GraphingCalculator</Filter>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)DensityStyles\Compact.xaml" />
+    <Page Include="EquationStylePanelControl.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Resources\en-US\CEngineStrings.resw">

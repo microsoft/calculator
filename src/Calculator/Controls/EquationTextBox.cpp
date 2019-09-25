@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include "EquationTextBox.h"
-#include "CalcViewModel/GraphingCalculator/EquationViewModel.h"
 
 using namespace std;
 using namespace Platform;
@@ -72,6 +71,8 @@ void EquationTextBox::OnApplyTemplate()
         ColorChooserFlyout->Opened += ref new EventHandler<Object ^>(this, &EquationTextBox::OnColorFlyoutOpened);
         ColorChooserFlyout->Closed += ref new EventHandler<Object ^>(this, &EquationTextBox::OnColorFlyoutClosed);
     }
+
+    UpdateCommonVisualState();
 }
 
 void EquationTextBox::OnPointerEntered(PointerRoutedEventArgs ^ e)
@@ -260,6 +261,5 @@ bool EquationTextBox::ShouldDeleteButtonBeVisible()
     {
         m_richEditBox->TextDocument->GetMath(&text);
     }
-
     return (!text->IsEmpty() && m_isFocused);
 }

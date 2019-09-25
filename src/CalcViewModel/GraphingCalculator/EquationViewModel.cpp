@@ -7,9 +7,8 @@ using namespace Windows::UI::Xaml;
 namespace CalculatorApp::ViewModel
 {
     EquationViewModel::EquationViewModel()
-        : m_LineColor{ Colors::Transparent },
-        m_KeyGraphFeaturesVisibility{ ::Visibility::Collapsed },
-        m_Expression{ "" }
+        : m_LineColor{ nullptr }, m_KeyGraphFeaturesVisibility{ ::Visibility::Collapsed }
+        , m_Expression{ "" }
     {
     }
 }

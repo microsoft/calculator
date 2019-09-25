@@ -1,26 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Common">
-      <UniqueIdentifier>{1daab7c4-63f6-4266-a259-f34acad66d09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\Automation">
-      <UniqueIdentifier>{8d4edf06-c312-4312-978a-b6c2beb8295a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DataLoaders">
-      <UniqueIdentifier>{0184f727-b8aa-4af8-a699-63f1b56e7853}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GraphingCalculator">
-      <UniqueIdentifier>{cf7dca32-9727-4f98-83c3-1c0ca7dd1e0c}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="ApplicationViewModel.cpp" />
     <ClCompile Include="DateCalculatorViewModel.cpp" />
     <ClCompile Include="HistoryItemViewModel.cpp" />
     <ClCompile Include="HistoryViewModel.cpp" />
     <ClCompile Include="MemoryItemViewModel.cpp" />
+    <ClCompile Include="pch.cpp" />
     <ClCompile Include="StandardCalculatorViewModel.cpp" />
     <ClCompile Include="UnitConverterViewModel.cpp" />
     <ClCompile Include="ViewState.cpp" />
@@ -72,9 +58,6 @@
     <ClCompile Include="Common\Utils.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Automation\LiveRegionHost.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
     <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp">
       <Filter>Common\Automation</Filter>
     </ClCompile>
@@ -87,46 +70,49 @@
     <ClCompile Include="Common\Automation\NotificationHost.cpp">
       <Filter>Common\Automation</Filter>
     </ClCompile>
-    <ClCompile Include="DataLoaders\CurrencyDataLoader.cpp">
+    <ClCompile Include="Common\Automation\LiveRegionHost.cpp">
+      <Filter>Common\Automation</Filter>
+    </ClCompile>
+    <ClCompile Include="DataLoaders\UnitConverterDataLoader.cpp">
       <Filter>DataLoaders</Filter>
     </ClCompile>
     <ClCompile Include="DataLoaders\CurrencyHttpClient.cpp">
       <Filter>DataLoaders</Filter>
     </ClCompile>
-    <ClCompile Include="DataLoaders\UnitConverterDataLoader.cpp">
-      <Filter>DataLoaders</Filter>
+    <ClCompile Include="GraphingCalculator\GraphingCalculatorViewModel.cpp">
+      <Filter>GraphingCalculator</Filter>
     </ClCompile>
     <ClCompile Include="GraphingCalculator\EquationViewModel.cpp">
       <Filter>GraphingCalculator</Filter>
-    </ClInclude>
-    <ClCompile Include="GraphingCalculator\GraphingCalculatorViewModel.cpp">
-      <Filter>GraphingCalculator</Filter>
-    </ClInclude>
+    </ClCompile>
+    <ClCompile Include="DataLoaders\CurrencyDataLoader.cpp">
+      <Filter>DataLoaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="targetver.h" />
     <ClInclude Include="ApplicationViewModel.h" />
     <ClInclude Include="DateCalculatorViewModel.h" />
     <ClInclude Include="HistoryItemViewModel.h" />
     <ClInclude Include="HistoryViewModel.h" />
     <ClInclude Include="MemoryItemViewModel.h" />
+    <ClInclude Include="pch.h" />
     <ClInclude Include="StandardCalculatorViewModel.h" />
+    <ClInclude Include="targetver.h" />
     <ClInclude Include="UnitConverterViewModel.h" />
     <ClInclude Include="ViewState.h" />
-    <ClInclude Include="Common\AlwaysSelectedCollectionView.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Common\AppResourceProvider.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\BindableBase.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\CalculatorButtonPressedEventArgs.h">
+    <ClInclude Include="Common\AlwaysSelectedCollectionView.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\CalculatorButtonUser.h">
+    <ClInclude Include="Common\BitLength.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\CalculatorButtonPressedEventArgs.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\CalculatorDisplay.h">
@@ -159,22 +145,25 @@
     <ClInclude Include="Common\KeyboardShortcutManager.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="Common\LocalizationStringUtil.h">
+      <Filter>Common</Filter>
+    </ClInclude>
     <ClInclude Include="Common\LocalizationService.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\LocalizationSettings.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\LocalizationStringUtil.h">
+    <ClInclude Include="Common\NavCategory.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\MyVirtualKey.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\NavCategory.h">
+    <ClInclude Include="Common\NetworkManager.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\NetworkManager.h">
+    <ClInclude Include="Common\TraceActivity.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\TraceLogger.h">
@@ -186,11 +175,8 @@
     <ClInclude Include="Common\ValidatingConverters.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\Automation\INarratorAnnouncementHost.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Automation\LiveRegionHost.h">
-      <Filter>Common\Automation</Filter>
+    <ClInclude Include="Common\CalculatorButtonUser.h">
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\Automation\NarratorAnnouncement.h">
       <Filter>Common\Automation</Filter>
@@ -204,11 +190,11 @@
     <ClInclude Include="Common\Automation\NotificationHost.h">
       <Filter>Common\Automation</Filter>
     </ClInclude>
-    <ClInclude Include="DataLoaders\CurrencyDataLoader.h">
-      <Filter>DataLoaders</Filter>
+    <ClInclude Include="Common\Automation\INarratorAnnouncementHost.h">
+      <Filter>Common\Automation</Filter>
     </ClInclude>
-    <ClInclude Include="DataLoaders\CurrencyHttpClient.h">
-      <Filter>DataLoaders</Filter>
+    <ClInclude Include="Common\Automation\LiveRegionHost.h">
+      <Filter>Common\Automation</Filter>
     </ClInclude>
     <ClInclude Include="DataLoaders\ICurrencyHttpClient.h">
       <Filter>DataLoaders</Filter>
@@ -219,29 +205,40 @@
     <ClInclude Include="DataLoaders\UnitConverterDataLoader.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
-    <ClInclude Include="Common\TraceActivity.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="DataLoaders\DataLoaderMockConstants.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
-    <ClInclude Include="DataLoaders\DataLoaderConstants.h">
+    <ClInclude Include="DataLoaders\CurrencyHttpClient.h">
       <Filter>DataLoaders</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\BitLength.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphingCalculator\EquationViewModel.h">
-      <Filter>GraphingCalculator</Filter>
     </ClInclude>
     <ClInclude Include="GraphingCalculator\GraphingCalculatorViewModel.h">
       <Filter>GraphingCalculator</Filter>
     </ClInclude>
+    <ClInclude Include="GraphingCalculator\EquationViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLoaders\CurrencyDataLoader.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="DataLoaders\DefaultFromToCurrency.json">
       <Filter>DataLoaders</Filter>
     </None>
-    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Common\Automation">
+      <UniqueIdentifier>{98717b14-c8c7-4fb6-9861-abb9124b34f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphingCalculator">
+      <UniqueIdentifier>{07311281-a1fd-4dd9-baef-007f159e33ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{14ddcbc1-10a4-4940-ad53-3a751b9ebea0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataLoaders">
+      <UniqueIdentifier>{b017a5e6-6d25-4799-a517-99f88d65b82f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
