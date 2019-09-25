@@ -69,6 +69,7 @@ namespace CalculatorApp
         void OnShareCompleted(Windows::ApplicationModel::DataTransfer::DataPackage^ sender, Windows::ApplicationModel::DataTransfer::ShareCompletedEventArgs^ e);
         void GraphingControl_VariablesUpdated(Platform::Object ^ sender, Object ^ args);
         void OnEquationKeyGraphFeaturesRequested(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnGraphLostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnKeyGraphFeaturesClosed(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         bool ActiveTracingOn;
     };
