@@ -953,6 +953,20 @@ NumbersAndOperatorsEnum StandardCalculatorViewModel::MapCharacterToButtonId(cons
         mappedValue = NumbersAndOperatorsEnum::Divide;
         break;
 
+    case '^':
+        if (IsScientific)
+        {
+            mappedValue = NumbersAndOperatorsEnum::XPowerY;
+        }
+        break;
+
+    case '%':
+        if (IsScientific || IsProgrammer)
+        {
+            mappedValue = NumbersAndOperatorsEnum::Mod;
+        }
+        break;
+
     case '=':
         mappedValue = NumbersAndOperatorsEnum::Equals;
         break;

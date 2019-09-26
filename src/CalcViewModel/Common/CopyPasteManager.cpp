@@ -17,7 +17,10 @@ using namespace Windows::ApplicationModel::DataTransfer;
 
 String ^ CopyPasteManager::supportedFormats[] = { StandardDataFormats::Text };
 
-static constexpr wstring_view c_validCharacterSet{ L"0123456789()+-*/.abcdefABCDEF" };
+static const wstring c_validBasicCharacterSet = L"0123456789+-.e";
+static const wstring c_validStandardCharacterSet = c_validBasicCharacterSet + L"*/";
+static const wstring c_validScientificCharacterSet = c_validStandardCharacterSet + L"()^%";
+static const wstring c_validProgrammerCharacterSet = c_validStandardCharacterSet + L"()%abcdfABCDEF";
 
 // The below values can not be "constexpr"-ed,
 // as both wstring_view and wchar[] can not be concatenated
@@ -102,8 +105,7 @@ String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode
 
 // return "NoOp" if pastedText is invalid else return pastedText
 
-String
-    ^ CopyPasteManager::ValidatePasteExpression(
+String ^ CopyPasteManager::ValidatePasteExpression(
         String ^ pastedText,
         ViewMode mode,
         CategoryGroupType modeType,
@@ -165,12 +167,29 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
     bool isPreviousOpenParen = false;
     bool isPreviousOperator = false;
 
+    wstring validCharacterSet;
+    switch (mode)
+    {
+    case ViewMode::Standard:
+        validCharacterSet = c_validStandardCharacterSet;
+        break;
+    case ViewMode::Scientific:
+        validCharacterSet = c_validScientificCharacterSet;
+        break;
+    case ViewMode::Programmer:
+        validCharacterSet = c_validProgrammerCharacterSet;
+        break;
+    default:
+        validCharacterSet = c_validBasicCharacterSet;
+    }
+
     // This will have the exponent length
     size_t expLength = 0;
     for (size_t i = 0; i < pasteExpression.length(); i++)
     {
+        wchar_t currentChar = pasteExpression.at(i);
         // if the current character is not a valid one don't process it
-        if (c_validCharacterSet.find(pasteExpression.at(i)) == wstring_view::npos)
+        if (validCharacterSet.find(currentChar) == wstring_view::npos)
         {
             continue;
         }
@@ -182,9 +201,9 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
             return operands;
         }
 
-        if (startExpCounting)
+        if (currentChar >= L'0' && currentChar <= L'9')
         {
-            if ((pasteExpression.at(i) >= L'0') && (pasteExpression.at(i) <= L'9'))
+            if (startExpCounting)
             {
                 expLength++;
 
@@ -196,16 +215,19 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
                     return operands;
                 }
             }
+            isPreviousOperator = false;
         }
-
-        if ((mode != ViewMode::Programmer) && (pasteExpression.at(i) == L'e'))
+        else if (currentChar == L'e')
         {
-            startExpCounting = true;
+            if (mode != ViewMode::Programmer)
+            {
+                startExpCounting = true;
+            }
+            isPreviousOperator = false;
         }
-
-        if (((pasteExpression.at(i) == L'+') || (pasteExpression.at(i) == L'-') || (pasteExpression.at(i) == L'*') || (pasteExpression.at(i) == L'/')))
+        else if (currentChar == L'+' || currentChar == L'-' || currentChar == L'*' || currentChar == L'/' || currentChar == L'^' || currentChar == L'%')
         {
-            if ((pasteExpression.at(i) == L'+') || (pasteExpression.at(i) == L'-'))
+            if (currentChar == L'+' || currentChar == L'-')
             {
                 // don't break the expression into operands if the encountered character corresponds to sign command(+-)
                 if (isPreviousOpenParen || startOfExpression || isPreviousOperator
