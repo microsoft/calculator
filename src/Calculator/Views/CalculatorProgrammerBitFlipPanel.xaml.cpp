@@ -199,11 +199,14 @@ void CalculatorProgrammerBitFlipPanel::UpdateCheckedStates(bool updateAutomation
     for (bool val : Model->BinaryDigits)
     {
         FlipButtons ^ flipButton = *it;
-        if (updateAutomationPropertiesNames || (mustUpdateTextOfMostSignificantDigits && (index == previousMSDPosition || index == newMSDPosition)))
-        {
-            flipButton->SetValue(AutomationProperties::NameProperty, GenerateAutomationPropertiesName(index, flipButton->IsChecked->Value));
-        }
+        bool hasValueChanged = flipButton->IsChecked->Value != val;
         flipButton->IsChecked = val;
+        if (updateAutomationPropertiesNames
+            || hasValueChanged
+            || (mustUpdateTextOfMostSignificantDigits && (index == previousMSDPosition || index == newMSDPosition)))
+        {
+            flipButton->SetValue(AutomationProperties::NameProperty, GenerateAutomationPropertiesName(index, val));
+        }
         ++it;
         ++index;
     }
