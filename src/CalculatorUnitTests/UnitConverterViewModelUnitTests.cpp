@@ -222,10 +222,10 @@ void UnitConverterMock::SwitchActive(const std::wstring& newValue)
     m_curValue = newValue;
 }
 
-    std::wstring UnitConverterMock::SaveUserPreferences()
-    {
-        return L"TEST";
-    };
+std::wstring UnitConverterMock::SaveUserPreferences()
+{
+    return L"TEST";
+};
 
 void UnitConverterMock::RestoreUserPreferences(_In_ std::wstring_view /*userPreferences*/){};
 
@@ -284,9 +284,9 @@ for (unsigned int k = 0; k < categoryList->Size; k++)
         wstring unit1Name = vm->Unit1->Name->Data();
         for (unsigned int j = 0; j < unitList->Size; j++)
         {
-			if (i == j)
-				continue;
-			vm->Value2Active = true;
+            if (i == j)
+                continue;
+            vm->Value2Active = true;
             vm->Value1Active = false;
             vm->Unit2 = unitList->GetAt(j);
             wstring unit2Name = vm->Unit2->Name->Data();
@@ -704,46 +704,46 @@ TEST_METHOD(TestUnitChangeAfterSwitchingActiveTwiceUpdateUnitsCorrectly)
     VERIFY_IS_TRUE(UNIT6 == mock->m_curFrom);
 }
 
-        TEST_METHOD(TestUnitFlipFromToUnits)
-        {
-            shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
-            VM::UnitConverterViewModel vm(mock);
-            vm.Value2Active = true;
-            vm.Value1Active = true;
-            vm.Unit2 = vm.Units->GetAt(0);
-            VERIFY_IS_TRUE(vm.Unit2 == vm.Units->GetAt(0));
-            vm.Unit1 = vm.Units->GetAt(2);
-            VERIFY_IS_TRUE(vm.Unit1 == vm.Units->GetAt(2));
-            vm.Unit2 = vm.Units->GetAt(2);
-            VERIFY_IS_TRUE(vm.Unit1 == vm.Units->GetAt(0));
-            VERIFY_IS_TRUE(vm.Unit2 == vm.Units->GetAt(2));
-            vm.Unit1 = vm.Units->GetAt(2);
-            VERIFY_IS_TRUE(vm.Unit2 == vm.Units->GetAt(0));
-            VERIFY_IS_TRUE(vm.Unit1 == vm.Units->GetAt(2));
-            vm.Unit1 = vm.Units->GetAt(1);
-            VERIFY_IS_TRUE(vm.Unit2 == vm.Units->GetAt(0));
-            VERIFY_IS_TRUE(vm.Unit1 == vm.Units->GetAt(1));
-        }
+TEST_METHOD(TestUnitFlipFromToUnits)
+{
+    shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
+    VM::UnitConverterViewModel vm(mock);
+    vm.Value2Active = true;
+    vm.Value1Active = true;
+    vm.Unit2 = vm.Units->GetAt(0);
+    VERIFY_IS_TRUE(vm.Unit2 == vm.Units->GetAt(0));
+    vm.Unit1 = vm.Units->GetAt(2);
+    VERIFY_IS_TRUE(vm.Unit1 == vm.Units->GetAt(2));
+    vm.Unit2 = vm.Units->GetAt(2);
+    VERIFY_IS_TRUE(vm.Unit1 == vm.Units->GetAt(0));
+    VERIFY_IS_TRUE(vm.Unit2 == vm.Units->GetAt(2));
+    vm.Unit1 = vm.Units->GetAt(2);
+    VERIFY_IS_TRUE(vm.Unit2 == vm.Units->GetAt(0));
+    VERIFY_IS_TRUE(vm.Unit1 == vm.Units->GetAt(2));
+    vm.Unit1 = vm.Units->GetAt(1);
+    VERIFY_IS_TRUE(vm.Unit2 == vm.Units->GetAt(0));
+    VERIFY_IS_TRUE(vm.Unit1 == vm.Units->GetAt(1));
+}
 
-        TEST_METHOD(TestCategoryChangeAfterSwitchingActiveTwiceUpdatesDisplayCorrectly)
-        {
-            shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
-            VM::UnitConverterViewModel vm(mock);
-            const WCHAR * vFrom = L"1", *vTo = L"234";
-            vm.UpdateDisplay(vFrom, vTo);
-            vm.Value2Active = true;
-            vm.Value1Active = true;
-            vm.CurrentCategory = vm.Categories->GetAt(2);
-            VERIFY_IS_TRUE(UNIT9 == vm.Unit1->GetModelUnit());
-            VERIFY_IS_TRUE(UNIT7 == vm.Unit2->GetModelUnit());
-            VERIFY_IS_TRUE(UNIT9 == mock->m_curFrom);
-            VERIFY_IS_TRUE(UNIT7 == mock->m_curTo);
-            VERIFY_ARE_EQUAL((UINT)2, mock->m_switchActiveCallCount);
-            const wchar_t * newvFrom = L"5", *newvTo = L"7";
-            vm.UpdateDisplay(newvFrom, newvTo);
-            VERIFY_IS_TRUE(vm.Value1 == AddUnicodeLTRMarkers(newvFrom));
-            VERIFY_IS_TRUE(vm.Value2 == AddUnicodeLTRMarkers(newvTo));
-        }
+TEST_METHOD(TestCategoryChangeAfterSwitchingActiveTwiceUpdatesDisplayCorrectly)
+{
+    shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
+    VM::UnitConverterViewModel vm(mock);
+    const WCHAR *vFrom = L"1", *vTo = L"234";
+    vm.UpdateDisplay(vFrom, vTo);
+    vm.Value2Active = true;
+    vm.Value1Active = true;
+    vm.CurrentCategory = vm.Categories->GetAt(2);
+    VERIFY_IS_TRUE(UNIT9 == vm.Unit1->GetModelUnit());
+    VERIFY_IS_TRUE(UNIT7 == vm.Unit2->GetModelUnit());
+    VERIFY_IS_TRUE(UNIT9 == mock->m_curFrom);
+    VERIFY_IS_TRUE(UNIT7 == mock->m_curTo);
+    VERIFY_ARE_EQUAL((UINT)2, mock->m_switchActiveCallCount);
+    const wchar_t *newvFrom = L"5", *newvTo = L"7";
+    vm.UpdateDisplay(newvFrom, newvTo);
+    VERIFY_IS_TRUE(vm.Value1 == AddUnicodeLTRMarkers(newvFrom));
+    VERIFY_IS_TRUE(vm.Value2 == AddUnicodeLTRMarkers(newvTo));
+}
 
 // There is a 100 ms fudge time for the time based tests below
 
