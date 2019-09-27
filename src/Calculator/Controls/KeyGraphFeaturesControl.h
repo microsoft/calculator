@@ -22,14 +22,7 @@ namespace CalculatorApp
         protected:
             virtual void OnApplyTemplate() override;
         private:
-            Windows::UI::Xaml::Controls::Button ^ m_equationButton;
-            Windows::UI::Xaml::Controls::RichEditBox ^ m_equationEditBox;
-            Windows::UI::Xaml::Controls::RichEditBox ^ m_keyGraphFeaturesBox;
 
-            void SetRichEditText(
-                Windows::ApplicationModel::LimitedAccessFeatureStatus lafStatus,
-                Windows::UI::Xaml::Controls::RichEditBox ^ richEditBox,
-                Platform::String ^ mathMLString);
         };
     }
 }
