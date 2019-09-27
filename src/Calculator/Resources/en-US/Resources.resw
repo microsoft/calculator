@@ -549,11 +549,11 @@
     <value>%1, value %2</value>
     <comment>{Locked="%1","%2"}. String used in automation name for each bit in bit flip. %1 will be replaced by the position of the bit (1st bit, 3rd bit), %2 by a binary value (1 or 0)</comment>
   </data>
-    <data name="BitPosition" xml:space="preserve">
+  <data name="BitPosition" xml:space="preserve">
     <value>%1 bit</value>
     <comment>{Locked="%1"}. Sub-string used to indicate the position of a bit (e.g. 1st bit, 2nd bit...)</comment>
   </data>
-    <data name="63" xml:space="preserve">
+  <data name="63" xml:space="preserve">
     <value>63rd</value>
     <comment>Sub-string used in automation name for 63 bit in bit flip</comment>
   </data>
@@ -805,9 +805,9 @@
     <value>1st</value>
     <comment>Sub-string used in automation name for 1 bit in bit flip</comment>
   </data>
-  <data name="0" xml:space="preserve">
-    <value>0th</value>
-    <comment>Sub-string used in automation name for 0 bit in bit flip</comment>
+  <data name="LeastSignificantBit" xml:space="preserve">
+    <value>least significant bit</value>
+    <comment>Used to describe the first bit of a binary number. Used in bit flip</comment>
   </data>
   <data name="MemoryButton_Open" xml:space="preserve">
     <value>Open memory flyout</value>
@@ -3426,5 +3426,9 @@
   <data name="CalculationFailed" xml:space="preserve">
     <value>Calculation failed</value>
     <comment>Text displayed when the application is not able to do a calculation</comment>
+  </data>
+  <data name="MostSignificantBit" xml:space="preserve">
+    <value>most significant bit</value>
+    <comment>Used to describe the last bit of a binary number. Used in bit flip</comment>
   </data>
 </root>
