@@ -374,22 +374,23 @@
               Grid.Column="1"
               Margin="0,0,0,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <StackPanel>
                 <Button x:Name="Share" Click="OnShareClick">
                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
                 </Button>
-                <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}"/>
+                <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}" KeyGraphFeaturesVisibilityChanged="OnEquationKeyGraphFeaturesChanged"/>
             </StackPanel>
 
             <Grid x:Name="ButtonContainerGrid"
                   Grid.Row="2"
                   Margin="3,0,3,3"
-                  UseLayoutRounding="False">
+                  UseLayoutRounding="False"
+                  Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>

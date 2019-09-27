@@ -18,6 +18,7 @@ namespace CalculatorApp
         COMMAND_FOR_METHOD(ZoomOutButtonPressed, GraphingCalculator::OnZoomOutCommand);
         COMMAND_FOR_METHOD(ZoomInButtonPressed, GraphingCalculator::OnZoomInCommand);
         COMMAND_FOR_METHOD(ZoomResetButtonPressed, GraphingCalculator::OnZoomResetCommand);
+        OBSERVABLE_PROPERTY_RW(bool, IsKeyGraphFeaturesVisible);
 
         property CalculatorApp::ViewModel::GraphingCalculatorViewModel^ ViewModel
         {
@@ -52,7 +53,7 @@ namespace CalculatorApp
         void CommandInvokedHandler(Windows::UI::Popups::IUICommand^ command);
 
         void TextBoxGotFocus(Windows::UI::Xaml::Controls::TextBox^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OnEquationKeyGraphFeaturesChanged(GraphControl::Equation ^ equation, Platform::String ^ propertyName);
+        void OnEquationKeyGraphFeaturesChanged(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 
 }

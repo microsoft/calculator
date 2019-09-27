@@ -48,6 +48,15 @@ namespace GraphControl
     DependencyProperty ^ Equation::s_monotonicityProperty;
     static constexpr auto s_propertyName_Monotonicity = L"Monotonicity";
 
+    DependencyProperty ^ Equation::s_verticalAsymptotesProperty;
+    static constexpr auto s_propertyName_VerticalAsymptotes = L"VerticalAsymptotes";
+
+    DependencyProperty ^ Equation::s_horizontalAsymptotesProperty;
+    static constexpr auto s_propertyName_HorizontalAsymptotes = L"HorizontalAsymptotes";
+
+    DependencyProperty ^ Equation::s_obliqueAsymptotesProperty;
+    static constexpr auto s_propertyName_ObliqueAsymptotes = L"ObliqueAsymptotes";
+
     namespace EquationProperties
     {
         String ^ Expression = StringReference(s_propertyName_Expression);
@@ -62,6 +71,9 @@ namespace GraphControl
         String ^ Range = StringReference(s_propertyName_Range);
         String ^ InflectionPoints = StringReference(s_propertyName_InflectionPoints);
         String ^ Monotonicity = StringReference(s_propertyName_Monotonicity);
+        String ^ VerticalAsymptotes = StringReference(s_propertyName_VerticalAsymptotes);
+        String ^ HorizontalAsymptotes = StringReference(s_propertyName_HorizontalAsymptotes);
+        String ^ ObliqueAsymptotes = StringReference(s_propertyName_ObliqueAsymptotes);
     }
 
     void Equation::RegisterDependencyProperties()
@@ -110,7 +122,7 @@ namespace GraphControl
         {
             s_parityProperty = DependencyProperty::Register(
                 EquationProperties::Parity,
-                String::typeid,
+                FunctionParityType::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -177,6 +189,33 @@ namespace GraphControl
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
+
+        if (!s_verticalAsymptotesProperty)
+        {
+            s_verticalAsymptotesProperty = DependencyProperty::Register(
+                EquationProperties::VerticalAsymptotes,
+                String::typeid,
+                Equation::typeid,
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
+        }
+
+        if (!s_horizontalAsymptotesProperty)
+        {
+            s_horizontalAsymptotesProperty = DependencyProperty::Register(
+                EquationProperties::HorizontalAsymptotes,
+                String::typeid,
+                Equation::typeid,
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
+        }
+
+        if (!s_obliqueAsymptotesProperty)
+        {
+            s_obliqueAsymptotesProperty = DependencyProperty::Register(
+                EquationProperties::ObliqueAsymptotes,
+                String::typeid,
+                Equation::typeid,
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
+        }
     }
 
     void Equation::OnCustomDependencyPropertyChanged(DependencyObject ^ obj, DependencyPropertyChangedEventArgs ^ args)
@@ -232,7 +271,19 @@ namespace GraphControl
             {
                 propertyName = EquationProperties::Monotonicity;
             }
-
+            else if (args->Property == s_verticalAsymptotesProperty)
+            {
+                propertyName = EquationProperties::VerticalAsymptotes;
+            }
+            else if (args->Property == s_horizontalAsymptotesProperty)
+            {
+                propertyName = EquationProperties::HorizontalAsymptotes;
+            }
+            else if (args->Property == s_obliqueAsymptotesProperty)
+            {
+                propertyName = EquationProperties::ObliqueAsymptotes;
+            }
+            
             eq->PropertyChanged(eq, propertyName);
         }
     }

@@ -54,7 +54,8 @@
                                                       GotFocus="InputTextBox_GotFocus"
                                                       KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked"
                                                       LostFocus="InputTextBox_LostFocus"
-                                                      RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
+                                                      RemoveButtonClicked="EquationTextBox_RemoveButtonClicked"
+                                                      EquationButtonClicked="EquationTextBox_EquationButtonClicked">
                                 <controls:EquationTextBox.EquationColor>
                                     <SolidColorBrush x:Name="EquationLineColor" Color="{x:Bind LineColor, Mode=OneWay}"/>
                                 </controls:EquationTextBox.EquationColor>
@@ -81,15 +82,40 @@
         </Grid>
         <StackPanel x:Name="KeyGraphFeaturesPanel"
                     DataContext="{x:Bind KeyGraphFeaturesVM, Mode=OneWay}"
-                    Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}">
-            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Domain, Mode=OneWay}"/>
-            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Range, Mode=OneWay}"/>
-            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.XIntercept, Mode=OneWay}"/>
-            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.YIntercept, Mode=OneWay}"/>
-            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Minima, Mode=OneWay}"/>
-            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Maxima, Mode=OneWay}"/>
-            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.InflectionPoints, Mode=OneWay}"/>
-            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Monotonicity, Mode=OneWay}"/>
+                    Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"
+                    >
+            <controls:EquationTextBox x:Uid="EquationInputButton"
+                                       Margin="0,8,3,0"
+                                       Style="{StaticResource EquationTextBoxStyle}"
+                                       EquationButtonClicked="KeyGraphFeatures_EquationButtonClicked"
+                                       DataContext="{x:Bind KeyGraphFeaturesVM, Mode=OneWay}"/>
+            <TextBlock x:Uid="KeyGraphFeaturesLabel" FontWeight="Bold" FontSize="14" Margin="0,8,3,0"/>
+            <TextBlock x:Uid="KeyGraphFeatures_DomainLabel" FontWeight="Bold" FontSize="12" Margin="0,8,3,0"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Domain, Mode=OneWay}" Margin="0,8,3,0"/>
+            <TextBlock x:Uid="KeyGraphFeatures_RangeLabel" FontWeight="Bold" FontSize="12" Margin="0,8,3,0"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Range, Mode=OneWay}" Margin="0,8,3,0"/>
+            <TextBlock x:Uid="KeyGraphFeatures_XInterceptLabel" FontWeight="Bold" FontSize="12" Margin="0,8,3,0"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.XIntercept, Mode=OneWay}" Margin="0,8,3,0"/>
+            <TextBlock x:Uid="KeyGraphFeatures_YInterceptLabel" FontWeight="Bold" FontSize="12" Margin="0,8,3,0"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.YIntercept, Mode=OneWay}" Margin="0,8,3,0"/>
+            <TextBlock x:Uid="KeyGraphFeatures_MinimaLabel" FontWeight="Bold" FontSize="12" Margin="0,8,3,0"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Minima, Mode=OneWay}" Margin="0,8,3,0"/>
+            <TextBlock x:Uid="KeyGraphFeatures_MaximaLabel" FontWeight="Bold" FontSize="12" Margin="0,8,3,0"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Maxima, Mode=OneWay}" Margin="0,8,3,0"/>
+            <TextBlock x:Uid="KeyGraphFeatures_ParityLabel" FontWeight="Bold" FontSize="12" Margin="0,8,3,0"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.ParityString, Mode=OneWay}" Margin="0,8,3,0"/>
+            <TextBlock x:Uid="KeyGraphFeatures_PeriodicityLabel" FontWeight="Bold" FontSize="12" Margin="0,8,3,0"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.PeriodicityString, Mode=OneWay}" Margin="0,8,3,0"/>
+            <TextBlock x:Uid="KeyGraphFeatures_InflectionPointsLabel" FontWeight="Bold" FontSize="12" Margin="0,8,3,0"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.InflectionPoints, Mode=OneWay}" Margin="0,8,3,0"/>
+            <TextBlock x:Uid="KeyGraphFeatures_MonotonicityLabel" FontWeight="Bold" FontSize="12" Margin="0,8,3,0"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.Monotonicity, Mode=OneWay}" Margin="0,8,3,0"/>
+            <TextBlock x:Uid="KeyGraphFeatures_VerticalAsymptotesLabel" FontWeight="Bold" FontSize="12" Margin="0,8,3,0"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.VerticalAsymptotes, Mode=OneWay}" Margin="0,8,3,0"/>
+            <TextBlock x:Uid="KeyGraphFeatures_HorizontalAsymptotesLabel" FontWeight="Bold" FontSize="12" Margin="0,8,3,0"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.HorizontalAsymptotes, Mode=OneWay}" Margin="0,8,3,0"/>
+            <TextBlock x:Uid="KeyGraphFeatures_ObliqueAsymptotesLabel" FontWeight="Bold" FontSize="12" Margin="0,8,3,0"/>
+            <controls:MathRichEditBox Text="{x:Bind KeyGraphFeaturesVM.ObliqueAsymptotes, Mode=OneWay}" Margin="0,8,3,0"/>
         </StackPanel>
 
 

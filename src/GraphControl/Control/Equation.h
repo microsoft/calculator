@@ -8,6 +8,66 @@ namespace GraphControl
         extern Platform::String ^ LineColor;
     }
 
+	// function parity for function analysis
+    enum class FunctionParityType
+    {
+        // parity not calculated or not possible to calculate
+        FunctionParityType_Unknown = 0,
+
+        // parity is odd
+        FunctionParityType_Odd = 1,
+
+        // parity is even
+        FunctionParityType_Even = 2,
+
+        // function is not odd nor even
+        FunctionParityType_None = 3
+    };
+
+    // monotonicity direction for function analysis
+    enum class FunctionMonotonicityType
+    {
+        // unknown or not calculated
+        FunctionMonotonicityType_Unknown = 0,
+
+        // ascending monotonicity on interval
+        FunctionMonotonicityType_Ascending = 1,
+
+        // descending monotonicity on interval
+        FunctionMonotonicityType_Descending = 2,
+
+        // constant monotonicity on interval
+        FunctionMonotonicityType_Constant = 3
+    };
+
+    // asymptote description for function analysis
+    enum class AsymptoteType
+    {
+        // unknown or not calculated
+        AsymptoteType_Unknown = 0,
+
+        // when x goes to positive infinity
+        AsymptoteType_PositiveInfinity = 1,
+
+        // when x goes to negative infinity
+        AsymptoteType_NegativeInfinity = 2,
+
+        // when x goes to positive or negative infinity
+        AsymptoteType_AnyInfinity = 3
+    };
+    // function periodicity for function analysis
+    enum class FunctionPeriodicityType
+    {
+        // periodicity not calculated or not possible to calculate
+        FunctionPeriodicityType_Unknown = 0,
+
+        // parity is odd
+        FunctionPeriodicityType_Periodic = 1,
+
+        // parity is even
+        FunctionPeriodicityType_NotPeriodic = 2
+    };
+
     ref class Equation;
     delegate void PropertyChangedEventHandler(Equation ^ sender, Platform::String ^ propertyName);
 
@@ -105,7 +165,7 @@ namespace GraphControl
         }
         #pragma endregion
 
-        #pragma region Platform::String ^ Parity DependencyProperty
+        #pragma region int Parity DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ ParityProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -113,20 +173,20 @@ namespace GraphControl
                 return s_parityProperty;
             }
         }
-        property Platform::String^ Parity
+        property int Parity
         {
-            Platform::String^ get()
+           int get()
             {
-                return static_cast<Platform::String^>(GetValue(s_parityProperty));
+                return static_cast<int>(GetValue(s_parityProperty));
             }
-            void set(Platform::String^ value)
+            void set(int value)
             {
                 SetValue(s_parityProperty, value);
             }
         }
         #pragma endregion
 
-        #pragma region Platform::String ^ Periodicity DependencyProperty
+        #pragma region int Periodicity DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ PeriodicityProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -134,13 +194,13 @@ namespace GraphControl
                 return s_periodicityProperty;
             }
         }
-        property Platform::String^ Periodicity
+        property int Periodicity
         {
-            Platform::String^ get()
+            int get()
             {
-                return static_cast<Platform::String^>(GetValue(s_periodicityProperty));
+                return static_cast<int>(GetValue(s_periodicityProperty));
             }
-            void set(Platform::String^ value)
+            void set(int value)
             {
                 SetValue(s_periodicityProperty, value);
             }
@@ -252,7 +312,7 @@ namespace GraphControl
         }
         #pragma endregion
 
-        #pragma regionPlatform::String ^ Monotonicity DependencyProperty
+        #pragma region Platform::String ^ Monotonicity DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ MonotonicityProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -269,6 +329,69 @@ namespace GraphControl
             void set(Platform::String^ value)
             {
                 SetValue(s_monotonicityProperty, value);
+            }
+        }
+        #pragma endregion
+
+        #pragma region Platform::String ^ VerticalAsymptotes DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty^ VerticalAsymptotesProperty
+        {
+            Windows::UI::Xaml::DependencyProperty^ get()
+            {
+                return s_verticalAsymptotesProperty;
+            }
+        }
+        property Platform::String^ VerticalAsymptotes
+        {
+            Platform::String^ get()
+            {
+                return static_cast<Platform::String^>(GetValue(s_verticalAsymptotesProperty));
+            }
+            void set(Platform::String^ value)
+            {
+                SetValue(s_verticalAsymptotesProperty, value);
+            }
+        }
+        #pragma endregion
+
+       #pragma region Platform::String ^ HorizontalAsymptotes DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty^ HorizontalAsymptotesProperty
+        {
+            Windows::UI::Xaml::DependencyProperty^ get()
+            {
+                return s_horizontalAsymptotesProperty;
+            }
+        }
+        property Platform::String^ HorizontalAsymptotes
+        {
+            Platform::String^ get()
+            {
+                return static_cast<Platform::String^>(GetValue(s_horizontalAsymptotesProperty));
+            }
+            void set(Platform::String^ value)
+            {
+                SetValue(s_horizontalAsymptotesProperty, value);
+            }
+        }
+        #pragma endregion
+
+        #pragma region Platform::String ^ ObliqueAsymptotes DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty^ ObliqueAsymptotesProperty
+        {
+            Windows::UI::Xaml::DependencyProperty^ get()
+            {
+                return s_obliqueAsymptotesProperty;
+            }
+        }
+        property Platform::String^ ObliqueAsymptotes
+        {
+            Platform::String^ get()
+            {
+                return static_cast<Platform::String^>(GetValue(s_obliqueAsymptotesProperty));
+            }
+            void set(Platform::String^ value)
+            {
+                SetValue(s_obliqueAsymptotesProperty, value);
             }
         }
         #pragma endregion
@@ -300,5 +423,8 @@ namespace GraphControl
         static Windows::UI::Xaml::DependencyProperty ^ s_rangeProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_inflectionPointsProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_monotonicityProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_verticalAsymptotesProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_horizontalAsymptotesProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_obliqueAsymptotesProperty;
     };
 }

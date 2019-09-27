@@ -549,11 +549,11 @@
     <value>%1, value %2</value>
     <comment>{Locked="%1","%2"}. String used in automation name for each bit in bit flip. %1 will be replaced by the position of the bit (1st bit, 3rd bit), %2 by a binary value (1 or 0)</comment>
   </data>
-    <data name="BitPosition" xml:space="preserve">
+  <data name="BitPosition" xml:space="preserve">
     <value>%1 bit</value>
     <comment>{Locked="%1"}. Sub-string used to indicate the position of a bit (e.g. 1st bit, 2nd bit...)</comment>
   </data>
-    <data name="63" xml:space="preserve">
+  <data name="63" xml:space="preserve">
     <value>63rd</value>
     <comment>Sub-string used in automation name for 63 bit in bit flip</comment>
   </data>
@@ -3526,5 +3526,61 @@
   <data name="MaxTextBlock.Text" xml:space="preserve">
     <value>Max</value>
     <comment>Label text for the max text box</comment>
+  </data>
+  <data name="KeyGraphFeaturesLabel.Text" xml:space="preserve">
+    <value>Key Graph Features</value>
+    <comment>Title for KeyGraphFeatures Control</comment>
+  </data>
+  <data name="KeyGraphFeatures_DomainLabel.Text" xml:space="preserve">
+    <value>Domain</value>
+    <comment>Title for KeyGraphFeatures Domain Property</comment>
+  </data>
+  <data name="KeyGraphFeatures_InflectionPointsLabel.Text" xml:space="preserve">
+    <value>Inflection Points</value>
+    <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
+  </data>
+  <data name="KeyGraphFeatures_MaximaLabel.Text" xml:space="preserve">
+    <value>Maxima</value>
+    <comment>Title for KeyGraphFeatures Maxima Property</comment>
+  </data>
+  <data name="KeyGraphFeatures_MinimaLabel.Text" xml:space="preserve">
+    <value>Minima</value>
+    <comment>Title for KeyGraphFeatures Minima Property</comment>
+  </data>
+  <data name="KeyGraphFeatures_MonotonicityLabel.Text" xml:space="preserve">
+    <value>Monotonicity</value>
+    <comment>Title for KeyGraphFeatures Monotonicity Property</comment>
+  </data>
+  <data name="KeyGraphFeatures_ParityLabel.Text" xml:space="preserve">
+    <value>Parity</value>
+    <comment>Title for KeyGraphFeatures Parity Property</comment>
+  </data>
+  <data name="KeyGraphFeatures_PeriodicityLabel.Text" xml:space="preserve">
+    <value>Periodicity</value>
+    <comment>Title for KeyGraphFeatures Periodicity Property</comment>
+  </data>
+  <data name="KeyGraphFeatures_RangeLabel.Text" xml:space="preserve">
+    <value>Range</value>
+    <comment>Title for KeyGraphFeatures Range Property</comment>
+  </data>
+  <data name="KeyGraphFeatures_XInterceptLabel.Text" xml:space="preserve">
+    <value>XIntercept</value>
+    <comment>Title for KeyGraphFeatures XIntercept Property</comment>
+  </data>
+  <data name="KeyGraphFeatures_YInterceptLabel.Text" xml:space="preserve">
+    <value>YIntercept</value>
+    <comment>Title for KeyGraphFeatures YIntercept Property</comment>
+  </data>
+  <data name="KeyGraphFeatures_HorizontalAsymptotesLabel.Text" xml:space="preserve">
+    <value>Horizontal Asymptotes</value>
+    <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
+  </data>
+  <data name="KeyGraphFeatures_ObliqueAsymptotesLabel.Text" xml:space="preserve">
+    <value>Oblique Asymptotes</value>
+    <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
+  </data>
+  <data name="KeyGraphFeatures_VerticalAsymptotesLabel.Text" xml:space="preserve">
+    <value>Vertical Asymptotes</value>
+    <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
   </data>
 </root>

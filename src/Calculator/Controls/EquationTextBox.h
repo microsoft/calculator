@@ -23,6 +23,7 @@ namespace CalculatorApp
             event Windows::UI::Xaml::RoutedEventHandler^ RemoveButtonClicked;
             event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesButtonClicked;
             event Windows::UI::Xaml::RoutedEventHandler ^ EquationSubmitted;
+            event Windows::UI::Xaml::RoutedEventHandler ^ EquationButtonClicked;
 
             Platform::String^ GetEquationText();
             void SetEquationText(Platform::String^ equationText);

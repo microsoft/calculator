@@ -180,6 +180,7 @@ namespace GraphControl
         void ScaleRange(double centerX, double centerY, double scale);
 
         Platform::String ^ ConvertVectorToString(std::vector<std::wstring> inVector);
+        std::map<std::wstring, int> Grapher::ConvertMap(std::map<const Graphing::IExpression*, int> inMap);
 
     private:
         DX::RenderMain^ m_renderMain = nullptr;

@@ -256,7 +256,7 @@ void GraphingCalculator::OnZoomResetCommand(Object ^ /* parameter */)
     GraphingControl->ResetGrid();
 }
 
-void GraphingCalculator::OnEquationKeyGraphFeaturesChanged(Equation ^ equation, String ^ propertyName)
+void GraphingCalculator::OnEquationKeyGraphFeaturesChanged(Object ^ sender, RoutedEventArgs ^ e)
 {
-
+    IsKeyGraphFeaturesVisible = IsKeyGraphFeaturesVisible ? false : true;
 }

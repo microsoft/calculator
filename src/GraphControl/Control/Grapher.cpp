@@ -452,14 +452,17 @@ namespace GraphControl
                             {
                                 equation->Domain = ref new String(functionAnalysisDataOut[0].Domain.c_str());
                                 equation->Range = ref new String(functionAnalysisDataOut[0].Range.c_str());
-                                equation->Parity = ref new String(functionAnalysisDataOut[0].Parity.c_str());
-                                equation->Periodicity = ref new String(functionAnalysisDataOut[0].Periodicity.c_str());
+                                equation->Parity = functionAnalysisDataOut[0].Parity;
+                                equation->Periodicity = functionAnalysisDataOut[0].Periodicity;
                                 equation->XIntercept = ref new String(functionAnalysisDataOut[0].Zeros.c_str());
                                 equation->YIntercept = ref new String(functionAnalysisDataOut[0].YIntercept.c_str());
-                                equation->Minima = ConvertVectorToString(functionAnalysisDataOut[0].Maxima);
+                                equation->Minima = ConvertVectorToString(functionAnalysisDataOut[0].Minima);
                                 equation->Maxima = ConvertVectorToString(functionAnalysisDataOut[0].Maxima);
                                 equation->InflectionPoints = ConvertVectorToString(functionAnalysisDataOut[0].InflectionPoints);
-                                equation->Monotonicity = ConvertVectorToString(functionAnalysisDataOut[0].MonotoneIntervals);
+                                auto mono = ConvertMap(functionAnalysisDataOut[0].MonotoneIntervals);
+                                equation->VerticalAsymptotes = ConvertVectorToString(functionAnalysisDataOut[0].VerticalAsymptotes);
+                                equation->HorizontalAsymptotes = ConvertVectorToString(functionAnalysisDataOut[0].HorizontalAsymptotes);
+                                equation->ObliqueAsymptotes = ConvertVectorToString(functionAnalysisDataOut[0].ObliqueAsymptotes);
                                 continue;
                             }
                         }
@@ -482,11 +485,24 @@ namespace GraphControl
             outString += ref new String(inVector[i].c_str());
             if (i < vectorSize - 1)
             {
-                outString += "\n";
+                outString += ", ";
             }
         }
 
         return outString;
+    }
+
+    map<wstring, int> Grapher::ConvertMap(map<const Graphing::IExpression *, int> inMap)
+    {
+        map<wstring, int> outMap;
+        int mapSize = (int)inMap.size();
+        for (auto pair : inMap)
+        {
+            wstring string = m_solver->Serialize(pair.first);
+            outMap.emplace(string, pair.second);
+        }
+
+        return outMap;
     }
 
     void Grapher::UpdateVariables()

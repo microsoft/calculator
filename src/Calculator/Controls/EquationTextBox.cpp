@@ -167,6 +167,7 @@ void EquationTextBox::OnDeleteButtonClicked(Object ^ sender, RoutedEventArgs ^ e
 
 void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
+    EquationButtonClicked(this, ref new RoutedEventArgs());
 }
 
 void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e)

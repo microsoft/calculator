@@ -74,8 +74,8 @@ void EquationInputArea::InputTextBox_LostFocus(Object ^ sender, RoutedEventArgs 
 
 void EquationInputArea::InputTextBox_Submitted(Object ^ sender, RoutedEventArgs ^ e)
 {
-    auto tb = static_cast<EquationTextBox^>(sender);
-    auto eq = static_cast<EquationViewModel^>(tb->DataContext);
+    auto tb = static_cast<EquationTextBox ^>(sender);
+    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
     eq->Expression = tb->GetEquationText();
 }
 
@@ -101,5 +101,17 @@ void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ s
     auto tb = static_cast<EquationTextBox ^>(sender);
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
     KeyGraphFeaturesVM = eq;
+    KeyGraphFeaturesVisibilityChanged(this, ref new RoutedEventArgs());
     IsKeyGraphFeaturesVisible = true;
+
+}
+
+void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+}
+
+void EquationInputArea::KeyGraphFeatures_EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    KeyGraphFeaturesVisibilityChanged(this, ref new RoutedEventArgs());
+    IsKeyGraphFeaturesVisible = false;
 }
