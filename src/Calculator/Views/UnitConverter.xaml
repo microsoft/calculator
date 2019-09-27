@@ -341,7 +341,7 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-            <VisualStateGroup x:Name="Sizing">
+            <VisualStateGroup x:Name="Sizing" CurrentStateChanged="OnVisualStateChanged">
                 <VisualState x:Name="Wide">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="768" MinWindowWidth="1280"/>
@@ -706,7 +706,7 @@
                                        Style="{StaticResource SymbolOperatorButtonStyle}"
                                        FontSize="16"
                                        ButtonId="Negate"
-                                       Content="&#xe94d;"
+                                       Content="&#xF898;"
                                        TabIndex="6"
                                        Visibility="{x:Bind Model.CurrentCategory.NegateVisibility, Mode=OneWay}"/>
         </Grid>

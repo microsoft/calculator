@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -37,39 +37,163 @@ static constexpr int VOLUME_ID = 4;
 static constexpr int LENGTH_ID = 5;
 static constexpr int WEIGHT_ID = 6;
 static constexpr int TEMPERATURE_ID = 7;
-static constexpr int ENERGY_ID      = 8;
-static constexpr int AREA_ID        = 9;
-static constexpr int SPEED_ID       = 10;
-static constexpr int TIME_ID        = 11;
-static constexpr int POWER_ID       = 12;
-static constexpr int DATA_ID        = 13;
-static constexpr int PRESSURE_ID    = 14;
-static constexpr int ANGLE_ID       = 15;
-static constexpr int CURRENCY_ID    = 16;
+static constexpr int ENERGY_ID = 8;
+static constexpr int AREA_ID = 9;
+static constexpr int SPEED_ID = 10;
+static constexpr int TIME_ID = 11;
+static constexpr int POWER_ID = 12;
+static constexpr int DATA_ID = 13;
+static constexpr int PRESSURE_ID = 14;
+static constexpr int ANGLE_ID = 15;
+static constexpr int CURRENCY_ID = 16;
 static constexpr int GRAPHING_ID    = 17;
 // ^^^ THESE CONSTANTS SHOULD NEVER CHANGE ^^^
 
 // The order of items in this list determines the order of items in the menu.
-static constexpr array<const NavCategoryInitializer, 18> s_categoryManifest = {
-    NavCategoryInitializer { ViewMode::Standard,    STANDARD_ID,    L"Standard",        L"StandardMode",             L"\uE8EF", CategoryGroupType::Calculator, MyVirtualKey::Number1, SUPPORTS_ALL      },
-    NavCategoryInitializer { ViewMode::Scientific,  SCIENTIFIC_ID,  L"Scientific",      L"ScientificMode",           L"\uF196", CategoryGroupType::Calculator, MyVirtualKey::Number2, SUPPORTS_ALL      },
-    NavCategoryInitializer { ViewMode::Programmer,  PROGRAMMER_ID,  L"Programmer",      L"ProgrammerMode",           L"\uECCE", CategoryGroupType::Calculator, MyVirtualKey::Number3, SUPPORTS_ALL      },
-    NavCategoryInitializer { ViewMode::Date,        DATE_ID,        L"Date",            L"DateCalculationMode",      L"\uE787", CategoryGroupType::Calculator, MyVirtualKey::Number4, SUPPORTS_ALL      },
-    NavCategoryInitializer { ViewMode::Graphing,    GRAPHING_ID,    L"Graphing",        L"GraphingCalculatorMode",   L"\uF770", CategoryGroupType::Calculator, MyVirtualKey::Number5, SUPPORTS_ALL      },
-    NavCategoryInitializer { ViewMode::Currency,    CURRENCY_ID,    L"Currency",        L"CategoryName_Currency",    L"\uEB0D", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     },
-    NavCategoryInitializer { ViewMode::Volume,      VOLUME_ID,      L"Volume",          L"CategoryName_Volume",      L"\uF1AA", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     },
-    NavCategoryInitializer { ViewMode::Length,      LENGTH_ID,      L"Length",          L"CategoryName_Length",      L"\uECC6", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     },
-    NavCategoryInitializer { ViewMode::Weight,      WEIGHT_ID,      L"Weight and Mass", L"CategoryName_Weight",      L"\uF4C1", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     },
-    NavCategoryInitializer { ViewMode::Temperature, TEMPERATURE_ID, L"Temperature",     L"CategoryName_Temperature", L"\uE7A3", CategoryGroupType::Converter,  MyVirtualKey::None,    SUPPORTS_NEGATIVE },
-    NavCategoryInitializer { ViewMode::Energy,      ENERGY_ID,      L"Energy",          L"CategoryName_Energy",      L"\uECAD", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     },
-    NavCategoryInitializer { ViewMode::Area,        AREA_ID,        L"Area",            L"CategoryName_Area",        L"\uE809", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     },
-    NavCategoryInitializer { ViewMode::Speed,       SPEED_ID,       L"Speed",           L"CategoryName_Speed",       L"\uEADA", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     },
-    NavCategoryInitializer { ViewMode::Time,        TIME_ID,        L"Time",            L"CategoryName_Time",        L"\uE917", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     },
-    NavCategoryInitializer { ViewMode::Power,       POWER_ID,       L"Power",           L"CategoryName_Power",       L"\uE945", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     },
-    NavCategoryInitializer { ViewMode::Data,        DATA_ID,        L"Data",            L"CategoryName_Data",        L"\uF20F", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     },
-    NavCategoryInitializer { ViewMode::Pressure,    PRESSURE_ID,    L"Pressure",        L"CategoryName_Pressure",    L"\uEC4A", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     },
-    NavCategoryInitializer { ViewMode::Angle,       ANGLE_ID,       L"Angle",           L"CategoryName_Angle",       L"\uF515", CategoryGroupType::Converter,  MyVirtualKey::None,    POSITIVE_ONLY     }
-};
+static constexpr array<const NavCategoryInitializer, 18> s_categoryManifest = { NavCategoryInitializer{ ViewMode::Standard,
+                                                                                                        STANDARD_ID,
+                                                                                                        L"Standard",
+                                                                                                        L"StandardMode",
+                                                                                                        L"\uE8EF",
+                                                                                                        CategoryGroupType::Calculator,
+                                                                                                        MyVirtualKey::Number1,
+                                                                                                        SUPPORTS_ALL },
+																				NavCategoryInitializer{ ViewMode::Graphing,
+																										GRAPHING_ID,
+																										L"Graphing",
+																										L"GraphingCalculatorMode",
+																										L"\uF770",
+																										CategoryGroupType::Calculator,
+																										MyVirtualKey::Number5,
+                                                                                                        SUPPORTS_ALL },
+                                                                                NavCategoryInitializer{ ViewMode::Scientific,
+                                                                                                        SCIENTIFIC_ID,
+                                                                                                        L"Scientific",
+                                                                                                        L"ScientificMode",
+                                                                                                        L"\uF196",
+                                                                                                        CategoryGroupType::Calculator,
+                                                                                                        MyVirtualKey::Number2,
+                                                                                                        SUPPORTS_ALL },
+                                                                                NavCategoryInitializer{ ViewMode::Programmer,
+                                                                                                        PROGRAMMER_ID,
+                                                                                                        L"Programmer",
+                                                                                                        L"ProgrammerMode",
+                                                                                                        L"\uECCE",
+                                                                                                        CategoryGroupType::Calculator,
+                                                                                                        MyVirtualKey::Number3,
+                                                                                                        SUPPORTS_ALL },
+                                                                                NavCategoryInitializer{ ViewMode::Date,
+                                                                                                        DATE_ID,
+                                                                                                        L"Date",
+                                                                                                        L"DateCalculationMode",
+                                                                                                        L"\uE787",
+                                                                                                        CategoryGroupType::Calculator,
+                                                                                                        MyVirtualKey::Number4,
+                                                                                                        SUPPORTS_ALL },
+                                                                                NavCategoryInitializer{ ViewMode::Currency,
+                                                                                                        CURRENCY_ID,
+                                                                                                        L"Currency",
+                                                                                                        L"CategoryName_Currency",
+                                                                                                        L"\uEB0D",
+                                                                                                        CategoryGroupType::Converter,
+                                                                                                        MyVirtualKey::None,
+                                                                                                        POSITIVE_ONLY },
+                                                                                NavCategoryInitializer{ ViewMode::Volume,
+                                                                                                        VOLUME_ID,
+                                                                                                        L"Volume",
+                                                                                                        L"CategoryName_Volume",
+                                                                                                        L"\uF1AA",
+                                                                                                        CategoryGroupType::Converter,
+                                                                                                        MyVirtualKey::None,
+                                                                                                        POSITIVE_ONLY },
+                                                                                NavCategoryInitializer{ ViewMode::Length,
+                                                                                                        LENGTH_ID,
+                                                                                                        L"Length",
+                                                                                                        L"CategoryName_Length",
+                                                                                                        L"\uECC6",
+                                                                                                        CategoryGroupType::Converter,
+                                                                                                        MyVirtualKey::None,
+                                                                                                        POSITIVE_ONLY },
+                                                                                NavCategoryInitializer{ ViewMode::Weight,
+                                                                                                        WEIGHT_ID,
+                                                                                                        L"Weight and Mass",
+                                                                                                        L"CategoryName_Weight",
+                                                                                                        L"\uF4C1",
+                                                                                                        CategoryGroupType::Converter,
+                                                                                                        MyVirtualKey::None,
+                                                                                                        POSITIVE_ONLY },
+                                                                                NavCategoryInitializer{ ViewMode::Temperature,
+                                                                                                        TEMPERATURE_ID,
+                                                                                                        L"Temperature",
+                                                                                                        L"CategoryName_Temperature",
+                                                                                                        L"\uE7A3",
+                                                                                                        CategoryGroupType::Converter,
+                                                                                                        MyVirtualKey::None,
+                                                                                                        SUPPORTS_NEGATIVE },
+                                                                                NavCategoryInitializer{ ViewMode::Energy,
+                                                                                                        ENERGY_ID,
+                                                                                                        L"Energy",
+                                                                                                        L"CategoryName_Energy",
+                                                                                                        L"\uECAD",
+                                                                                                        CategoryGroupType::Converter,
+                                                                                                        MyVirtualKey::None,
+                                                                                                        POSITIVE_ONLY },
+                                                                                NavCategoryInitializer{ ViewMode::Area,
+                                                                                                        AREA_ID,
+                                                                                                        L"Area",
+                                                                                                        L"CategoryName_Area",
+                                                                                                        L"\uE809",
+                                                                                                        CategoryGroupType::Converter,
+                                                                                                        MyVirtualKey::None,
+                                                                                                        POSITIVE_ONLY },
+                                                                                NavCategoryInitializer{ ViewMode::Speed,
+                                                                                                        SPEED_ID,
+                                                                                                        L"Speed",
+                                                                                                        L"CategoryName_Speed",
+                                                                                                        L"\uEADA",
+                                                                                                        CategoryGroupType::Converter,
+                                                                                                        MyVirtualKey::None,
+                                                                                                        POSITIVE_ONLY },
+                                                                                NavCategoryInitializer{ ViewMode::Time,
+                                                                                                        TIME_ID,
+                                                                                                        L"Time",
+                                                                                                        L"CategoryName_Time",
+                                                                                                        L"\uE917",
+                                                                                                        CategoryGroupType::Converter,
+                                                                                                        MyVirtualKey::None,
+                                                                                                        POSITIVE_ONLY },
+                                                                                NavCategoryInitializer{ ViewMode::Power,
+                                                                                                        POWER_ID,
+                                                                                                        L"Power",
+                                                                                                        L"CategoryName_Power",
+                                                                                                        L"\uE945",
+                                                                                                        CategoryGroupType::Converter,
+                                                                                                        MyVirtualKey::None,
+                                                                                                        POSITIVE_ONLY },
+                                                                                NavCategoryInitializer{ ViewMode::Data,
+                                                                                                        DATA_ID,
+                                                                                                        L"Data",
+                                                                                                        L"CategoryName_Data",
+                                                                                                        L"\uF20F",
+                                                                                                        CategoryGroupType::Converter,
+                                                                                                        MyVirtualKey::None,
+                                                                                                        POSITIVE_ONLY },
+                                                                                NavCategoryInitializer{ ViewMode::Pressure,
+                                                                                                        PRESSURE_ID,
+                                                                                                        L"Pressure",
+                                                                                                        L"CategoryName_Pressure",
+                                                                                                        L"\uEC4A",
+                                                                                                        CategoryGroupType::Converter,
+                                                                                                        MyVirtualKey::None,
+                                                                                                        POSITIVE_ONLY },
+                                                                                NavCategoryInitializer{ ViewMode::Angle,
+                                                                                                        ANGLE_ID,
+                                                                                                        L"Angle",
+                                                                                                        L"CategoryName_Angle",
+                                                                                                        L"\uF515",
+                                                                                                        CategoryGroupType::Converter,
+                                                                                                        MyVirtualKey::None,
+                                                                                                        POSITIVE_ONLY } };
 
 // This function should only be used when storing the mode to app data.
 int NavCategory::Serialize(ViewMode mode)

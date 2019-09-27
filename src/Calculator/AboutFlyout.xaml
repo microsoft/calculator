@@ -4,7 +4,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp.Common"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             Loaded="UserControl_Loaded"
              mc:Ignorable="d">
     <UserControl.Transitions>
         <TransitionCollection>

@@ -20,3 +20,5 @@
 #include <unordered_map>
 #include <vector>
 #include <winerror.h>
+#include <iostream>
+#include <math.h>

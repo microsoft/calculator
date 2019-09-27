@@ -20,12 +20,16 @@ namespace CalculatorApp
             void Initialize(CalculatorApp::Common::ViewMode mode); // Use for first init, use deserialize for rehydration
 
             OBSERVABLE_OBJECT();
-            OBSERVABLE_PROPERTY_RW(StandardCalculatorViewModel^, CalculatorViewModel);
-            OBSERVABLE_PROPERTY_RW(DateCalculatorViewModel^, DateCalcViewModel);
-            OBSERVABLE_PROPERTY_RW(GraphingCalculatorViewModel^, GraphingCalcViewModel);
-            OBSERVABLE_PROPERTY_RW(UnitConverterViewModel^, ConverterViewModel);
+            OBSERVABLE_PROPERTY_RW(StandardCalculatorViewModel ^, CalculatorViewModel);
+            OBSERVABLE_PROPERTY_RW(DateCalculatorViewModel ^, DateCalcViewModel);
+            OBSERVABLE_PROPERTY_RW(GraphingCalculatorViewModel ^, GraphingCalcViewModel);
+            OBSERVABLE_PROPERTY_RW(UnitConverterViewModel ^, ConverterViewModel);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::ViewMode, PreviousMode);
+            OBSERVABLE_PROPERTY_R(bool, IsAlwaysOnTop);
             OBSERVABLE_NAMED_PROPERTY_RW(Platform::String ^, CategoryName);
+
+            // Indicates whether calculator is currently in standard mode _and_ supports CompactOverlay _and_ is not in Always-on-Top mode
+            OBSERVABLE_PROPERTY_R(bool, DisplayNormalAlwaysOnTopOption);
 
             COMMAND_FOR_METHOD(CopyCommand, ApplicationViewModel::OnCopyCommand);
             COMMAND_FOR_METHOD(PasteCommand, ApplicationViewModel::OnPasteCommand);
@@ -66,6 +70,32 @@ namespace CalculatorApp
                 }
             }
 
+            static property Platform::String ^ LaunchedLocalSettings
+            {
+                Platform::String ^ get()
+                {
+                    return Platform::StringReference(L"calculatorAlwaysOnTopLaunched");
+                }
+            }
+
+            static property Platform::String ^ WidthLocalSettings
+            {
+                Platform::String ^ get()
+                {
+                    return Platform::StringReference(L"calculatorAlwaysOnTopLastWidth");
+                }
+            }
+
+            static property Platform::String ^ HeightLocalSettings
+            {
+                Platform::String ^ get()
+                {
+                    return Platform::StringReference(L"calculatorAlwaysOnTopLastHeight");
+                }
+            }
+
+            void ToggleAlwaysOnTop(float width, float height);
+
         private:
             bool TryRecoverFromNavigationModeFailure();
 
@@ -78,6 +108,8 @@ namespace CalculatorApp
 
             CalculatorApp::Common::ViewMode m_mode;
             Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup ^> ^ m_categories;
+            Concurrency::task<void> HandleToggleAlwaysOnTop(float width, float height);
+            void SetDisplayNormalAlwaysOnTopOption();
         };
     }
 }

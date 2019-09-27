@@ -118,6 +118,9 @@ void HistoryViewModel::SetCalculatorDisplay(CalculatorDisplay& calculatorDisplay
 
 void HistoryViewModel::ShowItem(_In_ HistoryItemViewModel ^ e)
 {
+    unsigned int index;
+    Items->IndexOf(e, &index);
+    TraceLogger::GetInstance().LogHistoryItemLoad((ViewMode)m_currentMode, ItemSize, (int)(index));
     HistoryItemClicked(e);
 }
 
@@ -149,7 +152,6 @@ void HistoryViewModel::OnHideCommand(_In_ Platform::Object ^ e)
 
 void HistoryViewModel::OnClearCommand(_In_ Platform::Object ^ e)
 {
-    TraceLogger::GetInstance().LogClearHistory();
     if (AreHistoryShortcutsEnabled == true)
     {
         m_calculatorManager->ClearHistory();

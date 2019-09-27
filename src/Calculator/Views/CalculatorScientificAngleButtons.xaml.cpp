@@ -37,7 +37,6 @@ CalculatorScientificAngleButtons::CalculatorScientificAngleButtons()
 
 void CalculatorScientificAngleButtons::HypButton_Toggled(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    TraceLogger::GetInstance().LogHypButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
 }
 
 void CalculatorScientificAngleButtons::FToEButton_Toggled(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
@@ -48,7 +47,6 @@ void CalculatorScientificAngleButtons::FToEButton_Toggled(_In_ Object ^ sender, 
 
 void CalculatorApp::CalculatorScientificAngleButtons::OnAngleButtonPressed(_In_ Object ^ commandParameter)
 {
-    TraceLogger::GetInstance().LogAngleButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
     String ^ buttonId = static_cast<String ^>(commandParameter);
 
     DegreeButton->Visibility = ::Visibility::Collapsed;

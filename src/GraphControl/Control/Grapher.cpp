@@ -57,7 +57,7 @@ namespace GraphControl
         , m_graph{ m_solver->CreateGrapher() }
         , m_Moving{ false }
     {
-        m_solver->ParsingOptions().SetFormatType(FormatType::Linear);
+        m_solver->ParsingOptions().SetFormatType(FormatType::MathML);
 
         DefaultStyleKey = StringReference(s_defaultStyleKey);
 
@@ -314,6 +314,12 @@ namespace GraphControl
                 older->EquationChanged -= m_tokenEquationChanged;
                 m_tokenEquationChanged.Value = 0;
             }
+
+            if (m_tokenEquationStyleChanged.Value != 0)
+            {
+                older->EquationStyleChanged -= m_tokenEquationStyleChanged;
+                m_tokenEquationStyleChanged.Value = 0;
+            }
         }
 
         if (auto newer = static_cast<EquationCollection ^>(args->NewValue))
@@ -321,6 +327,8 @@ namespace GraphControl
             m_tokenEquationsChanged = newer->VectorChanged += ref new VectorChangedEventHandler<Equation ^>(this, &Grapher::OnEquationsVectorChanged);
 
             m_tokenEquationChanged = newer->EquationChanged += ref new EquationChangedEventHandler(this, &Grapher::OnEquationChanged);
+
+            m_tokenEquationStyleChanged = newer->EquationStyleChanged += ref new EquationChangedEventHandler(this, &Grapher::OnEquationStyleChanged);
         }
 
         UpdateGraph();
@@ -347,6 +355,19 @@ namespace GraphControl
         UpdateGraph();
     }
 
+    void Grapher::OnEquationStyleChanged()
+    {
+        if (m_graph)
+        {
+            UpdateGraphOptions(m_graph->GetOptions(), GetValidEquations());
+        }
+
+        if (m_renderMain)
+        {
+            m_renderMain->RunRenderPass();
+        }
+    }
+
     void Grapher::UpdateGraph()
     {
         if (m_renderMain && m_graph != nullptr)
@@ -356,20 +377,20 @@ namespace GraphControl
             if (!validEqs.empty())
             {
                 wstringstream ss{};
-                ss << L"show2d(";
+                ss << L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>show2d</mi><mfenced separators=\"\">";
 
                 int numValidEquations = 0;
                 for (Equation ^ eq : validEqs)
                 {
                     if (numValidEquations++ > 0)
                     {
-                        ss << L",";
+                        ss << L"<mo>,</mo>";
                     }
 
                     ss << eq->GetRequest();
                 }
 
-                ss << L")";
+                ss << L"</mfenced></mrow></math>";
 
                 wstring request = ss.str();
                 unique_ptr<IExpression> graphExpression;
@@ -475,7 +496,7 @@ namespace GraphControl
             graphColors.reserve(validEqs.size());
             for (Equation ^ eq : validEqs)
             {
-                auto lineColor = eq->LineColor;
+                auto lineColor = eq->LineColor->Color;
                 graphColors.emplace_back(lineColor.R, lineColor.G, lineColor.B, lineColor.A);
             }
             options.SetGraphColors(graphColors);
