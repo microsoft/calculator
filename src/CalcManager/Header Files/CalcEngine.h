@@ -109,8 +109,9 @@ private:
     bool m_fIntegerMode; /* This is true if engine is explicitly called to be in integer mode. All bases are restricted to be in integers only */
     ICalcDisplay* m_pCalcDisplay;
     CalculationManager::IResourceProvider* const m_resourceProvider;
-    int m_nOpCode;     /* ID value of operation.                       */
-    int m_nPrevOpCode; // opcode which computed the number in m_currentVal. 0 if it is already bracketed or plain number or
+    int m_nLastOpCode;     /* ID value of operation.                       */
+    int m_nBinaryOpCode;     /* ID value of binary operation.                       */
+    int m_nPrevBinaryOpCode; // opcode which computed the number in m_currentVal. 0 if it is already bracketed or plain number or
     // if it hasn't yet been computed
     bool m_bChangeOp;              /* Flag for changing operation.       */
     bool m_bRecord;                // Global mode: recording or displaying

@@ -80,7 +80,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
         {
             // If the operator is multiply/divide, we evaluate this as "X [op] (Y%)"
             // Otherwise, we evaluate it as "X [op] (X * Y%)"
-            if (m_nOpCode == IDC_MUL || m_nOpCode == IDC_DIV)
+            if (m_nBinaryOpCode == IDC_MUL || m_nBinaryOpCode == IDC_DIV)
             {
                 result = rat / 100;
             }
