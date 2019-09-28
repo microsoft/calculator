@@ -24,8 +24,8 @@
                     <SolidColorBrush x:Key="SystemControlHighlightTransparentBrush" Color="Transparent"/>
                     <SolidColorBrush x:Key="AppBackgroundAltMediumLowBrush" Color="{ThemeResource SystemAltMediumLowColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextBaseMediumHighBrush" Color="{StaticResource SystemBaseMediumHighColor}"/>
-                    <RevealBackgroundBrush x:Key="AppControlHoverButtonFaceBrush" Color="#18FFFFFF"/>
-                    <RevealBackgroundBrush x:Key="AppControlPressedButtonFaceBrush" Color="#30FFFFFF"/>
+                    <RevealBackgroundBrush x:Key="AppControlHoverButtonFaceBrush" Color="#18FFFFFF" FallbackColor="#18FFFFFF"/>
+                    <RevealBackgroundBrush x:Key="AppControlPressedButtonFaceBrush" Color="#30FFFFFF" FallbackColor="#30FFFFFF"/>
                     <SolidColorBrush x:Key="AppControlTransparentAccentColorBrush" Color="{ThemeResource SystemAccentColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush" Color="{StaticResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextRedColorBrush" Color="Red"/>
@@ -59,8 +59,8 @@
                     <SolidColorBrush x:Key="SystemControlHighlightTransparentBrush" Color="Transparent"/>
                     <SolidColorBrush x:Key="AppBackgroundAltMediumLowBrush" Color="{ThemeResource SystemAltMediumLowColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextBaseMediumHighBrush" Color="{StaticResource SystemBaseMediumHighColor}"/>
-                    <RevealBackgroundBrush x:Key="AppControlHoverButtonFaceBrush" Color="#17000000"/>
-                    <RevealBackgroundBrush x:Key="AppControlPressedButtonFaceBrush" Color="#30000000"/>
+                    <RevealBackgroundBrush x:Key="AppControlHoverButtonFaceBrush" Color="#17000000" FallbackColor="#17000000"/>
+                    <RevealBackgroundBrush x:Key="AppControlPressedButtonFaceBrush" Color="#30000000" FallbackColor="#30000000"/>
                     <SolidColorBrush x:Key="AppControlTransparentAccentColorBrush" Color="{ThemeResource SystemAccentColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush" Color="{StaticResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextRedColorBrush" Color="Red"/>
