@@ -84,8 +84,10 @@ public
         void OnIsAlwaysOnTopPropertyChanged(bool oldValue, bool newValue);
         void OnIsInErrorPropertyChanged();
         void OnCalcPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e);
-        void OnStoryboardCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
-        void OnLayoutStateChanged(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
+        void OnLayoutVisualStateCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
+        void OnModeVisualStateCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
+        void OnErrorVisualStateCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
+        void OnDisplayVisualStateCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void EnsureScientific();
         void EnsureProgrammer();
         void SetFontSizeResources();
@@ -137,7 +139,6 @@ public
         void OnHistoryFlyOutTapped(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         bool IsValidRegularExpression(std::wstring str);
         void DockPanelTapped(_In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
-        void OnErrorLayoutCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void OnHistoryAccessKeyInvoked(_In_ Windows::UI::Xaml::UIElement ^ sender, _In_ Windows::UI::Xaml::Input::AccessKeyInvokedEventArgs ^ args);
         void OnMemoryAccessKeyInvoked(_In_ Windows::UI::Xaml::UIElement ^ sender, _In_ Windows::UI::Xaml::Input::AccessKeyInvokedEventArgs ^ args);
         void OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e);
