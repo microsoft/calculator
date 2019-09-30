@@ -120,12 +120,12 @@ void CHistoryCollector::RemoveLastOpndFromHistory()
     // This will not restore the m_lastBinOpStartIndex, as it isn't possible to remove that also later
 }
 
-void CHistoryCollector::AddBinOpToHistory(int nOpCode, bool isIntgerMode, bool fNoRepetition)
+void CHistoryCollector::AddBinOpToHistory(int nOpCode, bool isIntegerMode, bool fNoRepetition)
 {
     int iCommandEnd = AddCommand(std::make_shared<CBinaryCommand>(nOpCode));
     m_lastBinOpStartIndex = IchAddSzToEquationSz(L" ", -1);
 
-    IchAddSzToEquationSz(CCalcEngine::OpCodeToBinaryString(nOpCode, isIntgerMode), iCommandEnd);
+    IchAddSzToEquationSz(CCalcEngine::OpCodeToBinaryString(nOpCode, isIntegerMode), iCommandEnd);
     IchAddSzToEquationSz(L" ", -1);
 
     if (fNoRepetition)

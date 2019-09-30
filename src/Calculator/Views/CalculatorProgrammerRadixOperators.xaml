@@ -457,7 +457,7 @@
                                        FontSize="12"
                                        x:DeferLoadStrategy="Lazy"
                                        AutomationProperties.AutomationId="lshLogicalButton"
-                                       ButtonId="LshL"
+                                       ButtonId="Lsh"
                                        Content="&#xF88E;"
                                        Visibility="Collapsed"/>
             <controls:CalculatorButton x:Name="RshLogicalButton"

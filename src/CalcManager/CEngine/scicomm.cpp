@@ -16,6 +16,7 @@
 #include <string>
 #include "Header Files/CalcEngine.h"
 #include "Header Files/CalcUtils.h"
+#include "NumberFormattingUtils.h"
 
 using namespace std;
 using namespace CalcEngine;
@@ -32,7 +33,7 @@ namespace
             0,0, IDC_OR,0, IDC_XOR,0,
             IDC_AND,1, IDC_NAND,1, IDC_NOR,1,
             IDC_ADD,2, IDC_SUB,2,
-            IDC_RSHF,3, IDC_LSHF,3, IDC_RSHFL,3, IDC_LSHFL,3,
+            IDC_RSHF,3, IDC_LSHF,3, IDC_RSHFL,3,
             IDC_MOD,3, IDC_DIV,3, IDC_MUL,3,
             IDC_PWR,4, IDC_ROOT,4, IDC_LOGBASEX,4 };
         unsigned int iPrec;
@@ -136,7 +137,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             IsOpInRange(wParam, IDM_HEX, IDM_BIN) ||
             IsOpInRange(wParam, IDM_QWORD, IDM_BYTE) ||
             IsOpInRange(wParam, IDM_DEG, IDM_GRAD) ||
-            IsOpInRange(wParam, IDC_BINEDITSTART, IDC_BINEDITSTART + 63) ||
+            IsOpInRange(wParam, IDC_BINEDITSTART, IDC_BINEDITEND) ||
             (IDC_INV == wParam) ||
             (IDC_SIGN == wParam && 10 != m_radix) ||
             (IDC_RAND == wParam) ||
@@ -359,7 +360,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     }
 
     // Tiny binary edit windows clicked. Toggle that bit and update display
-    if (IsOpInRange(wParam, IDC_BINEDITSTART, IDC_BINEDITSTART + 63))
+    if (IsOpInRange(wParam, IDC_BINEDITSTART, IDC_BINEDITEND))
     {
         // Same reasoning as for unary operators. We need to seed it previous number
         if (IsBinOpCode(m_nLastCom))
@@ -719,7 +720,6 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     case IDC_MCLEAR:
         m_memoryValue = make_unique<Rational>(wParam == IDC_STORE ? TruncateNumForIntMath(m_currentVal) : 0);
         break;
-
     case IDC_PI:
         if (!m_fIntegerMode)
         {
@@ -732,18 +732,13 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         }
         HandleErrorCommand(wParam);
         break;
-
     case IDC_RAND:
         if (!m_fIntegerMode)
         {
             CheckAndAddLastBinOpToHistory(); // rand is like entering the number
 
-            random_device rd;
-            mt19937 gen(rd());
-            uniform_real_distribution<> distr(0, 1);
-            auto random = distr(gen);
             wstringstream str;
-            str << fixed << setprecision(m_precision) << random;
+            str << fixed << setprecision(m_precision) << GenerateRandomNumber();
 
             auto rat = StringToRat(false, str.str(), false, L"", m_radix, m_precision);
             if (rat != nullptr)
@@ -964,7 +959,6 @@ static const std::unordered_map<int, FunctionNameElement> operatorStringTable =
     { IDC_FLOOR, { SIDS_FLOOR } },
     { IDC_NAND, { SIDS_NAND } },
     { IDC_NOR, { SIDS_NOR } },
-    { IDC_LSHFL, { SIDS_LSH } },
     { IDC_RSHFL, { SIDS_RSH } },
     { IDC_RORC, { SIDS_ROR } },
     { IDC_ROLC, { SIDS_ROL } },
@@ -1116,4 +1110,15 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
     }
 
     return result;
+}
+
+double CCalcEngine::GenerateRandomNumber()
+{
+    if (m_randomGeneratorEngine == nullptr)
+    {
+        random_device rd;
+        m_randomGeneratorEngine = std::make_unique<std::mt19937>(rd());
+        m_distr = std::make_unique<std::uniform_real_distribution<>>(0, 1);
+    }
+    return (*m_distr.get())(*m_randomGeneratorEngine.get());
 }

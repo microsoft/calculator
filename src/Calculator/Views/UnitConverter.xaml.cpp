@@ -291,12 +291,17 @@ void UnitConverter::SetDefaultFocus()
 
 void UnitConverter::CurrencyRefreshButton_Click(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
 {
-    if (Model->NetworkBehavior == NetworkAccessBehavior::OptIn)
+    // If IsCurrencyLoadingVisible is true that means CurrencyRefreshButton_Click was recently called
+    // and is still executing. In this case there is no reason to process the click.
+    if (!Model->IsCurrencyLoadingVisible)
     {
-        m_meteredConnectionOverride = true;
-    }
+        if (Model->NetworkBehavior == NetworkAccessBehavior::OptIn)
+        {
+            m_meteredConnectionOverride = true;
+        }
 
-    Model->RefreshCurrencyRatios();
+        Model->RefreshCurrencyRatios();
+    }
 }
 
 void UnitConverter::OnDataContextChanged(_In_ FrameworkElement ^ sender, _In_ DataContextChangedEventArgs ^ args)
@@ -320,15 +325,16 @@ void UnitConverter::OnIsDisplayVisibleChanged()
 {
     if (Model->IsCurrencyLoadingVisible)
     {
+        VisualStateManager::GoToState(this, L"CurrencyLoadingState", false);
         StartProgressRingWithDelay();
     }
     else
     {
         HideProgressRing();
 
-        if (m_isAnimationEnabled && Model->IsCurrencyCurrentCategory && !Model->CurrencyTimestamp->IsEmpty())
+        if (Model->IsCurrencyCurrentCategory && !Model->CurrencyTimestamp->IsEmpty())
         {
-            TimestampFadeInAnimation->Begin();
+            VisualStateManager::GoToState(this, L"CurrencyLoadedState", m_isAnimationEnabled);
         }
     }
 }

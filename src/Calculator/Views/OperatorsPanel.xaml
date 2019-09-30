@@ -21,10 +21,12 @@
                                              x:Load="False"/>
 
         <local:CalculatorProgrammerBitFlipPanel x:Name="BitFlipPanel"
-                                                Visibility="{x:Bind Model.IsBinaryBitFlippingEnabled, Mode=OneWay}"
-                                                x:Load="False"/>
+                                                x:Load="False"
+                                                IsEnabled="{x:Bind Model.IsBinaryBitFlippingEnabled, Mode=OneWay}"
+                                                Visibility="{x:Bind Model.IsBinaryBitFlippingEnabled, Mode=OneWay}"/>
 
         <local:CalculatorProgrammerRadixOperators x:Name="ProgrammerRadixOperators"
+                                                  IsEnabled="{x:Bind Model.AreProgrammerRadixOperatorsEnabled, Mode=OneWay}"
                                                   TabIndex="16"
                                                   Visibility="{x:Bind Model.AreProgrammerRadixOperatorsEnabled, Mode=OneWay}"
                                                   x:Load="False"/>

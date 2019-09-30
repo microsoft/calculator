@@ -14,6 +14,7 @@
 *
 \****************************************************************************/
 
+#include <random>
 #include "CCommand.h"
 #include "EngineStrings.h"
 #include "../Command.h"
@@ -154,6 +155,9 @@ private:
 
     uint64_t m_carryBit;
 
+    std::unique_ptr<std::mt19937> m_randomGeneratorEngine;
+    std::unique_ptr<std::uniform_real_distribution<>> m_distr;
+
     CHistoryCollector m_HistoryCollector; // Accumulator of each line of history as various commands are processed
 
     std::array<CalcEngine::Rational, NUM_WIDTH_LENGTH> m_chopNumbers;      // word size enforcement
@@ -178,6 +182,7 @@ private:
     void SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwidth);
     int32_t DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
     uint32_t NRadixFromRadixType(RADIX_TYPE radixtype);
+    double GenerateRandomNumber();
 
     bool TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno);
     void CheckAndAddLastBinOpToHistory(bool addToHistory = true);

@@ -130,6 +130,10 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+    <PackageCertificateKeyFile>CalculatorUnitTests_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>BE776C83699DBCE4969DE9EE730AEAF66C5D5182</PackageCertificateThumbprint>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /await /std:c++17 /permissive- /Zc:twoPhase- /utf-8 %(AdditionalOptions)</AdditionalOptions>

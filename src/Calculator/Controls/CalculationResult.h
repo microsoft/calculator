@@ -42,7 +42,6 @@ namespace CalculatorApp
             virtual void OnKeyDown(Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e) override;
             virtual void OnApplyTemplate() override;
             virtual void OnTapped(Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e) override;
-            virtual void OnPointerPressed(Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e) override;
             virtual void OnRightTapped(Windows::UI::Xaml::Input::RightTappedRoutedEventArgs ^ e) override;
             virtual void OnGotFocus(Windows::UI::Xaml::RoutedEventArgs ^ e) override;
             virtual void OnLostFocus(Windows::UI::Xaml::RoutedEventArgs ^ e) override;
@@ -56,15 +55,12 @@ namespace CalculatorApp
             void OnIsInErrorPropertyChanged(bool oldValue, bool newValue);
             void OnMinFontSizePropertyChanged(double oldValue, double newValue);
             void OnMaxFontSizePropertyChanged(double oldValue, double newValue);
-            void TextContainerSizeChanged(Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
+            void OnTextContainerSizeChanged(Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
             void OnTextContainerLayoutUpdated(Object ^ sender, Object ^ e);
+            void OnTextContainerOnViewChanged(Object ^ sender, Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs ^ e);
             void UpdateVisualState();
-            void UpdateAllState();
             void OnScrollClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-            void OnPointerEntered(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
-            void OnPointerExited(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
             void ModifyFontAndMargin(Windows::UI::Xaml::Controls::TextBlock ^ textBlock, double fontChange);
-            void ShowHideScrollButtons(Windows::UI::Xaml::Visibility vLeft, Windows::UI::Xaml::Visibility vRight);
             void UpdateScrollButtons();
             void ScrollLeft();
             void ScrollRight();
@@ -82,6 +78,10 @@ namespace CalculatorApp
             bool m_isScalingText;
             bool m_haveCalculatedMax;
             Windows::Foundation::EventRegistrationToken m_textContainerLayoutChangedToken;
+            Windows::Foundation::EventRegistrationToken m_textContainerViewChangedToken;
+            Windows::Foundation::EventRegistrationToken m_textContainerSizeChangedToken;
+            Windows::Foundation::EventRegistrationToken m_scrollRightClickToken;
+            Windows::Foundation::EventRegistrationToken m_scrollLeftClickToken;
         };
     }
 }

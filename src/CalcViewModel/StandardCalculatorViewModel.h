@@ -75,6 +75,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, AreAlwaysOnTopResultsUpdated);
             OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
             OBSERVABLE_PROPERTY_RW(bool, AreProgrammerRadixOperatorsEnabled);
+            OBSERVABLE_PROPERTY_RW(bool, IsInputEmpty);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::Automation::NarratorAnnouncement ^, Announcement);
             OBSERVABLE_PROPERTY_R(unsigned int, OpenParenthesisCount);
 
@@ -87,18 +88,6 @@ namespace CalculatorApp
             COMMAND_FOR_METHOD(MemorySubtract, StandardCalculatorViewModel::OnMemorySubtract);
 
             event HideMemoryClickedHandler ^ HideMemoryClicked;
-
-            property bool IsInputEmpty {
-                bool get() { return m_isInputEmpty;  }
-                void set(bool value)
-                {
-                    if (m_isInputEmpty != value)
-                    {
-                        m_isInputEmpty = value;
-                        RaisePropertyChanged(L"IsInputEmpty");
-                    }
-                }
-            }
 
             property bool IsBitFlipChecked
             {
@@ -117,13 +106,8 @@ namespace CalculatorApp
                     }
                 }
             }
-            static property Platform::String ^ IsBitFlipCheckedPropertyName
-            {
-                Platform::String ^ get()
-                {
-                    return Platform::StringReference(L"IsBitFlipChecked");
-                }
-            }
+            static property Platform::String
+                ^ IsBitFlipCheckedPropertyName { Platform::String ^ get() { return Platform::StringReference(L"IsBitFlipChecked"); } }
 
             property bool IsBinaryBitFlippingEnabled
             {
@@ -218,13 +202,8 @@ namespace CalculatorApp
                     }
                 }
             }
-            static property Platform::String ^ IsProgrammerPropertyName
-            {
-                Platform::String ^ get()
-                {
-                    return Platform::StringReference(L"IsProgrammer");
-                }
-            }
+            static property Platform::String
+                ^ IsProgrammerPropertyName { Platform::String ^ get() { return Platform::StringReference(L"IsProgrammer"); } }
 
             property bool IsAlwaysOnTop
             {

@@ -731,10 +731,6 @@ namespace CalculatorManagerTest
             Command::Command1, Command::CommandAnd, Command::CommandNULL };
         TestDriver::Test(L"10", L"5 Lsh 1 AND ", commands3, true, false);
 
-        Command commands4[] = { Command::ModeProgrammer, Command::Command5, Command::CommandLSHFL,
-            Command::Command1, Command::CommandAnd, Command::CommandNULL };
-        TestDriver::Test(L"10", L"5 Lsh 1 AND ", commands4, true, false);
-
         Command commands5[] = { Command::ModeProgrammer, Command::Command5, Command::CommandRSHFL,
             Command::Command1, Command::CommandAnd, Command::CommandNULL };
         TestDriver::Test(L"2", L"5 Rsh 1 AND ", commands5, true, false);
