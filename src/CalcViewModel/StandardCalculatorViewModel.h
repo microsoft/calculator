@@ -417,7 +417,6 @@ namespace CalculatorApp
             bool m_isProgrammer;
             bool m_isAlwaysOnTop;
             bool m_isBinaryBitFlippingEnabled;
-            bool m_isInputEmpty;
             bool m_isBitFlipChecked;
             bool m_isRtlLanguage;
             int m_tokenPosition;
