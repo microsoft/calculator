@@ -74,7 +74,7 @@ void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint
     TraceValuePopupTransform->X = (int)GraphingControl->TraceLocation.X + 15;
     TraceValuePopupTransform->Y = (int)GraphingControl->TraceLocation.Y - 30;
 
-    TraceValue->Text = "x=" + newPoint.X.ToString() + ", y=" + newPoint.Y.ToString();
+    TraceValue->Text = "(" + newPoint.X.ToString() + ", " + newPoint.Y.ToString() + ")";
 }
 
 GraphingCalculatorViewModel ^ GraphingCalculator::ViewModel::get()

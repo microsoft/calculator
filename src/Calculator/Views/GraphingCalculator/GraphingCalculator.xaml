@@ -79,8 +79,8 @@
                     <Popup.RenderTransform>
                         <TranslateTransform x:Name="TraceValuePopupTransform" X="50" Y="150"/>
                     </Popup.RenderTransform>
-                    <Grid Background="White" BorderBrush="SlateBlue" BorderThickness="3,3,3,3">
-                        <TextBlock x:Name="TraceValue" Text="x=0,y=0" Margin="5,5,5,5"/>
+                    <Grid Background="{StaticResource ToolTipBackground}" BorderBrush="{StaticResource ToolTipBorderBrush}" BorderThickness="3,3,3,3">
+                        <TextBlock x:Name="TraceValue" Text="x=0,y=0" Margin="5,5,5,5" Foreground="{StaticResource ToolTipForeground}"/>
                     </Grid>
                 </Popup>
 
