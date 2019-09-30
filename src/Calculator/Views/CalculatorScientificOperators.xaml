@@ -1,6 +1,7 @@
 <UserControl x:Class="CalculatorApp.CalculatorScientificOperators"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Windows10version1803="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract, 7)"
              xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
              xmlns:controls="using:CalculatorApp.Controls"
              xmlns:converters="using:CalculatorApp.Converters"
@@ -394,9 +395,10 @@
                                           Glyph="&#xF892;">
                 <controls:OperatorPanelButton.FlyoutMenu>
                     <Flyout x:Name="Trigflyout"
+                            Windows10version1803:Placement="Bottom"
                             Windows10version1809:AreOpenCloseAnimationsEnabled="False"
-                            FlyoutPresenterStyle="{ThemeResource OperatorPanelFlyoutStyle}"
-                            Placement="BottomEdgeAlignedLeft">
+                            Windows10version1809:Placement="BottomEdgeAlignedLeft"
+                            FlyoutPresenterStyle="{ThemeResource OperatorPanelFlyoutStyle}">
                         <Grid x:Name="TrigGrid"
                               MinWidth="258"
                               MinHeight="96"
@@ -423,8 +425,8 @@
                                           AutomationProperties.AutomationId="shiftButton"
                                           Checked="trigFlyoutShift_Toggle"
                                           Content="&#xF897;"
-                                          IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"
-                                          Unchecked="trigFlyoutShift_Toggle"/>
+                                          Unchecked="trigFlyoutShift_Toggle"
+                                          IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                             <ToggleButton x:Name="HypButton"
                                           x:Uid="hypButton"
@@ -433,9 +435,9 @@
                                           AutomationProperties.AutomationId="shiftButton"
                                           Checked="trigFlyoutHyp_Toggle"
                                           Content="hyp"
-                                          IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"
                                           IsEnabledChanged="shiftButton_IsEnabledChanged"
-                                          Unchecked="trigFlyoutHyp_Toggle"/>
+                                          Unchecked="trigFlyoutHyp_Toggle"
+                                          IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                             <Grid x:Name="TrigFunctions"
                                   Grid.RowSpan="2"

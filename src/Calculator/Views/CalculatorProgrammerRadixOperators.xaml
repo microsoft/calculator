@@ -1,6 +1,7 @@
 <UserControl x:Class="CalculatorApp.CalculatorProgrammerRadixOperators"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Windows10version1803="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract, 7)"
              xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
              xmlns:common="using:CalculatorApp.Common"
              xmlns:controls="using:CalculatorApp.Controls"
@@ -245,16 +246,17 @@
                                         Grid.ColumnSpan="6"
                                         Background="{ThemeResource AppOperatorPanelBackground}"
                                         AutomationProperties.HeadingLevel="Level1">
-            
+
             <controls:OperatorPanelButton x:Name="BitwiseButton"
                                           x:Uid="bitwiseButton"
                                           Style="{StaticResource OperatorPanelButtonStyle}"
                                           Glyph="&#xF895;">
                 <controls:OperatorPanelButton.FlyoutMenu>
                     <Flyout x:Name="BitwiseFlyout"
+                            Windows10version1803:Placement="Bottom"
                             Windows10version1809:AreOpenCloseAnimationsEnabled="False"
-                            FlyoutPresenterStyle="{ThemeResource OperatorPanelFlyoutStyle}"
-                            Placement="BottomEdgeAlignedLeft">
+                            Windows10version1809:Placement="BottomEdgeAlignedLeft"
+                            FlyoutPresenterStyle="{ThemeResource OperatorPanelFlyoutStyle}">
                         <Grid x:Name="BitwiseGrid"
                               MinWidth="258"
                               MinHeight="96"
