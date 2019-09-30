@@ -3583,6 +3583,10 @@
     <value>Arc Secant</value>
     <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
   </data>
+  <data name="invsecButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+    <value>U</value>
+    <comment>{Locked}The shortcut for the inverted sec button</comment>
+  </data>
   <data name="invsecButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyInverseChord" xml:space="preserve">
     <value>U</value>
     <comment>{Locked}The shortcut for the inverted sec button</comment>
@@ -3590,6 +3594,10 @@
   <data name="invsechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Hyperbolic Arc Secant</value>
     <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="invsechButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlShiftChord" xml:space="preserve">
+    <value>U</value>
+    <comment>{Locked}The shortcut for the inverted sech button</comment>
   </data>
   <data name="invsechButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlInverseChord" xml:space="preserve">
     <value>U</value>
@@ -3615,6 +3623,10 @@
     <value>Arc Cosecant</value>
     <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
   </data>
+  <data name="invcscButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+    <value>I</value>
+    <comment>{Locked}The shortcut for the inverted sec button</comment>
+  </data>
   <data name="invcscButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyInverseChord" xml:space="preserve">
     <value>I</value>
     <comment>{Locked}The shortcut for the inverted sec button</comment>
@@ -3622,6 +3634,10 @@
   <data name="invcschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Hyperbolic Arc Cosecant</value>
     <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcschButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlShiftChord" xml:space="preserve">
+    <value>I</value>
+    <comment>{Locked}The shortcut for the inverted sech button</comment>
   </data>
   <data name="invcschButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlInverseChord" xml:space="preserve">
     <value>I</value>
@@ -3647,6 +3663,10 @@
     <value>Arc Cotangent</value>
     <comment>Screen reader prompt for the Calculator button arc cot in the scientific flyout keypad</comment>
   </data>
+  <data name="invcotButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+    <value>J</value>
+    <comment>{Locked}The shortcut for the inverted sec button</comment>
+  </data>
   <data name="invcotButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyInverseChord" xml:space="preserve">
     <value>J</value>
     <comment>{Locked}The shortcut for the inverted sec button</comment>
@@ -3656,6 +3676,10 @@
     <comment>Screen reader prompt for the Calculator button arc coth in the scientific flyout keypad</comment>
   </data>
   <data name="invcothButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlInverseChord" xml:space="preserve">
+    <value>J</value>
+    <comment>{Locked}The shortcut for the inverted sech button</comment>
+  </data>
+  <data name="invcothButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlShiftChord" xml:space="preserve">
     <value>J</value>
     <comment>{Locked}The shortcut for the inverted sech button</comment>
   </data>

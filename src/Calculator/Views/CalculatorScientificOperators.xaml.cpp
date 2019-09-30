@@ -39,7 +39,6 @@ CalculatorScientificOperators::CalculatorScientificOperators()
     InitializeComponent();
 
     ExpButton->SetValue(Common::KeyboardShortcutManager::VirtualKeyProperty, Common::MyVirtualKey::E);
-    Common::KeyboardShortcutManager::ShiftButtonChecked(false);
 }
 
 void CalculatorScientificOperators::OnIsErrorVisualStatePropertyChanged(bool /*oldValue*/, bool newValue)
@@ -64,7 +63,6 @@ void CalculatorScientificOperators::shiftButton_Uncheck(_In_ Platform::Object^ /
 void CalculatorScientificOperators::trigFlyoutShift_Toggle(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
 {
     SetTrigRowVisibility();
-    Common::KeyboardShortcutManager::ShiftButtonChecked(TrigShiftButton->IsEnabled && TrigShiftButton->IsChecked->Value);
 }
 
 void CalculatorScientificOperators::trigFlyoutHyp_Toggle(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
