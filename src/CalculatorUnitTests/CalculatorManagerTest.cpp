@@ -97,6 +97,10 @@ namespace CalculatorManagerTest
             m_maxDigitsCalledCount++;
         }
 
+        void InputChanged() override
+        {
+        }
+
         int GetMaxDigitsCalledCount()
         {
             return m_maxDigitsCalledCount;
@@ -178,6 +182,8 @@ namespace CalculatorManagerTest
         TEST_METHOD(CalculatorManagerTestScientificParenthesis);
         TEST_METHOD(CalculatorManagerTestScientificError);
         TEST_METHOD(CalculatorManagerTestScientificModeChange);
+
+        TEST_METHOD(CalculatorManagerTestProgrammer);
 
         TEST_METHOD(CalculatorManagerTestModeChange);
 
@@ -495,9 +501,9 @@ namespace CalculatorManagerTest
 
         Command commands5[] = { Command::Command8, Command::CommandCUB, Command::CommandNULL };
         TestDriver::Test(L"512", L"cube(8)", commands5, true, true);
-        /*
-                Command commands6[] = { Command::Command8, Command::CommandCUB, Command::CommandCUBEROOT, Command::CommandNULL };
-                TestDriver::Test(L"8", L"cuberoot(cube(8))", commands6, true, true);*/
+
+        Command commands6[] = { Command::Command8, Command::CommandCUB, Command::CommandCUBEROOT, Command::CommandNULL };
+        TestDriver::Test(L"8", L"cuberoot(cube(8))", commands6, true, true);
 
         Command commands7[] = { Command::Command1, Command::Command0, Command::CommandLOG, Command::CommandNULL };
         TestDriver::Test(L"1", L"log(10)", commands7, true, true);
@@ -552,6 +558,66 @@ namespace CalculatorManagerTest
         Command commands22[] = { Command::Command1, Command::Command0, Command::CommandPWR, Command::Command1, Command::CommandPNT, Command::Command2,
                                  Command::Command3, Command::Command4, Command::Command5,   Command::Command6, Command::CommandADD, Command::CommandNULL };
         TestDriver::Test(L"17.161687912241792074207286679393", L"10 ^ 1.23456 + ", commands22, true, true);
+
+        Command commands23[] = { Command::Command1, Command::CommandSEC, Command::CommandNULL };
+        TestDriver::Test(L"1.0001523280439076654284264342126", L"sec\x2080(1)", commands23, true, true);
+
+        Command commands24[] = { Command::Command1, Command::CommandCSC, Command::CommandNULL };
+        TestDriver::Test(L"57.298688498550183476612683735174", L"csc\x2080(1)", commands24, true, true);
+
+        Command commands25[] = { Command::Command1, Command::CommandCOT, Command::CommandNULL };
+        TestDriver::Test(L"57.289961630759424687278147537113", L"cot\x2080(1)", commands25, true, true);
+
+        Command commands26[] = { Command::Command1, Command::CommandASEC, Command::CommandNULL };
+        TestDriver::Test(L"0", L"sec\x2080\x207B\x00B9(1)", commands26, true, true);
+
+        Command commands27[] = { Command::Command1, Command::CommandACSC, Command::CommandNULL };
+        TestDriver::Test(L"90", L"csc\x2080\x207B\x00B9(1)", commands27, true, true);
+
+        Command commands28[] = { Command::Command1, Command::CommandACOT, Command::CommandNULL };
+        TestDriver::Test(L"45", L"cot\x2080\x207B\x00B9(1)", commands28, true, true);
+
+        Command commands29[] = { Command::Command1, Command::CommandSECH, Command::CommandNULL };
+        TestDriver::Test(L"0.64805427366388539957497735322615", L"sech(1)", commands29, true, true);
+
+        Command commands30[] = { Command::Command1, Command::CommandCSCH, Command::CommandNULL };
+        TestDriver::Test(L"0.85091812823932154513384276328718", L"csch(1)", commands30, true, true);
+
+        Command commands31[] = { Command::Command1, Command::CommandCOTH, Command::CommandNULL };
+        TestDriver::Test(L"1.3130352854993313036361612469308", L"coth(1)", commands31, true, true);
+
+        Command commands32[] = { Command::Command1, Command::CommandASECH, Command::CommandNULL };
+        TestDriver::Test(L"0", L"sech\x207B\x00B9(1)", commands32, true, true);
+
+        Command commands33[] = { Command::Command1, Command::CommandACSCH, Command::CommandNULL };
+        TestDriver::Test(L"0.88137358701954302523260932497979", L"csch\x207B\x00B9(1)", commands33, true, true);
+
+        Command commands34[] = { Command::Command2, Command::CommandACOTH, Command::CommandNULL };
+        TestDriver::Test(L"0.54930614433405484569762261846126", L"coth\x207B\x00B9(2)", commands34, true, true);
+
+        Command commands35[] = { Command::Command8, Command::CommandPOW2, Command::CommandNULL };
+        TestDriver::Test(L"256", L"2^(8)", commands35);
+
+        Command commands36[] = { Command::CommandRand, Command::CommandCeil, Command::CommandNULL };
+        TestDriver::Test(L"1", L"N/A", commands36);
+
+        Command commands37[] = { Command::CommandRand, Command::CommandFloor, Command::CommandNULL };
+        TestDriver::Test(L"0", L"N/A", commands37);
+
+        Command commands38[] = { Command::CommandRand, Command::CommandSIGN, Command::CommandCeil, Command::CommandNULL };
+        TestDriver::Test(L"0", L"N/A", commands38);
+
+        Command commands39[] = { Command::CommandRand, Command::CommandSIGN, Command::CommandFloor, Command::CommandNULL };
+        TestDriver::Test(L"-1", L"N/A", commands39);
+
+        Command commands40[] = { Command::Command3, Command::CommandPNT, Command::Command8, Command::CommandFloor, Command::CommandNULL };
+        TestDriver::Test(L"3", L"floor(3.8)", commands40);
+
+        Command commands41[] = { Command::Command3, Command::CommandPNT, Command::Command8, Command::CommandCeil, Command::CommandNULL };
+        TestDriver::Test(L"4", L"ceil(3.8)", commands41);
+
+        Command commands42[] = { Command::Command3, Command::CommandLogBaseX, Command::Command5, Command::CommandADD, Command::CommandNULL };
+        TestDriver::Test(L"1.464973520717927", L"3 base log 5 + ", commands42);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestScientificParenthesis()
@@ -649,6 +715,41 @@ namespace CalculatorManagerTest
 
         Command commands8[] = { Command::ModeBasic, Command::CommandNULL };
         TestDriver::Test(L"0", L"", commands8, true, false);
+    }
+
+    void CalculatorManagerTest::CalculatorManagerTestProgrammer()
+    {
+        Command commands1[] = { Command::ModeProgrammer, Command::Command5, Command::Command3, Command::CommandNand,
+            Command::Command8, Command::Command3, Command::CommandAnd, Command::CommandNULL };
+        TestDriver::Test(L"-18", L"53 NAND 83 AND ", commands1, true, false);
+
+        Command commands2[] = { Command::ModeProgrammer, Command::Command5, Command::Command3, Command::CommandNor,
+            Command::Command8, Command::Command3, Command::CommandAnd, Command::CommandNULL };
+        TestDriver::Test(L"-120", L"53 NOR 83 AND ", commands2, true, false);
+
+        Command commands3[] = { Command::ModeProgrammer, Command::Command5, Command::CommandLSHF,
+            Command::Command1, Command::CommandAnd, Command::CommandNULL };
+        TestDriver::Test(L"10", L"5 Lsh 1 AND ", commands3, true, false);
+
+        Command commands5[] = { Command::ModeProgrammer, Command::Command5, Command::CommandRSHFL,
+            Command::Command1, Command::CommandAnd, Command::CommandNULL };
+        TestDriver::Test(L"2", L"5 Rsh 1 AND ", commands5, true, false);
+
+        Command commands6[] = { Command::ModeProgrammer, Command::CommandBINPOS63, Command::CommandRSHF,
+            Command::Command5, Command::Command6, Command::CommandAnd, Command::CommandNULL };
+        TestDriver::Test(L"-128", L"-9223372036854775808 Rsh 56 AND ", commands6, true, false);
+
+        Command commands7[] = { Command::ModeProgrammer, Command::Command1, Command::CommandROL, Command::CommandNULL };
+        TestDriver::Test(L"2", L"RoL(1)", commands7, true, false);
+
+        Command commands8[] = { Command::ModeProgrammer, Command::Command1, Command::CommandROR, Command::CommandNULL };
+        TestDriver::Test(L"-9,223,372,036,854,775,808", L"RoR(1)", commands8, true, false);
+
+        Command commands9[] = { Command::ModeProgrammer, Command::Command1, Command::CommandRORC, Command::CommandNULL };
+        TestDriver::Test(L"0", L"RoR(1)", commands9, true, false);
+
+        Command commands10[] = { Command::ModeProgrammer, Command::Command1, Command::CommandRORC, Command::CommandRORC, Command::CommandNULL };
+        TestDriver::Test(L"-9,223,372,036,854,775,808", L"RoR(RoR(1))", commands10, true, false);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestMemory()

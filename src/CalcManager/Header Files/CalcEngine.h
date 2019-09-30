@@ -14,6 +14,7 @@
 *
 \****************************************************************************/
 
+#include <random>
 #include "CCommand.h"
 #include "EngineStrings.h"
 #include "../Command.h"
@@ -68,6 +69,10 @@ public:
     {
         return m_bError;
     }
+    bool IsInputEmpty()
+    {
+        return m_input.IsEmpty() && (m_numberString.empty() || m_numberString == L"0");
+    }
     bool FInRecordingState()
     {
         return m_bRecord;
@@ -103,6 +108,7 @@ public:
         return GetString(IdStrFromCmdId(nOpCode));
     }
     static std::wstring_view OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE angletype);
+    static std::wstring_view OpCodeToBinaryString(int nOpCode, bool isIntegerMode);
 
 private:
     bool m_fPrecedence;
@@ -147,6 +153,11 @@ private:
     NUM_WIDTH m_numwidth;                    // one of qword, dword, word or byte mode.
     int32_t m_dwWordBitWidth;                // # of bits in currently selected word size
 
+    std::unique_ptr<std::mt19937> m_randomGeneratorEngine;
+    std::unique_ptr<std::uniform_real_distribution<>> m_distr;
+
+    uint64_t m_carryBit;
+
     CHistoryCollector m_HistoryCollector; // Accumulator of each line of history as various commands are processed
 
     std::array<CalcEngine::Rational, NUM_WIDTH_LENGTH> m_chopNumbers;      // word size enforcement
@@ -171,6 +182,7 @@ private:
     void SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwidth);
     int32_t DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
     uint32_t NRadixFromRadixType(RADIX_TYPE radixtype);
+    double GenerateRandomNumber();
 
     bool TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno);
     void CheckAndAddLastBinOpToHistory(bool addToHistory = true);

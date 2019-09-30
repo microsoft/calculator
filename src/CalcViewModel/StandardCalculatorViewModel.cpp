@@ -1026,6 +1026,11 @@ NumbersAndOperatorsEnum StandardCalculatorViewModel::MapCharacterToButtonId(cons
     return mappedValue;
 }
 
+void StandardCalculatorViewModel::OnInputChanged()
+{
+    IsInputEmpty = m_standardCalculatorManager.IsInputEmpty();
+}
+
 void StandardCalculatorViewModel::OnMemoryButtonPressed()
 {
     m_standardCalculatorManager.MemorizeNumber();
