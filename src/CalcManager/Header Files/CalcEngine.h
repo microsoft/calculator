@@ -153,10 +153,10 @@ private:
     NUM_WIDTH m_numwidth;                    // one of qword, dword, word or byte mode.
     int32_t m_dwWordBitWidth;                // # of bits in currently selected word size
 
-    uint64_t m_carryBit;
-
     std::unique_ptr<std::mt19937> m_randomGeneratorEngine;
     std::unique_ptr<std::uniform_real_distribution<>> m_distr;
+
+    uint64_t m_carryBit;
 
     CHistoryCollector m_HistoryCollector; // Accumulator of each line of history as various commands are processed
 
