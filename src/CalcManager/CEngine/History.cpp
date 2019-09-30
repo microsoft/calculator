@@ -301,11 +301,16 @@ void CHistoryCollector::AddUnaryOpToHistory(int nOpCode, bool fInv, ANGLE_TYPE a
 // history of equations
 void CHistoryCollector::CompleteHistoryLine(wstring_view numStr)
 {
-    if (nullptr != m_pCalcDisplay)
+    std::wstring expressionSuffix{};
+    HRESULT hr = m_spTokens->GetExpressionSuffix(&expressionSuffix);
+    if (SUCCEEDED(hr))
     {
-        m_pCalcDisplay->SetExpressionDisplay(
-            std::make_shared<CalculatorVector<std::pair<std::wstring, int>>>(), std::make_shared<CalculatorVector<std::shared_ptr<IExpressionCommand>>>());
+        // Add only '=' token and not add EQU command, because
+        // EQU command breaks loading from history (it duplicate history entries).
+        IchAddSzToEquationSz(expressionSuffix, -1);
     }
+
+    SetExpressionDisplay();
 
     if (nullptr != m_pHistoryDisplay)
     {

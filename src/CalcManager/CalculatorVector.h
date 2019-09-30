@@ -133,13 +133,6 @@ public:
                     }
                 }
             }
-
-            std::wstring expressionSuffix{};
-            hr = GetExpressionSuffix(&expressionSuffix);
-            if (SUCCEEDED(hr))
-            {
-                expression->append(expressionSuffix);
-            }
         }
 
         return hr;
@@ -147,7 +140,7 @@ public:
 
     ResultCode GetExpressionSuffix(_Out_ std::wstring* suffix)
     {
-        *suffix = L" =";
+        *suffix = L"=";
         return S_OK;
     }
 

@@ -475,11 +475,6 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         {
             wstring groupedString = GroupDigitsPerRadix(m_numberString, m_radix);
             m_HistoryCollector.CompleteHistoryLine(groupedString);
-            if (nullptr != m_pCalcDisplay)
-            {
-                m_pCalcDisplay->SetExpressionDisplay(
-                    make_shared<CalculatorVector<pair<wstring, int>>>(), make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>());
-            }
         }
 
         m_bChangeOp = false;
