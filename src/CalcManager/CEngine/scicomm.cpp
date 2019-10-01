@@ -103,6 +103,14 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         m_nTempCom = (int)wParam;
     }
 
+    // Clear expression shown after = sign, when user do any action.
+    static bool afterEQUCommand = false;
+    if (afterEQUCommand)
+    {
+        afterEQUCommand = false;
+        m_HistoryCollector.ClearHistoryLine(wstring());
+    }
+
     if (m_bError)
     {
         if (wParam == IDC_CLEAR)
@@ -475,6 +483,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         {
             wstring groupedString = GroupDigitsPerRadix(m_numberString, m_radix);
             m_HistoryCollector.CompleteHistoryLine(groupedString);
+            afterEQUCommand = true;
         }
 
         m_bChangeOp = false;
