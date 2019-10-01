@@ -15,7 +15,7 @@ CalculatorHistory::CalculatorHistory(size_t maxSize)
 unsigned int CalculatorHistory::AddToHistory(
     _In_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
     _In_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands,
-    _In_ wstring_view result)
+    wstring_view result)
 {
     unsigned int addedIndex;
     wstring generatedExpression;
@@ -47,7 +47,7 @@ unsigned int CalculatorHistory::AddItem(_In_ shared_ptr<HISTORYITEM> const& spHi
     return lastIndex;
 }
 
-bool CalculatorHistory::RemoveItem(_In_ unsigned int uIdx)
+bool CalculatorHistory::RemoveItem(unsigned int uIdx)
 {
     if (uIdx > m_historyItems.size() - 1)
     {
@@ -63,7 +63,7 @@ vector<shared_ptr<HISTORYITEM>> const& CalculatorHistory::GetHistory()
     return m_historyItems;
 }
 
-shared_ptr<HISTORYITEM> const& CalculatorHistory::GetHistoryItem(_In_ unsigned int uIdx)
+shared_ptr<HISTORYITEM> const& CalculatorHistory::GetHistoryItem(unsigned int uIdx)
 {
     assert(uIdx >= 0 && uIdx < m_historyItems.size());
     return m_historyItems.at(uIdx);
