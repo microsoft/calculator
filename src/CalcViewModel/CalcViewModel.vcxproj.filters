@@ -69,19 +69,7 @@
     <ClCompile Include="Common\Utils.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Automation\LiveRegionHost.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\Automation\NarratorAnnouncementHostFactory.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
     <ClCompile Include="Common\Automation\NarratorNotifier.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\Automation\NotificationHost.cpp">
       <Filter>Common\Automation</Filter>
     </ClCompile>
     <ClCompile Include="DataLoaders\CurrencyDataLoader.cpp">
@@ -92,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="DataLoaders\UnitConverterDataLoader.cpp">
       <Filter>DataLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp">
+      <Filter>Common\Automation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,22 +168,7 @@
     <ClInclude Include="Common\ValidatingConverters.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\Automation\INarratorAnnouncementHost.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Automation\LiveRegionHost.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Automation\NarratorAnnouncement.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Automation\NarratorAnnouncementHostFactory.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
     <ClInclude Include="Common\Automation\NarratorNotifier.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Automation\NotificationHost.h">
       <Filter>Common\Automation</Filter>
     </ClInclude>
     <ClInclude Include="DataLoaders\CurrencyDataLoader.h">
@@ -216,8 +192,8 @@
     <ClInclude Include="DataLoaders\DataLoaderMockConstants.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
-    <ClInclude Include="DataLoaders\DataLoaderConstants.h">
-      <Filter>DataLoaders</Filter>
+    <ClInclude Include="Common\Automation\NarratorAnnouncement.h">
+      <Filter>Common\Automation</Filter>
     </ClInclude>
     <ClInclude Include="Common\BitLength.h">
       <Filter>Common</Filter>
