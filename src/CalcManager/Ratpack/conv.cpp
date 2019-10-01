@@ -145,7 +145,7 @@ void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER* const src)
 //
 //-----------------------------------------------------------------------------
 
-void _destroynum(_In_opt_ PNUMBER pnum)
+void _destroynum(_Frees_ptr_opt_ PNUMBER pnum)
 
 {
     if (pnum != nullptr)
@@ -167,7 +167,7 @@ void _destroynum(_In_opt_ PNUMBER pnum)
 //
 //-----------------------------------------------------------------------------
 
-void _destroyrat(_In_opt_ PRAT prat)
+void _destroyrat(_Frees_ptr_opt_ PRAT prat)
 
 {
     if (prat != nullptr)
