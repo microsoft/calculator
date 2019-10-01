@@ -45,6 +45,7 @@ namespace GraphControl::DX
 
         void RunRenderPass();
 
+        // Indicates if we are in active tracing mode (the tracing box is being used and controlled through keyboard input)
         property bool ActiveTracing
         {
             bool get();
@@ -85,6 +86,7 @@ namespace GraphControl::DX
             }
         }
 
+        // Any time we should be showing the tracing popup (either active or passive tracing)
         property bool Tracing
         {
             bool get()
