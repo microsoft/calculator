@@ -544,7 +544,7 @@ namespace GraphControl
 
     void Grapher::UpdateTracingChanged()
     {
-        if (m_renderMain->Tracing)
+        if (m_renderMain->Tracing || m_renderMain->ActiveTracing)
         {
             TracingChangedEvent(true);
 
@@ -731,11 +731,10 @@ void Grapher::OnCoreKeyUp(CoreWindow ^ sender, KeyEventArgs ^ e)
 {
     // We don't want to react to keyboard input unless the graph control has the focus.
     // NOTE: you can't select the graph control from the mouse for focus but you can tab to it.
-    FrameworkElement ^ whoHasFocus = (FrameworkElement ^) FocusManager::GetFocusedElement();
-    String ^ wName = whoHasFocus->Name;
-    String ^ ETBName = L"GraphingControl";
-    if (wName != ETBName)
+    GraphControl::Grapher ^ gcHasFocus = dynamic_cast<GraphControl::Grapher ^>(FocusManager::GetFocusedElement());
+    if (gcHasFocus == nullptr)
     {
+        // Not a graphingCalculator control so we don't want the input.
         return;
     }
 
@@ -755,12 +754,11 @@ void Grapher::OnCoreKeyUp(CoreWindow ^ sender, KeyEventArgs ^ e)
 
 void Grapher::OnCoreKeyDown(CoreWindow ^ sender, KeyEventArgs ^ e)
 {
-    // We don't want to eat keys when the user is in the equation text box.
-    FrameworkElement ^ whoHasFocus = (FrameworkElement ^) FocusManager::GetFocusedElement();
-    String ^ wName = whoHasFocus->Name;
-    String ^ ETBName = L"EquationTextBox";
-    if (wName == ETBName)
+    // We don't want to react to any keys when we are not in the graph control
+    GraphControl::Grapher ^ gcHasFocus = dynamic_cast<GraphControl::Grapher ^>(FocusManager::GetFocusedElement());
+    if (gcHasFocus == nullptr)
     {
+        // Not a graphingCalculator control so we don't want the input.
         return;
     }
 

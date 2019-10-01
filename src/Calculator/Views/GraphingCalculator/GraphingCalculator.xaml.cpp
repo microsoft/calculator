@@ -54,11 +54,14 @@ GraphingCalculator::GraphingCalculator()
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
 {
-    TraceValuePopup->IsOpen = newValue;
-    if (TraceValuePopup->IsOpen)
+    if (TraceValuePopup->IsOpen != newValue)
     {
-        // Set the keyboard focus to the graph control so we can use the arrow keys safely.
-        GraphingControl->Focus(::FocusState::Programmatic);
+        TraceValuePopup->IsOpen = newValue;
+        if (TraceValuePopup->IsOpen)
+        {
+            // Set the keyboard focus to the graph control so we can use the arrow keys safely.
+            GraphingControl->Focus(::FocusState::Programmatic);
+        }
     }
 }
 
