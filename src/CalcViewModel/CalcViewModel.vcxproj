@@ -315,12 +315,8 @@
     <ClInclude Include="ApplicationViewModel.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h" />
     <ClInclude Include="Common\AppResourceProvider.h" />
-    <ClInclude Include="Common\Automation\INarratorAnnouncementHost.h" />
-    <ClInclude Include="Common\Automation\LiveRegionHost.h" />
     <ClInclude Include="Common\Automation\NarratorAnnouncement.h" />
-    <ClInclude Include="Common\Automation\NarratorAnnouncementHostFactory.h" />
     <ClInclude Include="Common\Automation\NarratorNotifier.h" />
-    <ClInclude Include="Common\Automation\NotificationHost.h" />
     <ClInclude Include="Common\BindableBase.h" />
     <ClInclude Include="Common\BitLength.h" />
     <ClInclude Include="Common\CalculatorButtonPressedEventArgs.h" />
@@ -363,11 +359,8 @@
   <ItemGroup>
     <ClCompile Include="ApplicationViewModel.cpp" />
     <ClCompile Include="Common\AppResourceProvider.cpp" />
-    <ClCompile Include="Common\Automation\LiveRegionHost.cpp" />
     <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp" />
-    <ClCompile Include="Common\Automation\NarratorAnnouncementHostFactory.cpp" />
     <ClCompile Include="Common\Automation\NarratorNotifier.cpp" />
-    <ClCompile Include="Common\Automation\NotificationHost.cpp" />
     <ClCompile Include="Common\BindableBase.cpp" />
     <ClCompile Include="Common\CalculatorButtonPressedEventArgs.cpp" />
     <ClCompile Include="Common\CalculatorDisplay.cpp" />
