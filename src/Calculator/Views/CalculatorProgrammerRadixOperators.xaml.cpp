@@ -29,7 +29,7 @@ CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators()
     InitializeComponent();
 }
 
-void CalculatorProgrammerRadixOperators::flyoutButton_Clicked(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
+void CalculatorProgrammerRadixOperators::FlyoutButton_Clicked(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
 {
     this->BitwiseFlyout->Hide();
 }
@@ -39,7 +39,7 @@ void CalculatorProgrammerRadixOperators::checkDefaultBitShift()
     this->ArithmeticShiftButton->IsChecked = true;
 }
 
-void CalculatorProgrammerRadixOperators::bitshiftFlyout_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     // Load deferred load buttons
     if (RolButton == nullptr)
@@ -59,7 +59,7 @@ void CalculatorProgrammerRadixOperators::bitshiftFlyout_Checked(Platform::Object
         return;
     }
 
-    collapseBitshiftButtons();
+    CollapseBitshiftButtons();
 
     auto radioButton = static_cast<RadioButton^>(sender);
 
@@ -95,7 +95,7 @@ void CalculatorProgrammerRadixOperators::bitshiftFlyout_Checked(Platform::Object
     this->BitShiftFlyout->Hide();
 }
 
-void CalculatorProgrammerRadixOperators::collapseBitshiftButtons()
+void CalculatorProgrammerRadixOperators::CollapseBitshiftButtons()
 {
     RolButton->Visibility = ::Visibility::Collapsed;
     RorButton->Visibility = ::Visibility::Collapsed;

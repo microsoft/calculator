@@ -99,14 +99,14 @@ void OperatorPanelListView::OnPointerExited(_In_ Object^ sender, _In_ PointerRou
 
 void OperatorPanelListView::ScrollLeft()
 {
-        double offset = m_scrollViewer->HorizontalOffset - (scrollRatio * m_scrollViewer->ViewportWidth);
-        m_scrollViewer->ChangeView(offset, nullptr, nullptr);
+    double offset = m_scrollViewer->HorizontalOffset - (scrollRatio * m_scrollViewer->ViewportWidth);
+    m_scrollViewer->ChangeView(offset, nullptr, nullptr);
 }
 
 void OperatorPanelListView::ScrollRight()
 {
-        double offset = m_scrollViewer->HorizontalOffset + (scrollRatio * m_scrollViewer->ViewportWidth);
-        m_scrollViewer->ChangeView(offset, nullptr, nullptr);
+    double offset = m_scrollViewer->HorizontalOffset + (scrollRatio * m_scrollViewer->ViewportWidth);
+    m_scrollViewer->ChangeView(offset, nullptr, nullptr);
 }
 
 void OperatorPanelListView::UpdateScrollButtons()

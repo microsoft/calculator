@@ -250,6 +250,7 @@
             <controls:OperatorPanelButton x:Name="BitwiseButton"
                                           x:Uid="bitwiseButton"
                                           Style="{StaticResource OperatorPanelButtonStyle}"
+                                          AutomationProperties.AutomationId="bitwiseButton"
                                           Glyph="&#xF895;">
                 <controls:OperatorPanelButton.FlyoutMenu>
                     <Flyout x:Name="BitwiseFlyout"
@@ -281,7 +282,7 @@
                                                        FontSize="12"
                                                        AutomationProperties.AutomationId="andButton"
                                                        ButtonId="And"
-                                                       Click="flyoutButton_Clicked"
+                                                       Click="FlyoutButton_Clicked"
                                                        Command="{x:Bind Model.ButtonPressed}"
                                                        Content="AND"
                                                        IsEnabled="{x:Bind BitwiseButton.IsEnabled, Mode=OneWay}"/>
@@ -293,7 +294,7 @@
                                                        FontSize="12"
                                                        AutomationProperties.AutomationId="orButton"
                                                        ButtonId="Or"
-                                                       Click="flyoutButton_Clicked"
+                                                       Click="FlyoutButton_Clicked"
                                                        Command="{x:Bind Model.ButtonPressed}"
                                                        Content="OR"
                                                        IsEnabled="{x:Bind BitwiseButton.IsEnabled, Mode=OneWay}"/>
@@ -305,7 +306,7 @@
                                                        FontSize="12"
                                                        AutomationProperties.AutomationId="notButton"
                                                        ButtonId="Not"
-                                                       Click="flyoutButton_Clicked"
+                                                       Click="FlyoutButton_Clicked"
                                                        Command="{x:Bind Model.ButtonPressed}"
                                                        Content="NOT"
                                                        IsEnabled="{x:Bind BitwiseButton.IsEnabled, Mode=OneWay}"/>
@@ -318,7 +319,7 @@
                                                        FontSize="12"
                                                        AutomationProperties.AutomationId="xorButton"
                                                        ButtonId="Xor"
-                                                       Click="flyoutButton_Clicked"
+                                                       Click="FlyoutButton_Clicked"
                                                        Command="{x:Bind Model.ButtonPressed}"
                                                        Content="XOR"
                                                        IsEnabled="{x:Bind BitwiseButton.IsEnabled, Mode=OneWay}"/>
@@ -330,7 +331,7 @@
                                                        FontSize="12"
                                                        AutomationProperties.AutomationId="nandButton"
                                                        ButtonId="Nand"
-                                                       Click="flyoutButton_Clicked"
+                                                       Click="FlyoutButton_Clicked"
                                                        Command="{x:Bind Model.ButtonPressed}"
                                                        Content="NAND"
                                                        IsEnabled="{x:Bind BitwiseButton.IsEnabled, Mode=OneWay}"/>
@@ -343,7 +344,7 @@
                                                        FontSize="12"
                                                        AutomationProperties.AutomationId="norButton"
                                                        ButtonId="Nor"
-                                                       Click="flyoutButton_Clicked"
+                                                       Click="FlyoutButton_Clicked"
                                                        Command="{x:Bind Model.ButtonPressed}"
                                                        Content="NOR"
                                                        IsEnabled="{x:Bind BitwiseButton.IsEnabled, Mode=OneWay}"/>
@@ -354,6 +355,7 @@
             <controls:OperatorPanelButton x:Name="BitShiftButton"
                                           x:Uid="bitShiftButton"
                                           Style="{StaticResource OperatorPanelButtonStyle}"
+                                          AutomationProperties.AutomationId="bitShiftButton"
                                           Glyph="&#xE301;">
                 <controls:OperatorPanelButton.FlyoutMenu>
                     <Flyout x:Name="BitShiftFlyout"
@@ -364,20 +366,20 @@
                             <RadioButton x:Name="ArithmeticShiftButton"
                                          x:Uid="arithmeticShiftButton"
                                          AutomationProperties.AutomationId="arithmeticShiftButton"
-                                         Checked="bitshiftFlyout_Checked"
+                                         Checked="BitshiftFlyout_Checked"
                                          IsChecked="True"/>
                             <RadioButton x:Name="LogicalShiftButton"
                                          x:Uid="logicalShiftButton"
                                          AutomationProperties.AutomationId="logicalShiftButton"
-                                         Checked="bitshiftFlyout_Checked"/>
+                                         Checked="BitshiftFlyout_Checked"/>
                             <RadioButton x:Name="RotateCircularButton"
                                          x:Uid="rotateCircularButton"
                                          AutomationProperties.AutomationId="rotateCircularButton"
-                                         Checked="bitshiftFlyout_Checked"/>
+                                         Checked="BitshiftFlyout_Checked"/>
                             <RadioButton x:Name="RotateCarryShiftButton"
                                          x:Uid="rotateCarryShiftButton"
                                          AutomationProperties.AutomationId="rotateCarryShiftButton"
-                                         Checked="bitshiftFlyout_Checked"/>
+                                         Checked="BitshiftFlyout_Checked"/>
                         </StackPanel>
                     </Flyout>
                 </controls:OperatorPanelButton.FlyoutMenu>

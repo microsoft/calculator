@@ -48,29 +48,29 @@ void CalculatorScientificOperators::OnIsErrorVisualStatePropertyChanged(bool /*o
     NumberPad->IsErrorVisualState = newValue;
 }
 
-void CalculatorScientificOperators::shiftButton_Check(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
+void CalculatorScientificOperators::ShiftButton_Check(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
 {
     SetOperatorRowVisibility();
 }
 
-void CalculatorScientificOperators::shiftButton_Uncheck(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
+void CalculatorScientificOperators::ShiftButton_Uncheck(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
 {
     ShiftButton->IsChecked = false;
     SetOperatorRowVisibility();
     ShiftButton->Focus(::FocusState::Programmatic);
 }
 
-void CalculatorScientificOperators::trigFlyoutShift_Toggle(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
+void CalculatorScientificOperators::TrigFlyoutShift_Toggle(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
 {
     SetTrigRowVisibility();
 }
 
-void CalculatorScientificOperators::trigFlyoutHyp_Toggle(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
+void CalculatorScientificOperators::TrigFlyoutHyp_Toggle(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
 {
     SetTrigRowVisibility();
 }
 
-void CalculatorScientificOperators::flyoutButton_Clicked(_In_ Platform::Object^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs^ /*e*/)
+void CalculatorScientificOperators::FlyoutButton_Clicked(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
 {
     this->HypButton->IsChecked = false;
     this->TrigShiftButton->IsChecked = false;
@@ -78,7 +78,7 @@ void CalculatorScientificOperators::flyoutButton_Clicked(_In_ Platform::Object^ 
     this->FuncFlyout->Hide();
 }
 
-void CalculatorScientificOperators::shiftButton_IsEnabledChanged(
+void CalculatorScientificOperators::ShiftButton_IsEnabledChanged(
     _In_ Platform::Object ^ /*sender*/,
     _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ /*e*/)
 {

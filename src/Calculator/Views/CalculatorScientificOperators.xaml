@@ -392,6 +392,7 @@
             <controls:OperatorPanelButton x:Name="TrigButton"
                                           x:Uid="trigButton"
                                           Style="{StaticResource OperatorPanelButtonStyle}"
+                                          AutomationProperties.AutomationId="trigButton"
                                           Glyph="&#xF892;">
                 <controls:OperatorPanelButton.FlyoutMenu>
                     <Flyout x:Name="Trigflyout"
@@ -422,21 +423,21 @@
                                           x:Uid="trigShiftButton"
                                           Style="{StaticResource CaptionToggleEmphasizedButtonStyle}"
                                           FontFamily="{StaticResource CalculatorFontFamily}"
-                                          AutomationProperties.AutomationId="shiftButton"
-                                          Checked="trigFlyoutShift_Toggle"
+                                          AutomationProperties.AutomationId="trigShiftButton"
+                                          Checked="TrigFlyoutShift_Toggle"
                                           Content="&#xF897;"
-                                          Unchecked="trigFlyoutShift_Toggle"
+                                          Unchecked="TrigFlyoutShift_Toggle"
                                           IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                             <ToggleButton x:Name="HypButton"
                                           x:Uid="hypButton"
                                           Grid.Row="1"
                                           Style="{StaticResource CaptionToggleEmphasizedButtonStyle}"
-                                          AutomationProperties.AutomationId="shiftButton"
-                                          Checked="trigFlyoutHyp_Toggle"
+                                          AutomationProperties.AutomationId="hypShiftButton"
+                                          Checked="TrigFlyoutHyp_Toggle"
                                           Content="hyp"
-                                          IsEnabledChanged="shiftButton_IsEnabledChanged"
-                                          Unchecked="trigFlyoutHyp_Toggle"
+                                          IsEnabledChanged="ShiftButton_IsEnabledChanged"
+                                          Unchecked="TrigFlyoutHyp_Toggle"
                                           IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                             <Grid x:Name="TrigFunctions"
@@ -459,7 +460,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="sinButton"
                                                            ButtonId="Sin"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="sin"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -470,7 +471,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="cosButton"
                                                            ButtonId="Cos"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="cos"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -481,7 +482,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="tanButton"
                                                            ButtonId="Tan"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="tan"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -492,7 +493,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="secButton"
                                                            ButtonId="Sec"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="sec"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -504,7 +505,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="cscButton"
                                                            ButtonId="Csc"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="csc"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -516,7 +517,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="cotButton"
                                                            ButtonId="Cot"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="cot"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -542,7 +543,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="invsinButton"
                                                            ButtonId="InvSin"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="sin⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -553,7 +554,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="invcosButton"
                                                            ButtonId="InvCos"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="cos⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -564,7 +565,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="invtanButton"
                                                            ButtonId="InvTan"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="tan⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -575,7 +576,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="invsecButton"
                                                            ButtonId="InvSec"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="sec⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -587,7 +588,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="invcscButton"
                                                            ButtonId="InvCsc"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="csc⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -599,7 +600,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="invcotButton"
                                                            ButtonId="InvCot"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="cot⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -625,7 +626,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="sinhButton"
                                                            ButtonId="Sinh"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="sinh"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -636,7 +637,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="coshButton"
                                                            ButtonId="Cosh"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="cosh"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -647,7 +648,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="tanhButton"
                                                            ButtonId="Tanh"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="tanh"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -658,7 +659,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="sechButton"
                                                            ButtonId="Sech"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="sech"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -670,7 +671,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="cschButton"
                                                            ButtonId="Csch"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="csch"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -682,7 +683,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="cothButton"
                                                            ButtonId="Coth"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="coth"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -707,7 +708,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="invsinhButton"
                                                            ButtonId="InvSinh"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="sinh⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -718,7 +719,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="invcoshButton"
                                                            ButtonId="InvCosh"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="cosh⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -729,7 +730,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="invtanhButton"
                                                            ButtonId="InvTanh"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="tanh⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -740,7 +741,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="invsechButton"
                                                            ButtonId="InvSech"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="sech⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -752,7 +753,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="invcschButton"
                                                            ButtonId="InvCsch"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="csch⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -764,7 +765,7 @@
                                                            Style="{StaticResource OperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="invcothButton"
                                                            ButtonId="InvCoth"
-                                                           Click="flyoutButton_Clicked"
+                                                           Click="FlyoutButton_Clicked"
                                                            Command="{x:Bind Model.ButtonPressed}"
                                                            Content="coth⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -777,6 +778,7 @@
             <controls:OperatorPanelButton x:Name="FuncButton"
                                           x:Uid="funcButton"
                                           Style="{StaticResource OperatorPanelButtonStyle}"
+                                          AutomationProperties.AutomationId="funcButton"
                                           Glyph="&#xF893;">
 
                 <controls:OperatorPanelButton.FlyoutMenu>
@@ -803,7 +805,7 @@
                                                        Style="{StaticResource SymbolOperatorButtonStyle}"
                                                        AutomationProperties.AutomationId="absButton"
                                                        ButtonId="Abs"
-                                                       Click="flyoutButton_Clicked"
+                                                       Click="FlyoutButton_Clicked"
                                                        Command="{x:Bind Model.ButtonPressed}"
                                                        Content="&#xF884;"
                                                        IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
@@ -814,7 +816,7 @@
                                                        Style="{StaticResource SymbolOperatorButtonStyle}"
                                                        AutomationProperties.AutomationId="floorButton"
                                                        ButtonId="Floor"
-                                                       Click="flyoutButton_Clicked"
+                                                       Click="FlyoutButton_Clicked"
                                                        Command="{x:Bind Model.ButtonPressed}"
                                                        Content="&#xF885;"
                                                        IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
@@ -825,7 +827,7 @@
                                                        Style="{StaticResource SymbolOperatorButtonStyle}"
                                                        AutomationProperties.AutomationId="ceilButton"
                                                        ButtonId="Ceil"
-                                                       Click="flyoutButton_Clicked"
+                                                       Click="FlyoutButton_Clicked"
                                                        Command="{x:Bind Model.ButtonPressed}"
                                                        Content="&#xF886;"
                                                        IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
@@ -836,7 +838,7 @@
                                                        Style="{StaticResource OperatorButtonStyle}"
                                                        AutomationProperties.AutomationId="randButton"
                                                        ButtonId="Rand"
-                                                       Click="flyoutButton_Clicked"
+                                                       Click="FlyoutButton_Clicked"
                                                        Command="{x:Bind Model.ButtonPressed}"
                                                        Content="rand"
                                                        IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
@@ -848,7 +850,7 @@
                                                        Style="{StaticResource SymbolOperatorButtonStyle}"
                                                        AutomationProperties.AutomationId="dmsButton"
                                                        ButtonId="DMS"
-                                                       Click="flyoutButton_Clicked"
+                                                       Click="FlyoutButton_Clicked"
                                                        Command="{x:Bind Model.ButtonPressed}"
                                                        Content="&#xF890;"
                                                        IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
@@ -860,7 +862,7 @@
                                                        Style="{StaticResource SymbolOperatorButtonStyle}"
                                                        AutomationProperties.AutomationId="degreesButton"
                                                        ButtonId="Degrees"
-                                                       Click="flyoutButton_Clicked"
+                                                       Click="FlyoutButton_Clicked"
                                                        Command="{x:Bind Model.ButtonPressed}"
                                                        Content="&#xF891;"
                                                        IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
@@ -877,10 +879,10 @@
                       FontFamily="{StaticResource CalculatorFontFamily}"
                       FontSize="20"
                       AutomationProperties.AutomationId="shiftButton"
-                      Checked="shiftButton_Check"
+                      Checked="ShiftButton_Check"
                       Content="&#xF897;"
-                      IsEnabledChanged="shiftButton_IsEnabledChanged"
-                      Unchecked="shiftButton_Check"/>
+                      IsEnabledChanged="ShiftButton_IsEnabledChanged"
+                      Unchecked="ShiftButton_Check"/>
 
         <controls:CalculatorButton x:Name="PiButton"
                                    x:Uid="piButton"
@@ -1021,7 +1023,7 @@
                                            Style="{StaticResource EmphasizedCalcButtonStyle}"
                                            AutomationProperties.AutomationId="squareRootButton"
                                            ButtonId="Sqrt"
-                                           Click="shiftButton_Uncheck"
+                                           Click="ShiftButton_Uncheck"
                                            Content="&#xF899;"/>
 
                 <controls:CalculatorButton x:Name="CubeRootButton"
@@ -1030,7 +1032,7 @@
                                            Style="{StaticResource EmphasizedCalcButtonStyle}"
                                            AutomationProperties.AutomationId="cubeRootButton"
                                            ButtonId="CubeRoot"
-                                           Click="shiftButton_Uncheck"
+                                           Click="ShiftButton_Uncheck"
                                            Content="&#xF881;"/>
 
                 <controls:CalculatorButton x:Name="YSquareRootButton"
@@ -1039,7 +1041,7 @@
                                            Style="{StaticResource EmphasizedCalcButtonStyle}"
                                            AutomationProperties.AutomationId="ySquareRootButton"
                                            ButtonId="YRootX"
-                                           Click="shiftButton_Uncheck"
+                                           Click="ShiftButton_Uncheck"
                                            Content="&#xf7cd;"/>
 
                 <controls:CalculatorButton x:Name="TwoPowerXButton"
@@ -1048,7 +1050,7 @@
                                            Style="{StaticResource EmphasizedCalcButtonStyle}"
                                            AutomationProperties.AutomationId="twoPowerXButton"
                                            ButtonId="TwoPowerX"
-                                           Click="shiftButton_Uncheck"
+                                           Click="ShiftButton_Uncheck"
                                            Content="&#xF882;"/>
 
                 <controls:CalculatorButton x:Name="LogBaseX"
@@ -1057,7 +1059,7 @@
                                            Style="{StaticResource EmphasizedCalcButtonStyle}"
                                            AutomationProperties.AutomationId="logBaseX"
                                            ButtonId="LogBaseX"
-                                           Click="shiftButton_Uncheck"
+                                           Click="ShiftButton_Uncheck"
                                            Content="&#xF883;"/>
 
                 <controls:CalculatorButton x:Name="PowerOfEButton"
@@ -1066,7 +1068,7 @@
                                            Style="{StaticResource EmphasizedCalcButtonStyle}"
                                            AutomationProperties.AutomationId="powerOfEButton"
                                            ButtonId="EPowerX"
-                                           Click="shiftButton_Uncheck"
+                                           Click="ShiftButton_Uncheck"
                                            Content="&#xf7ce;"/>
             </Grid>
         </Grid>
