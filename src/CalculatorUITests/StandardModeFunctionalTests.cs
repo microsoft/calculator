@@ -166,14 +166,6 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
-        public void Operator_Cubed()
-        {
-            page.StandardOperators.NumberPad.Input(-3);
-            page.StandardOperators.XPower3Button.Click();
-            Assert.AreEqual("-27", page.GetCalculatorResultText());
-        }
-
-        [TestMethod]
         public void Operator_Percent()
         {
             page.StandardOperators.NumberPad.Input(600);
@@ -240,13 +232,6 @@ namespace CalculatorUITests
         {
             page.Header.SendKeys("100@");
             Assert.AreEqual("10", page.GetCalculatorResultText());
-        }
-
-        [TestMethod]
-        public void KeyboardInput_Cubed()
-        {
-            page.Header.SendKeys("3#");
-            Assert.AreEqual("27", page.GetCalculatorResultText());
         }
 
         [TestMethod]

@@ -247,6 +247,8 @@
     <ClInclude Include="Converters\RadixToStringConverter.h" />
     <ClInclude Include="Converters\VisibilityNegationConverter.h" />
     <ClInclude Include="Controls\HorizontalNoOverflowStackPanel.h" />
+    <ClInclude Include="Controls\OperatorPanelListView.h" />
+    <ClInclude Include="Controls\OperatorPanelButton.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -294,6 +296,7 @@
       <DependentUpon>Views\OperatorsPanel.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Views\StateTriggers\AspectRatioTrigger.h" />
+    <ClInclude Include="Views\StateTriggers\ControlSizeTrigger.h" />
     <ClInclude Include="Views\SupplementaryResults.xaml.h">
       <DependentUpon>Views\SupplementaryResults.xaml</DependentUpon>
     </ClInclude>
@@ -376,6 +379,8 @@
     <ClCompile Include="Converters\RadixToStringConverter.cpp" />
     <ClCompile Include="Converters\VisibilityNegationConverter.cpp" />
     <ClCompile Include="Controls\HorizontalNoOverflowStackPanel.cpp" />
+    <ClCompile Include="Controls\OperatorPanelListView.cpp" />
+    <ClCompile Include="Controls\OperatorPanelButton.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -429,6 +434,7 @@
       <DependentUpon>Views\OperatorsPanel.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Views\StateTriggers\AspectRatioTrigger.cpp" />
+    <ClCompile Include="Views\StateTriggers\ControlSizeTrigger.cpp" />
     <ClCompile Include="Views\SupplementaryResults.xaml.cpp">
       <DependentUpon>Views\SupplementaryResults.xaml</DependentUpon>
     </ClCompile>
