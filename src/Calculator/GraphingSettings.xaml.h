@@ -5,7 +5,7 @@
 
 #pragma once
 
-//#include "..\..\src\GraphingInterfaces\IMathSolver.h"
+#include "..\..\src\GraphingInterfaces\IMathSolver.h"
 
 #include "CalcViewModel/Common/Utils.h"
 
@@ -33,13 +33,29 @@ namespace CalculatorApp
 
             void GraphingCalculator_DataContextChanged(Windows::UI::Xaml::FrameworkElement ^ sender, Windows::UI::Xaml::DataContextChangedEventArgs ^ args);
 
-        private:
             void OnPropertyChanged(Platform::String ^ propertyName)
             {
                 OutputDebugString(L"OnPropertyChanged");
                 // VariableUpdated(this, VariableChangedEventArgs{ Name, Value });
             }
             void OnTextChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::TextChangedEventArgs ^ e);
+
+
+            GraphControl::Grapher^ m_ParentGrapher;
+
+            std::mutex m_updating;
+            bool m_loading;
+
+            double
+                m_currentAspectRatio,
+                m_width,
+                m_height,
+                m_xMin,
+                m_yMin,
+                m_xMax,
+                m_yMax;
+
+            void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         };
     }
 }

@@ -5,16 +5,21 @@
 
 namespace CalculatorApp::ViewModel
 {
-
-        [Windows::UI::Xaml::Data::Bindable] public ref class ViewStateViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+    [Windows::UI::Xaml::Data::Bindable] public ref class ViewStateViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
     {
     public:
+        ViewStateViewModel()
+        {
+            OutputDebugString(L" ViewStateViewModel()\r\n");
+        }
+
         ViewStateViewModel(int xMin, int yMin, int xMax, int yMax)
             : m_XMin(xMin)
             , m_YMin(yMin)
             , m_XMax(xMax)
             , m_YMax(yMax)
         {
+            OutputDebugString(L" ViewStateViewModel(...)\r\n");
         }
 
         OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
@@ -32,10 +37,7 @@ namespace CalculatorApp::ViewModel
         }
     };
 
-
-
-
-    public
+public
     value struct VariableChangedEventArgs sealed
     {
         Platform::String ^ variableName;
@@ -101,7 +103,7 @@ namespace CalculatorApp::ViewModel
         OBSERVABLE_PROPERTY_R(bool, IsDecimalEnabled);
         OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<EquationViewModel ^> ^, Equations);
         OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<VariableViewModel ^> ^, Variables);
-        //OBSERVABLE_PROPERTY_R(ViewStateViewModel^, ViewState);
+        // OBSERVABLE_PROPERTY_R(ViewStateViewModel^, ViewState);
 
         property ViewStateViewModel^ ViewState
         {
@@ -123,8 +125,6 @@ namespace CalculatorApp::ViewModel
     private:
         void OnButtonPressed(Platform::Object ^ parameter);
         ViewStateViewModel ^ m_ViewState;
-
     };
-
 
 }

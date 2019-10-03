@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     DataContextChanged="GraphingCalculator_DataContextChanged"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="OnLoaded"
+    >
 
     <Grid BorderBrush="Black" BorderThickness="3">
         <StackPanel Margin="10,10,10,10">
@@ -28,13 +29,13 @@
                 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="x-min"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" Text="x-max"/>
-                <TextBox Grid.Row="1" Grid.Column="0" x:Name="x_min" Text="{x:Bind ViewState.XMin}" TextChanged="OnTextChanged"/>
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="x_max" Text="{x:Bind ViewState.XMax}" TextChanged="OnTextChanged"/>
+                <TextBox Grid.Row="1" Grid.Column="0" x:Name="x_min" TextChanged="OnTextChanged"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="x_max" TextChanged="OnTextChanged"/>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="y-min"/>
                 <TextBlock Grid.Row="3" Grid.Column="1" Text="y-min"/>
-                <TextBox Grid.Row="4" Grid.Column="0" x:Name="y_min" Text="{x:Bind ViewState.YMin}" TextChanged="OnTextChanged"/>
-                <TextBox Grid.Row="4" Grid.Column="1" x:Name="y_max" Text="{x:Bind ViewState.YMax}" TextChanged="OnTextChanged"/>
+                <TextBox Grid.Row="4" Grid.Column="0" x:Name="y_min" TextChanged="OnTextChanged"/>
+                <TextBox Grid.Row="4" Grid.Column="1" x:Name="y_max" TextChanged="OnTextChanged"/>
 
                 <Polyline Grid.Column="2" Grid.RowSpan="5" Points="0,20 50,20 50,110 0,110" Stroke="Blue" StrokeThickness="3" VerticalAlignment="Center"/>
                 <CheckBox Grid.Column="2" Grid.RowSpan="5" Margin="40,20,0,0" x:Name="PreserveAspectRatio" IsChecked="True" VerticalAlignment="Center" Opacity="100"/>
@@ -42,8 +43,8 @@
 
             <TextBlock Text="Units" FontSize="28" Margin="0,10"/>
             <StackPanel Orientation="Horizontal">
-                <RadioButton x:Name="Degrees" Content="Radians" IsChecked="True" Click="TrigUnitModeClick"/>
-                <RadioButton x:Name="Radians" Content="Degrees" Click="TrigUnitModeClick"/>
+                <RadioButton x:Name="Radians" Content="Radians" IsChecked="True" Click="TrigUnitModeClick"/>
+                <RadioButton x:Name="Degrees" Content="Degrees" Click="TrigUnitModeClick"/>
             </StackPanel>
         </StackPanel>
     </Grid>
