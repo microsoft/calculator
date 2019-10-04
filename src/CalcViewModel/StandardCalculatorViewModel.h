@@ -66,7 +66,6 @@ namespace CalculatorApp
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsMemoryEmpty);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEChecked);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsHyperbolicChecked);
             OBSERVABLE_PROPERTY_RW(bool, AreHEXButtonsEnabled);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationResultAutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationExpressionAutomationName);
@@ -89,22 +88,6 @@ namespace CalculatorApp
             COMMAND_FOR_METHOD(MemorySubtract, StandardCalculatorViewModel::OnMemorySubtract);
 
             event HideMemoryClickedHandler ^ HideMemoryClicked;
-
-            property bool IsShiftChecked
-            {
-                bool get()
-                {
-                    return m_isShiftChecked;
-                }
-                void set(bool value)
-                {
-                    if (m_isShiftChecked != value)
-                    {
-                        m_isShiftChecked = value;
-                        RaisePropertyChanged(L"IsShiftChecked");
-                    }
-                }
-            }
 
             property bool IsBitFlipChecked
             {
@@ -435,7 +418,6 @@ namespace CalculatorApp
             bool m_isAlwaysOnTop;
             bool m_isBinaryBitFlippingEnabled;
             bool m_isBitFlipChecked;
-            bool m_isShiftChecked;
             bool m_isRtlLanguage;
             int m_tokenPosition;
             bool m_keyPressed;
