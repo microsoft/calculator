@@ -165,6 +165,7 @@ private:
     void DisplayAnnounceBinaryOperator();
     void SetPrimaryDisplay(const std::wstring& szText, bool isError = false);
     void ClearTemporaryValues();
+    void ClearDisplay();
     CalcEngine::Rational TruncateNumForIntMath(CalcEngine::Rational const& rat);
     CalcEngine::Rational SciCalcFunctions(CalcEngine::Rational const& rat, uint32_t op);
     CalcEngine::Rational DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs);

@@ -76,6 +76,15 @@ void CCalcEngine::ClearTemporaryValues()
     m_bError = false;
 }
 
+void CCalcEngine::ClearDisplay()
+{
+    if (nullptr != m_pCalcDisplay)
+    {
+        m_pCalcDisplay->SetExpressionDisplay(
+            make_shared<CalculatorVector<pair<wstring, int>>>(), make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>());
+    }
+}
+
 void CCalcEngine::ProcessCommand(OpCode wParam)
 {
     if (wParam == IDC_SET_RESULT)
@@ -104,11 +113,9 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     }
 
     // Clear expression shown after = sign, when user do any action.
-    static bool afterEQUCommand = false;
-    if (afterEQUCommand)
+    if (!m_bNoPrevEqu)
     {
-        afterEQUCommand = false;
-        m_HistoryCollector.ClearHistoryLine(wstring());
+        ClearDisplay();
     }
 
     if (m_bError)
@@ -391,8 +398,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         if (nullptr != m_pCalcDisplay)
         {
             m_pCalcDisplay->SetParenthesisNumber(0);
-            m_pCalcDisplay->SetExpressionDisplay(
-                make_shared<CalculatorVector<pair<wstring, int>>>(), make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>());
+            ClearDisplay();
         }
 
         m_HistoryCollector.ClearHistoryLine(wstring());
@@ -482,8 +488,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         if (!m_bError)
         {
             wstring groupedString = GroupDigitsPerRadix(m_numberString, m_radix);
-            m_HistoryCollector.CompleteHistoryLine(groupedString);
-            afterEQUCommand = true;
+            m_HistoryCollector.CompleteEquation(groupedString);
         }
 
         m_bChangeOp = false;

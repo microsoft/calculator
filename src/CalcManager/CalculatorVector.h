@@ -138,12 +138,6 @@ public:
         return hr;
     }
 
-    ResultCode GetExpressionSuffix(_Out_ std::wstring* suffix)
-    {
-        *suffix = L"=";
-        return S_OK;
-    }
-
 private:
     std::vector<TType> m_vector;
 };
