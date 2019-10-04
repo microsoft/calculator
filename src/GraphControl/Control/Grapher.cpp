@@ -743,7 +743,7 @@ void Grapher::OnCoreKeyUp(CoreWindow ^ sender, KeyEventArgs ^ e)
     // We don't want to react to keyboard input unless the graph control has the focus.
     // NOTE: you can't select the graph control from the mouse for focus but you can tab to it.
     GraphControl::Grapher ^ gcHasFocus = dynamic_cast<GraphControl::Grapher ^>(FocusManager::GetFocusedElement());
-    if (gcHasFocus == nullptr)
+    if (gcHasFocus == nullptr || gcHasFocus != this)
     {
         // Not a graphingCalculator control so we don't want the input.
         return;
@@ -767,7 +767,7 @@ void Grapher::OnCoreKeyDown(CoreWindow ^ sender, KeyEventArgs ^ e)
 {
     // We don't want to react to any keys when we are not in the graph control
     GraphControl::Grapher ^ gcHasFocus = dynamic_cast<GraphControl::Grapher ^>(FocusManager::GetFocusedElement());
-    if (gcHasFocus == nullptr)
+    if (gcHasFocus == nullptr || gcHasFocus != this)
     {
         // Not a graphingCalculator control so we don't want the input.
         return;
