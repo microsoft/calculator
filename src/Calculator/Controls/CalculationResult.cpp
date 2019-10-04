@@ -52,9 +52,6 @@ DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, DisplayStringExpression);
 // and no events are launched when they scroll again in the same direction
 #define SCROLL_BUTTONS_APPROXIMATION_RANGE 4
 
-StringReference CalculationResult::s_FocusedState(L"Focused");
-StringReference CalculationResult::s_UnfocusedState(L"Unfocused");
-
 CalculationResult::CalculationResult()
     : m_isScalingText(false)
     , m_haveCalculatedMax(false)
@@ -136,7 +133,6 @@ void CalculationResult::OnApplyTemplate()
     }
     UpdateVisualState();
     UpdateTextState();
-    VisualStateManager::GoToState(this, s_UnfocusedState, false);
 }
 
 void CalculationResult::OnTextContainerLayoutUpdated(Object ^ /*sender*/, Object ^ /*e*/)
@@ -371,26 +367,7 @@ void CalculationResult::ModifyFontAndMargin(TextBlock ^ textBox, double fontChan
 
 void CalculationResult::OnTapped(TappedRoutedEventArgs ^ e)
 {
-    this->Focus(::FocusState::Programmatic);
     RaiseSelectedEvent();
-}
-
-void CalculationResult::OnRightTapped(RightTappedRoutedEventArgs ^ e)
-{
-    this->Focus(::FocusState::Programmatic);
-}
-
-void CalculationResult::OnGotFocus(RoutedEventArgs ^ e)
-{
-    if (this->FocusState == ::FocusState::Keyboard)
-    {
-        VisualStateManager::GoToState(this, s_FocusedState, true);
-    }
-}
-
-void CalculationResult::OnLostFocus(RoutedEventArgs ^ e)
-{
-    VisualStateManager::GoToState(this, s_UnfocusedState, true);
 }
 
 AutomationPeer ^ CalculationResult::OnCreateAutomationPeer()
