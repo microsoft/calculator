@@ -278,5 +278,5 @@ void KeyGraphFeaturesPanel::SetTooComplexFeaturesErrorProperty()
 
 void KeyGraphFeaturesPanel::EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
-    KeyGraphFeaturesVisibilityChanged(this, ref new RoutedEventArgs());
+    KeyGraphFeaturesClosed(this, ref new RoutedEventArgs());
 }

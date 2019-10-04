@@ -46,7 +46,7 @@ namespace CalculatorApp
 
         OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(CalculatorApp::ViewModel::EquationViewModel ^, ViewModel);
 
-        event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesVisibilityChanged;
+        event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesClosed;
 
 
     private:

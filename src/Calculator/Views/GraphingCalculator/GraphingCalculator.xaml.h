@@ -3,6 +3,7 @@
 #include "Views\GraphingCalculator\GraphingCalculator.g.h"
 #include "CalcViewModel\GraphingCalculator\GraphingCalculatorViewModel.h"
 #include "Views\NumberPad.xaml.h"
+#include "Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h"
 
 namespace CalculatorApp
 {
@@ -18,6 +19,8 @@ namespace CalculatorApp
         COMMAND_FOR_METHOD(ZoomOutButtonPressed, GraphingCalculator::OnZoomOutCommand);
         COMMAND_FOR_METHOD(ZoomInButtonPressed, GraphingCalculator::OnZoomInCommand);
         COMMAND_FOR_METHOD(ZoomResetButtonPressed, GraphingCalculator::OnZoomResetCommand);
+        OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(CalculatorApp::ViewModel::EquationViewModel ^, KeyGraphFeaturesVM);
+        OBSERVABLE_PROPERTY_RW(bool, IsKeyGraphFeaturesVisible);
 
         property CalculatorApp::ViewModel::GraphingCalculatorViewModel^ ViewModel
         {
@@ -58,6 +61,7 @@ namespace CalculatorApp
         void OnGraphLostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnLoosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
         void OnEquationKeyGraphFeaturesChanged(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnKeyGraphFeaturesClosed(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 
 }

@@ -2,7 +2,6 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="using:CalculatorApp.Controls"
-             xmlns:converters="using:CalculatorApp.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -11,28 +10,24 @@
              d:DesignWidth="400"
              mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
-    </UserControl.Resources>
-    <ListView x:Name="EquationInputList"
+        <ListView x:Name="EquationInputList"
               VerticalContentAlignment="Top"
               IsItemClickEnabled="False"
               ItemsSource="{x:Bind Equations}"
-              SelectionMode="None"
-              Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
+              SelectionMode="None">
 
-        <ListView.ItemContainerStyle>
-            <Style TargetType="ListViewItem">
-                <Setter Property="IsTabStop" Value="False"/>
-                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                <Setter Property="Padding" Value="0"/>
-                <Setter Property="Margin" Value="0,0,0,2"/>
-            </Style>
-        </ListView.ItemContainerStyle>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="IsTabStop" Value="False"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="0,0,0,2"/>
+                </Style>
+            </ListView.ItemContainerStyle>
 
-        <ListView.ItemTemplate>
-            <DataTemplate x:DataType="vm:EquationViewModel">
-                <controls:EquationTextBox x:Uid="EquationInputButton"
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="vm:EquationViewModel">
+                    <controls:EquationTextBox x:Uid="EquationInputButton"
                                           Margin="0,0,3,0"
                                           Style="{StaticResource EquationTextBoxStyle}"
                                           EquationColor="{x:Bind LineColor, Mode=OneWay}"
@@ -40,24 +35,22 @@
                                           GotFocus="InputTextBox_GotFocus"
                                           Loaded="EquationTextBoxLoaded"
                                           LostFocus="InputTextBox_LostFocus"
-                                          RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
-                    <controls:EquationTextBox.ColorChooserFlyout>
-                        <Flyout x:Name="ColorChooserFlyout"
+                                          RemoveButtonClicked="EquationTextBox_RemoveButtonClicked"
+                                          KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked">
+                        <controls:EquationTextBox.ColorChooserFlyout>
+                            <Flyout x:Name="ColorChooserFlyout"
                                 x:Uid="ColorChooserFlyout"
                                 Placement="Bottom">
-                            <local:EquationStylePanelControl SelectedColor="{x:Bind LineColor, Mode=TwoWay}"/>
-                        </Flyout>
-                    </controls:EquationTextBox.ColorChooserFlyout>
-                </controls:EquationTextBox>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-        <ListView.Footer>
-            <Button Margin="4"
+                                <local:EquationStylePanelControl SelectedColor="{x:Bind LineColor, Mode=TwoWay}"/>
+                            </Flyout>
+                        </controls:EquationTextBox.ColorChooserFlyout>
+                    </controls:EquationTextBox>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Footer>
+                <Button Margin="4"
                     Click="AddEquationButton_Click"
                     Content="+"/>
-        </ListView.Footer>
-    </ListView>
-            <local:KeyGraphFeaturesPanel KeyGraphFeaturesVisibilityChanged="OnKeyGraphFeaturesVisibilityChanged"
-                                     ViewModel="{x:Bind KeyGraphFeaturesVM, Mode=OneWay}"
-                                     Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"/>
+            </ListView.Footer>
+        </ListView>
 </UserControl>

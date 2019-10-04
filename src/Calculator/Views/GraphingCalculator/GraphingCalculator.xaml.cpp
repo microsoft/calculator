@@ -4,6 +4,8 @@
 #include "GraphingCalculator.xaml.h"
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "Controls/CalculationResult.h"
+#include <Calculator\Controls\EquationTextBox.h>
+#include <Calculator\Views\GraphingCalculator\EquationInputArea.xaml.h>
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -313,6 +315,12 @@ void CalculatorApp::GraphingCalculator::OnLoosingFocus(Windows::UI::Xaml::UIElem
 
 void GraphingCalculator::OnEquationKeyGraphFeaturesChanged(Object ^ sender, RoutedEventArgs ^ e)
 {
-    ButtonContainerGrid->Visibility = ButtonContainerGrid->Visibility == Windows::UI::Xaml::Visibility::Visible ? Windows::UI::Xaml::Visibility::Collapsed
-                                                                                                                : Windows::UI::Xaml::Visibility::Visible;
+    IsKeyGraphFeaturesVisible = true;
+    auto equationInputArea = static_cast<EquationInputArea ^>(sender);
+    KeyGraphFeaturesVM = equationInputArea->EquationVM;
+}
+
+void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventArgs ^ e)
+{
+    IsKeyGraphFeaturesVisible = false;
 }

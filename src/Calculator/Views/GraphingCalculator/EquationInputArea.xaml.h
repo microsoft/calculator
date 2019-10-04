@@ -17,8 +17,7 @@ namespace CalculatorApp
 
         OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector< ViewModel::EquationViewModel^ >^, Equations);
-        OBSERVABLE_PROPERTY_RW(bool, IsKeyGraphFeaturesVisible);
-        OBSERVABLE_PROPERTY_RW(ViewModel::EquationViewModel ^, KeyGraphFeaturesVM);
+        OBSERVABLE_PROPERTY_RW(ViewModel::EquationViewModel ^, EquationVM);
 
         event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesVisibilityChanged;
 
@@ -38,7 +37,6 @@ namespace CalculatorApp
         void EquationTextBox_RemoveButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void EquationTextBox_KeyGraphFeaturesButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void EquationTextBox_EquationButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void OnKeyGraphFeaturesVisibilityChanged(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void EquationTextBoxLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }

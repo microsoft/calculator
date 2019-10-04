@@ -106,7 +106,7 @@ namespace GraphControl
                 EquationProperties::LineColor,
                 SolidColorBrush::typeid,
                 Equation::typeid,
-                ref new PropertyMetadata(accentColor, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_xInterceptProperty)
