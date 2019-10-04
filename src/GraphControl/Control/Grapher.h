@@ -167,6 +167,7 @@ public
             }
         }
 
+
         property Windows::Foundation::Point ActiveTraceCursorPosition
         {
             Windows::Foundation::Point get()
@@ -332,6 +333,7 @@ public
         void UpdateTracingChanged();
         void HandleTracingMovementTick(Object ^ sender, Object ^ e);
         void HandleKey(bool keyDown, Windows::System::VirtualKey key);
+
 
     private:
         DX::RenderMain ^ m_renderMain = nullptr;
