@@ -60,6 +60,10 @@ namespace MockGraphingImpl
             return std::wstring{};
         }
 
+        Graphing::IGraphFunctionAnalysisData IMathSolver::Analyze(const Graphing::Analyzer::IGraphAnalyzer* analyzer)
+        {
+            return Graphing::IGraphFunctionAnalysisData{};
+        }
     private:
         MockGraphingImpl::ParsingOptions m_parsingOptions;
         MockGraphingImpl::EvalOptions m_evalOptions;

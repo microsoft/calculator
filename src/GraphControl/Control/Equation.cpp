@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Equation.h"
+using namespace winrt::Windows::Foundation::Collections;
 
 using namespace Platform;
 using namespace std;
@@ -57,6 +58,12 @@ namespace GraphControl
     DependencyProperty ^ Equation::s_obliqueAsymptotesProperty;
     static constexpr auto s_propertyName_ObliqueAsymptotes = L"ObliqueAsymptotes";
 
+    DependencyProperty ^ Equation::s_tooComplexFeaturesProperty;
+    static constexpr auto s_propertyName_TooComplexFeatures = L"TooComplexFeatures";
+
+    DependencyProperty ^ Equation::s_analysisNotSupportedProperty;
+    static constexpr auto s_propertyName_AnalysisNotSupported = L"AnalysisNotSupported";
+
     namespace EquationProperties
     {
         String ^ Expression = StringReference(s_propertyName_Expression);
@@ -74,6 +81,8 @@ namespace GraphControl
         String ^ VerticalAsymptotes = StringReference(s_propertyName_VerticalAsymptotes);
         String ^ HorizontalAsymptotes = StringReference(s_propertyName_HorizontalAsymptotes);
         String ^ ObliqueAsymptotes = StringReference(s_propertyName_ObliqueAsymptotes);
+        String ^ TooComplexFeatures = StringReference(s_propertyName_TooComplexFeatures);
+        String ^ AnalysisNotSupported = StringReference(s_propertyName_AnalysisNotSupported);
     }
 
     void Equation::RegisterDependencyProperties()
@@ -122,7 +131,7 @@ namespace GraphControl
         {
             s_parityProperty = DependencyProperty::Register(
                 EquationProperties::Parity,
-                FunctionParityType::typeid,
+                int ::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -131,7 +140,7 @@ namespace GraphControl
         {
             s_periodicityProperty = DependencyProperty::Register(
                 EquationProperties::Periodicity,
-                String::typeid,
+                IObservableMap<String ^, String ^>::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -140,7 +149,7 @@ namespace GraphControl
         {
             s_minimaProperty = DependencyProperty::Register(
                 EquationProperties::Minima,
-                String::typeid,
+                IObservableVector<String ^>::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -149,7 +158,7 @@ namespace GraphControl
         {
             s_maximaProperty = DependencyProperty::Register(
                 EquationProperties::Maxima,
-                String::typeid,
+                IObservableVector<String ^>::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -176,7 +185,7 @@ namespace GraphControl
         {
             s_inflectionPointsProperty = DependencyProperty::Register(
                 EquationProperties::InflectionPoints,
-                String::typeid,
+                IObservableVector<String ^>::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -185,7 +194,7 @@ namespace GraphControl
         {
             s_monotonicityProperty = DependencyProperty::Register(
                 EquationProperties::Monotonicity,
-                String::typeid,
+                IObservableMap<String ^, String ^>::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -194,7 +203,7 @@ namespace GraphControl
         {
             s_verticalAsymptotesProperty = DependencyProperty::Register(
                 EquationProperties::VerticalAsymptotes,
-                String::typeid,
+                IObservableVector<String ^>::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -203,7 +212,7 @@ namespace GraphControl
         {
             s_horizontalAsymptotesProperty = DependencyProperty::Register(
                 EquationProperties::HorizontalAsymptotes,
-                String::typeid,
+                IObservableVector<String ^>::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -212,7 +221,24 @@ namespace GraphControl
         {
             s_obliqueAsymptotesProperty = DependencyProperty::Register(
                 EquationProperties::ObliqueAsymptotes,
-                String::typeid,
+                IObservableVector<String ^>::typeid,
+                Equation::typeid,
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
+        }
+        if (!s_tooComplexFeaturesProperty)
+        {
+            s_tooComplexFeaturesProperty = DependencyProperty::Register(
+                EquationProperties::TooComplexFeatures,
+                int ::typeid,
+                Equation::typeid,
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
+        }
+
+        if (!s_analysisNotSupportedProperty)
+        {
+            s_analysisNotSupportedProperty = DependencyProperty::Register(
+                EquationProperties::TooComplexFeatures,
+                bool ::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -283,7 +309,15 @@ namespace GraphControl
             {
                 propertyName = EquationProperties::ObliqueAsymptotes;
             }
-            
+            else if (args->Property == s_tooComplexFeaturesProperty)
+            {
+                propertyName = EquationProperties::TooComplexFeatures;
+            }
+            else if (args->Property == s_analysisNotSupportedProperty)
+            {
+                propertyName = EquationProperties::AnalysisNotSupported;
+            }
+
             eq->PropertyChanged(eq, propertyName);
         }
     }
@@ -291,10 +325,7 @@ namespace GraphControl
     wstring Equation::GetRequest()
     {
         wstringstream ss{};
-        ss  << GetRequestHeader()
-            << GetExpression()
-            << GetLineColor()
-            << L"</mfenced></mrow>";
+        ss << GetRequestHeader() << GetExpression() << GetLineColor() << L"</mfenced></mrow>";
 
         return ss.str();
     }

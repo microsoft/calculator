@@ -258,5 +258,6 @@ void GraphingCalculator::OnZoomResetCommand(Object ^ /* parameter */)
 
 void GraphingCalculator::OnEquationKeyGraphFeaturesChanged(Object ^ sender, RoutedEventArgs ^ e)
 {
-    IsKeyGraphFeaturesVisible = IsKeyGraphFeaturesVisible ? false : true;
+    ButtonContainerGrid->Visibility = ButtonContainerGrid->Visibility == Windows::UI::Xaml::Visibility::Visible ? Windows::UI::Xaml::Visibility::Collapsed
+                                                                                                                : Windows::UI::Xaml::Visibility::Visible;
 }

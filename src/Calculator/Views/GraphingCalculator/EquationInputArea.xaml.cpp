@@ -103,15 +103,14 @@ void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ s
     KeyGraphFeaturesVM = eq;
     KeyGraphFeaturesVisibilityChanged(this, ref new RoutedEventArgs());
     IsKeyGraphFeaturesVisible = true;
-
 }
 
 void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
 }
 
-void EquationInputArea::KeyGraphFeatures_EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
+void EquationInputArea::OnKeyGraphFeaturesVisibilityChanged(Object ^ sender, RoutedEventArgs ^ e)
 {
-    KeyGraphFeaturesVisibilityChanged(this, ref new RoutedEventArgs());
     IsKeyGraphFeaturesVisible = false;
+    KeyGraphFeaturesVisibilityChanged(this, ref new RoutedEventArgs());
 }

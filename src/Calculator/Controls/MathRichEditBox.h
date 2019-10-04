@@ -9,7 +9,7 @@ namespace CalculatorApp
     namespace Controls
     {
     public
-        ref class MathRichEditBox sealed : public Windows::UI::Xaml::Controls::RichEditBox
+        ref class MathRichEditBox sealed : Windows::UI::Xaml::Controls::RichEditBox
         {
         public:
             MathRichEditBox();

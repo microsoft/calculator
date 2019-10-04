@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Grapher.h"
+#include <IBitmap.h>
 
 using namespace Graphing;
 using namespace GraphControl;
@@ -439,7 +440,6 @@ namespace GraphControl
                 if (auto analyzer = graph->GetAnalyzer())
                 {
                     bool result;
-                    vector<Graphing::Analyzer::IGraphFunctionAnalysisData> functionAnalysisDataOut;
                     analyzer->CanFunctionAnalysisBePerformed(result);
                     if (result)
                     {
@@ -448,58 +448,63 @@ namespace GraphControl
                             == analyzer->PerformFunctionAnalysis(
                                 (Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All))
                         {
-                            if (S_OK == analyzer->GetFunctionAnalysisData(functionAnalysisDataOut))
+                            Graphing::IGraphFunctionAnalysisData functionAnalysisData = m_solver->Analyze(analyzer.get());
                             {
-                                equation->Domain = ref new String(functionAnalysisDataOut[0].Domain.c_str());
-                                equation->Range = ref new String(functionAnalysisDataOut[0].Range.c_str());
-                                equation->Parity = functionAnalysisDataOut[0].Parity;
-                                equation->Periodicity = functionAnalysisDataOut[0].Periodicity;
-                                equation->XIntercept = ref new String(functionAnalysisDataOut[0].Zeros.c_str());
-                                equation->YIntercept = ref new String(functionAnalysisDataOut[0].YIntercept.c_str());
-                                equation->Minima = ConvertVectorToString(functionAnalysisDataOut[0].Minima);
-                                equation->Maxima = ConvertVectorToString(functionAnalysisDataOut[0].Maxima);
-                                equation->InflectionPoints = ConvertVectorToString(functionAnalysisDataOut[0].InflectionPoints);
-                                auto mono = ConvertMap(functionAnalysisDataOut[0].MonotoneIntervals);
-                                equation->VerticalAsymptotes = ConvertVectorToString(functionAnalysisDataOut[0].VerticalAsymptotes);
-                                equation->HorizontalAsymptotes = ConvertVectorToString(functionAnalysisDataOut[0].HorizontalAsymptotes);
-                                equation->ObliqueAsymptotes = ConvertVectorToString(functionAnalysisDataOut[0].ObliqueAsymptotes);
+                                equation->XIntercept = ref new String(functionAnalysisData.Zeros.c_str());
+                                equation->YIntercept = ref new String(functionAnalysisData.YIntercept.c_str());
+                                equation->Domain = ref new String(functionAnalysisData.Domain.c_str());
+                                equation->Range = ref new String(functionAnalysisData.Range.c_str());
+                                equation->Parity = functionAnalysisData.Parity;
+
+                                // There is only ever one item in Periodicity. Map is being used because it works with DependencyProperty.
+                                for (auto p : functionAnalysisData.Periodicity)
+                                {
+                                    equation->Periodicity->Insert(p.first.ToString(), ref new String(p.second.c_str()));
+                                }
+
+                                equation->Minima = ConvertWStringVector(functionAnalysisData.Minima);
+                                equation->Maxima = ConvertWStringVector(functionAnalysisData.Maxima);
+                                equation->InflectionPoints = ConvertWStringVector(functionAnalysisData.InflectionPoints);
+                                equation->Monotonicity = ConvertWStringIntMap(functionAnalysisData.MonotoneIntervals);
+                                equation->VerticalAsymptotes = ConvertWStringVector(functionAnalysisData.VerticalAsymptotes);
+                                equation->HorizontalAsymptotes = ConvertWStringVector(functionAnalysisData.HorizontalAsymptotes);
+                                equation->ObliqueAsymptotes = ConvertWStringVector(functionAnalysisData.ObliqueAsymptotes);
+                                equation->TooComplexFeatures = functionAnalysisData.TooComplexFeatures;
                                 continue;
                             }
                         }
-
-                        Graphing::Analyzer::GraphAnalyzerMessage graphMsg = Graphing::Analyzer::GraphAnalyzerMessage::GraphAnalyzerMessage_None;
-                        wstring msg;
-                        analyzer->GetMessage(graphMsg, msg);
+                        else
+                        {
+                            equation->AnalysisNotSupported = true;
+                        }
+                    }
+                    else
+                    {
+                        equation->AnalysisNotSupported = true;
                     }
                 }
             }
         }
     }
 
-    String ^ Grapher::ConvertVectorToString(vector<wstring> inVector)
+    Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^ Grapher::ConvertWStringVector(vector<wstring> inVector)
     {
-        String ^ outString = ref new String();
-        int vectorSize = (int)inVector.size();
-        for (int i = 0; i < vectorSize; i++)
+        Vector<Platform::String ^> ^ outVector = ref new Vector<String ^>();
+        ;
+        for (auto v : inVector)
         {
-            outString += ref new String(inVector[i].c_str());
-            if (i < vectorSize - 1)
-            {
-                outString += ", ";
-            }
+            outVector->Append(ref new String(v.c_str()));
         }
 
-        return outString;
+        return outVector;
     }
-
-    map<wstring, int> Grapher::ConvertMap(map<const Graphing::IExpression *, int> inMap)
+    Windows::Foundation::Collections::IObservableMap<Platform::String ^, String ^> ^ Grapher::ConvertWStringIntMap(map<wstring, int> inMap)
     {
-        map<wstring, int> outMap;
-        int mapSize = (int)inMap.size();
-        for (auto pair : inMap)
+        Map<Platform::String ^, String ^> ^ outMap = ref new Map<String ^, String ^>();
+        ;
+        for (auto m : inMap)
         {
-            wstring string = m_solver->Serialize(pair.first);
-            outMap.emplace(string, pair.second);
+            outMap->Insert(ref new String(m.first.c_str()), m.second.ToString());
         }
 
         return outMap;

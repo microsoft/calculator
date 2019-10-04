@@ -67,6 +67,7 @@
                                                Parity="{x:Bind Parity, Mode=TwoWay}"
                                                Periodicity="{x:Bind Periodicity, Mode=TwoWay}"
                                                Range="{x:Bind Range, Mode=TwoWay}"
+                                               TooComplexFeatures="{x:Bind TooComplexFeatures, Mode=TwoWay}"
                                                XIntercept="{x:Bind XIntercept, Mode=TwoWay}"
                                                YIntercept="{x:Bind YIntercept, Mode=TwoWay}"/>
                     </DataTemplate>
@@ -383,14 +384,15 @@
                 <Button x:Name="Share" Click="OnShareClick">
                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
                 </Button>
-                <local:EquationInputArea Grid.Row="0" Equations="{x:Bind ViewModel.Equations}" KeyGraphFeaturesVisibilityChanged="OnEquationKeyGraphFeaturesChanged"/>
+                <local:EquationInputArea Grid.Row="0"
+                                         Equations="{x:Bind ViewModel.Equations}"
+                                         KeyGraphFeaturesVisibilityChanged="OnEquationKeyGraphFeaturesChanged"/>
             </StackPanel>
 
             <Grid x:Name="ButtonContainerGrid"
                   Grid.Row="2"
                   Margin="3,0,3,3"
-                  UseLayoutRounding="False"
-                  Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}">
+                  UseLayoutRounding="False">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>

@@ -309,6 +309,7 @@
     </ClCompile>
     <ClCompile Include="Controls\KeyGraphFeaturesControl.cpp" />
     <ClCompile Include="Controls\MathRichEditBox.cpp" />
+    <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -397,6 +398,7 @@
     </ClInclude>
     <ClInclude Include="Controls\KeyGraphFeaturesControl.h" />
     <ClInclude Include="Controls\MathRichEditBox.h" />
+    <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -471,6 +473,7 @@
       <Filter>Views\GraphingCalculator</Filter>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)DensityStyles\Compact.xaml" />
+    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Resources\en-US\CEngineStrings.resw">
@@ -1481,6 +1484,10 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />

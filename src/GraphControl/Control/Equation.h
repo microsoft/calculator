@@ -8,66 +8,6 @@ namespace GraphControl
         extern Platform::String ^ LineColor;
     }
 
-	// function parity for function analysis
-    enum class FunctionParityType
-    {
-        // parity not calculated or not possible to calculate
-        FunctionParityType_Unknown = 0,
-
-        // parity is odd
-        FunctionParityType_Odd = 1,
-
-        // parity is even
-        FunctionParityType_Even = 2,
-
-        // function is not odd nor even
-        FunctionParityType_None = 3
-    };
-
-    // monotonicity direction for function analysis
-    enum class FunctionMonotonicityType
-    {
-        // unknown or not calculated
-        FunctionMonotonicityType_Unknown = 0,
-
-        // ascending monotonicity on interval
-        FunctionMonotonicityType_Ascending = 1,
-
-        // descending monotonicity on interval
-        FunctionMonotonicityType_Descending = 2,
-
-        // constant monotonicity on interval
-        FunctionMonotonicityType_Constant = 3
-    };
-
-    // asymptote description for function analysis
-    enum class AsymptoteType
-    {
-        // unknown or not calculated
-        AsymptoteType_Unknown = 0,
-
-        // when x goes to positive infinity
-        AsymptoteType_PositiveInfinity = 1,
-
-        // when x goes to negative infinity
-        AsymptoteType_NegativeInfinity = 2,
-
-        // when x goes to positive or negative infinity
-        AsymptoteType_AnyInfinity = 3
-    };
-    // function periodicity for function analysis
-    enum class FunctionPeriodicityType
-    {
-        // periodicity not calculated or not possible to calculate
-        FunctionPeriodicityType_Unknown = 0,
-
-        // parity is odd
-        FunctionPeriodicityType_Periodic = 1,
-
-        // parity is even
-        FunctionPeriodicityType_NotPeriodic = 2
-    };
-
     ref class Equation;
     delegate void PropertyChangedEventHandler(Equation ^ sender, Platform::String ^ propertyName);
 
@@ -78,8 +18,8 @@ namespace GraphControl
         {
         }
         static void RegisterDependencyProperties();
-        
-        #pragma region Platform::String ^ Expression DependencyProperty
+
+#pragma region Platform::String ^ Expression DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ ExpressionProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -98,9 +38,9 @@ namespace GraphControl
                 SetValue(s_expressionProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region Windows::UI::Color LineColor DependencyProperty
+#pragma region Windows::UI::Color LineColor DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ LineColorProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -119,11 +59,11 @@ namespace GraphControl
                 SetValue(s_lineColorProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region Key Graph Features
+#pragma region Key Graph Features
 
-        #pragma region Platform::String ^ XIntercept DependencyProperty
+#pragma region Platform::String ^ XIntercept DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ XInterceptProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -142,9 +82,9 @@ namespace GraphControl
                 SetValue(s_xInterceptProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region Platform::String ^ YIntercept DependencyProperty
+#pragma region Platform::String ^ YIntercept DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ YInterceptProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -163,9 +103,9 @@ namespace GraphControl
                 SetValue(s_yInterceptProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region int Parity DependencyProperty
+#pragma region int Parity DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ ParityProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -175,7 +115,7 @@ namespace GraphControl
         }
         property int Parity
         {
-           int get()
+            int get()
             {
                 return static_cast<int>(GetValue(s_parityProperty));
             }
@@ -184,9 +124,9 @@ namespace GraphControl
                 SetValue(s_parityProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region int Periodicity DependencyProperty
+#pragma region int Periodicity DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ PeriodicityProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -194,20 +134,20 @@ namespace GraphControl
                 return s_periodicityProperty;
             }
         }
-        property int Periodicity
+        property Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ Periodicity
         {
-            int get()
+            Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ get()
             {
-                return static_cast<int>(GetValue(s_periodicityProperty));
+                return static_cast<Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^>^>(GetValue(s_periodicityProperty));
             }
-            void set(int value)
+            void set(Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ value)
             {
                 SetValue(s_periodicityProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region Platform::String^ Minima DependencyProperty
+#pragma region Platform::String ^ Minima DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ MinimaProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -215,20 +155,20 @@ namespace GraphControl
                 return s_minimaProperty;
             }
         }
-        property Platform::String^ Minima
+        property Windows::Foundation::Collections::IVector<Platform::String^> ^ Minima
         {
-            Platform::String^ get()
+            Windows::Foundation::Collections::IVector<Platform::String^> ^ get()
             {
-                return static_cast<Platform::String^>(GetValue(s_minimaProperty));
+                return static_cast<Windows::Foundation::Collections::IVector<Platform::String^> ^>(GetValue(s_minimaProperty));
             }
-            void set(Platform::String^ value)
+            void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
             {
                 SetValue(s_minimaProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region Platform::String ^ Maxima DependencyProperty
+#pragma region Platform::String ^ Maxima DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ MaximaProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -236,20 +176,20 @@ namespace GraphControl
                 return s_maximaProperty;
             }
         }
-        property Platform::String^ Maxima
+        property Windows::Foundation::Collections::IVector<Platform::String^> ^ Maxima
         {
-            Platform::String^ get()
+            Windows::Foundation::Collections::IVector<Platform::String^> ^ get()
             {
-                return static_cast<Platform::String^>(GetValue(s_maximaProperty));
+                return static_cast<Windows::Foundation::Collections::IVector<Platform::String^> ^>(GetValue(s_maximaProperty));
             }
-            void set(Platform::String^ value)
+            void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
             {
                 SetValue(s_maximaProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region Platform::String ^ Domain DependencyProperty
+#pragma region Platform::String ^ Domain DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ DomainProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -268,9 +208,9 @@ namespace GraphControl
                 SetValue(s_domainProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region Platform::String ^ Range DependencyProperty
+#pragma region Platform::String ^ Range DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ RangeProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -289,9 +229,9 @@ namespace GraphControl
                 SetValue(s_rangeProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region Platform::String ^ InflectionPoints DependencyProperty
+#pragma region Platform::String ^ InflectionPoints DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ InflectionPointsProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -299,20 +239,20 @@ namespace GraphControl
                 return s_inflectionPointsProperty;
             }
         }
-        property Platform::String^ InflectionPoints
+        property Windows::Foundation::Collections::IVector<Platform::String^> ^ InflectionPoints
         {
-            Platform::String^ get()
+            Windows::Foundation::Collections::IVector<Platform::String^> ^ get()
             {
-                return static_cast<Platform::String^>(GetValue(s_inflectionPointsProperty));
+                return static_cast<Windows::Foundation::Collections::IVector<Platform::String^> ^>(GetValue(s_inflectionPointsProperty));
             }
-            void set(Platform::String^ value)
+            void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
             {
                 SetValue(s_inflectionPointsProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region Platform::String ^ Monotonicity DependencyProperty
+#pragma region Platform::String ^ Monotonicity DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ MonotonicityProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -320,20 +260,20 @@ namespace GraphControl
                 return s_monotonicityProperty;
             }
         }
-        property Platform::String^ Monotonicity
+        property Windows::Foundation::Collections::IObservableMap<Platform::String^, Platform::String ^> ^ Monotonicity
         {
-            Platform::String^ get()
+            Windows::Foundation::Collections::IObservableMap<Platform::String^, Platform::String ^> ^ get()
             {
-                return static_cast<Platform::String^>(GetValue(s_monotonicityProperty));
+                return static_cast<Windows::Foundation::Collections::IObservableMap<Platform::String^, Platform::String ^> ^>(GetValue(s_monotonicityProperty));
             }
-            void set(Platform::String^ value)
+            void set(Windows::Foundation::Collections::IObservableMap<Platform::String^, Platform::String ^> ^ value)
             {
                 SetValue(s_monotonicityProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region Platform::String ^ VerticalAsymptotes DependencyProperty
+#pragma region Platform::String ^ VerticalAsymptotes DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ VerticalAsymptotesProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -341,20 +281,20 @@ namespace GraphControl
                 return s_verticalAsymptotesProperty;
             }
         }
-        property Platform::String^ VerticalAsymptotes
+        property Windows::Foundation::Collections::IVector<Platform::String^> ^ VerticalAsymptotes
         {
-            Platform::String^ get()
+            Windows::Foundation::Collections::IVector<Platform::String^> ^ get()
             {
-                return static_cast<Platform::String^>(GetValue(s_verticalAsymptotesProperty));
+                return static_cast<Windows::Foundation::Collections::IVector<Platform::String^> ^>(GetValue(s_verticalAsymptotesProperty));
             }
-            void set(Platform::String^ value)
+            void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
             {
                 SetValue(s_verticalAsymptotesProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-       #pragma region Platform::String ^ HorizontalAsymptotes DependencyProperty
+#pragma region Platform::String ^ HorizontalAsymptotes DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ HorizontalAsymptotesProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -362,20 +302,20 @@ namespace GraphControl
                 return s_horizontalAsymptotesProperty;
             }
         }
-        property Platform::String^ HorizontalAsymptotes
+        property Windows::Foundation::Collections::IVector<Platform::String^> ^ HorizontalAsymptotes
         {
-            Platform::String^ get()
+           Windows::Foundation::Collections::IVector<Platform::String^> ^ get()
             {
-                return static_cast<Platform::String^>(GetValue(s_horizontalAsymptotesProperty));
+                return static_cast<Windows::Foundation::Collections::IVector<Platform::String^> ^>(GetValue(s_horizontalAsymptotesProperty));
             }
-            void set(Platform::String^ value)
+            void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
             {
                 SetValue(s_horizontalAsymptotesProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma region Platform::String ^ ObliqueAsymptotes DependencyProperty
+#pragma region Platform::String ^ ObliqueAsymptotes DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ ObliqueAsymptotesProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -383,25 +323,65 @@ namespace GraphControl
                 return s_obliqueAsymptotesProperty;
             }
         }
-        property Platform::String^ ObliqueAsymptotes
+        property Windows::Foundation::Collections::IVector<Platform::String^> ^ ObliqueAsymptotes
         {
-            Platform::String^ get()
+            Windows::Foundation::Collections::IVector<Platform::String^> ^ get()
             {
-                return static_cast<Platform::String^>(GetValue(s_obliqueAsymptotesProperty));
+                return static_cast<Windows::Foundation::Collections::IVector<Platform::String^> ^>(GetValue(s_obliqueAsymptotesProperty));
             }
-            void set(Platform::String^ value)
+            void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
             {
                 SetValue(s_obliqueAsymptotesProperty, value);
             }
         }
-        #pragma endregion
+#pragma endregion
 
-        #pragma endregion
+#pragma region int TooComplexFeatures DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty^ TooComplexFeaturesProperty
+        {
+            Windows::UI::Xaml::DependencyProperty^ get()
+            {
+                return s_tooComplexFeaturesProperty;
+            }
+        }
+        property int TooComplexFeatures
+        {
+            int get()
+            {
+                return static_cast<int>(GetValue(s_tooComplexFeaturesProperty));
+            }
+            void set(int value)
+            {
+                SetValue(s_tooComplexFeaturesProperty, value);
+            }
+        }
+#pragma endregion
+
+#pragma region bool AnalysisNotSupported DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty ^ AnalysisNotSupportedProperty {
+            Windows::UI::Xaml::DependencyProperty ^ get() { return s_analysisNotSupportedProperty; }
+        } property bool AnalysisNotSupported
+        {
+            bool get()
+            {
+                return static_cast<bool>(GetValue(s_analysisNotSupportedProperty));
+            }
+            void set(bool value)
+            {
+                SetValue(s_analysisNotSupportedProperty, value);
+            }
+        }
+
+#pragma endregion
 
     internal:
         event PropertyChangedEventHandler^ PropertyChanged;
 
         std::wstring GetRequest();
+
+        struct KeyGraphFeatures
+        {
+        };
 
     private:
         static void OnCustomDependencyPropertyChanged(Windows::UI::Xaml::DependencyObject ^ obj, Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
@@ -426,5 +406,7 @@ namespace GraphControl
         static Windows::UI::Xaml::DependencyProperty ^ s_verticalAsymptotesProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_horizontalAsymptotesProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_obliqueAsymptotesProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_tooComplexFeaturesProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_analysisNotSupportedProperty;
     };
 }

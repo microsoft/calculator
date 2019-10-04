@@ -9,4 +9,6 @@ namespace Graphing
     {
         return make_unique<MockGraphingImpl::MathSolver>();
     }
+
+
 }

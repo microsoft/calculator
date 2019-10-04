@@ -234,7 +234,6 @@
     </ClInclude>
     <ClInclude Include="Common\AppLifecycleLogger.h" />
     <ClInclude Include="Controls\CalculationResultAutomationPeer.h" />
-    <ClInclude Include="Controls\KeyGraphFeaturesControl.h" />
     <ClInclude Include="Controls\MathRichEditBox.h" />
     <ClInclude Include="Controls\OverflowTextBlockAutomationPeer.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h" />
@@ -287,6 +286,10 @@
     <ClInclude Include="Views\GraphingCalculator\GraphingCalculator.xaml.h">
       <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h">
+        <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
+    </ClInclude>
+      
     <ClInclude Include="Views\HistoryList.xaml.h">
       <DependentUpon>Views\HistoryList.xaml</DependentUpon>
     </ClInclude>
@@ -344,6 +347,7 @@
     <Page Include="Views\DelighterUnitStyles.xaml" />
     <Page Include="Views\GraphingCalculator\EquationInputArea.xaml" />
     <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml" />
+    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" />
     <Page Include="Views\HistoryList.xaml" />
     <Page Include="Views\MainPage.xaml" />
     <Page Include="Views\Memory.xaml" />
@@ -375,7 +379,6 @@
     </ClCompile>
     <ClCompile Include="Common\AppLifecycleLogger.cpp" />
     <ClCompile Include="Controls\CalculationResultAutomationPeer.cpp" />
-    <ClCompile Include="Controls\KeyGraphFeaturesControl.cpp" />
     <ClCompile Include="Controls\MathRichEditBox.cpp" />
     <ClCompile Include="Controls\OverflowTextBlockAutomationPeer.cpp" />
     <ClCompile Include="Common\BindableBase.cpp" />
@@ -432,6 +435,9 @@
     </ClCompile>
     <ClCompile Include="Views\GraphingCalculator\GraphingCalculator.xaml.cpp">
       <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp">
+        <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Views\HistoryList.xaml.cpp">
       <DependentUpon>Views\HistoryList.xaml</DependentUpon>

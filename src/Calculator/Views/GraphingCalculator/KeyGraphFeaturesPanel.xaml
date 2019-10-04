@@ -1,0 +1,93 @@
+<UserControl x:Class="CalculatorApp.KeyGraphFeaturesPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:CalculatorApp.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+             mc:Ignorable="d">
+
+
+    <UserControl.Resources>
+        <Style x:Name="KGF_RichEditBoxStyle" TargetType="RichEditBox">
+            <Setter Property="Margin" Value="0,4,3,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style x:Name="KGF_TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="0,4,3,0"/>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer>
+        <StackPanel>
+            <controls:EquationTextBox x:Uid="EquationInputButton"
+                                      Margin="0,8,3,0"
+                                      Style="{StaticResource EquationTextBoxStyle}"
+                                      DataContext="{x:Bind ViewModel, Mode=OneWay}"
+                                      EquationButtonClicked="EquationButtonClicked"/>
+            <TextBlock x:Uid="KeyGraphFeaturesLabel"
+                       Style="{StaticResource KGF_TextBlockStyle}"
+                       FontSize="14"/>
+            <TextBlock x:Name="AnalysisNotSupportedTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
+            <StackPanel x:Name="KeyGraphFeaturesStackPanel">
+                <TextBlock x:Name="DomainTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
+                <controls:MathRichEditBox x:Name="DomainEditbox"
+                                          Style="{StaticResource KGF_RichEditBoxStyle}"
+                                          Text="{x:Bind Domain, Mode=OneWay}"/>
+                <TextBlock x:Name="RangeTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
+                <controls:MathRichEditBox x:Name="RangeEditBox"
+                                          Style="{StaticResource KGF_RichEditBoxStyle}"
+                                          Text="{x:Bind Range, Mode=OneWay}"/>
+                <TextBlock x:Name="XInterceptTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
+                <controls:MathRichEditBox x:Name="XInterceptEditBox"
+                                          Style="{StaticResource KGF_RichEditBoxStyle}"
+                                          Text="{x:Bind XIntercept, Mode=OneWay}"/>
+                <TextBlock x:Name="YInterceptTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
+                <controls:MathRichEditBox x:Name="YInterceptEditBox"
+                                          Style="{StaticResource KGF_RichEditBoxStyle}"
+                                          Text="{x:Bind YIntercept, Mode=OneWay}"/>
+                <TextBlock x:Name="MinimaTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
+                <controls:MathRichEditBox x:Name="MinimaEditBox"
+                                          Style="{StaticResource KGF_RichEditBoxStyle}"
+                                          Text="{x:Bind Minima, Mode=OneWay}"/>
+                <TextBlock x:Name="MaximaTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
+                <controls:MathRichEditBox x:Name="MaximaEditBox"
+                                          Style="{StaticResource KGF_RichEditBoxStyle}"
+                                          Text="{x:Bind Maxima, Mode=OneWay}"/>
+                <TextBlock x:Name="ParityTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
+                <controls:MathRichEditBox x:Name="ParityEditBox"
+                                          Style="{StaticResource KGF_RichEditBoxStyle}"
+                                          Text="{x:Bind Parity, Mode=OneWay}"/>
+                <TextBlock x:Name="PeriodicityTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
+                <controls:MathRichEditBox x:Name="PeriodicityEditBox"
+                                          Style="{StaticResource KGF_RichEditBoxStyle}"
+                                          Text="{x:Bind Periodicity, Mode=OneWay}"/>
+                <TextBlock x:Name="InflectionPointsTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
+                <controls:MathRichEditBox x:Name="InflectionPointsEditBox"
+                                          Style="{StaticResource KGF_RichEditBoxStyle}"
+                                          Text="{x:Bind InflectionPoints, Mode=OneWay}"/>
+                <TextBlock x:Name="MonotonicityTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
+                <controls:MathRichEditBox x:Name="MonotonicityEditBox"
+                                          Style="{StaticResource KGF_RichEditBoxStyle}"
+                                          Text="{x:Bind Monotonicity, Mode=OneWay}"/>
+                <TextBlock x:Name="VerticalAsymptotesTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
+                <controls:MathRichEditBox x:Name="VerticalAsymptotesEditBox"
+                                          Style="{StaticResource KGF_RichEditBoxStyle}"
+                                          Text="{x:Bind VerticalAsymptotes, Mode=OneWay}"/>
+                <TextBlock x:Name="HorizontalAsymptotesTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
+                <controls:MathRichEditBox x:Name="HorizontalAsymptotesEditBox"
+                                          Style="{StaticResource KGF_RichEditBoxStyle}"
+                                          Text="{x:Bind HorizontalAsymptotes, Mode=OneWay}"/>
+                <TextBlock x:Name="ObliqueAsymptotesTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
+                <controls:MathRichEditBox x:Name="ObliqueAsymptotesEditBox"
+                                          Style="{StaticResource KGF_RichEditBoxStyle}"
+                                          Text="{x:Bind ObliqueAsymptotes, Mode=OneWay}"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
