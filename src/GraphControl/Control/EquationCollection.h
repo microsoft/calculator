@@ -144,16 +144,21 @@ public
         }
 
         event EquationChangedEventHandler ^ EquationChanged;
+        event EquationChangedEventHandler ^ EquationStyleChanged;
 
     private:
-        void OnEquationPropertyChanged(GraphControl::Equation ^ equation, Platform::String ^ propertyName)
+        void OnEquationPropertyChanged(GraphControl::Equation ^, Platform::String ^ propertyName)
         {
-            if (propertyName == EquationProperties::Expression)
+            if (propertyName == EquationProperties::LineColor)
+            {
+                EquationStyleChanged();
+            }
+            else if (propertyName == EquationProperties::Expression)
             {
                 EquationChanged();
             }
         }
-
+      
     private:
         Platform::Collections::Vector<GraphControl::Equation ^> ^ m_vector;
         std::vector<Windows::Foundation::EventRegistrationToken> m_tokens;

@@ -307,7 +307,6 @@
     <ClCompile Include="Controls\EquationTextBox.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
-    <ClCompile Include="Controls\KeyGraphFeaturesControl.cpp" />
     <ClCompile Include="Controls\MathRichEditBox.cpp" />
     <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp" />
   </ItemGroup>
@@ -396,7 +395,6 @@
     <ClInclude Include="Controls\EquationTextBox.h">
       <Filter>Controls</Filter>
     </ClInclude>
-    <ClInclude Include="Controls\KeyGraphFeaturesControl.h" />
     <ClInclude Include="Controls\MathRichEditBox.h" />
     <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h" />
   </ItemGroup>
@@ -473,7 +471,9 @@
       <Filter>Views\GraphingCalculator</Filter>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)DensityStyles\Compact.xaml" />
-    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" />
+    <Page Include="EquationStylePanelControl.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Resources\en-US\CEngineStrings.resw">

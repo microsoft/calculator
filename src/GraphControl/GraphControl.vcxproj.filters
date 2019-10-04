@@ -31,6 +31,9 @@
     <ClCompile Include="DirectX\NearestPointRenderer.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
+    <ClCompile Include="DirectX\ActiveTracingPointRenderer.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -57,6 +60,9 @@
       <Filter>Control</Filter>
     </ClInclude>
     <ClInclude Include="DirectX\NearestPointRenderer.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX\ActiveTracingPointRenderer.h">
       <Filter>DirectX</Filter>
     </ClInclude>
   </ItemGroup>

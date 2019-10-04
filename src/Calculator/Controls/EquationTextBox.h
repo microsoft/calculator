@@ -4,6 +4,7 @@
 #pragma once
 
 #include "CalcViewModel/Common/Utils.h"
+#include "CalcViewModel/GraphingCalculator/EquationViewModel.h"
 
 namespace CalculatorApp
 {

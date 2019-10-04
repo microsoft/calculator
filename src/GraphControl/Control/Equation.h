@@ -17,6 +17,7 @@ namespace GraphControl
         Equation()
         {
         }
+
         static void RegisterDependencyProperties();
 
 #pragma region Platform::String ^ Expression DependencyProperty
@@ -40,7 +41,7 @@ namespace GraphControl
         }
 #pragma endregion
 
-#pragma region Windows::UI::Color LineColor DependencyProperty
+#pragma region Windows::UI::Xaml::Media::SolidColorBrush ^ LineColor DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ LineColorProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -48,13 +49,13 @@ namespace GraphControl
                 return s_lineColorProperty;
             }
         }
-        property Windows::UI::Color LineColor
+        property Windows::UI::Xaml::Media::SolidColorBrush^ LineColor
         {
-            Windows::UI::Color get()
+            Windows::UI::Xaml::Media::SolidColorBrush^ get()
             {
-                return static_cast<Windows::UI::Color>(GetValue(s_lineColorProperty));
+                return static_cast<Windows::UI::Xaml::Media::SolidColorBrush^>(GetValue(s_lineColorProperty));
             }
-            void set(Windows::UI::Color value)
+            void set(Windows::UI::Xaml::Media::SolidColorBrush^ value)
             {
                 SetValue(s_lineColorProperty, value);
             }

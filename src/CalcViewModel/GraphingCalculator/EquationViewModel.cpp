@@ -9,7 +9,7 @@ using namespace Windows::UI::Xaml;
 namespace CalculatorApp::ViewModel
 {
     EquationViewModel::EquationViewModel()
-        : m_LineColor{ Colors::Transparent }
+        : m_LineColor{ nullptr }
         , m_Expression{ "" }
         , m_Domain{ "" }
         , m_Range{ "" }

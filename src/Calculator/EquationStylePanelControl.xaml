@@ -1,0 +1,91 @@
+<UserControl x:Class="CalculatorApp.EquationStylePanelControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:CalculatorApp"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+
+    <GridView x:Name="ColorChooser"
+              ItemsSource="{x:Bind AvailableColors}"
+              Loaded="ColorChooserLoaded"
+              SelectionChanged="SelectionChanged"
+              SingleSelectionFollowsFocus="False">
+        <GridView.ItemContainerStyle>
+            <Style TargetType="GridViewItem">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="MinHeight" Value="52"/>
+                <Setter Property="MinWidth" Value="52"/>
+                <Setter Property="Height" Value="52"/>
+                <Setter Property="Width" Value="52"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="GridViewItem">
+                            <Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="PointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Target="ItemContent.Margin" Value="-2,-2,-2,-2"/>
+                                                <Setter Target="ItemBorder.Margin" Value="2,2,2,2"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Target="ItemContent.Margin" Value="-2,-2,-2,-2"/>
+                                                <Setter Target="ItemBorder.Stroke" Value="{ThemeResource InkToolbarFlyoutItemBorderPressedThemeBrush}"/>
+                                                <Setter Target="ItemBorder.Margin" Value="2,2,2,2"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Target="ItemContent.Margin" Value="2,2,2,2"/>
+                                                <Setter Target="ItemBorder.Stroke" Value="{ThemeResource InkToolbarFlyoutItemBorderSelectedThemeBrush}"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="FocusStates">
+                                        <VisualState x:Name="Focused"/>
+                                        <VisualState x:Name="Unfocused"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Ellipse x:Name="ItemBorder"
+                                         Margin="6,6,6,6"
+                                         HorizontalAlignment="Stretch"
+                                         VerticalAlignment="Stretch"
+                                         Fill="Transparent"
+                                         Stroke="Transparent"
+                                         StrokeThickness="2"
+                                         UseLayoutRounding="false"/>
+                                <ContentPresenter x:Name="ItemContent" UseLayoutRounding="false"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </GridView.ItemContainerStyle>
+        <GridView.Header>
+            <TextBlock x:Uid="LineColorText" Margin="8,0,8,8"/>
+        </GridView.Header>
+        <GridView.ItemTemplate>
+            <DataTemplate x:DataType="Brush">
+                <Ellipse Margin="8,8,8,8"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         Fill="{x:Bind}"
+                         StrokeThickness="0"
+                         UseLayoutRounding="false"/>
+            </DataTemplate>
+        </GridView.ItemTemplate>
+        <GridView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <ItemsWrapGrid MaximumRowsOrColumns="7" Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </GridView.ItemsPanel>
+    </GridView>
+</UserControl>

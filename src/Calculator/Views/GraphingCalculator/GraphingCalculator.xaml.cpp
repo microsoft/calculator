@@ -22,6 +22,7 @@ using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage::Streams;
 using namespace Windows::System;
 using namespace Windows::UI::Core;
+using namespace Windows::UI::Input;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Controls;
@@ -43,6 +44,25 @@ GraphingCalculator::GraphingCalculator()
     // Register the current control as a share source.
     m_dataRequestedToken = dataTransferManager->DataRequested +=
         ref new TypedEventHandler<DataTransferManager ^, DataRequestedEventArgs ^>(this, &GraphingCalculator::OnDataRequested);
+
+    // Request notifications when we should be showing the trace values
+    GraphingControl->TracingChangedEvent += ref new TracingChangedEventHandler(this, &GraphingCalculator::OnShowTracePopupChanged);
+
+    // And when the actual trace value changes
+    GraphingControl->TracingValueChangedEvent += ref new TracingValueChangedEventHandler(this, &GraphingCalculator::OnTracePointChanged);
+}
+
+void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
+{
+    if (TraceValuePopup->IsOpen != newValue)
+    {
+        TraceValuePopup->IsOpen = newValue;
+        if (TraceValuePopup->IsOpen)
+        {
+            // Set the keyboard focus to the graph control so we can use the arrow keys safely.
+            GraphingControl->Focus(::FocusState::Programmatic);
+        }
+    }
 }
 
 void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement ^ sender, DataContextChangedEventArgs ^ args)
@@ -52,6 +72,14 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
     ViewModel->VariableUpdated += ref new EventHandler<VariableChangedEventArgs>(this, &CalculatorApp::GraphingCalculator::OnVariableChanged);
 
     //GraphingControl->Equations
+}
+
+void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
+{
+    TraceValuePopupTransform->X = (int)GraphingControl->TraceLocation.X + 15;
+    TraceValuePopupTransform->Y = (int)GraphingControl->TraceLocation.Y - 30;
+
+    TraceValue->Text = "(" + newPoint.X.ToString() + ", " + newPoint.Y.ToString() + ")";
 }
 
 GraphingCalculatorViewModel ^ GraphingCalculator::ViewModel::get()
@@ -93,7 +121,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
         for (unsigned i = 0; i < equations->Size; i++)
         {
             auto expression = equations->GetAt(i)->Expression->Data();
-            auto color = equations->GetAt(i)->LineColor;
+            auto color = equations->GetAt(i)->LineColor->Color;
 
             if (equations->GetAt(i)->Expression->Length() == 0)
             {
@@ -203,11 +231,11 @@ void GraphingCalculator::SubmitTextbox(TextBox ^ sender)
     }
     else if (sender->Name == "MaxTextBox")
     {
-        variableViewModel->Step = validateDouble(sender->Text, variableViewModel->Step);
+        variableViewModel->Max = validateDouble(sender->Text, variableViewModel->Max);
     }
     else if (sender->Name == "StepTextBox")
     {
-        variableViewModel->Max = validateDouble(sender->Text, variableViewModel->Max);
+        variableViewModel->Step = validateDouble(sender->Text, variableViewModel->Step);
     }
 }
 
@@ -254,6 +282,33 @@ void GraphingCalculator::OnZoomOutCommand(Object ^ /* parameter */)
 void GraphingCalculator::OnZoomResetCommand(Object ^ /* parameter */)
 {
     GraphingControl->ResetGrid();
+}
+
+void GraphingCalculator::OnActiveTracingClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    GraphingControl->ActiveTracing = !GraphingControl->ActiveTracing;
+}
+
+void CalculatorApp::GraphingCalculator::OnGraphLostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    // If the graph is losing focus while we are in active tracing we need to turn it off so we don't try to eat keys in other controls.
+    if (GraphingControl->ActiveTracing)
+    {
+        GraphingControl->ActiveTracing = false;
+        OnShowTracePopupChanged(false);
+    }
+}
+
+void CalculatorApp::GraphingCalculator::OnLoosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args)
+{
+    FrameworkElement ^ newFocusElement = (FrameworkElement ^) args->NewFocusedElement;
+    if (newFocusElement == nullptr || newFocusElement->Name == nullptr)
+    {
+        // Because clicking on the swap chain panel will try to move focus to a control that can't actually take focus
+        // we will get a null destination.  So we are going to try and cancel that request.
+        // If the destination is not in our application we will also get a null destination but the cancel will fail so it doesn't hurt to try.
+        args->TryCancel();
+    }
 }
 
 void GraphingCalculator::OnEquationKeyGraphFeaturesChanged(Object ^ sender, RoutedEventArgs ^ e)
