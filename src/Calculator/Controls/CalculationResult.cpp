@@ -377,7 +377,16 @@ void CalculationResult::OnTapped(TappedRoutedEventArgs ^ e)
 
 void CalculationResult::OnRightTapped(RightTappedRoutedEventArgs ^ e)
 {
-    this->Focus(::FocusState::Programmatic);
+    auto requestedElement = e->OriginalSource;
+
+    if (requestedElement->Equals(safe_cast<Object ^>(m_textBlock)))
+    {
+        m_textBlock->Focus(::FocusState::Programmatic);
+    }
+    else
+    {
+        this->Focus(::FocusState::Programmatic);
+    }
 }
 
 void CalculationResult::OnGotFocus(RoutedEventArgs ^ e)
