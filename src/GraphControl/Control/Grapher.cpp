@@ -13,6 +13,7 @@ using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage::Streams;
 using namespace Windows::System;
 using namespace Windows::UI;
+using namespace Windows::UI::Core;
 using namespace Windows::UI::Input;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
@@ -54,6 +55,7 @@ namespace GraphControl
     Grapher::Grapher()
         : m_solver{ IMathSolver::CreateMathSolver() }
         , m_graph{ m_solver->CreateGrapher() }
+        , m_Moving{ false }
     {
         m_solver->ParsingOptions().SetFormatType(FormatType::MathML);
 
@@ -67,6 +69,10 @@ namespace GraphControl
 
         this->ManipulationMode = ManipulationModes::TranslateX | ManipulationModes::TranslateY | ManipulationModes::TranslateInertia | ManipulationModes::Scale
                                  | ManipulationModes::ScaleInertia;
+
+        auto cw = CoreWindow::GetForCurrentThread();
+        cw->KeyDown += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &Grapher::OnCoreKeyDown);
+        cw->KeyUp += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &Grapher::OnCoreKeyUp);
     }
 
     void Grapher::OnLoaded(Object ^ sender, RoutedEventArgs ^ args)
@@ -126,6 +132,7 @@ namespace GraphControl
         auto swapChainPanel = dynamic_cast<SwapChainPanel ^>(GetTemplateChild(StringReference(s_templateKey_SwapChainPanel)));
         if (swapChainPanel)
         {
+            swapChainPanel->AllowFocusOnInteraction = true;
             m_renderMain = ref new RenderMain(swapChainPanel);
         }
 
@@ -535,12 +542,27 @@ namespace GraphControl
         }
     }
 
+    void Grapher::UpdateTracingChanged()
+    {
+        if (m_renderMain->Tracing || m_renderMain->ActiveTracing)
+        {
+            TracingChangedEvent(true);
+
+            TracingValueChangedEvent(m_renderMain->TraceValue);
+        }
+        else
+        {
+            TracingChangedEvent(false);
+        }
+    }
+
     void Grapher::OnPointerMoved(PointerRoutedEventArgs ^ e)
     {
         if (m_renderMain)
         {
             PointerPoint ^ currPoint = e->GetCurrentPoint(/* relativeTo */ this);
             m_renderMain->PointerLocation = currPoint->Position;
+            UpdateTracingChanged();
 
             e->Handled = true;
         }
@@ -551,6 +573,11 @@ namespace GraphControl
         if (m_renderMain)
         {
             m_renderMain->DrawNearestPoint = false;
+            if (ActiveTracing == false)
+            {
+                // IF we are active tracing we never want to hide the popup..
+                TracingChangedEvent(false);
+            }
             e->Handled = true;
         }
     }
@@ -697,5 +724,177 @@ namespace GraphControl
         }
 
         return outputStream;
+    }
+}
+
+void Grapher::OnCoreKeyUp(CoreWindow ^ sender, KeyEventArgs ^ e)
+{
+    // We don't want to react to keyboard input unless the graph control has the focus.
+    // NOTE: you can't select the graph control from the mouse for focus but you can tab to it.
+    GraphControl::Grapher ^ gcHasFocus = dynamic_cast<GraphControl::Grapher ^>(FocusManager::GetFocusedElement());
+    if (gcHasFocus == nullptr || gcHasFocus != this)
+    {
+        // Not a graphingCalculator control so we don't want the input.
+        return;
+    }
+
+    switch (e->VirtualKey)
+    {
+    case VirtualKey::Left:
+    case VirtualKey::Right:
+    case VirtualKey::Down:
+    case VirtualKey::Up:
+    case VirtualKey::Shift:
+    {
+        HandleKey(false, e->VirtualKey);
+    }
+    break;
+    }
+}
+
+void Grapher::OnCoreKeyDown(CoreWindow ^ sender, KeyEventArgs ^ e)
+{
+    // We don't want to react to any keys when we are not in the graph control
+    GraphControl::Grapher ^ gcHasFocus = dynamic_cast<GraphControl::Grapher ^>(FocusManager::GetFocusedElement());
+    if (gcHasFocus == nullptr || gcHasFocus != this)
+    {
+        // Not a graphingCalculator control so we don't want the input.
+        return;
+    }
+
+    switch (e->VirtualKey)
+    {
+    case VirtualKey::Left:
+    case VirtualKey::Right:
+    case VirtualKey::Down:
+    case VirtualKey::Up:
+    case VirtualKey::Shift:
+    {
+        HandleKey(true, e->VirtualKey);
+    }
+    break;
+    }
+}
+
+void Grapher::HandleKey(bool keyDown, VirtualKey key)
+{
+    int pressedKeys = 0;
+    if (key == VirtualKey::Left)
+    {
+        m_KeysPressed[KeysPressedSlots::Left] = keyDown;
+        if (keyDown)
+        {
+            pressedKeys++;
+        }
+    }
+    if (key == VirtualKey::Right)
+    {
+        m_KeysPressed[KeysPressedSlots::Right] = keyDown;
+        if (keyDown)
+        {
+            pressedKeys++;
+        }
+    }
+    if (key == VirtualKey::Up)
+    {
+        m_KeysPressed[KeysPressedSlots::Up] = keyDown;
+        if (keyDown)
+        {
+            pressedKeys++;
+        }
+    }
+    if (key == VirtualKey::Down)
+    {
+        m_KeysPressed[KeysPressedSlots::Down] = keyDown;
+        if (keyDown)
+        {
+            pressedKeys++;
+        }
+    }
+    if (key == VirtualKey::Shift)
+    {
+        m_KeysPressed[KeysPressedSlots::Accelerator] = keyDown;
+    }
+
+    if (pressedKeys > 0 && !m_Moving)
+    {
+        m_Moving = true;
+        // Key(s) we care about, so ensure we are ticking our timer (and that we have one to tick)
+        if (m_TracingTrackingTimer == nullptr)
+        {
+            m_TracingTrackingTimer = ref new DispatcherTimer();
+
+            m_TracingTrackingTimer->Tick += ref new EventHandler<Object ^>(this, &Grapher::HandleTracingMovementTick);
+            TimeSpan ts;
+            ts.Duration = 100000; // .1 second
+            m_TracingTrackingTimer->Interval = ts;
+            auto i = m_TracingTrackingTimer->Interval;
+        }
+        m_TracingTrackingTimer->Start();
+    }
+}
+
+void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
+{
+    int delta = 5;
+    int liveKeys = 0;
+
+    if (m_KeysPressed[KeysPressedSlots::Accelerator])
+    {
+        delta = 1;
+    }
+
+    auto curPos = ActiveTraceCursorPosition;
+
+    if (m_KeysPressed[KeysPressedSlots::Left])
+    {
+        liveKeys++;
+        curPos.X -= delta;
+        if (curPos.X < 0)
+        {
+            curPos.X = 0;
+        }
+    }
+
+    if (m_KeysPressed[KeysPressedSlots::Right])
+    {
+        liveKeys++;
+        curPos.X += delta;
+        if (curPos.X > ActualWidth - delta)
+        {
+            curPos.X = (float)ActualWidth - delta; // TODO change this to deal with size of cursor
+        }
+    }
+
+    if (m_KeysPressed[KeysPressedSlots::Up])
+    {
+        liveKeys++;
+        curPos.Y -= delta;
+        if (curPos.Y < 0)
+        {
+            curPos.Y = 0;
+        }
+    }
+
+    if (m_KeysPressed[KeysPressedSlots::Down])
+    {
+        liveKeys++;
+        curPos.Y += delta;
+        if (curPos.Y > ActualHeight - delta)
+        {
+            curPos.Y = (float)ActualHeight - delta; // TODO change this to deal with size of cursor
+        }
+    }
+
+    if (liveKeys == 0)
+    {
+        m_Moving = false;
+
+        // Non of the keys we care about are being hit any longer so shut down our timer
+        m_TracingTrackingTimer->Stop();
+    }
+    else
+    {
+        ActiveTraceCursorPosition = curPos;
     }
 }
