@@ -127,7 +127,7 @@ namespace GraphControl
         }
 #pragma endregion
 
-#pragma region int Periodicity DependencyProperty
+#pragma region Windows::Foundation::Collections::IObservableMap < Platform::String ^, Platform::String ^ > ^ Periodicity DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ PeriodicityProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -148,7 +148,7 @@ namespace GraphControl
         }
 #pragma endregion
 
-#pragma region Platform::String ^ Minima DependencyProperty
+#pragma region Windows::Foundation::Collections::IVector < Platform::String ^ > ^ Minima DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ MinimaProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -169,7 +169,7 @@ namespace GraphControl
         }
 #pragma endregion
 
-#pragma region Platform::String ^ Maxima DependencyProperty
+#pragma region Windows::Foundation::Collections::IVector < Platform::String ^ > ^ Maxima DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ MaximaProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -232,7 +232,7 @@ namespace GraphControl
         }
 #pragma endregion
 
-#pragma region Platform::String ^ InflectionPoints DependencyProperty
+#pragma region Windows::Foundation::Collections::IVector < Platform::String ^ > ^ InflectionPoints DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ InflectionPointsProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -253,7 +253,7 @@ namespace GraphControl
         }
 #pragma endregion
 
-#pragma region Platform::String ^ Monotonicity DependencyProperty
+#pragma region Windows::Foundation::Collections::IObservableMap < Platform::String ^, Platform::String ^ > ^ Monotonicity DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ MonotonicityProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -274,7 +274,7 @@ namespace GraphControl
         }
 #pragma endregion
 
-#pragma region Platform::String ^ VerticalAsymptotes DependencyProperty
+#pragma region Windows::Foundation::Collections::IVector < Platform::String ^ > ^ VerticalAsymptotes DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ VerticalAsymptotesProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -295,7 +295,7 @@ namespace GraphControl
         }
 #pragma endregion
 
-#pragma region Platform::String ^ HorizontalAsymptotes DependencyProperty
+#pragma region Windows::Foundation::Collections::IVector < Platform::String ^ > ^ HorizontalAsymptotes DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ HorizontalAsymptotesProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -316,7 +316,7 @@ namespace GraphControl
         }
 #pragma endregion
 
-#pragma region Platform::String ^ ObliqueAsymptotes DependencyProperty
+#pragma region Windows::Foundation::Collections::IVector < Platform::String ^ > ^ ObliqueAsymptotes DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ ObliqueAsymptotesProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
