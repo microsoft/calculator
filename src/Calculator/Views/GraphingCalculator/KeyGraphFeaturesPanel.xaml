@@ -10,16 +10,19 @@
 
     <UserControl.Resources>
         <Style x:Name="KGF_RichEditBoxStyle" TargetType="RichEditBox">
-            <Setter Property="Margin" Value="0,4,3,0"/>
+            <Setter Property="Margin" Value="0,8,3,0"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Height" Value="25"/>
+            <Setter Property="MinHeight" Value="25"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
         <Style x:Name="KGF_TextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Margin" Value="0,4,3,0"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0,8,3,0"/>
         </Style>
     </UserControl.Resources>
 
@@ -32,7 +35,7 @@
                                       EquationButtonClicked="EquationButtonClicked"/>
             <TextBlock x:Uid="KeyGraphFeaturesLabel"
                        Style="{StaticResource KGF_TextBlockStyle}"
-                       FontSize="14"/>
+                       FontSize="18"/>
             <TextBlock x:Name="AnalysisNotSupportedTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>
             <StackPanel x:Name="KeyGraphFeaturesStackPanel">
                 <TextBlock x:Name="DomainTextBlock" Style="{StaticResource KGF_TextBlockStyle}"/>

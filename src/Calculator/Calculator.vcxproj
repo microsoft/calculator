@@ -16,7 +16,6 @@
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <AppxDefaultResourceQualifierUAP_Contrast>black</AppxDefaultResourceQualifierUAP_Contrast>
     <AppxBundle>Always</AppxBundle>
-    <PackageCertificateKeyFile>TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
   </PropertyGroup>
@@ -224,6 +223,12 @@
   </ItemDefinitionGroup>
   <PropertyGroup>
     <AppVersion Condition="'$(AppVersion)' == ''">0.0.0.0</AppVersion>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <PackageCertificateThumbprint>48EE4CC068528EBEAC87CC7B2C50AD4FC954C6F5</PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <ItemGroup>
     <ResourceCompile Include="Calculator.rc" PreprocessorDefinitions="%(PreprocessorDefinitions);APP_VERSION_MAJOR=$(AppVersion.Split(`.`)[0]);APP_VERSION_MINOR=$(AppVersion.Split(`.`)[1]);APP_VERSION_BUILD=$(AppVersion.Split(`.`)[2]);APP_VERSION_REVISION=$(AppVersion.Split(`.`)[3])" />
@@ -290,9 +295,8 @@
       <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h">
-        <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
+      <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
     </ClInclude>
-      
     <ClInclude Include="Views\HistoryList.xaml.h">
       <DependentUpon>Views\HistoryList.xaml</DependentUpon>
     </ClInclude>
@@ -446,7 +450,7 @@
       <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp">
-        <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
+      <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Views\HistoryList.xaml.cpp">
       <DependentUpon>Views\HistoryList.xaml</DependentUpon>

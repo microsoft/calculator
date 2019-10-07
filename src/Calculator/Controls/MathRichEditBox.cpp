@@ -25,7 +25,7 @@ void MathRichEditBox::OnTextPropertyChanged(String ^, String ^ newValue)
 {
     bool readOnlyState = this->IsReadOnly;
     this->IsReadOnly = false;
-    TextDocument->SetText(::Windows::UI::Text::TextSetOptions::None, newValue);
+    TextDocument->SetMath(newValue);
 
     this->IsReadOnly = readOnlyState;
 }

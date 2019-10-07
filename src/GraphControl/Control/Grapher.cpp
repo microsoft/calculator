@@ -471,7 +471,7 @@ namespace GraphControl
                     analyzer->CanFunctionAnalysisBePerformed(result);
                     if (result)
                     {
-                        m_solver->FormatOptions().SetFormatType(FormatType::MathRichEdit);
+                        m_solver->FormatOptions().SetFormatType(FormatType::MathML);
                         if (S_OK
                             == analyzer->PerformFunctionAnalysis(
                                 (Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All))

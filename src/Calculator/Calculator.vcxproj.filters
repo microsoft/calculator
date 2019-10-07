@@ -474,6 +474,7 @@
     <Page Include="EquationStylePanelControl.xaml">
       <Filter>Views\GraphingCalculator</Filter>
     </Page>
+    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Resources\en-US\CEngineStrings.resw">
@@ -1484,6 +1485,8 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
