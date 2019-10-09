@@ -379,7 +379,7 @@ void CalculationResult::OnRightTapped(RightTappedRoutedEventArgs ^ e)
 {
     auto requestedElement = e->OriginalSource;
 
-    if (requestedElement->Equals(safe_cast<Object ^>(m_textBlock)))
+    if (requestedElement->Equals(dynamic_cast<Object ^>(m_textBlock)))
     {
         m_textBlock->Focus(::FocusState::Programmatic);
     }
