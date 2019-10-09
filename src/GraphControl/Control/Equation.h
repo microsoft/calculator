@@ -380,10 +380,6 @@ namespace GraphControl
 
         std::wstring GetRequest();
 
-        struct KeyGraphFeatures
-        {
-        };
-
     private:
         static void OnCustomDependencyPropertyChanged(Windows::UI::Xaml::DependencyObject ^ obj, Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
 

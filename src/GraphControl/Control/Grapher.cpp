@@ -35,6 +35,9 @@ namespace
     constexpr auto s_X = L"x";
     constexpr auto s_Y = L"y";
 
+    constexpr auto s_getGraphOpeningTags = L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>show2d</mi><mfenced separators=\"\">";
+    constexpr auto s_getGraphClosingTags = L"</mfenced></mrow></math>";
+
     // Helper function for converting a pointer position to a position that the graphing engine will understand.
     // posX/posY are the pointer position elements and width,height are the dimensions of the graph surface.
     // The graphing engine interprets x,y position between the range [-1, 1].
@@ -378,7 +381,7 @@ namespace GraphControl
             if (!validEqs.empty())
             {
                 wstringstream ss{};
-                ss << L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>show2d</mi><mfenced separators=\"\">";
+                ss << s_getGraphOpeningTags;
 
                 int numValidEquations = 0;
                 for (Equation ^ eq : validEqs)
@@ -391,7 +394,7 @@ namespace GraphControl
                     ss << eq->GetRequest();
                 }
 
-                ss << L"</mfenced></mrow></math>";
+                ss << s_getGraphClosingTags;
 
                 wstring request = ss.str();
                 unique_ptr<IExpression> graphExpression;
@@ -441,9 +444,9 @@ namespace GraphControl
         std::shared_ptr<Graphing::IGraph> graph = m_solver->CreateGrapher();
 
         wstringstream ss{};
-        ss << L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>show2d</mi><mfenced separators=\"\">";
+        ss << s_getGraphOpeningTags;
         ss << equation->GetRequest();
-        ss << L"</mfenced></mrow></math>";
+        ss << s_getGraphClosingTags;
 
         wstring request = ss.str();
         unique_ptr<IExpression> graphExpression;
@@ -467,9 +470,7 @@ namespace GraphControl
             {
                 if (auto analyzer = graph->GetAnalyzer())
                 {
-                    bool result;
-                    analyzer->CanFunctionAnalysisBePerformed(result);
-                    if (result)
+                    if (analyzer->CanFunctionAnalysisBePerformed())
                     {
                         m_solver->FormatOptions().SetFormatType(FormatType::MathML);
                         if (S_OK
@@ -515,7 +516,7 @@ namespace GraphControl
         }
     }
 
-    Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^ Grapher::ConvertWStringVector(vector<wstring> inVector)
+    IObservableVector<String ^> ^ Grapher::ConvertWStringVector(vector<wstring> inVector)
     {
         Vector<Platform::String ^> ^ outVector = ref new Vector<String ^>();
         ;
@@ -526,9 +527,9 @@ namespace GraphControl
 
         return outVector;
     }
-    Windows::Foundation::Collections::IObservableMap<Platform::String ^, String ^> ^ Grapher::ConvertWStringIntMap(map<wstring, int> inMap)
+    IObservableMap<String ^, String ^> ^ Grapher::ConvertWStringIntMap(map<wstring, int> inMap)
     {
-        Map<Platform::String ^, String ^> ^ outMap = ref new Map<String ^, String ^>();
+        Map<String ^, String ^> ^ outMap = ref new Map<String ^, String ^>();
         ;
         for (auto m : inMap)
         {

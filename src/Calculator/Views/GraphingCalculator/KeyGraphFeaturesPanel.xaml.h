@@ -42,7 +42,7 @@ namespace CalculatorApp
         OBSERVABLE_PROPERTY_R(Platform::String ^, HorizontalAsymptotes);
         OBSERVABLE_PROPERTY_R(Platform::String ^, ObliqueAsymptotes);
         OBSERVABLE_PROPERTY_R(Platform::String ^, TooComplexFeaturesError);
-        OBSERVABLE_PROPERTY_R(Platform::String ^, AnalysisNotSupported);
+        OBSERVABLE_PROPERTY_R(bool, AnalysisNotSupported);
 
         OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(CalculatorApp::ViewModel::EquationViewModel ^, ViewModel);
 

@@ -39,16 +39,14 @@ void KeyGraphFeaturesPanel::OnPropertyChanged(String ^ propertyName)
         {
             return;
         }
+
         if (ViewModel->AnalysisNotSupported)
         {
-            AnalysisNotSupported = m_resourceLoader->GetString(L"KGFAnalysisNotSupported");
-            AnalysisNotSupportedTextBlock->Visibility = Windows::UI::Xaml::Visibility::Visible;
-            KeyGraphFeaturesStackPanel->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+            AnalysisNotSupported = true;
         }
         else
         {
-            AnalysisNotSupportedTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-            KeyGraphFeaturesStackPanel->Visibility = Windows::UI::Xaml::Visibility::Visible;
+            AnalysisNotSupported = false;
 
             Domain = ViewModel->Domain;
             Range = ViewModel->Range;
