@@ -5,6 +5,7 @@
 
 #include "CalcViewModel/Common/Utils.h"
 #include "CalcViewModel/GraphingCalculator/EquationViewModel.h"
+#include "Calculator/Controls/MathRichEditBox.h"
 
 namespace CalculatorApp
 {
@@ -43,10 +44,8 @@ namespace CalculatorApp
             void UpdateDeleteButtonVisualState();
             bool ShouldDeleteButtonBeVisible();
 
-            void OnRichEditBoxLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnRichEditBoxGotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnRichEditBoxLostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-            void OnRichEditBoxLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ e);
             void OnRichEditBoxTextChanged(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
             void OnDeleteButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
@@ -58,7 +57,7 @@ namespace CalculatorApp
             void OnColorFlyoutOpened(Platform::Object^ sender, Platform::Object^ e);
             void OnColorFlyoutClosed(Platform::Object^ sender, Platform::Object^ e);
 
-            Windows::UI::Xaml::Controls::RichEditBox^ m_richEditBox;
+            CalculatorApp::Controls::MathRichEditBox^ m_richEditBox;
             Windows::UI::Xaml::Controls::Button^ m_equationButton;
             Windows::UI::Xaml::Controls::Button^ m_deleteButton;
             Windows::UI::Xaml::Controls::Button^ m_removeButton;

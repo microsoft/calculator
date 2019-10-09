@@ -15,12 +15,35 @@ namespace CalculatorApp
             MathRichEditBox();
 
             DEPENDENCY_PROPERTY_OWNER(MathRichEditBox);
-            DEPENDENCY_PROPERTY_WITH_CALLBACK(Platform::String ^, Text);
 
-        private:
-            void OnTextPropertyChanged(Platform::String ^, Platform::String ^ newValue);
+            static property Windows::UI::Xaml::DependencyProperty ^ MathTextProperty
+            {
+                Windows::UI::Xaml::DependencyProperty ^ get() {
+                    return s_MathTextProperty;
+                }
+            }      
+            property Platform::String ^ MathText
+            {
+                Platform::String ^ get()
+                {
+                    return GetMathTextProperty();
+                }
+                void set(Platform::String^ value)
+                {
+                    SetMathTextProperty(value);
+                }
+            
+            }
 
-            Windows::ApplicationModel::LimitedAccessFeatureRequestResult^ m_lafAccess;
+            private :
+                Platform::String ^ GetMathTextProperty();
+                void SetMathTextProperty(Platform::String ^ newValue);
+
+                static Windows::UI::Xaml::DependencyProperty ^ s_MathTextProperty;
+                static Windows::UI::Xaml::DependencyProperty ^ InitializeMathTextProperty()
+                {
+                    return Utils::RegisterDependencyProperty<DependencyPropertiesOwner, Platform::String ^>(L"MathText");
+                }
         };
     }
 }

@@ -9,11 +9,11 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::Foundation::Collections;
 
-DEPENDENCY_PROPERTY_INITIALIZATION(MathRichEditBox, Text);
+DEPENDENCY_PROPERTY_INITIALIZATION(MathRichEditBox, MathText);
 
 MathRichEditBox::MathRichEditBox()
 {
-    m_lafAccess = Windows::ApplicationModel::LimitedAccessFeatures::TryUnlockFeature(
+    Windows::ApplicationModel::LimitedAccessFeatures::TryUnlockFeature(
         "com.microsoft.windows.richeditmath",
         "H6wflFFz3gkOsAHtG/D9Tg==",
         "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.");
@@ -21,7 +21,13 @@ MathRichEditBox::MathRichEditBox()
     TextDocument->SetMathMode(Windows::UI::Text::RichEditMathMode::MathOnly);
 }
 
-void MathRichEditBox::OnTextPropertyChanged(String ^, String ^ newValue)
+String ^ MathRichEditBox::GetMathTextProperty() {
+    String ^ text;
+    this->TextDocument->GetMath(&text);
+    return text;
+}
+
+void MathRichEditBox::SetMathTextProperty(String ^ newValue)
 {
     bool readOnlyState = this->IsReadOnly;
     this->IsReadOnly = false;
