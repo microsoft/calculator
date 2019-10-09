@@ -13,7 +13,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(MathRichEditBox, Text);
 
 MathRichEditBox::MathRichEditBox()
 {
-    m_lafAccess = Windows::ApplicationModel::LimitedAccessFeatures::TryUnlockFeature(
+   Windows::ApplicationModel::LimitedAccessFeatures::TryUnlockFeature(
         "com.microsoft.windows.richeditmath",
         "H6wflFFz3gkOsAHtG/D9Tg==",
         "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.");

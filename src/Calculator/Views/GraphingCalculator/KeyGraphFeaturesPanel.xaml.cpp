@@ -1,11 +1,14 @@
 #include "pch.h"
 #include "KeyGraphFeaturesPanel.xaml.h"
 #include "Controls/MathRichEditBox.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
 
 using namespace CalculatorApp;
+using namespace CalculatorApp::Common;
 using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace Platform::Collections;
+using namespace std;
 using namespace Windows::UI;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
@@ -46,20 +49,6 @@ void KeyGraphFeaturesPanel::OnPropertyChanged(String ^ propertyName)
         {
             AnalysisNotSupportedTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
             KeyGraphFeaturesStackPanel->Visibility = Windows::UI::Xaml::Visibility::Visible;
-
-            DomainTextBlock->Text = m_resourceLoader->GetString(L"Domain");
-            RangeTextBlock->Text = m_resourceLoader->GetString(L"Range");
-            XInterceptTextBlock->Text = m_resourceLoader->GetString(L"XIntercept");
-            YInterceptTextBlock->Text = m_resourceLoader->GetString(L"YIntercept");
-            ParityTextBlock->Text = m_resourceLoader->GetString(L"Parity");
-            PeriodicityTextBlock->Text = m_resourceLoader->GetString(L"Periodicity");
-            MinimaTextBlock->Text = m_resourceLoader->GetString(L"Minima");
-            MaximaTextBlock->Text = m_resourceLoader->GetString(L"Maxima");
-            InflectionPointsTextBlock->Text = m_resourceLoader->GetString(L"InflectionPoints");
-            VerticalAsymptotesTextBlock->Text = m_resourceLoader->GetString(L"VerticalAsymptotes");
-            HorizontalAsymptotesTextBlock->Text = m_resourceLoader->GetString(L"HorizontalAsymptotes");
-            ObliqueAsymptotesTextBlock->Text = m_resourceLoader->GetString(L"ObliqueAsymptotes");
-            MonotonicityTextBlock->Text = m_resourceLoader->GetString(L"Monotonicity");
 
             Domain = ViewModel->Domain;
             Range = ViewModel->Range;
@@ -191,87 +180,89 @@ void KeyGraphFeaturesPanel::SetTooComplexFeaturesErrorProperty()
         return;
     }
 
-    std::wstring error;
+    Platform::String ^ separator = ref new String(LocalizationSettings::GetInstance().GetListSeparator().c_str());
+
+    wstring error;
     if ((ViewModel->TooComplexFeatures & KeyGraphFeaturesFlag::Domain) == KeyGraphFeaturesFlag::Domain)
     {
         DomainEditbox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
         DomainTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        error.append((m_resourceLoader->GetString(L"Domain") + L", ")->Data());
+        error.append((m_resourceLoader->GetString(L"Domain/Text") + separator + L" " )->Data());
     }
     else if ((ViewModel->TooComplexFeatures & KeyGraphFeaturesFlag::Range) == KeyGraphFeaturesFlag::Range)
     {
         RangeEditBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
         RangeTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        error.append((m_resourceLoader->GetString(L"Range") + L", ")->Data());
+        error.append((m_resourceLoader->GetString(L"Range/Text") + separator + L" ")->Data());
     }
     else if ((ViewModel->TooComplexFeatures & KeyGraphFeaturesFlag::Zeros) == KeyGraphFeaturesFlag::Zeros)
     {
         XInterceptEditBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
         XInterceptTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        error.append((m_resourceLoader->GetString(L"XIntercept") + L", ")->Data());
+        error.append((m_resourceLoader->GetString(L"XIntercept/Text") + separator + L" ")->Data());
     }
     else if ((ViewModel->TooComplexFeatures & KeyGraphFeaturesFlag::YIntercept) == KeyGraphFeaturesFlag::YIntercept)
     {
         YInterceptEditBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
         YInterceptTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        error.append((m_resourceLoader->GetString(L"YIntercept") + L", ")->Data());
+        error.append((m_resourceLoader->GetString(L"YIntercept/Text") + separator + L" ")->Data());
     }
     else if ((ViewModel->TooComplexFeatures & KeyGraphFeaturesFlag::Parity) == KeyGraphFeaturesFlag::Parity)
     {
         ParityEditBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
         ParityTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        error.append((m_resourceLoader->GetString(L"Parity") + L", ")->Data());
+        error.append((m_resourceLoader->GetString(L"Parity/Text") + separator + L" ")->Data());
     }
     else if ((ViewModel->TooComplexFeatures & KeyGraphFeaturesFlag::Periodicity) == KeyGraphFeaturesFlag::Periodicity)
     {
         PeriodicityEditBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
         PeriodicityTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        error.append((m_resourceLoader->GetString(L"Periodicity") + L", ")->Data());
+        error.append((m_resourceLoader->GetString(L"Periodicity/Text") + separator + L" ")->Data());
     }
     else if ((ViewModel->TooComplexFeatures & KeyGraphFeaturesFlag::Minima) == KeyGraphFeaturesFlag::Minima)
     {
         MinimaEditBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
         MinimaTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        error.append((m_resourceLoader->GetString(L"Minima") + L", ")->Data());
+        error.append((m_resourceLoader->GetString(L"Minima/Text") + separator + L" ")->Data());
     }
     else if ((ViewModel->TooComplexFeatures & KeyGraphFeaturesFlag::Maxima) == KeyGraphFeaturesFlag::Maxima)
     {
         MaximaEditBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
         MaximaTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        error.append((m_resourceLoader->GetString(L"Maxima") + L", ")->Data());
+        error.append((m_resourceLoader->GetString(L"Maxima/Text") + separator + L" ")->Data());
     }
     else if ((ViewModel->TooComplexFeatures & KeyGraphFeaturesFlag::InflectionPoints) == KeyGraphFeaturesFlag::InflectionPoints)
     {
         InflectionPointsEditBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
         InflectionPointsTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        error.append((m_resourceLoader->GetString(L"InflectionPoints") + L", ")->Data());
+        error.append((m_resourceLoader->GetString(L"InflectionPoints/Text") + separator + L" ")->Data());
     }
     else if ((ViewModel->TooComplexFeatures & KeyGraphFeaturesFlag::VerticalAsymptotes) == KeyGraphFeaturesFlag::VerticalAsymptotes)
     {
         VerticalAsymptotesEditBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
         VerticalAsymptotesTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        error.append((m_resourceLoader->GetString(L"VerticalAsymptotes") + L", ")->Data());
+        error.append((m_resourceLoader->GetString(L"VerticalAsymptotes/Text") + separator + L" ")->Data());
     }
     else if ((ViewModel->TooComplexFeatures & KeyGraphFeaturesFlag::HorizontalAsymptotes) == KeyGraphFeaturesFlag::HorizontalAsymptotes)
     {
         HorizontalAsymptotesEditBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
         HorizontalAsymptotesTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        error.append((m_resourceLoader->GetString(L"HorizontalAsymptotes") + L", ")->Data());
+        error.append((m_resourceLoader->GetString(L"HorizontalAsymptotes/Text") + separator + L" ")->Data());
     }
     else if ((ViewModel->TooComplexFeatures & KeyGraphFeaturesFlag::ObliqueAsymptotes) == KeyGraphFeaturesFlag::ObliqueAsymptotes)
     {
         ObliqueAsymptotesEditBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
         ObliqueAsymptotesTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        error.append((m_resourceLoader->GetString(L"ObliqueAsymptotes") + L", ")->Data());
+        error.append((m_resourceLoader->GetString(L"ObliqueAsymptotes/Text") + separator + L" ")->Data());
     }
     else if ((ViewModel->TooComplexFeatures & KeyGraphFeaturesFlag::MonotoneIntervals) == KeyGraphFeaturesFlag::MonotoneIntervals)
     {
         MonotonicityEditBox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
         MonotonicityTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        error.append((m_resourceLoader->GetString(L"Monotonicity") + L", ")->Data());
+        error.append((m_resourceLoader->GetString(L"Monotonicity/Text") + separator + L" ")->Data());
     }
 
-    TooComplexFeaturesError += ref new String(error.substr(0, (error.length() - 2)).c_str());
+    TooComplexFeaturesError += ref new String(error.substr(0, (error.length() - (separator->Length() + 1))).c_str());
     TooComplexFeaturesError += L"\n";
     TooComplexFeaturesError += m_resourceLoader->GetString(L"KGFTooComplexFeaturesError");
 }

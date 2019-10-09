@@ -421,10 +421,10 @@
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
             <local:KeyGraphFeaturesPanel x:Name="KeyGraphFeaturesControl"
+                                         Grid.RowSpan="2"
                                          KeyGraphFeaturesClosed="OnKeyGraphFeaturesClosed"
                                          ViewModel="{x:Bind KeyGraphFeaturesVM, Mode=OneWay}"
-                                         Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"
-                                         Grid.RowSpan="2"/>
+                                         Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"/>
             <Grid x:Name="EquationInputAreaGrid" Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

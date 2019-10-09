@@ -19,8 +19,6 @@ namespace CalculatorApp
 
         private:
             void OnTextPropertyChanged(Platform::String ^, Platform::String ^ newValue);
-
-            Windows::ApplicationModel::LimitedAccessFeatureRequestResult^ m_lafAccess;
         };
     }
 }

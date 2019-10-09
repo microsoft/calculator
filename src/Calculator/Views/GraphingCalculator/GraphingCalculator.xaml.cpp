@@ -72,8 +72,6 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
     ViewModel = dynamic_cast<GraphingCalculatorViewModel ^>(args->NewValue);
 
     ViewModel->VariableUpdated += ref new EventHandler<VariableChangedEventArgs>(this, &CalculatorApp::GraphingCalculator::OnVariableChanged);
-
-    //GraphingControl->Equations
 }
 
 void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)

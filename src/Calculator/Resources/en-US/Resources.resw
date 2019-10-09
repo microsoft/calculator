@@ -3619,59 +3619,59 @@
     <value>The function does not have any y-intercepts.</value>
     <comment>Message displayed when the graph does not have any y-intercepts</comment>
   </data>
-  <data name="Domain" xml:space="preserve">
+  <data name="Domain.Text" xml:space="preserve">
     <value>Domain</value>
     <comment>Title for KeyGraphFeatures Domain Property</comment>
   </data>
-  <data name="HorizontalAsymptotes" xml:space="preserve">
+  <data name="HorizontalAsymptotes.Text" xml:space="preserve">
     <value>Horizontal Asymptotes</value>
     <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
   </data>
-  <data name="InflectionPoints" xml:space="preserve">
+  <data name="InflectionPoints.Text" xml:space="preserve">
     <value>Inflection Points</value>
     <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
   </data>
-  <data name="KGFAnalysisNotSupported" xml:space="preserve">
+  <data name="KGFAnalysisNotSupported.Text" xml:space="preserve">
     <value>Analysis could not be performed for this function.</value>
     <comment>Error displayed when graph analysis is not supported or had an error.</comment>
   </data>
-  <data name="Maxima" xml:space="preserve">
+  <data name="Maxima.Text" xml:space="preserve">
     <value>Maxima</value>
     <comment>Title for KeyGraphFeatures Maxima Property</comment>
   </data>
-  <data name="Minima" xml:space="preserve">
+  <data name="Minima.Text" xml:space="preserve">
     <value>Minima</value>
     <comment>Title for KeyGraphFeatures Minima Property</comment>
   </data>
-  <data name="Monotonicity" xml:space="preserve">
+  <data name="Monotonicity.Text" xml:space="preserve">
     <value>Monotonicity</value>
     <comment>Title for KeyGraphFeatures Monotonicity Property</comment>
   </data>
-  <data name="ObliqueAsymptotes" xml:space="preserve">
+  <data name="ObliqueAsymptotes.Text" xml:space="preserve">
     <value>Oblique Asymptotes</value>
     <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
   </data>
-  <data name="Parity" xml:space="preserve">
+  <data name="Parity.Text" xml:space="preserve">
     <value>Parity</value>
     <comment>Title for KeyGraphFeatures Parity Property</comment>
   </data>
-  <data name="Periodicity" xml:space="preserve">
-    <value>Periodicity</value>
+  <data name="Periodicity.Text" xml:space="preserve">
+    <value>Period</value>
     <comment>Title for KeyGraphFeatures Periodicity Property</comment>
   </data>
-  <data name="Range" xml:space="preserve">
+  <data name="Range.Text" xml:space="preserve">
     <value>Range</value>
     <comment>Title for KeyGraphFeatures Range Property</comment>
   </data>
-  <data name="VerticalAsymptotes" xml:space="preserve">
+  <data name="VerticalAsymptotes.Text" xml:space="preserve">
     <value>Vertical Asymptotes</value>
     <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
   </data>
-  <data name="XIntercept" xml:space="preserve">
+  <data name="XIntercept.Text" xml:space="preserve">
     <value>XIntercept</value>
     <comment>Title for KeyGraphFeatures XIntercept Property</comment>
   </data>
-  <data name="YIntercept" xml:space="preserve">
+  <data name="YIntercept.Text" xml:space="preserve">
     <value>YIntercept</value>
     <comment>Title for KeyGraphFeatures YIntercept Property</comment>
   </data>
