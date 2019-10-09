@@ -25,7 +25,7 @@ You can also check the [``help wanted``](https://github.com/Microsoft/calculator
 other issues to help with. If you're interested in working on a fix, leave a comment to let everyone know and to help
 avoid duplicated effort from others.
 
-## Contributions we accept
+## Contributions rules
 We welcome your contributions to the Calculator project, especially to fix bugs and to make
 improvements which address the top issues reported by Calculator users. Some general guidelines:
 
