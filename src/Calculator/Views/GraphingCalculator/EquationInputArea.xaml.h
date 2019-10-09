@@ -10,6 +10,7 @@
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "Controls/EquationTextBox.h"
 #include "Converters/BooleanNegationConverter.h"
+#include "Controls/MathRichEditBox.h"
 
 namespace CalculatorApp
 {
