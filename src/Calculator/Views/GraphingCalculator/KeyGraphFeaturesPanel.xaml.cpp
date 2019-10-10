@@ -173,7 +173,7 @@ String ^ KeyGraphFeaturesPanel::ConvertVectorToString(Windows::Foundation::Colle
 
 void KeyGraphFeaturesPanel::SetTooComplexFeaturesErrorProperty()
 {
-    if (ViewModel->TooComplexFeatures == -1)
+    if (ViewModel->TooComplexFeatures <= 0)
     {
         return;
     }
