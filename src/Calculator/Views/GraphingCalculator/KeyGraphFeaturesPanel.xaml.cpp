@@ -72,28 +72,24 @@ void KeyGraphFeaturesPanel::OnPropertyChanged(String ^ propertyName)
 
 void KeyGraphFeaturesPanel::SetParityStringProperty()
 {
-    if (ViewModel->Parity)
+    switch (ViewModel->Parity)
     {
-        switch (ViewModel->Parity)
-        {
-        case 0:
-            Parity = m_resourceLoader->GetString(L"KGFParityUnknown");
-            break;
-        case 1:
-            Parity = m_resourceLoader->GetString(L"KGFParityOdd");
-            break;
-        case 2:
-            Parity = m_resourceLoader->GetString(L"KGFParityEven");
-            break;
-        case 3:
-            Parity = m_resourceLoader->GetString(L"KGFParityNeither");
-            break;
-        default:
-            Parity = m_resourceLoader->GetString(L"KGFParityError");
-        }
+    case 0:
+        Parity = m_resourceLoader->GetString(L"KGFParityUnknown");
+        break;
+    case 1:
+        Parity = m_resourceLoader->GetString(L"KGFParityOdd");
+        break;
+    case 2:
+        Parity = m_resourceLoader->GetString(L"KGFParityEven");
+        break;
+    case 3:
+        Parity = m_resourceLoader->GetString(L"KGFParityNeither");
+        break;
+    default:
+        Parity = m_resourceLoader->GetString(L"KGFParityError");
     }
 }
-
 void KeyGraphFeaturesPanel::SetPeriodicityStringProperty()
 {
     if (ViewModel->Periodicity->Size != 0)
@@ -113,6 +109,10 @@ void KeyGraphFeaturesPanel::SetPeriodicityStringProperty()
         default:
             Periodicity = m_resourceLoader->GetString(L"KGFPeriodicityError");
         }
+    }
+    else
+    {
+        Periodicity = m_resourceLoader->GetString(L"KGFPeriodicityError");
     }
 }
 
@@ -153,6 +153,10 @@ void KeyGraphFeaturesPanel::SetMonotoncityStringProperty()
             }
         }
     }
+    else
+    {
+        Monotonicity += m_resourceLoader->GetString(L"KGFMonotonicityError");
+    }
 }
 
 String ^ KeyGraphFeaturesPanel::ConvertVectorToString(Windows::Foundation::Collections::IObservableVector<String ^> ^ inVector)
@@ -185,7 +189,7 @@ void KeyGraphFeaturesPanel::SetTooComplexFeaturesErrorProperty()
     {
         DomainEditbox->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
         DomainTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        error.append((m_resourceLoader->GetString(L"Domain/Text") + separator + L" " )->Data());
+        error.append((m_resourceLoader->GetString(L"Domain/Text") + separator + L" ")->Data());
     }
     else if ((ViewModel->TooComplexFeatures & KeyGraphFeaturesFlag::Range) == KeyGraphFeaturesFlag::Range)
     {
