@@ -40,6 +40,8 @@ void KeyGraphFeaturesPanel::OnPropertyChanged(String ^ propertyName)
             return;
         }
 
+        SetEquationTextBoxProperties();
+
         if (ViewModel->AnalysisNotSupported)
         {
             AnalysisNotSupported = true;
@@ -272,4 +274,19 @@ void KeyGraphFeaturesPanel::SetTooComplexFeaturesErrorProperty()
 void KeyGraphFeaturesPanel::EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
     KeyGraphFeaturesClosed(this, ref new RoutedEventArgs());
+}
+
+void KeyGraphFeaturesPanel::EquationInputTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e)
+{
+    if (ViewModel != nullptr)
+    {
+        SetEquationTextBoxProperties();
+    }
+}
+
+void KeyGraphFeaturesPanel::SetEquationTextBoxProperties()
+{
+    EquationInputTextBox->SetEquationText(ViewModel->Expression);
+    EquationInputTextBox->EquationColor = ViewModel->LineColor;
+    VisualStateManager::GoToState(this->EquationInputTextBox, "KeyGraphFeaturesDisplayed", true);
 }

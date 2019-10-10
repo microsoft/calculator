@@ -10,7 +10,7 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::Foundation::Collections;
 
-DEPENDENCY_PROPERTY_INITIALIZATION(MathRichEditBox, Text);
+DEPENDENCY_PROPERTY_INITIALIZATION(MathRichEditBox, MathText);
 
 MathRichEditBox::MathRichEditBox()
 {
@@ -22,7 +22,13 @@ MathRichEditBox::MathRichEditBox()
     TextDocument->SetMathMode(Windows::UI::Text::RichEditMathMode::MathOnly);
 }
 
-void MathRichEditBox::OnTextPropertyChanged(String ^, String ^ newValue)
+String ^ MathRichEditBox::GetMathTextProperty() {
+    String ^ text;
+    this->TextDocument->GetMath(&text);
+    return text;
+}
+
+void MathRichEditBox::SetMathTextProperty(String ^ newValue)
 {
     bool readOnlyState = this->IsReadOnly;
     this->IsReadOnly = false;

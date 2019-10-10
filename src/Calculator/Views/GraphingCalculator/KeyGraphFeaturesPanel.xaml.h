@@ -2,6 +2,8 @@
 
 #include "Views\GraphingCalculator\KeyGraphFeaturesPanel.g.h"
 #include "CalcViewModel\GraphingCalculator\EquationViewModel.h"
+#include "Controls/MathRichEditBox.h"
+#include "Controls/EquationTextBox.h"
 
 namespace CalculatorApp
 {
@@ -58,7 +60,9 @@ namespace CalculatorApp
         void SetMonotoncityStringProperty();
         void SetTooComplexFeaturesErrorProperty();
         void EquationButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void SetEquationTextBoxProperties();
 
         Windows::ApplicationModel::Resources::ResourceLoader ^ m_resourceLoader;
+        void EquationInputTextBox_Loaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }
