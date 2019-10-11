@@ -41,8 +41,8 @@ typedef int32_t ResultCode;
 // CALC_E_DIVIDEBYZERO
 //
 // The current operation would require a divide by zero to complete
-
 static constexpr uint32_t CALC_E_DIVIDEBYZERO = (uint32_t)0x80000000;
+
 // CALC_E_DOMAIN
 //
 // The given input is not within the domain of this function
