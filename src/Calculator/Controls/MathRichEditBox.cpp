@@ -18,11 +18,18 @@ MathRichEditBox::MathRichEditBox()
         "com.microsoft.windows.richeditmath",
         "H6wflFFz3gkOsAHtG/D9Tg==",
         "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.");
-
-    TextDocument->SetMathMode(Windows::UI::Text::RichEditMathMode::MathOnly);
+    try
+    {
+        TextDocument->SetMathMode(Windows::UI::Text::RichEditMathMode::MathOnly);
+    }
+    catch (std::exception& e)
+    {
+        e.what();
+    }
 }
 
-String ^ MathRichEditBox::GetMathTextProperty() {
+String ^ MathRichEditBox::GetMathTextProperty()
+{
     String ^ text;
     this->TextDocument->GetMath(&text);
     return text;

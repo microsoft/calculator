@@ -3603,8 +3603,8 @@
     <value>The function periodicity is unknown.</value>
     <comment>Message displayed with the function periodicity is unknown</comment>
   </data>
-  <data name="KGFTooComplexFeaturesError" xml:space="preserve">
-    <value>These features are too complex for Calculator to calculate.</value>
+  <data name="KGFTooComplexFeaturesError.Text" xml:space="preserve">
+    <value>These features are too complex for Calculator to calculate:</value>
     <comment>Error displayed when analysis features cannot be calculated</comment>
   </data>
   <data name="KGFVerticalAsymptotesNone" xml:space="preserve">

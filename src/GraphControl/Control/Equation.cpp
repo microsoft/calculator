@@ -237,7 +237,7 @@ namespace GraphControl
         if (!s_analysisNotSupportedProperty)
         {
             s_analysisNotSupportedProperty = DependencyProperty::Register(
-                EquationProperties::TooComplexFeatures,
+                EquationProperties::AnalysisNotSupported,
                 bool ::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));

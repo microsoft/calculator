@@ -4,14 +4,15 @@
 
 namespace CalculatorApp::ViewModel
 {
-    public ref class EquationViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+public
+    ref class EquationViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
     {
     public:
         EquationViewModel();
 
         OBSERVABLE_OBJECT();
         OBSERVABLE_PROPERTY_RW(Platform::String ^, Expression);
-        OBSERVABLE_PROPERTY_RW(Windows::UI::Xaml::Media::SolidColorBrush^, LineColor);
+        OBSERVABLE_PROPERTY_RW(Windows::UI::Xaml::Media::SolidColorBrush ^, LineColor);
 
         // Key Graph Features
         OBSERVABLE_PROPERTY_RW(Platform::String ^, Domain);
@@ -27,7 +28,7 @@ namespace CalculatorApp::ViewModel
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, ObliqueAsymptotes);
         OBSERVABLE_PROPERTY_RW(int, TooComplexFeatures);
         OBSERVABLE_PROPERTY_RW(bool, AnalysisNotSupported);
-        
+
         property Windows::Foundation::Collections::IObservableMap<Platform::String^, Platform::String^>^ Periodicity
         {
             Windows::Foundation::Collections::IObservableMap<Platform::String^, Platform::String ^> ^ get()
@@ -59,8 +60,8 @@ namespace CalculatorApp::ViewModel
         }
 
     private:
-        Windows::Foundation::Collections::IObservableMap<Platform::String^, Platform::String ^> ^ m_Periodicity;
-        Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ m_Monotonicity;        
+        Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ m_Periodicity;
+        Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ m_Monotonicity;
     };
 
 }

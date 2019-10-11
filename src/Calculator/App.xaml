@@ -1159,9 +1159,9 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
                             <Grid x:Name="ButtonLayoutGrid"
-                                                          Background="Transparent"
-                                                          BorderBrush="{ThemeResource TextControlButtonBorderBrush}"
-                                                          BorderThickness="{TemplateBinding BorderThickness}">
+                                  Background="Transparent"
+                                  BorderBrush="{ThemeResource TextControlButtonBorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}">
 
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
@@ -1198,22 +1198,22 @@
                                         <VisualState x:Name="Disabled">
                                             <Storyboard>
                                                 <DoubleAnimation Duration="0"
-                                                                                         Storyboard.TargetName="ButtonLayoutGrid"
-                                                                                         Storyboard.TargetProperty="Opacity"
-                                                                                         To="0"/>
+                                                                 Storyboard.TargetName="ButtonLayoutGrid"
+                                                                 Storyboard.TargetProperty="Opacity"
+                                                                 To="0"/>
                                             </Storyboard>
                                         </VisualState>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
                                 <TextBlock x:Name="GlyphElement"
-                                                                   HorizontalAlignment="Center"
-                                                                   VerticalAlignment="Center"
-                                                                   Foreground="{ThemeResource EquationBoxHoverButtonForegroundBrush}"
-                                                                   FontFamily="{TemplateBinding FontFamily}"
-                                                                   FontSize="12"
-                                                                   FontStyle="Normal"
-                                                                   AutomationProperties.AccessibilityView="Raw"
-                                                                   Text="{TemplateBinding Content}"/>
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Foreground="{ThemeResource EquationBoxHoverButtonForegroundBrush}"
+                                           FontFamily="{TemplateBinding FontFamily}"
+                                           FontSize="12"
+                                           FontStyle="Normal"
+                                           AutomationProperties.AccessibilityView="Raw"
+                                           Text="{TemplateBinding Content}"/>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
@@ -1640,7 +1640,7 @@
                             <Grid>
 
                                 <Grid.Resources>
- 
+
                                     <Style x:Key="EquationTextBoxStyle" TargetType="Controls:MathRichEditBox">
                                         <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}"/>
                                         <Setter Property="Background" Value="Transparent"/>
@@ -1681,7 +1681,7 @@
 
                                                                 <VisualState x:Name="Disabled"/>
 
-                                                                
+
 
                                                                 <VisualState x:Name="Normal"/>
 
@@ -1691,7 +1691,7 @@
 
                                                                 <VisualState x:Name="Focused"/>
 
-                                                                
+
 
 
                                                             </VisualStateGroup>
@@ -1800,7 +1800,7 @@
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor}"/>
                                                 </ObjectAnimationUsingKeyFrames>
-                                                
+
                                             </Storyboard>
                                         </VisualState>
 
@@ -1853,10 +1853,10 @@
                                                                   FontWeight="{TemplateBinding FontWeight}"
                                                                   AcceptsReturn="false"
                                                                   InputScope="Text"
-                                                                  MaxLength="2048"
-                                                                  TextWrapping="NoWrap"
+                                                                  IsEnabled="False"
                                                                   IsReadOnly="True"
-                                                                  IsEnabled="False"/>
+                                                                  MaxLength="2048"
+                                                                  TextWrapping="NoWrap"/>
                                     </Grid>
                                 </Border>
                             </Grid>
@@ -1876,25 +1876,14 @@
             </Style>
 
             <Style x:Key="MathRichEditBoxStyle" TargetType="RichEditBox">
-                <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}"/>
-                <Setter Property="Background" Value="{ThemeResource TextControlBackground}"/>
-                <Setter Property="ContentLinkForegroundColor" Value="{ThemeResource ContentLinkForegroundColor}"/>
-                <Setter Property="ContentLinkBackgroundColor" Value="{ThemeResource ContentLinkBackgroundColor}"/>
-                <Setter Property="SelectionHighlightColor" Value="{ThemeResource TextControlSelectionHighlightColor}"/>
-                <Setter Property="BorderBrush" Value="{ThemeResource TextControlBorderBrush}"/>
-                <Setter Property="BorderThickness" Value="{ThemeResource TextControlBorderThemeThickness}"/>
-                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-                <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Auto"/>
-                <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto"/>
-                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
-                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
+                <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
                 <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False"/>
-                <Setter Property="TextWrapping" Value="Wrap"/>
-                <Setter Property="Padding" Value="{ThemeResource TextControlThemePadding}"/>
-                <Setter Property="UseSystemFocusVisuals" Value="{ThemeResource IsApplicationFocusVisualKindReveal}"/>
-                <Setter Property="ContextFlyout" Value="{StaticResource TextControlCommandBarContextFlyout}"/>
-                <Setter Property="SelectionFlyout" Value="{StaticResource TextControlCommandBarSelectionFlyout}"/>
+                <Setter Property="TextWrapping" Value="NoWrap"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="RichEditBox">
@@ -1908,7 +1897,6 @@
 
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
-
                                         <VisualState x:Name="Disabled">
 
                                             <Storyboard>
@@ -1916,7 +1904,7 @@
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForeground}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackground}"/>
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBorderBrush}"/>
@@ -1930,47 +1918,9 @@
                                             </Storyboard>
                                         </VisualState>
                                         <VisualState x:Name="Normal"/>
-
-                                        <VisualState x:Name="PointerOver">
-
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBorderBrushPointerOver}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackgroundPointerOver}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlPlaceholderForegroundPointerOver}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundPointerOver}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </VisualState>
-                                        <VisualState x:Name="Focused">
-
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlPlaceholderForegroundFocused}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackgroundFocused}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBorderBrushFocused}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundFocused}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="RequestedTheme">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Light"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </VisualState>
-
+                                        <VisualState x:Name="PointerOver"/>
+                                        <VisualState x:Name="Focused"/>
                                     </VisualStateGroup>
-
                                 </VisualStateManager.VisualStateGroups>
 
                                 <ContentPresenter x:Name="HeaderContentPresenter"

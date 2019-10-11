@@ -71,7 +71,8 @@
                                                    Range="{x:Bind Range, Mode=TwoWay}"
                                                    TooComplexFeatures="{x:Bind TooComplexFeatures, Mode=TwoWay}"
                                                    XIntercept="{x:Bind XIntercept, Mode=TwoWay}"
-                                                   YIntercept="{x:Bind YIntercept, Mode=TwoWay}"/>
+                                                   YIntercept="{x:Bind YIntercept, Mode=TwoWay}"
+                                                   AnalysisNotSupported="{x:Bind AnalysisNotSupported, Mode=TwoWay}"/>
                         </DataTemplate>
                     </graphControl:Grapher.EquationTemplate>
 

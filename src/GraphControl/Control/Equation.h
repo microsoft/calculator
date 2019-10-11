@@ -359,9 +359,14 @@ namespace GraphControl
 #pragma endregion
 
 #pragma region bool AnalysisNotSupported DependencyProperty
-        static property Windows::UI::Xaml::DependencyProperty ^ AnalysisNotSupportedProperty {
-            Windows::UI::Xaml::DependencyProperty ^ get() { return s_analysisNotSupportedProperty; }
-        } property bool AnalysisNotSupported
+        static property Windows::UI::Xaml::DependencyProperty ^ AnalysisNotSupportedProperty
+        {
+            Windows::UI::Xaml::DependencyProperty ^ get()
+            {
+                return s_analysisNotSupportedProperty;
+            }
+        }
+        property bool AnalysisNotSupported
         {
             bool get()
             {
