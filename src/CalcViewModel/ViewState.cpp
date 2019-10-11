@@ -8,10 +8,10 @@ namespace CalculatorApp
 {
     namespace ViewState
     {
-        Platform::StringReference Snap(L"Snap");
-        Platform::StringReference DockedView(L"DockedView");
+        Plat::StringReference Snap(L"Snap");
+        Plat::StringReference DockedView(L"DockedView");
 
-        bool IsValidViewState(Platform::String ^ viewState)
+        bool IsValidViewState(Plat::String ^ viewState)
         {
             return viewState->Equals(ViewState::Snap) || viewState->Equals(ViewState::DockedView);
         }

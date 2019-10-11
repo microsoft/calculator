@@ -7,9 +7,9 @@ namespace CalculatorApp
 {
     namespace ViewState
     {
-        extern Platform::StringReference Snap;
-        extern Platform::StringReference DockedView;
+        extern Plat::StringReference Snap;
+        extern Plat::StringReference DockedView;
 
-        bool IsValidViewState(Platform::String ^ viewState);
+        bool IsValidViewState(Plat::String ^ viewState);
     }
 }
