@@ -7,7 +7,6 @@
 #include "CalcViewModel/Common/TraceLogger.h"
 #include "CalcViewModel/Common/CopyPasteManager.h"
 #include "CalcViewModel/StandardCalculatorViewModel.h"
-#include "CalcViewModel/ViewState.h"
 #include "CalcViewModel/Common/LocalizationSettings.h"
 #include "Memory.xaml.h"
 #include "HistoryList.xaml.h"
@@ -402,13 +401,11 @@ void Calculator::UpdatePanelViewState()
 
 void Calculator::UpdateHistoryState()
 {
-    String ^ viewState = App::GetAppViewState();
-    if (viewState == ViewState::DockedView)
+    if (DockPanel->Visibility == ::Visibility::Visible)
     {
         // docked view
         CloseHistoryFlyout();
         SetChildAsHistory();
-        HistoryButton->Visibility = ::Visibility::Collapsed;
 
         if (!IsProgrammer && m_IsLastFlyoutHistory)
         {
@@ -416,7 +413,8 @@ void Calculator::UpdateHistoryState()
         }
     }
     else
-    { // flyout view
+    {
+        // flyout view
         DockHistoryHolder->Child = nullptr;
         if (!IsProgrammer)
         {
@@ -440,8 +438,7 @@ void Calculator::UpdateMemoryState()
             ClearMemoryButton->IsEnabled = false;
         }
 
-        String ^ viewState = App::GetAppViewState();
-        if (viewState == ViewState::DockedView)
+        if (DockPanel->Visibility == ::Visibility::Visible)
         {
             CloseMemoryFlyout();
             SetChildAsMemory();
@@ -554,11 +551,11 @@ void Calculator::SetDefaultFocus()
 
 void Calculator::ToggleHistoryFlyout(Object ^ /*parameter*/)
 {
-    if (Model->IsProgrammer || App::GetAppViewState() == ViewState::DockedView)
+    if (Model->IsProgrammer || DockPanel->Visibility == ::Visibility::Visible)
     {
         return;
     }
-    
+
     if (m_fIsHistoryFlyoutOpen)
     {
         HistoryFlyout->Hide();
@@ -568,24 +565,25 @@ void Calculator::ToggleHistoryFlyout(Object ^ /*parameter*/)
         HistoryFlyout->Content = m_historyList;
         m_historyList->RowHeight = NumpadPanel->ActualHeight;
         FlyoutBase::ShowAttachedFlyout(HistoryButton);
-    }   
+    }
 }
 
 void Calculator::ToggleMemoryFlyout()
 {
-    String ^ viewState = App::GetAppViewState();
-    if (viewState != ViewState::DockedView)
+    if (DockPanel->Visibility == ::Visibility::Visible)
     {
-        if (m_fIsMemoryFlyoutOpen)
-        {
-            MemoryFlyout->Hide();
-        }
-        else
-        {
-            MemoryFlyout->Content = GetMemory();
-            m_memory->RowHeight = NumpadPanel->ActualHeight;
-            FlyoutBase::ShowAttachedFlyout(MemoryButton);
-        }
+        return;
+    }
+
+    if (m_fIsMemoryFlyoutOpen)
+    {
+        MemoryFlyout->Hide();
+    }
+    else
+    {
+        MemoryFlyout->Content = GetMemory();
+        m_memory->RowHeight = NumpadPanel->ActualHeight;
+        FlyoutBase::ShowAttachedFlyout(MemoryButton);
     }
 }
 
