@@ -185,6 +185,7 @@ void KeyGraphFeaturesPanel::SetTooComplexFeaturesErrorProperty()
     }
 
     TooComplexFeaturesTextBlock->Visibility = Windows::UI::Xaml::Visibility::Visible;
+    TooComplexFeaturesErrorTextBlock->Visibility = Windows::UI::Xaml::Visibility::Visible;
 
     Platform::String ^ separator = ref new String(LocalizationSettings::GetInstance().GetListSeparator().c_str());
 
@@ -269,7 +270,7 @@ void KeyGraphFeaturesPanel::SetTooComplexFeaturesErrorProperty()
         error.append((m_resourceLoader->GetString(L"Monotonicity/Text") + separator + L" ")->Data());
     }
 
-    TooComplexFeatures += ref new String(error.substr(0, (error.length() - (separator->Length() + 1))).c_str());
+    TooComplexFeatures = ref new String(error.substr(0, (error.length() - (separator->Length() + 1))).c_str());
 }
 
 void KeyGraphFeaturesPanel::EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
@@ -336,4 +337,5 @@ void KeyGraphFeaturesPanel::ResetKGFControlVisibility()
     MonotonicityTextBlock->Visibility = visible;
 
     TooComplexFeaturesTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+    TooComplexFeaturesErrorTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 }

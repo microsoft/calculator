@@ -30,6 +30,7 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="0,8,3,0"/>
+            <Setter Property="TextWrapping" Value="WrapWholeWords"/>
         </Style>
         <Style x:Name="KGF_ListViewStyle" TargetType="ListView">
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -67,6 +68,7 @@
             <TextBlock x:Name="AnalysisNotSupportedTextBlock"
                        x:Uid="KGFAnalysisNotSupported"
                        Style="{StaticResource KGF_TextBlockStyle}"
+                       FontWeight="Normal"
                        Visibility="{x:Bind AnalysisNotSupported, Mode=OneWay}"/>
             <StackPanel x:Name="KeyGraphFeaturesStackPanel" Visibility="{x:Bind AnalysisNotSupported, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
                 <TextBlock x:Name="DomainTextBlock"
