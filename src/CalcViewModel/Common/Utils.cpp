@@ -10,7 +10,6 @@
 #include "Common/AppResourceProvider.h"
 #include "Common/ExpressionCommandSerializer.h"
 #include "Common/ExpressionCommandDeserializer.h"
-#include "ViewState.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
