@@ -62,6 +62,14 @@
                            FontSize="{ThemeResource BodyFontSize}"
                            TextWrapping="Wrap"/>
             </HyperlinkButton>
+            <HyperlinkButton Margin="12,0,12,6"
+                             NavigateUri="https://github.com/microsoft/calculator"
+                             ToolTipService.ToolTip="https://github.com/microsoft/calculator">
+                <TextBlock x:Uid="ContributeLink"
+                           FontSize="{ThemeResource BodyFontSize}"
+                           Text="Contribute"
+                           TextWrapping="Wrap"/>
+            </HyperlinkButton>
             <Button x:Name="FeedbackButton"
                     x:Uid="FeedbackButton"
                     MinWidth="120"
