@@ -26,8 +26,8 @@ static const wstring c_wspc = L"[\\s\\x85]*";
 static const wstring c_wspcLParens = c_wspc + L"[(]*" + c_wspc;
 static const wstring c_wspcLParenSigned = c_wspc + L"([-+]?[(])*" + c_wspc;
 static const wstring c_wspcRParens = c_wspc + L"[)]*" + c_wspc;
-static const wstring c_signedDecFloat = L"[-+]?\\d+(\\.\\d*)?|\\.\\d+";
-static const wstring c_optionalENotation = L"(e[+-]?\\d+)?";
+static const wstring c_signedDecFloat = L"(?:[-+]?\\d+(\\.\\d*)?|\\.\\d+)";
+static const wstring c_optionalENotation = L"(?:e[+-]?\\d+)?";
 
 // Programmer Mode Integer patterns
 // Support digit separators ` (WinDbg/MASM), ' (C++), and _ (C# and other languages)
