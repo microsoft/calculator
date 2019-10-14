@@ -26,7 +26,8 @@ static const wstring c_wspc = L"[\\s\\x85]*";
 static const wstring c_wspcLParens = c_wspc + L"[(]*" + c_wspc;
 static const wstring c_wspcLParenSigned = c_wspc + L"([-+]?[(])*" + c_wspc;
 static const wstring c_wspcRParens = c_wspc + L"[)]*" + c_wspc;
-static const wstring c_signedDecFloat = L"[-+]?\\d*(\\d|[.])\\d*";
+static const wstring c_signedDecFloat = L"(?:[-+]?\\d+(\\.\\d*)?|\\.\\d+)";
+static const wstring c_optionalENotation = L"(?:e[+-]?\\d+)?";
 
 // Programmer Mode Integer patterns
 // Support digit separators ` (WinDbg/MASM), ' (C++), and _ (C# and other languages)
@@ -37,11 +38,9 @@ static const wstring c_binProgrammerChars = L"[0-1]+((_|'|`)[0-1]+)*";
 static const wstring c_uIntSuffixes = L"[uU]?[lL]{0,2}";
 
 // RegEx Patterns used by various modes
-static const array<wregex, 1> standardModePatterns = { wregex(c_wspc + c_signedDecFloat + c_wspc) };
-static const array<wregex, 2> scientificModePatterns = {
-    wregex(L"(" + c_wspc + L"[-+]?)|(" + c_wspcLParenSigned + L")" + c_signedDecFloat + c_wspcRParens),
-    wregex(L"(" + c_wspc + L"[-+]?)|(" + c_wspcLParenSigned + L")" + c_signedDecFloat + L"e[+-]?\\d+" + c_wspcRParens)
-};
+static const array<wregex, 1> standardModePatterns = { wregex(c_wspc + c_signedDecFloat + c_optionalENotation + c_wspc) };
+static const array<wregex, 1> scientificModePatterns = { wregex(
+    L"(" + c_wspc + L"[-+]?)|(" + c_wspcLParenSigned + L")" + c_signedDecFloat + c_optionalENotation + c_wspcRParens) };
 static const array<array<wregex, 5>, 4> programmerModePatterns = {
     { // Hex numbers like 5F, 4A0C, 0xa9, 0xFFull, 47CDh
       { wregex(c_wspcLParens + L"(0[xX])?" + c_hexProgrammerChars + c_uIntSuffixes + c_wspcRParens),
@@ -55,8 +54,7 @@ static const array<array<wregex, 5>, 4> programmerModePatterns = {
       { wregex(c_wspcLParens + L"(0[byBY])?" + c_binProgrammerChars + c_uIntSuffixes + c_wspcRParens),
         wregex(c_wspcLParens + c_binProgrammerChars + L"[bB]?" + c_wspcRParens) } }
 };
-static const array<wregex, 1> unitConverterPatterns = { wregex(c_wspc + L"[-+]?\\d*[.]?\\d*" + c_wspc) };
-
+static const array<wregex, 1> unitConverterPatterns = { wregex(c_wspc + c_signedDecFloat + c_wspc) };
 void CopyPasteManager::CopyToClipboard(String ^ stringToCopy)
 {
     // Copy the string to the clipboard
@@ -104,7 +102,13 @@ String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode
 
 // return "NoOp" if pastedText is invalid else return pastedText
 
-String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, BitLength bitLengthType)
+String
+    ^ CopyPasteManager::ValidatePasteExpression(
+        String ^ pastedText,
+        ViewMode mode,
+        CategoryGroupType modeType,
+        int programmerNumberBase,
+        BitLength bitLengthType)
 {
     if (pastedText->Length() > MaxPasteableLength)
     {
@@ -241,7 +245,12 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
     return operands;
 }
 
-bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, BitLength bitLengthType)
+bool CopyPasteManager::ExpressionRegExMatch(
+    vector<wstring> operands,
+    ViewMode mode,
+    CategoryGroupType modeType,
+    int programmerNumberBase,
+    BitLength bitLengthType)
 {
     if (operands.empty())
     {
@@ -317,7 +326,8 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
     return expMatched;
 }
 
-pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, BitLength bitLengthType)
+pair<size_t, uint64_t>
+CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, BitLength bitLengthType)
 {
     constexpr size_t defaultMaxOperandLength = 0;
     constexpr uint64_t defaultMaxValue = 0;
