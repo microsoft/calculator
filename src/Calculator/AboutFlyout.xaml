@@ -67,7 +67,7 @@
                              ToolTipService.ToolTip="https://github.com/microsoft/calculator">
                 <TextBlock x:Uid="ContributeLink"
                            FontSize="{ThemeResource BodyFontSize}"
-                           Text="Contribute"
+                           Text="GitHub"
                            TextWrapping="Wrap"/>
             </HyperlinkButton>
             <Button x:Name="FeedbackButton"
