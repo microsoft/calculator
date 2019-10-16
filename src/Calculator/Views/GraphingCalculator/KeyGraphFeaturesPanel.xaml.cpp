@@ -63,7 +63,6 @@ void KeyGraphFeaturesPanel::OnPropertyChanged(String ^ propertyName)
         {
             AnalysisErrorVisible = false;
             ResetKGFControlVisibility();
-            ClearVectorPropertyValues();
 
             Domain = ViewModel->Domain;
             Range = ViewModel->Range;
@@ -363,15 +362,4 @@ void KeyGraphFeaturesPanel::ResetKGFControlVisibility()
 
     TooComplexFeaturesTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
     TooComplexFeaturesErrorTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-}
-
-void KeyGraphFeaturesPanel::ClearVectorPropertyValues()
-{
-    Minima->Clear();
-    Maxima->Clear();
-    InflectionPoints->Clear();
-    VerticalAsymptotes->Clear();
-    HorizontalAsymptotes->Clear();
-    ObliqueAsymptotes->Clear();
-    Monotonicity->Clear();
 }

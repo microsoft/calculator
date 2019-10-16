@@ -16,14 +16,14 @@
                TargetType="RichEditBox">
             <Setter Property="Margin" Value="0,8,3,0"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="MinHeight" Value="25"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="IsEnabled" Value="False"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="IsEnabled" Value="True"/>
             <Setter Property="MinWidth" Value="25"/>
         </Style>
         <Style x:Name="KGF_TextBlockStyle" TargetType="TextBlock">
@@ -31,6 +31,7 @@
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="0,8,3,0"/>
             <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+            <Setter Property="AutomationProperties.HeadingLevel" Value="Level2"/>
         </Style>
         <Style x:Name="KGF_ListViewStyle" TargetType="ListView">
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -46,6 +47,7 @@
             <Setter Property="Margin" Value="0,0,0,2"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Width" Value="Auto"/>
+            <Setter Property="AutomationProperties.AccessibilityView" Value="Raw"/>
         </Style>
         <DataTemplate x:Key="RichEditExpressionDataTemplate" x:DataType="local:ExpressionItem">
             <controls:MathRichEditBox Style="{StaticResource KGF_RichEditBoxStyle}" MathText="{x:Bind Expression}"/>
@@ -64,11 +66,12 @@
                                       Loaded="EquationInputTextBox_Loaded"/>
             <TextBlock x:Uid="KeyGraphFeaturesLabel"
                        Style="{StaticResource KGF_TextBlockStyle}"
-                       FontSize="18"/>
+                       FontSize="18"
+                       AutomationProperties.HeadingLevel="Level1"/>
             <TextBlock x:Name="AnalysisErrorTextBlock"
-                       Text="{x:Bind AnalysisError, Mode=OneWay}"
                        Style="{StaticResource KGF_TextBlockStyle}"
                        FontWeight="Normal"
+                       Text="{x:Bind AnalysisError, Mode=OneWay}"
                        Visibility="{x:Bind AnalysisErrorVisible, Mode=OneWay}"/>
             <StackPanel x:Name="KeyGraphFeaturesStackPanel" Visibility="{x:Bind AnalysisErrorVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
                 <TextBlock x:Name="DomainTextBlock"
@@ -139,6 +142,7 @@
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <ListView x:Name="MonotonicityList"
                           VerticalContentAlignment="Center"
+                          AutomationProperties.AccessibilityView="Raw"
                           IsItemClickEnabled="False"
                           ItemContainerStyle="{StaticResource ListViewItemContainerStyle}"
                           ItemsSource="{x:Bind Monotonicity}"
@@ -157,7 +161,9 @@
                                                           Style="{StaticResource KGF_RichEditBoxStyle}"
                                                           MathText="{x:Bind Expression}"/>
                                 <controls:MathRichEditBox x:Name="MonotonicityDirectionEditBox"
-                                                          Margin="5,0,0,0"
+                                                          Margin="2,4,0,0"
+                                                          VerticalAlignment="Stretch"
+                                                          VerticalContentAlignment="Center"
                                                           Style="{StaticResource KGF_RichEditBoxStyle}"
                                                           MathText="{x:Bind Direction}"/>
                             </StackPanel>

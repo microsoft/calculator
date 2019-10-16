@@ -1702,7 +1702,6 @@
                                                                           Grid.Column="0"
                                                                           Grid.ColumnSpan="4"
                                                                           Margin="{ThemeResource RichEditBoxTopHeaderMargin}"
-                                                                          VerticalAlignment="Top"
                                                                           Foreground="{ThemeResource TextControlHeaderForeground}"
                                                                           FontWeight="Normal"
                                                                           x:DeferLoadStrategy="Lazy"
@@ -1883,7 +1882,8 @@
                 <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False"/>
                 <Setter Property="TextWrapping" Value="NoWrap"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="Typography.StylisticSet20" Value="True"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="RichEditBox">
@@ -1926,7 +1926,6 @@
                                 <ContentPresenter x:Name="HeaderContentPresenter"
                                                   Grid.Row="0"
                                                   Margin="{ThemeResource RichEditBoxTopHeaderMargin}"
-                                                  VerticalAlignment="Top"
                                                   Foreground="{ThemeResource TextControlHeaderForeground}"
                                                   FontWeight="Normal"
                                                   x:DeferLoadStrategy="Lazy"
@@ -1947,6 +1946,7 @@
                                               Grid.Row="1"
                                               Margin="{TemplateBinding BorderThickness}"
                                               Padding="{TemplateBinding Padding}"
+                                              VerticalAlignment="Center"
                                               AutomationProperties.AccessibilityView="Raw"
                                               HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                               HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
