@@ -11,6 +11,13 @@ namespace GraphControl
         extern Platform::String ^ LineColor;
     }
 
+    public enum class AnalysisErrorType
+    {
+        NoError,
+        AnalysisCouldNotBePerformed,
+        AnalysisNotSupported
+    };
+
     ref class Equation;
     delegate void PropertyChangedEventHandler(Equation ^ sender, Platform::String ^ propertyName);
 
