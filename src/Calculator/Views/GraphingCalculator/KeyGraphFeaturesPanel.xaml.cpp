@@ -28,6 +28,9 @@ KeyGraphFeaturesPanel::KeyGraphFeaturesPanel()
     , m_VerticalAsymptotes{ ref new Vector<ExpressionItem ^>() }
     , m_HorizontalAsymptotes{ ref new Vector<ExpressionItem ^>() }
     , m_ObliqueAsymptotes{ ref new Vector<ExpressionItem ^>() }
+    , m_AnalysisErrorVisible{ false }
+    , m_AnalysisError{ "" }
+    , m_TooComplexFeatures{ "" }
     , m_resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() }
 {
     InitializeComponent();
@@ -43,14 +46,24 @@ void KeyGraphFeaturesPanel::OnPropertyChanged(String ^ propertyName)
 
         SetEquationTextBoxProperties();
 
-        if (ViewModel->AnalysisNotSupported)
+        if (ViewModel->AnalysisError != 0)
         {
-            AnalysisNotSupported = true;
+            AnalysisErrorVisible = true;
+
+            if (ViewModel->AnalysisError == (int)GraphControl::AnalysisErrorType::AnalysisCouldNotBePerformed)
+            {
+                AnalysisError = m_resourceLoader->GetString(L"KGFAnalysisCouldNotBePerformed");
+            }
+            else if (ViewModel->AnalysisError == (int)GraphControl::AnalysisErrorType::AnalysisNotSupported)
+            {
+                AnalysisError = m_resourceLoader->GetString(L"KGFAnalysisNotSupported");
+            }
         }
         else
         {
-            AnalysisNotSupported = false;
+            AnalysisErrorVisible = false;
             ResetKGFControlVisibility();
+            ClearVectorPropertyValues();
 
             Domain = ViewModel->Domain;
             Range = ViewModel->Range;
@@ -102,6 +115,10 @@ void KeyGraphFeaturesPanel::SetPeriodicityStringProperty()
             break;
         case '1':
             Periodicity = ViewModel->Periodicity->First()->Current->Value;
+            if (Periodicity == L"")
+            {
+                m_resourceLoader->GetString(L"KGFPeriodicityError");
+            }
             break;
         case '2':
             Periodicity = m_resourceLoader->GetString(L"KGFPeriodicityNotPeriodic");
@@ -172,6 +189,14 @@ IObservableVector<ExpressionItem ^> ^ KeyGraphFeaturesPanel::SetVectorValue(IObs
             exp->Expression = i;
             out->Append(exp);
         }
+    }
+
+    auto size = out->Size;
+    if (size == 0)
+    {
+        ExpressionItem ^ exp = ref new ExpressionItem();
+        exp->Expression = errorString;
+        out->Append(exp);
     }
 
     return out;
@@ -315,10 +340,10 @@ void KeyGraphFeaturesPanel::ResetKGFControlVisibility()
     PeriodicityEditBox->Visibility = visible;
     PeriodicityTextBlock->Visibility = visible;
 
-     MinimaList->Visibility = visible;
+    MinimaList->Visibility = visible;
     MinimaTextBlock->Visibility = visible;
 
-     MaximaList->Visibility = visible;
+    MaximaList->Visibility = visible;
     MaximaTextBlock->Visibility = visible;
 
     InflectionPointsList->Visibility = visible;
@@ -338,4 +363,15 @@ void KeyGraphFeaturesPanel::ResetKGFControlVisibility()
 
     TooComplexFeaturesTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
     TooComplexFeaturesErrorTextBlock->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+}
+
+void KeyGraphFeaturesPanel::ClearVectorPropertyValues()
+{
+    Minima->Clear();
+    Maxima->Clear();
+    InflectionPoints->Clear();
+    VerticalAsymptotes->Clear();
+    HorizontalAsymptotes->Clear();
+    ObliqueAsymptotes->Clear();
+    Monotonicity->Clear();
 }

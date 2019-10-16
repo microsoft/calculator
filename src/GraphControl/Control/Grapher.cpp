@@ -499,23 +499,22 @@ namespace GraphControl
                                 equation->HorizontalAsymptotes = ConvertWStringVector(functionAnalysisData.HorizontalAsymptotes);
                                 equation->ObliqueAsymptotes = ConvertWStringVector(functionAnalysisData.ObliqueAsymptotes);
                                 equation->TooComplexFeatures = functionAnalysisData.TooComplexFeatures;
+                                equation->AnalysisError = (int)AnalysisErrorType::NoError;
                                 continue;
                             }
-                        }
-                        else
-                        {
-                            equation->AnalysisNotSupported = true;
                         }
                     }
                     else
                     {
-                        equation->AnalysisNotSupported = true;
+                        equation->AnalysisError = (int)AnalysisErrorType::AnalysisNotSupported;
+                        continue;
                     }
                 }
             }
+
+            equation->AnalysisError = (int)AnalysisErrorType::AnalysisCouldNotBePerformed;
         }
     }
-
     IObservableVector<String ^> ^ Grapher::ConvertWStringVector(vector<wstring> inVector)
     {
         Vector<Platform::String ^> ^ outVector = ref new Vector<String ^>();
@@ -588,7 +587,6 @@ namespace GraphControl
             if (m_renderMain)
             {
                 m_renderMain->RunRenderPass();
-                UpdateKeyGraphFeatures();
             }
         }
     }

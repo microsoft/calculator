@@ -228,9 +228,9 @@ public
         void SetGraphArgs();
         std::shared_ptr<Graphing::IGraph> GetGraph(GraphControl::Equation ^ equation);
         void UpdateVariables();
+        void UpdateKeyGraphFeatures();
 
         void OnForceProportionalAxesChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
-        void UpdateKeyGraphFeatures();
 
         void OnBackgroundColorChanged(const Windows::UI::Color& color);
 

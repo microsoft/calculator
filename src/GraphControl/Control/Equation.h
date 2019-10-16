@@ -8,12 +8,20 @@ namespace GraphControl
         extern Platform::String ^ LineColor;
     }
 
+    public enum class AnalysisErrorType
+    {
+        NoError,
+        AnalysisCouldNotBePerformed,
+        AnalysisNotSupported
+    };
+
     ref class Equation;
     delegate void PropertyChangedEventHandler(Equation ^ sender, Platform::String ^ propertyName);
 
     [Windows::UI::Xaml::Data::Bindable] public ref class Equation sealed : public Windows::UI::Xaml::FrameworkElement
     {
     public:
+
         Equation()
         {
         }
@@ -358,30 +366,29 @@ namespace GraphControl
         }
 #pragma endregion
 
-#pragma region bool AnalysisNotSupported DependencyProperty
-        static property Windows::UI::Xaml::DependencyProperty ^ AnalysisNotSupportedProperty
+#pragma region int AnalysisError DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty ^ AnalysisErrorProperty
         {
             Windows::UI::Xaml::DependencyProperty ^ get()
             {
-                return s_analysisNotSupportedProperty;
+                return s_analysisErrorProperty;
             }
         }
-        property bool AnalysisNotSupported
+        property int AnalysisError
         {
-            bool get()
+            int get()
             {
-                return static_cast<bool>(GetValue(s_analysisNotSupportedProperty));
+                return static_cast<int>(GetValue(s_analysisErrorProperty));
             }
-            void set(bool value)
+            void set(int value)
             {
-                SetValue(s_analysisNotSupportedProperty, value);
+                SetValue(s_analysisErrorProperty, value);
             }
         }
 
 #pragma endregion
 
-    internal:
-        event PropertyChangedEventHandler^ PropertyChanged;
+        internal : event PropertyChangedEventHandler ^ PropertyChanged;
 
         std::wstring GetRequest();
 
@@ -409,6 +416,6 @@ namespace GraphControl
         static Windows::UI::Xaml::DependencyProperty ^ s_horizontalAsymptotesProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_obliqueAsymptotesProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_tooComplexFeaturesProperty;
-        static Windows::UI::Xaml::DependencyProperty ^ s_analysisNotSupportedProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_analysisErrorProperty;
     };
 }

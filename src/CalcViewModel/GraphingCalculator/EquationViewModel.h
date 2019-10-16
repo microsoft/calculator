@@ -27,7 +27,7 @@ public
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, HorizontalAsymptotes);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, ObliqueAsymptotes);
         OBSERVABLE_PROPERTY_RW(int, TooComplexFeatures);
-        OBSERVABLE_PROPERTY_RW(bool, AnalysisNotSupported);
+        OBSERVABLE_PROPERTY_RW(int, AnalysisError);
 
         property Windows::Foundation::Collections::IObservableMap<Platform::String^, Platform::String^>^ Periodicity
         {

@@ -65,12 +65,12 @@
             <TextBlock x:Uid="KeyGraphFeaturesLabel"
                        Style="{StaticResource KGF_TextBlockStyle}"
                        FontSize="18"/>
-            <TextBlock x:Name="AnalysisNotSupportedTextBlock"
-                       x:Uid="KGFAnalysisNotSupported"
+            <TextBlock x:Name="AnalysisErrorTextBlock"
+                       Text="{x:Bind AnalysisError, Mode=OneWay}"
                        Style="{StaticResource KGF_TextBlockStyle}"
                        FontWeight="Normal"
-                       Visibility="{x:Bind AnalysisNotSupported, Mode=OneWay}"/>
-            <StackPanel x:Name="KeyGraphFeaturesStackPanel" Visibility="{x:Bind AnalysisNotSupported, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
+                       Visibility="{x:Bind AnalysisErrorVisible, Mode=OneWay}"/>
+            <StackPanel x:Name="KeyGraphFeaturesStackPanel" Visibility="{x:Bind AnalysisErrorVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
                 <TextBlock x:Name="DomainTextBlock"
                            x:Uid="Domain"
                            Style="{StaticResource KGF_TextBlockStyle}"/>

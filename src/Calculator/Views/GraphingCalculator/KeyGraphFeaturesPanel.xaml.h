@@ -61,7 +61,8 @@ public
         OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<CalculatorApp::MonotonicityItem ^> ^, Monotonicity);
         OBSERVABLE_PROPERTY_R(Platform::String ^, TooComplexFeatures);
         OBSERVABLE_PROPERTY_R(Platform::String ^, MonotonicityError);
-        OBSERVABLE_PROPERTY_R(bool, AnalysisNotSupported);
+        OBSERVABLE_PROPERTY_R(Platform::String ^, AnalysisError);
+        OBSERVABLE_PROPERTY_R(bool, AnalysisErrorVisible);
 
         OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(CalculatorApp::ViewModel::EquationViewModel ^, ViewModel);
 

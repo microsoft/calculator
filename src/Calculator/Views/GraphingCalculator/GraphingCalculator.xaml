@@ -59,7 +59,8 @@
                     </graphControl:Grapher.Background>
                     <graphControl:Grapher.EquationTemplate>
                         <DataTemplate x:DataType="vm:EquationViewModel">
-                            <graphControl:Equation Domain="{x:Bind Domain, Mode=TwoWay}"
+                            <graphControl:Equation AnalysisError="{x:Bind AnalysisError, Mode=TwoWay}"
+                                                   Domain="{x:Bind Domain, Mode=TwoWay}"
                                                    Expression="{x:Bind Expression, Mode=OneWay}"
                                                    InflectionPoints="{x:Bind InflectionPoints, Mode=TwoWay}"
                                                    LineColor="{x:Bind LineColor, Mode=OneWay}"
@@ -71,8 +72,7 @@
                                                    Range="{x:Bind Range, Mode=TwoWay}"
                                                    TooComplexFeatures="{x:Bind TooComplexFeatures, Mode=TwoWay}"
                                                    XIntercept="{x:Bind XIntercept, Mode=TwoWay}"
-                                                   YIntercept="{x:Bind YIntercept, Mode=TwoWay}"
-                                                   AnalysisNotSupported="{x:Bind AnalysisNotSupported, Mode=TwoWay}"/>
+                                                   YIntercept="{x:Bind YIntercept, Mode=TwoWay}"/>
                         </DataTemplate>
                     </graphControl:Grapher.EquationTemplate>
 

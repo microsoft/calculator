@@ -3631,8 +3631,8 @@
     <value>Inflection Points</value>
     <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
   </data>
-  <data name="KGFAnalysisNotSupported.Text" xml:space="preserve">
-    <value>Analysis could not be performed for this function.</value>
+  <data name="KGFAnalysisNotSupported" xml:space="preserve">
+    <value>Analysis is not supported for this function.</value>
     <comment>Error displayed when graph analysis is not supported or had an error.</comment>
   </data>
   <data name="Maxima.Text" xml:space="preserve">
@@ -3674,5 +3674,8 @@
   <data name="YIntercept.Text" xml:space="preserve">
     <value>YIntercept</value>
     <comment>Title for KeyGraphFeatures YIntercept Property</comment>
+  </data>
+  <data name="KGFAnalysisCouldNotBePerformed" xml:space="preserve">
+    <value>Analysis could not be performed for the function.</value>
   </data>
 </root>

@@ -62,8 +62,8 @@ namespace GraphControl
     DependencyProperty ^ Equation::s_tooComplexFeaturesProperty;
     static constexpr auto s_propertyName_TooComplexFeatures = L"TooComplexFeatures";
 
-    DependencyProperty ^ Equation::s_analysisNotSupportedProperty;
-    static constexpr auto s_propertyName_AnalysisNotSupported = L"AnalysisNotSupported";
+    DependencyProperty ^ Equation::s_analysisErrorProperty;
+    static constexpr auto s_propertyName_AnalysisError = L"AnalysisError";
 
     namespace EquationProperties
     {
@@ -83,7 +83,7 @@ namespace GraphControl
         String ^ HorizontalAsymptotes = StringReference(s_propertyName_HorizontalAsymptotes);
         String ^ ObliqueAsymptotes = StringReference(s_propertyName_ObliqueAsymptotes);
         String ^ TooComplexFeatures = StringReference(s_propertyName_TooComplexFeatures);
-        String ^ AnalysisNotSupported = StringReference(s_propertyName_AnalysisNotSupported);
+        String ^ AnalysisError = StringReference(s_propertyName_AnalysisError);
     }
 
     void Equation::RegisterDependencyProperties()
@@ -229,16 +229,16 @@ namespace GraphControl
         {
             s_tooComplexFeaturesProperty = DependencyProperty::Register(
                 EquationProperties::TooComplexFeatures,
-                int ::typeid,
+                int::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
-        if (!s_analysisNotSupportedProperty)
+        if (!s_analysisErrorProperty)
         {
-            s_analysisNotSupportedProperty = DependencyProperty::Register(
-                EquationProperties::AnalysisNotSupported,
-                bool ::typeid,
+            s_analysisErrorProperty = DependencyProperty::Register(
+                EquationProperties::AnalysisError,
+                int::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -313,9 +313,9 @@ namespace GraphControl
             {
                 propertyName = EquationProperties::TooComplexFeatures;
             }
-            else if (args->Property == s_analysisNotSupportedProperty)
+            else if (args->Property == s_analysisErrorProperty)
             {
-                propertyName = EquationProperties::AnalysisNotSupported;
+                propertyName = EquationProperties::AnalysisError;
             }
 
             eq->PropertyChanged(eq, propertyName);

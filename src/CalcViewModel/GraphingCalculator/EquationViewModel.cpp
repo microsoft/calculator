@@ -25,7 +25,7 @@ namespace CalculatorApp::ViewModel
         , m_HorizontalAsymptotes{ ref new Vector<String ^>() }
         , m_ObliqueAsymptotes{ ref new Vector<String ^>() }
         , m_TooComplexFeatures{ -1 }
-        , m_AnalysisNotSupported{ false }
+        , m_AnalysisError{ 0 }
     {
     }
 }
