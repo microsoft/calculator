@@ -16,15 +16,10 @@
                TargetType="RichEditBox">
             <Setter Property="Margin" Value="0,8,3,0"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="MinHeight" Value="25"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
             <Setter Property="IsEnabled" Value="True"/>
-            <Setter Property="MinWidth" Value="25"/>
         </Style>
         <Style x:Name="KGF_TextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
@@ -34,7 +29,6 @@
             <Setter Property="AutomationProperties.HeadingLevel" Value="Level2"/>
         </Style>
         <Style x:Name="KGF_ListViewStyle" TargetType="ListView">
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="IsItemClickEnabled" Value="False"/>
             <Setter Property="SelectionMode" Value="None"/>
             <Setter Property="ItemContainerStyle" Value="{StaticResource ListViewItemContainerStyle}"/>
@@ -141,35 +135,8 @@
                            x:Uid="Monotonicity"
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <ListView x:Name="MonotonicityList"
-                          VerticalContentAlignment="Center"
-                          AutomationProperties.AccessibilityView="Raw"
-                          IsItemClickEnabled="False"
-                          ItemContainerStyle="{StaticResource ListViewItemContainerStyle}"
-                          ItemsSource="{x:Bind Monotonicity}"
-                          SelectionMode="None">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical"/>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:MonotonicityItem">
-                            <StackPanel Margin="0,8,3,0"
-                                        HorizontalAlignment="Stretch"
-                                        Orientation="Horizontal">
-                                <controls:MathRichEditBox x:Name="MonotonicityEditBox"
-                                                          Style="{StaticResource KGF_RichEditBoxStyle}"
-                                                          MathText="{x:Bind Expression}"/>
-                                <controls:MathRichEditBox x:Name="MonotonicityDirectionEditBox"
-                                                          Margin="2,4,0,0"
-                                                          VerticalAlignment="Stretch"
-                                                          VerticalContentAlignment="Center"
-                                                          Style="{StaticResource KGF_RichEditBoxStyle}"
-                                                          MathText="{x:Bind Direction}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                          Style="{StaticResource KGF_ListViewStyle}"
+                          ItemsSource="{x:Bind Monotonicity}"/>
 
                 <TextBlock x:Name="VerticalAsymptotesTextBlock"
                            x:Uid="VerticalAsymptotes"

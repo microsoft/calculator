@@ -24,7 +24,7 @@ KeyGraphFeaturesPanel::KeyGraphFeaturesPanel()
     , m_Minima{ ref new Vector<ExpressionItem ^>() }
     , m_Maxima{ ref new Vector<ExpressionItem ^>() }
     , m_InflectionPoints{ ref new Vector<ExpressionItem ^>() }
-    , m_Monotonicity{ ref new Vector<MonotonicityItem ^>() }
+    , m_Monotonicity{ ref new Vector<ExpressionItem ^>() }
     , m_VerticalAsymptotes{ ref new Vector<ExpressionItem ^>() }
     , m_HorizontalAsymptotes{ ref new Vector<ExpressionItem ^>() }
     , m_ObliqueAsymptotes{ ref new Vector<ExpressionItem ^>() }
@@ -137,38 +137,51 @@ void KeyGraphFeaturesPanel::SetMonotoncityStringProperty()
     Monotonicity->Clear();
     if (ViewModel->Monotonicity->Size != 0)
     {
+        wstring directionStartTag = L"<mml:mi><mml:mspace width=\"20px\"/>";
+        wstring directionEndTag = L"</mml:mi>";
         for (auto item : ViewModel->Monotonicity)
         {
-            MonotonicityItem ^ monotonicityItem = ref new MonotonicityItem();
+            ExpressionItem ^ monotonicityItem = ref new ExpressionItem();
+
+            wstring itemWString(item->Key->Data());
+            auto index = itemWString.find(L"</mml:math>");
+
+            wstring direction;
 
             auto monotonicityType = item->Value->Data();
             switch (*monotonicityType)
             {
             case '0':
-                monotonicityItem->Direction = m_resourceLoader->GetString(L"KGFMonotonicityUnknown");
+                direction = directionStartTag + m_resourceLoader->GetString(L"KGFMonotonicityUnknown")->Data() + directionEndTag;
                 break;
             case '1':
-                monotonicityItem->Direction = m_resourceLoader->GetString(L"KGFMonotonicityIncreasing");
+                direction = directionStartTag + m_resourceLoader->GetString(L"KGFMonotonicityIncreasing")->Data() + directionEndTag;
                 break;
             case '2':
-                monotonicityItem->Direction = m_resourceLoader->GetString(L"KGFMonotonicityDecreasing");
+                direction = directionStartTag + m_resourceLoader->GetString(L"KGFMonotonicityDecreasing")->Data() + directionEndTag;
                 break;
             case '3':
-                monotonicityItem->Direction = m_resourceLoader->GetString(L"KGFMonotonicityConstant");
+                direction = directionStartTag + m_resourceLoader->GetString(L"KGFMonotonicityConstant")->Data() + directionEndTag;
                 break;
             default:
-                monotonicityItem->Direction = m_resourceLoader->GetString(L"KGFMonotonicityError");
+                direction = directionStartTag + m_resourceLoader->GetString(L"KGFMonotonicityError")->Data() + directionEndTag;
                 break;
             }
 
-            monotonicityItem->Expression = item->Key;
+            itemWString.insert(index, direction);
+
+            monotonicityItem->Expression = ref new String(itemWString.c_str());
             Monotonicity->Append(monotonicityItem);
         }
     }
     else
     {
-        MonotonicityError += m_resourceLoader->GetString(L"KGFMonotonicityError");
+        ExpressionItem ^ monotonicityErrorItem = ref new ExpressionItem();
+        monotonicityErrorItem->Expression = m_resourceLoader->GetString(L"KGFMonotonicityError");
+        Monotonicity->Append(monotonicityErrorItem);
     }
+
+
 }
 
 IObservableVector<ExpressionItem ^> ^ KeyGraphFeaturesPanel::SetVectorValue(IObservableVector<String ^> ^ vector, String ^ errorString)
@@ -188,14 +201,6 @@ IObservableVector<ExpressionItem ^> ^ KeyGraphFeaturesPanel::SetVectorValue(IObs
             exp->Expression = i;
             out->Append(exp);
         }
-    }
-
-    auto size = out->Size;
-    if (size == 0)
-    {
-        ExpressionItem ^ exp = ref new ExpressionItem();
-        exp->Expression = errorString;
-        out->Append(exp);
     }
 
     return out;

@@ -58,9 +58,8 @@ public
         OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<ExpressionItem ^> ^, VerticalAsymptotes);
         OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<ExpressionItem ^> ^, HorizontalAsymptotes);
         OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<ExpressionItem ^> ^, ObliqueAsymptotes);
-        OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<CalculatorApp::MonotonicityItem ^> ^, Monotonicity);
+        OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<ExpressionItem ^> ^, Monotonicity);
         OBSERVABLE_PROPERTY_R(Platform::String ^, TooComplexFeatures);
-        OBSERVABLE_PROPERTY_R(Platform::String ^, MonotonicityError);
         OBSERVABLE_PROPERTY_R(Platform::String ^, AnalysisError);
         OBSERVABLE_PROPERTY_R(bool, AnalysisErrorVisible);
 
