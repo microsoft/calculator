@@ -137,7 +137,7 @@ void KeyGraphFeaturesPanel::SetMonotoncityStringProperty()
     Monotonicity->Clear();
     if (ViewModel->Monotonicity->Size != 0)
     {
-        wstring directionStartTag = L"<mml:mi><mml:mspace width=\"20px\"/>";
+        wstring directionStartTag = L"<mml:mi><mml:mspace/><mml:mspace/><mml:mspace/><mml:mspace/><mml:mspace/>";
         wstring directionEndTag = L"</mml:mi>";
         for (auto item : ViewModel->Monotonicity)
         {

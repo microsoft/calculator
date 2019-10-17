@@ -1785,7 +1785,7 @@
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackground}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource EquationBoxBorderBrush}"/>
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackground}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
@@ -1793,13 +1793,9 @@
                                         <VisualState x:Name="PointerOver">
 
                                             <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="Background">
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackground}"/>
                                                 </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-
                                             </Storyboard>
                                         </VisualState>
 
@@ -1826,10 +1822,13 @@
                                         Foreground="{StaticResource SystemChromeWhiteColor}"
                                         Content="← ƒₓ">
                                     <Button.Resources>
-                                        <SolidColorBrush x:Name="ButtonBackgroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                        <SolidColorBrush x:Name="ButtonBackgroundPointerOver"
+                                                         Opacity="0.5"
+                                                         Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                         <SolidColorBrush x:Name="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
-                                        <SolidColorBrush x:Name="ButtonBorderBrushPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                        <SolidColorBrush x:Name="ButtonBorderBrushPointerOver" Color="Transparent"/>
                                     </Button.Resources>
+
                                 </Button>
                                 <Border x:Name="EquationBoxBorder"
                                         Grid.Column="1"
