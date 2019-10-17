@@ -403,12 +403,12 @@
                         <Setter Target="MemMinus.IsEnabled" Value="False"/>
                         <Setter Target="MemButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnErrorLayoutCompleted"/>
+                    <Storyboard Completed="OnErrorVisualStateCompleted"/>
                 </VisualState>
             </VisualStateGroup>
             <!-- Always-on-Top specific -->
-            <VisualStateGroup x:Name="AlwaysOnTopStates">
-                <VisualState x:Name="AlwaysOnTop">
+            <VisualStateGroup x:Name="DisplayModeVisualStates">
+                <VisualState x:Name="DisplayModeAlwaysOnTop">
                     <VisualState.Setters>
                         <Setter Target="ClearMemoryButton.IsEnabled" Value="False"/>
                         <Setter Target="MemRecall.IsEnabled" Value="False"/>
@@ -419,19 +419,21 @@
                         <Setter Target="RowHamburger.Height" Value="0"/>
                         <Setter Target="RowMemoryControls.Height" Value="0*"/>
                     </VisualState.Setters>
+                    <Storyboard Completed="OnDisplayVisualStateCompleted"/>
                 </VisualState>
-                <VisualState x:Name="Normal">
+                <VisualState x:Name="DisplayModeNormal">
                     <VisualState.Setters>
                         <Setter Target="RowExpression.Height" Value="20*"/>
                         <Setter Target="RowHamburger.Height" Value="{StaticResource HamburgerHeightGridLength}"/>
                         <Setter Target="RowMemoryControls.Height" Value="32*"/>
                     </VisualState.Setters>
+                    <Storyboard Completed="OnDisplayVisualStateCompleted"/>
                 </VisualState>
             </VisualStateGroup>
             <!-- Mode specific -->
-            <VisualStateGroup x:Name="Mode">
+            <VisualStateGroup x:Name="ModeVisualStates">
                 <VisualState x:Name="Standard">
-                    <Storyboard Completed="OnStoryboardCompleted"/>
+                    <Storyboard Completed="OnModeVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="Scientific">
                     <VisualState.Setters>
@@ -439,7 +441,7 @@
                         <Setter Target="RowDisplayControls.MinHeight" Value="32"/>
                         <Setter Target="RowNumPad.Height" Value="276*"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnStoryboardCompleted"/>
+                    <Storyboard Completed="OnModeVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="Programmer">
                     <VisualState.Setters>
@@ -454,11 +456,11 @@
                         <Setter Target="MemoryButton.(Grid.Column)" Value="6"/>
                         <Setter Target="HistoryButton.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnStoryboardCompleted"/>
+                    <Storyboard Completed="OnModeVisualStateCompleted"/>
                 </VisualState>
             </VisualStateGroup>
             <!-- Layout specific -->
-            <VisualStateGroup CurrentStateChanged="OnVisualStateChanged">
+            <VisualStateGroup x:Name="LayoutVisualStates" CurrentStateChanged="OnVisualStateChanged">
                 <VisualState x:Name="Portrait768x1366">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="1366" MinWindowWidth="768"/>
@@ -468,7 +470,7 @@
                         <Setter Target="DockPanel.Visibility" Value="Visible"/>
                         <Setter Target="M6.Width" Value="0"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="LargeWideView">
                     <VisualState.StateTriggers>
@@ -479,7 +481,7 @@
                         <Setter Target="DockPanel.Visibility" Value="Visible"/>
                         <Setter Target="M6.Width" Value="0"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="DockVisible">
                     <VisualState.StateTriggers>
@@ -491,13 +493,13 @@
                         <Setter Target="DockPanel.Visibility" Value="Visible"/>
                         <Setter Target="M6.Width" Value="0"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="MinSizeLayout">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}" MinWindowWidth="{StaticResource AppMinWindowWidth}"/>
                     </VisualState.StateTriggers>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="DefaultLayout">
                     <VisualState.StateTriggers>
@@ -505,7 +507,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="RowMemoryControls.MinHeight" Value="0"/>
-
                         <Setter Target="ClearMemoryButton.Style" Value="{StaticResource CaptionButtonStyle}"/>
                         <Setter Target="MemRecall.Style" Value="{StaticResource CaptionButtonStyle}"/>
                         <Setter Target="MemPlus.Style" Value="{StaticResource CaptionButtonStyle}"/>
@@ -513,7 +514,7 @@
                         <Setter Target="MemButton.Style" Value="{StaticResource CaptionButtonStyle}"/>
                         <Setter Target="MemoryButton.MinHeight" Value="0"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
             </VisualStateGroup>
             <!-- Results display specific -->
