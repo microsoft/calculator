@@ -23,6 +23,8 @@ namespace GraphControl
     DependencyProperty ^ Equation::s_lineColorProperty;
     static constexpr auto s_propertyName_LineColor = L"LineColor";
 
+    DependencyProperty ^ Equation::s_isEnabledProperty;
+    static constexpr auto s_propertyName_IsEnabled = L"IsEnabled";
     DependencyProperty ^ Equation::s_xInterceptProperty;
     static constexpr auto s_propertyName_XIntercept = L"XIntercept";
 
@@ -75,6 +77,7 @@ namespace GraphControl
     {
         String ^ Expression = StringReference(s_propertyName_Expression);
         String ^ LineColor = StringReference(s_propertyName_LineColor);
+        String ^ IsEnabled = StringReference(s_propertyName_IsEnabled);
         String ^ XIntercept = StringReference(s_propertyName_XIntercept);
         String ^ YIntercept = StringReference(s_propertyName_YIntercept);
         String ^ Parity = StringReference(s_propertyName_Parity);
@@ -112,6 +115,15 @@ namespace GraphControl
             s_lineColorProperty = DependencyProperty::Register(
                 EquationProperties::LineColor,
                 SolidColorBrush::typeid,
+                Equation::typeid,
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
+        }
+
+        if (!s_isEnabledProperty)
+        {
+            s_isEnabledProperty = DependencyProperty::Register(
+                EquationProperties::IsEnabled,
+                bool ::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -272,6 +284,10 @@ namespace GraphControl
             else if (args->Property == s_lineColorProperty)
             {
                 propertyName = EquationProperties::LineColor;
+            }
+            else if (args->Property == s_isEnabledProperty)
+            {
+                propertyName = EquationProperties::IsEnabled;
             }
             else if (args->Property == s_xInterceptProperty)
             {

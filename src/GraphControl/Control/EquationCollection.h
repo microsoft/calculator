@@ -156,7 +156,7 @@ public
             {
                 EquationStyleChanged();
             }
-            else if (propertyName == EquationProperties::Expression)
+            else if (propertyName == EquationProperties::Expression  || propertyName == EquationProperties::IsEnabled)
             {
                 EquationChanged();
             }

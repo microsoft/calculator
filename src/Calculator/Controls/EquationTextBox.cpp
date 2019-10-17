@@ -21,6 +21,7 @@ using namespace Windows::UI::Xaml::Controls::Primitives;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, ColorChooserFlyout);
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, IsEquationLineVisible);
 
 void EquationTextBox::OnApplyTemplate()
 {
@@ -70,6 +71,8 @@ void EquationTextBox::OnApplyTemplate()
         ColorChooserFlyout->Opened += ref new EventHandler<Object ^>(this, &EquationTextBox::OnColorFlyoutOpened);
         ColorChooserFlyout->Closed += ref new EventHandler<Object ^>(this, &EquationTextBox::OnColorFlyoutClosed);
     }
+
+    IsEquationLineVisible = true;
 
     UpdateCommonVisualState();
 }
@@ -272,4 +275,19 @@ bool EquationTextBox::ShouldDeleteButtonBeVisible()
         text = m_richEditBox->MathText;
     }
     return (!text->IsEmpty() && m_HasFocus);
+}
+
+void EquationTextBox::OnIsEquationLineVisiblePropertyChanged(bool /*oldValue*/, bool newValue)
+{
+    if (m_equationButton && m_equationButton->Background)
+    {
+        if (!newValue)
+        {
+            m_equationButton->Background->Opacity = 0.4;
+        }
+        else
+        {
+            m_equationButton->Background->Opacity = 1.0;
+        }
+    }
 }
