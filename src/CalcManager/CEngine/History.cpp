@@ -325,12 +325,6 @@ void CHistoryCollector::AddUnaryOpToHistory(int nOpCode, bool fInv, ANGLE_TYPE a
 // history of equations
 void CHistoryCollector::CompleteHistoryLine(wstring_view numStr)
 {
-    if (nullptr != m_pCalcDisplay)
-    {
-        m_pCalcDisplay->SetExpressionDisplay(
-            std::make_shared<CalculatorVector<std::pair<std::wstring, int>>>(), std::make_shared<CalculatorVector<std::shared_ptr<IExpressionCommand>>>());
-    }
-
     if (nullptr != m_pHistoryDisplay)
     {
         unsigned int addedItemIndex = m_pHistoryDisplay->AddToHistory(m_spTokens, m_spCommands, numStr);
@@ -341,6 +335,16 @@ void CHistoryCollector::CompleteHistoryLine(wstring_view numStr)
     m_spCommands = nullptr;
     m_iCurLineHistStart = -1; // It will get recomputed at the first Opnd
     ReinitHistory();
+}
+
+void CHistoryCollector::CompleteEquation(std::wstring_view numStr)
+{
+    // Add only '=' token and not add EQU command, because
+    // EQU command breaks loading from history (it duplicate history entries).
+    IchAddSzToEquationSz(CCalcEngine::OpCodeToString(IDC_EQU), -1);
+
+    SetExpressionDisplay();
+    CompleteHistoryLine(numStr);
 }
 
 void CHistoryCollector::ClearHistoryLine(wstring_view errStr)
