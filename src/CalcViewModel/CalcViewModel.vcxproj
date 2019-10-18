@@ -351,6 +351,7 @@
     <ClInclude Include="DataLoaders\UnitConverterDataConstants.h" />
     <ClInclude Include="DataLoaders\UnitConverterDataLoader.h" />
     <ClInclude Include="DateCalculatorViewModel.h" />
+    <ClInclude Include="GraphingCalculatorEnums.h" />
     <ClInclude Include="GraphingCalculator\EquationViewModel.h" />
     <ClInclude Include="GraphingCalculator\GraphingCalculatorViewModel.h" />
     <ClInclude Include="HistoryItemViewModel.h" />

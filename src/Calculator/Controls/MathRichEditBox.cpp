@@ -35,8 +35,10 @@ void MathRichEditBox::SetMathTextProperty(String ^ newValue)
     this->IsReadOnly = false;
 
     // Check if this is a MathML string. If it is, then use SetMath so the math text displays properly.
+    // REGEX checks for strings that start with <math or <namespace:math
     wstring value = newValue->Data();
-    if (value.find(L"<mml:math") == 0 || value.find(L"<math") == 0)
+
+    if (regex_match(value,  wregex(L"^<([a-zA-Z0-9]*:)?math")))
     {
         TextDocument->SetMathMode(Windows::UI::Text::RichEditMathMode::MathOnly);
         TextDocument->SetMath(newValue);

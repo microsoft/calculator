@@ -9,7 +9,6 @@
              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
              mc:Ignorable="d">
 
-
     <UserControl.Resources>
         <Style x:Name="KGF_RichEditBoxStyle"
                BasedOn="{StaticResource MathRichEditBoxStyle}"
@@ -43,8 +42,8 @@
             <Setter Property="Width" Value="Auto"/>
             <Setter Property="AutomationProperties.AccessibilityView" Value="Raw"/>
         </Style>
-        <DataTemplate x:Key="RichEditExpressionDataTemplate" x:DataType="local:ExpressionItem">
-            <controls:MathRichEditBox Style="{StaticResource KGF_RichEditBoxStyle}" MathText="{x:Bind Expression}"/>
+        <DataTemplate x:Key="RichEditExpressionDataTemplate" x:DataType="x:String">
+            <controls:MathRichEditBox Style="{StaticResource KGF_RichEditBoxStyle}" MathText="{x:Bind}"/>
         </DataTemplate>
         <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
     </UserControl.Resources>
@@ -65,99 +64,99 @@
             <TextBlock x:Name="AnalysisErrorTextBlock"
                        Style="{StaticResource KGF_TextBlockStyle}"
                        FontWeight="Normal"
-                       Text="{x:Bind AnalysisError, Mode=OneWay}"
-                       Visibility="{x:Bind AnalysisErrorVisible, Mode=OneWay}"/>
-            <StackPanel x:Name="KeyGraphFeaturesStackPanel" Visibility="{x:Bind AnalysisErrorVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
+                       Text="{x:Bind ViewModel.AnalysisError, Mode=OneWay}"
+                       Visibility="{x:Bind ViewModel.AnalysisErrorVisible, Mode=OneWay}"/>
+            <StackPanel x:Name="KeyGraphFeaturesStackPanel" Visibility="{x:Bind ViewModel.AnalysisErrorVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
                 <TextBlock x:Name="DomainTextBlock"
                            x:Uid="Domain"
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <controls:MathRichEditBox x:Name="DomainEditbox"
                                           Style="{StaticResource KGF_RichEditBoxStyle}"
-                                          MathText="{x:Bind Domain, Mode=OneWay}"/>
+                                          MathText="{x:Bind ViewModel.Domain, Mode=OneWay}"/>
 
                 <TextBlock x:Name="RangeTextBlock"
                            x:Uid="Range"
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <controls:MathRichEditBox x:Name="RangeEditBox"
                                           Style="{StaticResource KGF_RichEditBoxStyle}"
-                                          MathText="{x:Bind Range, Mode=OneWay}"/>
+                                          MathText="{x:Bind ViewModel.Range, Mode=OneWay}"/>
 
                 <TextBlock x:Name="XInterceptTextBlock"
                            x:Uid="XIntercept"
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <controls:MathRichEditBox x:Name="XInterceptEditBox"
                                           Style="{StaticResource KGF_RichEditBoxStyle}"
-                                          MathText="{x:Bind XIntercept, Mode=OneWay}"/>
+                                          MathText="{x:Bind ViewModel.XIntercept, Mode=OneWay}"/>
 
                 <TextBlock x:Name="YInterceptTextBlock"
                            x:Uid="YIntercept"
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <controls:MathRichEditBox x:Name="YInterceptEditBox"
                                           Style="{StaticResource KGF_RichEditBoxStyle}"
-                                          MathText="{x:Bind YIntercept, Mode=OneWay}"/>
+                                          MathText="{x:Bind ViewModel.YIntercept, Mode=OneWay}"/>
 
                 <TextBlock x:Name="MinimaTextBlock"
                            x:Uid="Minima"
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <ListView x:Name="MinimaList"
                           Style="{StaticResource KGF_ListViewStyle}"
-                          ItemsSource="{x:Bind Minima}"/>
+                          ItemsSource="{x:Bind ViewModel.Minima}"/>
 
                 <TextBlock x:Name="MaximaTextBlock"
                            x:Uid="Maxima"
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <ListView x:Name="MaximaList"
                           Style="{StaticResource KGF_ListViewStyle}"
-                          ItemsSource="{x:Bind Maxima}"/>
+                          ItemsSource="{x:Bind ViewModel.Maxima}"/>
 
                 <TextBlock x:Name="ParityTextBlock"
                            x:Uid="Parity"
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <controls:MathRichEditBox x:Name="ParityEditBox"
                                           Style="{StaticResource KGF_RichEditBoxStyle}"
-                                          MathText="{x:Bind Parity, Mode=OneWay}"/>
+                                          MathText="{x:Bind ViewModel.ParityString, Mode=OneWay}"/>
 
                 <TextBlock x:Name="PeriodicityTextBlock"
                            x:Uid="Periodicity"
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <controls:MathRichEditBox x:Name="PeriodicityEditBox"
                                           Style="{StaticResource KGF_RichEditBoxStyle}"
-                                          MathText="{x:Bind Periodicity, Mode=OneWay}"/>
+                                          MathText="{x:Bind ViewModel.PeriodicityString, Mode=OneWay}"/>
 
                 <TextBlock x:Name="InflectionPointsTextBlock"
                            x:Uid="InflectionPoints"
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <ListView x:Name="InflectionPointsList"
                           Style="{StaticResource KGF_ListViewStyle}"
-                          ItemsSource="{x:Bind InflectionPoints}"/>
+                          ItemsSource="{x:Bind ViewModel.InflectionPoints}"/>
 
                 <TextBlock x:Name="MonotonicityTextBlock"
                            x:Uid="Monotonicity"
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <ListView x:Name="MonotonicityList"
                           Style="{StaticResource KGF_ListViewStyle}"
-                          ItemsSource="{x:Bind Monotonicity}"/>
+                          ItemsSource="{x:Bind ViewModel.MonotonicityString}"/>
 
                 <TextBlock x:Name="VerticalAsymptotesTextBlock"
                            x:Uid="VerticalAsymptotes"
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <ListView x:Name="VerticalAsymptotesList"
                           Style="{StaticResource KGF_ListViewStyle}"
-                          ItemsSource="{x:Bind VerticalAsymptotes}"/>
+                          ItemsSource="{x:Bind ViewModel.VerticalAsymptotes}"/>
 
                 <TextBlock x:Name="HorizontalAsymptotesTextBlock"
                            x:Uid="HorizontalAsymptotes"
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <ListView x:Name="HorizontalAsymptotesList"
                           Style="{StaticResource KGF_ListViewStyle}"
-                          ItemsSource="{x:Bind HorizontalAsymptotes}"/>
+                          ItemsSource="{x:Bind ViewModel.HorizontalAsymptotes}"/>
 
                 <TextBlock x:Name="ObliqueAsymptotesTextBlock"
                            x:Uid="ObliqueAsymptotes"
                            Style="{StaticResource KGF_TextBlockStyle}"/>
                 <ListView x:Name="ObliqueAsymptotesList"
                           Style="{StaticResource KGF_ListViewStyle}"
-                          ItemsSource="{x:Bind ObliqueAsymptotes}"/>
+                          ItemsSource="{x:Bind ViewModel.ObliqueAsymptotes}"/>
 
                 <TextBlock x:Name="TooComplexFeaturesErrorTextBlock"
                            x:Uid="KGFTooComplexFeaturesError"
@@ -169,7 +168,7 @@
                            Style="{StaticResource KGF_TextBlockStyle}"
                            FontSize="13"
                            FontWeight="Normal"
-                           Text="{x:Bind TooComplexFeatures, Mode=OneWay}"/>
+                           Text="{x:Bind ViewModel.TooComplexFeaturesString, Mode=OneWay}"/>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

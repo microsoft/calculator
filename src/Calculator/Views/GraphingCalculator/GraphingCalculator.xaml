@@ -421,8 +421,11 @@
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
+
+            <!-- Ideally the KeyGraphFeaturesPanel should be a frame so that navigation to and from the panel could be handled nicely -->
             <local:KeyGraphFeaturesPanel x:Name="KeyGraphFeaturesControl"
                                          Grid.RowSpan="2"
+                                         x:Load="False"
                                          KeyGraphFeaturesClosed="OnKeyGraphFeaturesClosed"
                                          ViewModel="{x:Bind KeyGraphFeaturesVM, Mode=OneWay}"
                                          Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"/>

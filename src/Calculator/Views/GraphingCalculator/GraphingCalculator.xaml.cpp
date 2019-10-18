@@ -4,8 +4,8 @@
 #include "GraphingCalculator.xaml.h"
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "Controls/CalculationResult.h"
-#include <Calculator\Controls\EquationTextBox.h>
-#include <Calculator\Views\GraphingCalculator\EquationInputArea.xaml.h>
+#include "Calculator\Controls\EquationTextBox.h"
+#include "Calculator\Views\GraphingCalculator\EquationInputArea.xaml.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;

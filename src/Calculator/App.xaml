@@ -1278,16 +1278,16 @@
 
                                                                     <Storyboard>
                                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForeground}"/>
+                                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlHeaderForegroundDisabled}"/>
                                                                         </ObjectAnimationUsingKeyFrames>
                                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource Transparent}"/>
+                                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackgroundDisabled}"/>
                                                                         </ObjectAnimationUsingKeyFrames>
                                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBorderBrush}"/>
+                                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBorderBrushDisabled}"/>
                                                                         </ObjectAnimationUsingKeyFrames>
                                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForeground}"/>
+                                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundDisabled}"/>
                                                                         </ObjectAnimationUsingKeyFrames>
                                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
                                                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlPlaceholderForegroundDisabled}"/>
@@ -1678,22 +1678,10 @@
 
                                                         <VisualStateManager.VisualStateGroups>
                                                             <VisualStateGroup x:Name="CommonStates">
-
                                                                 <VisualState x:Name="Disabled"/>
-
-
-
                                                                 <VisualState x:Name="Normal"/>
-
                                                                 <VisualState x:Name="PointerOver"/>
-
-
-
                                                                 <VisualState x:Name="Focused"/>
-
-
-
-
                                                             </VisualStateGroup>
                                                         </VisualStateManager.VisualStateGroups>
 
@@ -1778,37 +1766,14 @@
 
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal">
-
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackground}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackground}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </VisualState>
-
-                                        <VisualState x:Name="PointerOver">
-
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackground}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </VisualState>
-
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="PointerOver"/>
                                         <VisualState x:Name="Disabled"/>
-
-
                                         <VisualState x:Name="Focused"/>
-
                                     </VisualStateGroup>
 
                                     <VisualStateGroup x:Name="ButtonStates">
                                         <VisualState x:Name="ButtonVisible"/>
-
                                         <VisualState x:Name="ButtonCollapsed"/>
                                     </VisualStateGroup>
 
@@ -1819,44 +1784,43 @@
                                         MinHeight="44"
                                         VerticalAlignment="Stretch"
                                         Background="{TemplateBinding EquationColor}"
-                                        Foreground="{StaticResource SystemChromeWhiteColor}"
-                                        Content="← ƒₓ">
+                                        Foreground="{StaticResource SystemChromeWhiteColor}">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE72B;"/>
+                                            <TextBlock FontFamily="{TemplateBinding FontFamily}" Text=" ƒₓ"/>
+                                        </StackPanel>
+                                    </Button.Content>
                                     <Button.Resources>
                                         <SolidColorBrush x:Name="ButtonBackgroundPointerOver"
-                                                         Opacity="0.5"
+                                                         Opacity="0.4"
                                                          Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                         <SolidColorBrush x:Name="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
                                         <SolidColorBrush x:Name="ButtonBorderBrushPointerOver" Color="Transparent"/>
                                     </Button.Resources>
 
                                 </Button>
-                                <Border x:Name="EquationBoxBorder"
-                                        Grid.Column="1"
-                                        Background="{ThemeResource TextControlBackground}"
-                                        BorderBrush="{TemplateBinding EquationColor}"
-                                        BorderThickness="{TemplateBinding BorderThickness}">
 
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Controls:MathRichEditBox x:Name="EquationTextBox"
-                                                                  MinHeight="44"
-                                                                  Padding="{TemplateBinding Padding}"
-                                                                  VerticalAlignment="Stretch"
-                                                                  Style="{StaticResource EquationTextBoxStyle}"
-                                                                  BorderThickness="0"
-                                                                  FontFamily="{TemplateBinding FontFamily}"
-                                                                  FontSize="{TemplateBinding FontSize}"
-                                                                  FontWeight="{TemplateBinding FontWeight}"
-                                                                  AcceptsReturn="false"
-                                                                  InputScope="Text"
-                                                                  IsEnabled="False"
-                                                                  IsReadOnly="True"
-                                                                  MaxLength="2048"
-                                                                  TextWrapping="NoWrap"/>
-                                    </Grid>
-                                </Border>
+                                <Grid Grid.Column="1" Background="{ThemeResource TextControlBackground}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Controls:MathRichEditBox x:Name="EquationTextBox"
+                                                              MinHeight="44"
+                                                              Padding="{TemplateBinding Padding}"
+                                                              VerticalAlignment="Stretch"
+                                                              Style="{StaticResource EquationTextBoxStyle}"
+                                                              BorderThickness="0"
+                                                              FontFamily="{TemplateBinding FontFamily}"
+                                                              FontSize="{TemplateBinding FontSize}"
+                                                              FontWeight="{TemplateBinding FontWeight}"
+                                                              AcceptsReturn="false"
+                                                              InputScope="Text"
+                                                              IsEnabled="False"
+                                                              IsReadOnly="True"
+                                                              MaxLength="2048"
+                                                              TextWrapping="NoWrap"/>
+                                </Grid>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>

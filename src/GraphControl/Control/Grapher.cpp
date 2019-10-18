@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Grapher.h"
 #include <IBitmap.h>
+#include "../../CalcViewModel/GraphingCalculatorEnums.h"
 
 using namespace Graphing;
 using namespace GraphControl;
@@ -499,20 +500,20 @@ namespace GraphControl
                                 equation->HorizontalAsymptotes = ConvertWStringVector(functionAnalysisData.HorizontalAsymptotes);
                                 equation->ObliqueAsymptotes = ConvertWStringVector(functionAnalysisData.ObliqueAsymptotes);
                                 equation->TooComplexFeatures = functionAnalysisData.TooComplexFeatures;
-                                equation->AnalysisError = (int)AnalysisErrorType::NoError;
+                                equation->AnalysisError = CalculatorApp::AnalysisErrorType::NoError;
                                 continue;
                             }
                         }
                     }
                     else
                     {
-                        equation->AnalysisError = (int)AnalysisErrorType::AnalysisNotSupported;
+                        equation->AnalysisError = CalculatorApp::AnalysisErrorType::AnalysisNotSupported;
                         continue;
                     }
                 }
             }
 
-            equation->AnalysisError = (int)AnalysisErrorType::AnalysisCouldNotBePerformed;
+            equation->AnalysisError = CalculatorApp::AnalysisErrorType::AnalysisCouldNotBePerformed;
         }
     }
     IObservableVector<String ^> ^ Grapher::ConvertWStringVector(vector<wstring> inVector)

@@ -160,14 +160,13 @@ public
             }
         }
 
-        property Windows::Foundation::Point TraceLocation 
+        property Windows::Foundation::Point TraceLocation
         {
             Windows::Foundation::Point get()
             {
                 return m_renderMain->TraceLocation;
             }
         }
-
 
         property Windows::Foundation::Point ActiveTraceCursorPosition
         {
@@ -247,7 +246,6 @@ public
         void HandleTracingMovementTick(Object ^ sender, Object ^ e);
         void HandleKey(bool keyDown, Windows::System::VirtualKey key);
 
-
         Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^ ConvertWStringVector(std::vector<std::wstring> inVector);
         Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ ConvertWStringIntMap(std::map<std::wstring, int> inMap);
 
@@ -286,7 +284,7 @@ public
         bool m_KeysPressed[5];
         bool m_Moving;
 
-       Windows::UI::Xaml::DispatcherTimer ^ m_TracingTrackingTimer;
+        Windows::UI::Xaml::DispatcherTimer ^ m_TracingTrackingTimer;
 
     public:
         Windows::Storage::Streams::RandomAccessStreamReference ^ GetGraphBitmapStream();
