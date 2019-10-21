@@ -153,277 +153,269 @@
     <value>Aproximadament igual que</value>
     <comment>The text that shows at the bottom of the converter to head the supplementary results. Indicates that the main result is approximately equal to the supplementary results.</comment>
   </data>
-  <data name="BitAutomationName" xml:space="preserve">
-    <value>Mica </value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  <data name="BitFlipItemAutomationName" xml:space="preserve">
+    <value>%1, valor %2</value>
+    <comment>{Locked="%1","%2"}. String used in automation name for each bit in bit flip. %1 will be replaced by the position of the bit (1st bit, 3rd bit), %2 by a binary value (1 or 0)</comment>
   </data>
-  <data name="ValueAutomationName" xml:space="preserve">
-    <value>Valor </value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
-  </data>
-  <data name="BinaryZeroValueAutomationName" xml:space="preserve">
-    <value>Zero</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
-  </data>
-  <data name="BinaryOneValueAutomationName" xml:space="preserve">
-    <value>Un</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  <data name="BitPosition" xml:space="preserve">
+    <value>%1 bit</value>
+    <comment>{Locked="%1"}. Sub-string used to indicate the position of a bit (e.g. 1st bit, 2nd bit...)</comment>
   </data>
   <data name="63" xml:space="preserve">
-    <value>63è </value>
+    <value>63è</value>
     <comment>Sub-string used in automation name for 63 bit in bit flip</comment>
   </data>
   <data name="62" xml:space="preserve">
-    <value>62è </value>
+    <value>62è</value>
     <comment>Sub-string used in automation name for 62 bit in bit flip</comment>
   </data>
   <data name="61" xml:space="preserve">
-    <value>61è </value>
+    <value>61è</value>
     <comment>Sub-string used in automation name for 61 bit in bit flip</comment>
   </data>
   <data name="60" xml:space="preserve">
-    <value>60è </value>
+    <value>60è</value>
     <comment>Sub-string used in automation name for 60 bit in bit flip</comment>
   </data>
   <data name="59" xml:space="preserve">
-    <value>59è  </value>
+    <value>59è </value>
     <comment>Sub-string used in automation name for 59 bit in bit flip</comment>
   </data>
   <data name="58" xml:space="preserve">
-    <value>58è </value>
+    <value>58è</value>
     <comment>Sub-string used in automation name for 58 bit in bit flip</comment>
   </data>
   <data name="57" xml:space="preserve">
-    <value>57è </value>
+    <value>57è</value>
     <comment>Sub-string used in automation name for 57 bit in bit flip</comment>
   </data>
   <data name="56" xml:space="preserve">
-    <value>56è </value>
+    <value>56è</value>
     <comment>Sub-string used in automation name for 56 bit in bit flip</comment>
   </data>
   <data name="55" xml:space="preserve">
-    <value>55è </value>
+    <value>55è</value>
     <comment>Sub-string used in automation name for 55 bit in bit flip</comment>
   </data>
   <data name="54" xml:space="preserve">
-    <value>54è </value>
+    <value>54è</value>
     <comment>Sub-string used in automation name for 54 bit in bit flip</comment>
   </data>
   <data name="53" xml:space="preserve">
-    <value>53è </value>
+    <value>53è</value>
     <comment>Sub-string used in automation name for 53 bit in bit flip</comment>
   </data>
   <data name="52" xml:space="preserve">
-    <value>52è </value>
+    <value>52è</value>
     <comment>Sub-string used in automation name for 52 bit in bit flip</comment>
   </data>
   <data name="51" xml:space="preserve">
-    <value>51è </value>
+    <value>51è</value>
     <comment>Sub-string used in automation name for 51 bit in bit flip</comment>
   </data>
   <data name="50" xml:space="preserve">
-    <value>50è </value>
+    <value>50è</value>
     <comment>Sub-string used in automation name for 50 bit in bit flip</comment>
   </data>
   <data name="49" xml:space="preserve">
-    <value>49è </value>
+    <value>49è</value>
     <comment>Sub-string used in automation name for 49 bit in bit flip</comment>
   </data>
   <data name="48" xml:space="preserve">
-    <value>48è </value>
+    <value>48è</value>
     <comment>Sub-string used in automation name for 48 bit in bit flip</comment>
   </data>
   <data name="47" xml:space="preserve">
-    <value>47è </value>
+    <value>47è</value>
     <comment>Sub-string used in automation name for 47 bit in bit flip</comment>
   </data>
   <data name="46" xml:space="preserve">
-    <value>46è </value>
+    <value>46è</value>
     <comment>Sub-string used in automation name for 46 bit in bit flip</comment>
   </data>
   <data name="45" xml:space="preserve">
-    <value>45è </value>
+    <value>45è</value>
     <comment>Sub-string used in automation name for 45 bit in bit flip</comment>
   </data>
   <data name="44" xml:space="preserve">
-    <value>44è </value>
+    <value>44è</value>
     <comment>Sub-string used in automation name for 44 bit in bit flip</comment>
   </data>
   <data name="43" xml:space="preserve">
-    <value>43è </value>
+    <value>43è</value>
     <comment>Sub-string used in automation name for 43 bit in bit flip</comment>
   </data>
   <data name="42" xml:space="preserve">
-    <value>42è </value>
+    <value>42è</value>
     <comment>Sub-string used in automation name for 42 bit in bit flip</comment>
   </data>
   <data name="41" xml:space="preserve">
-    <value>41è </value>
+    <value>41è</value>
     <comment>Sub-string used in automation name for 41 bit in bit flip</comment>
   </data>
   <data name="40" xml:space="preserve">
-    <value>40è </value>
+    <value>40è</value>
     <comment>Sub-string used in automation name for 40 bit in bit flip</comment>
   </data>
   <data name="39" xml:space="preserve">
-    <value>39è </value>
+    <value>39è</value>
     <comment>Sub-string used in automation name for 39 bit in bit flip</comment>
   </data>
   <data name="38" xml:space="preserve">
-    <value>38è </value>
+    <value>38è</value>
     <comment>Sub-string used in automation name for 38 bit in bit flip</comment>
   </data>
   <data name="37" xml:space="preserve">
-    <value>37è </value>
+    <value>37è</value>
     <comment>Sub-string used in automation name for 37 bit in bit flip</comment>
   </data>
   <data name="36" xml:space="preserve">
-    <value>36è </value>
+    <value>36è</value>
     <comment>Sub-string used in automation name for 36 bit in bit flip</comment>
   </data>
   <data name="35" xml:space="preserve">
-    <value>35è </value>
+    <value>35è</value>
     <comment>Sub-string used in automation name for 35 bit in bit flip</comment>
   </data>
   <data name="34" xml:space="preserve">
-    <value>34è </value>
+    <value>34è</value>
     <comment>Sub-string used in automation name for 34 bit in bit flip</comment>
   </data>
   <data name="33" xml:space="preserve">
-    <value>33è </value>
+    <value>33è</value>
     <comment>Sub-string used in automation name for 33 bit in bit flip</comment>
   </data>
   <data name="32" xml:space="preserve">
-    <value>32è </value>
+    <value>32è</value>
     <comment>Sub-string used in automation name for 32 bit in bit flip</comment>
   </data>
   <data name="31" xml:space="preserve">
-    <value>31è </value>
+    <value>31è</value>
     <comment>Sub-string used in automation name for 31 bit in bit flip</comment>
   </data>
   <data name="30" xml:space="preserve">
-    <value>30è </value>
+    <value>30è</value>
     <comment>Sub-string used in automation name for 30 bit in bit flip</comment>
   </data>
   <data name="29" xml:space="preserve">
-    <value>29è </value>
+    <value>29è</value>
     <comment>Sub-string used in automation name for 29 bit in bit flip</comment>
   </data>
   <data name="28" xml:space="preserve">
-    <value>28è </value>
+    <value>28è</value>
     <comment>Sub-string used in automation name for 28 bit in bit flip</comment>
   </data>
   <data name="27" xml:space="preserve">
-    <value>27è </value>
+    <value>27è</value>
     <comment>Sub-string used in automation name for 27 bit in bit flip</comment>
   </data>
   <data name="26" xml:space="preserve">
-    <value>26è </value>
+    <value>26è</value>
     <comment>Sub-string used in automation name for 26 bit in bit flip</comment>
   </data>
   <data name="25" xml:space="preserve">
-    <value>25è </value>
+    <value>25è</value>
     <comment>Sub-string used in automation name for 25 bit in bit flip</comment>
   </data>
   <data name="24" xml:space="preserve">
-    <value>24è </value>
+    <value>24è</value>
     <comment>Sub-string used in automation name for 24 bit in bit flip</comment>
   </data>
   <data name="23" xml:space="preserve">
-    <value>23è </value>
+    <value>23è</value>
     <comment>Sub-string used in automation name for 23 bit in bit flip</comment>
   </data>
   <data name="22" xml:space="preserve">
-    <value>22è </value>
+    <value>22è</value>
     <comment>Sub-string used in automation name for 22 bit in bit flip</comment>
   </data>
   <data name="21" xml:space="preserve">
-    <value>21è </value>
+    <value>21è</value>
     <comment>Sub-string used in automation name for 21 bit in bit flip</comment>
   </data>
   <data name="20" xml:space="preserve">
-    <value>20è </value>
+    <value>20è</value>
     <comment>Sub-string used in automation name for 20 bit in bit flip</comment>
   </data>
   <data name="19" xml:space="preserve">
-    <value>19è </value>
+    <value>19è</value>
     <comment>Sub-string used in automation name for 19 bit in bit flip</comment>
   </data>
   <data name="18" xml:space="preserve">
-    <value>18è </value>
+    <value>18è</value>
     <comment>Sub-string used in automation name for 18 bit in bit flip</comment>
   </data>
   <data name="17" xml:space="preserve">
-    <value>17è </value>
+    <value>17è</value>
     <comment>Sub-string used in automation name for 17 bit in bit flip</comment>
   </data>
   <data name="16" xml:space="preserve">
-    <value>16è </value>
+    <value>16è</value>
     <comment>Sub-string used in automation name for 16 bit in bit flip</comment>
   </data>
   <data name="15" xml:space="preserve">
-    <value>15è </value>
+    <value>15è</value>
     <comment>Sub-string used in automation name for 15 bit in bit flip</comment>
   </data>
   <data name="14" xml:space="preserve">
-    <value>14è </value>
+    <value>14è</value>
     <comment>Sub-string used in automation name for 14 bit in bit flip</comment>
   </data>
   <data name="13" xml:space="preserve">
-    <value>13è </value>
+    <value>13è</value>
     <comment>Sub-string used in automation name for 13 bit in bit flip</comment>
   </data>
   <data name="12" xml:space="preserve">
-    <value>12è </value>
+    <value>12è</value>
     <comment>Sub-string used in automation name for 12 bit in bit flip</comment>
   </data>
   <data name="11" xml:space="preserve">
-    <value>11è </value>
+    <value>11è</value>
     <comment>Sub-string used in automation name for 11 bit in bit flip</comment>
   </data>
   <data name="10" xml:space="preserve">
-    <value>10è </value>
+    <value>10è</value>
     <comment>Sub-string used in automation name for 10 bit in bit flip</comment>
   </data>
   <data name="9" xml:space="preserve">
-    <value>9è </value>
+    <value>9è</value>
     <comment>Sub-string used in automation name for 9 bit in bit flip</comment>
   </data>
   <data name="8" xml:space="preserve">
-    <value>8è </value>
+    <value>8è</value>
     <comment>Sub-string used in automation name for 8 bit in bit flip</comment>
   </data>
   <data name="7" xml:space="preserve">
-    <value>7è </value>
+    <value>7è</value>
     <comment>Sub-string used in automation name for 7 bit in bit flip</comment>
   </data>
   <data name="6" xml:space="preserve">
-    <value>6è </value>
+    <value>6è</value>
     <comment>Sub-string used in automation name for 6 bit in bit flip</comment>
   </data>
   <data name="5" xml:space="preserve">
-    <value>5è </value>
+    <value>5è</value>
     <comment>Sub-string used in automation name for 5 bit in bit flip</comment>
   </data>
   <data name="4" xml:space="preserve">
-    <value>4è </value>
+    <value>4t</value>
     <comment>Sub-string used in automation name for 4 bit in bit flip</comment>
   </data>
   <data name="3" xml:space="preserve">
-    <value>3è </value>
+    <value>3r</value>
     <comment>Sub-string used in automation name for 3 bit in bit flip</comment>
   </data>
   <data name="2" xml:space="preserve">
-    <value>2è </value>
+    <value>2n</value>
     <comment>Sub-string used in automation name for 2 bit in bit flip</comment>
   </data>
   <data name="1" xml:space="preserve">
-    <value>1è </value>
+    <value>1r</value>
     <comment>Sub-string used in automation name for 1 bit in bit flip</comment>
   </data>
-  <data name="0" xml:space="preserve">
-    <value>0è </value>
-    <comment>Sub-string used in automation name for 0 bit in bit flip</comment>
+  <data name="LeastSignificantBit" xml:space="preserve">
+    <value>bit menys significatiu</value>
+    <comment>Used to describe the first bit of a binary number. Used in bit flip</comment>
   </data>
   <data name="MemoryButton_Open" xml:space="preserve">
     <value>Obre el desplegable de memòria</value>
@@ -704,6 +696,10 @@
   <data name="DeleteHistorySwipeItem.Text" xml:space="preserve">
     <value>Suprimeix</value>
     <comment>Text string for the Calculator Delete swipe button in the History list</comment>
+  </data>
+  <data name="CopyHistoryMenuItem.Text" xml:space="preserve"> 
+     <value>Copia</value> 
+     <comment>Text string for the Calculator Copy option in the History list context menu</comment> 
   </data>
   <data name="DeleteHistoryMenuItem.Text" xml:space="preserve">
     <value>Suprimeix</value>
@@ -2895,6 +2891,114 @@
     <value>Tangent hiperbòlica inversa</value>
     <comment>Name for the inverse hyperbolic tangent function. Used by screen readers.</comment>
   </data>
+  <data name="SecantDegrees" xml:space="preserve">
+    <value>graus de secant</value>
+    <comment>Name for the secant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="SecantRadians" xml:space="preserve">
+    <value>radians de secant</value>
+    <comment>Name for the secant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="SecantGradians" xml:space="preserve">
+    <value>graus centesimals de secant</value>
+    <comment>Name for the secant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantDegrees" xml:space="preserve">
+    <value>graus de secant inversa</value>
+    <comment>Name for the inverse secant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantRadians" xml:space="preserve">
+    <value>radians de secant inversa</value>
+    <comment>Name for the inverse secant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantGradians" xml:space="preserve">
+    <value>graus centesimals de secant inversa</value>
+    <comment>Name for the inverse secant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicSecant" xml:space="preserve">
+    <value>secant hiperbòlica</value>
+    <comment>Name for the hyperbolic secant function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicSecant" xml:space="preserve">
+    <value>secant hiperbòlica inversa</value>
+    <comment>Name for the inverse hyperbolic secant function. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantDegrees" xml:space="preserve">
+    <value>graus de cosecant</value>
+    <comment>Name for the cosecant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantRadians" xml:space="preserve">
+    <value>radians de cosecant</value>
+    <comment>Name for the cosecant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantGradians" xml:space="preserve">
+    <value>graus centesimals de cosecant</value>
+    <comment>Name for the cosecant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantDegrees" xml:space="preserve">
+    <value>graus de cosecant inversa</value>
+    <comment>Name for the inverse cosecant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantRadians" xml:space="preserve">
+    <value>radians de cosecant inversa</value>
+    <comment>Name for the inverse cosecant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantGradians" xml:space="preserve">
+    <value>graus centesimals de cosecant inversa</value>
+    <comment>Name for the inverse cosecant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicCosecant" xml:space="preserve">
+    <value>cosecant hiperbòlica</value>
+    <comment>Name for the hyperbolic cosecant function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicCosecant" xml:space="preserve">
+    <value>cosecant hiperbòlica inversa</value>
+    <comment>Name for the inverse hyperbolic cosecant function. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentDegrees" xml:space="preserve">
+    <value>graus de cotangent</value>
+    <comment>Name for the cotangent function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentRadians" xml:space="preserve">
+    <value>Radians de cotangent</value>
+    <comment>Name for the cotangent function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentGradians" xml:space="preserve">
+    <value>graus centesimals de cotangent</value>
+    <comment>Name for the cotangent function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentDegrees" xml:space="preserve">
+    <value>graus de cotangent inversa</value>
+    <comment>Name for the inverse cotangent function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentRadians" xml:space="preserve">
+    <value>radians de cotangent inversa</value>
+    <comment>Name for the inverse cotangent function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentGradians" xml:space="preserve">
+    <value>graus centesimals de cotangent inversa</value>
+    <comment>Name for the inverse cotangent function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicCotangent" xml:space="preserve">
+    <value>cotangent hiperbòlica</value>
+    <comment>Name for the hyperbolic cotangent function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicCotangent" xml:space="preserve">
+    <value>cotangent hiperbòlica inversa</value>
+    <comment>Name for the inverse hyperbolic cotangent function. Used by screen readers.</comment>
+  </data>
+  <data name="CubeRoot" xml:space="preserve">
+    <value>Arrel cúbica</value>
+    <comment>Name for the cube root function. Used by screen readers.</comment>
+  </data>
+  <data name="Logx" xml:space="preserve">
+    <value>Logaritme en base</value>
+    <comment>Name for the logbasex function. Used by screen readers.</comment>
+  </data>
+  <data name="AbsoluteValue" xml:space="preserve">
+    <value>Valor absolut</value>
+    <comment>Name for the absolute value function. Used by screen readers.</comment>
+  </data>
   <data name="LeftShift" xml:space="preserve">
     <value>desplaça a l'esquerra</value>
     <comment>Name for the programmer function that shifts bits to the left. Used by screen readers.</comment>
@@ -2957,6 +3061,194 @@
   </data>
   <data name="CalculationFailed" xml:space="preserve">
     <value>No s'ha pogut calcular</value>
-    <comment>Text displayed when the application is not able to do a calculation</comment>
+    <comment>Text displayed when the application is not able to do a calculation</comment>  
+  </data>
+  <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Logaritme en base X</value>
+    <comment>Screen reader prompt for the logBaseX button</comment>
+  </data>
+  <data name="trigButton.Text" xml:space="preserve">
+    <value>Trigonometria</value>
+    <comment>Displayed on the button that contains a flyout for the trig functions in scientific mode.</comment>
+  </data>
+  <data name="funcButton.Text" xml:space="preserve">
+    <value>Funció</value>
+    <comment>Displayed on the button that contains a flyout for the general functions in scientific mode.</comment>
+  </data>
+  <data name="bitwiseButton.Text" xml:space="preserve">
+    <value>Bit a bit</value>
+    <comment>Displayed on the button that contains a flyout for the bitwise functions in programmer mode.</comment>
+  </data>
+  <data name="bitShiftButton.Text" xml:space="preserve">
+    <value>Desplaçament de bits</value>
+    <comment>Displayed on the button that contains a flyout for the bit shift functions in programmer mode.</comment>
+  </data>
+  <data name="trigShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Funció inversa</value>
+    <comment>Screen Reader prompt for the shift button in the trig flyout in scientific mode.</comment>
+  </data>
+  <data name="hypButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Funció hiperbòlica</value>
+    <comment>Screen reader prompt for the Calculator button HYP in the scientific flyout keypad</comment>
+  </data>
+  <data name="secButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Secant</value>
+    <comment>Screen reader prompt for the Calculator button sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="sechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Secant hiperbòlica</value>
+    <comment>Screen reader prompt for the Calculator button sech in the scientific flyout keypad</comment>
+  </data>
+  <data name="invsecButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc secant</value>
+    <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="invsechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc secant hiperbòlic</value>
+    <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="cscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Cosecant</value>
+    <comment>Screen reader prompt for the Calculator button csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="cschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Cosecant hiperbòlica</value>
+    <comment>Screen reader prompt for the Calculator button csch in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc cosecant</value>
+    <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc cosecant hiperbòlic</value>
+    <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="cotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Cotangent</value>
+    <comment>Screen reader prompt for the Calculator button cot in the scientific flyout keypad</comment>
+  </data>
+  <data name="cothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Cotangent hiperbòlica</value>
+    <comment>Screen reader prompt for the Calculator button coth in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc cotangent</value>
+    <comment>Screen reader prompt for the Calculator button arc cot in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arc cotangent hiperbòlic</value>
+    <comment>Screen reader prompt for the Calculator button arc coth in the scientific flyout keypad</comment>
+  </data>
+  <data name="floorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Terra</value>
+    <comment>Screen reader prompt for the Calculator button floor in the scientific flyout keypad</comment>
+  </data>
+  <data name="ceilButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Sostre</value>
+    <comment>Screen reader prompt for the Calculator button ceiling in the scientific flyout keypad</comment>
+  </data>
+  <data name="randButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Aleatori</value>
+    <comment>Screen reader prompt for the Calculator button random in the scientific flyout keypad</comment>
+  </data>
+  <data name="absButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Valor absolut</value>
+    <comment>Screen reader prompt for the Calculator button abs in the scientific flyout keypad</comment>
+  </data>
+  <data name="eulerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Número d'Euler</value>
+    <comment>Screen reader prompt for the Calculator button e in the scientific flyout keypad</comment>
+  </data>
+  <data name="twoPowerXButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Dos a l'exponent</value>
+    <comment>Screen reader prompt for the Calculator button 2^x in the scientific flyout keypad</comment>
+  </data>
+  <data name="nandButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Nand</value>
+    <comment>Screen reader prompt for the Calculator button nand in the scientific flyout keypad</comment>
+  </data>
+  <data name="nandButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Nand</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="norButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Nor</value>
+    <comment>Screen reader prompt for the Calculator button nor in the scientific flyout keypad</comment>
+  </data>
+  <data name="norButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Nor</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="rolCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Gira a l'esquerra amb ròssec</value>
+    <comment>Screen reader prompt for the Calculator button rol with carry in the scientific flyout keypad</comment>
+  </data>
+  <data name="rorCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Gira a la dreta amb ròssec</value>
+    <comment>Screen reader prompt for the Calculator button ror with carry in the scientific flyout keypad</comment>
+  </data>
+  <data name="lshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Desplaçament a l'esquerra</value>
+    <comment>Screen reader prompt for the Calculator button lshLogical in the scientific flyout keypad</comment>
+  </data>
+  <data name="lshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Desplaçament a l'esquerra</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="rshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Desplaçament a la dreta</value>
+    <comment>Screen reader prompt for the Calculator button rshLogical in the scientific flyout keypad</comment>
+  </data>
+  <data name="rshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Desplaçament a la dreta</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="arithmeticShiftButton.Content" xml:space="preserve">
+    <value>Desplaçament aritmètic</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButton.Content" xml:space="preserve">
+    <value>Desplaçament lògic</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButton.Content" xml:space="preserve">
+    <value>Gira amb desplaçament circular</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButton.Content" xml:space="preserve">
+    <value>Gira amb desplaçament circular de ròssec</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
+  <data name="cubeRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Arrel cúbica</value>
+    <comment>Screen reader prompt for the cube root button on the scientific operator keypad</comment>
+  </data>
+  <data name="trigButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Trigonometria</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="funcButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Funcions</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="bitwiseButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Bit a bit</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="bitShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Desplaçament de bits</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="ScientificOperatorPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Taulers d'operadors científics</value>
+    <comment>Screen reader prompt for the Scientific Operator Panels on the scientific operator keypad</comment>
+  </data>
+  <data name="ProgrammerOperatorPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Taulers d'operadors de programador</value>
+    <comment>Screen reader prompt for the Programmer Operator Panels on the programmer operator keypad</comment>
+  </data>
+  <data name="MostSignificantBit" xml:space="preserve">
+    <value>bit més significatiu</value>
+    <comment>Used to describe the last bit of a binary number. Used in bit flip</comment>
   </data>
 </root>
