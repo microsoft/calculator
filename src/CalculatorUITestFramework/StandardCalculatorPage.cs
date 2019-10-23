@@ -15,13 +15,13 @@ namespace CalculatorUITestFramework
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public MemoryPanel MemoryPanel = new MemoryPanel();
+        public CalcMemoryFlyout CalcMemoryFlyout = new CalcMemoryFlyout();
         public HistoryPanel HistoryPanel = new HistoryPanel();
         public NavigationMenu NavigationMenu = new NavigationMenu();
         public WindowsElement Header => this.session.TryFindElementByAccessibilityId("Header");
         public WindowsElement Minimize => this.session.TryFindElementByAccessibilityId("Minimize");
         public WindowsElement Maximize => this.session.TryFindElementByAccessibilityId("Maximize");
         public WindowsElement AppName => this.session.TryFindElementByAccessibilityId("AppName");
-
         public WindowsElement CalculatorResult => this.session.TryFindElementByAccessibilityId("CalculatorResults");
         public WindowsElement CalculatorExpression => this.session.TryFindElementByAccessibilityId("CalculatorExpression");
         public WindowsElement EnterAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("NormalAlwaysOnTopButton");

@@ -447,6 +447,7 @@
     <Page Include="Views\TitleBar.xaml">
       <Filter>Views</Filter>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)DensityStyles\Compact.xaml" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Resources\en-US\CEngineStrings.resw">

@@ -4,6 +4,9 @@
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System.Collections.ObjectModel;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium;
+using System.Windows.Input;
 
 namespace CalculatorUITestFramework
 {
@@ -15,15 +18,18 @@ namespace CalculatorUITestFramework
         public WindowsElement MemPlus => this.session.TryFindElementByAccessibilityId("MemPlus");
         public WindowsElement MemMinus => this.session.TryFindElementByAccessibilityId("MemMinus");
         public WindowsElement MemButton => this.session.TryFindElementByAccessibilityId("memButton");
+        public WindowsElement MemoryButton => this.session.TryFindElementByAccessibilityId("MemoryButton");
         public WindowsElement MemoryPane => this.session.TryFindElementByAccessibilityId("MemoryPanel");
         public WindowsElement MemoryLabel => this.session.TryFindElementByAccessibilityId("MemoryLabel");
         public WindowsElement MemoryListView => this.session.TryFindElementByAccessibilityId("MemoryListView");
         public WindowsElement MemoryPaneEmptyLabel => this.session.TryFindElementByAccessibilityId("MemoryPaneEmpty");
-  //      public WindowsElement MemPlusItem => this.session.TryFindElementByAccessibilityId("MAddButton");
         public WindowsElement ClearMemoryItemButton => this.session.TryFindElementByAccessibilityId("MClearButton");
         public WindowsElement MemMinusItem => this.session.TryFindElementByAccessibilityId("MSubButton");
         public WindowsElement MemPlusItem => this.session.TryFindElementByAccessibilityId("MAddButton");
+        public WindowsElement ClearMemory => this.session.TryFindElementByAccessibilityId("ClearMemory");
         public WindowsElement ListViewItem => this.session.FindElementByClassName("ListViewItem");
+
+
 
         /// <summary>
         /// Opens the Memory Pane by clicking the Memory pivot label.

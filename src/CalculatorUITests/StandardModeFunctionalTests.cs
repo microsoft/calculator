@@ -13,6 +13,8 @@ using System.Drawing;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
+using System.Runtime.CompilerServices;
+using OpenQA.Selenium.Interactions;
 
 namespace CalculatorUITests
 {
@@ -380,6 +382,7 @@ namespace CalculatorUITests
             page.AppName.Click();
             page.Header.SendKeys(Keys.Alt + "1" + Keys.Alt);
             Assert.AreEqual("Standard", page.GetCalculatorHeaderText());
+
             ////Verify the non-numpad numbers
             //page.AppName.Click();
             //page.Header.SendKeys(Keys.NumberPad1);
@@ -428,24 +431,21 @@ namespace CalculatorUITests
             page.Header.SendKeys(Keys.Equal);
             Assert.AreEqual("3.333333333333333", page.GetCalculatorResultText());
             page.Header.SendKeys(Keys.Escape);
-            //Verifies the invert, cubed -NO CUBED HOTKEY??? -, and squared, 7, 8, and 9 key input
-            //----NOTE: Once Pepe's change goes through, we should remove cubed tests from standard------
+            //Verifies the invert, squared, 7, 8, and 9 key input
             page.AppName.Click();
             page.Header.SendKeys("7");
             page.Header.SendKeys(Keys.Escape);
             page.Header.SendKeys("7");
             page.Header.SendKeys("r");
-            page.AppName.Click();
             Assert.AreEqual("0.1428571428571429", page.GetCalculatorResultText());
             Assert.AreEqual("1/(7)", page.GetCalculatorExpressionText());
             page.Header.SendKeys(Keys.Escape);
             page.Header.SendKeys("8");
-            page.StandardOperators.XPower3Button.Click();
-            Assert.AreEqual("512", page.GetCalculatorResultText());
-            Assert.AreEqual("cube(8)", page.GetCalculatorExpressionText());
-            page.StandardOperators.ClearButton.Click();
+            Assert.AreEqual("8", page.GetCalculatorResultText());
+            page.Header.SendKeys(Keys.Escape);
             page.StandardOperators.NumberPad.Num9Button.Click();
-            page.StandardOperators.XPower2Button.Click();
+            page.AppName.Click();
+            page.Header.SendKeys("q");
             Assert.AreEqual("81", page.GetCalculatorResultText());
             Assert.AreEqual("square (9)", page.GetCalculatorExpressionText());
             page.Header.SendKeys(Keys.Escape);
@@ -467,7 +467,7 @@ namespace CalculatorUITests
             page.Header.SendKeys(Keys.Shift + "2" + Keys.Shift);
             Assert.AreEqual("0.3162277660168379", page.GetCalculatorResultText());
             Assert.AreEqual("10 + √(0.1)", page.GetCalculatorExpressionText());
-            page.Header.SendKeys(Keys.Decimal);
+            page.Header.SendKeys(".");
             page.Header.SendKeys(Keys.F9);
             Assert.AreEqual("-0 point", page.GetCalculatorResultText());
             Assert.AreEqual("10 +", page.GetCalculatorExpressionText());
@@ -523,17 +523,14 @@ namespace CalculatorUITests
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("3.333333333333333", page.GetCalculatorResultText());
             page.StandardOperators.ClearButton.Click();
-            //Verifies the invert, cubed, and squared, 7, 8, and 9 button
-            //----NOTE: Once Pepe's change goes through, we should remove cubed tests from standard------
+            //Verifies the invert, squared, 7, 8, and 9 button
             page.StandardOperators.NumberPad.Num7Button.Click();
             page.StandardOperators.InvertButton.Click();
             Assert.AreEqual("0.1428571428571429", page.GetCalculatorResultText());
             Assert.AreEqual("1/(7)", page.GetCalculatorExpressionText());
             page.StandardOperators.ClearButton.Click();
             page.StandardOperators.NumberPad.Num8Button.Click();
-            page.StandardOperators.XPower3Button.Click();
-            Assert.AreEqual("512", page.GetCalculatorResultText());
-            Assert.AreEqual("cube(8)", page.GetCalculatorExpressionText());
+            Assert.AreEqual("8", page.GetCalculatorResultText());
             page.StandardOperators.ClearButton.Click();
             page.StandardOperators.NumberPad.Num9Button.Click();
             page.StandardOperators.XPower2Button.Click();
@@ -594,11 +591,67 @@ namespace CalculatorUITests
         [TestMethod]
         public void BVT_17416884_VerifyMemoryFunction()
         {
-            ////Verify hover buttons
-            //page.StandardOperators.NumberPad.Num3Button.Click();
-            //page.MemoryPanel.MemButton.Click();
-            //page.MemoryPanel.MemoryLabel.Click();
-            //page.MemoryPanel.ListViewItem.Click();
+            // Memory control buttons veriifed at the end of automated test "BVT_17416429_VerifyMouseInput"
+            //Verify hover buttons MemMinusItem, MemPlusItem, and ClearMemoryItemButton, and verify the clear memory button in the Memory panel
+            page.StandardOperators.NumberPad.Num3Button.Click();
+            page.MemoryPanel.MemButton.Click();
+            page.MemoryPanel.MemButton.Click();
+            page.MemoryPanel.MemoryLabel.Click();
+            page.MemoryPanel.MemoryListView.WaitForDisplayed();
+            Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
+            moveToListView.MoveToElement(page.MemoryPanel.ListViewItem);
+            moveToListView.Perform();
+            Actions clickSubtractFromMemoryItem = new Actions(WinAppDriver.Instance.CalculatorSession);
+            clickSubtractFromMemoryItem.MoveByOffset(125, 10).Click();
+            clickSubtractFromMemoryItem.Perform();
+            var memoryItems0 = page.MemoryPanel.GetAllMemoryListViewItems();
+            Assert.IsTrue(memoryItems0[0].Text.Equals("0", StringComparison.InvariantCultureIgnoreCase));
+            moveToListView.Perform();
+            Actions clickAddToMemoryItem = new Actions(WinAppDriver.Instance.CalculatorSession);
+            clickAddToMemoryItem.MoveByOffset(100, 10).Click();
+            clickAddToMemoryItem.Perform();
+            Assert.IsTrue(memoryItems0[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
+            moveToListView.Perform();
+            Actions clickClearMemoryItem = new Actions(WinAppDriver.Instance.CalculatorSession);
+            clickClearMemoryItem.MoveByOffset(50, 10).Click();
+            clickClearMemoryItem.Perform();
+            var memoryItems2 = page.MemoryPanel.GetAllMemoryListViewItems();
+            Assert.IsTrue(memoryItems2[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
+            page.MemoryPanel.ClearMemory.Click();
+            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+
+            //Verify hover buttons MemMinusItem, MemPlusItem, and ClearMemoryItemButton, and verify the clear memory button in the dropdown Memory flyout
+            Size windowSize = new Size(464, 464);
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = windowSize;
+            page.MemoryPanel.MemButton.Click();
+            page.MemoryPanel.MemButton.Click();
+            page.CalcMemoryFlyout.OpenMemoryFlyout();
+            Actions moveToListView2 = new Actions(WinAppDriver.Instance.CalculatorSession);
+            moveToListView2.MoveToElement(page.CalcMemoryFlyout.ListViewItem);
+            moveToListView2.Perform();
+            Actions clickSubtractFromMemoryItem2 = new Actions(WinAppDriver.Instance.CalculatorSession);
+            clickSubtractFromMemoryItem2.MoveByOffset(190, 10).Click();
+            clickSubtractFromMemoryItem2.Perform();
+            var memoryItems = page.CalcMemoryFlyout.GetAllMemoryFlyoutListViewItems();
+            Assert.IsTrue(memoryItems[0].Text.Equals("0", StringComparison.InvariantCultureIgnoreCase));
+            page.CalcMemoryFlyout.OpenMemoryFlyout();
+            moveToListView2.Perform();
+            Actions clickAddToMemoryItem2 = new Actions(WinAppDriver.Instance.CalculatorSession);
+            clickAddToMemoryItem2.MoveByOffset(150, 10).Click();
+            clickAddToMemoryItem2.Perform();
+            Assert.IsTrue(memoryItems[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
+            page.CalcMemoryFlyout.OpenMemoryFlyout();
+            moveToListView2.Perform();
+            Actions clickClearMemoryItem2 = new Actions(WinAppDriver.Instance.CalculatorSession);
+            clickClearMemoryItem2.MoveByOffset(115, 10).Click();
+            clickClearMemoryItem2.Perform();
+            Assert.IsTrue(memoryItems[1].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
+            page.CalcMemoryFlyout.OpenMemoryFlyout();
+            page.CalcMemoryFlyout.ClearMemory.Click();
+            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+            Size newWindowSize = new Size(1200, 1050);
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
+            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
         }
 
         [TestMethod]
