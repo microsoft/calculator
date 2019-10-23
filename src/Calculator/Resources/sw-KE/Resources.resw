@@ -153,21 +153,13 @@
     <value>Karibu sawa na</value>
     <comment>The text that shows at the bottom of the converter to head the supplementary results. Indicates that the main result is approximately equal to the supplementary results.</comment>
   </data>
-  <data name="BitAutomationName" xml:space="preserve">
-    <value>Biti</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  <data name="BitFlipItemAutomationName" xml:space="preserve">
+    <value>%1, thamani %2</value>
+    <comment>{Locked="%1","%2"}. String used in automation name for each bit in bit flip. %1 will be replaced by the position of the bit (1st bit, 3rd bit), %2 by a binary value (1 or 0)</comment>
   </data>
-  <data name="ValueAutomationName" xml:space="preserve">
-    <value>Thamani</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
-  </data>
-  <data name="BinaryZeroValueAutomationName" xml:space="preserve">
-    <value>Sifuri</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
-  </data>
-  <data name="BinaryOneValueAutomationName" xml:space="preserve">
-    <value>Moja</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  <data name="BitPosition" xml:space="preserve">
+    <value>Biti %1</value>
+    <comment>{Locked="%1"}. Sub-string used to indicate the position of a bit (e.g. 1st bit, 2nd bit...)</comment>
   </data>
   <data name="63" xml:space="preserve">
     <value>Sitini na tatu</value>
@@ -420,10 +412,6 @@
   <data name="1" xml:space="preserve">
     <value>Moja</value>
     <comment>Sub-string used in automation name for 1 bit in bit flip</comment>
-  </data>
-  <data name="0" xml:space="preserve">
-    <value>Sifuri</value>
-    <comment>Sub-string used in automation name for 0 bit in bit flip</comment>
   </data>
   <data name="MemoryButton_Open" xml:space="preserve">
     <value>Fungua kiruka nje cha kumbukumbu</value>
@@ -2957,6 +2945,6 @@
   </data>
   <data name="CalculationFailed" xml:space="preserve">
     <value>Hesabu imeshindikana</value>
-    <comment>Text displayed when the application is not able to do a calculation</comment>
+    <comment>Text displayed when the application is not able to do a calculation</comment>  
   </data>
 </root>

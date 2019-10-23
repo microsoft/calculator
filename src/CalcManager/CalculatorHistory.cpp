@@ -69,11 +69,6 @@ shared_ptr<HISTORYITEM> const& CalculatorHistory::GetHistoryItem(_In_ unsigned i
     return m_historyItems.at(uIdx);
 }
 
-CalculatorHistory::~CalculatorHistory(void)
-{
-    ClearHistory();
-}
-
 void CalculatorHistory::ClearHistory()
 {
     m_historyItems.clear();

@@ -116,9 +116,9 @@ namespace CalculatorUITests
             page.StandardOperators.EqualButton.Click();
 
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyItems[0].Text.Equals("1 × 3 = 3", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].Text.Equals("2 Minus ( 3 = Minus (1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[2].Text.Equals("-3 + -2.6 = Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].Text.Equals("1 × 3= 3", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].Text.Equals("2 Minus ( 3= Minus (1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[2].Text.Equals("-3 + -2.6= Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
 
         }
 
@@ -177,14 +177,6 @@ namespace CalculatorUITests
             page.StandardOperators.NumberPad.Input(144);
             page.StandardOperators.SquareRootButton.Click();
             Assert.AreEqual("12", page.GetCalculatorResultText());
-        }
-
-        [TestMethod]
-        public void Operator_Cubed()
-        {
-            page.StandardOperators.NumberPad.Input(-3);
-            page.StandardOperators.XPower3Button.Click();
-            Assert.AreEqual("-27", page.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -258,13 +250,6 @@ namespace CalculatorUITests
         {
             page.Header.SendKeys("100@");
             Assert.AreEqual("10", page.GetCalculatorResultText());
-        }
-
-        [TestMethod]
-        public void KeyboardInput_Cubed()
-        {
-            page.Header.SendKeys("3#");
-            Assert.AreEqual("27", page.GetCalculatorResultText());
         }
 
         [TestMethod]
