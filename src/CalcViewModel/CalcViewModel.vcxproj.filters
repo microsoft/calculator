@@ -208,4 +208,7 @@
       <Filter>DataLoaders</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)DensityStyles\Compact.xaml" />
+  </ItemGroup>
 </Project>
