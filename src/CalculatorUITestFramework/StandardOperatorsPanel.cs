@@ -16,8 +16,8 @@ namespace CalculatorUITestFramework
 
         public WindowsElement PercentButton => this.session.TryFindElementByAccessibilityId("percentButton");
         public WindowsElement SquareRootButton => this.session.TryFindElementByAccessibilityId("squareRootButton");
-        public WindowsElement XPower2Button => this.session.TryFindElementByAccessibilityId("xpower2Button");
         public WindowsElement XPower3Button => this.session.TryFindElementByAccessibilityId("xpower3Button");
+        public WindowsElement XPower2Button => this.session.TryFindElementByAccessibilityId("xpower2Button");
         public WindowsElement InvertButton => this.session.TryFindElementByAccessibilityId("invertButton");
         public WindowsElement DivideButton => this.session.TryFindElementByAccessibilityId("divideButton");
         public WindowsElement MultiplyButton => this.session.TryFindElementByAccessibilityId("multiplyButton");

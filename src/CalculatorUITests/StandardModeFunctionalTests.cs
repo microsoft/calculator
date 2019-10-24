@@ -24,7 +24,7 @@ namespace CalculatorUITests
             WinAppDriver.Instance.SetupCalculatorSession(context);
 
             // Ensure that calculator is in standard mode
-            page.NavigateToStandardCalculator();
+            page.NavigateToCalculatorMode(CalculatorMode.StandardCalculator);
         }
 
         /// <summary>
@@ -54,7 +54,6 @@ namespace CalculatorUITests
         {
             page.ClearAll();
         }
-
         #region Smoke Tests
         [TestMethod]
         public void SmokeTest_Add()
@@ -136,6 +135,16 @@ namespace CalculatorUITests
             Assert.IsTrue(memoryItems[2].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
             return;
 
+        }
+
+        [TestMethod]
+       public void Multiplication()
+        {
+            page.StandardOperators.NumberPad.Input(12);
+            page.StandardOperators.MultiplyButton.Click();
+            page.StandardOperators.NumberPad.Input(11);
+            page.StandardOperators.EqualButton.Click();
+            Assert.AreEqual("132", page.GetCalculatorResultText());
         }
 
         #endregion

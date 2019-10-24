@@ -7,12 +7,12 @@ using OpenQA.Selenium.Appium.Windows;
 namespace CalculatorUITestFramework
 {
     /// <summary>
-    /// This class contains the UI automation objects and helper methods available when the Calculator is in Standard Mode.
+    /// This class contains the UI automation objects and helper methods available when the Calculator is in Scientific Mode.
     /// </summary>
-    public class StandardCalculatorPage
+    public class ScientificCalculatorPage
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
-        public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
+        public ScientificOperatorsPanel ScientificOperators = new ScientificOperatorsPanel();
         public MemoryPanel MemoryPanel = new MemoryPanel();
         public HistoryPanel HistoryPanel = new HistoryPanel();
         public NavigationMenu NavigationMenu = new NavigationMenu();
@@ -32,7 +32,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ClearAll()
         {
-            this.StandardOperators.ClearButton.Click();
+            this.ScientificOperators.ClearButton.Click();
             this.MemoryPanel.MemoryClear.Click();
             this.HistoryPanel.ClearHistory();
         }
