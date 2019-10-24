@@ -21,8 +21,8 @@ public:
     ~CHistoryCollector();
     void AddOpndToHistory(std::wstring_view numStr, CalcEngine::Rational const& rat, bool fRepetition = false);
     void RemoveLastOpndFromHistory();
-    void AddBinOpToHistory(int nOpCode, bool fNoRepetition = true);
-    void ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher);
+    void AddBinOpToHistory(int nOpCode, bool isIntgerMode, bool fNoRepetition = true);
+    void ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher, bool isIntgerMode);
     void AddUnaryOpToHistory(int nOpCode, bool fInv, ANGLE_TYPE angletype);
     void AddOpenBraceToHistory();
     void AddCloseBraceToHistory();
@@ -31,6 +31,7 @@ public:
     void EnclosePrecInversionBrackets();
     bool FOpndAddedToHistory();
     void CompleteHistoryLine(std::wstring_view numStr);
+    void CompleteEquation(std::wstring_view numStr);
     void ClearHistoryLine(std::wstring_view errStr);
     int AddCommand(_In_ const std::shared_ptr<IExpressionCommand>& spCommand);
     void UpdateHistoryExpression(uint32_t radix, int32_t precision);

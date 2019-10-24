@@ -28,6 +28,7 @@ namespace CalculatorApp
         void MaxDigitsReached() override;
         void BinaryOperatorReceived() override;
         void MemoryItemChanged(unsigned int indexOfMemory) override;
+        void InputChanged() override;
 
     private:
         Platform::WeakReference m_callbackReference;

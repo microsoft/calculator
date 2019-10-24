@@ -43,7 +43,6 @@ namespace CalculationManager
         {
             return m_maxHistorySize;
         }
-        ~CalculatorHistory(void);
 
     private:
         std::vector<std::shared_ptr<HISTORYITEM>> m_historyItems;

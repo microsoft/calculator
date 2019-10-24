@@ -22,7 +22,7 @@ namespace CalculatorApp
         bool ShouldEnableBit(CalculatorApp::Common::BitLength length, int index);
 
         property CalculatorApp::ViewModel::StandardCalculatorViewModel
-            ^ Model { CalculatorApp::ViewModel::StandardCalculatorViewModel ^ get(); }
+            ^ Model { CalculatorApp::ViewModel::StandardCalculatorViewModel ^ get(); } 
 
             private : void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnUnloaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
@@ -37,12 +37,14 @@ namespace CalculatorApp
 
     private:
         Windows::Foundation::EventRegistrationToken m_propertyChangedToken;
-        Platform::String ^ GenerateAutomationPropertiesName(int position, bool value) const;
+        Platform::String ^ GenerateAutomationPropertiesName(int position, bool value);
         void UpdateCheckedStates(bool updateAutomationPropertiesNames);
         void UpdateAutomationPropertiesNames();
+        int GetIndexOfLastBit(CalculatorApp::Common::BitLength length) const;
 
         static const unsigned int s_numBits = 64;
         std::array<CalculatorApp::Controls::FlipButtons ^, s_numBits> m_flipButtons;
         bool m_updatingCheckedStates;
+        CalculatorApp::Common::BitLength m_currentValueBitLength;
     };
 }

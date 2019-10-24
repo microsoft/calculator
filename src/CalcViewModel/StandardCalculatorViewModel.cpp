@@ -73,7 +73,6 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_MemorizedNumbers(ref new Vector<MemoryItemViewModel ^>())
     , m_IsMemoryEmpty(true)
     , m_IsFToEChecked(false)
-    , m_isShiftChecked(false)
     , m_IsShiftProgrammerChecked(false)
     , m_valueBitLength(BitLength::BitLengthQWord)
     , m_isBitFlipChecked(false)
@@ -954,6 +953,20 @@ NumbersAndOperatorsEnum StandardCalculatorViewModel::MapCharacterToButtonId(cons
         mappedValue = NumbersAndOperatorsEnum::Divide;
         break;
 
+    case '^':
+        if (IsScientific)
+        {
+            mappedValue = NumbersAndOperatorsEnum::XPowerY;
+        }
+        break;
+
+    case '%':
+        if (IsScientific || IsProgrammer)
+        {
+            mappedValue = NumbersAndOperatorsEnum::Mod;
+        }
+        break;
+
     case '=':
         mappedValue = NumbersAndOperatorsEnum::Equals;
         break;
@@ -1024,6 +1037,11 @@ NumbersAndOperatorsEnum StandardCalculatorViewModel::MapCharacterToButtonId(cons
     }
 
     return mappedValue;
+}
+
+void StandardCalculatorViewModel::OnInputChanged()
+{
+    IsInputEmpty = m_standardCalculatorManager.IsInputEmpty();
 }
 
 void StandardCalculatorViewModel::OnMemoryButtonPressed()
@@ -1218,7 +1236,6 @@ void StandardCalculatorViewModel::ResetDisplay()
     AreHEXButtonsEnabled = false;
     CurrentRadixType = (int)RADIX_TYPE::DEC_RADIX;
     m_standardCalculatorManager.SetRadix(DEC_RADIX);
-    ProgModeRadixChange();
 }
 
 void StandardCalculatorViewModel::SetPrecision(int32_t precision)
@@ -1236,7 +1253,6 @@ void StandardCalculatorViewModel::SwitchProgrammerModeBase(RADIX_TYPE radixType)
     AreHEXButtonsEnabled = (radixType == RADIX_TYPE::HEX_RADIX);
     CurrentRadixType = (int)radixType;
     m_standardCalculatorManager.SetRadix(radixType);
-    ProgModeRadixChange();
 }
 
 void StandardCalculatorViewModel::SetMemorizedNumbersString()

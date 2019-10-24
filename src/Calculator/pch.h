@@ -39,16 +39,5 @@
 #include "winrt/Windows.UI.ViewManagement.h"
 #include "winrt/Windows.UI.Xaml.h"
 
-// The following namespaces exist as a convenience to resolve
-// ambiguity for Windows types in the Windows::UI::Xaml::Automation::Peers
-// namespace that only exist on RS3.
-// Once the app switches to min version RS3, the namespaces can be removed.
-// TODO - MSFT 12735088
-namespace StandardPeers = Windows::UI::Xaml::Automation::Peers;
-namespace CalculatorApp::Common::Automation
-{
-}
-namespace CustomPeers = CalculatorApp::Common::Automation;
-
 // Project Headers
 #include "App.xaml.h"

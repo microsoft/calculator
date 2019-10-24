@@ -32,8 +32,6 @@ namespace CalculatorApp
 #define ASCII_0 48
     public
         delegate void HideMemoryClickedHandler();
-    public
-        delegate void ProgModeRadixChangeHandler();
 
         [Windows::UI::Xaml::Data::Bindable] public ref class StandardCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
@@ -68,7 +66,6 @@ namespace CalculatorApp
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsMemoryEmpty);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEChecked);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsHyperbolicChecked);
             OBSERVABLE_PROPERTY_RW(bool, AreHEXButtonsEnabled);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationResultAutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationExpressionAutomationName);
@@ -78,6 +75,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, AreAlwaysOnTopResultsUpdated);
             OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
             OBSERVABLE_PROPERTY_RW(bool, AreProgrammerRadixOperatorsEnabled);
+            OBSERVABLE_PROPERTY_RW(bool, IsInputEmpty);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::Automation::NarratorAnnouncement ^, Announcement);
             OBSERVABLE_PROPERTY_R(unsigned int, OpenParenthesisCount);
 
@@ -90,23 +88,6 @@ namespace CalculatorApp
             COMMAND_FOR_METHOD(MemorySubtract, StandardCalculatorViewModel::OnMemorySubtract);
 
             event HideMemoryClickedHandler ^ HideMemoryClicked;
-            event ProgModeRadixChangeHandler ^ ProgModeRadixChange;
-
-            property bool IsShiftChecked
-            {
-                bool get()
-                {
-                    return m_isShiftChecked;
-                }
-                void set(bool value)
-                {
-                    if (m_isShiftChecked != value)
-                    {
-                        m_isShiftChecked = value;
-                        RaisePropertyChanged(L"IsShiftChecked");
-                    }
-                }
-            }
 
             property bool IsBitFlipChecked
             {
@@ -125,13 +106,8 @@ namespace CalculatorApp
                     }
                 }
             }
-            static property Platform::String ^ IsBitFlipCheckedPropertyName
-            {
-                Platform::String ^ get()
-                {
-                    return Platform::StringReference(L"IsBitFlipChecked");
-                }
-            }
+            static property Platform::String
+                ^ IsBitFlipCheckedPropertyName { Platform::String ^ get() { return Platform::StringReference(L"IsBitFlipChecked"); } }
 
             property bool IsBinaryBitFlippingEnabled
             {
@@ -226,13 +202,8 @@ namespace CalculatorApp
                     }
                 }
             }
-            static property Platform::String ^ IsProgrammerPropertyName
-            {
-                Platform::String ^ get()
-                {
-                    return Platform::StringReference(L"IsProgrammer");
-                }
-            }
+            static property Platform::String
+                ^ IsProgrammerPropertyName { Platform::String ^ get() { return Platform::StringReference(L"IsProgrammer"); } }
 
             property bool IsAlwaysOnTop
             {
@@ -368,6 +339,7 @@ namespace CalculatorApp
             void OnMemoryClear(_In_ Platform::Object ^ memoryItemPosition);
             void OnPinUnpinCommand(Platform::Object ^ parameter);
 
+            void OnInputChanged();
             void SetPrimaryDisplay(_In_ std::wstring const& displayString, _In_ bool isError);
             void DisplayPasteError();
             void SetTokens(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens);
@@ -446,7 +418,6 @@ namespace CalculatorApp
             bool m_isAlwaysOnTop;
             bool m_isBinaryBitFlippingEnabled;
             bool m_isBitFlipChecked;
-            bool m_isShiftChecked;
             bool m_isRtlLanguage;
             int m_tokenPosition;
             bool m_keyPressed;

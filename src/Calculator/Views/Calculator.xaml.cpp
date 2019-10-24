@@ -209,7 +209,7 @@ void Calculator::AnimateCalculator(bool resultAnimate)
             // We are forcing the animation here
             // It's because if last animation was in standard, then go to unit converter, then comes back to standard
             // The state for the calculator does not change and the animation would not get run.
-            this->OnStoryboardCompleted(nullptr, nullptr);
+            this->OnModeVisualStateCompleted(nullptr, nullptr);
         }
     }
 }
@@ -239,7 +239,7 @@ void Calculator::OnContextCanceled(UIElement ^ sender, RoutedEventArgs ^ e)
     m_displayFlyout->Hide();
 }
 
-void Calculator::OnLayoutStateChanged(_In_ Object ^ sender, _In_ Object ^ e)
+void Calculator::OnLayoutVisualStateCompleted(_In_ Object ^ sender, _In_ Object ^ e)
 {
     UpdatePanelViewState();
 }
@@ -286,29 +286,23 @@ void Calculator::OnIsAlwaysOnTopPropertyChanged(bool /*oldValue*/, bool newValue
 {
     if (newValue)
     {
-        VisualStateManager::GoToState(this, L"AlwaysOnTop", false);
+        VisualStateManager::GoToState(this, L"DisplayModeAlwaysOnTop", false);
+        AlwaysOnTopResults->UpdateScrollButtons();
     }
     else
     {
-        VisualStateManager::GoToState(this, L"Normal", false);
-        if (Model->IsInError)
-        {
-            VisualStateManager::GoToState(this, L"ErrorLayout", false);
-        }
-        else
+        VisualStateManager::GoToState(this, L"DisplayModeNormal", false);
+        if (!Model->IsInError)
         {
             EnableMemoryControls(true);
         }
+        Results->UpdateTextState();
     }
 
     Model->IsMemoryEmpty = (Model->MemorizedNumbers->Size == 0) || IsAlwaysOnTop;
 
-    AlwaysOnTopResults->UpdateScrollButtons();
-    Results->UpdateTextState();
-
     UpdateViewState();
     UpdatePanelViewState();
-    SetDefaultFocus();
 }
 
 void Calculator::OnIsInErrorPropertyChanged()
@@ -336,7 +330,7 @@ void Calculator::OnIsInErrorPropertyChanged()
 
 // Once the storyboard that rearranges the buttons completed,
 // We do the animation based on the Mode or Orientation change.
-void Calculator::OnStoryboardCompleted(_In_ Object ^ sender, _In_ Object ^ e)
+void Calculator::OnModeVisualStateCompleted(_In_ Object ^ sender, _In_ Object ^ e)
 {
     m_isLastAnimatedInScientific = IsScientific;
     m_isLastAnimatedInProgrammer = IsProgrammer;
@@ -554,20 +548,20 @@ void Calculator::SetDefaultFocus()
 
 void Calculator::ToggleHistoryFlyout(Object ^ /*parameter*/)
 {
-    String ^ viewState = App::GetAppViewState();
-    // If app starts correctly in snap mode and shortcut is used for history then we need to load history if not yet initialized.
-    if (viewState != ViewState::DockedView)
+    if (Model->IsProgrammer || App::GetAppViewState() == ViewState::DockedView)
     {
-        if (m_fIsHistoryFlyoutOpen)
-        {
-            HistoryFlyout->Hide();
-        }
-        else
-        {
-            HistoryFlyout->Content = m_historyList;
-            m_historyList->RowHeight = NumpadPanel->ActualHeight;
-            FlyoutBase::ShowAttachedFlyout(HistoryButton);
-        }
+        return;
+    }
+
+    if (m_fIsHistoryFlyoutOpen)
+    {
+        HistoryFlyout->Hide();
+    }
+    else
+    {
+        HistoryFlyout->Content = m_historyList;
+        m_historyList->RowHeight = NumpadPanel->ActualHeight;
+        FlyoutBase::ShowAttachedFlyout(HistoryButton);
     }
 }
 
@@ -719,7 +713,12 @@ void Calculator::UnregisterEventHandlers()
     ExpressionText->UnregisterEventHandlers();
 }
 
-void Calculator::OnErrorLayoutCompleted(_In_ Object ^ sender, _In_ Object ^ e)
+void Calculator::OnErrorVisualStateCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e)
+{
+    SetDefaultFocus();
+}
+
+void Calculator::OnDisplayVisualStateCompleted(_In_ Object ^ sender, _In_ Object ^ e)
 {
     SetDefaultFocus();
 }

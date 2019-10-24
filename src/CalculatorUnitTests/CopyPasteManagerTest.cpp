@@ -630,7 +630,8 @@ namespace CalculatorUnitTests
                                      L"xyz",         L"ABab",
                                      L"e+234",       L"12345678912345678" /*boundary condition: greater than 16 digits*/,
                                      L"SIN(2)",      L"2+2==",
-                                     L"2=+2" };
+                                     L"2=+2",        L"2%2",
+                                     L"10^2" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateStandardPasteExpression, positiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateStandardPasteExpression, negativeInput);
@@ -668,7 +669,11 @@ namespace CalculatorUnitTests
                                      "-(432+3232)",
                                      "-(+(-3213)+(-2312))",
                                      "-(-(432+3232))",
-									 L"1.2e23"/*unsigned exponent*/ };
+									 L"1.2e23"/*unsigned exponent*/,
+                                     L"12^2",
+                                     L"-12.12^-2",
+                                     L"61%99"
+                                     L"-6.1%99" };
         String ^ negativeInput[] = { L"abcdef",
                                      L"xyz",
                                      L"ABab",
@@ -710,7 +715,10 @@ namespace CalculatorUnitTests
                                           L"1234ul",
                                           L"1234ULL",
                                           L"2+2=",
-                                          L"2+2=   " };
+                                          L"2+2=   ",
+                                          L"A4C3%12",
+                                          L"1233%AB",
+                                          L"FFC1%F2" };
         String ^ qwordNegativeInput[] = { L"+123",
                                           L"1.23" /*floating number*/,
                                           L"1''2",
@@ -906,7 +914,8 @@ namespace CalculatorUnitTests
                                           L"1234ul",
                                           L"1234ULL",
                                           L"2+2=",
-                                          L"2+2=   " };
+                                          L"2+2=   ",
+                                          L"823%21" };
         String ^ qwordNegativeInput[] = { L"1.23",
                                           L"1''2",
                                           L"'123",
@@ -1060,7 +1069,7 @@ namespace CalculatorUnitTests
     {
         String ^ qwordPositiveInput[] = { L"123",       L"123+456", L"1,234",       L"1 2 3",  L"1'2'3'4", L"1_2_3_4", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85",
                                           L"\n 1+\n2 ", L"1\"2",    L"(123)+(456)", L"0t1234", L"0T1234",  L"0o1234",  L"0O1234",      L"1234u",
-                                          L"1234ul",    L"1234ULL", L"2+2=",        L"2+2=   " };
+                                          L"1234ul",    L"1234ULL", L"2+2=",        L"2+2=   ", L"127%71" };
         String ^ qwordNegativeInput[] = { L"+123",
                                           L"1.23",
                                           L"1''2",
@@ -1084,7 +1093,8 @@ namespace CalculatorUnitTests
                                           L"1234uu",
                                           L"1234ulll",
                                           L"2+2==",
-                                          L"2=+2" };
+                                          L"2=+2",
+                                          L"89%12"};
 
         ASSERT_POSITIVE_TESTCASES(ValidateProgrammerOctQwordPasteExpression, qwordPositiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateProgrammerOctQwordPasteExpression, qwordNegativeInput);
@@ -1217,7 +1227,8 @@ namespace CalculatorUnitTests
                                           L"1111ULL",
                                           L"1010101010101010101010101011110110100100101010101001010101001010" /*boundary condition: max allowed digits 64*/,
                                           L"1+10=",
-                                          L"1+10=   " };
+                                          L"1+10=   ",
+                                          L"1001%10" };
         String ^ qwordNegativeInput[] = {
             L"+10101",
             L"1.01",

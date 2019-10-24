@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -49,16 +49,6 @@ String
 
             wstring token = tokenItem.first;
             accExpression << LocalizationService::GetNarratorReadableToken(StringReference(token.c_str()))->Data();
-        }
-    }
-
-    if (SUCCEEDED(hr))
-    {
-        wstring expressionSuffix{};
-        hr = spTokens->GetExpressionSuffix(&expressionSuffix);
-        if (SUCCEEDED(hr))
-        {
-            accExpression << expressionSuffix;
         }
     }
 
