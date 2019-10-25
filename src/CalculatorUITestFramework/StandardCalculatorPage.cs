@@ -13,6 +13,7 @@ namespace CalculatorUITestFramework
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public MemoryPanel MemoryPanel = new MemoryPanel();
         public HistoryPanel HistoryPanel = new HistoryPanel();
+        public CalcHistoryFlyout CalcHistoryFlyout = new CalcHistoryFlyout();
         public NavigationMenu NavigationMenu = new NavigationMenu();
         public StandardAoTCalculatorPage StandardAoTCalculatorPage = new StandardAoTCalculatorPage();
         public CalculatorResults CalculatorResults = new CalculatorResults();

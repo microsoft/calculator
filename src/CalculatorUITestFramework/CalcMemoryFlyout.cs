@@ -35,9 +35,9 @@ namespace CalculatorUITestFramework
             moveToMemoryButton.MoveToElement(MemoryButton);
             moveToMemoryButton.Perform();
             this.Header.SendKeys(Keys.Alt + "m" + Keys.Alt);
-            Actions moveToListView2 = new Actions(WinAppDriver.Instance.CalculatorSession);
-            moveToListView2.MoveToElement(MemoryFlyout);
-            moveToListView2.Perform();
+            Actions moveToMemoryFlyout = new Actions(WinAppDriver.Instance.CalculatorSession);
+            moveToMemoryFlyout.MoveToElement(MemoryFlyout);
+            moveToMemoryFlyout.Perform();
         }
 
         /// <summary>
