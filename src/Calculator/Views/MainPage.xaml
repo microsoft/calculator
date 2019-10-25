@@ -178,7 +178,11 @@
                         AutomationProperties.AutomationId="NormalAlwaysOnTopButton"
                         Click="AlwaysOnTopButtonClick"
                         Content="&#xEE49;"
-                        Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}"/>
+                        Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}">
+                    <Button.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control, Shift" Key="O"/>
+                    </Button.KeyboardAccelerators>
+                </Button>
             </Grid>
         </muxc:NavigationView>
     </Grid>
