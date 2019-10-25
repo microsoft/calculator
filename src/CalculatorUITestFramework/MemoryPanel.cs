@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System.Collections.ObjectModel;
@@ -48,6 +50,29 @@ namespace CalculatorUITestFramework
         {
             OpenMemoryPanel();
             return this.MemoryListView.FindElementsByClassName("ListViewItem");
+        }
+
+        /// <summary>
+        /// Opens the Memory Panel and clicks the delete button if it is visible
+        /// </summary>
+        public void ClearMemoryPanel()
+        {
+            this.MemoryLabel.Click();
+
+            try
+            {
+                this.ClearMemory.Click();
+            }
+            catch (WebDriverException ex)
+            {
+                if (ex.Message.Contains("element could not be located"))
+                {
+                    Assert.IsNotNull(this.MemoryPaneEmptyLabel);
+                    return;
+                }
+
+                throw;
+            }
         }
     }
 }

@@ -116,9 +116,9 @@ namespace CalculatorUITests
             page.StandardOperators.EqualButton.Click();
 
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyItems[0].Text.Equals("1 × 3= 3", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].Text.Equals("2 Minus ( 3= Minus (1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[2].Text.Equals("-3 + -2.6= Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].Text.Equals("1 × 3 = 3", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].Text.Equals("2 Minus ( 3 = Minus (1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[2].Text.Equals("-3 + -2.6 = Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
 
         }
 
@@ -352,9 +352,15 @@ namespace CalculatorUITests
 
         #region BVT
         [TestMethod]
-        public void BVT_23466694_VerifyHotkeysCommonToAllModes()
+        public void BVT_Hotkeys()
         {
-            //Verify Hotkeys for changing modes
+            /// <summary>
+            /// Test Case 23466694: BVT: All: Verify hotkeys common to all modes
+            /// This automated test verifies the functionality of all hotkeys, that are common for all calculator modes, for the standard calculator modes.
+            /// Note: Keyboard Numberpad input testing is not part of this automated test to unstability.  WinAppDrive command does not toggle Num Lock.  
+            /// </summary>
+
+            // Verify Hotkeys for changing modes
             page.AppName.Click();
             page.Header.SendKeys(Keys.Alt + "2" + Keys.Alt);
             Assert.AreEqual("Scientific", page.GetCalculatorHeaderText());
@@ -368,30 +374,6 @@ namespace CalculatorUITests
             page.Header.SendKeys(Keys.Alt + "1" + Keys.Alt);
             Assert.AreEqual("Standard", page.GetCalculatorHeaderText());
 
-            ////Verify the non-numpad numbers
-            //page.AppName.Click();
-            //page.Header.SendKeys(Keys.NumberPad1);
-            //var CalculatorResultText = page.GetCalculatorResultText();
-            //if (CalculatorResultText != "1")
-            //{
-            // ----- Need Help geting proper numlock input ------
-            //    page.Header.SendKeys("{NUMLOCK}");
-            //    page.AppName.Click();
-            //    page.Header.SendKeys(Keys.NumberPad1);
-            //}
-            //page.Header.SendKeys(Keys.NumberPad2);
-            //page.Header.SendKeys(Keys.NumberPad3);
-            //page.Header.SendKeys(Keys.NumberPad4);
-            //page.Header.SendKeys(Keys.NumberPad5);
-            //page.Header.SendKeys(Keys.NumberPad6);
-            //page.Header.SendKeys(Keys.NumberPad7);
-            //page.Header.SendKeys(Keys.NumberPad8);
-            //page.Header.SendKeys(Keys.NumberPad9);
-            //page.Header.SendKeys(Keys.NumberPad0);
-            //Assert.AreEqual("1,234,567,890", page.GetCalculatorResultText());
-            //page.Header.SendKeys(Keys.Escape);
-
-            //Verifies user input through keyboard:
             //Verifies the +, -, CE, C, 2, and 3 input
             page.AppName.Click();
             page.Header.SendKeys("2");
@@ -406,6 +388,7 @@ namespace CalculatorUITests
             Assert.AreEqual("2 + 2 Minus (", page.GetCalculatorExpressionText());
             page.AppName.Click();
             page.Header.SendKeys(Keys.Escape);
+
             //Verifies the multiplication, division, and equal, 4, 5, and 6 key input
             page.AppName.Click();
             page.Header.SendKeys("4");
@@ -416,6 +399,7 @@ namespace CalculatorUITests
             page.Header.SendKeys(Keys.Equal);
             Assert.AreEqual("3.333333333333333", page.GetCalculatorResultText());
             page.Header.SendKeys(Keys.Escape);
+
             //Verifies the invert, squared, 7, 8, and 9 key input
             page.AppName.Click();
             page.Header.SendKeys("7");
@@ -434,6 +418,7 @@ namespace CalculatorUITests
             Assert.AreEqual("81", page.GetCalculatorResultText());
             Assert.AreEqual("square (9)", page.GetCalculatorExpressionText());
             page.Header.SendKeys(Keys.Escape);
+
             //Verifies the %, square root, backspace, decimal, negate, +, 1, and 0 key input
             page.AppName.Click();
             page.Header.SendKeys("100");
@@ -456,13 +441,15 @@ namespace CalculatorUITests
             page.Header.SendKeys(Keys.F9);
             Assert.AreEqual("-0 point", page.GetCalculatorResultText());
             Assert.AreEqual("10 +", page.GetCalculatorExpressionText());
+
             //Verifies history hotkeys
             page.AppName.Click();
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
             Assert.IsTrue(historyItems[0].Text.Equals("4 × 5 ÷ 6 = 3.333333333333333", StringComparison.InvariantCultureIgnoreCase));
-            page.Header.SendKeys(Keys.Control + Keys.Shift + "D" + Keys.Control + Keys.Shift);
+            page.Header.SendKeys(Keys.Shift + Keys.Control + "D" + Keys.Control + Keys.Shift);
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
             page.StandardOperators.ClearButton.Click();
+
             //Verifies memory hotkeys
             page.AppName.Click();
             page.Header.SendKeys("1");
@@ -485,9 +472,13 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
-        public void BVT_17416429_VerifyMouseInput()
+        public void BVT_MouseInput()
         {
-            //Verifies clicking all the buttons:
+            /// <summary>
+            /// Test Case 23624584: BVT: All: Verify mouse input
+            /// This automated test verifies clicking each of the buttons and getting an expected result.
+            /// </summary>
+
             //Verifies the +, -, CE, C, 2, and 3 button
             page.StandardOperators.NumberPad.Num2Button.Click();
             page.StandardOperators.PlusButton.Click();
@@ -574,9 +565,14 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
-        public void BVT_17416884_VerifyMemoryFunction()
+        public void BVT_VerifyMemoryFunction()
         {
-            // Memory control buttons veriifed at the end of automated test "BVT_17416429_VerifyMouseInput"
+            /// <summary>
+            /// Test Case 23624587: BVT: All: Verify memory functions
+            /// This automated test verifies using memory related buttons in the Memory Panel, and in the memory flyout
+            /// Memory control buttons are veriifed at the end of automated test "BVT_VerifyMouseInput"
+            /// </summary>
+
             //Verify hover buttons MemMinusItem, MemPlusItem, and ClearMemoryItemButton, and verify the clear memory button in the Memory panel
             page.StandardOperators.NumberPad.Num3Button.Click();
             page.MemoryPanel.MemButton.Click();
@@ -637,6 +633,123 @@ namespace CalculatorUITests
             Size newWindowSize = new Size(1200, 1050);
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+        }
+
+        [TestMethod]
+        public void BVT_HistoryPanel()
+        {
+
+            /// <summary>
+            /// Test Case 23480026: BVT: Standard/Scientific: Verify history panel
+            /// This automated test verifies using using the history panel in Standard mode
+            /// Note: An empty history on initial launch cannot be verified.  The automation cannot see the Windows element "HistoryEmpty."
+            /// Even though this element is there; I see it, and Inspect sees it, WinAppDriver cannot find it.
+            /// The only time the automation is successful at finding this element is after creating and deleting history items.
+            /// Will this part of the test later, once issue is solved.
+            /// </summary>
+
+            //Verify selecting history items form the history panel, and clearing the history panel
+            page.HistoryPanel.OpenHistoryPanel();
+
+            page.StandardOperators.NumberPad.Input(-3);
+            page.StandardOperators.PlusButton.Click();
+            page.StandardOperators.NumberPad.Input(-2.6);
+            page.StandardOperators.EqualButton.Click();
+
+            page.StandardOperators.NumberPad.Input(2);
+            page.StandardOperators.MinusButton.Click();
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.EqualButton.Click();
+
+            var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
+            Assert.IsTrue(historyItems[0].Text.Equals("2 Minus ( 3 = Minus (1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].Text.Equals("-3 + -2.6 = Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
+
+            Assert.AreEqual("-1", page.GetCalculatorResultText());
+
+            Actions clickHistoryItemsw1 = new Actions(WinAppDriver.Instance.CalculatorSession);
+            clickHistoryItemsw1.Click(historyItems[1]);
+            clickHistoryItemsw1.Perform();
+
+            Assert.AreEqual("-5.6", page.GetCalculatorResultText());
+            Assert.AreEqual("-3 + -2.6", page.GetCalculatorExpressionText());
+
+            Actions clickHistoryItemsw0 = new Actions(WinAppDriver.Instance.CalculatorSession);
+            clickHistoryItemsw0.Click(historyItems[0]);
+            clickHistoryItemsw0.Perform();
+
+            Assert.AreEqual("-1", page.GetCalculatorResultText());
+
+            page.HistoryPanel.ClearHistory();
+            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
+        }
+
+        [TestMethod]
+        public void BVT_HistoryFlyout()
+        {
+
+            /// <summary>
+            /// Test Case 23466739: BVT: Standard/Scientific: Verify history flyout
+            /// This automated test verifies using using the history history flyout in Standard mode
+            /// </summary>
+
+            //Verify selecting history items form the history flyout, using up/down arrows and [enter] to select history items,
+            // and clearing the history flyout.  Additionally, verify history panel and history flyout have same information.
+
+            page.HistoryPanel.OpenHistoryPanel();
+
+            page.StandardOperators.NumberPad.Input(-3);
+            page.StandardOperators.PlusButton.Click();
+            page.StandardOperators.NumberPad.Input(-2.6);
+            page.StandardOperators.EqualButton.Click();
+
+            page.StandardOperators.NumberPad.Input(2);
+            page.StandardOperators.MinusButton.Click();
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.EqualButton.Click();
+
+            var historyPanelItems = page.HistoryPanel.GetAllHistoryListViewItems();
+            Assert.IsTrue(historyPanelItems[0].Text.Equals("2 Minus ( 3 = Minus (1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyPanelItems[1].Text.Equals("-3 + -2.6 = Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
+
+            Assert.AreEqual("-1", page.GetCalculatorResultText());
+
+            Size windowSize = new Size(464, 464);
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = windowSize;
+            page.CalcHistoryFlyout.OpenHistoryFlyout();
+            Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
+            moveToListView.MoveToElement(page.CalcHistoryFlyout.ListViewItem);
+            moveToListView.Perform();
+
+            var historyItems = page.CalcHistoryFlyout.GetAllHistoryFlyoutListViewItems();
+            Assert.IsTrue(historyItems[0].Text.Equals("2 Minus ( 3 = Minus (1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].Text.Equals("-3 + -2.6 = Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
+
+            Assert.AreEqual("-1", page.GetCalculatorResultText());
+
+            page.CalcHistoryFlyout.ListViewItem.SendKeys(Keys.ArrowDown + Keys.Enter);
+
+            Assert.AreEqual("-5.6", page.GetCalculatorResultText());
+            Assert.AreEqual("-3 + -2.6", page.GetCalculatorExpressionText());
+
+            page.CalcHistoryFlyout.OpenHistoryFlyout();
+            moveToListView.Perform();
+            page.CalcHistoryFlyout.ListViewItem.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
+
+            Assert.AreEqual("-1", page.GetCalculatorResultText());
+
+            page.CalcHistoryFlyout.OpenHistoryFlyout();
+            moveToListView.Perform();
+
+            page.CalcHistoryFlyout.ClearHistoryButton.Click();
+            page.CalcHistoryFlyout.OpenHistoryFlyout();
+            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
+
+            Size newWindowSize = new Size(1200, 1050);
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
+
+            page.HistoryPanel.OpenHistoryPanel();
+            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
         }
 
         [TestMethod]
@@ -752,7 +865,6 @@ namespace CalculatorUITests
             page.AppName.Click();
             Assert.AreEqual("Standard", page.GetCalculatorHeaderText());
         }
-
 
         #endregion
     }

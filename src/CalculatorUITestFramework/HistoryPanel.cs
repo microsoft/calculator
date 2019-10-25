@@ -12,11 +12,25 @@ namespace CalculatorUITestFramework
     public class HistoryPanel
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        public WindowsElement HistoryButton => this.session.TryFindElementByAccessibilityId("HistoryButton");
         public WindowsElement HistoryLabel => this.session.TryFindElementByAccessibilityId("HistoryLabel");
-        public WindowsElement HistoryListView => this.session.TryFindElementByAccessibilityId("HistoryListView");
-        public WindowsElement ClearHistoryButton => this.session.TryFindElementByAccessibilityId("ClearHistory");
         public WindowsElement HistoryEmptyLabel => this.session.TryFindElementByAccessibilityId("HistoryEmpty");
+        public WindowsElement HistoryListView => this.session.TryFindElementByAccessibilityId("HistoryListView");
+        public WindowsElement HistoryList => this.session.TryFindElementByAccessibilityId("HistoryList");
+        public WindowsElement ListViewItem => this.session.FindElementByClassName("ListViewItem");
+        public WindowsElement ExprTextBlock => this.session.TryFindElementByAccessibilityId("ExprTextBlock");
+        public WindowsElement ResultTextBlock => this.session.TryFindElementByAccessibilityId("ResultTextBlock");
+        public WindowsElement ClearHistoryButton => this.session.TryFindElementByAccessibilityId("ClearHistory");
 
+
+        /// <summary>
+        /// Opens the Memory Pane by clicking the Memory pivot label.
+        /// </summary>
+        public void OpenHistoryPanel()
+        {
+            this.HistoryLabel.Click();
+ //           this.HistoryList.WaitForDisplayed();
+        }
 
         /// <summary>
         /// Gets all of the history items listed in the History Pane.
@@ -24,8 +38,7 @@ namespace CalculatorUITestFramework
         /// <returns>A readonly collection of history items.</returns>
         public ReadOnlyCollection<AppiumWebElement> GetAllHistoryListViewItems()
         {
- //           this.HistoryLabel.Click();
-            this.HistoryListView.WaitForDisplayed();
+            OpenHistoryPanel();
             return this.HistoryListView.FindElementsByClassName("ListViewItem");
         }
 

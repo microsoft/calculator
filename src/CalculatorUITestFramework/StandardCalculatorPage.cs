@@ -17,6 +17,7 @@ namespace CalculatorUITestFramework
         public MemoryPanel MemoryPanel = new MemoryPanel();
         public CalcMemoryFlyout CalcMemoryFlyout = new CalcMemoryFlyout();
         public HistoryPanel HistoryPanel = new HistoryPanel();
+        public CalcHistoryFlyout CalcHistoryFlyout = new CalcHistoryFlyout();
         public NavigationMenu NavigationMenu = new NavigationMenu();
         public WindowsElement Header => this.session.TryFindElementByAccessibilityId("Header");
         public WindowsElement Minimize => this.session.TryFindElementByAccessibilityId("Minimize");
