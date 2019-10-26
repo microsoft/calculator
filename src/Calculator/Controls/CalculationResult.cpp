@@ -91,6 +91,12 @@ void CalculationResult::OnApplyTemplate()
         }
     }
 
+    if (m_textBlock != nullptr && m_textBlockSizeChangedToken.Value != 0)
+    {
+        m_textBlock->SizeChanged -= m_textBlockSizeChangedToken;
+        m_textBlockSizeChangedToken.Value = 0;
+    }
+
     if (m_scrollLeft != nullptr && m_scrollLeftClickToken.Value != 0)
     {
         m_scrollLeft->Click -= m_scrollLeftClickToken;
@@ -132,6 +138,7 @@ void CalculationResult::OnApplyTemplate()
         if (m_textBlock)
         {
             m_textBlock->Visibility = ::Visibility::Visible;
+            m_textBlockSizeChangedToken = m_textBlock->SizeChanged += ref new SizeChangedEventHandler(this, &CalculationResult::OnTextBlockSizeChanged);
         }
     }
     UpdateVisualState();
@@ -418,6 +425,11 @@ void CalculationResult::RaiseSelectedEvent()
 }
 
 void CalculationResult::OnTextContainerOnViewChanged(Object ^ /*sender*/, ScrollViewerViewChangedEventArgs ^ e)
+{
+    UpdateScrollButtons();
+}
+
+void CalculationResult::OnTextBlockSizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ /*e*/)
 {
     UpdateScrollButtons();
 }
