@@ -509,7 +509,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->DecimalDisplayValue), StringReference(L"15"));
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->OctalDisplayValue), StringReference(L"17"));
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->BinaryDisplayValue), StringReference(L"1111"));
-            auto val = ref new PC::Vector<bool>(64, false);
+            auto val = ref new Platform::Collections::Vector<bool>(64, false);
             val->SetAt(0, true);
             val->SetAt(1, true);
             val->SetAt(2, true);
@@ -562,7 +562,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->DecimalDisplayValue), StringReference(L"123,456,789"));
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->OctalDisplayValue), StringReference(L"726 746 425"));
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->BinaryDisplayValue), StringReference(L"0111 0101 1011 1100 1101 0001 0101"));
-            auto val = ref new PC::Vector<bool>(64, false);
+            auto val = ref new Platform::Collections::Vector<bool>(64, false);
             val->SetAt(0, true);
             val->SetAt(2, true);
             val->SetAt(4, true);
@@ -599,7 +599,7 @@ namespace CalculatorUnitTests
                 Utils::GetStringValue(m_viewModel->BinaryDisplayValue),
                 StringReference(L"1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1110"));
             VERIFY_ARE_EQUAL(m_viewModel->DisplayValue, StringReference(L"-2"));
-            auto val = ref new PC::Vector<bool>(64, true);
+            auto val = ref new Platform::Collections::Vector<bool>(64, true);
             val->SetAt(0, false);
             CompareVector<bool>(m_viewModel->BinaryDigits, val);
         }
