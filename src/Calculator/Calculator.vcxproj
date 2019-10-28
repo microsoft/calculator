@@ -253,6 +253,7 @@
     <ClInclude Include="Converters\BooleanToVisibilityConverter.h" />
     <ClInclude Include="Converters\ExpressionItemTemplateSelector.h" />
     <ClInclude Include="Converters\ItemSizeToVisibilityConverter.h" />
+    <ClInclude Include="Converters\NullOrEmptyStringToVisibilityConverter.h" />
     <ClInclude Include="Converters\RadixToStringConverter.h" />
     <ClInclude Include="Converters\VisibilityNegationConverter.h" />
     <ClInclude Include="Controls\HorizontalNoOverflowStackPanel.h" />
@@ -403,6 +404,7 @@
     <ClCompile Include="Converters\BooleanToVisibilityConverter.cpp" />
     <ClCompile Include="Converters\ExpressionItemTemplateSelector.cpp" />
     <ClCompile Include="Converters\ItemSizeToVisibilityConverter.cpp" />
+    <ClCompile Include="Converters\NullOrEmptyStringToVisibilityConverter.cpp" />
     <ClCompile Include="Converters\RadixToStringConverter.cpp" />
     <ClCompile Include="Converters\VisibilityNegationConverter.cpp" />
     <ClCompile Include="Controls\HorizontalNoOverflowStackPanel.cpp" />
