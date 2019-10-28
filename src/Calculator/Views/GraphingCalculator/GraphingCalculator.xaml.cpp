@@ -316,7 +316,6 @@ void GraphingCalculator::OnEquationKeyGraphFeaturesChanged(Object ^ sender, Rout
     IsKeyGraphFeaturesVisible = true;
     auto equationInputArea = static_cast<EquationInputArea ^>(sender);
     KeyGraphFeaturesVM = equationInputArea->EquationVM;
-    KeyGraphFeaturesControl->Focus(Windows::UI::Xaml::FocusState::Programmatic);
 }
 
 void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventArgs ^ e)

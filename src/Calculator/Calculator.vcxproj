@@ -248,6 +248,7 @@
     <ClInclude Include="Converters\BooleanToVisibilityConverter.h" />
     <ClInclude Include="Converters\ExpressionItemTemplateSelector.h" />
     <ClInclude Include="Converters\ItemSizeToVisibilityConverter.h" />
+    <ClInclude Include="Converters\NullOrEmptyStringToVisibilityConverter.h" />
     <ClInclude Include="Converters\RadixToStringConverter.h" />
     <ClInclude Include="Converters\VisibilityNegationConverter.h" />
     <ClInclude Include="Controls\HorizontalNoOverflowStackPanel.h" />
@@ -259,6 +260,7 @@
     <ClInclude Include="EquationStylePanelControl.xaml.h">
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.h" />
     <ClInclude Include="Views\Calculator.xaml.h">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
     </ClInclude>
@@ -397,6 +399,7 @@
     <ClCompile Include="Converters\BooleanToVisibilityConverter.cpp" />
     <ClCompile Include="Converters\ExpressionItemTemplateSelector.cpp" />
     <ClCompile Include="Converters\ItemSizeToVisibilityConverter.cpp" />
+    <ClCompile Include="Converters\NullOrEmptyStringToVisibilityConverter.cpp" />
     <ClCompile Include="Converters\RadixToStringConverter.cpp" />
     <ClCompile Include="Converters\VisibilityNegationConverter.cpp" />
     <ClCompile Include="Controls\HorizontalNoOverflowStackPanel.cpp" />
@@ -414,6 +417,7 @@
     <ClCompile Include="EquationStylePanelControl.xaml.cpp">
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.cpp" />
     <ClCompile Include="Views\Calculator.xaml.cpp">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
     </ClCompile>

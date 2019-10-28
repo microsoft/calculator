@@ -12,7 +12,8 @@ namespace Graphing
 		std::wstring Domain;
 		std::wstring Range;
 		int Parity;
-		std::map<int, std::wstring> Periodicity;
+		int PeriodicityDirection;
+		std::wstring PeriodicityExpression;
 		std::wstring Zeros;
 		std::wstring YIntercept;
 		std::vector<std::wstring> Minima;
@@ -42,6 +43,7 @@ namespace Graphing
         virtual ~IFormatOptions() = default;
 
         virtual void SetFormatType(FormatType type) = 0;
+		virtual void SetMathMLPrefix(const std::wstring& value) = 0;
     };
 
     struct IMathSolver : public NonCopyable, public NonMoveable

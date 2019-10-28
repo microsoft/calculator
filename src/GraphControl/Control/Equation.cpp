@@ -20,6 +20,9 @@ namespace GraphControl
     DependencyProperty ^ Equation::s_lineColorProperty;
     static constexpr auto s_propertyName_LineColor = L"LineColor";
 
+    DependencyProperty ^ Equation::s_isAnalysisUpdatedProperty;
+    static constexpr auto s_propertyName_IsAnalysisUpdated = L"IsAnalysisUpdated";
+
     DependencyProperty ^ Equation::s_xInterceptProperty;
     static constexpr auto s_propertyName_XIntercept = L"XIntercept";
 
@@ -29,8 +32,11 @@ namespace GraphControl
     DependencyProperty ^ Equation::s_parityProperty;
     static constexpr auto s_propertyName_Parity = L"Parity";
 
-    DependencyProperty ^ Equation::s_periodicityProperty;
-    static constexpr auto s_propertyName_Periodicity = L"Periodicity";
+    DependencyProperty ^ Equation::s_periodicityDirectionProperty;
+    static constexpr auto s_propertyName_PeriodicityDirection = L"PeriodicityDirection";
+
+    DependencyProperty ^ Equation::s_periodicityExpressionProperty;
+    static constexpr auto s_propertyName_PeriodicityExpression = L"PeriodicityExpression";
 
     DependencyProperty ^ Equation::s_minimaProperty;
     static constexpr auto s_propertyName_Minima = L"Minima";
@@ -69,10 +75,12 @@ namespace GraphControl
     {
         String ^ Expression = StringReference(s_propertyName_Expression);
         String ^ LineColor = StringReference(s_propertyName_LineColor);
+        String ^ IsAnalysisUpdated = StringReference(s_propertyName_IsAnalysisUpdated);
         String ^ XIntercept = StringReference(s_propertyName_XIntercept);
         String ^ YIntercept = StringReference(s_propertyName_YIntercept);
         String ^ Parity = StringReference(s_propertyName_Parity);
-        String ^ Periodicity = StringReference(s_propertyName_Periodicity);
+        String ^ PeriodicityDirection = StringReference(s_propertyName_PeriodicityDirection);
+        String ^ PeriodicityExpression = StringReference(s_propertyName_PeriodicityExpression);
         String ^ Minima = StringReference(s_propertyName_Minima);
         String ^ Maxima = StringReference(s_propertyName_Maxima);
         String ^ Domain = StringReference(s_propertyName_Domain);
@@ -109,6 +117,15 @@ namespace GraphControl
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
+        if (!s_isAnalysisUpdatedProperty)
+        {
+            s_isAnalysisUpdatedProperty = DependencyProperty::Register(
+                EquationProperties::IsAnalysisUpdated,
+                bool ::typeid,
+                Equation::typeid,
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
+        }
+
         if (!s_xInterceptProperty)
         {
             s_xInterceptProperty = DependencyProperty::Register(
@@ -136,11 +153,20 @@ namespace GraphControl
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
-        if (!s_periodicityProperty)
+        if (!s_periodicityDirectionProperty)
         {
-            s_periodicityProperty = DependencyProperty::Register(
-                EquationProperties::Periodicity,
-                IObservableMap<String ^, String ^>::typeid,
+            s_periodicityDirectionProperty = DependencyProperty::Register(
+                EquationProperties::PeriodicityDirection,
+                int ::typeid,
+                Equation::typeid,
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
+        }
+
+        if (!s_periodicityExpressionProperty)
+        {
+            s_periodicityExpressionProperty = DependencyProperty::Register(
+                EquationProperties::PeriodicityExpression,
+                String::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -229,7 +255,7 @@ namespace GraphControl
         {
             s_tooComplexFeaturesProperty = DependencyProperty::Register(
                 EquationProperties::TooComplexFeatures,
-                int::typeid,
+                int ::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -238,7 +264,7 @@ namespace GraphControl
         {
             s_analysisErrorProperty = DependencyProperty::Register(
                 EquationProperties::AnalysisError,
-                int::typeid,
+                int ::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -257,6 +283,10 @@ namespace GraphControl
             {
                 propertyName = EquationProperties::LineColor;
             }
+            else if (args->Property == s_isAnalysisUpdatedProperty)
+            {
+                propertyName = EquationProperties::IsAnalysisUpdated;
+            }
             else if (args->Property == s_xInterceptProperty)
             {
                 propertyName = EquationProperties::XIntercept;
@@ -269,9 +299,13 @@ namespace GraphControl
             {
                 propertyName = EquationProperties::Parity;
             }
-            else if (args->Property == s_periodicityProperty)
+            else if (args->Property == s_periodicityDirectionProperty)
             {
-                propertyName = EquationProperties::Periodicity;
+                propertyName = EquationProperties::PeriodicityDirection;
+            }
+            else if (args->Property == s_periodicityExpressionProperty)
+            {
+                propertyName = EquationProperties::PeriodicityExpression;
             }
             else if (args->Property == s_minimaProperty)
             {

@@ -24,7 +24,5 @@ public
         void EquationButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void SetEquationTextBoxProperties();
         void EquationInputTextBox_Loaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void ResetKGFControlVisibility();
-        void SetTooComplexFeaturesVisibility();
     };
 }

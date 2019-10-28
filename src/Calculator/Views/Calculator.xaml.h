@@ -14,6 +14,7 @@
 #include "Controls/EquationTextBox.h"
 #include "Controls/MathRichEditBox.h"
 #include "CalcViewModel/HistoryViewModel.h"
+#include "TemplateSelectors/KeyGraphFeaturesTemplateSelector.h"
 #include "Views/CalculatorProgrammerDisplayPanel.xaml.h"
 #include "Views/CalculatorProgrammerOperators.xaml.h"
 #include "Views/CalculatorScientificAngleButtons.xaml.h"

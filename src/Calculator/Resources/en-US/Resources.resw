@@ -3603,7 +3603,7 @@
     <value>The function periodicity is unknown.</value>
     <comment>Message displayed with the function periodicity is unknown</comment>
   </data>
-  <data name="KGFTooComplexFeaturesError.Text" xml:space="preserve">
+  <data name="KGFTooComplexFeaturesError" xml:space="preserve">
     <value>These features are too complex for Calculator to calculate:</value>
     <comment>Error displayed when analysis features cannot be calculated</comment>
   </data>
@@ -3619,15 +3619,15 @@
     <value>The function does not have any y-intercepts.</value>
     <comment>Message displayed when the graph does not have any y-intercepts</comment>
   </data>
-  <data name="Domain.Text" xml:space="preserve">
+  <data name="Domain" xml:space="preserve">
     <value>Domain</value>
     <comment>Title for KeyGraphFeatures Domain Property</comment>
   </data>
-  <data name="HorizontalAsymptotes.Text" xml:space="preserve">
+  <data name="HorizontalAsymptotes" xml:space="preserve">
     <value>Horizontal Asymptotes</value>
     <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
   </data>
-  <data name="InflectionPoints.Text" xml:space="preserve">
+  <data name="InflectionPoints" xml:space="preserve">
     <value>Inflection Points</value>
     <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
   </data>
@@ -3635,47 +3635,55 @@
     <value>Analysis is not supported for this function.</value>
     <comment>Error displayed when graph analysis is not supported or had an error.</comment>
   </data>
-  <data name="Maxima.Text" xml:space="preserve">
+  <data name="Maxima" xml:space="preserve">
     <value>Maxima</value>
     <comment>Title for KeyGraphFeatures Maxima Property</comment>
   </data>
-  <data name="Minima.Text" xml:space="preserve">
+  <data name="Minima" xml:space="preserve">
     <value>Minima</value>
     <comment>Title for KeyGraphFeatures Minima Property</comment>
   </data>
-  <data name="Monotonicity.Text" xml:space="preserve">
+  <data name="Monotonicity" xml:space="preserve">
     <value>Monotonicity</value>
     <comment>Title for KeyGraphFeatures Monotonicity Property</comment>
   </data>
-  <data name="ObliqueAsymptotes.Text" xml:space="preserve">
+  <data name="ObliqueAsymptotes" xml:space="preserve">
     <value>Oblique Asymptotes</value>
     <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
   </data>
-  <data name="Parity.Text" xml:space="preserve">
+  <data name="Parity" xml:space="preserve">
     <value>Parity</value>
     <comment>Title for KeyGraphFeatures Parity Property</comment>
   </data>
-  <data name="Periodicity.Text" xml:space="preserve">
+  <data name="Periodicity" xml:space="preserve">
     <value>Period</value>
     <comment>Title for KeyGraphFeatures Periodicity Property</comment>
   </data>
-  <data name="Range.Text" xml:space="preserve">
+  <data name="Range" xml:space="preserve">
     <value>Range</value>
     <comment>Title for KeyGraphFeatures Range Property</comment>
   </data>
-  <data name="VerticalAsymptotes.Text" xml:space="preserve">
+  <data name="VerticalAsymptotes" xml:space="preserve">
     <value>Vertical Asymptotes</value>
     <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
   </data>
-  <data name="XIntercept.Text" xml:space="preserve">
+  <data name="XIntercept" xml:space="preserve">
     <value>XIntercept</value>
     <comment>Title for KeyGraphFeatures XIntercept Property</comment>
   </data>
-  <data name="YIntercept.Text" xml:space="preserve">
+  <data name="YIntercept" xml:space="preserve">
     <value>YIntercept</value>
     <comment>Title for KeyGraphFeatures YIntercept Property</comment>
   </data>
   <data name="KGFAnalysisCouldNotBePerformed" xml:space="preserve">
     <value>Analysis could not be performed for the function.</value>
+  </data>
+  <data name="KGFDomainNone" xml:space="preserve">
+    <value>Unable to calculate the domain for this function.</value>
+    <comment>Error displayed when Domain is not returned from the analyzer.</comment>
+  </data>
+  <data name="KGFRangeNone" xml:space="preserve">
+    <value>Unable to calculate the range for this function.</value>
+    <comment>Error displayed when Range is not returned from the analyzer.</comment>
   </data>
 </root>

@@ -58,6 +58,8 @@ namespace GraphControl
             }
             void set(Windows::UI::Xaml::Media::SolidColorBrush^ value)
             {
+                if (value == nullptr || LineColor == nullptr || (value->Color.A != LineColor->Color.A) || (value->Color.R != LineColor->Color.R)
+                    || (value->Color.G != LineColor->Color.G) || (value->Color.B != LineColor->Color.B))
                 SetValue(s_lineColorProperty, value);
             }
         }
@@ -65,6 +67,26 @@ namespace GraphControl
 
 #pragma region Key Graph Features
 
+        #pragma region bool IsAnalysisUpdated DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty^ IsAnalysisUpdatedProperty
+        {
+            Windows::UI::Xaml::DependencyProperty^ get()
+            {
+                return s_isAnalysisUpdatedProperty;
+            }
+        }
+        property bool IsAnalysisUpdated
+        {
+            bool get()
+            {
+                return static_cast<bool>(GetValue(s_isAnalysisUpdatedProperty));
+            }
+            void set(bool value)
+            {
+                SetValue(s_isAnalysisUpdatedProperty, value);
+            }
+        }
+#pragma endregion
 #pragma region Platform::String ^ XIntercept DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ XInterceptProperty
         {
@@ -128,23 +150,44 @@ namespace GraphControl
         }
 #pragma endregion
 
-#pragma region Windows::Foundation::Collections::IObservableMap < Platform::String ^, Platform::String ^ > ^ Periodicity DependencyProperty
-        static property Windows::UI::Xaml::DependencyProperty^ PeriodicityProperty
+#pragma region int Periodicity DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty^ PeriodicityDirectionProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
             {
-                return s_periodicityProperty;
+                return s_periodicityDirectionProperty;
             }
         }
-        property Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ Periodicity
+        property int PeriodicityDirection
         {
-            Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ get()
+           int get()
             {
-                return static_cast<Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^>^>(GetValue(s_periodicityProperty));
+                return static_cast<int>(GetValue(s_periodicityDirectionProperty));
             }
-            void set(Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ value)
+            void set(int value)
             {
-                SetValue(s_periodicityProperty, value);
+                SetValue(s_periodicityDirectionProperty, value);
+            }
+        }
+#pragma endregion
+
+        #pragma region Platform::String ^ PeriodicityExpression DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty^ PeriodicityExpressionProperty
+        {
+            Windows::UI::Xaml::DependencyProperty^ get()
+            {
+                return s_periodicityExpressionProperty;
+            }
+        }
+        property Platform::String ^ PeriodicityExpression
+        {
+            Platform::String ^ get()
+            {
+                return static_cast<Platform::String ^>(GetValue(s_periodicityExpressionProperty));
+            }
+            void set(Platform::String ^ value)
+            {
+                SetValue(s_periodicityExpressionProperty, value);
             }
         }
 #pragma endregion
@@ -395,10 +438,12 @@ namespace GraphControl
     private:
         static Windows::UI::Xaml::DependencyProperty ^ s_expressionProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_lineColorProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_isAnalysisUpdatedProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_xInterceptProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_yInterceptProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_parityProperty;
-        static Windows::UI::Xaml::DependencyProperty ^ s_periodicityProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_periodicityDirectionProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_periodicityExpressionProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_minimaProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_maximaProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_domainProperty;

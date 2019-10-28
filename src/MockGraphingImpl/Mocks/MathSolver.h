@@ -8,7 +8,8 @@ namespace MockGraphingImpl
     {
     public:
         void SetFormatType(Graphing::FormatType type) override
-        { }
+        {
+        }
     };
 
     class EvalOptions : public Graphing::IEvalOptions
@@ -19,7 +20,12 @@ namespace MockGraphingImpl
     {
     public:
         void SetFormatType(Graphing::FormatType type) override
-        { }
+        {
+        }
+
+        void SetMathMLPrefix(const std::wstring& value) override
+        {
+        }
     };
 
     class MathSolver : public Graphing::IMathSolver
@@ -64,6 +70,7 @@ namespace MockGraphingImpl
         {
             return Graphing::IGraphFunctionAnalysisData{};
         }
+
     private:
         MockGraphingImpl::ParsingOptions m_parsingOptions;
         MockGraphingImpl::EvalOptions m_evalOptions;

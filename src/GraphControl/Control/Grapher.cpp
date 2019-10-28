@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Grapher.h"
-#include <IBitmap.h>
+#include "IBitmap.h"
 #include "../../CalcViewModel/GraphingCalculatorEnums.h"
 
 using namespace Graphing;
@@ -465,7 +465,7 @@ namespace GraphControl
     void Grapher::UpdateKeyGraphFeatures()
     {
         auto equations = GetValidEquations();
-        for (auto equation : GetValidEquations())
+        for (auto equation : equations)
         {
             if (auto graph = GetGraph(equation))
             {
@@ -474,6 +474,8 @@ namespace GraphControl
                     if (analyzer->CanFunctionAnalysisBePerformed())
                     {
                         m_solver->FormatOptions().SetFormatType(FormatType::MathML);
+                        m_solver->FormatOptions().SetMathMLPrefix(wstring(L"mml"));
+
                         if (S_OK
                             == analyzer->PerformFunctionAnalysis(
                                 (Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All))
@@ -485,13 +487,8 @@ namespace GraphControl
                                 equation->Domain = ref new String(functionAnalysisData.Domain.c_str());
                                 equation->Range = ref new String(functionAnalysisData.Range.c_str());
                                 equation->Parity = functionAnalysisData.Parity;
-
-                                // There is only ever one item in Periodicity. Map is being used because it works with DependencyProperty.
-                                for (auto p : functionAnalysisData.Periodicity)
-                                {
-                                    equation->Periodicity->Insert(p.first.ToString(), ref new String(p.second.c_str()));
-                                }
-
+                                equation->PeriodicityDirection = functionAnalysisData.PeriodicityDirection;
+                                equation->PeriodicityExpression = ref new String(functionAnalysisData.PeriodicityExpression.c_str());
                                 equation->Minima = ConvertWStringVector(functionAnalysisData.Minima);
                                 equation->Maxima = ConvertWStringVector(functionAnalysisData.Maxima);
                                 equation->InflectionPoints = ConvertWStringVector(functionAnalysisData.InflectionPoints);
@@ -501,6 +498,7 @@ namespace GraphControl
                                 equation->ObliqueAsymptotes = ConvertWStringVector(functionAnalysisData.ObliqueAsymptotes);
                                 equation->TooComplexFeatures = functionAnalysisData.TooComplexFeatures;
                                 equation->AnalysisError = CalculatorApp::AnalysisErrorType::NoError;
+                                equation->IsAnalysisUpdated = true;
                                 continue;
                             }
                         }
@@ -508,18 +506,20 @@ namespace GraphControl
                     else
                     {
                         equation->AnalysisError = CalculatorApp::AnalysisErrorType::AnalysisNotSupported;
+                        equation->IsAnalysisUpdated = true;
                         continue;
                     }
                 }
             }
 
             equation->AnalysisError = CalculatorApp::AnalysisErrorType::AnalysisCouldNotBePerformed;
+            equation->IsAnalysisUpdated = true;
         }
     }
     IObservableVector<String ^> ^ Grapher::ConvertWStringVector(vector<wstring> inVector)
     {
-        Vector<Platform::String ^> ^ outVector = ref new Vector<String ^>();
-        ;
+        Vector<String ^> ^ outVector = ref new Vector<String ^>();
+        
         for (auto v : inVector)
         {
             outVector->Append(ref new String(v.c_str()));
@@ -527,6 +527,7 @@ namespace GraphControl
 
         return outVector;
     }
+
     IObservableMap<String ^, String ^> ^ Grapher::ConvertWStringIntMap(map<wstring, int> inMap)
     {
         Map<String ^, String ^> ^ outMap = ref new Map<String ^, String ^>();

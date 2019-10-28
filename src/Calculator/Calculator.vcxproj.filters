@@ -309,6 +309,8 @@
     </ClCompile>
     <ClCompile Include="Controls\MathRichEditBox.cpp" />
     <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp" />
+    <ClCompile Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.cpp" />
+    <ClCompile Include="Converters\NullOrEmptyStringToVisibilityConverter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -397,6 +399,8 @@
     </ClInclude>
     <ClInclude Include="Controls\MathRichEditBox.h" />
     <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h" />
+    <ClInclude Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.h" />
+    <ClInclude Include="Converters\NullOrEmptyStringToVisibilityConverter.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -1485,6 +1489,10 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
