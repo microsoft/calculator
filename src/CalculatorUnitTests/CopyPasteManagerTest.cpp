@@ -77,7 +77,7 @@ namespace CalculatorUnitTests
 
             VERIFY_ARE_EQUAL(
                 m_CopyPasteManager.ValidatePasteExpression(
-                    StringReference(L"123e456"), ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown),
+                    StringReference(L"1a23f456"), ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown),
                 StringReference(L"NoOp"),
                 L"Verify pasting unsupported strings for the current mode is invalid");
 
@@ -192,8 +192,10 @@ namespace CalculatorUnitTests
             Logger::WriteMessage(L"Verify all operands must match patterns.");
             VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(
                 vector<wstring>{ L"123", L"456" }, ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown));
-            VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(
+            VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(
                 vector<wstring>{ L"123", L"1e23" }, ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown));
+            VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(
+                vector<wstring>{ L"123", L"fab10" }, ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown));
 
             VERIFY_IS_TRUE(
                 m_CopyPasteManager.ExpressionRegExMatch(
@@ -624,9 +626,12 @@ namespace CalculatorUnitTests
                                      L"1\"2",
                                      L"1234567891234567" /*boundary condition <=16 digits*/,
                                      L"2+2=",
-                                     L"2+2=   " };
-        String ^ negativeInput[] = { L"(123)+(456)", L"1.2e23" /*unsigned exponent*/,
-                                     L"12345e-23",   L"abcdef",
+                                     L"2+2=   ",
+                                     L"1.2e23",
+                                     L"12345e-23",
+                                     
+        };
+        String ^ negativeInput[] = { L"(123)+(456)", L"abcdef",
                                      L"xyz",         L"ABab",
                                      L"e+234",       L"12345678912345678" /*boundary condition: greater than 16 digits*/,
                                      L"SIN(2)",      L"2+2==",
