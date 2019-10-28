@@ -232,7 +232,6 @@ namespace CalculatorApp
                 {
                     if (m_isEditingEnabled != value)
                     {
-                        //                        Numbers::Common::KeyboardShortcutManager::IsCalculatorInEditingMode = value;
                         m_isEditingEnabled = value;
                         bool currentEditToggleValue = !m_isEditingEnabled;
                         IsBinaryOperatorEnabled = currentEditToggleValue;

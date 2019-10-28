@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "Utils.h"
-#include "MyVirtualKey.h"
+#include "CalcViewModel/Common/Utils.h"
+#include "CalcViewModel/Common/MyVirtualKey.h"
 
 namespace CalculatorApp
 {

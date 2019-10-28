@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "WindowFrameService.h"
-#include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "Common/KeyboardShortcutManager.h"
 #include "CalcViewModel/Common/TraceLogger.h"
 
 using namespace concurrency;

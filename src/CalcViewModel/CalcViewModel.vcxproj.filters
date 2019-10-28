@@ -23,16 +23,10 @@
     <ClCompile Include="Common\AppResourceProvider.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Common\BindableBase.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="Common\CalculatorButtonPressedEventArgs.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\CalculatorDisplay.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\ConversionResultTaskHelper.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\CopyPasteManager.cpp">
@@ -48,9 +42,6 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\ExpressionCommandSerializer.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\KeyboardShortcutManager.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\LocalizationService.cpp">
@@ -94,13 +85,7 @@
     <ClInclude Include="MemoryItemViewModel.h" />
     <ClInclude Include="StandardCalculatorViewModel.h" />
     <ClInclude Include="UnitConverterViewModel.h" />
-    <ClInclude Include="Common\AlwaysSelectedCollectionView.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Common\AppResourceProvider.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\BindableBase.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\CalculatorButtonPressedEventArgs.h">
@@ -112,16 +97,10 @@
     <ClInclude Include="Common\CalculatorDisplay.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\ConversionResultTaskHelper.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Common\CopyPasteManager.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\DateCalculator.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\DelegateCommand.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\DisplayExpressionToken.h">
@@ -134,9 +113,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\ExpressionCommandSerializer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\KeyboardShortcutManager.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\LocalizationService.h">
@@ -161,9 +137,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\Utils.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\ValidatingConverters.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\Automation\NarratorNotifier.h">
@@ -198,6 +171,9 @@
     </ClInclude>
     <ClInclude Include="Common\NumberBase.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\DelegateCommand.h">
+	  <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

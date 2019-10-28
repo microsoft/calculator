@@ -225,9 +225,6 @@
   <ItemGroup>
     <ClCompile Include="App.xaml.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Common\BindableBase.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="Controls\CalculationResult.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -308,14 +305,15 @@
     <ClCompile Include="Controls\OperatorPanelButton.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
+    <ClCompile Include="Common\KeyboardShortcutManager.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ViewState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\BindableBase.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Controls\CalculationResult.h">
@@ -398,6 +396,13 @@
     <ClInclude Include="Controls\OperatorPanelButton.h">
       <Filter>Controls</Filter>
     </ClInclude>
+    <ClInclude Include="Common\KeyboardShortcutManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ValidatingConverters.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ViewState.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -465,6 +470,7 @@
     <Page Include="Views\TitleBar.xaml">
       <Filter>Views</Filter>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)DensityStyles\Compact.xaml" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Resources\en-US\CEngineStrings.resw">
