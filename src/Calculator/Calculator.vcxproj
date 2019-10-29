@@ -8,7 +8,7 @@
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0.18362.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
     <!-- We want to manually control the MinVersion/MaxVersionTested in the manifest so turn of the replacement. -->
     <AppxOSMinVersionReplaceManifestVersion>false</AppxOSMinVersionReplaceManifestVersion>
@@ -219,7 +219,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(IsStoreBuild)' == 'True'">
     <ClCompile>
-      <AdditionalOptions>/DSEND_TELEMETRY %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/DSEND_DIAGNOSTICS /DIS_STORE_BUILD %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup>
@@ -243,7 +243,6 @@
     <ClInclude Include="Controls\OverflowTextBlock.h" />
     <ClInclude Include="Controls\RadixButton.h" />
     <ClInclude Include="Controls\SupplementaryItemsControl.h" />
-    <ClInclude Include="Converters\BitFlipAutomationNameConverter.h" />
     <ClInclude Include="Converters\BooleanNegationConverter.h" />
     <ClInclude Include="Converters\BooleanToVisibilityConverter.h" />
     <ClInclude Include="Converters\ExpressionItemTemplateSelector.h" />
@@ -388,7 +387,6 @@
     <ClCompile Include="Controls\OverflowTextBlock.cpp" />
     <ClCompile Include="Controls\RadixButton.cpp" />
     <ClCompile Include="Controls\SupplementaryItemsControl.cpp" />
-    <ClCompile Include="Converters\BitFlipAutomationNameConverter.cpp" />
     <ClCompile Include="Converters\BooleanNegationConverter.cpp" />
     <ClCompile Include="Converters\BooleanToVisibilityConverter.cpp" />
     <ClCompile Include="Converters\ExpressionItemTemplateSelector.cpp" />
@@ -648,99 +646,71 @@
     <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-80.png" />
     <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-96.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-16.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-16_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-16_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-16_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-16_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-16_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-16_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-20.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-20_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-20_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-20_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-20_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-20_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-20_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-24.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-24_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-24_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-24_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-24_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-24_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-24_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-30.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-30_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-30_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-30_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-30_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-30_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-30_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-32.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-32_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-32_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-32_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-32_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-32_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-32_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-36.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-36_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-36_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-36_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-36_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-36_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-36_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-40.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-40_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-40_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-40_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-40_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-40_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-40_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-60.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-60_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-60_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-60_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-60_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-60_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-60_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-64.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-64_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-64_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-64_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-64_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-64_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-64_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-72.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-72_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-72_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-72_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-72_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-72_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-72_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-80.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-80_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-80_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-80_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-80_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-80_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-80_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-96.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-96_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-black.png" />

@@ -195,7 +195,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
     }
     catch (Exception ^ ex)
     {
-        TraceLogger::GetInstance().LogPlatformException(__FUNCTIONW__, ex);
+        TraceLogger::GetInstance().LogPlatformException(ViewMode::Graphing, __FUNCTIONW__, ex);
 
         // Something went wrong, notify the user.
         auto errorTitleString = resourceLoader->GetString(L"ShareActionErrorMessage");

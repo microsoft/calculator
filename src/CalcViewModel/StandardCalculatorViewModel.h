@@ -9,6 +9,7 @@
 #include "Common/CalculatorButtonUser.h"
 #include "HistoryViewModel.h"
 #include "MemoryItemViewModel.h"
+#include "Common/BitLength.h"
 
 namespace CalculatorFunctionalTests
 {
@@ -40,7 +41,6 @@ namespace CalculatorApp
             StandardCalculatorViewModel();
             void UpdateOperand(int pos, Platform::String ^ text);
             void UpdatecommandsInRecordingMode();
-            int GetBitLengthType();
             int GetNumberBase();
 
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
@@ -54,6 +54,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(Platform::String ^, HexDisplayValue);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, OctalDisplayValue);
             OBSERVABLE_NAMED_PROPERTY_RW(Platform::String ^, BinaryDisplayValue);
+            OBSERVABLE_NAMED_PROPERTY_R(Windows::Foundation::Collections::IVector<bool> ^, BinaryDigits);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, HexDisplayValue_AutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, DecDisplayValue_AutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, OctDisplayValue_AutomationName);
@@ -72,12 +73,9 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationResultAutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationExpressionAutomationName);
             OBSERVABLE_PROPERTY_RW(bool, IsShiftProgrammerChecked);
-            OBSERVABLE_PROPERTY_RW(bool, IsQwordEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsDwordEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsWordEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsByteEnabled);
             OBSERVABLE_PROPERTY_RW(int, CurrentRadixType);
             OBSERVABLE_PROPERTY_RW(bool, AreTokensUpdated);
+            OBSERVABLE_PROPERTY_RW(bool, AreAlwaysOnTopResultsUpdated);
             OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
             OBSERVABLE_PROPERTY_RW(bool, AreProgrammerRadixOperatorsEnabled);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::Automation::NarratorAnnouncement ^, Announcement);
@@ -127,6 +125,13 @@ namespace CalculatorApp
                     }
                 }
             }
+            static property Platform::String ^ IsBitFlipCheckedPropertyName
+            {
+                Platform::String ^ get()
+                {
+                    return Platform::StringReference(L"IsBitFlipChecked");
+                }
+            }
 
             property bool IsBinaryBitFlippingEnabled
             {
@@ -142,6 +147,15 @@ namespace CalculatorApp
                         RaisePropertyChanged(L"IsBinaryBitFlippingEnabled");
                     }
                 }
+            }
+
+            property CalculatorApp::Common::BitLength ValueBitLength
+            {
+                CalculatorApp::Common::BitLength get()
+                {
+                    return m_valueBitLength;
+                }
+                void set(CalculatorApp::Common::BitLength value);
             }
 
             property bool IsStandard
@@ -209,6 +223,29 @@ namespace CalculatorApp
                             IsScientific = false;
                         }
                         RaisePropertyChanged(L"IsProgrammer");
+                    }
+                }
+            }
+            static property Platform::String ^ IsProgrammerPropertyName
+            {
+                Platform::String ^ get()
+                {
+                    return Platform::StringReference(L"IsProgrammer");
+                }
+            }
+
+            property bool IsAlwaysOnTop
+            {
+                bool get()
+                {
+                    return m_isAlwaysOnTop;
+                }
+                void set(bool value)
+                {
+                    if (m_isAlwaysOnTop != value)
+                    {
+                        m_isAlwaysOnTop = value;
+                        RaisePropertyChanged(L"IsAlwaysOnTop");
                     }
                 }
             }
@@ -317,7 +354,7 @@ namespace CalculatorApp
                 }
             }
 
-            internal : void OnPaste(Platform::String ^ pastedString, CalculatorApp::Common::ViewMode mode);
+            internal : void OnPaste(Platform::String ^ pastedString);
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);
 
@@ -347,7 +384,6 @@ namespace CalculatorApp
             void OnMaxDigitsReached();
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
-
 
             Platform::String ^ GetLocalizedStringFormat(Platform::String ^ format, Platform::String ^ displayValue);
             void OnPropertyChanged(Platform::String ^ propertyname);
@@ -407,6 +443,7 @@ namespace CalculatorApp
             bool m_isStandard;
             bool m_isScientific;
             bool m_isProgrammer;
+            bool m_isAlwaysOnTop;
             bool m_isBinaryBitFlippingEnabled;
             bool m_isBitFlipChecked;
             bool m_isShiftChecked;
@@ -416,6 +453,7 @@ namespace CalculatorApp
             bool m_operandUpdated;
             bool m_completeTextSelection;
             bool m_isLastOperationHistoryLoad;
+            CalculatorApp::Common::BitLength m_valueBitLength;
             Platform::String ^ m_selectedExpressionLastData;
             Common::DisplayExpressionToken ^ m_selectedExpressionToken;
 
@@ -450,6 +488,8 @@ namespace CalculatorApp
 
             bool IsViewPinned();
             void SetViewPinnedState(bool pinned);
+
+            CalculatorApp::Common::ViewMode GetCalculatorMode();
 
             friend class CalculatorDisplay;
             friend class CalculatorFunctionalTests::HistoryTests;

@@ -7,8 +7,8 @@
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <UnitTestPlatformVersion Condition="'$(UnitTestPlatformVersion)' == ''">15.0</UnitTestPlatformVersion>
     <ProjectSubType>NativeUnitTestProject</ProjectSubType>
@@ -16,6 +16,8 @@
     <!-- We want to automatic replace of MinVersion/MaxVersionTested for unit tests. -->
     <AppxOSMinVersionReplaceManifestVersion>true</AppxOSMinVersionReplaceManifestVersion>
     <AppxOSMaxVersionTestedReplaceManifestVersion>true</AppxOSMaxVersionTestedReplaceManifestVersion>
+    <PackageCertificateKeyFile>CalculatorUnitTests_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>be776c83699dbce4969de9ee730aeaf66c5d5182</PackageCertificateThumbprint>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -128,10 +130,6 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros">
-    <PackageCertificateKeyFile>CalculatorUnitTests_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>BE776C83699DBCE4969DE9EE730AEAF66C5D5182</PackageCertificateThumbprint>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /await /std:c++17 /permissive- /Zc:twoPhase- /utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -244,6 +242,7 @@
     <ClCompile Include="CurrencyConverterUnitTests.cpp" />
     <ClCompile Include="DateCalculatorUnitTests.cpp" />
     <ClCompile Include="HistoryTests.cpp" />
+    <ClCompile Include="LocalizationServiceUnitTests.cpp" />
     <ClCompile Include="Mocks\CurrencyHttpClient.cpp" />
     <ClCompile Include="Module.cpp" />
     <ClCompile Include="MultiWindowUnitTests.cpp" />
