@@ -390,7 +390,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0">

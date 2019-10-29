@@ -58,7 +58,10 @@ namespace GraphControl
         , m_Moving{ false }
     {
         m_solver->ParsingOptions().SetFormatType(FormatType::MathML);
+<<<<<<<
+=======
 
+>>>>>>>
 
         DefaultStyleKey = StringReference(s_defaultStyleKey);
 
