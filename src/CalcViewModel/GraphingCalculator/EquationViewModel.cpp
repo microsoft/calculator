@@ -170,9 +170,10 @@ namespace CalculatorApp::ViewModel
         switch (PeriodicityDirection)
         {
         case 0:
-            periodicityItem->DisplayItems->Append(m_resourceLoader->GetString(L"KGFPeriodicityUnknown"));
-            periodicityItem->IsText = true;
-            break;
+            // Periodicity is not supported or is too complex to calculate.
+            // Return out of this function without adding periodicity to KeyGraphFeatureItems.
+            // SetTooComplexFeaturesErrorProperty will set the too complex error when periodicity is supported and unknown
+            return;
         case 1:
             if (PeriodicityExpression == L"")
             {
