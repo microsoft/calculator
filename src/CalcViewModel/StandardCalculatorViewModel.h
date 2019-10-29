@@ -62,7 +62,6 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, IsUnaryOperatorEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsNegateEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsDecimalEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsCurrentViewPinned);
             OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IVector<MemoryItemViewModel ^> ^, MemorizedNumbers);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsMemoryEmpty);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEChecked);
@@ -337,7 +336,6 @@ namespace CalculatorApp
             void OnMemoryAdd(Platform::Object ^ memoryItemPosition);
             void OnMemorySubtract(Platform::Object ^ memoryItemPosition);
             void OnMemoryClear(_In_ Platform::Object ^ memoryItemPosition);
-            void OnPinUnpinCommand(Platform::Object ^ parameter);
 
             void OnInputChanged();
             void DisplayPasteError();
@@ -409,7 +407,6 @@ namespace CalculatorApp
             Platform::String ^ m_localizedOpenParenthesisCountChangedAutomationFormat;
             Platform::String ^ m_localizedNoRightParenthesisAddedFormat;
 
-            bool m_pinned;
             bool m_isOperandEnabled;
             bool m_isEditingEnabled;
             bool m_isStandard;
@@ -454,11 +451,7 @@ namespace CalculatorApp
             bool IsOpnd(CalculationManager::Command command);
             bool IsRecoverableCommand(CalculationManager::Command command);
 
-            CalculationManager::CommandType GetSelectedTokenType(_In_ unsigned int);
             void SaveEditedCommand(_In_ unsigned int index, _In_ CalculationManager::Command command);
-
-            bool IsViewPinned();
-            void SetViewPinnedState(bool pinned);
 
             CalculatorApp::Common::ViewMode GetCalculatorMode();
 
