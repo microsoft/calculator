@@ -188,7 +188,7 @@ public:
 private:                                                                                                                                                       \
     static Windows::UI::Xaml::DependencyProperty ^ s_##n##Property;                                                                                            \
                                                                                                                                                                \
-public:
+private:
 
 // Utilities for DependencyProperties
 namespace Utils

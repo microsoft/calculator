@@ -1903,3 +1903,11 @@ void StandardCalculatorViewModel::ValueBitLength::set(CalculatorApp::Common::Bit
         SetMemorizedNumbersString();
     }
 }
+
+void StandardCalculatorViewModel::SelectHistoryItem(HistoryItemViewModel ^ item)
+{
+    SetHistoryExpressionDisplay(item->GetTokens(), item->GetCommands());
+    SetExpressionDisplay(item->GetTokens(), item->GetCommands());
+    SetPrimaryDisplay(item->Result, false);
+    IsFToEEnabled = false;
+}
