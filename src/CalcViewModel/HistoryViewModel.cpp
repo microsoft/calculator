@@ -36,12 +36,6 @@ HistoryViewModel::HistoryViewModel(_In_ CalculationManager::CalculatorManager* c
     ItemSize = 0;
 }
 
-void HistoryViewModel::RestoreCompleteHistory()
-{
-    RestoreHistory(CalculationManager::CALCULATOR_MODE::CM_STD);
-    RestoreHistory(CalculationManager::CALCULATOR_MODE::CM_SCI);
-}
-
 // this will reload Items with the history list based on current mode
 void HistoryViewModel::ReloadHistory(_In_ ViewMode currentMode)
 {
