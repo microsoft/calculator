@@ -640,8 +640,10 @@
                                         AutomationProperties.AutomationId="CalculatorAlwaysOnTopResults"
                                         AutomationProperties.HeadingLevel="Level1"
                                         AutomationProperties.Name="{x:Bind Model.CalculationResultAutomationName, Mode=OneWay}"
-                                        IsActive="True"
+                                        IsTabStop="False"
                                         TokensUpdated="{x:Bind Model.AreAlwaysOnTopResultsUpdated, Mode=OneWay}"
+                                        HorizontalContentAlignment="Right"
+                                        IsActive="True"
                                         UseSystemFocusVisuals="True"
                                         Visibility="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"/>
 

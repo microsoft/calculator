@@ -582,9 +582,23 @@ void MainPage::AlwaysOnTopButtonClick(_In_ Object ^ /*sender*/, _In_ RoutedEvent
     Model->ToggleAlwaysOnTop(0, 0);
 }
 
+void MainPage::TitleBarAlwaysOnTopButtonClick(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
+{
+    auto bounds = Window::Current->Bounds;
+    Model->ToggleAlwaysOnTop(bounds.Width, bounds.Height);
+}
+
+void MainPage::AlwaysOnTopButtonClick(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
+{
+    Model->ToggleAlwaysOnTop(0, 0);
+}
+
 void MainPage::App_Suspending(Object ^ sender, Windows::ApplicationModel::SuspendingEventArgs ^ e)
 {
     if (m_model->IsAlwaysOnTop)
+    {
         ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
         localSettings->Values->Insert(ApplicationViewModel::WidthLocalSettings, this->ActualWidth);
         localSettings->Values->Insert(ApplicationViewModel::HeightLocalSettings, this->ActualHeight);
+    }
+}
