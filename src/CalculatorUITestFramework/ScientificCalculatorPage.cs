@@ -32,6 +32,14 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ClearAll()
         {
+            if (string.IsNullOrEmpty(this.CalculatorResult.Text))
+            {
+                this.ScientificOperators.ClearButton.Click();
+            }
+            else
+            {
+                this.ScientificOperators.ClearEntryButton.Click();
+            }
             this.ScientificOperators.ClearButton.Click();
             this.MemoryPanel.MemoryClear.Click();
             this.HistoryPanel.ClearHistory();

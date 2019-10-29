@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Windows;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -18,18 +19,18 @@ namespace CalculatorUITestFramework
 
         public WindowsElement XPower2Button => this.session.TryFindElementByAccessibilityId("xpower2Button");
         public WindowsElement XPower3Button => this.session.TryFindElementByAccessibilityId("xpower3Button");
-        public WindowsElement XPowerYButton => this.session.TryFindElementByAccessibilityId("xpowerYButton");
-        public WindowsElement PowerXButton => this.session.TryFindElementByAccessibilityId("powerXButton");
+        public WindowsElement XPowerYButton => this.session.TryFindElementByAccessibilityId("powerButton");
+        public WindowsElement PowerOf10Button => this.session.TryFindElementByAccessibilityId("powerOf10Button");
         public WindowsElement LogButton => this.session.TryFindElementByAccessibilityId("logBase10Button");
         public WindowsElement LnButton => this.session.TryFindElementByAccessibilityId("logBaseEButton");
         public WindowsElement PiButton => this.session.TryFindElementByAccessibilityId("piButton");
         public WindowsElement InvertButton => this.session.TryFindElementByAccessibilityId("invertButton");
-        public WindowsElement EButton => this.session.TryFindElementByAccessibilityId("eButton");
+        public WindowsElement EulerButton => this.session.TryFindElementByAccessibilityId("eulerButton");
         public WindowsElement AbsButton => this.session.TryFindElementByAccessibilityId("absButton");
         public WindowsElement ExpButton => this.session.TryFindElementByAccessibilityId("expButton");
         public WindowsElement ModButton => this.session.TryFindElementByAccessibilityId("modButton");
-        public WindowsElement ParenthesesLeftButton => this.session.TryFindElementByAccessibilityId("parenthesesLeftButton");
-        public WindowsElement ParenthesesRightButton => this.session.TryFindElementByAccessibilityId("parenthesesRightButton");
+        public WindowsElement ParenthesisLeftButton => this.session.TryFindElementByAccessibilityId("openParenthesisButton");
+        public WindowsElement ParenthesisRightButton => this.session.TryFindElementByAccessibilityId("closeParenthesisButton");
         public WindowsElement FactorialButton => this.session.TryFindElementByAccessibilityId("factorialButton");
         public WindowsElement DivideButton => this.session.TryFindElementByAccessibilityId("divideButton");
         public WindowsElement MultiplyButton => this.session.TryFindElementByAccessibilityId("multiplyButton");
@@ -61,7 +62,7 @@ namespace CalculatorUITestFramework
         public WindowsElement InvCotButton => this.session.TryFindElementByAccessibilityId("invcotButton");
         public WindowsElement SinhButton => this.session.TryFindElementByAccessibilityId("sinhButton");
         public WindowsElement CoshButton => this.session.TryFindElementByAccessibilityId("coshButton");
-        public WindowsElement TanhButton => this.session.TryFindElementByAccessibilityId("cothButton");
+        public WindowsElement TanhButton => this.session.TryFindElementByAccessibilityId("tanhButton");
         public WindowsElement CschButton => this.session.TryFindElementByAccessibilityId("cschButton");
         public WindowsElement SechButton => this.session.TryFindElementByAccessibilityId("sechButton");
         public WindowsElement CothButton => this.session.TryFindElementByAccessibilityId("cothButton");
@@ -71,5 +72,42 @@ namespace CalculatorUITestFramework
         public WindowsElement InvCschButton => this.session.TryFindElementByAccessibilityId("invcschButton");
         public WindowsElement InvSechButton => this.session.TryFindElementByAccessibilityId("invsechButton");
         public WindowsElement InvCothButton => this.session.TryFindElementByAccessibilityId("invcothButton");
+        public WindowsElement FloorButton => this.session.TryFindElementByAccessibilityId("floorButton");
+        public WindowsElement CeilButton => this.session.TryFindElementByAccessibilityId("ceilButton");
+        public WindowsElement RandButton => this.session.TryFindElementByAccessibilityId("randButton");
+        public WindowsElement DmsButton => this.session.TryFindElementByAccessibilityId("dmsButton");
+        public WindowsElement DegreesButton => this.session.TryFindElementByAccessibilityId("degreesButton");
+        public WindowsElement FixedToExponentialButton => this.session.TryFindElementByAccessibilityId("ftoeButton");
+        public WindowsElement NegateButton => this.session.TryFindElementByAccessibilityId("negateButton");
+        public WindowsElement GetDegRadGradButton()
+        {
+            string source = this.session.PageSource;
+            if (source.Contains("degButton"))
+            {
+                return DegButton;
+            }
+            else if (source.Contains("radButton"))
+            {
+                return RadButton;
+            }
+            else if (source.Contains("gradButton"))
+            {
+                return GradButton;
+            }
+
+            throw new NotFoundException("Could not find deg, rad or grad button in page source");
+        }
+
+        public WindowsElement GetDesiredDegRadGradButton(string desiredButtonId)
+        {
+            var button = GetDegRadGradButton();
+            while (button.Id != desiredButtonId)
+            {
+                button.Click();
+                button = GetDegRadGradButton();
+            }
+
+            return button;
+        }
     }
 }
