@@ -199,7 +199,8 @@ void Calculator::UpdateViewState()
 
 void Calculator::AnimateCalculator(bool resultAnimate)
 {
-    if (App::IsAnimationEnabled())
+    static auto uiSettings = ref new UISettings(); 
+    if (uiSettings->AnimationsEnabled)
     {
         m_doAnimate = true;
         m_resultAnimate = resultAnimate;

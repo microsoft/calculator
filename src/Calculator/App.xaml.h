@@ -29,7 +29,6 @@ namespace CalculatorApp
         virtual void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs ^ args) override;
         virtual void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs ^ args) override;
 
-        internal : static bool IsAnimationEnabled();
         static Platform::String ^ GetAppViewState();
         static float GetAppWindowHeight();
         void RemoveWindow(_In_ WindowFrameService ^ frameService);
@@ -89,7 +88,5 @@ namespace CalculatorApp
         bool m_preLaunched;
 
         Windows::UI::Xaml::Controls::Primitives::Popup ^ m_aboutPopup;
-
-        static bool m_isAnimationEnabled;
     };
 }

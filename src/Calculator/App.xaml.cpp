@@ -84,16 +84,6 @@ App::App()
 #endif
 }
 
-bool App::m_isAnimationEnabled = true;
-
-/// <summary>
-/// Return True if animation is enabled by user setting.
-/// </summary>
-bool App::IsAnimationEnabled()
-{
-    return App::m_isAnimationEnabled;
-}
-
 /// <summary>
 /// Return the current application view state. The value
 /// will match one of the constants in the ViewState namespace.
@@ -240,7 +230,6 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
     //#endif
 
     auto userSettings = ref new Windows::UI::ViewManagement::UISettings();
-    m_isAnimationEnabled = userSettings->AnimationsEnabled;
 
     args->SplashScreen->Dismissed += ref new TypedEventHandler<SplashScreen ^, Object ^>(this, &App::DismissedEventHandler);
 
