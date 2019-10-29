@@ -326,9 +326,6 @@
     <ClInclude Include="Controls\OverflowTextBlock.h">
       <Filter>Controls</Filter>
     </ClInclude>
-    <ClCompile Include="Converters\BitFlipAutomationNameConverter.cpp">
-      <Filter>Converters</Filter>
-    </ClCompile>
     <ClInclude Include="Converters\BooleanNegationConverter.h">
       <Filter>Converters</Filter>
     </ClInclude>
@@ -1486,6 +1483,8 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>
