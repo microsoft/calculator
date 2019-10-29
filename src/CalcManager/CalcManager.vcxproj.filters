@@ -120,7 +120,6 @@
     <ClInclude Include="Ratpack\ratpak.h">
       <Filter>RatPack</Filter>
     </ClInclude>
-    <ClInclude Include="CalculatorVector.h" />
     <ClInclude Include="Header Files\CalcEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>

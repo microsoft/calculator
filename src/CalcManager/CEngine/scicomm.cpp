@@ -87,7 +87,7 @@ void CCalcEngine::ClearDisplay()
     if (nullptr != m_pCalcDisplay)
     {
         m_pCalcDisplay->SetExpressionDisplay(
-            make_shared<CalculatorVector<pair<wstring, int>>>(), make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>());
+            make_shared<vector<pair<wstring, int>>>(), make_shared<vector<shared_ptr<IExpressionCommand>>>());
     }
 }
 

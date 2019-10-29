@@ -43,16 +43,13 @@ namespace CalculatorManagerTest
             m_isError = isError;
         }
         void SetExpressionDisplay(
-            _Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
-            _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& /*commands*/) override
+            _Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
+            _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& /*commands*/) override
         {
             m_expression.clear();
-            unsigned int nTokens = 0;
-            std::pair<std::wstring, int> currentPair;
-            tokens->GetSize(&nTokens);
-            for (unsigned int i = 0; i < nTokens; ++i)
+
+            for (const auto& currentPair : *tokens)
             {
-                tokens->GetAt(i, &currentPair);
                 m_expression += currentPair.first;
             }
         }
