@@ -47,15 +47,13 @@
             <Setter Property="Width" Value="Auto"/>
             <Setter Property="AutomationProperties.AccessibilityView" Value="Raw"/>
         </Style>
-        <Style x:Name="ItemsControlContainterStyle" TargetType="ItemsControl">
-            <Setter Property="Margin" Value="0,2,0,0"/>
-        </Style>
+
         <DataTemplate x:Key="KGFRichEditDataTemplate" x:DataType="vm:KeyGraphFeaturesItem">
-            <StackPanel >
+            <StackPanel>
                 <TextBlock x:Name="TitleTextBlock"
                            Style="{StaticResource KGF_TitleTextBlockStyle}"
                            Text="{x:Bind Title, Mode=OneWay}"/>
-                <ItemsControl ItemContainerStyle="{StaticResource ItemsControlContainterStyle}" ItemsSource="{x:Bind DisplayItems, Mode=OneWay}">
+                <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="x:String">
                             <controls:MathRichEditBox HorizontalAlignment="Left"
@@ -68,11 +66,11 @@
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="KGFGridDataTemplate" x:DataType="vm:KeyGraphFeaturesItem">
-            <StackPanel >
+            <StackPanel>
                 <TextBlock x:Name="TitleTextBlock"
                            Style="{StaticResource KGF_TitleTextBlockStyle}"
                            Text="{x:Bind Title, Mode=OneWay}"/>
-                <ItemsControl ItemContainerStyle="{StaticResource ItemsControlContainterStyle}" ItemsSource="{x:Bind GridItems, Mode=OneWay}">
+                <ItemsControl ItemsSource="{x:Bind GridItems, Mode=OneWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="vm:GridDisplayItems">
                             <Grid VerticalAlignment="Center">
@@ -97,11 +95,11 @@
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="KGFTextBlockDataTemplate" x:DataType="vm:KeyGraphFeaturesItem">
-            <StackPanel >
+            <StackPanel>
                 <TextBlock x:Name="TitleTextBlock"
                            Style="{StaticResource KGF_TitleTextBlockStyle}"
                            Text="{x:Bind Title, Mode=OneWay}"/>
-                <ItemsControl ItemContainerStyle="{StaticResource ItemsControlContainterStyle}" ItemsSource="{x:Bind DisplayItems, Mode=OneWay}">
+                <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="x:String">
                             <TextBlock Style="{StaticResource KGF_TextBlockStyle}" Text="{x:Bind}"/>
