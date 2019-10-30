@@ -19,6 +19,9 @@ namespace
             if (isFirst)
             {
                 isFirst = false;
+            }
+            else
+            {
                 expression += L' ';
             }
             expression.append(token.first);
