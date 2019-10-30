@@ -86,8 +86,8 @@ namespace CalculationManager
     /// </summary>
     /// <param name="expressionString">wstring representing expression to be displayed</param>
     void CalculatorManager::SetExpressionDisplay(
-        _Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
-        _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
+        _Inout_ shared_ptr<vector<pair<wstring, int>>> const& tokens,
+        _Inout_ shared_ptr<vector<shared_ptr<IExpressionCommand>>> const& commands)
     {
         if (!m_inHistoryItemLoadMode)
         {
