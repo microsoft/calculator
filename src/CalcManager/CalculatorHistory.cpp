@@ -12,17 +12,16 @@ namespace
     static wstring GetGeneratedExpression(const vector<pair<wstring, int>>& tokens)
     {
         wstring expression;
-        const size_t nTokens = tokens.size();
+        bool isFirst = true;
 
-        for (size_t i = 0; i < nTokens; ++i)
+        for (auto const& token : tokens)
         {
-            const auto& currentPair = tokens[i];
-            expression.append(currentPair.first);
-
-            if (i != (nTokens - 1))
+            if (isFirst)
             {
+                isFirst = false;
                 expression += L' ';
             }
+            expression.append(token.first);
         }
 
         return expression;

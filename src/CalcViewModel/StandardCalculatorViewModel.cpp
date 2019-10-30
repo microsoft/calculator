@@ -339,7 +339,7 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<vector<pair<wstri
         auto currentToken = (*tokens)[i];
         
         Common::TokenType type;
-        bool isEditable = (currentToken.second == -1) ? false : true;
+        bool isEditable = currentToken.second != -1;
         localizer.LocalizeDisplayValue(&(currentToken.first));
 
         if (!isEditable)
@@ -1278,8 +1278,7 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
     wstring updatedToken = L"";
 
     const pair<wstring, int>& token = m_tokens->at(tokenPosition);
-    const unsigned int tokenCommandIndex = token.second;
-    const shared_ptr<IExpressionCommand>& tokenCommand = m_commands->at(tokenCommandIndex);
+    const shared_ptr<IExpressionCommand>& tokenCommand = m_commands->at(token.second);
 
     if (IsUnaryOp(nOpCode) && command != Command::CommandSIGN)
     {
@@ -1345,7 +1344,7 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
         if (tokenCommand->GetCommandType() == CommandType::UnaryCommand)
         {
             shared_ptr<IExpressionCommand> spSignCommand = make_shared<CUnaryCommand>(nOpCode);
-            m_commands->insert(m_commands->begin() + tokenCommandIndex + 1, spSignCommand);
+            m_commands->insert(m_commands->begin() + token.second + 1, spSignCommand);
         }
         else
         {
@@ -1358,7 +1357,7 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
 
     if (!handleOperand)
     {
-        (*m_commands)[tokenCommandIndex] = tokenCommand;
+        (*m_commands)[token.second] = tokenCommand;
         (*m_tokens)[tokenPosition].first = updatedToken;
 
         DisplayExpressionToken ^ displayExpressionToken = ExpressionTokens->GetAt(tokenPosition);

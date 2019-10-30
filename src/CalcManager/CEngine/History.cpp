@@ -436,7 +436,7 @@ void CHistoryCollector::UpdateHistoryExpression(uint32_t radix, int32_t precisio
         return;
     }
 
-    for (auto token : *m_spTokens)
+    for (auto& token : *m_spTokens)
     {
         int commandPosition = token.second;
         if (commandPosition != -1)
