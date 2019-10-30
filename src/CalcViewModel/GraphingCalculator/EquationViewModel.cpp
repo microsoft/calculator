@@ -75,7 +75,7 @@ namespace CalculatorApp::ViewModel
             SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Domain"), Domain, m_resourceLoader->GetString(L"KGFDomainNone"));
             SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Range"), Range, m_resourceLoader->GetString(L"KGFRangeNone"));
             SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"XIntercept"), XIntercept, m_resourceLoader->GetString(L"KGFXInterceptNone"));
-            SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"YIntercept"), XIntercept, m_resourceLoader->GetString(L"KGFYInterceptNone"));
+            SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"YIntercept"), YIntercept, m_resourceLoader->GetString(L"KGFYInterceptNone"));
             SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Minima"), Minima, m_resourceLoader->GetString(L"KGFMinimaNone"));
             SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Maxima"), Maxima, m_resourceLoader->GetString(L"KGFMaximaNone"));
             SetKeyGraphFeaturesItems(
