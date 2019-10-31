@@ -38,7 +38,7 @@ AboutFlyout::AboutFlyout()
     Header->Text = resourceLoader->GetResourceString("AboutButton/Content");
 
     auto copyrightText =
-        LocalizationStringUtil::GetLocalizedString(resourceLoader->GetResourceString("AboutControlCopyright"), ref new String(to_wstring(BUILD_YEAR).c_str()));
+        LocalizationStringUtil::GetLocalizedString(resourceLoader->GetResourceString("AboutControlCopyright"), StringReference(to_wstring(BUILD_YEAR).c_str()));
     AboutControlCopyrightRun->Text = copyrightText;
 }
 

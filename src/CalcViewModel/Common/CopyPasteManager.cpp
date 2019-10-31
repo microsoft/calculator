@@ -92,13 +92,12 @@ bool CopyPasteManager::HasStringToPaste()
     return Clipboard::GetContent()->Contains(StandardDataFormats::Text);
 }
 
-// return "NoOp" if pastedText is invalid else return pastedText
-
 String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode mode, int programmerNumberBase, BitLength bitLengthType)
 {
-    return CopyPasteManager::ValidatePasteExpression(pastedText, mode, NavCategory::GetGroupType(mode), programmerNumberBase, bitLengthType);
+    return ValidatePasteExpression(pastedText, mode, NavCategory::GetGroupType(mode), programmerNumberBase, bitLengthType);
 }
 
+// return "NoOp" if pastedText is invalid else return pastedText
 String
     ^ CopyPasteManager::ValidatePasteExpression(
         String ^ pastedText,

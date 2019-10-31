@@ -18,7 +18,6 @@ using namespace Windows::UI::Xaml::Data;
 
 String ^ RadixButton::GetRawDisplayValue()
 {
-    wstring rawValue;
     String ^ radixContent = Content->ToString();
     return LocalizationSettings::GetInstance().RemoveGroupSeparators(radixContent);
 }
