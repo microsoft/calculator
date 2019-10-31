@@ -92,36 +92,25 @@ wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, wchar_t* unwantedCh
 }
 
 void Utils::SerializeCommandsAndTokens(
-    _In_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
-    _In_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands,
+    _In_ shared_ptr<vector<pair<wstring, int>>> const& tokens,
+    _In_ shared_ptr<vector<shared_ptr<IExpressionCommand>>> const& commands,
     DataWriter ^ writer)
 {
-    unsigned int commandsSize;
-    IFTPlatformException(commands->GetSize(&commandsSize));
-
     // Save the size of the commands vector
-    writer->WriteUInt32(commandsSize);
+    writer->WriteUInt32(static_cast<unsigned int>(commands->size()));
 
     SerializeCommandVisitor cmdVisitor(writer);
-    for (unsigned int i = 0; i < commandsSize; ++i)
+    for (const auto& exprCmd : *commands)
     {
-        shared_ptr<IExpressionCommand> exprCmd;
-        IFTPlatformException(commands->GetAt(i, &exprCmd));
-
         CalculationManager::CommandType commandType = exprCmd->GetCommandType();
         writer->WriteInt32(static_cast<int>(commandType));
         exprCmd->Accept(cmdVisitor);
     }
 
-    unsigned int tokensSize;
-    IFTPlatformException(tokens->GetSize(&tokensSize));
-    writer->WriteUInt32(tokensSize);
+    writer->WriteUInt32(static_cast<unsigned int>(tokens->size()));
 
-    for (unsigned int i = 0; i < tokensSize; ++i)
+    for (const auto& eachToken : *tokens)
     {
-        pair<wstring, int> eachToken;
-        IFTPlatformException(tokens->GetAt(i, &eachToken));
-
         auto stringData = ref new Platform::String(eachToken.first.c_str());
         auto intData = eachToken.second;
         writer->WriteUInt32(writer->MeasureString(stringData));
@@ -130,9 +119,9 @@ void Utils::SerializeCommandsAndTokens(
     }
 }
 
-const shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> Utils::DeserializeCommands(DataReader ^ reader)
+const shared_ptr<vector<shared_ptr<IExpressionCommand>>> Utils::DeserializeCommands(DataReader ^ reader)
 {
-    shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> commandVector = make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>();
+    auto commandVector = make_shared<vector<shared_ptr<IExpressionCommand>>>();
     auto commandVectorSize = reader->ReadUInt32();
 
     CommandDeserializer cmdDeserializer(reader);
@@ -141,26 +130,23 @@ const shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> Utils::Deseri
         auto commandTypeInt = reader->ReadInt32();
         CalculationManager::CommandType commandType = static_cast<CalculationManager::CommandType>(commandTypeInt);
         shared_ptr<IExpressionCommand> exprCmd = cmdDeserializer.Deserialize(commandType);
-        commandVector->Append(exprCmd);
+        commandVector->push_back(exprCmd);
     }
 
     return commandVector;
 }
 
-const shared_ptr<CalculatorVector<pair<wstring, int>>> Utils::DeserializeTokens(DataReader ^ reader)
+const shared_ptr<vector<pair<wstring, int>>> Utils::DeserializeTokens(DataReader ^ reader)
 {
-    shared_ptr<CalculatorVector<pair<wstring, int>>> tokenVector = make_shared<CalculatorVector<pair<wstring, int>>>();
+    auto tokenVector = make_shared<vector<pair<wstring, int>>>();
     auto tokensSize = reader->ReadUInt32();
 
     for (unsigned int i = 0; i < tokensSize; ++i)
     {
-        pair<wstring, int> eachToken;
         auto stringDataLen = reader->ReadUInt32();
         auto stringData = reader->ReadString(stringDataLen);
         auto intData = reader->ReadInt32();
-        eachToken.first = stringData->Data();
-        eachToken.second = intData;
-        tokenVector->Append(eachToken);
+        tokenVector->emplace_back(stringData->Data(), intData);
     }
 
     return tokenVector;

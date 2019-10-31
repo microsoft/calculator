@@ -473,9 +473,7 @@ void Calculator::OnHideHistoryClicked()
 
 void Calculator::OnHistoryItemClicked(_In_ HistoryItemViewModel ^ e)
 {
-    unsigned int tokenSize;
     assert(e->GetTokens() != nullptr);
-    e->GetTokens()->GetSize(&tokenSize);
     Model->SetHistoryExpressionDisplay(e->GetTokens(), e->GetCommands());
     Model->SetExpressionDisplay(e->GetTokens(), e->GetCommands());
     Model->SetPrimaryDisplay(e->Result, false);

@@ -291,8 +291,8 @@ void StandardCalculatorViewModel::DisableButtons(CommandType selectedExpressionC
 }
 
 void StandardCalculatorViewModel::SetExpressionDisplay(
-    _Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
-    _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
+    _Inout_ shared_ptr<std::vector<pair<wstring, int>>> const& tokens,
+    _Inout_ shared_ptr<std::vector<shared_ptr<IExpressionCommand>>> const& commands)
 {
     m_tokens = tokens;
     m_commands = commands;
@@ -307,11 +307,11 @@ void StandardCalculatorViewModel::SetExpressionDisplay(
 }
 
 void StandardCalculatorViewModel::SetHistoryExpressionDisplay(
-    _Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
-    _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
+    _Inout_ shared_ptr<vector<pair<wstring, int>>> const& tokens,
+    _Inout_ shared_ptr<vector<shared_ptr<IExpressionCommand>>> const& commands)
 {
-    m_tokens = make_shared<CalculatorVector<pair<wstring, int>>>(*tokens);
-    m_commands = make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>(*commands);
+    m_tokens = make_shared<vector<pair<wstring, int>>>(*tokens);
+    m_commands = make_shared<vector<shared_ptr<IExpressionCommand>>>(*commands);
     IsEditingEnabled = false;
 
     // Setting the History Item Load Mode so that UI does not get updated with recalculation of every token
@@ -321,12 +321,11 @@ void StandardCalculatorViewModel::SetHistoryExpressionDisplay(
     m_isLastOperationHistoryLoad = true;
 }
 
-void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens)
+void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<vector<pair<wstring, int>>> const& tokens)
 {
     AreTokensUpdated = false;
 
-    unsigned int nTokens = 0;
-    tokens->GetSize(&nTokens);
+    const size_t nTokens = tokens->size();
 
     if (nTokens == 0)
     {
@@ -334,50 +333,47 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<CalculatorVector<
         return;
     }
 
-    pair<wstring, int> currentToken;
     const auto& localizer = LocalizationSettings::GetInstance();
 
     const wstring separator = L" ";
     for (unsigned int i = 0; i < nTokens; ++i)
     {
-        if (SUCCEEDED(tokens->GetAt(i, &currentToken)))
+        auto currentToken = (*tokens)[i];
+        
+        Common::TokenType type;
+        bool isEditable = currentToken.second != -1;
+        localizer.LocalizeDisplayValue(&(currentToken.first));
+
+        if (!isEditable)
         {
-            Common::TokenType type;
-            bool isEditable = (currentToken.second == -1) ? false : true;
-            localizer.LocalizeDisplayValue(&(currentToken.first));
+            type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
+        }
+        else
+        {
+            const shared_ptr<IExpressionCommand>& command = m_commands->at(currentToken.second);
+            type = command->GetCommandType() == CommandType::OperandCommand ? TokenType::Operand : TokenType::Operator;
+        }
 
-            if (!isEditable)
+        auto currentTokenString = StringReference(currentToken.first.c_str());
+        if (i < m_ExpressionTokens->Size)
+        {
+            auto existingItem = m_ExpressionTokens->GetAt(i);
+            if (type == existingItem->Type && existingItem->Token->Equals(currentTokenString))
             {
-                type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
-            }
-            else
-            {
-                shared_ptr<IExpressionCommand> command;
-                IFTPlatformException(m_commands->GetAt(static_cast<unsigned int>(currentToken.second), &command));
-                type = command->GetCommandType() == CommandType::OperandCommand ? TokenType::Operand : TokenType::Operator;
-            }
-
-            auto currentTokenString = StringReference(currentToken.first.c_str());
-            if (i < m_ExpressionTokens->Size)
-            {
-                auto existingItem = m_ExpressionTokens->GetAt(i);
-                if (type == existingItem->Type && existingItem->Token->Equals(currentTokenString))
-                {
-                    existingItem->TokenPosition = i;
-                    existingItem->IsTokenEditable = isEditable;
-                    existingItem->CommandIndex = 0;
-                }
-                else
-                {
-                    auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
-                    m_ExpressionTokens->InsertAt(i, expressionToken);
-                }
+                existingItem->TokenPosition = i;
+                existingItem->IsTokenEditable = isEditable;
+                existingItem->CommandIndex = 0;
             }
             else
             {
                 auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
-                m_ExpressionTokens->Append(expressionToken);
+                m_ExpressionTokens->InsertAt(i, expressionToken);
             }
+        }
+        else
+        {
+            auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
+            m_ExpressionTokens->Append(expressionToken);
         }
     }
 
@@ -1276,16 +1272,12 @@ ANGLE_TYPE GetAngleTypeFromCommand(Command command)
 
 void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosition, _In_ Command command)
 {
-    pair<wstring, int> token;
     bool handleOperand = false;
     int nOpCode = static_cast<int>(command);
     wstring updatedToken = L"";
 
-    shared_ptr<IExpressionCommand> tokenCommand;
-    IFTPlatformException(m_tokens->GetAt(tokenPosition, &token));
-
-    unsigned int tokenCommandIndex = token.second;
-    IFTPlatformException(m_commands->GetAt(tokenCommandIndex, &tokenCommand));
+    const pair<wstring, int>& token = m_tokens->at(tokenPosition);
+    const shared_ptr<IExpressionCommand>& tokenCommand = m_commands->at(token.second);
 
     if (IsUnaryOp(nOpCode) && command != Command::CommandSIGN)
     {
@@ -1351,7 +1343,7 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
         if (tokenCommand->GetCommandType() == CommandType::UnaryCommand)
         {
             shared_ptr<IExpressionCommand> spSignCommand = make_shared<CUnaryCommand>(nOpCode);
-            IFTPlatformException(m_commands->InsertAt(tokenCommandIndex + 1, spSignCommand));
+            m_commands->insert(m_commands->begin() + token.second + 1, spSignCommand);
         }
         else
         {
@@ -1364,12 +1356,8 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
 
     if (!handleOperand)
     {
-        IFTPlatformException(m_commands->SetAt(tokenCommandIndex, tokenCommand));
-
-        pair<wstring, int> selectedToken;
-        IFTPlatformException(m_tokens->GetAt(tokenPosition, &selectedToken));
-        selectedToken.first = updatedToken;
-        IFTPlatformException(m_tokens->SetAt(tokenPosition, selectedToken));
+        (*m_commands)[token.second] = tokenCommand;
+        (*m_tokens)[tokenPosition].first = updatedToken;
 
         DisplayExpressionToken ^ displayExpressionToken = ExpressionTokens->GetAt(tokenPosition);
         displayExpressionToken->Token = ref new Platform::String(updatedToken.c_str());
@@ -1387,30 +1375,21 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
 {
     // Recalculate
     Command currentDegreeMode = m_standardCalculatorManager.GetCurrentDegreeMode();
-    shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> savedCommands = make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>();
-
+    shared_ptr<vector<shared_ptr<IExpressionCommand>>> savedCommands = make_shared<vector<shared_ptr<IExpressionCommand>>>();
     vector<int> currentCommands;
-    unsigned int commandListCount;
-    m_commands->GetSize(&commandListCount);
-    for (unsigned int i = 0; i < commandListCount; i++)
-    {
-        shared_ptr<IExpressionCommand> command;
-        IFTPlatformException(m_commands->GetAt(i, &command));
 
-        savedCommands->Append(command);
+    for (const auto& command : *m_commands)
+    {
+        savedCommands->push_back(command);
         CommandType commandType = command->GetCommandType();
 
         if (commandType == CommandType::UnaryCommand)
         {
             shared_ptr<IUnaryCommand> spCommand = dynamic_pointer_cast<IUnaryCommand>(command);
-            shared_ptr<CalculatorVector<int>> unaryCommands = spCommand->GetCommands();
-            unsigned int unaryCommandCount;
-            unaryCommands->GetSize(&unaryCommandCount);
+            const shared_ptr<vector<int>>& unaryCommands = spCommand->GetCommands();
 
-            int nUCode;
-            for (unsigned int j = 0; j < unaryCommandCount; ++j)
+            for (int nUCode : *unaryCommands)
             {
-                IFTPlatformException(unaryCommands->GetAt(j, &nUCode));
                 currentCommands.push_back(nUCode);
             }
         }
@@ -1430,15 +1409,11 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
         if (commandType == CommandType::OperandCommand)
         {
             shared_ptr<IOpndCommand> spCommand = dynamic_pointer_cast<IOpndCommand>(command);
-            shared_ptr<CalculatorVector<int>> opndCommands = spCommand->GetCommands();
-            unsigned int opndCommandCount;
-            opndCommands->GetSize(&opndCommandCount);
+            const shared_ptr<vector<int>>& opndCommands = spCommand->GetCommands();
             bool fNeedIDCSign = spCommand->IsNegative();
 
-            int nOCode;
-            for (unsigned int j = 0; j < opndCommandCount; ++j)
+            for (int nOCode : *opndCommands)
             {
-                IFTPlatformException(opndCommands->GetAt(j, &nOCode));
                 currentCommands.push_back(nOCode);
 
                 if (fNeedIDCSign && nOCode != IDC_0)
@@ -1449,16 +1424,12 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
             }
         }
     }
-    shared_ptr<CalculatorVector<pair<wstring, int>>> savedTokens = make_shared<CalculatorVector<pair<wstring, int>>>();
 
-    unsigned int tokenCount;
-    IFTPlatformException(m_tokens->GetSize(&tokenCount));
+    shared_ptr<vector<pair<wstring, int>>> savedTokens = make_shared<vector<pair<wstring, int>>>();
 
-    for (unsigned int i = 0; i < tokenCount; ++i)
+    for (const auto& currentToken : *m_tokens)
     {
-        pair<wstring, int> currentToken;
-        IFTPlatformException(m_tokens->GetAt(i, &currentToken));
-        savedTokens->Append(currentToken);
+        savedTokens->push_back(currentToken);
     }
 
     m_standardCalculatorManager.Reset(false);
@@ -1496,12 +1467,9 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
 
 CommandType StandardCalculatorViewModel::GetSelectedTokenType(_In_ unsigned int tokenPosition)
 {
-    pair<wstring, int> token;
-    shared_ptr<IExpressionCommand> tokenCommand;
-    IFTPlatformException(m_tokens->GetAt(tokenPosition, &token));
-
+    const pair<wstring, int>& token = m_tokens->at(tokenPosition);
     unsigned int tokenCommandIndex = token.second;
-    IFTPlatformException(m_commands->GetAt(tokenCommandIndex, &tokenCommand));
+    const shared_ptr<IExpressionCommand>& tokenCommand = m_commands->at(tokenCommandIndex);
 
     return tokenCommand->GetCommandType();
 }
@@ -1714,20 +1682,18 @@ NumbersAndOperatorsEnum StandardCalculatorViewModel::ConvertIntegerToNumbersAndO
 
 void StandardCalculatorViewModel::UpdateOperand(int pos, String ^ text)
 {
-    pair<wstring, int> p;
-    m_tokens->GetAt(pos, &p);
+    pair<wstring, int> p = m_tokens->at(pos);
 
     String ^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(text);
     p.first = englishString->Data();
 
     int commandPos = p.second;
-    shared_ptr<IExpressionCommand> exprCmd;
-    m_commands->GetAt(commandPos, &exprCmd);
+    const shared_ptr<IExpressionCommand>& exprCmd = m_commands->at(commandPos);
     auto operandCommand = std::dynamic_pointer_cast<IOpndCommand>(exprCmd);
 
     if (operandCommand != nullptr)
     {
-        shared_ptr<CalculatorVector<int>> commands = make_shared<CalculatorVector<int>>();
+        shared_ptr<vector<int>> commands = make_shared<vector<int>>();
         size_t length = p.first.length();
         if (length > 0)
         {
@@ -1765,12 +1731,12 @@ void StandardCalculatorViewModel::UpdateOperand(int pos, String ^ text)
                         continue;
                     }
                 }
-                commands->Append(num);
+                commands->push_back(num);
             }
         }
         else
         {
-            commands->Append(0);
+            commands->push_back(0);
         }
         operandCommand->SetCommands(commands);
     }
@@ -1779,7 +1745,7 @@ void StandardCalculatorViewModel::UpdateOperand(int pos, String ^ text)
 void StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
 {
     vector<unsigned char> savedCommands = m_standardCalculatorManager.GetSavedCommands();
-    shared_ptr<CalculatorVector<int>> commands = make_shared<CalculatorVector<int>>();
+    shared_ptr<vector<int>> commands = make_shared<vector<int>>();
     bool isDecimal = false;
     bool isNegative = false;
     bool isExpMode = false;
@@ -1826,18 +1792,16 @@ void StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
             isExpMode = false;
             ePlusMode = false;
             eMinusMode = false;
-            commands->Clear();
+            commands->clear();
             continue;
         }
-        commands->Append(num);
+        commands->push_back(num);
     }
 
-    unsigned int size = 0;
-    commands->GetSize(&size);
-    if (size > 0)
+    if (!commands->empty())
     {
         shared_ptr<IOpndCommand> sp = make_shared<COpndCommand>(commands, isNegative, isDecimal, isExpMode);
-        m_commands->Append(sp);
+        m_commands->push_back(sp);
     }
     Recalculate();
 }

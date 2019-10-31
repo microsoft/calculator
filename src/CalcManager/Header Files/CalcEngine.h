@@ -18,7 +18,6 @@
 #include "CCommand.h"
 #include "EngineStrings.h"
 #include "../Command.h"
-#include "../CalculatorVector.h"
 #include "../ExpressionCommand.h"
 #include "RadixType.h"
 #include "History.h" // for History Collector

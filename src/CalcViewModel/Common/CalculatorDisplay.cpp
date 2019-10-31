@@ -71,8 +71,8 @@ void CalculatorDisplay::SetIsInError(bool isError)
 }
 
 void CalculatorDisplay::SetExpressionDisplay(
-    _Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
-    _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands)
+    _Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
+    _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands)
 {
     if (m_callbackReference != nullptr)
     {

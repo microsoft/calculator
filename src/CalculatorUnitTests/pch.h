@@ -80,7 +80,6 @@ namespace CalculatorApp::Common::Automation
 namespace CustomPeers = CalculatorApp::Common::Automation;
 
 // CalcManager Headers
-#include "CalcManager/CalculatorVector.h"
 #include "CalcManager/ExpressionCommand.h"
 #include "CalcManager/CalculatorResource.h"
 #include "CalcManager/CalculatorManager.h"
