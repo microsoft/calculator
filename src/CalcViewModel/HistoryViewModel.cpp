@@ -371,9 +371,10 @@ void HistoryViewModel::UpdateItemSize()
     ItemSize = Items->Size;
 }
 
-void HistoryViewModel::MakeHistoryClearedNarratorAnnouncement(String ^ resourceKey, String ^ &formatVariable)
+Platform::String ^ HistoryViewModel::MakeHistoryClearedNarratorAnnouncement(String ^ resourceKey, String ^ formatVariable)
 {
     String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(resourceKey, formatVariable);
 
     HistoryAnnouncement = CalculatorAnnouncement::GetHistoryClearedAnnouncement(announcement);
+    return announcement;
 }

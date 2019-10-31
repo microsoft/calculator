@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -9,49 +9,87 @@ namespace CalculatorApp
 {
     namespace Common
     {
-        class LocalizationStringUtil
+    public
+        ref class LocalizationStringUtil sealed
         {
         public:
-            static std::wstring GetLocalizedString(const wchar_t* pMessage, ...)
+            static Platform::String ^ GetLocalizedString(Platform::String ^ pMessage)
             {
-                std::wstring returnString = L"";
-                const UINT32 length = 1024;
-                std::unique_ptr<wchar_t[]> spBuffer = std::unique_ptr<wchar_t[]>(new wchar_t[length]);
-                va_list args = NULL;
-                va_start(args, pMessage);
-                DWORD fmtReturnVal = FormatMessage(FORMAT_MESSAGE_FROM_STRING, pMessage, 0, 0, spBuffer.get(), length, &args);
-                va_end(args);
+                return GetLocalizedStringInternal(pMessage);
+            }
 
-                if (fmtReturnVal != 0)
-                {
-                    returnString = spBuffer.get();
-                }
+            static Platform::String ^ GetLocalizedString(Platform::String ^ pMessage, Platform::String ^ param1)
+            {
+                return GetLocalizedStringInternal(pMessage, param1->Data());
+            }
 
-                return returnString;
+            static Platform::String ^ GetLocalizedString(Platform::String ^ pMessage, Platform::String ^ param1, Platform::String ^ param2)
+            {
+                return GetLocalizedStringInternal(pMessage, param1->Data(), param2->Data());
+            }
+
+            static Platform::String ^ GetLocalizedString(Platform::String ^ pMessage, Platform::String ^ param1, Platform::String ^ param2, Platform::String ^ param3)
+            {
+                return GetLocalizedStringInternal(pMessage, param1->Data(), param2->Data(), param3->Data());
+            }
+
+            static Platform::String ^ GetLocalizedString(Platform::String ^ pMessage, Platform::String ^ param1, Platform::String ^ param2, Platform::String ^ param3, Platform::String ^ param4)
+            {
+                return GetLocalizedStringInternal(pMessage, param1->Data(), param2->Data(), param3->Data(), param4->Data());
+            }
+
+            static Platform::String^ GetLocalizedNarratorAnnouncement(Platform::String ^ resourceKey, Platform::String^ formatVariable)
+            {
+                return GetLocalizedString(GetResourceValue(resourceKey));
+            }
+
+            static Platform::String^ GetLocalizedNarratorAnnouncement(Platform::String ^ resourceKey, Platform::String^ formatVariable, Platform::String^ param1)
+            {
+                return GetLocalizedString(GetResourceValue(resourceKey), param1);
+            }
+
+            static Platform::String^ GetLocalizedNarratorAnnouncement(Platform::String ^ resourceKey, Platform::String^ formatVariable, Platform::String^ param1, Platform::String^ param2)
+            {
+                return GetLocalizedString(GetResourceValue(resourceKey), param1, param2);
+            }
+        private:
+    
+            template <typename... T>
+            static Platform::String^ GetLocalizedNarratorAnnouncementInternal(Platform::String ^ resourceKey, Platform::String^ formatVariable, T*... params)
+            {
+                return GetLocalizedString(GetResourceValue(resourceKey), params...).c_str();
             }
 
             template <typename... T>
-            static Platform::String^ GetLocalizedNarratorAnnouncement(Platform::String^ resourceKey, Platform::String^& formatVariable, T*... params)
+            static Platform::String ^ GetLocalizedStringInternal(Platform::String ^ pMessage, T*...)
+        {
+            std::wstring returnString = L"";
+            const UINT32 length = 1024;
+            std::unique_ptr<wchar_t[]> spBuffer = std::unique_ptr<wchar_t[]>(new wchar_t[length]);
+            va_list args = NULL;
+            va_start(args, pMessage);
+            DWORD fmtReturnVal = FormatMessage(FORMAT_MESSAGE_FROM_STRING, pMessage->Data(), 0, 0, spBuffer.get(), length, &args);
+            va_end(args);
+
+            if (fmtReturnVal != 0)
             {
-                EnsureInitialization(resourceKey, formatVariable);
-                return StringReference(GetLocalizedString(formatVariable->Data(), params...).c_str());
+                return ref new Platform::String(spBuffer.get());
             }
+            else
+            {
+                return ref new Platform::String();
+            }
+        }
 
         private:
-            static void EnsureInitialization(Platform::String^ resourceKey, Platform::String^& formatVariable)
+            static Platform::String^ GetResourceValue(Platform::String ^ resourceKey)
             {
                 if (resourceKey == nullptr || resourceKey->IsEmpty())
                 {
-                    return;
+                    return L"";
                 }
 
-                // If the formatVariable already has a value, we don't need to set it again. Simply return.
-                if (formatVariable != nullptr && !formatVariable->IsEmpty())
-                {
-                    return;
-                }
-
-                formatVariable = AppResourceProvider::GetInstance().GetResourceString(resourceKey);
+                return AppResourceProvider::GetInstance()->GetResourceString(resourceKey);
             }
         };
     }

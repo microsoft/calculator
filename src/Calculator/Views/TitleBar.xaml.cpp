@@ -37,9 +37,9 @@ namespace CalculatorApp
         Loaded += ref new RoutedEventHandler(this, &TitleBar::OnLoaded);
         Unloaded += ref new RoutedEventHandler(this, &TitleBar::OnUnloaded);
 #ifdef IS_STORE_BUILD
-        AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
+        AppName->Text = AppResourceProvider::GetInstance()->GetResourceString(L"AppName");
 #else
-        AppName->Text = AppResourceProvider::GetInstance().GetResourceString(L"DevAppName");
+        AppName->Text = AppResourceProvider::GetInstance()->GetResourceString(L"DevAppName");
 #endif // IS_STORE_BUILD
     }
 

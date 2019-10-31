@@ -137,12 +137,12 @@ UnitConverterViewModel::UnitConverterViewModel(const shared_ptr<UCM::IUnitConver
     m_currencyMaxFractionDigits = m_currencyFormatter->FractionDigits;
 
     auto resourceLoader = AppResourceProvider::GetInstance();
-    m_localizedValueFromFormat = resourceLoader.GetResourceString(UnitConverterResourceKeys::ValueFromFormat);
-    m_localizedValueToFormat = resourceLoader.GetResourceString(UnitConverterResourceKeys::ValueToFormat);
-    m_localizedConversionResultFormat = resourceLoader.GetResourceString(UnitConverterResourceKeys::ConversionResultFormat);
-    m_localizedValueFromDecimalFormat = resourceLoader.GetResourceString(UnitConverterResourceKeys::ValueFromDecimalFormat);
-    m_localizedInputUnitName = resourceLoader.GetResourceString(UnitConverterResourceKeys::InputUnit_Name);
-    m_localizedOutputUnitName = resourceLoader.GetResourceString(UnitConverterResourceKeys::OutputUnit_Name);
+    m_localizedValueFromFormat = resourceLoader->GetResourceString(UnitConverterResourceKeys::ValueFromFormat);
+    m_localizedValueToFormat = resourceLoader->GetResourceString(UnitConverterResourceKeys::ValueToFormat);
+    m_localizedConversionResultFormat = resourceLoader->GetResourceString(UnitConverterResourceKeys::ConversionResultFormat);
+    m_localizedValueFromDecimalFormat = resourceLoader->GetResourceString(UnitConverterResourceKeys::ValueFromDecimalFormat);
+    m_localizedInputUnitName = resourceLoader->GetResourceString(UnitConverterResourceKeys::InputUnit_Name);
+    m_localizedOutputUnitName = resourceLoader->GetResourceString(UnitConverterResourceKeys::OutputUnit_Name);
 
     Unit1AutomationName = m_localizedInputUnitName;
     Unit2AutomationName = m_localizedOutputUnitName;
@@ -390,7 +390,7 @@ String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& st
 
 void UnitConverterViewModel::DisplayPasteError()
 {
-    String ^ errorMsg = AppResourceProvider::GetInstance().GetCEngineString(StringReference(SIDS_DOMAIN)); /*SIDS_DOMAIN is for "invalid input"*/
+    String ^ errorMsg = AppResourceProvider::GetInstance()->GetCEngineString(StringReference(SIDS_DOMAIN)); /*SIDS_DOMAIN is for "invalid input"*/
     Value1 = errorMsg;
     Value2 = errorMsg;
     m_relocalizeStringOnSwitch = false;
@@ -515,8 +515,10 @@ void UnitConverterViewModel::OnPasteCommand(Platform::Object ^ parameter)
     // Ensure that the paste happens on the UI thread
     // EventWriteClipboardPaste_Start();
     // Any converter ViewMode is fine here.
-    CopyPasteManager::GetStringToPaste(m_Mode, NavCategory::GetGroupType(m_Mode))
-        .then([this](String ^ pastedString) { OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
+    
+    auto that(this);
+    create_task(CopyPasteManager::GetStringToPaste(m_Mode, NavCategory::GetGroupType(m_Mode), -1, BitLength::BitLengthUnknown))
+        .then([that](String ^ pastedString) { that->OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 
 void UnitConverterViewModel::InitializeView()
@@ -650,7 +652,7 @@ void UnitConverterViewModel::OnCurrencyDataLoadFinished(bool didLoad)
     ResetCategory();
 
     StringReference key = didLoad ? UnitConverterResourceKeys::CurrencyRatesUpdated : UnitConverterResourceKeys::CurrencyRatesUpdateFailed;
-    String ^ announcement = AppResourceProvider::GetInstance().GetResourceString(key);
+    String ^ announcement = AppResourceProvider::GetInstance()->GetResourceString(key);
     Announcement = CalculatorAnnouncement::GetUpdateCurrencyRatesAnnouncement(announcement);
 }
 
@@ -665,7 +667,7 @@ void UnitConverterViewModel::RefreshCurrencyRatios()
     m_isCurrencyDataLoaded = false;
     IsCurrencyLoadingVisible = true;
 
-    String ^ announcement = AppResourceProvider::GetInstance().GetResourceString(UnitConverterResourceKeys::UpdatingCurrencyRates);
+    String ^ announcement = AppResourceProvider::GetInstance()->GetResourceString(UnitConverterResourceKeys::UpdatingCurrencyRates);
     Announcement = CalculatorAnnouncement::GetUpdateCurrencyRatesAnnouncement(announcement);
 
     auto refreshTask = create_task([this] { return m_model->RefreshCurrencyRatios().get(); });
@@ -878,7 +880,7 @@ NumbersAndOperatorsEnum UnitConverterViewModel::MapCharacterToButtonId(const wch
 void UnitConverterViewModel::OnPaste(String ^ stringToPaste)
 {
     // If pastedString is invalid("NoOp") then display pasteError else process the string
-    if (stringToPaste == StringReference(CopyPasteManager::PasteErrorString))
+    if (CopyPasteManager::IsErrorMessage(stringToPaste))
     {
         this->DisplayPasteError();
         return;
@@ -954,8 +956,7 @@ String ^ UnitConverterViewModel::GetLocalizedAutomationName(_In_ String ^ displa
         format = m_localizedValueFromDecimalFormat;
     }
 
-    wstring localizedResult = LocalizationStringUtil::GetLocalizedString(format->Data(), displayvalue->Data(), unitname->Data());
-    return ref new String(localizedResult.c_str());
+    return LocalizationStringUtil::GetLocalizedString(format, displayvalue, unitname);
 }
 
 String
@@ -965,11 +966,7 @@ String
         _In_ String ^ toValue,
         _In_ String ^ toUnit)
 {
-    String ^ localizedString =
-        ref new String(LocalizationStringUtil::GetLocalizedString(
-                           m_localizedConversionResultFormat->Data(), fromValue->Data(), fromUnit->Data(), toValue->Data(), toUnit->Data())
-                           .c_str());
-    return localizedString;
+    return LocalizationStringUtil::GetLocalizedString(m_localizedConversionResultFormat, fromValue, fromUnit, toValue, toUnit);
 }
 
 void UnitConverterViewModel::UpdateValue1AutomationName()
@@ -990,9 +987,9 @@ void UnitConverterViewModel::UpdateValue2AutomationName()
 
 void UnitConverterViewModel::OnMaxDigitsReached()
 {
-    String ^ format = AppResourceProvider::GetInstance().GetResourceString(UnitConverterResourceKeys::MaxDigitsReachedFormat);
-    const wstring& announcement = LocalizationStringUtil::GetLocalizedString(format->Data(), m_lastAnnouncedConversionResult->Data());
-    Announcement = CalculatorAnnouncement::GetMaxDigitsReachedAnnouncement(StringReference(announcement.c_str()));
+    String ^ format = AppResourceProvider::GetInstance()->GetResourceString(UnitConverterResourceKeys::MaxDigitsReachedFormat);
+    auto announcement = LocalizationStringUtil::GetLocalizedString(format, m_lastAnnouncedConversionResult);
+    Announcement = CalculatorAnnouncement::GetMaxDigitsReachedAnnouncement(announcement);
 }
 
 bool UnitConverterViewModel::UnitsAreValid()
@@ -1013,6 +1010,6 @@ void UnitConverterViewModel::StartConversionResultTimer()
 
 String ^ SupplementaryResult::GetLocalizedAutomationName()
 {
-    auto format = AppResourceProvider::GetInstance().GetResourceString("SupplementaryUnit_AutomationName");
-    return ref new String(LocalizationStringUtil::GetLocalizedString(format->Data(), this->Value->Data(), this->Unit->Name->Data()).c_str());
+    auto format = AppResourceProvider::GetInstance()->GetResourceString("SupplementaryUnit_AutomationName");
+    return LocalizationStringUtil::GetLocalizedString(format, this->Value, this->Unit->Name);
 }

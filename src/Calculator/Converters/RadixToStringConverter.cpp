@@ -28,22 +28,22 @@ namespace CalculatorApp
             {
             case RADIX_TYPE::BIN_RADIX:
             {
-                convertedValue = resourceLoader.GetResourceString("Bin");
+                convertedValue = resourceLoader->GetResourceString("Bin");
                 break;
             }
             case RADIX_TYPE::OCT_RADIX:
             {
-                convertedValue = resourceLoader.GetResourceString("Oct");
+                convertedValue = resourceLoader->GetResourceString("Oct");
                 break;
             }
             case RADIX_TYPE::DEC_RADIX:
             {
-                convertedValue = resourceLoader.GetResourceString("Dec");
+                convertedValue = resourceLoader->GetResourceString("Dec");
                 break;
             }
             case RADIX_TYPE::HEX_RADIX:
             {
-                convertedValue = resourceLoader.GetResourceString("Hex");
+                convertedValue = resourceLoader->GetResourceString("Hex");
                 break;
             }
             default:
