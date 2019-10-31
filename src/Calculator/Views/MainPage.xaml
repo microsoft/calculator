@@ -180,7 +180,7 @@
                         Content="&#xEE49;"
                         Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}">
                     <Button.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="Control, Shift" Key="O"/>
+                        <KeyboardAccelerator Modifiers="Menu" Key="Up"/>
                     </Button.KeyboardAccelerators>
                 </Button>
             </Grid>

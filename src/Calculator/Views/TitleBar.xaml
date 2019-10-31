@@ -56,7 +56,7 @@
                 Content="&#xEE47;"
                 Visibility="Collapsed">
             <Button.KeyboardAccelerators>
-                <KeyboardAccelerator Modifiers="Control, Shift" Key="O"/>
+                <KeyboardAccelerator Modifiers="Menu" Key="Down"/>
             </Button.KeyboardAccelerators>
         </Button>
     </Grid>
