@@ -1324,8 +1324,7 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
         }
         if ((token.first.length() > 0) && (token.first[token.first.length() - 1] == L'('))
         {
-            wstring chOpenBrace = L"(";
-            updatedToken.append(chOpenBrace);
+            updatedToken += L'(';
         }
     }
     else if (IsBinOp(nOpCode))
