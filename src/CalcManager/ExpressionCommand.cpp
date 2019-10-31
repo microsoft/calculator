@@ -223,20 +223,20 @@ const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
 
         if (nOpCode == IDC_PNT)
         {
-            m_token.append(wstring{ decimalSymbol });
+            m_token += decimalSymbol;
         }
         else if (nOpCode == IDC_EXP)
         {
-            m_token.append(&chExp);
+            m_token += chExp;
             int nextOpCode = m_commands->at(i + 1);
             if (nextOpCode != IDC_SIGN)
             {
-                m_token.append(&chPlus);
+                m_token += chPlus;
             }
         }
         else if (nOpCode == IDC_SIGN)
         {
-            m_token.append(&chNegate);
+            m_token += chNegate;
         }
         else
         {
@@ -261,15 +261,14 @@ const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
 
             if (m_fNegative)
             {
-                m_token.insert(0, &chNegate);
+                m_token.insert(0, 1, chNegate);
             }
 
             return m_token;
         }
     }
 
-    m_token.clear();
-    m_token.append(&chZero);
+    m_token = chZero;
 
     return m_token;
 }
