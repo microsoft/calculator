@@ -12,7 +12,7 @@
 
     <Grid BorderBrush="Black" BorderThickness="3">
         <StackPanel Margin="10,10,10,10">
-            <TextBlock Text="Grid" FontSize="28"/>
+            <TextBlock x:Name="GridHeading" Text="Grid_d" FontSize="28"/>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
@@ -26,25 +26,26 @@
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="70"/>
                 </Grid.ColumnDefinitions>
-                
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="x-min"/>
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="x-max"/>
-                <TextBox Grid.Row="1" Grid.Column="0" x:Name="x_min" TextChanged="OnTextChanged"/>
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="x_max" TextChanged="OnTextChanged"/>
 
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="y-min"/>
-                <TextBlock Grid.Row="3" Grid.Column="1" Text="y-min"/>
-                <TextBox Grid.Row="4" Grid.Column="0" x:Name="y_min" TextChanged="OnTextChanged"/>
-                <TextBox Grid.Row="4" Grid.Column="1" x:Name="y_max" TextChanged="OnTextChanged"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" x:Name="x_MinHeading" Text="x-min_d"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="x_MaxHeading" Text="x-max_d"/>
+                <TextBox Grid.Row="1" Grid.Column="0" x:Name="x_min" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="x_max" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown"/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" x:Name="y_MinHeading" Text="y-min_d"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" x:Name="y_MaxHeading" Text="y-max_d"/>
+                <TextBox Grid.Row="4" Grid.Column="0" x:Name="y_min" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown"/>
+                <TextBox Grid.Row="4" Grid.Column="1" x:Name="y_max" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown"/>
 
                 <Polyline Grid.Column="2" Grid.RowSpan="5" Points="0,20 50,20 50,110 0,110" Stroke="Blue" StrokeThickness="3" VerticalAlignment="Center"/>
                 <CheckBox Grid.Column="2" Grid.RowSpan="5" Margin="40,20,0,0" x:Name="PreserveAspectRatio" IsChecked="True" VerticalAlignment="Center" Opacity="100"/>
             </Grid>
 
-            <TextBlock Text="Units" FontSize="28" Margin="0,10"/>
+            <TextBlock  x:Name="UnitsHeading" Text="Units_d" FontSize="28" Margin="0,10"/>
             <StackPanel Orientation="Horizontal">
-                <RadioButton x:Name="Radians" Content="Radians" IsChecked="True" Click="TrigUnitModeClick"/>
-                <RadioButton x:Name="Degrees" Content="Degrees" Click="TrigUnitModeClick"/>
+                <RadioButton x:Name="Radians" Content="Radians_d" IsChecked="True" Click="TrigUnitModeClick"/>
+                <RadioButton x:Name="Degrees" Content="Degrees_d" Click="TrigUnitModeClick"/>
+                <RadioButton x:Name="Gradians" Content="Gradians_d" Click="TrigUnitModeClick"/>
             </StackPanel>
         </StackPanel>
     </Grid>

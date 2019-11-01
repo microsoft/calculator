@@ -16,7 +16,7 @@ namespace CalculatorApp
 {
     namespace Controls
     {
-        [Windows::Foundation::Metadata::WebHostHidden] public ref class GraphingSettings sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+        [Windows::Foundation::Metadata::WebHostHidden] public ref class GraphingSettings sealed
         {
         public:
             GraphingSettings();
@@ -24,21 +24,13 @@ namespace CalculatorApp
         public:
             property CalculatorApp::ViewModel::ViewStateViewModel^ ViewState;
 
-            OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
-
         private:
             void TrigUnitModeClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
-            CalculatorApp::ViewModel::ViewStateViewModel ^ ViewModel;
-
             void GraphingCalculator_DataContextChanged(Windows::UI::Xaml::FrameworkElement ^ sender, Windows::UI::Xaml::DataContextChangedEventArgs ^ args);
 
-            void OnPropertyChanged(Platform::String ^ propertyName)
-            {
-                OutputDebugString(L"OnPropertyChanged");
-                // VariableUpdated(this, VariableChangedEventArgs{ Name, Value });
-            }
-            void OnTextChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::TextChangedEventArgs ^ e);
+            // Helper for updating the extents from the various ways we can trigger it.
+            void UpdateExtents(Platform::Object ^ sender);
 
 
             GraphControl::Grapher^ m_ParentGrapher;
@@ -55,7 +47,10 @@ namespace CalculatorApp
                 m_xMax,
                 m_yMax;
 
+            void OnTextChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::TextChangedEventArgs ^ e);
             void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+            void OnLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
+            void OnKeyDown(Platform::Object ^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);
         };
     }
 }

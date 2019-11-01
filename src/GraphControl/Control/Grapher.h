@@ -186,7 +186,7 @@ public
             {
                 std::pair<double, double> newValue(value, XAxisMax);
                 m_graph->GetOptions().SetDefaultXRange(newValue);
-                //UpdateGraph();
+                // UpdateGraph();
                 m_renderMain->RunRenderPass();
             }
         }
@@ -201,7 +201,7 @@ public
             {
                 std::pair<double, double> newValue(XAxisMax, value);
                 m_graph->GetOptions().SetDefaultXRange(newValue);
-                //UpdateGraph();
+                // UpdateGraph();
                 m_renderMain->RunRenderPass();
             }
         }
@@ -216,7 +216,7 @@ public
             {
                 std::pair<double, double> newValue(value, YAxisMax);
                 m_graph->GetOptions().SetDefaultYRange(newValue);
-                //UpdateGraph();
+                // UpdateGraph();
                 m_renderMain->RunRenderPass();
             }
         }
@@ -231,7 +231,7 @@ public
             {
                 std::pair<double, double> newValue(YAxisMax, value);
                 m_graph->GetOptions().SetDefaultYRange(newValue);
-                //UpdateGraph();
+                // UpdateGraph();
                 m_renderMain->RunRenderPass();
             }
         }
@@ -245,6 +245,18 @@ public
             catch (const std::exception&)
             {
                 OutputDebugString(L"GetDisplayRanges failed\r\n");
+            }
+        }
+
+        void SetDisplayRanges(double xMin, double xMax, double yMin, double yMax)
+        {
+            try
+            {
+                m_graph->GetRenderer()->SetDisplayRanges(xMin, xMax, yMin, yMax);
+            }
+            catch (const std::exception&)
+            {
+                OutputDebugString(L"SetDisplayRanges failed\r\n");
             }
         }
 
@@ -336,6 +348,5 @@ public
     public:
         Windows::Storage::Streams::RandomAccessStreamReference ^ GetGraphBitmapStream();
         void UpdateGraph();
-
     };
 }

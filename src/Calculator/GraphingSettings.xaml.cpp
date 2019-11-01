@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "GraphingSettings.xaml.h"
+#include <CalcViewModel\Common\AppResourceProvider.cpp>
 
 using namespace Graphing;
 
@@ -23,6 +24,20 @@ using namespace Windows::UI::Xaml::Navigation;
 GraphingSettings::GraphingSettings()
 {
     InitializeComponent();
+
+    auto resLoader = AppResourceProvider::GetInstance();
+
+    x_MinHeading->Text = resLoader.GetResourceString(L"x-min");
+    x_MaxHeading->Text = resLoader.GetResourceString(L"x-max");
+    y_MinHeading->Text = resLoader.GetResourceString(L"y-min");
+    y_MaxHeading->Text = resLoader.GetResourceString(L"y-max");
+
+    GridHeading->Text = resLoader.GetResourceString(L"GridHeading");
+    UnitsHeading->Text = resLoader.GetResourceString(L"UnitsHeading");
+
+    Radians->Content = resLoader.GetResourceString(L"TrigModeRadians");
+    Degrees->Content = resLoader.GetResourceString(L"TrigModeDegrees");
+    Gradians->Content = resLoader.GetResourceString(L"TrigModeGradians");
 }
 
 void GraphingSettings::GraphingCalculator_DataContextChanged(FrameworkElement ^ sender, DataContextChangedEventArgs ^ args)
@@ -44,10 +59,15 @@ void GraphingSettings::TrigUnitModeClick(Platform::Object ^ sender, Windows::UI:
     }
 }
 
-void CalculatorApp::Controls::GraphingSettings::OnTextChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::TextChangedEventArgs ^ e)
+void GraphingSettings::OnTextChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::TextChangedEventArgs ^ e)
+{
+    //UpdateExtents(sender);
+}
+
+void GraphingSettings::UpdateExtents(Platform::Object ^ sender)
 {
     FrameworkElement ^ fe = (FrameworkElement ^) sender;
-    FrameworkElement ^ currentFocus = (FrameworkElement ^) FocusManager::GetFocusedElement(); 
+    FrameworkElement ^ currentFocus = (FrameworkElement ^) FocusManager::GetFocusedElement();
 
     bool thisControlHasFocus = (fe == currentFocus);
     TextBox ^ tb = reinterpret_cast<TextBox ^>(sender);
@@ -121,8 +141,7 @@ void CalculatorApp::Controls::GraphingSettings::OnTextChanged(Platform::Object ^
                     y_min->Text = m_yMin.ToString();
                     y_max->Text = m_yMax.ToString();
 
-                    //m_ParentGrapher->UpdateGraph();
-                    
+                    m_ParentGrapher->SetDisplayRanges(m_xMin, m_xMax, m_yMin, m_yMax);
                 }
             }
         }
@@ -134,21 +153,7 @@ void CalculatorApp::Controls::GraphingSettings::OnTextChanged(Platform::Object ^
 
 void CalculatorApp::Controls::GraphingSettings::OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
-    // Get our first value to see if they have been set or are using defaults (expressed as nan which we don't want to show)
-    m_xMin = m_ParentGrapher->XAxisMin;
-    if (isnan(m_xMin))
-    {
-        // No range has been determined yet so use the current extents.
-        m_ParentGrapher->GetDisplayRanges(&m_xMin, &m_xMax, &m_yMin, &m_yMax);
-    }
-    else
-    {
-        // We have ranges set so use them
-        m_xMax = m_ParentGrapher->XAxisMax;
-
-        m_yMin = m_ParentGrapher->YAxisMin;
-        m_yMax = m_ParentGrapher->YAxisMax;
-    }
+    m_ParentGrapher->GetDisplayRanges(&m_xMin, &m_xMax, &m_yMin, &m_yMax);
 
     // Now we can load our UX
     x_min->Text = m_xMin.ToString();
@@ -170,6 +175,11 @@ void CalculatorApp::Controls::GraphingSettings::OnLoaded(Platform::Object ^ send
     }
     break;
     case Graphing::EvalTrigUnitMode::Grads:
+    {
+        Gradians->IsChecked = true;
+    }
+    break;
+
     case Graphing::EvalTrigUnitMode::Invalid:
     {
         OutputDebugString(L"GraphingSettings::GraphingCalculator_DataContextChanged Unsupported TrigUnitMode\r\n");
@@ -180,4 +190,17 @@ void CalculatorApp::Controls::GraphingSettings::OnLoaded(Platform::Object ^ send
     m_width = m_xMax - m_xMin;
     m_height = m_yMax - m_yMin;
     m_currentAspectRatio = m_height / m_width;
+}
+
+void GraphingSettings::OnLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args)
+{
+    UpdateExtents(sender);
+}
+
+void GraphingSettings::OnKeyDown(Platform::Object ^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e)
+{
+    if (e->Key == Windows::System::VirtualKey::Enter)
+    {
+        UpdateExtents(sender);
+    }
 }

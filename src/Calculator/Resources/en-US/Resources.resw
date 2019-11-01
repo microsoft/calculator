@@ -553,7 +553,7 @@
     <value>%1 bit</value>
     <comment>{Locked="%1"}. Sub-string used to indicate the position of a bit (e.g. 1st bit, 2nd bit...)</comment>
   </data>
-    <data name="63" xml:space="preserve">
+  <data name="63" xml:space="preserve">
     <value>63rd</value>
     <comment>Sub-string used in automation name for 63 bit in bit flip</comment>
   </data>
