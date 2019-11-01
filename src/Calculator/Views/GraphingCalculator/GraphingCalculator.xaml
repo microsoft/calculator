@@ -70,8 +70,11 @@
                     <Button x:Name="ActiveTracing" Click="OnActiveTracingClick" MinWidth="40" MinHeight="40" Margin="0,0,10,0">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE73F;"/>
                     </Button>
-                    <Button x:Name="Share" Click="OnShareClick" MinWidth="40" MinHeight="40">
+                    <Button x:Name="Share" Click="OnShareClick" MinWidth="40" MinHeight="40"  Margin="0,0,10,0">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
+                    </Button>
+                    <Button x:Name="Settings" Click="OnSettingsClick" Width="40" Height="40" Margin="0,0,10,0">
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE713;"/>
                     </Button>
                 </StackPanel>
                 
@@ -392,22 +395,7 @@
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Button x:Name="ActiveTracing" Click="OnActiveTracingClick" Width="40" Height="40" Margin="0,0,10,0">
-                            <Image Source="ms-appx:///Assets/ActiveTracking-32_contrast-white.png"/>
-                        </Button>
-                        <Button x:Name="Settings" Click="OnSettingsClick" Width="40" Height="40"  Margin="0,0,10,0">
-                            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE713;"/>
-                        </Button>
-                        <Button x:Name="Share" Click="OnShareClick" Width="40" Height="40"  Margin="0,0,10,0">
-                            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
-                        </Button>
-                    </StackPanel>
-                </StackPanel>
-            </StackPanel>
-            <local:EquationInputArea Grid.Row="1"
+            <local:EquationInputArea Grid.Row="0"
                                  Margin="0,8,0,0"
                                  Equations="{x:Bind ViewModel.Equations}"/>
             <Popup  Grid.Row="0" x:Name="SettingsPopup" IsOpen="False" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 50">

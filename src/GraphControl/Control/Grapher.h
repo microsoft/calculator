@@ -167,7 +167,6 @@ public
             }
         }
 
-
         property Windows::Foundation::Point ActiveTraceCursorPosition
         {
             Windows::Foundation::Point get()
@@ -217,7 +216,7 @@ public
             {
                 std::pair<double, double> newValue(value, XAxisMax);
                 m_graph->GetOptions().SetDefaultXRange(newValue);
-                //UpdateGraph();
+                // UpdateGraph();
                 m_renderMain->RunRenderPass();
             }
         }
@@ -232,7 +231,7 @@ public
             {
                 std::pair<double, double> newValue(XAxisMax, value);
                 m_graph->GetOptions().SetDefaultXRange(newValue);
-                //UpdateGraph();
+                // UpdateGraph();
                 m_renderMain->RunRenderPass();
             }
         }
@@ -247,7 +246,7 @@ public
             {
                 std::pair<double, double> newValue(value, YAxisMax);
                 m_graph->GetOptions().SetDefaultYRange(newValue);
-                //UpdateGraph();
+                // UpdateGraph();
                 m_renderMain->RunRenderPass();
             }
         }
@@ -262,7 +261,7 @@ public
             {
                 std::pair<double, double> newValue(YAxisMax, value);
                 m_graph->GetOptions().SetDefaultYRange(newValue);
-                //UpdateGraph();
+                // UpdateGraph();
                 m_renderMain->RunRenderPass();
             }
         }
@@ -276,6 +275,18 @@ public
             catch (const std::exception&)
             {
                 OutputDebugString(L"GetDisplayRanges failed\r\n");
+            }
+        }
+
+        void SetDisplayRanges(double xMin, double xMax, double yMin, double yMax)
+        {
+            try
+            {
+                m_graph->GetRenderer()->SetDisplayRanges(xMin, xMax, yMin, yMax);
+            }
+            catch (const std::exception&)
+            {
+                OutputDebugString(L"SetDisplayRanges failed\r\n");
             }
         }
 
@@ -334,7 +345,6 @@ public
         void HandleTracingMovementTick(Object ^ sender, Object ^ e);
         void HandleKey(bool keyDown, Windows::System::VirtualKey key);
 
-
     private:
         DX::RenderMain ^ m_renderMain = nullptr;
 
@@ -370,11 +380,10 @@ public
         bool m_KeysPressed[5];
         bool m_Moving;
 
-       Windows::UI::Xaml::DispatcherTimer ^ m_TracingTrackingTimer;
+        Windows::UI::Xaml::DispatcherTimer ^ m_TracingTrackingTimer;
 
     public:
         Windows::Storage::Streams::RandomAccessStreamReference ^ GetGraphBitmapStream();
         void UpdateGraph();
-
     };
 }

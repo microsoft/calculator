@@ -51,6 +51,8 @@ namespace CalculatorApp
 
     private:
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
+        Windows::Foundation::EventRegistrationToken m_showTracePopupChangedToken;
+        Windows::Foundation::EventRegistrationToken m_tracePointChangedToken;
         void OnDataRequested(Windows::ApplicationModel::DataTransfer::DataTransferManager^ sender, Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs^ e);
 
         void TextBoxGotFocus(Windows::UI::Xaml::Controls::TextBox^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);

@@ -58,11 +58,7 @@ namespace GraphControl
         , m_Moving{ false }
     {
         m_solver->ParsingOptions().SetFormatType(FormatType::MathML);
-<<<<<<<
-=======
-
->>>>>>>
-
+        TrigUnitMode = (int)Graphing::EvalTrigUnitMode::Radians;
         DefaultStyleKey = StringReference(s_defaultStyleKey);
 
         this->SetValue(EquationsProperty, ref new EquationCollection());
