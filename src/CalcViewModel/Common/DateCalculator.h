@@ -38,7 +38,7 @@ namespace CalculatorApp
 
                 bool operator==(const DateDifference& dd) const
                 {
-                    return year == dd.year && month == dd.month && week == dd.week && day == day;
+                    return year == dd.year && month == dd.month && week == dd.week && day == dd.day;
                 }
             };
 
