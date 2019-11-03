@@ -153,6 +153,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             IsOpInRange(wParam, IDM_QWORD, IDM_BYTE) ||
             IsOpInRange(wParam, IDM_DEG, IDM_GRAD) ||
             IsOpInRange(wParam, IDC_BINEDITSTART, IDC_BINEDITEND) ||
+            (IDC_TAU == wParam) ||
             (IDC_INV == wParam) ||
             (IDC_SIGN == wParam && 10 != m_radix) ||
             (IDC_RAND == wParam) ||
@@ -737,6 +738,17 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 
             DisplayNum();
             m_bInv = false;
+            break;
+        }
+        HandleErrorCommand(wParam);
+        break;
+    case IDC_TAU:
+        if (!m_fIntegerMode)
+        {
+            CheckAndAddLastBinOpToHistory(); // tau is like entering the number
+            m_currentVal = Rational{ two_pi };
+
+            DisplayNum();
             break;
         }
         HandleErrorCommand(wParam);

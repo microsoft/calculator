@@ -105,6 +105,7 @@
 
 #define IDC_FE 119
 #define IDC_PI 120
+#define IDC_TAU 148
 #define IDC_EQU 121
 
 #define IDC_MCLEAR 122

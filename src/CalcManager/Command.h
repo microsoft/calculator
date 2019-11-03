@@ -120,6 +120,7 @@ namespace CalculationManager
 
         CommandFE = 119,
         CommandPI = 120,
+        CommandTAU = 148, // 2 * PI
         CommandEQU = 121,
 
         CommandMCLEAR = 122,

@@ -937,6 +937,10 @@
     <value>Pī</value>
     <comment>Screen reader prompt for the Calculator pi button  on the scientific operator keypad</comment>
   </data>
+  <data name="tauButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tau</value>
+    <comment>Screen reader prompt for the Calculator tau button  on the scientific operator keypad</comment>
+  </data>
   <data name="sinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Sinuss</value>
     <comment>Screen reader prompt for the Calculator sin button  on the scientific operator keypad</comment>

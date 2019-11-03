@@ -129,6 +129,8 @@ void CalculatorScientificOperators::SetOperatorRowVisibility()
 
     Row1->Visibility = rowVis;
     InvRow1->Visibility = invRowVis;
+    CirclePi->Visibility = rowVis;
+    CircleTau->Visibility = invRowVis;
 }
 
 void CalculatorScientificOperators::OpenParenthesisButton_GotFocus(Object ^ sender, RoutedEventArgs ^ e)

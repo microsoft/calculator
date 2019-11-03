@@ -81,6 +81,7 @@
                         <Setter Target="PlusButton.IsEnabled" Value="False"/>
 
                         <Setter Target="PiButton.IsEnabled" Value="False"/>
+                        <Setter Target="TauButton.IsEnabled" Value="False"/>
                         <Setter Target="FactorialButton.IsEnabled" Value="False"/>
                         <Setter Target="NegateButton.IsEnabled" Value="False"/>
                         <Setter Target="OpenParenthesisButton.IsEnabled" Value="False"/>
@@ -106,6 +107,7 @@
                     <VisualState.Setters>
                         <Setter Target="NegateButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSizeExtraLarge}"/>
                         <Setter Target="PiButton.FontSize" Value="{ThemeResource CalcButtonCaptionSize}"/>
+                        <Setter Target="TauButton.FontSize" Value="{ThemeResource CalcButtonCaptionSize}"/>
                         <Setter Target="FactorialButton.FontSize" Value="{ThemeResource CalcButtonCaptionSize}"/>
                         <Setter Target="OpenParenthesisButton.FontSize" Value="{ThemeResource CalcButtonCaptionSize}"/>
                         <Setter Target="CloseParenthesisButton.FontSize" Value="{ThemeResource CalcButtonCaptionSize}"/>
@@ -202,6 +204,7 @@
                     <VisualState.Setters>
                         <Setter Target="NegateButton.FontSize" Value="{ThemeResource CalcStandardOperatorCaptionSizeLarge}"/>
                         <Setter Target="PiButton.FontSize" Value="{ThemeResource CalcStandardOperatorCaptionSize}"/>
+                        <Setter Target="TauButton.FontSize" Value="{ThemeResource CalcStandardOperatorCaptionSize}"/>
                         <Setter Target="FactorialButton.FontSize" Value="{ThemeResource CalcStandardOperatorCaptionSize}"/>
                         <Setter Target="OpenParenthesisButton.FontSize" Value="{ThemeResource CalcStandardOperatorCaptionSize}"/>
                         <Setter Target="CloseParenthesisButton.FontSize" Value="{ThemeResource CalcStandardOperatorCaptionSize}"/>
@@ -295,6 +298,7 @@
                     <VisualState.Setters>
                         <Setter Target="NegateButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
                         <Setter Target="PiButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
+                        <Setter Target="TauButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
                         <Setter Target="FactorialButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
                         <Setter Target="OpenParenthesisButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
                         <Setter Target="CloseParenthesisButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
@@ -884,15 +888,42 @@
                       IsEnabledChanged="ShiftButton_IsEnabledChanged"
                       Unchecked="ShiftButton_Check"/>
 
-        <controls:CalculatorButton x:Name="PiButton"
-                                   x:Uid="piButton"
-                                   Grid.Row="1"
-                                   Grid.Column="1"
-                                   Style="{StaticResource SymbolOperatorButtonStyle}"
-                                   FontSize="14"
-                                   AutomationProperties.AutomationId="piButton"
-                                   ButtonId="Pi"
-                                   Content="&#xf7cf;"/>
+        <Grid x:Uid="CircleRatios"
+              Grid.Row="1"
+              Grid.Column="1"
+              AutomationProperties.HeadingLevel="Level1">
+            <!-- Circle Ratio Pi -->
+            <Grid x:Name="CirclePi">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <controls:CalculatorButton x:Name="PiButton"
+                                           x:Uid="piButton"
+                                           Grid.Row="1"
+                                           Grid.Column="1"
+                                           Style="{StaticResource SymbolOperatorButtonStyle}"
+                                           FontSize="14"
+                                           AutomationProperties.AutomationId="piButton"
+                                           ButtonId="Pi"
+                                           Content="&#xf7cf;"/>
+            </Grid>
+
+            <!-- Circle Ratio Tau -->
+            <Grid x:Name="CircleTau" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <controls:CalculatorButton x:Name="TauButton"
+                                           x:Uid="tauButton"
+                                           Grid.Row="1"
+                                           Grid.Column="1"
+                                           Style="{StaticResource OperatorButtonStyle}"
+                                           FontSize="14"
+                                           AutomationProperties.AutomationId="tauButton"
+                                           ButtonId="Tau"
+                                           Content="&#x03C4;"/>
+            </Grid>
+        </Grid>
 
         <controls:CalculatorButton x:Name="EulerButton"
                                    x:Uid="eulerButton"

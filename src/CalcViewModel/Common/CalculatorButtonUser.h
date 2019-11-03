@@ -42,6 +42,7 @@ public
         OpenParenthesis = (int)CM::Command::CommandOPENP,
         CloseParenthesis = (int)CM::Command::CommandCLOSEP,
         Pi = (int)CM::Command::CommandPI,
+        Tau = (int)CM::Command::CommandTAU,
         Sin = (int)CM::Command::CommandSIN,
         Cos = (int)CM::Command::CommandCOS,
         Tan = (int)CM::Command::CommandTAN,

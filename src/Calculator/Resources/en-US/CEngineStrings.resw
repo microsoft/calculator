@@ -253,6 +253,10 @@
     <value>.</value>
     <comment>{Locked}The string that represents the function</comment>
   </data>
+  <data name="39" xml:space="preserve">
+    <value>Tau</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
   <data name="40" xml:space="preserve">
     <value>Pi</value>
     <comment>{Locked}The string that represents the function</comment>
