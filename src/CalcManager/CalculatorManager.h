@@ -102,7 +102,7 @@ namespace CalculationManager
         void BinaryOperatorReceived() override;
         void MemoryItemChanged(unsigned int indexOfMemory) override;
         void InputChanged() override;
-        CalculatorManager(ICalcDisplay* displayCallback, IResourceProvider* resourceProvider);
+        CalculatorManager(_In_ ICalcDisplay* displayCallback, _In_ IResourceProvider* resourceProvider);
 
         void Reset(bool clearMemory = true);
         void SetStandardMode();
