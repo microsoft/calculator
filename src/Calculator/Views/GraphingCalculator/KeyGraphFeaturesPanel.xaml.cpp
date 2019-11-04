@@ -14,9 +14,7 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 
 KeyGraphFeaturesPanel::KeyGraphFeaturesPanel()
-
 {
-
     InitializeComponent();
 }
 

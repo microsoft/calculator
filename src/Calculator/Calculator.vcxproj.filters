@@ -310,6 +310,7 @@
     <ClCompile Include="Controls\MathRichEditBox.cpp" />
     <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp" />
     <ClCompile Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.cpp" />
+    <ClCompile Include="Converters\IsLineEnabledToOpacityConverter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -399,6 +400,7 @@
     <ClInclude Include="Controls\MathRichEditBox.h" />
     <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h" />
     <ClInclude Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.h" />
+    <ClInclude Include="Converters\IsLineEnabledToOpacityConverter.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

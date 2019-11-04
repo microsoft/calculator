@@ -69,6 +69,7 @@ void EquationInputArea::AddNewEquation()
 
     eq->LineColor = AvailableColors->GetAt(m_lastLineColorIndex);
 
+    eq->FunctionLabelIndex = ++m_lastFunctionLabelIndex;
     Equations->Append(eq);
     EquationInputList->ScrollIntoView(eq);
 }
@@ -102,6 +103,10 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
     unsigned int index;
     if (Equations->IndexOf(eq, &index))
     {
+        if (static_cast<int>(eq->FunctionLabelIndex) == m_lastFunctionLabelIndex)
+        {
+            m_lastFunctionLabelIndex--;
+        }
         Equations->RemoveAt(index);
     }
 }
@@ -119,8 +124,6 @@ void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, R
     auto tb = static_cast<EquationTextBox ^>(sender);
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
     eq->IsEnabled = !eq->IsEnabled;
-
-    tb->IsEquationLineVisible = !tb->IsEquationLineVisible;
 }
 
 void EquationInputArea::EquationTextBoxLoaded(Object ^ sender, RoutedEventArgs ^ e)
