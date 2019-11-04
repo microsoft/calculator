@@ -752,7 +752,7 @@ wstring CurrencyDataLoader::GetCurrencyTimestamp()
     DateTime epoch{};
     if (m_cacheTimestamp.UniversalTime != epoch.UniversalTime)
     {
-        DateTimeFormatter ^ dateFormatter = ref new DateTimeFormatter(L"{month.abbreviated} {day.integer}, {year.full}");
+        DateTimeFormatter ^ dateFormatter = ref new DateTimeFormatter(L"shortdate");
         wstring date = dateFormatter->Format(m_cacheTimestamp)->Data();
 
         DateTimeFormatter ^ timeFormatter = ref new DateTimeFormatter(L"shorttime");

@@ -369,7 +369,7 @@ extern PNUMBER i32factnum(int32_t ini32, uint32_t radix);
 extern PNUMBER i32prodnum(int32_t start, int32_t stop, uint32_t radix);
 extern PNUMBER i32tonum(int32_t ini32, uint32_t radix);
 extern PNUMBER Ui32tonum(uint32_t ini32, uint32_t radix);
-extern PNUMBER numtonRadixx(PNUMBER a, uint32_t radix);
+extern PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix);
 
 // creates a empty/undefined rational representation (p/q)
 extern PRAT _createrat(void);
@@ -446,8 +446,8 @@ extern void tananglerat(_Inout_ PRAT* px, ANGLE_TYPE angletype, uint32_t radix, 
 
 extern void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER* const src);
 
-extern void _destroynum(_In_ PNUMBER pnum);
-extern void _destroyrat(_In_ PRAT prat);
+extern void _destroynum(_Frees_ptr_opt_ PNUMBER pnum);
+extern void _destroyrat(_Frees_ptr_opt_ PRAT prat);
 extern void addnum(_Inout_ PNUMBER* pa, _In_ PNUMBER b, uint32_t radix);
 extern void addrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision);
 extern void andrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision);
