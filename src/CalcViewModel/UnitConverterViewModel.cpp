@@ -515,7 +515,7 @@ void UnitConverterViewModel::OnPasteCommand(Platform::Object ^ parameter)
     // Ensure that the paste happens on the UI thread
     // EventWriteClipboardPaste_Start();
     // Any converter ViewMode is fine here.
-    
+
     auto that(this);
     create_task(CopyPasteManager::GetStringToPaste(m_Mode, NavCategory::GetGroupType(m_Mode), -1, BitLength::BitLengthUnknown))
         .then([that](String ^ pastedString) { that->OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
@@ -670,14 +670,15 @@ void UnitConverterViewModel::RefreshCurrencyRatios()
     String ^ announcement = AppResourceProvider::GetInstance()->GetResourceString(UnitConverterResourceKeys::UpdatingCurrencyRates);
     Announcement = CalculatorAnnouncement::GetUpdateCurrencyRatesAnnouncement(announcement);
 
-    auto refreshTask = create_task([this] { return m_model->RefreshCurrencyRatios().get(); });
+    auto that(this);
+    auto refreshTask = create_task([that] { return that->m_model->RefreshCurrencyRatios().get(); });
     refreshTask.then(
-        [this](const pair<bool, wstring>& refreshResult) {
+        [that](const pair<bool, wstring>& refreshResult) {
             bool didLoad = refreshResult.first;
             wstring timestamp = refreshResult.second;
 
-            OnCurrencyTimestampUpdated(timestamp, false /*isWeekOldData*/);
-            OnCurrencyDataLoadFinished(didLoad);
+            that->OnCurrencyTimestampUpdated(timestamp, false /*isWeekOldData*/);
+            that->OnCurrencyDataLoadFinished(didLoad);
         },
         task_continuation_context::use_current());
 }
@@ -999,11 +1000,12 @@ bool UnitConverterViewModel::UnitsAreValid()
 
 void UnitConverterViewModel::StartConversionResultTimer()
 {
-    m_conversionResultTaskHelper = make_unique<ConversionResultTaskHelper>(CONVERSION_FINALIZED_DELAY_IN_MS, [this]() {
-        if (UnitsAreValid())
+    auto that(this);
+    m_conversionResultTaskHelper = make_unique<ConversionResultTaskHelper>(CONVERSION_FINALIZED_DELAY_IN_MS, [that]() {
+        if (that->UnitsAreValid())
         {
-            String ^ valueFrom = m_Value1Active ? m_Value1 : m_Value2;
-            String ^ valueTo = m_Value1Active ? m_Value2 : m_Value1;
+            String ^ valueFrom = that->m_Value1Active ? that->m_Value1 : that->m_Value2;
+            String ^ valueTo = that->m_Value1Active ? that->m_Value2 : that->m_Value1;
         }
     });
 }

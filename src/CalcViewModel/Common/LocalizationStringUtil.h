@@ -9,10 +9,11 @@ namespace CalculatorApp
 {
     namespace Common
     {
-         class LocalizationStringUtilInternal
+        class LocalizationStringUtilInternal
         {
         public:
-            static Platform::String ^ GetLocalizedString(Platform::String ^ pMessage, ...) {
+            static Platform::String ^ GetLocalizedString(Platform::String ^ pMessage, ...)
+            {
                 std::wstring returnString = L"";
                 const UINT32 length = 1024;
                 std::unique_ptr<wchar_t[]> spBuffer = std::unique_ptr<wchar_t[]>(new wchar_t[length]);

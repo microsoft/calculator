@@ -76,15 +76,14 @@ IAsyncOperation<String ^> ^ CopyPasteManager::GetStringToPaste(ViewMode mode, Ca
     //-- add support to allow pasting for expressions like .2 , -.2
     //-- add support to allow pasting for expressions like 1.3e12(as of now we allow 1.3e+12)
 
-    return create_async([dataPackageView, mode, modeType, programmerNumberBase, bitLengthType]
-        {
+    return create_async([dataPackageView, mode, modeType, programmerNumberBase, bitLengthType] {
         return create_task(dataPackageView->GetTextAsync(::StandardDataFormats::Text))
             .then(
                 [mode, modeType, programmerNumberBase, bitLengthType](String ^ pastedText) {
                     return ValidatePasteExpression(pastedText, mode, modeType, programmerNumberBase, bitLengthType);
                 },
                 task_continuation_context::use_arbitrary());
-        });
+    });
 }
 
 bool CopyPasteManager::HasStringToPaste()

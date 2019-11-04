@@ -749,8 +749,6 @@ void CurrencyDataLoader::UpdateDisplayedTimestamp()
 }
 wstring CurrencyDataLoader::GetCurrencyTimestamp()
 {
-    wstring timestamp = L"";
-
     DateTime epoch{};
     if (m_cacheTimestamp.UniversalTime != epoch.UniversalTime)
     {
