@@ -3,7 +3,6 @@
 
 #include "Header Files/CalcEngine.h"
 #include "Command.h"
-#include "CalculatorVector.h"
 #include "ExpressionCommand.h"
 
 constexpr int ASCII_0 = 48;
@@ -13,14 +12,19 @@ using namespace CalcEngine;
 
 namespace
 {
-    void IFT(ResultCode hr)
+    template <typename T>
+    static void Truncate(vector<T>& v, unsigned int index)
     {
-        if (FAILED(hr))
+        if (index >= v.size())
         {
-            throw hr;
+            throw E_BOUNDS;
         }
+
+        auto startIter = v.begin() + index;
+        v.erase(startIter, v.end());
     }
 }
+
 void CHistoryCollector::ReinitHistory()
 {
     m_lastOpStartIndex = -1;
@@ -29,11 +33,11 @@ void CHistoryCollector::ReinitHistory()
     m_bLastOpndBrace = false;
     if (m_spTokens != nullptr)
     {
-        m_spTokens->Clear();
+        m_spTokens->clear();
     }
     if (m_spCommands != nullptr)
     {
-        m_spCommands->Clear();
+        m_spCommands->clear();
     }
 }
 
@@ -55,13 +59,13 @@ CHistoryCollector::~CHistoryCollector()
 
     if (m_spTokens != nullptr)
     {
-        m_spTokens->Clear();
+        m_spTokens->clear();
     }
 }
 
 void CHistoryCollector::AddOpndToHistory(wstring_view numStr, Rational const& rat, bool fRepetition)
 {
-    std::shared_ptr<CalculatorVector<int>> commands = std::make_shared<CalculatorVector<int>>();
+    std::shared_ptr<std::vector<int>> commands = std::make_shared<vector<int>>();
     // Check for negate
     bool fNegative = (numStr[0] == L'-');
     bool fSciFmt = false;
@@ -71,7 +75,7 @@ void CHistoryCollector::AddOpndToHistory(wstring_view numStr, Rational const& ra
     {
         if (numStr[i] == m_decimalSymbol)
         {
-            IFT(commands->Append(IDC_PNT));
+            commands->push_back(IDC_PNT);
             if (!fSciFmt)
             {
                 fDecimal = true;
@@ -79,12 +83,12 @@ void CHistoryCollector::AddOpndToHistory(wstring_view numStr, Rational const& ra
         }
         else if (numStr[i] == L'e')
         {
-            IFT(commands->Append(IDC_EXP));
+            commands->push_back(IDC_EXP);
             fSciFmt = true;
         }
         else if (numStr[i] == L'-')
         {
-            IFT(commands->Append(IDC_SIGN));
+            commands->push_back(IDC_SIGN);
         }
         else if (numStr[i] == L'+')
         {
@@ -95,7 +99,7 @@ void CHistoryCollector::AddOpndToHistory(wstring_view numStr, Rational const& ra
         {
             int num = static_cast<int>(numStr[i]) - ASCII_0;
             num += IDC_0;
-            IFT(commands->Append(num));
+            commands->push_back(num);
         }
     }
 
@@ -325,12 +329,6 @@ void CHistoryCollector::AddUnaryOpToHistory(int nOpCode, bool fInv, ANGLE_TYPE a
 // history of equations
 void CHistoryCollector::CompleteHistoryLine(wstring_view numStr)
 {
-    if (nullptr != m_pCalcDisplay)
-    {
-        m_pCalcDisplay->SetExpressionDisplay(
-            std::make_shared<CalculatorVector<std::pair<std::wstring, int>>>(), std::make_shared<CalculatorVector<std::shared_ptr<IExpressionCommand>>>());
-    }
-
     if (nullptr != m_pHistoryDisplay)
     {
         unsigned int addedItemIndex = m_pHistoryDisplay->AddToHistory(m_spTokens, m_spCommands, numStr);
@@ -343,6 +341,16 @@ void CHistoryCollector::CompleteHistoryLine(wstring_view numStr)
     ReinitHistory();
 }
 
+void CHistoryCollector::CompleteEquation(std::wstring_view numStr)
+{
+    // Add only '=' token and not add EQU command, because
+    // EQU command breaks loading from history (it duplicate history entries).
+    IchAddSzToEquationSz(CCalcEngine::OpCodeToString(IDC_EQU), -1);
+
+    SetExpressionDisplay();
+    CompleteHistoryLine(numStr);
+}
+
 void CHistoryCollector::ClearHistoryLine(wstring_view errStr)
 {
     if (errStr.empty()) // in case of error let the display stay as it is
@@ -350,7 +358,7 @@ void CHistoryCollector::ClearHistoryLine(wstring_view errStr)
         if (nullptr != m_pCalcDisplay)
         {
             m_pCalcDisplay->SetExpressionDisplay(
-                std::make_shared<CalculatorVector<std::pair<std::wstring, int>>>(), std::make_shared<CalculatorVector<std::shared_ptr<IExpressionCommand>>>());
+                std::make_shared<std::vector<std::pair<std::wstring, int>>>(), std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>());
         }
         m_iCurLineHistStart = -1; // It will get recomputed at the first Opnd
         ReinitHistory();
@@ -363,26 +371,17 @@ int CHistoryCollector::IchAddSzToEquationSz(wstring_view str, int icommandIndex)
 {
     if (m_spTokens == nullptr)
     {
-        m_spTokens = std::make_shared<CalculatorVector<std::pair<std::wstring, int>>>();
+        m_spTokens = std::make_shared<std::vector<std::pair<std::wstring, int>>>();
     }
 
-    if (FAILED(m_spTokens->Append(std::make_pair(wstring(str), icommandIndex))))
-    {
-        throw(CALC_E_OUTOFMEMORY);
-    }
-
-    unsigned int nTokens;
-    m_spTokens->GetSize(&nTokens);
-    return nTokens - 1;
+    m_spTokens->push_back(std::pair(wstring(str), icommandIndex));
+    return static_cast<int>(m_spTokens->size() - 1);
 }
 
 // Inserts a given string into the global m_pszEquation at the given index ich taking care of reallocations etc.
 void CHistoryCollector::InsertSzInEquationSz(wstring_view str, int icommandIndex, int ich)
 {
-    if (FAILED(m_spTokens->InsertAt(ich, std::make_pair(wstring(str), icommandIndex))))
-    {
-        throw(CALC_E_OUTOFMEMORY);
-    }
+    m_spTokens->emplace(m_spTokens->begin() + ich, wstring(str), icommandIndex);
 }
 
 // Chops off the current equation string from the given index
@@ -390,25 +389,23 @@ void CHistoryCollector::TruncateEquationSzFromIch(int ich)
 {
     // Truncate commands
     int minIdx = -1;
-    unsigned int nTokens = 0;
-    std::pair<std::wstring, int> currentPair;
-    m_spTokens->GetSize(&nTokens);
+    unsigned int nTokens = static_cast<unsigned int>(m_spTokens->size());
 
     for (unsigned int i = ich; i < nTokens; i++)
     {
-        IFT(m_spTokens->GetAt(i, &currentPair));
+        const auto& currentPair = (*m_spTokens)[i];
         int curTokenId = currentPair.second;
         if (curTokenId != -1)
         {
             if ((minIdx != -1) || (curTokenId < minIdx))
             {
                 minIdx = curTokenId;
-                IFT(m_spCommands->Truncate(minIdx));
+                Truncate(*m_spCommands, minIdx);
             }
         }
     }
 
-    IFT(m_spTokens->Truncate(ich));
+    Truncate(*m_spTokens, ich);
 }
 
 // Adds the m_pszEquation into the running history text
@@ -424,17 +421,11 @@ int CHistoryCollector::AddCommand(_In_ const std::shared_ptr<IExpressionCommand>
 {
     if (m_spCommands == nullptr)
     {
-        m_spCommands = std::make_shared<CalculatorVector<std::shared_ptr<IExpressionCommand>>>();
+        m_spCommands = std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>();
     }
 
-    if (FAILED(m_spCommands->Append(spCommand)))
-    {
-        throw(CALC_E_OUTOFMEMORY);
-    }
-
-    unsigned int nCommands = 0;
-    m_spCommands->GetSize(&nCommands);
-    return nCommands - 1;
+    m_spCommands->push_back(spCommand);
+    return static_cast<int>(m_spCommands->size() - 1);
 }
 
 // To Update the operands in the Expression according to the current Radix
@@ -445,30 +436,25 @@ void CHistoryCollector::UpdateHistoryExpression(uint32_t radix, int32_t precisio
         return;
     }
 
-    unsigned int size;
-    IFT(m_spTokens->GetSize(&size));
-
-    for (unsigned int i = 0; i < size; ++i)
+    for (auto& token : *m_spTokens)
     {
-        std::pair<std::wstring, int> token;
-        IFT(m_spTokens->GetAt(i, &token));
         int commandPosition = token.second;
         if (commandPosition != -1)
         {
-            std::shared_ptr<IExpressionCommand> expCommand;
-            IFT(m_spCommands->GetAt(commandPosition, &expCommand));
+            const std::shared_ptr<IExpressionCommand>& expCommand = m_spCommands->at(commandPosition);
+
             if (expCommand != nullptr && CalculationManager::CommandType::OperandCommand == expCommand->GetCommandType())
             {
-                std::shared_ptr<COpndCommand> opndCommand = std::static_pointer_cast<COpndCommand>(expCommand);
+                const std::shared_ptr<COpndCommand>& opndCommand = std::static_pointer_cast<COpndCommand>(expCommand);
                 if (opndCommand != nullptr)
                 {
                     token.first = opndCommand->GetString(radix, precision);
-                    IFT(m_spTokens->SetAt(i, token));
                     opndCommand->SetCommands(GetOperandCommandsFromString(token.first));
                 }
             }
         }
     }
+
     SetExpressionDisplay();
 }
 
@@ -478,9 +464,9 @@ void CHistoryCollector::SetDecimalSymbol(wchar_t decimalSymbol)
 }
 
 // Update the commands corresponding to the passed string Number
-std::shared_ptr<CalculatorVector<int>> CHistoryCollector::GetOperandCommandsFromString(wstring_view numStr)
+std::shared_ptr<std::vector<int>> CHistoryCollector::GetOperandCommandsFromString(wstring_view numStr)
 {
-    std::shared_ptr<CalculatorVector<int>> commands = std::make_shared<CalculatorVector<int>>();
+    std::shared_ptr<std::vector<int>> commands = std::make_shared<std::vector<int>>();
     // Check for negate
     bool fNegative = (numStr[0] == L'-');
 
@@ -488,15 +474,15 @@ std::shared_ptr<CalculatorVector<int>> CHistoryCollector::GetOperandCommandsFrom
     {
         if (numStr[i] == m_decimalSymbol)
         {
-            IFT(commands->Append(IDC_PNT));
+            commands->push_back(IDC_PNT);
         }
         else if (numStr[i] == L'e')
         {
-            IFT(commands->Append(IDC_EXP));
+            commands->push_back(IDC_EXP);
         }
         else if (numStr[i] == L'-')
         {
-            IFT(commands->Append(IDC_SIGN));
+            commands->push_back(IDC_SIGN);
         }
         else if (numStr[i] == L'+')
         {
@@ -507,14 +493,14 @@ std::shared_ptr<CalculatorVector<int>> CHistoryCollector::GetOperandCommandsFrom
         {
             int num = static_cast<int>(numStr[i]) - ASCII_0;
             num += IDC_0;
-            IFT(commands->Append(num));
+            commands->push_back(num);
         }
     }
 
     // If the number is negative, append a sign command at the end.
     if (fNegative)
     {
-        IFT(commands->Append(IDC_SIGN));
+        commands->push_back(IDC_SIGN);
     }
     return commands;
 }

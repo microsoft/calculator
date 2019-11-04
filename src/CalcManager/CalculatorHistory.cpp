@@ -7,25 +7,48 @@
 using namespace std;
 using namespace CalculationManager;
 
+namespace
+{
+    static wstring GetGeneratedExpression(const vector<pair<wstring, int>>& tokens)
+    {
+        wstring expression;
+        bool isFirst = true;
+
+        for (auto const& token : tokens)
+        {
+            if (isFirst)
+            {
+                isFirst = false;
+            }
+            else
+            {
+                expression += L' ';
+            }
+            expression.append(token.first);
+        }
+
+        return expression;
+    }
+}
+
 CalculatorHistory::CalculatorHistory(size_t maxSize)
     : m_maxHistorySize(maxSize)
 {
 }
 
 unsigned int CalculatorHistory::AddToHistory(
-    _In_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
-    _In_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands,
+    _In_ shared_ptr<vector<pair<wstring, int>>> const& tokens,
+    _In_ shared_ptr<vector<shared_ptr<IExpressionCommand>>> const& commands,
     wstring_view result)
 {
     unsigned int addedIndex;
-    wstring generatedExpression;
     shared_ptr<HISTORYITEM> spHistoryItem = make_shared<HISTORYITEM>();
 
     spHistoryItem->historyItemVector.spTokens = tokens;
     spHistoryItem->historyItemVector.spCommands = commands;
 
     // to be changed when pszexp is back
-    tokens->GetString(&generatedExpression);
+    wstring generatedExpression = GetGeneratedExpression(*tokens);
     // Prefixing and suffixing the special Unicode markers to ensure that the expression
     // in the history doesn't get broken for RTL languages
     spHistoryItem->historyItemVector.expression = L'\u202d' + generatedExpression + L'\u202c';
@@ -67,11 +90,6 @@ shared_ptr<HISTORYITEM> const& CalculatorHistory::GetHistoryItem(unsigned int uI
 {
     assert(uIdx >= 0 && uIdx < m_historyItems.size());
     return m_historyItems.at(uIdx);
-}
-
-CalculatorHistory::~CalculatorHistory(void)
-{
-    ClearHistory();
 }
 
 void CalculatorHistory::ClearHistory()

@@ -30,8 +30,12 @@ namespace CalculatorApp
 
         DEPENDENCY_PROPERTY_OWNER(CalculatorProgrammerRadixOperators);
 
+        void checkDefaultBitShift();
+
     private:
-        void Shift_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void BitshiftFlyout_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void FlyoutButton_Clicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void CollapseBitshiftButtons();
 
         bool m_isErrorVisualState;
         void OpenParenthesisButton_GotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
