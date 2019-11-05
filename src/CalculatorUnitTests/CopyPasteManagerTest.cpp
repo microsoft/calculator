@@ -6,7 +6,7 @@
 
 #include "CalcViewModel/StandardCalculatorViewModel.h"
 #include "CalcViewModel/Common/CopyPasteManager.h"
-#include "AssertUtils.h"
+#include "Helpers.h"
 
 using namespace CalculationManager;
 using namespace CalculatorApp;
