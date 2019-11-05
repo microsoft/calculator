@@ -244,7 +244,7 @@ void UnitConverter::OnCopyMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEvent
 void UnitConverter::OnPasteMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     auto that(this);
-    create_task(CopyPasteManager::GetStringToPaste(Model->Mode, CategoryGroupType::Converter, -1, BitLength::BitLengthUnknown))
+    create_task(CopyPasteManager::GetStringToPaste(Model->Mode, CategoryGroupType::Converter, NumberBase::Unknown, BitLength::BitLengthUnknown))
         .then([that](String ^ pastedString) { that->Model->OnPaste(pastedString); });
 }
 

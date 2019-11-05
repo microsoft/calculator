@@ -14,6 +14,7 @@ using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Common::Automation;
 using namespace CalculatorApp::ViewModel;
 using namespace CalculationManager;
+using namespace concurrency;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace std;
@@ -680,23 +681,23 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
     }
 }
 
-int StandardCalculatorViewModel::GetNumberBase()
+NumberBase StandardCalculatorViewModel::GetNumberBase()
 {
     if (CurrentRadixType == HEX_RADIX)
     {
-        return HexBase;
+        return NumberBase::HexBase;
     }
     else if (CurrentRadixType == DEC_RADIX)
     {
-        return DecBase;
+        return NumberBase::DecBase;
     }
     else if (CurrentRadixType == OCT_RADIX)
     {
-        return OctBase;
+        return NumberBase::OctBase;
     }
     else
     {
-        return BinBase;
+        return NumberBase::BinBase;
     }
 }
 
@@ -712,7 +713,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
 {
     auto that(this);
     ViewMode mode;
-    int NumberBase = -1;
+    NumberBase numberBase = NumberBase::Unknown;
     BitLength bitLengthType = BitLength::BitLengthUnknown;
     if (IsScientific)
     {
@@ -721,7 +722,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     else if (IsProgrammer)
     {
         mode = ViewMode::Programmer;
-        NumberBase = GetNumberBase();
+        numberBase = GetNumberBase();
         bitLengthType = m_valueBitLength;
     }
     else
@@ -735,7 +736,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     }
 
     // Ensure that the paste happens on the UI thread
-    create_task(CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), NumberBase, bitLengthType))
+    create_task(CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), this->GetNumberBase(), bitLengthType))
         .then([that, mode](String ^ pastedString) { that->OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 

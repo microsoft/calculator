@@ -207,6 +207,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AssertUtils.h" />
     <ClInclude Include="DateUtils.h" />
     <ClInclude Include="Helpers.h" />
     <ClInclude Include="Mocks\CurrencyHttpClient.h" />

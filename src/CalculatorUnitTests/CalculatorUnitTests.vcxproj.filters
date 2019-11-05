@@ -39,6 +39,7 @@
     <ClInclude Include="Mocks\CurrencyHttpClient.h">
       <Filter>Mocks</Filter>
     </ClInclude>
+    <ClInclude Include="AssertUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="UnitTestApp.rd.xml" />
