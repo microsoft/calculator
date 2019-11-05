@@ -19,24 +19,19 @@ namespace CalculatorApp
     inline constexpr auto OctBase = 7;
     inline constexpr auto BinBase = 8;
 
-    class CopyPasteManager
+    public ref class CopyPasteManager sealed
     {
     public:
         static void CopyToClipboard(Platform::String ^ stringToCopy);
-        static concurrency::task<Platform::String ^> GetStringToPaste(
+        static Windows::Foundation::IAsyncOperation<Platform::String ^>^ GetStringToPaste(
             CalculatorApp::Common::ViewMode mode,
             CalculatorApp::Common::CategoryGroupType modeType,
-            int programmerNumberBase = -1,
-            CalculatorApp::Common::BitLength bitLengthType = CalculatorApp::Common::BitLength::BitLengthUnknown);
-        static bool HasStringToPaste()
-        {
-            return ClipboardTextFormat() >= 0;
-        }
-
-        static constexpr auto PasteErrorString = L"NoOp";
+            int programmerNumberBase,
+            CalculatorApp::Common::BitLength bitLengthType);
+        static bool HasStringToPaste();
+        static bool IsErrorMessage(Platform::String ^ message);
 
     private:
-        static int ClipboardTextFormat();
         static Platform::String
             ^ ValidatePasteExpression(
                 Platform::String ^ pastedText,
@@ -83,8 +78,6 @@ namespace CalculatorApp
         static constexpr size_t MaxPasteableLength = 512;
         static constexpr size_t MaxExponentLength = 4;
         static constexpr size_t MaxProgrammerBitLength = 64;
-
-        static Platform::String ^ supportedFormats[];
 
         friend class CalculatorUnitTests::CopyPasteManagerTest;
     };

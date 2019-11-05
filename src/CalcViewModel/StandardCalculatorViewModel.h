@@ -340,7 +340,7 @@ namespace CalculatorApp
             void OnPinUnpinCommand(Platform::Object ^ parameter);
 
             void OnInputChanged();
-            void SetPrimaryDisplay(_In_ std::wstring const& displayString, _In_ bool isError);
+            void SetPrimaryDisplay(Platform::String ^ displayString, _In_ bool isError);
             void DisplayPasteError();
             void SetTokens(_Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens);
             void SetExpressionDisplay(
