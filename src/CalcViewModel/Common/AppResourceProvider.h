@@ -1,14 +1,14 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
 
 namespace CalculatorApp
 {
-    public ref class AppResourceProvider sealed
+    class AppResourceProvider
     {
     public:
-        static AppResourceProvider ^ GetInstance();
+        static AppResourceProvider& GetInstance();
         Platform::String ^ GetResourceString(_In_ Platform::String ^ key);
         Platform::String ^ GetCEngineString(_In_ Platform::String ^ key);
 

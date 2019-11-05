@@ -368,28 +368,33 @@ NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupIniti
     m_GroupType = groupInitializer.type;
 
     auto resProvider = AppResourceProvider::GetInstance();
-    m_Name = resProvider->GetResourceString(StringReference(groupInitializer.headerResourceKey));
-    String ^ groupMode = resProvider->GetResourceString(StringReference(groupInitializer.modeResourceKey));
-    String ^ automationName = resProvider->GetResourceString(StringReference(groupInitializer.automationResourceKey));
+    String ^ headerResourceKey = StringReference(groupInitializer.headerResourceKey);
+    String ^ modeResourceKey = StringReference(groupInitializer.modeResourceKey);
+    String ^ automationResourceKey = StringReference(groupInitializer.automationResourceKey);
+    m_Name = resProvider.GetResourceString(headerResourceKey);
+    String ^ groupMode = resProvider.GetResourceString(modeResourceKey);
+    String ^ automationName = resProvider.GetResourceString(automationResourceKey);
 
-    String ^ navCategoryHeaderAutomationNameFormat = resProvider->GetResourceString(L"NavCategoryHeader_AutomationNameFormat");
-    m_AutomationName = LocalizationStringUtil::GetLocalizedString(navCategoryHeaderAutomationNameFormat, automationName);
+    String ^ navCategoryHeaderAutomationNameFormat = resProvider.GetResourceString(L"NavCategoryHeader_AutomationNameFormat");
+    m_AutomationName =
+        ref new String(LocalizationStringUtil::GetLocalizedString(navCategoryHeaderAutomationNameFormat->Data(), automationName->Data()).c_str());
 
-    String ^ navCategoryItemAutomationNameFormat = resProvider->GetResourceString(L"NavCategoryItem_AutomationNameFormat");
+    String ^ navCategoryItemAutomationNameFormat = resProvider.GetResourceString(L"NavCategoryItem_AutomationNameFormat");
 
     for (const NavCategoryInitializer& categoryInitializer : s_categoryManifest)
     {
         if (categoryInitializer.groupType == groupInitializer.type)
         {
             String ^ nameResourceKey = StringReference(categoryInitializer.nameResourceKey);
-            String ^ categoryName = resProvider->GetResourceString(nameResourceKey + "Text");
-            String ^ categoryAutomationName = LocalizationStringUtil::GetLocalizedString(navCategoryItemAutomationNameFormat, categoryName, m_Name);
+            String ^ categoryName = resProvider.GetResourceString(nameResourceKey + "Text");
+            String ^ categoryAutomationName = ref new String(
+                LocalizationStringUtil::GetLocalizedString(navCategoryItemAutomationNameFormat->Data(), categoryName->Data(), m_Name->Data()).c_str());
 
             m_Categories->Append(ref new NavCategory(
                 categoryName,
                 categoryAutomationName,
                 StringReference(categoryInitializer.glyph),
-                resProvider->GetResourceString(nameResourceKey + "AccessKey"),
+                resProvider.GetResourceString(nameResourceKey + "AccessKey"),
                 groupMode,
                 categoryInitializer.viewMode,
                 categoryInitializer.supportsNegative));

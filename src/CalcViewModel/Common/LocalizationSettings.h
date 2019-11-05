@@ -169,21 +169,20 @@ namespace CalculatorApp
                 }
             }
 
-            Platform::String ^ GetEnglishValueFromLocalizedDigits(Platform::String ^ localizedString) const
+            Platform::String ^ GetEnglishValueFromLocalizedDigits(const std::wstring& localizedString) const
             {
                 if (m_resolvedName == L"en-US")
                 {
-                    return localizedString;
+                    return ref new Platform::String(localizedString.c_str());
                 }
 
                 size_t i = 0;
-                auto localizedStringData = localizedString->Data();
-                size_t length = localizedString->Length();
+                size_t length = localizedString.size();
                 std::unique_ptr<wchar_t[]> englishString(new wchar_t[length + 1]); // +1 for the null termination
 
                 for (; i < length; ++i)
                 {
-                    wchar_t ch = localizedStringData[i];
+                    wchar_t ch = localizedString[i];
                     if (!IsEnUsDigit(ch))
                     {
                         for (int j = 0; j < 10; ++j)
@@ -282,17 +281,18 @@ namespace CalculatorApp
                 return m_numberGrouping;
             }
 
-            Platform::String ^ RemoveGroupSeparators(Platform::String ^ source) const
+            void RemoveGroupSeparators(const wchar_t* value, const size_t length, std::wstring* rawValue) const
             {
-                std::wstringstream stream;
-                for (auto c = source->Begin(); c < source->End(); ++c)
+                rawValue->clear();
+                rawValue->reserve(length);
+
+                for (size_t i = 0; i < length; i++)
                 {
-                    if (*c != L' ' && *c != m_numberGroupSeparator)
+                    if (value[i] != L' ' && value[i] != m_numberGroupSeparator)
                     {
-                        stream << *c;
+                        rawValue->append(1, value[i]);
                     }
                 }
-                return ref new Platform::String(stream.str().c_str());
             }
 
             Platform::String ^ GetCalendarIdentifier() const
