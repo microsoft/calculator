@@ -16,6 +16,8 @@ namespace CalculatorApp
 
         OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector< ViewModel::EquationViewModel^ >^, Equations);
+        OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Windows::UI::Xaml::Media::SolidColorBrush ^> ^, AvailableColors);
+
 
     private:
         void OnPropertyChanged(Platform::String^ propertyName);
@@ -28,7 +30,11 @@ namespace CalculatorApp
         void InputTextBox_LostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void InputTextBox_Submitted(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
+        void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
+        void ReloadAvailableColors(bool isHighContrast);
+
     private:
+        Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         int m_lastLineColorIndex;
         void EquationTextBox_RemoveButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void EquationTextBoxLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
