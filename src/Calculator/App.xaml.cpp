@@ -118,7 +118,7 @@ void App::AddWindowToMap(_In_ WindowFrameService ^ frameService)
 {
     reader_writer_lock::scoped_lock lock(m_windowsMapLock);
     m_secondaryWindows[frameService->GetViewId()] = frameService;
-    TraceLogger::GetInstance().UpdateWindowCount(m_secondaryWindows.size());
+    TraceLogger::GetInstance()->UpdateWindowCount(m_secondaryWindows.size());
 }
 
 WindowFrameService ^ App::GetWindowFromMap(int viewId)
@@ -384,7 +384,7 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
                 }
                 else
                 {
-                    TraceLogger::GetInstance().LogError(ViewMode::None, L"App::OnAppLaunch", L"Null_ActivationViewSwitcher");
+                    TraceLogger::GetInstance()->LogError(ViewMode::None, L"App::OnAppLaunch", L"Null_ActivationViewSwitcher");
                 }
             }
             // Set the preLaunched flag to false
@@ -460,7 +460,7 @@ void App::OnActivated(IActivatedEventArgs ^ args)
 
 void CalculatorApp::App::OnSuspending(Object ^ sender, SuspendingEventArgs ^ args)
 {
-    TraceLogger::GetInstance().LogButtonUsage();
+    TraceLogger::GetInstance()->LogButtonUsage();
 }
 
 void App::DismissedEventHandler(SplashScreen ^ sender, Object ^ e)

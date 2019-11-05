@@ -256,7 +256,7 @@ void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
     // Delay load things later when we get a chance.
     this->Dispatcher->RunAsync(
         CoreDispatcherPriority::Normal, ref new DispatchedHandler([]() {
-            if (TraceLogger::GetInstance().IsWindowIdInLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
+            if (TraceLogger::GetInstance()->IsWindowIdInLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
             {
                 AppLifecycleLogger::GetInstance().LaunchUIResponsive();
                 AppLifecycleLogger::GetInstance().LaunchVisibleComplete();
@@ -391,7 +391,7 @@ void MainPage::OnNavPaneOpening(_In_ MUXC::NavigationView ^ sender, _In_ Object 
 void MainPage::OnNavPaneOpened(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
 {
     KeyboardShortcutManager::HonorShortcuts(false);
-    TraceLogger::GetInstance().LogNavBarOpened();
+    TraceLogger::GetInstance()->LogNavBarOpened();
 }
 
 void MainPage::OnNavPaneClosed(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)

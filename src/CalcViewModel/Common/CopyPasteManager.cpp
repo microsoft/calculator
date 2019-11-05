@@ -108,7 +108,7 @@ String
     if (pastedText->Length() > MaxPasteableLength)
     {
         // return NoOp to indicate don't paste anything.
-        TraceLogger::GetInstance().LogError(mode, L"CopyPasteManager::ValidatePasteExpression", L"PastedExpressionSizeGreaterThanMaxAllowed");
+        TraceLogger::GetInstance()->LogError(mode, L"CopyPasteManager::ValidatePasteExpression", L"PastedExpressionSizeGreaterThanMaxAllowed");
         return PasteErrorString;
     }
 
@@ -141,7 +141,7 @@ String
     // validate each operand with patterns for different modes
     if (!ExpressionRegExMatch(operands, mode, modeType, programmerNumberBase, bitLengthType))
     {
-        TraceLogger::GetInstance().LogError(mode, L"CopyPasteManager::ValidatePasteExpression", L"InvalidExpressionForPresentMode");
+        TraceLogger::GetInstance()->LogError(mode, L"CopyPasteManager::ValidatePasteExpression", L"InvalidExpressionForPresentMode");
         return PasteErrorString;
     }
 
@@ -187,7 +187,7 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
 
         if (operands.size() >= MaxOperandCount)
         {
-            TraceLogger::GetInstance().LogError(mode, L"CopyPasteManager::ExtractOperands", L"OperandCountGreaterThanMaxCount");
+            TraceLogger::GetInstance()->LogError(mode, L"CopyPasteManager::ExtractOperands", L"OperandCountGreaterThanMaxCount");
             operands.clear();
             return operands;
         }
@@ -201,7 +201,7 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
                 // to disallow pasting of 1e+12345 as 1e+1234, max exponent that can be pasted is 9999.
                 if (expLength > MaxExponentLength)
                 {
-                    TraceLogger::GetInstance().LogError(mode, L"CopyPasteManager::ExtractOperands", L"ExponentLengthGreaterThanMaxLength");
+                    TraceLogger::GetInstance()->LogError(mode, L"CopyPasteManager::ExtractOperands", L"ExponentLengthGreaterThanMaxLength");
                     operands.clear();
                     return operands;
                 }
