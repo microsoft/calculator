@@ -164,7 +164,11 @@ void HistoryViewModel::OnClearCommand(_In_ Platform::Object ^ e)
             UpdateItemSize();
         }
 
-        MakeHistoryClearedNarratorAnnouncement(HistoryResourceKeys::HistoryCleared, m_localizedHistoryCleared);
+        if (m_localizedHistoryCleared == nullptr)
+        {
+            m_localizedHistoryCleared = AppResourceProvider::GetInstance()->GetResourceString(HistoryResourceKeys::HistoryCleared);
+        }
+        HistoryAnnouncement = CalculatorAnnouncement::GetHistoryClearedAnnouncement(m_localizedHistoryCleared);
     }
 }
 
@@ -369,12 +373,4 @@ bool HistoryViewModel::IsValid(_In_ CalculationManager::HISTORYITEM item)
 void HistoryViewModel::UpdateItemSize()
 {
     ItemSize = Items->Size;
-}
-
-Platform::String ^ HistoryViewModel::MakeHistoryClearedNarratorAnnouncement(String ^ resourceKey, String ^ formatVariable)
-{
-    String ^ announcement = LocalizationStringUtil::GetLocalizedString(LocalizationStringUtil::GetResourceValue(resourceKey), formatVariable);
-
-    HistoryAnnouncement = CalculatorAnnouncement::GetHistoryClearedAnnouncement(announcement);
-    return announcement;
 }

@@ -241,10 +241,13 @@ void StandardCalculatorViewModel::SetOpenParenthesisCountNarratorAnnouncement()
     wstring localizedParenthesisCount = to_wstring(m_OpenParenthesisCount).c_str();
     LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
 
-    String ^ announcement = LocalizationStringUtil::GetLocalizedString(
-        LocalizationStringUtil::GetResourceValue(CalculatorResourceKeys::OpenParenthesisCountAutomationFormat),
-        m_localizedOpenParenthesisCountChangedAutomationFormat,
-        StringReference(localizedParenthesisCount.c_str()));
+    if (m_localizedOpenParenthesisCountChangedAutomationFormat == nullptr)
+    {
+        m_localizedOpenParenthesisCountChangedAutomationFormat =
+            AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::OpenParenthesisCountAutomationFormat);
+    }
+    String ^ announcement =
+        LocalizationStringUtil::GetLocalizedString(m_localizedOpenParenthesisCountChangedAutomationFormat, StringReference(localizedParenthesisCount.c_str()));
 
     Announcement = CalculatorAnnouncement::GetOpenParenthesisCountChangedAnnouncement(announcement);
 }
@@ -256,10 +259,13 @@ void StandardCalculatorViewModel::OnNoRightParenAdded()
 
 void StandardCalculatorViewModel::SetNoParenAddedNarratorAnnouncement()
 {
-    String ^ announcement =
-        LocalizationStringUtil::GetLocalizedString(LocalizationStringUtil::GetResourceValue(CalculatorResourceKeys::NoParenthesisAdded), m_localizedNoRightParenthesisAddedFormat);
+    if (m_localizedNoRightParenthesisAddedFormat == nullptr)
+    {
+        m_localizedNoRightParenthesisAddedFormat =
+            AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::NoParenthesisAdded);
+    }
 
-    Announcement = CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(announcement);
+    Announcement = CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(m_localizedNoRightParenthesisAddedFormat);
 }
 
 void StandardCalculatorViewModel::DisableButtons(CommandType selectedExpressionCommandType)
@@ -339,7 +345,7 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<vector<pair<wstri
     for (unsigned int i = 0; i < nTokens; ++i)
     {
         auto currentToken = (*tokens)[i];
-        
+
         Common::TokenType type;
         bool isEditable = currentToken.second != -1;
         localizer.LocalizeDisplayValue(&(currentToken.first));
@@ -895,8 +901,11 @@ void StandardCalculatorViewModel::OnClearMemoryCommand(Object ^ parameter)
 
     TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
 
-    String ^ announcement = LocalizationStringUtil::GetLocalizedString(LocalizationStringUtil::GetResourceValue(CalculatorResourceKeys::MemoryCleared), m_localizedMemoryCleared);
-    Announcement = CalculatorAnnouncement::GetMemoryClearedAnnouncement(announcement);
+    if (m_localizedMemoryCleared == nullptr)
+    {
+        m_localizedMemoryCleared = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MemoryCleared);
+    }
+    Announcement = CalculatorAnnouncement::GetMemoryClearedAnnouncement(m_localizedMemoryCleared);
 }
 
 void StandardCalculatorViewModel::OnPinUnpinCommand(Object ^ parameter)
@@ -1048,9 +1057,11 @@ void StandardCalculatorViewModel::OnMemoryButtonPressed()
 
     TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::Memory, GetCalculatorMode());
 
-    String ^ announcement = LocalizationStringUtil::GetLocalizedString(
-        LocalizationStringUtil::GetResourceValue(CalculatorResourceKeys::MemorySave), m_localizedMemorySavedAutomationFormat, m_DisplayValue);
-
+    if (m_localizedMemorySavedAutomationFormat == nullptr)
+    {
+        m_localizedMemorySavedAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MemorySave);
+    }
+    String ^ announcement = LocalizationStringUtil::GetLocalizedString(m_localizedMemorySavedAutomationFormat, m_DisplayValue);
     Announcement = CalculatorAnnouncement::GetMemoryItemAddedAnnouncement(announcement);
 }
 
@@ -1064,9 +1075,12 @@ void StandardCalculatorViewModel::OnMemoryItemChanged(unsigned int indexOfMemory
         wstring localizedIndex = to_wstring(indexOfMemory + 1);
         LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedIndex);
 
-        String ^ announcement = LocalizationStringUtil::GetLocalizedString(
-            LocalizationStringUtil::GetResourceValue(CalculatorResourceKeys::MemoryItemChanged), m_localizedMemoryItemChangedAutomationFormat, StringReference(localizedIndex.c_str()), localizedValue);
-
+        if (m_localizedMemoryItemChangedAutomationFormat == nullptr)
+        {
+            m_localizedMemoryItemChangedAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MemoryItemChanged);
+        }
+        String ^ announcement =
+            LocalizationStringUtil::GetLocalizedString(m_localizedMemoryItemChangedAutomationFormat, StringReference(localizedIndex.c_str()), localizedValue);
         Announcement = CalculatorAnnouncement::GetMemoryItemChangedAnnouncement(announcement);
     }
 }
@@ -1133,8 +1147,12 @@ void StandardCalculatorViewModel::OnMemoryClear(_In_ Object ^ memoryItemPosition
             wstring localizedIndex = to_wstring(boxedPosition->Value + 1);
             LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedIndex);
 
-            String ^ announcement = LocalizationStringUtil::GetLocalizedString(
-                LocalizationStringUtil::GetResourceValue(CalculatorResourceKeys::MemoryItemCleared), m_localizedMemoryItemClearedAutomationFormat, StringReference(localizedIndex.c_str()));
+            if (m_localizedMemoryItemClearedAutomationFormat == nullptr)
+            {
+                m_localizedMemoryItemClearedAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MemoryItemCleared);
+            }
+            String ^ announcement =
+                LocalizationStringUtil::GetLocalizedString(m_localizedMemoryItemClearedAutomationFormat, StringReference(localizedIndex.c_str()));
 
             Announcement = CalculatorAnnouncement::GetMemoryClearedAnnouncement(announcement);
         }
@@ -1808,9 +1826,11 @@ void StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
 
 void StandardCalculatorViewModel::OnMaxDigitsReached()
 {
-    String ^ announcement = LocalizationStringUtil::GetLocalizedString(
-        LocalizationStringUtil::GetResourceValue(CalculatorResourceKeys::MaxDigitsReachedFormat), m_localizedMaxDigitsReachedAutomationFormat, m_CalculationResultAutomationName);
-
+    if (m_localizedMaxDigitsReachedAutomationFormat == nullptr)
+    {
+        m_localizedMaxDigitsReachedAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MaxDigitsReachedFormat);
+    }
+    String ^ announcement = LocalizationStringUtil::GetLocalizedString(m_localizedMaxDigitsReachedAutomationFormat, m_CalculationResultAutomationName);
     Announcement = CalculatorAnnouncement::GetMaxDigitsReachedAnnouncement(announcement);
 }
 
@@ -1828,8 +1848,11 @@ NarratorAnnouncement ^ StandardCalculatorViewModel::GetDisplayUpdatedNarratorAnn
     }
     else
     {
+        if (m_localizedButtonPressFeedbackAutomationFormat == nullptr)
+        {
+            m_localizedButtonPressFeedbackAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::ButtonPressFeedbackFormat);
+        }
         announcement = LocalizationStringUtil::GetLocalizedString(
-            LocalizationStringUtil::GetResourceValue(CalculatorResourceKeys::ButtonPressFeedbackFormat),
             m_localizedButtonPressFeedbackAutomationFormat,
             m_CalculationResultAutomationName,
             m_feedbackForButtonPress);

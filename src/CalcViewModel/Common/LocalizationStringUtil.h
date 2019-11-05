@@ -81,16 +81,6 @@ namespace CalculatorApp
                 {
                     return LocalizationStringUtilInternal::GetLocalizedString(pMessage, param1->Data(), param2->Data(), param3->Data(), param4->Data());
                 }
-
-           static Platform::String
-                          ^ GetResourceValue(Platform::String ^ resourceKey) {
-                                if (resourceKey == nullptr || resourceKey->IsEmpty())
-                                {
-                                    return L"";
-                                }
-
-                                return AppResourceProvider::GetInstance()->GetResourceString(resourceKey);
-                            }
         };
     }
 }
