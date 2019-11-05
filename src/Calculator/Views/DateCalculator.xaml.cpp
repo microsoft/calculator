@@ -92,7 +92,7 @@ DateCalculator::DateCalculator()
     DateDiff_FromDate->PlaceholderText = placeholderText;
     DateDiff_ToDate->PlaceholderText = placeholderText;
 
-    CopyMenuItem->Text = AppResourceProvider::GetInstance()->GetResourceString(L"copyMenuItem");
+    CopyMenuItem->Text = AppResourceProvider::GetInstance().GetResourceString(L"copyMenuItem");
     m_dateCalcOptionChangedEventToken = DateCalculationOption->SelectionChanged +=
         ref new SelectionChangedEventHandler(this, &DateCalculator::DateCalcOption_Changed);
 }

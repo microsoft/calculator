@@ -10,7 +10,6 @@
 #include "CalcViewModel/Common/AppResourceProvider.h"
 #include "Views/Memory.xaml.h"
 #include "Converters/BooleanToVisibilityConverter.h"
-#include "CalcViewModel/Common/LocalizationStringUtil.h"
 #include "Common/AppLifecycleLogger.h"
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -511,20 +510,25 @@ void MainPage::SetHeaderAutomationName()
     String ^ name;
     if (NavCategory::IsDateCalculatorViewMode(mode))
     {
-        name = resProvider->GetResourceString(L"HeaderAutomationName_Date");
+        name = resProvider.GetResourceString(L"HeaderAutomationName_Date");
     }
     else
     {
-        String ^ full;
+        wstring full;
         if (NavCategory::IsCalculatorViewMode(mode))
         {
-            full = resProvider->GetResourceString(L"HeaderAutomationName_Calculator");
+            full = resProvider.GetResourceString(L"HeaderAutomationName_Calculator")->Data();
         }
         else if (NavCategory::IsConverterViewMode(mode))
         {
-            full = resProvider->GetResourceString(L"HeaderAutomationName_Converter");
+            full = resProvider.GetResourceString(L"HeaderAutomationName_Converter")->Data();
         }
-        name = LocalizationStringUtil::GetLocalizedString(full, m_model->CategoryName);
+
+        string::size_type found = full.find(L"%1");
+        wstring strMode = m_model->CategoryName->Data();
+        full = full.replace(found, 2, strMode);
+
+        name = ref new String(full.c_str());
     }
 
     AutomationProperties::SetName(Header, name);

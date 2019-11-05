@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -124,9 +124,9 @@ namespace CalculatorApp
             std::shared_ptr<UCM::IViewModelCurrencyCallback> m_vmCallback;
 
             Windows::Globalization::NumberFormatting::DecimalFormatter ^ m_ratioFormatter;
-            Platform::String ^ m_ratioFormat;
+            std::wstring m_ratioFormat;
             Windows::Foundation::DateTime m_cacheTimestamp;
-            Platform::String ^ m_timestampFormat;
+            std::wstring m_timestampFormat;
 
             CurrencyLoadStatus m_loadStatus;
 

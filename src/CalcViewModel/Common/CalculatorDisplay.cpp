@@ -9,7 +9,6 @@
 
 using namespace CalculatorApp;
 using namespace CalculationManager;
-using namespace Platform;
 using namespace std;
 
 CalculatorDisplay::CalculatorDisplay()
@@ -32,7 +31,7 @@ void CalculatorDisplay::SetPrimaryDisplay(_In_ const wstring& displayStringValue
     {
         if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
         {
-            calcVM->SetPrimaryDisplay(StringReference(displayStringValue.c_str()), isError);
+            calcVM->SetPrimaryDisplay(displayStringValue, isError);
         }
     }
 }

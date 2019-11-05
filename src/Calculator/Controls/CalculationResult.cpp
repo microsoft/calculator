@@ -63,7 +63,11 @@ CalculationResult::CalculationResult()
 
 Platform::String ^ CalculationResult::GetRawDisplayValue()
 {
-    return LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue);
+    std::wstring rawValue;
+
+    LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue->Data(), DisplayValue->Length(), &rawValue);
+
+    return ref new Platform::String(rawValue.c_str());
 }
 
 void CalculationResult::OnApplyTemplate()

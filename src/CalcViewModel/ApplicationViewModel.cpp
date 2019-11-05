@@ -152,7 +152,7 @@ void ApplicationViewModel::OnModeChanged()
     }
 
     auto resProvider = AppResourceProvider::GetInstance();
-    CategoryName = resProvider->GetResourceString(NavCategory::GetNameResourceKey(m_mode));
+    CategoryName = resProvider.GetResourceString(NavCategory::GetNameResourceKey(m_mode));
 
     // Cast mode to an int in order to save it to app data.
     // Save the changed mode, so that the new window launches in this mode.
