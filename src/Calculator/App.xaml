@@ -1776,6 +1776,7 @@
 
                                 </VisualStateManager.VisualStateGroups>
 
+
                                 <Button x:Name="EquationButton"
                                         MinWidth="44"
                                         MinHeight="44"
@@ -1783,19 +1784,25 @@
                                         Background="{TemplateBinding EquationColor}"
                                         Foreground="{StaticResource SystemChromeWhiteColor}">
                                     <Button.Content>
-                                        <StackPanel Orientation="Horizontal">
-                                            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE72B;"/>
-                                            <TextBlock FontFamily="{TemplateBinding FontFamily}" Text=" ƒₓ"/>
+                                        <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
+                                            <FontIcon VerticalAlignment="Center"
+                                                      FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                      FontSize="16"
+                                                      Glyph="&#xE72B;"/>
+                                            <TextBlock Margin="12,-4,0,0"
+                                                       VerticalAlignment="Top"
+                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontSize="16"
+                                                       Text="ƒₓ"/>
                                         </StackPanel>
                                     </Button.Content>
                                     <Button.Resources>
                                         <SolidColorBrush x:Name="ButtonBackgroundPointerOver"
-                                                         Opacity="0.4"
+                                                         Opacity="0.7"
                                                          Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                         <SolidColorBrush x:Name="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
                                         <SolidColorBrush x:Name="ButtonBorderBrushPointerOver" Color="Transparent"/>
                                     </Button.Resources>
-
                                 </Button>
 
                                 <Grid Grid.Column="1" Background="{ThemeResource TextControlBackground}">
@@ -1807,16 +1814,17 @@
                                                               Padding="{TemplateBinding Padding}"
                                                               VerticalAlignment="Stretch"
                                                               Style="{StaticResource MathRichEdit_EquationTextBoxStyle}"
+                                                              Background="Transparent"
                                                               BorderThickness="0"
                                                               FontFamily="{TemplateBinding FontFamily}"
                                                               FontSize="{TemplateBinding FontSize}"
                                                               FontWeight="{TemplateBinding FontWeight}"
                                                               AcceptsReturn="false"
                                                               InputScope="Text"
-                                                              IsEnabled="False"
                                                               IsReadOnly="True"
                                                               MaxLength="2048"
-                                                              TextWrapping="NoWrap"/>
+                                                              TextWrapping="NoWrap"
+                                                              UseSystemFocusVisuals="True"/>
                                 </Grid>
                             </Grid>
                         </ControlTemplate>

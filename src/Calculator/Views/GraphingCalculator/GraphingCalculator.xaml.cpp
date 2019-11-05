@@ -311,11 +311,9 @@ void CalculatorApp::GraphingCalculator::OnLoosingFocus(Windows::UI::Xaml::UIElem
     }
 }
 
-void GraphingCalculator::OnEquationKeyGraphFeaturesChanged(Object ^ sender, RoutedEventArgs ^ e)
+void GraphingCalculator::OnEquationKeyGraphFeaturesVisibilityChanged(Object ^ sender, RoutedEventArgs ^ e)
 {
     IsKeyGraphFeaturesVisible = true;
-    auto equationInputArea = static_cast<EquationInputArea ^>(sender);
-    KeyGraphFeaturesVM = equationInputArea->EquationVM;
 }
 
 void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventArgs ^ e)

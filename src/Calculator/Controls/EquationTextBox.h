@@ -22,7 +22,7 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::SolidColorBrush^, EquationColor);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Controls::Flyout^, ColorChooserFlyout);
 
-            event Windows::UI::Xaml::RoutedEventHandler^ RemoveButtonClicked;
+            event Windows::UI::Xaml::RoutedEventHandler ^ RemoveButtonClicked;
             event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesButtonClicked;
             event Windows::UI::Xaml::RoutedEventHandler ^ EquationSubmitted;
             event Windows::UI::Xaml::RoutedEventHandler ^ EquationButtonClicked;

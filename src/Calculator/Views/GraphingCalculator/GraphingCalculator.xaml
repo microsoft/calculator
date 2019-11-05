@@ -429,17 +429,17 @@
                                          Grid.RowSpan="2"
                                          x:Load="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"
                                          KeyGraphFeaturesClosed="OnKeyGraphFeaturesClosed"
-                                         ViewModel="{x:Bind KeyGraphFeaturesVM, Mode=OneWay}"
+                                         ViewModel="{x:Bind EquationInputAreaControl.EquationVM, Mode=OneWay}"
                                          Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"/>
             <Grid x:Name="EquationInputAreaGrid" Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <local:EquationInputArea Grid.Row="1"
+                <local:EquationInputArea x:Name="EquationInputAreaControl" Grid.Row="1"
                                          Margin="0,8,0,0"
                                          Equations="{x:Bind ViewModel.Equations}"
-                                         KeyGraphFeaturesVisibilityChanged="OnEquationKeyGraphFeaturesChanged"/>
+                                         KeyGraphFeaturesVisibilityChanged="OnEquationKeyGraphFeaturesVisibilityChanged"/>
             </Grid>
 
             <Grid x:Name="ButtonContainerGrid"

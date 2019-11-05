@@ -56,7 +56,15 @@ namespace CalculatorApp::ViewModel
 
     void EquationViewModel::OnPropertyChanged(String ^ propertyName)
     {
-        if (propertyName == L"IsAnalysisUpdated" && IsAnalysisUpdated)
+        if (propertyName == L"IsAnalysisUpdated")
+        {
+            OnIsAnalysisUpdatedChanged();
+        }
+    }
+
+    void EquationViewModel::OnIsAnalysisUpdatedChanged()
+    {
+        if (IsAnalysisUpdated)
         {
             if (AnalysisError != 0)
             {
@@ -102,7 +110,6 @@ namespace CalculatorApp::ViewModel
         item->Title = title;
         if (expression != L"")
         {
-
             item->DisplayItems->Append(expression);
             item->IsText = false;
         }
@@ -142,27 +149,25 @@ namespace CalculatorApp::ViewModel
         {
         case 0:
             parityItem->DisplayItems->Append(m_resourceLoader->GetString(L"KGFParityUnknown"));
-            parityItem->IsText = true;
             break;
         case 1:
             parityItem->DisplayItems->Append(m_resourceLoader->GetString(L"KGFParityOdd"));
-            parityItem->IsText = true;
             break;
         case 2:
             parityItem->DisplayItems->Append(m_resourceLoader->GetString(L"KGFParityEven"));
-            parityItem->IsText = true;
             break;
         case 3:
             parityItem->DisplayItems->Append(m_resourceLoader->GetString(L"KGFParityNeither"));
-            parityItem->IsText = true;
             break;
         default:
             parityItem->DisplayItems->Append(m_resourceLoader->GetString(L"KGFParityUnknown"));
-            parityItem->IsText = true;
+
         }
+        parityItem->IsText = true;
 
         KeyGraphFeaturesItems->Append(parityItem);
     }
+
     void EquationViewModel::SetPeriodicityStringProperty()
     {
         KeyGraphFeaturesItem ^ periodicityItem = ref new KeyGraphFeaturesItem();
@@ -256,51 +261,51 @@ namespace CalculatorApp::ViewModel
         {
             error.append((m_resourceLoader->GetString(L"Domain") + separator + L" ")->Data());
         }
-        else if ((TooComplexFeatures & KeyGraphFeaturesFlag::Range) == KeyGraphFeaturesFlag::Range)
+        if ((TooComplexFeatures & KeyGraphFeaturesFlag::Range) == KeyGraphFeaturesFlag::Range)
         {
             error.append((m_resourceLoader->GetString(L"Range") + separator + L" ")->Data());
         }
-        else if ((TooComplexFeatures & KeyGraphFeaturesFlag::Zeros) == KeyGraphFeaturesFlag::Zeros)
+        if ((TooComplexFeatures & KeyGraphFeaturesFlag::Zeros) == KeyGraphFeaturesFlag::Zeros)
         {
             error.append((m_resourceLoader->GetString(L"XIntercept") + separator + L" ")->Data());
         }
-        else if ((TooComplexFeatures & KeyGraphFeaturesFlag::YIntercept) == KeyGraphFeaturesFlag::YIntercept)
+        if ((TooComplexFeatures & KeyGraphFeaturesFlag::YIntercept) == KeyGraphFeaturesFlag::YIntercept)
         {
             error.append((m_resourceLoader->GetString(L"YIntercept") + separator + L" ")->Data());
         }
-        else if ((TooComplexFeatures & KeyGraphFeaturesFlag::Parity) == KeyGraphFeaturesFlag::Parity)
+        if ((TooComplexFeatures & KeyGraphFeaturesFlag::Parity) == KeyGraphFeaturesFlag::Parity)
         {
             error.append((m_resourceLoader->GetString(L"Parity") + separator + L" ")->Data());
         }
-        else if ((TooComplexFeatures & KeyGraphFeaturesFlag::Periodicity) == KeyGraphFeaturesFlag::Periodicity)
+        if ((TooComplexFeatures & KeyGraphFeaturesFlag::Periodicity) == KeyGraphFeaturesFlag::Periodicity)
         {
             error.append((m_resourceLoader->GetString(L"Periodicity") + separator + L" ")->Data());
         }
-        else if ((TooComplexFeatures & KeyGraphFeaturesFlag::Minima) == KeyGraphFeaturesFlag::Minima)
+        if ((TooComplexFeatures & KeyGraphFeaturesFlag::Minima) == KeyGraphFeaturesFlag::Minima)
         {
             error.append((m_resourceLoader->GetString(L"Minima") + separator + L" ")->Data());
         }
-        else if ((TooComplexFeatures & KeyGraphFeaturesFlag::Maxima) == KeyGraphFeaturesFlag::Maxima)
+        if ((TooComplexFeatures & KeyGraphFeaturesFlag::Maxima) == KeyGraphFeaturesFlag::Maxima)
         {
             error.append((m_resourceLoader->GetString(L"Maxima") + separator + L" ")->Data());
         }
-        else if ((TooComplexFeatures & KeyGraphFeaturesFlag::InflectionPoints) == KeyGraphFeaturesFlag::InflectionPoints)
+        if ((TooComplexFeatures & KeyGraphFeaturesFlag::InflectionPoints) == KeyGraphFeaturesFlag::InflectionPoints)
         {
             error.append((m_resourceLoader->GetString(L"InflectionPoints") + separator + L" ")->Data());
         }
-        else if ((TooComplexFeatures & KeyGraphFeaturesFlag::VerticalAsymptotes) == KeyGraphFeaturesFlag::VerticalAsymptotes)
+        if ((TooComplexFeatures & KeyGraphFeaturesFlag::VerticalAsymptotes) == KeyGraphFeaturesFlag::VerticalAsymptotes)
         {
             error.append((m_resourceLoader->GetString(L"VerticalAsymptotes") + separator + L" ")->Data());
         }
-        else if ((TooComplexFeatures & KeyGraphFeaturesFlag::HorizontalAsymptotes) == KeyGraphFeaturesFlag::HorizontalAsymptotes)
+        if ((TooComplexFeatures & KeyGraphFeaturesFlag::HorizontalAsymptotes) == KeyGraphFeaturesFlag::HorizontalAsymptotes)
         {
             error.append((m_resourceLoader->GetString(L"HorizontalAsymptotes") + separator + L" ")->Data());
         }
-        else if ((TooComplexFeatures & KeyGraphFeaturesFlag::ObliqueAsymptotes) == KeyGraphFeaturesFlag::ObliqueAsymptotes)
+        if ((TooComplexFeatures & KeyGraphFeaturesFlag::ObliqueAsymptotes) == KeyGraphFeaturesFlag::ObliqueAsymptotes)
         {
             error.append((m_resourceLoader->GetString(L"ObliqueAsymptotes") + separator + L" ")->Data());
         }
-        else if ((TooComplexFeatures & KeyGraphFeaturesFlag::MonotoneIntervals) == KeyGraphFeaturesFlag::MonotoneIntervals)
+        if ((TooComplexFeatures & KeyGraphFeaturesFlag::MonotoneIntervals) == KeyGraphFeaturesFlag::MonotoneIntervals)
         {
             error.append((m_resourceLoader->GetString(L"Monotonicity") + separator + L" ")->Data());
         }

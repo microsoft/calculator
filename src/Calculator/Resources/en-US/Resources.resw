@@ -3668,11 +3668,11 @@
     <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
   </data>
   <data name="XIntercept" xml:space="preserve">
-    <value>XIntercept</value>
+    <value>X Intercept</value>
     <comment>Title for KeyGraphFeatures XIntercept Property</comment>
   </data>
   <data name="YIntercept" xml:space="preserve">
-    <value>YIntercept</value>
+    <value>Y Intercept</value>
     <comment>Title for KeyGraphFeatures YIntercept Property</comment>
   </data>
   <data name="KGFAnalysisCouldNotBePerformed" xml:space="preserve">

@@ -40,26 +40,22 @@ public
         OBSERVABLE_PROPERTY_RW(Windows::UI::Xaml::Media::SolidColorBrush ^, LineColor);
 
         // Key Graph Features
-        OBSERVABLE_PROPERTY_RW(bool, IsAnalysisUpdated);
+        OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(bool, IsAnalysisUpdated);
         OBSERVABLE_PROPERTY_RW(Platform::String ^, Domain);
         OBSERVABLE_PROPERTY_RW(Platform::String ^, Range);
         OBSERVABLE_PROPERTY_RW(Platform::String ^, XIntercept);
         OBSERVABLE_PROPERTY_RW(Platform::String ^, YIntercept);
         OBSERVABLE_PROPERTY_RW(int, Parity);
-        // OBSERVABLE_PROPERTY_R(Platform::String ^, ParityString);
         OBSERVABLE_PROPERTY_RW(int, PeriodicityDirection);
         OBSERVABLE_PROPERTY_RW(Platform::String ^, PeriodicityExpression);
-        // OBSERVABLE_PROPERTY_R(Platform::String ^, PeriodicityString);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, Minima);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, Maxima);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, InflectionPoints);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, VerticalAsymptotes);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, HorizontalAsymptotes);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, ObliqueAsymptotes);
-        // OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, MonotonicityString);
         OBSERVABLE_PROPERTY_RW(int, TooComplexFeatures);
         OBSERVABLE_PROPERTY_RW(int, AnalysisError);
-        // OBSERVABLE_PROPERTY_R(Platform::String ^, TooComplexFeaturesString);
         OBSERVABLE_PROPERTY_R(Platform::String ^, AnalysisErrorString);
         OBSERVABLE_PROPERTY_R(bool, AnalysisErrorVisible);
         OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<CalculatorApp::ViewModel::KeyGraphFeaturesItem ^> ^, KeyGraphFeaturesItems)
@@ -88,6 +84,7 @@ public
             Platform::String ^ errorString);
         void SetMonotoncityStringProperty();
         void SetTooComplexFeaturesErrorProperty();
+        void OnIsAnalysisUpdatedChanged();
 
         Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ m_Monotonicity;
         Windows::ApplicationModel::Resources::ResourceLoader ^ m_resourceLoader;

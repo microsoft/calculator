@@ -21,6 +21,7 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="IsEnabled" Value="True"/>
             <Setter Property="Margin" Value="-8,0,0,0"/>
+            <Setter Property="UseSystemFocusVisuals" Value="True"/>
         </Style>
         <Style x:Name="KGF_TitleTextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Medium"/>
@@ -53,7 +54,7 @@
                 <TextBlock x:Name="TitleTextBlock"
                            Style="{StaticResource KGF_TitleTextBlockStyle}"
                            Text="{x:Bind Title, Mode=OneWay}"/>
-                <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}">
+                <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}" UseSystemFocusVisuals="True">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="x:String">
                             <controls:MathRichEditBox HorizontalAlignment="Left"
@@ -70,7 +71,7 @@
                 <TextBlock x:Name="TitleTextBlock"
                            Style="{StaticResource KGF_TitleTextBlockStyle}"
                            Text="{x:Bind Title, Mode=OneWay}"/>
-                <ItemsControl ItemsSource="{x:Bind GridItems, Mode=OneWay}">
+                <ItemsControl ItemsSource="{x:Bind GridItems, Mode=OneWay}" UseSystemFocusVisuals="True">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="vm:GridDisplayItems">
                             <Grid VerticalAlignment="Center">
@@ -99,7 +100,7 @@
                 <TextBlock x:Name="TitleTextBlock"
                            Style="{StaticResource KGF_TitleTextBlockStyle}"
                            Text="{x:Bind Title, Mode=OneWay}"/>
-                <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}">
+                <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}" UseSystemFocusVisuals="True">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="x:String">
                             <TextBlock Style="{StaticResource KGF_TextBlockStyle}" Text="{x:Bind}"/>
@@ -115,7 +116,6 @@
                                              TextBlockTemplate="{StaticResource KGFTextBlockDataTemplate}"/>
 
         <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
-        <converters:ItemSizeToVisibilityConverter x:Name="ItemSizeToVisibilityConverter"/>
     </UserControl.Resources>
 
     <Grid>
@@ -131,7 +131,8 @@
                                   Style="{StaticResource KGF_EquationTextBoxStyle}"
                                   DataContext="{x:Bind ViewModel, Mode=OneWay}"
                                   EquationButtonClicked="EquationButtonClicked"
-                                  Loaded="EquationInputTextBox_Loaded"/>
+                                  Loaded="EquationInputTextBox_Loaded"
+                                  />
         <TextBlock x:Uid="KeyGraphFeaturesLabel"
                    Grid.Row="1"
                    Margin="10,10,10,0"
@@ -148,7 +149,8 @@
                   ItemsSource="{x:Bind ViewModel.KeyGraphFeaturesItems}"
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   ScrollViewer.VerticalScrollMode="Auto"
-                  Visibility="{x:Bind ViewModel.AnalysisErrorVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+                  Visibility="{x:Bind ViewModel.AnalysisErrorVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"
+                  />
         <TextBlock x:Name="AnalysisErrorTextBlock"
                    Grid.Row="2"
                    Margin="10,10"

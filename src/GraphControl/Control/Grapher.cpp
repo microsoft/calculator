@@ -467,6 +467,8 @@ namespace GraphControl
         auto equations = GetValidEquations();
         for (auto equation : equations)
         {
+            equation->IsAnalysisUpdated = false;
+
             if (auto graph = GetGraph(equation))
             {
                 if (auto analyzer = graph->GetAnalyzer())
