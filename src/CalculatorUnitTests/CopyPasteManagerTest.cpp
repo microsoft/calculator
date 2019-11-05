@@ -42,6 +42,10 @@ namespace CalculatorUnitTests
     TEST_CLASS(CopyPasteManagerTest)
     {
     public:
+        CopyPasteManagerTest()
+        {
+            m_CopyPasteManager = ref new CopyPasteManager();
+        }
         TEST_METHOD(FunctionalCopyPasteTest);
         TEST_METHOD(ValidateStandardPasteExpressionTest);
         TEST_METHOD(ValidateScientificPasteExpressionTest);
@@ -54,35 +58,36 @@ namespace CalculatorUnitTests
         TEST_METHOD(ValidatePasteExpressionErrorStates)
         {
             wstring exp_TooLong = L"";
-            for (int i = 0; i < m_CopyPasteManager.MaxPasteableLength / 8; i++)
+            for (int i = 0; i < m_CopyPasteManager->MaxPasteableLength / 8; i++)
             {
                 exp_TooLong += L"-1234567";
             }
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.ValidatePasteExpression(StringReference(exp_TooLong.c_str()), ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown),
+                m_CopyPasteManager->ValidatePasteExpression(
+                    StringReference(exp_TooLong.c_str()), ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown),
                 StringReference(exp_TooLong.c_str()),
                 L"Verify ValidatePasteExpression handles expressions up to max length");
             exp_TooLong += L"1";
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.ValidatePasteExpression(
+                m_CopyPasteManager->ValidatePasteExpression(
                     StringReference(exp_TooLong.c_str()), ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown),
                 StringReference(L"NoOp"),
                 L"Verify ValidatePasteExpression returns NoOp for strings over max length");
 
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.ValidatePasteExpression(
+                m_CopyPasteManager->ValidatePasteExpression(
                     StringReference(L""), ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown),
                 StringReference(L"NoOp"),
                 L"Verify empty string is invalid");
 
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.ValidatePasteExpression(
+                m_CopyPasteManager->ValidatePasteExpression(
                     StringReference(L"1a23f456"), ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown),
                 StringReference(L"NoOp"),
                 L"Verify pasting unsupported strings for the current mode is invalid");
 
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.ValidatePasteExpression(StringReference(L"123"), ViewMode::None, CategoryGroupType::None, -1, BitLength::BitLengthUnknown),
+                m_CopyPasteManager->ValidatePasteExpression(StringReference(L"123"), ViewMode::None, CategoryGroupType::None, -1, BitLength::BitLengthUnknown),
                 StringReference(L"NoOp"),
                 L"Verify pasting without a ViewMode or Category is invalid");
         };
@@ -92,47 +97,47 @@ namespace CalculatorUnitTests
             vector<wstring> results = {};
 
             vector<wstring> oneOperand = { L"123456" };
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"123456", ViewMode::Standard), oneOperand);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ExtractOperands(L"123456", ViewMode::Standard), oneOperand);
             oneOperand = { L"123^456" };
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"123^456", ViewMode::Standard), oneOperand);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ExtractOperands(L"123^456", ViewMode::Standard), oneOperand);
 
             vector<wstring> twoOperands = { L"123", L"456" };
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"123+456", ViewMode::Standard), twoOperands);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"123-456", ViewMode::Standard), twoOperands);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"123*456", ViewMode::Standard), twoOperands);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"123/456", ViewMode::Standard), twoOperands);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ExtractOperands(L"123+456", ViewMode::Standard), twoOperands);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ExtractOperands(L"123-456", ViewMode::Standard), twoOperands);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ExtractOperands(L"123*456", ViewMode::Standard), twoOperands);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ExtractOperands(L"123/456", ViewMode::Standard), twoOperands);
 
             vector<wstring> expOperand = { L"123e456" };
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"123e456", ViewMode::Standard), expOperand);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ExtractOperands(L"123e456", ViewMode::Standard), expOperand);
             expOperand = { L"123e4567" };
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"123e4567", ViewMode::Standard), expOperand);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ExtractOperands(L"123e4567", ViewMode::Standard), expOperand);
 
             vector<wstring> twoOperandsParens = { L"((45)", L"(-30))" };
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ExtractOperands(L"((45)+(-30))", ViewMode::Scientific), twoOperandsParens);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ExtractOperands(L"((45)+(-30))", ViewMode::Scientific), twoOperandsParens);
         };
 
         TEST_METHOD(ValidateExtractOperandsErrors)
         {
             wstring exp_OperandLimit = L"";
-            for (int i = 0; i < m_CopyPasteManager.MaxOperandCount; i++)
+            for (int i = 0; i < m_CopyPasteManager->MaxOperandCount; i++)
             {
                 exp_OperandLimit += L"+1";
             }
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.ExtractOperands(exp_OperandLimit, ViewMode::Standard).size(),
+                m_CopyPasteManager->ExtractOperands(exp_OperandLimit, ViewMode::Standard).size(),
                 100,
                 L"Verify ExtractOperands handles up to MaxOperandCount operands");
 
             exp_OperandLimit += L"+1";
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.ExtractOperands(exp_OperandLimit, ViewMode::Standard).size(),
+                m_CopyPasteManager->ExtractOperands(exp_OperandLimit, ViewMode::Standard).size(),
                 0,
                 L"Verify ExtractOperands returns empty vector on too many operands");
 
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.ExtractOperands(L"12e9999", ViewMode::Standard).size(), 1, L"Verify ExtractOperands handles up to 4 digit exponents");
+                m_CopyPasteManager->ExtractOperands(L"12e9999", ViewMode::Standard).size(), 1, L"Verify ExtractOperands handles up to 4 digit exponents");
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.ExtractOperands(L"12e10000", ViewMode::Standard).size(),
+                m_CopyPasteManager->ExtractOperands(L"12e10000", ViewMode::Standard).size(),
                 0,
                 L"Verify ExtractOperands returns empty vector when the exponent is too long");
         };
@@ -140,31 +145,31 @@ namespace CalculatorUnitTests
         TEST_METHOD(ValidateExpressionRegExMatch)
         {
             VERIFY_IS_FALSE(
-                m_CopyPasteManager.ExpressionRegExMatch(vector<wstring>{}, ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown),
+                m_CopyPasteManager->ExpressionRegExMatch(vector<wstring>{}, ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown),
                 L"Verify empty list of operands returns false.");
             VERIFY_IS_FALSE(
-                m_CopyPasteManager.ExpressionRegExMatch(
+                m_CopyPasteManager->ExpressionRegExMatch(
                     vector<wstring>{ L"123" }, ViewMode::None, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown),
                 L"Verify invalid ViewMode/CategoryGroups return false.");
             VERIFY_IS_FALSE(
-                m_CopyPasteManager.ExpressionRegExMatch(
+                m_CopyPasteManager->ExpressionRegExMatch(
                     vector<wstring>{ L"123" }, ViewMode::Currency, CategoryGroupType::None, -1, BitLength::BitLengthUnknown),
                 L"Verify invalid ViewMode/CategoryGroups return false.");
 
             Logger::WriteMessage(L"Verify operand lengths > max return false.");
-            VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(
+            VERIFY_IS_FALSE(m_CopyPasteManager->ExpressionRegExMatch(
                 vector<wstring>{ L"12345678901234567" }, ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown));
-            VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(
+            VERIFY_IS_FALSE(m_CopyPasteManager->ExpressionRegExMatch(
                 vector<wstring>{ L"123456789012345678901234567890123" }, ViewMode::Scientific, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown));
-            VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(
+            VERIFY_IS_FALSE(m_CopyPasteManager->ExpressionRegExMatch(
                 vector<wstring>{ L"12345678901234567" }, ViewMode::None, CategoryGroupType::Converter, -1, BitLength::BitLengthUnknown));
-            VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(
+            VERIFY_IS_FALSE(m_CopyPasteManager->ExpressionRegExMatch(
                 vector<wstring>{ L"11111111111111111" }, ViewMode::Programmer, CategoryGroupType::Calculator, HexBase, BitLength::BitLengthQWord));
-            VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(
+            VERIFY_IS_FALSE(m_CopyPasteManager->ExpressionRegExMatch(
                 vector<wstring>{ L"12345678901234567890" }, ViewMode::Programmer, CategoryGroupType::Calculator, DecBase, BitLength::BitLengthQWord));
-            VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(
+            VERIFY_IS_FALSE(m_CopyPasteManager->ExpressionRegExMatch(
                 vector<wstring>{ L"11111111111111111111111" }, ViewMode::Programmer, CategoryGroupType::Calculator, OctBase, BitLength::BitLengthQWord));
-            VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(
+            VERIFY_IS_FALSE(m_CopyPasteManager->ExpressionRegExMatch(
                 vector<wstring>{ L"10000000000000000000000000000000000000000000000000000000000000000" },
                 ViewMode::Programmer,
                 CategoryGroupType::Calculator,
@@ -172,12 +177,12 @@ namespace CalculatorUnitTests
                 BitLength::BitLengthQWord));
 
             VERIFY_IS_FALSE(
-                m_CopyPasteManager.ExpressionRegExMatch(
+                m_CopyPasteManager->ExpressionRegExMatch(
                     vector<wstring>{ L"9223372036854775808" }, ViewMode::Programmer, CategoryGroupType::Calculator, DecBase, BitLength::BitLengthQWord),
                 L"Verify operand values > max return false.");
 
             VERIFY_IS_TRUE(
-                m_CopyPasteManager.ExpressionRegExMatch(
+                m_CopyPasteManager->ExpressionRegExMatch(
                     vector<wstring>{ L"((((((((((((((((((((123))))))))))))))))))))" },
                     ViewMode::Scientific,
                     CategoryGroupType::Calculator,
@@ -185,20 +190,20 @@ namespace CalculatorUnitTests
                     BitLength::BitLengthUnknown),
                 L"Verify sanitized operand is detected as within max length.");
             VERIFY_IS_TRUE(
-                m_CopyPasteManager.ExpressionRegExMatch(
+                m_CopyPasteManager->ExpressionRegExMatch(
                     vector<wstring>{ L"9223372036854775807" }, ViewMode::Programmer, CategoryGroupType::Calculator, DecBase, BitLength::BitLengthQWord),
                 L"Verify operand values == max return true.");
 
             Logger::WriteMessage(L"Verify all operands must match patterns.");
-            VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(
+            VERIFY_IS_TRUE(m_CopyPasteManager->ExpressionRegExMatch(
                 vector<wstring>{ L"123", L"456" }, ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown));
-            VERIFY_IS_TRUE(m_CopyPasteManager.ExpressionRegExMatch(
+            VERIFY_IS_TRUE(m_CopyPasteManager->ExpressionRegExMatch(
                 vector<wstring>{ L"123", L"1e23" }, ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown));
-            VERIFY_IS_FALSE(m_CopyPasteManager.ExpressionRegExMatch(
+            VERIFY_IS_FALSE(m_CopyPasteManager->ExpressionRegExMatch(
                 vector<wstring>{ L"123", L"fab10" }, ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown));
 
             VERIFY_IS_TRUE(
-                m_CopyPasteManager.ExpressionRegExMatch(
+                m_CopyPasteManager->ExpressionRegExMatch(
                     vector<wstring>{ L"1.23e+456", L"1.23e456", L".23e+456", L"123e-456", L"12e2", L"12e+2", L"12e-2", L"-12e2", L"-12e+2", L"-12e-2" },
                     ViewMode::Scientific,
                     CategoryGroupType::Calculator,
@@ -207,34 +212,30 @@ namespace CalculatorUnitTests
                 L"Verify exponents are accepted in scientific mode.");
 
             VERIFY_IS_FALSE(
-                m_CopyPasteManager.ExpressionRegExMatch(
+                m_CopyPasteManager->ExpressionRegExMatch(
                     vector<wstring>{ L"123", L"12345678901234567" }, ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown),
                 L"Verify all operands must be within maxlength");
             VERIFY_IS_FALSE(
-                m_CopyPasteManager.ExpressionRegExMatch(
-                    vector<wstring>{ L"123", L"9223372036854775808" },
-                    ViewMode::Programmer,
-                    CategoryGroupType::Calculator,
-                    DecBase,
-                    BitLength::BitLengthQWord),
+                m_CopyPasteManager->ExpressionRegExMatch(
+                    vector<wstring>{ L"123", L"9223372036854775808" }, ViewMode::Programmer, CategoryGroupType::Calculator, DecBase, BitLength::BitLengthQWord),
                 L"Verify all operand must be within max value.");
         };
 
         TEST_METHOD(ValidateGetMaxOperandLengthAndValue)
         {
-            pair<size_t, unsigned long long int> standardModeMaximums = make_pair(m_CopyPasteManager.MaxStandardOperandLength, 0);
-            pair<size_t, unsigned long long int> scientificModeMaximums = make_pair(m_CopyPasteManager.MaxScientificOperandLength, 0);
-            pair<size_t, unsigned long long int> converterModeMaximums = make_pair(m_CopyPasteManager.MaxConverterInputLength, 0);
+            pair<size_t, unsigned long long int> standardModeMaximums = make_pair(m_CopyPasteManager->MaxStandardOperandLength, 0);
+            pair<size_t, unsigned long long int> scientificModeMaximums = make_pair(m_CopyPasteManager->MaxScientificOperandLength, 0);
+            pair<size_t, unsigned long long int> converterModeMaximums = make_pair(m_CopyPasteManager->MaxConverterInputLength, 0);
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Standard, CategoryGroupType::None, -1, BitLength::BitLengthUnknown),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Standard, CategoryGroupType::None, -1, BitLength::BitLengthUnknown),
                 standardModeMaximums,
                 L"Verify Standard mode maximum values");
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Scientific, CategoryGroupType::None, -1, BitLength::BitLengthUnknown),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Scientific, CategoryGroupType::None, -1, BitLength::BitLengthUnknown),
                 scientificModeMaximums,
                 L"Verify Scientific mode maximum values");
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::None, CategoryGroupType::Converter, -1, BitLength::BitLengthUnknown),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::None, CategoryGroupType::Converter, -1, BitLength::BitLengthUnknown),
                 converterModeMaximums,
                 L"Verify Converter mode maximum values");
 
@@ -244,108 +245,108 @@ namespace CalculatorUnitTests
             unsigned long long int ullByteMax = UINT8_MAX;
             Logger::WriteMessage(L"Verify Programmer Mode HexBase maximum values");
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, HexBase, BitLength::BitLengthQWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, HexBase, BitLength::BitLengthQWord),
                 make_pair((size_t)16u, ullQwordMax));
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, HexBase, BitLength::BitLengthDWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, HexBase, BitLength::BitLengthDWord),
                 make_pair((size_t)8u, ullDwordMax));
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, HexBase, BitLength::BitLengthWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, HexBase, BitLength::BitLengthWord),
                 make_pair((size_t)4u, ullWordMax));
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, HexBase, BitLength::BitLengthByte),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, HexBase, BitLength::BitLengthByte),
                 make_pair((size_t)2u, ullByteMax));
 
             Logger::WriteMessage(L"Verify Programmer Mode DecBase maximum values");
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, DecBase, BitLength::BitLengthQWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, DecBase, BitLength::BitLengthQWord),
                 make_pair((size_t)19u, ullQwordMax >> 1));
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, DecBase, BitLength::BitLengthDWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, DecBase, BitLength::BitLengthDWord),
                 make_pair((size_t)10u, ullDwordMax >> 1));
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, DecBase, BitLength::BitLengthWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, DecBase, BitLength::BitLengthWord),
                 make_pair((size_t)5u, ullWordMax >> 1));
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, DecBase, BitLength::BitLengthByte),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, DecBase, BitLength::BitLengthByte),
                 make_pair((size_t)3u, ullByteMax >> 1));
 
             Logger::WriteMessage(L"Verify Programmer Mode OctBase maximum values");
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, OctBase, BitLength::BitLengthQWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, OctBase, BitLength::BitLengthQWord),
                 make_pair((size_t)22u, ullQwordMax));
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, OctBase, BitLength::BitLengthDWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, OctBase, BitLength::BitLengthDWord),
                 make_pair((size_t)11u, ullDwordMax));
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, OctBase, BitLength::BitLengthWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, OctBase, BitLength::BitLengthWord),
                 make_pair((size_t)6u, ullWordMax));
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, OctBase, BitLength::BitLengthByte),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, OctBase, BitLength::BitLengthByte),
                 make_pair((size_t)3u, ullByteMax));
 
             Logger::WriteMessage(L"Verify Programmer Mode BinBase maximum values");
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, BinBase, BitLength::BitLengthQWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, BinBase, BitLength::BitLengthQWord),
                 make_pair((size_t)64u, ullQwordMax));
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, BinBase, BitLength::BitLengthDWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, BinBase, BitLength::BitLengthDWord),
                 make_pair((size_t)32u, ullDwordMax));
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, BinBase, BitLength::BitLengthWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, BinBase, BitLength::BitLengthWord),
                 make_pair((size_t)16u, ullWordMax));
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, BinBase, BitLength::BitLengthByte),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, BinBase, BitLength::BitLengthByte),
                 make_pair((size_t)8u, ullByteMax));
 
             Logger::WriteMessage(L"Verify invalid ViewModes/Categories return 0 for max values");
             VERIFY_ARE_EQUAL(
-                m_CopyPasteManager.GetMaxOperandLengthAndValue(ViewMode::None, CategoryGroupType::None, - 1, BitLength::BitLengthUnknown),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::None, CategoryGroupType::None, -1, BitLength::BitLengthUnknown),
                 make_pair((size_t)0u, 0ull));
         };
 
         TEST_METHOD(ValidateSanitizeOperand)
         {
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"((1234"), L"1234");
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"1234))"), L"1234");
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"1234))"), L"1234");
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"-1234"), L"1234");
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"+1234"), L"1234");
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"-(1234)"), L"1234");
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"+(1234)"), L"1234");
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"12-34"), L"1234");
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"((((1234))))"), L"1234");
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"1'2'3'4"), L"1234");
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"'''''1234''''"), L"1234");
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"1_2_3_4"), L"1234");
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.SanitizeOperand(L"______1234___"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->SanitizeOperand(L"((1234"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->SanitizeOperand(L"1234))"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->SanitizeOperand(L"1234))"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->SanitizeOperand(L"-1234"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->SanitizeOperand(L"+1234"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->SanitizeOperand(L"-(1234)"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->SanitizeOperand(L"+(1234)"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->SanitizeOperand(L"12-34"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->SanitizeOperand(L"((((1234))))"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->SanitizeOperand(L"1'2'3'4"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->SanitizeOperand(L"'''''1234''''"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->SanitizeOperand(L"1_2_3_4"), L"1234");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->SanitizeOperand(L"______1234___"), L"1234");
         };
 
         // Using unicode literals here until the encoding issues get figured out
         TEST_METHOD(ValidatePrefixCurrencySymbols)
         {
             // ¥5
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u00A5\u0035"), L"5");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->RemoveUnwantedCharsFromWstring(L"\u00A5\u0035"), L"5");
             // ¤5
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u00A4\u0035"), L"5");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->RemoveUnwantedCharsFromWstring(L"\u00A4\u0035"), L"5");
             // ₵5
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20B5\u0035"), L"5");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->RemoveUnwantedCharsFromWstring(L"\u20B5\u0035"), L"5");
             // $5
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u0024\u0035"), L"5");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->RemoveUnwantedCharsFromWstring(L"\u0024\u0035"), L"5");
             // ₡5
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20A1\u0035"), L"5");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->RemoveUnwantedCharsFromWstring(L"\u20A1\u0035"), L"5");
             // ₩5
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20A9\u0035"), L"5");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->RemoveUnwantedCharsFromWstring(L"\u20A9\u0035"), L"5");
             // ₪5
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20AA\u0035"), L"5");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->RemoveUnwantedCharsFromWstring(L"\u20AA\u0035"), L"5");
             // ₦5
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20A6\u0035"), L"5");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->RemoveUnwantedCharsFromWstring(L"\u20A6\u0035"), L"5");
             // ₹5
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20B9\u0035"), L"5");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->RemoveUnwantedCharsFromWstring(L"\u20B9\u0035"), L"5");
             // £5
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u00A3\u0035"), L"5");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->RemoveUnwantedCharsFromWstring(L"\u00A3\u0035"), L"5");
             // €5
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.RemoveUnwantedCharsFromWstring(L"\u20AC\u0035"), L"5");
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->RemoveUnwantedCharsFromWstring(L"\u20AC\u0035"), L"5");
         };
 
         TEST_METHOD(ValidateTryOperandToULL)
@@ -353,199 +354,199 @@ namespace CalculatorUnitTests
             unsigned long long int result = 0;
 
             Logger::WriteMessage(L"Verify TryOperandToULL HexBase conversion");
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"1234", HexBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"1234", HexBase, result));
             VERIFY_ARE_EQUAL(result, 0x1234ull);
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"FF", HexBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"FF", HexBase, result));
             VERIFY_ARE_EQUAL(result, 0xFFull);
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"FFFFFFFFFFFFFFFF", HexBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"FFFFFFFFFFFFFFFF", HexBase, result));
             VERIFY_ARE_EQUAL(result, 0xFFFF'FFFF'FFFF'FFFF);
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"0xFFFFFFFFFFFFFFFF", HexBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"0xFFFFFFFFFFFFFFFF", HexBase, result));
             VERIFY_ARE_EQUAL(result, 0xFFFF'FFFF'FFFF'FFFF);
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"0XFFFFFFFFFFFFFFFF", HexBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"0XFFFFFFFFFFFFFFFF", HexBase, result));
             VERIFY_ARE_EQUAL(result, 0xFFFF'FFFF'FFFF'FFFF);
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"0X0FFFFFFFFFFFFFFFF", HexBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"0X0FFFFFFFFFFFFFFFF", HexBase, result));
             VERIFY_ARE_EQUAL(result, 0xFFFF'FFFF'FFFF'FFFF);
 
             Logger::WriteMessage(L"Verify TryOperandToULL DecBase conversion");
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"1234", DecBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"1234", DecBase, result));
             VERIFY_ARE_EQUAL(result, 1234ull);
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"18446744073709551615", DecBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"18446744073709551615", DecBase, result));
             VERIFY_ARE_EQUAL(result, 0xFFFF'FFFF'FFFF'FFFF);
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"018446744073709551615", DecBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"018446744073709551615", DecBase, result));
             VERIFY_ARE_EQUAL(result, 0xFFFF'FFFF'FFFF'FFFF);
 
             Logger::WriteMessage(L"Verify TryOperandToULL OctBase conversion");
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"777", OctBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"777", OctBase, result));
             VERIFY_ARE_EQUAL(result, 0777ull);
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"0777", OctBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"0777", OctBase, result));
             VERIFY_ARE_EQUAL(result, 0777ull);
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"1777777777777777777777", OctBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"1777777777777777777777", OctBase, result));
             VERIFY_ARE_EQUAL(result, 0xFFFF'FFFF'FFFF'FFFF);
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"01777777777777777777777", OctBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"01777777777777777777777", OctBase, result));
             VERIFY_ARE_EQUAL(result, 0xFFFF'FFFF'FFFF'FFFF);
 
             Logger::WriteMessage(L"Verify TryOperandToULL BinBase conversion");
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"1111", BinBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"1111", BinBase, result));
             VERIFY_ARE_EQUAL(result, 0b1111ull);
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"0010", BinBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"0010", BinBase, result));
             VERIFY_ARE_EQUAL(result, 0b10ull);
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"1111111111111111111111111111111111111111111111111111111111111111", BinBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"1111111111111111111111111111111111111111111111111111111111111111", BinBase, result));
             VERIFY_ARE_EQUAL(result, 0xFFFF'FFFF'FFFF'FFFF);
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"01111111111111111111111111111111111111111111111111111111111111111", BinBase, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"01111111111111111111111111111111111111111111111111111111111111111", BinBase, result));
             VERIFY_ARE_EQUAL(result, 0xFFFF'FFFF'FFFF'FFFF);
 
             Logger::WriteMessage(L"Verify TryOperandToULL invalid numberBase defaults to DecBase");
-            VERIFY_IS_TRUE(m_CopyPasteManager.TryOperandToULL(L"1234", 128, result));
+            VERIFY_IS_TRUE(m_CopyPasteManager->TryOperandToULL(L"1234", 128, result));
             VERIFY_ARE_EQUAL(result, 1234ull);
 
             Logger::WriteMessage(L"Verify TryOperandToULL returns false when input is invalid or strtoull throws exceptions");
             // Max values + 1
-            VERIFY_IS_FALSE(m_CopyPasteManager.TryOperandToULL(L"0xFFFFFFFFFFFFFFFFF1", HexBase, result));
-            VERIFY_IS_FALSE(m_CopyPasteManager.TryOperandToULL(L"18446744073709551616", DecBase, result));
-            VERIFY_IS_FALSE(m_CopyPasteManager.TryOperandToULL(L"2000000000000000000000", OctBase, result));
-            VERIFY_IS_FALSE(m_CopyPasteManager.TryOperandToULL(L"11111111111111111111111111111111111111111111111111111111111111111", BinBase, result));
+            VERIFY_IS_FALSE(m_CopyPasteManager->TryOperandToULL(L"0xFFFFFFFFFFFFFFFFF1", HexBase, result));
+            VERIFY_IS_FALSE(m_CopyPasteManager->TryOperandToULL(L"18446744073709551616", DecBase, result));
+            VERIFY_IS_FALSE(m_CopyPasteManager->TryOperandToULL(L"2000000000000000000000", OctBase, result));
+            VERIFY_IS_FALSE(m_CopyPasteManager->TryOperandToULL(L"11111111111111111111111111111111111111111111111111111111111111111", BinBase, result));
             // Invalid values/characters
-            VERIFY_IS_FALSE(m_CopyPasteManager.TryOperandToULL(L"-1", DecBase, result));
-            VERIFY_IS_FALSE(m_CopyPasteManager.TryOperandToULL(L"5555", BinBase, result));
-            VERIFY_IS_FALSE(m_CopyPasteManager.TryOperandToULL(L"xyz", BinBase, result));
+            VERIFY_IS_FALSE(m_CopyPasteManager->TryOperandToULL(L"-1", DecBase, result));
+            VERIFY_IS_FALSE(m_CopyPasteManager->TryOperandToULL(L"5555", BinBase, result));
+            VERIFY_IS_FALSE(m_CopyPasteManager->TryOperandToULL(L"xyz", BinBase, result));
         };
 
         TEST_METHOD(ValidateStandardScientificOperandLength)
         {
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.StandardScientificOperandLength(L""), 0);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.StandardScientificOperandLength(L"0.2"), 1);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.StandardScientificOperandLength(L"1.2"), 2);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.StandardScientificOperandLength(L"0."), 0);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.StandardScientificOperandLength(L"12345"), 5);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.StandardScientificOperandLength(L"-12345"), 6);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->StandardScientificOperandLength(L""), 0);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->StandardScientificOperandLength(L"0.2"), 1);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->StandardScientificOperandLength(L"1.2"), 2);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->StandardScientificOperandLength(L"0."), 0);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->StandardScientificOperandLength(L"12345"), 5);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->StandardScientificOperandLength(L"-12345"), 6);
         };
 
         TEST_METHOD(ValidateProgrammerOperandLength)
         {
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"1001", BinBase), 4);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"1001b", BinBase), 4);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"1001B", BinBase), 4);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"0b1001", BinBase), 4);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"0B1001", BinBase), 4);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"0y1001", BinBase), 4);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"0Y1001", BinBase), 4);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"0b", BinBase), 1);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"1001", BinBase), 4);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"1001b", BinBase), 4);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"1001B", BinBase), 4);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"0b1001", BinBase), 4);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"0B1001", BinBase), 4);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"0y1001", BinBase), 4);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"0Y1001", BinBase), 4);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"0b", BinBase), 1);
 
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"123456", OctBase), 6);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"0t123456", OctBase), 6);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"0T123456", OctBase), 6);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"0o123456", OctBase), 6);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"0O123456", OctBase), 6);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"123456", OctBase), 6);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"0t123456", OctBase), 6);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"0T123456", OctBase), 6);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"0o123456", OctBase), 6);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"0O123456", OctBase), 6);
 
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"", DecBase), 0);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"-", DecBase), 0);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"12345", DecBase), 5);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"-12345", DecBase), 5);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"0n12345", DecBase), 5);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"0N12345", DecBase), 5);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"", DecBase), 0);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"-", DecBase), 0);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"12345", DecBase), 5);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"-12345", DecBase), 5);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"0n12345", DecBase), 5);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"0N12345", DecBase), 5);
 
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"123ABC", HexBase), 6);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"0x123ABC", HexBase), 6);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"0X123ABC", HexBase), 6);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"123ABCh", HexBase), 6);
-            VERIFY_ARE_EQUAL(m_CopyPasteManager.ProgrammerOperandLength(L"123ABCH", HexBase), 6);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"123ABC", HexBase), 6);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"0x123ABC", HexBase), 6);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"0X123ABC", HexBase), 6);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"123ABCh", HexBase), 6);
+            VERIFY_ARE_EQUAL(m_CopyPasteManager->ProgrammerOperandLength(L"123ABCH", HexBase), 6);
         };
 
     private:
-        CopyPasteManager m_CopyPasteManager;
+        CopyPasteManager ^ m_CopyPasteManager;
         String^ ValidateStandardPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Standard, -1/*number base*/, BitLength::BitLengthUnknown);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Standard, -1/*number base*/, BitLength::BitLengthUnknown);
         }
 
         String^ ValidateScientificPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Scientific, -1/*number base*/, BitLength::BitLengthUnknown);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Scientific, -1/*number base*/, BitLength::BitLengthUnknown);
         }
 
         String^ ValidateConverterPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::None, CategoryGroupType::Converter, -1/*number base*/, BitLength::BitLengthUnknown);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::None, CategoryGroupType::Converter, -1/*number base*/, BitLength::BitLengthUnknown);
         }
 
         String^ ValidateProgrammerHexQwordPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, HexBase/*number base*/, BitLength::BitLengthQWord);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, HexBase/*number base*/, BitLength::BitLengthQWord);
         }
 
         String^ ValidateProgrammerHexDwordPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, HexBase/*number base*/, BitLength::BitLengthDWord);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, HexBase/*number base*/, BitLength::BitLengthDWord);
         }
 
         String^ ValidateProgrammerHexWordPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, HexBase/*number base*/, BitLength::BitLengthWord);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, HexBase/*number base*/, BitLength::BitLengthWord);
         }
 
         String^ ValidateProgrammerHexBytePasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, HexBase/*number base*/, BitLength::BitLengthByte);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, HexBase/*number base*/, BitLength::BitLengthByte);
         }
 
         String^ ValidateProgrammerDecQwordPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, DecBase/*number base*/, BitLength::BitLengthQWord);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, DecBase/*number base*/, BitLength::BitLengthQWord);
         }
 
         String^ ValidateProgrammerDecDwordPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, DecBase/*number base*/, BitLength::BitLengthDWord);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, DecBase/*number base*/, BitLength::BitLengthDWord);
         }
 
         String^ ValidateProgrammerDecWordPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, DecBase/*number base*/, BitLength::BitLengthWord);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, DecBase/*number base*/, BitLength::BitLengthWord);
         }
 
         String^ ValidateProgrammerDecBytePasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, DecBase/*number base*/, BitLength::BitLengthByte);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, DecBase/*number base*/, BitLength::BitLengthByte);
         }
 
         String^ ValidateProgrammerOctQwordPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, OctBase/*number base*/, BitLength::BitLengthQWord);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, OctBase/*number base*/, BitLength::BitLengthQWord);
         }
 
         String^ ValidateProgrammerOctDwordPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, OctBase/*number base*/, BitLength::BitLengthDWord);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, OctBase/*number base*/, BitLength::BitLengthDWord);
         }
 
         String^ ValidateProgrammerOctWordPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, OctBase/*number base*/, BitLength::BitLengthWord);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, OctBase/*number base*/, BitLength::BitLengthWord);
         }
 
         String^ ValidateProgrammerOctBytePasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, OctBase/*number base*/, BitLength::BitLengthByte);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, OctBase/*number base*/, BitLength::BitLengthByte);
         }
 
         String^ ValidateProgrammerBinQwordPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, BinBase/*number base*/, BitLength::BitLengthQWord);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, BinBase/*number base*/, BitLength::BitLengthQWord);
         }
 
         String^ ValidateProgrammerBinDwordPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, BinBase/*number base*/, BitLength::BitLengthDWord);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, BinBase/*number base*/, BitLength::BitLengthDWord);
         }
 
         String^ ValidateProgrammerBinWordPasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, BinBase/*number base*/, BitLength::BitLengthWord);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, BinBase/*number base*/, BitLength::BitLengthWord);
         }
 
         String^ ValidateProgrammerBinBytePasteExpression(_In_ String^ pastedText)
         {
-            return m_CopyPasteManager.ValidatePasteExpression(pastedText, ViewMode::Programmer, BinBase/*number base*/, BitLength::BitLengthByte);
+            return m_CopyPasteManager->ValidatePasteExpression(pastedText, ViewMode::Programmer, BinBase/*number base*/, BitLength::BitLengthByte);
         }
     };
 
@@ -602,41 +603,38 @@ namespace CalculatorUnitTests
 
     void CopyPasteManagerTest::ValidateStandardPasteExpressionTest()
     {
-        String ^ positiveInput[] = { L"123",
-                                     L"+123",
-                                     L"-133",
-                                     L"12345.",
-                                     L"+12.34",
-                                     L"12.345",
-                                     L"012.034",
-                                     L"-23.032",
-                                     L"-.123",
-                                     L".1234",
-                                     L"012.012",
-                                     L"123+456",
-                                     L"123+-234",
-                                     L"123*-345",
-                                     L"123*4*-3",
-                                     L"123*+4*-3",
-                                     L"1,234",
-                                     L"1 2 3",
-                                     L"\n\r1,234\n",
-                                     L"\f\n1+2\t\r\v\x85",
-                                     L"\n 1+\n2 ",
-                                     L"1\"2",
-                                     L"1234567891234567" /*boundary condition <=16 digits*/,
-                                     L"2+2=",
-                                     L"2+2=   ",
-                                     L"1.2e23",
-                                     L"12345e-23",
-                                     
+        String ^ positiveInput[] = {
+            L"123",
+            L"+123",
+            L"-133",
+            L"12345.",
+            L"+12.34",
+            L"12.345",
+            L"012.034",
+            L"-23.032",
+            L"-.123",
+            L".1234",
+            L"012.012",
+            L"123+456",
+            L"123+-234",
+            L"123*-345",
+            L"123*4*-3",
+            L"123*+4*-3",
+            L"1,234",
+            L"1 2 3",
+            L"\n\r1,234\n",
+            L"\f\n1+2\t\r\v\x85",
+            L"\n 1+\n2 ",
+            L"1\"2",
+            L"1234567891234567" /*boundary condition <=16 digits*/,
+            L"2+2=",
+            L"2+2=   ",
+            L"1.2e23",
+            L"12345e-23",
+
         };
-        String ^ negativeInput[] = { L"(123)+(456)", L"abcdef",
-                                     L"xyz",         L"ABab",
-                                     L"e+234",       L"12345678912345678" /*boundary condition: greater than 16 digits*/,
-                                     L"SIN(2)",      L"2+2==",
-                                     L"2=+2",        L"2%2",
-                                     L"10^2" };
+        String ^ negativeInput[] = { L"(123)+(456)", L"abcdef", L"xyz",  L"ABab", L"e+234", L"12345678912345678" /*boundary condition: greater than 16 digits*/,
+                                     L"SIN(2)",      L"2+2==",  L"2=+2", L"2%2",  L"10^2" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateStandardPasteExpression, positiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateStandardPasteExpression, negativeInput);
@@ -674,19 +672,14 @@ namespace CalculatorUnitTests
                                      "-(432+3232)",
                                      "-(+(-3213)+(-2312))",
                                      "-(-(432+3232))",
-									 L"1.2e23"/*unsigned exponent*/,
+                                     L"1.2e23" /*unsigned exponent*/,
                                      L"12^2",
                                      L"-12.12^-2",
                                      L"61%99"
                                      L"-6.1%99" };
-        String ^ negativeInput[] = { L"abcdef",
-                                     L"xyz",
-                                     L"ABab",
-                                     L"e+234",
-                                     L"123456789123456781234567890123456" /*boundary condition: greater than 32 digits*/,
-                                     L"SIN(2)",
-                                     L"2+2==",
-                                     L"2=+2" };
+        String
+            ^ negativeInput[] = { L"abcdef", L"xyz",   L"ABab", L"e+234", L"123456789123456781234567890123456" /*boundary condition: greater than 32 digits*/,
+                                  L"SIN(2)", L"2+2==", L"2=+2" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateScientificPasteExpression, positiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateScientificPasteExpression, negativeInput);
@@ -1072,8 +1065,8 @@ namespace CalculatorUnitTests
 
     void CopyPasteManagerTest::ValidateProgrammerOctPasteExpressionTest()
     {
-        String ^ qwordPositiveInput[] = { L"123",       L"123+456", L"1,234",       L"1 2 3",  L"1'2'3'4", L"1_2_3_4", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85",
-                                          L"\n 1+\n2 ", L"1\"2",    L"(123)+(456)", L"0t1234", L"0T1234",  L"0o1234",  L"0O1234",      L"1234u",
+        String ^ qwordPositiveInput[] = { L"123",       L"123+456", L"1,234",       L"1 2 3",   L"1'2'3'4", L"1_2_3_4", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85",
+                                          L"\n 1+\n2 ", L"1\"2",    L"(123)+(456)", L"0t1234",  L"0T1234",  L"0o1234",  L"0O1234",      L"1234u",
                                           L"1234ul",    L"1234ULL", L"2+2=",        L"2+2=   ", L"127%71" };
         String ^ qwordNegativeInput[] = { L"+123",
                                           L"1.23",
@@ -1099,7 +1092,7 @@ namespace CalculatorUnitTests
                                           L"1234ulll",
                                           L"2+2==",
                                           L"2=+2",
-                                          L"89%12"};
+                                          L"89%12" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateProgrammerOctQwordPasteExpression, qwordPositiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateProgrammerOctQwordPasteExpression, qwordNegativeInput);

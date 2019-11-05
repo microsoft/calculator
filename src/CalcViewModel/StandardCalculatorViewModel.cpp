@@ -25,6 +25,7 @@ using namespace Windows::UI::Popups;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Foundation::Collections;
 using namespace Utils;
+using namespace concurrency;
 
 constexpr int StandardModePrecision = 16;
 constexpr int ScientificModePrecision = 32;
@@ -93,15 +94,16 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_localizedNoRightParenthesisAddedFormat(nullptr)
 {
     WeakReference calculatorViewModel(this);
+    auto appResourceProvider = AppResourceProvider::GetInstance();
     m_calculatorDisplay.SetCallback(calculatorViewModel);
-    m_expressionAutomationNameFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::CalculatorExpression);
-    m_localizedCalculationResultAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::CalculatorResults);
+    m_expressionAutomationNameFormat = appResourceProvider->GetResourceString(CalculatorResourceKeys::CalculatorExpression);
+    m_localizedCalculationResultAutomationFormat = appResourceProvider->GetResourceString(CalculatorResourceKeys::CalculatorResults);
     m_localizedCalculationResultDecimalAutomationFormat =
-        AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::CalculatorResults_DecimalSeparator_Announced);
-    m_localizedHexaDecimalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::HexButton);
-    m_localizedDecimalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::DecButton);
-    m_localizedOctalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::OctButton);
-    m_localizedBinaryAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::BinButton);
+        appResourceProvider->GetResourceString(CalculatorResourceKeys::CalculatorResults_DecimalSeparator_Announced);
+    m_localizedHexaDecimalAutomationFormat = appResourceProvider->GetResourceString(CalculatorResourceKeys::HexButton);
+    m_localizedDecimalAutomationFormat = appResourceProvider->GetResourceString(CalculatorResourceKeys::DecButton);
+    m_localizedOctalAutomationFormat = appResourceProvider->GetResourceString(CalculatorResourceKeys::OctButton);
+    m_localizedBinaryAutomationFormat = appResourceProvider->GetResourceString(CalculatorResourceKeys::BinButton);
 
     // Initialize the Automation Name
     CalculationResultAutomationName = GetLocalizedStringFormat(m_localizedCalculationResultAutomationFormat, m_DisplayValue);
@@ -192,13 +194,13 @@ String ^ StandardCalculatorViewModel::GetNarratorStringReadRawNumbers(_In_ Strin
     return ref new String(wss.str().c_str());
 }
 
-void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ wstring const& displayStringValue, _In_ bool isError)
+void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ String ^ displayStringValue, _In_ bool isError)
 {
-    String ^ localizedDisplayStringValue = LocalizeDisplayValue(displayStringValue, isError);
+    String ^ localizedDisplayStringValue = LocalizeDisplayValue(displayStringValue->Data(), isError);
 
     // Set this variable before the DisplayValue is modified, Otherwise the DisplayValue will
     // not match what the narrator is saying
-    m_CalculationResultAutomationName = CalculateNarratorDisplayValue(displayStringValue, localizedDisplayStringValue, isError);
+    m_CalculationResultAutomationName = CalculateNarratorDisplayValue(displayStringValue->Data(), localizedDisplayStringValue, isError);
 
     AreAlwaysOnTopResultsUpdated = false;
     if (DisplayValue != localizedDisplayStringValue)
@@ -239,10 +241,13 @@ void StandardCalculatorViewModel::SetOpenParenthesisCountNarratorAnnouncement()
     wstring localizedParenthesisCount = to_wstring(m_OpenParenthesisCount).c_str();
     LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
 
-    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
-        CalculatorResourceKeys::OpenParenthesisCountAutomationFormat,
-        m_localizedOpenParenthesisCountChangedAutomationFormat,
-        localizedParenthesisCount.c_str());
+    if (m_localizedOpenParenthesisCountChangedAutomationFormat == nullptr)
+    {
+        m_localizedOpenParenthesisCountChangedAutomationFormat =
+            AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::OpenParenthesisCountAutomationFormat);
+    }
+    String ^ announcement =
+        LocalizationStringUtil::GetLocalizedString(m_localizedOpenParenthesisCountChangedAutomationFormat, StringReference(localizedParenthesisCount.c_str()));
 
     Announcement = CalculatorAnnouncement::GetOpenParenthesisCountChangedAnnouncement(announcement);
 }
@@ -254,10 +259,13 @@ void StandardCalculatorViewModel::OnNoRightParenAdded()
 
 void StandardCalculatorViewModel::SetNoParenAddedNarratorAnnouncement()
 {
-    String ^ announcement =
-        LocalizationStringUtil::GetLocalizedNarratorAnnouncement(CalculatorResourceKeys::NoParenthesisAdded, m_localizedNoRightParenthesisAddedFormat);
+    if (m_localizedNoRightParenthesisAddedFormat == nullptr)
+    {
+        m_localizedNoRightParenthesisAddedFormat =
+            AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::NoParenthesisAdded);
+    }
 
-    Announcement = CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(announcement);
+    Announcement = CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(m_localizedNoRightParenthesisAddedFormat);
 }
 
 void StandardCalculatorViewModel::DisableButtons(CommandType selectedExpressionCommandType)
@@ -337,7 +345,7 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<vector<pair<wstri
     for (unsigned int i = 0; i < nTokens; ++i)
     {
         auto currentToken = (*tokens)[i];
-        
+
         Common::TokenType type;
         bool isEditable = currentToken.second != -1;
         localizer.LocalizeDisplayValue(&(currentToken.first));
@@ -352,7 +360,7 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<vector<pair<wstri
             type = command->GetCommandType() == CommandType::OperandCommand ? TokenType::Operand : TokenType::Operator;
         }
 
-        auto currentTokenString = ref new String(currentToken.first.c_str());
+        auto currentTokenString = StringReference(currentToken.first.c_str());
         if (i < m_ExpressionTokens->Size)
         {
             auto existingItem = m_ExpressionTokens->GetAt(i);
@@ -696,7 +704,7 @@ void StandardCalculatorViewModel::OnCopyCommand(Object ^ parameter)
 {
     CopyPasteManager::CopyToClipboard(GetRawDisplayValue());
 
-    String ^ announcement = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::DisplayCopied);
+    String ^ announcement = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::DisplayCopied);
     Announcement = CalculatorAnnouncement::GetDisplayCopiedAnnouncement(announcement);
 }
 
@@ -727,7 +735,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     }
 
     // Ensure that the paste happens on the UI thread
-    CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), NumberBase, bitLengthType)
+    create_task(CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), NumberBase, bitLengthType))
         .then([that, mode](String ^ pastedString) { that->OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 
@@ -739,7 +747,7 @@ CalculationManager::Command StandardCalculatorViewModel::ConvertToOperatorsEnum(
 void StandardCalculatorViewModel::OnPaste(String ^ pastedString)
 {
     // If pastedString is invalid("NoOp") then display pasteError else process the string
-    if (pastedString == StringReference(CopyPasteManager::PasteErrorString))
+    if (CopyPasteManager::IsErrorMessage(pastedString))
     {
         this->DisplayPasteError();
         return;
@@ -893,8 +901,11 @@ void StandardCalculatorViewModel::OnClearMemoryCommand(Object ^ parameter)
 
     TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
 
-    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(CalculatorResourceKeys::MemoryCleared, m_localizedMemoryCleared);
-    Announcement = CalculatorAnnouncement::GetMemoryClearedAnnouncement(announcement);
+    if (m_localizedMemoryCleared == nullptr)
+    {
+        m_localizedMemoryCleared = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MemoryCleared);
+    }
+    Announcement = CalculatorAnnouncement::GetMemoryClearedAnnouncement(m_localizedMemoryCleared);
 }
 
 void StandardCalculatorViewModel::OnPinUnpinCommand(Object ^ parameter)
@@ -1046,9 +1057,11 @@ void StandardCalculatorViewModel::OnMemoryButtonPressed()
 
     TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::Memory, GetCalculatorMode());
 
-    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
-        CalculatorResourceKeys::MemorySave, m_localizedMemorySavedAutomationFormat, m_DisplayValue->Data());
-
+    if (m_localizedMemorySavedAutomationFormat == nullptr)
+    {
+        m_localizedMemorySavedAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MemorySave);
+    }
+    String ^ announcement = LocalizationStringUtil::GetLocalizedString(m_localizedMemorySavedAutomationFormat, m_DisplayValue);
     Announcement = CalculatorAnnouncement::GetMemoryItemAddedAnnouncement(announcement);
 }
 
@@ -1062,9 +1075,12 @@ void StandardCalculatorViewModel::OnMemoryItemChanged(unsigned int indexOfMemory
         wstring localizedIndex = to_wstring(indexOfMemory + 1);
         LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedIndex);
 
-        String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
-            CalculatorResourceKeys::MemoryItemChanged, m_localizedMemoryItemChangedAutomationFormat, localizedIndex.c_str(), localizedValue->Data());
-
+        if (m_localizedMemoryItemChangedAutomationFormat == nullptr)
+        {
+            m_localizedMemoryItemChangedAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MemoryItemChanged);
+        }
+        String ^ announcement =
+            LocalizationStringUtil::GetLocalizedString(m_localizedMemoryItemChangedAutomationFormat, StringReference(localizedIndex.c_str()), localizedValue);
         Announcement = CalculatorAnnouncement::GetMemoryItemChangedAnnouncement(announcement);
     }
 }
@@ -1131,8 +1147,12 @@ void StandardCalculatorViewModel::OnMemoryClear(_In_ Object ^ memoryItemPosition
             wstring localizedIndex = to_wstring(boxedPosition->Value + 1);
             LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedIndex);
 
-            String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
-                CalculatorResourceKeys::MemoryItemCleared, m_localizedMemoryItemClearedAutomationFormat, localizedIndex.c_str());
+            if (m_localizedMemoryItemClearedAutomationFormat == nullptr)
+            {
+                m_localizedMemoryItemClearedAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MemoryItemCleared);
+            }
+            String ^ announcement =
+                LocalizationStringUtil::GetLocalizedString(m_localizedMemoryItemClearedAutomationFormat, StringReference(localizedIndex.c_str()));
 
             Announcement = CalculatorAnnouncement::GetMemoryClearedAnnouncement(announcement);
         }
@@ -1212,9 +1232,7 @@ String ^ StandardCalculatorViewModel::GetRawDisplayValue()
     }
     else
     {
-        wstring rawValue;
-        LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue->Data(), DisplayValue->Length(), &rawValue);
-        return ref new String(rawValue.c_str());
+        return LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue);
     }
 }
 
@@ -1223,8 +1241,7 @@ String ^ StandardCalculatorViewModel::GetRawDisplayValue()
 //     'displayValue' is a localized string containing a numerical value to be displayed to the user.
 String ^ StandardCalculatorViewModel::GetLocalizedStringFormat(String ^ format, String ^ displayValue)
 {
-    String ^ localizedString = ref new String(LocalizationStringUtil::GetLocalizedString(format->Data(), displayValue->Data()).c_str());
-    return localizedString;
+    return LocalizationStringUtil::GetLocalizedString(format, displayValue);
 }
 
 void StandardCalculatorViewModel::ResetDisplay()
@@ -1585,7 +1602,7 @@ size_t StandardCalculatorViewModel::LengthWithoutPadding(wstring str)
 
 wstring StandardCalculatorViewModel::AddPadding(wstring binaryString)
 {
-    if (LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(binaryString) == L"0")
+    if (LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(StringReference(binaryString.c_str())) == L"0")
     {
         return binaryString;
     }
@@ -1684,7 +1701,7 @@ void StandardCalculatorViewModel::UpdateOperand(int pos, String ^ text)
 {
     pair<wstring, int> p = m_tokens->at(pos);
 
-    String ^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(text->Data());
+    String ^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(text);
     p.first = englishString->Data();
 
     int commandPos = p.second;
@@ -1808,9 +1825,11 @@ void StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
 
 void StandardCalculatorViewModel::OnMaxDigitsReached()
 {
-    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
-        CalculatorResourceKeys::MaxDigitsReachedFormat, m_localizedMaxDigitsReachedAutomationFormat, m_CalculationResultAutomationName->Data());
-
+    if (m_localizedMaxDigitsReachedAutomationFormat == nullptr)
+    {
+        m_localizedMaxDigitsReachedAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MaxDigitsReachedFormat);
+    }
+    String ^ announcement = LocalizationStringUtil::GetLocalizedString(m_localizedMaxDigitsReachedAutomationFormat, m_CalculationResultAutomationName);
     Announcement = CalculatorAnnouncement::GetMaxDigitsReachedAnnouncement(announcement);
 }
 
@@ -1828,11 +1847,14 @@ NarratorAnnouncement ^ StandardCalculatorViewModel::GetDisplayUpdatedNarratorAnn
     }
     else
     {
-        announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
-            CalculatorResourceKeys::ButtonPressFeedbackFormat,
+        if (m_localizedButtonPressFeedbackAutomationFormat == nullptr)
+        {
+            m_localizedButtonPressFeedbackAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::ButtonPressFeedbackFormat);
+        }
+        announcement = LocalizationStringUtil::GetLocalizedString(
             m_localizedButtonPressFeedbackAutomationFormat,
-            m_CalculationResultAutomationName->Data(),
-            m_feedbackForButtonPress->Data());
+            m_CalculationResultAutomationName,
+            m_feedbackForButtonPress);
     }
 
     // Make sure we don't accidentally repeat an announcement.
