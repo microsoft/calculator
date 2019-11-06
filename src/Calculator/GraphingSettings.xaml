@@ -105,13 +105,13 @@
                     <ColumnDefinition Width="70"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" x:Name="x_MinHeading" Text="x-min_d"/>
-                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="x_MaxHeading" Text="x-max_d"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" x:Name="x_MinHeading" Text="x-min_d" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="x_MaxHeading" Text="x-max_d" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="1" Grid.Column="0" x:Name="x_min" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="1" Grid.Column="1" x:Name="x_max" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown" VerticalAlignment="Center"/>
 
-                <TextBlock Grid.Row="3" Grid.Column="0" x:Name="y_MinHeading" Text="y-min_d"/>
-                <TextBlock Grid.Row="3" Grid.Column="1" x:Name="y_MaxHeading" Text="y-max_d"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" x:Name="y_MinHeading" Text="y-min_d" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" x:Name="y_MaxHeading" Text="y-max_d" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="4" Grid.Column="0" x:Name="y_min" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="4" Grid.Column="1" x:Name="y_max" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown" VerticalAlignment="Center"/>
 
