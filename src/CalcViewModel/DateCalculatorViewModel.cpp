@@ -45,13 +45,13 @@ DateCalculatorViewModel::DateCalculatorViewModel()
     , m_StrDateResult(L"")
     , m_StrDateResultAutomationName(L"")
 {
-    const auto& localizationSettings = LocalizationSettings::GetInstance();
+    const auto & localizationSettings = LocalizationSettings::GetInstance();
 
     // Initialize Date Output format instances
     InitializeDateOutputFormats(localizationSettings.GetCalendarIdentifier());
 
     // Initialize Date Calc engine
-    m_dateCalcEngine = make_shared<DateCalculationEngine>(localizationSettings.GetCalendarIdentifier());
+    m_dateCalcEngine = ref new DateCalculationEngine(localizationSettings.GetCalendarIdentifier());
     // Initialize dates of DatePicker controls to today's date
     auto calendar = ref new Calendar();
     // We force the timezone to UTC, in order to avoid being affected by Daylight Saving Time
@@ -111,20 +111,20 @@ void DateCalculatorViewModel::OnPropertyChanged(_In_ String ^ prop)
 
 void DateCalculatorViewModel::OnInputsChanged()
 {
-    DateDifference dateDiff;
-
     if (m_IsDateDiffMode)
     {
         DateTime clippedFromDate = ClipTime(FromDate, true);
         DateTime clippedToDate = ClipTime(ToDate, true);
 
         // Calculate difference between two dates
-        if (m_dateCalcEngine->TryGetDateDifference(clippedFromDate, clippedToDate, m_daysOutputFormat, &dateDiff))
+        auto dateDiff = m_dateCalcEngine->TryGetDateDifference(clippedFromDate, clippedToDate, m_daysOutputFormat);
+        if (dateDiff != nullptr)
         {
-            DateDiffResultInDays = dateDiff;
-            if (m_dateCalcEngine->TryGetDateDifference(clippedFromDate, clippedToDate, m_allDateUnitsOutputFormat, &dateDiff))
+            DateDiffResultInDays = dateDiff->Value;
+            dateDiff = m_dateCalcEngine->TryGetDateDifference(clippedFromDate, clippedToDate, m_allDateUnitsOutputFormat);
+            if (dateDiff != nullptr)
             {
-                DateDiffResult = dateDiff;
+                DateDiffResult = dateDiff->Value;
             }
             else
             {
@@ -140,26 +140,28 @@ void DateCalculatorViewModel::OnInputsChanged()
     }
     else
     {
+        DateDifference dateDiff;
         dateDiff.day = DaysOffset;
         dateDiff.month = MonthsOffset;
         dateDiff.year = YearsOffset;
 
-        DateTime dateTimeResult;
+        IBox<DateTime> ^ dateTimeResult;
 
         if (m_IsAddMode)
         {
             // Add number of Days, Months and Years to a Date
-            IsOutOfBound = !m_dateCalcEngine->AddDuration(StartDate, dateDiff, &dateTimeResult);
+            dateTimeResult = m_dateCalcEngine->AddDuration(StartDate, dateDiff);
         }
         else
         {
             // Subtract number of Days, Months and Years from a Date
-            IsOutOfBound = !m_dateCalcEngine->SubtractDuration(StartDate, dateDiff, &dateTimeResult);
+            dateTimeResult = m_dateCalcEngine->SubtractDuration(StartDate, dateDiff);
         }
+        IsOutOfBound = dateTimeResult == nullptr;
 
         if (!m_isOutOfBound)
         {
-            DateResult = dateTimeResult;
+            DateResult = dateTimeResult->Value;
         }
     }
 }
@@ -181,8 +183,7 @@ void DateCalculatorViewModel::UpdateDisplayResult()
             StrDateDiffResultInDays = L"";
             StrDateDiffResult = AppResourceProvider::GetInstance()->GetResourceString(L"Date_SameDates");
         }
-        else if (m_dateDiffResult == DateDifferenceUnknown ||
-            (m_dateDiffResult.year == 0 && m_dateDiffResult.month == 0 && m_dateDiffResult.week == 0))
+        else if (m_dateDiffResult == DateDifferenceUnknown || (m_dateDiffResult.year == 0 && m_dateDiffResult.month == 0 && m_dateDiffResult.week == 0))
         {
             IsDiffInDays = true;
             StrDateDiffResultInDays = L"";

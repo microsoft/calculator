@@ -137,7 +137,7 @@ void Calculator::OnLoaded(_In_ Object ^, _In_ RoutedEventArgs ^)
     WeakReference weakThis(this);
     this->Dispatcher->RunAsync(
         CoreDispatcherPriority::Normal, ref new DispatchedHandler([weakThis]() {
-            if (TraceLogger::GetInstance().IsWindowIdInLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
+            if (TraceLogger::GetInstance()->IsWindowIdInLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
             {
                 auto refThis = weakThis.Resolve<Calculator>();
                 if (refThis != nullptr)
@@ -707,8 +707,7 @@ void Calculator::OnMemoryAccessKeyInvoked(_In_ UIElement ^ sender, _In_ AccessKe
 void CalculatorApp::Calculator::OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e)
 {
     auto mode = IsStandard ? ViewMode::Standard : IsScientific ? ViewMode::Scientific : ViewMode::Programmer;
-    auto state = std::wstring(e->NewState->Name->Begin());
-    TraceLogger::GetInstance().LogVisualStateChanged(mode, state, IsAlwaysOnTop);
+    TraceLogger::GetInstance()->LogVisualStateChanged(mode, e->NewState->Name, IsAlwaysOnTop);
 }
 
 void Calculator::Calculator_SizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ /*e*/)

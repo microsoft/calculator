@@ -377,6 +377,5 @@ void CalculatorApp::UnitConverter::SupplementaryResultsPanelInGrid_SizeChanged(P
 void CalculatorApp::UnitConverter::OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e)
 {
     auto mode = NavCategory::Deserialize(Model->CurrentCategory->GetModelCategory().id);
-    auto state = std::wstring(e->NewState->Name->Begin());
-    TraceLogger::GetInstance().LogVisualStateChanged(mode, state);
+    TraceLogger::GetInstance()->LogVisualStateChanged(mode, e->NewState->Name, false);
 }

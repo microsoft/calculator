@@ -674,7 +674,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
                 m_isLastOperationHistoryLoad = false;
             }
 
-            TraceLogger::GetInstance().UpdateButtonUsage(numOpEnum, GetCalculatorMode());
+            TraceLogger::GetInstance()->UpdateButtonUsage(numOpEnum, GetCalculatorMode());
             m_standardCalculatorManager.SendCommand(cmdenum);
         }
     }
@@ -753,7 +753,7 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString)
         return;
     }
 
-    TraceLogger::GetInstance().LogInputPasted(GetCalculatorMode());
+    TraceLogger::GetInstance()->LogInputPasted(GetCalculatorMode());
     bool isFirstLegalChar = true;
     m_standardCalculatorManager.SendCommand(Command::CommandCENTR);
     bool sendNegate = false;
@@ -899,7 +899,7 @@ void StandardCalculatorViewModel::OnClearMemoryCommand(Object ^ parameter)
 {
     m_standardCalculatorManager.MemorizedNumberClearAll();
 
-    TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
+    TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
 
     if (m_localizedMemoryCleared == nullptr)
     {
@@ -1055,7 +1055,7 @@ void StandardCalculatorViewModel::OnMemoryButtonPressed()
 {
     m_standardCalculatorManager.MemorizeNumber();
 
-    TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::Memory, GetCalculatorMode());
+    TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::Memory, GetCalculatorMode());
 
     if (m_localizedMemorySavedAutomationFormat == nullptr)
     {
@@ -1094,7 +1094,7 @@ void StandardCalculatorViewModel::OnMemoryItemPressed(Object ^ memoryItemPositio
         HideMemoryClicked();
 
         auto mode = IsStandard ? ViewMode::Standard : IsScientific ? ViewMode::Scientific : ViewMode::Programmer;
-        TraceLogger::GetInstance().LogMemoryItemLoad(mode, MemorizedNumbers->Size, boxedPosition->Value);
+        TraceLogger::GetInstance()->LogMemoryItemLoad(mode, MemorizedNumbers->Size, boxedPosition->Value);
     }
 }
 
@@ -1105,7 +1105,7 @@ void StandardCalculatorViewModel::OnMemoryAdd(Object ^ memoryItemPosition)
     if (MemorizedNumbers)
     {
         auto boxedPosition = safe_cast<Box<int> ^>(memoryItemPosition);
-        TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryAdd, GetCalculatorMode());
+        TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryAdd, GetCalculatorMode());
         m_standardCalculatorManager.MemorizedNumberAdd(boxedPosition->Value);
     }
 }
@@ -1116,7 +1116,7 @@ void StandardCalculatorViewModel::OnMemorySubtract(Object ^ memoryItemPosition)
     if (MemorizedNumbers)
     {
         auto boxedPosition = safe_cast<Box<int> ^>(memoryItemPosition);
-        TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemorySubtract, GetCalculatorMode());
+        TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::MemorySubtract, GetCalculatorMode());
         m_standardCalculatorManager.MemorizedNumberSubtract(boxedPosition->Value);
     }
 }
@@ -1142,7 +1142,7 @@ void StandardCalculatorViewModel::OnMemoryClear(_In_ Object ^ memoryItemPosition
             {
                 IsMemoryEmpty = true;
             }
-            TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
+            TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
 
             wstring localizedIndex = to_wstring(boxedPosition->Value + 1);
             LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedIndex);
@@ -1189,7 +1189,7 @@ void StandardCalculatorViewModel::OnPropertyChanged(String ^ propertyname)
     }
     else if (propertyname == IsBitFlipCheckedPropertyName)
     {
-        TraceLogger::GetInstance().UpdateButtonUsage(
+        TraceLogger::GetInstance()->UpdateButtonUsage(
             IsBitFlipChecked ? NumbersAndOperatorsEnum::BitflipButton : NumbersAndOperatorsEnum::FullKeypadButton, ViewMode::Programmer);
     }
 }
