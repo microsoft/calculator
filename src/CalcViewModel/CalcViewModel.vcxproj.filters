@@ -20,7 +20,6 @@
     <ClCompile Include="MemoryItemViewModel.cpp" />
     <ClCompile Include="StandardCalculatorViewModel.cpp" />
     <ClCompile Include="UnitConverterViewModel.cpp" />
-    <ClCompile Include="ViewState.cpp" />
     <ClCompile Include="Common\AppResourceProvider.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -95,7 +94,6 @@
     <ClInclude Include="MemoryItemViewModel.h" />
     <ClInclude Include="StandardCalculatorViewModel.h" />
     <ClInclude Include="UnitConverterViewModel.h" />
-    <ClInclude Include="ViewState.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h">
       <Filter>Common</Filter>
     </ClInclude>

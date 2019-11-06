@@ -953,7 +953,7 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
 
 wstring UnitConverterDataLoader::GetLocalizedStringName(String ^ stringId)
 {
-    return AppResourceProvider::GetInstance().GetResourceString(stringId)->Data();
+    return AppResourceProvider::GetInstance()->GetResourceString(stringId)->Data();
 }
 
 void UnitConverterDataLoader::GetExplicitConversionData(_In_ unordered_map<int, unordered_map<int, UCM::ConversionData>>& unitToUnitConversionList)

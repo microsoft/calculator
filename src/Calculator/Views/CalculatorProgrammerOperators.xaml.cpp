@@ -33,7 +33,7 @@ CalculatorProgrammerOperators::CalculatorProgrammerOperators()
 {
     InitializeComponent();
 
-    CopyMenuItem->Text = AppResourceProvider::GetInstance().GetResourceString(L"copyMenuItem");
+    CopyMenuItem->Text = AppResourceProvider::GetInstance()->GetResourceString(L"copyMenuItem");
 }
 
 void CalculatorProgrammerOperators::HexButtonChecked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)

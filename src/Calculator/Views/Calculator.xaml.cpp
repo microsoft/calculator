@@ -7,7 +7,6 @@
 #include "CalcViewModel/Common/TraceLogger.h"
 #include "CalcViewModel/Common/CopyPasteManager.h"
 #include "CalcViewModel/StandardCalculatorViewModel.h"
-#include "CalcViewModel/ViewState.h"
 #include "CalcViewModel/Common/LocalizationSettings.h"
 #include "Memory.xaml.h"
 #include "HistoryList.xaml.h"
@@ -59,8 +58,8 @@ Calculator::Calculator()
 
     m_displayFlyout = static_cast<MenuFlyout ^>(Resources->Lookup(L"DisplayContextMenu"));
     auto resLoader = AppResourceProvider::GetInstance();
-    CopyMenuItem->Text = resLoader.GetResourceString(L"copyMenuItem");
-    PasteMenuItem->Text = resLoader.GetResourceString(L"pasteMenuItem");
+    CopyMenuItem->Text = resLoader->GetResourceString(L"copyMenuItem");
+    PasteMenuItem->Text = resLoader->GetResourceString(L"pasteMenuItem");
 
     this->SizeChanged += ref new SizeChangedEventHandler(this, &Calculator::Calculator_SizeChanged);
 }
@@ -68,10 +67,10 @@ Calculator::Calculator()
 void Calculator::LoadResourceStrings()
 {
     auto resProvider = AppResourceProvider::GetInstance();
-    m_openMemoryFlyoutAutomationName = resProvider.GetResourceString(L"MemoryButton_Open");
-    m_closeMemoryFlyoutAutomationName = resProvider.GetResourceString(L"MemoryButton_Close");
-    m_openHistoryFlyoutAutomationName = resProvider.GetResourceString(L"HistoryButton_Open");
-    m_closeHistoryFlyoutAutomationName = resProvider.GetResourceString(L"HistoryButton_Close");
+    m_openMemoryFlyoutAutomationName = resProvider->GetResourceString(L"MemoryButton_Open");
+    m_closeMemoryFlyoutAutomationName = resProvider->GetResourceString(L"MemoryButton_Close");
+    m_openHistoryFlyoutAutomationName = resProvider->GetResourceString(L"HistoryButton_Open");
+    m_closeHistoryFlyoutAutomationName = resProvider->GetResourceString(L"HistoryButton_Close");
     AutomationProperties::SetName(MemoryButton, m_openMemoryFlyoutAutomationName);
     AutomationProperties::SetName(HistoryButton, m_openHistoryFlyoutAutomationName);
 }
@@ -123,9 +122,9 @@ void Calculator::OnLoaded(_In_ Object ^, _In_ RoutedEventArgs ^)
     Model->HideMemoryClicked += ref new HideMemoryClickedHandler(this, &Calculator::OnHideMemoryClicked);
 
     InitializeHistoryView(Model->HistoryVM);
-    String ^ historyPaneName = AppResourceProvider::GetInstance().GetResourceString(L"HistoryPane");
+    String ^ historyPaneName = AppResourceProvider::GetInstance()->GetResourceString(L"HistoryPane");
     HistoryFlyout->FlyoutPresenterStyle->Setters->Append(ref new Setter(AutomationProperties::NameProperty, historyPaneName));
-    String ^ memoryPaneName = AppResourceProvider::GetInstance().GetResourceString(L"MemoryPane");
+    String ^ memoryPaneName = AppResourceProvider::GetInstance()->GetResourceString(L"MemoryPane");
     MemoryFlyout->FlyoutPresenterStyle->Setters->Append(ref new Setter(AutomationProperties::NameProperty, memoryPaneName));
 
     if (Windows::Foundation::Metadata::ApiInformation::IsEventPresent(L"Windows.UI.Xaml.Controls.Primitives.FlyoutBase", L"Closing"))
@@ -149,24 +148,21 @@ void Calculator::OnLoaded(_In_ Object ^, _In_ RoutedEventArgs ^)
         }));
 }
 
-std::wstring Calculator::GetCurrentLayoutState()
+Platform::String ^ Calculator::GetCurrentLayoutState()
 {
-    std::wstring state;
 
     if (IsProgrammer)
     {
-        state = L"Programmer";
+        return L"Programmer";
     }
     else if (IsScientific)
     {
-        state = L"Scientific";
+        return L"Scientific";
     }
     else
     {
-        state = L"Standard";
+        return L"Standard";
     }
-
-    return state;
 }
 
 void Calculator::UpdateViewState()
@@ -396,13 +392,11 @@ void Calculator::UpdatePanelViewState()
 
 void Calculator::UpdateHistoryState()
 {
-    String ^ viewState = App::GetAppViewState();
-    if (viewState == ViewState::DockedView)
+    if (DockPanel->Visibility == ::Visibility::Visible)
     {
         // docked view
         CloseHistoryFlyout();
         SetChildAsHistory();
-        HistoryButton->Visibility = ::Visibility::Collapsed;
 
         if (!IsProgrammer && m_IsLastFlyoutHistory)
         {
@@ -410,7 +404,8 @@ void Calculator::UpdateHistoryState()
         }
     }
     else
-    { // flyout view
+    {
+        // flyout view
         DockHistoryHolder->Child = nullptr;
         if (!IsProgrammer)
         {
@@ -434,8 +429,7 @@ void Calculator::UpdateMemoryState()
             ClearMemoryButton->IsEnabled = false;
         }
 
-        String ^ viewState = App::GetAppViewState();
-        if (viewState == ViewState::DockedView)
+        if (DockPanel->Visibility == ::Visibility::Visible)
         {
             CloseMemoryFlyout();
             SetChildAsMemory();
@@ -479,7 +473,7 @@ void Calculator::OnHistoryItemClicked(_In_ HistoryItemViewModel ^ e)
     assert(e->GetTokens() != nullptr);
     Model->SetHistoryExpressionDisplay(e->GetTokens(), e->GetCommands());
     Model->SetExpressionDisplay(e->GetTokens(), e->GetCommands());
-    Model->SetPrimaryDisplay(e->Result->Data(), false);
+    Model->SetPrimaryDisplay(e->Result, false);
     Model->IsFToEEnabled = false;
 
     CloseHistoryFlyout();
@@ -546,7 +540,7 @@ void Calculator::SetDefaultFocus()
 
 void Calculator::ToggleHistoryFlyout(Object ^ /*parameter*/)
 {
-    if (Model->IsProgrammer || App::GetAppViewState() == ViewState::DockedView)
+    if (Model->IsProgrammer || DockPanel->Visibility == ::Visibility::Visible)
     {
         return;
     }
@@ -565,19 +559,20 @@ void Calculator::ToggleHistoryFlyout(Object ^ /*parameter*/)
 
 void Calculator::ToggleMemoryFlyout()
 {
-    String ^ viewState = App::GetAppViewState();
-    if (viewState != ViewState::DockedView)
+    if (DockPanel->Visibility == ::Visibility::Visible)
     {
-        if (m_fIsMemoryFlyoutOpen)
-        {
-            MemoryFlyout->Hide();
-        }
-        else
-        {
-            MemoryFlyout->Content = GetMemory();
-            m_memory->RowHeight = NumpadPanel->ActualHeight;
-            FlyoutBase::ShowAttachedFlyout(MemoryButton);
-        }
+        return;
+    }
+
+    if (m_fIsMemoryFlyoutOpen)
+    {
+        MemoryFlyout->Hide();
+    }
+    else
+    {
+        MemoryFlyout->Content = GetMemory();
+        m_memory->RowHeight = NumpadPanel->ActualHeight;
+        FlyoutBase::ShowAttachedFlyout(MemoryButton);
     }
 }
 
@@ -616,7 +611,7 @@ Memory ^ Calculator::GetMemory()
     if (m_memory == nullptr)
     {
         m_memory = ref new Memory();
-        VisualStateManager::GoToState(m_memory, ref new String(GetCurrentLayoutState().c_str()), true /*useTransitions*/);
+        VisualStateManager::GoToState(m_memory, GetCurrentLayoutState(), true /*useTransitions*/);
     }
 
     return m_memory;
@@ -670,28 +665,6 @@ void Calculator::OnHistoryFlyOutTapped(_In_ Object ^ sender, _In_ TappedRoutedEv
     {
         HistoryFlyout->Hide();
     }
-}
-
-bool Calculator::IsValidRegularExpression(std::wstring str)
-{
-    bool result = false;
-    std::wregex regexPatterns[3];
-    regexPatterns[0] = L"[-]{0,1}[0-9]{0,}[.]{0,1}[0-9]{0,}";
-    regexPatterns[1] = L"[-]{0,1}[0-9]{0,}[.]{0,1}[0-9]{0,}[e]{1}[+]{1}[0-9]{1,}";
-    regexPatterns[2] = L"[-]{0,1}[0-9]{0,}[.]{0,1}[0-9]{0,}[e]{1}[-]{1}[0-9]{1,}";
-
-    const auto& localizer = LocalizationSettings::GetInstance();
-    String ^ englishString = localizer.GetEnglishValueFromLocalizedDigits(str);
-
-    for (int i = 0; i < 3; ++i)
-    {
-        if (regex_match(englishString->Data(), regexPatterns[i]))
-        {
-            result = true;
-            break;
-        }
-    }
-    return result;
 }
 
 void Calculator::DockPanelTapped(_In_ TappedRoutedEventArgs ^ e)

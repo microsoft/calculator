@@ -12,7 +12,6 @@
 #include "CalcViewModel/Common/Automation/NarratorNotifier.h"
 #include "CalcViewModel/Common/AppResourceProvider.h"
 #include "CalcViewModel/Common/LocalizationSettings.h"
-#include "CalcViewModel/ViewState.h"
 #include "Views/MainPage.xaml.h"
 
 using namespace CalculatorApp;
@@ -92,26 +91,6 @@ bool App::m_isAnimationEnabled = true;
 bool App::IsAnimationEnabled()
 {
     return App::m_isAnimationEnabled;
-}
-
-/// <summary>
-/// Return the current application view state. The value
-/// will match one of the constants in the ViewState namespace.
-/// </summary>
-String ^ App::GetAppViewState()
-{
-    String ^ newViewState;
-    CoreWindow ^ window = CoreWindow::GetForCurrentThread();
-    if ((window->Bounds.Width >= 560) && (window->Bounds.Height >= 356))
-    {
-        newViewState = ViewState::DockedView;
-    }
-    else
-    {
-        newViewState = ViewState::Snap;
-    }
-
-    return newViewState;
 }
 
 void App::AddWindowToMap(_In_ WindowFrameService ^ frameService)
@@ -468,10 +447,5 @@ void App::DismissedEventHandler(SplashScreen ^ sender, Object ^ e)
     SetupJumpList();
 }
 
-float App::GetAppWindowHeight()
-{
-    CoreWindow ^ window = CoreWindow::GetForCurrentThread();
-    return window->Bounds.Height;
-}
 
 

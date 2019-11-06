@@ -56,6 +56,7 @@ namespace CalculatorApp
             void OnMinFontSizePropertyChanged(double oldValue, double newValue);
             void OnMaxFontSizePropertyChanged(double oldValue, double newValue);
             void OnTextContainerSizeChanged(Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
+            void OnTextBlockSizeChanged(Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
             void OnTextContainerLayoutUpdated(Object ^ sender, Object ^ e);
             void OnTextContainerOnViewChanged(Object ^ sender, Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs ^ e);
             void UpdateVisualState();
@@ -82,6 +83,7 @@ namespace CalculatorApp
             Windows::Foundation::EventRegistrationToken m_textContainerSizeChangedToken;
             Windows::Foundation::EventRegistrationToken m_scrollRightClickToken;
             Windows::Foundation::EventRegistrationToken m_scrollLeftClickToken;
+            Windows::Foundation::EventRegistrationToken m_textBlockSizeChangedToken;            
         };
     }
 }

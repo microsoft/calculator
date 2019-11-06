@@ -519,7 +519,7 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs
             auto navView = buttons.first->second.Resolve<MUXC::NavigationView>();
             auto appViewModel = safe_cast<ApplicationViewModel ^>(navView->DataContext);
             appViewModel->Mode = ViewMode::Date;
-            auto categoryName = AppResourceProvider::GetInstance().GetResourceString(L"DateCalculationModeText");
+            auto categoryName = AppResourceProvider::GetInstance()->GetResourceString(L"DateCalculationModeText");
             appViewModel->CategoryName = categoryName;
 
             auto menuItems = static_cast<IObservableVector<Object ^> ^>(navView->MenuItemsSource);
