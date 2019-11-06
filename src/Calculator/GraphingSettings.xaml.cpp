@@ -59,11 +59,6 @@ void GraphingSettings::TrigUnitModeClick(Platform::Object ^ sender, Windows::UI:
     }
 }
 
-void GraphingSettings::OnTextChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::TextChangedEventArgs ^ e)
-{
-    //UpdateExtents(sender);
-}
-
 void GraphingSettings::UpdateExtents(Platform::Object ^ sender)
 {
     FrameworkElement ^ fe = (FrameworkElement ^) sender;
@@ -109,7 +104,7 @@ void GraphingSettings::UpdateExtents(Platform::Object ^ sender)
 
         if (thisControlHasFocus)
         {
-            if (PreserveAspectRatio->IsChecked)
+            if (m_preserveAspectRatio)
             {
                 if (widthChanged)
                 {
@@ -202,5 +197,21 @@ void GraphingSettings::OnKeyDown(Platform::Object ^ sender, Windows::UI::Xaml::I
     if (e->Key == Windows::System::VirtualKey::Enter)
     {
         UpdateExtents(sender);
+    }
+}
+
+void CalculatorApp::Controls::GraphingSettings::OnPreserveAspectRatioClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    if (m_preserveAspectRatio)
+    {
+        // On now, turning it off
+        m_preserveAspectRatio = false;
+        PreserveAspectRatioSymbol->Opacity = 0.25;
+    }
+    else
+    {
+        // Off now, turning it on
+        m_preserveAspectRatio = true;
+        PreserveAspectRatioSymbol->Opacity = 1.0;
     }
 }

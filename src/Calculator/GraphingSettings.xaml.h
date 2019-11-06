@@ -47,10 +47,12 @@ namespace CalculatorApp
                 m_xMax,
                 m_yMax;
 
-            void OnTextChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::TextChangedEventArgs ^ e);
+            bool m_preserveAspectRatio = true;
+
             void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
             void OnLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
             void OnKeyDown(Platform::Object ^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);
+            void OnPreserveAspectRatioClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         };
     }
 }
