@@ -3547,7 +3547,7 @@
     <value>Radians</value>
     <comment>Radians mode on settings page</comment>
   </data>
-  <data name="UnitHeading" xml:space="preserve">
+  <data name="UnitsHeading" xml:space="preserve">
     <value>Unit</value>
     <comment>Heading for Unit's on the settings</comment>
   </data>

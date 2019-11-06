@@ -78,6 +78,10 @@
                     </Button>
                 </StackPanel>
                 
+                <Popup  Grid.Row="0" x:Name="SettingsPopup" IsOpen="False" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="70, 50">
+                    <controls:GraphingSettings x:Name="GraphSettings"  ViewState="{x:Bind ViewModel.ViewState}"/>
+                </Popup>
+
                 <Popup x:Name="TraceValuePopup" Grid.Row="0" RenderTransformOrigin="0,1">
                     <Popup.RenderTransform>
                         <TranslateTransform x:Name="TraceValuePopupTransform" X="50" Y="150"/>
@@ -398,9 +402,6 @@
             <local:EquationInputArea Grid.Row="0"
                                  Margin="0,8,0,0"
                                  Equations="{x:Bind ViewModel.Equations}"/>
-            <Popup  Grid.Row="0" x:Name="SettingsPopup" IsOpen="False" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 50">
-                <controls:GraphingSettings x:Name="GraphSettings"  ViewState="{x:Bind ViewModel.ViewState}"/>
-            </Popup>
 
             <Grid x:Name="ButtonContainerGrid"
                   Grid.Row="1"

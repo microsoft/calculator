@@ -9,6 +9,84 @@
     DataContextChanged="GraphingCalculator_DataContextChanged"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="OnLoaded"
     >
+    <Page.Resources>
+        <SolidColorBrush x:Key="ListMediumControlBackgroundBrush" Color="{StaticResource SystemListMediumColor}" />
+        <SolidColorBrush x:Key="ControlPointerOverBorderBrush" Color="LightGray" />
+        <SolidColorBrush x:Key="ControlSelectedBackgroundBrush" Color="LightGray" />
+        <SolidColorBrush x:Key="BaseMediumLowPressedBackgroundBrush" Color="{StaticResource SystemBaseMediumLowColor}" />
+        <SolidColorBrush x:Key="ChromeWhiteHighControlSelectedForegroundBrush" Color="#FFFFFFFF" />
+        <SolidColorBrush x:Key="BackgroundColorBrush" Color="CornflowerBlue" />
+        <SolidColorBrush x:Key="ForegroundColorBrush" Color="White" />
+
+        <Style x:Key="FilterRadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="MinHeight" Value="44" />
+            <Setter Property="MinWidth" Value="0" />
+            <Setter Property="Padding" Value="4,4" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="FocusVisualMargin" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid
+                        Name="LayoutRoot"
+                        Margin="0,0"
+                        Background="{ThemeResource RadioButtonBackground}">
+                            <Border
+                            Name="AccessibilityBorder"
+                            BorderBrush="{ThemeResource RadioButtonBorderBrush}"
+                            BorderThickness="1" />
+                            <Border
+                            Name="VisualBorder"
+                            BorderBrush="{ThemeResource RadioButtonBorderBrush}"
+                            BorderThickness="1" />
+                            <ContentPresenter
+                            Name="ContentPresenter"
+                            Grid.Column="1"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="{TemplateBinding Foreground}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            AutomationProperties.AccessibilityView="Raw" />
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="LayoutRoot.Background" Value="{ThemeResource ListMediumControlBackgroundBrush}" />
+                                            <Setter Target="AccessibilityBorder.BorderBrush" Value="{ThemeResource ControlPointerOverBorderBrush}" />
+                                            <Setter Target="AccessibilityBorder.Background" Value="{ThemeResource ControlSelectedBackgroundBrush}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="LayoutRoot.Background" Value="{ThemeResource BaseMediumLowPressedBackgroundBrush}" />
+                                            <Setter Target="AccessibilityBorder.BorderBrush" Value="{ThemeResource ControlPointerOverBorderBrush}" />
+                                            <Setter Target="AccessibilityBorder.Background" Value="{ThemeResource ControlSelectedBackgroundBrush}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="CheckStates">
+                                    <VisualState x:Name="Checked">
+                                        <VisualState.Setters>
+                                            <Setter Target="VisualBorder.BorderBrush" Value="{ThemeResource BackgroundColorBrush}" />
+                                            <Setter Target="VisualBorder.Background" Value="{ThemeResource BackgroundColorBrush}" />
+                                            <Setter Target="ContentPresenter.Background" Value="{ThemeResource BackgroundColorBrush}" />
+                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ForegroundColorBrush}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked" />
+                                    <VisualState x:Name="Indeterminate" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
     <Grid BorderBrush="Black" BorderThickness="3">
         <StackPanel Margin="10,10,10,10">
@@ -29,23 +107,26 @@
 
                 <TextBlock Grid.Row="0" Grid.Column="0" x:Name="x_MinHeading" Text="x-min_d"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" x:Name="x_MaxHeading" Text="x-max_d"/>
-                <TextBox Grid.Row="1" Grid.Column="0" x:Name="x_min" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown"/>
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="x_max" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown"/>
+                <TextBox Grid.Row="1" Grid.Column="0" x:Name="x_min" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="x_max" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown" VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" x:Name="y_MinHeading" Text="y-min_d"/>
                 <TextBlock Grid.Row="3" Grid.Column="1" x:Name="y_MaxHeading" Text="y-max_d"/>
-                <TextBox Grid.Row="4" Grid.Column="0" x:Name="y_min" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown"/>
-                <TextBox Grid.Row="4" Grid.Column="1" x:Name="y_max" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown"/>
+                <TextBox Grid.Row="4" Grid.Column="0" x:Name="y_min" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="4" Grid.Column="1" x:Name="y_max" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown" VerticalAlignment="Center"/>
 
                 <Polyline Grid.Column="2" Grid.RowSpan="5" Points="0,20 50,20 50,110 0,110" Stroke="Blue" StrokeThickness="3" VerticalAlignment="Center"/>
-                <CheckBox Grid.Column="2" Grid.RowSpan="5" Margin="40,20,0,0" x:Name="PreserveAspectRatio" IsChecked="True" VerticalAlignment="Center" Opacity="100"/>
+                <Button Grid.Column="2" Grid.RowSpan="5" Margin="05,20,0,0" x:Name="PreserveAspectRatio" VerticalAlignment="Center" Click="OnPreserveAspectRatioClicked">
+                    <FontIcon x:Name="PreserveAspectRatioSymbol" FontFamily="Segoe UI Symbol" Glyph="&#x26D3;"/>
+                </Button>
             </Grid>
 
             <TextBlock  x:Name="UnitsHeading" Text="Units_d" FontSize="28" Margin="0,10"/>
+            
             <StackPanel Orientation="Horizontal">
-                <RadioButton x:Name="Radians" Content="Radians_d" IsChecked="True" Click="TrigUnitModeClick"/>
-                <RadioButton x:Name="Degrees" Content="Degrees_d" Click="TrigUnitModeClick"/>
-                <RadioButton x:Name="Gradians" Content="Gradians_d" Click="TrigUnitModeClick"/>
+                <RadioButton Style="{StaticResource FilterRadioButtonStyle}" x:Name="Radians" Content="Radians_d" IsChecked="True" Click="TrigUnitModeClick"/>
+                <RadioButton Style="{StaticResource FilterRadioButtonStyle}" x:Name="Degrees" Content="Degrees_d" Click="TrigUnitModeClick"/>
+                <RadioButton Style="{StaticResource FilterRadioButtonStyle}" x:Name="Gradians" Content="Gradians_d" Click="TrigUnitModeClick"/>
             </StackPanel>
         </StackPanel>
     </Grid>
