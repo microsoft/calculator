@@ -69,7 +69,6 @@ public
         void CloseMemoryFlyout();
 
         void SetDefaultFocus();
-
     private:
         void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
