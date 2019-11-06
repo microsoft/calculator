@@ -1542,7 +1542,7 @@ bool StandardCalculatorViewModel::IsRecoverableCommand(int nOpCode)
 
 size_t StandardCalculatorViewModel::LengthWithoutPadding(wstring str)
 {
-    return std::count(str.begin(), str.end(), L' ');
+    return str.length() - count(str.begin(), str.end(), L' ');
 }
 
 wstring StandardCalculatorViewModel::AddPadding(wstring binaryString)
