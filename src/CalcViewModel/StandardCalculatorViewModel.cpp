@@ -1292,7 +1292,7 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
 {
     bool handleOperand = false;
     int nOpCode = static_cast<int>(command);
-    wstring updatedToken = L"";
+    wstring updatedToken;
 
     const pair<wstring, int>& token = m_tokens->at(tokenPosition);
     const shared_ptr<IExpressionCommand>& tokenCommand = m_commands->at(token.second);
@@ -1461,10 +1461,10 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
     }
 
     m_standardCalculatorManager.SendCommand(currentDegreeMode);
-    size_t currentCommandsSize = currentCommands.size();
-    for (size_t i = 0; i < currentCommandsSize; i++)
+
+    for (int command : currentCommands)
     {
-        m_standardCalculatorManager.SendCommand(static_cast<CalculationManager::Command>(currentCommands[i]));
+        m_standardCalculatorManager.SendCommand(static_cast<CalculationManager::Command>(command));
     }
 
     if (fromHistory) // This is for the cases where the expression is loaded from history
@@ -1493,32 +1493,22 @@ CommandType StandardCalculatorViewModel::GetSelectedTokenType(_In_ unsigned int 
 
 bool StandardCalculatorViewModel::IsOpnd(int nOpCode)
 {
-    static Command opnd[] = { Command::Command0, Command::Command1, Command::Command2, Command::Command3, Command::Command4,  Command::Command5,
+    static constexpr Command opnd[] = { Command::Command0, Command::Command1, Command::Command2, Command::Command3, Command::Command4,  Command::Command5,
                               Command::Command6, Command::Command7, Command::Command8, Command::Command9, Command::CommandPNT };
 
-    for (unsigned int i = 0; i < size(opnd); i++)
-    {
-        if (nOpCode == static_cast<int>(opnd[i]))
-        {
-            return true;
-        }
-    }
-    return false;
+    return find(begin(opnd), end(opnd), static_cast<Command>(nOpCode)) != end(opnd);
 }
 
 bool StandardCalculatorViewModel::IsUnaryOp(int nOpCode)
 {
-    static Command unaryOp[] = { Command::CommandSQRT,  Command::CommandFAC,  Command::CommandSQR,   Command::CommandLOG,
+    static constexpr Command unaryOp[] = { Command::CommandSQRT,  Command::CommandFAC,  Command::CommandSQR,   Command::CommandLOG,
                                  Command::CommandPOW10, Command::CommandPOWE, Command::CommandLN,    Command::CommandREC,
                                  Command::CommandSIGN,  Command::CommandSINH, Command::CommandASINH, Command::CommandCOSH,
                                  Command::CommandACOSH, Command::CommandTANH, Command::CommandATANH, Command::CommandCUB };
 
-    for (unsigned int i = 0; i < size(unaryOp); i++)
+    if (find(begin(unaryOp), end(unaryOp), static_cast<Command>(nOpCode)) != end(unaryOp))
     {
-        if (nOpCode == static_cast<int>(unaryOp[i]))
-        {
-            return true;
-        }
+        return true;
     }
 
     if (IsTrigOp(nOpCode))
@@ -1531,33 +1521,19 @@ bool StandardCalculatorViewModel::IsUnaryOp(int nOpCode)
 
 bool StandardCalculatorViewModel::IsTrigOp(int nOpCode)
 {
-    static Command trigOp[] = {
+    static constexpr Command trigOp[] = {
         Command::CommandSIN, Command::CommandCOS, Command::CommandTAN, Command::CommandASIN, Command::CommandACOS, Command::CommandATAN
     };
 
-    for (unsigned int i = 0; i < size(trigOp); i++)
-    {
-        if (nOpCode == static_cast<int>(trigOp[i]))
-        {
-            return true;
-        }
-    }
-    return false;
+    return find(begin(trigOp), end(trigOp), static_cast<Command>(nOpCode)) != end(trigOp);
 }
 
 bool StandardCalculatorViewModel::IsBinOp(int nOpCode)
 {
-    static Command binOp[] = { Command::CommandADD, Command::CommandSUB,  Command::CommandMUL, Command::CommandDIV,
+    static constexpr Command binOp[] = { Command::CommandADD, Command::CommandSUB,  Command::CommandMUL, Command::CommandDIV,
                                Command::CommandEXP, Command::CommandROOT, Command::CommandMOD, Command::CommandPWR };
 
-    for (unsigned int i = 0; i < size(binOp); i++)
-    {
-        if (nOpCode == static_cast<int>(binOp[i]))
-        {
-            return true;
-        }
-    }
-    return false;
+    return find(begin(binOp), end(binOp), static_cast<Command>(nOpCode)) != end(binOp);
 }
 
 bool StandardCalculatorViewModel::IsRecoverableCommand(int nOpCode)
@@ -1575,29 +1551,15 @@ bool StandardCalculatorViewModel::IsRecoverableCommand(int nOpCode)
         return true;
     }
 
-    static Command recoverableCommands[] = { Command::CommandA, Command::CommandB, Command::CommandC, Command::CommandD, Command::CommandE, Command::CommandF };
+    static constexpr Command recoverableCommands[] = { Command::CommandA, Command::CommandB, Command::CommandC,
+                                                       Command::CommandD, Command::CommandE, Command::CommandF };
 
-    for (unsigned int i = 0; i < size(recoverableCommands); i++)
-    {
-        if (nOpCode == static_cast<int>(recoverableCommands[i]))
-        {
-            return true;
-        }
-    }
-    return false;
+    return find(begin(recoverableCommands), end(recoverableCommands), static_cast<Command>(nOpCode)) != end(recoverableCommands);
 }
 
 size_t StandardCalculatorViewModel::LengthWithoutPadding(wstring str)
 {
-    size_t count = 0;
-    for (size_t i = 0; i < str.length(); i++)
-    {
-        if (str[i] != L' ')
-        {
-            count++;
-        }
-    }
-    return count;
+    return str.length() - count(str.begin(), str.end(), L' ');
 }
 
 wstring StandardCalculatorViewModel::AddPadding(wstring binaryString)
@@ -1611,12 +1573,7 @@ wstring StandardCalculatorViewModel::AddPadding(wstring binaryString)
     {
         pad = 0;
     }
-    wstring padString = L"";
-    for (size_t i = 0; i < pad; i++)
-    {
-        padString += L"0";
-    }
-    return padString + binaryString;
+    return wstring(pad, L'0') + binaryString;
 }
 
 void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
