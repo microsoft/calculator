@@ -35,15 +35,18 @@ namespace CalculatorApp
             
             }
 
-            private :
-                Platform::String ^ GetMathTextProperty();
-                void SetMathTextProperty(Platform::String ^ newValue);
+        protected:
+            void OnLostFocus(Windows::UI::Xaml::RoutedEventArgs ^ e) override;
 
-                static Windows::UI::Xaml::DependencyProperty ^ s_MathTextProperty;
-                static Windows::UI::Xaml::DependencyProperty ^ InitializeMathTextProperty()
-                {
-                    return Utils::RegisterDependencyProperty<DependencyPropertiesOwner, Platform::String ^>(L"MathText");
-                }
+        private :
+            Platform::String ^ GetMathTextProperty();
+            void SetMathTextProperty(Platform::String ^ newValue);
+
+            static Windows::UI::Xaml::DependencyProperty ^ s_MathTextProperty;
+            static Windows::UI::Xaml::DependencyProperty ^ InitializeMathTextProperty()
+            {
+                return Utils::RegisterDependencyProperty<DependencyPropertiesOwner, Platform::String ^>(L"MathText");
+            }
         };
     }
 }

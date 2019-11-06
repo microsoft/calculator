@@ -34,13 +34,7 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="TextWrapping" Value="WrapWholeWords"/>
         </Style>
-        <Style x:Name="KGF_ListViewStyle" TargetType="ListView">
-            <Setter Property="IsItemClickEnabled" Value="False"/>
-            <Setter Property="SelectionMode" Value="None"/>
-            <Setter Property="ItemContainerStyle" Value="{StaticResource ListViewItemContainerStyle}"/>
-        </Style>
-        <Style x:Name="ListViewItemContainerStyle" TargetType="ListViewItem">
-            <Setter Property="IsTabStop" Value="False"/>
+        <Style x:Name="KGF_ItemsControlContainerStyle" TargetType="ContentPresenter">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Margin" Value="10"/>
@@ -140,11 +134,10 @@
                    FontSize="18"
                    AutomationProperties.HeadingLevel="Level1"/>
 
-        <ListView x:Name="KeyGraphFeaturesListView"
+        <ItemsControl x:Name="KeyGraphFeaturesListView"
                   Grid.Row="2"
                   Padding="0,0,0,12"
-                  Style="{StaticResource KGF_ListViewStyle}"
-                  ItemContainerStyle="{StaticResource ListViewItemContainerStyle}"
+                  ItemContainerStyle="{StaticResource KGF_ItemsControlContainerStyle}"
                   ItemTemplateSelector="{StaticResource KGFTemplateSelector}"
                   ItemsSource="{x:Bind ViewModel.KeyGraphFeaturesItems}"
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
