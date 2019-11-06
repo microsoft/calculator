@@ -32,15 +32,17 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ClearAll()
         {
-            if (string.IsNullOrEmpty(this.CalculatorResult.Text))
+            string source = this.session.PageSource;
+
+            if (source.Contains("clearEntryButton"))
+            {
+                this.ScientificOperators.ClearEntryButton.Click();
+                source = this.session.PageSource;
+            }
+            if (source.Contains("clearButton"))
             {
                 this.ScientificOperators.ClearButton.Click();
             }
-            else
-            {
-                this.ScientificOperators.ClearEntryButton.Click();
-            }
-            this.ScientificOperators.ClearButton.Click();
             this.MemoryPanel.MemoryClear.Click();
             this.HistoryPanel.ClearHistory();
         }

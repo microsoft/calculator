@@ -79,6 +79,10 @@ namespace CalculatorUITestFramework
         public WindowsElement DegreesButton => this.session.TryFindElementByAccessibilityId("degreesButton");
         public WindowsElement FixedToExponentialButton => this.session.TryFindElementByAccessibilityId("ftoeButton");
         public WindowsElement NegateButton => this.session.TryFindElementByAccessibilityId("negateButton");
+        public WindowsElement TrigFlyout => this.session.TryFindElementByAccessibilityId("Trigflyout");
+        public WindowsElement LightDismiss => this.session.TryFindElementByAccessibilityId("Light Dismiss");
+
+        public SetAngleOperatorButtonState AngleOperatorsButton = new SetAngleOperatorButtonState();
         public WindowsElement GetDegRadGradButton()
         {
             string source = this.session.PageSource;
@@ -86,28 +90,27 @@ namespace CalculatorUITestFramework
             {
                 return DegButton;
             }
-            else if (source.Contains("radButton"))
-            {
-                return RadButton;
-            }
             else if (source.Contains("gradButton"))
             {
                 return GradButton;
+            }
+            else if (source.Contains("radButton"))
+            {
+                return RadButton;
             }
 
             throw new NotFoundException("Could not find deg, rad or grad button in page source");
         }
 
-        public WindowsElement GetDesiredDegRadGradButton(string desiredButtonId)
-        {
-            var button = GetDegRadGradButton();
-            while (button.Id != desiredButtonId)
-            {
-                button.Click();
-                button = GetDegRadGradButton();
-            }
-
-            return button;
-        }
+        //public WindowsElement GetDesiredDegRadGradButton(string desiredButtonId)
+        //{ 
+        //    var button = GetDegRadGradButton();
+        //    while (button.Id != desiredButtonId)
+        //    {
+        //        button.Click();
+        //        button = GetDegRadGradButton();
+        //    }
+        //    return button;
+        //}
     }
 }
