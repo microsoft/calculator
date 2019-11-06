@@ -448,11 +448,11 @@ namespace CalculatorApp
             std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> m_commands;
 
             // Token types
-            bool IsUnaryOp(int nOpCode);
-            bool IsBinOp(int nOpcode);
-            bool IsTrigOp(int nOpCode);
-            bool IsOpnd(int nOpCode);
-            bool IsRecoverableCommand(int nOpCode);
+            bool IsUnaryOp(CalculationManager::Command command);
+            bool IsBinOp(CalculationManager::Command command);
+            bool IsTrigOp(CalculationManager::Command command);
+            bool IsOpnd(CalculationManager::Command command);
+            bool IsRecoverableCommand(CalculationManager::Command command);
 
             CalculationManager::CommandType GetSelectedTokenType(_In_ unsigned int);
             void SaveEditedCommand(_In_ unsigned int index, _In_ CalculationManager::Command command);
