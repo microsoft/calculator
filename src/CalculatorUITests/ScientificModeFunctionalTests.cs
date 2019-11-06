@@ -279,285 +279,324 @@ namespace CalculatorUITests
         }
         #endregion
 
-        ////Need to find a consistent way ensure the correct trig dropdown settings are toggled
-        //#region Trigonometry Tests
-        //[TestMethod]
-        //public void Trig_CosButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+        //Need to find a consistent way ensure the correct trig dropdown settings are toggled
+        #region Trigonometry Tests
+        [TestMethod]
+        public void Trig_CosButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //    page.ScientificOperators.NumberPad.Input(180);
-        //    page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.NumberPad.Input(180);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.CosButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.AreEqual("-1", page.GetCalculatorResultText());
 
-            
+            //page.ScientificOperators.ResetTrigDropdownToggles();
+        }
 
-        //    page.ScientificOperators.CosButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.AreEqual("-1", page.GetCalculatorResultText());
-        //}
+        [TestMethod]
+        public void Trig_TanButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //[TestMethod]
-        //public void Trig_TanButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.NumberPad.Input(45);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.TanButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.AreEqual("1", page.GetCalculatorResultText());
 
-        //    page.ScientificOperators.NumberPad.Input(45);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.TanButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.AreEqual("1", page.GetCalculatorResultText());
-        //}
+            //page.ScientificOperators.ResetTrigDropdownToggles();
+        }
 
-        //[TestMethod]
-        //public void Trig_SecButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+        [TestMethod]
+        public void Trig_SecButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //    page.ScientificOperators.NumberPad.Input(180);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.SecButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.AreEqual("-1", page.GetCalculatorResultText());
-        //}
+            page.ScientificOperators.NumberPad.Input(180);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.SecButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.AreEqual("-1", page.GetCalculatorResultText());
 
-        //[TestMethod]
-        //public void Trig_CscButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            //page.ScientificOperators.ResetTrigDropdownToggles();
+        }
 
-        //    page.ScientificOperators.NumberPad.Input(90);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.CscButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.AreEqual("1", page.GetCalculatorResultText());
-        //}
+        [TestMethod]
+        public void Trig_CscButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //[TestMethod]
-        //public void Trig_CotButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.NumberPad.Input(90);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.CscButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.AreEqual("1", page.GetCalculatorResultText());
 
-        //    page.ScientificOperators.NumberPad.Input(45);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.CotButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.AreEqual("1", page.GetCalculatorResultText());
-        //}
+            //page.ScientificOperators.ResetTrigDropdownToggles();
+        }
 
-        //[TestMethod]
-        //public void Trig_InvSinButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+        [TestMethod]
+        public void Trig_CotButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //    page.ScientificOperators.NumberPad.Input(1);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.TrigShiftButton.Click();
-        //    page.ScientificOperators.InvSinButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.AreEqual("90", page.GetCalculatorResultText());
-        //}
+            page.ScientificOperators.NumberPad.Input(45);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.CotButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.AreEqual("1", page.GetCalculatorResultText());
 
-        //[TestMethod]
-        //public void Trig_InvTanButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+           // page.ScientificOperators.ResetTrigDropdownToggles();
+        }
 
-        //    page.ScientificOperators.NumberPad.Input(1);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.TrigShiftButton.Click();
-        //    page.ScientificOperators.InvTanButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.AreEqual("45", page.GetCalculatorResultText());
-        //}
+        [TestMethod]
+        public void Trig_InvSinButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //[TestMethod]
-        //public void Trig_InvSecButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.NumberPad.Input(1);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.TrigShiftButton.Click();
+            page.ScientificOperators.InvSinButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.AreEqual("90", page.GetCalculatorResultText());
 
-        //    page.ScientificOperators.NumberPad.Input(1);
-        //    page.ScientificOperators.NegateButton.Click();
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.TrigShiftButton.Click();
-        //    page.ScientificOperators.InvSecButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.AreEqual("180", page.GetCalculatorResultText());
-        //}
+           // page.ScientificOperators.ResetTrigDropdownToggles();
+        }
 
-        //[TestMethod]
-        //public void Trig_InvCscButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+        [TestMethod]
+        public void Trig_InvTanButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //    page.ScientificOperators.NumberPad.Input(1);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.TrigShiftButton.Click();
-        //    page.ScientificOperators.InvCscButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.AreEqual("90", page.GetCalculatorResultText());
-        //}
+            page.ScientificOperators.NumberPad.Input(1);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.TrigShiftButton.Click();
+            page.ScientificOperators.InvTanButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.AreEqual("45", page.GetCalculatorResultText());
 
-        //[TestMethod]
-        //public void Trig_InvCotButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+           // page.ScientificOperators.ResetTrigDropdownToggles();
+        }
 
-        //    page.ScientificOperators.NumberPad.Input(1);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.TrigShiftButton.Click();
-        //    page.ScientificOperators.InvCotButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.AreEqual("45", page.GetCalculatorResultText());
-        //}
+        [TestMethod]
+        public void Trig_InvSecButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //[TestMethod]
-        //public void Trig_SinhButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.NumberPad.Input(1);
+            page.ScientificOperators.NegateButton.Click();
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.TrigShiftButton.Click();
+            page.ScientificOperators.InvSecButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.AreEqual("180", page.GetCalculatorResultText());
 
-        //    page.ScientificOperators.NumberPad.Input(1);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.HypShiftButton.Click();
-        //    page.ScientificOperators.SinhButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.IsTrue(page.GetCalculatorResultText().StartsWith("1.175201"));
-        //}
+           // page.ScientificOperators.ResetTrigDropdownToggles();
+        }
 
-        //[TestMethod]
-        //public void Trig_CoshButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+        [TestMethod]
+        public void Trig_InvCscButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //    page.ScientificOperators.NumberPad.Input(1);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.HypShiftButton.Click();
-        //    page.ScientificOperators.CoshButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.IsTrue(page.GetCalculatorResultText().StartsWith("1.54308"));
-        //}
+            page.ScientificOperators.NumberPad.Input(1);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.TrigShiftButton.Click();
+            page.ScientificOperators.InvCscButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.AreEqual("90", page.GetCalculatorResultText());
 
-        //[TestMethod]
-        //public void Trig_SechButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+           // page.ScientificOperators.ResetTrigDropdownToggles();
+        }
 
-        //    page.ScientificOperators.NumberPad.Input(1);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.HypShiftButton.Click();
-        //    page.ScientificOperators.SechButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.64805"));
-        //}
+        [TestMethod]
+        public void Trig_InvCotButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //[TestMethod]
-        //public void Trig_CschButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.NumberPad.Input(1);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.TrigShiftButton.Click();
+            page.ScientificOperators.InvCotButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.AreEqual("45", page.GetCalculatorResultText());
 
-        //    page.ScientificOperators.NumberPad.Input(1);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.HypShiftButton.Click();
-        //    page.ScientificOperators.CschButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.850918"));
-        //}
+           // page.ScientificOperators.ResetTrigDropdownToggles();
+        }
 
-        //[TestMethod]
-        //public void Trig_CothButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+        [TestMethod]
+        public void Trig_SinhButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //    page.ScientificOperators.NumberPad.Input(45);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.HypShiftButton.Click();
-        //    page.ScientificOperators.DegreesButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.AreEqual("1", page.GetCalculatorResultText());
-        //}
+            page.ScientificOperators.NumberPad.Input(1);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.HypShiftButton.Click();
+            page.ScientificOperators.SinhButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("1.175201"));
 
-        //[TestMethod]
-        //public void Trig_InvSinhButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+           // page.ScientificOperators.ResetTrigDropdownToggles();
+        }
 
-        //    page.ScientificOperators.NumberPad.Input(1);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.TrigShiftButton.Click();
-        //    page.ScientificOperators.HypShiftButton.Click();
-        //    page.ScientificOperators.InvSinhButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.881373"));
-        //}
+        [TestMethod]
+        public void Trig_CoshButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //[TestMethod]
-        //public void Trig_InvCoshButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.NumberPad.Input(1);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.HypShiftButton.Click();
+            page.ScientificOperators.CoshButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("1.54308"));
 
-        //    page.ScientificOperators.NumberPad.Input(1);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.TrigShiftButton.Click();
-        //    page.ScientificOperators.HypShiftButton.Click();
-        //    page.ScientificOperators.InvCoshButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.AreEqual("0", page.GetCalculatorResultText());
-        //}
+           // page.ScientificOperators.ResetTrigDropdownToggles();
+        }
 
-        //[TestMethod]
-        //public void Trig_InvTanhButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+        [TestMethod]
+        public void Trig_SechButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //    page.ScientificOperators.NumberPad.Input(0.0);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.TrigShiftButton.Click();
-        //    page.ScientificOperators.HypShiftButton.Click();
-        //    page.ScientificOperators.InvTanhButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.AreEqual("0", page.GetCalculatorResultText());
-        //}
+            page.ScientificOperators.NumberPad.Input(1);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.HypShiftButton.Click();
+            page.ScientificOperators.SechButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.64805"));
 
-        //[TestMethod]
-        //public void Trig_InvSechButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            //page.ScientificOperators.ResetTrigDropdownToggles();
+        }
 
-        //    page.ScientificOperators.NumberPad.Input(1);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.TrigShiftButton.Click();
-        //    page.ScientificOperators.HypShiftButton.Click();
-        //    page.ScientificOperators.InvSechButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.AreEqual("0", page.GetCalculatorResultText());
-        //}
+        [TestMethod]
+        public void Trig_CschButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //[TestMethod]
-        //public void Trig_InvCschButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.NumberPad.Input(1);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.HypShiftButton.Click();
+            page.ScientificOperators.CschButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.850918"));
 
-        //    page.ScientificOperators.NumberPad.Input(1);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.TrigShiftButton.Click();
-        //    page.ScientificOperators.HypShiftButton.Click();
-        //    page.ScientificOperators.InvCschButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.881373"));
-        //}
+           // page.ScientificOperators.ResetTrigDropdownToggles();
+        }
 
-        //[TestMethod]
-        //public void Trig_InvCothButton()
-        //{
-        //    page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+        [TestMethod]
+        public void Trig_CothButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
-        //    page.ScientificOperators.NumberPad.Input(2);
-        //    page.ScientificOperators.TrigButton.Click();
-        //    page.ScientificOperators.TrigShiftButton.Click();
-        //    page.ScientificOperators.HypShiftButton.Click();
-        //    page.ScientificOperators.InvCothButton.Click();
-        //    page.ScientificOperators.EqualButton.Click();
-        //    Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.549306"));
-        //}
-        //#endregion
+            page.ScientificOperators.NumberPad.Input(45);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.HypShiftButton.Click();
+            page.ScientificOperators.CothButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.AreEqual("1", page.GetCalculatorResultText());
+
+           // page.ScientificOperators.ResetTrigDropdownToggles();
+        }
+
+        [TestMethod]
+        public void Trig_InvSinhButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+
+            page.ScientificOperators.NumberPad.Input(1);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.TrigShiftButton.Click();
+            page.ScientificOperators.HypShiftButton.Click();
+            page.ScientificOperators.InvSinhButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.881373"));
+
+          //  page.ScientificOperators.ResetTrigDropdownToggles();
+        }
+
+        [TestMethod]
+        public void Trig_InvCoshButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+
+            page.ScientificOperators.NumberPad.Input(1);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.TrigShiftButton.Click();
+            page.ScientificOperators.HypShiftButton.Click();
+            page.ScientificOperators.InvCoshButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.AreEqual("0", page.GetCalculatorResultText());
+
+          //  page.ScientificOperators.ResetTrigDropdownToggles();
+        }
+
+        [TestMethod]
+        public void Trig_InvTanhButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+
+            page.ScientificOperators.NumberPad.Input(0.0);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.TrigShiftButton.Click();
+            page.ScientificOperators.HypShiftButton.Click();
+            page.ScientificOperators.InvTanhButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.AreEqual("0", page.GetCalculatorResultText());
+
+           // page.ScientificOperators.ResetTrigDropdownToggles();
+        }
+
+        [TestMethod]
+        public void Trig_InvSechButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+
+            page.ScientificOperators.NumberPad.Input(1);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.TrigShiftButton.Click();
+            page.ScientificOperators.HypShiftButton.Click();
+            page.ScientificOperators.InvSechButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.AreEqual("0", page.GetCalculatorResultText());
+
+           // page.ScientificOperators.ResetTrigDropdownToggles();
+        }
+
+        [TestMethod]
+        public void Trig_InvCschButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+
+            page.ScientificOperators.NumberPad.Input(1);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.TrigShiftButton.Click();
+            page.ScientificOperators.HypShiftButton.Click();
+            page.ScientificOperators.InvCschButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.881373"));
+
+           // page.ScientificOperators.ResetTrigDropdownToggles();
+        }
+
+        [TestMethod]
+        public void Trig_InvCothButton()
+        {
+            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+
+            page.ScientificOperators.NumberPad.Input(2);
+            page.ScientificOperators.TrigButton.Click();
+            page.ScientificOperators.TrigShiftButton.Click();
+            page.ScientificOperators.HypShiftButton.Click();
+            page.ScientificOperators.InvCothButton.Click();
+            page.ScientificOperators.EqualButton.Click();
+            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.549306"));
+
+           // page.ScientificOperators.ResetTrigDropdownToggles();
+        }
+        #endregion
     }
 }
