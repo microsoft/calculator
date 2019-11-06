@@ -340,15 +340,15 @@ namespace CalculatorApp
             void OnPinUnpinCommand(Platform::Object ^ parameter);
 
             void OnInputChanged();
-            void SetPrimaryDisplay(_In_ std::wstring const& displayString, _In_ bool isError);
+            void SetPrimaryDisplay(Platform::String ^ displayString, _In_ bool isError);
             void DisplayPasteError();
-            void SetTokens(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens);
+            void SetTokens(_Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens);
             void SetExpressionDisplay(
-                _Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
-                _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands);
+                _Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
+                _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands);
             void SetHistoryExpressionDisplay(
-                _Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
-                _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands);
+                _Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
+                _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands);
             void SetParenthesisCount(_In_ unsigned int parenthesisCount);
             void SetOpenParenthesisCountNarratorAnnouncement();
             void OnNoRightParenAdded();
@@ -444,8 +444,8 @@ namespace CalculatorApp
             std::wstring AddPadding(std::wstring);
             size_t LengthWithoutPadding(std::wstring);
 
-            std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> m_tokens;
-            std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> m_commands;
+            std::shared_ptr<std::vector<std::pair<std::wstring, int>>> m_tokens;
+            std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> m_commands;
 
             // Token types
             bool IsUnaryOp(int nOpCode);

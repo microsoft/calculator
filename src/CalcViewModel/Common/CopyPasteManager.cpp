@@ -15,7 +15,7 @@ using namespace Windows::Foundation;
 using namespace Windows::System;
 using namespace Windows::ApplicationModel::DataTransfer;
 
-String ^ CopyPasteManager::supportedFormats[] = { StandardDataFormats::Text };
+StringReference PasteErrorString(L"NoOp");
 
 static const wstring c_validBasicCharacterSet = L"0123456789+-.e";
 static const wstring c_validStandardCharacterSet = c_validBasicCharacterSet + L"*/";
@@ -29,7 +29,7 @@ static const wstring c_wspc = L"[\\s\\x85]*";
 static const wstring c_wspcLParens = c_wspc + L"[(]*" + c_wspc;
 static const wstring c_wspcLParenSigned = c_wspc + L"([-+]?[(])*" + c_wspc;
 static const wstring c_wspcRParens = c_wspc + L"[)]*" + c_wspc;
-static const wstring c_signedDecFloat = L"(?:[-+]?\\d+(\\.\\d*)?|\\.\\d+)";
+static const wstring c_signedDecFloat = L"(?:[-+]?(?:\\d+(\\.\\d*)?|\\.\\d+))";
 static const wstring c_optionalENotation = L"(?:e[+-]?\\d+)?";
 
 // Programmer Mode Integer patterns
@@ -66,7 +66,7 @@ void CopyPasteManager::CopyToClipboard(String ^ stringToCopy)
     Clipboard::SetContent(dataPackage);
 }
 
-task<String ^> CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, BitLength bitLengthType)
+IAsyncOperation<String ^> ^ CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, BitLength bitLengthType)
 {
     // Retrieve the text in the clipboard
     auto dataPackageView = Clipboard::GetContent();
@@ -76,36 +76,29 @@ task<String ^> CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupTy
     //-- add support to allow pasting for expressions like .2 , -.2
     //-- add support to allow pasting for expressions like 1.3e12(as of now we allow 1.3e+12)
 
-    return create_task((dataPackageView->GetTextAsync(::StandardDataFormats::Text)))
-        .then(
-            [mode, modeType, programmerNumberBase, bitLengthType](String ^ pastedText) {
-                return ValidatePasteExpression(pastedText, mode, modeType, programmerNumberBase, bitLengthType);
-            },
-            task_continuation_context::use_arbitrary());
+    return create_async([dataPackageView, mode, modeType, programmerNumberBase, bitLengthType] {
+        return create_task(dataPackageView->GetTextAsync(::StandardDataFormats::Text))
+            .then(
+                [mode, modeType, programmerNumberBase, bitLengthType](String ^ pastedText) {
+                    return ValidatePasteExpression(pastedText, mode, modeType, programmerNumberBase, bitLengthType);
+                },
+                task_continuation_context::use_arbitrary());
+    });
 }
 
-int CopyPasteManager::ClipboardTextFormat()
+bool CopyPasteManager::HasStringToPaste()
 {
-    const auto dataPackageView = Clipboard::GetContent();
-
-    for (int i = 0; i < RTL_NUMBER_OF(supportedFormats); i++)
-    {
-        if (dataPackageView->Contains(supportedFormats[i]))
-        {
-            return i;
-        }
-    }
-    return -1;
+    return Clipboard::GetContent()->Contains(StandardDataFormats::Text);
 }
 
 String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode mode, int programmerNumberBase, BitLength bitLengthType)
 {
-    return CopyPasteManager::ValidatePasteExpression(pastedText, mode, NavCategory::GetGroupType(mode), programmerNumberBase, bitLengthType);
+    return ValidatePasteExpression(pastedText, mode, NavCategory::GetGroupType(mode), programmerNumberBase, bitLengthType);
 }
 
 // return "NoOp" if pastedText is invalid else return pastedText
-
-String ^ CopyPasteManager::ValidatePasteExpression(
+String
+    ^ CopyPasteManager::ValidatePasteExpression(
         String ^ pastedText,
         ViewMode mode,
         CategoryGroupType modeType,
@@ -116,16 +109,14 @@ String ^ CopyPasteManager::ValidatePasteExpression(
     {
         // return NoOp to indicate don't paste anything.
         TraceLogger::GetInstance().LogError(mode, L"CopyPasteManager::ValidatePasteExpression", L"PastedExpressionSizeGreaterThanMaxAllowed");
-        return StringReference(PasteErrorString);
+        return PasteErrorString;
     }
 
-    wstring pasteExpression = pastedText->Data();
-
     // Get english translated expression
-    String ^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(pasteExpression);
+    String ^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(pastedText);
 
     // Removing the spaces, comma separator from the pasteExpression to allow pasting of expressions like 1  +     2+1,333
-    pasteExpression = RemoveUnwantedCharsFromWstring(englishString->Data());
+    wstring pasteExpression = RemoveUnwantedCharsFromWstring(englishString->Data());
 
     // If the last character is an = sign, remove it from the pasteExpression to allow evaluating the result on paste.
     if (!pasteExpression.empty() && pasteExpression.back() == L'=')
@@ -139,7 +130,7 @@ String ^ CopyPasteManager::ValidatePasteExpression(
     if (operands.empty())
     {
         // return NoOp to indicate don't paste anything.
-        return StringReference(PasteErrorString);
+        return PasteErrorString;
     }
 
     if (modeType == CategoryGroupType::Converter)
@@ -151,10 +142,10 @@ String ^ CopyPasteManager::ValidatePasteExpression(
     if (!ExpressionRegExMatch(operands, mode, modeType, programmerNumberBase, bitLengthType))
     {
         TraceLogger::GetInstance().LogError(mode, L"CopyPasteManager::ValidatePasteExpression", L"InvalidExpressionForPresentMode");
-        return StringReference(PasteErrorString);
+        return PasteErrorString;
     }
 
-    return ref new String(pastedText->Data());
+    return pastedText;
 }
 
 vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression, ViewMode mode)
@@ -592,4 +583,9 @@ wstring CopyPasteManager::RemoveUnwantedCharsFromWstring(const wstring& input)
 {
     wchar_t unWantedChars[] = { L' ', L',', L'"', 165, 164, 8373, 36, 8353, 8361, 8362, 8358, 8377, 163, 8364, 8234, 8235, 8236, 8237 };
     return Utils::RemoveUnwantedCharsFromWstring(input, unWantedChars, 18);
+}
+
+bool CopyPasteManager::IsErrorMessage(Platform::String ^ message)
+{
+    return message == PasteErrorString;
 }

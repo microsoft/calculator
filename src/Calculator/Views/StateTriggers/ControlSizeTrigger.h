@@ -16,9 +16,9 @@ namespace CalculatorApp::Views::StateTriggers
 
         DEPENDENCY_PROPERTY_WITH_CALLBACK(Windows::UI::Xaml::FrameworkElement^, Source);
 
-        DEPENDENCY_PROPERTY_WITH_DEFAULT(double, MinHeight, 0.0);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT(double, MinHeight, -1);
 
-        DEPENDENCY_PROPERTY_WITH_DEFAULT(double, MinWidth, 0.0);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT(double, MinWidth, -1);
 
     private:
         ~ControlSizeTrigger();

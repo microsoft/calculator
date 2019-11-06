@@ -94,7 +94,7 @@ public
         void EnsureScientific();
         void EnsureProgrammer();
         void SetFontSizeResources();
-        std::wstring GetCurrentLayoutState();
+        Platform::String ^ GetCurrentLayoutState();
         void Calculator_SizeChanged(Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
 
     private:
@@ -140,7 +140,6 @@ public
         void EnableMemoryControls(bool enable);
         void OnMemoryFlyOutTapped(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         void OnHistoryFlyOutTapped(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
-        bool IsValidRegularExpression(std::wstring str);
         void DockPanelTapped(_In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         void OnHistoryAccessKeyInvoked(_In_ Windows::UI::Xaml::UIElement ^ sender, _In_ Windows::UI::Xaml::Input::AccessKeyInvokedEventArgs ^ args);
         void OnMemoryAccessKeyInvoked(_In_ Windows::UI::Xaml::UIElement ^ sender, _In_ Windows::UI::Xaml::Input::AccessKeyInvokedEventArgs ^ args);

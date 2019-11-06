@@ -91,8 +91,8 @@ namespace CalculationManager
         void SetPrimaryDisplay(_In_ const std::wstring& displayString, _In_ bool isError) override;
         void SetIsInError(bool isError) override;
         void SetExpressionDisplay(
-            _Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
-            _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands) override;
+            _Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
+            _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands) override;
         void SetMemorizedNumbers(_In_ const std::vector<std::wstring>& memorizedNumbers) override;
         void OnHistoryItemAdded(_In_ unsigned int addedItemIndex) override;
         void SetParenthesisNumber(_In_ unsigned int parenthesisCount) override;
@@ -102,7 +102,7 @@ namespace CalculationManager
         void BinaryOperatorReceived() override;
         void MemoryItemChanged(unsigned int indexOfMemory) override;
         void InputChanged() override;
-        CalculatorManager(ICalcDisplay* displayCallback, IResourceProvider* resourceProvider);
+        CalculatorManager(_In_ ICalcDisplay* displayCallback, _In_ IResourceProvider* resourceProvider);
 
         void Reset(bool clearMemory = true);
         void SetStandardMode();

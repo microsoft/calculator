@@ -51,8 +51,8 @@ private:
     int m_curOperandIndex; // Stack index for the above stack
     bool m_bLastOpndBrace; // iff the last opnd in history is already braced so we can avoid putting another one for unary operator
     wchar_t m_decimalSymbol;
-    std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> m_spTokens;
-    std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> m_spCommands;
+    std::shared_ptr<std::vector<std::pair<std::wstring, int>>> m_spTokens;
+    std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> m_spCommands;
 
 private:
     void ReinitHistory();
@@ -60,5 +60,5 @@ private:
     void TruncateEquationSzFromIch(int ich);
     void SetExpressionDisplay();
     void InsertSzInEquationSz(std::wstring_view str, int icommandIndex, int ich);
-    std::shared_ptr<CalculatorVector<int>> GetOperandCommandsFromString(std::wstring_view numStr);
+    std::shared_ptr<std::vector<int>> GetOperandCommandsFromString(std::wstring_view numStr);
 };
