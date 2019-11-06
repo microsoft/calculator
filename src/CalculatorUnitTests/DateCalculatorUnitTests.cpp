@@ -659,7 +659,7 @@ TEST_METHOD(DateCalcViewModelInitializationTest)
 
 TEST_METHOD(DateCalcViewModelAddSubtractInitTest)
 {
-    DateCalculatorViewModel ^ viewModel = ref new DateCalculatorViewModel();
+    auto viewModel = ref new DateCalculatorViewModel();
     viewModel->IsDateDiffMode = false;
 
     // Check for the initialized values
@@ -684,7 +684,7 @@ TEST_METHOD(DateCalcViewModelAddSubtractInitTest)
 
 TEST_METHOD(DateCalcViewModelDateDiffDaylightSavingTimeTest)
 {
-    DateCalculatorViewModel ^ viewModel = ref new DateCalculatorViewModel();
+    auto viewModel = ref new DateCalculatorViewModel();
     viewModel->IsDateDiffMode = true;
     VERIFY_IS_TRUE(viewModel->IsDateDiffMode);
 
@@ -956,7 +956,7 @@ TEST_METHOD(DateCalcViewModelAddSubtractResultAutomationNameTest)
 
 TEST_METHOD(JaEraTransitionAddition)
 {
-    auto viewModel = ref new DateCalculationEngine(CalendarIdentifiers::Japanese);
+    auto engine = ref new DateCalculationEngine(CalendarIdentifiers::Japanese);
     auto cal = ref new Calendar();
 
     // The Showa period ended in Jan 1989.
@@ -974,7 +974,7 @@ TEST_METHOD(JaEraTransitionAddition)
     DateDifference yearDuration;
     yearDuration.year = 1;
 
-    auto actualYearResult = viewModel->AddDuration(startTime, yearDuration);
+    auto actualYearResult = engine->AddDuration(startTime, yearDuration);
 
     VERIFY_ARE_EQUAL(expectedYearResult.UniversalTime, actualYearResult->Value.UniversalTime);
 
@@ -987,14 +987,14 @@ TEST_METHOD(JaEraTransitionAddition)
     DateDifference monthDuration;
     monthDuration.month = 1;
 
-    auto actualMonthResult = viewModel->AddDuration(startTime, monthDuration);
+    auto actualMonthResult = engine->AddDuration(startTime, monthDuration);
 
     VERIFY_ARE_EQUAL(expectedMonthResult.UniversalTime, actualMonthResult->Value.UniversalTime);
 }
 
 TEST_METHOD(JaEraTransitionSubtraction)
 {
-    auto viewModel = ref new DateCalculationEngine(CalendarIdentifiers::Japanese);
+    auto engine = ref new DateCalculationEngine(CalendarIdentifiers::Japanese);
     auto cal = ref new Calendar();
 
     // The Showa period ended in Jan 1989.
@@ -1012,7 +1012,7 @@ TEST_METHOD(JaEraTransitionSubtraction)
     DateDifference yearDuration;
     yearDuration.year = 1;
 
-    auto actualYearResult = viewModel->SubtractDuration(startTime, yearDuration);
+    auto actualYearResult = engine->SubtractDuration(startTime, yearDuration);
 
     VERIFY_ARE_EQUAL(expectedYearResult.UniversalTime, actualYearResult->Value.UniversalTime);
 
@@ -1025,14 +1025,14 @@ TEST_METHOD(JaEraTransitionSubtraction)
     DateDifference monthDuration;
     monthDuration.month = 1;
 
-    auto actualMonthResult = viewModel->SubtractDuration(startTime, monthDuration);
+    auto actualMonthResult = engine->SubtractDuration(startTime, monthDuration);
 
     VERIFY_ARE_EQUAL(expectedMonthResult.UniversalTime, actualMonthResult->Value.UniversalTime);
 }
 
 TEST_METHOD(JaEraTransitionDifference)
 {
-    auto viewModel = ref new DateCalculationEngine(CalendarIdentifiers::Japanese);
+    auto engine = ref new DateCalculationEngine(CalendarIdentifiers::Japanese);
     auto cal = ref new Calendar();
 
     // The Showa period ended in Jan 8, 1989.  Pick 2 days across that boundary
@@ -1046,7 +1046,7 @@ TEST_METHOD(JaEraTransitionDifference)
     cal->Day = 20;
     auto endTime = cal->GetDateTime();
 
-    auto diff = viewModel->TryGetDateDifference(startTime, endTime, DateUnit::Day);
+    auto diff = engine->TryGetDateDifference(startTime, endTime, DateUnit::Day);
     VERIFY_IS_NOT_NULL(diff);
     VERIFY_ARE_EQUAL(diff->Value.day, 19);
 }

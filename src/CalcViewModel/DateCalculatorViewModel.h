@@ -22,30 +22,9 @@ namespace CalculatorApp
             // Input Properties
             OBSERVABLE_PROPERTY_RW(bool, IsDateDiffMode);
             OBSERVABLE_PROPERTY_RW(bool, IsAddMode);
+            OBSERVABLE_PROPERTY_R(bool, IsDiffInDays); // If diff is only in days or the dates are the same,
+                                                       // then show only one result and avoid redundancy
 
-            property bool IsDiffInDays
-            {
-                bool get()
-                {
-                    return m_IsDiffInDays;
-                }
-
-            private:
-                void set(bool value)
-                {
-                    if (m_IsDiffInDays != value)
-                    {
-                        m_IsDiffInDays = value;
-                        RaisePropertyChanged(L"IsDiffInDays");
-                    }
-                }
-            }
-
-        private:
-            bool m_IsDiffInDays;
-            // OBSERVABLE_PROPERTY_R(bool, IsDiffInDays); // If diff is only in days or the dates are the same,
-            // then show only one result and avoid redundancy
-        public:
             OBSERVABLE_PROPERTY_RW(int, DaysOffset);
             OBSERVABLE_PROPERTY_RW(int, MonthsOffset);
             OBSERVABLE_PROPERTY_RW(int, YearsOffset);
