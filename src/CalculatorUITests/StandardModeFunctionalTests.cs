@@ -116,9 +116,9 @@ namespace CalculatorUITests
             page.StandardOperators.EqualButton.Click();
 
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyItems[0].Text.Equals("1 × 3 = 3", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].Text.Equals("2 Minus ( 3 = Minus (1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[2].Text.Equals("-3 + -2.6 = Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].Text.Equals("1 × 3= 3", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].Text.Equals("2 Minus ( 3= Minus (1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[2].Text.Equals("-3 + -2.6= Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
 
         }
 
@@ -357,7 +357,9 @@ namespace CalculatorUITests
             /// <summary>
             /// Test Case 23466694: BVT: All: Verify hotkeys common to all modes
             /// This automated test verifies the functionality of all hotkeys, that are common for all calculator modes, for the standard calculator modes.
-            /// Note: Keyboard Numberpad input testing is not part of this automated test to unstability.  WinAppDrive command does not toggle Num Lock.  
+            /// Note:
+            /// - Active issue "Bug 23811901: Clicking on the History Label causes the [Shift] + [Ctrl] + [D] hotkeys to break" causes this case to fail
+            /// - Keyboard Numberpad input testing is not part of this automated test to unstability.  WinAppDrive command does not toggle Num Lock.  
             /// </summary>
 
             // Verify Hotkeys for changing modes
@@ -445,7 +447,7 @@ namespace CalculatorUITests
             //Verifies history hotkeys
             page.AppName.Click();
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyItems[0].Text.Equals("4 × 5 ÷ 6 = 3.333333333333333", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].Text.Equals("4 × 5 ÷ 6= 3.333333333333333", StringComparison.InvariantCultureIgnoreCase));
             page.Header.SendKeys(Keys.Shift + Keys.Control + "D" + Keys.Control + Keys.Shift);
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
             page.StandardOperators.ClearButton.Click();
@@ -534,13 +536,11 @@ namespace CalculatorUITests
             Assert.AreEqual("-0 point", page.GetCalculatorResultText());
             Assert.AreEqual("10 +", page.GetCalculatorExpressionText());
             //Verifies history buttons
-            Size windowSize = new Size(464, 464);
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = windowSize;
+            page.HistoryPanel.ResizeWindowToDiplayHistoryButton();
             page.StandardOperators.HistoryButton.Click();
-            Size newWindowSize = new Size(1200, 1050);
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
+            page.HistoryPanel.ResizeWindowToDiplayHistoryLabel();
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyItems[0].Text.Equals("4 × 5 ÷ 6 = 3.333333333333333", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].Text.Equals("4 × 5 ÷ 6= 3.333333333333333", StringComparison.InvariantCultureIgnoreCase));
             page.HistoryPanel.ClearHistoryButton.Click();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
             page.StandardOperators.ClearButton.Click();
@@ -577,7 +577,7 @@ namespace CalculatorUITests
             page.StandardOperators.NumberPad.Num3Button.Click();
             page.MemoryPanel.MemButton.Click();
             page.MemoryPanel.MemButton.Click();
-            page.MemoryPanel.MemoryLabel.Click();
+            page.MemoryPanel.OpenMemoryPanel();
             page.MemoryPanel.MemoryListView.WaitForDisplayed();
             Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
             moveToListView.MoveToElement(page.MemoryPanel.ListViewItem);
@@ -602,8 +602,6 @@ namespace CalculatorUITests
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
 
             //Verify hover buttons MemMinusItem, MemPlusItem, and ClearMemoryItemButton, and verify the clear memory button in the dropdown Memory flyout
-            Size windowSize = new Size(464, 464);
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = windowSize;
             page.MemoryPanel.MemButton.Click();
             page.MemoryPanel.MemButton.Click();
             page.CalcMemoryFlyout.OpenMemoryFlyout();
@@ -630,8 +628,7 @@ namespace CalculatorUITests
             page.CalcMemoryFlyout.OpenMemoryFlyout();
             page.CalcMemoryFlyout.ClearMemory.Click();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
-            Size newWindowSize = new Size(1200, 1050);
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
+            page.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
         }
 
@@ -662,8 +659,8 @@ namespace CalculatorUITests
             page.StandardOperators.EqualButton.Click();
 
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyItems[0].Text.Equals("2 Minus ( 3 = Minus (1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].Text.Equals("-3 + -2.6 = Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].Text.Equals("2 Minus ( 3= Minus (1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].Text.Equals("-3 + -2.6= Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
 
             Assert.AreEqual("-1", page.GetCalculatorResultText());
 
@@ -672,7 +669,7 @@ namespace CalculatorUITests
             clickHistoryItemsw1.Perform();
 
             Assert.AreEqual("-5.6", page.GetCalculatorResultText());
-            Assert.AreEqual("-3 + -2.6", page.GetCalculatorExpressionText());
+            Assert.AreEqual("-3 + -2.6=", page.GetCalculatorExpressionText());
 
             Actions clickHistoryItemsw0 = new Actions(WinAppDriver.Instance.CalculatorSession);
             clickHistoryItemsw0.Click(historyItems[0]);
@@ -709,44 +706,33 @@ namespace CalculatorUITests
             page.StandardOperators.EqualButton.Click();
 
             var historyPanelItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyPanelItems[0].Text.Equals("2 Minus ( 3 = Minus (1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyPanelItems[1].Text.Equals("-3 + -2.6 = Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyPanelItems[0].Text.Equals("2 Minus ( 3= Minus (1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyPanelItems[1].Text.Equals("-3 + -2.6= Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
 
             Assert.AreEqual("-1", page.GetCalculatorResultText());
 
-            Size windowSize = new Size(464, 464);
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = windowSize;
             page.CalcHistoryFlyout.OpenHistoryFlyout();
-            Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
-            moveToListView.MoveToElement(page.CalcHistoryFlyout.ListViewItem);
-            moveToListView.Perform();
 
             var historyItems = page.CalcHistoryFlyout.GetAllHistoryFlyoutListViewItems();
-            Assert.IsTrue(historyItems[0].Text.Equals("2 Minus ( 3 = Minus (1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].Text.Equals("-3 + -2.6 = Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].Text.Equals("2 Minus ( 3= Minus (1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].Text.Equals("-3 + -2.6= Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
 
             Assert.AreEqual("-1", page.GetCalculatorResultText());
 
             page.CalcHistoryFlyout.ListViewItem.SendKeys(Keys.ArrowDown + Keys.Enter);
 
             Assert.AreEqual("-5.6", page.GetCalculatorResultText());
-            Assert.AreEqual("-3 + -2.6", page.GetCalculatorExpressionText());
+            Assert.AreEqual("-3 + -2.6=", page.GetCalculatorExpressionText());
 
             page.CalcHistoryFlyout.OpenHistoryFlyout();
-            moveToListView.Perform();
             page.CalcHistoryFlyout.ListViewItem.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
-
             Assert.AreEqual("-1", page.GetCalculatorResultText());
 
             page.CalcHistoryFlyout.OpenHistoryFlyout();
-            moveToListView.Perform();
-
             page.CalcHistoryFlyout.ClearHistoryButton.Click();
+
             page.CalcHistoryFlyout.OpenHistoryFlyout();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
-
-            Size newWindowSize = new Size(1200, 1050);
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
 
             page.HistoryPanel.OpenHistoryPanel();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));

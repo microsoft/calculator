@@ -9,6 +9,8 @@ using System.Collections.ObjectModel;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium;
 using System.Windows.Input;
+using System.Drawing;
+using System;
 
 namespace CalculatorUITestFramework
 {
@@ -38,6 +40,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void OpenMemoryPanel()
         {
+            this.ResizeWindowToDiplayMemoryLabel();
             this.MemoryLabel.Click();
             this.MemoryPane.WaitForDisplayed();
         }
@@ -72,6 +75,78 @@ namespace CalculatorUITestFramework
                 }
 
                 throw;
+            }
+        }
+
+        /// <summary>
+        /// If the Memory label is not displayed, resize the window
+        /// Two attempts are made, the the lable is not found a "not found" exception is thrown
+        /// </summary>
+        public void ResizeWindowToDiplayMemoryLabel()
+        {
+            string source3 = this.session.PageSource;
+            if (source3.Contains("MemoryLabel"))
+            {
+                return;
+            }
+            else
+            {
+                Size newWindowSize = new Size(1200, 1050);
+                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
+                string source4 = this.session.PageSource;
+                if (source4.Contains("MemoryLabel"))
+                {
+                    return;
+                }
+                else
+                {
+                    Size newWindowSize2 = new Size(2097, 1282);
+                    WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
+                }
+                string source7 = this.session.PageSource;
+                if (source7.Contains("MemoryLabel"))
+                {
+                    return;
+                }
+                else
+                {
+                    throw new NotFoundException("Could not the Memory Label");
+                }
+            }
+        }
+
+        /// <summary>
+        /// If the Memory button is not displayed, resize the window
+        /// </summary>
+        public void ResizeWindowToDiplayMemoryButton()
+        {
+            string source5 = this.session.PageSource;
+            if (source5.Contains("Alt, M"))
+            {
+                return;
+            }
+            else
+            {
+                //this.MemButton.Click();
+                string source6 = this.session.PageSource;
+                if (source6.Contains("Alt, M"))
+                {
+                    return;
+                }
+                else
+                {
+                    Size newWindowSize2 = new Size(464, 464);
+                    WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
+                    string source8 = this.session.PageSource;
+                    if (source8.Contains("Alt, M"))
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        throw new NotFoundException("Could not the History Button");
+                    }
+                }
             }
         }
     }

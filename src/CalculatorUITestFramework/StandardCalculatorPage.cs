@@ -69,6 +69,7 @@ namespace CalculatorUITestFramework
         {
             return this.CalculatorExpression.Text.Replace("Expression is", string.Empty).Trim();
         }
+
     }
 
 }

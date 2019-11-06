@@ -6,6 +6,9 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System.Collections.ObjectModel;
+using System.Drawing;
+using OpenQA.Selenium.Interactions;
+using System;
 
 namespace CalculatorUITestFramework
 {
@@ -14,7 +17,7 @@ namespace CalculatorUITestFramework
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
         public WindowsElement HistoryButton => this.session.TryFindElementByAccessibilityId("HistoryButton");
         public WindowsElement HistoryLabel => this.session.TryFindElementByAccessibilityId("HistoryLabel");
-        public WindowsElement HistoryEmptyLabel => this.session.TryFindElementByAccessibilityId("HistoryEmpty");
+        public AppiumWebElement HistoryEmpty => this.session.TryFindElementByAccessibilityId("DockPivot").FindElementByAccessibilityId("HistoryEmpty");
         public WindowsElement HistoryListView => this.session.TryFindElementByAccessibilityId("HistoryListView");
         public WindowsElement HistoryList => this.session.TryFindElementByAccessibilityId("HistoryList");
         public WindowsElement ListViewItem => this.session.FindElementByClassName("ListViewItem");
@@ -22,14 +25,13 @@ namespace CalculatorUITestFramework
         public WindowsElement ResultTextBlock => this.session.TryFindElementByAccessibilityId("ResultTextBlock");
         public WindowsElement ClearHistoryButton => this.session.TryFindElementByAccessibilityId("ClearHistory");
 
-
         /// <summary>
         /// Opens the Memory Pane by clicking the Memory pivot label.
         /// </summary>
         public void OpenHistoryPanel()
         {
+            this.ResizeWindowToDiplayHistoryLabel();
             this.HistoryLabel.Click();
- //           this.HistoryList.WaitForDisplayed();
         }
 
         /// <summary>
@@ -57,11 +59,74 @@ namespace CalculatorUITestFramework
             {
                 if (ex.Message.Contains("element could not be located"))
                 {
-                    Assert.IsNotNull(this.HistoryEmptyLabel);
+                    Assert.IsNotNull(this.HistoryEmpty);
                     return;
                 }
 
                 throw;
+            }
+        }
+
+        /// <summary>
+        /// If the History label is not displayed, resize the window
+        /// Two attempts are made, the the lable is not found a "not found" exception is thrown
+        /// </summary>
+        public void ResizeWindowToDiplayHistoryLabel()
+        {
+            string source0 = this.session.PageSource;
+            if (source0.Contains("HistoryLabel"))
+            {
+                return;
+            }
+            else
+            {
+                Size newWindowSize = new Size(1200, 1050);
+                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
+                string source2 = this.session.PageSource;
+                if (source2.Contains("HistoryLabel"))
+                {
+                    return;
+                }
+                else
+                {
+                    Size newWindowSize2 = new Size(2097, 1282);
+                    WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
+                }
+                string source9 = this.session.PageSource;
+                if (source9.Contains("HistoryLabel"))
+                {
+                    return;
+                }
+                else
+                {
+                    throw new NotFoundException("Could not the History Label");
+                }
+            }
+        }
+
+        ///// <summary>
+        ///// If the History button is not displayed, resize the window
+        ///// </summary>
+        public void ResizeWindowToDiplayHistoryButton()
+        {
+            string source1 = this.session.PageSource;
+            if (source1.Contains("HistoryButton"))
+            {
+                return;
+            }
+            else
+            {
+                Size newWindowSize = new Size(464, 464);
+                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
+                string source2 = this.session.PageSource;
+                if (source2.Contains("HistoryButton"))
+                {
+                    return;
+                }
+                else
+                {
+                    throw new NotFoundException("Could not the History Button");
+                }
             }
         }
     }
