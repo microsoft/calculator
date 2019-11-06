@@ -253,7 +253,7 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
     if (yearCount > 0)
     {
         result += GetLocalizedNumberString(yearCount)->Data();
-        result += L" ";
+        result += L' ';
 
         if (yearCount > 1)
         {
@@ -281,7 +281,7 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
         }
 
         result += GetLocalizedNumberString(monthCount)->Data();
-        result += L" ";
+        result += L' ';
 
         if (monthCount > 1)
         {
@@ -306,7 +306,7 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
         }
 
         result += GetLocalizedNumberString(weekCount)->Data();
-        result += L" ";
+        result += L' ';
 
         if (weekCount > 1)
         {
@@ -331,7 +331,7 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
         }
 
         result += GetLocalizedNumberString(dayCount)->Data();
-        result += L" ";
+        result += L' ';
 
         if (dayCount > 1)
         {
@@ -349,7 +349,7 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
 String ^ DateCalculatorViewModel::GetDateDiffStringInDays() const
 {
     wstring result = GetLocalizedNumberString(m_dateDiffResultInDays.day)->Data();
-    result += L" ";
+    result += L' ';
 
     // Display the result as '1 day' or 'N days'
     if (m_dateDiffResultInDays.day > 1)
