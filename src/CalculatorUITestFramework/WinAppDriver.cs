@@ -7,12 +7,15 @@ using OpenQA.Selenium.Appium.Windows;
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using OpenQA.Selenium;
+using System.Windows.Input;
 
 namespace CalculatorUITestFramework
 {
     public sealed class WinAppDriver
     {
         private WindowsDriverLocalService windowsDriverService = null;
+        public MemoryPanel MemoryPanel = new MemoryPanel();
         private const string defaultAppId = "Microsoft.WindowsCalculator.Dev_8wekyb3d8bbwe!App";
         private static WinAppDriver instance = null;
         public static WinAppDriver Instance
@@ -69,8 +72,9 @@ namespace CalculatorUITestFramework
                 this.CalculatorSession = new WindowsDriver<WindowsElement>(this.windowsDriverService.ServiceUrl, options);
                 this.CalculatorSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 Assert.IsNotNull(this.CalculatorSession);
-                Size windowSize = new Size(1200, 1050);
-                this.CalculatorSession.Manage().Window.Size = windowSize;
+                this.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
+                //Size windowSize = new Size(1200, 1050);
+                //this.CalculatorSession.Manage().Window.Size = windowSize;
             }
         }
 

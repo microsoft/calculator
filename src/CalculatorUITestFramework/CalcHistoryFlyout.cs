@@ -14,6 +14,7 @@ namespace CalculatorUITestFramework
     public class CalcHistoryFlyout
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        public HistoryPanel HistoryPanel = new HistoryPanel();
         public WindowsElement Header => this.session.TryFindElementByAccessibilityId("Header");
         public WindowsElement AppName => this.session.TryFindElementByAccessibilityId("AppName");
         public WindowsElement HistoryFlyout => this.session.TryFindElementByAccessibilityId("HistoryFlyout");
@@ -30,6 +31,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void OpenHistoryFlyout()
         {
+            this.HistoryPanel.ResizeWindowToDiplayHistoryButton();
             this.AppName.Click();
             this.Header.SendKeys(Keys.Control + "h" + Keys.Control);
             Actions moveToHistoryFlyout = new Actions(WinAppDriver.Instance.CalculatorSession);

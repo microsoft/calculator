@@ -13,6 +13,7 @@ namespace CalculatorUITestFramework
     public class CalcMemoryFlyout
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        public MemoryPanel MemoryPanel = new MemoryPanel();
         public WindowsElement Header => this.session.TryFindElementByAccessibilityId("Header");
         public WindowsElement AppName => this.session.TryFindElementByAccessibilityId("AppName");
         public WindowsElement MemoryButton => this.session.TryFindElementByAccessibilityId("MemoryButton");
@@ -30,6 +31,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void OpenMemoryFlyout()
         {
+            this.MemoryPanel.ResizeWindowToDiplayMemoryButton();
             this.AppName.Click();
             Actions moveToMemoryButton = new Actions(WinAppDriver.Instance.CalculatorSession);
             moveToMemoryButton.MoveToElement(MemoryButton);
