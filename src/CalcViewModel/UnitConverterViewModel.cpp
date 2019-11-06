@@ -494,7 +494,7 @@ void UnitConverterViewModel::OnButtonPressed(Platform::Object ^ parameter)
 
     m_model->SendCommand(command);
 
-    TraceLogger::GetInstance().LogConverterInputReceived(Mode);
+    TraceLogger::GetInstance()->LogConverterInputReceived(Mode);
 }
 
 void UnitConverterViewModel::OnCopyCommand(Platform::Object ^ parameter)
@@ -887,7 +887,7 @@ void UnitConverterViewModel::OnPaste(String ^ stringToPaste)
         return;
     }
 
-    TraceLogger::GetInstance().LogInputPasted(Mode);
+    TraceLogger::GetInstance()->LogInputPasted(Mode);
     bool isFirstLegalChar = true;
     bool sendNegate = false;
     wstring accumulation = L"";
