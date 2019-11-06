@@ -1,14 +1,17 @@
 
 #include "pch.h"
-#include "CalcViewModel/Common/TraceLogger.h"
 #include "GraphingCalculator.xaml.h"
+#include "CalcViewModel/Common/TraceLogger.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "Controls/CalculationResult.h"
+#include "CalcManager/NumberFormattingUtils.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Controls;
 using namespace CalculatorApp::ViewModel;
+using namespace CalcManager::NumberFormattingUtils;
 using namespace concurrency;
 using namespace GraphControl;
 using namespace Platform;
@@ -17,6 +20,7 @@ using namespace std;
 using namespace std::chrono;
 using namespace Utils;
 using namespace Windows::ApplicationModel::DataTransfer;
+using namespace Windows::ApplicationModel::Resources;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage::Streams;
@@ -105,70 +109,92 @@ void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object ^ sender, 
 // data to be shared. We will request the current graph image from the grapher as a stream that will pass to the share request.
 void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataRequestedEventArgs ^ args)
 {
-    auto resourceLoader = Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView();
+    auto resourceLoader = ResourceLoader::GetForCurrentView();
+
     try
     {
-        // Get our title from the localized resources
-        auto EmptyEquationString = resourceLoader->GetString(L"EmptyEquationString");
-
-        std::wstring rawHtml = L"<p><img src='graph.png'></p>";
+        std::wstring rawHtml;
+        std::wstring graphImageHtml = L"<p><img src='graph.png' width='600'></p>";
 
         auto equations = ViewModel->Equations;
-        rawHtml += L"<p><table cellpadding=\"10\">";
-        rawHtml += L"<col width=\"20\">";
-        rawHtml += L"<row height=\"20\">";
-        for (unsigned i = 0; i < equations->Size; i++)
+        bool hasEquations = false;
+
+        if (equations->Size > 0)
         {
-            auto expression = equations->GetAt(i)->Expression->Data();
-            auto color = equations->GetAt(i)->LineColor->Color;
-
-            if (equations->GetAt(i)->Expression->Length() == 0)
+            rawHtml += L"<span style=\"color: rgb(68, 114, 196); font-family: calibri, sans-serif; font-style: bold; font-size : 13pt;\">";
+            rawHtml += resourceLoader->GetString(L"EquationsShareHeader")->Data();
+            rawHtml += L"</span>";
+            rawHtml += L"<table cellpadding=\"0\">";
+            for (unsigned i = 0; i < equations->Size; i++)
             {
-                expression = EmptyEquationString->Data();
+                auto expression = equations->GetAt(i)->Expression;
+                auto color = equations->GetAt(i)->LineColor->Color;
+
+                if (expression->IsEmpty())
+                {
+                    continue;
+                }
+
+                hasEquations = true;
+
+                expression = GraphingControl->ConvertToLinear(expression);
+
+                std::wstring equatinColorHtml = L"color:rgb(";
+                equatinColorHtml += color.R.ToString()->Data();
+                equatinColorHtml += L",";
+                equatinColorHtml += color.G.ToString()->Data();
+                equatinColorHtml += L",";
+                equatinColorHtml += color.B.ToString()->Data();
+                equatinColorHtml += L");";
+
+                rawHtml +=
+                    L"<tr><td><span style=\"line-height: 0; font-size: 24pt;" + equatinColorHtml + L"\">&#x25A0;</span></td><td><div style=\"margin: 4px 0px 0px 0px; \">";
+                rawHtml += expression->Data();
+                rawHtml += L"</div></td>";
             }
-
-            rawHtml += L"<tr>";
-
-            rawHtml += L"<td style=\"background-color:rgb(";
-            rawHtml += color.R.ToString()->Data();
-            rawHtml += L",";
-            rawHtml += color.G.ToString()->Data();
-            rawHtml += L",";
-            rawHtml += color.B.ToString()->Data();
-            rawHtml += L"); \">";
-            rawHtml += L"</td>";
-            rawHtml += L"<td>";
-            rawHtml += expression;
-            rawHtml += L"</td>";
-
-            rawHtml += L"</tr>";
+            rawHtml += L"</table>";
         }
-        rawHtml += L"</table></p>";
+
+        if (hasEquations)
+        {
+            rawHtml = graphImageHtml + rawHtml;
+        }
+        else
+        {
+            rawHtml = graphImageHtml;
+        }
 
         auto variables = ViewModel->Variables;
-        rawHtml += L"<p><table cellpadding=\"10\">";
-        rawHtml += L"<col width=\"20\">";
-        rawHtml += L"<row height=\"20\">";
-        for (unsigned i = 0; i < variables->Size; i++)
+
+        if (variables->Size > 0)
         {
-            auto name = variables->GetAt(i)->Name;
-            auto value = variables->GetAt(i)->Value;
+            auto localizedSeperator = LocalizationSettings::GetInstance().GetListSeparator() + L" ";
 
-            if (name->Length() >= 0)
+            rawHtml += L"<span style=\"color: rgb(68, 114, 196); font-family: calibri, sans-serif; font-style: bold; font-size: 13pt;\">";
+            rawHtml += resourceLoader->GetString(L"VaiablesShareHeader")->Data();
+            rawHtml += L"</span><br><span>";
+
+            for (unsigned i = 0; i < variables->Size; i++)
             {
-                rawHtml += L"<tr>";
+                auto name = variables->GetAt(i)->Name;
+                auto value = variables->GetAt(i)->Value;
 
-                rawHtml += L"<td>";
                 rawHtml += name->Data();
-                rawHtml += L"</td>";
-                rawHtml += L"<td>";
-                rawHtml += std::to_wstring(value);
-                rawHtml += L"</td>";
+                rawHtml += L"=";
+                auto formattedValue = to_wstring(value);
+                TrimTrailingZeros(formattedValue);
+                rawHtml += formattedValue;
 
-                rawHtml += L"</tr>";
+                if (variables->Size - 1 != i)
+                {
+                    rawHtml += localizedSeperator;
+                }
             }
+
+            rawHtml += L"</span>";
         }
-        rawHtml += L"</table></p>";
+
+        rawHtml += L"<br><br>";
 
         // Shortcut to the request data
         auto requestData = args->Request->Data;
@@ -176,8 +202,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
         DataPackage ^ dataPackage = ref new DataPackage();
         auto html = HtmlFormatHelper::CreateHtmlFormat(ref new String(rawHtml.c_str()));
 
-        auto titleString = resourceLoader->GetString(L"ShareActionTitle");
-        requestData->Properties->Title = titleString;
+        requestData->Properties->Title = resourceLoader->GetString(L"ShareActionTitle");
 
         requestData->SetHtmlFormat(html);
 
@@ -187,21 +212,16 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
 
         // Set the thumbnail image (in case the share target can't handle HTML)
         requestData->Properties->Thumbnail = bitmapStream;
-
-        // And the bitmap (in case the share target can't handle HTML)
-        requestData->SetBitmap(bitmapStream);
     }
     catch (Exception ^ ex)
     {
         TraceLogger::GetInstance().LogPlatformException(ViewMode::Graphing, __FUNCTIONW__, ex);
 
         // Something went wrong, notify the user.
-        auto errorTitleString = resourceLoader->GetString(L"ShareActionErrorMessage");
-        auto errorOkString = resourceLoader->GetString(L"ShareActionErrorOk");
-        auto errDialog = ref new Windows::UI::Xaml::Controls::ContentDialog();
 
-        errDialog->Content = errorTitleString;
-        errDialog->CloseButtonText = errorOkString;
+        auto errDialog = ref new ContentDialog();
+        errDialog->Content = resourceLoader->GetString(L"ShareActionErrorMessage");
+        errDialog->CloseButtonText = resourceLoader->GetString(L"ShareActionErrorOk");
         errDialog->ShowAsync();
     }
 }
@@ -283,14 +303,14 @@ void GraphingCalculator::OnZoomResetCommand(Object ^ /* parameter */)
     GraphingControl->ResetGrid();
 }
 
-void GraphingCalculator::OnActiveTracingClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void GraphingCalculator::OnActiveTracingClick(Object ^ sender, RoutedEventArgs ^ e)
 {
     // The focus change to this button will have turned off the tracing if it was on
     ActiveTracingOn = !ActiveTracingOn;
     GraphingControl->ActiveTracing = ActiveTracingOn;
 }
 
-void CalculatorApp::GraphingCalculator::OnGraphLostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void GraphingCalculator::OnGraphLostFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     // If the graph is losing focus while we are in active tracing we need to turn it off so we don't try to eat keys in other controls.
     if (GraphingControl->ActiveTracing)
@@ -300,9 +320,9 @@ void CalculatorApp::GraphingCalculator::OnGraphLostFocus(Platform::Object ^ send
     }
 }
 
-void CalculatorApp::GraphingCalculator::OnLoosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args)
+void GraphingCalculator::OnLosingFocus(UIElement ^ sender, LosingFocusEventArgs ^ args)
 {
-    FrameworkElement ^ newFocusElement = (FrameworkElement ^) args->NewFocusedElement;
+    auto newFocusElement = dynamic_cast<FrameworkElement ^>(args->NewFocusedElement);
     if (newFocusElement == nullptr || newFocusElement->Name == nullptr)
     {
         // Because clicking on the swap chain panel will try to move focus to a control that can't actually take focus

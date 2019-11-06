@@ -33,7 +33,7 @@ namespace
 
     constexpr auto s_X = L"x";
     constexpr auto s_Y = L"y";
-
+    constexpr auto s_defaultFormatType = FormatType::MathML;
     // Helper function for converting a pointer position to a position that the graphing engine will understand.
     // posX/posY are the pointer position elements and width,height are the dimensions of the graph surface.
     // The graphing engine interprets x,y position between the range [-1, 1].
@@ -57,7 +57,7 @@ namespace GraphControl
         , m_graph{ m_solver->CreateGrapher() }
         , m_Moving{ false }
     {
-        m_solver->ParsingOptions().SetFormatType(FormatType::MathML);
+        m_solver->ParsingOptions().SetFormatType(s_defaultFormatType);
 
         DefaultStyleKey = StringReference(s_defaultStyleKey);
 
@@ -897,4 +897,16 @@ void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
     {
         ActiveTraceCursorPosition = curPos;
     }
+}
+
+String ^ Grapher::ConvertToLinear(String ^ mmlString)
+{
+    m_solver->FormatOptions().SetFormatType(FormatType::LinearInput);
+
+    auto expression = m_solver->ParseInput(mmlString->Data());
+    auto linearExpression = m_solver->Serialize(expression.get());
+
+    m_solver->FormatOptions().SetFormatType(s_defaultFormatType);
+
+    return ref new String(linearExpression.c_str());
 }
