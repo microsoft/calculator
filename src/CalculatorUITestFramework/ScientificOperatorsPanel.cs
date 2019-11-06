@@ -101,16 +101,28 @@ namespace CalculatorUITestFramework
 
             throw new NotFoundException("Could not find deg, rad or grad button in page source");
         }
-
-        //public WindowsElement GetDesiredDegRadGradButton(string desiredButtonId)
-        //{ 
-        //    var button = GetDegRadGradButton();
-        //    while (button.Id != desiredButtonId)
-        //    {
-        //        button.Click();
-        //        button = GetDegRadGradButton();
-        //    }
-        //    return button;
-        //}
+        public WindowsElement ResetTrigDropdownToggles()
+        {
+            TrigButton.Click();
+            string source = this.session.PageSource;
+            if (source.Contains("sinButton"))
+            {
+                LightDismiss.Click();
+            }
+            else if (source.Contains("invsinButton"))
+            {
+                TrigShiftButton.Click();
+            }
+            else if (source.Contains("sinhButton"))
+            {
+                HypShiftButton.Click();
+            }
+            else if (source.Contains("invsinhButton"))
+            {
+                TrigShiftButton.Click();
+                HypShiftButton.Click();
+            }
+            throw new NotFoundException("Could not find trig drop-down buttons in page source");
+        }
     }
 }
