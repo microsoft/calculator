@@ -64,9 +64,3 @@ void MathRichEditBox::SetMathTextProperty(String ^ newValue)
 
     this->IsReadOnly = readOnlyState;
 }
-
-void MathRichEditBox::OnLostFocus(RoutedEventArgs ^ e)
-{
-    this->Document->Selection->SetRange(0, 0);
-
-}
