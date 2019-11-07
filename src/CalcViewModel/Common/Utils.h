@@ -98,7 +98,7 @@ public:
 
 #define OBSERVABLE_NAMED_PROPERTY_R(t, n)                                                                                                                      \
     OBSERVABLE_PROPERTY_R(t, n)                                                                                                                                \
-    internal:                                                                                                                                                  \
+public:                                                                                                                                                        \
     static property Platform::String ^ n##PropertyName                                                                                                         \
     {                                                                                                                                                          \
         Platform::String ^ get() { return Platform::StringReference(L#n); }                                                                                    \
@@ -108,7 +108,7 @@ public:
 
 #define OBSERVABLE_NAMED_PROPERTY_RW(t, n)                                                                                                                     \
     OBSERVABLE_PROPERTY_RW(t, n)                                                                                                                               \
-    internal:                                                                                                                                                  \
+public:                                                                                                                                                        \
     static property Platform::String ^ n##PropertyName                                                                                                         \
     {                                                                                                                                                          \
         Platform::String ^ get() { return Platform::StringReference(L#n); }                                                                                    \
@@ -373,7 +373,6 @@ namespace Utils
     }
 
     void IFTPlatformException(HRESULT hr);
-    Platform::String ^ GetStringValue(Platform::String ^ input);
     bool IsLastCharacterTarget(std::wstring const& input, wchar_t target);
 
     // Return wstring after removing characters specified by unwantedChars array
