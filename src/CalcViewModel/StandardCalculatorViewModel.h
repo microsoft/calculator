@@ -65,7 +65,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IVector<MemoryItemViewModel ^> ^, MemorizedNumbers);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsMemoryEmpty);
             OBSERVABLE_PROPERTY_RW(bool, IsFToEChecked);
-            OBSERVABLE_PROPERTY_RW(bool, IsFToEEnabled);
+            OBSERVABLE_PROPERTY_R(bool, IsFToEEnabled);
             OBSERVABLE_PROPERTY_RW(bool, AreHEXButtonsEnabled);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationResultAutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationExpressionAutomationName);
@@ -340,15 +340,7 @@ namespace CalculatorApp
             void OnPinUnpinCommand(Platform::Object ^ parameter);
 
             void OnInputChanged();
-            void SetPrimaryDisplay(Platform::String ^ displayString, _In_ bool isError);
             void DisplayPasteError();
-            void SetTokens(_Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens);
-            void SetExpressionDisplay(
-                _Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
-                _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands);
-            void SetHistoryExpressionDisplay(
-                _Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
-                _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands);
             void SetParenthesisCount(_In_ unsigned int parenthesisCount);
             void SetOpenParenthesisCountNarratorAnnouncement();
             void OnNoRightParenAdded();
@@ -382,11 +374,19 @@ namespace CalculatorApp
             {
                 return m_CurrentAngleType;
             }
-
+            void SelectHistoryItem(HistoryItemViewModel ^ item);
         private:
             void SetMemorizedNumbers(const std::vector<std::wstring>& memorizedNumbers);
             void UpdateProgrammerPanelDisplay();
             void HandleUpdatedOperandData(CalculationManager::Command cmdenum);
+            void SetPrimaryDisplay(_In_ Platform::String ^ displayStringValue, _In_ bool isError);
+            void SetExpressionDisplay(
+                _Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
+                _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands);
+            void SetHistoryExpressionDisplay(
+                _Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
+                _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands);
+            void SetTokens(_Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens);
             NumbersAndOperatorsEnum ConvertIntegerToNumbersAndOperatorsEnum(unsigned int parameter);
             NumbersAndOperatorsEnum m_CurrentAngleType;
             wchar_t m_decimalSeparator;
@@ -448,11 +448,11 @@ namespace CalculatorApp
             std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> m_commands;
 
             // Token types
-            bool IsUnaryOp(int nOpCode);
-            bool IsBinOp(int nOpcode);
-            bool IsTrigOp(int nOpCode);
-            bool IsOpnd(int nOpCode);
-            bool IsRecoverableCommand(int nOpCode);
+            bool IsUnaryOp(CalculationManager::Command command);
+            bool IsBinOp(CalculationManager::Command command);
+            bool IsTrigOp(CalculationManager::Command command);
+            bool IsOpnd(CalculationManager::Command command);
+            bool IsRecoverableCommand(CalculationManager::Command command);
 
             CalculationManager::CommandType GetSelectedTokenType(_In_ unsigned int);
             void SaveEditedCommand(_In_ unsigned int index, _In_ CalculationManager::Command command);

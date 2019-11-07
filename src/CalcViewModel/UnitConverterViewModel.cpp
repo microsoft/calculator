@@ -476,10 +476,10 @@ void UnitConverterViewModel::OnButtonPressed(Platform::Object ^ parameter)
         return;
     }
 
-    static const vector<UCM::Command> OPERANDS = { UCM::Command::Zero, UCM::Command::One, UCM::Command::Two,   UCM::Command::Three, UCM::Command::Four,
+    static constexpr UCM::Command OPERANDS[] = { UCM::Command::Zero, UCM::Command::One, UCM::Command::Two,   UCM::Command::Three, UCM::Command::Four,
                                                    UCM::Command::Five, UCM::Command::Six, UCM::Command::Seven, UCM::Command::Eight, UCM::Command::Nine };
 
-    if (find(begin(OPERANDS), end(OPERANDS), command) != OPERANDS.end())
+    if (find(begin(OPERANDS), end(OPERANDS), command) != end(OPERANDS))
     {
         if (m_isInputBlocked)
         {
@@ -890,13 +890,13 @@ void UnitConverterViewModel::OnPaste(String ^ stringToPaste)
     TraceLogger::GetInstance()->LogInputPasted(Mode);
     bool isFirstLegalChar = true;
     bool sendNegate = false;
-    wstring accumulation = L"";
+    wstring accumulation;
 
-    for (auto it = stringToPaste->Begin(); it != stringToPaste->End(); it++)
+    for (const auto ch : stringToPaste)
     {
         bool canSendNegate = false;
 
-        NumbersAndOperatorsEnum op = MapCharacterToButtonId(*it, canSendNegate);
+        NumbersAndOperatorsEnum op = MapCharacterToButtonId(ch, canSendNegate);
 
         if (NumbersAndOperatorsEnum::None != op)
         {
@@ -932,7 +932,7 @@ void UnitConverterViewModel::OnPaste(String ^ stringToPaste)
                 }
             }
 
-            accumulation += *it;
+            accumulation += ch;
             UpdateInputBlocked(accumulation);
             if (m_isInputBlocked)
             {

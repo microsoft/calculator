@@ -470,11 +470,7 @@ void Calculator::OnHideHistoryClicked()
 
 void Calculator::OnHistoryItemClicked(_In_ HistoryItemViewModel ^ e)
 {
-    assert(e->GetTokens() != nullptr);
-    Model->SetHistoryExpressionDisplay(e->GetTokens(), e->GetCommands());
-    Model->SetExpressionDisplay(e->GetTokens(), e->GetCommands());
-    Model->SetPrimaryDisplay(e->Result, false);
-    Model->IsFToEEnabled = false;
+    Model->SelectHistoryItem(e);
 
     CloseHistoryFlyout();
     this->Focus(::FocusState::Programmatic);
@@ -717,3 +713,4 @@ void Calculator::Calculator_SizeChanged(Object ^ /*sender*/, SizeChangedEventArg
         AlwaysOnTopResults->UpdateScrollButtons();
     }
 }
+

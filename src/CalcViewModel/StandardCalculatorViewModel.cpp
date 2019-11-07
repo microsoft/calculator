@@ -611,7 +611,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
     {
         m_standardCalculatorManager.SendCommand(Command::CommandCLEAR);
 
-        if (!IsRecoverableCommand((int)numOpEnum))
+        if (!IsRecoverableCommand(static_cast<Command>(numOpEnum)))
         {
             return;
         }
@@ -1291,66 +1291,65 @@ ANGLE_TYPE GetAngleTypeFromCommand(Command command)
 void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosition, _In_ Command command)
 {
     bool handleOperand = false;
-    int nOpCode = static_cast<int>(command);
-    wstring updatedToken = L"";
+    wstring updatedToken;
 
     const pair<wstring, int>& token = m_tokens->at(tokenPosition);
     const shared_ptr<IExpressionCommand>& tokenCommand = m_commands->at(token.second);
 
-    if (IsUnaryOp(nOpCode) && command != Command::CommandSIGN)
+    if (IsUnaryOp(command) && command != Command::CommandSIGN)
     {
         int angleCmd = static_cast<int>(m_standardCalculatorManager.GetCurrentDegreeMode());
         ANGLE_TYPE angleType = GetAngleTypeFromCommand(static_cast<Command>(angleCmd));
 
-        if (IsTrigOp(nOpCode))
+        if (IsTrigOp(command))
         {
             shared_ptr<IUnaryCommand> spUnaryCommand = dynamic_pointer_cast<IUnaryCommand>(tokenCommand);
-            spUnaryCommand->SetCommands(angleCmd, nOpCode);
+            spUnaryCommand->SetCommands(angleCmd, static_cast<int>(command));
         }
         else
         {
             shared_ptr<IUnaryCommand> spUnaryCommand = dynamic_pointer_cast<IUnaryCommand>(tokenCommand);
-            spUnaryCommand->SetCommand(nOpCode);
+            spUnaryCommand->SetCommand(static_cast<int>(command));
         }
 
-        switch (nOpCode)
+        switch (command)
         {
-        case static_cast<int>(Command::CommandASIN):
+        case Command::CommandASIN:
             updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSIN), true, angleType);
             break;
-        case static_cast<int>(Command::CommandACOS):
+        case Command::CommandACOS:
             updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOS), true, angleType);
             break;
-        case static_cast<int>(Command::CommandATAN):
+        case Command::CommandATAN:
             updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTAN), true, angleType);
             break;
-        case static_cast<int>(Command::CommandASINH):
+        case Command::CommandASINH:
             updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSINH), true, angleType);
             break;
-        case static_cast<int>(Command::CommandACOSH):
+        case Command::CommandACOSH:
             updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOSH), true, angleType);
             break;
-        case static_cast<int>(Command::CommandATANH):
+        case Command::CommandATANH:
             updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTANH), true, angleType);
             break;
-        case static_cast<int>(Command::CommandPOWE):
+        case Command::CommandPOWE:
             updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandLN), true, angleType);
             break;
         default:
-            updatedToken = CCalcEngine::OpCodeToUnaryString(nOpCode, false, angleType);
+            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(command), false, angleType);
         }
         if ((token.first.length() > 0) && (token.first[token.first.length() - 1] == L'('))
         {
             updatedToken += L'(';
         }
     }
-    else if (IsBinOp(nOpCode))
+    else if (IsBinOp(command))
     {
         shared_ptr<IBinaryCommand> spBinaryCommand = dynamic_pointer_cast<IBinaryCommand>(tokenCommand);
-        spBinaryCommand->SetCommand(nOpCode);
-        updatedToken = CCalcEngine::OpCodeToString(nOpCode);
+        spBinaryCommand->SetCommand(static_cast<int>(command));
+        updatedToken = CCalcEngine::OpCodeToString(static_cast<int>(command));
     }
-    else if (IsOpnd(nOpCode) || command == Command::CommandBACK)
+    else if (IsOpnd(command) || command == Command::CommandBACK)
     {
         HandleUpdatedOperandData(command);
         handleOperand = true;
@@ -1359,7 +1358,7 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
     {
         if (tokenCommand->GetCommandType() == CommandType::UnaryCommand)
         {
-            shared_ptr<IExpressionCommand> spSignCommand = make_shared<CUnaryCommand>(nOpCode);
+            shared_ptr<IExpressionCommand> spSignCommand = make_shared<CUnaryCommand>(static_cast<int>(command));
             m_commands->insert(m_commands->begin() + token.second + 1, spSignCommand);
         }
         else
@@ -1461,10 +1460,10 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
     }
 
     m_standardCalculatorManager.SendCommand(currentDegreeMode);
-    size_t currentCommandsSize = currentCommands.size();
-    for (size_t i = 0; i < currentCommandsSize; i++)
+
+    for (int command : currentCommands)
     {
-        m_standardCalculatorManager.SendCommand(static_cast<CalculationManager::Command>(currentCommands[i]));
+        m_standardCalculatorManager.SendCommand(static_cast<CalculationManager::Command>(command));
     }
 
     if (fromHistory) // This is for the cases where the expression is loaded from history
@@ -1491,37 +1490,27 @@ CommandType StandardCalculatorViewModel::GetSelectedTokenType(_In_ unsigned int 
     return tokenCommand->GetCommandType();
 }
 
-bool StandardCalculatorViewModel::IsOpnd(int nOpCode)
+bool StandardCalculatorViewModel::IsOpnd(Command command)
 {
-    static Command opnd[] = { Command::Command0, Command::Command1, Command::Command2, Command::Command3, Command::Command4,  Command::Command5,
+    static constexpr Command opnd[] = { Command::Command0, Command::Command1, Command::Command2, Command::Command3, Command::Command4,  Command::Command5,
                               Command::Command6, Command::Command7, Command::Command8, Command::Command9, Command::CommandPNT };
 
-    for (unsigned int i = 0; i < size(opnd); i++)
-    {
-        if (nOpCode == static_cast<int>(opnd[i]))
-        {
-            return true;
-        }
-    }
-    return false;
+    return find(begin(opnd), end(opnd), command) != end(opnd);
 }
 
-bool StandardCalculatorViewModel::IsUnaryOp(int nOpCode)
+bool StandardCalculatorViewModel::IsUnaryOp(Command command)
 {
-    static Command unaryOp[] = { Command::CommandSQRT,  Command::CommandFAC,  Command::CommandSQR,   Command::CommandLOG,
+    static constexpr Command unaryOp[] = { Command::CommandSQRT,  Command::CommandFAC,  Command::CommandSQR,   Command::CommandLOG,
                                  Command::CommandPOW10, Command::CommandPOWE, Command::CommandLN,    Command::CommandREC,
                                  Command::CommandSIGN,  Command::CommandSINH, Command::CommandASINH, Command::CommandCOSH,
                                  Command::CommandACOSH, Command::CommandTANH, Command::CommandATANH, Command::CommandCUB };
 
-    for (unsigned int i = 0; i < size(unaryOp); i++)
+    if (find(begin(unaryOp), end(unaryOp), command) != end(unaryOp))
     {
-        if (nOpCode == static_cast<int>(unaryOp[i]))
-        {
-            return true;
-        }
+        return true;
     }
 
-    if (IsTrigOp(nOpCode))
+    if (IsTrigOp(command))
     {
         return true;
     }
@@ -1529,75 +1518,45 @@ bool StandardCalculatorViewModel::IsUnaryOp(int nOpCode)
     return false;
 }
 
-bool StandardCalculatorViewModel::IsTrigOp(int nOpCode)
+bool StandardCalculatorViewModel::IsTrigOp(Command command)
 {
-    static Command trigOp[] = {
+    static constexpr Command trigOp[] = {
         Command::CommandSIN, Command::CommandCOS, Command::CommandTAN, Command::CommandASIN, Command::CommandACOS, Command::CommandATAN
     };
 
-    for (unsigned int i = 0; i < size(trigOp); i++)
-    {
-        if (nOpCode == static_cast<int>(trigOp[i]))
-        {
-            return true;
-        }
-    }
-    return false;
+    return find(begin(trigOp), end(trigOp), command) != end(trigOp);
 }
 
-bool StandardCalculatorViewModel::IsBinOp(int nOpCode)
+bool StandardCalculatorViewModel::IsBinOp(Command command)
 {
-    static Command binOp[] = { Command::CommandADD, Command::CommandSUB,  Command::CommandMUL, Command::CommandDIV,
+    static constexpr Command binOp[] = { Command::CommandADD, Command::CommandSUB,  Command::CommandMUL, Command::CommandDIV,
                                Command::CommandEXP, Command::CommandROOT, Command::CommandMOD, Command::CommandPWR };
 
-    for (unsigned int i = 0; i < size(binOp); i++)
-    {
-        if (nOpCode == static_cast<int>(binOp[i]))
-        {
-            return true;
-        }
-    }
-    return false;
+    return find(begin(binOp), end(binOp), command) != end(binOp);
 }
 
-bool StandardCalculatorViewModel::IsRecoverableCommand(int nOpCode)
+bool StandardCalculatorViewModel::IsRecoverableCommand(Command command)
 {
-    if (IsOpnd(nOpCode))
+    if (IsOpnd(command))
     {
         return true;
     }
 
     // Programmer mode, bit flipping
-    int minBinPos = static_cast<int>(Command::CommandBINEDITSTART);
-    int maxBinPos = static_cast<int>(Command::CommandBINEDITEND);
-    if (minBinPos <= nOpCode && nOpCode <= maxBinPos)
+    if (Command::CommandBINEDITSTART <= command && command <= Command::CommandBINEDITEND)
     {
         return true;
     }
 
-    static Command recoverableCommands[] = { Command::CommandA, Command::CommandB, Command::CommandC, Command::CommandD, Command::CommandE, Command::CommandF };
+    static constexpr Command recoverableCommands[] = { Command::CommandA, Command::CommandB, Command::CommandC,
+                                                       Command::CommandD, Command::CommandE, Command::CommandF };
 
-    for (unsigned int i = 0; i < size(recoverableCommands); i++)
-    {
-        if (nOpCode == static_cast<int>(recoverableCommands[i]))
-        {
-            return true;
-        }
-    }
-    return false;
+    return find(begin(recoverableCommands), end(recoverableCommands), command) != end(recoverableCommands);
 }
 
 size_t StandardCalculatorViewModel::LengthWithoutPadding(wstring str)
 {
-    size_t count = 0;
-    for (size_t i = 0; i < str.length(); i++)
-    {
-        if (str[i] != L' ')
-        {
-            count++;
-        }
-    }
-    return count;
+    return str.length() - count(str.begin(), str.end(), L' ');
 }
 
 wstring StandardCalculatorViewModel::AddPadding(wstring binaryString)
@@ -1611,12 +1570,7 @@ wstring StandardCalculatorViewModel::AddPadding(wstring binaryString)
     {
         pad = 0;
     }
-    wstring padString = L"";
-    for (size_t i = 0; i < pad; i++)
-    {
-        padString += L"0";
-    }
-    return padString + binaryString;
+    return wstring(pad, L'0') + binaryString;
 }
 
 void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
@@ -1902,4 +1856,12 @@ void StandardCalculatorViewModel::ValueBitLength::set(CalculatorApp::Common::Bit
         // update memory list according to bit length
         SetMemorizedNumbersString();
     }
+}
+
+void StandardCalculatorViewModel::SelectHistoryItem(HistoryItemViewModel ^ item)
+{
+    SetHistoryExpressionDisplay(item->GetTokens(), item->GetCommands());
+    SetExpressionDisplay(item->GetTokens(), item->GetCommands());
+    SetPrimaryDisplay(item->Result, false);
+    IsFToEEnabled = false;
 }
