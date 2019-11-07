@@ -34,7 +34,13 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="TextWrapping" Value="WrapWholeWords"/>
         </Style>
-        <Style x:Name="KGF_ItemsControlContainerStyle" TargetType="ContentPresenter">
+        <Style x:Name="KGF_ListViewStyle" TargetType="ListView">
+            <Setter Property="IsItemClickEnabled" Value="False"/>
+            <Setter Property="SelectionMode" Value="None"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ListViewItemContainerStyle}"/>
+        </Style>
+        <Style x:Name="ListViewItemContainerStyle" TargetType="ListViewItem">
+            <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Margin" Value="10"/>
@@ -42,7 +48,6 @@
             <Setter Property="Width" Value="Auto"/>
             <Setter Property="AutomationProperties.AccessibilityView" Value="Raw"/>
         </Style>
-
         <DataTemplate x:Key="KGFRichEditDataTemplate" x:DataType="vm:KeyGraphFeaturesItem">
             <StackPanel>
                 <TextBlock x:Name="TitleTextBlock"
@@ -125,8 +130,7 @@
                                   Style="{StaticResource KGF_EquationTextBoxStyle}"
                                   DataContext="{x:Bind ViewModel, Mode=OneWay}"
                                   EquationButtonClicked="EquationButtonClicked"
-                                  Loaded="EquationInputTextBox_Loaded"
-                                  />
+                                  Loaded="EquationInputTextBox_Loaded"/>
         <TextBlock x:Uid="KeyGraphFeaturesLabel"
                    Grid.Row="1"
                    Margin="10,10,10,0"
@@ -134,16 +138,15 @@
                    FontSize="18"
                    AutomationProperties.HeadingLevel="Level1"/>
 
-        <ItemsControl x:Name="KeyGraphFeaturesListView"
+        <ListView x:Name="KeyGraphFeaturesListView"
                   Grid.Row="2"
                   Padding="0,0,0,12"
-                  ItemContainerStyle="{StaticResource KGF_ItemsControlContainerStyle}"
+                  Style="{StaticResource KGF_ListViewStyle}"
                   ItemTemplateSelector="{StaticResource KGFTemplateSelector}"
                   ItemsSource="{x:Bind ViewModel.KeyGraphFeaturesItems}"
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   ScrollViewer.VerticalScrollMode="Auto"
-                  Visibility="{x:Bind ViewModel.AnalysisErrorVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"
-                  />
+                  Visibility="{x:Bind ViewModel.AnalysisErrorVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
         <TextBlock x:Name="AnalysisErrorTextBlock"
                    Grid.Row="2"
                    Margin="10,10"

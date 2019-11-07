@@ -6,6 +6,7 @@ using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Controls;
 using namespace std;
+using namespace Windows::ApplicationModel;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::Foundation::Collections;
@@ -37,8 +38,8 @@ MathRichEditBox::MathRichEditBox()
     {
         m_lafResultStatus = LimitedAccessFeatures::TryUnlockFeature(
                                 "com.microsoft.windows.richeditmath",
-                                "T9H+yhLpNVGoPAaTGVPzXQ==", // Microsoft.WindowsCalculator.Graphing
-                                "5dtbxgwsfagna has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.")->Status;
+                                "H6wflFFz3gkOsAHtG/D9Tg==", // Microsoft.WindowsCalculator.Graphing
+                                "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.")->Status;
     }
 
     TextDocument->SetMathMode(Windows::UI::Text::RichEditMathMode::MathOnly);
@@ -59,10 +60,4 @@ void MathRichEditBox::SetMathTextProperty(String ^ newValue)
     TextDocument->SetMath(newValue);
 
     this->IsReadOnly = readOnlyState;
-}
-
-void MathRichEditBox::OnLostFocus(RoutedEventArgs ^ e)
-{
-    this->Document->Selection->SetRange(0, 0);
-
 }

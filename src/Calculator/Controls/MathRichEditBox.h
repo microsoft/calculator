@@ -35,9 +35,6 @@ namespace CalculatorApp
             
             }
 
-        protected:
-            void OnLostFocus(Windows::UI::Xaml::RoutedEventArgs ^ e) override;
-
         private :
             Platform::String ^ GetMathTextProperty();
             void SetMathTextProperty(Platform::String ^ newValue);
