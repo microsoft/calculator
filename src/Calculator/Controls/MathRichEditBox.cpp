@@ -14,10 +14,32 @@ DEPENDENCY_PROPERTY_INITIALIZATION(MathRichEditBox, MathText);
 
 MathRichEditBox::MathRichEditBox()
 {
-    Windows::ApplicationModel::LimitedAccessFeatures::TryUnlockFeature(
-        "com.microsoft.windows.richeditmath",
-        "H6wflFFz3gkOsAHtG/D9Tg==",
-        "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.");
+    static LimitedAccessFeatureStatus m_lafResultStatus;
+    String ^ packageName = Package::Current->Id->Name;
+
+    if (packageName == L"Microsoft.WindowsCalculator.Dev")
+    {
+        m_lafResultStatus = LimitedAccessFeatures::TryUnlockFeature(
+            "com.microsoft.windows.richeditmath",
+            "BeDD/jxKhz/yfVNA11t4uA==", // Microsoft.WindowsCalculator.Dev
+            "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.")->Status;
+    }
+
+    else if (packageName == L"Microsoft.WindowsCalculator")
+    {
+        m_lafResultStatus = LimitedAccessFeatures::TryUnlockFeature(
+            "com.microsoft.windows.richeditmath",
+            "pfanNuxnzo+mAkBQ3N/rGQ==", // Microsoft.WindowsCalculator
+            "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.")->Status;
+    }
+
+    else if (packageName == L"Microsoft.WindowsCalculator.Graphing")
+    {
+        m_lafResultStatus = LimitedAccessFeatures::TryUnlockFeature(
+                                "com.microsoft.windows.richeditmath",
+                                "T9H+yhLpNVGoPAaTGVPzXQ==", // Microsoft.WindowsCalculator.Graphing
+                                "5dtbxgwsfagna has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.")->Status;
+    }
 
     TextDocument->SetMathMode(Windows::UI::Text::RichEditMathMode::MathOnly);
 }
