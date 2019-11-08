@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -29,32 +29,30 @@ namespace CalculatorApp
             };
 
             // Struct to store the difference between two Dates in the form of Years, Months , Weeks
-            struct DateDifference
+        public
+            value struct DateDifference
             {
-                int year = 0;
-                int month = 0;
-                int week = 0;
-                int day = 0;
+                int year;
+                int month;
+                int week;
+                int day;
             };
 
-            class DateCalculationEngine
+            const DateDifference DateDifferenceUnknown{ INT_MIN, INT_MIN, INT_MIN, INT_MIN };
+
+        public
+            ref class DateCalculationEngine sealed
             {
             public:
                 // Constructor
                 DateCalculationEngine(_In_ Platform::String ^ calendarIdentifier);
 
                 // Public Methods
-                bool __nothrow
-                AddDuration(_In_ Windows::Foundation::DateTime startDate, _In_ const DateDifference& duration, _Out_ Windows::Foundation::DateTime* endDate);
-                bool __nothrow SubtractDuration(
-                    _In_ Windows::Foundation::DateTime startDate,
-                    _In_ const DateDifference& duration,
-                    _Out_ Windows::Foundation::DateTime* endDate);
-                void __nothrow GetDateDifference(
-                    _In_ Windows::Foundation::DateTime date1,
-                    _In_ Windows::Foundation::DateTime date2,
-                    _In_ DateUnit outputFormat,
-                    _Out_ DateDifference* difference);
+
+                Platform::IBox<Windows::Foundation::DateTime> ^ AddDuration(_In_ Windows::Foundation::DateTime startDate, _In_ DateDifference duration);
+                Platform::IBox<Windows::Foundation::DateTime> ^ SubtractDuration(_In_ Windows::Foundation::DateTime startDate, _In_ DateDifference duration);
+                Platform::IBox<
+                    DateDifference> ^ TryGetDateDifference(_In_ Windows::Foundation::DateTime date1, _In_ Windows::Foundation::DateTime date2, _In_ DateUnit outputFormat);
 
             private:
                 // Private Variables
@@ -69,3 +67,5 @@ namespace CalculatorApp
         }
     }
 }
+
+bool operator==(const CalculatorApp::Common::DateCalculation::DateDifference& l, const CalculatorApp::Common::DateCalculation::DateDifference& r);

@@ -34,7 +34,7 @@ void _mulnumx(PNUMBER* pa, PNUMBER b);
 //
 //----------------------------------------------------------------------------
 
-void __inline mulnumx(PNUMBER* pa, PNUMBER b)
+void mulnumx(_Inout_ PNUMBER* pa, _In_ PNUMBER b)
 
 {
     if (b->cdigit > 1 || b->mant[0] != 1 || b->exp != 0)
@@ -172,7 +172,7 @@ void _mulnumx(PNUMBER* pa, PNUMBER b)
 //
 //-----------------------------------------------------------------------------
 
-void numpowi32x(_Inout_ PNUMBER* proot, _In_ int32_t power)
+void numpowi32x(_Inout_ PNUMBER* proot, int32_t power)
 
 {
     PNUMBER lret = i32tonum(1, BASEX);
@@ -215,7 +215,7 @@ void _divnumx(PNUMBER* pa, PNUMBER b, int32_t precision);
 //
 //----------------------------------------------------------------------------
 
-void __inline divnumx(PNUMBER* pa, PNUMBER b, int32_t precision)
+void divnumx(_Inout_ PNUMBER* pa, _In_ PNUMBER b, int32_t precision)
 
 {
     if (b->cdigit > 1 || b->mant[0] != 1 || b->exp != 0)

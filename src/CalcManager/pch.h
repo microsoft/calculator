@@ -13,10 +13,14 @@
 #include <cassert>
 #include <intsafe.h>
 #include <list>
-#include <ppltasks.h>
+#include <future>
 #include <regex>
 #include <sstream>
 #include <string>
 #include <unordered_map>
 #include <vector>
 #include <winerror.h>
+#include <iostream>
+#include <math.h>
+#include <random>
+#include <iomanip>

@@ -519,7 +519,7 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs
             auto navView = buttons.first->second.Resolve<MUXC::NavigationView>();
             auto appViewModel = safe_cast<ApplicationViewModel ^>(navView->DataContext);
             appViewModel->Mode = ViewMode::Date;
-            auto categoryName = AppResourceProvider::GetInstance().GetResourceString(L"DateCalculationModeText");
+            auto categoryName = AppResourceProvider::GetInstance()->GetResourceString(L"DateCalculationModeText");
             appViewModel->CategoryName = categoryName;
 
             auto menuItems = static_cast<IObservableVector<Object ^> ^>(navView->MenuItemsSource);
@@ -668,10 +668,11 @@ void KeyboardShortcutManager::OnAcceleratorKeyActivated(CoreDispatcher ^, Accele
                     if (nullptr != vm)
                     {
                         ViewMode toMode = NavCategory::GetViewModeForVirtualKey(static_cast<MyVirtualKey>(key));
-                        if (NavCategory::IsValidViewMode(toMode))
+                        auto nvi = dynamic_cast<MUXC::NavigationViewItem ^>(menuItems->GetAt(NavCategory::GetFlatIndex(toMode)));
+                        if (nvi && nvi->IsEnabled && NavCategory::IsValidViewMode(toMode))
                         {
                             vm->Mode = toMode;
-                            navView->SelectedItem = menuItems->GetAt(NavCategory::GetFlatIndex(toMode));
+                            navView->SelectedItem = nvi;
                         }
                     }
                 }

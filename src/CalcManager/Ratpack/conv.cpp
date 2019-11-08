@@ -18,7 +18,7 @@
 //---------------------------------------------------------------------------
 
 #include <algorithm>
-#include <winerror.h>
+#include "winerror_cross_platform.h"
 #include <sstream>
 #include <cstring> // for memmove, memcpy
 #include "ratpak.h"
@@ -145,7 +145,7 @@ void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER* const src)
 //
 //-----------------------------------------------------------------------------
 
-void _destroynum(_In_ PNUMBER pnum)
+void _destroynum(_Frees_ptr_opt_ PNUMBER pnum)
 
 {
     if (pnum != nullptr)
@@ -167,7 +167,7 @@ void _destroynum(_In_ PNUMBER pnum)
 //
 //-----------------------------------------------------------------------------
 
-void _destroyrat(_In_ PRAT prat)
+void _destroyrat(_Frees_ptr_opt_ PRAT prat)
 
 {
     if (prat != nullptr)
@@ -760,7 +760,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
 //
 //-----------------------------------------------------------------------------
 
-PRAT i32torat(_In_ int32_t ini32)
+PRAT i32torat(int32_t ini32)
 
 {
     PRAT pratret = nullptr;
@@ -784,7 +784,7 @@ PRAT i32torat(_In_ int32_t ini32)
 //
 //-----------------------------------------------------------------------------
 
-PRAT Ui32torat(_In_ uint32_t inui32)
+PRAT Ui32torat(uint32_t inui32)
 
 {
     PRAT pratret = nullptr;

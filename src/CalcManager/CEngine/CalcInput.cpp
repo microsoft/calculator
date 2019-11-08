@@ -261,6 +261,11 @@ void CalcInput::SetDecimalSymbol(wchar_t decSymbol)
     }
 }
 
+bool CalcInput::IsEmpty()
+{
+    return m_base.IsEmpty() && !m_hasExponent && m_exponent.IsEmpty() && !m_hasDecimal;
+}
+
 wstring CalcInput::ToString(uint32_t radix)
 {
     // In theory both the base and exponent could be C_NUM_MAX_DIGITS long.

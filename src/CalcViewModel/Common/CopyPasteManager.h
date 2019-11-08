@@ -5,6 +5,7 @@
 
 #include "AppResourceProvider.h"
 #include "NavCategory.h"
+#include "BitLength.h"
 
 namespace CalculatorUnitTests
 {
@@ -13,57 +14,52 @@ namespace CalculatorUnitTests
 
 namespace CalculatorApp
 {
-    inline constexpr auto QwordType = 1;
-    inline constexpr auto DwordType = 2;
-    inline constexpr auto WordType = 3;
-    inline constexpr auto ByteType = 4;
     inline constexpr auto HexBase = 5;
     inline constexpr auto DecBase = 6;
     inline constexpr auto OctBase = 7;
     inline constexpr auto BinBase = 8;
 
-    class CopyPasteManager
+    public ref class CopyPasteManager sealed
     {
     public:
         static void CopyToClipboard(Platform::String ^ stringToCopy);
-        static concurrency::task<Platform::String ^> GetStringToPaste(
+        static Windows::Foundation::IAsyncOperation<Platform::String ^>^ GetStringToPaste(
             CalculatorApp::Common::ViewMode mode,
             CalculatorApp::Common::CategoryGroupType modeType,
-            int programmerNumberBase = -1,
-            int bitLengthType = -1);
-        static bool HasStringToPaste()
-        {
-            return ClipboardTextFormat() >= 0;
-        }
-
-        static constexpr auto PasteErrorString = L"NoOp";
+            int programmerNumberBase,
+            CalculatorApp::Common::BitLength bitLengthType);
+        static bool HasStringToPaste();
+        static bool IsErrorMessage(Platform::String ^ message);
 
     private:
-        static int ClipboardTextFormat();
         static Platform::String
-            ^ ValidatePasteExpression(Platform::String ^ pastedText, CalculatorApp::Common::ViewMode mode, int programmerNumberBase, int bitLengthType);
+            ^ ValidatePasteExpression(
+                Platform::String ^ pastedText,
+                CalculatorApp::Common::ViewMode mode,
+                int programmerNumberBase,
+                CalculatorApp::Common::BitLength bitLengthType);
         static Platform::String
             ^ ValidatePasteExpression(
                 Platform::String ^ pastedText,
                 CalculatorApp::Common::ViewMode mode,
                 CalculatorApp::Common::CategoryGroupType modeType,
                 int programmerNumberBase,
-                int bitLengthType);
+                CalculatorApp::Common::BitLength bitLengthType);
 
         static std::vector<std::wstring>
-        ExtractOperands(const std::wstring& pasteExpression, CalculatorApp::Common::ViewMode mode, int programmerNumberBase = -1, int bitLengthType = -1);
+        ExtractOperands(const std::wstring& pasteExpression, CalculatorApp::Common::ViewMode mode);
         static bool ExpressionRegExMatch(
             std::vector<std::wstring> operands,
             CalculatorApp::Common::ViewMode mode,
             CalculatorApp::Common::CategoryGroupType modeType,
             int programmerNumberBase = -1,
-            int bitLengthType = -1);
+            CalculatorApp::Common::BitLength bitLengthType = CalculatorApp::Common::BitLength::BitLengthUnknown);
 
         static std::pair<size_t, uint64_t> GetMaxOperandLengthAndValue(
             CalculatorApp::Common::ViewMode mode,
             CalculatorApp::Common::CategoryGroupType modeType,
             int programmerNumberBase = -1,
-            int bitLengthType = -1);
+            CalculatorApp::Common::BitLength bitLengthType = CalculatorApp::Common::BitLength::BitLengthUnknown);
         static std::wstring SanitizeOperand(const std::wstring& operand);
         static bool TryOperandToULL(const std::wstring& operand, int numberBase, unsigned long long int& result);
         static size_t OperandLength(
@@ -82,8 +78,6 @@ namespace CalculatorApp
         static constexpr size_t MaxPasteableLength = 512;
         static constexpr size_t MaxExponentLength = 4;
         static constexpr size_t MaxProgrammerBitLength = 64;
-
-        static Platform::String ^ supportedFormats[];
 
         friend class CalculatorUnitTests::CopyPasteManagerTest;
     };

@@ -8,7 +8,7 @@
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0.18362.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
     <!-- We want to manually control the MinVersion/MaxVersionTested in the manifest so turn of the replacement. -->
     <AppxOSMinVersionReplaceManifestVersion>false</AppxOSMinVersionReplaceManifestVersion>
@@ -62,46 +62,46 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -132,7 +132,7 @@
   </ImportGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 </AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -141,7 +141,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 </AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -150,7 +150,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -162,7 +162,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -174,7 +174,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 </AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -183,7 +183,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -195,7 +195,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 </AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -204,7 +204,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -216,7 +216,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(IsStoreBuild)' == 'True'">
     <ClCompile>
-      <AdditionalOptions>/DSEND_TELEMETRY %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/DSEND_DIAGNOSTICS /DIS_STORE_BUILD %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup>
@@ -240,7 +240,6 @@
     <ClInclude Include="Controls\OverflowTextBlock.h" />
     <ClInclude Include="Controls\RadixButton.h" />
     <ClInclude Include="Controls\SupplementaryItemsControl.h" />
-    <ClInclude Include="Converters\BitFlipAutomationNameConverter.h" />
     <ClInclude Include="Converters\BooleanNegationConverter.h" />
     <ClInclude Include="Converters\BooleanToVisibilityConverter.h" />
     <ClInclude Include="Converters\ExpressionItemTemplateSelector.h" />
@@ -248,6 +247,8 @@
     <ClInclude Include="Converters\RadixToStringConverter.h" />
     <ClInclude Include="Converters\VisibilityNegationConverter.h" />
     <ClInclude Include="Controls\HorizontalNoOverflowStackPanel.h" />
+    <ClInclude Include="Controls\OperatorPanelListView.h" />
+    <ClInclude Include="Controls\OperatorPanelButton.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -295,6 +296,7 @@
       <DependentUpon>Views\OperatorsPanel.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Views\StateTriggers\AspectRatioTrigger.h" />
+    <ClInclude Include="Views\StateTriggers\ControlSizeTrigger.h" />
     <ClInclude Include="Views\SupplementaryResults.xaml.h">
       <DependentUpon>Views\SupplementaryResults.xaml</DependentUpon>
     </ClInclude>
@@ -370,7 +372,6 @@
     <ClCompile Include="Controls\OverflowTextBlock.cpp" />
     <ClCompile Include="Controls\RadixButton.cpp" />
     <ClCompile Include="Controls\SupplementaryItemsControl.cpp" />
-    <ClCompile Include="Converters\BitFlipAutomationNameConverter.cpp" />
     <ClCompile Include="Converters\BooleanNegationConverter.cpp" />
     <ClCompile Include="Converters\BooleanToVisibilityConverter.cpp" />
     <ClCompile Include="Converters\ExpressionItemTemplateSelector.cpp" />
@@ -378,6 +379,8 @@
     <ClCompile Include="Converters\RadixToStringConverter.cpp" />
     <ClCompile Include="Converters\VisibilityNegationConverter.cpp" />
     <ClCompile Include="Controls\HorizontalNoOverflowStackPanel.cpp" />
+    <ClCompile Include="Controls\OperatorPanelListView.cpp" />
+    <ClCompile Include="Controls\OperatorPanelButton.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -431,6 +434,7 @@
       <DependentUpon>Views\OperatorsPanel.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Views\StateTriggers\AspectRatioTrigger.cpp" />
+    <ClCompile Include="Views\StateTriggers\ControlSizeTrigger.cpp" />
     <ClCompile Include="Views\SupplementaryResults.xaml.cpp">
       <DependentUpon>Views\SupplementaryResults.xaml</DependentUpon>
     </ClCompile>
@@ -619,103 +623,87 @@
     <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-80.png" />
     <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-96.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-16.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-16_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-16_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-16_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-16_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-16_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-16_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-20.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-20_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-20_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-20_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-20_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-20_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-20_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-24.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-24_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-24_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-24_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-24_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-24_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-24_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-lightunplated.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-lightunplated_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-black.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-black_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-white.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-white_devicefamily-colorfulunplated.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-30.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-30_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-30_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-30_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-30_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-30_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-30_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-32.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-32_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-32_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-32_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-32_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-32_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-32_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-36.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-36_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-36_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-36_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-36_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-36_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-36_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-40.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-40_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-40_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-40_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-40_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-40_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-40_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48_altform-lightunplated.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-lightunplated_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-black.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-black_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-white.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-white_devicefamily-colorfulunplated.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-60.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-60_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-60_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-60_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-60_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-60_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-60_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-64.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-64_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-64_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-64_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-64_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-64_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-64_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-72.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-72_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-72_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-72_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-72_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-72_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-72_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-80.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-80_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-80_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-80_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-80_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-80_altform-unplated_contrast-black.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-80_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-96.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-colorize.png" />
-    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-fullcolor.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-96_altform-lightunplated.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-lightunplated_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-black.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-black_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-white.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-white_devicefamily-colorfulunplated.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorLargeTile.contrast-black_scale-100.png" />
     <Image Include="Assets\CalculatorLargeTile.contrast-black_scale-125.png" />
     <Image Include="Assets\CalculatorLargeTile.contrast-black_scale-150.png" />
@@ -839,7 +827,7 @@
   </Target>
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets" Condition="Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" />
-    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -847,6 +835,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets'))" />
   </Target>
 </Project>

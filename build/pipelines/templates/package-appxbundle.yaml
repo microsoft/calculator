@@ -17,7 +17,7 @@ jobs:
       in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
     ) 
   pool:
-    vmImage: vs2017-win2016
+    vmImage: windows-2019
   workspace:
     clean: outputs
   variables:
@@ -38,10 +38,13 @@ jobs:
       filePath: $(Build.SourcesDirectory)\build\scripts\CreateAppxBundleMapping.ps1
       arguments: '-InputPath $(Build.ArtifactStagingDirectory)\drop\Release -ProjectName Calculator -OutputFile $(Build.BinariesDirectory)\AppxBundleMapping.txt'
 
-  - script: '"C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86\MakeAppx.exe" bundle /v /bv %BUNDLEVERSION% /f %MAPPINGFILEPATH% /p %OUTPUTPATH%'
+  - powershell: |
+      $buildVersion = [version]$Env:BUILDVERSION
+      $bundleVersion = "2020.$($buildVersion.Minor).$($buildVersion.Build).$($buildVersion.Revision)"
+      & "C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x86\MakeAppx.exe" bundle /v /bv $bundleVersion /f $Env:MAPPINGFILEPATH /p $Env:OUTPUTPATH
     displayName: Make AppxBundle
     env:
-      BUNDLEVERSION: $(Build.BuildNumber)
+      BUILDVERSION: $(Build.BuildNumber)
       MAPPINGFILEPATH: $(Build.BinariesDirectory)\AppxBundleMapping.txt
       OUTPUTPATH: $(Build.BinariesDirectory)\Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
 

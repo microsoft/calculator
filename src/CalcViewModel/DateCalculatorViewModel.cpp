@@ -45,13 +45,13 @@ DateCalculatorViewModel::DateCalculatorViewModel()
     , m_StrDateResult(L"")
     , m_StrDateResultAutomationName(L"")
 {
-    const auto& localizationSettings = LocalizationSettings::GetInstance();
+    const auto & localizationSettings = LocalizationSettings::GetInstance();
 
     // Initialize Date Output format instances
     InitializeDateOutputFormats(localizationSettings.GetCalendarIdentifier());
 
     // Initialize Date Calc engine
-    m_dateCalcEngine = make_shared<DateCalculationEngine>(localizationSettings.GetCalendarIdentifier());
+    m_dateCalcEngine = ref new DateCalculationEngine(localizationSettings.GetCalendarIdentifier());
     // Initialize dates of DatePicker controls to today's date
     auto calendar = ref new Calendar();
     // We force the timezone to UTC, in order to avoid being affected by Daylight Saving Time
@@ -60,8 +60,7 @@ DateCalculatorViewModel::DateCalculatorViewModel()
     auto today = calendar->GetDateTime();
 
     // FromDate and ToDate should be clipped (adjusted to a consistent hour in UTC)
-    m_fromDate = ClipTime(today);
-    m_toDate = ClipTime(today);
+    m_fromDate = m_toDate = ClipTime(today, true);
 
     // StartDate should not be clipped
     m_startDate = today;
@@ -84,14 +83,11 @@ DateCalculatorViewModel::DateCalculatorViewModel()
 
     DayOfWeek trueDayOfWeek = calendar->DayOfWeek;
 
-    DateTime clippedTime = ClipTime(today);
+    DateTime clippedTime = ClipTime(today, false);
     calendar->SetDateTime(clippedTime);
     if (calendar->DayOfWeek != trueDayOfWeek)
     {
         calendar->SetDateTime(today);
-        TraceLogger::GetInstance().LogDateClippedTimeDifferenceFound(
-            from_cx<winrt::Windows::Globalization::Calendar>(calendar),
-            winrt::Windows::Foundation::DateTime{ winrt::Windows::Foundation::TimeSpan{ clippedTime.UniversalTime } });
     }
 }
 
@@ -115,42 +111,57 @@ void DateCalculatorViewModel::OnPropertyChanged(_In_ String ^ prop)
 
 void DateCalculatorViewModel::OnInputsChanged()
 {
-    DateDifference dateDiff;
-
     if (m_IsDateDiffMode)
     {
-        DateTime clippedFromDate = ClipTime(FromDate);
-        DateTime clippedToDate = ClipTime(ToDate);
+        DateTime clippedFromDate = ClipTime(FromDate, true);
+        DateTime clippedToDate = ClipTime(ToDate, true);
 
         // Calculate difference between two dates
-        m_dateCalcEngine->GetDateDifference(clippedFromDate, clippedToDate, m_allDateUnitsOutputFormat, &dateDiff);
-        DateDiffResult = dateDiff;
-
-        m_dateCalcEngine->GetDateDifference(clippedFromDate, clippedToDate, m_daysOutputFormat, &dateDiff);
-        DateDiffResultInDays = dateDiff;
+        auto dateDiff = m_dateCalcEngine->TryGetDateDifference(clippedFromDate, clippedToDate, m_daysOutputFormat);
+        if (dateDiff != nullptr)
+        {
+            DateDiffResultInDays = dateDiff->Value;
+            dateDiff = m_dateCalcEngine->TryGetDateDifference(clippedFromDate, clippedToDate, m_allDateUnitsOutputFormat);
+            if (dateDiff != nullptr)
+            {
+                DateDiffResult = dateDiff->Value;
+            }
+            else
+            {
+                // TryGetDateDifference wasn't able to calculate the difference in days/weeks/months/years, we will instead display the difference in days.
+                DateDiffResult = DateDiffResultInDays;
+            }
+        }
+        else
+        {
+            DateDiffResult = DateDifferenceUnknown;
+            DateDiffResultInDays = DateDifferenceUnknown;
+        }
     }
     else
     {
+        DateDifference dateDiff;
         dateDiff.day = DaysOffset;
         dateDiff.month = MonthsOffset;
         dateDiff.year = YearsOffset;
 
-        DateTime dateTimeResult;
+        IBox<DateTime> ^ dateTimeResult;
 
         if (m_IsAddMode)
         {
             // Add number of Days, Months and Years to a Date
-            IsOutOfBound = !m_dateCalcEngine->AddDuration(StartDate, dateDiff, &dateTimeResult);
+            dateTimeResult = m_dateCalcEngine->AddDuration(StartDate, dateDiff);
         }
         else
         {
             // Subtract number of Days, Months and Years from a Date
-            IsOutOfBound = !m_dateCalcEngine->SubtractDuration(StartDate, dateDiff, &dateTimeResult);
+            dateTimeResult = m_dateCalcEngine->SubtractDuration(StartDate, dateDiff);
         }
+        IsOutOfBound = dateTimeResult == nullptr;
 
         if (!m_isOutOfBound)
         {
-            DateResult = dateTimeResult;
+            DateResult = dateTimeResult->Value;
         }
     }
 }
@@ -159,14 +170,20 @@ void DateCalculatorViewModel::UpdateDisplayResult()
 {
     if (m_IsDateDiffMode)
     {
-        // Are to and from dates the same
-        if (m_dateDiffResultInDays.day == 0)
+        if (m_dateDiffResultInDays == DateDifferenceUnknown)
         {
+            IsDiffInDays = false;
+            StrDateDiffResultInDays = L"";
+            StrDateDiffResult = AppResourceProvider::GetInstance()->GetResourceString(L"CalculationFailed");
+        }
+        else if (m_dateDiffResultInDays.day == 0)
+        {
+            // to and from dates the same
             IsDiffInDays = true;
             StrDateDiffResultInDays = L"";
-            StrDateDiffResult = AppResourceProvider::GetInstance().GetResourceString(L"Date_SameDates");
+            StrDateDiffResult = AppResourceProvider::GetInstance()->GetResourceString(L"Date_SameDates");
         }
-        else if ((m_dateDiffResult.year == 0) && (m_dateDiffResult.month == 0) && (m_dateDiffResult.week == 0))
+        else if (m_dateDiffResult == DateDifferenceUnknown || (m_dateDiffResult.year == 0 && m_dateDiffResult.month == 0 && m_dateDiffResult.week == 0))
         {
             IsDiffInDays = true;
             StrDateDiffResultInDays = L"";
@@ -190,7 +207,7 @@ void DateCalculatorViewModel::UpdateDisplayResult()
         if (m_isOutOfBound)
         {
             // Display Date out of bound message
-            StrDateResult = AppResourceProvider::GetInstance().GetResourceString(L"Date_OutOfBoundMessage");
+            StrDateResult = AppResourceProvider::GetInstance()->GetResourceString(L"Date_OutOfBoundMessage");
         }
         else
         {
@@ -202,22 +219,20 @@ void DateCalculatorViewModel::UpdateDisplayResult()
 
 void DateCalculatorViewModel::UpdateStrDateDiffResultAutomationName()
 {
-    String ^ automationFormat = AppResourceProvider::GetInstance().GetResourceString(L"Date_DifferenceResultAutomationName");
-    wstring localizedAutomationName = LocalizationStringUtil::GetLocalizedString(automationFormat->Data(), StrDateDiffResult->Data());
-    StrDateDiffResultAutomationName = ref new String(localizedAutomationName.c_str());
+    String ^ automationFormat = AppResourceProvider::GetInstance()->GetResourceString(L"Date_DifferenceResultAutomationName");
+    StrDateDiffResultAutomationName = LocalizationStringUtil::GetLocalizedString(automationFormat, StrDateDiffResult);
 }
 
 void DateCalculatorViewModel::UpdateStrDateResultAutomationName()
 {
-    String ^ automationFormat = AppResourceProvider::GetInstance().GetResourceString(L"Date_ResultingDateAutomationName");
-    wstring localizedAutomationName = LocalizationStringUtil::GetLocalizedString(automationFormat->Data(), StrDateResult->Data());
-    StrDateResultAutomationName = ref new String(localizedAutomationName.c_str());
+    String ^ automationFormat = AppResourceProvider::GetInstance()->GetResourceString(L"Date_ResultingDateAutomationName");
+    StrDateResultAutomationName = LocalizationStringUtil::GetLocalizedString(automationFormat, StrDateResult);
 }
 
 void DateCalculatorViewModel::InitializeDateOutputFormats(_In_ String ^ calendarIdentifier)
 {
     // Format for Add/Subtract days
-    m_dateTimeFormatter = LocalizationService::GetRegionalSettingsAwareDateTimeFormatter(
+    m_dateTimeFormatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDateTimeFormatter(
         L"longdate",
         calendarIdentifier,
         ClockIdentifiers::TwentyFourHour); // Clock Identifier is not used
@@ -231,7 +246,7 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
 {
     wstring result;
     bool addDelimiter = false;
-    AppResourceProvider resourceLoader = AppResourceProvider::GetInstance();
+    AppResourceProvider ^ resourceLoader = AppResourceProvider::GetInstance();
 
     auto yearCount = m_dateDiffResult.year;
     if (yearCount > 0)
@@ -241,11 +256,11 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
 
         if (yearCount > 1)
         {
-            result += resourceLoader.GetResourceString(L"Date_Years")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Years")->Data();
         }
         else
         {
-            result += resourceLoader.GetResourceString(L"Date_Year")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Year")->Data();
         }
 
         // set the flags to add a delimiter whenever the next unit is added
@@ -269,11 +284,11 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
 
         if (monthCount > 1)
         {
-            result += resourceLoader.GetResourceString(L"Date_Months")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Months")->Data();
         }
         else
         {
-            result += resourceLoader.GetResourceString(L"Date_Month")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Month")->Data();
         }
     }
 
@@ -294,11 +309,11 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
 
         if (weekCount > 1)
         {
-            result += resourceLoader.GetResourceString(L"Date_Weeks")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Weeks")->Data();
         }
         else
         {
-            result += resourceLoader.GetResourceString(L"Date_Week")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Week")->Data();
         }
     }
 
@@ -319,11 +334,11 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
 
         if (dayCount > 1)
         {
-            result += resourceLoader.GetResourceString(L"Date_Days")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Days")->Data();
         }
         else
         {
-            result += resourceLoader.GetResourceString(L"Date_Day")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Day")->Data();
         }
     }
 
@@ -338,11 +353,11 @@ String ^ DateCalculatorViewModel::GetDateDiffStringInDays() const
     // Display the result as '1 day' or 'N days'
     if (m_dateDiffResultInDays.day > 1)
     {
-        result += AppResourceProvider::GetInstance().GetResourceString(L"Date_Days")->Data();
+        result += AppResourceProvider::GetInstance()->GetResourceString(L"Date_Days")->Data();
     }
     else
     {
-        result += AppResourceProvider::GetInstance().GetResourceString(L"Date_Day")->Data();
+        result += AppResourceProvider::GetInstance()->GetResourceString(L"Date_Day")->Data();
     }
 
     return ref new String(result.data());
@@ -367,12 +382,34 @@ String ^ DateCalculatorViewModel::GetLocalizedNumberString(int value) const
     return ref new String(numberStr.c_str());
 }
 
-// Adjusts the given DateTime to 12AM (UTC) of the same day
-DateTime DateCalculatorViewModel::ClipTime(DateTime dateTime)
+/// <summary>
+/// Adjusts the given DateTime to 12AM of the same day
+/// </summary>
+/// <param name="dateTime">DateTime to clip</param>
+/// <param name="adjustUsingLocalTime">Adjust the datetime using local time (by default adjust using UTC time)</param>
+DateTime DateCalculatorViewModel::ClipTime(DateTime dateTime, bool adjustUsingLocalTime)
 {
+    DateTime referenceDateTime;
+    if (adjustUsingLocalTime)
+    {
+        FILETIME fileTime;
+        fileTime.dwLowDateTime = (DWORD)(dateTime.UniversalTime & 0xffffffff);
+        fileTime.dwHighDateTime = (DWORD)(dateTime.UniversalTime >> 32);
+
+        FILETIME localFileTime;
+        FileTimeToLocalFileTime(&fileTime, &localFileTime);
+
+        referenceDateTime.UniversalTime = (DWORD)localFileTime.dwHighDateTime;
+        referenceDateTime.UniversalTime <<= 32;
+        referenceDateTime.UniversalTime |= (DWORD)localFileTime.dwLowDateTime;
+    }
+    else
+    {
+        referenceDateTime = dateTime;
+    }
     auto calendar = ref new Calendar();
     calendar->ChangeTimeZone("UTC");
-    calendar->SetDateTime(dateTime);
+    calendar->SetDateTime(referenceDateTime);
     calendar->Period = calendar->FirstPeriodInThisDay;
     calendar->Hour = calendar->FirstHourInThisPeriod;
     calendar->Minute = 0;

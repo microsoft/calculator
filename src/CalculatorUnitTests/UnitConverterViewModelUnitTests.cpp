@@ -129,8 +129,6 @@ UnitConverterMock::UnitConverterMock()
     , m_switchActiveCallCount(0)
     , m_sendCommandCallCount(0)
     , m_setVMCallbackCallCount(0)
-    , m_serializeCallCount(0)
-    , m_deSerializeCallCount(0)
 {
 }
 
@@ -224,21 +222,10 @@ void UnitConverterMock::SwitchActive(const std::wstring& newValue)
     m_curValue = newValue;
 }
 
-wstring UnitConverterMock::Serialize()
-{
-    m_serializeCallCount++;
-    return wstring(L"");
-}
-
-void UnitConverterMock::DeSerialize(const wstring& /*serializedData*/)
-{
-    m_deSerializeCallCount++;
-}
-
-std::wstring UnitConverterMock::SaveUserPreferences()
-{
-    return L"TEST";
-};
+    std::wstring UnitConverterMock::SaveUserPreferences()
+    {
+        return L"TEST";
+    };
 
 void UnitConverterMock::RestoreUserPreferences(_In_ const std::wstring& /*userPreferences*/){};
 
@@ -858,37 +845,6 @@ TEST_METHOD(TestSupplementaryResultsWhimsicalUnits)
     VERIFY_IS_TRUE(vm.SupplementaryResults->GetAt(0)->Unit->GetModelUnit() == UNITWHIMSY);
 }
 
-// Test deserialization
-TEST_METHOD(TestUnitConverterViewModelDeserialization)
-{
-    String ^ serializedTest = L"0[;;;]0[;;;]0[;;;]1[;;;]1.5[;;;]25[;;;]1.5[;;;]25[;;;][###][###]";
-    shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
-    VM::UnitConverterViewModel vm(mock);
-    vm.Deserialize(serializedTest);
-    VERIFY_IS_TRUE(vm.Value1 == L"1.5");
-    VERIFY_IS_TRUE(vm.Value2 == L"25");
-    VERIFY_IS_TRUE(vm.GetValueFromUnlocalized() == L"1.5");
-    VERIFY_IS_TRUE(vm.GetValueToUnlocalized() == L"25");
-    VERIFY_ARE_EQUAL(vm.Value1Active, false);
-    VERIFY_ARE_EQUAL(vm.Value2Active, true);
-    VERIFY_IS_TRUE(mock->m_deSerializeCallCount == 1);
-}
-
-// Test serialization
-/*TEST_METHOD(TestUnitConverterViewModelSerialization)
-{
-    String ^ serializedTest = L"0[;;;]0[;;;]0[;;;]1[;;;];;;]1.5[;;;[;;;]25[###[;;;]0[;;;]0[;;;][###][###]";
-    shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
-    VM::UnitConverterViewModel vm(mock);
-    vm.Value1 = L";;;]1.5[;;;";
-    vm.Value2 = L"25[###";
-    vm.Value1Active = false;
-    vm.Value2Active = true;
-    String ^ test = vm.Serialize();
-    VERIFY_IS_TRUE(serializedTest == test);
-    VERIFY_IS_TRUE(mock->m_serializeCallCount == 1);
-}*/
-
 TEST_METHOD(TestOnPaste)
 {
     shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
@@ -896,69 +852,68 @@ TEST_METHOD(TestOnPaste)
 
     // Call count is being set to 1 because we send 'CE' command as the first call in OnPaste method of the ViewModel
     UINT callCount = 1;
-    ViewMode mode = ViewMode::Volume; // Some temp mode for UnitConverter
 
     // Paste an invalid character - verify that call count doesn't increment
-    vm.OnPaste("z", mode);
+    vm.OnPaste("z");
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
 
     // Test all valid characters. Verify that two commands are sent for each character
-    vm.OnPaste("0", mode);
+    vm.OnPaste("0");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Zero == mock->m_lastCommand);
 
-    vm.OnPaste("1", mode);
+    vm.OnPaste("1");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::One == mock->m_lastCommand);
 
-    vm.OnPaste("2", mode);
+    vm.OnPaste("2");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Two == mock->m_lastCommand);
 
-    vm.OnPaste("3", mode);
+    vm.OnPaste("3");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Three == mock->m_lastCommand);
 
-    vm.OnPaste("4", mode);
+    vm.OnPaste("4");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Four == mock->m_lastCommand);
 
-    vm.OnPaste("5", mode);
+    vm.OnPaste("5");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Five == mock->m_lastCommand);
 
-    vm.OnPaste("6", mode);
+    vm.OnPaste("6");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Six == mock->m_lastCommand);
 
-    vm.OnPaste("7", mode);
+    vm.OnPaste("7");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Seven == mock->m_lastCommand);
 
-    vm.OnPaste("8", mode);
+    vm.OnPaste("8");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Eight == mock->m_lastCommand);
 
-    vm.OnPaste("9", mode);
+    vm.OnPaste("9");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Nine == mock->m_lastCommand);
 
-    vm.OnPaste(".", mode);
+    vm.OnPaste(".");
     callCount += 2;
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     VERIFY_IS_TRUE(UCM::Command::Decimal == mock->m_lastCommand);
 
-    vm.OnPaste("-", mode);
+    vm.OnPaste("-");
     // Call count should increment by one (the Clear command) since negate isn't
     // sent by itself, only after another legal character
     ++callCount;
@@ -966,7 +921,7 @@ TEST_METHOD(TestOnPaste)
 
     // Send an invalid character
 
-    vm.OnPaste("a", mode);
+    vm.OnPaste("a");
     // Count should remain the same
     VERIFY_ARE_EQUAL(callCount, mock->m_sendCommandCallCount);
     // Last command should remain the same

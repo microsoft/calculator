@@ -30,7 +30,9 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY_ATTACHED_WITH_DEFAULT_AND_CALLBACK(LanguageFontType, FontType, LanguageFontType::UIText);
             DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(double, FontSize);
 
-            internal : static LocalizationService ^ GetInstance();
+        internal:
+            static LocalizationService ^ GetInstance();
+            static void OverrideWithLanguage(_In_ const wchar_t* const language);
 
             Windows::UI::Xaml::FlowDirection GetFlowDirection();
             bool IsRtlLayout();
@@ -41,24 +43,38 @@ namespace CalculatorApp
             Windows::UI::Text::FontWeight GetFontWeightOverride();
             double GetFontScaleFactorOverride(LanguageFontType fontType);
 
-            static Windows::Globalization::NumberFormatting::DecimalFormatter ^ GetRegionalSettingsAwareDecimalFormatter();
-            static Windows::Globalization::DateTimeFormatting::DateTimeFormatter ^ GetRegionalSettingsAwareDateTimeFormatter(_In_ Platform::String ^ format);
-            static Windows::Globalization::DateTimeFormatting::DateTimeFormatter
+            void Sort(std::vector<Platform::String ^>& source);
+
+            template <typename T>
+            void Sort(std::vector<T>& source, std::function<Platform::String ^ (T)> func)
+            {
+                const collate<wchar_t>& coll = use_facet<collate<wchar_t>>(m_locale);
+                sort(source.begin(), source.end(), [&coll, &func](T obj1, T obj2) {
+                    Platform::String ^ str1 = func(obj1);
+                    Platform::String ^ str2 = func(obj2);
+                    return coll.compare(str1->Begin(), str1->End(), str2->Begin(), str2->End()) < 0;
+                });
+            }
+
+            Windows::Globalization::NumberFormatting::DecimalFormatter ^ GetRegionalSettingsAwareDecimalFormatter() const;
+            Windows::Globalization::DateTimeFormatting::DateTimeFormatter ^ GetRegionalSettingsAwareDateTimeFormatter(_In_ Platform::String ^ format) const;
+            Windows::Globalization::DateTimeFormatting::DateTimeFormatter
                 ^ GetRegionalSettingsAwareDateTimeFormatter(
                     _In_ Platform::String ^ format,
                     _In_ Platform::String ^ calendarIdentifier,
-                    _In_ Platform::String ^ clockIdentifier);
+                    _In_ Platform::String ^ clockIdentifier) const;
 
-            static Windows::Globalization::NumberFormatting::CurrencyFormatter ^ GetRegionalSettingsAwareCurrencyFormatter();
+            Windows::Globalization::NumberFormatting::CurrencyFormatter ^ GetRegionalSettingsAwareCurrencyFormatter() const;
 
             static Platform::String ^ GetNarratorReadableToken(Platform::String ^ rawToken);
             static Platform::String ^ GetNarratorReadableString(Platform::String ^ rawString);
 
         private:
+            LocalizationService(_In_ const wchar_t* const overridedLanguage);
             Windows::Globalization::Fonts::LanguageFont ^ GetLanguageFont(LanguageFontType fontType);
             Windows::UI::Text::FontWeight ParseFontWeight(Platform::String ^ fontWeight);
 
-            static Windows::Foundation::Collections::IIterable<Platform::String ^> ^ GetLanguageIdentifiers();
+            Windows::Foundation::Collections::IIterable<Platform::String ^> ^ GetLanguageIdentifiers() const;
 
             // Attached property callbacks
             static void OnFontTypePropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, LanguageFontType oldValue, LanguageFontType newValue);
@@ -72,9 +88,6 @@ namespace CalculatorApp
 
             static std::unordered_map<std::wstring, std::wstring> GetTokenToReadableNameMap();
 
-        private:
-            LocalizationService();
-
             static LocalizationService ^ s_singletonInstance;
 
             Windows::Globalization::Fonts::LanguageFontGroup ^ m_fontGroup;
@@ -82,9 +95,11 @@ namespace CalculatorApp
             Windows::UI::Xaml::FlowDirection m_flowDirection;
             bool m_overrideFontApiValues;
             Platform::String ^ m_fontFamilyOverride;
+            bool m_isLanguageOverrided;
             Windows::UI::Text::FontWeight m_fontWeightOverride;
             double m_uiTextFontScaleFactorOverride;
             double m_uiCaptionFontScaleFactorOverride;
+            std::locale m_locale;
         };
 
     }

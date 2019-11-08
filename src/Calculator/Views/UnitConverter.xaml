@@ -260,14 +260,6 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
 
-        <Storyboard x:Name="TimestampFadeInAnimation">
-            <DoubleAnimation Duration="0:0:1"
-                             From="0"
-                             Storyboard.TargetName="CurrencyTimestampTextBlock"
-                             Storyboard.TargetProperty="Opacity"
-                             To="1"/>
-        </Storyboard>
-
         <MenuFlyout x:Key="CalculationResultContextMenu">
             <MenuFlyoutItem x:Name="CopyMenuItem"
                             x:Uid="CopyMenuItem"
@@ -321,8 +313,6 @@
                                                      Threshold="1"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="GutterTop.Height" Value="0.5*"/>
-                        <Setter Target="GutterBottom.Height" Value="0.5*"/>
                         <Setter Target="GutterLeft.Width" Value="48"/>
                         <Setter Target="GutterRight.Width" Value="48"/>
                         <Setter Target="ColumnLeft.Width" Value="1*"/>
@@ -343,7 +333,7 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-            <VisualStateGroup x:Name="Sizing">
+            <VisualStateGroup x:Name="Sizing" CurrentStateChanged="OnVisualStateChanged">
                 <VisualState x:Name="Wide">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="768" MinWindowWidth="1280"/>
@@ -450,14 +440,85 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+            <VisualStateGroup x:Name="CurrencyLoadingStates">
+                <VisualStateGroup.Transitions>
+                    <VisualTransition From="CurrencyLoadingState" To="CurrencyLoadedState">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Units1" Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Value1Container" Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Units2" Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Value2Container" Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <DoubleAnimation Duration="0:0:1"
+                                             From="0"
+                                             Storyboard.TargetName="CurrencyRatioEqualityBlock"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"/>
+                            <DoubleAnimation Duration="0:0:1"
+                                             From="0"
+                                             Storyboard.TargetName="CurrencyTimestampTextBlock"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"/>
+                            <DoubleAnimation Duration="0:0:1"
+                                             From="0"
+                                             Storyboard.TargetName="Units1"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"/>
+                            <DoubleAnimation Duration="0:0:1"
+                                             From="0"
+                                             Storyboard.TargetName="Value1Container"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"/>
+                            <DoubleAnimation Duration="0:0:1"
+                                             From="0"
+                                             Storyboard.TargetName="Units2"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"/>
+                            <DoubleAnimation Duration="0:0:1"
+                                             From="0"
+                                             Storyboard.TargetName="Value2Container"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"/>
+                        </Storyboard>
+                    </VisualTransition>
+                </VisualStateGroup.Transitions>
+                <VisualState x:Name="CurrencyLoadingState">
+                    <VisualState.Setters>
+                        <Setter Target="CurrencyRatioEqualityBlock.Opacity" Value="0"/>
+                        <Setter Target="CurrencyTimestampTextBlock.Opacity" Value="0"/>
+                        <Setter Target="CurrencyLoadingGrid.Visibility" Value="Visible"/>
+                        <Setter Target="Units1.Visibility" Value="Collapsed"/>
+                        <Setter Target="Value1Container.Visibility" Value="Collapsed"/>
+                        <Setter Target="Units2.Visibility" Value="Collapsed"/>
+                        <Setter Target="Value2Container.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="CurrencyLoadedState">
+                    <VisualState.Setters>
+                        <Setter Target="CurrencyRatioEqualityBlock.Opacity" Value="1"/>
+                        <Setter Target="CurrencyTimestampTextBlock.Opacity" Value="1"/>
+                        <Setter Target="CurrencyLoadingGrid.Visibility" Value="Collapsed"/>
+                        <Setter Target="Units1.Visibility" Value="Visible"/>
+                        <Setter Target="Value1Container.Visibility" Value="Visible"/>
+                        <Setter Target="Units2.Visibility" Value="Visible"/>
+                        <Setter Target="Value2Container.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
         <Grid x:Name="CurrencyLoadingGrid"
               Grid.Row="1"
               Grid.RowSpan="5"
               Grid.Column="0"
-              Grid.ColumnSpan="4"
-              Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+              Grid.ColumnSpan="4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10*"/>
                 <RowDefinition Height="7*"/>
@@ -477,8 +538,7 @@
               Grid.Row="1"
               Grid.Column="1"
               HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
-              Style="{ThemeResource ValueContainerStyle}"
-              Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+              Style="{ThemeResource ValueContainerStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -522,15 +582,13 @@
                   ItemTemplate="{StaticResource UnitTemplate}"
                   ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
                   SelectedItem="{Binding Unit1, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
-                  TabIndex="2"
-                  Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
+                  TabIndex="2"/>
 
         <Grid x:Name="Value2Container"
               Grid.Row="3"
               Grid.Column="1"
               HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
-              Style="{ThemeResource ValueContainerStyle}"
-              Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+              Style="{ThemeResource ValueContainerStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -574,8 +632,7 @@
                   ItemTemplate="{StaticResource UnitTemplate}"
                   ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
                   SelectedItem="{Binding Unit2, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
-                  TabIndex="4"
-                  Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
+                  TabIndex="4"/>
 
         <StackPanel x:Name="SupplementaryResultsPanelInGrid"
                     Grid.Row="5"
@@ -585,8 +642,7 @@
                     HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
                     VerticalAlignment="Top"
                     FlowDirection="{x:Bind LayoutDirection}"
-                    SizeChanged="SupplementaryResultsPanelInGrid_SizeChanged"
-                    Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+                    SizeChanged="SupplementaryResultsPanelInGrid_SizeChanged">
             <local:SupplementaryResults x:Name="SupplementaryResults"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
@@ -644,31 +700,28 @@
         <Grid x:Name="ConverterNumPad"
               Grid.Row="6"
               Grid.Column="1"
-              Margin="0,0,0,6"
+              Margin="3,0,3,3"
               FlowDirection="LeftToRight"
-              RenderTransformOrigin="0.5,0.5">
+              RenderTransformOrigin="0.5,0.5"
+              XYFocusKeyboardNavigation="Enabled">
             <Grid.RenderTransform>
                 <CompositeTransform/>
             </Grid.RenderTransform>
             <Grid.RowDefinitions>
-                <RowDefinition x:Name="GutterTop" Height="0"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition x:Name="GutterBottom" Height="0"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.25*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="0.25*"/>
             </Grid.ColumnDefinitions>
             <Grid x:Uid="DisplayControls"
-                  Grid.Row="1"
-                  Grid.Column="2"
+                  Grid.Row="0"
+                  Grid.Column="1"
                   Grid.ColumnSpan="2"
                   AutomationProperties.HeadingLevel="Level1">
                 <Grid.ColumnDefinitions>
@@ -696,9 +749,9 @@
 
             <local:NumberPad x:Name="NumberPad"
                              x:Uid="NumberPad"
-                             Grid.Row="2"
+                             Grid.Row="1"
                              Grid.RowSpan="4"
-                             Grid.Column="1"
+                             Grid.Column="0"
                              Grid.ColumnSpan="3"
                              VerticalAlignment="Stretch"
                              AutomationProperties.HeadingLevel="Level1"
@@ -707,12 +760,12 @@
                              TabNavigation="Local"/>
             <controls:CalculatorButton x:Name="ConverterNegateButton"
                                        x:Uid="converterNegateButton"
-                                       Grid.Row="5"
-                                       Grid.Column="1"
-                                       Style="{StaticResource SymbolOperatorButtonStyle}"
+                                       Grid.Row="4"
+                                       Grid.Column="0"
+                                       Style="{StaticResource SymbolOperatorKeypadButtonStyle}"
                                        FontSize="16"
                                        ButtonId="Negate"
-                                       Content="&#xe94d;"
+                                       Content="&#xF898;"
                                        TabIndex="6"
                                        Visibility="{x:Bind Model.CurrentCategory.NegateVisibility, Mode=OneWay}"/>
         </Grid>

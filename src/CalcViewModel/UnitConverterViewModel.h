@@ -204,7 +204,7 @@ namespace CalculatorApp
             NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
             void DisplayPasteError();
             void OnValueActivated(IActivatable ^ control);
-            void OnPaste(Platform::String ^ stringToPaste, CalculatorApp::Common::ViewMode mode);
+            void OnPaste(Platform::String ^ stringToPaste);
 
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);
@@ -219,9 +219,6 @@ namespace CalculatorApp
                     _In_ Platform::String ^ toUnit);
             void UpdateValue1AutomationName();
             void UpdateValue2AutomationName();
-            Platform::String ^ Serialize();
-            void Deserialize(Platform::String ^ state);
-            void ResetCategoriesAndRatio();
 
             // Saving And Restoring User Preferences of Category and Associated-Units across Sessions.
             void SaveUserPreferences();
@@ -314,8 +311,6 @@ namespace CalculatorApp
             std::wstring m_valueFromUnlocalized;
             std::wstring m_valueToUnlocalized;
             bool m_relocalizeStringOnSwitch;
-            // For Saving the User Preferences only if the Unit converter ViewModel is initialised for the first time
-            bool m_IsFirstTime;
 
             Platform::String ^ m_localizedValueFromFormat;
             Platform::String ^ m_localizedValueFromDecimalFormat;

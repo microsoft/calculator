@@ -19,7 +19,7 @@ namespace CalculatorApp
 
                 // Use DecimalFormatter as it respects the locale and the user setting
                 Windows::Globalization::NumberFormatting::DecimalFormatter ^ formatter;
-                formatter = CalculatorApp::Common::LocalizationService::GetRegionalSettingsAwareDecimalFormatter();
+                formatter = LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter();
                 formatter->FractionDigits = 0;
                 formatter->IsDecimalPointAlwaysDisplayed = false;
 
@@ -61,7 +61,7 @@ namespace CalculatorApp
                     // Get locale info for List Separator, eg. comma is used in many locales
                     wchar_t listSeparatorString[4] = L"";
                     result = ::GetLocaleInfoEx(
-                        LOCALE_NAME_USER_DEFAULT,
+                        m_resolvedName.c_str(),
                         LOCALE_SLIST,
                         listSeparatorString,
                         static_cast<int>(std::size(listSeparatorString))); // Max length of the expected return value is 4
@@ -85,7 +85,7 @@ namespace CalculatorApp
                     // A value of 0 indicates the symbol follows the currency value.
                     int currencySymbolPrecedence = 1;
                     result = GetLocaleInfoEx(
-                        LOCALE_NAME_USER_DEFAULT,
+                        m_resolvedName.c_str(),
                         LOCALE_IPOSSYMPRECEDES | LOCALE_RETURN_NUMBER,
                         (LPWSTR)&currencySymbolPrecedence,
                         sizeof(currencySymbolPrecedence) / sizeof(WCHAR));
@@ -104,14 +104,14 @@ namespace CalculatorApp
                 // Note: This function returns 0 on failure.
                 // We'll ignore the failure in that case and the CalendarIdentifier would get set to GregorianCalendar.
                 CALID calId;
-                ::GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT, LOCALE_ICALENDARTYPE | LOCALE_RETURN_NUMBER, reinterpret_cast<PWSTR>(&calId), sizeof(calId));
+                ::GetLocaleInfoEx(m_resolvedName.c_str(), LOCALE_ICALENDARTYPE | LOCALE_RETURN_NUMBER, reinterpret_cast<PWSTR>(&calId), sizeof(calId));
 
                 m_calendarIdentifier = GetCalendarIdentifierFromCalid(calId);
 
                 // Get FirstDayOfWeek Date and Time setting
                 wchar_t day[80] = L"";
                 ::GetLocaleInfoEx(
-                    LOCALE_NAME_USER_DEFAULT,
+                    m_resolvedName.c_str(),
                     LOCALE_IFIRSTDAYOFWEEK,            // The first day in a week
                     reinterpret_cast<PWSTR>(day),      // Argument is of type PWSTR
                     static_cast<int>(std::size(day))); // Max return size are 80 characters
@@ -169,20 +169,21 @@ namespace CalculatorApp
                 }
             }
 
-            Platform::String ^ GetEnglishValueFromLocalizedDigits(const std::wstring& localizedString) const
+            Platform::String ^ GetEnglishValueFromLocalizedDigits(Platform::String ^ localizedString) const
             {
                 if (m_resolvedName == L"en-US")
                 {
-                    return ref new Platform::String(localizedString.c_str());
+                    return localizedString;
                 }
 
                 size_t i = 0;
-                size_t length = localizedString.size();
+                auto localizedStringData = localizedString->Data();
+                size_t length = localizedString->Length();
                 std::unique_ptr<wchar_t[]> englishString(new wchar_t[length + 1]); // +1 for the null termination
 
                 for (; i < length; ++i)
                 {
-                    wchar_t ch = localizedString[i];
+                    wchar_t ch = localizedStringData[i];
                     if (!IsEnUsDigit(ch))
                     {
                         for (int j = 0; j < 10; ++j)
@@ -281,18 +282,17 @@ namespace CalculatorApp
                 return m_numberGrouping;
             }
 
-            void RemoveGroupSeparators(const wchar_t* value, const size_t length, std::wstring* rawValue) const
+            Platform::String ^ RemoveGroupSeparators(Platform::String ^ source) const
             {
-                rawValue->clear();
-                rawValue->reserve(length);
-
-                for (size_t i = 0; i < length; i++)
+                std::wstringstream stream;
+                for (auto c = source->Begin(); c < source->End(); ++c)
                 {
-                    if (value[i] != L' ' && value[i] != m_numberGroupSeparator)
+                    if (*c != L' ' && *c != m_numberGroupSeparator)
                     {
-                        rawValue->append(1, value[i]);
+                        stream << *c;
                     }
                 }
+                return ref new Platform::String(stream.str().c_str());
             }
 
             Platform::String ^ GetCalendarIdentifier() const

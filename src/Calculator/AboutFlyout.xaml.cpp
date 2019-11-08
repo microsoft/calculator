@@ -35,11 +35,11 @@ AboutFlyout::AboutFlyout()
 
     this->SetVersionString();
 
-    Header->Text = resourceLoader.GetResourceString("AboutButton/Content");
+    Header->Text = resourceLoader->GetResourceString("AboutButton/Content");
 
     auto copyrightText =
-        LocalizationStringUtil::GetLocalizedString(resourceLoader.GetResourceString("AboutControlCopyright")->Data(), to_wstring(BUILD_YEAR).c_str());
-    AboutControlCopyrightRun->Text = ref new String(copyrightText.c_str());
+        LocalizationStringUtil::GetLocalizedString(resourceLoader->GetResourceString("AboutControlCopyright"), StringReference(to_wstring(BUILD_YEAR).c_str()));
+    AboutControlCopyrightRun->Text = copyrightText;
 }
 
 void AboutFlyout::FeedbackButton_Click(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
@@ -53,16 +53,11 @@ void AboutFlyout::FeedbackButton_Click(_In_ Object ^ sender, _In_ RoutedEventArg
 void AboutFlyout::SetVersionString()
 {
     PackageVersion version = Package::Current->Id->Version;
-    String ^ appName = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
+    String ^ appName = AppResourceProvider::GetInstance()->GetResourceString(L"AppName");
     AboutFlyoutVersion->Text = appName + L" " + version.Major + L"." + version.Minor + L"." + version.Build + L"." + version.Revision;
 }
 
 void AboutFlyout::SetDefaultFocus()
 {
     AboutFlyoutEULA->Focus(::FocusState::Programmatic);
-}
-
-void CalculatorApp::AboutFlyout::UserControl_Loaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
-{
-    TraceLogger::GetInstance().LogAboutFlyoutOpened();
 }

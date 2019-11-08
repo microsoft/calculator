@@ -16,15 +16,48 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+            <VisualStateGroup x:Name="AOTStates">
+                <VisualState x:Name="AOTNormalState"/>
+                <VisualState x:Name="AOTMiniState">
+                    <VisualState.Setters>
+                        <Setter Target="AppName.Visibility" Value="Collapsed"/>
+                        <Setter Target="ExitAlwaysOnTopButton.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <TextBlock x:Name="AppName"
-                   x:Uid="AppName"
-                   Margin="12,0,12,0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   Foreground="{ThemeResource TitleBarForegroundBaseHighBrush}"
-                   FontSize="12"
-                   TextAlignment="Left"
-                   TextTrimming="CharacterEllipsis"/>
+        <Grid x:Name="BackgroundElement"
+              Height="32"
+              Background="Transparent">
+            <TextBlock x:Name="AppName"
+                       x:Uid="AppName"
+                       Margin="12,0,12,0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Foreground="{ThemeResource TitleBarForegroundBaseHighBrush}"
+                       FontSize="12"
+                       TextAlignment="Left"
+                       TextTrimming="CharacterEllipsis"/>
+        </Grid>
+        <Button x:Name="ExitAlwaysOnTopButton"
+                x:Uid="ExitAlwaysOnTopButton"
+                Width="46"
+                Height="Auto"
+                HorizontalAlignment="Left"
+                HorizontalContentAlignment="Center"
+                Style="{ThemeResource CommandBarFlyoutEllipsisButtonStyle}"
+                Background="Transparent"
+                FontFamily="{StaticResource CalculatorFontFamily}"
+                FontSize="14"
+                FontWeight="Thin"
+                x:Load="False"
+                AutomationProperties.AutomationId="ExitAlwaysOnTopButton"
+                Click="AlwaysOnTopButton_Click"
+                Content="&#xEE47;"
+                Visibility="Collapsed">
+            <Button.KeyboardAccelerators>
+                <KeyboardAccelerator Modifiers="Menu" Key="Down"/>
+            </Button.KeyboardAccelerators>
+        </Button>
     </Grid>
 </UserControl>

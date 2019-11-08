@@ -11,6 +11,8 @@
 #include "CalcViewModel/Common/TraceLogger.h"
 #include "CalcViewModel/Common/LocalizationSettings.h"
 #include "Converters/BooleanToVisibilityConverter.h"
+#include <CalcViewModel/Common/AppResourceProvider.h>
+#include "CalcViewModel/Common/LocalizationStringUtil.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -19,6 +21,7 @@ using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace std;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
@@ -29,15 +32,11 @@ CalculatorProgrammerBitFlipPanel::CalculatorProgrammerBitFlipPanel()
     : m_updatingCheckedStates(false)
 {
     InitializeComponent();
-    auto booleanToVisibilityConverter = ref new Converters::BooleanToVisibilityConverter;
-    SetVisibilityBinding(BitFlipPanel, L"IsBinaryBitFlippingEnabled", booleanToVisibilityConverter);
-
     AssignFlipButtons();
 }
 
 void CalculatorProgrammerBitFlipPanel::OnLoaded(Object ^ sender, RoutedEventArgs ^ e)
 {
-    UnsubscribePropertyChanged();
     SubscribePropertyChanged();
 }
 
@@ -51,8 +50,8 @@ void CalculatorProgrammerBitFlipPanel::SubscribePropertyChanged()
     if (Model != nullptr)
     {
         m_propertyChangedToken = Model->PropertyChanged += ref new PropertyChangedEventHandler(this, &CalculatorProgrammerBitFlipPanel::OnPropertyChanged);
-
-        UpdateCheckedStates();
+        m_currentValueBitLength = Model->ValueBitLength;
+        UpdateCheckedStates(true);
     }
 }
 
@@ -67,9 +66,21 @@ void CalculatorProgrammerBitFlipPanel::UnsubscribePropertyChanged()
 
 void CalculatorProgrammerBitFlipPanel::OnPropertyChanged(Object ^ sender, PropertyChangedEventArgs ^ e)
 {
-    if (e->PropertyName == StandardCalculatorViewModel::BinaryDisplayValuePropertyName)
+    if (e->PropertyName == StandardCalculatorViewModel::BinaryDigitsPropertyName)
     {
-        UpdateCheckedStates();
+        UpdateCheckedStates(false);
+        m_currentValueBitLength = Model->ValueBitLength;
+    }
+    else if (
+        e->PropertyName == StandardCalculatorViewModel::IsBitFlipCheckedPropertyName
+        || e->PropertyName == StandardCalculatorViewModel::IsProgrammerPropertyName)
+    {
+        if (Model->IsBitFlipChecked && Model->IsProgrammer)
+        {
+            // OnBitToggle won't update the automation properties when this control isn't displayed
+            // We need to update all automation properties names manually when the BitFlipPanel is displayed again
+            UpdateAutomationPropertiesNames();
+        }
     }
 }
 
@@ -148,14 +159,6 @@ void CalculatorProgrammerBitFlipPanel::AssignFlipButtons()
     m_flipButtons[63] = this->Bit63;
 }
 
-void CalculatorProgrammerBitFlipPanel::SetVisibilityBinding(_In_ FrameworkElement ^ element, _In_ String ^ path, _In_ IValueConverter ^ converter)
-{
-    Binding ^ commandBinding = ref new Binding();
-    commandBinding->Path = ref new PropertyPath(path);
-    commandBinding->Converter = converter;
-    element->SetBinding(VisibilityProperty, commandBinding);
-}
-
 void CalculatorProgrammerBitFlipPanel::OnBitToggled(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     if (m_updatingCheckedStates)
@@ -168,16 +171,16 @@ void CalculatorProgrammerBitFlipPanel::OnBitToggled(_In_ Object ^ sender, _In_ R
     // Also, if the mode is switched to other Calculator modes when the BitFlip panel is open,
     // a race condition exists in which the IsProgrammerMode property is still true and the UpdatePrimaryResult() is called,
     // which continuously alters the Display Value and the state of the Bit Flip buttons.
-    if ((Model->IsBitFlipChecked) && Model->IsProgrammer)
+    if (Model->IsBitFlipChecked && Model->IsProgrammer)
     {
-        TraceLogger::GetInstance().LogBitFlipUsed();
-
         auto flipButton = static_cast<FlipButtons ^>(sender);
+        int index = static_cast<int>(flipButton->Tag);
+        flipButton->SetValue(AutomationProperties::NameProperty, GenerateAutomationPropertiesName(index, flipButton->IsChecked->Value));
         Model->ButtonPressed->Execute(flipButton->ButtonId);
     }
 }
 
-void CalculatorProgrammerBitFlipPanel::UpdateCheckedStates()
+void CalculatorProgrammerBitFlipPanel::UpdateCheckedStates(bool updateAutomationPropertiesNames)
 {
     assert(!m_updatingCheckedStates);
     assert(m_flipButtons.size() == s_numBits);
@@ -187,35 +190,87 @@ void CalculatorProgrammerBitFlipPanel::UpdateCheckedStates()
         return;
     }
 
-    static const wchar_t ch0 = LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit(L'0');
-
-    // Filter any unwanted characters from the displayed string.
-    static constexpr array<wchar_t, 4> unwantedChars = { L' ', Utils::LRE, Utils::PDF, Utils::LRO };
-
-    wstringstream stream;
-    wstring displayValue = Model->BinaryDisplayValue->Data();
-    for (const wchar_t& c : displayValue)
-    {
-        if (find(begin(unwantedChars), end(unwantedChars), c) == unwantedChars.end())
-        {
-            stream << c;
-        }
-    }
-
-    wstring rawDisplay = stream.str();
-    size_t paddingCount = s_numBits - rawDisplay.length();
-    wstring setBits = wstring(paddingCount, ch0) + rawDisplay;
-    assert(setBits.length() == s_numBits);
-
     m_updatingCheckedStates = true;
-    for (unsigned int bitIndex = 0; bitIndex < s_numBits; bitIndex++)
+    auto it = m_flipButtons.begin();
+    int index = 0;
+    bool mustUpdateTextOfMostSignificantDigits = m_currentValueBitLength != Model->ValueBitLength;
+    int previousMSDPosition = GetIndexOfLastBit(m_currentValueBitLength);
+    int newMSDPosition = GetIndexOfLastBit(Model->ValueBitLength);
+    for (bool val : Model->BinaryDigits)
     {
-        // Highest bit (64) is at index 0 in bit string.
-        // To get bit 0, grab from opposite end of string.
-        wchar_t bit = setBits[s_numBits - bitIndex - 1];
-
-        m_flipButtons[bitIndex]->IsChecked = (bit != ch0);
+        FlipButtons ^ flipButton = *it;
+        bool hasValueChanged = flipButton->IsChecked->Value != val;
+        flipButton->IsChecked = val;
+        if (updateAutomationPropertiesNames
+            || hasValueChanged
+            || (mustUpdateTextOfMostSignificantDigits && (index == previousMSDPosition || index == newMSDPosition)))
+        {
+            flipButton->SetValue(AutomationProperties::NameProperty, GenerateAutomationPropertiesName(index, val));
+        }
+        ++it;
+        ++index;
     }
 
     m_updatingCheckedStates = false;
+}
+
+void CalculatorProgrammerBitFlipPanel::UpdateAutomationPropertiesNames()
+{
+    for (FlipButtons ^ flipButton : m_flipButtons)
+    {
+        int index = static_cast<int>(flipButton->Tag);
+        flipButton->SetValue(AutomationProperties::NameProperty, GenerateAutomationPropertiesName(index, flipButton->IsChecked->Value));
+    }
+}
+
+bool CalculatorProgrammerBitFlipPanel::ShouldEnableBit(BitLength length, int index)
+{
+    return index <= GetIndexOfLastBit(length);
+}
+
+int CalculatorProgrammerBitFlipPanel::GetIndexOfLastBit(BitLength length) const
+{
+    switch (length)
+    {
+    case BitLength::BitLengthQWord:
+        return 63;
+    case BitLength::BitLengthDWord:
+        return 31;
+    case BitLength::BitLengthWord:
+        return 15;
+    case BitLength::BitLengthByte:
+        return 7;
+    }
+    return -1;
+}
+
+String ^ CalculatorProgrammerBitFlipPanel::GenerateAutomationPropertiesName(int position, bool value)
+{
+    auto resourceLoader = AppResourceProvider::GetInstance();
+    String ^ automationNameTemplate = resourceLoader->GetResourceString(L"BitFlipItemAutomationName");
+    String ^ bitPosition;
+    if (position == 0)
+    {
+        bitPosition = resourceLoader->GetResourceString(L"LeastSignificantBit");
+    }
+    else
+    {
+        int lastPosition = -1;
+        if (Model != nullptr)
+        {
+            lastPosition = GetIndexOfLastBit(Model->ValueBitLength);
+        }
+
+        if (position == lastPosition)
+        {
+            bitPosition = resourceLoader->GetResourceString(L"MostSignificantBit");
+        }
+        else
+        {
+            String ^ indexName = resourceLoader->GetResourceString(ref new Platform::String(to_wstring(position).c_str()));
+            String ^ bitPositionTemplate = resourceLoader->GetResourceString(L"BitPosition");
+            bitPosition = LocalizationStringUtil::GetLocalizedString(bitPositionTemplate, indexName);
+        }
+    }
+    return LocalizationStringUtil::GetLocalizedString(automationNameTemplate, bitPosition, value ? L"1" : L"0");
 }

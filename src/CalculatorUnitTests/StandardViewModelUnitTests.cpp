@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -16,9 +16,22 @@ using namespace CalculatorApp::Common;
 using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace Windows::Foundation::Collections;
 
 namespace CalculatorUnitTests
 {
+    template <typename T>
+    void CompareVector(IVector<T> ^ vecA, IVector<T> ^ vecB)
+    {
+        if (vecA->Size != vecB->Size)
+            Assert::Fail();
+
+        for (unsigned int i = 0; i < vecA->Size; ++i)
+        {
+            VERIFY_ARE_EQUAL(vecA->GetAt(i), vecB->GetAt(i));
+        }
+    }
+
     void ChangeMode(StandardCalculatorViewModel ^ viewModel, int mode)
     {
         if (mode == 0)
@@ -75,7 +88,6 @@ namespace CalculatorUnitTests
             viewModel->ButtonPressed->Execute(NumbersAndOperatorsEnum::Clear);
             viewModel->ButtonPressed->Execute(NumbersAndOperatorsEnum::ClearEntry);
             viewModel->ClearMemoryCommand->Execute(nullptr);
-            viewModel->Deserialize(ref new Platform::Array<unsigned char>(0));
         }
 
         TESTITEM* currentItem = item;
@@ -388,26 +400,26 @@ namespace CalculatorUnitTests
         {
             m_viewModel->IsScientific = false;
 
-            m_viewModel->OnPaste("-0.99", ViewMode::Standard);
+            m_viewModel->OnPaste("-0.99");
             ValidateViewModelValueAndExpression("-0" + m_decimalSeparator + "99", "");
 
-            m_viewModel->OnPaste("1+1=", ViewMode::Standard);
+            m_viewModel->OnPaste("1+1=");
             ValidateViewModelValueAndExpression("2", "");
 
             // This result is not obvious: it's the result of the previous operation
-            m_viewModel->OnPaste("0=", ViewMode::Standard);
+            m_viewModel->OnPaste("0=");
             ValidateViewModelValueAndExpression("1", "");
 
             // Negative value
-            m_viewModel->OnPaste("-1", ViewMode::Standard);
+            m_viewModel->OnPaste("-1");
             ValidateViewModelValueAndExpression("-1", "");
 
             // Negated expression
-            m_viewModel->OnPaste("-(1+1)", ViewMode::Standard);
+            m_viewModel->OnPaste("-(1+1)");
             ValidateViewModelValueAndSecondaryExpression("-2", "negate(1 + 1)");
 
             // More complicated Negated expression
-            m_viewModel->OnPaste("-(-(-1))", ViewMode::Standard);
+            m_viewModel->OnPaste("-(-(-1))");
             ValidateViewModelValueAndSecondaryExpression("-1", "negate(0 - (0 - 1))");
 
             // Switch to scientific mode
@@ -416,16 +428,25 @@ namespace CalculatorUnitTests
             VERIFY_IS_FALSE(m_viewModel->IsFToEChecked);
 
             //// Positive exponent
-            m_viewModel->OnPaste("1.23e+10", ViewMode::Scientific);
+            m_viewModel->OnPaste("1.23e+10");
             ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e+10", "");
 
+            m_viewModel->OnPaste("1.23e10");
+            ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e+10", "");
+
+            m_viewModel->OnPaste("135e10");
+            ValidateViewModelValueAndExpression("135" + m_decimalSeparator + "e+10", "");
+
             //// Negative exponent
-            m_viewModel->OnPaste("1.23e-10", ViewMode::Scientific);
+            m_viewModel->OnPaste("1.23e-10");
             ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e-10", "");
 
             //// Uppercase E (for exponent)
-            m_viewModel->OnPaste("1.23E-10", ViewMode::Scientific);
+            m_viewModel->OnPaste("1.23E-10");
             ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e-10", "");
+
+            m_viewModel->OnPaste("135E10");
+            ValidateViewModelValueAndExpression("135" + m_decimalSeparator + "e+10", "");
         }
 
         // Verify Calculator CalculationResultAutomationName is set correctly
@@ -488,6 +509,12 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->DecimalDisplayValue), StringReference(L"15"));
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->OctalDisplayValue), StringReference(L"17"));
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->BinaryDisplayValue), StringReference(L"1111"));
+            auto val = ref new Platform::Collections::Vector<bool>(64, false);
+            val->SetAt(0, true);
+            val->SetAt(1, true);
+            val->SetAt(2, true);
+            val->SetAt(3, true);
+            CompareVector<bool>(m_viewModel->BinaryDigits, val);
         }
 
         // Test Button disabling in different Radixes
@@ -535,6 +562,24 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->DecimalDisplayValue), StringReference(L"123,456,789"));
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->OctalDisplayValue), StringReference(L"726 746 425"));
             VERIFY_ARE_EQUAL(Utils::GetStringValue(m_viewModel->BinaryDisplayValue), StringReference(L"0111 0101 1011 1100 1101 0001 0101"));
+            auto val = ref new Platform::Collections::Vector<bool>(64, false);
+            val->SetAt(0, true);
+            val->SetAt(2, true);
+            val->SetAt(4, true);
+            val->SetAt(8, true);
+            val->SetAt(10, true);
+            val->SetAt(11, true);
+            val->SetAt(14, true);
+            val->SetAt(15, true);
+            val->SetAt(16, true);
+            val->SetAt(17, true);
+            val->SetAt(19, true);
+            val->SetAt(20, true);
+            val->SetAt(22, true);
+            val->SetAt(24, true);
+            val->SetAt(25, true);
+            val->SetAt(26, true);
+            CompareVector<bool>(m_viewModel->BinaryDigits, val);
         }
 
         // Test Not functionality
@@ -554,6 +599,9 @@ namespace CalculatorUnitTests
                 Utils::GetStringValue(m_viewModel->BinaryDisplayValue),
                 StringReference(L"1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1110"));
             VERIFY_ARE_EQUAL(m_viewModel->DisplayValue, StringReference(L"-2"));
+            auto val = ref new Platform::Collections::Vector<bool>(64, true);
+            val->SetAt(0, false);
+            CompareVector<bool>(m_viewModel->BinaryDigits, val);
         }
 
         // Test And Or functionality

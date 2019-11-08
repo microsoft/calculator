@@ -153,277 +153,265 @@
     <value>Taxminan teng</value>
     <comment>The text that shows at the bottom of the converter to head the supplementary results. Indicates that the main result is approximately equal to the supplementary results.</comment>
   </data>
-  <data name="BitAutomationName" xml:space="preserve">
-    <value>Bit </value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  <data name="BitFlipItemAutomationName" xml:space="preserve">
+    <value>%1, qiymati %2</value>
+    <comment>{Locked="%1","%2"}. String used in automation name for each bit in bit flip. %1 will be replaced by the position of the bit (1st bit, 3rd bit), %2 by a binary value (1 or 0)</comment>
   </data>
-  <data name="ValueAutomationName" xml:space="preserve">
-    <value>Qiymat </value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
-  </data>
-  <data name="BinaryZeroValueAutomationName" xml:space="preserve">
-    <value>Nol</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
-  </data>
-  <data name="BinaryOneValueAutomationName" xml:space="preserve">
-    <value>Bir</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  <data name="BitPosition" xml:space="preserve">
+    <value>%1-bit</value>
+    <comment>{Locked="%1"}. Sub-string used to indicate the position of a bit (e.g. 1st bit, 2nd bit...)</comment>
   </data>
   <data name="63" xml:space="preserve">
-    <value>63-chi </value>
+    <value>63-chi</value>
     <comment>Sub-string used in automation name for 63 bit in bit flip</comment>
   </data>
   <data name="62" xml:space="preserve">
-    <value>62-chi </value>
+    <value>62-chi</value>
     <comment>Sub-string used in automation name for 62 bit in bit flip</comment>
   </data>
   <data name="61" xml:space="preserve">
-    <value>61-chi </value>
+    <value>61-chi</value>
     <comment>Sub-string used in automation name for 61 bit in bit flip</comment>
   </data>
   <data name="60" xml:space="preserve">
-    <value>60-chi </value>
+    <value>60-chi</value>
     <comment>Sub-string used in automation name for 60 bit in bit flip</comment>
   </data>
   <data name="59" xml:space="preserve">
-    <value>59-chi </value>
+    <value>59-chi</value>
     <comment>Sub-string used in automation name for 59 bit in bit flip</comment>
   </data>
   <data name="58" xml:space="preserve">
-    <value>58-chi </value>
+    <value>58-chi</value>
     <comment>Sub-string used in automation name for 58 bit in bit flip</comment>
   </data>
   <data name="57" xml:space="preserve">
-    <value>57-chi </value>
+    <value>57-chi</value>
     <comment>Sub-string used in automation name for 57 bit in bit flip</comment>
   </data>
   <data name="56" xml:space="preserve">
-    <value>56-chi </value>
+    <value>56-chi</value>
     <comment>Sub-string used in automation name for 56 bit in bit flip</comment>
   </data>
   <data name="55" xml:space="preserve">
-    <value>55-chi </value>
+    <value>55-chi</value>
     <comment>Sub-string used in automation name for 55 bit in bit flip</comment>
   </data>
   <data name="54" xml:space="preserve">
-    <value>54-chi </value>
+    <value>54-chi</value>
     <comment>Sub-string used in automation name for 54 bit in bit flip</comment>
   </data>
   <data name="53" xml:space="preserve">
-    <value>53-chi </value>
+    <value>53-chi</value>
     <comment>Sub-string used in automation name for 53 bit in bit flip</comment>
   </data>
   <data name="52" xml:space="preserve">
-    <value>52-chi </value>
+    <value>52-chi</value>
     <comment>Sub-string used in automation name for 52 bit in bit flip</comment>
   </data>
   <data name="51" xml:space="preserve">
-    <value>51-chi </value>
+    <value>51-chi</value>
     <comment>Sub-string used in automation name for 51 bit in bit flip</comment>
   </data>
   <data name="50" xml:space="preserve">
-    <value>50-chi </value>
+    <value>50-chi</value>
     <comment>Sub-string used in automation name for 50 bit in bit flip</comment>
   </data>
   <data name="49" xml:space="preserve">
-    <value>49-chi </value>
+    <value>49-chi</value>
     <comment>Sub-string used in automation name for 49 bit in bit flip</comment>
   </data>
   <data name="48" xml:space="preserve">
-    <value>48-chi </value>
+    <value>48-chi</value>
     <comment>Sub-string used in automation name for 48 bit in bit flip</comment>
   </data>
   <data name="47" xml:space="preserve">
-    <value>47-chi </value>
+    <value>47-chi</value>
     <comment>Sub-string used in automation name for 47 bit in bit flip</comment>
   </data>
   <data name="46" xml:space="preserve">
-    <value>46-chi </value>
+    <value>46-chi</value>
     <comment>Sub-string used in automation name for 46 bit in bit flip</comment>
   </data>
   <data name="45" xml:space="preserve">
-    <value>45-chi </value>
+    <value>45-chi</value>
     <comment>Sub-string used in automation name for 45 bit in bit flip</comment>
   </data>
   <data name="44" xml:space="preserve">
-    <value>44-chi </value>
+    <value>44-chi</value>
     <comment>Sub-string used in automation name for 44 bit in bit flip</comment>
   </data>
   <data name="43" xml:space="preserve">
-    <value>43-chi </value>
+    <value>43-chi</value>
     <comment>Sub-string used in automation name for 43 bit in bit flip</comment>
   </data>
   <data name="42" xml:space="preserve">
-    <value>42-chi </value>
+    <value>42-chi</value>
     <comment>Sub-string used in automation name for 42 bit in bit flip</comment>
   </data>
   <data name="41" xml:space="preserve">
-    <value>41-chi </value>
+    <value>41-chi</value>
     <comment>Sub-string used in automation name for 41 bit in bit flip</comment>
   </data>
   <data name="40" xml:space="preserve">
-    <value>40-chi </value>
+    <value>40-chi</value>
     <comment>Sub-string used in automation name for 40 bit in bit flip</comment>
   </data>
   <data name="39" xml:space="preserve">
-    <value>39-chi </value>
+    <value>39-chi</value>
     <comment>Sub-string used in automation name for 39 bit in bit flip</comment>
   </data>
   <data name="38" xml:space="preserve">
-    <value>38-chi </value>
+    <value>38-chi</value>
     <comment>Sub-string used in automation name for 38 bit in bit flip</comment>
   </data>
   <data name="37" xml:space="preserve">
-    <value>37-chi </value>
+    <value>37-chi</value>
     <comment>Sub-string used in automation name for 37 bit in bit flip</comment>
   </data>
   <data name="36" xml:space="preserve">
-    <value>36-chi </value>
+    <value>36-chi</value>
     <comment>Sub-string used in automation name for 36 bit in bit flip</comment>
   </data>
   <data name="35" xml:space="preserve">
-    <value>35-chi </value>
+    <value>35-chi</value>
     <comment>Sub-string used in automation name for 35 bit in bit flip</comment>
   </data>
   <data name="34" xml:space="preserve">
-    <value>34-chi </value>
+    <value>34-chi</value>
     <comment>Sub-string used in automation name for 34 bit in bit flip</comment>
   </data>
   <data name="33" xml:space="preserve">
-    <value>33-chi </value>
+    <value>33-chi</value>
     <comment>Sub-string used in automation name for 33 bit in bit flip</comment>
   </data>
   <data name="32" xml:space="preserve">
-    <value>32-chi </value>
+    <value>32-chi</value>
     <comment>Sub-string used in automation name for 32 bit in bit flip</comment>
   </data>
   <data name="31" xml:space="preserve">
-    <value>31-chi </value>
+    <value>31-chi</value>
     <comment>Sub-string used in automation name for 31 bit in bit flip</comment>
   </data>
   <data name="30" xml:space="preserve">
-    <value>30-chi </value>
+    <value>30-chi</value>
     <comment>Sub-string used in automation name for 30 bit in bit flip</comment>
   </data>
   <data name="29" xml:space="preserve">
-    <value>29-chi </value>
+    <value>29-chi</value>
     <comment>Sub-string used in automation name for 29 bit in bit flip</comment>
   </data>
   <data name="28" xml:space="preserve">
-    <value>28-chi </value>
+    <value>28-chi</value>
     <comment>Sub-string used in automation name for 28 bit in bit flip</comment>
   </data>
   <data name="27" xml:space="preserve">
-    <value>27-chi </value>
+    <value>27-chi</value>
     <comment>Sub-string used in automation name for 27 bit in bit flip</comment>
   </data>
   <data name="26" xml:space="preserve">
-    <value>26-chi </value>
+    <value>26-chi</value>
     <comment>Sub-string used in automation name for 26 bit in bit flip</comment>
   </data>
   <data name="25" xml:space="preserve">
-    <value>25-chi </value>
+    <value>25-chi</value>
     <comment>Sub-string used in automation name for 25 bit in bit flip</comment>
   </data>
   <data name="24" xml:space="preserve">
-    <value>24-chi </value>
+    <value>24-chi</value>
     <comment>Sub-string used in automation name for 24 bit in bit flip</comment>
   </data>
   <data name="23" xml:space="preserve">
-    <value>23-chi </value>
+    <value>23-chi</value>
     <comment>Sub-string used in automation name for 23 bit in bit flip</comment>
   </data>
   <data name="22" xml:space="preserve">
-    <value>22-chi </value>
+    <value>22-chi</value>
     <comment>Sub-string used in automation name for 22 bit in bit flip</comment>
   </data>
   <data name="21" xml:space="preserve">
-    <value>21-chi </value>
+    <value>21-chi</value>
     <comment>Sub-string used in automation name for 21 bit in bit flip</comment>
   </data>
   <data name="20" xml:space="preserve">
-    <value>20-chi </value>
+    <value>20-chi</value>
     <comment>Sub-string used in automation name for 20 bit in bit flip</comment>
   </data>
   <data name="19" xml:space="preserve">
-    <value>19-chi </value>
+    <value>19-chi</value>
     <comment>Sub-string used in automation name for 19 bit in bit flip</comment>
   </data>
   <data name="18" xml:space="preserve">
-    <value>18-chi </value>
+    <value>18-chi</value>
     <comment>Sub-string used in automation name for 18 bit in bit flip</comment>
   </data>
   <data name="17" xml:space="preserve">
-    <value>17-chi </value>
+    <value>17-chi</value>
     <comment>Sub-string used in automation name for 17 bit in bit flip</comment>
   </data>
   <data name="16" xml:space="preserve">
-    <value>16-chi </value>
+    <value>16-chi</value>
     <comment>Sub-string used in automation name for 16 bit in bit flip</comment>
   </data>
   <data name="15" xml:space="preserve">
-    <value>15-chi </value>
+    <value>15-chi</value>
     <comment>Sub-string used in automation name for 15 bit in bit flip</comment>
   </data>
   <data name="14" xml:space="preserve">
-    <value>14-chi </value>
+    <value>14-chi</value>
     <comment>Sub-string used in automation name for 14 bit in bit flip</comment>
   </data>
   <data name="13" xml:space="preserve">
-    <value>13-chi </value>
+    <value>13-chi</value>
     <comment>Sub-string used in automation name for 13 bit in bit flip</comment>
   </data>
   <data name="12" xml:space="preserve">
-    <value>12-chi </value>
+    <value>12-chi</value>
     <comment>Sub-string used in automation name for 12 bit in bit flip</comment>
   </data>
   <data name="11" xml:space="preserve">
-    <value>11-chi </value>
+    <value>11-chi</value>
     <comment>Sub-string used in automation name for 11 bit in bit flip</comment>
   </data>
   <data name="10" xml:space="preserve">
-    <value>10-chi </value>
+    <value>10-chi</value>
     <comment>Sub-string used in automation name for 10 bit in bit flip</comment>
   </data>
   <data name="9" xml:space="preserve">
-    <value>9-chi </value>
+    <value>9-chi</value>
     <comment>Sub-string used in automation name for 9 bit in bit flip</comment>
   </data>
   <data name="8" xml:space="preserve">
-    <value>8-chi </value>
+    <value>8-chi</value>
     <comment>Sub-string used in automation name for 8 bit in bit flip</comment>
   </data>
   <data name="7" xml:space="preserve">
-    <value>7-chi </value>
+    <value>7-chi</value>
     <comment>Sub-string used in automation name for 7 bit in bit flip</comment>
   </data>
   <data name="6" xml:space="preserve">
-    <value>6-chi </value>
+    <value>6-chi</value>
     <comment>Sub-string used in automation name for 6 bit in bit flip</comment>
   </data>
   <data name="5" xml:space="preserve">
-    <value>5-chi </value>
+    <value>5-chi</value>
     <comment>Sub-string used in automation name for 5 bit in bit flip</comment>
   </data>
   <data name="4" xml:space="preserve">
-    <value>4-chi </value>
+    <value>4-chi</value>
     <comment>Sub-string used in automation name for 4 bit in bit flip</comment>
   </data>
   <data name="3" xml:space="preserve">
-    <value>3-chi </value>
+    <value>3-chi</value>
     <comment>Sub-string used in automation name for 3 bit in bit flip</comment>
   </data>
   <data name="2" xml:space="preserve">
-    <value>2-chi </value>
+    <value>2-chi</value>
     <comment>Sub-string used in automation name for 2 bit in bit flip</comment>
   </data>
   <data name="1" xml:space="preserve">
-    <value>1-chi </value>
+    <value>1-chi</value>
     <comment>Sub-string used in automation name for 1 bit in bit flip</comment>
-  </data>
-  <data name="0" xml:space="preserve">
-    <value>0-chi </value>
-    <comment>Sub-string used in automation name for 0 bit in bit flip</comment>
   </data>
   <data name="MemoryButton_Open" xml:space="preserve">
     <value>Xotira qalqib chiqishini ochish</value>
@@ -432,6 +420,14 @@
   <data name="MemoryButton_Close" xml:space="preserve">
     <value>Xotira qalqib chiqishini yopish</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
+  </data>
+  <data name="AlwaysOnTop_Enter" xml:space="preserve">
+    <value>Boshqa dasturlar ustida ochish</value>
+    <comment>This is the tool tip automation name for the always-on-top button when out of always-on-top mode.</comment>
+  </data>
+  <data name="AlwaysOnTop_Exit" xml:space="preserve">
+    <value>Butun ekran rejimiga qaytish</value>
+    <comment>This is the tool tip automation name for the always-on-top button when in always-on-top mode.</comment>
   </data>
   <data name="MemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Xotira</value>
@@ -544,6 +540,10 @@
   <data name="Format_CalculatorResults" xml:space="preserve">
     <value>Displey - bu %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator results text block. %1 = Localized display value, e.g. "50".</comment>
+  </data>
+  <data name="Format_CalculatorAlwaysOnTopResults" xml:space="preserve">
+    <value>Ifoda – %1, hozir kiritilgan qiymat – %2</value>
+    <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
     <value>Displey %1 ochko</value>
@@ -901,7 +901,10 @@
     <value>Chap qavs</value>
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
-  
+  <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
+    <value>Chap qavs, ochiq qavslar soni - %1</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
+  </data>
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>O‘ng qavs</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
@@ -1053,6 +1056,22 @@
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Toifalar pastga ochiladigan ro‘yxati</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
+  </data>
+  <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Boshqa dasturlar ustida ochish</value>
+    <comment>Screen reader prompt for the Always-on-Top button when in normal mode.</comment>
+  </data>
+  <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Butun ekran rejimiga qaytish</value>
+    <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
+  </data>
+  <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Boshqa dasturlar ustida ochish</value>
+    <comment>This is the tool tip automation name for the Always-on-Top button when in normal mode.</comment>
+  </data>
+  <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Butun ekran rejimiga qaytish</value>
+    <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
     <value>%1 %2 dan o‘girildi</value>
@@ -2429,9 +2448,9 @@
     <value>Farq</value>
     <comment>Difference result label</comment>
   </data>
-  <data name="Date_FromLabel.Text" xml:space="preserve">
+  <data name="DateDiff_FromHeader.Header" xml:space="preserve">
     <value>Quyidagidan</value>
-    <comment>From Date label for Date Picker</comment>
+    <comment>From Date Header for Difference Date Picker</comment>
   </data>
   <data name="MonthsLabel.Text" xml:space="preserve">
     <value>Oy</value>
@@ -2441,9 +2460,9 @@
     <value>Olib tashlash</value>
     <comment>Subtract toggle button text</comment>
   </data>
-  <data name="Date_ToLabel.Text" xml:space="preserve">
+  <data name="DateDiff_ToHeader.Header" xml:space="preserve">
     <value>Quyidagigacha</value>
-    <comment>To Date label for Date Picker</comment>
+    <comment>To Date Header for Difference Date Picker</comment>
   </data>
   <data name="YearsLabel.Text" xml:space="preserve">
     <value>Yil</value>
@@ -2903,5 +2922,29 @@
   <data name="AboutControlServicesAgreement.Text" xml:space="preserve">
     <value>Microsoft xizmatlaridan foydalanish shartnomasi</value>
     <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
+  </data>
+  <data name="UnitAbbreviation_Pyeong" xml:space="preserve">
+    <value>Pyon</value>
+    <comment>An abbreviation for a measurement unit of area.</comment>
+  </data>
+  <data name="UnitName_Pyeong" xml:space="preserve">
+    <value>Pyon</value>
+    <comment>A measurement unit for area.</comment>
+  </data>
+  <data name="AddSubtract_Date_FromHeader.Header" xml:space="preserve">
+    <value>Quyidagidan</value>
+    <comment>From Date Header for AddSubtract Date Picker</comment>
+  </data>
+  <data name="CalculationResultScrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hisoblash natijasini chapga surish</value>
+    <comment>Automation label for the "Scroll Left" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
+  </data>
+  <data name="CalculationResultScrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hisoblash natijasini oʻngga surish</value>
+    <comment>Automation label for the "Scroll Right" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
+  </data>
+  <data name="CalculationFailed" xml:space="preserve">
+    <value>Hisoblash amalga oshmadi</value>
+    <comment>Text displayed when the application is not able to do a calculation</comment>  
   </data>
 </root>

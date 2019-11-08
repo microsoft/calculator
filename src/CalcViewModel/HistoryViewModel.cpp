@@ -118,6 +118,9 @@ void HistoryViewModel::SetCalculatorDisplay(CalculatorDisplay& calculatorDisplay
 
 void HistoryViewModel::ShowItem(_In_ HistoryItemViewModel ^ e)
 {
+    unsigned int index;
+    Items->IndexOf(e, &index);
+    TraceLogger::GetInstance()->LogHistoryItemLoad((ViewMode)m_currentMode, ItemSize, (int)(index));
     HistoryItemClicked(e);
 }
 
@@ -149,7 +152,6 @@ void HistoryViewModel::OnHideCommand(_In_ Platform::Object ^ e)
 
 void HistoryViewModel::OnClearCommand(_In_ Platform::Object ^ e)
 {
-    TraceLogger::GetInstance().LogClearHistory();
     if (AreHistoryShortcutsEnabled == true)
     {
         m_calculatorManager->ClearHistory();
@@ -162,7 +164,11 @@ void HistoryViewModel::OnClearCommand(_In_ Platform::Object ^ e)
             UpdateItemSize();
         }
 
-        MakeHistoryClearedNarratorAnnouncement(HistoryResourceKeys::HistoryCleared, m_localizedHistoryCleared);
+        if (m_localizedHistoryCleared == nullptr)
+        {
+            m_localizedHistoryCleared = AppResourceProvider::GetInstance()->GetResourceString(HistoryResourceKeys::HistoryCleared);
+        }
+        HistoryAnnouncement = CalculatorAnnouncement::GetHistoryClearedAnnouncement(m_localizedHistoryCleared);
     }
 }
 
@@ -367,11 +373,4 @@ bool HistoryViewModel::IsValid(_In_ CalculationManager::HISTORYITEM item)
 void HistoryViewModel::UpdateItemSize()
 {
     ItemSize = Items->Size;
-}
-
-void HistoryViewModel::MakeHistoryClearedNarratorAnnouncement(String ^ resourceKey, String ^ &formatVariable)
-{
-    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(resourceKey, formatVariable);
-
-    HistoryAnnouncement = CalculatorAnnouncement::GetHistoryClearedAnnouncement(announcement);
 }

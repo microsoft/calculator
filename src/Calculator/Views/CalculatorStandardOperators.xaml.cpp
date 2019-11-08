@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -8,6 +8,7 @@
 
 #include "pch.h"
 #include "CalculatorStandardOperators.xaml.h"
+#include "Controls/CalculatorButton.h"
 
 using namespace CalculatorApp;
 

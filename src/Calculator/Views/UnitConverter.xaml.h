@@ -89,5 +89,6 @@ namespace CalculatorApp
 
         bool m_isAnimationEnabled;
         void SupplementaryResultsPanelInGrid_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
+        void OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e);
     };
 }

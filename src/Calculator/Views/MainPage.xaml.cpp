@@ -10,6 +10,7 @@
 #include "CalcViewModel/Common/AppResourceProvider.h"
 #include "Views/Memory.xaml.h"
 #include "Converters/BooleanToVisibilityConverter.h"
+#include "CalcViewModel/Common/LocalizationStringUtil.h"
 #include "Common/AppLifecycleLogger.h"
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -70,7 +71,9 @@ MainPage::MainPage()
 
     KeyboardShortcutManager::Initialize();
 
+    Application::Current->Suspending += ref new SuspendingEventHandler(this, &MainPage::App_Suspending);
     m_model->PropertyChanged += ref new PropertyChangedEventHandler(this, &MainPage::OnAppPropertyChanged);
+    m_accessibilitySettings = ref new AccessibilitySettings();
 
     double sizeInInches = 0.0;
 
@@ -243,6 +246,8 @@ void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
     }
 
     m_windowSizeEventToken = Window::Current->SizeChanged += ref new WindowSizeChangedEventHandler(this, &MainPage::WindowSizeChanged);
+    m_accessibilitySettingsToken = m_accessibilitySettings->HighContrastChanged +=
+        ref new Windows::Foundation::TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &CalculatorApp::MainPage::OnHighContrastChanged);
     UpdateViewState();
 
     SetHeaderAutomationName();
@@ -251,13 +256,21 @@ void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
     // Delay load things later when we get a chance.
     this->Dispatcher->RunAsync(
         CoreDispatcherPriority::Normal, ref new DispatchedHandler([]() {
-            if (TraceLogger::GetInstance().UpdateWindowIdLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
+            if (TraceLogger::GetInstance()->IsWindowIdInLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
             {
-                TraceLogger::GetInstance().LogAppLaunchComplete();
                 AppLifecycleLogger::GetInstance().LaunchUIResponsive();
                 AppLifecycleLogger::GetInstance().LaunchVisibleComplete();
             }
         }));
+}
+
+void MainPage::OnHighContrastChanged(_In_ AccessibilitySettings ^ /*sender*/, _In_ Object ^ /*args*/)
+{
+    if (Model->IsAlwaysOnTop && this->ActualHeight < 394)
+    {
+        // Sets to default always-on-top size to force re-layout
+        ApplicationView::GetForCurrentView()->TryResizeView(Size(320, 394));
+    }
 }
 
 void MainPage::SetDefaultFocus()
@@ -293,13 +306,16 @@ void MainPage::EnsureCalculator()
         Binding ^ isProgramerBinding = ref new Binding();
         isProgramerBinding->Path = ref new PropertyPath(L"IsProgrammer");
         m_calculator->SetBinding(m_calculator->IsProgrammerProperty, isProgramerBinding);
+        Binding ^ isAlwaysOnTopBinding = ref new Binding();
+        isAlwaysOnTopBinding->Path = ref new PropertyPath(L"IsAlwaysOnTop");
+        m_calculator->SetBinding(m_calculator->IsAlwaysOnTopProperty, isAlwaysOnTopBinding);
         m_calculator->Style = CalculatorBaseStyle;
 
         CalcHolder->Child = m_calculator;
 
         // Calculator's "default" state is visible, but if we get delay loaded
         // when in converter, we should not be visible. This is not a problem for converter
-        // since it's default state is hidden.
+        // since its default state is hidden.
         ShowHideControls(this->Model->Mode);
     }
 
@@ -375,7 +391,7 @@ void MainPage::OnNavPaneOpening(_In_ MUXC::NavigationView ^ sender, _In_ Object 
 void MainPage::OnNavPaneOpened(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
 {
     KeyboardShortcutManager::HonorShortcuts(false);
-    TraceLogger::GetInstance().LogNavBarOpened();
+    TraceLogger::GetInstance()->LogNavBarOpened();
 }
 
 void MainPage::OnNavPaneClosed(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
@@ -478,6 +494,8 @@ void MainPage::UnregisterEventHandlers()
 {
     Window::Current->SizeChanged -= m_windowSizeEventToken;
     m_windowSizeEventToken.Value = 0;
+    m_accessibilitySettings->HighContrastChanged -= m_accessibilitySettingsToken;
+    m_accessibilitySettingsToken.Value = 0;
 
     if (m_calculator != nullptr)
     {
@@ -493,25 +511,20 @@ void MainPage::SetHeaderAutomationName()
     String ^ name;
     if (NavCategory::IsDateCalculatorViewMode(mode))
     {
-        name = resProvider.GetResourceString(L"HeaderAutomationName_Date");
+        name = resProvider->GetResourceString(L"HeaderAutomationName_Date");
     }
     else
     {
-        wstring full;
+        String ^ full;
         if (NavCategory::IsCalculatorViewMode(mode))
         {
-            full = resProvider.GetResourceString(L"HeaderAutomationName_Calculator")->Data();
+            full = resProvider->GetResourceString(L"HeaderAutomationName_Calculator");
         }
         else if (NavCategory::IsConverterViewMode(mode))
         {
-            full = resProvider.GetResourceString(L"HeaderAutomationName_Converter")->Data();
+            full = resProvider->GetResourceString(L"HeaderAutomationName_Converter");
         }
-
-        string::size_type found = full.find(L"%1");
-        wstring strMode = m_model->CategoryName->Data();
-        full = full.replace(found, 2, strMode);
-
-        name = ref new String(full.c_str());
+        name = LocalizationStringUtil::GetLocalizedString(full, m_model->CategoryName);
     }
 
     AutomationProperties::SetName(Header, name);
@@ -527,4 +540,25 @@ void MainPage::AnnounceCategoryName()
 void MainPage::OnNavItemInvoked(MUXC::NavigationView ^ /*sender*/, _In_ MUXC::NavigationViewItemInvokedEventArgs ^ e)
 {
     NavView->IsPaneOpen = false;
+}
+
+void MainPage::TitleBarAlwaysOnTopButtonClick(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
+{
+    auto bounds = Window::Current->Bounds;
+    Model->ToggleAlwaysOnTop(bounds.Width, bounds.Height);
+}
+
+void MainPage::AlwaysOnTopButtonClick(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
+{
+    Model->ToggleAlwaysOnTop(0, 0);
+}
+
+void MainPage::App_Suspending(Object ^ sender, Windows::ApplicationModel::SuspendingEventArgs ^ e)
+{
+    if (m_model->IsAlwaysOnTop)
+    {
+        ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
+        localSettings->Values->Insert(ApplicationViewModel::WidthLocalSettings, this->ActualWidth);
+        localSettings->Values->Insert(ApplicationViewModel::HeightLocalSettings, this->ActualHeight);
+    }
 }

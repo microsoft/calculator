@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -10,6 +10,7 @@
 
 #include "Views/NumberPad.g.h"
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "CalcManager/Header Files/RadixType.h"
 
 namespace CalculatorApp
 {
@@ -20,6 +21,7 @@ namespace CalculatorApp
         DEPENDENCY_PROPERTY_OWNER(NumberPad);
 
         DEPENDENCY_PROPERTY(Windows::UI::Xaml::Style ^, ButtonStyle);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(int, CurrentRadixType, safe_cast<int>(::RADIX_TYPE::DEC_RADIX));
 
         property bool IsErrorVisualState
         {
@@ -27,9 +29,10 @@ namespace CalculatorApp
             void set(bool value);
         }
 
-        void ProgModeRadixChange();
-
     private:
+        void OnCurrentRadixTypePropertyChanged(int oldValue, int newValue);
+
+
         bool m_isErrorVisualState;
     };
 }

@@ -11,6 +11,8 @@
 #include "Controls/CalculatorButton.h"
 #include "Controls/CalculationResult.h"
 #include "Controls/OverflowTextBlock.h"
+#include "Controls/OperatorPanelListView.h"
+#include "Controls/OperatorPanelButton.h"
 #include "CalcViewModel/HistoryViewModel.h"
 #include "Views/CalculatorProgrammerDisplayPanel.xaml.h"
 #include "Views/CalculatorProgrammerOperators.xaml.h"
@@ -18,6 +20,7 @@
 #include "Views/HistoryList.xaml.h"
 #include "Views/Memory.xaml.h"
 #include "Views/OperatorsPanel.xaml.h"
+#include "Views/StateTriggers/ControlSizeTrigger.h"
 
 namespace CalculatorApp
 {
@@ -53,6 +56,7 @@ public
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, IsStandard, false);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, IsScientific, false);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, IsProgrammer, false);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, IsAlwaysOnTop, false);
 
         COMMAND_FOR_METHOD(HistoryButtonPressed, Calculator::ToggleHistoryFlyout);
 
@@ -65,7 +69,6 @@ public
         void CloseMemoryFlyout();
 
         void SetDefaultFocus();
-
     private:
         void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
@@ -75,20 +78,23 @@ public
         void UpdateMemoryState();
         void UpdateHistoryState();
 
-        void CalculationResultsOnSelected(_In_ Platform::Object ^ sender);
         void OnContextRequested(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::ContextRequestedEventArgs ^ e);
         void OnContextCanceled(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnIsScientificPropertyChanged(bool oldValue, bool newValue);
         void OnIsProgrammerPropertyChanged(bool oldValue, bool newValue);
         void OnIsStandardPropertyChanged(bool oldValue, bool newValue);
+        void OnIsAlwaysOnTopPropertyChanged(bool oldValue, bool newValue);
         void OnIsInErrorPropertyChanged();
         void OnCalcPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ e);
-        void OnStoryboardCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
-        void OnLayoutStateChanged(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
+        void OnLayoutVisualStateCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
+        void OnModeVisualStateCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
+        void OnErrorVisualStateCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
+        void OnDisplayVisualStateCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void EnsureScientific();
         void EnsureProgrammer();
         void SetFontSizeResources();
-        std::wstring GetCurrentLayoutState();
+        Platform::String ^ GetCurrentLayoutState();
+        void Calculator_SizeChanged(Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
 
     private:
         Windows::UI::Xaml::Controls::ListView ^ m_tokenList;
@@ -133,11 +139,9 @@ public
         void EnableMemoryControls(bool enable);
         void OnMemoryFlyOutTapped(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         void OnHistoryFlyOutTapped(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
-        bool IsValidRegularExpression(std::wstring str);
         void DockPanelTapped(_In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
-        void OnErrorLayoutCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void OnHistoryAccessKeyInvoked(_In_ Windows::UI::Xaml::UIElement ^ sender, _In_ Windows::UI::Xaml::Input::AccessKeyInvokedEventArgs ^ args);
         void OnMemoryAccessKeyInvoked(_In_ Windows::UI::Xaml::UIElement ^ sender, _In_ Windows::UI::Xaml::Input::AccessKeyInvokedEventArgs ^ args);
-        void DockPivot_SelectionChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e);
+        void OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e);
     };
 }

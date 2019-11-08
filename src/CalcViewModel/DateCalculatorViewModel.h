@@ -110,7 +110,7 @@ namespace CalculatorApp
             Platform::String ^ GetDateDiffString() const;
             Platform::String ^ GetDateDiffStringInDays() const;
             Platform::String ^ GetLocalizedNumberString(int value) const;
-            static Windows::Foundation::DateTime ClipTime(Windows::Foundation::DateTime dateTime);
+            static Windows::Foundation::DateTime ClipTime(Windows::Foundation::DateTime dateTime, bool adjustToLocalTime);
 
             property bool IsOutOfBound
             {
@@ -176,7 +176,7 @@ namespace CalculatorApp
             CalculatorApp::Common::DateCalculation::DateDifference m_dateDiffResultInDays;
 
             // Private members
-            std::shared_ptr<CalculatorApp::Common::DateCalculation::DateCalculationEngine> m_dateCalcEngine;
+            CalculatorApp::Common::DateCalculation::DateCalculationEngine ^ m_dateCalcEngine;
             CalculatorApp::Common::DateCalculation::DateUnit m_daysOutputFormat;
             CalculatorApp::Common::DateCalculation::DateUnit m_allDateUnitsOutputFormat;
             Windows::Globalization::DateTimeFormatting::DateTimeFormatter ^ m_dateTimeFormatter;
