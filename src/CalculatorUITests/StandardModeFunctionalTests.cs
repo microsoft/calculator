@@ -340,18 +340,206 @@ namespace CalculatorUITests
         }
         #endregion
 
-        #region AoT Tests
+        #region KOT(Keep on top) Tests
         [TestMethod]
-        public void AoT_EnterAlwaysOnTop()
+        [Priority(0)]
+        public void KOT_EnterExitKeepOnTop()
         {
-            page.EnterAlwaysOnTopButton.Click();
-            page.ExitAlwaysOnTopButton.Click();
+            /// <summary>
+            /// Test Case 23456961: BVT: KOT: Verify entering and exiting KOT mode
+            /// This automated test verifies the caculator can enter KOT mode and that the window within KOT size range
+            /// and it verifies exiting KOT mode
+            /// </summary>
+            page.StandardKoTMode();
+            page.KOTWindowSizeWithinRange();
+            page.StandardNonKoTMode();
 
         }
+
+        [TestMethod]
+        [Priority(0)]
+        public void KOT_Tootip()
+        {
+            /// <summary>
+            /// Test Case 23456329: BVT: KOT: Verify tooltip
+            /// This automated test verifies english KOT button tooltips
+            /// </summary>
+            Assert.AreEqual("Keep on top", page.GetKOTToolTipText());
+            page.StandardKoTMode();
+            Assert.AreEqual("Back to full view", page.GetKOTToolTipText());
+        }
+
+        [TestMethod]
+        [Priority(1)]
+        public void KOT_NoMemoryFunction()
+        {
+            /// <summary>
+            /// Test Case 23458498: BVT: KOT: Verify Memory function is not accessible while in KOT mode
+            /// This automated test verifies memory function cannot be triggered in KOT calculator
+            /// </summary>
+            ///
+            page.StandardOperators.NumberPad.Num9Button.Click();
+            page.StandardOperators.MinusButton.Click();
+            page.StandardOperators.NumberPad.Num3Button.Click();
+            page.StandardKoTMode();
+            page.Window.SendKeys(Keys.Enter);
+            page.Window.SendKeys(Keys.Control + "P" + Keys.Control);
+            page.StandardNonKoTMode();
+            page.MemoryPanel.OpenMemoryPanel();
+            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+        }
+
+        [TestMethod]
+        [Priority(1)]
+        public void KOT_HistoryFunction()
+        {
+            /// <summary>
+            /// Test Case 23458436: BVT: KOT: Verify History is not accessible while in KOT mode, but it is still tracked
+            /// This automated test verifies the history flyout cannot be opened in KOT mode and
+            /// that history is tracked while in KOT mode and avalible upon ext of KOT mode
+            /// </summary>
+            page.HistoryPanel.ClearHistory();
+            page.StandardOperators.NumberPad.Num3Button.Click();
+            page.StandardOperators.PlusButton.Click();
+            page.StandardOperators.NumberPad.Num3Button.Click();
+            page.StandardKoTMode();
+            page.Window.SendKeys(Keys.Enter);
+            page.Window.SendKeys(Keys.Control + "H" + Keys.Control);
+            string sourceI = WinAppDriver.Instance.CalculatorSession.PageSource;
+            if (sourceI.Contains("HistoryFlyout"))
+            {
+                throw new NotFoundException("This test fails; history flyout is present");
+            }
+            else
+            {
+                page.StandardNonKoTMode();
+                page.HistoryPanel.OpenHistoryPanel();
+                var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
+                Assert.IsTrue(historyItems[0].Text.Equals("3 + 3= 6", StringComparison.InvariantCultureIgnoreCase));
+            }
+        }
+
+        [TestMethod]
+        [Priority(2)]
+        public void KOT_ButtonOnlyInStandard()
+        {
+            /// <summary>
+            /// Test Case 23459163: BVT: KOT: Verify KOT button is only available in Standard mode
+            /// This automated test verifies that Sandard calculator has KOT button, but other major
+            /// calculator modes do not
+            /// </summary>
+
+            page.AppName.Click();
+            page.Header.SendKeys(Keys.Alt + "2" + Keys.Alt);
+            Assert.AreEqual("Scientific", page.GetCalculatorHeaderText());
+            page.GetKOTPresence();
+            Assert.AreEqual("False", page.GetKOTPresence());
+
+            page.AppName.Click();
+            page.Header.SendKeys(Keys.Alt + "3" + Keys.Alt);
+            Assert.AreEqual("Programmer", page.GetCalculatorHeaderText());
+            page.GetKOTPresence();
+            Assert.AreEqual("False", page.GetKOTPresence());
+
+            page.AppName.Click();
+            page.Header.SendKeys(Keys.Alt + "4" + Keys.Alt);
+            Assert.AreEqual("Date Calculation", page.GetCalculatorHeaderText());
+            page.GetKOTPresence();
+            Assert.AreEqual("False", page.GetKOTPresence());
+
+            page.AppName.Click();
+            page.Header.SendKeys(Keys.Alt + "1" + Keys.Alt);
+            Assert.AreEqual("Standard", page.GetCalculatorHeaderText());
+            page.GetKOTPresence();
+            Assert.AreEqual("True", page.GetKOTPresence());
+        }
+
+        [TestMethod]
+        [Priority(2)]
+        public void KOT_Scaling()
+        {
+            /// <summary>
+            /// Test Case 23456757: BVT: KOT: Verify UI while scaling
+            /// This automated test verifies that the app can scale to smallest size, largest size, and to a medium size 
+            /// without crashing
+            /// </summary>
+            page.StandardKoTMode();
+            page.KOTWindowSizeWithinRange();
+            Size smallKOTWindowSize = new Size(161, 168);
+            Size largeKOTWindowSize = new Size(502, 502);
+            Size mediumKOTWindowSize = new Size(396, 322);
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = smallKOTWindowSize;
+            Assert.AreEqual("(161, 168)", page.GetCalculatorWindowSize());
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeKOTWindowSize;
+            Assert.AreEqual("(502, 502)", page.GetCalculatorWindowSize());
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = mediumKOTWindowSize;
+            Assert.AreEqual("(396, 322)", page.GetCalculatorWindowSize());
+            page.StandardNonKoTMode();
+        }
+
+        [TestMethod]
+        [Priority(2)]
+        public void KOT_ScaleRetention()
+        {
+            /// <summary>
+            /// (Half) Test Case 23458956: BVT: KOT: Verify scale retention
+            /// This automated test verifies the window scale retention is maintained when switching between KOT and Non-KOT
+            /// Note: This does not verify scale retention across calculator session
+            /// </summary>
+
+            Size smallWindowSize = new Size(464, 502);
+            Size largeKOTWindowSize = new Size(502, 502);
+            
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = smallWindowSize;
+            Assert.AreEqual("(464, 502)", page.GetCalculatorWindowSize());
+
+            page.StandardKoTMode();
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeKOTWindowSize;
+            Assert.AreEqual("(502, 502)", page.GetCalculatorWindowSize());
+
+            page.StandardNonKoTMode();
+            Assert.AreEqual("(464, 502)", page.GetCalculatorWindowSize());
+
+            page.StandardKoTMode();
+            Assert.AreEqual("(502, 502)", page.GetCalculatorWindowSize());
+
+        }
+
+        [TestMethod]
+        [Priority(2)]
+        public void KOT_ErrorMessage()
+        {
+            /// <summary>
+            /// Test Case 23459118: BVT: KOT: Verify error message display
+            /// This automated test verifies the window scale retention is maintained when switching between KOT and Non-KOT
+            /// Note: This test case is in progress: Need to verify " All operator buttons (except for "CE", "C", "Delete" and "="), and memory buttons are disabled"
+            /// </summary>
+
+            Size largeKOTWindowSize = new Size(502, 502);
+            page.StandardKoTMode();
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeKOTWindowSize;
+            page.Window.SendKeys("/");
+            page.Window.SendKeys("0");
+            page.Window.SendKeys(Keys.Enter);
+            page.KOTModeCheck();
+            Assert.AreEqual("True", page.KOTModeCheck());
+            Assert.IsTrue(page.GetKOTCalculatorResultText() == "Result is undefined");
+            page.StandardOperators.ClearButton.Click();
+            page.StandardOperators.InvertButton.Click();
+            page.KOTModeCheck();
+            Assert.AreEqual("True", page.KOTModeCheck());
+            Assert.IsTrue(page.GetKOTCalculatorResultText() == "Cannot divide by zero");
+            page.StandardNonKoTMode();
+            page.KOTModeCheck();
+            Assert.AreEqual("False", page.KOTModeCheck());
+            Assert.IsTrue(page.GetCalculatorResultText() == "Cannot divide by zero");
+        }
+
         #endregion
 
         #region BVT
         [TestMethod]
+        [Priority(1)]
         public void BVT_Hotkeys()
         {
             /// <summary>
@@ -474,6 +662,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void BVT_MouseInput()
         {
             /// <summary>
@@ -565,6 +754,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void BVT_VerifyMemoryFunction()
         {
             /// <summary>
@@ -633,6 +823,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void BVT_HistoryPanel()
         {
 
@@ -682,6 +873,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void BVT_HistoryFlyout()
         {
 
@@ -739,6 +931,167 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
+        public void BVT_ArithmeticOperators()
+        {
+            /// <summary>
+            /// Arithmetic Operators for standard calculator are also automated in: 
+            /// 	public void BVT_MouseInput()
+            /// 	public void BVT_Hotkeys()
+            /// This automated test not only verifies each opperator individually, but it also simultaneously verifies mixed user input.
+            /// Test Case 17416430: BVT: Standard: Verify arithmetic operators
+            /// </summary>
+
+            //Verify Addition
+            page.StandardOperators.NumberPad.Input(2);
+            page.StandardOperators.PlusButton.Click();
+            page.AppName.Click();
+            page.Header.SendKeys("2");
+            page.Header.SendKeys(Keys.Equal);
+            Assert.AreEqual("4", page.GetCalculatorResultText());
+            page.Header.SendKeys(Keys.Escape);
+
+            //Verify Subtraction
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.MinusButton.Click();
+            page.AppName.Click();
+            page.Header.SendKeys("2");
+            page.Header.SendKeys(Keys.Equal);
+            Assert.AreEqual("1", page.GetCalculatorResultText());
+            page.Header.SendKeys(Keys.Escape);
+
+            //Verify Multiplication
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.MultiplyButton.Click();
+            page.AppName.Click();
+            page.Header.SendKeys("2");
+            page.Header.SendKeys(Keys.Equal);
+            Assert.AreEqual("6", page.GetCalculatorResultText());
+            page.Header.SendKeys(Keys.Escape);
+
+            //Verify Division
+            page.StandardOperators.NumberPad.Input(6);
+            page.StandardOperators.MultiplyButton.Click();
+            page.AppName.Click();
+            page.Header.SendKeys("2");
+            page.Header.SendKeys(Keys.Equal);
+            Assert.AreEqual("12", page.GetCalculatorResultText());
+            page.Header.SendKeys(Keys.Escape);
+
+            //Verify Reciprocal
+            page.StandardOperators.NumberPad.Input(2);
+            page.StandardOperators.InvertButton.Click();
+            page.AppName.Click();
+            page.Header.SendKeys(Keys.Equal);
+            Assert.AreEqual("0.5", page.GetCalculatorResultText());
+            page.Header.SendKeys(Keys.Escape);
+
+            //Verify Square
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.XPower2Button.Click();
+            page.AppName.Click();
+            page.Header.SendKeys(Keys.Equal);
+            Assert.AreEqual("9", page.GetCalculatorResultText());
+            page.Header.SendKeys(Keys.Escape);
+
+            //Verify Square root
+            page.StandardOperators.NumberPad.Input(9);
+            page.StandardOperators.XPower2Button.Click();
+            page.AppName.Click();
+            page.Header.SendKeys(Keys.Equal);
+            Assert.AreEqual("81", page.GetCalculatorResultText());
+            page.Header.SendKeys(Keys.Escape);
+
+            //Verify Percent addition/subtraction
+            page.StandardOperators.NumberPad.Input(10);
+            page.StandardOperators.MinusButton.Click();
+            page.AppName.Click();
+            page.Header.SendKeys("10");
+            page.StandardOperators.PercentButton.Click();
+            page.Header.SendKeys(Keys.Equal);
+            Assert.AreEqual("9", page.GetCalculatorResultText());
+            page.Header.SendKeys(Keys.Escape);
+
+            //Verify Percent multiplication/division
+            page.StandardOperators.NumberPad.Input(10);
+            page.StandardOperators.MultiplyButton.Click();
+            page.AppName.Click();
+            page.Header.SendKeys("10");
+            page.StandardOperators.PercentButton.Click();
+            page.Header.SendKeys(Keys.Equal);
+            Assert.AreEqual("1", page.GetCalculatorResultText());
+            page.Header.SendKeys(Keys.Escape);
+
+            //Verify Positive/Negative (plus/minus)
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.MinusButton.Click();
+            page.AppName.Click();
+            page.Header.SendKeys("2");
+            page.StandardOperators.NegateButton.Click();
+            page.Header.SendKeys(Keys.Equal);
+            Assert.AreEqual("5", page.GetCalculatorResultText());
+            page.Header.SendKeys(Keys.Escape);
+
+            //Verify Decimal
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.NumberPad.DecimalButton.Click();
+            page.AppName.Click();
+            page.Header.SendKeys("2");
+            page.Header.SendKeys(Keys.Equal);
+            Assert.AreEqual("3.2", page.GetCalculatorResultText());
+            page.Header.SendKeys(Keys.Escape);
+
+            //Verify Equal
+            page.HistoryPanel.ClearHistory();
+            page.StandardOperators.EqualButton.Click();
+            page.AppName.Click();
+            page.Header.SendKeys(Keys.Equal);
+            Assert.AreEqual("0", page.GetCalculatorResultText());
+            var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
+            Assert.IsTrue(historyItems[0].Text.Equals("0= 0", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].Text.Equals("0= 0", StringComparison.InvariantCultureIgnoreCase));
+            page.Header.SendKeys(Keys.Escape);
+
+            //Verify Delete
+            page.StandardOperators.NumberPad.Input(3);
+            page.Header.SendKeys("3");
+            Assert.AreEqual("33", page.GetCalculatorResultText());
+            page.StandardOperators.BackSpaceButton.Click();
+            Assert.AreEqual("3", page.GetCalculatorResultText());
+            page.Header.SendKeys(Keys.Backspace);
+            Assert.AreEqual("0", page.GetCalculatorResultText());
+
+            //Verify Clear Entery
+            page.StandardOperators.NumberPad.Input(3);
+            page.Header.SendKeys(Keys.Add);
+            page.Header.SendKeys("3");
+            page.AppName.Click();
+            page.Header.SendKeys(Keys.Delete);
+            Assert.AreEqual("0", page.GetCalculatorResultText());
+            Assert.AreEqual("3 +", page.GetCalculatorExpressionText());
+
+            page.StandardOperators.NumberPad.Input(9);
+            page.Header.SendKeys(Keys.Subtract);
+            page.Header.SendKeys("6");
+            page.StandardOperators.ClearEntryButton.Click();
+            Assert.AreEqual("0", page.GetCalculatorResultText());
+            Assert.AreEqual("3 + 9 Minus (", page.GetCalculatorExpressionText());
+
+            //Verify Clear
+            page.StandardOperators.ClearButton.Click();
+            string sourceD = WinAppDriver.Instance.CalculatorSession.PageSource;
+            if (sourceD.Contains("CalculatorExpression"))
+            {
+                throw new NotFoundException("This test fails; the Calculator Expression should be cleared");
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        [TestMethod]
+        [Priority(3)]
         public void BVT_SwitchBetweenStandardAndOtherTypes()
         {
             Assert.AreEqual("Standard", page.GetCalculatorHeaderText());

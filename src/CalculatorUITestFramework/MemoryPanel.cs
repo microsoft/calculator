@@ -64,7 +64,15 @@ namespace CalculatorUITestFramework
 
             try
             {
-                this.ClearMemory.Click();
+                string sourceC = this.session.PageSource;
+                if (sourceC.Contains("ClearMemoryButton"))
+                {
+                    this.ClearMemory.Click();
+                }
+                else
+                {
+                    return;
+                }
             }
             catch (WebDriverException ex)
             {

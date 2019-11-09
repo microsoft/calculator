@@ -49,13 +49,21 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ClearHistory()
         {
-            this.HistoryLabel.Click();
 
+            this.HistoryLabel.Click();
             try
             {
-                this.ClearHistoryButton.Click();
+                string sourceB = this.session.PageSource;
+                if (sourceB.Contains("ClearHistory"))
+                {
+                    this.ClearHistoryButton.Click();
+                }
+                else
+                {
+                    return;
+                }
             }
-            catch(WebDriverException ex)
+            catch (WebDriverException ex)
             {
                 if (ex.Message.Contains("element could not be located"))
                 {

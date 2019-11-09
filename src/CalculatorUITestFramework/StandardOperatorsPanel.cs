@@ -5,6 +5,11 @@ using OpenQA.Selenium.Appium.Windows;
 using System.Collections.Generic;
 using System.Drawing;
 using OpenQA.Selenium.Interactions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Appium;
+using System.Collections.ObjectModel;
+using System;
 
 namespace CalculatorUITestFramework
 {
@@ -31,5 +36,6 @@ namespace CalculatorUITestFramework
         public WindowsElement BackSpaceButton => this.session.TryFindElementByAccessibilityId("backSpaceButton");
         public WindowsElement NegateButton => this.session.TryFindElementByAccessibilityId("negateButton");
         public WindowsElement HistoryButton => this.session.TryFindElementByAccessibilityId("HistoryButton");
+
     }
 }
