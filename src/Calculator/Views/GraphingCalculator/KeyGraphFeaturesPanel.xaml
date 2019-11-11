@@ -169,7 +169,11 @@
                                                    VerticalAlignment="Top"
                                                    FontFamily="{TemplateBinding FontFamily}"
                                                    FontSize="16"
-                                                   Text="ƒₓ"/>
+                                                   Text="ƒ"/>
+                                        <TextBlock Margin="0,0,0,5"
+                                                   FontFamily="{TemplateBinding FontFamily}"
+                                                   FontSize="9"
+                                                   Text="{TemplateBinding EquationButtonContentIndex}"/>
                                     </StackPanel>
                                 </Button.Content>
                                 <Button.Resources>
