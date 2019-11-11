@@ -436,7 +436,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <local:EquationInputArea x:Name="EquationInputAreaControl" Grid.Row="1"
+                <local:EquationInputArea x:Name="EquationInputAreaControl"
+                                         Grid.Row="1"
                                          Margin="0,8,0,0"
                                          Equations="{x:Bind ViewModel.Equations}"
                                          KeyGraphFeaturesVisibilityChanged="OnEquationKeyGraphFeaturesVisibilityChanged"/>
