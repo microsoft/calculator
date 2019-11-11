@@ -25,9 +25,7 @@ namespace
     constexpr auto s_defaultStyleKey = L"GraphControl.Grapher";
     constexpr auto s_templateKey_SwapChainPanel = L"GraphSurface";
 
-    constexpr auto s_propertyName_EquationTemplate = L"EquationTemplate";
     constexpr auto s_propertyName_Equations = L"Equations";
-    constexpr auto s_propertyName_EquationsSource = L"EquationsSource";
     constexpr auto s_propertyName_Variables = L"Variables";
     constexpr auto s_propertyName_ForceProportionalAxes = L"ForceProportionalAxes";
 
@@ -46,9 +44,7 @@ namespace
 
 namespace GraphControl
 {
-    DependencyProperty ^ Grapher::s_equationTemplateProperty;
     DependencyProperty ^ Grapher::s_equationsProperty;
-    DependencyProperty ^ Grapher::s_equationsSourceProperty;
     DependencyProperty ^ Grapher::s_variablesProperty;
     DependencyProperty ^ Grapher::s_forceProportionalAxesTemplateProperty;
 
@@ -150,24 +146,6 @@ namespace GraphControl
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
         }
 
-        if (!s_equationsSourceProperty)
-        {
-            s_equationsSourceProperty = DependencyProperty::Register(
-                StringReference(s_propertyName_EquationsSource),
-                Object::typeid,
-                Grapher::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
-        }
-
-        if (!s_equationTemplateProperty)
-        {
-            s_equationTemplateProperty = DependencyProperty::Register(
-                StringReference(s_propertyName_EquationTemplate),
-                DataTemplate::typeid,
-                Grapher::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
-        }
-
         if (!s_variablesProperty)
         {
             s_variablesProperty = DependencyProperty::Register(
@@ -196,14 +174,6 @@ namespace GraphControl
             {
                 self->OnEquationsChanged(args);
             }
-            else if (args->Property == EquationsSourceProperty)
-            {
-                self->OnEquationsSourceChanged(args);
-            }
-            else if (args->Property == EquationTemplateProperty)
-            {
-                self->OnEquationTemplateChanged(args);
-            }
             else if (args->Property == ForceProportionalAxesTemplateProperty)
             {
                 self->OnForceProportionalAxesChanged(args);
@@ -220,95 +190,10 @@ namespace GraphControl
         }
     }
 
-    void Grapher::OnEquationTemplateChanged(DependencyPropertyChangedEventArgs ^ args)
-    {
-        SyncEquationsWithItemsSource();
-    }
-
-    void Grapher::OnEquationsSourceChanged(DependencyPropertyChangedEventArgs ^ args)
-    {
-        if (m_dataSource && m_tokenDataSourceChanged.Value != 0)
-        {
-            m_dataSource->DataSourceChanged -= m_tokenDataSourceChanged;
-        }
-
-        m_dataSource = args->NewValue ? ref new InspectingDataSource(args->NewValue) : nullptr;
-        if (m_dataSource)
-        {
-            m_tokenDataSourceChanged = m_dataSource->DataSourceChanged +=
-                ref new TypedEventHandler<InspectingDataSource ^, DataSourceChangedEventArgs>(this, &Grapher::OnDataSourceChanged);
-        }
-
-        SyncEquationsWithItemsSource();
-    }
-
-    void Grapher::OnDataSourceChanged(InspectingDataSource ^ sender, DataSourceChangedEventArgs args)
-    {
-        switch (args.Action)
-        {
-        case DataSourceChangedAction::Insert:
-            OnItemsAdded(args.NewStartingIndex, args.NewItemsCount);
-            break;
-
-        case DataSourceChangedAction::Remove:
-            OnItemsRemoved(args.OldStartingIndex, args.OldItemsCount);
-            break;
-
-        case DataSourceChangedAction::Reset:
-            SyncEquationsWithItemsSource();
-            break;
-
-        case DataSourceChangedAction::Replace:
-            OnItemsRemoved(args.OldStartingIndex, args.OldItemsCount);
-            OnItemsAdded(args.NewStartingIndex, args.NewItemsCount);
-            break;
-        }
-    }
-
-    void Grapher::OnItemsAdded(int index, int count)
-    {
-        for (int i = index + count - 1; i >= index; i--)
-        {
-            auto eq = safe_cast<Equation ^>(EquationTemplate->LoadContent());
-            eq->DataContext = m_dataSource->GetAt(i);
-
-            Equations->InsertAt(index, eq);
-        }
-    }
-
-    void Grapher::OnItemsRemoved(int index, int count)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            Equations->RemoveAt(index);
-        }
-    }
-
-    void Grapher::SyncEquationsWithItemsSource()
-    {
-        Equations->Clear();
-        if (m_dataSource)
-        {
-            auto size = m_dataSource->GetSize();
-            for (auto i = 0u; i < size; i++)
-            {
-                auto eq = safe_cast<Equation ^>(EquationTemplate->LoadContent());
-                eq->DataContext = m_dataSource->GetAt(i);
-
-                Equations->Append(eq);
-            }
-        }
-    }
-
     void Grapher::OnEquationsChanged(DependencyPropertyChangedEventArgs ^ args)
     {
         if (auto older = static_cast<EquationCollection ^>(args->OldValue))
         {
-            if (m_tokenEquationsChanged.Value != 0)
-            {
-                older->VectorChanged -= m_tokenEquationsChanged;
-                m_tokenEquationsChanged.Value = 0;
-            }
             if (m_tokenEquationChanged.Value != 0)
             {
                 older->EquationChanged -= m_tokenEquationChanged;
@@ -324,27 +209,9 @@ namespace GraphControl
 
         if (auto newer = static_cast<EquationCollection ^>(args->NewValue))
         {
-            m_tokenEquationsChanged = newer->VectorChanged += ref new VectorChangedEventHandler<Equation ^>(this, &Grapher::OnEquationsVectorChanged);
-
             m_tokenEquationChanged = newer->EquationChanged += ref new EquationChangedEventHandler(this, &Grapher::OnEquationChanged);
 
             m_tokenEquationStyleChanged = newer->EquationStyleChanged += ref new EquationChangedEventHandler(this, &Grapher::OnEquationStyleChanged);
-        }
-
-        UpdateGraph();
-    }
-
-    void Grapher::OnEquationsVectorChanged(IObservableVector<Equation ^> ^ sender, IVectorChangedEventArgs ^ event)
-    {
-        if (event->CollectionChange == ::CollectionChange::ItemInserted || event->CollectionChange == ::CollectionChange::ItemChanged)
-        {
-            auto eq = sender->GetAt(event->Index);
-
-            // Don't update the graph unless the equations being added/modified is valid.
-            if (eq->Expression->IsEmpty())
-            {
-                return;
-            }
         }
 
         UpdateGraph();
@@ -366,6 +233,11 @@ namespace GraphControl
         {
             m_renderMain->RunRenderPass();
         }
+    }
+
+    void Grapher::PlotGraph()
+    {
+        UpdateGraph();
     }
 
     void Grapher::UpdateGraph()

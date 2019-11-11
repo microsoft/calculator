@@ -3,12 +3,13 @@
 
 using namespace Windows::UI;
 using namespace Windows::UI::Xaml;
+using namespace GraphControl;
 
 namespace CalculatorApp::ViewModel
 {
-    EquationViewModel::EquationViewModel()
-        : m_LineColor{ nullptr }, m_KeyGraphFeaturesVisibility{ ::Visibility::Collapsed }
-        , m_Expression{ "" }
+    EquationViewModel::EquationViewModel(GraphControl::Equation ^ equation)
+        : m_KeyGraphFeaturesVisibility{ ::Visibility::Collapsed }
     {
+        GraphEquation = equation;
     }
 }

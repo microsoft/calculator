@@ -68,9 +68,43 @@ void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
 
 void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement ^ sender, DataContextChangedEventArgs ^ args)
 {
+    if (ViewModel != nullptr)
+    {
+        if (m_vectorChangedToken.Value != 0)
+        {
+            ViewModel->Equations->VectorChanged -= m_vectorChangedToken;
+            m_vectorChangedToken.Value = 0;
+        }
+
+        if (m_variableUpdatedToken.Value != 0)
+        {
+            ViewModel->VariableUpdated -= m_variableUpdatedToken;
+            m_variableUpdatedToken.Value = 0;
+        }
+    }
+
     ViewModel = dynamic_cast<GraphingCalculatorViewModel ^>(args->NewValue);
 
-    ViewModel->VariableUpdated += ref new EventHandler<VariableChangedEventArgs>(this, &CalculatorApp::GraphingCalculator::OnVariableChanged);
+    m_vectorChangedToken = ViewModel->Equations->VectorChanged +=
+        ref new VectorChangedEventHandler<EquationViewModel ^>(this, &GraphingCalculator::OnEquationsVectorChanged);
+
+    m_variableUpdatedToken = ViewModel->VariableUpdated +=
+        ref new EventHandler<VariableChangedEventArgs>(this, &CalculatorApp::GraphingCalculator::OnVariableChanged);
+}
+
+void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationViewModel ^> ^ sender, IVectorChangedEventArgs ^ event)
+{
+    if (event->CollectionChange != ::CollectionChange::ItemChanged)
+    {
+        GraphingControl->Equations->Clear();
+
+        for (auto equationViewModel : ViewModel->Equations)
+        {
+            GraphingControl->Equations->Append(equationViewModel->GraphEquation);
+        }
+
+        GraphingControl->PlotGraph();
+    }
 }
 
 void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)

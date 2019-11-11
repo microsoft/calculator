@@ -60,7 +60,7 @@ void EquationInputArea::AddEquationButton_Click(Object ^ sender, RoutedEventArgs
 
 void EquationInputArea::AddNewEquation()
 {
-    auto eq = ref new EquationViewModel();
+    auto eq = ref new EquationViewModel(ref new Equation());
 
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
 

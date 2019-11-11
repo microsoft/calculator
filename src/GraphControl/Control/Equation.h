@@ -11,7 +11,7 @@ namespace GraphControl
     ref class Equation;
     delegate void PropertyChangedEventHandler(Equation ^ sender, Platform::String ^ propertyName);
 
-    [Windows::UI::Xaml::Data::Bindable] public ref class Equation sealed : public Windows::UI::Xaml::FrameworkElement
+    [Windows::UI::Xaml::Data::Bindable] public ref class Equation sealed : public Windows::UI::Xaml::DependencyObject
     {
     public:
         Equation()

@@ -30,6 +30,9 @@ namespace CalculatorApp
 
         void GraphVariablesUpdated(Platform::Object^ sender, Object^ args);
         void OnVariableChanged(Platform::Object^ sender, CalculatorApp::ViewModel::VariableChangedEventArgs args);
+        void OnEquationsVectorChanged(
+            Windows::Foundation::Collections::IObservableVector<CalculatorApp::ViewModel::EquationViewModel ^> ^ sender,
+            Windows::Foundation::Collections::IVectorChangedEventArgs ^ event);
 
         void TextBoxLosingFocus(Windows::UI::Xaml::Controls::TextBox^ textbox, Windows::UI::Xaml::Input::LosingFocusEventArgs^ args);
         void TextBoxKeyDown(Windows::UI::Xaml::Controls::TextBox^ textbox, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e);
@@ -51,6 +54,8 @@ namespace CalculatorApp
 
     private:
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
+        Windows::Foundation::EventRegistrationToken m_vectorChangedToken;
+        Windows::Foundation::EventRegistrationToken m_variableUpdatedToken;
         void OnDataRequested(Windows::ApplicationModel::DataTransfer::DataTransferManager^ sender, Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs^ e);
 
         void TextBoxGotFocus(Windows::UI::Xaml::Controls::TextBox^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
