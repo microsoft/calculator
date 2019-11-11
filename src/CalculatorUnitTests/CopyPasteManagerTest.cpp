@@ -67,7 +67,7 @@ namespace CalculatorUnitTests
                     StringReference(exp_TooLong.c_str()), ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown),
                 StringReference(exp_TooLong.c_str()),
                 L"Verify ValidatePasteExpression handles expressions up to max length");
-            exp_TooLong += L"1";
+            exp_TooLong += L'1';
             VERIFY_ARE_EQUAL(
                 m_CopyPasteManager->ValidatePasteExpression(
                     StringReference(exp_TooLong.c_str()), ViewMode::Standard, CategoryGroupType::Calculator, -1, BitLength::BitLengthUnknown),

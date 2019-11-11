@@ -309,7 +309,7 @@ namespace CalculatorEngineTests
             wstring maxStr{};
             for (size_t i = 0; i < MAX_STRLEN + 1; i++)
             {
-                maxStr += L"1";
+                maxStr += L'1';
                 m_calcInput.TryAddDigit(1, 10, false, maxStr, 64, 100);
             }
             auto result = m_calcInput.ToString(10);
@@ -323,7 +323,7 @@ namespace CalculatorEngineTests
             bool exponentCapped = false;
             for (size_t i = 0; i < MAX_STRLEN + 1; i++)
             {
-                maxStr += L"1";
+                maxStr += L'1';
                 if (!m_calcInput.TryAddDigit(1, 10, false, maxStr, 64, MAX_STRLEN + 25))
                 {
                     exponentCapped = true;

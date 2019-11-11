@@ -640,9 +640,9 @@ namespace CalculationManager
         if (pHistory)
         {
             pHistory->ClearHistory();
-            for (unsigned int i = 0; i < history.size(); ++i)
+            for (auto const& historyItem : history)
             {
-                pHistory->AddItem(history[i]);
+                pHistory->AddItem(historyItem);
             }
         }
     }
