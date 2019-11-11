@@ -401,43 +401,43 @@ void UnitConverter::SendCommand(Command command)
     switch (command)
     {
     case Command::Zero:
-        m_currentDisplay += L"0";
+        m_currentDisplay += L'0';
         break;
 
     case Command::One:
-        m_currentDisplay += L"1";
+        m_currentDisplay += L'1';
         break;
 
     case Command::Two:
-        m_currentDisplay += L"2";
+        m_currentDisplay += L'2';
         break;
 
     case Command::Three:
-        m_currentDisplay += L"3";
+        m_currentDisplay += L'3';
         break;
 
     case Command::Four:
-        m_currentDisplay += L"4";
+        m_currentDisplay += L'4';
         break;
 
     case Command::Five:
-        m_currentDisplay += L"5";
+        m_currentDisplay += L'5';
         break;
 
     case Command::Six:
-        m_currentDisplay += L"6";
+        m_currentDisplay += L'6';
         break;
 
     case Command::Seven:
-        m_currentDisplay += L"7";
+        m_currentDisplay += L'7';
         break;
 
     case Command::Eight:
-        m_currentDisplay += L"8";
+        m_currentDisplay += L'8';
         break;
 
     case Command::Nine:
-        m_currentDisplay += L"9";
+        m_currentDisplay += L'9';
         break;
 
     case Command::Decimal:
@@ -445,7 +445,7 @@ void UnitConverter::SendCommand(Command command)
         clearBack = false;
         if (!m_currentHasDecimal)
         {
-            m_currentDisplay += L".";
+            m_currentDisplay += L'.';
             m_currentHasDecimal = true;
         }
         break;

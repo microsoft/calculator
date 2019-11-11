@@ -179,7 +179,7 @@ bool CalcInput::TryAddDecimalPt()
 
     if (m_base.IsEmpty())
     {
-        m_base.value += L"0"; // Add a leading zero
+        m_base.value += L'0'; // Add a leading zero
     }
 
     m_decPtIndex = m_base.value.size();

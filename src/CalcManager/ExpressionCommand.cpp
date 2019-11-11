@@ -275,14 +275,12 @@ const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
 
 wstring COpndCommand::GetString(uint32_t radix, int32_t precision)
 {
-    wstring result{};
-
     if (m_fInitialized)
     {
-        result = m_value.ToString(radix, eNUMOBJ_FMT::FMT_FLOAT, precision);
+        return m_value.ToString(radix, eNUMOBJ_FMT::FMT_FLOAT, precision);
     }
 
-    return result;
+    return wstring{};
 }
 
 void COpndCommand::Accept(_In_ ISerializeCommandVisitor& commandVisitor)
