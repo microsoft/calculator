@@ -38,6 +38,7 @@ using namespace Windows::UI::Popups;
 constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 
 GraphingCalculator::GraphingCalculator()
+    : ActiveTracingOn(false)
 {
     Equation::RegisterDependencyProperties();
     Grapher::RegisterDependencyProperties();
@@ -288,7 +289,9 @@ void GraphingCalculator::OnZoomResetCommand(Object ^ /* parameter */)
 
 void GraphingCalculator::OnActiveTracingClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
-    GraphingControl->ActiveTracing = !GraphingControl->ActiveTracing;
+    // The focus change to this button will have turned off the tracing if it was on
+    ActiveTracingOn = !ActiveTracingOn;
+    GraphingControl->ActiveTracing = ActiveTracingOn;
 }
 
 void CalculatorApp::GraphingCalculator::OnGraphLostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)

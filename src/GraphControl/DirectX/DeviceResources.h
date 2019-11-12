@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 // Modified from the default template for Xaml and Direct3D 11 apps.

@@ -150,23 +150,11 @@
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
 
-                    <!-- TODO: Add high contrast colors mapping -->
-                    <SolidColorBrush x:Key="EquationBrush1" Color="#FFFF0000"/>
-                    <SolidColorBrush x:Key="EquationBrush2" Color="#FFFFB900"/>
-                    <SolidColorBrush x:Key="EquationBrush3" Color="#FFFF8C00"/>
-                    <SolidColorBrush x:Key="EquationBrush4" Color="#FFF7630C"/>
-                    <SolidColorBrush x:Key="EquationBrush5" Color="#FFCA5010"/>
-                    <SolidColorBrush x:Key="EquationBrush6" Color="#FFE3008C"/>
-                    <SolidColorBrush x:Key="EquationBrush7" Color="#FFBF0077"/>
-                    <SolidColorBrush x:Key="EquationBrush8" Color="#FFC239B3"/>
-                    <SolidColorBrush x:Key="EquationBrush9" Color="#FF0063B1"/>
-                    <SolidColorBrush x:Key="EquationBrush10" Color="#FF2D7D9A"/>
-                    <SolidColorBrush x:Key="EquationBrush11" Color="#FF00B7C3"/>
-                    <SolidColorBrush x:Key="EquationBrush12" Color="#FF00CC6A"/>
-                    <SolidColorBrush x:Key="EquationBrush13" Color="#FF00B294"/>
-                    <SolidColorBrush x:Key="EquationBrush14" Color="#FF018574"/>
-                    <SolidColorBrush x:Key="EquationBrush15" Color="#FF10893E"/>
-                    <SolidColorBrush x:Key="EquationBrush16" Color="#FF000000"/>
+                    <!-- TODO: Figure out what colors we can use in high contrast -->
+                    <SolidColorBrush x:Key="EquationBrush1" Color="{ThemeResource SystemColorGrayTextColor}"/>
+                    <SolidColorBrush x:Key="EquationBrush2" Color="{ThemeResource SystemColorHighlightColor}"/>
+                    <SolidColorBrush x:Key="EquationBrush3" Color="{ThemeResource SystemColorHotlightColor}"/>
+                    <SolidColorBrush x:Key="EquationBrush4" Color="{ThemeResource SystemColorWindowColor}"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 
