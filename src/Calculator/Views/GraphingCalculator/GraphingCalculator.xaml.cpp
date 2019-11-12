@@ -113,55 +113,51 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
 
     try
     {
-        std::wstring rawHtml;
-        std::wstring graphImageHtml = L"<p><img src='graph.png' width='600'></p>";
+        std::wstringstream rawHtml;
+        std::wstringstream equationHtml;
+
+        rawHtml << L"<p><img src='graph.png' width='600' alt='" << resourceLoader->GetString(L"GraphImageAltText")->Data() << "'></p>";
 
         auto equations = ViewModel->Equations;
         bool hasEquations = false;
 
         if (equations->Size > 0)
         {
-            rawHtml += L"<span style=\"color: rgb(68, 114, 196); font-family: calibri, sans-serif; font-style: bold; font-size : 13pt;\">";
-            rawHtml += resourceLoader->GetString(L"EquationsShareHeader")->Data();
-            rawHtml += L"</span>";
-            rawHtml += L"<table cellpadding=\"0\">";
-            for (unsigned i = 0; i < equations->Size; i++)
-            {
-                auto expression = equations->GetAt(i)->Expression;
-                auto color = equations->GetAt(i)->LineColor->Color;
+            equationHtml << L"<span style=\"color: rgb(68, 114, 196); font-style: bold; font-size : 13pt;\">";
+            equationHtml << resourceLoader->GetString(L"EquationsShareHeader")->Data();
+            equationHtml << L"</span>";
+            equationHtml << L"<table cellpadding=\"0\">";
+            equationHtml << L"<table cellpadding=\"0\">";
 
+            for (auto equation : equations)
+            {
+                auto expression = equation->Expression;
                 if (expression->IsEmpty())
                 {
                     continue;
                 }
 
+                auto color = equation->LineColor->Color;
                 hasEquations = true;
 
                 expression = GraphingControl->ConvertToLinear(expression);
 
-                std::wstring equatinColorHtml = L"color:rgb(";
-                equatinColorHtml += color.R.ToString()->Data();
-                equatinColorHtml += L",";
-                equatinColorHtml += color.G.ToString()->Data();
-                equatinColorHtml += L",";
-                equatinColorHtml += color.B.ToString()->Data();
-                equatinColorHtml += L");";
+                std::wstringstream equationColorHtml;
+                equationColorHtml << L"color:rgb(" << color.R.ToString()->Data() << L"," << color.G.ToString()->Data() << L"," << color.B.ToString()->Data()
+                                  << L");";
 
-                rawHtml +=
-                    L"<tr><td><span style=\"line-height: 0; font-size: 24pt;" + equatinColorHtml + L"\">&#x25A0;</span></td><td><div style=\"margin: 4px 0px 0px 0px; \">";
-                rawHtml += expression->Data();
-                rawHtml += L"</div></td>";
+                equationHtml << L"<tr><td><span style=\"line-height: 0; font-size: 24pt;" << equationColorHtml.str()
+                             << L"\">&#x25A0;</span></td><td><div style=\"margin: 4pt 0pt 0pt 0pt; \">";
+                Uri::EscapeComponent
+      //          equationHtml << expression->Data();
+                equationHtml << L"</div></td>";
             }
-            rawHtml += L"</table>";
+            equationHtml << L"</table>";
         }
 
         if (hasEquations)
         {
-            rawHtml = graphImageHtml + rawHtml;
-        }
-        else
-        {
-            rawHtml = graphImageHtml;
+            rawHtml << equationHtml.str();
         }
 
         auto variables = ViewModel->Variables;
@@ -170,37 +166,37 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
         {
             auto localizedSeperator = LocalizationSettings::GetInstance().GetListSeparator() + L" ";
 
-            rawHtml += L"<span style=\"color: rgb(68, 114, 196); font-family: calibri, sans-serif; font-style: bold; font-size: 13pt;\">";
-            rawHtml += resourceLoader->GetString(L"VaiablesShareHeader")->Data();
-            rawHtml += L"</span><br><span>";
+            rawHtml << L"<span style=\"color: rgb(68, 114, 196); font-style: bold; font-size: 13pt;\">";
+            rawHtml << resourceLoader->GetString(L"VariablesShareHeader")->Data();
+            rawHtml << L"</span><br><span>";
 
             for (unsigned i = 0; i < variables->Size; i++)
             {
                 auto name = variables->GetAt(i)->Name;
                 auto value = variables->GetAt(i)->Value;
 
-                rawHtml += name->Data();
-                rawHtml += L"=";
+                rawHtml << name->Data();
+                rawHtml << L"=";
                 auto formattedValue = to_wstring(value);
                 TrimTrailingZeros(formattedValue);
-                rawHtml += formattedValue;
+                rawHtml << formattedValue;
 
                 if (variables->Size - 1 != i)
                 {
-                    rawHtml += localizedSeperator;
+                    rawHtml << localizedSeperator;
                 }
             }
 
-            rawHtml += L"</span>";
+            rawHtml << L"</span>";
         }
 
-        rawHtml += L"<br><br>";
+        rawHtml << L"<br><br>";
 
         // Shortcut to the request data
         auto requestData = args->Request->Data;
 
         DataPackage ^ dataPackage = ref new DataPackage();
-        auto html = HtmlFormatHelper::CreateHtmlFormat(ref new String(rawHtml.c_str()));
+        auto html = HtmlFormatHelper::CreateHtmlFormat(ref new String(rawHtml.str().c_str()));
 
         requestData->Properties->Title = resourceLoader->GetString(L"ShareActionTitle");
 
@@ -226,7 +222,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
     }
 }
 
-void GraphingCalculator::GraphVariablesUpdated(Object ^, Object ^)
+void GraphingCalculator::GraphingControl_VariablesUpdated(Object ^, Object ^)
 {
     m_viewModel->UpdateVariables(GraphingControl->Variables);
 }
@@ -310,7 +306,7 @@ void GraphingCalculator::OnActiveTracingClick(Object ^ sender, RoutedEventArgs ^
     GraphingControl->ActiveTracing = ActiveTracingOn;
 }
 
-void GraphingCalculator::OnGraphLostFocus(Object ^ sender, RoutedEventArgs ^ e)
+void GraphingCalculator::GraphingControl_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     // If the graph is losing focus while we are in active tracing we need to turn it off so we don't try to eat keys in other controls.
     if (GraphingControl->ActiveTracing)
@@ -320,7 +316,7 @@ void GraphingCalculator::OnGraphLostFocus(Object ^ sender, RoutedEventArgs ^ e)
     }
 }
 
-void GraphingCalculator::OnLosingFocus(UIElement ^ sender, LosingFocusEventArgs ^ args)
+void GraphingCalculator::GraphingControl_LosingFocus(UIElement ^ sender, LosingFocusEventArgs ^ args)
 {
     auto newFocusElement = dynamic_cast<FrameworkElement ^>(args->NewFocusedElement);
     if (newFocusElement == nullptr || newFocusElement->Name == nullptr)

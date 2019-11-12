@@ -50,10 +50,10 @@
                 <graphControl:Grapher Name="GraphingControl"
                                       EquationsSource="{x:Bind ViewModel.Equations, Mode=OneWay}"
                                       ForceProportionalAxes="True"
-                                      LosingFocus="OnLosingFocus"
-                                      LostFocus="OnGraphLostFocus"
+                                      LosingFocus="GraphingControl_LosingFocus"
+                                      LostFocus="GraphingControl_LostFocus"
                                       UseSystemFocusVisuals="True"
-                                      VariablesUpdated="GraphVariablesUpdated">
+                                      VariablesUpdated="GraphingControl_VariablesUpdated">
                     <graphControl:Grapher.Background>
                         <SolidColorBrush Color="White"/>
                     </graphControl:Grapher.Background>
