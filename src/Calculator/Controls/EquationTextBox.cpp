@@ -62,6 +62,7 @@ void EquationTextBox::OnApplyTemplate()
     if (m_functionButton != nullptr)
     {
         m_functionButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnFunctionButtonClicked);
+        m_functionButton->IsEnabled = false;
     }
 
     if (ColorChooserFlyout != nullptr)
@@ -102,6 +103,10 @@ void EquationTextBox::OnKeyDown(KeyRoutedEventArgs ^ e)
     if (e->Key == VirtualKey::Enter)
     {
         EquationSubmitted(this, ref new RoutedEventArgs());
+        if (m_functionButton && m_richEditBox->MathText != L"")
+        {
+            m_functionButton->IsEnabled = true;
+        }
     }
 }
 
@@ -110,6 +115,10 @@ void EquationTextBox::OnLostFocus(RoutedEventArgs ^ e)
     if (!m_richEditBox->ContextFlyout->IsOpen)
     {
         EquationSubmitted(this, ref new RoutedEventArgs());
+        if (m_functionButton && m_richEditBox->MathText != L"")
+        {
+            m_functionButton->IsEnabled = true;
+        }
     }
 }
 
@@ -153,6 +162,10 @@ void EquationTextBox::OnDeleteButtonClicked(Object ^ sender, RoutedEventArgs ^ e
     if (m_richEditBox != nullptr)
     {
         m_richEditBox->MathText = L"";
+        if (m_functionButton)
+        {
+            m_functionButton->IsEnabled = false;
+        }
     }
 }
 
@@ -163,7 +176,17 @@ void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^
 
 void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->MathText = L"";
+    }
+
     RemoveButtonClicked(this, ref new RoutedEventArgs());
+
+    if (m_functionButton)
+    {
+        m_functionButton->IsEnabled = false;
+    }
 }
 
 void EquationTextBox::OnColorChooserButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
