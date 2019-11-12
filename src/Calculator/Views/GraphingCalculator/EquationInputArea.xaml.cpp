@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "pch.h"
 #include "EquationInputArea.xaml.h"
 
@@ -33,7 +36,7 @@ EquationInputArea::EquationInputArea()
         ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &EquationInputArea::OnHighContrastChanged);
 
     ReloadAvailableColors(m_accessibilitySettings->HighContrast);
-
+  
     InitializeComponent();
 }
 
@@ -96,6 +99,18 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
     {
         Equations->RemoveAt(index);
     }
+}
+
+void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    auto tb = static_cast<EquationTextBox ^>(sender);
+    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
+    EquationVM = eq;
+    KeyGraphFeaturesVisibilityChanged(this, ref new RoutedEventArgs());
+}
+
+void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
 }
 
 void EquationInputArea::EquationTextBoxLoaded(Object ^ sender, RoutedEventArgs ^ e)

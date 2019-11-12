@@ -8,8 +8,8 @@
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0.18970.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0.19019.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
     <!-- We want to manually control the MinVersion/MaxVersionTested in the manifest so turn of the replacement. -->
     <AppxOSMinVersionReplaceManifestVersion>false</AppxOSMinVersionReplaceManifestVersion>
     <AppxOSMaxVersionTestedReplaceManifestVersion>false</AppxOSMaxVersionTestedReplaceManifestVersion>
@@ -234,6 +234,7 @@
     </ClInclude>
     <ClInclude Include="Common\AppLifecycleLogger.h" />
     <ClInclude Include="Controls\CalculationResultAutomationPeer.h" />
+    <ClInclude Include="Controls\MathRichEditBox.h" />
     <ClInclude Include="Controls\OverflowTextBlockAutomationPeer.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h" />
     <ClInclude Include="Common\BindableBase.h" />
@@ -258,6 +259,7 @@
     <ClInclude Include="EquationStylePanelControl.xaml.h">
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.h" />
     <ClInclude Include="Views\Calculator.xaml.h">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
     </ClInclude>
@@ -287,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="Views\GraphingCalculator\GraphingCalculator.xaml.h">
       <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h">
+      <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Views\HistoryList.xaml.h">
       <DependentUpon>Views\HistoryList.xaml</DependentUpon>
@@ -348,6 +353,7 @@
     <Page Include="Views\DelighterUnitStyles.xaml" />
     <Page Include="Views\GraphingCalculator\EquationInputArea.xaml" />
     <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml" />
+    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" />
     <Page Include="Views\HistoryList.xaml" />
     <Page Include="Views\MainPage.xaml" />
     <Page Include="Views\Memory.xaml" />
@@ -379,6 +385,7 @@
     </ClCompile>
     <ClCompile Include="Common\AppLifecycleLogger.cpp" />
     <ClCompile Include="Controls\CalculationResultAutomationPeer.cpp" />
+    <ClCompile Include="Controls\MathRichEditBox.cpp" />
     <ClCompile Include="Controls\OverflowTextBlockAutomationPeer.cpp" />
     <ClCompile Include="Common\BindableBase.cpp" />
     <ClCompile Include="Controls\CalculationResult.cpp" />
@@ -408,6 +415,7 @@
     <ClCompile Include="EquationStylePanelControl.xaml.cpp">
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.cpp" />
     <ClCompile Include="Views\Calculator.xaml.cpp">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
     </ClCompile>
@@ -437,6 +445,9 @@
     </ClCompile>
     <ClCompile Include="Views\GraphingCalculator\GraphingCalculator.xaml.cpp">
       <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp">
+      <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Views\HistoryList.xaml.cpp">
       <DependentUpon>Views\HistoryList.xaml</DependentUpon>

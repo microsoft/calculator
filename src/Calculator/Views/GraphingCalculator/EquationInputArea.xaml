@@ -10,24 +10,24 @@
              d:DesignWidth="400"
              mc:Ignorable="d">
 
-    <ListView x:Name="EquationInputList"
+        <ListView x:Name="EquationInputList"
               VerticalContentAlignment="Top"
               IsItemClickEnabled="False"
               ItemsSource="{x:Bind Equations}"
               SelectionMode="None">
 
-        <ListView.ItemContainerStyle>
-            <Style TargetType="ListViewItem">
-                <Setter Property="IsTabStop" Value="False"/>
-                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                <Setter Property="Padding" Value="0"/>
-                <Setter Property="Margin" Value="0,0,0,2"/>
-            </Style>
-        </ListView.ItemContainerStyle>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="IsTabStop" Value="False"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="0,0,0,2"/>
+                </Style>
+            </ListView.ItemContainerStyle>
 
-        <ListView.ItemTemplate>
-            <DataTemplate x:DataType="vm:EquationViewModel">
-                <controls:EquationTextBox x:Uid="EquationInputButton"
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="vm:EquationViewModel">
+                    <controls:EquationTextBox x:Uid="EquationInputButton"
                                           Margin="0,0,3,0"
                                           Style="{StaticResource EquationTextBoxStyle}"
                                           EquationColor="{x:Bind LineColor, Mode=OneWay}"
@@ -35,27 +35,22 @@
                                           GotFocus="InputTextBox_GotFocus"
                                           Loaded="EquationTextBoxLoaded"
                                           LostFocus="InputTextBox_LostFocus"
-                                          RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
-                    <controls:EquationTextBox.KeyGraphFeaturesContent>
-                        <StackPanel x:Name="KeyGraphFeaturesGrid" Visibility="{x:Bind KeyGraphFeaturesVisibility, Mode=OneWay}">
-                            <TextBlock Text="Key Graph Features"/>
-                            <TextBlock Text="{x:Bind Expression, Mode=OneWay}"/>
-                        </StackPanel>
-                    </controls:EquationTextBox.KeyGraphFeaturesContent>
-                    <controls:EquationTextBox.ColorChooserFlyout>
-                        <Flyout x:Name="ColorChooserFlyout"
+                                          RemoveButtonClicked="EquationTextBox_RemoveButtonClicked"
+                                          KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked">
+                        <controls:EquationTextBox.ColorChooserFlyout>
+                            <Flyout x:Name="ColorChooserFlyout"
                                 x:Uid="ColorChooserFlyout"
                                 Placement="Bottom">
-                            <local:EquationStylePanelControl SelectedColor="{x:Bind LineColor, Mode=TwoWay}"/>
-                        </Flyout>
-                    </controls:EquationTextBox.ColorChooserFlyout>
-                </controls:EquationTextBox>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-        <ListView.Footer>
-            <Button Margin="4"
+                                <local:EquationStylePanelControl SelectedColor="{x:Bind LineColor, Mode=TwoWay}"/>
+                            </Flyout>
+                        </controls:EquationTextBox.ColorChooserFlyout>
+                    </controls:EquationTextBox>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Footer>
+                <Button Margin="4"
                     Click="AddEquationButton_Click"
                     Content="+"/>
-        </ListView.Footer>
-    </ListView>
+            </ListView.Footer>
+        </ListView>
 </UserControl>
