@@ -83,8 +83,6 @@ namespace GraphControl
         auto cw = CoreWindow::GetForCurrentThread();
         cw->KeyDown += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &Grapher::OnCoreKeyDown);
         cw->KeyUp += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &Grapher::OnCoreKeyUp);
-
-                auto& formatOptions = m_solver->FormatOptions();
     }
 
     void Grapher::OnLoaded(Object ^ sender, RoutedEventArgs ^ args)
@@ -382,7 +380,6 @@ namespace GraphControl
 
     void Grapher::UpdateGraph()
     {
-        auto& formatOptions = m_solver->FormatOptions();
         if (m_renderMain && m_graph != nullptr)
         {
             auto validEqs = GetValidEquations();
@@ -411,7 +408,6 @@ namespace GraphControl
                 {
                     if (m_graph->TryInitialize(graphExpression.get()))
                     {
-                        auto& formatOptions2 = m_solver->FormatOptions();
                         UpdateGraphOptions(m_graph->GetOptions(), validEqs);
                         SetGraphArgs();
 
