@@ -31,7 +31,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void OpenHistoryFlyout()
         {
-            this.HistoryPanel.ResizeWindowToDiplayHistoryButton();
+            this.HistoryPanel.ResizeWindowToNotDiplayHistoryLabel();
             this.AppName.Click();
             this.Header.SendKeys(Keys.Control + "h" + Keys.Control);
             Actions moveToHistoryFlyout = new Actions(WinAppDriver.Instance.CalculatorSession);
