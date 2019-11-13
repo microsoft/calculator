@@ -67,6 +67,7 @@ void EquationInputArea::AddNewEquation()
     eq->LineColor = AvailableColors->GetAt(m_lastLineColorIndex);
 
     Equations->Append(eq);
+    EquationInputList->ScrollIntoView(eq);
 }
 
 void EquationInputArea::InputTextBox_GotFocus(Object ^ sender, RoutedEventArgs ^ e)
@@ -157,4 +158,9 @@ void EquationInputArea::ReloadAvailableColors(bool isHighContrast)
         equationViewModel->LineColor = blankBrush;
         equationViewModel->LineColor = AvailableColors->GetAt(m_lastLineColorIndex);
     }
+}
+
+void CalculatorApp::EquationInputArea::UserControl_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e)
+{
+    EquationInputList->MaxHeight = ActualHeight - 44;
 }
