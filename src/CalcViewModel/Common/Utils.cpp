@@ -48,7 +48,7 @@ String ^ Utils::GetStringValue(String ^ input)
 double Utils::GetDoubleFromWstring(wstring input)
 {
     wchar_t unWantedChars[] = { L' ', L',', 8234, 8235, 8236, 8237 };
-    wstring ws = RemoveUnwantedCharsFromWstring(input, unWantedChars, 6);
+    wstring ws = RemoveUnwantedCharsFromString(input, unWantedChars, 6);
     return stod(ws);
 }
 
@@ -81,7 +81,7 @@ bool Utils::IsLastCharacterTarget(_In_ wstring const& input, _In_ wchar_t target
 }
 
 // Return wstring after removing characters specified by unwantedChars array
-wstring Utils::RemoveUnwantedCharsFromWstring(wstring input, wchar_t* unwantedChars, unsigned int size)
+wstring Utils::RemoveUnwantedCharsFromString(wstring input, wchar_t* unwantedChars, unsigned int size)
 {
     for (unsigned int i = 0; i < size; ++i)
     {

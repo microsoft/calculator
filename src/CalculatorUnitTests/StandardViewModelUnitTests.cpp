@@ -24,7 +24,9 @@ namespace CalculatorUnitTests
     void CompareVector(IVector<T> ^ vecA, IVector<T> ^ vecB)
     {
         if (vecA->Size != vecB->Size)
+        {
             Assert::Fail();
+        }
 
         for (unsigned int i = 0; i < vecA->Size; ++i)
         {

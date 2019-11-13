@@ -10,6 +10,7 @@
 #include "HistoryViewModel.h"
 #include "MemoryItemViewModel.h"
 #include "Common/BitLength.h"
+#include "Common/NumberBase.h"
 
 namespace CalculatorFunctionalTests
 {
@@ -39,7 +40,7 @@ namespace CalculatorApp
             StandardCalculatorViewModel();
             void UpdateOperand(int pos, Platform::String ^ text);
             void UpdatecommandsInRecordingMode();
-            int GetNumberBase();
+            CalculatorApp::Common::NumberBase GetNumberBase();
 
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, DisplayValue);
