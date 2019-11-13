@@ -19,8 +19,6 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
 GraphingSettings::GraphingSettings()
 {
     InitializeComponent();
@@ -56,6 +54,11 @@ void GraphingSettings::TrigUnitModeClick(Platform::Object ^ sender, Windows::UI:
     if (Radians->IsChecked->Value == true)
     {
         m_ParentGrapher->TrigUnitMode = (int)Graphing::EvalTrigUnitMode::Radians;
+    }
+
+    if (Gradians->IsChecked->Value == true)
+    {
+        m_ParentGrapher->TrigUnitMode = (int)Graphing::EvalTrigUnitMode::Grads;
     }
 }
 
