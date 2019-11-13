@@ -77,7 +77,7 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
 
     auto t = ViewModel->ViewState;
 
-    // The graph settings know who it's parent is.
+    // Let the graph settings know who it's parent is.
     GraphSettings->DataContext = GraphingControl;
 
 }
@@ -319,11 +319,5 @@ void CalculatorApp::GraphingCalculator::OnLoosingFocus(Windows::UI::Xaml::UIElem
         // If the destination is not in our application we will also get a null destination but the cancel will fail so it doesn't hurt to try.
         args->TryCancel();
     }
-}
-
-void CalculatorApp::GraphingCalculator::OnSettingsClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
-{
-    // Hide or show the settings popup
-    SettingsPopup->IsOpen = SettingsPopup->IsOpen ? false : true;
 }
 

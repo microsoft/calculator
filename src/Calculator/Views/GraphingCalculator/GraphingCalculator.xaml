@@ -73,15 +73,18 @@
                     <Button x:Name="Share" Click="OnShareClick" MinWidth="40" MinHeight="40"  Margin="0,0,10,0">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
                     </Button>
-                    <Button x:Name="Settings" Click="OnSettingsClick" Width="40" Height="40" Margin="0,0,10,0">
+                    <Button x:Name="Settings" Width="40" Height="40" Margin="0,0,10,0">
+                        <Button.Flyout>
+                            <Flyout>
+                            <StackPanel>
+                                    <controls:GraphingSettings x:Name="GraphSettings" ViewState="{x:Bind ViewModel.ViewState}"/>
+                            </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE713;"/>
                     </Button>
                 </StackPanel>
                 
-                <Popup  Grid.Row="0" x:Name="SettingsPopup" IsOpen="False" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="70, 50">
-                    <controls:GraphingSettings x:Name="GraphSettings"  ViewState="{x:Bind ViewModel.ViewState}"/>
-                </Popup>
-
                 <Popup x:Name="TraceValuePopup" Grid.Row="0" RenderTransformOrigin="0,1">
                     <Popup.RenderTransform>
                         <TranslateTransform x:Name="TraceValuePopupTransform" X="50" Y="150"/>

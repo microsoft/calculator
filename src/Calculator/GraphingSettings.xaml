@@ -88,7 +88,7 @@
         </Style>
     </Page.Resources>
 
-    <Grid BorderBrush="Black" BorderThickness="3">
+    <Grid>
         <StackPanel Margin="10,10,10,10">
             <TextBlock x:Name="GridHeading" Text="Grid_d" FontSize="28"/>
             <Grid>
@@ -115,10 +115,13 @@
                 <TextBox Grid.Row="4" Grid.Column="0" x:Name="y_min" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="4" Grid.Column="1" x:Name="y_max" LosingFocus="OnLosingFocus" KeyDown="OnKeyDown" VerticalAlignment="Center"/>
 
-                <Polyline Grid.Column="2" Grid.RowSpan="5" Points="0,20 50,20 50,110 0,110" Stroke="Blue" StrokeThickness="3" VerticalAlignment="Center"/>
-                <Button Grid.Column="2" Grid.RowSpan="5" Margin="05,20,0,0" x:Name="PreserveAspectRatio" VerticalAlignment="Center" Click="OnPreserveAspectRatioClicked">
+                <Polyline Grid.Column="2" Grid.RowSpan="5" Points="0,50 50,50 50,65" Stroke="Blue" StrokeThickness="3"/>
+                <Polyline Grid.Column="2" Grid.RowSpan="5" Points="50,115 50,140 0,140" Stroke="Blue" StrokeThickness="3"/>
+
+                <Button Grid.Column="2" Grid.RowSpan="5" Margin="30,20,0,0" x:Name="PreserveAspectRatio" VerticalAlignment="Center" Click="OnPreserveAspectRatioClicked">
                     <FontIcon x:Name="PreserveAspectRatioSymbol" FontFamily="Segoe UI Symbol" Glyph="&#x26D3;"/>
                 </Button>
+
             </Grid>
 
             <TextBlock  x:Name="UnitsHeading" Text="Units_d" FontSize="28" Margin="0,10"/>
