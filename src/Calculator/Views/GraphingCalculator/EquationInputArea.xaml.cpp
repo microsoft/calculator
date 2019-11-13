@@ -87,7 +87,11 @@ void EquationInputArea::InputTextBox_Submitted(Object ^ sender, RoutedEventArgs 
     auto tb = static_cast<EquationTextBox ^>(sender);
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
     eq->Expression = tb->GetEquationText();
-    FocusManager::TryMoveFocus(::FocusNavigationDirection::Left);
+
+    if (tb->HasFocus)
+    {
+        FocusManager::TryMoveFocus(::FocusNavigationDirection::Left);
+    }
 }
 
 void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
