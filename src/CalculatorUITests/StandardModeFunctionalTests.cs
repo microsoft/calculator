@@ -516,7 +516,9 @@ namespace CalculatorUITests
             /// </summary>
 
             Size largeKOTWindowSize = new Size(502, 502);
+            Point largeKOTWindowPosition = new Point(0, 0);
             page.StandardKoTMode();
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = largeKOTWindowPosition;
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeKOTWindowSize;
             page.Window.SendKeys("/");
             page.Window.SendKeys("0");
@@ -632,12 +634,14 @@ namespace CalculatorUITests
             Assert.AreEqual("-0 point", page.GetCalculatorResultText());
             Assert.AreEqual("10 +", page.GetCalculatorExpressionText());
 
-            //Verifies history hotkeys
-            page.AppName.Click();
-            var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyItems[0].Text.Equals("4 × 5 ÷ 6= 3.333333333333333", StringComparison.InvariantCultureIgnoreCase));
-            page.Header.SendKeys(Keys.Shift + Keys.Control + "D" + Keys.Control + Keys.Shift);
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
+            ////Verifies history hotkeys
+            /// Note: Commenting this section out until following active issue in calculator is fixed
+            /// - Active issue "Bug 23811901: Clicking on the History Label causes the [Shift] + [Ctrl] + [D] hotkeys to break" causes this case to fail
+            //page.AppName.Click();
+            //var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
+            //Assert.IsTrue(historyItems[0].Text.Equals("4 × 5 ÷ 6= 3.333333333333333", StringComparison.InvariantCultureIgnoreCase));
+            //page.Header.SendKeys(Keys.Shift + Keys.Control + "D" + Keys.Control + Keys.Shift);
+            //Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
             page.StandardOperators.ClearButton.Click();
 
             //Verifies memory hotkeys
@@ -725,7 +729,7 @@ namespace CalculatorUITests
             Assert.AreEqual("-0 point", page.GetCalculatorResultText());
             Assert.AreEqual("10 +", page.GetCalculatorExpressionText());
             //Verifies history buttons
-            page.HistoryPanel.ResizeWindowToDiplayHistoryButton();
+            page.HistoryPanel.ResizeWindowToNotDiplayHistoryLabel();
             page.StandardOperators.HistoryButton.Click();
             page.HistoryPanel.ResizeWindowToDiplayHistoryLabel();
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();

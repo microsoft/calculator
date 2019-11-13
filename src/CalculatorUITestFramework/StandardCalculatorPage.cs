@@ -66,7 +66,6 @@ namespace CalculatorUITestFramework
         {
             return this.CalculatorResult.Text.Replace("Display is", string.Empty).Trim();
         }
-
         /// <summary>
         /// Gets the text from the display control in KOT mode and removes the narrator text that is not displayed in the UI.
         /// </summary>
@@ -226,6 +225,17 @@ namespace CalculatorUITestFramework
                 InKOTMode = true;
             }
             return InKOTMode.ToString();
+        }
+        ///// <summary>
+        ///// Gets the calculators window's X and Y position and returns it as a string. e.g. "(0, 0)"
+        ///// </summary>
+        public string GetCalculatorWindowPosition()
+        {
+            Point getCalculatorWindowPosition = WinAppDriver.Instance.CalculatorSession.Manage().Window.Position;
+            int X = getCalculatorWindowPosition.X;
+            int Y = getCalculatorWindowPosition.Y;
+            var CalculatorWindowPosition = (X, Y);
+            return CalculatorWindowPosition.ToString();
         }
     }
 

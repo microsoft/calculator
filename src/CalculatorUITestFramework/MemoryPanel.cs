@@ -92,6 +92,8 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ResizeWindowToDiplayMemoryLabel()
         {
+            Point newWindowPostion = new Point(0, 0);
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
             string source3 = this.session.PageSource;
             if (source3.Contains("MemoryLabel"))
             {

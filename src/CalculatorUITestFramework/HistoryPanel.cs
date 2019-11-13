@@ -81,6 +81,8 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ResizeWindowToDiplayHistoryLabel()
         {
+            Point newWindowPostion = new Point(0, 0);
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
             string source0 = this.session.PageSource;
             if (source0.Contains("HistoryLabel"))
             {
@@ -115,14 +117,10 @@ namespace CalculatorUITestFramework
         ///// <summary>
         ///// If the History button is not displayed, resize the window
         ///// </summary>
-        public void ResizeWindowToDiplayHistoryButton()
+        public void ResizeWindowToNotDiplayHistoryLabel()
         {
             string source1 = this.session.PageSource;
-            if (source1.Contains("HistoryButton"))
-            {
-                return;
-            }
-            else
+            if (source1.Contains("HistoryLabel"))
             {
                 Size newWindowSize = new Size(464, 464);
                 WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
@@ -135,6 +133,10 @@ namespace CalculatorUITestFramework
                 {
                     throw new NotFoundException("Could not the History Button");
                 }
+            }
+            else
+            {
+                return;
             }
         }
     }
