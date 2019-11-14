@@ -337,6 +337,7 @@
     <ClInclude Include="Common\MyVirtualKey.h" />
     <ClInclude Include="Common\NavCategory.h" />
     <ClInclude Include="Common\NetworkManager.h" />
+    <ClInclude Include="Common\NumberBase.h" />
     <ClInclude Include="Common\TraceActivity.h" />
     <ClInclude Include="Common\TraceLogger.h" />
     <ClInclude Include="Common\Utils.h" />

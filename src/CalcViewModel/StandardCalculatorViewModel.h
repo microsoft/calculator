@@ -10,6 +10,7 @@
 #include "HistoryViewModel.h"
 #include "MemoryItemViewModel.h"
 #include "Common/BitLength.h"
+#include "Common/NumberBase.h"
 
 namespace CalculatorFunctionalTests
 {
@@ -19,7 +20,6 @@ namespace CalculatorFunctionalTests
 namespace CalculatorUnitTests
 {
     class MultiWindowUnitTests;
-    class TimerTests;
 }
 
 namespace CalculatorApp
@@ -30,8 +30,13 @@ namespace CalculatorApp
     namespace ViewModel
     {
 #define ASCII_0 48
-    public
-        delegate void HideMemoryClickedHandler();
+        public delegate void HideMemoryClickedHandler();
+
+        public value struct ButtonInfo
+        {
+            NumbersAndOperatorsEnum buttonId;
+            bool canSendNegate;
+        };
 
         [Windows::UI::Xaml::Data::Bindable] public ref class StandardCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
@@ -39,44 +44,50 @@ namespace CalculatorApp
             StandardCalculatorViewModel();
             void UpdateOperand(int pos, Platform::String ^ text);
             void UpdatecommandsInRecordingMode();
-            int GetNumberBase();
 
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, DisplayValue);
-            OBSERVABLE_PROPERTY_RW(HistoryViewModel ^, HistoryVM);
-            OBSERVABLE_NAMED_PROPERTY_RW(bool, IsInError);
-            OBSERVABLE_PROPERTY_RW(bool, IsOperatorCommand);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, DisplayStringExpression);
+            OBSERVABLE_PROPERTY_R(HistoryViewModel ^, HistoryVM);
+            OBSERVABLE_PROPERTY_RW(bool, IsAlwaysOnTop);
+            OBSERVABLE_PROPERTY_R(bool, IsBinaryBitFlippingEnabled);
+            PROPERTY_R(bool, IsOperandUpdatedUsingViewModel);
+            PROPERTY_R(int, TokenPosition);
+            PROPERTY_R(bool, IsOperandTextCompletelySelected);
+            PROPERTY_R(bool, KeyPressed);
+            PROPERTY_R(Platform::String ^, SelectedExpressionLastData);
+            OBSERVABLE_NAMED_PROPERTY_R(bool, IsInError);
+            OBSERVABLE_PROPERTY_R(bool, IsOperatorCommand);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, DisplayStringExpression);
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Common::DisplayExpressionToken ^> ^, ExpressionTokens);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, DecimalDisplayValue);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, HexDisplayValue);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, OctalDisplayValue);
-            OBSERVABLE_NAMED_PROPERTY_RW(Platform::String ^, BinaryDisplayValue);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, DecimalDisplayValue);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, HexDisplayValue);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, OctalDisplayValue);
+            OBSERVABLE_NAMED_PROPERTY_R(Platform::String ^, BinaryDisplayValue);
             OBSERVABLE_NAMED_PROPERTY_R(Windows::Foundation::Collections::IVector<bool> ^, BinaryDigits);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, HexDisplayValue_AutomationName);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, DecDisplayValue_AutomationName);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, OctDisplayValue_AutomationName);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, BinDisplayValue_AutomationName);
-            OBSERVABLE_PROPERTY_RW(bool, IsBinaryOperatorEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsUnaryOperatorEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsNegateEnabled);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, HexDisplayValue_AutomationName);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, DecDisplayValue_AutomationName);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, OctDisplayValue_AutomationName);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, BinDisplayValue_AutomationName);
+            OBSERVABLE_PROPERTY_R(bool, IsBinaryOperatorEnabled);
+            OBSERVABLE_PROPERTY_R(bool, IsUnaryOperatorEnabled);
+            OBSERVABLE_PROPERTY_R(bool, IsNegateEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsDecimalEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsCurrentViewPinned);
-            OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IVector<MemoryItemViewModel ^> ^, MemorizedNumbers);
+            OBSERVABLE_PROPERTY_R(bool, IsCurrentViewPinned);
+            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IVector<MemoryItemViewModel ^> ^, MemorizedNumbers);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsMemoryEmpty);
-            OBSERVABLE_PROPERTY_RW(bool, IsFToEChecked);
+            OBSERVABLE_PROPERTY_R(bool, IsFToEChecked);
             OBSERVABLE_PROPERTY_R(bool, IsFToEEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, AreHEXButtonsEnabled);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationResultAutomationName);
-            OBSERVABLE_PROPERTY_RW(Platform::String ^, CalculationExpressionAutomationName);
-            OBSERVABLE_PROPERTY_RW(bool, IsShiftProgrammerChecked);
-            OBSERVABLE_PROPERTY_RW(int, CurrentRadixType);
-            OBSERVABLE_PROPERTY_RW(bool, AreTokensUpdated);
-            OBSERVABLE_PROPERTY_RW(bool, AreAlwaysOnTopResultsUpdated);
+            OBSERVABLE_PROPERTY_R(bool, AreHEXButtonsEnabled);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, CalculationResultAutomationName);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, CalculationExpressionAutomationName);
+            OBSERVABLE_PROPERTY_R(bool, IsShiftProgrammerChecked);
+            OBSERVABLE_PROPERTY_R(CalculatorApp::Common::NumberBase, CurrentRadixType);
+            OBSERVABLE_PROPERTY_R(bool, AreTokensUpdated);
+            OBSERVABLE_PROPERTY_R(bool, AreAlwaysOnTopResultsUpdated);
             OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, AreProgrammerRadixOperatorsEnabled);
-            OBSERVABLE_PROPERTY_RW(bool, IsInputEmpty);
-            OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::Automation::NarratorAnnouncement ^, Announcement);
+            OBSERVABLE_PROPERTY_R(bool, AreProgrammerRadixOperatorsEnabled);
+            OBSERVABLE_PROPERTY_R(bool, IsInputEmpty);
+            OBSERVABLE_PROPERTY_R(CalculatorApp::Common::Automation::NarratorAnnouncement ^, Announcement);
             OBSERVABLE_PROPERTY_R(unsigned int, OpenParenthesisCount);
 
             COMMAND_FOR_METHOD(CopyCommand, StandardCalculatorViewModel::OnCopyCommand);
@@ -108,22 +119,6 @@ namespace CalculatorApp
             }
             static property Platform::String
                 ^ IsBitFlipCheckedPropertyName { Platform::String ^ get() { return Platform::StringReference(L"IsBitFlipChecked"); } }
-
-            property bool IsBinaryBitFlippingEnabled
-            {
-                bool get()
-                {
-                    return m_isBinaryBitFlippingEnabled;
-                }
-                void set(bool value)
-                {
-                    if (m_isBinaryBitFlippingEnabled != value)
-                    {
-                        m_isBinaryBitFlippingEnabled = value;
-                        RaisePropertyChanged(L"IsBinaryBitFlippingEnabled");
-                    }
-                }
-            }
 
             property CalculatorApp::Common::BitLength ValueBitLength
             {
@@ -205,22 +200,6 @@ namespace CalculatorApp
             static property Platform::String
                 ^ IsProgrammerPropertyName { Platform::String ^ get() { return Platform::StringReference(L"IsProgrammer"); } }
 
-            property bool IsAlwaysOnTop
-            {
-                bool get()
-                {
-                    return m_isAlwaysOnTop;
-                }
-                void set(bool value)
-                {
-                    if (m_isAlwaysOnTop != value)
-                    {
-                        m_isAlwaysOnTop = value;
-                        RaisePropertyChanged(L"IsAlwaysOnTop");
-                    }
-                }
-            }
-
             property bool IsEditingEnabled
             {
                 bool get()
@@ -271,65 +250,12 @@ namespace CalculatorApp
                 }
             }
 
-            property int TokenPosition
-            {
-                int get()
-                {
-                    return m_tokenPosition;
-                }
-                void set(int value)
-                {
-                    m_tokenPosition = value;
-                }
-            }
-
-            property Platform::String^ SelectedExpressionLastData
-            {
-                Platform::String^ get() { return m_selectedExpressionLastData; }
-                void set(Platform::String^ value) { m_selectedExpressionLastData = value; }
-            }
-
-            property bool KeyPressed
-            {
-                bool get()
-                {
-                    return m_keyPressed;
-                }
-                void set(bool value)
-                {
-                    m_keyPressed = value;
-                }
-            }
-
-            property bool IsOperandUpdatedUsingViewModel
-            {
-                bool get()
-                {
-                    return m_operandUpdated;
-                }
-                void set(bool value)
-                {
-                    m_operandUpdated = value;
-                }
-            }
-
-            property bool IsOperandTextCompletelySelected
-            {
-                bool get()
-                {
-                    return m_completeTextSelection;
-                }
-                void set(bool value)
-                {
-                    m_completeTextSelection = value;
-                }
-            }
-
-            internal : void OnPaste(Platform::String ^ pastedString);
+        internal :
+            void OnPaste(Platform::String ^ pastedString);
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);
 
-            NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
+            ButtonInfo MapCharacterToButtonId(char16 ch);
 
             // Memory feature related methods. They are internal because they need to called from the MainPage code-behind
             void OnMemoryButtonPressed();
@@ -357,14 +283,11 @@ namespace CalculatorApp
             void Recalculate(bool fromHistory = false);
             bool IsOperator(CalculationManager::Command cmdenum);
             void FtoEButtonToggled();
-            void SwitchProgrammerModeBase(RADIX_TYPE calculatorBase);
+            void SwitchProgrammerModeBase(CalculatorApp::Common::NumberBase calculatorBase);
             void SetMemorizedNumbersString();
             void SwitchAngleType(NumbersAndOperatorsEnum num);
             void ResetDisplay();
-            RADIX_TYPE GetCurrentRadixType()
-            {
-                return (RADIX_TYPE)m_CurrentRadixType;
-            }
+          
             void SetPrecision(int32_t precision);
             void UpdateMaxIntDigits()
             {
@@ -388,6 +311,7 @@ namespace CalculatorApp
                 _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands);
             void SetTokens(_Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens);
             NumbersAndOperatorsEnum ConvertIntegerToNumbersAndOperatorsEnum(unsigned int parameter);
+            static RADIX_TYPE GetRadixTypeFromNumberBase(CalculatorApp::Common::NumberBase base);
             NumbersAndOperatorsEnum m_CurrentAngleType;
             wchar_t m_decimalSeparator;
             CalculatorDisplay m_calculatorDisplay;
@@ -415,14 +339,9 @@ namespace CalculatorApp
             bool m_isStandard;
             bool m_isScientific;
             bool m_isProgrammer;
-            bool m_isAlwaysOnTop;
-            bool m_isBinaryBitFlippingEnabled;
             bool m_isBitFlipChecked;
             bool m_isRtlLanguage;
-            int m_tokenPosition;
-            bool m_keyPressed;
             bool m_operandUpdated;
-            bool m_completeTextSelection;
             bool m_isLastOperationHistoryLoad;
             CalculatorApp::Common::BitLength m_valueBitLength;
             Platform::String ^ m_selectedExpressionLastData;
@@ -465,7 +384,6 @@ namespace CalculatorApp
             friend class CalculatorDisplay;
             friend class CalculatorFunctionalTests::HistoryTests;
             friend class CalculatorUnitTests::MultiWindowUnitTests;
-            friend class CalculatorUnitTests::TimerTests;
         };
     }
 }

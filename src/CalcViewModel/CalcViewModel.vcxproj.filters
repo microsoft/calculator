@@ -196,6 +196,9 @@
     <ClInclude Include="Common\BitLength.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="Common\NumberBase.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="DataLoaders\DefaultFromToCurrency.json">

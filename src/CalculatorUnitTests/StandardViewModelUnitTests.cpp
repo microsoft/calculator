@@ -24,7 +24,9 @@ namespace CalculatorUnitTests
     void CompareVector(IVector<T> ^ vecA, IVector<T> ^ vecB)
     {
         if (vecA->Size != vecB->Size)
+        {
             Assert::Fail();
+        }
 
         for (unsigned int i = 0; i < vecA->Size; ++i)
         {
@@ -371,27 +373,25 @@ namespace CalculatorUnitTests
         /// Low-level test of character mapping
         TEST_METHOD(VerifyCorrectCharacterMapping)
         {
-            bool canSendNegate = false;
-
             // Valid numbers
-            NumbersAndOperatorsEnum n = m_viewModel->MapCharacterToButtonId(L'0', canSendNegate);
+            NumbersAndOperatorsEnum n = m_viewModel->MapCharacterToButtonId(L'0').buttonId;
             ValidateNumbersAndOperatorsAreEqual(n, NumbersAndOperatorsEnum::Zero);
 
-            n = m_viewModel->MapCharacterToButtonId(L'1', canSendNegate);
+            n = m_viewModel->MapCharacterToButtonId(L'1').buttonId;
             ValidateNumbersAndOperatorsAreEqual(n, NumbersAndOperatorsEnum::One);
 
             // Valid operators
-            n = m_viewModel->MapCharacterToButtonId(L'+', canSendNegate);
+            n = m_viewModel->MapCharacterToButtonId(L'+').buttonId;
             ValidateNumbersAndOperatorsAreEqual(n, NumbersAndOperatorsEnum::Add);
 
-            n = m_viewModel->MapCharacterToButtonId(L'=', canSendNegate);
+            n = m_viewModel->MapCharacterToButtonId(L'=').buttonId;
             ValidateNumbersAndOperatorsAreEqual(n, NumbersAndOperatorsEnum::Equals);
 
-            n = m_viewModel->MapCharacterToButtonId(L'a', canSendNegate);
+            n = m_viewModel->MapCharacterToButtonId(L'a').buttonId;
             ValidateNumbersAndOperatorsAreEqual(n, NumbersAndOperatorsEnum::A);
 
             // Invalid character
-            n = m_viewModel->MapCharacterToButtonId(L'$', canSendNegate);
+            n = m_viewModel->MapCharacterToButtonId(L'$').buttonId;
             ValidateNumbersAndOperatorsAreEqual(n, NumbersAndOperatorsEnum::None);
         }
 
@@ -889,13 +889,13 @@ namespace CalculatorUnitTests
             };
             ValidateViewModelByCommands(m_viewModel, items, true);
             m_viewModel->OnMemoryButtonPressed();
-            m_viewModel->SwitchProgrammerModeBase(RADIX_TYPE::OCT_RADIX);
+            m_viewModel->SwitchProgrammerModeBase(NumberBase::OctBase);
             MemoryItemViewModel ^ memorySlotOct = (MemoryItemViewModel ^) m_viewModel->MemorizedNumbers->GetAt(0);
             VERIFY_ARE_EQUAL(Platform::StringReference(L"377"), Utils::GetStringValue(memorySlotOct->Value));
-            m_viewModel->SwitchProgrammerModeBase(RADIX_TYPE::DEC_RADIX);
+            m_viewModel->SwitchProgrammerModeBase(NumberBase::DecBase);
             MemoryItemViewModel ^ memorySlotDec = (MemoryItemViewModel ^) m_viewModel->MemorizedNumbers->GetAt(0);
             VERIFY_ARE_EQUAL(Platform::StringReference(L"255"), Utils::GetStringValue(memorySlotDec->Value));
-            m_viewModel->SwitchProgrammerModeBase(RADIX_TYPE::BIN_RADIX);
+            m_viewModel->SwitchProgrammerModeBase(NumberBase::BinBase);
             MemoryItemViewModel ^ memorySlotBin = (MemoryItemViewModel ^) m_viewModel->MemorizedNumbers->GetAt(0);
             VERIFY_ARE_EQUAL(Platform::StringReference(L"1111 1111"), Utils::GetStringValue(memorySlotBin->Value));
         }
