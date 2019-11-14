@@ -77,7 +77,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_IsShiftProgrammerChecked(false)
     , m_valueBitLength(BitLength::BitLengthQWord)
     , m_isBitFlipChecked(false)
-    , m_isBinaryBitFlippingEnabled(false)
+    , m_IsBinaryBitFlippingEnabled(false)
     , m_CurrentRadixType(RADIX_TYPE::DEC_RADIX)
     , m_CurrentAngleType(NumbersAndOperatorsEnum::Degree)
     , m_Announcement(nullptr)
@@ -92,6 +92,8 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_localizedMemoryCleared(nullptr)
     , m_localizedOpenParenthesisCountChangedAutomationFormat(nullptr)
     , m_localizedNoRightParenthesisAddedFormat(nullptr)
+    , m_TokenPosition(-1)
+    , m_isLastOperationHistoryLoad(false)
 {
     WeakReference calculatorViewModel(this);
     auto appResourceProvider = AppResourceProvider::GetInstance();
@@ -129,9 +131,6 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     IsDecimalEnabled = true;
     AreHistoryShortcutsEnabled = true;
     AreProgrammerRadixOperatorsEnabled = false;
-
-    m_tokenPosition = -1;
-    m_isLastOperationHistoryLoad = false;
 }
 
 String ^ StandardCalculatorViewModel::LocalizeDisplayValue(_In_ wstring const& displayValue, _In_ bool isError)
@@ -454,7 +453,7 @@ void StandardCalculatorViewModel::FtoEButtonToggled()
 
 void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
 {
-    DisplayExpressionToken ^ displayExpressionToken = ExpressionTokens->GetAt(m_tokenPosition);
+    DisplayExpressionToken ^ displayExpressionToken = ExpressionTokens->GetAt(m_TokenPosition);
     if (displayExpressionToken == nullptr)
     {
         return;
@@ -582,7 +581,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
     }
 
     String ^ updatedData = ref new String(temp);
-    UpdateOperand(m_tokenPosition, updatedData);
+    UpdateOperand(m_TokenPosition, updatedData);
     displayExpressionToken->Token = updatedData;
     IsOperandUpdatedUsingViewModel = true;
     displayExpressionToken->CommandIndex = commandIndex;
@@ -621,7 +620,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
         && numOpEnum != NumbersAndOperatorsEnum::IsProgrammerMode && numOpEnum != NumbersAndOperatorsEnum::FToE
         && (numOpEnum != NumbersAndOperatorsEnum::Degree) && (numOpEnum != NumbersAndOperatorsEnum::Radians) && (numOpEnum != NumbersAndOperatorsEnum::Grads))
     {
-        if (!m_keyPressed)
+        if (!m_KeyPressed)
         {
             SaveEditedCommand(m_selectedExpressionToken->TokenPosition, cmdenum);
         }
