@@ -41,13 +41,8 @@
                                               GotFocus="InputTextBox_GotFocus"
                                               Loaded="EquationTextBoxLoaded"
                                               LostFocus="InputTextBox_LostFocus"
-                                              RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
-                        <controls:EquationTextBox.KeyGraphFeaturesContent>
-                            <StackPanel x:Name="KeyGraphFeaturesGrid" Visibility="{x:Bind KeyGraphFeaturesVisibility, Mode=OneWay}">
-                                <TextBlock Text="Key Graph Features"/>
-                                <TextBlock Text="{x:Bind Expression, Mode=OneWay}"/>
-                            </StackPanel>
-                        </controls:EquationTextBox.KeyGraphFeaturesContent>
+                                              RemoveButtonClicked="EquationTextBox_RemoveButtonClicked"
+                                              KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked">
                         <controls:EquationTextBox.ColorChooserFlyout>
                             <Flyout x:Name="ColorChooserFlyout"
                                     x:Uid="ColorChooserFlyout"

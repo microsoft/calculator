@@ -1,9 +1,13 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 #include "pch.h"
 #include "CalcViewModel/Common/TraceLogger.h"
 #include "GraphingCalculator.xaml.h"
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "Controls/CalculationResult.h"
+#include "Calculator\Controls\EquationTextBox.h"
+#include "Calculator\Views\GraphingCalculator\EquationInputArea.xaml.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -310,4 +314,14 @@ void CalculatorApp::GraphingCalculator::OnLoosingFocus(Windows::UI::Xaml::UIElem
         // If the destination is not in our application we will also get a null destination but the cancel will fail so it doesn't hurt to try.
         args->TryCancel();
     }
+}
+
+void GraphingCalculator::OnEquationKeyGraphFeaturesVisibilityChanged(Object ^ sender, RoutedEventArgs ^ e)
+{
+    IsKeyGraphFeaturesVisible = true;
+}
+
+void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventArgs ^ e)
+{
+    IsKeyGraphFeaturesVisible = false;
 }

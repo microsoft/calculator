@@ -220,6 +220,9 @@
     <ClInclude Include="DataLoaders\CurrencyDataLoader.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
+    <ClInclude Include="GraphingCalculatorEnums.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
