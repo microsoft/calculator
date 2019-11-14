@@ -142,7 +142,7 @@ void EquationTextBox::OnRichEditBoxTextChanged(Object ^ sender, RoutedEventArgs 
 
 void EquationTextBox::OnRichEditBoxGotFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
-    m_isFocused = true;
+    m_HasFocus = true;
     UpdateCommonVisualState();
     UpdateDeleteButtonVisualState();
 }
@@ -151,7 +151,7 @@ void EquationTextBox::OnRichEditBoxLostFocus(Object ^ sender, RoutedEventArgs ^ 
 {
     if (!m_richEditBox->ContextFlyout->IsOpen)
     {
-        m_isFocused = false;
+        m_HasFocus = false;
     }
     UpdateCommonVisualState();
     UpdateDeleteButtonVisualState();
@@ -222,7 +222,7 @@ void EquationTextBox::UpdateCommonVisualState()
 {
     String ^ state = "Normal";
 
-    if (m_isFocused)
+    if (m_HasFocus)
     {
         state = "Focused";
     }
@@ -271,5 +271,5 @@ bool EquationTextBox::ShouldDeleteButtonBeVisible()
     {
         text = m_richEditBox->MathText;
     }
-    return (!text->IsEmpty() && m_isFocused);
+    return (!text->IsEmpty() && m_HasFocus);
 }

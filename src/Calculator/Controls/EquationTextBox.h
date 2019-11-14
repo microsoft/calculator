@@ -22,6 +22,8 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::SolidColorBrush^, EquationColor);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Controls::Flyout^, ColorChooserFlyout);
 
+            PROPERTY_R(bool, HasFocus);
+
             event Windows::UI::Xaml::RoutedEventHandler ^ RemoveButtonClicked;
             event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesButtonClicked;
             event Windows::UI::Xaml::RoutedEventHandler ^ EquationSubmitted;
@@ -64,7 +66,6 @@ namespace CalculatorApp
             Windows::UI::Xaml::Controls::Button^ m_functionButton;
             Windows::UI::Xaml::Controls::Primitives::ToggleButton^ m_colorChooserButton;
 
-            bool m_isFocused;
             bool m_isPointerOver;
             bool m_isColorChooserFlyoutOpen;
         };
