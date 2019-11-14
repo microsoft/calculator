@@ -368,7 +368,7 @@ void Calculator::EnsureProgrammer()
     }
 
     OpsPanel->EnsureProgrammerRadixOps();
-    ProgrammerOperators->SetRadixButton(Model->GetCurrentRadixType());
+    ProgrammerOperators->SetRadixButton(Model->CurrentRadixType);
 }
 
 void Calculator::OnCalcPropertyChanged(_In_ Object ^ sender, _In_ PropertyChangedEventArgs ^ e)
