@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
-using System.Collections.ObjectModel;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium;
-using System.Windows.Input;
+using System.Collections.ObjectModel;
 
 namespace CalculatorUITestFramework
 {

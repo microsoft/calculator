@@ -2,19 +2,11 @@
 // Licensed under the MIT License.
 
 using CalculatorUITestFramework;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Appium.Windows;
-using OpenQA.Selenium.Remote;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Threading;
-using System.Runtime.InteropServices;
-using System.Windows.Input;
-using System.Runtime.CompilerServices;
 using OpenQA.Selenium.Interactions;
+using System;
+using System.Drawing;
 
 namespace CalculatorUITests
 {
@@ -58,7 +50,7 @@ namespace CalculatorUITests
             {
                 page.ClearAll();
             }
-            page.AppName.Click();
+            page.AppName.Click(); //This click is to ensure app focus
         }
 
         [TestCleanup]

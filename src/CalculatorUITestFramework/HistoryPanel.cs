@@ -7,8 +7,6 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System.Collections.ObjectModel;
 using System.Drawing;
-using OpenQA.Selenium.Interactions;
-using System;
 
 namespace CalculatorUITestFramework
 {
@@ -119,6 +117,8 @@ namespace CalculatorUITestFramework
         ///// </summary>
         public void ResizeWindowToNotDiplayHistoryLabel()
         {
+            Point newWindowPostion = new Point(0, 0);
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
             string source1 = this.session.PageSource;
             if (source1.Contains("HistoryLabel"))
             {

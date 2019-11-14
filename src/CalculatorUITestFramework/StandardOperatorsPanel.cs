@@ -2,14 +2,6 @@
 // Licensed under the MIT License.
 
 using OpenQA.Selenium.Appium.Windows;
-using System.Collections.Generic;
-using System.Drawing;
-using OpenQA.Selenium.Interactions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Appium;
-using System.Collections.ObjectModel;
-using System;
 
 namespace CalculatorUITestFramework
 {

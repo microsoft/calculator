@@ -3,14 +3,11 @@
 
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System.Collections.ObjectModel;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium;
-using System.Windows.Input;
 using System.Drawing;
-using System;
 
 namespace CalculatorUITestFramework
 {
@@ -130,6 +127,8 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ResizeWindowToDiplayMemoryButton()
         {
+            Point newWindowPostion = new Point(0, 0);
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
             string source5 = this.session.PageSource;
             if (source5.Contains("Alt, M"))
             {

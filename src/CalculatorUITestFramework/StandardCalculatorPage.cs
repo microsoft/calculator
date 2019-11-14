@@ -2,18 +2,12 @@
 // Licensed under the MIT License.
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium.Appium.Windows;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
-using System.Collections.ObjectModel;
-using System.Windows;
-using System.Reflection;
-using System.Drawing.Imaging;
-using System.Security.Cryptography.X509Certificates;
+using OpenQA.Selenium.Appium.Windows;
+using OpenQA.Selenium.Interactions;
+using System;
+using System.Drawing;
 
 namespace CalculatorUITestFramework
 {
