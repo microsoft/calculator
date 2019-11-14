@@ -196,7 +196,25 @@
                     </graphControl:Grapher.Background>
                     <graphControl:Grapher.EquationTemplate>
                         <DataTemplate x:DataType="vm:EquationViewModel">
-                            <graphControl:Equation Expression="{x:Bind Expression, Mode=OneWay}" LineColor="{x:Bind LineColor, Mode=OneWay}"/>
+                            <graphControl:Equation AnalysisError="{x:Bind AnalysisError, Mode=TwoWay}"
+                                                   Domain="{x:Bind Domain, Mode=TwoWay}"
+                                                   Expression="{x:Bind Expression, Mode=OneWay}"
+                                                   HorizontalAsymptotes="{x:Bind HorizontalAsymptotes, Mode=TwoWay}"
+                                                   InflectionPoints="{x:Bind InflectionPoints, Mode=TwoWay}"
+                                                   IsAnalysisUpdated="{x:Bind IsAnalysisUpdated, Mode=TwoWay}"
+                                                   LineColor="{x:Bind LineColor, Mode=OneWay}"
+                                                   Maxima="{x:Bind Maxima, Mode=TwoWay}"
+                                                   Minima="{x:Bind Minima, Mode=TwoWay}"
+                                                   Monotonicity="{x:Bind Monotonicity, Mode=TwoWay}"
+                                                   ObliqueAsymptotes="{x:Bind ObliqueAsymptotes, Mode=TwoWay}"
+                                                   Parity="{x:Bind Parity, Mode=TwoWay}"
+                                                   PeriodicityDirection="{x:Bind PeriodicityDirection, Mode=TwoWay}"
+                                                   PeriodicityExpression="{x:Bind PeriodicityExpression, Mode=TwoWay}"
+                                                   Range="{x:Bind Range, Mode=TwoWay}"
+                                                   TooComplexFeatures="{x:Bind TooComplexFeatures, Mode=TwoWay}"
+                                                   VerticalAsymptotes="{x:Bind VerticalAsymptotes, Mode=TwoWay}"
+                                                   XIntercept="{x:Bind XIntercept, Mode=TwoWay}"
+                                                   YIntercept="{x:Bind YIntercept, Mode=TwoWay}"/>
                         </DataTemplate>
                     </graphControl:Grapher.EquationTemplate>
 
@@ -485,15 +503,25 @@
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
 
+            <!-- Ideally the KeyGraphFeaturesPanel should be a frame so that navigation to and from the panel could be handled nicely -->
+            <local:KeyGraphFeaturesPanel x:Name="KeyGraphFeaturesControl"
+                                         Grid.RowSpan="2"
+                                         x:Load="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"
+                                         KeyGraphFeaturesClosed="OnKeyGraphFeaturesClosed"
+                                         ViewModel="{x:Bind EquationInputAreaControl.EquationVM, Mode=OneWay}"
+                                         Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"/>
 
-            <local:EquationInputArea Grid.Row="0"
+
+            <local:EquationInputArea x:Name="EquationInputAreaControl"
                                      Margin="0,4,0,0"
-                                     Equations="{x:Bind ViewModel.Equations}"/>
+                                     Equations="{x:Bind ViewModel.Equations}"
+                                     KeyGraphFeaturesVisibilityChanged="OnEquationKeyGraphFeaturesVisibilityChanged"/>
 
             <Grid x:Name="ButtonContainerGrid"
                   Grid.Row="1"
                   Margin="2,0,2,2"
-                  UseLayoutRounding="False">
+                  UseLayoutRounding="False"
+                  Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
