@@ -14,6 +14,7 @@ using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Common::Automation;
 using namespace CalculatorApp::ViewModel;
 using namespace CalculationManager;
+using namespace concurrency;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace std;
@@ -78,7 +79,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_valueBitLength(BitLength::BitLengthQWord)
     , m_isBitFlipChecked(false)
     , m_IsBinaryBitFlippingEnabled(false)
-    , m_CurrentRadixType(RADIX_TYPE::DEC_RADIX)
+    , m_CurrentRadixType(NumberBase::DecBase)
     , m_CurrentAngleType(NumbersAndOperatorsEnum::Degree)
     , m_Announcement(nullptr)
     , m_OpenParenthesisCount(0)
@@ -166,7 +167,7 @@ String ^ StandardCalculatorViewModel::CalculateNarratorDisplayValue(_In_ wstring
     }
 
     // In Programmer modes using non-base10, we want the strings to be read as literal digits.
-    if (IsProgrammer && CurrentRadixType != RADIX_TYPE::DEC_RADIX)
+    if (IsProgrammer && CurrentRadixType != NumberBase::DecBase)
     {
         localizedValue = GetNarratorStringReadRawNumbers(localizedValue);
     }
@@ -679,23 +680,18 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
     }
 }
 
-int StandardCalculatorViewModel::GetNumberBase()
+RADIX_TYPE StandardCalculatorViewModel::GetRadixTypeFromNumberBase(NumberBase base)
 {
-    if (CurrentRadixType == HEX_RADIX)
+    switch (base)
     {
-        return HexBase;
-    }
-    else if (CurrentRadixType == DEC_RADIX)
-    {
-        return DecBase;
-    }
-    else if (CurrentRadixType == OCT_RADIX)
-    {
-        return OctBase;
-    }
-    else
-    {
-        return BinBase;
+    case NumberBase::BinBase:
+        return RADIX_TYPE::BIN_RADIX;
+    case NumberBase::HexBase:
+        return RADIX_TYPE::HEX_RADIX;
+    case NumberBase::OctBase:
+        return RADIX_TYPE::OCT_RADIX;
+    default:
+        return RADIX_TYPE::DEC_RADIX;
     }
 }
 
@@ -711,8 +707,8 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
 {
     auto that(this);
     ViewMode mode;
-    int NumberBase = -1;
     BitLength bitLengthType = BitLength::BitLengthUnknown;
+    NumberBase numberBase = NumberBase::Unknown;
     if (IsScientific)
     {
         mode = ViewMode::Scientific;
@@ -720,8 +716,8 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     else if (IsProgrammer)
     {
         mode = ViewMode::Programmer;
-        NumberBase = GetNumberBase();
         bitLengthType = m_valueBitLength;
+        numberBase = CurrentRadixType;
     }
     else
     {
@@ -734,7 +730,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     }
 
     // Ensure that the paste happens on the UI thread
-    create_task(CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), NumberBase, bitLengthType))
+    create_task(CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), numberBase, bitLengthType))
         .then([that, mode](String ^ pastedString) { that->OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 
@@ -1247,7 +1243,7 @@ String ^ StandardCalculatorViewModel::GetLocalizedStringFormat(String ^ format, 
 void StandardCalculatorViewModel::ResetDisplay()
 {
     AreHEXButtonsEnabled = false;
-    CurrentRadixType = (int)RADIX_TYPE::DEC_RADIX;
+    CurrentRadixType = NumberBase::DecBase;
     m_standardCalculatorManager.SetRadix(DEC_RADIX);
 }
 
@@ -1256,16 +1252,16 @@ void StandardCalculatorViewModel::SetPrecision(int32_t precision)
     m_standardCalculatorManager.SetPrecision(precision);
 }
 
-void StandardCalculatorViewModel::SwitchProgrammerModeBase(RADIX_TYPE radixType)
+void StandardCalculatorViewModel::SwitchProgrammerModeBase(NumberBase numberBase)
 {
     if (IsInError)
     {
         m_standardCalculatorManager.SendCommand(Command::CommandCLEAR);
     }
 
-    AreHEXButtonsEnabled = (radixType == RADIX_TYPE::HEX_RADIX);
-    CurrentRadixType = (int)radixType;
-    m_standardCalculatorManager.SetRadix(radixType);
+    AreHEXButtonsEnabled = numberBase == NumberBase::HexBase;
+    CurrentRadixType = numberBase;
+    m_standardCalculatorManager.SetRadix(GetRadixTypeFromNumberBase(numberBase));
 }
 
 void StandardCalculatorViewModel::SetMemorizedNumbersString()

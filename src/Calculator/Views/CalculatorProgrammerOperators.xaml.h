@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -6,6 +6,7 @@
 #include "Views/CalculatorProgrammerOperators.g.h"
 #include "Controls/RadixButton.h"
 #include "CalcViewModel/StandardCalculatorViewModel.h"
+#include "CalcViewModel/Common/NumberBase.h"
 
 namespace CalculatorApp
 {
@@ -24,7 +25,7 @@ namespace CalculatorApp
 
         DEPENDENCY_PROPERTY(_In_ Windows::UI::Xaml::Style ^, SymbolButtonStyle);
 
-        internal : void SetRadixButton(RADIX_TYPE radixType);
+        internal : void SetRadixButton(CalculatorApp::Common::NumberBase radixType);
 
     private:
         void DecButtonChecked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);

@@ -10,6 +10,7 @@
 #include "HistoryViewModel.h"
 #include "MemoryItemViewModel.h"
 #include "Common/BitLength.h"
+#include "Common/NumberBase.h"
 
 namespace CalculatorFunctionalTests
 {
@@ -43,7 +44,6 @@ namespace CalculatorApp
             StandardCalculatorViewModel();
             void UpdateOperand(int pos, Platform::String ^ text);
             void UpdatecommandsInRecordingMode();
-            int GetNumberBase();
 
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, DisplayValue);
@@ -81,7 +81,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_R(Platform::String ^, CalculationResultAutomationName);
             OBSERVABLE_PROPERTY_R(Platform::String ^, CalculationExpressionAutomationName);
             OBSERVABLE_PROPERTY_R(bool, IsShiftProgrammerChecked);
-            OBSERVABLE_PROPERTY_R(int, CurrentRadixType);
+            OBSERVABLE_PROPERTY_R(CalculatorApp::Common::NumberBase, CurrentRadixType);
             OBSERVABLE_PROPERTY_R(bool, AreTokensUpdated);
             OBSERVABLE_PROPERTY_R(bool, AreAlwaysOnTopResultsUpdated);
             OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
@@ -283,14 +283,11 @@ namespace CalculatorApp
             void Recalculate(bool fromHistory = false);
             bool IsOperator(CalculationManager::Command cmdenum);
             void FtoEButtonToggled();
-            void SwitchProgrammerModeBase(RADIX_TYPE calculatorBase);
+            void SwitchProgrammerModeBase(CalculatorApp::Common::NumberBase calculatorBase);
             void SetMemorizedNumbersString();
             void SwitchAngleType(NumbersAndOperatorsEnum num);
             void ResetDisplay();
-            RADIX_TYPE GetCurrentRadixType()
-            {
-                return (RADIX_TYPE)m_CurrentRadixType;
-            }
+          
             void SetPrecision(int32_t precision);
             void UpdateMaxIntDigits()
             {
@@ -314,6 +311,7 @@ namespace CalculatorApp
                 _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands);
             void SetTokens(_Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens);
             NumbersAndOperatorsEnum ConvertIntegerToNumbersAndOperatorsEnum(unsigned int parameter);
+            static RADIX_TYPE GetRadixTypeFromNumberBase(CalculatorApp::Common::NumberBase base);
             NumbersAndOperatorsEnum m_CurrentAngleType;
             wchar_t m_decimalSeparator;
             CalculatorDisplay m_calculatorDisplay;

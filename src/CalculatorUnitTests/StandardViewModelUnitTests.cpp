@@ -24,7 +24,9 @@ namespace CalculatorUnitTests
     void CompareVector(IVector<T> ^ vecA, IVector<T> ^ vecB)
     {
         if (vecA->Size != vecB->Size)
+        {
             Assert::Fail();
+        }
 
         for (unsigned int i = 0; i < vecA->Size; ++i)
         {
@@ -887,13 +889,13 @@ namespace CalculatorUnitTests
             };
             ValidateViewModelByCommands(m_viewModel, items, true);
             m_viewModel->OnMemoryButtonPressed();
-            m_viewModel->SwitchProgrammerModeBase(RADIX_TYPE::OCT_RADIX);
+            m_viewModel->SwitchProgrammerModeBase(NumberBase::OctBase);
             MemoryItemViewModel ^ memorySlotOct = (MemoryItemViewModel ^) m_viewModel->MemorizedNumbers->GetAt(0);
             VERIFY_ARE_EQUAL(Platform::StringReference(L"377"), Utils::GetStringValue(memorySlotOct->Value));
-            m_viewModel->SwitchProgrammerModeBase(RADIX_TYPE::DEC_RADIX);
+            m_viewModel->SwitchProgrammerModeBase(NumberBase::DecBase);
             MemoryItemViewModel ^ memorySlotDec = (MemoryItemViewModel ^) m_viewModel->MemorizedNumbers->GetAt(0);
             VERIFY_ARE_EQUAL(Platform::StringReference(L"255"), Utils::GetStringValue(memorySlotDec->Value));
-            m_viewModel->SwitchProgrammerModeBase(RADIX_TYPE::BIN_RADIX);
+            m_viewModel->SwitchProgrammerModeBase(NumberBase::BinBase);
             MemoryItemViewModel ^ memorySlotBin = (MemoryItemViewModel ^) m_viewModel->MemorizedNumbers->GetAt(0);
             VERIFY_ARE_EQUAL(Platform::StringReference(L"1111 1111"), Utils::GetStringValue(memorySlotBin->Value));
         }

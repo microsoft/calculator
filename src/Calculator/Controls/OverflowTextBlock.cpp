@@ -197,6 +197,7 @@ void OverflowTextBlock::UpdateScrollButtons()
             m_expressionContainer->Padding = Thickness(left, 0, right, 0);
             m_expressionContent->Margin = Thickness(-left, 0, -right, 0);
             m_expressionContainer->UpdateLayout();
+            m_expressionContainer->Measure(m_expressionContainer->RenderSize);
 
             m_containerViewChangedToken = m_expressionContainer->ViewChanged +=
                 ref new EventHandler<ScrollViewerViewChangedEventArgs ^>(this, &OverflowTextBlock::OnViewChanged);

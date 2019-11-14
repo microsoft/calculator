@@ -21,6 +21,13 @@ namespace CalculatorApp
         {
         public:
             OverflowTextBlock()
+                : m_isAccessibilityViewControl(false)
+                , m_ignoreViewChanged(false)
+                , m_expressionContent(nullptr)
+                , m_itemsControl(nullptr)
+                , m_expressionContainer(nullptr)
+                , m_scrollLeft(nullptr)
+                , m_scrollRight(nullptr)
             {
             }
 
@@ -52,6 +59,7 @@ namespace CalculatorApp
             void ScrollRight();
 
             bool m_isAccessibilityViewControl;
+            bool m_ignoreViewChanged;
             Windows::UI::Xaml::FrameworkElement ^ m_expressionContent;
             Windows::UI::Xaml::Controls::ItemsControl ^ m_itemsControl;
             Windows::UI::Xaml::Controls::ScrollViewer ^ m_expressionContainer;
