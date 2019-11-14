@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
+using OpenQA.Selenium.Interactions;
 using System.Collections.ObjectModel;
 using System.Drawing;
 
@@ -13,6 +14,7 @@ namespace CalculatorUITestFramework
     public class HistoryPanel
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        public GlobalCalculatorUI GlobalCalculatorUI = new GlobalCalculatorUI();
         public WindowsElement HistoryButton => this.session.TryFindElementByAccessibilityId("HistoryButton");
         public WindowsElement HistoryLabel => this.session.TryFindElementByAccessibilityId("HistoryLabel");
         public AppiumWebElement HistoryEmpty => this.session.TryFindElementByAccessibilityId("DockPivot").FindElementByAccessibilityId("HistoryEmpty");
@@ -22,6 +24,7 @@ namespace CalculatorUITestFramework
         public WindowsElement ExprTextBlock => this.session.TryFindElementByAccessibilityId("ExprTextBlock");
         public WindowsElement ResultTextBlock => this.session.TryFindElementByAccessibilityId("ResultTextBlock");
         public WindowsElement ClearHistoryButton => this.session.TryFindElementByAccessibilityId("ClearHistory");
+        public WindowsElement HistoryFlyout => this.session.TryFindElementByAccessibilityId("HistoryFlyout");
 
         /// <summary>
         /// Opens the Memory Pane by clicking the Memory pivot label.
@@ -31,7 +34,6 @@ namespace CalculatorUITestFramework
             this.ResizeWindowToDiplayHistoryLabel();
             this.HistoryLabel.Click();
         }
-
         /// <summary>
         /// Gets all of the history items listed in the History Pane.
         /// </summary>
@@ -41,7 +43,6 @@ namespace CalculatorUITestFramework
             OpenHistoryPanel();
             return this.HistoryListView.FindElementsByClassName("ListViewItem");
         }
-
         /// <summary>
         /// Opens the History Pane and clicks the delete button if it is visible.
         /// </summary>
@@ -72,7 +73,6 @@ namespace CalculatorUITestFramework
                 throw;
             }
         }
-
         /// <summary>
         /// If the History label is not displayed, resize the window
         /// Two attempts are made, the the lable is not found a "not found" exception is thrown
@@ -111,7 +111,6 @@ namespace CalculatorUITestFramework
                 }
             }
         }
-
         ///// <summary>
         ///// If the History button is not displayed, resize the window
         ///// </summary>
@@ -138,6 +137,27 @@ namespace CalculatorUITestFramework
             {
                 return;
             }
+        }
+        /// <summary>
+        /// Opens the History Flyout.
+        /// </summary>
+        public void OpenHistoryFlyout()
+        {
+            this.ResizeWindowToNotDiplayHistoryLabel();
+            this.GlobalCalculatorUI.AppName.Click();
+            this.GlobalCalculatorUI.Header.SendKeys(Keys.Control + "h" + Keys.Control);
+            Actions moveToHistoryFlyout = new Actions(WinAppDriver.Instance.CalculatorSession);
+            moveToHistoryFlyout.MoveToElement(HistoryFlyout);
+            moveToHistoryFlyout.Perform();
+        }
+        /// <summary>
+        /// Gets all of the History items listed in the History Flyout.
+        /// </summary>
+        /// <returns> A read only collection of History items.</returns>
+        public ReadOnlyCollection<AppiumWebElement> GetAllHistoryFlyoutListViewItems()
+        {
+            OpenHistoryFlyout();
+            return this.HistoryListView.FindElementsByClassName("ListViewItem");
         }
     }
 }

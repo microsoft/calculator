@@ -17,29 +17,21 @@ namespace CalculatorUITestFramework
     public class StandardCalculatorPage
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        public GlobalCalculatorUI GlobalCalculatorUI = new GlobalCalculatorUI();
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public MemoryPanel MemoryPanel = new MemoryPanel();
-        public CalcMemoryFlyout CalcMemoryFlyout = new CalcMemoryFlyout();
         public HistoryPanel HistoryPanel = new HistoryPanel();
-        public CalcHistoryFlyout CalcHistoryFlyout = new CalcHistoryFlyout();
         public NavigationMenu NavigationMenu = new NavigationMenu();
-        public WindowsElement Header => this.session.TryFindElementByAccessibilityId("Header");
-        public WindowsElement Minimize => this.session.TryFindElementByAccessibilityId("Minimize");
-        public WindowsElement Maximize => this.session.TryFindElementByAccessibilityId("Maximize");
-        public WindowsElement AppName => this.session.TryFindElementByAccessibilityId("AppName");
-        public WindowsElement CalculatorResult => this.session.TryFindElementByAccessibilityId("CalculatorResults");
-        public WindowsElement CalculatorExpression => this.session.TryFindElementByAccessibilityId("CalculatorExpression");
         public WindowsElement EnterAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("NormalAlwaysOnTopButton");
         public WindowsElement ExitAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("ExitAlwaysOnTopButton");
         public AppiumWebElement ToolTip => WinAppDriver.Instance.CalculatorSession.FindElementByClassName("ToolTip").FindElementByClassName("TextBlock");
-        public WindowsElement Window => this.session.FindElementByClassName("Windows.UI.Core.CoreWindow");
         public WindowsElement CalculatorAlwaysOnTopResults => this.session.TryFindElementByAccessibilityId("CalculatorAlwaysOnTopResults");
 
         public void NavigateToStandardCalculator()
         {
             // Ensure that calculator is in standard mode
             this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            Assert.IsNotNull(CalculatorResult);
+            Assert.IsNotNull(this.GlobalCalculatorUI.CalculatorResult);
         }
         /// <summary>
         /// Clear the Calculator display, Memory Panel and optionally the History Panel
@@ -53,14 +45,6 @@ namespace CalculatorUITestFramework
             this.HistoryPanel.ClearHistory();
         }
         /// <summary>
-        /// Gets the text from the display control and removes the narrator text that is not displayed in the UI.
-        /// </summary>
-        /// <returns>The string shown in the UI.</returns>
-        public string GetCalculatorResultText()
-        {
-            return this.CalculatorResult.Text.Replace("Display is", string.Empty).Trim();
-        }
-        /// <summary>
         /// Gets the text from the display control in KOT mode and removes the narrator text that is not displayed in the UI.
         /// </summary>
         /// <returns>The string shown in the UI.</returns>
@@ -68,29 +52,13 @@ namespace CalculatorUITestFramework
         {
             return this.CalculatorAlwaysOnTopResults.Text.Replace("Display is", string.Empty).Trim();
         }
-        /// <summary>
-        /// Gets the text from the Header
-        /// </summary>
-        /// <returns>The string shown in the UI.</returns>
-        public string GetCalculatorHeaderText()
-        {
-            return this.Header.Text;
-        }
-        /// <summary>
-        /// Gets the text from the Calculator Expression control and removes narrator text that is not displayed in the UI.
-        /// </summary>
-        /// <returns>The string shown in the UI.</returns>
-        public string GetCalculatorExpressionText()
-        {
-            return this.CalculatorExpression.Text.Replace("Expression is", string.Empty).Trim();
-        }
         public void StandardNonKoTMode()
         {
             string sourceF = this.session.PageSource;
             if (sourceF.Contains("ExitAlwaysOnTopButton"))
             {
                 this.ExitAlwaysOnTopButton.Click();
-                Assert.AreEqual("Standard", this.GetCalculatorHeaderText());
+                Assert.AreEqual("Standard", this.GlobalCalculatorUI.GetCalculatorHeaderText());
             }
             else
             {

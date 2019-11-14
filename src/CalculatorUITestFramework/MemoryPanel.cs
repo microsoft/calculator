@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
+using OpenQA.Selenium.Interactions;
 using System.Collections.ObjectModel;
 using System.Drawing;
 
@@ -14,6 +15,7 @@ namespace CalculatorUITestFramework
     public class MemoryPanel
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        public GlobalCalculatorUI GlobalCalculatorUI = new GlobalCalculatorUI();
         public WindowsElement MemoryClear => this.session.TryFindElementByAccessibilityId("ClearMemoryButton");
         public WindowsElement MemRecall => this.session.TryFindElementByAccessibilityId("MemRecall");
         public WindowsElement MemPlus => this.session.TryFindElementByAccessibilityId("MemPlus");
@@ -29,7 +31,7 @@ namespace CalculatorUITestFramework
         public WindowsElement MemPlusItem => this.session.TryFindElementByAccessibilityId("MAddButton");
         public WindowsElement ClearMemory => this.session.TryFindElementByAccessibilityId("ClearMemory");
         public WindowsElement ListViewItem => this.session.FindElementByClassName("ListViewItem");
-
+        public WindowsElement MemoryFlyout => this.session.TryFindElementByAccessibilityId("MemoryFlyout");
 
 
         /// <summary>
@@ -41,7 +43,6 @@ namespace CalculatorUITestFramework
             this.MemoryLabel.Click();
             this.MemoryPane.WaitForDisplayed();
         }
-
         /// <summary>
         /// Gets all of the memory items listed in the Memory Pane.
         /// </summary>
@@ -51,7 +52,6 @@ namespace CalculatorUITestFramework
             OpenMemoryPanel();
             return this.MemoryListView.FindElementsByClassName("ListViewItem");
         }
-
         /// <summary>
         /// Opens the Memory Panel and clicks the delete button if it is visible
         /// </summary>
@@ -82,7 +82,6 @@ namespace CalculatorUITestFramework
                 throw;
             }
         }
-
         /// <summary>
         /// If the Memory label is not displayed, resize the window
         /// Two attempts are made, the the lable is not found a "not found" exception is thrown
@@ -121,7 +120,6 @@ namespace CalculatorUITestFramework
                 }
             }
         }
-
         /// <summary>
         /// If the Memory button is not displayed, resize the window
         /// </summary>
@@ -157,6 +155,32 @@ namespace CalculatorUITestFramework
                     }
                 }
             }
+        }
+
+        //CalcMemoryFlyout
+        /// <summary>
+        /// Opens the Memory Flyout.
+        /// </summary>
+        public void OpenMemoryFlyout()
+        {
+            this.ResizeWindowToDiplayMemoryButton();
+            this.GlobalCalculatorUI.AppName.Click();
+            Actions moveToMemoryButton = new Actions(WinAppDriver.Instance.CalculatorSession);
+            moveToMemoryButton.MoveToElement(MemoryButton);
+            moveToMemoryButton.Perform();
+            this.GlobalCalculatorUI.Header.SendKeys(Keys.Alt + "m" + Keys.Alt);
+            Actions moveToMemoryFlyout = new Actions(WinAppDriver.Instance.CalculatorSession);
+            moveToMemoryFlyout.MoveToElement(MemoryFlyout);
+            moveToMemoryFlyout.Perform();
+        }
+        /// <summary>
+        /// Gets all of the memory items listed in the Memory Flyout.
+        /// </summary>
+        /// <returns> A read only collection of memory items.</returns>
+        public ReadOnlyCollection<AppiumWebElement> GetAllMemoryFlyoutListViewItems()
+        {
+            OpenMemoryFlyout();
+            return this.MemoryListView.FindElementsByClassName("ListViewItem");
         }
     }
 }
