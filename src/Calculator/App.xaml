@@ -1477,7 +1477,7 @@
                                                 MinHeight="44"
                                                 VerticalAlignment="Stretch"
                                                 Background="{ThemeResource SystemColorButtonFaceColor}"
-                                                Foreground="{StaticResource SystemChromeWhiteColor}"
+                                                Foreground="{TemplateBinding EquationColor}"
                                                 Content="ƒₓ">
                                             <Button.Resources>
                                                 <SolidColorBrush x:Name="ButtonBackgroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
