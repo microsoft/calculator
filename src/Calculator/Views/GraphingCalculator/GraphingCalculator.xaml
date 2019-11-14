@@ -9,31 +9,49 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:CalculatorApp.ViewModel"
              DataContextChanged="GraphingCalculator_DataContextChanged"
-             mc:Ignorable="d"
-             >
+             mc:Ignorable="d">
 
     <UserControl.Resources>
-        <Style x:Key="ZoomRepeatButtonStyle" TargetType="RepeatButton">
-            <Setter Property="Width" Value="36"/>
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="CornerRadius" Value="18"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Delay" Value="500"/>
-            <Setter Property="Interval" Value="40"/>
-        </Style>
-        <Style x:Key="ZoomButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="36"/>
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="CornerRadius" Value="18"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="FontSize" Value="12"/>
-        </Style>
-        <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter"/>
-        <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
+        <ResourceDictionary>
+            <Style x:Key="ZoomRepeatButtonStyle" TargetType="RepeatButton">
+                <Setter Property="Width" Value="36"/>
+                <Setter Property="Height" Value="36"/>
+                <Setter Property="CornerRadius" Value="18"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Delay" Value="500"/>
+                <Setter Property="Interval" Value="40"/>
+            </Style>
+            <Style x:Key="ZoomButtonStyle" TargetType="Button">
+                <Setter Property="Width" Value="36"/>
+                <Setter Property="Height" Value="36"/>
+                <Setter Property="CornerRadius" Value="18"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+            <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter"/>
+            <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <Style x:Key="GrapherStyle" TargetType="graphControl:Grapher">
+                        <Setter Property="Background" Value="Yellow"/>
+                    </Style>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <Style x:Key="GrapherStyle" TargetType="graphControl:Grapher">
+                        <Setter Property="Background" Value="Orange"/>
+                    </Style>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="HighContrast">
+                    <Style x:Key="GrapherStyle" TargetType="graphControl:Grapher">
+                        <Setter Property="Background" Value="Blue"/>
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Name="RootGrid" >
+    <Grid x:Name="RootGrid">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="RowHamburger" Height="{StaticResource HamburgerHeightGridLength}"/>
             <RowDefinition/>
@@ -47,16 +65,31 @@
         <Grid x:Name="LeftGrid"
               Grid.Row="1"
               Grid.Column="0">
+            <Grid.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Default">
+                            <SolidColorBrush x:Key="GraphingBackgroundColor" Color="Purple"/>
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="Light">
+                            <SolidColorBrush x:Key="GraphingBackgroundColor" Color="Yellow"/>
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="HighContrast">
+                            <SolidColorBrush x:Key="GraphingBackgroundColor" Color="Orange"/>
+                        </ResourceDictionary>
+                    </ResourceDictionary.ThemeDictionaries>
+                </ResourceDictionary>
+            </Grid.Resources>
             <Grid Grid.Row="0" Margin="4,7,4,4">
-                <graphControl:Grapher Name="GraphingControl" 
-                                  EquationsSource="{x:Bind ViewModel.Equations, Mode=OneWay}"
-                                  ForceProportionalAxes="True"
-                                  UseSystemFocusVisuals="True"
-                                  VariablesUpdated="GraphVariablesUpdated"
-                                  LostFocus="OnGraphLostFocus"
-                                  LosingFocus="OnLoosingFocus">
+                <graphControl:Grapher Name="GraphingControl"
+                                      EquationsSource="{x:Bind ViewModel.Equations, Mode=OneWay}"
+                                      ForceProportionalAxes="True"
+                                      LosingFocus="OnLoosingFocus"
+                                      LostFocus="OnGraphLostFocus"
+                                      UseSystemFocusVisuals="True"
+                                      VariablesUpdated="GraphVariablesUpdated">
                     <graphControl:Grapher.Background>
-                        <SolidColorBrush Color="White"/>
+                        <SolidColorBrush Color="{ThemeResource SystemColorWindowColor}"/>
                     </graphControl:Grapher.Background>
                     <graphControl:Grapher.EquationTemplate>
                         <DataTemplate x:DataType="vm:EquationViewModel">
@@ -66,21 +99,39 @@
 
                 </graphControl:Grapher>
 
-                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,10,10">
-                    <Button x:Name="ActiveTracing" Click="OnActiveTracingClick" MinWidth="40" MinHeight="40" Margin="0,0,10,0">
+                <StackPanel Grid.Row="0"
+                            Margin="0,0,10,10"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Orientation="Horizontal">
+                    <Button x:Name="ActiveTracing"
+                            MinWidth="40"
+                            MinHeight="40"
+                            Margin="0,0,10,0"
+                            Click="OnActiveTracingClick">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE73F;"/>
                     </Button>
-                    <Button x:Name="Share" Click="OnShareClick" MinWidth="40" MinHeight="40">
+                    <Button x:Name="Share"
+                            MinWidth="40"
+                            MinHeight="40"
+                            Click="OnShareClick">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE72D;"/>
                     </Button>
                 </StackPanel>
-                
-                <Popup x:Name="TraceValuePopup" Grid.Row="0" RenderTransformOrigin="0,1">
+
+                <Popup x:Name="TraceValuePopup"
+                       Grid.Row="0"
+                       RenderTransformOrigin="0,1">
                     <Popup.RenderTransform>
                         <TranslateTransform x:Name="TraceValuePopupTransform" X="50" Y="150"/>
                     </Popup.RenderTransform>
-                    <Grid Background="{StaticResource ToolTipBackground}" BorderBrush="{StaticResource ToolTipBorderBrush}" BorderThickness="3,3,3,3">
-                        <TextBlock x:Name="TraceValue" Text="x=0,y=0" Margin="5,5,5,5" Foreground="{StaticResource ToolTipForeground}"/>
+                    <Grid Background="{StaticResource ToolTipBackground}"
+                          BorderBrush="{StaticResource ToolTipBorderBrush}"
+                          BorderThickness="3,3,3,3">
+                        <TextBlock x:Name="TraceValue"
+                                   Margin="5,5,5,5"
+                                   Foreground="{StaticResource ToolTipForeground}"
+                                   Text="x=0,y=0"/>
                     </Grid>
                 </Popup>
 
