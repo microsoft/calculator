@@ -100,7 +100,6 @@
                                           BorderBrush="{TemplateBinding BorderBrush}"
                                           BorderThickness="{TemplateBinding BorderThickness}"
                                           AutomationProperties.AccessibilityView="Raw"
-                                          BackgroundSizing="{TemplateBinding BackgroundSizing}"
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                           ContentTransitions="{TemplateBinding ContentTransitions}"
@@ -514,6 +513,7 @@
 
             <local:EquationInputArea x:Name="EquationInputAreaControl"
                                      Margin="0,4,0,0"
+                                     Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"
                                      Equations="{x:Bind ViewModel.Equations}"
                                      KeyGraphFeaturesVisibilityChanged="OnEquationKeyGraphFeaturesVisibilityChanged"/>
 

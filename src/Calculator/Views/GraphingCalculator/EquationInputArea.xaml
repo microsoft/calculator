@@ -31,6 +31,12 @@
                 </Style>
             </ListView.ItemContainerStyle>
 
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:EquationViewModel">
                     <controls:EquationTextBox x:Uid="EquationInputButton"
