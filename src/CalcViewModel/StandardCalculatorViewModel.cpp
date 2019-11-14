@@ -769,9 +769,10 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString)
     while (it != pastedString->End())
     {
         bool sendCommand = true;
-        bool canSendNegate = false;
+        auto buttonInfo = MapCharacterToButtonId(*it);
 
-        NumbersAndOperatorsEnum mappedNumOp = MapCharacterToButtonId(*it, canSendNegate);
+        NumbersAndOperatorsEnum mappedNumOp = buttonInfo.buttonId;
+        bool canSendNegate = buttonInfo.canSendNegate;
 
         if (mappedNumOp == NumbersAndOperatorsEnum::None)
         {
@@ -873,7 +874,7 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString)
         if (mappedNumOp == NumbersAndOperatorsEnum::Exp)
         {
             // Check the following item
-            switch (MapCharacterToButtonId(*(it + 1), canSendNegate))
+            switch (MapCharacterToButtonId(*(it + 1)).buttonId)
             {
             case NumbersAndOperatorsEnum::Subtract:
             {
@@ -923,10 +924,11 @@ void StandardCalculatorViewModel::SetViewPinnedState(bool pinned)
     IsCurrentViewPinned = pinned;
 }
 
-NumbersAndOperatorsEnum StandardCalculatorViewModel::MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate)
+ButtonInfo StandardCalculatorViewModel::MapCharacterToButtonId(char16 ch)
 {
-    NumbersAndOperatorsEnum mappedValue = NumbersAndOperatorsEnum::None;
-    canSendNegate = false;
+    ButtonInfo result;
+    result.buttonId = NumbersAndOperatorsEnum::None;
+    result.canSendNegate = false;
 
     switch (ch)
     {
@@ -940,112 +942,111 @@ NumbersAndOperatorsEnum StandardCalculatorViewModel::MapCharacterToButtonId(cons
     case '7':
     case '8':
     case '9':
-        mappedValue = NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - L'0');
-        canSendNegate = true;
+        result.buttonId = NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - L'0');
+        result.canSendNegate = true;
         break;
 
     case '*':
-        mappedValue = NumbersAndOperatorsEnum::Multiply;
+        result.buttonId = NumbersAndOperatorsEnum::Multiply;
         break;
 
     case '+':
-        mappedValue = NumbersAndOperatorsEnum::Add;
+        result.buttonId = NumbersAndOperatorsEnum::Add;
         break;
 
     case '-':
-        mappedValue = NumbersAndOperatorsEnum::Subtract;
+        result.buttonId = NumbersAndOperatorsEnum::Subtract;
         break;
 
     case '/':
-        mappedValue = NumbersAndOperatorsEnum::Divide;
+        result.buttonId = NumbersAndOperatorsEnum::Divide;
         break;
 
     case '^':
         if (IsScientific)
         {
-            mappedValue = NumbersAndOperatorsEnum::XPowerY;
+            result.buttonId = NumbersAndOperatorsEnum::XPowerY;
         }
         break;
 
     case '%':
         if (IsScientific || IsProgrammer)
         {
-            mappedValue = NumbersAndOperatorsEnum::Mod;
+            result.buttonId = NumbersAndOperatorsEnum::Mod;
         }
         break;
 
     case '=':
-        mappedValue = NumbersAndOperatorsEnum::Equals;
+        result.buttonId = NumbersAndOperatorsEnum::Equals;
         break;
 
     case '(':
-        mappedValue = NumbersAndOperatorsEnum::OpenParenthesis;
+        result.buttonId = NumbersAndOperatorsEnum::OpenParenthesis;
         break;
 
     case ')':
-        mappedValue = NumbersAndOperatorsEnum::CloseParenthesis;
+        result.buttonId = NumbersAndOperatorsEnum::CloseParenthesis;
         break;
 
     case 'a':
     case 'A':
-        mappedValue = NumbersAndOperatorsEnum::A;
+        result.buttonId = NumbersAndOperatorsEnum::A;
         break;
     case 'b':
     case 'B':
-        mappedValue = NumbersAndOperatorsEnum::B;
+        result.buttonId = NumbersAndOperatorsEnum::B;
         break;
     case 'c':
     case 'C':
-        mappedValue = NumbersAndOperatorsEnum::C;
+        result.buttonId = NumbersAndOperatorsEnum::C;
         break;
     case 'd':
     case 'D':
-        mappedValue = NumbersAndOperatorsEnum::D;
+        result.buttonId = NumbersAndOperatorsEnum::D;
         break;
     case 'e':
     case 'E':
         // Only allow scientific notation in scientific mode
         if (IsProgrammer)
         {
-            mappedValue = NumbersAndOperatorsEnum::E;
+            result.buttonId = NumbersAndOperatorsEnum::E;
         }
         else
         {
-            mappedValue = NumbersAndOperatorsEnum::Exp;
+            result.buttonId = NumbersAndOperatorsEnum::Exp;
         }
         break;
     case 'f':
     case 'F':
-        mappedValue = NumbersAndOperatorsEnum::F;
+        result.buttonId = NumbersAndOperatorsEnum::F;
         break;
     default:
         // For the decimalSeparator, we need to respect the user setting.
         if (ch == m_decimalSeparator)
         {
-            mappedValue = NumbersAndOperatorsEnum::Decimal;
+            result.buttonId = NumbersAndOperatorsEnum::Decimal;
         }
         break;
     }
 
-    if (mappedValue == NumbersAndOperatorsEnum::None)
+    if (result.buttonId == NumbersAndOperatorsEnum::None)
     {
         if (LocalizationSettings::GetInstance().IsLocalizedDigit(ch))
         {
-            mappedValue =
-                NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit('0'));
-            canSendNegate = true;
+            result.buttonId = NumbersAndOperatorsEnum::Zero
+                              + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit('0'));
+            result.canSendNegate = true;
         }
     }
 
     // Negate cannot be sent for leading zeroes
-    if (NumbersAndOperatorsEnum::Zero == mappedValue)
+    if (NumbersAndOperatorsEnum::Zero == result.buttonId)
     {
-        canSendNegate = false;
+        result.canSendNegate = false;
     }
 
-    return mappedValue;
+    return result;
 }
-
 void StandardCalculatorViewModel::OnInputChanged()
 {
     IsInputEmpty = m_standardCalculatorManager.IsInputEmpty();

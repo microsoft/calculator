@@ -30,8 +30,13 @@ namespace CalculatorApp
     namespace ViewModel
     {
 #define ASCII_0 48
-    public
-        delegate void HideMemoryClickedHandler();
+        public delegate void HideMemoryClickedHandler();
+
+        public value struct ButtonInfo
+        {
+            NumbersAndOperatorsEnum buttonId;
+            bool canSendNegate;
+        };
 
         [Windows::UI::Xaml::Data::Bindable] public ref class StandardCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
@@ -329,7 +334,7 @@ namespace CalculatorApp
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);
 
-            NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
+            ButtonInfo MapCharacterToButtonId(char16 ch);
 
             // Memory feature related methods. They are internal because they need to called from the MainPage code-behind
             void OnMemoryButtonPressed();
