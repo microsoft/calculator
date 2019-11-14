@@ -1,9 +1,0 @@
-C:/Repos/v-credwa/calculator/src/out/build/x64-Debug/CMakeFiles/edit_cache.dir
-C:/Repos/v-credwa/calculator/src/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
-C:/Repos/v-credwa/calculator/src/out/build/x64-Debug/CalcManager/CMakeFiles/CalcManager.dir
-C:/Repos/v-credwa/calculator/src/out/build/x64-Debug/CalcManager/CMakeFiles/edit_cache.dir
-C:/Repos/v-credwa/calculator/src/out/build/x64-Debug/CalcManager/CMakeFiles/rebuild_cache.dir
-C:/Repos/v-credwa/calculator/src/out/build/x64-Debug/CalcManager/Ratpack/CMakeFiles/edit_cache.dir
-C:/Repos/v-credwa/calculator/src/out/build/x64-Debug/CalcManager/Ratpack/CMakeFiles/rebuild_cache.dir
-C:/Repos/v-credwa/calculator/src/out/build/x64-Debug/CalcManager/CEngine/CMakeFiles/edit_cache.dir
-C:/Repos/v-credwa/calculator/src/out/build/x64-Debug/CalcManager/CEngine/CMakeFiles/rebuild_cache.dir
