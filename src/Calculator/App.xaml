@@ -1402,7 +1402,7 @@
                                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackground}"/>
                                                         </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SystemColorButtonTextColor}"/>
                                                         </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ColorChooserButton" Storyboard.TargetProperty="Visibility">
                                                             <DiscreteObjectKeyFrame KeyTime="0">
@@ -1445,7 +1445,7 @@
                                                 <VisualState x:Name="Focused">
                                                     <Storyboard>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SystemColorButtonTextColor}"/>
                                                         </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="Background">
                                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextBoxBackgroundThemeBrush}"/>
@@ -1480,9 +1480,9 @@
                                                 Foreground="{TemplateBinding EquationColor}"
                                                 Content="ƒₓ">
                                             <Button.Resources>
-                                                <SolidColorBrush x:Name="ButtonBackgroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                <SolidColorBrush x:Name="ButtonBackgroundPointerOver" Color="{ThemeResource SystemColorHighlightColor}"/>
                                                 <SolidColorBrush x:Name="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
-                                                <SolidColorBrush x:Name="ButtonBorderBrushPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                <SolidColorBrush x:Name="ButtonBorderBrushPointerOver" Color="{ThemeResource SystemColorButtonTextColor}"/>
                                             </Button.Resources>
                                         </Button>
                                         <Border x:Name="EquationBoxBorder"
