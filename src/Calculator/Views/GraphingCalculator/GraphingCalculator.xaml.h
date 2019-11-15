@@ -1,8 +1,12 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include "Views\GraphingCalculator\GraphingCalculator.g.h"
 #include "CalcViewModel\GraphingCalculator\GraphingCalculatorViewModel.h"
 #include "Views\NumberPad.xaml.h"
+#include "Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h"
 
 namespace CalculatorApp
 {
@@ -18,6 +22,7 @@ namespace CalculatorApp
         COMMAND_FOR_METHOD(ZoomOutButtonPressed, GraphingCalculator::OnZoomOutCommand);
         COMMAND_FOR_METHOD(ZoomInButtonPressed, GraphingCalculator::OnZoomInCommand);
         COMMAND_FOR_METHOD(ZoomResetButtonPressed, GraphingCalculator::OnZoomResetCommand);
+        OBSERVABLE_PROPERTY_RW(bool, IsKeyGraphFeaturesVisible);
 
         property CalculatorApp::ViewModel::GraphingCalculatorViewModel^ ViewModel
         {
@@ -57,7 +62,8 @@ namespace CalculatorApp
         void GraphingControl_LostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void GraphingControl_LosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
         void GraphingControl_VariablesUpdated(Platform::Object ^ sender, Object ^ args);
-
+        void OnEquationKeyGraphFeaturesVisibilityChanged(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnKeyGraphFeaturesClosed(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         bool ActiveTracingOn;
     };
 

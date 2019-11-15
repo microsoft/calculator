@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include "GraphingInterfaces/IMathSolver.h"
@@ -8,7 +11,8 @@ namespace MockGraphingImpl
     {
     public:
         void SetFormatType(Graphing::FormatType type) override
-        { }
+        {
+        }
     };
 
     class EvalOptions : public Graphing::IEvalOptions
@@ -19,7 +23,12 @@ namespace MockGraphingImpl
     {
     public:
         void SetFormatType(Graphing::FormatType type) override
-        { }
+        {
+        }
+
+        void SetMathMLPrefix(const std::wstring& value) override
+        {
+        }
     };
 
     class MathSolver : public Graphing::IMathSolver
@@ -58,6 +67,11 @@ namespace MockGraphingImpl
         std::wstring Serialize(const Graphing::IExpression* expression) override
         {
             return std::wstring{};
+        }
+
+        Graphing::IGraphFunctionAnalysisData IMathSolver::Analyze(const Graphing::Analyzer::IGraphAnalyzer* analyzer)
+        {
+            return Graphing::IGraphFunctionAnalysisData{};
         }
 
     private:
