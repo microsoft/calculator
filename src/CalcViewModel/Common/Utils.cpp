@@ -264,8 +264,6 @@ void Utils::TrimBack(wstring& value)
     }).base(), value.end());
 }
 
-
-
 String^ Utils::EscapeHtmlSpecialCharacters(String^ originalString, shared_ptr<vector<wchar_t>> specialCharacters)
 {
     // Construct a default special characters if not provided.
@@ -285,11 +283,12 @@ String^ Utils::EscapeHtmlSpecialCharacters(String^ originalString, shared_ptr<ve
 
     // First step is scanning the string for special characters.
     // If there isn't any special character, we simply return the original string
-    for (pCh = originalString->Data(); *pCh && !replaceCharacters; pCh++)
+    for (pCh = originalString->Data(); *pCh; pCh++)
     {
         if (std::find(specialCharacters->begin(), specialCharacters->end(), *pCh) != specialCharacters->end())
         {
             replaceCharacters = true;
+            break;
         }
     }
 
