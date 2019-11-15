@@ -547,7 +547,7 @@
                             </Setter.Value>
                         </Setter>
                     </Style>
-                    
+
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
                     <Thickness x:Key="HighContrastThicknessTop">0,0,0,0</Thickness>
@@ -1140,7 +1140,7 @@
                                                     <Setter.Value>
                                                         <ControlTemplate TargetType="Button">
                                                             <Grid x:Name="ButtonLayoutGrid"
-                                                                  Background="Transparent"
+                                                                  Background="{StaticResource SystemColorButtonFaceBrush}"
                                                                   BorderBrush="{ThemeResource TextControlButtonBorderBrush}"
                                                                   BorderThickness="{TemplateBinding BorderThickness}">
 
@@ -1151,13 +1151,13 @@
                                                                         <VisualState x:Name="PointerOver">
                                                                             <Storyboard>
                                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonLayoutGrid" Storyboard.TargetProperty="Background">
-                                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
+                                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SystemColorHighlightBrush}"/>
                                                                                 </ObjectAnimationUsingKeyFrames>
                                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonLayoutGrid" Storyboard.TargetProperty="BorderBrush">
                                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlButtonBorderBrushPointerOver}"/>
                                                                                 </ObjectAnimationUsingKeyFrames>
                                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GlyphElement" Storyboard.TargetProperty="Foreground">
-                                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SystemColorBackgroundColor}"/>
                                                                                 </ObjectAnimationUsingKeyFrames>
                                                                             </Storyboard>
                                                                         </VisualState>
@@ -1477,7 +1477,7 @@
                                                 MinHeight="44"
                                                 VerticalAlignment="Stretch"
                                                 Background="{ThemeResource SystemColorButtonFaceColor}"
-                                                Foreground="{TemplateBinding EquationColor}"
+                                                Foreground="{StaticResource SystemColorButtonTextColor}"
                                                 Content="ƒₓ">
                                             <Button.Resources>
                                                 <SolidColorBrush x:Name="ButtonBackgroundPointerOver" Color="{ThemeResource SystemColorHighlightColor}"/>
@@ -1534,7 +1534,7 @@
                                                         VerticalAlignment="Stretch"
                                                         Style="{StaticResource EquationTextBoxButtonStyle}"
                                                         Background="{TemplateBinding EquationColor}"
-                                                        Foreground="{TemplateBinding EquationColor}"
+                                                        Foreground="{StaticResource SystemColorButtonFaceBrush}"
                                                         BorderThickness="0"
                                                         FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                         FontSize="{TemplateBinding FontSize}"
