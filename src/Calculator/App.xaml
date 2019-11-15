@@ -141,7 +141,7 @@
                     <SolidColorBrush x:Key="AppControlPressedButtonFaceBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentAccentColorBrush" Color="Transparent"/>
                     <SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
-                    <SolidColorBrush x:Key="AppControlForegroundAccentBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
+                    <SolidColorBrush x:Key="AppControlForegroundAccentBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextRedColorBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
                     <SolidColorBrush x:Key="AppControlForegroundTransparentRevealBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
                     <SolidColorBrush x:Key="AppControlHighlightAccentRevealBackgroundBrush" Color="{ThemeResource SystemColorHighlightColor}"/>

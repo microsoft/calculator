@@ -8,16 +8,15 @@
              xmlns:vm="using:CalculatorApp.ViewModel"
              d:DesignHeight="300"
              d:DesignWidth="400"
-             SizeChanged="UserControl_SizeChanged"
              mc:Ignorable="d">
-    <Grid>
+    
+    <Grid VerticalAlignment="Top">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <ListView x:Name="EquationInputList"
-                  VerticalContentAlignment="Top"
                   IsItemClickEnabled="False"
                   ItemsSource="{x:Bind Equations}"
                   SelectionMode="None">

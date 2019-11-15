@@ -15,9 +15,9 @@
         <Style x:Key="GraphButtonStyle" TargetType="Button">
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
             <Setter Property="Background" Value="{ThemeResource AppControlTransparentButtonBackgroundBrush}"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Margin" Value="0"/>
-            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Padding" Value="8"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -27,7 +27,6 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <ContentPresenter x:Name="ContentPresenter"
-                                          Margin="{TemplateBinding Margin}"
                                           Padding="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalAlignment}"
@@ -47,13 +46,13 @@
                                     <VisualState x:Name="Normal"/>
                                     <VisualState x:Name="PointerOver">
                                         <VisualState.Setters>
-                                            <Setter Target="ContentPresenter.Background" Value="{ThemeResource AppControlTransparentButtonBackgroundBrush}"/>
+                                            <Setter Target="ContentPresenter.Background" Value="{ThemeResource AppControlHoverButtonFaceBrush}"/>
                                             <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource AppControlForegroundAccentBrush}"/>
                                         </VisualState.Setters>
                                     </VisualState>
                                     <VisualState x:Name="Pressed">
                                         <VisualState.Setters>
-                                            <Setter Target="ContentPresenter.Background" Value="{ThemeResource AppControlTransparentButtonBackgroundBrush}"/>
+                                            <Setter Target="ContentPresenter.Background" Value="{ThemeResource AppControlPressedButtonFaceBrush}"/>
                                             <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource AppControlForegroundAccentBrush}"/>
                                         </VisualState.Setters>
                                     </VisualState>
@@ -73,10 +72,10 @@
         <Style x:Key="GraphRepeatButtonStyle" TargetType="RepeatButton">
             <Setter Property="Background" Value="{ThemeResource AppControlTransparentButtonBackgroundBrush}"/>
             <Setter Property="Foreground" Value="{ThemeResource RepeatButtonForeground}"/>
-            <Setter Property="BorderBrush" Value="{ThemeResource RepeatButtonBorderBrush}"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource AppControlForegroundTransparentRevealBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Margin" Value="0"/>
-            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Padding" Value="0"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -92,7 +91,6 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="RepeatButton">
                         <ContentPresenter x:Name="ContentPresenter"
-                                          Margin="{TemplateBinding Margin}"
                                           Padding="{TemplateBinding Padding}"
                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -113,10 +111,10 @@
 
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppControlTransparentButtonBackgroundBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppControlHoverButtonFaceBrush}"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RepeatButtonBorderBrushPointerOver}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppControlForegroundTransparentRevealBorderBrush}"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppControlForegroundAccentBrush}"/>
@@ -128,10 +126,10 @@
 
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppControlTransparentButtonBackgroundBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppControlHoverButtonFaceBrush}"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RepeatButtonBorderBrushPressed}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppControlForegroundTransparentRevealBorderBrush}"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppControlForegroundAccentBrush}"/>
@@ -220,14 +218,16 @@
                 </graphControl:Grapher>
 
                 <StackPanel Grid.Row="0"
-                            Margin="0,24,24,0"
+                            Margin="0,12,12,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Orientation="Horizontal">
 
                     <!-- Temporary button until the final UI is created -->
                     <Button x:Name="VariableEditing"
-                            Margin="0,0,12,0"
+                            Margin="0,0,4,0"
+                            MinHeight="44"
+                            MinWidth="44"
                             Style="{StaticResource GraphButtonStyle}"
                             RequestedTheme="Light">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE70F;"/>
@@ -394,7 +394,9 @@
                     </Button>
 
                     <Button x:Name="ActiveTracing"
-                            Margin="0,0,12,0"
+                            Margin="0,0,4,0"
+                            MinHeight="44"
+                            MinWidth="44"
                             Style="{StaticResource GraphButtonStyle}"
                             Click="OnActiveTracingClick"
                             RequestedTheme="Light">
@@ -403,6 +405,8 @@
 
                     <Button x:Name="Share"
                             Margin="0"
+                            MinHeight="44"
+                            MinWidth="44"
                             Style="{StaticResource GraphButtonStyle}"
                             Click="OnShareClick"
                             RequestedTheme="Light">
@@ -417,7 +421,9 @@
                             Orientation="Vertical">
 
                     <RepeatButton x:Uid="zoomInButton"
-                                  Margin="0,0,0,8"
+                                  Margin="0,0,0,4"
+                                  MinHeight="44"
+                                  MinWidth="44"
                                   Style="{ThemeResource GraphRepeatButtonStyle}"
                                   FontFamily="{StaticResource SymbolThemeFontFamily}"
                                   AutomationProperties.AutomationId="zoomInButton"
@@ -425,7 +431,7 @@
                                   RequestedTheme="Light">
                         <Grid>
                             <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                      FontSize="28"
+                                      FontSize="26"
                                       FontWeight="ExtraLight"
                                       Glyph="&#xEA3A;"/>
                             <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
@@ -435,7 +441,9 @@
                     </RepeatButton>
 
                     <RepeatButton x:Uid="zoomOutButton"
-                                  Margin="0,0,0,8"
+                                  Margin="0,0,0,4"
+                                  MinHeight="44"
+                                  MinWidth="44"
                                   Style="{ThemeResource GraphRepeatButtonStyle}"
                                   FontFamily="{StaticResource SymbolThemeFontFamily}"
                                   AutomationProperties.AutomationId="zoomOutButton"
@@ -443,7 +451,7 @@
                                   RequestedTheme="Light">
                         <Grid>
                             <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                      FontSize="28"
+                                      FontSize="26"
                                       FontWeight="ExtraLight"
                                       Glyph="&#xEA3A;"/>
                             <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
@@ -454,13 +462,15 @@
 
                     <Button x:Uid="zoomResetButton"
                             Margin="0,0,0,0"
+                            MinHeight="44"
+                            MinWidth="44"
                             Style="{ThemeResource GraphButtonStyle}"
                             AutomationProperties.AutomationId="zoomResetButton"
                             Command="{x:Bind ZoomResetButtonPressed, Mode=OneTime}"
                             RequestedTheme="Light">
                         <Grid>
                             <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                      FontSize="28"
+                                      FontSize="26"
                                       FontWeight="ExtraLight"
                                       Glyph="&#xEA3A;"/>
                             <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
@@ -510,7 +520,7 @@
                                          ViewModel="{x:Bind EquationInputAreaControl.EquationVM, Mode=OneWay}"
                                          Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"/>
 
-
+            <!-- This control should be within a grid that limits the hight to keep the sticky footer functionality from breaking -->
             <local:EquationInputArea x:Name="EquationInputAreaControl"
                                      Margin="0,4,0,0"
                                      Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"

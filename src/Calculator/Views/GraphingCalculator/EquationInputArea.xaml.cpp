@@ -178,8 +178,3 @@ void EquationInputArea::ReloadAvailableColors(bool isHighContrast)
         equationViewModel->LineColor = AvailableColors->GetAt(m_lastLineColorIndex);
     }
 }
-
-void CalculatorApp::EquationInputArea::UserControl_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e)
-{
-    EquationInputList->MaxHeight = ActualHeight - 44;
-}
