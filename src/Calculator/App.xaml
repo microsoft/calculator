@@ -915,6 +915,7 @@
                 </Setter>
             </Style>
 
+
             <Style x:Key="SquareIconButtonStyle" TargetType="Button">
                 <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                 <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>

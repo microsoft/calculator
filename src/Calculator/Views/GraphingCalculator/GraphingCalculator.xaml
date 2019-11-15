@@ -9,9 +9,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:CalculatorApp.ViewModel"
              DataContextChanged="GraphingCalculator_DataContextChanged"
+             x:Name="Control"
              mc:Ignorable="d">
 
     <UserControl.Resources>
+        <ResourceDictionary>
         <Style x:Key="ZoomRepeatButtonStyle" TargetType="RepeatButton">
             <Setter Property="Width" Value="36"/>
             <Setter Property="Height" Value="36"/>
@@ -28,11 +30,179 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontSize" Value="12"/>
         </Style>
-        <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter"/>
         <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
+
+        <Style x:Key="SwitchModeToggleButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource AppControlForegroundTransparentRevealBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="{ThemeResource ButtonPadding}"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
+            <Setter Property="FocusVisualMargin" Value="-3"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.(RevealBrush.State)" Value="PointerOver"/>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource AppControlHoverButtonFaceBrush}"/>
+                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.(RevealBrush.State)" Value="Pressed"/>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource AppControlPressedButtonFaceBrush}"/>
+                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ToggleButtonRevealBackgroundDisabled}"/>
+                                            <Setter Target="ContentPresenter.Opacity" Value="0.5"/>
+                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SystemControlDisabledBaseLowBrush}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Checked">
+                                        <VisualState.Setters>
+                                            <Setter Target="ContentPresenter.BorderBrush" Value="{ThemeResource ToggleButtonRevealBorderBrushChecked}"/>
+                                                <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SystemAccentColor}"/>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="CheckedPointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.(RevealBrush.State)" Value="PointerOver"/>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource AppControlHoverButtonFaceBrush}"/>
+                                                <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SystemAccentColor}"/>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="CheckedPressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.(RevealBrush.State)" Value="Pressed"/>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource AppControlPressedButtonFaceBrush}"/>
+                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SystemAccentColor}"/>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="CheckedDisabled">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ToggleButtonRevealBackgroundDisabled}"/>
+                                            <Setter Target="ContentPresenter.Opacity" Value="0.5"/>
+                                                <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SystemAccentColor}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Indeterminate">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ToggleButtonRevealBackgroundIndeterminate}"/>
+                                            <Setter Target="ContentPresenter.BorderBrush" Value="{ThemeResource ToggleButtonRevealBorderBrushIndeterminate}"/>
+                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ToggleButtonForegroundIndeterminate}"/>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="IndeterminatePointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.(RevealBrush.State)" Value="PointerOver"/>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ToggleButtonRevealBackgroundIndeterminatePointerOver}"/>
+                                            <Setter Target="ContentPresenter.BorderBrush" Value="{ThemeResource ToggleButtonRevealBorderBrushIndeterminatePointerOver}"/>
+                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ToggleButtonForegroundIndeterminatePointerOver}"/>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="IndeterminatePressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.(RevealBrush.State)" Value="Pressed"/>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ToggleButtonRevealBackgroundIndeterminatePressed}"/>
+                                            <Setter Target="ContentPresenter.BorderBrush" Value="{ThemeResource ToggleButtonRevealBorderBrushIndeterminatePressed}"/>
+                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ToggleButtonForegroundIndeterminatePressed}"/>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="IndeterminateDisabled">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ToggleButtonRevealBackgroundIndeterminateDisabled}"/>
+                                            <Setter Target="ContentPresenter.BorderBrush" Value="{ThemeResource ToggleButtonRevealBorderBrushIndeterminateDisabled}"/>
+                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ToggleButtonForegroundIndeterminateDisabled}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" CornerRadius="{TemplateBinding CornerRadius}" ContentTransitions="{TemplateBinding ContentTransitions}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <Style x:Key="ThemedSwitchModeToggleButtonStyle" BasedOn="{StaticResource SwitchModeToggleButtonStyle}" TargetType="ToggleButton" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <Style x:Key="ThemedSwitchModeToggleButtonStyle" BasedOn="{StaticResource SwitchModeToggleButtonStyle}" TargetType="ToggleButton" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="HighContrast">
+                    <Style x:Key="ThemedSwitchModeToggleButtonStyle" TargetType="ToggleButton" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid x:Name="RootGrid">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="ColumnsState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800">
+                        </AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="SmallState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Control.IsSmallState" Value="True" />
+                        <Setter Target="LeftGrid.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="RightGrid.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="RightGrid.(Grid.Column)" Value="0" />
+                        <Setter Target="SwitchModeToggleButton.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition x:Name="RowHamburger" Height="{StaticResource HamburgerHeightGridLength}"/>
             <RowDefinition/>
@@ -41,22 +211,33 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-
+        <!-- Top panel -->
+        <Grid Grid.ColumnSpan="2">
+            <ToggleButton x:Name="SwitchModeToggleButton" Visibility="Collapsed"
+                          x:Uid="SwitchModeToggleButton"
+                          Checked="SwitchModeToggleButton_Checked"
+                          Unchecked="SwitchModeToggleButton_Checked"
+                          AutomationProperties.AutomationId="SwitchModeToggleButton"
+                          Style="{StaticResource ThemedSwitchModeToggleButtonStyle}"
+                          ToolTipService.ToolTip="{x:Bind GetInfoForSwitchModeToggleButton(SwitchModeToggleButton.IsChecked.Value), Mode=OneWay}"
+                          AutomationProperties.Name="{x:Bind GetInfoForSwitchModeToggleButton(SwitchModeToggleButton.IsChecked.Value), Mode=OneWay}"
+                          HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,2,4,2">
+                <!-- TODO: update this icon -->
+                <FontIcon Glyph="" FontFamily="Segoe MDL2 Assets" />
+            </ToggleButton>
+        </Grid>
         <!-- Left portion of the screen -->
         <Grid x:Name="LeftGrid"
-              Grid.Row="1"
-              Grid.Column="0">
-            <Grid Grid.Row="0" Margin="4,7,4,4">
+              Grid.Row="1" Visibility="{x:Bind ShouldDisplayPanel(IsSmallState, SwitchModeToggleButton.IsChecked.Value, x:True), Mode=OneWay}">
+            <Grid Margin="4,7,4,4">
                 <graphControl:Grapher Name="GraphingControl"
+                                      Background="White"
                                       EquationsSource="{x:Bind ViewModel.Equations, Mode=OneWay}"
                                       ForceProportionalAxes="True"
                                       LosingFocus="OnLoosingFocus"
                                       LostFocus="OnGraphLostFocus"
                                       UseSystemFocusVisuals="True"
                                       VariablesUpdated="GraphVariablesUpdated">
-                    <graphControl:Grapher.Background>
-                        <SolidColorBrush Color="White"/>
-                    </graphControl:Grapher.Background>
                     <graphControl:Grapher.EquationTemplate>
                         <DataTemplate x:DataType="vm:EquationViewModel">
                             <graphControl:Equation AnalysisError="{x:Bind AnalysisError, Mode=TwoWay}"
@@ -80,11 +261,9 @@
                                                    YIntercept="{x:Bind YIntercept, Mode=TwoWay}"/>
                         </DataTemplate>
                     </graphControl:Grapher.EquationTemplate>
-
                 </graphControl:Grapher>
 
-                <StackPanel Grid.Row="0"
-                            Margin="0,0,10,10"
+                <StackPanel Margin="0,0,10,10"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Orientation="Horizontal">
@@ -103,24 +282,20 @@
                     </Button>
                 </StackPanel>
 
-                <Popup x:Name="TraceValuePopup"
-                       Grid.Row="0"
-                       RenderTransformOrigin="0,1">
+                <Popup x:Name="TraceValuePopup">
                     <Popup.RenderTransform>
                         <TranslateTransform x:Name="TraceValuePopupTransform" X="50" Y="150"/>
                     </Popup.RenderTransform>
                     <Grid Background="{StaticResource ToolTipBackground}"
                           BorderBrush="{StaticResource ToolTipBorderBrush}"
-                          BorderThickness="3,3,3,3">
+                          BorderThickness="3">
                         <TextBlock x:Name="TraceValue"
-                                   Margin="5,5,5,5"
+                                   Margin="5"
                                    Foreground="{StaticResource ToolTipForeground}"
                                    Text="x=0,y=0"/>
                     </Grid>
                 </Popup>
-
             </Grid>
-
 
             <!-- Temporary button until the final UI is created -->
             <Button Margin="12,0,0,12"
@@ -233,7 +408,7 @@
                                         <Grid Grid.Row="1"
                                               MinHeight="38"
                                               HorizontalAlignment="Stretch"
-                                              Visibility="{x:Bind SliderSettingsVisible, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                                              Visibility="{x:Bind SliderSettingsVisible, Mode=OneWay}">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="*"/>
@@ -418,10 +593,10 @@
 
         <!-- Right portion of the screen -->
         <Grid x:Name="RightGrid"
+              Visibility="{x:Bind ShouldDisplayPanel(IsSmallState, SwitchModeToggleButton.IsChecked.Value, x:False), Mode=OneWay}"
               Grid.Row="1"
               Grid.RowSpan="2"
-              Grid.Column="1"
-              Margin="0,0,0,0">
+              Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="3*"/>

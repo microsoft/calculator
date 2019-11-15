@@ -4,13 +4,17 @@
 #include "pch.h"
 #include "CalcViewModel/Common/TraceLogger.h"
 #include "GraphingCalculator.xaml.h"
-#include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "Controls/CalculationResult.h"
-#include "Calculator\Controls\EquationTextBox.h"
-#include "Calculator\Views\GraphingCalculator\EquationInputArea.xaml.h"
+#include "Calculator/Controls/EquationTextBox.h"
+#include "EquationInputArea.xaml.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
+#include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "CalcViewModel/Common/Automation/NarratorAnnouncement.h"
+#include "CalcViewModel/Common/Automation/NarratorNotifier.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
+using namespace CalculatorApp::Common::Automation;
 using namespace CalculatorApp::Controls;
 using namespace CalculatorApp::ViewModel;
 using namespace concurrency;
@@ -36,6 +40,8 @@ using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::UI::Popups;
 
 constexpr auto sc_ViewModelPropertyName = L"ViewModel";
+
+DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, IsSmallState);
 
 GraphingCalculator::GraphingCalculator()
     : ActiveTracingOn(false)
@@ -324,4 +330,38 @@ void GraphingCalculator::OnEquationKeyGraphFeaturesVisibilityChanged(Object ^ se
 void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventArgs ^ e)
 {
     IsKeyGraphFeaturesVisible = false;
+}
+
+Visibility GraphingCalculator::ShouldDisplayPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel)
+{
+    return (!isSmallState || isEquationModeActivated ^ isGraphPanel) ? ::Visibility::Visible : ::Visibility::Collapsed;
+}
+
+Platform::String ^ GraphingCalculator::GetInfoForSwitchModeToggleButton(bool isChecked)
+{
+    if (isChecked)
+    {
+        return AppResourceProvider::GetInstance().GetResourceString(L"GraphSwitchToGraphMode");
+    }
+    else
+    {
+        return AppResourceProvider::GetInstance().GetResourceString(L"GraphSwitchToEquationMode");
+    }
+}
+
+void CalculatorApp::GraphingCalculator::SwitchModeToggleButton_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    auto narratorNotifier = ref new NarratorNotifier();
+    String ^ announcementText;
+    if (SwitchModeToggleButton->IsChecked->Value)
+    {
+        announcementText = AppResourceProvider::GetInstance().GetResourceString(L"GraphSwitchedToEquationModeAnnouncement");
+    }
+    else
+    {
+        announcementText = AppResourceProvider::GetInstance().GetResourceString(L"GraphSwitchedToGraphModeAnnouncement");
+    }
+
+    auto announcement = CalculatorAnnouncement::GetGraphModeChangedAnnouncement(announcementText);
+    narratorNotifier->Announce(announcement);
 }
