@@ -71,7 +71,7 @@ namespace CalculatorApp
             }
         }
 
-        void LightUpButton(ButtonBase ^ button)
+        winrt::fire_and_forget LightUpButton(ButtonBase ^ button)
         {
             // If the button is a toggle button then we don't need
             // to change the UI of the button
@@ -83,31 +83,15 @@ namespace CalculatorApp
             // The button will go into the visual Pressed state with this call
             VisualStateManager::GoToState(button, "Pressed", true);
 
-            // This timer will fire after lightUpTime and make the button
-            // go back to the normal state.
-            // This timer will only fire once after which it will be destroyed
-            auto timer = ref new DispatcherTimer();
-            TimeSpan lightUpTime{};
-            lightUpTime.Duration = 500000L; // Half second (in 100-ns units)
-            timer->Interval = lightUpTime;
+            winrt::apartment_context uiThreadContext;
 
-            WeakReference timerWeakReference(timer);
-            WeakReference buttonWeakReference(button);
-            timer->Tick += ref new EventHandler<Object ^>([buttonWeakReference, timerWeakReference](Object ^, Object ^) {
-                auto button = buttonWeakReference.Resolve<ButtonBase>();
-                if (button)
-                {
-                    VisualStateManager::GoToState(button, "Normal", true);
-                }
+            co_await winrt::resume_background();
+            co_await winrt::resume_after(500ms);
 
-                // Cancel the timer after we're done so it only fires once
-                auto timer = timerWeakReference.Resolve<DispatcherTimer>();
-                if (timer)
-                {
-                    timer->Stop();
-                }
-            });
-            timer->Start();
+            co_await uiThreadContext;
+
+            // Restore the normal state
+            VisualStateManager::GoToState(button, "Normal", true);
         }
 
         // Looks for the first button reference that it can resolve

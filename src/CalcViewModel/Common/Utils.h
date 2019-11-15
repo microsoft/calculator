@@ -5,6 +5,7 @@
 
 #include "CalcManager/ExpressionCommandInterface.h"
 #include "DelegateCommand.h"
+#include "GraphingInterfaces/GraphingEnums.h"
 
 // Utility macros to make Models easier to write
 // generates a member variable called m_<n>
@@ -62,6 +63,25 @@ public:
                 m_##n = value;                                                                                                                                 \
                 RaisePropertyChanged(L#n);                                                                                                                     \
             }                                                                                                                                                  \
+        }                                                                                                                                                      \
+    }                                                                                                                                                          \
+                                                                                                                                                               \
+private:                                                                                                                                                       \
+    t m_##n;                                                                                                                                                   \
+                                                                                                                                                               \
+public:
+
+#define OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(t, n)                                                                                                             \
+    property t n                                                                                                                                               \
+    {                                                                                                                                                          \
+        t get()                                                                                                                                                \
+        {                                                                                                                                                      \
+            return m_##n;                                                                                                                                      \
+        }                                                                                                                                                      \
+        void set(t value)                                                                                                                                      \
+        {                                                                                                                                                      \
+            m_##n = value;                                                                                                                                     \
+            RaisePropertyChanged(L#n);                                                                                                                         \
         }                                                                                                                                                      \
     }                                                                                                                                                          \
                                                                                                                                                                \
@@ -400,6 +420,13 @@ namespace Utils
         Platform::String ^ contents,
         Windows::Storage::CreationCollisionOption collisionOption);
     concurrency::task<Platform::String ^> ReadFileFromFolder(Windows::Storage::IStorageFolder ^ folder, Platform::String ^ fileName);
+
+    bool AreColorsEqual(const Windows::UI::Color& color1, const Windows::UI::Color& color2);
+
+    Platform::String ^ Trim(Platform::String ^ value);
+    void Trim(std::wstring& value);
+    void TrimFront(std::wstring& value);
+    void TrimBack(std::wstring& value);
 }
 
 // This goes into the header to define the property, in the public: section of the class
@@ -696,3 +723,18 @@ namespace CalculatorApp
         return to;
     }
 }
+
+// There's no standard definition of equality for Windows::UI::Color structs.
+// Define a template specialization for std::equal_to.
+template <>
+class std::equal_to<Windows::UI::Color>
+{
+public:
+    bool operator()(const Windows::UI::Color& color1, const Windows::UI::Color& color2)
+    {
+        return Utils::AreColorsEqual(color1, color2);
+    }
+};
+
+bool operator==(const Windows::UI::Color& color1, const Windows::UI::Color& color2);
+bool operator!=(const Windows::UI::Color& color1, const Windows::UI::Color& color2);

@@ -7,7 +7,6 @@
 #include "CalcViewModel\GraphingCalculatorEnums.h"
 
 using namespace CalculatorApp::Common;
-using namespace Graphing;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace std;

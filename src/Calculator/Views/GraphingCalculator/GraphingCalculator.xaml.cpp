@@ -99,7 +99,7 @@ void GraphingCalculator::ViewModel::set(GraphingCalculatorViewModel ^ vm)
     }
 }
 
-void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void GraphingCalculator::OnShareClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     // Ask the OS to start a share action.
     DataTransferManager::ShowShareUI();
@@ -197,7 +197,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
     }
     catch (Exception ^ ex)
     {
-        TraceLogger::GetInstance().LogPlatformException(ViewMode::Graphing, __FUNCTIONW__, ex);
+        TraceLogger::GetInstance()->LogPlatformException(ViewMode::Graphing, __FUNCTIONW__, ex);
 
         // Something went wrong, notify the user.
         auto errorTitleString = resourceLoader->GetString(L"ShareActionErrorMessage");

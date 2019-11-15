@@ -439,11 +439,6 @@ void App::OnActivated(IActivatedEventArgs ^ args)
 
 void CalculatorApp::App::OnSuspending(Object ^ sender, SuspendingEventArgs ^ args)
 {
-    TraceLogger::GetInstance().LogButtonUsage();
-}
-
-void CalculatorApp::App::OnSuspending(Object ^ sender, SuspendingEventArgs ^ args)
-{
     TraceLogger::GetInstance()->LogButtonUsage();
 }
 

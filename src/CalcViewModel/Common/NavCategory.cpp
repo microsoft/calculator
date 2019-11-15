@@ -46,10 +46,11 @@ static constexpr int DATA_ID = 13;
 static constexpr int PRESSURE_ID = 14;
 static constexpr int ANGLE_ID = 15;
 static constexpr int CURRENCY_ID = 16;
+static constexpr int GRAPHING_ID = 17;
 // ^^^ THESE CONSTANTS SHOULD NEVER CHANGE ^^^
 
 // The order of items in this list determines the order of items in the menu.
-static constexpr array<const NavCategoryInitializer, 17> s_categoryManifest = { NavCategoryInitializer{ ViewMode::Standard,
+static constexpr array<const NavCategoryInitializer, 18> s_categoryManifest = { NavCategoryInitializer{ ViewMode::Standard,
                                                                                                         STANDARD_ID,
                                                                                                         L"Standard",
                                                                                                         L"StandardMode",
@@ -80,6 +81,14 @@ static constexpr array<const NavCategoryInitializer, 17> s_categoryManifest = { 
                                                                                                         L"\uE787",
                                                                                                         CategoryGroupType::Calculator,
                                                                                                         MyVirtualKey::Number4,
+                                                                                                        SUPPORTS_ALL },
+                                                                                NavCategoryInitializer{ ViewMode::Graphing,
+                                                                                                        GRAPHING_ID,
+                                                                                                        L"Graphing",
+                                                                                                        L"GraphingCalculatorMode",
+                                                                                                        L"\uF770",
+                                                                                                        CategoryGroupType::Calculator,
+                                                                                                        MyVirtualKey::Number5,
                                                                                                         SUPPORTS_ALL },
                                                                                 NavCategoryInitializer{ ViewMode::Currency,
                                                                                                         CURRENCY_ID,
@@ -228,9 +237,13 @@ bool NavCategory::IsValidViewMode(ViewMode mode)
 
 bool NavCategory::IsCalculatorViewMode(ViewMode mode)
 {
-    // Historically, Date Calculator is not a Calculator mode
-    // even though it is in the Calculator category.
-    return !IsDateCalculatorViewMode(mode) && IsModeInCategoryGroup(mode, CategoryGroupType::Calculator);
+    // Historically, Calculator modes are Standard, Scientific, and Programmer.
+    return !IsDateCalculatorViewMode(mode) && !IsGraphingCalculatorViewMode(mode) && IsModeInCategoryGroup(mode, CategoryGroupType::Calculator);
+}
+
+bool NavCategory::IsGraphingCalculatorViewMode(ViewMode mode)
+{
+    return mode == ViewMode::Graphing;
 }
 
 bool NavCategory::IsDateCalculatorViewMode(ViewMode mode)

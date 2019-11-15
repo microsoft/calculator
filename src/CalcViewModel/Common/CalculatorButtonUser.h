@@ -121,6 +121,11 @@ public
         RolC = (int)CM::Command::CommandROLC,
         RorC = (int)CM::Command::CommandRORC,
 
+        Plot,
+        X,
+        Y,
+
+
         BINSTART = (int)CM::Command::CommandBINEDITSTART,
         BINPOS0 = (int)CM::Command::CommandBINPOS0,
         BINPOS1 = (int)CM::Command::CommandBINPOS1,

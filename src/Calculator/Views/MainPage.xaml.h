@@ -6,6 +6,7 @@
 #include "Views/Calculator.xaml.h"
 #include "Views/MainPage.g.h"
 #include "Views/DateCalculator.xaml.h"
+#include "Views/GraphingCalculator/GraphingCalculator.xaml.h"
 #include "Views/UnitConverter.xaml.h"
 #include "CalcViewModel/ApplicationViewModel.h"
 
@@ -24,8 +25,8 @@ public
     {
     public:
         MainPage();
-        property CalculatorApp::ViewModel::ApplicationViewModel
-            ^ Model { CalculatorApp::ViewModel::ApplicationViewModel ^ get() { return m_model; } }
+        property ViewModel::ApplicationViewModel
+            ^ Model { ViewModel::ApplicationViewModel ^ get() { return m_model; } }
 
             void
             UnregisterEventHandlers();
@@ -35,7 +36,7 @@ public
 
         Windows::Foundation::Collections::IObservableVector<
             Platform::Object
-            ^> ^ CreateUIElementsForCategories(_In_ Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup ^> ^ categories);
+            ^> ^ CreateUIElementsForCategories(_In_ Windows::Foundation::Collections::IObservableVector<Common::NavCategoryGroup ^> ^ categories);
 
     protected:
         void OnNavigatedTo(_In_ Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e) override;
@@ -59,10 +60,10 @@ public
         void AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void TitleBarAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
-        Microsoft::UI::Xaml::Controls::NavigationViewItemHeader ^ CreateNavViewHeaderFromGroup(CalculatorApp::Common::NavCategoryGroup ^ group);
-        Microsoft::UI::Xaml::Controls::NavigationViewItem ^ CreateNavViewItemFromCategory(CalculatorApp::Common::NavCategory ^ category);
+        Microsoft::UI::Xaml::Controls::NavigationViewItemHeader ^ CreateNavViewHeaderFromGroup(Common::NavCategoryGroup ^ group);
+        Microsoft::UI::Xaml::Controls::NavigationViewItem ^ CreateNavViewItemFromCategory(Common::NavCategory ^ category);
 
-        void ShowHideControls(CalculatorApp::Common::ViewMode mode);
+        void ShowHideControls(Common::ViewMode mode);
         void UpdateViewState();
         void UpdatePanelViewState();
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
@@ -71,17 +72,19 @@ public
         void App_Suspending(Object ^ sender, Windows::ApplicationModel::SuspendingEventArgs ^ e);
 
         void EnsureCalculator();
-        void EnsureConverter();
         void EnsureDateCalculator();
+        void EnsureGraphingCalculator();
+        void EnsureConverter();
         void ShowAboutPage();
 
         void AnnounceCategoryName();
 
-        CalculatorApp::Calculator ^ m_calculator;
-        CalculatorApp::UnitConverter ^ m_converter;
-        CalculatorApp::DateCalculator ^ m_dateCalculator;
+        Calculator ^ m_calculator;
+        GraphingCalculator ^ m_graphingCalculator;
+        UnitConverter ^ m_converter;
+        DateCalculator ^ m_dateCalculator;
         Windows::Foundation::EventRegistrationToken m_windowSizeEventToken;
-        CalculatorApp::ViewModel::ApplicationViewModel ^ m_model;
+        ViewModel::ApplicationViewModel ^ m_model;
         Windows::Foundation::EventRegistrationToken m_accessibilitySettingsToken;
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
     };
