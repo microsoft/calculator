@@ -6,7 +6,6 @@
 #include "Views/Calculator.xaml.h"
 #include "Views/MainPage.g.h"
 #include "Views/DateCalculator.xaml.h"
-#include "Views/GraphingCalculator/GraphingCalculator.xaml.h"
 #include "Views/UnitConverter.xaml.h"
 #include "CalcViewModel/ApplicationViewModel.h"
 
@@ -72,9 +71,8 @@ public
         void App_Suspending(Object ^ sender, Windows::ApplicationModel::SuspendingEventArgs ^ e);
 
         void EnsureCalculator();
-        void EnsureDateCalculator();
-        void EnsureGraphingCalculator();
         void EnsureConverter();
+        void EnsureDateCalculator();
         void ShowAboutPage();
 
         void AnnounceCategoryName();
@@ -82,7 +80,6 @@ public
         CalculatorApp::Calculator ^ m_calculator;
         CalculatorApp::UnitConverter ^ m_converter;
         CalculatorApp::DateCalculator ^ m_dateCalculator;
-        CalculatorApp::GraphingCalculator^ m_graphingCalculator;
         Windows::Foundation::EventRegistrationToken m_windowSizeEventToken;
         CalculatorApp::ViewModel::ApplicationViewModel ^ m_model;
         Windows::Foundation::EventRegistrationToken m_accessibilitySettingsToken;

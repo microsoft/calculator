@@ -46,25 +46,16 @@ static constexpr int DATA_ID = 13;
 static constexpr int PRESSURE_ID = 14;
 static constexpr int ANGLE_ID = 15;
 static constexpr int CURRENCY_ID = 16;
-static constexpr int GRAPHING_ID    = 17;
 // ^^^ THESE CONSTANTS SHOULD NEVER CHANGE ^^^
 
 // The order of items in this list determines the order of items in the menu.
-static constexpr array<const NavCategoryInitializer, 18> s_categoryManifest = { NavCategoryInitializer{ ViewMode::Standard,
+static constexpr array<const NavCategoryInitializer, 17> s_categoryManifest = { NavCategoryInitializer{ ViewMode::Standard,
                                                                                                         STANDARD_ID,
                                                                                                         L"Standard",
                                                                                                         L"StandardMode",
                                                                                                         L"\uE8EF",
                                                                                                         CategoryGroupType::Calculator,
                                                                                                         MyVirtualKey::Number1,
-                                                                                                        SUPPORTS_ALL },
-																				NavCategoryInitializer{ ViewMode::Graphing,
-																										GRAPHING_ID,
-																										L"Graphing",
-																										L"GraphingCalculatorMode",
-																										L"\uF770",
-																										CategoryGroupType::Calculator,
-																										MyVirtualKey::Number5,
                                                                                                         SUPPORTS_ALL },
                                                                                 NavCategoryInitializer{ ViewMode::Scientific,
                                                                                                         SCIENTIFIC_ID,
@@ -169,7 +160,7 @@ static constexpr array<const NavCategoryInitializer, 18> s_categoryManifest = { 
                                                                                                         L"\uE945",
                                                                                                         CategoryGroupType::Converter,
                                                                                                         MyVirtualKey::None,
-                                                                                                        POSITIVE_ONLY },
+                                                                                                        SUPPORTS_NEGATIVE },
                                                                                 NavCategoryInitializer{ ViewMode::Data,
                                                                                                         DATA_ID,
                                                                                                         L"Data",
@@ -193,7 +184,7 @@ static constexpr array<const NavCategoryInitializer, 18> s_categoryManifest = { 
                                                                                                         L"\uF515",
                                                                                                         CategoryGroupType::Converter,
                                                                                                         MyVirtualKey::None,
-                                                                                                        POSITIVE_ONLY } };
+                                                                                                        SUPPORTS_NEGATIVE } };
 
 // This function should only be used when storing the mode to app data.
 int NavCategory::Serialize(ViewMode mode)
@@ -237,15 +228,9 @@ bool NavCategory::IsValidViewMode(ViewMode mode)
 
 bool NavCategory::IsCalculatorViewMode(ViewMode mode)
 {
-    // Historically, Calculator modes are Standard, Scientific, and Programmer.
-    return !IsDateCalculatorViewMode(mode)
-        && !IsGraphingCalculatorViewMode(mode)
-        && IsModeInCategoryGroup(mode, CategoryGroupType::Calculator);
-}
-
-bool NavCategory::IsGraphingCalculatorViewMode(ViewMode mode)
-{
-    return mode == ViewMode::Graphing;
+    // Historically, Date Calculator is not a Calculator mode
+    // even though it is in the Calculator category.
+    return !IsDateCalculatorViewMode(mode) && IsModeInCategoryGroup(mode, CategoryGroupType::Calculator);
 }
 
 bool NavCategory::IsDateCalculatorViewMode(ViewMode mode)
@@ -383,33 +368,28 @@ NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupIniti
     m_GroupType = groupInitializer.type;
 
     auto resProvider = AppResourceProvider::GetInstance();
-    String ^ headerResourceKey = StringReference(groupInitializer.headerResourceKey);
-    String ^ modeResourceKey = StringReference(groupInitializer.modeResourceKey);
-    String ^ automationResourceKey = StringReference(groupInitializer.automationResourceKey);
-    m_Name = resProvider.GetResourceString(headerResourceKey);
-    String ^ groupMode = resProvider.GetResourceString(modeResourceKey);
-    String ^ automationName = resProvider.GetResourceString(automationResourceKey);
+    m_Name = resProvider->GetResourceString(StringReference(groupInitializer.headerResourceKey));
+    String ^ groupMode = resProvider->GetResourceString(StringReference(groupInitializer.modeResourceKey));
+    String ^ automationName = resProvider->GetResourceString(StringReference(groupInitializer.automationResourceKey));
 
-    String ^ navCategoryHeaderAutomationNameFormat = resProvider.GetResourceString(L"NavCategoryHeader_AutomationNameFormat");
-    m_AutomationName =
-        ref new String(LocalizationStringUtil::GetLocalizedString(navCategoryHeaderAutomationNameFormat->Data(), automationName->Data()).c_str());
+    String ^ navCategoryHeaderAutomationNameFormat = resProvider->GetResourceString(L"NavCategoryHeader_AutomationNameFormat");
+    m_AutomationName = LocalizationStringUtil::GetLocalizedString(navCategoryHeaderAutomationNameFormat, automationName);
 
-    String ^ navCategoryItemAutomationNameFormat = resProvider.GetResourceString(L"NavCategoryItem_AutomationNameFormat");
+    String ^ navCategoryItemAutomationNameFormat = resProvider->GetResourceString(L"NavCategoryItem_AutomationNameFormat");
 
     for (const NavCategoryInitializer& categoryInitializer : s_categoryManifest)
     {
         if (categoryInitializer.groupType == groupInitializer.type)
         {
             String ^ nameResourceKey = StringReference(categoryInitializer.nameResourceKey);
-            String ^ categoryName = resProvider.GetResourceString(nameResourceKey + "Text");
-            String ^ categoryAutomationName = ref new String(
-                LocalizationStringUtil::GetLocalizedString(navCategoryItemAutomationNameFormat->Data(), categoryName->Data(), m_Name->Data()).c_str());
+            String ^ categoryName = resProvider->GetResourceString(nameResourceKey + "Text");
+            String ^ categoryAutomationName = LocalizationStringUtil::GetLocalizedString(navCategoryItemAutomationNameFormat, categoryName, m_Name);
 
             m_Categories->Append(ref new NavCategory(
                 categoryName,
                 categoryAutomationName,
                 StringReference(categoryInitializer.glyph),
-                resProvider.GetResourceString(nameResourceKey + "AccessKey"),
+                resProvider->GetResourceString(nameResourceKey + "AccessKey"),
                 groupMode,
                 categoryInitializer.viewMode,
                 categoryInitializer.supportsNegative));

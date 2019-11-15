@@ -43,7 +43,6 @@ namespace
 ApplicationViewModel::ApplicationViewModel()
     : m_CalculatorViewModel(nullptr)
     , m_DateCalcViewModel(nullptr)
-    , m_GraphingCalcViewModel(nullptr)
     , m_ConverterViewModel(nullptr)
     , m_PreviousMode(ViewMode::None)
     , m_mode(ViewMode::None)
@@ -86,7 +85,7 @@ void ApplicationViewModel::Initialize(ViewMode mode)
     }
     catch (const std::exception& e)
     {
-        TraceLogger::GetInstance().LogStandardException(mode, __FUNCTIONW__, e);
+        TraceLogger::GetInstance()->LogStandardException(mode, __FUNCTIONW__, e);
         if (!TryRecoverFromNavigationModeFailure())
         {
             // Could not navigate to standard mode either.
@@ -96,7 +95,7 @@ void ApplicationViewModel::Initialize(ViewMode mode)
     }
     catch (Exception ^ e)
     {
-        TraceLogger::GetInstance().LogPlatformException(mode, __FUNCTIONW__, e);
+        TraceLogger::GetInstance()->LogPlatformException(mode, __FUNCTIONW__, e);
         if (!TryRecoverFromNavigationModeFailure())
         {
             // Could not navigate to standard mode either.
@@ -133,13 +132,6 @@ void ApplicationViewModel::OnModeChanged()
         }
         m_CalculatorViewModel->SetCalculatorType(m_mode);
     }
-    else if (NavCategory::IsGraphingCalculatorViewMode(m_mode))
-    {
-        if (!m_GraphingCalcViewModel)
-        {
-            m_GraphingCalcViewModel = ref new GraphingCalculatorViewModel();
-        }
-    }
     else if (NavCategory::IsDateCalculatorViewMode(m_mode))
     {
         if (!m_DateCalcViewModel)
@@ -160,7 +152,7 @@ void ApplicationViewModel::OnModeChanged()
     }
 
     auto resProvider = AppResourceProvider::GetInstance();
-    CategoryName = resProvider.GetResourceString(NavCategory::GetNameResourceKey(m_mode));
+    CategoryName = resProvider->GetResourceString(NavCategory::GetNameResourceKey(m_mode));
 
     // Cast mode to an int in order to save it to app data.
     // Save the changed mode, so that the new window launches in this mode.
@@ -170,11 +162,11 @@ void ApplicationViewModel::OnModeChanged()
     // Log ModeChange event when not first launch, log WindowCreated on first launch
     if (NavCategory::IsValidViewMode(m_PreviousMode))
     {
-        TraceLogger::GetInstance().LogModeChange(m_mode);
+        TraceLogger::GetInstance()->LogModeChange(m_mode);
     }
     else
     {
-        TraceLogger::GetInstance().LogWindowCreated(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+        TraceLogger::GetInstance()->LogWindowCreated(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
     }
 
     RaisePropertyChanged(ClearMemoryVisibilityPropertyName);

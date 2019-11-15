@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -15,8 +15,8 @@ namespace CalculationManager
 
     struct HISTORYITEMVECTOR
     {
-        std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> spTokens;
-        std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> spCommands;
+        std::shared_ptr<std::vector<std::pair<std::wstring, int>>> spTokens;
+        std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> spCommands;
         std::wstring expression;
         std::wstring result;
     };
@@ -31,8 +31,8 @@ namespace CalculationManager
     public:
         CalculatorHistory(const size_t maxSize);
         unsigned int AddToHistory(
-            _In_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& spTokens,
-            _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& spCommands,
+            _In_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& spTokens,
+            _In_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& spCommands,
             std::wstring_view result);
         std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistory();
         std::shared_ptr<HISTORYITEM> const& GetHistoryItem(unsigned int uIdx);
@@ -43,7 +43,6 @@ namespace CalculationManager
         {
             return m_maxHistorySize;
         }
-        ~CalculatorHistory(void);
 
     private:
         std::vector<std::shared_ptr<HISTORYITEM>> m_historyItems;

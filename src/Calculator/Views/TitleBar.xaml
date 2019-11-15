@@ -54,6 +54,10 @@
                 AutomationProperties.AutomationId="ExitAlwaysOnTopButton"
                 Click="AlwaysOnTopButton_Click"
                 Content="&#xEE47;"
-                Visibility="Collapsed"/>
+                Visibility="Collapsed">
+            <Button.KeyboardAccelerators>
+                <KeyboardAccelerator Modifiers="Menu" Key="Down"/>
+            </Button.KeyboardAccelerators>
+        </Button>
     </Grid>
 </UserControl>

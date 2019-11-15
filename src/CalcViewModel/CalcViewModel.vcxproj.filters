@@ -9,7 +9,6 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="StandardCalculatorViewModel.cpp" />
     <ClCompile Include="UnitConverterViewModel.cpp" />
-    <ClCompile Include="ViewState.cpp" />
     <ClCompile Include="Common\AppResourceProvider.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -58,22 +57,10 @@
     <ClCompile Include="Common\Utils.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\Automation\NarratorAnnouncementHostFactory.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
     <ClCompile Include="Common\Automation\NarratorNotifier.cpp">
       <Filter>Common\Automation</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Automation\NotificationHost.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\Automation\LiveRegionHost.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
-    <ClCompile Include="DataLoaders\UnitConverterDataLoader.cpp">
+    <ClCompile Include="DataLoaders\CurrencyDataLoader.cpp">
       <Filter>DataLoaders</Filter>
     </ClCompile>
     <ClCompile Include="DataLoaders\CurrencyHttpClient.cpp">
@@ -88,6 +75,9 @@
     <ClCompile Include="DataLoaders\CurrencyDataLoader.cpp">
       <Filter>DataLoaders</Filter>
     </ClCompile>
+    <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp">
+      <Filter>Common\Automation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApplicationViewModel.h" />
@@ -99,7 +89,9 @@
     <ClInclude Include="StandardCalculatorViewModel.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UnitConverterViewModel.h" />
-    <ClInclude Include="ViewState.h" />
+    <ClInclude Include="Common\AlwaysSelectedCollectionView.h">
+      <Filter>Common</Filter>
+    </ClInclude>
     <ClInclude Include="Common\AppResourceProvider.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -175,26 +167,14 @@
     <ClInclude Include="Common\ValidatingConverters.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\CalculatorButtonUser.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Automation\NarratorAnnouncement.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Automation\NarratorAnnouncementHostFactory.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
     <ClInclude Include="Common\Automation\NarratorNotifier.h">
       <Filter>Common\Automation</Filter>
     </ClInclude>
-    <ClInclude Include="Common\Automation\NotificationHost.h">
-      <Filter>Common\Automation</Filter>
+    <ClInclude Include="DataLoaders\CurrencyDataLoader.h">
+      <Filter>DataLoaders</Filter>
     </ClInclude>
-    <ClInclude Include="Common\Automation\INarratorAnnouncementHost.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Automation\LiveRegionHost.h">
-      <Filter>Common\Automation</Filter>
+    <ClInclude Include="DataLoaders\CurrencyHttpClient.h">
+      <Filter>DataLoaders</Filter>
     </ClInclude>
     <ClInclude Include="DataLoaders\ICurrencyHttpClient.h">
       <Filter>DataLoaders</Filter>
@@ -223,6 +203,18 @@
     <ClInclude Include="GraphingCalculatorEnums.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="DataLoaders\DataLoaderMockConstants.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Automation\NarratorAnnouncement.h">
+      <Filter>Common\Automation</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\BitLength.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\NumberBase.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -243,5 +235,8 @@
     <Filter Include="DataLoaders">
       <UniqueIdentifier>{b017a5e6-6d25-4799-a517-99f88d65b82f}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)DensityStyles\Compact.xaml" />
   </ItemGroup>
 </Project>

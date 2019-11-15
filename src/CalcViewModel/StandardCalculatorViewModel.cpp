@@ -14,6 +14,7 @@ using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Common::Automation;
 using namespace CalculatorApp::ViewModel;
 using namespace CalculationManager;
+using namespace concurrency;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace std;
@@ -25,6 +26,7 @@ using namespace Windows::UI::Popups;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Foundation::Collections;
 using namespace Utils;
+using namespace concurrency;
 
 constexpr int StandardModePrecision = 16;
 constexpr int ScientificModePrecision = 32;
@@ -73,12 +75,11 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_MemorizedNumbers(ref new Vector<MemoryItemViewModel ^>())
     , m_IsMemoryEmpty(true)
     , m_IsFToEChecked(false)
-    , m_isShiftChecked(false)
     , m_IsShiftProgrammerChecked(false)
     , m_valueBitLength(BitLength::BitLengthQWord)
     , m_isBitFlipChecked(false)
-    , m_isBinaryBitFlippingEnabled(false)
-    , m_CurrentRadixType(RADIX_TYPE::DEC_RADIX)
+    , m_IsBinaryBitFlippingEnabled(false)
+    , m_CurrentRadixType(NumberBase::DecBase)
     , m_CurrentAngleType(NumbersAndOperatorsEnum::Degree)
     , m_Announcement(nullptr)
     , m_OpenParenthesisCount(0)
@@ -92,17 +93,20 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_localizedMemoryCleared(nullptr)
     , m_localizedOpenParenthesisCountChangedAutomationFormat(nullptr)
     , m_localizedNoRightParenthesisAddedFormat(nullptr)
+    , m_TokenPosition(-1)
+    , m_isLastOperationHistoryLoad(false)
 {
     WeakReference calculatorViewModel(this);
+    auto appResourceProvider = AppResourceProvider::GetInstance();
     m_calculatorDisplay.SetCallback(calculatorViewModel);
-    m_expressionAutomationNameFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::CalculatorExpression);
-    m_localizedCalculationResultAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::CalculatorResults);
+    m_expressionAutomationNameFormat = appResourceProvider->GetResourceString(CalculatorResourceKeys::CalculatorExpression);
+    m_localizedCalculationResultAutomationFormat = appResourceProvider->GetResourceString(CalculatorResourceKeys::CalculatorResults);
     m_localizedCalculationResultDecimalAutomationFormat =
-        AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::CalculatorResults_DecimalSeparator_Announced);
-    m_localizedHexaDecimalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::HexButton);
-    m_localizedDecimalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::DecButton);
-    m_localizedOctalAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::OctButton);
-    m_localizedBinaryAutomationFormat = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::BinButton);
+        appResourceProvider->GetResourceString(CalculatorResourceKeys::CalculatorResults_DecimalSeparator_Announced);
+    m_localizedHexaDecimalAutomationFormat = appResourceProvider->GetResourceString(CalculatorResourceKeys::HexButton);
+    m_localizedDecimalAutomationFormat = appResourceProvider->GetResourceString(CalculatorResourceKeys::DecButton);
+    m_localizedOctalAutomationFormat = appResourceProvider->GetResourceString(CalculatorResourceKeys::OctButton);
+    m_localizedBinaryAutomationFormat = appResourceProvider->GetResourceString(CalculatorResourceKeys::BinButton);
 
     // Initialize the Automation Name
     CalculationResultAutomationName = GetLocalizedStringFormat(m_localizedCalculationResultAutomationFormat, m_DisplayValue);
@@ -128,9 +132,6 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     IsDecimalEnabled = true;
     AreHistoryShortcutsEnabled = true;
     AreProgrammerRadixOperatorsEnabled = false;
-
-    m_tokenPosition = -1;
-    m_isLastOperationHistoryLoad = false;
 }
 
 String ^ StandardCalculatorViewModel::LocalizeDisplayValue(_In_ wstring const& displayValue, _In_ bool isError)
@@ -166,7 +167,7 @@ String ^ StandardCalculatorViewModel::CalculateNarratorDisplayValue(_In_ wstring
     }
 
     // In Programmer modes using non-base10, we want the strings to be read as literal digits.
-    if (IsProgrammer && CurrentRadixType != RADIX_TYPE::DEC_RADIX)
+    if (IsProgrammer && CurrentRadixType != NumberBase::DecBase)
     {
         localizedValue = GetNarratorStringReadRawNumbers(localizedValue);
     }
@@ -193,13 +194,13 @@ String ^ StandardCalculatorViewModel::GetNarratorStringReadRawNumbers(_In_ Strin
     return ref new String(wss.str().c_str());
 }
 
-void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ wstring const& displayStringValue, _In_ bool isError)
+void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ String ^ displayStringValue, _In_ bool isError)
 {
-    String ^ localizedDisplayStringValue = LocalizeDisplayValue(displayStringValue, isError);
+    String ^ localizedDisplayStringValue = LocalizeDisplayValue(displayStringValue->Data(), isError);
 
     // Set this variable before the DisplayValue is modified, Otherwise the DisplayValue will
     // not match what the narrator is saying
-    m_CalculationResultAutomationName = CalculateNarratorDisplayValue(displayStringValue, localizedDisplayStringValue, isError);
+    m_CalculationResultAutomationName = CalculateNarratorDisplayValue(displayStringValue->Data(), localizedDisplayStringValue, isError);
 
     AreAlwaysOnTopResultsUpdated = false;
     if (DisplayValue != localizedDisplayStringValue)
@@ -240,10 +241,13 @@ void StandardCalculatorViewModel::SetOpenParenthesisCountNarratorAnnouncement()
     wstring localizedParenthesisCount = to_wstring(m_OpenParenthesisCount).c_str();
     LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
 
-    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
-        CalculatorResourceKeys::OpenParenthesisCountAutomationFormat,
-        m_localizedOpenParenthesisCountChangedAutomationFormat,
-        localizedParenthesisCount.c_str());
+    if (m_localizedOpenParenthesisCountChangedAutomationFormat == nullptr)
+    {
+        m_localizedOpenParenthesisCountChangedAutomationFormat =
+            AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::OpenParenthesisCountAutomationFormat);
+    }
+    String ^ announcement =
+        LocalizationStringUtil::GetLocalizedString(m_localizedOpenParenthesisCountChangedAutomationFormat, StringReference(localizedParenthesisCount.c_str()));
 
     Announcement = CalculatorAnnouncement::GetOpenParenthesisCountChangedAnnouncement(announcement);
 }
@@ -255,10 +259,13 @@ void StandardCalculatorViewModel::OnNoRightParenAdded()
 
 void StandardCalculatorViewModel::SetNoParenAddedNarratorAnnouncement()
 {
-    String ^ announcement =
-        LocalizationStringUtil::GetLocalizedNarratorAnnouncement(CalculatorResourceKeys::NoParenthesisAdded, m_localizedNoRightParenthesisAddedFormat);
+    if (m_localizedNoRightParenthesisAddedFormat == nullptr)
+    {
+        m_localizedNoRightParenthesisAddedFormat =
+            AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::NoParenthesisAdded);
+    }
 
-    Announcement = CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(announcement);
+    Announcement = CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(m_localizedNoRightParenthesisAddedFormat);
 }
 
 void StandardCalculatorViewModel::DisableButtons(CommandType selectedExpressionCommandType)
@@ -290,8 +297,8 @@ void StandardCalculatorViewModel::DisableButtons(CommandType selectedExpressionC
 }
 
 void StandardCalculatorViewModel::SetExpressionDisplay(
-    _Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
-    _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
+    _Inout_ shared_ptr<std::vector<pair<wstring, int>>> const& tokens,
+    _Inout_ shared_ptr<std::vector<shared_ptr<IExpressionCommand>>> const& commands)
 {
     m_tokens = tokens;
     m_commands = commands;
@@ -306,11 +313,11 @@ void StandardCalculatorViewModel::SetExpressionDisplay(
 }
 
 void StandardCalculatorViewModel::SetHistoryExpressionDisplay(
-    _Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
-    _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
+    _Inout_ shared_ptr<vector<pair<wstring, int>>> const& tokens,
+    _Inout_ shared_ptr<vector<shared_ptr<IExpressionCommand>>> const& commands)
 {
-    m_tokens = make_shared<CalculatorVector<pair<wstring, int>>>(*tokens);
-    m_commands = make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>(*commands);
+    m_tokens = make_shared<vector<pair<wstring, int>>>(*tokens);
+    m_commands = make_shared<vector<shared_ptr<IExpressionCommand>>>(*commands);
     IsEditingEnabled = false;
 
     // Setting the History Item Load Mode so that UI does not get updated with recalculation of every token
@@ -320,12 +327,11 @@ void StandardCalculatorViewModel::SetHistoryExpressionDisplay(
     m_isLastOperationHistoryLoad = true;
 }
 
-void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens)
+void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<vector<pair<wstring, int>>> const& tokens)
 {
     AreTokensUpdated = false;
 
-    unsigned int nTokens = 0;
-    tokens->GetSize(&nTokens);
+    const size_t nTokens = tokens->size();
 
     if (nTokens == 0)
     {
@@ -333,50 +339,47 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<CalculatorVector<
         return;
     }
 
-    pair<wstring, int> currentToken;
     const auto& localizer = LocalizationSettings::GetInstance();
 
     const wstring separator = L" ";
     for (unsigned int i = 0; i < nTokens; ++i)
     {
-        if (SUCCEEDED(tokens->GetAt(i, &currentToken)))
+        auto currentToken = (*tokens)[i];
+
+        Common::TokenType type;
+        bool isEditable = currentToken.second != -1;
+        localizer.LocalizeDisplayValue(&(currentToken.first));
+
+        if (!isEditable)
         {
-            Common::TokenType type;
-            bool isEditable = (currentToken.second == -1) ? false : true;
-            localizer.LocalizeDisplayValue(&(currentToken.first));
+            type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
+        }
+        else
+        {
+            const shared_ptr<IExpressionCommand>& command = m_commands->at(currentToken.second);
+            type = command->GetCommandType() == CommandType::OperandCommand ? TokenType::Operand : TokenType::Operator;
+        }
 
-            if (!isEditable)
+        auto currentTokenString = StringReference(currentToken.first.c_str());
+        if (i < m_ExpressionTokens->Size)
+        {
+            auto existingItem = m_ExpressionTokens->GetAt(i);
+            if (type == existingItem->Type && existingItem->Token->Equals(currentTokenString))
             {
-                type = currentToken.first == separator ? TokenType::Separator : TokenType::Operator;
-            }
-            else
-            {
-                shared_ptr<IExpressionCommand> command;
-                IFTPlatformException(m_commands->GetAt(static_cast<unsigned int>(currentToken.second), &command));
-                type = command->GetCommandType() == CommandType::OperandCommand ? TokenType::Operand : TokenType::Operator;
-            }
-
-            auto currentTokenString = ref new String(currentToken.first.c_str());
-            if (i < m_ExpressionTokens->Size)
-            {
-                auto existingItem = m_ExpressionTokens->GetAt(i);
-                if (type == existingItem->Type && existingItem->Token->Equals(currentTokenString))
-                {
-                    existingItem->TokenPosition = i;
-                    existingItem->IsTokenEditable = isEditable;
-                    existingItem->CommandIndex = 0;
-                }
-                else
-                {
-                    auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
-                    m_ExpressionTokens->InsertAt(i, expressionToken);
-                }
+                existingItem->TokenPosition = i;
+                existingItem->IsTokenEditable = isEditable;
+                existingItem->CommandIndex = 0;
             }
             else
             {
                 auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
-                m_ExpressionTokens->Append(expressionToken);
+                m_ExpressionTokens->InsertAt(i, expressionToken);
             }
+        }
+        else
+        {
+            auto expressionToken = ref new DisplayExpressionToken(currentTokenString, i, isEditable, type);
+            m_ExpressionTokens->Append(expressionToken);
         }
     }
 
@@ -451,7 +454,7 @@ void StandardCalculatorViewModel::FtoEButtonToggled()
 
 void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
 {
-    DisplayExpressionToken ^ displayExpressionToken = ExpressionTokens->GetAt(m_tokenPosition);
+    DisplayExpressionToken ^ displayExpressionToken = ExpressionTokens->GetAt(m_TokenPosition);
     if (displayExpressionToken == nullptr)
     {
         return;
@@ -579,7 +582,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
     }
 
     String ^ updatedData = ref new String(temp);
-    UpdateOperand(m_tokenPosition, updatedData);
+    UpdateOperand(m_TokenPosition, updatedData);
     displayExpressionToken->Token = updatedData;
     IsOperandUpdatedUsingViewModel = true;
     displayExpressionToken->CommandIndex = commandIndex;
@@ -608,7 +611,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
     {
         m_standardCalculatorManager.SendCommand(Command::CommandCLEAR);
 
-        if (!IsRecoverableCommand((int)numOpEnum))
+        if (!IsRecoverableCommand(static_cast<Command>(numOpEnum)))
         {
             return;
         }
@@ -618,7 +621,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
         && numOpEnum != NumbersAndOperatorsEnum::IsProgrammerMode && numOpEnum != NumbersAndOperatorsEnum::FToE
         && (numOpEnum != NumbersAndOperatorsEnum::Degree) && (numOpEnum != NumbersAndOperatorsEnum::Radians) && (numOpEnum != NumbersAndOperatorsEnum::Grads))
     {
-        if (!m_keyPressed)
+        if (!m_KeyPressed)
         {
             SaveEditedCommand(m_selectedExpressionToken->TokenPosition, cmdenum);
         }
@@ -671,29 +674,24 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
                 m_isLastOperationHistoryLoad = false;
             }
 
-            TraceLogger::GetInstance().UpdateButtonUsage(numOpEnum, GetCalculatorMode());
+            TraceLogger::GetInstance()->UpdateButtonUsage(numOpEnum, GetCalculatorMode());
             m_standardCalculatorManager.SendCommand(cmdenum);
         }
     }
 }
 
-int StandardCalculatorViewModel::GetNumberBase()
+RADIX_TYPE StandardCalculatorViewModel::GetRadixTypeFromNumberBase(NumberBase base)
 {
-    if (CurrentRadixType == HEX_RADIX)
+    switch (base)
     {
-        return HexBase;
-    }
-    else if (CurrentRadixType == DEC_RADIX)
-    {
-        return DecBase;
-    }
-    else if (CurrentRadixType == OCT_RADIX)
-    {
-        return OctBase;
-    }
-    else
-    {
-        return BinBase;
+    case NumberBase::BinBase:
+        return RADIX_TYPE::BIN_RADIX;
+    case NumberBase::HexBase:
+        return RADIX_TYPE::HEX_RADIX;
+    case NumberBase::OctBase:
+        return RADIX_TYPE::OCT_RADIX;
+    default:
+        return RADIX_TYPE::DEC_RADIX;
     }
 }
 
@@ -701,7 +699,7 @@ void StandardCalculatorViewModel::OnCopyCommand(Object ^ parameter)
 {
     CopyPasteManager::CopyToClipboard(GetRawDisplayValue());
 
-    String ^ announcement = AppResourceProvider::GetInstance().GetResourceString(CalculatorResourceKeys::DisplayCopied);
+    String ^ announcement = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::DisplayCopied);
     Announcement = CalculatorAnnouncement::GetDisplayCopiedAnnouncement(announcement);
 }
 
@@ -709,8 +707,8 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
 {
     auto that(this);
     ViewMode mode;
-    int NumberBase = -1;
     BitLength bitLengthType = BitLength::BitLengthUnknown;
+    NumberBase numberBase = NumberBase::Unknown;
     if (IsScientific)
     {
         mode = ViewMode::Scientific;
@@ -718,8 +716,8 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     else if (IsProgrammer)
     {
         mode = ViewMode::Programmer;
-        NumberBase = GetNumberBase();
         bitLengthType = m_valueBitLength;
+        numberBase = CurrentRadixType;
     }
     else
     {
@@ -732,7 +730,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     }
 
     // Ensure that the paste happens on the UI thread
-    CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), NumberBase, bitLengthType)
+    create_task(CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), numberBase, bitLengthType))
         .then([that, mode](String ^ pastedString) { that->OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 
@@ -744,13 +742,13 @@ CalculationManager::Command StandardCalculatorViewModel::ConvertToOperatorsEnum(
 void StandardCalculatorViewModel::OnPaste(String ^ pastedString)
 {
     // If pastedString is invalid("NoOp") then display pasteError else process the string
-    if (pastedString == StringReference(CopyPasteManager::PasteErrorString))
+    if (CopyPasteManager::IsErrorMessage(pastedString))
     {
         this->DisplayPasteError();
         return;
     }
 
-    TraceLogger::GetInstance().LogInputPasted(GetCalculatorMode());
+    TraceLogger::GetInstance()->LogInputPasted(GetCalculatorMode());
     bool isFirstLegalChar = true;
     m_standardCalculatorManager.SendCommand(Command::CommandCENTR);
     bool sendNegate = false;
@@ -766,9 +764,10 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString)
     while (it != pastedString->End())
     {
         bool sendCommand = true;
-        bool canSendNegate = false;
+        auto buttonInfo = MapCharacterToButtonId(*it);
 
-        NumbersAndOperatorsEnum mappedNumOp = MapCharacterToButtonId(*it, canSendNegate);
+        NumbersAndOperatorsEnum mappedNumOp = buttonInfo.buttonId;
+        bool canSendNegate = buttonInfo.canSendNegate;
 
         if (mappedNumOp == NumbersAndOperatorsEnum::None)
         {
@@ -870,7 +869,7 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString)
         if (mappedNumOp == NumbersAndOperatorsEnum::Exp)
         {
             // Check the following item
-            switch (MapCharacterToButtonId(*(it + 1), canSendNegate))
+            switch (MapCharacterToButtonId(*(it + 1)).buttonId)
             {
             case NumbersAndOperatorsEnum::Subtract:
             {
@@ -896,10 +895,13 @@ void StandardCalculatorViewModel::OnClearMemoryCommand(Object ^ parameter)
 {
     m_standardCalculatorManager.MemorizedNumberClearAll();
 
-    TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
+    TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
 
-    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(CalculatorResourceKeys::MemoryCleared, m_localizedMemoryCleared);
-    Announcement = CalculatorAnnouncement::GetMemoryClearedAnnouncement(announcement);
+    if (m_localizedMemoryCleared == nullptr)
+    {
+        m_localizedMemoryCleared = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MemoryCleared);
+    }
+    Announcement = CalculatorAnnouncement::GetMemoryClearedAnnouncement(m_localizedMemoryCleared);
 }
 
 void StandardCalculatorViewModel::OnPinUnpinCommand(Object ^ parameter)
@@ -917,10 +919,11 @@ void StandardCalculatorViewModel::SetViewPinnedState(bool pinned)
     IsCurrentViewPinned = pinned;
 }
 
-NumbersAndOperatorsEnum StandardCalculatorViewModel::MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate)
+ButtonInfo StandardCalculatorViewModel::MapCharacterToButtonId(char16 ch)
 {
-    NumbersAndOperatorsEnum mappedValue = NumbersAndOperatorsEnum::None;
-    canSendNegate = false;
+    ButtonInfo result;
+    result.buttonId = NumbersAndOperatorsEnum::None;
+    result.canSendNegate = false;
 
     switch (ch)
     {
@@ -934,107 +937,127 @@ NumbersAndOperatorsEnum StandardCalculatorViewModel::MapCharacterToButtonId(cons
     case '7':
     case '8':
     case '9':
-        mappedValue = NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - L'0');
-        canSendNegate = true;
+        result.buttonId = NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - L'0');
+        result.canSendNegate = true;
         break;
 
     case '*':
-        mappedValue = NumbersAndOperatorsEnum::Multiply;
+        result.buttonId = NumbersAndOperatorsEnum::Multiply;
         break;
 
     case '+':
-        mappedValue = NumbersAndOperatorsEnum::Add;
+        result.buttonId = NumbersAndOperatorsEnum::Add;
         break;
 
     case '-':
-        mappedValue = NumbersAndOperatorsEnum::Subtract;
+        result.buttonId = NumbersAndOperatorsEnum::Subtract;
         break;
 
     case '/':
-        mappedValue = NumbersAndOperatorsEnum::Divide;
+        result.buttonId = NumbersAndOperatorsEnum::Divide;
+        break;
+
+    case '^':
+        if (IsScientific)
+        {
+            result.buttonId = NumbersAndOperatorsEnum::XPowerY;
+        }
+        break;
+
+    case '%':
+        if (IsScientific || IsProgrammer)
+        {
+            result.buttonId = NumbersAndOperatorsEnum::Mod;
+        }
         break;
 
     case '=':
-        mappedValue = NumbersAndOperatorsEnum::Equals;
+        result.buttonId = NumbersAndOperatorsEnum::Equals;
         break;
 
     case '(':
-        mappedValue = NumbersAndOperatorsEnum::OpenParenthesis;
+        result.buttonId = NumbersAndOperatorsEnum::OpenParenthesis;
         break;
 
     case ')':
-        mappedValue = NumbersAndOperatorsEnum::CloseParenthesis;
+        result.buttonId = NumbersAndOperatorsEnum::CloseParenthesis;
         break;
 
     case 'a':
     case 'A':
-        mappedValue = NumbersAndOperatorsEnum::A;
+        result.buttonId = NumbersAndOperatorsEnum::A;
         break;
     case 'b':
     case 'B':
-        mappedValue = NumbersAndOperatorsEnum::B;
+        result.buttonId = NumbersAndOperatorsEnum::B;
         break;
     case 'c':
     case 'C':
-        mappedValue = NumbersAndOperatorsEnum::C;
+        result.buttonId = NumbersAndOperatorsEnum::C;
         break;
     case 'd':
     case 'D':
-        mappedValue = NumbersAndOperatorsEnum::D;
+        result.buttonId = NumbersAndOperatorsEnum::D;
         break;
     case 'e':
     case 'E':
         // Only allow scientific notation in scientific mode
         if (IsProgrammer)
         {
-            mappedValue = NumbersAndOperatorsEnum::E;
+            result.buttonId = NumbersAndOperatorsEnum::E;
         }
         else
         {
-            mappedValue = NumbersAndOperatorsEnum::Exp;
+            result.buttonId = NumbersAndOperatorsEnum::Exp;
         }
         break;
     case 'f':
     case 'F':
-        mappedValue = NumbersAndOperatorsEnum::F;
+        result.buttonId = NumbersAndOperatorsEnum::F;
         break;
     default:
         // For the decimalSeparator, we need to respect the user setting.
         if (ch == m_decimalSeparator)
         {
-            mappedValue = NumbersAndOperatorsEnum::Decimal;
+            result.buttonId = NumbersAndOperatorsEnum::Decimal;
         }
         break;
     }
 
-    if (mappedValue == NumbersAndOperatorsEnum::None)
+    if (result.buttonId == NumbersAndOperatorsEnum::None)
     {
         if (LocalizationSettings::GetInstance().IsLocalizedDigit(ch))
         {
-            mappedValue =
-                NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit('0'));
-            canSendNegate = true;
+            result.buttonId = NumbersAndOperatorsEnum::Zero
+                              + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit('0'));
+            result.canSendNegate = true;
         }
     }
 
     // Negate cannot be sent for leading zeroes
-    if (NumbersAndOperatorsEnum::Zero == mappedValue)
+    if (NumbersAndOperatorsEnum::Zero == result.buttonId)
     {
-        canSendNegate = false;
+        result.canSendNegate = false;
     }
 
-    return mappedValue;
+    return result;
+}
+void StandardCalculatorViewModel::OnInputChanged()
+{
+    IsInputEmpty = m_standardCalculatorManager.IsInputEmpty();
 }
 
 void StandardCalculatorViewModel::OnMemoryButtonPressed()
 {
     m_standardCalculatorManager.MemorizeNumber();
 
-    TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::Memory, GetCalculatorMode());
+    TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::Memory, GetCalculatorMode());
 
-    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
-        CalculatorResourceKeys::MemorySave, m_localizedMemorySavedAutomationFormat, m_DisplayValue->Data());
-
+    if (m_localizedMemorySavedAutomationFormat == nullptr)
+    {
+        m_localizedMemorySavedAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MemorySave);
+    }
+    String ^ announcement = LocalizationStringUtil::GetLocalizedString(m_localizedMemorySavedAutomationFormat, m_DisplayValue);
     Announcement = CalculatorAnnouncement::GetMemoryItemAddedAnnouncement(announcement);
 }
 
@@ -1048,9 +1071,12 @@ void StandardCalculatorViewModel::OnMemoryItemChanged(unsigned int indexOfMemory
         wstring localizedIndex = to_wstring(indexOfMemory + 1);
         LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedIndex);
 
-        String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
-            CalculatorResourceKeys::MemoryItemChanged, m_localizedMemoryItemChangedAutomationFormat, localizedIndex.c_str(), localizedValue->Data());
-
+        if (m_localizedMemoryItemChangedAutomationFormat == nullptr)
+        {
+            m_localizedMemoryItemChangedAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MemoryItemChanged);
+        }
+        String ^ announcement =
+            LocalizationStringUtil::GetLocalizedString(m_localizedMemoryItemChangedAutomationFormat, StringReference(localizedIndex.c_str()), localizedValue);
         Announcement = CalculatorAnnouncement::GetMemoryItemChangedAnnouncement(announcement);
     }
 }
@@ -1064,7 +1090,7 @@ void StandardCalculatorViewModel::OnMemoryItemPressed(Object ^ memoryItemPositio
         HideMemoryClicked();
 
         auto mode = IsStandard ? ViewMode::Standard : IsScientific ? ViewMode::Scientific : ViewMode::Programmer;
-        TraceLogger::GetInstance().LogMemoryItemLoad(mode, MemorizedNumbers->Size, boxedPosition->Value);
+        TraceLogger::GetInstance()->LogMemoryItemLoad(mode, MemorizedNumbers->Size, boxedPosition->Value);
     }
 }
 
@@ -1075,7 +1101,7 @@ void StandardCalculatorViewModel::OnMemoryAdd(Object ^ memoryItemPosition)
     if (MemorizedNumbers)
     {
         auto boxedPosition = safe_cast<Box<int> ^>(memoryItemPosition);
-        TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryAdd, GetCalculatorMode());
+        TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryAdd, GetCalculatorMode());
         m_standardCalculatorManager.MemorizedNumberAdd(boxedPosition->Value);
     }
 }
@@ -1086,7 +1112,7 @@ void StandardCalculatorViewModel::OnMemorySubtract(Object ^ memoryItemPosition)
     if (MemorizedNumbers)
     {
         auto boxedPosition = safe_cast<Box<int> ^>(memoryItemPosition);
-        TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemorySubtract, GetCalculatorMode());
+        TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::MemorySubtract, GetCalculatorMode());
         m_standardCalculatorManager.MemorizedNumberSubtract(boxedPosition->Value);
     }
 }
@@ -1112,13 +1138,17 @@ void StandardCalculatorViewModel::OnMemoryClear(_In_ Object ^ memoryItemPosition
             {
                 IsMemoryEmpty = true;
             }
-            TraceLogger::GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
+            TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
 
             wstring localizedIndex = to_wstring(boxedPosition->Value + 1);
             LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedIndex);
 
-            String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
-                CalculatorResourceKeys::MemoryItemCleared, m_localizedMemoryItemClearedAutomationFormat, localizedIndex.c_str());
+            if (m_localizedMemoryItemClearedAutomationFormat == nullptr)
+            {
+                m_localizedMemoryItemClearedAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MemoryItemCleared);
+            }
+            String ^ announcement =
+                LocalizationStringUtil::GetLocalizedString(m_localizedMemoryItemClearedAutomationFormat, StringReference(localizedIndex.c_str()));
 
             Announcement = CalculatorAnnouncement::GetMemoryClearedAnnouncement(announcement);
         }
@@ -1155,7 +1185,7 @@ void StandardCalculatorViewModel::OnPropertyChanged(String ^ propertyname)
     }
     else if (propertyname == IsBitFlipCheckedPropertyName)
     {
-        TraceLogger::GetInstance().UpdateButtonUsage(
+        TraceLogger::GetInstance()->UpdateButtonUsage(
             IsBitFlipChecked ? NumbersAndOperatorsEnum::BitflipButton : NumbersAndOperatorsEnum::FullKeypadButton, ViewMode::Programmer);
     }
 }
@@ -1198,9 +1228,7 @@ String ^ StandardCalculatorViewModel::GetRawDisplayValue()
     }
     else
     {
-        wstring rawValue;
-        LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue->Data(), DisplayValue->Length(), &rawValue);
-        return ref new String(rawValue.c_str());
+        return LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue);
     }
 }
 
@@ -1209,16 +1237,14 @@ String ^ StandardCalculatorViewModel::GetRawDisplayValue()
 //     'displayValue' is a localized string containing a numerical value to be displayed to the user.
 String ^ StandardCalculatorViewModel::GetLocalizedStringFormat(String ^ format, String ^ displayValue)
 {
-    String ^ localizedString = ref new String(LocalizationStringUtil::GetLocalizedString(format->Data(), displayValue->Data()).c_str());
-    return localizedString;
+    return LocalizationStringUtil::GetLocalizedString(format, displayValue);
 }
 
 void StandardCalculatorViewModel::ResetDisplay()
 {
     AreHEXButtonsEnabled = false;
-    CurrentRadixType = (int)RADIX_TYPE::DEC_RADIX;
+    CurrentRadixType = NumberBase::DecBase;
     m_standardCalculatorManager.SetRadix(DEC_RADIX);
-    ProgModeRadixChange();
 }
 
 void StandardCalculatorViewModel::SetPrecision(int32_t precision)
@@ -1226,17 +1252,16 @@ void StandardCalculatorViewModel::SetPrecision(int32_t precision)
     m_standardCalculatorManager.SetPrecision(precision);
 }
 
-void StandardCalculatorViewModel::SwitchProgrammerModeBase(RADIX_TYPE radixType)
+void StandardCalculatorViewModel::SwitchProgrammerModeBase(NumberBase numberBase)
 {
     if (IsInError)
     {
         m_standardCalculatorManager.SendCommand(Command::CommandCLEAR);
     }
 
-    AreHEXButtonsEnabled = (radixType == RADIX_TYPE::HEX_RADIX);
-    CurrentRadixType = (int)radixType;
-    m_standardCalculatorManager.SetRadix(radixType);
-    ProgModeRadixChange();
+    AreHEXButtonsEnabled = numberBase == NumberBase::HexBase;
+    CurrentRadixType = numberBase;
+    m_standardCalculatorManager.SetRadix(GetRadixTypeFromNumberBase(numberBase));
 }
 
 void StandardCalculatorViewModel::SetMemorizedNumbersString()
@@ -1261,72 +1286,66 @@ ANGLE_TYPE GetAngleTypeFromCommand(Command command)
 
 void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosition, _In_ Command command)
 {
-    pair<wstring, int> token;
     bool handleOperand = false;
-    int nOpCode = static_cast<int>(command);
-    wstring updatedToken = L"";
+    wstring updatedToken;
 
-    shared_ptr<IExpressionCommand> tokenCommand;
-    IFTPlatformException(m_tokens->GetAt(tokenPosition, &token));
+    const pair<wstring, int>& token = m_tokens->at(tokenPosition);
+    const shared_ptr<IExpressionCommand>& tokenCommand = m_commands->at(token.second);
 
-    unsigned int tokenCommandIndex = token.second;
-    IFTPlatformException(m_commands->GetAt(tokenCommandIndex, &tokenCommand));
-
-    if (IsUnaryOp(nOpCode) && command != Command::CommandSIGN)
+    if (IsUnaryOp(command) && command != Command::CommandSIGN)
     {
         int angleCmd = static_cast<int>(m_standardCalculatorManager.GetCurrentDegreeMode());
         ANGLE_TYPE angleType = GetAngleTypeFromCommand(static_cast<Command>(angleCmd));
 
-        if (IsTrigOp(nOpCode))
+        if (IsTrigOp(command))
         {
             shared_ptr<IUnaryCommand> spUnaryCommand = dynamic_pointer_cast<IUnaryCommand>(tokenCommand);
-            spUnaryCommand->SetCommands(angleCmd, nOpCode);
+            spUnaryCommand->SetCommands(angleCmd, static_cast<int>(command));
         }
         else
         {
             shared_ptr<IUnaryCommand> spUnaryCommand = dynamic_pointer_cast<IUnaryCommand>(tokenCommand);
-            spUnaryCommand->SetCommand(nOpCode);
+            spUnaryCommand->SetCommand(static_cast<int>(command));
         }
 
-        switch (nOpCode)
+        switch (command)
         {
-        case static_cast<int>(Command::CommandASIN):
+        case Command::CommandASIN:
             updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSIN), true, angleType);
             break;
-        case static_cast<int>(Command::CommandACOS):
+        case Command::CommandACOS:
             updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOS), true, angleType);
             break;
-        case static_cast<int>(Command::CommandATAN):
+        case Command::CommandATAN:
             updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTAN), true, angleType);
             break;
-        case static_cast<int>(Command::CommandASINH):
+        case Command::CommandASINH:
             updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandSINH), true, angleType);
             break;
-        case static_cast<int>(Command::CommandACOSH):
+        case Command::CommandACOSH:
             updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandCOSH), true, angleType);
             break;
-        case static_cast<int>(Command::CommandATANH):
+        case Command::CommandATANH:
             updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandTANH), true, angleType);
             break;
-        case static_cast<int>(Command::CommandPOWE):
+        case Command::CommandPOWE:
             updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(Command::CommandLN), true, angleType);
             break;
         default:
-            updatedToken = CCalcEngine::OpCodeToUnaryString(nOpCode, false, angleType);
+            updatedToken = CCalcEngine::OpCodeToUnaryString(static_cast<int>(command), false, angleType);
         }
         if ((token.first.length() > 0) && (token.first[token.first.length() - 1] == L'('))
         {
-            wstring chOpenBrace = L"(";
-            updatedToken.append(chOpenBrace);
+            updatedToken += L'(';
         }
     }
-    else if (IsBinOp(nOpCode))
+    else if (IsBinOp(command))
     {
         shared_ptr<IBinaryCommand> spBinaryCommand = dynamic_pointer_cast<IBinaryCommand>(tokenCommand);
-        spBinaryCommand->SetCommand(nOpCode);
-        updatedToken = CCalcEngine::OpCodeToString(nOpCode);
+        spBinaryCommand->SetCommand(static_cast<int>(command));
+        updatedToken = CCalcEngine::OpCodeToString(static_cast<int>(command));
     }
-    else if (IsOpnd(nOpCode) || command == Command::CommandBACK)
+    else if (IsOpnd(command) || command == Command::CommandBACK)
     {
         HandleUpdatedOperandData(command);
         handleOperand = true;
@@ -1335,8 +1354,8 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
     {
         if (tokenCommand->GetCommandType() == CommandType::UnaryCommand)
         {
-            shared_ptr<IExpressionCommand> spSignCommand = make_shared<CUnaryCommand>(nOpCode);
-            IFTPlatformException(m_commands->InsertAt(tokenCommandIndex + 1, spSignCommand));
+            shared_ptr<IExpressionCommand> spSignCommand = make_shared<CUnaryCommand>(static_cast<int>(command));
+            m_commands->insert(m_commands->begin() + token.second + 1, spSignCommand);
         }
         else
         {
@@ -1349,12 +1368,8 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
 
     if (!handleOperand)
     {
-        IFTPlatformException(m_commands->SetAt(tokenCommandIndex, tokenCommand));
-
-        pair<wstring, int> selectedToken;
-        IFTPlatformException(m_tokens->GetAt(tokenPosition, &selectedToken));
-        selectedToken.first = updatedToken;
-        IFTPlatformException(m_tokens->SetAt(tokenPosition, selectedToken));
+        (*m_commands)[token.second] = tokenCommand;
+        (*m_tokens)[tokenPosition].first = updatedToken;
 
         DisplayExpressionToken ^ displayExpressionToken = ExpressionTokens->GetAt(tokenPosition);
         displayExpressionToken->Token = ref new Platform::String(updatedToken.c_str());
@@ -1372,30 +1387,21 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
 {
     // Recalculate
     Command currentDegreeMode = m_standardCalculatorManager.GetCurrentDegreeMode();
-    shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> savedCommands = make_shared<CalculatorVector<shared_ptr<IExpressionCommand>>>();
-
+    shared_ptr<vector<shared_ptr<IExpressionCommand>>> savedCommands = make_shared<vector<shared_ptr<IExpressionCommand>>>();
     vector<int> currentCommands;
-    unsigned int commandListCount;
-    m_commands->GetSize(&commandListCount);
-    for (unsigned int i = 0; i < commandListCount; i++)
-    {
-        shared_ptr<IExpressionCommand> command;
-        IFTPlatformException(m_commands->GetAt(i, &command));
 
-        savedCommands->Append(command);
+    for (const auto& command : *m_commands)
+    {
+        savedCommands->push_back(command);
         CommandType commandType = command->GetCommandType();
 
         if (commandType == CommandType::UnaryCommand)
         {
             shared_ptr<IUnaryCommand> spCommand = dynamic_pointer_cast<IUnaryCommand>(command);
-            shared_ptr<CalculatorVector<int>> unaryCommands = spCommand->GetCommands();
-            unsigned int unaryCommandCount;
-            unaryCommands->GetSize(&unaryCommandCount);
+            const shared_ptr<vector<int>>& unaryCommands = spCommand->GetCommands();
 
-            int nUCode;
-            for (unsigned int j = 0; j < unaryCommandCount; ++j)
+            for (int nUCode : *unaryCommands)
             {
-                IFTPlatformException(unaryCommands->GetAt(j, &nUCode));
                 currentCommands.push_back(nUCode);
             }
         }
@@ -1415,15 +1421,11 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
         if (commandType == CommandType::OperandCommand)
         {
             shared_ptr<IOpndCommand> spCommand = dynamic_pointer_cast<IOpndCommand>(command);
-            shared_ptr<CalculatorVector<int>> opndCommands = spCommand->GetCommands();
-            unsigned int opndCommandCount;
-            opndCommands->GetSize(&opndCommandCount);
+            const shared_ptr<vector<int>>& opndCommands = spCommand->GetCommands();
             bool fNeedIDCSign = spCommand->IsNegative();
 
-            int nOCode;
-            for (unsigned int j = 0; j < opndCommandCount; ++j)
+            for (int nOCode : *opndCommands)
             {
-                IFTPlatformException(opndCommands->GetAt(j, &nOCode));
                 currentCommands.push_back(nOCode);
 
                 if (fNeedIDCSign && nOCode != IDC_0)
@@ -1434,16 +1436,12 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
             }
         }
     }
-    shared_ptr<CalculatorVector<pair<wstring, int>>> savedTokens = make_shared<CalculatorVector<pair<wstring, int>>>();
 
-    unsigned int tokenCount;
-    IFTPlatformException(m_tokens->GetSize(&tokenCount));
+    shared_ptr<vector<pair<wstring, int>>> savedTokens = make_shared<vector<pair<wstring, int>>>();
 
-    for (unsigned int i = 0; i < tokenCount; ++i)
+    for (const auto& currentToken : *m_tokens)
     {
-        pair<wstring, int> currentToken;
-        IFTPlatformException(m_tokens->GetAt(i, &currentToken));
-        savedTokens->Append(currentToken);
+        savedTokens->push_back(currentToken);
     }
 
     m_standardCalculatorManager.Reset(false);
@@ -1458,10 +1456,10 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
     }
 
     m_standardCalculatorManager.SendCommand(currentDegreeMode);
-    size_t currentCommandsSize = currentCommands.size();
-    for (size_t i = 0; i < currentCommandsSize; i++)
+
+    for (int command : currentCommands)
     {
-        m_standardCalculatorManager.SendCommand(static_cast<CalculationManager::Command>(currentCommands[i]));
+        m_standardCalculatorManager.SendCommand(static_cast<CalculationManager::Command>(command));
     }
 
     if (fromHistory) // This is for the cases where the expression is loaded from history
@@ -1481,47 +1479,34 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
 
 CommandType StandardCalculatorViewModel::GetSelectedTokenType(_In_ unsigned int tokenPosition)
 {
-    pair<wstring, int> token;
-    shared_ptr<IExpressionCommand> tokenCommand;
-    IFTPlatformException(m_tokens->GetAt(tokenPosition, &token));
-
+    const pair<wstring, int>& token = m_tokens->at(tokenPosition);
     unsigned int tokenCommandIndex = token.second;
-    IFTPlatformException(m_commands->GetAt(tokenCommandIndex, &tokenCommand));
+    const shared_ptr<IExpressionCommand>& tokenCommand = m_commands->at(tokenCommandIndex);
 
     return tokenCommand->GetCommandType();
 }
 
-bool StandardCalculatorViewModel::IsOpnd(int nOpCode)
+bool StandardCalculatorViewModel::IsOpnd(Command command)
 {
-    static Command opnd[] = { Command::Command0, Command::Command1, Command::Command2, Command::Command3, Command::Command4,  Command::Command5,
+    static constexpr Command opnd[] = { Command::Command0, Command::Command1, Command::Command2, Command::Command3, Command::Command4,  Command::Command5,
                               Command::Command6, Command::Command7, Command::Command8, Command::Command9, Command::CommandPNT };
 
-    for (unsigned int i = 0; i < size(opnd); i++)
-    {
-        if (nOpCode == static_cast<int>(opnd[i]))
-        {
-            return true;
-        }
-    }
-    return false;
+    return find(begin(opnd), end(opnd), command) != end(opnd);
 }
 
-bool StandardCalculatorViewModel::IsUnaryOp(int nOpCode)
+bool StandardCalculatorViewModel::IsUnaryOp(Command command)
 {
-    static Command unaryOp[] = { Command::CommandSQRT,  Command::CommandFAC,  Command::CommandSQR,   Command::CommandLOG,
+    static constexpr Command unaryOp[] = { Command::CommandSQRT,  Command::CommandFAC,  Command::CommandSQR,   Command::CommandLOG,
                                  Command::CommandPOW10, Command::CommandPOWE, Command::CommandLN,    Command::CommandREC,
                                  Command::CommandSIGN,  Command::CommandSINH, Command::CommandASINH, Command::CommandCOSH,
                                  Command::CommandACOSH, Command::CommandTANH, Command::CommandATANH, Command::CommandCUB };
 
-    for (unsigned int i = 0; i < size(unaryOp); i++)
+    if (find(begin(unaryOp), end(unaryOp), command) != end(unaryOp))
     {
-        if (nOpCode == static_cast<int>(unaryOp[i]))
-        {
-            return true;
-        }
+        return true;
     }
 
-    if (IsTrigOp(nOpCode))
+    if (IsTrigOp(command))
     {
         return true;
     }
@@ -1529,80 +1514,50 @@ bool StandardCalculatorViewModel::IsUnaryOp(int nOpCode)
     return false;
 }
 
-bool StandardCalculatorViewModel::IsTrigOp(int nOpCode)
+bool StandardCalculatorViewModel::IsTrigOp(Command command)
 {
-    static Command trigOp[] = {
+    static constexpr Command trigOp[] = {
         Command::CommandSIN, Command::CommandCOS, Command::CommandTAN, Command::CommandASIN, Command::CommandACOS, Command::CommandATAN
     };
 
-    for (unsigned int i = 0; i < size(trigOp); i++)
-    {
-        if (nOpCode == static_cast<int>(trigOp[i]))
-        {
-            return true;
-        }
-    }
-    return false;
+    return find(begin(trigOp), end(trigOp), command) != end(trigOp);
 }
 
-bool StandardCalculatorViewModel::IsBinOp(int nOpCode)
+bool StandardCalculatorViewModel::IsBinOp(Command command)
 {
-    static Command binOp[] = { Command::CommandADD, Command::CommandSUB,  Command::CommandMUL, Command::CommandDIV,
+    static constexpr Command binOp[] = { Command::CommandADD, Command::CommandSUB,  Command::CommandMUL, Command::CommandDIV,
                                Command::CommandEXP, Command::CommandROOT, Command::CommandMOD, Command::CommandPWR };
 
-    for (unsigned int i = 0; i < size(binOp); i++)
-    {
-        if (nOpCode == static_cast<int>(binOp[i]))
-        {
-            return true;
-        }
-    }
-    return false;
+    return find(begin(binOp), end(binOp), command) != end(binOp);
 }
 
-bool StandardCalculatorViewModel::IsRecoverableCommand(int nOpCode)
+bool StandardCalculatorViewModel::IsRecoverableCommand(Command command)
 {
-    if (IsOpnd(nOpCode))
+    if (IsOpnd(command))
     {
         return true;
     }
 
     // Programmer mode, bit flipping
-    int minBinPos = static_cast<int>(Command::CommandBINEDITSTART);
-    int maxBinPos = static_cast<int>(Command::CommandBINEDITEND);
-    if (minBinPos <= nOpCode && nOpCode <= maxBinPos)
+    if (Command::CommandBINEDITSTART <= command && command <= Command::CommandBINEDITEND)
     {
         return true;
     }
 
-    static Command recoverableCommands[] = { Command::CommandA, Command::CommandB, Command::CommandC, Command::CommandD, Command::CommandE, Command::CommandF };
+    static constexpr Command recoverableCommands[] = { Command::CommandA, Command::CommandB, Command::CommandC,
+                                                       Command::CommandD, Command::CommandE, Command::CommandF };
 
-    for (unsigned int i = 0; i < size(recoverableCommands); i++)
-    {
-        if (nOpCode == static_cast<int>(recoverableCommands[i]))
-        {
-            return true;
-        }
-    }
-    return false;
+    return find(begin(recoverableCommands), end(recoverableCommands), command) != end(recoverableCommands);
 }
 
 size_t StandardCalculatorViewModel::LengthWithoutPadding(wstring str)
 {
-    size_t count = 0;
-    for (size_t i = 0; i < str.length(); i++)
-    {
-        if (str[i] != L' ')
-        {
-            count++;
-        }
-    }
-    return count;
+    return str.length() - count(str.begin(), str.end(), L' ');
 }
 
 wstring StandardCalculatorViewModel::AddPadding(wstring binaryString)
 {
-    if (LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(binaryString) == L"0")
+    if (LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(StringReference(binaryString.c_str())) == L"0")
     {
         return binaryString;
     }
@@ -1611,12 +1566,7 @@ wstring StandardCalculatorViewModel::AddPadding(wstring binaryString)
     {
         pad = 0;
     }
-    wstring padString = L"";
-    for (size_t i = 0; i < pad; i++)
-    {
-        padString += L"0";
-    }
-    return padString + binaryString;
+    return wstring(pad, L'0') + binaryString;
 }
 
 void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
@@ -1699,20 +1649,18 @@ NumbersAndOperatorsEnum StandardCalculatorViewModel::ConvertIntegerToNumbersAndO
 
 void StandardCalculatorViewModel::UpdateOperand(int pos, String ^ text)
 {
-    pair<wstring, int> p;
-    m_tokens->GetAt(pos, &p);
+    pair<wstring, int> p = m_tokens->at(pos);
 
-    String ^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(text->Data());
+    String ^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(text);
     p.first = englishString->Data();
 
     int commandPos = p.second;
-    shared_ptr<IExpressionCommand> exprCmd;
-    m_commands->GetAt(commandPos, &exprCmd);
+    const shared_ptr<IExpressionCommand>& exprCmd = m_commands->at(commandPos);
     auto operandCommand = std::dynamic_pointer_cast<IOpndCommand>(exprCmd);
 
     if (operandCommand != nullptr)
     {
-        shared_ptr<CalculatorVector<int>> commands = make_shared<CalculatorVector<int>>();
+        shared_ptr<vector<int>> commands = make_shared<vector<int>>();
         size_t length = p.first.length();
         if (length > 0)
         {
@@ -1750,12 +1698,12 @@ void StandardCalculatorViewModel::UpdateOperand(int pos, String ^ text)
                         continue;
                     }
                 }
-                commands->Append(num);
+                commands->push_back(num);
             }
         }
         else
         {
-            commands->Append(0);
+            commands->push_back(0);
         }
         operandCommand->SetCommands(commands);
     }
@@ -1764,7 +1712,7 @@ void StandardCalculatorViewModel::UpdateOperand(int pos, String ^ text)
 void StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
 {
     vector<unsigned char> savedCommands = m_standardCalculatorManager.GetSavedCommands();
-    shared_ptr<CalculatorVector<int>> commands = make_shared<CalculatorVector<int>>();
+    shared_ptr<vector<int>> commands = make_shared<vector<int>>();
     bool isDecimal = false;
     bool isNegative = false;
     bool isExpMode = false;
@@ -1811,27 +1759,27 @@ void StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
             isExpMode = false;
             ePlusMode = false;
             eMinusMode = false;
-            commands->Clear();
+            commands->clear();
             continue;
         }
-        commands->Append(num);
+        commands->push_back(num);
     }
 
-    unsigned int size = 0;
-    commands->GetSize(&size);
-    if (size > 0)
+    if (!commands->empty())
     {
         shared_ptr<IOpndCommand> sp = make_shared<COpndCommand>(commands, isNegative, isDecimal, isExpMode);
-        m_commands->Append(sp);
+        m_commands->push_back(sp);
     }
     Recalculate();
 }
 
 void StandardCalculatorViewModel::OnMaxDigitsReached()
 {
-    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
-        CalculatorResourceKeys::MaxDigitsReachedFormat, m_localizedMaxDigitsReachedAutomationFormat, m_CalculationResultAutomationName->Data());
-
+    if (m_localizedMaxDigitsReachedAutomationFormat == nullptr)
+    {
+        m_localizedMaxDigitsReachedAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::MaxDigitsReachedFormat);
+    }
+    String ^ announcement = LocalizationStringUtil::GetLocalizedString(m_localizedMaxDigitsReachedAutomationFormat, m_CalculationResultAutomationName);
     Announcement = CalculatorAnnouncement::GetMaxDigitsReachedAnnouncement(announcement);
 }
 
@@ -1849,11 +1797,14 @@ NarratorAnnouncement ^ StandardCalculatorViewModel::GetDisplayUpdatedNarratorAnn
     }
     else
     {
-        announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(
-            CalculatorResourceKeys::ButtonPressFeedbackFormat,
+        if (m_localizedButtonPressFeedbackAutomationFormat == nullptr)
+        {
+            m_localizedButtonPressFeedbackAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::ButtonPressFeedbackFormat);
+        }
+        announcement = LocalizationStringUtil::GetLocalizedString(
             m_localizedButtonPressFeedbackAutomationFormat,
-            m_CalculationResultAutomationName->Data(),
-            m_feedbackForButtonPress->Data());
+            m_CalculationResultAutomationName,
+            m_feedbackForButtonPress);
     }
 
     // Make sure we don't accidentally repeat an announcement.
@@ -1901,4 +1852,12 @@ void StandardCalculatorViewModel::ValueBitLength::set(CalculatorApp::Common::Bit
         // update memory list according to bit length
         SetMemorizedNumbersString();
     }
+}
+
+void StandardCalculatorViewModel::SelectHistoryItem(HistoryItemViewModel ^ item)
+{
+    SetHistoryExpressionDisplay(item->GetTokens(), item->GetCommands());
+    SetExpressionDisplay(item->GetTokens(), item->GetCommands());
+    SetPrimaryDisplay(item->Result, false);
+    IsFToEEnabled = false;
 }

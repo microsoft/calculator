@@ -47,8 +47,6 @@
                         <Setter Target="DegreeButton.Style" Value="{StaticResource CaptionButtonSmallStyle}"/>
                         <Setter Target="RadianButton.Style" Value="{StaticResource CaptionButtonSmallStyle}"/>
                         <Setter Target="GradsButton.Style" Value="{StaticResource CaptionButtonSmallStyle}"/>
-
-                        <Setter Target="HyperbolicButton.Style" Value="{StaticResource CaptionToggleButtonSmallStyle}"/>
                         <Setter Target="FtoeButton.Style" Value="{StaticResource CaptionToggleButtonSmallStyle}"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -60,7 +58,6 @@
                         <Setter Target="DegreeButton.IsEnabled" Value="False"/>
                         <Setter Target="RadianButton.IsEnabled" Value="False"/>
                         <Setter Target="GradsButton.IsEnabled" Value="False"/>
-                        <Setter Target="HyperbolicButton.IsEnabled" Value="False"/>
                         <Setter Target="FtoeButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -89,20 +86,9 @@
                 CommandParameter="2"
                 Content="GRAD"
                 Visibility="Collapsed"/>
-        <ToggleButton x:Name="HyperbolicButton"
-                      x:Uid="hyperbolicButton"
-                      Grid.Column="1"
-                      Style="{StaticResource CaptionToggleButtonStyle}"
-                      Background="{ThemeResource SystemControlBackgroundTransparentBrush}"
-                      FontWeight="SemiBold"
-                      AutomationProperties.AutomationId="hyperbolicButton"
-                      Checked="HypButton_Toggled"
-                      Content="HYP"
-                      IsChecked="{Binding IsHyperbolicChecked, Mode=TwoWay}"
-                      Unchecked="HypButton_Toggled"/>
         <ToggleButton x:Name="FtoeButton"
                       x:Uid="ftoeButton"
-                      Grid.Column="2"
+                      Grid.Column="1"
                       Style="{StaticResource CaptionToggleButtonStyle}"
                       Background="{ThemeResource SystemControlBackgroundTransparentBrush}"
                       FontWeight="SemiBold"

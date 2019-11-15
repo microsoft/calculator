@@ -3,14 +3,11 @@
 
 #pragma once
 
-#include "CalcManager/CalculatorVector.h"
 #include "CalcManager/ExpressionCommandInterface.h"
 #include "DelegateCommand.h"
-#include "GraphingInterfaces/GraphingEnums.h"
 
 // Utility macros to make Models easier to write
 // generates a member variable called m_<n>
-
 #define PROPERTY_R(t, n)                                                                                                                                       \
     property t n                                                                                                                                               \
     {                                                                                                                                                          \
@@ -65,25 +62,6 @@ public:
                 m_##n = value;                                                                                                                                 \
                 RaisePropertyChanged(L#n);                                                                                                                     \
             }                                                                                                                                                  \
-        }                                                                                                                                                      \
-    }                                                                                                                                                          \
-                                                                                                                                                               \
-private:                                                                                                                                                       \
-    t m_##n;                                                                                                                                                   \
-                                                                                                                                                               \
-public:
-
-#define OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(t, n)                                                                                                             \
-    property t n                                                                                                                                               \
-    {                                                                                                                                                          \
-        t get()                                                                                                                                                \
-        {                                                                                                                                                      \
-            return m_##n;                                                                                                                                      \
-        }                                                                                                                                                      \
-        void set(t value)                                                                                                                                      \
-        {                                                                                                                                                      \
-            m_##n = value;                                                                                                                                     \
-            RaisePropertyChanged(L#n);                                                                                                                         \
         }                                                                                                                                                      \
     }                                                                                                                                                          \
                                                                                                                                                                \
@@ -210,7 +188,7 @@ public:
 private:                                                                                                                                                       \
     static Windows::UI::Xaml::DependencyProperty ^ s_##n##Property;                                                                                            \
                                                                                                                                                                \
-public:
+private:
 
 // Utilities for DependencyProperties
 namespace Utils
@@ -401,17 +379,17 @@ namespace Utils
     void IFTPlatformException(HRESULT hr);
     Platform::String ^ GetStringValue(Platform::String ^ input);
     bool IsLastCharacterTarget(std::wstring const& input, wchar_t target);
-    std::wstring RemoveUnwantedCharsFromWstring(std::wstring inputString, wchar_t* unwantedChars, unsigned int size);
+    std::wstring RemoveUnwantedCharsFromString(std::wstring inputString, wchar_t* unwantedChars, unsigned int size);
     double GetDoubleFromWstring(std::wstring input);
     int GetWindowId();
     void RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Windows::UI::Core::CoreDispatcher ^ currentDispatcher);
     void SerializeCommandsAndTokens(
-        _In_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
-        _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands,
+        _In_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
+        _In_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands,
         Windows::Storage::Streams::DataWriter ^ writer);
 
-    const std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> DeserializeCommands(Windows::Storage::Streams::DataReader ^ reader);
-    const std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> DeserializeTokens(Windows::Storage::Streams::DataReader ^ reader);
+    const std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> DeserializeCommands(Windows::Storage::Streams::DataReader ^ reader);
+    const std::shared_ptr<std::vector<std::pair<std::wstring, int>>> DeserializeTokens(Windows::Storage::Streams::DataReader ^ reader);
 
     Windows::Foundation::DateTime GetUniversalSystemTime();
     bool IsDateTimeOlderThan(Windows::Foundation::DateTime dateTime, const long long duration);
@@ -422,15 +400,6 @@ namespace Utils
         Platform::String ^ contents,
         Windows::Storage::CreationCollisionOption collisionOption);
     concurrency::task<Platform::String ^> ReadFileFromFolder(Windows::Storage::IStorageFolder ^ folder, Platform::String ^ fileName);
-
-    bool AreColorsEqual(const Windows::UI::Color& color1, const Windows::UI::Color& color2);
-
-    Platform::String^ Trim(Platform::String^ value);
-    void Trim(std::wstring& value);
-    void TrimFront(std::wstring& value);
-    void TrimBack(std::wstring& value);
-
-
 }
 
 // This goes into the header to define the property, in the public: section of the class
@@ -727,18 +696,3 @@ namespace CalculatorApp
         return to;
     }
 }
-
-// There's no standard definition of equality for Windows::UI::Color structs.
-// Define a template specialization for std::equal_to.
-template<>
-class std::equal_to<Windows::UI::Color>
-{
-public:
-    bool operator()(const Windows::UI::Color& color1, const Windows::UI::Color& color2)
-    {
-        return Utils::AreColorsEqual(color1, color2);
-    }
-};
-
-bool operator==(const Windows::UI::Color& color1, const Windows::UI::Color& color2);
-bool operator!=(const Windows::UI::Color& color1, const Windows::UI::Color& color2);

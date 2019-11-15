@@ -8,6 +8,7 @@
 
 #include "pch.h"
 #include "CalculatorStandardOperators.xaml.h"
+#include "Controls/CalculatorButton.h"
 
 using namespace CalculatorApp;
 
