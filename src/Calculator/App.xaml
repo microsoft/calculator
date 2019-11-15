@@ -547,7 +547,7 @@
                             </Setter.Value>
                         </Setter>
                     </Style>
-
+                    
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
                     <Thickness x:Key="HighContrastThicknessTop">0,0,0,0</Thickness>
@@ -1113,7 +1113,7 @@
                     <SolidColorBrush x:Key="EquationBrush1" Color="{ThemeResource SystemColorGrayTextColor}"/>
                     <SolidColorBrush x:Key="EquationBrush2" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="EquationBrush3" Color="{ThemeResource SystemColorHotlightColor}"/>
-                    <SolidColorBrush x:Key="EquationBrush4" Color="{ThemeResource SystemColorWindowColor}"/>
+                    <SolidColorBrush x:Key="EquationBrush4" Color="{ThemeResource SystemColorButtonTextColor}"/>
 
 
 
@@ -1402,7 +1402,7 @@
                                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackground}"/>
                                                         </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SystemColorButtonTextColor}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SystemColorButtonTextBrush}"/>
                                                         </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ColorChooserButton" Storyboard.TargetProperty="Visibility">
                                                             <DiscreteObjectKeyFrame KeyTime="0">
