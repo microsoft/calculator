@@ -8,8 +8,9 @@
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "Controls/CalculationResult.h"
 #include "CalcManager/NumberFormattingUtils.h"
-#include "Calculator\Controls\EquationTextBox.h"
-#include "Calculator\Views\GraphingCalculator\EquationInputArea.xaml.h"
+#include "Calculator/Controls/EquationTextBox.h"
+#include "Calculator/Views/GraphingCalculator/EquationInputArea.xaml.h"
+#include "CalcViewModel/Common/Utils.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -152,8 +153,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
 
                 equationHtml << L"<tr><td><span style=\"line-height: 0; font-size: 24pt;" << equationColorHtml.str()
                              << L"\">&#x25A0;</span></td><td><div style=\"margin: 4pt 0pt 0pt 0pt; \">";
-                Uri::EscapeComponent
-      //          equationHtml << expression->Data();
+                equationHtml << EscapeHtmlSpecialCharacters(expression)->Data();
                 equationHtml << L"</div></td>";
             }
             equationHtml << L"</table>";
