@@ -22,6 +22,17 @@
                   ItemsSource="{x:Bind Equations}"
                   SelectionMode="None">
 
+            <ListView.Style>
+                <Style TargetType="ListView">
+                    <Setter Property="ItemContainerTransitions">
+                        <Setter.Value>
+                            <TransitionCollection>
+                            </TransitionCollection>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.Style>
+
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="IsTabStop" Value="False"/>
@@ -31,11 +42,6 @@
                 </Style>
             </ListView.ItemContainerStyle>
 
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:EquationViewModel">
