@@ -132,7 +132,6 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
             equationHtml << resourceLoader->GetString(L"EquationsShareHeader")->Data();
             equationHtml << L"</span>";
             equationHtml << L"<table cellpadding=\"0\">";
-            equationHtml << L"<table cellpadding=\"0\">";
 
             for (auto equation : equations)
             {
