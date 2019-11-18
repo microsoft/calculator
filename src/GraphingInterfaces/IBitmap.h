@@ -4,8 +4,8 @@
 
 namespace Graphing
 {
-    struct IBitmap
+	struct IBitmap
 	{
-        virtual const std::vector<BYTE>& GetData() const = 0;
-    };
+		virtual const std::vector<BYTE>& GetData() const = 0;
+	};
 }

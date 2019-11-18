@@ -1,9 +1,13 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include "InspectingDataSource.h"
 #include "DirectX/RenderMain.h"
 #include "Equation.h"
 #include "EquationCollection.h"
+#include "IGraphAnalyzer.h"
 #include "IMathSolver.h"
 #include "Common.h"
 
@@ -115,14 +119,13 @@ public
             }
         }
 
-        property Windows::Foundation::Point TraceLocation 
+        property Windows::Foundation::Point TraceLocation
         {
             Windows::Foundation::Point get()
             {
                 return m_renderMain->TraceLocation;
             }
         }
-
 
         property Windows::Foundation::Point ActiveTraceCursorPosition
         {
@@ -174,7 +177,9 @@ public
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
         std::vector<Equation ^> GetValidEquations();
         void SetGraphArgs();
+        std::shared_ptr<Graphing::IGraph> GetGraph(GraphControl::Equation ^ equation);
         void UpdateVariables();
+        void UpdateKeyGraphFeatures();
 
         void OnForceProportionalAxesChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
 
@@ -189,6 +194,8 @@ public
         void HandleTracingMovementTick(Object ^ sender, Object ^ e);
         void HandleKey(bool keyDown, Windows::System::VirtualKey key);
 
+        Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^ ConvertWStringVector(std::vector<std::wstring> inVector);
+        Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ ConvertWStringIntMap(std::map<std::wstring, int> inMap);
 
     private:
         DX::RenderMain ^ m_renderMain = nullptr;
@@ -225,7 +232,7 @@ public
         bool m_KeysPressed[5];
         bool m_Moving;
 
-       Windows::UI::Xaml::DispatcherTimer ^ m_TracingTrackingTimer;
+        Windows::UI::Xaml::DispatcherTimer ^ m_TracingTrackingTimer;
 
     public:
         Windows::Storage::Streams::RandomAccessStreamReference ^ GetGraphBitmapStream();

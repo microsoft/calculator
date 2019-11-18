@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include "Views/GraphingCalculator/EquationInputArea.g.h"
@@ -6,6 +9,7 @@
 #include "EquationStylePanelControl.xaml.h"
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "Controls/EquationTextBox.h"
+#include "Converters/BooleanNegationConverter.h"
 
 namespace CalculatorApp
 {
@@ -16,8 +20,10 @@ namespace CalculatorApp
 
         OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector< ViewModel::EquationViewModel^ >^, Equations);
+        OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(ViewModel::EquationViewModel ^, EquationVM);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Windows::UI::Xaml::Media::SolidColorBrush ^> ^, AvailableColors);
-
+        
+        event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesVisibilityChanged;
 
     private:
         void OnPropertyChanged(Platform::String^ propertyName);
@@ -37,6 +43,8 @@ namespace CalculatorApp
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         int m_lastLineColorIndex;
         void EquationTextBox_RemoveButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void EquationTextBox_KeyGraphFeaturesButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void EquationTextBox_EquationButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void EquationTextBoxLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }
