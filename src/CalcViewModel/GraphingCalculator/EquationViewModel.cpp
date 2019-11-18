@@ -58,33 +58,33 @@ namespace CalculatorApp::ViewModel
 
         KeyGraphFeaturesItems->Clear();
 
-        SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Domain"), GraphEquation->Domain, m_resourceLoader->GetString(L"KGFDomainNone"));
-        SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Range"), GraphEquation->Range, m_resourceLoader->GetString(L"KGFRangeNone"));
-        SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"XIntercept"), GraphEquation->XIntercept, m_resourceLoader->GetString(L"KGFXInterceptNone"));
-        SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"YIntercept"), GraphEquation->YIntercept, m_resourceLoader->GetString(L"KGFYInterceptNone"));
-        SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Minima"), GraphEquation->Minima, m_resourceLoader->GetString(L"KGFMinimaNone"));
-        SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Maxima"), GraphEquation->Maxima, m_resourceLoader->GetString(L"KGFMaximaNone"));
-        SetKeyGraphFeaturesItems(
+        AddKeyGraphFeature(m_resourceLoader->GetString(L"Domain"), GraphEquation->Domain, m_resourceLoader->GetString(L"KGFDomainNone"));
+        AddKeyGraphFeature(m_resourceLoader->GetString(L"Range"), GraphEquation->Range, m_resourceLoader->GetString(L"KGFRangeNone"));
+        AddKeyGraphFeature(m_resourceLoader->GetString(L"XIntercept"), GraphEquation->XIntercept, m_resourceLoader->GetString(L"KGFXInterceptNone"));
+        AddKeyGraphFeature(m_resourceLoader->GetString(L"YIntercept"), GraphEquation->YIntercept, m_resourceLoader->GetString(L"KGFYInterceptNone"));
+        AddKeyGraphFeature(m_resourceLoader->GetString(L"Minima"), GraphEquation->Minima, m_resourceLoader->GetString(L"KGFMinimaNone"));
+        AddKeyGraphFeature(m_resourceLoader->GetString(L"Maxima"), GraphEquation->Maxima, m_resourceLoader->GetString(L"KGFMaximaNone"));
+        AddKeyGraphFeature(
             m_resourceLoader->GetString(L"InflectionPoints"), GraphEquation->InflectionPoints, m_resourceLoader->GetString(L"KGFInflectionPointsNone"));
-        SetKeyGraphFeaturesItems(
+        AddKeyGraphFeature(
             m_resourceLoader->GetString(L"VerticalAsymptotes"),
             GraphEquation->VerticalAsymptotes,
             m_resourceLoader->GetString(L"KGFVerticalAsymptotesNone"));
-        SetKeyGraphFeaturesItems(
+        AddKeyGraphFeature(
             m_resourceLoader->GetString(L"HorizontalAsymptotes"),
             GraphEquation->HorizontalAsymptotes,
             m_resourceLoader->GetString(L"KGFHorizontalAsymptotesNone"));
-        SetKeyGraphFeaturesItems(
+        AddKeyGraphFeature(
             m_resourceLoader->GetString(L"ObliqueAsymptotes"), GraphEquation->ObliqueAsymptotes, m_resourceLoader->GetString(L"KGFObliqueAsymptotesNone"));
-        SetParityStringProperty();
-        SetPeriodicityStringProperty();
-        SetMonotoncityStringProperty();
-        SetTooComplexFeaturesErrorProperty();
+        AddParityKeyGraphFeature();
+        AddPeriodicityKeyGraphFeature();
+        AddMonotoncityKeyGraphFeature();
+        AddTooComplexKeyGraphFeature();
 
         AnalysisErrorVisible = false;
     }
 
-    void EquationViewModel::SetKeyGraphFeaturesItems(String ^ title, String ^ expression, String ^ errorString)
+    void EquationViewModel::AddKeyGraphFeature(String ^ title, String ^ expression, String ^ errorString)
     {
         KeyGraphFeaturesItem ^ item = ref new KeyGraphFeaturesItem();
         item->Title = title;
@@ -101,7 +101,7 @@ namespace CalculatorApp::ViewModel
         KeyGraphFeaturesItems->Append(item);
     }
 
-    void EquationViewModel::SetKeyGraphFeaturesItems(String ^ title, IVector<String ^> ^ expressionVector, String ^ errorString)
+    void EquationViewModel::AddKeyGraphFeature(String ^ title, IVector<String ^> ^ expressionVector, String ^ errorString)
     {
         KeyGraphFeaturesItem ^ item = ref new KeyGraphFeaturesItem();
         item->Title = title;
@@ -121,7 +121,7 @@ namespace CalculatorApp::ViewModel
         KeyGraphFeaturesItems->Append(item);
     }
 
-    void EquationViewModel::SetParityStringProperty()
+    void EquationViewModel::AddParityKeyGraphFeature()
     {
         KeyGraphFeaturesItem ^ parityItem = ref new KeyGraphFeaturesItem();
         parityItem->Title = m_resourceLoader->GetString(L"Parity");
@@ -147,7 +147,7 @@ namespace CalculatorApp::ViewModel
         KeyGraphFeaturesItems->Append(parityItem);
     }
 
-    void EquationViewModel::SetPeriodicityStringProperty()
+    void EquationViewModel::AddPeriodicityKeyGraphFeature()
     {
         KeyGraphFeaturesItem ^ periodicityItem = ref new KeyGraphFeaturesItem();
         periodicityItem->Title = m_resourceLoader->GetString(L"Periodicity");
@@ -182,7 +182,7 @@ namespace CalculatorApp::ViewModel
         KeyGraphFeaturesItems->Append(periodicityItem);
     }
 
-    void EquationViewModel::SetMonotoncityStringProperty()
+    void EquationViewModel::AddMonotoncityKeyGraphFeature()
     {
         KeyGraphFeaturesItem ^ monotonicityItem = ref new KeyGraphFeaturesItem();
         monotonicityItem->Title = m_resourceLoader->GetString(L"Monotonicity");
@@ -226,7 +226,7 @@ namespace CalculatorApp::ViewModel
         KeyGraphFeaturesItems->Append(monotonicityItem);
     }
 
-    void EquationViewModel::SetTooComplexFeaturesErrorProperty()
+    void EquationViewModel::AddTooComplexKeyGraphFeature()
     {
         if (GraphEquation->TooComplexFeatures <= 0)
         {

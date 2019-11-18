@@ -81,15 +81,15 @@ public
         void PopulateKeyGraphFeatures();
 
     private:
-        void SetParityStringProperty();
-        void SetPeriodicityStringProperty();
-        void SetKeyGraphFeaturesItems(Platform::String ^ title, Platform::String ^ expression, Platform::String ^ errorString);
-        void SetKeyGraphFeaturesItems(
+        void AddKeyGraphFeature(Platform::String ^ title, Platform::String ^ expression, Platform::String ^ errorString);
+        void AddKeyGraphFeature(
             Platform::String ^ title,
             Windows::Foundation::Collections::IVector<Platform::String ^> ^ expressionVector,
             Platform::String ^ errorString);
-        void SetMonotoncityStringProperty();
-        void SetTooComplexFeaturesErrorProperty();
+        void AddParityKeyGraphFeature();
+        void AddPeriodicityKeyGraphFeature();
+        void AddMonotoncityKeyGraphFeature();
+        void AddTooComplexKeyGraphFeature();
 
         Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ m_Monotonicity;
         Windows::ApplicationModel::Resources::ResourceLoader ^ m_resourceLoader;
