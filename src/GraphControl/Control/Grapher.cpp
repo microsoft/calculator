@@ -250,6 +250,51 @@ namespace GraphControl
         UpdateGraph();
     }
 
+    void Grapher::AnalyzeEquation(Equation ^ equation)
+    {
+        if (auto graph = GetGraph(equation))
+        {
+            if (auto analyzer = graph->GetAnalyzer())
+            {
+                if (analyzer->CanFunctionAnalysisBePerformed())
+                {
+                    if (S_OK == analyzer->PerformFunctionAnalysis((Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All))
+                    {
+                        Graphing::IGraphFunctionAnalysisData functionAnalysisData = m_solver->Analyze(analyzer.get());
+                        {
+                            equation->XIntercept = ref new String(functionAnalysisData.Zeros.c_str());
+                            equation->YIntercept = ref new String(functionAnalysisData.YIntercept.c_str());
+                            equation->Domain = ref new String(functionAnalysisData.Domain.c_str());
+                            equation->Range = ref new String(functionAnalysisData.Range.c_str());
+                            equation->Parity = functionAnalysisData.Parity;
+                            equation->PeriodicityDirection = functionAnalysisData.PeriodicityDirection;
+                            equation->PeriodicityExpression = ref new String(functionAnalysisData.PeriodicityExpression.c_str());
+                            equation->Minima = ConvertWStringVector(functionAnalysisData.Minima);
+                            equation->Maxima = ConvertWStringVector(functionAnalysisData.Maxima);
+                            equation->InflectionPoints = ConvertWStringVector(functionAnalysisData.InflectionPoints);
+                            equation->Monotonicity = ConvertWStringIntMap(functionAnalysisData.MonotoneIntervals);
+                            equation->VerticalAsymptotes = ConvertWStringVector(functionAnalysisData.VerticalAsymptotes);
+                            equation->HorizontalAsymptotes = ConvertWStringVector(functionAnalysisData.HorizontalAsymptotes);
+                            equation->ObliqueAsymptotes = ConvertWStringVector(functionAnalysisData.ObliqueAsymptotes);
+                            equation->TooComplexFeatures = functionAnalysisData.TooComplexFeatures;
+                            equation->AnalysisError = CalculatorApp::AnalysisErrorType::NoError;
+
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    equation->AnalysisError = CalculatorApp::AnalysisErrorType::AnalysisNotSupported;
+
+                    return;
+                }
+            }
+        }
+
+        equation->AnalysisError = CalculatorApp::AnalysisErrorType::AnalysisCouldNotBePerformed;
+    }
+
     void Grapher::UpdateGraph()
     {
         if (m_renderMain && m_graph != nullptr)
@@ -286,7 +331,6 @@ namespace GraphControl
                         m_renderMain->Graph = m_graph;
 
                         UpdateVariables();
-                        UpdateKeyGraphFeatures();
                     }
                 }
             }
@@ -300,7 +344,6 @@ namespace GraphControl
                     m_renderMain->Graph = m_graph;
 
                     UpdateVariables();
-                    UpdateKeyGraphFeatures();
                 }
             }
         }
@@ -339,59 +382,6 @@ namespace GraphControl
         return nullptr;
     }
 
-    void Grapher::UpdateKeyGraphFeatures()
-    {
-        auto equations = GetValidEquations();
-        for (auto equation : equations)
-        {
-            equation->IsAnalysisUpdated = false;
-
-            if (auto graph = GetGraph(equation))
-            {
-                if (auto analyzer = graph->GetAnalyzer())
-                {
-                    if (analyzer->CanFunctionAnalysisBePerformed())
-                    {
-                        if (S_OK
-                            == analyzer->PerformFunctionAnalysis(
-                                (Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All))
-                        {
-                            Graphing::IGraphFunctionAnalysisData functionAnalysisData = m_solver->Analyze(analyzer.get());
-                            {
-                                equation->XIntercept = ref new String(functionAnalysisData.Zeros.c_str());
-                                equation->YIntercept = ref new String(functionAnalysisData.YIntercept.c_str());
-                                equation->Domain = ref new String(functionAnalysisData.Domain.c_str());
-                                equation->Range = ref new String(functionAnalysisData.Range.c_str());
-                                equation->Parity = functionAnalysisData.Parity;
-                                equation->PeriodicityDirection = functionAnalysisData.PeriodicityDirection;
-                                equation->PeriodicityExpression = ref new String(functionAnalysisData.PeriodicityExpression.c_str());
-                                equation->Minima = ConvertWStringVector(functionAnalysisData.Minima);
-                                equation->Maxima = ConvertWStringVector(functionAnalysisData.Maxima);
-                                equation->InflectionPoints = ConvertWStringVector(functionAnalysisData.InflectionPoints);
-                                equation->Monotonicity = ConvertWStringIntMap(functionAnalysisData.MonotoneIntervals);
-                                equation->VerticalAsymptotes = ConvertWStringVector(functionAnalysisData.VerticalAsymptotes);
-                                equation->HorizontalAsymptotes = ConvertWStringVector(functionAnalysisData.HorizontalAsymptotes);
-                                equation->ObliqueAsymptotes = ConvertWStringVector(functionAnalysisData.ObliqueAsymptotes);
-                                equation->TooComplexFeatures = functionAnalysisData.TooComplexFeatures;
-                                equation->AnalysisError = CalculatorApp::AnalysisErrorType::NoError;
-                                equation->IsAnalysisUpdated = true;
-                                continue;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        equation->AnalysisError = CalculatorApp::AnalysisErrorType::AnalysisNotSupported;
-                        equation->IsAnalysisUpdated = true;
-                        continue;
-                    }
-                }
-            }
-
-            equation->AnalysisError = CalculatorApp::AnalysisErrorType::AnalysisCouldNotBePerformed;
-            equation->IsAnalysisUpdated = true;
-        }
-    }
     IObservableVector<String ^> ^ Grapher::ConvertWStringVector(vector<wstring> inVector)
     {
         Vector<String ^> ^ outVector = ref new Vector<String ^>();

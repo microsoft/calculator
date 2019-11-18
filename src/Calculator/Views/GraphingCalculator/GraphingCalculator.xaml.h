@@ -67,7 +67,7 @@ namespace CalculatorApp
         void OnActiveTracingClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnGraphLostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnLoosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
-        void OnEquationKeyGraphFeaturesVisibilityChanged(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnEquationKeyGraphFeaturesRequested(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnKeyGraphFeaturesClosed(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         bool ActiveTracingOn;
     };

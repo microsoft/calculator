@@ -110,7 +110,7 @@ void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ s
     auto tb = static_cast<EquationTextBox ^>(sender);
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
     EquationVM = eq;
-    KeyGraphFeaturesVisibilityChanged(this, ref new RoutedEventArgs());
+    KeyGraphFeaturesRequested(EquationVM, ref new RoutedEventArgs());
 }
 
 void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)

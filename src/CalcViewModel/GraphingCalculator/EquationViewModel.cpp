@@ -32,80 +32,56 @@ namespace CalculatorApp::ViewModel
     {
     }
 
-    EquationViewModel::EquationViewModel()
-        : m_LineColor{ nullptr }
-        , m_Expression{ "" }
-        , m_IsAnalysisUpdated{ false }
-        , m_Domain{ "" }
-        , m_Range{ "" }
-        , m_XIntercept{ "" }
-        , m_YIntercept{ "" }
-        , m_Parity{ -1 }
-        , m_PeriodicityDirection{ -1 }
-        , m_PeriodicityExpression{ "" }
-        , m_Minima{ ref new Vector<String ^>() }
-        , m_Maxima{ ref new Vector<String ^>() }
-        , m_InflectionPoints{ ref new Vector<String ^>() }
-        , m_Monotonicity{ ref new Map<String ^, String ^>() }
-        , m_VerticalAsymptotes{ ref new Vector<String ^>() }
-        , m_HorizontalAsymptotes{ ref new Vector<String ^>() }
-        , m_ObliqueAsymptotes{ ref new Vector<String ^>() }
-        , m_TooComplexFeatures{ -1 }
-        , m_AnalysisError{ 0 }
-        , m_AnalysisErrorVisible{ false }
+    EquationViewModel::EquationViewModel(GraphControl::Equation ^ equation)
+        : m_AnalysisErrorVisible{ false }
         , m_KeyGraphFeaturesItems{ ref new Vector<KeyGraphFeaturesItem ^>() }
         , m_resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() }
     {
+        GraphEquation = equation;
     }
 
-    void EquationViewModel::OnPropertyChanged(String ^ propertyName)
+    void EquationViewModel::PopulateKeyGraphFeatures()
     {
-        if (propertyName == L"IsAnalysisUpdated")
+        if (GraphEquation->AnalysisError != 0)
         {
-            OnIsAnalysisUpdatedChanged();
-        }
-    }
-
-    void EquationViewModel::OnIsAnalysisUpdatedChanged()
-    {
-        if (IsAnalysisUpdated)
-        {
-            if (AnalysisError != 0)
+            AnalysisErrorVisible = true;
+            if (GraphEquation->AnalysisError == static_cast<int>(AnalysisErrorType::AnalysisCouldNotBePerformed))
             {
-                AnalysisErrorVisible = true;
-                if (AnalysisError == static_cast<int>(AnalysisErrorType::AnalysisCouldNotBePerformed))
-                {
-                    AnalysisErrorString = m_resourceLoader->GetString(L"KGFAnalysisCouldNotBePerformed");
-                }
-                else if (AnalysisError == static_cast<int>(AnalysisErrorType::AnalysisNotSupported))
-                {
-                    AnalysisErrorString = m_resourceLoader->GetString(L"KGFAnalysisNotSupported");
-                }
-                return;
+                AnalysisErrorString = m_resourceLoader->GetString(L"KGFAnalysisCouldNotBePerformed");
             }
-            KeyGraphFeaturesItems->Clear();
-            SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Domain"), Domain, m_resourceLoader->GetString(L"KGFDomainNone"));
-            SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Range"), Range, m_resourceLoader->GetString(L"KGFRangeNone"));
-            SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"XIntercept"), XIntercept, m_resourceLoader->GetString(L"KGFXInterceptNone"));
-            SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"YIntercept"), YIntercept, m_resourceLoader->GetString(L"KGFYInterceptNone"));
-            SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Minima"), Minima, m_resourceLoader->GetString(L"KGFMinimaNone"));
-            SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Maxima"), Maxima, m_resourceLoader->GetString(L"KGFMaximaNone"));
-            SetKeyGraphFeaturesItems(
-                m_resourceLoader->GetString(L"InflectionPoints"), InflectionPoints, m_resourceLoader->GetString(L"KGFInflectionPointsNone"));
-            SetKeyGraphFeaturesItems(
-                m_resourceLoader->GetString(L"VerticalAsymptotes"), VerticalAsymptotes, m_resourceLoader->GetString(L"KGFVerticalAsymptotesNone"));
-            SetKeyGraphFeaturesItems(
-                m_resourceLoader->GetString(L"HorizontalAsymptotes"), HorizontalAsymptotes, m_resourceLoader->GetString(L"KGFHorizontalAsymptotesNone"));
-            SetKeyGraphFeaturesItems(
-                m_resourceLoader->GetString(L"ObliqueAsymptotes"), ObliqueAsymptotes, m_resourceLoader->GetString(L"KGFObliqueAsymptotesNone"));
-            SetParityStringProperty();
-            SetPeriodicityStringProperty();
-            SetMonotoncityStringProperty();
-            SetTooComplexFeaturesErrorProperty();
-
-            AnalysisErrorVisible = false;
-            IsAnalysisUpdated = false;
+            else if (GraphEquation->AnalysisError == static_cast<int>(AnalysisErrorType::AnalysisNotSupported))
+            {
+                AnalysisErrorString = m_resourceLoader->GetString(L"KGFAnalysisNotSupported");
+            }
+            return;
         }
+
+        KeyGraphFeaturesItems->Clear();
+
+        SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Domain"), GraphEquation->Domain, m_resourceLoader->GetString(L"KGFDomainNone"));
+        SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Range"), GraphEquation->Range, m_resourceLoader->GetString(L"KGFRangeNone"));
+        SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"XIntercept"), GraphEquation->XIntercept, m_resourceLoader->GetString(L"KGFXInterceptNone"));
+        SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"YIntercept"), GraphEquation->YIntercept, m_resourceLoader->GetString(L"KGFYInterceptNone"));
+        SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Minima"), GraphEquation->Minima, m_resourceLoader->GetString(L"KGFMinimaNone"));
+        SetKeyGraphFeaturesItems(m_resourceLoader->GetString(L"Maxima"), GraphEquation->Maxima, m_resourceLoader->GetString(L"KGFMaximaNone"));
+        SetKeyGraphFeaturesItems(
+            m_resourceLoader->GetString(L"InflectionPoints"), GraphEquation->InflectionPoints, m_resourceLoader->GetString(L"KGFInflectionPointsNone"));
+        SetKeyGraphFeaturesItems(
+            m_resourceLoader->GetString(L"VerticalAsymptotes"),
+            GraphEquation->VerticalAsymptotes,
+            m_resourceLoader->GetString(L"KGFVerticalAsymptotesNone"));
+        SetKeyGraphFeaturesItems(
+            m_resourceLoader->GetString(L"HorizontalAsymptotes"),
+            GraphEquation->HorizontalAsymptotes,
+            m_resourceLoader->GetString(L"KGFHorizontalAsymptotesNone"));
+        SetKeyGraphFeaturesItems(
+            m_resourceLoader->GetString(L"ObliqueAsymptotes"), GraphEquation->ObliqueAsymptotes, m_resourceLoader->GetString(L"KGFObliqueAsymptotesNone"));
+        SetParityStringProperty();
+        SetPeriodicityStringProperty();
+        SetMonotoncityStringProperty();
+        SetTooComplexFeaturesErrorProperty();
+
+        AnalysisErrorVisible = false;
     }
 
     void EquationViewModel::SetKeyGraphFeaturesItems(String ^ title, String ^ expression, String ^ errorString)
@@ -125,7 +101,7 @@ namespace CalculatorApp::ViewModel
         KeyGraphFeaturesItems->Append(item);
     }
 
-    void EquationViewModel::SetKeyGraphFeaturesItems(String ^ title, IObservableVector<String ^> ^ expressionVector, String ^ errorString)
+    void EquationViewModel::SetKeyGraphFeaturesItems(String ^ title, IVector<String ^> ^ expressionVector, String ^ errorString)
     {
         KeyGraphFeaturesItem ^ item = ref new KeyGraphFeaturesItem();
         item->Title = title;
@@ -149,7 +125,7 @@ namespace CalculatorApp::ViewModel
     {
         KeyGraphFeaturesItem ^ parityItem = ref new KeyGraphFeaturesItem();
         parityItem->Title = m_resourceLoader->GetString(L"Parity");
-        switch (Parity)
+        switch (GraphEquation->Parity)
         {
         case 0:
             parityItem->DisplayItems->Append(m_resourceLoader->GetString(L"KGFParityUnknown"));
@@ -165,7 +141,6 @@ namespace CalculatorApp::ViewModel
             break;
         default:
             parityItem->DisplayItems->Append(m_resourceLoader->GetString(L"KGFParityUnknown"));
-
         }
         parityItem->IsText = true;
 
@@ -176,7 +151,7 @@ namespace CalculatorApp::ViewModel
     {
         KeyGraphFeaturesItem ^ periodicityItem = ref new KeyGraphFeaturesItem();
         periodicityItem->Title = m_resourceLoader->GetString(L"Periodicity");
-        switch (PeriodicityDirection)
+        switch (GraphEquation->PeriodicityDirection)
         {
         case 0:
             // Periodicity is not supported or is too complex to calculate.
@@ -184,14 +159,14 @@ namespace CalculatorApp::ViewModel
             // SetTooComplexFeaturesErrorProperty will set the too complex error when periodicity is supported and unknown
             return;
         case 1:
-            if (PeriodicityExpression == L"")
+            if (GraphEquation->PeriodicityExpression == L"")
             {
                 periodicityItem->DisplayItems->Append(m_resourceLoader->GetString(L"KGFPeriodicityUnknown"));
                 periodicityItem->IsText = true;
             }
             else
             {
-                periodicityItem->DisplayItems->Append(PeriodicityExpression);
+                periodicityItem->DisplayItems->Append(GraphEquation->PeriodicityExpression);
                 periodicityItem->IsText = false;
             }
             break;
@@ -211,9 +186,9 @@ namespace CalculatorApp::ViewModel
     {
         KeyGraphFeaturesItem ^ monotonicityItem = ref new KeyGraphFeaturesItem();
         monotonicityItem->Title = m_resourceLoader->GetString(L"Monotonicity");
-        if (Monotonicity->Size != 0)
+        if (GraphEquation->Monotonicity->Size != 0)
         {
-            for (auto item : Monotonicity)
+            for (auto item : GraphEquation->Monotonicity)
             {
                 GridDisplayItems ^ gridItem = ref new GridDisplayItems();
                 gridItem->Expression = item->Key;
@@ -253,7 +228,7 @@ namespace CalculatorApp::ViewModel
 
     void EquationViewModel::SetTooComplexFeaturesErrorProperty()
     {
-        if (TooComplexFeatures <= 0)
+        if (GraphEquation->TooComplexFeatures <= 0)
         {
             return;
         }
@@ -261,55 +236,55 @@ namespace CalculatorApp::ViewModel
         Platform::String ^ separator = ref new String(LocalizationSettings::GetInstance().GetListSeparator().c_str());
 
         wstring error;
-        if ((TooComplexFeatures & KeyGraphFeaturesFlag::Domain) == KeyGraphFeaturesFlag::Domain)
+        if ((GraphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::Domain) == KeyGraphFeaturesFlag::Domain)
         {
             error.append((m_resourceLoader->GetString(L"Domain") + separator + L" ")->Data());
         }
-        if ((TooComplexFeatures & KeyGraphFeaturesFlag::Range) == KeyGraphFeaturesFlag::Range)
+        if ((GraphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::Range) == KeyGraphFeaturesFlag::Range)
         {
             error.append((m_resourceLoader->GetString(L"Range") + separator + L" ")->Data());
         }
-        if ((TooComplexFeatures & KeyGraphFeaturesFlag::Zeros) == KeyGraphFeaturesFlag::Zeros)
+        if ((GraphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::Zeros) == KeyGraphFeaturesFlag::Zeros)
         {
             error.append((m_resourceLoader->GetString(L"XIntercept") + separator + L" ")->Data());
         }
-        if ((TooComplexFeatures & KeyGraphFeaturesFlag::YIntercept) == KeyGraphFeaturesFlag::YIntercept)
+        if ((GraphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::YIntercept) == KeyGraphFeaturesFlag::YIntercept)
         {
             error.append((m_resourceLoader->GetString(L"YIntercept") + separator + L" ")->Data());
         }
-        if ((TooComplexFeatures & KeyGraphFeaturesFlag::Parity) == KeyGraphFeaturesFlag::Parity)
+        if ((GraphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::Parity) == KeyGraphFeaturesFlag::Parity)
         {
             error.append((m_resourceLoader->GetString(L"Parity") + separator + L" ")->Data());
         }
-        if ((TooComplexFeatures & KeyGraphFeaturesFlag::Periodicity) == KeyGraphFeaturesFlag::Periodicity)
+        if ((GraphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::Periodicity) == KeyGraphFeaturesFlag::Periodicity)
         {
             error.append((m_resourceLoader->GetString(L"Periodicity") + separator + L" ")->Data());
         }
-        if ((TooComplexFeatures & KeyGraphFeaturesFlag::Minima) == KeyGraphFeaturesFlag::Minima)
+        if ((GraphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::Minima) == KeyGraphFeaturesFlag::Minima)
         {
             error.append((m_resourceLoader->GetString(L"Minima") + separator + L" ")->Data());
         }
-        if ((TooComplexFeatures & KeyGraphFeaturesFlag::Maxima) == KeyGraphFeaturesFlag::Maxima)
+        if ((GraphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::Maxima) == KeyGraphFeaturesFlag::Maxima)
         {
             error.append((m_resourceLoader->GetString(L"Maxima") + separator + L" ")->Data());
         }
-        if ((TooComplexFeatures & KeyGraphFeaturesFlag::InflectionPoints) == KeyGraphFeaturesFlag::InflectionPoints)
+        if ((GraphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::InflectionPoints) == KeyGraphFeaturesFlag::InflectionPoints)
         {
             error.append((m_resourceLoader->GetString(L"InflectionPoints") + separator + L" ")->Data());
         }
-        if ((TooComplexFeatures & KeyGraphFeaturesFlag::VerticalAsymptotes) == KeyGraphFeaturesFlag::VerticalAsymptotes)
+        if ((GraphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::VerticalAsymptotes) == KeyGraphFeaturesFlag::VerticalAsymptotes)
         {
             error.append((m_resourceLoader->GetString(L"VerticalAsymptotes") + separator + L" ")->Data());
         }
-        if ((TooComplexFeatures & KeyGraphFeaturesFlag::HorizontalAsymptotes) == KeyGraphFeaturesFlag::HorizontalAsymptotes)
+        if ((GraphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::HorizontalAsymptotes) == KeyGraphFeaturesFlag::HorizontalAsymptotes)
         {
             error.append((m_resourceLoader->GetString(L"HorizontalAsymptotes") + separator + L" ")->Data());
         }
-        if ((TooComplexFeatures & KeyGraphFeaturesFlag::ObliqueAsymptotes) == KeyGraphFeaturesFlag::ObliqueAsymptotes)
+        if ((GraphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::ObliqueAsymptotes) == KeyGraphFeaturesFlag::ObliqueAsymptotes)
         {
             error.append((m_resourceLoader->GetString(L"ObliqueAsymptotes") + separator + L" ")->Data());
         }
-        if ((TooComplexFeatures & KeyGraphFeaturesFlag::MonotoneIntervals) == KeyGraphFeaturesFlag::MonotoneIntervals)
+        if ((GraphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::MonotoneIntervals) == KeyGraphFeaturesFlag::MonotoneIntervals)
         {
             error.append((m_resourceLoader->GetString(L"Monotonicity") + separator + L" ")->Data());
         }

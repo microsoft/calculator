@@ -350,8 +350,11 @@ void CalculatorApp::GraphingCalculator::OnLoosingFocus(Windows::UI::Xaml::UIElem
     }
 }
 
-void GraphingCalculator::OnEquationKeyGraphFeaturesVisibilityChanged(Object ^ sender, RoutedEventArgs ^ e)
+void GraphingCalculator::OnEquationKeyGraphFeaturesRequested(Object ^ sender, RoutedEventArgs ^ e)
 {
+    auto equationViewModel = static_cast<EquationViewModel ^>(sender);
+    GraphingControl->AnalyzeEquation(equationViewModel->GraphEquation);
+    equationViewModel->PopulateKeyGraphFeatures();
     IsKeyGraphFeaturesVisible = true;
 }
 

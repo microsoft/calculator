@@ -147,6 +147,7 @@ public
         event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String ^, double> ^> ^ VariablesUpdated;
         void SetVariable(Platform::String ^ variableName, double newValue);
         void PlotGraph();
+        void AnalyzeEquation(GraphControl::Equation ^ equation);
 
     protected:
 #pragma region Control Overrides
@@ -179,7 +180,6 @@ public
         void SetGraphArgs();
         std::shared_ptr<Graphing::IGraph> GetGraph(GraphControl::Equation ^ equation);
         void UpdateVariables();
-        void UpdateKeyGraphFeatures();
 
         void OnForceProportionalAxesChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
 

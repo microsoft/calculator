@@ -418,7 +418,7 @@
                                          Grid.Row="1"
                                          Margin="0,8,0,0"
                                          Equations="{x:Bind ViewModel.Equations}"
-                                         KeyGraphFeaturesVisibilityChanged="OnEquationKeyGraphFeaturesVisibilityChanged"/>
+                                         KeyGraphFeaturesRequested="OnEquationKeyGraphFeaturesRequested"/>
             </Grid>
 
             <Grid x:Name="ButtonContainerGrid"
