@@ -384,4 +384,189 @@ namespace Graphing
             DashDotDot
         };
     }
+
+	namespace Analyzer {
+
+		// Graph Analyzer Messages
+		enum GraphAnalyzerMessage
+		{
+			// "No data"
+			GraphAnalyzerMessage_None = 0,
+
+			// "No zeros"
+			GraphAnalyzerMessage_NoZeros = 1,
+
+			// "No y-intercept"
+			GraphAnalyzerMessage_NoYIntercept = 2,
+
+			// "No minima"
+			GraphAnalyzerMessage_NoMinima = 3,
+
+			// "No maxima"
+			GraphAnalyzerMessage_NoMaxima = 4,
+
+			// "No inflection points"
+			GraphAnalyzerMessage_NoInflectionPoints = 5,
+
+			// "No vertical asymptotes"
+			GraphAnalyzerMessage_NoVerticalAsymptotes = 6,
+
+			// "No horizontal asymptotes"
+			GraphAnalyzerMessage_NoHorizontalAsymptotes = 7,
+
+			// "No oblique asymptotes"
+			GraphAnalyzerMessage_NoObliqueAsymptotes = 8,
+
+			// "Not able to calculate"
+			GraphAnalyzerMessage_NotAbleToCalculate = 9,
+
+			// "Not able to mark all graph features"
+			GraphAnalyzerMessage_NotAbleToMarkAllGraphFeatures = 10,
+
+			// These features are too complex for {APPLICATION_NAME} to calculate
+			GraphAnalyzerMessage_TheseFeaturesAreTooComplexToCalculate = 11,
+
+			// "This feature is too complex for {APPLICATION_NAME} to calculate"
+			GraphAnalyzerMessage_ThisFeatureIsTooComplexToCalculate = 12
+		};
+
+		// define which data should be filled into result object
+		enum AnalysisType
+		{
+			// fill domain data
+			AnalysisType_Domain = 0,
+
+			// fill range data
+			AnalysisType_Range = 1,
+
+			// fill parity data
+			AnalysisType_Parity = 2,
+
+			// fill zeros
+			AnalysisType_Zeros = 3,
+
+			// fill interception with y axis
+			AnalysisType_YIntercept = 4,
+
+			// fill minima
+			AnalysisType_Minima = 5,
+
+			// fill maxima
+			AnalysisType_Maxima = 6,
+
+			// fill inflection points
+			AnalysisType_InflectionPoints = 7,
+
+			// fill vertical asymptotes
+			AnalysisType_VerticalAsymptotes = 8,
+
+			// fill horizontal asymptotes
+			AnalysisType_HorizontalAsymptotes = 9,
+
+			// fill oblique asymptotes
+			AnalysisType_ObliqueAsymptotes = 10,
+
+			// fill monotonicity
+			AnalysisType_Monotonicity = 11,
+
+			// fill period
+			AnalysisType_Period = 12
+		};
+
+		// define which additional data should be calculated
+		enum class PerformAnalysisType
+		{
+			// Calculate nothing
+			//PerformAnalysisType_None = 0x0,
+
+			// Calculate domain data
+			PerformAnalysisType_Domain = 0x01,
+
+			// Calculate range data
+			PerformAnalysisType_Range = 0x02,
+
+			// Calculate parity data
+			PerformAnalysisType_Parity = 0x04,
+
+			// Calculate zeros and interception with y axis
+			PerformAnalysisType_InterceptionPointsWithXAndYAxis = 0x08,
+
+			// Calculate Extrema and inflection points
+			PerformAnalysisType_CriticalPoints = 0x10,
+
+			// Calculate asymptotes
+			PerformAnalysisType_Asymptotes = 0x20,
+
+			// Calculate monotonicity
+			PerformAnalysisType_Monotonicity = 0x40,
+
+			// Calculate period
+			PerformAnalysisType_Period = 0x80,
+
+			// Calculate all additional data
+			PerformAnalysisType_All = 0xFF
+		};
+
+		// function parity for function analysis
+		enum class FunctionParityType
+		{
+			// parity not calculated or not possible to calculate
+			FunctionParityType_Unknown = 0,
+
+			// parity is odd
+			FunctionParityType_Odd = 1,
+
+			// parity is even
+			FunctionParityType_Even = 2,
+
+			// function is not odd nor even
+			FunctionParityType_None = 3
+		};
+
+		// monotonicity direction for function analysis
+		enum class FunctionMonotonicityType
+		{
+			// unknown or not calculated
+			FunctionMonotonicityType_Unknown = 0,
+
+			// ascending monotonicity on interval
+			FunctionMonotonicityType_Ascending = 1,
+
+			// descending monotonicity on interval
+			FunctionMonotonicityType_Descending = 2,
+
+			// constant monotonicity on interval
+			FunctionMonotonicityType_Constant = 3
+		};
+
+		// asymptote description for function analysis
+		enum class AsymptoteType
+		{
+			// unknown or not calculated
+			AsymptoteType_Unknown = 0,
+
+			// when x goes to positive infinity
+			AsymptoteType_PositiveInfinity = 1,
+
+			// when x goes to negative infinity
+			AsymptoteType_NegativeInfinity = 2,
+
+			// when x goes to positive or negative infinity
+			AsymptoteType_AnyInfinity = 3
+		};
+
+		// function periodicity for function analysis
+		enum class FunctionPeriodicityType
+		{
+			// periodicity not calculated or not possible to calculate
+			FunctionPeriodicityType_Unknown = 0,
+
+			// parity is odd
+			FunctionPeriodicityType_Periodic = 1,
+
+			// parity is even
+			FunctionPeriodicityType_NotPeriodic = 2
+		};
+
+	}
 }

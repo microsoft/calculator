@@ -12,13 +12,16 @@
 #include "Controls/CalculationResult.h"
 #include "Controls/OverflowTextBlock.h"
 #include "Controls/EquationTextBox.h"
+#include "Controls/MathRichEditBox.h"
 #include "CalcViewModel/HistoryViewModel.h"
+#include "TemplateSelectors/KeyGraphFeaturesTemplateSelector.h"
 #include "Views/CalculatorProgrammerDisplayPanel.xaml.h"
 #include "Views/CalculatorProgrammerOperators.xaml.h"
 #include "Views/CalculatorScientificAngleButtons.xaml.h"
 #include "Views/HistoryList.xaml.h"
 #include "Views/Memory.xaml.h"
 #include "Views/OperatorsPanel.xaml.h"
+#include "Views/GraphingCalculator/KeyGraphFeaturesPanel.xaml.h"
 
 namespace CalculatorApp
 {

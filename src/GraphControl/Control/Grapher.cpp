@@ -1,5 +1,10 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "pch.h"
 #include "Grapher.h"
+#include "IBitmap.h"
+#include "../../CalcViewModel/GraphingCalculatorEnums.h"
 
 using namespace Graphing;
 using namespace GraphControl;
@@ -34,6 +39,9 @@ namespace
     constexpr auto s_X = L"x";
     constexpr auto s_Y = L"y";
 
+    constexpr auto s_getGraphOpeningTags = L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>show2d</mi><mfenced separators=\"\">";
+    constexpr auto s_getGraphClosingTags = L"</mfenced></mrow></math>";
+
     // Helper function for converting a pointer position to a position that the graphing engine will understand.
     // posX/posY are the pointer position elements and width,height are the dimensions of the graph surface.
     // The graphing engine interprets x,y position between the range [-1, 1].
@@ -58,6 +66,8 @@ namespace GraphControl
         , m_Moving{ false }
     {
         m_solver->ParsingOptions().SetFormatType(FormatType::MathML);
+        m_solver->FormatOptions().SetFormatType(FormatType::MathML);
+        m_solver->FormatOptions().SetMathMLPrefix(wstring(L"mml"));
 
         DefaultStyleKey = StringReference(s_defaultStyleKey);
 
@@ -377,7 +387,7 @@ namespace GraphControl
             if (!validEqs.empty())
             {
                 wstringstream ss{};
-                ss << L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>show2d</mi><mfenced separators=\"\">";
+                ss << s_getGraphOpeningTags;
 
                 int numValidEquations = 0;
                 for (Equation ^ eq : validEqs)
@@ -390,7 +400,7 @@ namespace GraphControl
                     ss << eq->GetRequest();
                 }
 
-                ss << L"</mfenced></mrow></math>";
+                ss << s_getGraphClosingTags;
 
                 wstring request = ss.str();
                 unique_ptr<IExpression> graphExpression;
@@ -404,6 +414,7 @@ namespace GraphControl
                         m_renderMain->Graph = m_graph;
 
                         UpdateVariables();
+                        UpdateKeyGraphFeatures();
                     }
                 }
             }
@@ -417,6 +428,7 @@ namespace GraphControl
                     m_renderMain->Graph = m_graph;
 
                     UpdateVariables();
+                    UpdateKeyGraphFeatures();
                 }
             }
         }
@@ -431,6 +443,105 @@ namespace GraphControl
                 m_graph->SetArgValue(variable->Key->Data(), variable->Value);
             }
         }
+    }
+
+    shared_ptr<IGraph> Grapher::GetGraph(GraphControl::Equation ^ equation)
+    {
+        std::shared_ptr<Graphing::IGraph> graph = m_solver->CreateGrapher();
+
+        wstringstream ss{};
+        ss << s_getGraphOpeningTags;
+        ss << equation->GetRequest();
+        ss << s_getGraphClosingTags;
+
+        wstring request = ss.str();
+        unique_ptr<IExpression> graphExpression;
+        if (graphExpression = m_solver->ParseInput(request))
+        {
+            if (graph->TryInitialize(graphExpression.get()))
+            {
+                return graph;
+            }
+        }
+
+        return nullptr;
+    }
+
+    void Grapher::UpdateKeyGraphFeatures()
+    {
+        auto equations = GetValidEquations();
+        for (auto equation : equations)
+        {
+            equation->IsAnalysisUpdated = false;
+
+            if (auto graph = GetGraph(equation))
+            {
+                if (auto analyzer = graph->GetAnalyzer())
+                {
+                    if (analyzer->CanFunctionAnalysisBePerformed())
+                    {
+                        if (S_OK
+                            == analyzer->PerformFunctionAnalysis(
+                                (Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All))
+                        {
+                            Graphing::IGraphFunctionAnalysisData functionAnalysisData = m_solver->Analyze(analyzer.get());
+                            {
+                                equation->XIntercept = ref new String(functionAnalysisData.Zeros.c_str());
+                                equation->YIntercept = ref new String(functionAnalysisData.YIntercept.c_str());
+                                equation->Domain = ref new String(functionAnalysisData.Domain.c_str());
+                                equation->Range = ref new String(functionAnalysisData.Range.c_str());
+                                equation->Parity = functionAnalysisData.Parity;
+                                equation->PeriodicityDirection = functionAnalysisData.PeriodicityDirection;
+                                equation->PeriodicityExpression = ref new String(functionAnalysisData.PeriodicityExpression.c_str());
+                                equation->Minima = ConvertWStringVector(functionAnalysisData.Minima);
+                                equation->Maxima = ConvertWStringVector(functionAnalysisData.Maxima);
+                                equation->InflectionPoints = ConvertWStringVector(functionAnalysisData.InflectionPoints);
+                                equation->Monotonicity = ConvertWStringIntMap(functionAnalysisData.MonotoneIntervals);
+                                equation->VerticalAsymptotes = ConvertWStringVector(functionAnalysisData.VerticalAsymptotes);
+                                equation->HorizontalAsymptotes = ConvertWStringVector(functionAnalysisData.HorizontalAsymptotes);
+                                equation->ObliqueAsymptotes = ConvertWStringVector(functionAnalysisData.ObliqueAsymptotes);
+                                equation->TooComplexFeatures = functionAnalysisData.TooComplexFeatures;
+                                equation->AnalysisError = CalculatorApp::AnalysisErrorType::NoError;
+                                equation->IsAnalysisUpdated = true;
+                                continue;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        equation->AnalysisError = CalculatorApp::AnalysisErrorType::AnalysisNotSupported;
+                        equation->IsAnalysisUpdated = true;
+                        continue;
+                    }
+                }
+            }
+
+            equation->AnalysisError = CalculatorApp::AnalysisErrorType::AnalysisCouldNotBePerformed;
+            equation->IsAnalysisUpdated = true;
+        }
+    }
+    IObservableVector<String ^> ^ Grapher::ConvertWStringVector(vector<wstring> inVector)
+    {
+        Vector<String ^> ^ outVector = ref new Vector<String ^>();
+        
+        for (auto v : inVector)
+        {
+            outVector->Append(ref new String(v.c_str()));
+        }
+
+        return outVector;
+    }
+
+    IObservableMap<String ^, String ^> ^ Grapher::ConvertWStringIntMap(map<wstring, int> inMap)
+    {
+        Map<String ^, String ^> ^ outMap = ref new Map<String ^, String ^>();
+        ;
+        for (auto m : inMap)
+        {
+            outMap->Insert(ref new String(m.first.c_str()), m.second.ToString());
+        }
+
+        return outMap;
     }
 
     void Grapher::UpdateVariables()
