@@ -119,7 +119,7 @@ namespace CalculationManager
 
         bool IsEngineRecording();
         bool IsInputEmpty();
-        const std::vector<unsigned char> GetSavedCommands() const
+        const std::vector<unsigned char>& GetSavedCommands() const
         {
             return m_savedCommands;
         }
