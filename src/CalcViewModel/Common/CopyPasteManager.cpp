@@ -423,9 +423,9 @@ CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType m
 
 Platform::String ^ CopyPasteManager::SanitizeOperand(Platform::String ^ operand)
 {
-    wchar_t unWantedChars[] = { L'\'', L'_', L'`', L'(', L')', L'-', L'+' };
+    constexpr wchar_t unWantedChars[] = { L'\'', L'_', L'`', L'(', L')', L'-', L'+' };
 
-    return ref new String(Utils::RemoveUnwantedCharsFromString(operand->Data(), unWantedChars, static_cast<int>(size(unWantedChars))).c_str());
+    return ref new String(Utils::RemoveUnwantedCharsFromString(operand->Data(), unWantedChars).c_str());
 }
 
 IBox<unsigned long long int> ^ CopyPasteManager::TryOperandToULL(String ^ operand, NumberBase numberBase)
@@ -596,8 +596,8 @@ ULONG32 CopyPasteManager::ProgrammerOperandLength(Platform::String ^ operand, Nu
 // euro(€) - 8364
 Platform::String ^ CopyPasteManager::RemoveUnwantedCharsFromString(Platform::String ^ input)
 {
-    wchar_t unWantedChars[] = { L' ', L',', L'"', 165, 164, 8373, 36, 8353, 8361, 8362, 8358, 8377, 163, 8364, 8234, 8235, 8236, 8237 };
-    return ref new String(Utils::RemoveUnwantedCharsFromString(input->Data(), unWantedChars, 18).c_str());
+    constexpr wchar_t unWantedChars[] = { L' ', L',', L'"', 165, 164, 8373, 36, 8353, 8361, 8362, 8358, 8377, 163, 8364, 8234, 8235, 8236, 8237 };
+    return ref new String(Utils::RemoveUnwantedCharsFromString(input->Data(), unWantedChars).c_str());
 }
 
 bool CopyPasteManager::IsErrorMessage(Platform::String ^ message)

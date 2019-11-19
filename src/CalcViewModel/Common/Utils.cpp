@@ -47,8 +47,8 @@ String ^ Utils::GetStringValue(String ^ input)
 
 double Utils::GetDoubleFromWstring(wstring input)
 {
-    wchar_t unWantedChars[] = { L' ', L',', 8234, 8235, 8236, 8237 };
-    wstring ws = RemoveUnwantedCharsFromString(input, unWantedChars, 6);
+    constexpr wchar_t unWantedChars[] = { L' ', L',', 8234, 8235, 8236, 8237 };
+    wstring ws = RemoveUnwantedCharsFromString(input, unWantedChars);
     return stod(ws);
 }
 
@@ -78,16 +78,6 @@ void Utils::RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Core
 bool Utils::IsLastCharacterTarget(_In_ wstring const& input, _In_ wchar_t target)
 {
     return !input.empty() && input.back() == target;
-}
-
-// Return wstring after removing characters specified by unwantedChars array
-wstring Utils::RemoveUnwantedCharsFromString(wstring input, wchar_t* unwantedChars, unsigned int size)
-{
-    for (unsigned int i = 0; i < size; ++i)
-    {
-        input.erase(std::remove(input.begin(), input.end(), unwantedChars[i]), input.end());
-    }
-    return input;
 }
 
 void Utils::SerializeCommandsAndTokens(
