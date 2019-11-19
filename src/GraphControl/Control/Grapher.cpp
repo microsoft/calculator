@@ -224,6 +224,9 @@ namespace GraphControl
             m_tokenEquationChanged = newer->EquationChanged += ref new EquationChangedEventHandler(this, &Grapher::OnEquationChanged);
 
             m_tokenEquationStyleChanged = newer->EquationStyleChanged += ref new EquationChangedEventHandler(this, &Grapher::OnEquationStyleChanged);
+
+            m_tokenEquationLineEnabledChanged = newer->EquationLineEnabledChanged +=
+                ref new EquationChangedEventHandler(this, &Grapher::OnEquationLineEnabledChanged);
         }
 
         UpdateGraph();
@@ -312,10 +315,12 @@ namespace GraphControl
                 int numValidEquations = 0;
                 for (Equation ^ eq : validEqs)
                 {
-                    if (numValidEquations++ > 0)
+                    if (eq->IsLineEnabled)
                     {
-                        ss << L"<mo>,</mo>";
-                    }
+                        if (numValidEquations++ > 0)
+                        {
+                            ss << L"<mo>,</mo>";
+                        }
 
                     ss << eq->GetRequest();
                 }
@@ -328,7 +333,6 @@ namespace GraphControl
                 {
                     if (m_graph->TryInitialize(graphExpression.get()))
                     {
-                        auto& formatOptions2 = m_solver->FormatOptions();
                         UpdateGraphOptions(m_graph->GetOptions(), validEqs);
                         SetGraphArgs();
 

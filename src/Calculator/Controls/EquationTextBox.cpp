@@ -21,12 +21,12 @@ using namespace Windows::UI::Xaml::Controls::Primitives;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, ColorChooserFlyout);
-DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonOpacity);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonContentIndex);
+
 
 void EquationTextBox::OnApplyTemplate()
 {
-    m_equationButton = dynamic_cast<Button ^>(GetTemplateChild("EquationButton"));
+    m_equationButton = dynamic_cast<ToggleButton ^>(GetTemplateChild("EquationButton"));
     m_richEditBox = dynamic_cast<MathRichEditBox ^>(GetTemplateChild("EquationTextBox"));
     m_deleteButton = dynamic_cast<Button ^>(GetTemplateChild("DeleteButton"));
     m_removeButton = dynamic_cast<Button ^>(GetTemplateChild("RemoveButton"));

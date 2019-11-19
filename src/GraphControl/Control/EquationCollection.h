@@ -148,6 +148,7 @@ public
 
         event EquationChangedEventHandler ^ EquationChanged;
         event EquationChangedEventHandler ^ EquationStyleChanged;
+        event EquationChangedEventHandler ^ EquationLineEnabledChanged;
 
     private:
         void OnEquationPropertyChanged(GraphControl::Equation ^, Platform::String ^ propertyName)
@@ -156,12 +157,16 @@ public
             {
                 EquationStyleChanged();
             }
-            else if (propertyName == EquationProperties::Expression  || propertyName == EquationProperties::IsEnabled)
+            else if (propertyName == EquationProperties::Expression)
             {
                 EquationChanged();
             }
+            else if (propertyName == EquationProperties::IsLineEnabled)
+            {
+                EquationLineEnabledChanged();
+            }
         }
-      
+
     private:
         Platform::Collections::Vector<GraphControl::Equation ^> ^ m_vector;
         std::vector<Windows::Foundation::EventRegistrationToken> m_tokens;

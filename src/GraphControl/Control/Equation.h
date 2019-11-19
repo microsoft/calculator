@@ -9,7 +9,7 @@ namespace GraphControl
     {
         extern Platform::String ^ Expression;
         extern Platform::String ^ LineColor;
-        extern Platform::String ^ IsEnabled;
+        extern Platform::String ^ IsLineEnabled;
     }
 
     ref class Equation;
@@ -69,23 +69,23 @@ namespace GraphControl
         }
 #pragma endregion
 
-#pragma region bool IsEnabled DependencyProperty
-        static property Windows::UI::Xaml::DependencyProperty ^ IsEnabledProperty
+#pragma region bool IsLineEnabled DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty ^ IsLineEnabledProperty
         {
             Windows::UI::Xaml::DependencyProperty ^ get()
             {
-                return s_isEnabledProperty;
+                return s_isLineEnabledProperty;
             }
         }
-        property bool IsEnabled
+        property bool IsLineEnabled
         {
             bool get()
             {
-                return static_cast<bool>(GetValue(s_isEnabledProperty));
+                return static_cast<bool>(GetValue(s_isLineEnabledProperty));
             }
             void set(bool value)
             {
-                SetValue(s_isEnabledProperty, value);
+                SetValue(s_isLineEnabledProperty, value);
             }
         }
 
@@ -445,7 +445,7 @@ namespace GraphControl
     private:
         static Windows::UI::Xaml::DependencyProperty ^ s_expressionProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_lineColorProperty;
-        static Windows::UI::Xaml::DependencyProperty ^ s_isEnabledProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_isLineEnabledProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_xInterceptProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_yInterceptProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_parityProperty;

@@ -11,7 +11,6 @@
 #include "Controls/EquationTextBox.h"
 #include "Converters/BooleanNegationConverter.h"
 #include "Controls/MathRichEditBox.h"
-#include "Converters/IsLineEnabledToOpacityConverter.h"
 
 namespace CalculatorApp
 {
@@ -24,9 +23,6 @@ namespace CalculatorApp
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector< ViewModel::EquationViewModel^ >^, Equations);
         OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(ViewModel::EquationViewModel ^, EquationVM);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Windows::UI::Xaml::Media::SolidColorBrush ^> ^, AvailableColors);
-        
-        OBSERVABLE_PROPERTY_RW(double, IsLineEnabledOpacity);
-
         event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesRequested;
 
     private:

@@ -103,7 +103,7 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
     unsigned int index;
     if (Equations->IndexOf(eq, &index))
     {
-        if (static_cast<int>(eq->FunctionLabelIndex) == m_lastFunctionLabelIndex)
+        if (eq->FunctionLabelIndex == m_lastFunctionLabelIndex)
         {
             m_lastFunctionLabelIndex--;
         }
@@ -123,7 +123,7 @@ void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, R
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
-    eq->IsEnabled = !eq->IsEnabled;
+    eq->IsLineEnabled = !eq->IsLineEnabled;
 }
 
 void EquationInputArea::EquationTextBoxLoaded(Object ^ sender, RoutedEventArgs ^ e)

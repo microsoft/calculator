@@ -306,7 +306,7 @@
       <AdditionalOptions>/ignore:4264 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(IsStoreBuild)' == 'True'">
     <ClCompile>
       <AdditionalOptions>/DSEND_DIAGNOSTICS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
