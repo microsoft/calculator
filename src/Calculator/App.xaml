@@ -1530,7 +1530,11 @@
                                         Background="{ThemeResource EquationButtonBackground}"
                                         Foreground="{ThemeResource EquationButtonForeground}"
                                         Content="ƒₓ">
+<<<<<<< Updated upstream
                                     <!--<Button.Resources>
+=======
+                                    <Button.Resources>
+>>>>>>> Stashed changes
                                         <ResourceDictionary>
                                             <ResourceDictionary.ThemeDictionaries>
                                                 <ResourceDictionary x:Key="Default">
@@ -1547,7 +1551,11 @@
                                                 </ResourceDictionary>
                                             </ResourceDictionary.ThemeDictionaries>
                                         </ResourceDictionary>
+<<<<<<< Updated upstream
                                     </Button.Resources>-->
+=======
+                                    </Button.Resources>
+>>>>>>> Stashed changes
                                 </Button>
                                 <Border x:Name="EquationBoxBorder"
                                         Grid.Column="2"
