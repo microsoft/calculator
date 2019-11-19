@@ -1720,7 +1720,7 @@ void StandardCalculatorViewModel::UpdateCommandsInRecordingMode()
 
     for (const auto savedCommand : m_standardCalculatorManager.GetSavedCommands())
     {
-        const Command val = safe_cast<Command>(savedCommand);
+        const Command val = static_cast<Command>(savedCommand);
         if (val == Command::CommandSIGN)
         {
             isNegative = true;
