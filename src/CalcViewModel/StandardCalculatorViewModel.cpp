@@ -1709,9 +1709,8 @@ void StandardCalculatorViewModel::UpdateOperand(int pos, String ^ text)
     }
 }
 
-void StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
+void StandardCalculatorViewModel::UpdateCommandsInRecordingMode()
 {
-    vector<unsigned char> savedCommands = m_standardCalculatorManager.GetSavedCommands();
     shared_ptr<vector<int>> commands = make_shared<vector<int>>();
     bool isDecimal = false;
     bool isNegative = false;
@@ -1719,12 +1718,9 @@ void StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
     bool ePlusMode = false;
     bool eMinusMode = false;
 
-    int num = 0;
-    Command val;
-    for (unsigned int i = 0; i < savedCommands.size(); ++i)
+    for (const auto savedCommand : m_standardCalculatorManager.GetSavedCommands())
     {
-        val = safe_cast<Command>(savedCommands[i]);
-        num = static_cast<int>(val);
+        const Command val = static_cast<Command>(savedCommand);
         if (val == Command::CommandSIGN)
         {
             isNegative = true;
@@ -1762,7 +1758,7 @@ void StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
             commands->clear();
             continue;
         }
-        commands->push_back(num);
+        commands->push_back(static_cast<int>(val));
     }
 
     if (!commands->empty())
