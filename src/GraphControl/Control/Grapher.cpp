@@ -38,7 +38,7 @@ namespace
 
     constexpr auto s_X = L"x";
     constexpr auto s_Y = L"y";
-
+    constexpr auto s_defaultFormatType = FormatType::MathML;
     constexpr auto s_getGraphOpeningTags = L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mi>show2d</mi><mfenced separators=\"\">";
     constexpr auto s_getGraphClosingTags = L"</mfenced></mrow></math>";
 
@@ -65,7 +65,7 @@ namespace GraphControl
         , m_graph{ m_solver->CreateGrapher() }
         , m_Moving{ false }
     {
-        m_solver->ParsingOptions().SetFormatType(FormatType::MathML);
+        m_solver->ParsingOptions().SetFormatType(s_defaultFormatType);
         m_solver->FormatOptions().SetFormatType(FormatType::MathML);
         m_solver->FormatOptions().SetMathMLPrefix(wstring(L"mml"));
 
@@ -1008,4 +1008,16 @@ void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
     {
         ActiveTraceCursorPosition = curPos;
     }
+}
+
+String ^ Grapher::ConvertToLinear(String ^ mmlString)
+{
+    m_solver->FormatOptions().SetFormatType(FormatType::LinearInput);
+
+    auto expression = m_solver->ParseInput(mmlString->Data());
+    auto linearExpression = m_solver->Serialize(expression.get());
+
+    m_solver->FormatOptions().SetFormatType(s_defaultFormatType);
+
+    return ref new String(linearExpression.c_str());
 }

@@ -190,6 +190,7 @@ public
 
         event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String ^, double> ^> ^ VariablesUpdated;
         void SetVariable(Platform::String ^ variableName, double newValue);
+        Platform::String ^ ConvertToLinear(Platform::String ^ mmlString);
 
     protected:
 #pragma region Control Overrides
