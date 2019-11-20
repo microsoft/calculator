@@ -49,10 +49,10 @@
             <Grid Grid.Row="0" Margin="4,7,4,4">
                 <graphControl:Grapher Name="GraphingControl"
                                       ForceProportionalAxes="True"
-                                      LosingFocus="OnLoosingFocus"
-                                      LostFocus="OnGraphLostFocus"
+                                      LosingFocus="GraphingControl_LosingFocus"
+                                      LostFocus="GraphingControl_LostFocus"
                                       UseSystemFocusVisuals="True"
-                                      VariablesUpdated="GraphVariablesUpdated">
+                                      VariablesUpdated="GraphingControl_VariablesUpdated">
                     <graphControl:Grapher.Background>
                         <SolidColorBrush Color="White"/>
                     </graphControl:Grapher.Background>
