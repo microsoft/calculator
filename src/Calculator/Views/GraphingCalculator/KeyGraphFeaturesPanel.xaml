@@ -173,11 +173,32 @@
                                     </StackPanel>
                                 </Button.Content>
                                 <Button.Resources>
-                                    <SolidColorBrush x:Name="ButtonBackgroundPointerOver"
+                                    <ResourceDictionary>
+                                        <ResourceDictionary.ThemeDictionaries>
+                                            <ResourceDictionary x:Key="Custom">
+                                                <SolidColorBrush x:Name="ButtonBackgroundPointerOver"
                                                      Opacity="0.7"
                                                      Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                    <SolidColorBrush x:Name="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
-                                    <SolidColorBrush x:Name="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
+                                                <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                            </ResourceDictionary>
+                                            <ResourceDictionary x:Key="Light">
+                                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver"
+                                                     Opacity="0.7"
+                                                     Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
+                                                <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                            </ResourceDictionary>
+                                            <ResourceDictionary x:Key="HighContrast">
+                                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver"
+                                                     Opacity="0.7"
+                                                     Color="{StaticResource SystemColorButtonFaceColor}"/>
+                                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource SystemColorButtonTextColor}"/>
+                                                <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                            </ResourceDictionary>
+                                        </ResourceDictionary.ThemeDictionaries>
+                                    </ResourceDictionary>
+                                    
                                 </Button.Resources>
                             </Button>
 
