@@ -21,6 +21,7 @@
                   ItemsSource="{x:Bind Equations}"
                   SelectionMode="None">
 
+<!-- Removes animations from the ListView Style. -->
             <ListView.Style>
                 <Style TargetType="ListView">
                     <Setter Property="ItemContainerTransitions">
