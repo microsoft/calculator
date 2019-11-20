@@ -1,7 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="ApplicationViewModel.cpp" />
+    <ClCompile Include="DateCalculatorViewModel.cpp" />
+    <ClCompile Include="GraphingCalculator\EquationViewModel.cpp" />
+    <ClCompile Include="GraphingCalculator\GraphingCalculatorViewModel.cpp" />
+    <ClCompile Include="HistoryItemViewModel.cpp" />
+    <ClCompile Include="HistoryViewModel.cpp" />
+    <ClCompile Include="MemoryItemViewModel.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="StandardCalculatorViewModel.cpp" />
+    <ClCompile Include="UnitConverterViewModel.cpp" />
+    <ClCompile Include="ViewState.cpp" />
     <ClCompile Include="Common\AppResourceProvider.cpp" />
     <ClCompile Include="Common\Automation\LiveRegionHost.cpp" />
     <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp" />
@@ -26,16 +36,6 @@
     <ClCompile Include="DataLoaders\CurrencyDataLoader.cpp" />
     <ClCompile Include="DataLoaders\CurrencyHttpClient.cpp" />
     <ClCompile Include="DataLoaders\UnitConverterDataLoader.cpp" />
-    <ClCompile Include="DateCalculatorViewModel.cpp" />
-    <ClCompile Include="GraphingCalculator\EquationViewModel.cpp" />
-    <ClCompile Include="GraphingCalculator\GraphingCalculatorViewModel.cpp" />
-    <ClCompile Include="HistoryItemViewModel.cpp" />
-    <ClCompile Include="HistoryViewModel.cpp" />
-    <ClCompile Include="MemoryItemViewModel.cpp" />
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="StandardCalculatorViewModel.cpp" />
-    <ClCompile Include="UnitConverterViewModel.cpp" />
-    <ClCompile Include="ViewState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApplicationViewModel.h" />
@@ -87,6 +87,124 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UnitConverterViewModel.h" />
     <ClInclude Include="ViewState.h" />
+    <ClInclude Include="Common\AppResourceProvider.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\BindableBase.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\AlwaysSelectedCollectionView.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\BitLength.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\CalculatorButtonPressedEventArgs.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\CalculatorDisplay.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ConversionResultTaskHelper.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\CopyPasteManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\DateCalculator.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\DelegateCommand.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\DisplayExpressionToken.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\EngineResourceProvider.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ExpressionCommandDeserializer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ExpressionCommandSerializer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\KeyboardShortcutManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\LocalizationStringUtil.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\LocalizationService.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\LocalizationSettings.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\NavCategory.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\MyVirtualKey.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\NetworkManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\TraceActivity.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\TraceLogger.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Utils.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ValidatingConverters.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\CalculatorButtonUser.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Automation\NarratorAnnouncement.h">
+      <Filter>Common\Automation</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Automation\NarratorAnnouncementHostFactory.h">
+      <Filter>Common\Automation</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Automation\NarratorNotifier.h">
+      <Filter>Common\Automation</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Automation\NotificationHost.h">
+      <Filter>Common\Automation</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Automation\INarratorAnnouncementHost.h">
+      <Filter>Common\Automation</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Automation\LiveRegionHost.h">
+      <Filter>Common\Automation</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLoaders\ICurrencyHttpClient.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLoaders\UnitConverterDataConstants.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLoaders\UnitConverterDataLoader.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLoaders\CurrencyHttpClient.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculator\GraphingCalculatorViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculator\EquationViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLoaders\CurrencyDataLoader.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculatorEnums.h" />
     <ClInclude Include="DataLoaders\DataLoaderMockConstants.h" />
   </ItemGroup>
   <ItemGroup>

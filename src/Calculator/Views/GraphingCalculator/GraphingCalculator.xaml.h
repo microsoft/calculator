@@ -1,8 +1,12 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include "Views\GraphingCalculator\GraphingCalculator.g.h"
 #include "CalcViewModel\GraphingCalculator\GraphingCalculatorViewModel.h"
 #include "Views\NumberPad.xaml.h"
+#include "Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h"
 
 namespace CalculatorApp
 {
@@ -18,6 +22,7 @@ namespace CalculatorApp
         COMMAND_FOR_METHOD(ZoomOutButtonPressed, GraphingCalculator::OnZoomOutCommand);
         COMMAND_FOR_METHOD(ZoomInButtonPressed, GraphingCalculator::OnZoomInCommand);
         COMMAND_FOR_METHOD(ZoomResetButtonPressed, GraphingCalculator::OnZoomResetCommand);
+        OBSERVABLE_PROPERTY_RW(bool, IsKeyGraphFeaturesVisible);
 
         property CalculatorApp::ViewModel::GraphingCalculatorViewModel^ ViewModel
         {
@@ -28,7 +33,6 @@ namespace CalculatorApp
     private:
         void GraphingCalculator_DataContextChanged(Windows::UI::Xaml::FrameworkElement^ sender, Windows::UI::Xaml::DataContextChangedEventArgs^ args);
 
-        void GraphVariablesUpdated(Platform::Object^ sender, Object^ args);
         void OnVariableChanged(Platform::Object^ sender, CalculatorApp::ViewModel::VariableChangedEventArgs args);
 
         void TextBoxLosingFocus(Windows::UI::Xaml::Controls::TextBox^ textbox, Windows::UI::Xaml::Input::LosingFocusEventArgs^ args);
@@ -51,16 +55,15 @@ namespace CalculatorApp
 
     private:
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
-        Windows::Foundation::EventRegistrationToken m_showTracePopupChangedToken;
-        Windows::Foundation::EventRegistrationToken m_tracePointChangedToken;
         void OnDataRequested(Windows::ApplicationModel::DataTransfer::DataTransferManager^ sender, Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs^ e);
 
         void TextBoxGotFocus(Windows::UI::Xaml::Controls::TextBox^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void OnActiveTracingClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void TrigUnitModeClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void OnGraphLostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void OnLoosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
-
+        void GraphingControl_LostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void GraphingControl_LosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
+        void GraphingControl_VariablesUpdated(Platform::Object ^ sender, Object ^ args);
+        void OnEquationKeyGraphFeaturesVisibilityChanged(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnKeyGraphFeaturesClosed(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         bool ActiveTracingOn;
     };
 

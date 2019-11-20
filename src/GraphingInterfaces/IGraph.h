@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common.h"
+#include "IGraphAnalyzer.h"
 #include "IGraphingOptions.h"
 #include "IGraphRenderer.h"
 #include "IEquation.h"
@@ -16,12 +17,14 @@ namespace Graphing
 
         virtual IGraphingOptions& GetOptions() = 0;
 
-        virtual std::vector<std::shared_ptr<IVariable>> GetVariables() = 0;
+        virtual std::vector<std::shared_ptr<Graphing::IVariable>> GetVariables() = 0;
 
         virtual void SetArgValue(std::wstring variableName, double value) = 0;
 
-        virtual std::shared_ptr< Renderer::IGraphRenderer > GetRenderer() const = 0;
+        virtual std::shared_ptr<Renderer::IGraphRenderer> GetRenderer() const = 0;
 
         virtual bool TryResetSelection() = 0;
+
+		virtual std::shared_ptr< Graphing::Analyzer::IGraphAnalyzer > GetAnalyzer() const = 0;
     };
 }

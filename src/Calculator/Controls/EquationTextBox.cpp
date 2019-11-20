@@ -20,13 +20,12 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Controls::Primitives;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationColor);
-DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, KeyGraphFeaturesContent);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, ColorChooserFlyout);
 
 void EquationTextBox::OnApplyTemplate()
 {
     m_equationButton = dynamic_cast<Button ^>(GetTemplateChild("EquationButton"));
-    m_richEditBox = dynamic_cast<RichEditBox ^>(GetTemplateChild("EquationTextBox"));
+    m_richEditBox = dynamic_cast<MathRichEditBox ^>(GetTemplateChild("EquationTextBox"));
     m_deleteButton = dynamic_cast<Button ^>(GetTemplateChild("DeleteButton"));
     m_removeButton = dynamic_cast<Button ^>(GetTemplateChild("RemoveButton"));
     m_functionButton = dynamic_cast<Button ^>(GetTemplateChild("FunctionButton"));
@@ -34,7 +33,6 @@ void EquationTextBox::OnApplyTemplate()
 
     if (m_richEditBox != nullptr)
     {
-        m_richEditBox->Loaded += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxLoaded);
         m_richEditBox->GotFocus += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxGotFocus);
         m_richEditBox->LostFocus += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxLostFocus);
         m_richEditBox->TextChanged += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxTextChanged);
@@ -64,6 +62,7 @@ void EquationTextBox::OnApplyTemplate()
     if (m_functionButton != nullptr)
     {
         m_functionButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnFunctionButtonClicked);
+        m_functionButton->IsEnabled = false;
     }
 
     if (ColorChooserFlyout != nullptr)
@@ -104,6 +103,10 @@ void EquationTextBox::OnKeyDown(KeyRoutedEventArgs ^ e)
     if (e->Key == VirtualKey::Enter)
     {
         EquationSubmitted(this, ref new RoutedEventArgs());
+        if (m_functionButton && m_richEditBox->MathText != L"")
+        {
+            m_functionButton->IsEnabled = true;
+        }
     }
 }
 
@@ -112,6 +115,10 @@ void EquationTextBox::OnLostFocus(RoutedEventArgs ^ e)
     if (!m_richEditBox->ContextFlyout->IsOpen)
     {
         EquationSubmitted(this, ref new RoutedEventArgs());
+        if (m_functionButton && m_richEditBox->MathText != L"")
+        {
+            m_functionButton->IsEnabled = true;
+        }
     }
 }
 
@@ -128,15 +135,6 @@ void EquationTextBox::OnColorFlyoutClosed(Object ^ sender, Object ^ e)
     UpdateCommonVisualState();
 }
 
-void EquationTextBox::OnRichEditBoxLoaded(Object ^ sender, RoutedEventArgs ^ e)
-{
-    LimitedAccessFeatures::TryUnlockFeature(
-        "com.microsoft.windows.richeditmath",
-        "H6wflFFz3gkOsAHtG/D9Tg==",
-        "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.");
-    m_richEditBox->TextDocument->SetMathMode(::RichEditMathMode::MathOnly);
-}
-
 void EquationTextBox::OnRichEditBoxTextChanged(Object ^ sender, RoutedEventArgs ^ e)
 {
     UpdateDeleteButtonVisualState();
@@ -144,7 +142,7 @@ void EquationTextBox::OnRichEditBoxTextChanged(Object ^ sender, RoutedEventArgs 
 
 void EquationTextBox::OnRichEditBoxGotFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
-    m_isFocused = true;
+    m_HasFocus = true;
     UpdateCommonVisualState();
     UpdateDeleteButtonVisualState();
 }
@@ -153,7 +151,7 @@ void EquationTextBox::OnRichEditBoxLostFocus(Object ^ sender, RoutedEventArgs ^ 
 {
     if (!m_richEditBox->ContextFlyout->IsOpen)
     {
-        m_isFocused = false;
+        m_HasFocus = false;
     }
     UpdateCommonVisualState();
     UpdateDeleteButtonVisualState();
@@ -163,17 +161,32 @@ void EquationTextBox::OnDeleteButtonClicked(Object ^ sender, RoutedEventArgs ^ e
 {
     if (m_richEditBox != nullptr)
     {
-        m_richEditBox->TextDocument->SetMath(L"");
+        m_richEditBox->MathText = L"";
+        if (m_functionButton)
+        {
+            m_functionButton->IsEnabled = false;
+        }
     }
 }
 
 void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
+    EquationButtonClicked(this, ref new RoutedEventArgs());
 }
 
 void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->MathText = L"";
+    }
+
     RemoveButtonClicked(this, ref new RoutedEventArgs());
+
+    if (m_functionButton)
+    {
+        m_functionButton->IsEnabled = false;
+    }
 }
 
 void EquationTextBox::OnColorChooserButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
@@ -186,10 +199,7 @@ void EquationTextBox::OnColorChooserButtonClicked(Object ^ sender, RoutedEventAr
 
 void EquationTextBox::OnFunctionButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
-    auto equationViewModel = static_cast<EquationViewModel ^>(DataContext);
-    equationViewModel->KeyGraphFeaturesVisibility =
-        (equationViewModel->KeyGraphFeaturesVisibility == ::Visibility::Collapsed) ? ::Visibility::Visible : ::Visibility::Collapsed;
-    UpdateCommonVisualState();
+    KeyGraphFeaturesButtonClicked(this, ref new RoutedEventArgs());
 }
 
 void EquationTextBox::UpdateDeleteButtonVisualState()
@@ -212,7 +222,7 @@ void EquationTextBox::UpdateCommonVisualState()
 {
     String ^ state = "Normal";
 
-    if (m_isFocused)
+    if (m_HasFocus)
     {
         state = "Focused";
     }
@@ -239,7 +249,7 @@ Platform::String ^ EquationTextBox::GetEquationText()
             range->CharacterFormat->Underline = UnderlineType::None;
         }
 
-        m_richEditBox->TextDocument->GetMath(&text);
+        text = m_richEditBox->MathText;
     }
 
     return text;
@@ -249,7 +259,7 @@ void EquationTextBox::SetEquationText(Platform::String ^ equationText)
 {
     if (m_richEditBox != nullptr)
     {
-        m_richEditBox->TextDocument->SetMath(equationText);
+        m_richEditBox->MathText = equationText;
     }
 }
 
@@ -259,7 +269,7 @@ bool EquationTextBox::ShouldDeleteButtonBeVisible()
 
     if (m_richEditBox != nullptr)
     {
-        m_richEditBox->TextDocument->GetMath(&text);
+        text = m_richEditBox->MathText;
     }
-    return (!text->IsEmpty() && m_isFocused);
+    return (!text->IsEmpty() && m_HasFocus);
 }

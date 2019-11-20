@@ -45,5 +45,8 @@
     </ClInclude>
     <ClInclude Include="..\GraphingInterfaces\IEquation.h" />
     <ClInclude Include="..\GraphingInterfaces\IEquationOptions.h" />
+    <ClInclude Include="..\GraphingInterfaces\IGraphAnalyzer.h">
+      <Filter>GraphingInterfaces</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

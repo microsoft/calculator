@@ -1,9 +1,13 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include "InspectingDataSource.h"
 #include "DirectX/RenderMain.h"
 #include "Equation.h"
 #include "EquationCollection.h"
+#include "IGraphAnalyzer.h"
 #include "IMathSolver.h"
 #include "Common.h"
 
@@ -186,7 +190,8 @@ public
 
         event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String ^, double> ^> ^ VariablesUpdated;
         void SetVariable(Platform::String ^ variableName, double newValue);
-
+        Platform::String ^ ConvertToLinear(Platform::String ^ mmlString);
+		
         // We can't use the EValTrigUnitMode enum directly in as the property type because it comes from another module which doesn't expose
         // it as a public enum class.  So the compiler doesn't recognize it as a valid type for the ABI boundary.
         property int TrigUnitMode
@@ -216,7 +221,6 @@ public
             {
                 std::pair<double, double> newValue(value, XAxisMax);
                 m_graph->GetOptions().SetDefaultXRange(newValue);
-                // UpdateGraph();
                 m_renderMain->RunRenderPass();
             }
         }
@@ -231,7 +235,6 @@ public
             {
                 std::pair<double, double> newValue(XAxisMax, value);
                 m_graph->GetOptions().SetDefaultXRange(newValue);
-                // UpdateGraph();
                 m_renderMain->RunRenderPass();
             }
         }
@@ -246,7 +249,6 @@ public
             {
                 std::pair<double, double> newValue(value, YAxisMax);
                 m_graph->GetOptions().SetDefaultYRange(newValue);
-                // UpdateGraph();
                 m_renderMain->RunRenderPass();
             }
         }
@@ -261,7 +263,6 @@ public
             {
                 std::pair<double, double> newValue(YAxisMax, value);
                 m_graph->GetOptions().SetDefaultYRange(newValue);
-                // UpdateGraph();
                 m_renderMain->RunRenderPass();
             }
         }
@@ -323,10 +324,13 @@ public
         void OnEquationChanged();
         void OnEquationStyleChanged();
 
+        void UpdateGraph();
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
         std::vector<Equation ^> GetValidEquations();
         void SetGraphArgs();
+        std::shared_ptr<Graphing::IGraph> GetGraph(GraphControl::Equation ^ equation);
         void UpdateVariables();
+        void UpdateKeyGraphFeatures();
 
         void OnForceProportionalAxesChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
 
@@ -344,6 +348,9 @@ public
         void UpdateTracingChanged();
         void HandleTracingMovementTick(Object ^ sender, Object ^ e);
         void HandleKey(bool keyDown, Windows::System::VirtualKey key);
+
+        Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^ ConvertWStringVector(std::vector<std::wstring> inVector);
+        Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ ConvertWStringIntMap(std::map<std::wstring, int> inMap);
 
     private:
         DX::RenderMain ^ m_renderMain = nullptr;
@@ -384,6 +391,5 @@ public
 
     public:
         Windows::Storage::Streams::RandomAccessStreamReference ^ GetGraphBitmapStream();
-        void UpdateGraph();
     };
 }

@@ -8,7 +8,7 @@
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0.19492.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.19492.0</WindowsTargetPlatformMinVersion>
     <!-- We want to manually control the MinVersion/MaxVersionTested in the manifest so turn of the replacement. -->
     <AppxOSMinVersionReplaceManifestVersion>false</AppxOSMinVersionReplaceManifestVersion>
@@ -234,6 +234,7 @@
     </ClInclude>
     <ClInclude Include="Common\AppLifecycleLogger.h" />
     <ClInclude Include="Controls\CalculationResultAutomationPeer.h" />
+    <ClInclude Include="Controls\MathRichEditBox.h" />
     <ClInclude Include="Controls\OverflowTextBlockAutomationPeer.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h" />
     <ClInclude Include="Common\BindableBase.h" />
@@ -261,6 +262,7 @@
     <ClInclude Include="EquationStylePanelControl.xaml.h">
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.h" />
     <ClInclude Include="Views\Calculator.xaml.h">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
     </ClInclude>
@@ -290,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="Views\GraphingCalculator\GraphingCalculator.xaml.h">
       <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h">
+      <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Views\HistoryList.xaml.h">
       <DependentUpon>Views\HistoryList.xaml</DependentUpon>
@@ -354,6 +359,7 @@
     <Page Include="Views\DelighterUnitStyles.xaml" />
     <Page Include="Views\GraphingCalculator\EquationInputArea.xaml" />
     <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml" />
+    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" />
     <Page Include="Views\HistoryList.xaml" />
     <Page Include="Views\MainPage.xaml" />
     <Page Include="Views\Memory.xaml" />
@@ -385,6 +391,7 @@
     </ClCompile>
     <ClCompile Include="Common\AppLifecycleLogger.cpp" />
     <ClCompile Include="Controls\CalculationResultAutomationPeer.cpp" />
+    <ClCompile Include="Controls\MathRichEditBox.cpp" />
     <ClCompile Include="Controls\OverflowTextBlockAutomationPeer.cpp" />
     <ClCompile Include="Common\BindableBase.cpp" />
     <ClCompile Include="Controls\CalculationResult.cpp" />
@@ -417,6 +424,7 @@
     <ClCompile Include="EquationStylePanelControl.xaml.cpp">
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.cpp" />
     <ClCompile Include="Views\Calculator.xaml.cpp">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
     </ClCompile>
@@ -446,6 +454,9 @@
     </ClCompile>
     <ClCompile Include="Views\GraphingCalculator\GraphingCalculator.xaml.cpp">
       <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp">
+      <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Views\HistoryList.xaml.cpp">
       <DependentUpon>Views\HistoryList.xaml</DependentUpon>
@@ -849,7 +860,7 @@
   </Target>
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets" Condition="Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" />
-    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.2.190917002\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.2.190917002\build\native\Microsoft.UI.Xaml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -857,6 +868,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.2.190917002\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.2.190917002\build\native\Microsoft.UI.Xaml.targets'))" />
   </Target>
 </Project>
