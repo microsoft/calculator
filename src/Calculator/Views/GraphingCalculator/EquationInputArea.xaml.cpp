@@ -70,6 +70,7 @@ void EquationInputArea::AddNewEquation()
     eq->LineColor = AvailableColors->GetAt(m_lastLineColorIndex);
 
     Equations->Append(eq);
+    EquationInputList->ScrollIntoView(eq);
 }
 
 void EquationInputArea::InputTextBox_GotFocus(Object ^ sender, RoutedEventArgs ^ e)

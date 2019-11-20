@@ -3491,7 +3491,7 @@
     <value>Zoom Out</value>
     <comment>Screen reader prompt for the zoom out button.</comment>
   </data>
-  <data name="EquationInputButtonPlaceholderText" xml:space="preserve">
+  <data name="EquationInputButtonPlaceholder.Text" xml:space="preserve">
     <value>Add Equation</value>
     <comment>Placeholder text for the equation input button</comment>
   </data>
