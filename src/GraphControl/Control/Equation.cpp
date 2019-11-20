@@ -23,9 +23,6 @@ namespace GraphControl
     DependencyProperty ^ Equation::s_lineColorProperty;
     static constexpr auto s_propertyName_LineColor = L"LineColor";
 
-    DependencyProperty ^ Equation::s_isAnalysisUpdatedProperty;
-    static constexpr auto s_propertyName_IsAnalysisUpdated = L"IsAnalysisUpdated";
-
     DependencyProperty ^ Equation::s_xInterceptProperty;
     static constexpr auto s_propertyName_XIntercept = L"XIntercept";
 
@@ -78,7 +75,6 @@ namespace GraphControl
     {
         String ^ Expression = StringReference(s_propertyName_Expression);
         String ^ LineColor = StringReference(s_propertyName_LineColor);
-        String ^ IsAnalysisUpdated = StringReference(s_propertyName_IsAnalysisUpdated);
         String ^ XIntercept = StringReference(s_propertyName_XIntercept);
         String ^ YIntercept = StringReference(s_propertyName_YIntercept);
         String ^ Parity = StringReference(s_propertyName_Parity);
@@ -116,15 +112,6 @@ namespace GraphControl
             s_lineColorProperty = DependencyProperty::Register(
                 EquationProperties::LineColor,
                 SolidColorBrush::typeid,
-                Equation::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
-        }
-
-        if (!s_isAnalysisUpdatedProperty)
-        {
-            s_isAnalysisUpdatedProperty = DependencyProperty::Register(
-                EquationProperties::IsAnalysisUpdated,
-                bool ::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -285,10 +272,6 @@ namespace GraphControl
             else if (args->Property == s_lineColorProperty)
             {
                 propertyName = EquationProperties::LineColor;
-            }
-            else if (args->Property == s_isAnalysisUpdatedProperty)
-            {
-                propertyName = EquationProperties::IsAnalysisUpdated;
             }
             else if (args->Property == s_xInterceptProperty)
             {

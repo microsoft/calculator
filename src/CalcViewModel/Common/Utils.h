@@ -427,6 +427,9 @@ namespace Utils
     void Trim(std::wstring& value);
     void TrimFront(std::wstring& value);
     void TrimBack(std::wstring& value);
+
+    Platform::String ^ EscapeHtmlSpecialCharacters(Platform::String ^ originalString, std::shared_ptr<std::vector<wchar_t>> specialCharacters = nullptr);
+
 }
 
 // This goes into the header to define the property, in the public: section of the class

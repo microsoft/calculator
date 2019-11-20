@@ -23,7 +23,7 @@ namespace CalculatorApp
         OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(ViewModel::EquationViewModel ^, EquationVM);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Windows::UI::Xaml::Media::SolidColorBrush ^> ^, AvailableColors);
         
-        event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesVisibilityChanged;
+        event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesRequested;
 
     private:
         void OnPropertyChanged(Platform::String^ propertyName);

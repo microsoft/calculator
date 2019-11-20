@@ -745,6 +745,7 @@
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
                 <Setter Property="FontSize" Value="{StaticResource CaptionFontSize}"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -784,7 +785,7 @@
                                                   BorderBrush="{ThemeResource AppControlForegroundTransparentRevealBorderBrush}"
                                                   BorderThickness="{TemplateBinding BorderThickness}"
                                                   FontSize="{TemplateBinding FontSize}"
-                                                  FontWeight="SemiBold"
+                                                  FontWeight="{TemplateBinding FontWeight}"
                                                   AutomationProperties.AccessibilityView="Raw"
                                                   Content="{TemplateBinding Content}"
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
