@@ -9,48 +9,92 @@
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
+    
+    <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
         <ListView x:Name="EquationInputList"
-              VerticalContentAlignment="Top"
-              IsItemClickEnabled="False"
-              ItemsSource="{x:Bind Equations}"
-              SelectionMode="None">
+                  IsItemClickEnabled="False"
+                  ItemsSource="{x:Bind Equations}"
+                  SelectionMode="None">
+
+<!-- Removes animations from the ListView Style. -->
+            <ListView.Style>
+                <Style TargetType="ListView">
+                    <Setter Property="ItemContainerTransitions">
+                        <Setter.Value>
+                            <TransitionCollection>
+                            </TransitionCollection>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.Style>
 
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="IsTabStop" Value="False"/>
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     <Setter Property="Padding" Value="0"/>
-                    <Setter Property="Margin" Value="0,0,0,2"/>
+                    <Setter Property="Margin" Value="1,0,1,0"/>
                 </Style>
             </ListView.ItemContainerStyle>
+
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:EquationViewModel">
                     <controls:EquationTextBox x:Uid="EquationInputButton"
-                                          Margin="0,0,3,0"
-                                          Style="{StaticResource EquationTextBoxStyle}"
-                                          EquationColor="{x:Bind LineColor, Mode=OneWay}"
-                                          EquationSubmitted="InputTextBox_Submitted"
-                                          GotFocus="InputTextBox_GotFocus"
-                                          Loaded="EquationTextBoxLoaded"
-                                          LostFocus="InputTextBox_LostFocus"
-                                          RemoveButtonClicked="EquationTextBox_RemoveButtonClicked"
-                                          KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked">
+                                              Margin="1,0,1,0"
+                                              Style="{StaticResource EquationTextBoxStyle}"
+                                              EquationColor="{x:Bind LineColor, Mode=OneWay}"
+                                              EquationSubmitted="InputTextBox_Submitted"
+                                              GotFocus="InputTextBox_GotFocus"
+                                              Loaded="EquationTextBoxLoaded"
+                                              LostFocus="InputTextBox_LostFocus"
+                                              RemoveButtonClicked="EquationTextBox_RemoveButtonClicked"
+                                              KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked">
                         <controls:EquationTextBox.ColorChooserFlyout>
                             <Flyout x:Name="ColorChooserFlyout"
-                                x:Uid="ColorChooserFlyout"
-                                Placement="Bottom">
+                                    x:Uid="ColorChooserFlyout"
+                                    Placement="Bottom">
                                 <local:EquationStylePanelControl SelectedColor="{x:Bind LineColor, Mode=TwoWay}"/>
                             </Flyout>
                         </controls:EquationTextBox.ColorChooserFlyout>
                     </controls:EquationTextBox>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            <ListView.Footer>
-                <Button Margin="4"
-                    Click="AddEquationButton_Click"
-                    Content="+"/>
-            </ListView.Footer>
         </ListView>
+        <Button Grid.Row="1"
+                MinHeight="44"
+                Margin="2,0,2,1"
+                Padding="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch"
+                Style="{ThemeResource CaptionButtonStyle}"
+                FontSize="14"
+                FontWeight="Normal"
+                Click="AddEquationButton_Click">
+            <Button.Content>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <FontIcon MinWidth="44"
+                              FontFamily="{StaticResource SymbolThemeFontFamily}"
+                              Glyph="&#xE710;"/>
+
+                    <TextBlock x:Uid="EquationInputButtonPlaceholder"
+                               Grid.Column="1"
+                               Margin="8,0,0,0"
+                               VerticalAlignment="Center"/>
+                </Grid>
+            </Button.Content>
+        </Button>
+    </Grid>
 </UserControl>
