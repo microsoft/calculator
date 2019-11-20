@@ -37,6 +37,11 @@ namespace CalculatorApp::ViewModel
         , m_KeyGraphFeaturesItems{ ref new Vector<KeyGraphFeaturesItem ^>() }
         , m_resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() }
     {
+        if (equation == nullptr)
+        {
+            throw ref new InvalidArgumentException(L"Equation cannot be null");
+        }
+
         GraphEquation = equation;
     }
 
@@ -67,9 +72,7 @@ namespace CalculatorApp::ViewModel
         AddKeyGraphFeature(
             m_resourceLoader->GetString(L"InflectionPoints"), GraphEquation->InflectionPoints, m_resourceLoader->GetString(L"KGFInflectionPointsNone"));
         AddKeyGraphFeature(
-            m_resourceLoader->GetString(L"VerticalAsymptotes"),
-            GraphEquation->VerticalAsymptotes,
-            m_resourceLoader->GetString(L"KGFVerticalAsymptotesNone"));
+            m_resourceLoader->GetString(L"VerticalAsymptotes"), GraphEquation->VerticalAsymptotes, m_resourceLoader->GetString(L"KGFVerticalAsymptotesNone"));
         AddKeyGraphFeature(
             m_resourceLoader->GetString(L"HorizontalAsymptotes"),
             GraphEquation->HorizontalAsymptotes,

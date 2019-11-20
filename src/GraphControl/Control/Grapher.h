@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include "InspectingDataSource.h"
 #include "DirectX/RenderMain.h"
 #include "Equation.h"
 #include "EquationCollection.h"
@@ -203,7 +202,6 @@ public
         static Windows::UI::Xaml::DependencyProperty ^ s_equationTemplateProperty;
 
         static Windows::UI::Xaml::DependencyProperty ^ s_equationsSourceProperty;
-        InspectingDataSource ^ m_dataSource;
         Windows::Foundation::EventRegistrationToken m_tokenDataSourceChanged;
 
         static Windows::UI::Xaml::DependencyProperty ^ s_equationsProperty;
