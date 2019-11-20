@@ -49,6 +49,8 @@ namespace CalculatorUITests
             {
                 page.ClearAll();
             }
+
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
         }
 
         [TestCleanup]
@@ -70,8 +72,6 @@ namespace CalculatorUITests
         [TestMethod]
         public void SmokeTest_Sin()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
-
             page.ScientificOperators.NumberPad.Input(90);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.SinButton.Click();
@@ -82,8 +82,6 @@ namespace CalculatorUITests
         [TestMethod]
         public void SmokeTest_Tanh()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
-
             page.ScientificOperators.NumberPad.Input(90);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.HypShiftButton.Click();
@@ -95,8 +93,6 @@ namespace CalculatorUITests
         [TestMethod]
         public void SmokeTest_InvCos()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
-
             page.ScientificOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TrigShiftButton.Click();
@@ -132,7 +128,7 @@ namespace CalculatorUITests
         [TestMethod]
         public void SmokeTest_RadianAngleOperator()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Radians;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Radians);
 
             page.ScientificOperators.PiButton.Click();
             page.ScientificOperators.TrigButton.Click();
@@ -144,7 +140,7 @@ namespace CalculatorUITests
         [TestMethod]
         public void SmokeTest_GradianAngleOperator()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Gradians;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Gradians);
 
             page.ScientificOperators.NumberPad.Input(100);
             page.ScientificOperators.TrigButton.Click();
@@ -279,12 +275,10 @@ namespace CalculatorUITests
         }
         #endregion
 
-        //Need to find a consistent way ensure the correct trig dropdown settings are toggled
         #region Trigonometry Tests
         [TestMethod]
         public void Trig_CosButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
 
             page.ScientificOperators.NumberPad.Input(180);
             page.ScientificOperators.TrigButton.Click();
@@ -292,13 +286,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.AreEqual("-1", page.GetCalculatorResultText());
 
-            //page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_TanButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(45);
             page.ScientificOperators.TrigButton.Click();
@@ -306,13 +299,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.AreEqual("1", page.GetCalculatorResultText());
 
-            //page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_SecButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(180);
             page.ScientificOperators.TrigButton.Click();
@@ -320,13 +312,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.AreEqual("-1", page.GetCalculatorResultText());
 
-            //page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_CscButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(90);
             page.ScientificOperators.TrigButton.Click();
@@ -334,13 +325,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.AreEqual("1", page.GetCalculatorResultText());
 
-            //page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_CotButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(45);
             page.ScientificOperators.TrigButton.Click();
@@ -348,13 +338,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.AreEqual("1", page.GetCalculatorResultText());
 
-           // page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_InvSinButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
@@ -363,13 +352,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.AreEqual("90", page.GetCalculatorResultText());
 
-           // page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_InvTanButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
@@ -378,13 +366,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.AreEqual("45", page.GetCalculatorResultText());
 
-           // page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_InvSecButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(1);
             page.ScientificOperators.NegateButton.Click();
@@ -394,13 +381,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.AreEqual("180", page.GetCalculatorResultText());
 
-           // page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_InvCscButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
@@ -409,13 +395,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.AreEqual("90", page.GetCalculatorResultText());
 
-           // page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_InvCotButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
@@ -424,13 +409,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.AreEqual("45", page.GetCalculatorResultText());
 
-           // page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_SinhButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
@@ -439,13 +423,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.IsTrue(page.GetCalculatorResultText().StartsWith("1.175201"));
 
-           // page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_CoshButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
@@ -454,13 +437,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.IsTrue(page.GetCalculatorResultText().StartsWith("1.54308"));
 
-           // page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_SechButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
@@ -469,13 +451,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.64805"));
 
-            //page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_CschButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
@@ -484,13 +465,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.850918"));
 
-           // page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_CothButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(45);
             page.ScientificOperators.TrigButton.Click();
@@ -499,13 +479,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.AreEqual("1", page.GetCalculatorResultText());
 
-           // page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_InvSinhButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
@@ -515,13 +494,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.881373"));
 
-          //  page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_InvCoshButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
@@ -531,13 +509,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.AreEqual("0", page.GetCalculatorResultText());
 
-          //  page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_InvTanhButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(0.0);
             page.ScientificOperators.TrigButton.Click();
@@ -547,13 +524,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.AreEqual("0", page.GetCalculatorResultText());
 
-           // page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_InvSechButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
@@ -563,13 +539,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.AreEqual("0", page.GetCalculatorResultText());
 
-           // page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_InvCschButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
@@ -579,13 +554,12 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.881373"));
 
-           // page.ScientificOperators.ResetTrigDropdownToggles();
         }
 
         [TestMethod]
         public void Trig_InvCothButton()
         {
-            page.ScientificOperators.AngleOperatorsButton.State = DegRadGradState.Degrees;
+            page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
             page.ScientificOperators.NumberPad.Input(2);
             page.ScientificOperators.TrigButton.Click();
@@ -595,7 +569,6 @@ namespace CalculatorUITests
             page.ScientificOperators.EqualButton.Click();
             Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.549306"));
 
-           // page.ScientificOperators.ResetTrigDropdownToggles();
         }
         #endregion
     }
