@@ -182,7 +182,6 @@
               Grid.Column="0">
             <Grid Grid.Row="0" Margin="0,4,0,0">
                 <graphControl:Grapher Name="GraphingControl"
-                                      EquationsSource="{x:Bind ViewModel.Equations, Mode=OneWay}"
                                       ForceProportionalAxes="True"
                                       LosingFocus="GraphingControl_LosingFocus"
                                       LostFocus="GraphingControl_LostFocus"
@@ -191,30 +190,6 @@
                     <graphControl:Grapher.Background>
                         <SolidColorBrush Color="White"/>
                     </graphControl:Grapher.Background>
-                    <graphControl:Grapher.EquationTemplate>
-                        <DataTemplate x:DataType="vm:EquationViewModel">
-                            <graphControl:Equation AnalysisError="{x:Bind AnalysisError, Mode=TwoWay}"
-                                                   Domain="{x:Bind Domain, Mode=TwoWay}"
-                                                   Expression="{x:Bind Expression, Mode=OneWay}"
-                                                   HorizontalAsymptotes="{x:Bind HorizontalAsymptotes, Mode=TwoWay}"
-                                                   InflectionPoints="{x:Bind InflectionPoints, Mode=TwoWay}"
-                                                   IsAnalysisUpdated="{x:Bind IsAnalysisUpdated, Mode=TwoWay}"
-                                                   LineColor="{x:Bind LineColor, Mode=OneWay}"
-                                                   Maxima="{x:Bind Maxima, Mode=TwoWay}"
-                                                   Minima="{x:Bind Minima, Mode=TwoWay}"
-                                                   Monotonicity="{x:Bind Monotonicity, Mode=TwoWay}"
-                                                   ObliqueAsymptotes="{x:Bind ObliqueAsymptotes, Mode=TwoWay}"
-                                                   Parity="{x:Bind Parity, Mode=TwoWay}"
-                                                   PeriodicityDirection="{x:Bind PeriodicityDirection, Mode=TwoWay}"
-                                                   PeriodicityExpression="{x:Bind PeriodicityExpression, Mode=TwoWay}"
-                                                   Range="{x:Bind Range, Mode=TwoWay}"
-                                                   TooComplexFeatures="{x:Bind TooComplexFeatures, Mode=TwoWay}"
-                                                   VerticalAsymptotes="{x:Bind VerticalAsymptotes, Mode=TwoWay}"
-                                                   XIntercept="{x:Bind XIntercept, Mode=TwoWay}"
-                                                   YIntercept="{x:Bind YIntercept, Mode=TwoWay}"/>
-                        </DataTemplate>
-                    </graphControl:Grapher.EquationTemplate>
-
                 </graphControl:Grapher>
 
                 <StackPanel Grid.Row="0"
@@ -525,7 +500,7 @@
                                      Margin="0,4,0,0"
                                      Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"
                                      Equations="{x:Bind ViewModel.Equations}"
-                                     KeyGraphFeaturesVisibilityChanged="OnEquationKeyGraphFeaturesVisibilityChanged"/>
+                                     KeyGraphFeaturesRequested="OnEquationKeyGraphFeaturesRequested"/>
 
             <Grid x:Name="ButtonContainerGrid"
                   Grid.Row="1"

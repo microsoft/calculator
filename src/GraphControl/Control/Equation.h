@@ -14,7 +14,7 @@ namespace GraphControl
     ref class Equation;
     delegate void PropertyChangedEventHandler(Equation ^ sender, Platform::String ^ propertyName);
 
-    [Windows::UI::Xaml::Data::Bindable] public ref class Equation sealed : public Windows::UI::Xaml::FrameworkElement
+    [Windows::UI::Xaml::Data::Bindable] public ref class Equation sealed : public Windows::UI::Xaml::DependencyObject
     {
     public:
 
@@ -70,26 +70,7 @@ namespace GraphControl
 
 #pragma region Key Graph Features
 
-        #pragma region bool IsAnalysisUpdated DependencyProperty
-        static property Windows::UI::Xaml::DependencyProperty^ IsAnalysisUpdatedProperty
-        {
-            Windows::UI::Xaml::DependencyProperty^ get()
-            {
-                return s_isAnalysisUpdatedProperty;
-            }
-        }
-        property bool IsAnalysisUpdated
-        {
-            bool get()
-            {
-                return static_cast<bool>(GetValue(s_isAnalysisUpdatedProperty));
-            }
-            void set(bool value)
-            {
-                SetValue(s_isAnalysisUpdatedProperty, value);
-            }
-        }
-#pragma endregion
+
 #pragma region Platform::String ^ XIntercept DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ XInterceptProperty
         {
@@ -441,7 +422,6 @@ namespace GraphControl
     private:
         static Windows::UI::Xaml::DependencyProperty ^ s_expressionProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_lineColorProperty;
-        static Windows::UI::Xaml::DependencyProperty ^ s_isAnalysisUpdatedProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_xInterceptProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_yInterceptProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_parityProperty;
