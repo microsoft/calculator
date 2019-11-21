@@ -47,5 +47,4 @@ void KeyGraphFeaturesPanel::EquationInputTextBox_Loaded(Object ^ sender, RoutedE
 void KeyGraphFeaturesPanel::SetEquationTextBoxProperties()
 {
     EquationInputTextBox->SetEquationText(ViewModel->Expression);
-    EquationInputTextBox->EquationColor = ViewModel->LineColor;
 }

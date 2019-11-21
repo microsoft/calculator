@@ -34,6 +34,7 @@ namespace CalculatorApp::ViewModel
 
     EquationViewModel::EquationViewModel(GraphControl::Equation ^ equation)
         : m_AnalysisErrorVisible{ false }
+        , m_FunctionLabelIndex{ 0 }
         , m_KeyGraphFeaturesItems{ ref new Vector<KeyGraphFeaturesItem ^>() }
         , m_resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() }
     {

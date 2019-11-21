@@ -68,7 +68,7 @@ void EquationInputArea::AddNewEquation()
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
 
     eq->LineColor = AvailableColors->GetAt(m_lastLineColorIndex);
-
+    eq->IsLineEnabled = true;
     eq->FunctionLabelIndex = ++m_lastFunctionLabelIndex;
     Equations->Append(eq);
     EquationInputList->ScrollIntoView(eq);

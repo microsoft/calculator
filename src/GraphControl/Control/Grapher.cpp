@@ -80,7 +80,7 @@ namespace GraphControl
         cw->KeyDown += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &Grapher::OnCoreKeyDown);
         cw->KeyUp += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &Grapher::OnCoreKeyUp);
 
-                auto& formatOptions = m_solver->FormatOptions();
+        auto& formatOptions = m_solver->FormatOptions();
     }
 
     void Grapher::OnLoaded(Object ^ sender, RoutedEventArgs ^ args)
@@ -250,6 +250,11 @@ namespace GraphControl
         }
     }
 
+    void Grapher::OnEquationLineEnabledChanged()
+    {
+        UpdateGraph();
+    }
+
     void Grapher::PlotGraph()
     {
         UpdateGraph();
@@ -263,7 +268,9 @@ namespace GraphControl
             {
                 if (analyzer->CanFunctionAnalysisBePerformed())
                 {
-                    if (S_OK == analyzer->PerformFunctionAnalysis((Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All))
+                    if (S_OK
+                        == analyzer->PerformFunctionAnalysis(
+                            (Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All))
                     {
                         Graphing::IGraphFunctionAnalysisData functionAnalysisData = m_solver->Analyze(analyzer.get());
                         {
@@ -302,7 +309,8 @@ namespace GraphControl
 
     void Grapher::UpdateGraph()
     {
-        auto& formatOptions = m_solver->FormatOptions();
+        optional<vector<shared_ptr<IEquation>>> initResult = nullopt;
+
         if (m_renderMain && m_graph != nullptr)
         {
             auto validEqs = GetValidEquations();
@@ -322,7 +330,8 @@ namespace GraphControl
                             ss << L"<mo>,</mo>";
                         }
 
-                    ss << eq->GetRequest();
+                        ss << eq->GetRequest();
+                    }
                 }
 
                 ss << s_getGraphClosingTags;
@@ -331,28 +340,22 @@ namespace GraphControl
                 unique_ptr<IExpression> graphExpression;
                 if (graphExpression = m_solver->ParseInput(request))
                 {
-                    if (m_graph->TryInitialize(graphExpression.get()))
-                    {
-                        UpdateGraphOptions(m_graph->GetOptions(), validEqs);
-                        SetGraphArgs();
-
-                        m_renderMain->Graph = m_graph;
-
-                        UpdateVariables();
-                    }
+                    initResult = m_graph->TryInitialize(graphExpression.get());
                 }
             }
-            else
+
+            if (initResult == nullopt)
             {
-                if (m_graph->TryInitialize())
-                {
-                    UpdateGraphOptions(m_graph->GetOptions(), validEqs);
-                    SetGraphArgs();
+                initResult = m_graph->TryInitialize();
+            }
 
-                    m_renderMain->Graph = m_graph;
+            if (initResult != nullopt)
+            {
+                UpdateGraphOptions(m_graph->GetOptions(), validEqs);
+                SetGraphArgs();
 
-                    UpdateVariables();
-                }
+                UpdateVariables();
+                m_renderMain->Graph = m_graph;
             }
         }
     }
@@ -393,7 +396,7 @@ namespace GraphControl
     IObservableVector<String ^> ^ Grapher::ConvertWStringVector(vector<wstring> inVector)
     {
         Vector<String ^> ^ outVector = ref new Vector<String ^>();
-        
+
         for (auto v : inVector)
         {
             outVector->Append(ref new String(v.c_str()));
@@ -463,7 +466,6 @@ namespace GraphControl
             if (m_renderMain)
             {
                 m_renderMain->RunRenderPass();
-                UpdateKeyGraphFeatures();
             }
         }
     }
