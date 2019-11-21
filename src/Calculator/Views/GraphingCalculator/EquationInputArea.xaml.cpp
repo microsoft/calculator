@@ -107,6 +107,7 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
         {
             m_lastFunctionLabelIndex--;
         }
+
         Equations->RemoveAt(index);
     }
 }

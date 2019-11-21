@@ -1536,9 +1536,8 @@
                                         </StackPanel>
                                     </ToggleButton.Content>
                                     <ToggleButton.Resources>
-                                        <SolidColorBrush x:Name="ButtonBackgroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                        <SolidColorBrush x:Name="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
-                                        <SolidColorBrush x:Name="ButtonBorderBrushPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                        <SolidColorBrush x:Name="ButtonBackgroundBrush" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                        <SolidColorBrush x:Name="ButtonBorderBrush" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                     </ToggleButton.Resources>
                                     <ToggleButton.Style>
                                         <Style TargetType="ToggleButton">
@@ -1546,12 +1545,14 @@
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="ToggleButton">
                                                         <Grid x:Name="RootGrid"
-                                                              Background="{TemplateBinding Background}"
-                                                              BorderBrush="{TemplateBinding BorderBrush}">
+                                                              Background="Transparent"
+                                                              BorderBrush="Transparent">
                                                             <VisualStateManager.VisualStateGroups>
                                                                 <VisualStateGroup x:Name="CommonStates">
                                                                     <VisualState x:Name="Normal">
                                                                         <VisualState.Setters>
+                                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ButtonBackgroundBrush}"/>
+                                                                            <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
                                                                             <Setter Target="Overlay.Opacity" Value="0.0"/>
                                                                             <Setter Target="ContentPresenter.Visibility" Value="Visible"/>
                                                                             <Setter Target="ShowHideIcon.Visibility" Value="Collapsed"/>
@@ -1559,6 +1560,8 @@
                                                                     </VisualState>
                                                                     <VisualState x:Name="PointerOver">
                                                                         <VisualState.Setters>
+                                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ButtonBackgroundBrush}"/>
+                                                                            <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
                                                                             <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPointerOverOpacity}"/>
                                                                             <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                             <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
@@ -1567,6 +1570,8 @@
                                                                     </VisualState>
                                                                     <VisualState x:Name="Pressed">
                                                                         <VisualState.Setters>
+                                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ButtonBackgroundBrush}"/>
+                                                                            <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
                                                                             <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPressedOpacity}"/>
                                                                             <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                             <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>

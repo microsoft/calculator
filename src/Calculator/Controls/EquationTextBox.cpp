@@ -189,6 +189,13 @@ void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e
     {
         m_functionButton->IsEnabled = false;
     }
+
+    if (m_equationButton)
+    {
+        m_equationButton->IsChecked = false;
+    }
+
+    VisualStateManager::GoToState(this, "Normal", true);
 }
 
 void EquationTextBox::OnColorChooserButtonClicked(Object ^ sender, RoutedEventArgs ^ e)

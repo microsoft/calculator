@@ -323,15 +323,12 @@ namespace GraphControl
                 int numValidEquations = 0;
                 for (Equation ^ eq : validEqs)
                 {
-                    if (eq->IsLineEnabled)
+                    if (numValidEquations++ > 0)
                     {
-                        if (numValidEquations++ > 0)
-                        {
-                            ss << L"<mo>,</mo>";
-                        }
-
-                        ss << eq->GetRequest();
+                        ss << L"<mo>,</mo>";
                     }
+
+                    ss << eq->GetRequest();
                 }
 
                 ss << s_getGraphClosingTags;
@@ -493,7 +490,7 @@ namespace GraphControl
 
         for (Equation ^ eq : Equations)
         {
-            if (!eq->Expression->IsEmpty())
+            if (!eq->Expression->IsEmpty() && eq->IsLineEnabled)
             {
                 validEqs.push_back(eq);
             }
