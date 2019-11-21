@@ -21,10 +21,12 @@ using namespace Windows::UI::Xaml::Controls::Primitives;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, ColorChooserFlyout);
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonContentIndex);
+
 
 void EquationTextBox::OnApplyTemplate()
 {
-    m_equationButton = dynamic_cast<Button ^>(GetTemplateChild("EquationButton"));
+    m_equationButton = dynamic_cast<ToggleButton ^>(GetTemplateChild("EquationButton"));
     m_richEditBox = dynamic_cast<MathRichEditBox ^>(GetTemplateChild("EquationTextBox"));
     m_deleteButton = dynamic_cast<Button ^>(GetTemplateChild("DeleteButton"));
     m_removeButton = dynamic_cast<Button ^>(GetTemplateChild("RemoveButton"));
@@ -187,6 +189,13 @@ void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e
     {
         m_functionButton->IsEnabled = false;
     }
+
+    if (m_equationButton)
+    {
+        m_equationButton->IsChecked = false;
+    }
+
+    VisualStateManager::GoToState(this, "Normal", true);
 }
 
 void EquationTextBox::OnColorChooserButtonClicked(Object ^ sender, RoutedEventArgs ^ e)

@@ -68,7 +68,8 @@ void EquationInputArea::AddNewEquation()
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
 
     eq->LineColor = AvailableColors->GetAt(m_lastLineColorIndex);
-
+    eq->IsLineEnabled = true;
+    eq->FunctionLabelIndex = ++m_lastFunctionLabelIndex;
     Equations->Append(eq);
     EquationInputList->ScrollIntoView(eq);
 }
@@ -102,6 +103,11 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
     unsigned int index;
     if (Equations->IndexOf(eq, &index))
     {
+        if (eq->FunctionLabelIndex == m_lastFunctionLabelIndex)
+        {
+            m_lastFunctionLabelIndex--;
+        }
+
         Equations->RemoveAt(index);
     }
 }
@@ -116,6 +122,9 @@ void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ s
 
 void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
+    auto tb = static_cast<EquationTextBox ^>(sender);
+    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
+    eq->IsLineEnabled = !eq->IsLineEnabled;
 }
 
 void EquationInputArea::EquationTextBoxLoaded(Object ^ sender, RoutedEventArgs ^ e)

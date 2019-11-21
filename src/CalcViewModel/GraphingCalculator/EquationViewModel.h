@@ -40,6 +40,7 @@ public
 
         OBSERVABLE_OBJECT();
         OBSERVABLE_PROPERTY_R(GraphControl::Equation ^, GraphEquation);
+        OBSERVABLE_PROPERTY_RW(int, FunctionLabelIndex);
 
         property Platform::String ^ Expression
         {
@@ -69,6 +70,22 @@ public
                 {
                     GraphEquation->LineColor = value;
                     RaisePropertyChanged("LineColor");
+                }
+            }
+        }
+
+        property bool IsLineEnabled
+        {
+            bool get()
+            {
+                return GraphEquation->IsLineEnabled;
+            }
+            void set(bool value)
+            {
+                if (GraphEquation->IsLineEnabled != value)
+                {
+                    GraphEquation->IsLineEnabled = value;
+                    RaisePropertyChanged("IsLineEnabled");
                 }
             }
         }

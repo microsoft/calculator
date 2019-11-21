@@ -150,36 +150,39 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
-                            <Button x:Name="EquationButton"
-                                    MinWidth="44"
-                                    MinHeight="44"
-                                    VerticalAlignment="Stretch"
-                                    Background="{TemplateBinding EquationColor}"
-                                    Foreground="{StaticResource SystemChromeWhiteColor}"
-                                    BorderThickness="0">
-                                <Button.Content>
-                                    <StackPanel Margin="5,0"
-                                                VerticalAlignment="Top"
-                                                Orientation="Horizontal">
+                            <ToggleButton x:Name="EquationButton"
+                                          MinWidth="44"
+                                          MinHeight="44"
+                                          VerticalAlignment="Stretch"
+                                          Background="{TemplateBinding EquationColor}"
+                                          Foreground="{StaticResource SystemChromeWhiteColor}"
+                                          BorderThickness="0">
+                                <ToggleButton.Content>
+                                    <StackPanel x:Name="FunctionNumberLabel"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Background="Transparent"
+                                                    Orientation="Horizontal"
+                                                    Margin="5,0">
                                         <FontIcon VerticalAlignment="Center"
                                                   FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                   FontSize="16"
                                                   Glyph="&#xE72B;"/>
-                                        <TextBlock Margin="12,-4,0,0"
-                                                   VerticalAlignment="Top"
-                                                   FontFamily="{TemplateBinding FontFamily}"
-                                                   FontSize="16"
-                                                   Text="ƒₓ"/>
+                                        <TextBlock Text="ƒ" Margin="12,0,0,0"/>
+                                        <TextBlock Margin="0,10,0,0"
+                                                       FontSize="9"
+                                                       Text="{TemplateBinding EquationButtonContentIndex}"/>
                                     </StackPanel>
-                                </Button.Content>
-                                <Button.Resources>
+
+                                </ToggleButton.Content>
+                                <ToggleButton.Resources>
                                     <SolidColorBrush x:Name="ButtonBackgroundPointerOver"
                                                      Opacity="0.7"
                                                      Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                     <SolidColorBrush x:Name="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
                                     <SolidColorBrush x:Name="ButtonBorderBrushPointerOver" Color="Transparent"/>
-                                </Button.Resources>
-                            </Button>
+                                </ToggleButton.Resources>
+                            </ToggleButton>
 
                             <controls:MathRichEditBox x:Name="EquationTextBox"
                                                       Grid.Column="1"
@@ -431,6 +434,8 @@
                                   BorderThickness="0"
                                   DataContext="{x:Bind ViewModel, Mode=OneWay}"
                                   EquationButtonClicked="EquationButtonClicked"
+                                  EquationButtonContentIndex="{x:Bind ViewModel.FunctionLabelIndex, Mode=OneWay}"
+                                  EquationColor="{x:Bind ViewModel.LineColor, Mode=OneWay}"
                                   Loaded="EquationInputTextBox_Loaded"/>
         <TextBlock x:Uid="KeyGraphFeaturesLabel"
                    Grid.Row="1"
