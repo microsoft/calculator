@@ -379,7 +379,18 @@ namespace Utils
     void IFTPlatformException(HRESULT hr);
     Platform::String ^ GetStringValue(Platform::String ^ input);
     bool IsLastCharacterTarget(std::wstring const& input, wchar_t target);
-    std::wstring RemoveUnwantedCharsFromString(std::wstring inputString, wchar_t* unwantedChars, unsigned int size);
+
+    // Return wstring after removing characters specified by unwantedChars array
+    template <size_t N>
+    std::wstring RemoveUnwantedCharsFromString(std::wstring inputString, const wchar_t (&unwantedChars)[N])
+    {
+        for (const wchar_t unwantedChar : unwantedChars)
+        {
+            inputString.erase(std::remove(inputString.begin(), inputString.end(), unwantedChar), inputString.end());
+        }
+        return inputString;
+    }
+
     double GetDoubleFromWstring(std::wstring input);
     int GetWindowId();
     void RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Windows::UI::Core::CoreDispatcher ^ currentDispatcher);
