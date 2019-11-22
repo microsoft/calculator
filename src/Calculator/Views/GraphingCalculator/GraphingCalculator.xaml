@@ -402,6 +402,7 @@
 
                     <!-- Temporary button until the final UI is created -->
                     <Button x:Name="VariableEditing"
+                            x:Uid="variablesButton"
                             MinWidth="44"
                             MinHeight="44"
                             Margin="0,0,4,0"
@@ -480,7 +481,8 @@
                                                              KeyDown="TextBoxKeyDown"
                                                              LosingFocus="TextBoxLosingFocus"
                                                              Text="{x:Bind Value, Mode=OneWay}"/>
-                                                    <ToggleButton Grid.Column="2"
+                                                    <ToggleButton x:Uid="sliderOptionsButton"
+                                                                  Grid.Column="2"
                                                                   HorizontalAlignment="Right"
                                                                   Background="Transparent"
                                                                   FontFamily="{StaticResource SymbolThemeFontFamily}"
@@ -581,6 +583,7 @@
                     </Button>
 
                     <Button x:Name="Share"
+                            x:Uid="shareButton"
                             MinWidth="44"
                             MinHeight="44"
                             Margin="0"

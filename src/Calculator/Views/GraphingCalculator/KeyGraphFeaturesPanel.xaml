@@ -150,14 +150,15 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
-                            <ToggleButton x:Name="EquationButton"
+                            <Button x:Name="KGFEquationButton"
+                                          x:Uid="equationAnalysisBack"
                                           MinWidth="44"
                                           MinHeight="44"
                                           VerticalAlignment="Stretch"
                                           Background="{TemplateBinding EquationColor}"
                                           Foreground="{StaticResource SystemChromeWhiteColor}"
                                           BorderThickness="0">
-                                <ToggleButton.Content>
+                                <Button.Content>
                                     <StackPanel x:Name="FunctionNumberLabel"
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
@@ -174,15 +175,15 @@
                                                        Text="{TemplateBinding EquationButtonContentIndex}"/>
                                     </StackPanel>
 
-                                </ToggleButton.Content>
-                                <ToggleButton.Resources>
+                                </Button.Content>
+                                <Button.Resources>
                                     <SolidColorBrush x:Name="ButtonBackgroundPointerOver"
                                                      Opacity="0.7"
                                                      Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                     <SolidColorBrush x:Name="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
                                     <SolidColorBrush x:Name="ButtonBorderBrushPointerOver" Color="Transparent"/>
-                                </ToggleButton.Resources>
-                            </ToggleButton>
+                                </Button.Resources>
+                            </Button>
 
                             <controls:MathRichEditBox x:Name="EquationTextBox"
                                                       Grid.Column="1"
