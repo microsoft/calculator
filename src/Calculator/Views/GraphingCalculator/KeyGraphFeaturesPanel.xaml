@@ -27,6 +27,7 @@
                     <ControlTemplate TargetType="controls:EquationTextBox">
                         <Grid>
                             <Grid.Resources>
+                                
                                 <Style x:Key="KGF_EquationTextBoxStyle" TargetType="controls:MathRichEditBox">
                                     <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}"/>
                                     <Setter Property="Background" Value="Transparent"/>
@@ -138,6 +139,7 @@
                                         </Setter.Value>
                                     </Setter>
                                 </Style>
+                                
                             </Grid.Resources>
 
                             <Grid.ColumnDefinitions>
@@ -154,8 +156,6 @@
                                     MinWidth="44"
                                     MinHeight="44"
                                     VerticalAlignment="Stretch"
-                                    Background="{TemplateBinding EquationColor}"
-                                    Foreground="{StaticResource SystemChromeWhiteColor}"
                                     BorderThickness="0">
                                 <Button.Content>
                                     <StackPanel Margin="5,0"
@@ -176,7 +176,8 @@
                                     <ResourceDictionary>
                                         <ResourceDictionary.ThemeDictionaries>
                                             <ResourceDictionary x:Key="Custom">
-                                                <SolidColorBrush x:Name="EquationButtonBackground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                <SolidColorBrush x:Name="ButtonBackground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                <SolidColorBrush x:Name="ButtonForeground" Color="{StaticResource SystemChromeWhiteColor}"/>
                                                 <SolidColorBrush x:Name="ButtonBackgroundPointerOver"
                                                      Opacity="0.7"
                                                      Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
@@ -184,7 +185,8 @@
                                                 <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
                                             </ResourceDictionary>
                                             <ResourceDictionary x:Key="Light">
-                                                <SolidColorBrush x:Key="EquationButtonBackground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                <SolidColorBrush x:Key="ButtonBackground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                <SolidColorBrush x:Key="ButtonForeground" Color="{StaticResource SystemChromeWhiteColor}"/>
                                                 <SolidColorBrush x:Key="ButtonBackgroundPointerOver"
                                                      Opacity="0.7"
                                                      Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
@@ -192,11 +194,10 @@
                                                 <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
                                             </ResourceDictionary>
                                             <ResourceDictionary x:Key="HighContrast">
-                                                <SolidColorBrush x:Key="EquationButtonBackground" Color="{ThemeResource SystemColorButtonFaceColor}"/>
-                                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver"
-                                                     Opacity="0.7"
-                                                     Color="{StaticResource SystemColorButtonFaceColor}"/>
-                                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource SystemColorButtonTextColor}"/>
+                                                <SolidColorBrush x:Key="ButtonBackground" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                                                <SolidColorBrush x:Key="ButtonForeground" Color="{ThemeResource SystemColorButtonTextColor}"/>
+                                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{ThemeResource SystemColorHighlightColor}"/>
+                                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemColorWindowColor}"/>
                                                 <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
                                             </ResourceDictionary>
                                         </ResourceDictionary.ThemeDictionaries>
