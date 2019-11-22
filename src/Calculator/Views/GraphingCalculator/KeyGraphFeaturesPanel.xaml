@@ -176,6 +176,7 @@
                                     <ResourceDictionary>
                                         <ResourceDictionary.ThemeDictionaries>
                                             <ResourceDictionary x:Key="Custom">
+                                                <SolidColorBrush x:Name="EquationButtonBackground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                 <SolidColorBrush x:Name="ButtonBackgroundPointerOver"
                                                      Opacity="0.7"
                                                      Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
@@ -183,6 +184,7 @@
                                                 <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
                                             </ResourceDictionary>
                                             <ResourceDictionary x:Key="Light">
+                                                <SolidColorBrush x:Key="EquationButtonBackground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                 <SolidColorBrush x:Key="ButtonBackgroundPointerOver"
                                                      Opacity="0.7"
                                                      Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
@@ -190,6 +192,7 @@
                                                 <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
                                             </ResourceDictionary>
                                             <ResourceDictionary x:Key="HighContrast">
+                                                <SolidColorBrush x:Key="EquationButtonBackground" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                                                 <SolidColorBrush x:Key="ButtonBackgroundPointerOver"
                                                      Opacity="0.7"
                                                      Color="{StaticResource SystemColorButtonFaceColor}"/>
@@ -435,6 +438,8 @@
                                              TextBlockTemplate="{StaticResource KGFTextBlockDataTemplate}"/>
 
         <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
+
+        
     </UserControl.Resources>
 
     <Grid Margin="0,7,0,0" Background="Transparent">
