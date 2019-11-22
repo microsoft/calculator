@@ -23,10 +23,10 @@ namespace GraphControl
     DependencyProperty ^ Equation::s_lineColorProperty;
     static constexpr auto s_propertyName_LineColor = L"LineColor";
 
-    DependencyProperty ^ Equation::s_isAnalysisUpdatedProperty;
-    static constexpr auto s_propertyName_IsAnalysisUpdated = L"IsAnalysisUpdated";
+    DependencyProperty ^ Equation::s_isLineEnabledProperty;
+    static constexpr auto s_propertyName_IsLineEnabled = L"IsLineEnabled";
 
-    DependencyProperty ^ Equation::s_xInterceptProperty;
+	DependencyProperty ^ Equation::s_xInterceptProperty;
     static constexpr auto s_propertyName_XIntercept = L"XIntercept";
 
     DependencyProperty ^ Equation::s_yInterceptProperty;
@@ -78,7 +78,7 @@ namespace GraphControl
     {
         String ^ Expression = StringReference(s_propertyName_Expression);
         String ^ LineColor = StringReference(s_propertyName_LineColor);
-        String ^ IsAnalysisUpdated = StringReference(s_propertyName_IsAnalysisUpdated);
+        String ^ IsLineEnabled = StringReference(s_propertyName_IsLineEnabled);
         String ^ XIntercept = StringReference(s_propertyName_XIntercept);
         String ^ YIntercept = StringReference(s_propertyName_YIntercept);
         String ^ Parity = StringReference(s_propertyName_Parity);
@@ -120,10 +120,10 @@ namespace GraphControl
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
-        if (!s_isAnalysisUpdatedProperty)
+        if (!s_isLineEnabledProperty)
         {
-            s_isAnalysisUpdatedProperty = DependencyProperty::Register(
-                EquationProperties::IsAnalysisUpdated,
+            s_isLineEnabledProperty = DependencyProperty::Register(
+                EquationProperties::IsLineEnabled,
                 bool ::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
@@ -286,9 +286,9 @@ namespace GraphControl
             {
                 propertyName = EquationProperties::LineColor;
             }
-            else if (args->Property == s_isAnalysisUpdatedProperty)
+            else if (args->Property == s_isLineEnabledProperty)
             {
-                propertyName = EquationProperties::IsAnalysisUpdated;
+                propertyName = EquationProperties::IsLineEnabled;
             }
             else if (args->Property == s_xInterceptProperty)
             {

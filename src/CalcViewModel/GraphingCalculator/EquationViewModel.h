@@ -36,58 +36,77 @@ public
     ref class EquationViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
     {
     public:
-        EquationViewModel();
+        EquationViewModel(GraphControl::Equation ^ equation);
 
-        OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
-        OBSERVABLE_PROPERTY_RW(Platform::String ^, Expression);
-        OBSERVABLE_PROPERTY_RW(Windows::UI::Xaml::Media::SolidColorBrush ^, LineColor);
+        OBSERVABLE_OBJECT();
+        OBSERVABLE_PROPERTY_R(GraphControl::Equation ^, GraphEquation);
+        OBSERVABLE_PROPERTY_RW(int, FunctionLabelIndex);
 
-        // Key Graph Features
-        OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(bool, IsAnalysisUpdated);
-        OBSERVABLE_PROPERTY_RW(Platform::String ^, Domain);
-        OBSERVABLE_PROPERTY_RW(Platform::String ^, Range);
-        OBSERVABLE_PROPERTY_RW(Platform::String ^, XIntercept);
-        OBSERVABLE_PROPERTY_RW(Platform::String ^, YIntercept);
-        OBSERVABLE_PROPERTY_RW(int, Parity);
-        OBSERVABLE_PROPERTY_RW(int, PeriodicityDirection);
-        OBSERVABLE_PROPERTY_RW(Platform::String ^, PeriodicityExpression);
-        OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, Minima);
-        OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, Maxima);
-        OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, InflectionPoints);
-        OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, VerticalAsymptotes);
-        OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, HorizontalAsymptotes);
-        OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^, ObliqueAsymptotes);
-        OBSERVABLE_PROPERTY_RW(int, TooComplexFeatures);
-        OBSERVABLE_PROPERTY_RW(int, AnalysisError);
-        OBSERVABLE_PROPERTY_R(Platform::String ^, AnalysisErrorString);
-        OBSERVABLE_PROPERTY_R(bool, AnalysisErrorVisible);
-        OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<CalculatorApp::ViewModel::KeyGraphFeaturesItem ^> ^, KeyGraphFeaturesItems)
-
-        property Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String^> ^ Monotonicity
+        property Platform::String ^ Expression
         {
-            Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String^> ^ get()
+            Platform::String ^ get()
             {
-                return m_Monotonicity;
+                return GraphEquation->Expression;
             }
-            void set(Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String^> ^ value)
+            void set(Platform::String ^ value)
             {
-                if (m_Monotonicity != value)
+                if (GraphEquation->Expression != value)
                 {
-                    m_Monotonicity = value;
+                    GraphEquation->Expression = value;
+                    RaisePropertyChanged("Expression");
                 }
             }
         }
 
+        property Windows::UI::Xaml::Media::SolidColorBrush ^ LineColor
+        {
+            Windows::UI::Xaml::Media::SolidColorBrush ^ get()
+            {
+                return GraphEquation->LineColor;
+            }
+            void set(Windows::UI::Xaml::Media::SolidColorBrush ^ value)
+            {
+                if (GraphEquation->LineColor != value)
+                {
+                    GraphEquation->LineColor = value;
+                    RaisePropertyChanged("LineColor");
+                }
+            }
+        }
+
+        property bool IsLineEnabled
+        {
+            bool get()
+            {
+                return GraphEquation->IsLineEnabled;
+            }
+            void set(bool value)
+            {
+                if (GraphEquation->IsLineEnabled != value)
+                {
+                    GraphEquation->IsLineEnabled = value;
+                    RaisePropertyChanged("IsLineEnabled");
+                }
+            }
+        }
+
+        // Key Graph Features
+        OBSERVABLE_PROPERTY_R(Platform::String ^, AnalysisErrorString);
+        OBSERVABLE_PROPERTY_R(bool, AnalysisErrorVisible);
+        OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<CalculatorApp::ViewModel::KeyGraphFeaturesItem ^> ^, KeyGraphFeaturesItems)
+
+        void PopulateKeyGraphFeatures();
+
     private:
-        void OnPropertyChanged(Platform::String ^ propertyName);
-        void SetParityStringProperty();
-        void SetPeriodicityStringProperty();
-        void SetKeyGraphFeaturesItems(Platform::String ^ title, Platform::String ^ expression, Platform::String ^ errorString);
-        void SetKeyGraphFeaturesItems(Platform::String ^ title, Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^ expressionVector,
+        void AddKeyGraphFeature(Platform::String ^ title, Platform::String ^ expression, Platform::String ^ errorString);
+        void AddKeyGraphFeature(
+            Platform::String ^ title,
+            Windows::Foundation::Collections::IVector<Platform::String ^> ^ expressionVector,
             Platform::String ^ errorString);
-        void SetMonotoncityStringProperty();
-        void SetTooComplexFeaturesErrorProperty();
-        void OnIsAnalysisUpdatedChanged();
+        void AddParityKeyGraphFeature();
+        void AddPeriodicityKeyGraphFeature();
+        void AddMonotoncityKeyGraphFeature();
+        void AddTooComplexKeyGraphFeature();
 
         Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ m_Monotonicity;
         Windows::ApplicationModel::Resources::ResourceLoader ^ m_resourceLoader;

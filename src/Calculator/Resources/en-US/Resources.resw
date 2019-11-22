@@ -3491,7 +3491,7 @@
     <value>Zoom Out</value>
     <comment>Screen reader prompt for the zoom out button.</comment>
   </data>
-  <data name="EquationInputButtonPlaceholderText" xml:space="preserve">
+  <data name="EquationInputButtonPlaceholder.Text" xml:space="preserve">
     <value>Add Equation</value>
     <comment>Placeholder text for the equation input button</comment>
   </data>
@@ -3507,9 +3507,17 @@
     <value>Look what I graphed.</value>
     <comment>Sent as part of the shared content. The title for the share.</comment>
   </data>
-  <data name="EmptyEquationString" xml:space="preserve">
-    <value>Empty graph equation</value>
-    <comment>When sharing and one of the equations has no content this will be shown in the graph key for that equation.</comment>
+  <data name="EquationsShareHeader" xml:space="preserve">
+    <value>Equations:</value>
+    <comment>Header that appears over the equations section when sharing</comment>
+  </data>
+  <data name="VariablesShareHeader" xml:space="preserve">
+    <value>Variables:</value>
+    <comment>Header that appears over the variables section when sharing</comment>
+  </data>
+  <data name="GraphImageAltText" xml:space="preserve">
+    <value>Image of a graph with equations</value>
+    <comment>Alt text for the graph image when output via Share</comment>
   </data>
   <data name="VaiablesHeader.Text" xml:space="preserve">
     <value>Variables</value>
