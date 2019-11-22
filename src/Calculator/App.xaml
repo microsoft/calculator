@@ -1166,7 +1166,7 @@
                                         <VisualState x:Name="PointerOver">
                                             <Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonLayoutGrid" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlButtonBackgroundBrushPointerOver}"/>
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonLayoutGrid" Storyboard.TargetProperty="BorderBrush">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlButtonBorderBrushPointerOver}"/>
@@ -1180,13 +1180,13 @@
                                         <VisualState x:Name="Pressed">
                                             <Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonLayoutGrid" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonLayoutGrid" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlButtonBorderBrushPressed}"/>
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GlyphElement" Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemChromeWhiteColor}"/>
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
@@ -1632,19 +1632,28 @@
                                                 <ResourceDictionary>
                                                     <ResourceDictionary.ThemeDictionaries>
                                                         <ResourceDictionary x:Key="Default">
-                                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
                                                             <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                             <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemChromeWhiteColor}"/>
+                                                            <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{ThemeResource TextControlButtonBorderBrushPressed}"/>
                                                         </ResourceDictionary>
                                                         <ResourceDictionary x:Key="Light">
-                                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
                                                             <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                             <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemChromeWhiteColor}"/>
+                                                            <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{ThemeResource TextControlButtonBorderBrushPressed}"/>
                                                         </ResourceDictionary>
                                                         <ResourceDictionary x:Key="HighContrast">
                                                             <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource SystemColorHighlightColor}"/>
                                                             <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource SystemColorBackgroundColor}"/>
                                                             <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{StaticResource SystemColorWindowTextColor}"/>
+                                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource SystemColorHighlightColor}"/>
+                                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{StaticResource SystemColorBackgroundColor}"/>
+                                                            <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{StaticResource SystemColorWindowTextColor}"/>
                                                         </ResourceDictionary>
                                                     </ResourceDictionary.ThemeDictionaries>
                                                 </ResourceDictionary>
@@ -1721,19 +1730,28 @@
                                                 <ResourceDictionary>
                                                     <ResourceDictionary.ThemeDictionaries>
                                                         <ResourceDictionary x:Key="Default">
-                                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
                                                             <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                             <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemChromeWhiteColor}"/>
+                                                            <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{ThemeResource TextControlButtonBorderBrushPressed}"/>
                                                         </ResourceDictionary>
                                                         <ResourceDictionary x:Key="Light">
-                                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
                                                             <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                             <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemChromeWhiteColor}"/>
+                                                            <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{ThemeResource TextControlButtonBorderBrushPressed}"/>
                                                         </ResourceDictionary>
                                                         <ResourceDictionary x:Key="HighContrast">
                                                             <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource SystemColorHighlightColor}"/>
                                                             <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource SystemColorBackgroundColor}"/>
                                                             <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{StaticResource SystemColorWindowTextColor}"/>
+                                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource SystemColorHighlightColor}"/>
+                                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{StaticResource SystemColorBackgroundColor}"/>
+                                                            <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{StaticResource SystemColorWindowTextColor}"/>
                                                         </ResourceDictionary>
                                                     </ResourceDictionary.ThemeDictionaries>
                                                 </ResourceDictionary>
