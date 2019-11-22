@@ -71,6 +71,8 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void OnKeyGraphFeaturesClosed(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         bool ActiveTracingOn;
         void SwitchModeToggleButton_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void TraceValuePopup_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
+        void PositionGraphPopup();
     };
 
 }

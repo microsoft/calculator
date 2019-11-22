@@ -65,14 +65,9 @@ GraphingCalculator::GraphingCalculator()
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
 {
-    if (TraceValuePopup->IsOpen != newValue)
+    if ((TraceValuePopup->Visibility == ::Visibility::Visible) != newValue)
     {
-        TraceValuePopup->IsOpen = newValue;
-        if (TraceValuePopup->IsOpen)
-        {
-            // Set the keyboard focus to the graph control so we can use the arrow keys safely.
-            GraphingControl->Focus(::FocusState::Programmatic);
-        }
+        TraceValuePopup->Visibility = newValue ? ::Visibility::Visible : ::Visibility::Collapsed;
     }
 }
 
@@ -85,10 +80,8 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
 
 void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
 {
-    TraceValuePopupTransform->X = (int)GraphingControl->TraceLocation.X + 15;
-    TraceValuePopupTransform->Y = (int)GraphingControl->TraceLocation.Y - 30;
-
     TraceValue->Text = "(" + newPoint.X.ToString() + ", " + newPoint.Y.ToString() + ")";
+    PositionGraphPopup();
 }
 
 GraphingCalculatorViewModel ^ GraphingCalculator::ViewModel::get()
@@ -349,7 +342,7 @@ Platform::String ^ GraphingCalculator::GetInfoForSwitchModeToggleButton(bool isC
     }
 }
 
-void CalculatorApp::GraphingCalculator::SwitchModeToggleButton_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void GraphingCalculator::SwitchModeToggleButton_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     auto narratorNotifier = ref new NarratorNotifier();
     String ^ announcementText;
@@ -364,4 +357,30 @@ void CalculatorApp::GraphingCalculator::SwitchModeToggleButton_Checked(Platform:
 
     auto announcement = CalculatorAnnouncement::GetGraphModeChangedAnnouncement(announcementText);
     narratorNotifier->Announce(announcement);
+}
+
+void GraphingCalculator::PositionGraphPopup()
+{
+    if (GraphingControl->TraceLocation.X + 15 + TraceValuePopup->ActualWidth >= GraphingControl->ActualWidth)
+    {
+        TraceValuePopupTransform->X = (int)GraphingControl->TraceLocation.X - 15 - TraceValuePopup->ActualWidth;
+    }
+    else
+    {
+        TraceValuePopupTransform->X = (int)GraphingControl->TraceLocation.X + 15;
+    }
+
+    if (GraphingControl->TraceLocation.Y >= 30)
+    {
+        TraceValuePopupTransform->Y = (int)GraphingControl->TraceLocation.Y - 30;
+    }
+    else
+    {
+        TraceValuePopupTransform->Y = (int)GraphingControl->TraceLocation.Y;
+    }
+}
+
+void GraphingCalculator::TraceValuePopup_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e)
+{
+    PositionGraphPopup();
 }
