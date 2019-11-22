@@ -156,7 +156,7 @@
                                     MinWidth="44"
                                     MinHeight="44"
                                     VerticalAlignment="Stretch"
-                                    BorderThickness="0">
+                                    BorderThickness="1">
                                 <Button.Content>
                                     <StackPanel Margin="5,0"
                                                 VerticalAlignment="Top"
@@ -196,6 +196,7 @@
                                             <ResourceDictionary x:Key="HighContrast">
                                                 <SolidColorBrush x:Key="ButtonBackground" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                                                 <SolidColorBrush x:Key="ButtonForeground" Color="{ThemeResource SystemColorButtonTextColor}"/>
+                                                <SolidColorBrush x:Key="ButtonBorderBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
                                                 <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{ThemeResource SystemColorHighlightColor}"/>
                                                 <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemColorWindowColor}"/>
                                                 <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
