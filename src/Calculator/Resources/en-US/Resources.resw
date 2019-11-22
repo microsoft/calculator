@@ -3741,6 +3741,7 @@
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Configure slider</value>
     <comment>This is the tool tip text for teh slider options button in Graphing Calculator</comment>
+  </data>
   <data name="GraphSwitchToEquationMode" xml:space="preserve">
     <value>Switch to equation mode</value>
     <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
