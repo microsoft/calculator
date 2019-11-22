@@ -267,16 +267,16 @@ void HistoryViewModel::ClearHistory()
 void HistoryViewModel::SaveHistory()
 {
     ApplicationDataContainer ^ historyContainer = GetHistoryContainer(m_currentMode);
-    auto currentHistoryVector = m_calculatorManager->GetHistoryItems(m_currentMode);
+    auto const& currentHistoryVector = m_calculatorManager->GetHistoryItems(m_currentMode);
     bool failure = false;
     int index = 0;
     Platform::String ^ serializedHistoryItem;
 
-    for (auto iter = currentHistoryVector.begin(); iter != currentHistoryVector.end(); ++iter)
+    for (auto const& item : currentHistoryVector)
     {
         try
         {
-            serializedHistoryItem = SerializeHistoryItem(*iter);
+            serializedHistoryItem = SerializeHistoryItem(item);
             historyContainer->Values->Insert(index.ToString(), serializedHistoryItem);
         }
         catch (Platform::Exception ^)
