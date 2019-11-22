@@ -71,7 +71,7 @@ public
         void SetDefaultFocus();
 
         // Methods used by native bindings
-        static Windows::UI::Xaml::Visibility HasHistory(bool isAlwaysOnTop, bool isProgrammer, Windows::UI::Xaml::Visibility dockPanelVisibility);
+        static Windows::UI::Xaml::Visibility ShouldDisplayHistoryButton(bool isAlwaysOnTop, bool isProgrammer, Windows::UI::Xaml::Visibility dockPanelVisibility);
     private:
         void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
