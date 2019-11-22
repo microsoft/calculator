@@ -151,6 +151,7 @@
                             </Grid.RowDefinitions>
 
                             <ToggleButton x:Name="EquationButton"
+                                          x:Uid="equationAnalysisBack"
                                           MinWidth="44"
                                           MinHeight="44"
                                           VerticalAlignment="Stretch"

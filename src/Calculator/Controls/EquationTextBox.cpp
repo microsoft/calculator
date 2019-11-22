@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
+#include "CalcViewModel/Common/LocalizationStringUtil.h"
 #include "EquationTextBox.h"
 
 using namespace std;
@@ -44,6 +46,11 @@ void EquationTextBox::OnApplyTemplate()
     if (m_equationButton != nullptr)
     {
         m_equationButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnEquationButtonClicked);
+
+         auto toolTip = ref new ToolTip();
+         auto resProvider = AppResourceProvider::GetInstance();
+         toolTip->Content = m_equationButton->IsChecked->Value ? resProvider.GetResourceString(L"showEquationButtonToolTip") : resProvider.GetResourceString(L"hideEquationButtonToolTip");
+         ToolTipService::SetToolTip(m_equationButton, toolTip);
     }
 
     if (m_deleteButton != nullptr)
@@ -174,6 +181,12 @@ void EquationTextBox::OnDeleteButtonClicked(Object ^ sender, RoutedEventArgs ^ e
 void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
     EquationButtonClicked(this, ref new RoutedEventArgs());
+
+    auto toolTip = ref new ToolTip();
+    auto resProvider = AppResourceProvider::GetInstance();
+    toolTip->Content = m_equationButton->IsChecked->Value ? resProvider.GetResourceString(L"showEquationButtonToolTip") : resProvider.GetResourceString(L"hideEquationButtonToolTip");
+
+    ToolTipService::SetToolTip(m_equationButton, toolTip);
 }
 
 void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e)

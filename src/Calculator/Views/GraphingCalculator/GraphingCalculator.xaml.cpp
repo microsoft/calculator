@@ -3,8 +3,10 @@
 
 #include "pch.h"
 #include "GraphingCalculator.xaml.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
 #include "CalcViewModel/Common/TraceLogger.h"
 #include "CalcViewModel/Common/LocalizationSettings.h"
+#include "CalcViewModel/Common/LocalizationStringUtil.h"
 #include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "Controls/CalculationResult.h"
 #include "CalcManager/NumberFormattingUtils.h"
@@ -48,6 +50,11 @@ GraphingCalculator::GraphingCalculator()
     Equation::RegisterDependencyProperties();
     Grapher::RegisterDependencyProperties();
     InitializeComponent();
+
+    auto toolTip = ref new ToolTip();
+    auto resProvider = AppResourceProvider::GetInstance();
+    toolTip->Content = ActiveTracingOn ? resProvider.GetResourceString(L"disableTracingButtonToolTip") : resProvider.GetResourceString(L"enableTracingButtonToolTip");
+    ToolTipService::SetToolTip(ActiveTracing, toolTip);
 
     DataTransferManager ^ dataTransferManager = DataTransferManager::GetForCurrentView();
 
@@ -341,6 +348,11 @@ void GraphingCalculator::OnActiveTracingClick(Object ^ sender, RoutedEventArgs ^
     // The focus change to this button will have turned off the tracing if it was on
     ActiveTracingOn = !ActiveTracingOn;
     GraphingControl->ActiveTracing = ActiveTracingOn;
+
+    auto toolTip = ref new ToolTip();
+    auto resProvider = AppResourceProvider::GetInstance();
+    toolTip->Content = ActiveTracingOn ? resProvider.GetResourceString(L"disableTracingButtonToolTip") : resProvider.GetResourceString(L"enableTracingButtonToolTip");
+    ToolTipService::SetToolTip(ActiveTracing, toolTip);
 }
 
 void GraphingCalculator::GraphingControl_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
