@@ -337,7 +337,7 @@
     <Page Include="Themes\generic.xaml" />
   </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::ValueOrDefault($(UseMockGraphingImpl), true))">
-    <ProjectReference Include="$(SolutionDir)\MockGraphingImpl\MockGraphingImpl.vcxproj">
+    <ProjectReference Include="$(SolutionDir)\GraphingImpl\GraphingImpl.vcxproj">
       <Project>{52E03A58-B378-4F50-8BFB-F659FB85E790}</Project>
     </ProjectReference>
   </ItemGroup>

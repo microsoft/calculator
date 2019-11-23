@@ -37,7 +37,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{52e03a58-b378-4f50-8bfb-f659fb85e790}</ProjectGuid>
     <Keyword>DynamicLibrary</Keyword>
-    <RootNamespace>MockGraphingImpl</RootNamespace>
+    <RootNamespace>GraphingImpl</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
