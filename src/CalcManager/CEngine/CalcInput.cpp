@@ -231,6 +231,10 @@ void CalcInput::Backspace()
         if (!m_base.IsEmpty())
         {
             m_base.value.pop_back();
+            if (m_base.value == L"0")
+            {
+                m_base.value.pop_back();
+            }
         }
 
         if (m_base.value.size() <= m_decPtIndex)
