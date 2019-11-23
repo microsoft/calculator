@@ -3689,6 +3689,7 @@
   <data name="KGFRangeNone" xml:space="preserve">
     <value>Unable to calculate the range for this function.</value>
     <comment>Error displayed when Range is not returned from the analyzer.</comment>
+  </data>
   <data name="GridHeading" xml:space="preserve">
     <value>Grid</value>
     <comment>Heading for grid extents on the settings </comment>
