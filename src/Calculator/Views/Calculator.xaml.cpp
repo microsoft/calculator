@@ -714,3 +714,7 @@ void Calculator::Calculator_SizeChanged(Object ^ /*sender*/, SizeChangedEventArg
     }
 }
 
+::Visibility Calculator::ShouldDisplayHistoryButton(bool isAlwaysOnTop, bool isProgrammer, ::Visibility dockPanelVisibility)
+{
+    return !isAlwaysOnTop && !isProgrammer && dockPanelVisibility == ::Visibility::Collapsed ? ::Visibility::Visible : ::Visibility::Collapsed;
+}
