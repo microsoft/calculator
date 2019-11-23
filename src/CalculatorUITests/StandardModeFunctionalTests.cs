@@ -408,7 +408,6 @@ namespace CalculatorUITests
             else
             {
                 page.StandardNonKoTMode();
-                page.HistoryPanel.OpenHistoryPanel();
                 var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
                 Assert.IsTrue(historyItems[0].Text.Equals("3 + 3= 6", StringComparison.InvariantCultureIgnoreCase));
             }
@@ -902,8 +901,6 @@ namespace CalculatorUITests
 
             Assert.AreEqual("-1", page.GlobalCalculatorUI.GetCalculatorResultText());
 
-            page.HistoryPanel.OpenHistoryFlyout();
-
             var historyItems = page.HistoryPanel.GetAllHistoryFlyoutListViewItems();
             Assert.IsTrue(historyItems[0].Text.Equals("2 Minus ( 3= Minus (1", StringComparison.InvariantCultureIgnoreCase));
             Assert.IsTrue(historyItems[1].Text.Equals("-3 + -2.6= Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
@@ -980,8 +977,6 @@ namespace CalculatorUITests
             //Verify Reciprocal
             page.StandardOperators.NumberPad.Input(2);
             page.StandardOperators.InvertButton.Click();
-            page.GlobalCalculatorUI.AppName.Click();
-            page.GlobalCalculatorUI.Header.SendKeys(Keys.Equal);
             Assert.AreEqual("0.5", page.GlobalCalculatorUI.GetCalculatorResultText());
             page.GlobalCalculatorUI.Header.SendKeys(Keys.Escape);
 
@@ -1202,13 +1197,6 @@ namespace CalculatorUITests
             page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
             page.GlobalCalculatorUI.AppName.Click();
             Assert.AreEqual("Standard", page.GlobalCalculatorUI.GetCalculatorHeaderText());
-        }
-
-        [TestMethod]
-        public void test_Function()
-        {
-            page.HistoryPanel.OpenHistoryFlyout();
-            page.HistoryPanel.ListViewItem.Click();
         }
 
         #endregion
