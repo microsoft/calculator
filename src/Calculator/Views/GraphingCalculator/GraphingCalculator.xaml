@@ -15,6 +15,9 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
+
+            <converters:ItemSizeToVisibilityConverter x:Key="ItemSizeToVisibilityConverter"/>
+
             <Style x:Key="GraphButtonStyle" TargetType="Button">
                 <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                 <Setter Property="Background" Value="{ThemeResource AppControlTransparentButtonBackgroundBrush}"/>
@@ -370,9 +373,9 @@
                           VerticalAlignment="Stretch"
                           Style="{ThemeResource ThemedSwitchModeToggleButtonStyle}"
                           AutomationProperties.AutomationId="SwitchModeToggleButton"
-                          AutomationProperties.Name="{x:Bind GetInfoForSwitchModeToggleButton(SwitchModeToggleButton.IsChecked.Value), Mode=OneWay}"
+                          AutomationProperties.Name="{x:Bind local:GraphingCalculator.GetInfoForSwitchModeToggleButton(SwitchModeToggleButton.IsChecked.Value), Mode=OneWay}"
                           Checked="SwitchModeToggleButton_Checked"
-                          ToolTipService.ToolTip="{x:Bind GetInfoForSwitchModeToggleButton(SwitchModeToggleButton.IsChecked.Value), Mode=OneWay}"
+                          ToolTipService.ToolTip="{x:Bind local:GraphingCalculator.GetInfoForSwitchModeToggleButton(SwitchModeToggleButton.IsChecked.Value), Mode=OneWay}"
                           Unchecked="SwitchModeToggleButton_Checked"
                           Visibility="Collapsed">
                 <!-- TODO: update this icon -->
@@ -399,7 +402,6 @@
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Orientation="Horizontal">
-
                     <!-- Temporary button until the final UI is created -->
                     <Button x:Name="VariableEditing"
                             x:Uid="variablesButton"
@@ -407,7 +409,8 @@
                             MinHeight="44"
                             Margin="0,0,4,0"
                             Style="{StaticResource GraphButtonStyle}"
-                            RequestedTheme="Light">
+                            RequestedTheme="Light"
+                            Visibility="{x:Bind local:GraphingCalculator.ManageEditVariablesButtonVisibility(ViewModel.Variables.Size), Mode=OneWay}">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE70F;"/>
                         <Button.Flyout>
                             <Flyout Placement="BottomEdgeAlignedLeft">
@@ -688,7 +691,7 @@
               Grid.Row="1"
               Grid.RowSpan="2"
               Grid.Column="1"
-              Visibility="{x:Bind ShouldDisplayPanel(IsSmallState, SwitchModeToggleButton.IsChecked.Value, x:False), Mode=OneWay}">
+              Visibility="{x:Bind local:GraphingCalculator.ShouldDisplayPanel(IsSmallState, SwitchModeToggleButton.IsChecked.Value, x:False), Mode=OneWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="3*"/>

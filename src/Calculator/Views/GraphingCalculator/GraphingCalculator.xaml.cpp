@@ -447,3 +447,7 @@ void GraphingCalculator::TraceValuePopup_SizeChanged(Platform::Object ^ sender, 
 {
     PositionGraphPopup();
 }
+::Visibility GraphingCalculator::ManageEditVariablesButtonVisibility(unsigned int numberOfVariables)
+{
+    return numberOfVariables == 0 ? ::Visibility::Collapsed : ::Visibility::Visible;
+}
