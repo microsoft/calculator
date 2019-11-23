@@ -171,12 +171,12 @@ public
         void OnDependencyPropertyChanged(Windows::UI::Xaml::DependencyObject ^ obj, Windows::UI::Xaml::DependencyProperty ^ p);
 
         void OnEquationsChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
-        void OnEquationChanged();
-        void OnEquationStyleChanged();
-        void OnEquationLineEnabledChanged();
+        void OnEquationChanged(GraphControl::Equation ^ equation);
+        void OnEquationStyleChanged(GraphControl::Equation ^ equation);
+        void OnEquationLineEnabledChanged(GraphControl::Equation ^ equation);
         void UpdateGraph();
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
-        std::vector<Equation ^> GetValidEquations();
+        std::vector<Equation ^> GetGraphableEquations();
         void SetGraphArgs();
         std::shared_ptr<Graphing::IGraph> GetGraph(GraphControl::Equation ^ equation);
         void UpdateVariables();
@@ -193,6 +193,9 @@ public
         void UpdateTracingChanged();
         void HandleTracingMovementTick(Object ^ sender, Object ^ e);
         void HandleKey(bool keyDown, Windows::System::VirtualKey key);
+
+        void SetEquationsAsValid(std::vector<Equation ^>);
+        void SetEquationsErrors(std::vector<Equation ^>);
 
         Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^ ConvertWStringVector(std::vector<std::wstring> inVector);
         Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ ConvertWStringIntMap(std::map<std::wstring, int> inMap);

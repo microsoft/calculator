@@ -62,7 +62,7 @@ namespace GraphControl
         , m_Moving{ false }
     {
         m_solver->ParsingOptions().SetFormatType(s_defaultFormatType);
-        m_solver->FormatOptions().SetFormatType(FormatType::MathML);
+        m_solver->FormatOptions().SetFormatType(s_defaultFormatType);
         m_solver->FormatOptions().SetMathMLPrefix(wstring(L"mml"));
 
         DefaultStyleKey = StringReference(s_defaultStyleKey);
@@ -232,16 +232,20 @@ namespace GraphControl
         UpdateGraph();
     }
 
-    void Grapher::OnEquationChanged()
+    void Grapher::OnEquationChanged(Equation ^ equation)
     {
+        // Reset these properties if the equation is requesting to be graphed again
+        equation->HasGraphError = false;
+        equation->IsValidated = false;
+
         UpdateGraph();
     }
 
-    void Grapher::OnEquationStyleChanged()
+    void Grapher::OnEquationStyleChanged(Equation ^)
     {
         if (m_graph)
         {
-            UpdateGraphOptions(m_graph->GetOptions(), GetValidEquations());
+            UpdateGraphOptions(m_graph->GetOptions(), GetGraphableEquations());
         }
 
         if (m_renderMain)
@@ -250,7 +254,7 @@ namespace GraphControl
         }
     }
 
-    void Grapher::OnEquationLineEnabledChanged()
+    void Grapher::OnEquationLineEnabledChanged(Equation ^)
     {
         UpdateGraph();
     }
@@ -313,7 +317,9 @@ namespace GraphControl
 
         if (m_renderMain && m_graph != nullptr)
         {
-            auto validEqs = GetValidEquations();
+            auto validEqs = GetGraphableEquations();
+
+            bool hasPreviouslyValidatedEquation = false;
 
             if (!validEqs.empty())
             {
@@ -323,6 +329,11 @@ namespace GraphControl
                 int numValidEquations = 0;
                 for (Equation ^ eq : validEqs)
                 {
+                    if (eq->IsValidated)
+                    {
+                        hasPreviouslyValidatedEquation = true;
+                    }
+
                     if (numValidEquations++ > 0)
                     {
                         ss << L"<mo>,</mo>";
@@ -343,7 +354,13 @@ namespace GraphControl
 
             if (initResult == nullopt)
             {
-                initResult = m_graph->TryInitialize();
+                SetEquationsErrors(validEqs);
+
+                // Do not re-initialize the graph to empty if there are still valid equations graphed
+                if (!hasPreviouslyValidatedEquation)
+                {
+                    initResult = m_graph->TryInitialize();
+                }
             }
 
             if (initResult != nullopt)
@@ -353,6 +370,27 @@ namespace GraphControl
 
                 UpdateVariables();
                 m_renderMain->Graph = m_graph;
+
+                SetEquationsAsValid(validEqs);
+            }
+        }
+    }
+
+    void Grapher::SetEquationsAsValid(vector<Equation ^> equations)
+    {
+        for (Equation ^ eq : equations)
+        {
+            eq->IsValidated = true;
+        }
+    }
+
+    void Grapher::SetEquationsErrors(vector<Equation ^> equations)
+    {
+        for (Equation ^ eq : equations)
+        {
+            if (!eq->IsValidated)
+            {
+                eq->HasGraphError = true;
             }
         }
     }
@@ -484,13 +522,13 @@ namespace GraphControl
         }
     }
 
-    vector<Equation ^> Grapher::GetValidEquations()
+    vector<Equation ^> Grapher::GetGraphableEquations()
     {
         vector<Equation ^> validEqs;
 
         for (Equation ^ eq : Equations)
         {
-            if (!eq->Expression->IsEmpty() && eq->IsLineEnabled)
+            if (eq->IsGraphableEquation())
             {
                 validEqs.push_back(eq);
             }

@@ -91,6 +91,44 @@ namespace GraphControl
 
 #pragma endregion
 
+#pragma region bool HasGraphError DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty ^ HasGraphErrorProperty { Windows::UI::Xaml::DependencyProperty ^ get() { return s_hasGraphErrorProperty; } }
+
+        property bool HasGraphError
+        {
+            bool get()
+            {
+                return static_cast<bool>(GetValue(s_hasGraphErrorProperty));
+            }
+
+        internal:
+            void set(bool value)
+            {
+                SetValue(s_hasGraphErrorProperty, value);
+            }
+        }
+
+#pragma endregion
+
+#pragma region bool IsValidated DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty ^ IsValidatedProperty { Windows::UI::Xaml::DependencyProperty ^ get() { return s_isValidatedProperty; } }
+
+            property bool IsValidated
+        {
+            bool get()
+            {
+                return static_cast<bool>(GetValue(s_isValidatedProperty));
+            }
+
+        internal:
+            void set(bool value)
+            {
+                SetValue(s_isValidatedProperty, value);
+            }
+        }
+
+#pragma endregion
+
 #pragma region Key Graph Features
 
 
@@ -108,7 +146,7 @@ namespace GraphControl
             {
                 return static_cast<Platform::String^>(GetValue(s_xInterceptProperty));
             }
-            void set(Platform::String^ value)
+            internal: void set(Platform::String^ value)
             {
                 SetValue(s_xInterceptProperty, value);
             }
@@ -129,7 +167,7 @@ namespace GraphControl
             {
                 return static_cast<Platform::String^>(GetValue(s_yInterceptProperty));
             }
-            void set(Platform::String^ value)
+            internal: void set(Platform::String^ value)
             {
                 SetValue(s_yInterceptProperty, value);
             }
@@ -150,7 +188,7 @@ namespace GraphControl
             {
                 return static_cast<int>(GetValue(s_parityProperty));
             }
-            void set(int value)
+        internal: void set(int value)
             {
                 SetValue(s_parityProperty, value);
             }
@@ -171,7 +209,7 @@ namespace GraphControl
             {
                 return static_cast<int>(GetValue(s_periodicityDirectionProperty));
             }
-            void set(int value)
+        internal: void set(int value)
             {
                 SetValue(s_periodicityDirectionProperty, value);
             }
@@ -192,7 +230,7 @@ namespace GraphControl
             {
                 return static_cast<Platform::String ^>(GetValue(s_periodicityExpressionProperty));
             }
-            void set(Platform::String ^ value)
+            internal: void set(Platform::String ^ value)
             {
                 SetValue(s_periodicityExpressionProperty, value);
             }
@@ -213,7 +251,7 @@ namespace GraphControl
             {
                 return static_cast<Windows::Foundation::Collections::IVector<Platform::String^> ^>(GetValue(s_minimaProperty));
             }
-            void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
+            internal: void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
             {
                 SetValue(s_minimaProperty, value);
             }
@@ -234,7 +272,7 @@ namespace GraphControl
             {
                 return static_cast<Windows::Foundation::Collections::IVector<Platform::String^> ^>(GetValue(s_maximaProperty));
             }
-            void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
+            internal: void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
             {
                 SetValue(s_maximaProperty, value);
             }
@@ -255,7 +293,7 @@ namespace GraphControl
             {
                 return static_cast<Platform::String^>(GetValue(s_domainProperty));
             }
-            void set(Platform::String^ value)
+            internal: void set(Platform::String^ value)
             {
                 SetValue(s_domainProperty, value);
             }
@@ -276,7 +314,7 @@ namespace GraphControl
             {
                 return static_cast<Platform::String^>(GetValue(s_rangeProperty));
             }
-            void set(Platform::String^ value)
+            internal: void set(Platform::String^ value)
             {
                 SetValue(s_rangeProperty, value);
             }
@@ -297,7 +335,7 @@ namespace GraphControl
             {
                 return static_cast<Windows::Foundation::Collections::IVector<Platform::String^> ^>(GetValue(s_inflectionPointsProperty));
             }
-            void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
+            internal: void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
             {
                 SetValue(s_inflectionPointsProperty, value);
             }
@@ -318,7 +356,7 @@ namespace GraphControl
             {
                 return static_cast<Windows::Foundation::Collections::IObservableMap<Platform::String^, Platform::String ^> ^>(GetValue(s_monotonicityProperty));
             }
-            void set(Windows::Foundation::Collections::IObservableMap<Platform::String^, Platform::String ^> ^ value)
+            internal: void set(Windows::Foundation::Collections::IObservableMap<Platform::String^, Platform::String ^> ^ value)
             {
                 SetValue(s_monotonicityProperty, value);
             }
@@ -339,7 +377,7 @@ namespace GraphControl
             {
                 return static_cast<Windows::Foundation::Collections::IVector<Platform::String^> ^>(GetValue(s_verticalAsymptotesProperty));
             }
-            void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
+            internal: void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
             {
                 SetValue(s_verticalAsymptotesProperty, value);
             }
@@ -360,7 +398,7 @@ namespace GraphControl
             {
                 return static_cast<Windows::Foundation::Collections::IVector<Platform::String^> ^>(GetValue(s_horizontalAsymptotesProperty));
             }
-            void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
+            internal: void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
             {
                 SetValue(s_horizontalAsymptotesProperty, value);
             }
@@ -381,7 +419,7 @@ namespace GraphControl
             {
                 return static_cast<Windows::Foundation::Collections::IVector<Platform::String^> ^>(GetValue(s_obliqueAsymptotesProperty));
             }
-            void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
+            internal: void set(Windows::Foundation::Collections::IVector<Platform::String^> ^ value)
             {
                 SetValue(s_obliqueAsymptotesProperty, value);
             }
@@ -402,7 +440,7 @@ namespace GraphControl
             {
                 return static_cast<int>(GetValue(s_tooComplexFeaturesProperty));
             }
-            void set(int value)
+        internal: void set(int value)
             {
                 SetValue(s_tooComplexFeaturesProperty, value);
             }
@@ -423,7 +461,7 @@ namespace GraphControl
             {
                 return static_cast<int>(GetValue(s_analysisErrorProperty));
             }
-            void set(int value)
+            internal: void set(int value)
             {
                 SetValue(s_analysisErrorProperty, value);
             }
@@ -434,6 +472,7 @@ namespace GraphControl
         internal : event PropertyChangedEventHandler ^ PropertyChanged;
 
         std::wstring GetRequest();
+        bool IsGraphableEquation();
 
     private:
         static void OnCustomDependencyPropertyChanged(Windows::UI::Xaml::DependencyObject ^ obj, Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
@@ -446,6 +485,8 @@ namespace GraphControl
         static Windows::UI::Xaml::DependencyProperty ^ s_expressionProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_lineColorProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_isLineEnabledProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_hasGraphErrorProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_isValidatedProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_xInterceptProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_yInterceptProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_parityProperty;
