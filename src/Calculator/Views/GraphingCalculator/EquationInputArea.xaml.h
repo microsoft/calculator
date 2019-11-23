@@ -29,7 +29,6 @@ namespace CalculatorApp
         void OnPropertyChanged(Platform::String^ propertyName);
         void OnEquationsPropertyChanged();
 
-        void AddEquationButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void AddNewEquation();
 
         void InputTextBox_GotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);

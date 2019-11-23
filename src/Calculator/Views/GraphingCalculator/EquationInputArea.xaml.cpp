@@ -56,11 +56,6 @@ void EquationInputArea::OnEquationsPropertyChanged()
     }
 }
 
-void EquationInputArea::AddEquationButton_Click(Object ^ sender, RoutedEventArgs ^ e)
-{
-    AddNewEquation();
-}
-
 void EquationInputArea::AddNewEquation()
 {
     auto eq = ref new EquationViewModel(ref new Equation());
@@ -95,9 +90,25 @@ void EquationInputArea::InputTextBox_Submitted(Object ^ sender, RoutedEventArgs 
         eq->Expression = tb->GetEquationText();
     }
 
-    if (tb->HasFocus)
+    if (eq->Expression != nullptr && eq->Expression->Length() > 0)
     {
-        FocusManager::TryMoveFocus(::FocusNavigationDirection::Left);
+        auto hasFocus = tb->HasFocus;
+        unsigned int index = 0;
+        if (Equations->IndexOf(eq, &index) && index == Equations->Size - 1)
+        {
+            AddNewEquation();
+        }
+        if (hasFocus)
+        {
+
+        }
+    }
+    else
+    {
+        if (tb->HasFocus)
+        {
+            FocusManager::TryMoveFocus(::FocusNavigationDirection::Left);
+        }
     }
 }
 
@@ -143,7 +154,6 @@ void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, R
 void EquationInputArea::EquationTextBoxLoaded(Object ^ sender, RoutedEventArgs ^ e)
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
-    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
 
     auto colorChooser = static_cast<EquationStylePanelControl ^>(tb->ColorChooserFlyout->Content);
     colorChooser->AvailableColors = AvailableColors;
