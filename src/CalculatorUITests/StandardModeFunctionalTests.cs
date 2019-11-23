@@ -192,7 +192,7 @@ namespace CalculatorUITests
             page.StandardOperators.BackSpaceButton.Click();
             page.StandardOperators.BackSpaceButton.Click();
             page.StandardOperators.NumberPad.Input(0);
-            Assert.AreEqual("0", page.GetCalculatorResultText();
+            Assert.AreEqual("0", page.GetCalculatorResultText());
         }
 
         [TestMethod]
