@@ -104,17 +104,47 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
 
 void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationViewModel ^> ^ sender, IVectorChangedEventArgs ^ event)
 {
-    if (event->CollectionChange != ::CollectionChange::ItemChanged)
+    // If an item is already added to the graph, changing it should automatically trigger a graph update
+    if (event->CollectionChange == ::CollectionChange::ItemChanged)
     {
-        GraphingControl->Equations->Clear();
-
-        for (auto equationViewModel : ViewModel->Equations)
-        {
-            GraphingControl->Equations->Append(equationViewModel->GraphEquation);
-        }
-
-        GraphingControl->PlotGraph();
+        return;
     }
+
+    // Do not plot the graph if we are removing an empty equation, just remove it
+    if (event->CollectionChange == ::CollectionChange::ItemRemoved)
+    {
+        auto itemToRemove = GraphingControl->Equations->GetAt(event->Index);
+
+        if (itemToRemove->Expression->IsEmpty())
+        {
+            GraphingControl->Equations->RemoveAt(event->Index);
+
+            return;
+        }
+    }
+
+    // Do not plot the graph if we are adding an empty equation, just add it
+    if (event->CollectionChange == ::CollectionChange::ItemInserted)
+    {
+        auto itemToAdd = sender->GetAt(event->Index);
+
+        if (itemToAdd->Expression->IsEmpty())
+        {
+            GraphingControl->Equations->Append(itemToAdd->GraphEquation);
+
+            return;
+        }
+    }
+
+    // We are either adding or removing a valid equation, or resetting the collection. We will need to plot the graph
+    GraphingControl->Equations->Clear();
+
+    for (auto equationViewModel : ViewModel->Equations)
+    {
+        GraphingControl->Equations->Append(equationViewModel->GraphEquation);
+    }
+
+    GraphingControl->PlotGraph();
 }
 
 void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)

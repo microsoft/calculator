@@ -174,7 +174,8 @@ public
         void OnEquationChanged(GraphControl::Equation ^ equation);
         void OnEquationStyleChanged(GraphControl::Equation ^ equation);
         void OnEquationLineEnabledChanged(GraphControl::Equation ^ equation);
-        void UpdateGraph();
+        bool TryUpdateGraph();
+        void TryPlotGraph(bool shouldRetry);
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
         std::vector<Equation ^> GetGraphableEquations();
         void SetGraphArgs();
@@ -194,8 +195,8 @@ public
         void HandleTracingMovementTick(Object ^ sender, Object ^ e);
         void HandleKey(bool keyDown, Windows::System::VirtualKey key);
 
-        void SetEquationsAsValid(std::vector<Equation ^>);
-        void SetEquationsErrors(std::vector<Equation ^>);
+        void SetEquationsAsValid();
+        void SetEquationErrors();
 
         Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^ ConvertWStringVector(std::vector<std::wstring> inVector);
         Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ ConvertWStringIntMap(std::map<std::wstring, int> inMap);

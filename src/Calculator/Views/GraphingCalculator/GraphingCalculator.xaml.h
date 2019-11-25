@@ -37,7 +37,6 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
     private:
         void GraphingCalculator_DataContextChanged(Windows::UI::Xaml::FrameworkElement ^ sender, Windows::UI::Xaml::DataContextChangedEventArgs ^ args);
 
-        void GraphVariablesUpdated(Platform::Object ^ sender, Object ^ args);
         void OnVariableChanged(Platform::Object ^ sender, CalculatorApp::ViewModel::VariableChangedEventArgs args);
         void OnEquationsVectorChanged(
             Windows::Foundation::Collections::IObservableVector<CalculatorApp::ViewModel::EquationViewModel ^> ^ sender,
