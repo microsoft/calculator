@@ -59,6 +59,12 @@ void EquationInputArea::OnEquationsPropertyChanged()
 void EquationInputArea::AddNewEquation()
 {
     auto eq = ref new EquationViewModel(ref new Equation());
+    eq->IsLastItem = true;
+
+    if (Equations->Size > 0)
+    {
+        Equations->GetAt(Equations->Size - 1)->IsLastItem = false;
+    }
 
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
 
@@ -66,7 +72,6 @@ void EquationInputArea::AddNewEquation()
     eq->IsLineEnabled = true;
     eq->FunctionLabelIndex = ++m_lastFunctionLabelIndex;
     Equations->Append(eq);
-    EquationInputList->ScrollIntoView(eq);
 }
 
 void EquationInputArea::InputTextBox_GotFocus(Object ^ sender, RoutedEventArgs ^ e)
@@ -100,7 +105,7 @@ void EquationInputArea::InputTextBox_Submitted(Object ^ sender, RoutedEventArgs 
         }
         if (hasFocus)
         {
-
+            FocusManager::TryMoveFocus(::FocusNavigationDirection::Left);
         }
     }
     else
@@ -124,6 +129,10 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
             m_lastFunctionLabelIndex--;
         }
 
+        if (index == Equations->Size - 1 && Equations->Size > 1)
+        {
+            Equations->GetAt(Equations->Size - 2)->IsLastItem = true;
+        }
         Equations->RemoveAt(index);
     }
 }

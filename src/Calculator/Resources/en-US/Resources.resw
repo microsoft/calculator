@@ -3907,7 +3907,7 @@
     <value>Zoom Out</value>
     <comment>Screen reader prompt for the zoom out button.</comment>
   </data>
-  <data name="EquationInputButtonPlaceholder.Text" xml:space="preserve">
+  <data name="EquationTextBoxAddPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Add Equation</value>
     <comment>Placeholder text for the equation input button</comment>
   </data>

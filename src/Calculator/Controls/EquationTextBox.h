@@ -23,6 +23,7 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Controls::Flyout^, ColorChooserFlyout);
             DEPENDENCY_PROPERTY(Platform::String ^, EquationButtonContentIndex);
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, HasError);
+            DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, IsAddEquationMode);
 
             PROPERTY_R(bool, HasFocus);
 
@@ -42,10 +43,11 @@ namespace CalculatorApp
             virtual void OnPointerCaptureLost(Windows::UI::Xaml::Input::PointerRoutedEventArgs^ e) override;
             virtual void OnKeyDown(Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e) override;
             virtual void OnLostFocus(Windows::UI::Xaml::RoutedEventArgs^ e) override;
+            void OnIsAddEquationModePropertyChanged(bool oldValue, bool newValue);
 
         private:
             void UpdateCommonVisualState();
-            void UpdateDeleteButtonVisualState();
+            void UpdateButtonsVisualState();
             bool RichEditHasContent();
 
             void OnRichEditBoxGotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);

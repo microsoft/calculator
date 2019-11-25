@@ -41,6 +41,7 @@ public
         OBSERVABLE_OBJECT();
         OBSERVABLE_PROPERTY_R(GraphControl::Equation ^, GraphEquation);
         OBSERVABLE_PROPERTY_RW(int, FunctionLabelIndex);
+        OBSERVABLE_PROPERTY_RW(bool, IsLastItem);
 
         property Platform::String ^ Expression
         {

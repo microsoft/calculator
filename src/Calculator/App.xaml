@@ -68,10 +68,10 @@
                                   FallbackColor="{ThemeResource SystemChromeMediumColor}"
                                   TintColor="{ThemeResource SystemChromeLowColor}"
                                   TintOpacity="0.7"/>
+                    <SolidColorBrush x:Key="EquationBoxAddBackgroundBrush" Color="#9d000000"/>
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemControlBackgroundAltMediumBrush}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="AppChromeAcrylicOperatorFlyoutBackgroundBrush" Color="#FF2F2F2F"/>
-                    <SolidColorBrush x:Key="EquationTextBoxTransparentBackgroundBrush" Color="Transparent"/>
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource TextControlBackground}"/>
                     <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="White"/>
                     <SolidColorBrush x:Key="EquationBoxErrorBackgroundBrush" Color="#33EB5757"/>
@@ -164,6 +164,7 @@
                                   FallbackColor="{ThemeResource SystemChromeMediumColor}"
                                   TintColor="{ThemeResource SystemChromeLowColor}"
                                   TintOpacity="0.8"/>
+                    <SolidColorBrush x:Key="EquationBoxAddBackgroundBrush" Color="#D0FFFFFF"/>
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemControlBackgroundAltMediumBrush}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource TextControlBackground}"/>
@@ -222,6 +223,7 @@
                     <SolidColorBrush x:Key="AppControlHighlightCalcButtonBrush" Color="{ThemeResource SystemColorWindowColor}"/>
                     <SolidColorBrush x:Key="AppControlHighlightCalcButtonToggledBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="AppControlHighlightCalcButtonHoverBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
+                    <SolidColorBrush x:Key="EquationBoxAddBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemColorCaptionTextColor}"/>
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
@@ -1898,7 +1900,14 @@
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
-
+                                        <VisualState x:Name="AddEquation">
+                                            <VisualState.Setters>
+                                                <Setter Target="RemoveButtonPanel.Visibility" Value="Collapsed"/>
+                                                <Setter Target="MathRichEditBox.PlaceholderText" Value="Enter an equation"/>
+                                                <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource EquationBoxAddBackgroundBrush}"/>
+                                                <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource EquationBoxBorderBrush}"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
                                         <VisualState x:Name="Error">
                                             <Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
@@ -2040,6 +2049,11 @@
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
+                                        <VisualState x:Name="ButtonHideRemove">
+                                            <VisualState.Setters>
+                                                <Setter Target="RemoveButtonPanel.Visibility" Value="Collapsed"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
                                         <VisualState x:Name="ButtonCollapsed"/>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
@@ -2154,9 +2168,13 @@
                                         </Style>
                                     </ToggleButton.Style>
                                 </ToggleButton>
+                                <Rectangle x:Name="EquationBoxBaseBackground"
+                                           Grid.Column="1"
+                                           Fill="{ThemeResource TextControlBackground}"/>
+                                <Rectangle x:Name="EquationBoxBackground" Grid.Column="1"/>
+
                                 <Border x:Name="EquationBoxBorder"
                                         Grid.Column="1"
-                                        Background="{ThemeResource TextControlBackground}"
                                         BorderBrush="{TemplateBinding EquationColor}"
                                         BorderThickness="{TemplateBinding BorderThickness}">
 
@@ -2225,21 +2243,22 @@
                                                   AutomationProperties.AccessibilityView="Raw"
                                                   Glyph="&#xE783;"
                                                   Visibility="Collapsed"/>
-                                        <Button x:Name="RemoveButton"
-                                                x:Uid="removeButton"
-                                                Grid.Column="3"
-                                                MinWidth="34"
-                                                Margin="{ThemeResource HelperButtonThemePadding}"
-                                                VerticalAlignment="Stretch"
-                                                Style="{StaticResource EquationTextBoxButtonStyle}"
-                                                Background="{TemplateBinding EquationColor}"
-                                                Foreground="{TemplateBinding EquationColor}"
-                                                BorderThickness="0"
-                                                FontFamily="{StaticResource CalculatorFontFamily}"
-                                                AutomationProperties.AccessibilityView="Raw"
-                                                Content="&#xECC9;"
-                                                IsTabStop="False"
-                                                Visibility="Collapsed"/>
+                                        <Grid x:Name="RemoveButtonPanel" Grid.Column="3">
+                                            <Button x:Name="RemoveButton"
+                                                    x:Uid="removeButton"
+                                                    MinWidth="34"
+                                                    Margin="{ThemeResource HelperButtonThemePadding}"
+                                                    VerticalAlignment="Stretch"
+                                                    Style="{StaticResource EquationTextBoxButtonStyle}"
+                                                    Background="{TemplateBinding EquationColor}"
+                                                    Foreground="{TemplateBinding EquationColor}"
+                                                    BorderThickness="0"
+                                                    FontFamily="{StaticResource CalculatorFontFamily}"
+                                                    AutomationProperties.AccessibilityView="Raw"
+                                                    Content="&#xECC9;"
+                                                    IsTabStop="False"
+                                                    Visibility="Collapsed"/>
+                                        </Grid>
                                         <ToggleButton x:Name="ColorChooserButton"
                                                       x:Uid="colorChooserButton"
                                                       Grid.Column="2"
