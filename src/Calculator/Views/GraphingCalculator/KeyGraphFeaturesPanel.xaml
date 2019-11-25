@@ -200,6 +200,9 @@
                                                 <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{ThemeResource SystemColorHighlightColor}"/>
                                                 <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemColorWindowColor}"/>
                                                 <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{ThemeResource SystemColorHighlightColor}"/>
+                                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemColorWindowColor}"/>
+                                                <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="Transparent"/>
                                             </ResourceDictionary>
                                         </ResourceDictionary.ThemeDictionaries>
                                     </ResourceDictionary>
