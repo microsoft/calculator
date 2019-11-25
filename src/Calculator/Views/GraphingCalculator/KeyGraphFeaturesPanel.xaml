@@ -27,7 +27,7 @@
                     <ControlTemplate TargetType="controls:EquationTextBox">
                         <Grid>
                             <Grid.Resources>
-                                
+
                                 <Style x:Key="KGF_EquationTextBoxStyle" TargetType="controls:MathRichEditBox">
                                     <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}"/>
                                     <Setter Property="Background" Value="Transparent"/>
@@ -139,7 +139,7 @@
                                         </Setter.Value>
                                     </Setter>
                                 </Style>
-                                
+
                             </Grid.Resources>
 
                             <Grid.ColumnDefinitions>
@@ -153,26 +153,26 @@
                             </Grid.RowDefinitions>
 
                             <Button x:Name="KGFEquationButton"
-                                    x:Uid="equationAnalysisBack" 
+                                    x:Uid="equationAnalysisBack"
                                     MinWidth="44"
                                     MinHeight="44"
                                     VerticalAlignment="Stretch"
                                     BorderThickness="1">
                                 <Button.Content>
                                     <StackPanel x:Name="FunctionNumberLabel"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    Background="Transparent"
-                                                    Orientation="Horizontal"
-                                                    Margin="5,0">
+                                                Margin="5,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Background="Transparent"
+                                                Orientation="Horizontal">
                                         <FontIcon VerticalAlignment="Center"
                                                   FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                   FontSize="16"
                                                   Glyph="&#xE72B;"/>
-                                        <TextBlock Text="ƒ" Margin="12,0,0,0"/>
+                                        <TextBlock Margin="12,0,0,0" Text="ƒ"/>
                                         <TextBlock Margin="0,10,0,0"
-                                                       FontSize="9"
-                                                       Text="{TemplateBinding EquationButtonContentIndex}"/>
+                                                   FontSize="9"
+                                                   Text="{TemplateBinding EquationButtonContentIndex}"/>
                                     </StackPanel>
 
                                 </Button.Content>
@@ -183,8 +183,8 @@
                                                 <SolidColorBrush x:Name="ButtonBackground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                 <SolidColorBrush x:Name="ButtonForeground" Color="{StaticResource SystemChromeWhiteColor}"/>
                                                 <SolidColorBrush x:Name="ButtonBackgroundPointerOver"
-                                                     Opacity="0.7"
-                                                     Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                                 Opacity="0.7"
+                                                                 Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                 <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
                                                 <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
 
@@ -196,8 +196,8 @@
                                                 <SolidColorBrush x:Key="ButtonBackground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                 <SolidColorBrush x:Key="ButtonForeground" Color="{StaticResource SystemChromeWhiteColor}"/>
                                                 <SolidColorBrush x:Key="ButtonBackgroundPointerOver"
-                                                     Opacity="0.7"
-                                                     Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                                 Opacity="0.7"
+                                                                 Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                 <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
                                                 <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
                                                 <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
@@ -217,7 +217,7 @@
                                             </ResourceDictionary>
                                         </ResourceDictionary.ThemeDictionaries>
                                     </ResourceDictionary>
-                                    
+
                                 </Button.Resources>
                             </Button>
 
@@ -455,7 +455,7 @@
 
         <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
 
-        
+
     </UserControl.Resources>
 
     <Grid Margin="0,7,0,0" Background="Transparent">
