@@ -21,6 +21,7 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY_OWNER(EquationTextBox);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::SolidColorBrush^, EquationColor);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Controls::Flyout^, ColorChooserFlyout);
+            DEPENDENCY_PROPERTY(Platform::String ^, EquationButtonContentIndex);
 
             PROPERTY_R(bool, HasFocus);
 
@@ -52,6 +53,7 @@ namespace CalculatorApp
 
             void OnDeleteButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnEquationButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+            void OnKGFEquationButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
             void OnRemoveButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnColorChooserButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnFunctionButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
@@ -60,7 +62,8 @@ namespace CalculatorApp
             void OnColorFlyoutClosed(Platform::Object^ sender, Platform::Object^ e);
 
             CalculatorApp::Controls::MathRichEditBox^ m_richEditBox;
-            Windows::UI::Xaml::Controls::Button^ m_equationButton;
+            Windows::UI::Xaml::Controls::Primitives::ToggleButton^ m_equationButton;
+            Windows::UI::Xaml::Controls::Button^ m_kgfEquationButton;
             Windows::UI::Xaml::Controls::Button^ m_deleteButton;
             Windows::UI::Xaml::Controls::Button^ m_removeButton;
             Windows::UI::Xaml::Controls::Button^ m_functionButton;

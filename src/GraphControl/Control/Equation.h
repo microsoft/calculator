@@ -9,6 +9,7 @@ namespace GraphControl
     {
         extern Platform::String ^ Expression;
         extern Platform::String ^ LineColor;
+        extern Platform::String ^ IsLineEnabled;
     }
 
     ref class Equation;
@@ -66,6 +67,28 @@ namespace GraphControl
                 SetValue(s_lineColorProperty, value);
             }
         }
+#pragma endregion
+
+#pragma region bool IsLineEnabled DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty ^ IsLineEnabledProperty
+        {
+            Windows::UI::Xaml::DependencyProperty ^ get()
+            {
+                return s_isLineEnabledProperty;
+            }
+        }
+        property bool IsLineEnabled
+        {
+            bool get()
+            {
+                return static_cast<bool>(GetValue(s_isLineEnabledProperty));
+            }
+            void set(bool value)
+            {
+                SetValue(s_isLineEnabledProperty, value);
+            }
+        }
+
 #pragma endregion
 
 #pragma region Key Graph Features
@@ -422,6 +445,7 @@ namespace GraphControl
     private:
         static Windows::UI::Xaml::DependencyProperty ^ s_expressionProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_lineColorProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_isLineEnabledProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_xInterceptProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_yInterceptProperty;
         static Windows::UI::Xaml::DependencyProperty ^ s_parityProperty;

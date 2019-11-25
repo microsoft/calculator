@@ -23,7 +23,10 @@ namespace GraphControl
     DependencyProperty ^ Equation::s_lineColorProperty;
     static constexpr auto s_propertyName_LineColor = L"LineColor";
 
-    DependencyProperty ^ Equation::s_xInterceptProperty;
+    DependencyProperty ^ Equation::s_isLineEnabledProperty;
+    static constexpr auto s_propertyName_IsLineEnabled = L"IsLineEnabled";
+
+	DependencyProperty ^ Equation::s_xInterceptProperty;
     static constexpr auto s_propertyName_XIntercept = L"XIntercept";
 
     DependencyProperty ^ Equation::s_yInterceptProperty;
@@ -75,6 +78,7 @@ namespace GraphControl
     {
         String ^ Expression = StringReference(s_propertyName_Expression);
         String ^ LineColor = StringReference(s_propertyName_LineColor);
+        String ^ IsLineEnabled = StringReference(s_propertyName_IsLineEnabled);
         String ^ XIntercept = StringReference(s_propertyName_XIntercept);
         String ^ YIntercept = StringReference(s_propertyName_YIntercept);
         String ^ Parity = StringReference(s_propertyName_Parity);
@@ -112,6 +116,15 @@ namespace GraphControl
             s_lineColorProperty = DependencyProperty::Register(
                 EquationProperties::LineColor,
                 SolidColorBrush::typeid,
+                Equation::typeid,
+                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
+        }
+
+        if (!s_isLineEnabledProperty)
+        {
+            s_isLineEnabledProperty = DependencyProperty::Register(
+                EquationProperties::IsLineEnabled,
+                bool ::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
@@ -272,6 +285,10 @@ namespace GraphControl
             else if (args->Property == s_lineColorProperty)
             {
                 propertyName = EquationProperties::LineColor;
+            }
+            else if (args->Property == s_isLineEnabledProperty)
+            {
+                propertyName = EquationProperties::IsLineEnabled;
             }
             else if (args->Property == s_xInterceptProperty)
             {

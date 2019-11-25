@@ -317,7 +317,9 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="Controls\MathRichEditBox.cpp" />
-    <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp" />
+    <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp" >
+          <Filter>Views\GraphingCalculator</Filter>
+    </ClCompile>
     <ClCompile Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -415,7 +417,9 @@
       <Filter>Controls</Filter>
     </ClInclude>
     <ClInclude Include="Controls\MathRichEditBox.h" />
-    <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h" />
+    <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h" >
+      <Filter>Views\GraphingCalculator</Filter>
+    </ClInclude>
     <ClInclude Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.h" />
   </ItemGroup>
   <ItemGroup>
@@ -494,7 +498,9 @@
     <Page Include="EquationStylePanelControl.xaml">
       <Filter>Views\GraphingCalculator</Filter>
     </Page>
-    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" />
+    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" >
+          <Filter>Views\GraphingCalculator</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Resources\en-US\CEngineStrings.resw">

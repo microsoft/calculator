@@ -14,9 +14,7 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 
 KeyGraphFeaturesPanel::KeyGraphFeaturesPanel()
-
 {
-
     InitializeComponent();
 }
 
@@ -49,5 +47,4 @@ void KeyGraphFeaturesPanel::EquationInputTextBox_Loaded(Object ^ sender, RoutedE
 void KeyGraphFeaturesPanel::SetEquationTextBoxProperties()
 {
     EquationInputTextBox->SetEquationText(ViewModel->Expression);
-    EquationInputTextBox->EquationColor = ViewModel->LineColor;
 }

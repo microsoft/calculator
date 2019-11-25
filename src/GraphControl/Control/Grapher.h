@@ -173,7 +173,7 @@ public
         void OnEquationsChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
         void OnEquationChanged();
         void OnEquationStyleChanged();
-
+        void OnEquationLineEnabledChanged();
         void UpdateGraph();
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
         std::vector<Equation ^> GetValidEquations();
@@ -210,6 +210,7 @@ public
         Windows::Foundation::EventRegistrationToken m_tokenEquationsChanged;
         Windows::Foundation::EventRegistrationToken m_tokenEquationStyleChanged;
         Windows::Foundation::EventRegistrationToken m_tokenEquationChanged;
+        Windows::Foundation::EventRegistrationToken m_tokenEquationLineEnabledChanged;
 
         static Windows::UI::Xaml::DependencyProperty ^ s_forceProportionalAxesTemplateProperty;
 

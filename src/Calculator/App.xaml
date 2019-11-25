@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="using:CalculatorApp.Controls"
              xmlns:common="using:CalculatorApp.Common"
-             xmlns:converters="using:CalculatorApp.Converters"
              xmlns:local="using:CalculatorApp">
 
     <Application.Resources>
@@ -15,6 +14,8 @@
                 <ResourceDictionary x:Key="Default">
                     <Thickness x:Key="HighContrastThicknessTop">0,0,0,0</Thickness>
                     <x:Double x:Key="HighContrastStrokeThickness">0</x:Double>
+                    <x:Double x:Key="EquationButtonOverlayPointerOverOpacity">0.3</x:Double>
+                    <x:Double x:Key="EquationButtonOverlayPressedOpacity">0.5</x:Double>
                     <Color x:Key="AltHighColor">#FF000000</Color>
                     <Color x:Key="ChromeMediumLowColor">#FF2B2B2B</Color>
                     <Color x:Key="OperatorPanelScrollButtonBackgroundColor">#FF858585</Color>
@@ -67,6 +68,13 @@
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemControlBackgroundAltMediumBrush}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource TextControlBackground}"/>
+                    <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="White"/>
+                    <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush"
+                                     Opacity="0.4"
+                                     Color="#FFFFFF"/>
+                    <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush"
+                                     Opacity="0.6"
+                                     Color="{StaticResource SystemChromeWhiteColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
 
                     <SolidColorBrush x:Key="EquationBrush1" Color="#FF0078D7"/>
@@ -92,6 +100,9 @@
                     <Color x:Key="AltHighColor">#FFF2F2F2</Color>
                     <Color x:Key="ChromeMediumLowColor">#FFE0E0E0</Color>
                     <Color x:Key="OperatorPanelScrollButtonBackgroundColor">#FF858585</Color>
+
+                    <x:Double x:Key="EquationButtonOverlayPointerOverOpacity">0.2</x:Double>
+                    <x:Double x:Key="EquationButtonOverlayPressedOpacity">0.4</x:Double>
                     <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="{StaticResource SystemAltHighColor}"/>
                     <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush" Color="{StaticResource ChromeMediumLowColor}"/>
                     <SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush" Color="{StaticResource SystemBaseHighColor}"/>
@@ -144,6 +155,11 @@
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemControlBackgroundAltMediumBrush}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource TextControlBackground}"/>
+                    <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="Black"/>
+                    <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush"
+                                     Opacity="0.4"
+                                     Color="#000000"/>
+                    <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush" Color="{StaticResource SystemChromeWhiteColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
 
                     <SolidColorBrush x:Key="EquationBrush1" Color="#FF0078D7"/>
@@ -166,6 +182,8 @@
                 <ResourceDictionary x:Key="HighContrast">
                     <Thickness x:Key="HighContrastThicknessTop">0,1,0,0</Thickness>
                     <x:Double x:Key="HighContrastStrokeThickness">2</x:Double>
+                    <x:Double x:Key="EquationButtonOverlayPointerOverOpacity">1.0</x:Double>
+                    <x:Double x:Key="EquationButtonOverlayPressedOpacity">1.0</x:Double>
                     <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush" Color="{ThemeResource SystemColorCaptionTextColor}"/>
@@ -193,7 +211,9 @@
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
-
+                    <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                    <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="Transparent"/>
+                    <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush" Color="{StaticResource SystemColorGrayTextColor}"/>
                     <!-- TODO: Figure out what colors we can use in high contrast -->
                     <SolidColorBrush x:Key="EquationBrush1" Color="{ThemeResource SystemColorGrayTextColor}"/>
                     <SolidColorBrush x:Key="EquationBrush2" Color="{ThemeResource SystemColorHighlightColor}"/>
@@ -1931,6 +1951,7 @@
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
+
                                     </VisualStateGroup>
 
                                     <VisualStateGroup x:Name="ButtonStates">
@@ -1950,19 +1971,116 @@
 
                                 </VisualStateManager.VisualStateGroups>
 
-                                <Button x:Name="EquationButton"
-                                        MinWidth="44"
-                                        MinHeight="44"
-                                        VerticalAlignment="Stretch"
-                                        Background="{TemplateBinding EquationColor}"
-                                        Foreground="{StaticResource SystemChromeWhiteColor}"
-                                        Content="ƒₓ">
-                                    <Button.Resources>
-                                        <SolidColorBrush x:Name="ButtonBackgroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                        <SolidColorBrush x:Name="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
-                                        <SolidColorBrush x:Name="ButtonBorderBrushPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                    </Button.Resources>
-                                </Button>
+                                <ToggleButton x:Name="EquationButton"
+                                              MinWidth="44"
+                                              MinHeight="44"
+                                              VerticalAlignment="Stretch"
+                                              Background="{TemplateBinding EquationColor}"
+                                              Foreground="{StaticResource SystemChromeWhiteColor}"
+                                              BorderBrush="{TemplateBinding EquationColor}">
+                                    <ToggleButton.Content>
+                                        <StackPanel x:Name="FunctionNumberLabel"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Background="Transparent"
+                                                    Orientation="Horizontal">
+                                            <TextBlock Text="ƒ"/>
+                                            <TextBlock Margin="0,10,0,0"
+                                                       FontSize="9"
+                                                       Text="{TemplateBinding EquationButtonContentIndex}"/>
+                                        </StackPanel>
+                                    </ToggleButton.Content>
+                                    <ToggleButton.Resources>
+                                        <SolidColorBrush x:Name="ButtonBackgroundBrush" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                        <SolidColorBrush x:Name="ButtonBorderBrush" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                    </ToggleButton.Resources>
+                                    <ToggleButton.Style>
+                                        <Style TargetType="ToggleButton">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ToggleButton">
+                                                        <Grid x:Name="RootGrid"
+                                                              Background="Transparent"
+                                                              BorderBrush="Transparent">
+                                                            <VisualStateManager.VisualStateGroups>
+                                                                <VisualStateGroup x:Name="CommonStates">
+                                                                    <VisualState x:Name="Normal">
+                                                                        <VisualState.Setters>
+                                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ButtonBackgroundBrush}"/>
+                                                                            <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
+                                                                            <Setter Target="Overlay.Opacity" Value="0.0"/>
+                                                                            <Setter Target="ContentPresenter.Visibility" Value="Visible"/>
+                                                                            <Setter Target="ShowHideIcon.Visibility" Value="Collapsed"/>
+                                                                        </VisualState.Setters>
+                                                                    </VisualState>
+                                                                    <VisualState x:Name="PointerOver">
+                                                                        <VisualState.Setters>
+                                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ButtonBackgroundBrush}"/>
+                                                                            <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
+                                                                            <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPointerOverOpacity}"/>
+                                                                            <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
+                                                                            <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
+                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xE890;"/>
+                                                                        </VisualState.Setters>
+                                                                    </VisualState>
+                                                                    <VisualState x:Name="Pressed">
+                                                                        <VisualState.Setters>
+                                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ButtonBackgroundBrush}"/>
+                                                                            <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
+                                                                            <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPressedOpacity}"/>
+                                                                            <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
+                                                                            <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
+                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xE890;"/>
+                                                                        </VisualState.Setters>
+                                                                    </VisualState>
+                                                                    <VisualState x:Name="Checked">
+                                                                        <VisualState.Setters>
+                                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource EquationButtonHideLineBackgroundBrush}"/>
+                                                                            <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource EquationButtonHideLineBackgroundBrush}"/>
+                                                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource EquationButtonHideLineForegroundBrush}"/>
+                                                                        </VisualState.Setters>
+                                                                    </VisualState>
+                                                                    <VisualState x:Name="CheckedPointerOver">
+                                                                        <VisualState.Setters>
+                                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource EquationButtonHideLineBackgroundBrush}"/>
+                                                                            <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource EquationButtonHideLineBackgroundBrush}"/>
+                                                                            <Setter Target="ShowHideIcon.Foreground" Value="{ThemeResource EquationButtonHideLineForegroundBrush}"/>
+                                                                            <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPointerOverOpacity}"/>
+                                                                            <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
+                                                                            <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
+                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xED1A;"/>
+                                                                        </VisualState.Setters>
+                                                                    </VisualState>
+                                                                    <VisualState x:Name="CheckedPressed">
+                                                                        <VisualState.Setters>
+                                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource EquationButtonHideLineBackgroundBrush}"/>
+                                                                            <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource EquationButtonHideLineBackgroundBrush}"/>
+                                                                            <Setter Target="ShowHideIcon.Foreground" Value="{ThemeResource EquationButtonHideLineForegroundBrush}"/>
+                                                                            <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPressedOpacity}"/>
+                                                                            <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
+                                                                            <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
+                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xED1A;"/>
+                                                                        </VisualState.Setters>
+                                                                    </VisualState>
+                                                                </VisualStateGroup>
+                                                            </VisualStateManager.VisualStateGroups>
+                                                            <Rectangle x:Name="Overlay"
+                                                                       Fill="{ThemeResource EquationButtonOverlayBackgroundBrush}"
+                                                                       Opacity="0"
+                                                                       IsHitTestVisible="False"/>
+                                                            <ContentPresenter x:Name="ContentPresenter"
+                                                                              AutomationProperties.AccessibilityView="Raw"
+                                                                              IsHitTestVisible="False"/>
+                                                            <FontIcon x:Name="ShowHideIcon"
+                                                                      FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                      Visibility="Collapsed"/>
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ToggleButton.Style>
+                                </ToggleButton>
                                 <Border x:Name="EquationBoxBorder"
                                         Grid.Column="1"
                                         Background="{ThemeResource TextControlBackground}"
@@ -2006,6 +2124,7 @@
                                                 IsTabStop="False"
                                                 Visibility="Collapsed"/>
                                         <Button x:Name="RemoveButton"
+                                                x:Uid="removeButton"
                                                 Grid.Column="3"
                                                 MinWidth="34"
                                                 Margin="{ThemeResource HelperButtonThemePadding}"
@@ -2021,6 +2140,7 @@
                                                 IsTabStop="False"
                                                 Visibility="Collapsed"/>
                                         <ToggleButton x:Name="ColorChooserButton"
+                                                      x:Uid="colorChooserButton"
                                                       Grid.Column="2"
                                                       MinWidth="34"
                                                       Margin="{ThemeResource HelperButtonThemePadding}"
@@ -2046,6 +2166,7 @@
                                             </ToggleButton.Resources>
                                         </ToggleButton>
                                         <Button x:Name="FunctionButton"
+                                                x:Uid="functionAnalysisButton"
                                                 Grid.Column="1"
                                                 MinWidth="34"
                                                 Margin="{ThemeResource HelperButtonThemePadding}"
