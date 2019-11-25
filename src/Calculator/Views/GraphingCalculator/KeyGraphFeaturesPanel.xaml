@@ -175,7 +175,7 @@
                                 <Button.Resources>
                                     <ResourceDictionary>
                                         <ResourceDictionary.ThemeDictionaries>
-                                            <ResourceDictionary x:Key="Custom">
+                                            <ResourceDictionary x:Key="Default">
                                                 <SolidColorBrush x:Name="ButtonBackground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                 <SolidColorBrush x:Name="ButtonForeground" Color="{StaticResource SystemChromeWhiteColor}"/>
                                                 <SolidColorBrush x:Name="ButtonBackgroundPointerOver"
@@ -183,6 +183,10 @@
                                                      Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                 <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
                                                 <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+
+                                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemColorWindowColor}"/>
+                                                <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                             </ResourceDictionary>
                                             <ResourceDictionary x:Key="Light">
                                                 <SolidColorBrush x:Key="ButtonBackground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
@@ -192,6 +196,9 @@
                                                      Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                 <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
                                                 <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemColorWindowColor}"/>
+                                                <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                             </ResourceDictionary>
                                             <ResourceDictionary x:Key="HighContrast">
                                                 <SolidColorBrush x:Key="ButtonBackground" Color="{ThemeResource SystemColorButtonFaceColor}"/>
