@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="using:CalculatorApp.Controls"
              xmlns:common="using:CalculatorApp.Common"
-             xmlns:converters="using:CalculatorApp.Converters"
              xmlns:local="using:CalculatorApp">
 
     <Application.Resources>
@@ -15,6 +14,8 @@
                 <ResourceDictionary x:Key="Default">
                     <Thickness x:Key="HighContrastThicknessTop">0,0,0,0</Thickness>
                     <x:Double x:Key="HighContrastStrokeThickness">0</x:Double>
+                    <x:Double x:Key="EquationButtonOverlayPointerOverOpacity">0.3</x:Double>
+                    <x:Double x:Key="EquationButtonOverlayPressedOpacity">0.5</x:Double>
                     <Color x:Key="AltHighColor">#FF000000</Color>
                     <Color x:Key="ChromeMediumLowColor">#FF2B2B2B</Color>
                     <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="{StaticResource AltHighColor}"/>
@@ -28,6 +29,7 @@
                     <RevealBackgroundBrush x:Key="AppControlPressedButtonFaceBrush" Color="#30FFFFFF"/>
                     <SolidColorBrush x:Key="AppControlTransparentAccentColorBrush" Color="{ThemeResource SystemAccentColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush" Color="{StaticResource SystemBaseHighColor}"/>
+                    <SolidColorBrush x:Key="AppControlForegroundAccentBrush" Color="{ThemeResource SystemAccentColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextRedColorBrush" Color="Red"/>
                     <RevealBorderBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
                                        FallbackColor="Transparent"
@@ -50,6 +52,13 @@
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemControlBackgroundAltMediumBrush}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource TextControlBackground}"/>
+                    <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="White"/>
+                    <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush"
+                                     Opacity="0.4"
+                                     Color="#FFFFFF"/>
+                    <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush"
+                                     Opacity="0.6"
+                                     Color="{StaticResource SystemChromeWhiteColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
                     <SolidColorBrush x:Key="TextControlButtonBorderBrushPointerOver" Color="Transparent"/>
                     <SolidColorBrush x:Key="TextControlButtonBackgroundBrushPointerOver" Color="Transparent"/>
@@ -76,6 +85,8 @@
                     <x:Double x:Key="HighContrastStrokeThickness">0</x:Double>
                     <Color x:Key="AltHighColor">#FFF2F2F2</Color>
                     <Color x:Key="ChromeMediumLowColor">#FFE0E0E0</Color>
+                    <x:Double x:Key="EquationButtonOverlayPointerOverOpacity">0.2</x:Double>
+                    <x:Double x:Key="EquationButtonOverlayPressedOpacity">0.4</x:Double>
                     <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="{StaticResource SystemAltHighColor}"/>
                     <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush" Color="{StaticResource ChromeMediumLowColor}"/>
                     <SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush" Color="{StaticResource SystemBaseHighColor}"/>
@@ -87,6 +98,7 @@
                     <RevealBackgroundBrush x:Key="AppControlPressedButtonFaceBrush" Color="#30000000"/>
                     <SolidColorBrush x:Key="AppControlTransparentAccentColorBrush" Color="{ThemeResource SystemAccentColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush" Color="{StaticResource SystemBaseHighColor}"/>
+                    <SolidColorBrush x:Key="AppControlForegroundAccentBrush" Color="{ThemeResource SystemAccentColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextRedColorBrush" Color="Red"/>
                     <RevealBorderBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
                                        FallbackColor="Transparent"
@@ -108,6 +120,11 @@
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemControlBackgroundAltMediumBrush}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource TextControlBackground}"/>
+                    <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="Black"/>
+                    <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush"
+                                     Opacity="0.4"
+                                     Color="#000000"/>
+                    <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush" Color="{StaticResource SystemChromeWhiteColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
                     <SolidColorBrush x:Key="TextControlButtonBorderBrushPointerOver" Color="Transparent"/>
                     <SolidColorBrush x:Key="TextControlButtonBackgroundBrushPointerOver" Color="Transparent"/>
@@ -133,6 +150,8 @@
                 <ResourceDictionary x:Key="HighContrast">
                     <Thickness x:Key="HighContrastThicknessTop">0,1,0,0</Thickness>
                     <x:Double x:Key="HighContrastStrokeThickness">2</x:Double>
+                    <x:Double x:Key="EquationButtonOverlayPointerOverOpacity">1.0</x:Double>
+                    <x:Double x:Key="EquationButtonOverlayPressedOpacity">1.0</x:Double>
                     <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="TitleBarForegroundBaseHighBrush" Color="{ThemeResource SystemColorCaptionTextColor}"/>
@@ -144,6 +163,7 @@
                     <SolidColorBrush x:Key="AppControlPressedButtonFaceBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentAccentColorBrush" Color="Transparent"/>
                     <SolidColorBrush x:Key="AppControlPageTextBaseHighColorBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
+                    <SolidColorBrush x:Key="AppControlForegroundAccentBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextRedColorBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
                     <SolidColorBrush x:Key="AppControlForegroundTransparentRevealBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
                     <SolidColorBrush x:Key="AppControlHighlightAccentRevealBackgroundBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
@@ -154,7 +174,9 @@
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
-
+                    <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                    <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="Transparent"/>
+                    <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush" Color="{StaticResource SystemColorGrayTextColor}"/>
                     <!-- TODO: Figure out what colors we can use in high contrast -->
                     <SolidColorBrush x:Key="EquationBrush1" Color="{ThemeResource SystemColorGrayTextColor}"/>
                     <SolidColorBrush x:Key="EquationBrush2" Color="{ThemeResource SystemColorHighlightColor}"/>
@@ -529,6 +551,7 @@
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
                 <Setter Property="FontSize" Value="{StaticResource CaptionFontSize}"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -568,7 +591,7 @@
                                                   BorderBrush="{ThemeResource AppControlForegroundTransparentRevealBorderBrush}"
                                                   BorderThickness="{TemplateBinding BorderThickness}"
                                                   FontSize="{TemplateBinding FontSize}"
-                                                  FontWeight="SemiBold"
+                                                  FontWeight="{TemplateBinding FontWeight}"
                                                   AutomationProperties.AccessibilityView="Raw"
                                                   Content="{TemplateBinding Content}"
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -1510,6 +1533,7 @@
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
+
                                     </VisualStateGroup>
 
                                     <VisualStateGroup x:Name="ButtonStates">
@@ -1614,6 +1638,7 @@
                                                 IsTabStop="False"
                                                 Visibility="Collapsed"/>
                                         <Button x:Name="RemoveButton"
+                                                x:Uid="removeButton"
                                                 Grid.Column="3"
                                                 MinWidth="34"
                                                 Margin="{ThemeResource HelperButtonThemePadding}"
@@ -1660,6 +1685,7 @@
                                             </Button.Resources>
                                         </Button>
                                         <ToggleButton x:Name="ColorChooserButton"
+                                                      x:Uid="colorChooserButton"
                                                       Grid.Column="2"
                                                       MinWidth="34"
                                                       Margin="{ThemeResource HelperButtonThemePadding}"
@@ -1713,6 +1739,7 @@
                                             </ToggleButton.Resources>
                                         </ToggleButton>
                                         <Button x:Name="FunctionButton"
+                                                x:Uid="functionAnalysisButton"
                                                 Grid.Column="1"
                                                 MinWidth="34"
                                                 Margin="{ThemeResource HelperButtonThemePadding}"

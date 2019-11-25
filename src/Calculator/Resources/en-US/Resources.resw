@@ -3491,7 +3491,7 @@
     <value>Zoom Out</value>
     <comment>Screen reader prompt for the zoom out button.</comment>
   </data>
-  <data name="EquationInputButtonPlaceholderText" xml:space="preserve">
+  <data name="EquationInputButtonPlaceholder.Text" xml:space="preserve">
     <value>Add Equation</value>
     <comment>Placeholder text for the equation input button</comment>
   </data>
@@ -3507,9 +3507,17 @@
     <value>Look what I graphed.</value>
     <comment>Sent as part of the shared content. The title for the share.</comment>
   </data>
-  <data name="EmptyEquationString" xml:space="preserve">
-    <value>Empty graph equation</value>
-    <comment>When sharing and one of the equations has no content this will be shown in the graph key for that equation.</comment>
+  <data name="EquationsShareHeader" xml:space="preserve">
+    <value>Equations:</value>
+    <comment>Header that appears over the equations section when sharing</comment>
+  </data>
+  <data name="VariablesShareHeader" xml:space="preserve">
+    <value>Variables:</value>
+    <comment>Header that appears over the variables section when sharing</comment>
+  </data>
+  <data name="GraphImageAltText" xml:space="preserve">
+    <value>Image of a graph with equations</value>
+    <comment>Alt text for the graph image when output via Share</comment>
   </data>
   <data name="VaiablesHeader.Text" xml:space="preserve">
     <value>Variables</value>
@@ -3689,5 +3697,69 @@
   <data name="KGFRangeNone" xml:space="preserve">
     <value>Unable to calculate the range for this function.</value>
     <comment>Error displayed when Range is not returned from the analyzer.</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Back</value>
+    <comment>This is the tooltip contents for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Analyze equation</value>
+    <comment>This is the tooltip automation name for the analyze equation button</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Remove equation</value>
+    <comment>This is the tool tip automation name for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Share</value>
+    <comment>This is the tool tip automation name for the graphing calculator share button.</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Change equation style</value>
+    <comment>This is the tool tip automation name for the graphing calculator equation style button</comment>
+  </data>
+  <data name="showEquationButtonToolTip" xml:space="preserve">
+    <value>Show</value>
+    <comment>This is the tooltip shown when visibility is set to hidden in the graphing calculator</comment>
+  </data>
+  <data name="hideEquationButtonToolTip" xml:space="preserve">
+    <value>Hide</value>
+    <comment>This is the tooltip shown when visibility is set to visible in the graphing calculator</comment>
+  </data>
+  <data name="disableTracingButtonToolTip" xml:space="preserve">
+    <value>Stop tracing</value>
+    <comment>This is the tool tip automation name for the graphing calculator stop tracing button</comment>
+  </data>
+  <data name="enableTracingButtonToolTip" xml:space="preserve">
+    <value>Start tracing</value>
+    <comment>This is the tool tip automation name for the graphing calculator start tracing button</comment>
+  </data>
+  <data name="variablesButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Variables</value>
+    <comment>This is the tool tip automation name for the Calculator variables button.</comment>
+  </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Configure slider</value>
+    <comment>This is the tool tip text for teh slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphSwitchToEquationMode" xml:space="preserve">
+    <value>Switch to equation mode</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchToGraphMode" xml:space="preserve">
+    <value>Switch to graph mode</value>
+    <comment>Used in Graphing Calculator to switch the view to the graph mode</comment>
+  </data>
+  <data name="SwitchModeToggleButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Switch to equation mode</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToEquationModeAnnouncement" xml:space="preserve">
+    <value>Current mode is equation mode</value>
+    <comment>Announcement used in Graphing Calculator when switching to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToGraphModeAnnouncement" xml:space="preserve">
+    <value>Current mode is graph mode</value>
+    <comment>Announcement used in Graphing Calculator when switching to the graph mode</comment>
   </data>
 </root>

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
+#include "CalcViewModel/Common/LocalizationStringUtil.h"
 #include "EquationTextBox.h"
 
 using namespace std;
@@ -21,10 +23,13 @@ using namespace Windows::UI::Xaml::Controls::Primitives;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, ColorChooserFlyout);
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonContentIndex);
+
 
 void EquationTextBox::OnApplyTemplate()
 {
-    m_equationButton = dynamic_cast<Button ^>(GetTemplateChild("EquationButton"));
+    m_equationButton = dynamic_cast<ToggleButton ^>(GetTemplateChild("EquationButton"));
+    m_kgfEquationButton = dynamic_cast<Button ^>(GetTemplateChild("KGFEquationButton"));
     m_richEditBox = dynamic_cast<MathRichEditBox ^>(GetTemplateChild("EquationTextBox"));
     m_deleteButton = dynamic_cast<Button ^>(GetTemplateChild("DeleteButton"));
     m_removeButton = dynamic_cast<Button ^>(GetTemplateChild("RemoveButton"));
@@ -42,6 +47,16 @@ void EquationTextBox::OnApplyTemplate()
     if (m_equationButton != nullptr)
     {
         m_equationButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnEquationButtonClicked);
+
+         auto toolTip = ref new ToolTip();
+         auto resProvider = AppResourceProvider::GetInstance();
+         toolTip->Content = m_equationButton->IsChecked->Value ? resProvider.GetResourceString(L"showEquationButtonToolTip") : resProvider.GetResourceString(L"hideEquationButtonToolTip");
+         ToolTipService::SetToolTip(m_equationButton, toolTip);
+    }
+
+    if (m_kgfEquationButton != nullptr)
+    {
+        m_kgfEquationButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnKGFEquationButtonClicked);
     }
 
     if (m_deleteButton != nullptr)
@@ -172,6 +187,17 @@ void EquationTextBox::OnDeleteButtonClicked(Object ^ sender, RoutedEventArgs ^ e
 void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
     EquationButtonClicked(this, ref new RoutedEventArgs());
+
+    auto toolTip = ref new ToolTip();
+    auto resProvider = AppResourceProvider::GetInstance();
+    toolTip->Content = m_equationButton->IsChecked->Value ? resProvider.GetResourceString(L"showEquationButtonToolTip") : resProvider.GetResourceString(L"hideEquationButtonToolTip");
+
+    ToolTipService::SetToolTip(m_equationButton, toolTip);
+}
+
+void EquationTextBox::OnKGFEquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    EquationButtonClicked(this, ref new RoutedEventArgs());
 }
 
 void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
@@ -187,6 +213,13 @@ void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e
     {
         m_functionButton->IsEnabled = false;
     }
+
+    if (m_equationButton)
+    {
+        m_equationButton->IsChecked = false;
+    }
+
+    VisualStateManager::GoToState(this, "Normal", true);
 }
 
 void EquationTextBox::OnColorChooserButtonClicked(Object ^ sender, RoutedEventArgs ^ e)

@@ -63,13 +63,15 @@ void EquationInputArea::AddEquationButton_Click(Object ^ sender, RoutedEventArgs
 
 void EquationInputArea::AddNewEquation()
 {
-    auto eq = ref new EquationViewModel();
+    auto eq = ref new EquationViewModel(ref new Equation());
 
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
 
     eq->LineColor = AvailableColors->GetAt(m_lastLineColorIndex);
-
+    eq->IsLineEnabled = true;
+    eq->FunctionLabelIndex = ++m_lastFunctionLabelIndex;
     Equations->Append(eq);
+    EquationInputList->ScrollIntoView(eq);
 }
 
 void EquationInputArea::InputTextBox_GotFocus(Object ^ sender, RoutedEventArgs ^ e)
@@ -101,6 +103,11 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
     unsigned int index;
     if (Equations->IndexOf(eq, &index))
     {
+        if (eq->FunctionLabelIndex == m_lastFunctionLabelIndex)
+        {
+            m_lastFunctionLabelIndex--;
+        }
+
         Equations->RemoveAt(index);
     }
 }
@@ -110,11 +117,14 @@ void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ s
     auto tb = static_cast<EquationTextBox ^>(sender);
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
     EquationVM = eq;
-    KeyGraphFeaturesVisibilityChanged(this, ref new RoutedEventArgs());
+    KeyGraphFeaturesRequested(EquationVM, ref new RoutedEventArgs());
 }
 
 void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
+    auto tb = static_cast<EquationTextBox ^>(sender);
+    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
+    eq->IsLineEnabled = !eq->IsLineEnabled;
 }
 
 void EquationInputArea::EquationTextBoxLoaded(Object ^ sender, RoutedEventArgs ^ e)

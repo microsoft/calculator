@@ -413,6 +413,9 @@
     <ProjectReference Include="..\CalcManager\CalcManager.vcxproj">
       <Project>{311e866d-8b93-4609-a691-265941fee101}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\GraphControl\GraphControl.vcxproj">
+      <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemDefinitionGroup Condition="!Exists('DataLoaders\DataLoaderConstants.h')">
     <ClCompile>
