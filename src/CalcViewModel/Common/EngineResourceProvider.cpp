@@ -17,7 +17,7 @@ namespace CalculatorApp
         m_resLoader = ResourceLoader::GetForViewIndependentUse("CEngineStrings");
     }
 
-    wstring EngineResourceProvider::GetCEngineString(const wstring& id)
+    wstring EngineResourceProvider::GetCEngineString(wstring_view id)
     {
         const auto& localizationSettings = LocalizationSettings::GetInstance();
 
@@ -43,7 +43,7 @@ namespace CalculatorApp
             return numberGroupingString;
         }
 
-        StringReference idRef(id.c_str());
+        StringReference idRef(id.data(), id.length());
         String ^ str = m_resLoader->GetString(idRef);
         return str->Begin();
     }
