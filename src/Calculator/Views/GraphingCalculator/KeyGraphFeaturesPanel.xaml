@@ -152,7 +152,8 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
-                            <Button x:Name="EquationButton"
+                            <Button x:Name="KGFEquationButton"
+                                    x:Uid="equationAnalysisBack" 
                                     MinWidth="44"
                                     MinHeight="44"
                                     VerticalAlignment="Stretch"
