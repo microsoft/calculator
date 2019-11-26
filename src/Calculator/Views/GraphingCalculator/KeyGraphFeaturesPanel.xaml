@@ -27,7 +27,6 @@
                     <ControlTemplate TargetType="controls:EquationTextBox">
                         <Grid>
                             <Grid.Resources>
-
                                 <Style x:Key="KGF_EquationTextBoxStyle" TargetType="controls:MathRichEditBox">
                                     <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}"/>
                                     <Setter Property="Background" Value="Transparent"/>
@@ -139,7 +138,6 @@
                                         </Setter.Value>
                                     </Setter>
                                 </Style>
-
                             </Grid.Resources>
 
                             <Grid.ColumnDefinitions>
@@ -454,8 +452,6 @@
                                              TextBlockTemplate="{StaticResource KGFTextBlockDataTemplate}"/>
 
         <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
-
-
     </UserControl.Resources>
 
     <Grid Margin="0,7,0,0" Background="Transparent">
