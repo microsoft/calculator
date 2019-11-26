@@ -175,8 +175,8 @@
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="Transparent"/>
-                    <SolidColorBrush x:Key="EquationBoxErrorBackgroundBrush" Color="#33EB5757"/>
-                    <SolidColorBrush x:Key="EquationBoxErrorBorderBrush" Color="#FFEB5757"/>
+                    <SolidColorBrush x:Key="EquationBoxErrorBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                    <SolidColorBrush x:Key="EquationBoxErrorBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
                     <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush" Color="{StaticResource SystemColorGrayTextColor}"/>
                     <!-- TODO: Figure out what colors we can use in high contrast -->
                     <SolidColorBrush x:Key="EquationBrush1" Color="{ThemeResource SystemColorGrayTextColor}"/>
