@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
+#include "CalcViewModel/Common/LocalizationStringUtil.h"
 #include "EquationTextBox.h"
 
 using namespace std;
@@ -27,6 +29,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, HasError);
 void EquationTextBox::OnApplyTemplate()
 {
     m_equationButton = dynamic_cast<ToggleButton ^>(GetTemplateChild("EquationButton"));
+    m_kgfEquationButton = dynamic_cast<Button ^>(GetTemplateChild("KGFEquationButton"));
     m_richEditBox = dynamic_cast<MathRichEditBox ^>(GetTemplateChild("MathRichEditBox"));
     m_deleteButton = dynamic_cast<Button ^>(GetTemplateChild("DeleteButton"));
     m_removeButton = dynamic_cast<Button ^>(GetTemplateChild("RemoveButton"));
@@ -44,6 +47,16 @@ void EquationTextBox::OnApplyTemplate()
     if (m_equationButton != nullptr)
     {
         m_equationButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnEquationButtonClicked);
+
+         auto toolTip = ref new ToolTip();
+         auto resProvider = AppResourceProvider::GetInstance();
+         toolTip->Content = m_equationButton->IsChecked->Value ? resProvider.GetResourceString(L"showEquationButtonToolTip") : resProvider.GetResourceString(L"hideEquationButtonToolTip");
+         ToolTipService::SetToolTip(m_equationButton, toolTip);
+    }
+
+    if (m_kgfEquationButton != nullptr)
+    {
+        m_kgfEquationButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnKGFEquationButtonClicked);
     }
 
     if (m_deleteButton != nullptr)
@@ -173,6 +186,17 @@ void EquationTextBox::OnDeleteButtonClicked(Object ^ sender, RoutedEventArgs ^ e
 }
 
 void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    EquationButtonClicked(this, ref new RoutedEventArgs());
+
+    auto toolTip = ref new ToolTip();
+    auto resProvider = AppResourceProvider::GetInstance();
+    toolTip->Content = m_equationButton->IsChecked->Value ? resProvider.GetResourceString(L"showEquationButtonToolTip") : resProvider.GetResourceString(L"hideEquationButtonToolTip");
+
+    ToolTipService::SetToolTip(m_equationButton, toolTip);
+}
+
+void EquationTextBox::OnKGFEquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
     EquationButtonClicked(this, ref new RoutedEventArgs());
 }

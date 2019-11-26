@@ -32,8 +32,9 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
             void set(CalculatorApp::ViewModel::GraphingCalculatorViewModel^ vm);
         }
 
-        Windows::UI::Xaml::Visibility ShouldDisplayPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel);
-        Platform::String ^ GetInfoForSwitchModeToggleButton(bool isChecked);
+        static Windows::UI::Xaml::Visibility ShouldDisplayPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel);
+        static Platform::String ^ GetInfoForSwitchModeToggleButton(bool isChecked);
+        static Windows::UI::Xaml::Visibility ManageEditVariablesButtonVisibility(unsigned int numberOfVariables);
     private:
         void GraphingCalculator_DataContextChanged(Windows::UI::Xaml::FrameworkElement ^ sender, Windows::UI::Xaml::DataContextChangedEventArgs ^ args);
 
@@ -58,7 +59,6 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
 
         void OnShowTracePopupChanged(bool newValue);
         void OnTracePointChanged(Windows::Foundation::Point newPoint);
-
     private:
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
         Windows::Foundation::EventRegistrationToken m_vectorChangedToken;

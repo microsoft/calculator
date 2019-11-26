@@ -1749,6 +1749,7 @@
                                                 FontSize="16"
                                                 Visibility="Collapsed"/>
                                         <Button x:Name="RemoveButton"
+                                                x:Uid="removeButton"
                                                 Grid.Column="3"
                                                 MinWidth="34"
                                                 Margin="{ThemeResource HelperButtonThemePadding}"
@@ -1764,6 +1765,7 @@
                                                 IsTabStop="False"
                                                 Visibility="Collapsed"/>
                                         <ToggleButton x:Name="ColorChooserButton"
+                                                      x:Uid="colorChooserButton"
                                                       Grid.Column="2"
                                                       MinWidth="34"
                                                       Margin="{ThemeResource HelperButtonThemePadding}"
@@ -1789,6 +1791,7 @@
                                             </ToggleButton.Resources>
                                         </ToggleButton>
                                         <Button x:Name="FunctionButton"
+                                                x:Uid="functionAnalysisButton"
                                                 Grid.Column="1"
                                                 MinWidth="34"
                                                 Margin="{ThemeResource HelperButtonThemePadding}"
