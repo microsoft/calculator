@@ -31,7 +31,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void OpenHistoryPanel()
         {
-            this.ResizeWindowToDiplayHistoryLabel();
+            this.ResizeWindowToDisplayHistoryLabel();
             this.HistoryLabel.Click();
         }
         /// <summary>
@@ -77,7 +77,7 @@ namespace CalculatorUITestFramework
         /// If the History label is not displayed, resize the window
         /// Two attempts are made, the the lable is not found a "not found" exception is thrown
         /// </summary>
-        public void ResizeWindowToDiplayHistoryLabel()
+        public void ResizeWindowToDisplayHistoryLabel()
         {
             Point newWindowPostion = new Point(0, 0);
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
@@ -114,7 +114,7 @@ namespace CalculatorUITestFramework
         ///// <summary>
         ///// If the History button is not displayed, resize the window
         ///// </summary>
-        public void ResizeWindowToNotDiplayHistoryLabel()
+        public void ResizeWindowToNotDisplayHistoryLabel()
         {
             Point newWindowPostion = new Point(0, 0);
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
@@ -143,7 +143,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void OpenHistoryFlyout()
         {
-            this.ResizeWindowToNotDiplayHistoryLabel();
+            this.ResizeWindowToNotDisplayHistoryLabel();
             this.GlobalCalculatorUI.AppName.Click();
             this.GlobalCalculatorUI.Header.SendKeys(Keys.Control + "h" + Keys.Control);
             Actions moveToHistoryFlyout = new Actions(WinAppDriver.Instance.CalculatorSession);

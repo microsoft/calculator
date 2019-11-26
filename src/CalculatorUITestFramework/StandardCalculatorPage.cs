@@ -82,6 +82,7 @@ namespace CalculatorUITestFramework
             if (sourceG.Contains("NormalAlwaysOnTopButton"))
             {
                 this.EnterAlwaysOnTopButton.Click();
+                this.ExitAlwaysOnTopButton.WaitForDisplayed();
                 string sourceH = WinAppDriver.Instance.CalculatorSession.PageSource;
                 if (sourceH.Contains("Header"))
                 {
