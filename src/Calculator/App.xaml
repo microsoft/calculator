@@ -1609,7 +1609,7 @@
                                                     <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{StaticResource SystemColorBackgroundColor}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrushPointerOver" Color="{StaticResource SystemColorWindowTextColor}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="{StaticResource SystemColorHighlightColor}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{StaticResource SystemColorBackgroundColor}"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{StaticResource SystemColorWindowColor}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrushPressed" Color="{StaticResource SystemColorWindowTextColor}"/>
                                                 </ResourceDictionary>
                                             </ResourceDictionary.ThemeDictionaries>
@@ -1647,9 +1647,10 @@
                                                                     </VisualState>
                                                                     <VisualState x:Name="Pressed">
                                                                         <VisualState.Setters>
-                                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ToggleButtonBackgroundBrush}"/>
+                                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ToggleButtonBackgroundPressed}"/>
                                                                             <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ToggleButtonBorderBrush}"/>
                                                                             <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPressedOpacity}"/>
+                                                                            <Setter Target="ShowHideIcon.Foreground" Value="{ThemeResource ToggleButtonForegroundPressed}"/>
                                                                             <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                             <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
                                                                             <Setter Target="ShowHideIcon.Glyph" Value="&#xE890;"/>
