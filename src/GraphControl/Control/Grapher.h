@@ -92,6 +92,28 @@ public
         }
 #pragma endregion
 
+#pragma region Windows::UI::Xaml::DataTemplate ^ AxesColor DependencyProperty
+        static property Windows::UI::Xaml::DependencyProperty^ AxesColorProperty
+        {
+            Windows::UI::Xaml::DependencyProperty ^ get()
+            {
+                return s_axesColorProperty;
+            }
+        }
+
+        property Windows::UI::Xaml::Media::SolidColorBrush^ AxesColor
+        {
+            Windows::UI::Xaml::Media::SolidColorBrush^ get()
+            {
+                return static_cast<Windows::UI::Xaml::Media::SolidColorBrush^>(GetValue(s_axesColorProperty));
+            }
+            void set(Windows::UI::Xaml::Media::SolidColorBrush^ value)
+            {
+                SetValue(s_axesColorProperty, value);
+            }
+        }
+#pragma endregion
+
         // Pass active tracing turned on or off down to the renderer
         property bool ActiveTracing
         {
@@ -183,6 +205,8 @@ public
 
         void OnForceProportionalAxesChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
 
+        void OnAxesColorChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
+
         void OnBackgroundColorChanged(const Windows::UI::Color& color);
 
         void ScaleRange(double centerX, double centerY, double scale);
@@ -213,6 +237,7 @@ public
         Windows::Foundation::EventRegistrationToken m_tokenEquationLineEnabledChanged;
 
         static Windows::UI::Xaml::DependencyProperty ^ s_forceProportionalAxesTemplateProperty;
+        static Windows::UI::Xaml::DependencyProperty ^ s_axesColorProperty;
 
         Windows::Foundation::EventRegistrationToken m_tokenBackgroundColorChanged;
 

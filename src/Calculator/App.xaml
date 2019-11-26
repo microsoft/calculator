@@ -1560,13 +1560,13 @@
                                            Fill="{TemplateBinding EquationColor}"
                                            Visibility="{ThemeResource RectangleVisibility}"/>
                                 <ToggleButton x:Name="EquationButton"
-                                        Grid.Column="1"
-                                        MinWidth="44"
-                                        MinHeight="44"
-                                        VerticalAlignment="Stretch"
-                                        Background="{ThemeResource EquationButtonBackground}"
-                                        Foreground="{ThemeResource EquationButtonForeground}"
-                                        BorderBrush="{ThemeResource EquationBoxBorderBrush}">
+                                              Grid.Column="1"
+                                              MinWidth="44"
+                                              MinHeight="44"
+                                              VerticalAlignment="Stretch"
+                                              Background="{ThemeResource EquationButtonBackground}"
+                                              Foreground="{ThemeResource EquationButtonForeground}"
+                                              BorderBrush="{ThemeResource EquationBoxBorderBrush}">
                                     <ToggleButton.Content>
                                         <StackPanel x:Name="FunctionNumberLabel"
                                                     HorizontalAlignment="Center"
@@ -1622,7 +1622,8 @@
                                                     <ControlTemplate TargetType="ToggleButton">
                                                         <Grid x:Name="RootGrid"
                                                               Background="Transparent"
-                                                              BorderBrush="Transparent">
+                                                              BorderBrush="Transparent"
+                                                              BorderThickness="1">
                                                             <VisualStateManager.VisualStateGroups>
                                                                 <VisualStateGroup x:Name="CommonStates">
                                                                     <VisualState x:Name="Normal">

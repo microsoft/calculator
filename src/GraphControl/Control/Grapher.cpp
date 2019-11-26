@@ -33,6 +33,7 @@ namespace
     constexpr auto s_propertyName_Equations = L"Equations";
     constexpr auto s_propertyName_Variables = L"Variables";
     constexpr auto s_propertyName_ForceProportionalAxes = L"ForceProportionalAxes";
+    constexpr auto s_propertyName_AxesColor = L"AxesColor";
 
     constexpr auto s_X = L"x";
     constexpr auto s_Y = L"y";
@@ -55,6 +56,7 @@ namespace GraphControl
     DependencyProperty ^ Grapher::s_equationsProperty;
     DependencyProperty ^ Grapher::s_variablesProperty;
     DependencyProperty ^ Grapher::s_forceProportionalAxesTemplateProperty;
+    DependencyProperty ^ Grapher::s_axesColorProperty;
 
     Grapher::Grapher()
         : m_solver{ IMathSolver::CreateMathSolver() }
@@ -175,6 +177,15 @@ namespace GraphControl
                 Grapher::typeid,
                 ref new PropertyMetadata(true, ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
         }
+
+        if (!s_axesColorProperty)
+        {
+            s_axesColorProperty = DependencyProperty::Register(
+                StringReference(s_propertyName_AxesColor),
+                Windows::UI::Xaml::Media::SolidColorBrush ::typeid,
+                Grapher::typeid,
+                ref new PropertyMetadata(true, ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
+        }
     }
 
     void Grapher::OnCustomDependencyPropertyChanged(DependencyObject ^ obj, DependencyPropertyChangedEventArgs ^ args)
@@ -189,6 +200,10 @@ namespace GraphControl
             else if (args->Property == ForceProportionalAxesTemplateProperty)
             {
                 self->OnForceProportionalAxesChanged(args);
+            }
+            else if (args->Property == AxesColorProperty)
+            {
+                self->OnAxesColorChanged(args);
             }
         }
     }
@@ -470,6 +485,8 @@ namespace GraphControl
     void Grapher::UpdateGraphOptions(IGraphingOptions& options, const vector<Equation ^>& validEqs)
     {
         options.SetForceProportional(ForceProportionalAxes);
+        auto axesColor = new Graphing::Color(AxesColor->Color.R, AxesColor->Color.G, AxesColor->Color.B, AxesColor->Color.A);
+        options.SetAxisColor(*axesColor);
 
         if (!validEqs.empty())
         {
@@ -502,6 +519,15 @@ namespace GraphControl
     void Grapher::OnForceProportionalAxesChanged(DependencyPropertyChangedEventArgs ^ args)
     {
         UpdateGraph();
+    }
+
+    void Grapher::OnAxesColorChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args)
+    {
+        if (m_graph)
+        {
+            auto axesColor = new Graphing::Color(AxesColor->Color.R, AxesColor->Color.G, AxesColor->Color.B, AxesColor->Color.A);
+            m_graph->GetOptions().SetAxisColor(*axesColor);
+        }
     }
 
     void Grapher::OnBackgroundColorChanged(const Windows::UI::Color& color)

@@ -392,7 +392,8 @@
                                       LosingFocus="GraphingControl_LosingFocus"
                                       LostFocus="GraphingControl_LostFocus"
                                       UseSystemFocusVisuals="True"
-                                      VariablesUpdated="GraphingControl_VariablesUpdated">
+                                      VariablesUpdated="GraphingControl_VariablesUpdated"
+                                      AxesColor="{ThemeResource SystemColorButtonTextBrush}">
                     <graphControl:Grapher.Background>
                         <SolidColorBrush Color="{ThemeResource SystemColorWindowColor}"/>
                     </graphControl:Grapher.Background>
