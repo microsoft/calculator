@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "EquationInputArea.xaml.h"
+#include "Utils/VisualTree.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -21,6 +22,7 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Input;
 using namespace GraphControl;
+using namespace Calculator::Utils;
 
 namespace
 {
@@ -31,6 +33,7 @@ EquationInputArea::EquationInputArea()
     : m_lastLineColorIndex{ -1 }
     , m_AvailableColors{ ref new Vector<SolidColorBrush ^>() }
     , m_accessibilitySettings{ ref new AccessibilitySettings() }
+    , m_equationToFocus{ nullptr }
 {
     m_accessibilitySettings->HighContrastChanged +=
         ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &EquationInputArea::OnHighContrastChanged);
@@ -72,6 +75,7 @@ void EquationInputArea::AddNewEquation()
     eq->IsLineEnabled = true;
     eq->FunctionLabelIndex = ++m_lastFunctionLabelIndex;
     Equations->Append(eq);
+    m_equationToFocus = eq;
 }
 
 void EquationInputArea::InputTextBox_GotFocus(Object ^ sender, RoutedEventArgs ^ e)
@@ -84,36 +88,65 @@ void EquationInputArea::InputTextBox_LostFocus(Object ^ sender, RoutedEventArgs 
     KeyboardShortcutManager::HonorShortcuts(true);
 }
 
-void EquationInputArea::InputTextBox_Submitted(Object ^ sender, RoutedEventArgs ^ e)
+void EquationInputArea::InputTextBox_Submitted(Object ^ sender, EquationSubmissionSource source)
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
-    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
-
-    // eq can be null if the equation has been removed
-    if (eq != nullptr)
+    if (tb == nullptr)
     {
-        eq->Expression = tb->GetEquationText();
+        return;
+    }
+    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
+    if (eq == nullptr)
+    {
+        return;
     }
 
-    if (eq->Expression != nullptr && eq->Expression->Length() > 0)
+    auto expressionText = tb->GetEquationText();
+    if (source == EquationSubmissionSource::FOCUS_LOST && eq->Expression == expressionText)
     {
-        auto hasFocus = tb->HasFocus;
+        // The expression didn't change.
+        return;
+    }
+
+    eq->Expression = expressionText;
+
+    if (source == EquationSubmissionSource::ENTER_KEY || eq->Expression != nullptr && eq->Expression->Length() > 0)
+    {
         unsigned int index = 0;
         if (Equations->IndexOf(eq, &index) && index == Equations->Size - 1)
         {
+            // If it's the last equation of the list
             AddNewEquation();
         }
-        if (hasFocus)
+        else
         {
-            FocusManager::TryMoveFocus(::FocusNavigationDirection::Left);
+            auto nextEquation = Equations->GetAt(index + 1);
+            FocusEquationTextBox(nextEquation);
         }
     }
-    else
+}
+
+void EquationInputArea::FocusEquationTextBox(EquationViewModel ^ equation)
+{
+    auto nextContainer = EquationInputList->ContainerFromItem(equation);
+    if (nextContainer == nullptr)
     {
-        if (tb->HasFocus)
-        {
-            FocusManager::TryMoveFocus(::FocusNavigationDirection::Left);
-        }
+        return;
+    }
+    auto listviewItem = dynamic_cast<ListViewItem ^>(nextContainer);
+    if (listviewItem == nullptr)
+    {
+        return;
+    }
+    auto equationInput = VisualTree::FindDescendantByName(nextContainer, "EquationInputButton");
+    if (equationInput == nullptr)
+    {
+        return;
+    }
+    auto equationTextBox = dynamic_cast<EquationTextBox ^>(equationInput);
+    if (equationTextBox != nullptr)
+    {
+        equationTextBox->FocusTextBox();
     }
 }
 
@@ -166,6 +199,12 @@ void EquationInputArea::EquationTextBoxLoaded(Object ^ sender, RoutedEventArgs ^
 
     auto colorChooser = static_cast<EquationStylePanelControl ^>(tb->ColorChooserFlyout->Content);
     colorChooser->AvailableColors = AvailableColors;
+
+    if (tb->DataContext == m_equationToFocus)
+    {
+        m_equationToFocus = nullptr;
+        tb->FocusTextBox();
+    }
 }
 
 void EquationInputArea::OnHighContrastChanged(AccessibilitySettings ^ sender, Object ^ args)

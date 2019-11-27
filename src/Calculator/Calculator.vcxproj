@@ -262,6 +262,7 @@
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.h" />
+    <ClInclude Include="Utils\VisualTree.h" />
     <ClInclude Include="Views\Calculator.xaml.h">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
     </ClInclude>
@@ -425,6 +426,7 @@
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.cpp" />
+    <ClCompile Include="Utils\VisualTree.cpp" />
     <ClCompile Include="Views\Calculator.xaml.cpp">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
     </ClCompile>

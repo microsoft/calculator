@@ -38,7 +38,8 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:EquationViewModel">
-                    <controls:EquationTextBox x:Uid="EquationInputButton"
+                    <controls:EquationTextBox x:Name="EquationInputButton"
+                                              x:Uid="EquationInputButton"
                                               Margin="1"
                                               Style="{StaticResource EquationTextBoxStyle}"
                                               EquationButtonClicked="EquationTextBox_EquationButtonClicked"

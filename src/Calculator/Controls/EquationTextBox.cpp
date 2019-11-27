@@ -28,6 +28,10 @@ DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonContentIndex);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, HasError);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, IsAddEquationMode);
 
+EquationTextBox::EquationTextBox()
+{
+}
+
 void EquationTextBox::OnApplyTemplate()
 {
     m_equationButton = dynamic_cast<ToggleButton ^>(GetTemplateChild("EquationButton"));
@@ -151,10 +155,16 @@ void EquationTextBox::OnKeyDown(KeyRoutedEventArgs ^ e)
 {
     if (e->Key == VirtualKey::Enter)
     {
-        EquationSubmitted(this, ref new RoutedEventArgs());
-        if (m_functionButton && m_richEditBox->MathText != L"")
+        m_sourceSubmission = EquationSubmissionSource::ENTER_KEY;
+        // We will rely on OnLostFocus to submit the equation to prevent the launch of 2 events
+        if (!m_HasFocus || !FocusManager::TryMoveFocusAsync(::FocusNavigationDirection::Next))
         {
-            m_functionButton->IsEnabled = true;
+            m_sourceSubmission = EquationSubmissionSource::FOCUS_LOST;
+            EquationSubmitted(this, EquationSubmissionSource::ENTER_KEY);
+            if (m_functionButton && m_richEditBox->MathText != L"")
+            {
+                m_functionButton->IsEnabled = true;
+            }
         }
     }
 }
@@ -163,11 +173,13 @@ void EquationTextBox::OnLostFocus(RoutedEventArgs ^ e)
 {
     if (m_richEditBox != nullptr && !m_richEditBox->ContextFlyout->IsOpen)
     {
-        EquationSubmitted(this, ref new RoutedEventArgs());
-        if (m_functionButton && m_richEditBox->MathText != L"")
-        {
-            m_functionButton->IsEnabled = true;
-        }
+        return;
+    }
+
+    EquationSubmitted(this, m_sourceSubmission);
+    if (m_functionButton && m_richEditBox->MathText != L"")
+    {
+        m_functionButton->IsEnabled = true;
     }
 }
 
@@ -192,6 +204,7 @@ void EquationTextBox::OnRichEditBoxTextChanged(Object ^ sender, RoutedEventArgs 
 void EquationTextBox::OnRichEditBoxGotFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     m_HasFocus = true;
+    m_sourceSubmission = EquationSubmissionSource::FOCUS_LOST;
     UpdateCommonVisualState();
     UpdateButtonsVisualState();
 }
@@ -379,4 +392,12 @@ void EquationTextBox::OnIsAddEquationModePropertyChanged(bool /*oldValue*/, bool
 {
     UpdateCommonVisualState();
     UpdateButtonsVisualState();
+}
+
+void EquationTextBox::FocusTextBox()
+{
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->Focus(::FocusState::Programmatic);
+    }
 }
