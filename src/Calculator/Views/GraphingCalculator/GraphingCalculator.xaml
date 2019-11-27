@@ -383,18 +383,11 @@
                 <ToggleButton.Resources>
                     <ResourceDictionary>
                         <ResourceDictionary.ThemeDictionaries>
-                            <ResourceDictionary x:Key="Default">
-                                
-                            </ResourceDictionary>
-                            <ResourceDictionary x:Key="Light">
-                                
-                            </ResourceDictionary>
                             <ResourceDictionary x:Key="HighContrast">
                                 <SolidColorBrush x:Key="ToggleButtonBackgroundPointerOver" Color="{ThemeResource SystemColorHighlightColor}"/>
                                 <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{ThemeResource SystemColorWindowColor}"/>
                                 <SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="{ThemeResource SystemColorHighlightColor}"/>
                                 <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{ThemeResource SystemColorWindowColor}"/>
-                                
                             </ResourceDictionary>
                         </ResourceDictionary.ThemeDictionaries>
                     </ResourceDictionary>
@@ -407,12 +400,12 @@
               Visibility="{x:Bind ShouldDisplayPanel(IsSmallState, SwitchModeToggleButton.IsChecked.Value, x:True), Mode=OneWay}">
             <Grid Grid.Row="0" Margin="0,4,0,0">
                 <graphControl:Grapher Name="GraphingControl"
+                                      AxesColor="{ThemeResource SystemColorButtonTextBrush}"
                                       ForceProportionalAxes="True"
                                       LosingFocus="GraphingControl_LosingFocus"
                                       LostFocus="GraphingControl_LostFocus"
                                       UseSystemFocusVisuals="True"
-                                      VariablesUpdated="GraphingControl_VariablesUpdated"
-                                      AxesColor="{ThemeResource SystemColorButtonTextBrush}">
+                                      VariablesUpdated="GraphingControl_VariablesUpdated">
                     <graphControl:Grapher.Background>
                         <SolidColorBrush Color="{ThemeResource SystemColorWindowColor}"/>
                     </graphControl:Grapher.Background>
