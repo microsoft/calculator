@@ -53,8 +53,6 @@ DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, IsSmallState);
 
 GraphingCalculator::GraphingCalculator()    
 {
-    Equation::RegisterDependencyProperties();
-    Grapher::RegisterDependencyProperties();
     InitializeComponent();
 
     DataTransferManager ^ dataTransferManager = DataTransferManager::GetForCurrentView();
@@ -219,7 +217,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
                     continue;
                 }
 
-                auto color = equation->LineColor->Color;
+                auto color = equation->LineColor;
                 hasEquations = true;
 
                 expression = GraphingControl->ConvertToLinear(expression);
@@ -319,7 +317,7 @@ void GraphingCalculator::SubmitTextbox(TextBox ^ sender)
 
     if (sender->Name == "ValueTextBox")
     {
-        variableViewModel->SetValue(validateDouble(sender->Text, variableViewModel->Value));
+        variableViewModel->Value = validateDouble(sender->Text, variableViewModel->Value);
     }
     else if (sender->Name == "MinTextBox")
     {
@@ -432,12 +430,15 @@ void GraphingCalculator::GraphingControl_LosingFocus(UIElement ^ sender, LosingF
     }
 }
 
-void GraphingCalculator::OnEquationKeyGraphFeaturesRequested(Object ^ sender, RoutedEventArgs ^ e)
+void GraphingCalculator::OnEquationKeyGraphFeaturesRequested(Object ^ sender, EquationViewModel ^ equationViewModel)
 {
-    auto equationViewModel = static_cast<EquationViewModel ^>(sender);
-    GraphingControl->AnalyzeEquation(equationViewModel->GraphEquation);
-    equationViewModel->PopulateKeyGraphFeatures();
-    IsKeyGraphFeaturesVisible = true;
+    ViewModel->SetSelectedEquation(equationViewModel);
+    if (equationViewModel != nullptr)
+    {
+        auto keyGraphFeatureInfo = GraphingControl->AnalyzeEquation(equationViewModel->GraphEquation);
+        equationViewModel->PopulateKeyGraphFeatures(keyGraphFeatureInfo);
+        IsKeyGraphFeaturesVisible = true;
+    }
 }
 
 void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventArgs ^ e)

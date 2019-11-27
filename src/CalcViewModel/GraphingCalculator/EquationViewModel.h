@@ -5,6 +5,12 @@
 
 #include "../Common/Utils.h"
 
+namespace GraphControl
+{
+    ref class Equation;
+    ref class KeyGraphFeaturesInfo;
+}
+
 namespace CalculatorApp::ViewModel
 {
 public
@@ -31,17 +37,16 @@ public
         OBSERVABLE_PROPERTY_RW(bool, IsText);
     };
 
-
 public
     ref class EquationViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
     {
     public:
-        EquationViewModel(GraphControl::Equation ^ equation);
+        EquationViewModel(GraphControl::Equation ^ equation, int functionLabelIndex, Windows::UI::Color color);
 
         OBSERVABLE_OBJECT();
         OBSERVABLE_PROPERTY_R(GraphControl::Equation ^, GraphEquation);
-        OBSERVABLE_PROPERTY_RW(int, FunctionLabelIndex);
-        OBSERVABLE_PROPERTY_RW(bool, IsLastItemInList);
+        OBSERVABLE_PROPERTY_R(int, FunctionLabelIndex);
+        OBSERVABLE_PROPERTY_R(bool, IsLastItemInList);
 
         property Platform::String ^ Expression
         {
@@ -59,15 +64,15 @@ public
             }
         }
 
-        property Windows::UI::Xaml::Media::SolidColorBrush ^ LineColor
+        property Windows::UI::Color LineColor
         {
-            Windows::UI::Xaml::Media::SolidColorBrush ^ get()
+            Windows::UI::Color get()
             {
                 return GraphEquation->LineColor;
             }
-            void set(Windows::UI::Xaml::Media::SolidColorBrush ^ value)
+            void set(Windows::UI::Color value)
             {
-                if (GraphEquation->LineColor != value)
+                if (!Utils::AreColorsEqual(GraphEquation->LineColor, value))
                 {
                     GraphEquation->LineColor = value;
                     RaisePropertyChanged("LineColor");
@@ -96,7 +101,7 @@ public
         OBSERVABLE_PROPERTY_R(bool, AnalysisErrorVisible);
         OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<CalculatorApp::ViewModel::KeyGraphFeaturesItem ^> ^, KeyGraphFeaturesItems)
 
-        void PopulateKeyGraphFeatures();
+        void PopulateKeyGraphFeatures(GraphControl::KeyGraphFeaturesInfo ^ info);
 
     private:
         void AddKeyGraphFeature(Platform::String ^ title, Platform::String ^ expression, Platform::String ^ errorString);
@@ -104,13 +109,12 @@ public
             Platform::String ^ title,
             Windows::Foundation::Collections::IVector<Platform::String ^> ^ expressionVector,
             Platform::String ^ errorString);
-        void AddParityKeyGraphFeature();
-        void AddPeriodicityKeyGraphFeature();
-        void AddMonotoncityKeyGraphFeature();
-        void AddTooComplexKeyGraphFeature();
+        void AddParityKeyGraphFeature(GraphControl::KeyGraphFeaturesInfo ^ info);
+        void AddPeriodicityKeyGraphFeature(GraphControl::KeyGraphFeaturesInfo ^ info);
+        void AddMonotoncityKeyGraphFeature(GraphControl::KeyGraphFeaturesInfo ^ info);
+        void AddTooComplexKeyGraphFeature(GraphControl::KeyGraphFeaturesInfo ^ info);
 
         Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ m_Monotonicity;
         Windows::ApplicationModel::Resources::ResourceLoader ^ m_resourceLoader;
     };
-
 }

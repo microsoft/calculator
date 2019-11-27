@@ -14,13 +14,15 @@ namespace CalculatorApp
         EquationStylePanelControl();
         DEPENDENCY_PROPERTY_OWNER(EquationStylePanelControl);
 
-        DEPENDENCY_PROPERTY_WITH_CALLBACK(Windows::UI::Xaml::Media::SolidColorBrush ^, SelectedColor);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, SelectedColor, Windows::UI::Colors::Black);
         DEPENDENCY_PROPERTY_WITH_DEFAULT(Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::SolidColorBrush ^> ^, AvailableColors, nullptr);
 
 	private:
         void SelectionChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e);
-        void OnSelectedColorPropertyChanged(Windows::UI::Xaml::Media::SolidColorBrush ^ oldValue, Windows::UI::Xaml::Media::SolidColorBrush ^ newValue);
-        void ColorChooserLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void SelectColor(Windows::UI::Xaml::Media::SolidColorBrush ^ selectedColor);
+        void OnSelectedColorPropertyChanged(Windows::UI::Color oldColor, Windows::UI::Color newColor);
+        void ColorChooserLoaded(
+            Platform::Object ^ sender,
+            Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void SelectColor(Windows::UI::Color selectedColor);
     };
 }

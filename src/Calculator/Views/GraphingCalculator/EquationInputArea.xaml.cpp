@@ -7,6 +7,7 @@
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
+using namespace GraphControl;
 using namespace CalculatorApp::ViewModel;
 using namespace CalculatorApp::Controls;
 using namespace Platform;
@@ -70,10 +71,7 @@ void EquationInputArea::AddNewEquation()
     }
 
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
-
-    eq->LineColor = AvailableColors->GetAt(m_lastLineColorIndex);
-    eq->IsLineEnabled = true;
-    eq->FunctionLabelIndex = ++m_lastFunctionLabelIndex;
+    auto eq = ref new EquationViewModel(ref new Equation(), ++m_lastFunctionLabelIndex, AvailableColors->GetAt(m_lastLineColorIndex)->Color);
     Equations->Append(eq);
     m_equationToFocus = eq;
 }
@@ -181,9 +179,7 @@ void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ s
     }
 
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
-    EquationVM = eq;
-
-    KeyGraphFeaturesRequested(EquationVM, ref new RoutedEventArgs());
+    KeyGraphFeaturesRequested(this, eq);
 }
 
 void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
@@ -244,17 +240,11 @@ void EquationInputArea::ReloadAvailableColors(bool isHighContrast)
         return;
     }
 
-    // Use a blank brush to clear out the color before setting it. This is needed because going
-    // from High Contrast White -> High Contrast Black, the high contrast colors seem to be equivalent,
-    // causing the change to not take place.
-    auto blankBrush = ref new SolidColorBrush();
-
     // Reassign colors for each equation
     m_lastLineColorIndex = -1;
     for (auto equationViewModel : Equations)
     {
         m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
-        equationViewModel->LineColor = blankBrush;
-        equationViewModel->LineColor = AvailableColors->GetAt(m_lastLineColorIndex);
+        equationViewModel->LineColor = AvailableColors->GetAt(m_lastLineColorIndex)->Color;
     }
 }

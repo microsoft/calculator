@@ -213,7 +213,6 @@
                 </Setter>
             </Style>
 
-            <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter"/>
             <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
@@ -483,7 +482,7 @@
                                                 <Grid Grid.Row="1"
                                                       MinHeight="38"
                                                       HorizontalAlignment="Stretch"
-                                                      Visibility="{x:Bind SliderSettingsVisible, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                                                      Visibility="{x:Bind SliderSettingsVisible, Mode=OneWay}">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="Auto"/>
                                                         <ColumnDefinition Width="*"/>

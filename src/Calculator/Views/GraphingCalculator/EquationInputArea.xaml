@@ -44,7 +44,7 @@
                                               Style="{StaticResource EquationTextBoxStyle}"
                                               EquationButtonClicked="EquationTextBox_EquationButtonClicked"
                                               EquationButtonContentIndex="{x:Bind FunctionLabelIndex, Mode=OneWay}"
-                                              EquationColor="{x:Bind LineColor, Mode=OneWay}"
+                                              EquationColor="{x:Bind local:EquationInputArea.ToSolidColorBrush(LineColor), Mode=OneWay}"
                                               EquationSubmitted="InputTextBox_Submitted"
                                               GotFocus="InputTextBox_GotFocus"
                                               HasError="{x:Bind GraphEquation.HasGraphError, Mode=OneWay}"

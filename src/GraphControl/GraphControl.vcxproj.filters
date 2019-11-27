@@ -19,9 +19,6 @@
     <ClCompile Include="DirectX\RenderMain.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="Control\Equation.cpp">
-      <Filter>Control</Filter>
-    </ClCompile>
     <ClCompile Include="Control\Grapher.cpp">
       <Filter>Control</Filter>
     </ClCompile>
@@ -31,6 +28,8 @@
     <ClCompile Include="DirectX\ActiveTracingPointRenderer.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Equation.cpp" />
+    <ClCompile Include="Models\KeyGraphFeaturesInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -44,12 +43,6 @@
       <Filter>DirectX</Filter>
     </ClInclude>
     <ClInclude Include="winrtHeaders.h" />
-    <ClInclude Include="Control\Equation.h">
-      <Filter>Control</Filter>
-    </ClInclude>
-    <ClInclude Include="Control\EquationCollection.h">
-      <Filter>Control</Filter>
-    </ClInclude>
     <ClInclude Include="Control\Grapher.h">
       <Filter>Control</Filter>
     </ClInclude>
@@ -59,6 +52,10 @@
     <ClInclude Include="DirectX\ActiveTracingPointRenderer.h">
       <Filter>DirectX</Filter>
     </ClInclude>
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="Models\Equation.h" />
+    <ClInclude Include="Models\EquationCollection.h" />
+    <ClInclude Include="Models\KeyGraphFeaturesInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\generic.xaml">

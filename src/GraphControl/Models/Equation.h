@@ -18,7 +18,6 @@ namespace GraphControl
     [Windows::UI::Xaml::Data::Bindable] public ref class Equation sealed : public Windows::UI::Xaml::DependencyObject
     {
     public:
-
         Equation()
         {
         }
@@ -92,9 +91,10 @@ namespace GraphControl
 #pragma endregion
 
 #pragma region bool HasGraphError DependencyProperty
-        static property Windows::UI::Xaml::DependencyProperty ^ HasGraphErrorProperty { Windows::UI::Xaml::DependencyProperty ^ get() { return s_hasGraphErrorProperty; } }
+        static property Windows::UI::Xaml::DependencyProperty
+            ^ HasGraphErrorProperty { Windows::UI::Xaml::DependencyProperty ^ get() { return s_hasGraphErrorProperty; } }
 
-        property bool HasGraphError
+            property bool HasGraphError
         {
             bool get()
             {
@@ -111,7 +111,8 @@ namespace GraphControl
 #pragma endregion
 
 #pragma region bool IsValidated DependencyProperty
-        static property Windows::UI::Xaml::DependencyProperty ^ IsValidatedProperty { Windows::UI::Xaml::DependencyProperty ^ get() { return s_isValidatedProperty; } }
+        static property Windows::UI::Xaml::DependencyProperty
+            ^ IsValidatedProperty { Windows::UI::Xaml::DependencyProperty ^ get() { return s_isValidatedProperty; } }
 
             property bool IsValidated
         {
@@ -130,7 +131,6 @@ namespace GraphControl
 #pragma endregion
 
 #pragma region Key Graph Features
-
 
 #pragma region Platform::String ^ XIntercept DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ XInterceptProperty
@@ -188,7 +188,8 @@ namespace GraphControl
             {
                 return static_cast<int>(GetValue(s_parityProperty));
             }
-        internal: void set(int value)
+        internal:
+            void set(int value)
             {
                 SetValue(s_parityProperty, value);
             }
@@ -196,27 +197,23 @@ namespace GraphControl
 #pragma endregion
 
 #pragma region int Periodicity DependencyProperty
-        static property Windows::UI::Xaml::DependencyProperty^ PeriodicityDirectionProperty
+        static property Windows::UI::Xaml::DependencyProperty ^ PeriodicityDirectionProperty {
+            Windows::UI::Xaml::DependencyProperty ^ get() { return s_periodicityDirectionProperty; }
+        } property int PeriodicityDirection
         {
-            Windows::UI::Xaml::DependencyProperty^ get()
-            {
-                return s_periodicityDirectionProperty;
-            }
-        }
-        property int PeriodicityDirection
-        {
-           int get()
+            int get()
             {
                 return static_cast<int>(GetValue(s_periodicityDirectionProperty));
             }
-        internal: void set(int value)
+        internal:
+            void set(int value)
             {
                 SetValue(s_periodicityDirectionProperty, value);
             }
         }
 #pragma endregion
 
-        #pragma region Platform::String ^ PeriodicityExpression DependencyProperty
+#pragma region Platform::String ^ PeriodicityExpression DependencyProperty
         static property Windows::UI::Xaml::DependencyProperty^ PeriodicityExpressionProperty
         {
             Windows::UI::Xaml::DependencyProperty^ get()
@@ -440,7 +437,8 @@ namespace GraphControl
             {
                 return static_cast<int>(GetValue(s_tooComplexFeaturesProperty));
             }
-        internal: void set(int value)
+        internal:
+            void set(int value)
             {
                 SetValue(s_tooComplexFeaturesProperty, value);
             }
@@ -448,20 +446,15 @@ namespace GraphControl
 #pragma endregion
 
 #pragma region int AnalysisError DependencyProperty
-        static property Windows::UI::Xaml::DependencyProperty ^ AnalysisErrorProperty
-        {
-            Windows::UI::Xaml::DependencyProperty ^ get()
-            {
-                return s_analysisErrorProperty;
-            }
-        }
-        property int AnalysisError
+        static property Windows::UI::Xaml::DependencyProperty
+            ^ AnalysisErrorProperty { Windows::UI::Xaml::DependencyProperty ^ get() { return s_analysisErrorProperty; } } property int AnalysisError
         {
             int get()
             {
                 return static_cast<int>(GetValue(s_analysisErrorProperty));
             }
-            internal: void set(int value)
+        internal:
+            void set(int value)
             {
                 SetValue(s_analysisErrorProperty, value);
             }

@@ -15,27 +15,30 @@ namespace CalculatorApp::ViewModel
 {
     GraphingCalculatorViewModel::GraphingCalculatorViewModel()
         : m_IsDecimalEnabled{ true }
-        , m_Equations{ ref new Vector< EquationViewModel^ >() }
-        , m_Variables{ ref new Vector< VariableViewModel^ >() }
+        , m_Equations{ ref new Vector<EquationViewModel ^>() }
+        , m_Variables{ ref new Vector<VariableViewModel ^>() }
     {
     }
 
-    void GraphingCalculatorViewModel::OnButtonPressed(Object^ parameter)
+    void GraphingCalculatorViewModel::OnButtonPressed(Object ^ parameter)
     {
     }
 
-    void GraphingCalculatorViewModel::UpdateVariables(IMap<String^, double>^ variables)
+    void GraphingCalculatorViewModel::UpdateVariables(IMap<String ^, double> ^ variables)
     {
         Variables->Clear();
         for (auto var : variables)
         {
             auto variable = ref new VariableViewModel(var->Key, var->Value);
-            variable->VariableUpdated += ref new EventHandler<VariableChangedEventArgs>([this, variable](Object^ sender, VariableChangedEventArgs e)
-                {
-                    VariableUpdated(variable, VariableChangedEventArgs{ e.variableName, e.newValue });
-                });
+            variable->VariableUpdated += ref new EventHandler<VariableChangedEventArgs>([this, variable](Object ^ sender, VariableChangedEventArgs e) {
+                VariableUpdated(variable, VariableChangedEventArgs{ e.variableName, e.newValue });
+            });
             Variables->Append(variable);
-
         }
+    }
+
+    void GraphingCalculatorViewModel::SetSelectedEquation(EquationViewModel ^ equation)
+    {
+        SelectedEquation = equation;
     }
 }
