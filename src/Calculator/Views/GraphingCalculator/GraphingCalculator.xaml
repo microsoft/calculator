@@ -380,6 +380,25 @@
                           Visibility="Collapsed">
                 <!-- TODO: update this icon -->
                 <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph=""/>
+                <ToggleButton.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Default">
+                                
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Light">
+                                
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="HighContrast">
+                                <SolidColorBrush x:Key="ToggleButtonBackgroundPointerOver" Color="{ThemeResource SystemColorHighlightColor}"/>
+                                <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{ThemeResource SystemColorWindowColor}"/>
+                                <SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="{ThemeResource SystemColorHighlightColor}"/>
+                                <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{ThemeResource SystemColorWindowColor}"/>
+                                
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </ToggleButton.Resources>
             </ToggleButton>
         </Grid>
         <!-- Left portion of the screen -->
