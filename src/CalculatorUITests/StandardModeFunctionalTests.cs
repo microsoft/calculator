@@ -1048,7 +1048,7 @@ namespace CalculatorUITests
             page.StandardOperators.NumberPad.Input(9);
             page.StandardOperators.NegateButton.Click();
             page.StandardOperators.SquareRootButton.Click();
-            Assert.IsTrue(page.GlobalCalculatorUI.GetCalculatorResultText() == "Invalid input");
+            Assert.AreEqual("Invalid input", page.GlobalCalculatorUI.GetCalculatorResultText());
         }
         #endregion
 
@@ -1237,16 +1237,16 @@ namespace CalculatorUITests
             page.GlobalCalculatorUI.Window.SendKeys(Keys.Enter);
             page.KOTModeCheck();
             Assert.AreEqual("True", page.KOTModeCheck());
-            Assert.IsTrue(page.GetKOTCalculatorResultText() == "Result is undefined");
+            Assert.AreEqual("Result is undefined", page.GetKOTCalculatorResultText());
             page.StandardOperators.ClearButton.Click();
             page.StandardOperators.InvertButton.Click();
             page.KOTModeCheck();
             Assert.AreEqual("True", page.KOTModeCheck());
-            Assert.IsTrue(page.GetKOTCalculatorResultText() == "Cannot divide by zero");
+            Assert.AreEqual("Cannot divide by zero", page.GetKOTCalculatorResultText());
             page.StandardNonKoTMode();
             page.KOTModeCheck();
             Assert.AreEqual("False", page.KOTModeCheck());
-            Assert.IsTrue(page.GlobalCalculatorUI.GetCalculatorResultText() == "Cannot divide by zero");
+            Assert.AreEqual("Cannot divide by zero", page.GlobalCalculatorUI.GetCalculatorResultText());
         }
 
         #endregion
