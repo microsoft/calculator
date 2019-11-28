@@ -61,8 +61,8 @@ namespace CalculatorUITestFramework
 
             try
             {
-                string sourceC = this.session.PageSource;
-                if (sourceC.Contains("ClearMemoryButton"))
+                string source0 = this.session.PageSource;
+                if (source0.Contains("ClearMemoryButton"))
                 {
                     this.ClearMemory.Click();
                 }
@@ -90,8 +90,8 @@ namespace CalculatorUITestFramework
         {
             Point newWindowPostion = new Point(0, 0);
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
-            string source3 = this.session.PageSource;
-            if (source3.Contains("MemoryLabel"))
+            string source0 = this.session.PageSource;
+            if (source0.Contains("MemoryLabel"))
             {
                 return;
             }
@@ -99,8 +99,8 @@ namespace CalculatorUITestFramework
             {
                 Size newWindowSize = new Size(1200, 1050);
                 WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
-                string source4 = this.session.PageSource;
-                if (source4.Contains("MemoryLabel"))
+                string source1 = this.session.PageSource;
+                if (source1.Contains("MemoryLabel"))
                 {
                     return;
                 }
@@ -109,8 +109,8 @@ namespace CalculatorUITestFramework
                     Size newWindowSize2 = new Size(2097, 1282);
                     WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
                 }
-                string source7 = this.session.PageSource;
-                if (source7.Contains("MemoryLabel"))
+                string source2 = this.session.PageSource;
+                if (source2.Contains("MemoryLabel"))
                 {
                     return;
                 }
@@ -127,16 +127,16 @@ namespace CalculatorUITestFramework
         {
             Point newWindowPostion = new Point(0, 0);
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
-            string source5 = this.session.PageSource;
-            if (source5.Contains("Alt, M"))
+            string source0 = this.session.PageSource;
+            if (source0.Contains("Alt, M"))
             {
                 return;
             }
             else
             {
                 //this.MemButton.Click();
-                string source6 = this.session.PageSource;
-                if (source6.Contains("Alt, M"))
+                string source2 = this.session.PageSource;
+                if (source2.Contains("Alt, M"))
                 {
                     return;
                 }
@@ -144,8 +144,8 @@ namespace CalculatorUITestFramework
                 {
                     Size newWindowSize2 = new Size(464, 464);
                     WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
-                    string source8 = this.session.PageSource;
-                    if (source8.Contains("Alt, M"))
+                    string source3 = this.session.PageSource;
+                    if (source3.Contains("Alt, M"))
                     {
                         return;
                     }

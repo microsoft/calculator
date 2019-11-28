@@ -19,9 +19,7 @@ namespace CalculatorUITestFramework
         public WindowsElement HistoryLabel => this.session.TryFindElementByAccessibilityId("HistoryLabel");
         public AppiumWebElement HistoryEmpty => this.session.TryFindElementByAccessibilityId("DockPivot").FindElementByAccessibilityId("HistoryEmpty");
         public WindowsElement HistoryListView => this.session.TryFindElementByAccessibilityId("HistoryListView");
-        public WindowsElement HistoryList => this.session.TryFindElementByAccessibilityId("HistoryList");
         public WindowsElement ListViewItem => this.session.FindElementByClassName("ListViewItem");
-        public WindowsElement ExprTextBlock => this.session.TryFindElementByAccessibilityId("ExprTextBlock");
         public WindowsElement ResultTextBlock => this.session.TryFindElementByAccessibilityId("ResultTextBlock");
         public WindowsElement ClearHistoryButton => this.session.TryFindElementByAccessibilityId("ClearHistory");
         public WindowsElement HistoryFlyout => this.session.TryFindElementByAccessibilityId("HistoryFlyout");
@@ -52,8 +50,8 @@ namespace CalculatorUITestFramework
             this.HistoryLabel.Click();
             try
             {
-                string sourceB = this.session.PageSource;
-                if (sourceB.Contains("ClearHistory"))
+                string source = this.session.PageSource;
+                if (source.Contains("ClearHistory"))
                 {
                     this.ClearHistoryButton.Click();
                 }
@@ -75,7 +73,7 @@ namespace CalculatorUITestFramework
         }
         /// <summary>
         /// If the History label is not displayed, resize the window
-        /// Two attempts are made, the the lable is not found a "not found" exception is thrown
+        /// Two attempts are made; the label is not found a "not found" exception is thrown
         /// </summary>
         public void ResizeWindowToDisplayHistoryLabel()
         {
@@ -90,8 +88,8 @@ namespace CalculatorUITestFramework
             {
                 Size newWindowSize = new Size(1200, 1050);
                 WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
-                string source2 = this.session.PageSource;
-                if (source2.Contains("HistoryLabel"))
+                string source1 = this.session.PageSource;
+                if (source1.Contains("HistoryLabel"))
                 {
                     return;
                 }
@@ -100,8 +98,8 @@ namespace CalculatorUITestFramework
                     Size newWindowSize2 = new Size(2097, 1282);
                     WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
                 }
-                string source9 = this.session.PageSource;
-                if (source9.Contains("HistoryLabel"))
+                string source2 = this.session.PageSource;
+                if (source2.Contains("HistoryLabel"))
                 {
                     return;
                 }

@@ -832,8 +832,8 @@ namespace CalculatorUITests
             page.GlobalCalculatorUI.Header.SendKeys(Keys.Subtract);
             page.GlobalCalculatorUI.Header.SendKeys("9");
             page.StandardOperators.ClearButton.Click();
-            string sourceD = WinAppDriver.Instance.CalculatorSession.PageSource;
-            if (sourceD.Contains("CalculatorExpression"))
+            string source0 = WinAppDriver.Instance.CalculatorSession.PageSource;
+            if (source0.Contains("CalculatorExpression"))
             {
                 throw new NotFoundException("This test fails; the Calculator Expression should be cleared");
             }
@@ -1118,8 +1118,8 @@ namespace CalculatorUITests
             page.StandardKoTMode();
             page.GlobalCalculatorUI.Window.SendKeys(Keys.Enter);
             page.GlobalCalculatorUI.Window.SendKeys(Keys.Control + "H" + Keys.Control);
-            string sourceI = WinAppDriver.Instance.CalculatorSession.PageSource;
-            if (sourceI.Contains("HistoryFlyout"))
+            string source0 = WinAppDriver.Instance.CalculatorSession.PageSource;
+            if (source0.Contains("HistoryFlyout"))
             {
                 throw new NotFoundException("This test fails; history flyout is present");
             }
@@ -1232,9 +1232,9 @@ namespace CalculatorUITests
             page.StandardKoTMode();
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = largeKOTWindowPosition;
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeKOTWindowSize;
-            page.GlobalCalculatorUI.Window.SendKeys("/");
-            page.GlobalCalculatorUI.Window.SendKeys("0");
-            page.GlobalCalculatorUI.Window.SendKeys(Keys.Enter);
+            page.StandardOperators.DivideButton.Click();
+            page.StandardOperators.NumberPad.Num0Button.Click();
+            page.StandardOperators.EqualButton.Click();
             page.KOTModeCheck();
             Assert.AreEqual("True", page.KOTModeCheck());
             Assert.AreEqual("Result is undefined", page.GetKOTCalculatorResultText());
