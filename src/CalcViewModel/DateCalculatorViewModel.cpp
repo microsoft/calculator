@@ -386,11 +386,30 @@ String ^ DateCalculatorViewModel::GetLocalizedNumberString(int value) const
 /// Adjusts the given DateTime to 12AM of the same day
 /// </summary>
 /// <param name="dateTime">DateTime to clip</param>
-DateTime DateCalculatorViewModel::ClipTime(DateTime dateTime)
+/// <param name="adjustUsingLocalTime">Adjust the datetime using local time (by default adjust using UTC time)</param>
+DateTime DateCalculatorViewModel::ClipTime(DateTime dateTime, bool adjustUsingLocalTime)
 {
+    DateTime referenceDateTime;
+    if (adjustUsingLocalTime)
+    {
+        FILETIME fileTime;
+        fileTime.dwLowDateTime = (DWORD)(dateTime.UniversalTime & 0xffffffff);
+        fileTime.dwHighDateTime = (DWORD)(dateTime.UniversalTime >> 32);
+
+        FILETIME localFileTime;
+        FileTimeToLocalFileTime(&fileTime, &localFileTime);
+
+        referenceDateTime.UniversalTime = (DWORD)localFileTime.dwHighDateTime;
+        referenceDateTime.UniversalTime <<= 32;
+        referenceDateTime.UniversalTime |= (DWORD)localFileTime.dwLowDateTime;
+    }
+    else
+    {
+        referenceDateTime = dateTime;
+    }
     auto calendar = ref new Calendar();
     calendar->ChangeTimeZone("UTC");
-    calendar->SetDateTime(dateTime);
+    calendar->SetDateTime(referenceDateTime);
     calendar->Period = calendar->FirstPeriodInThisDay;
     calendar->Hour = calendar->FirstHourInThisPeriod;
     calendar->Minute = 0;
