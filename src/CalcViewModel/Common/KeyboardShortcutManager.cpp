@@ -10,7 +10,6 @@
 using namespace Concurrency;
 using namespace Platform;
 using namespace std;
-using namespace std::chrono;
 using namespace Windows::ApplicationModel::Resources;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
@@ -432,8 +431,9 @@ void KeyboardShortcutManager::OnCharacterReceivedHandler(CoreWindow ^ sender, Ch
             wchar_t character = static_cast<wchar_t>(args->KeyCode);
             auto buttons = s_CharacterForButtons.find(viewId)->second.equal_range(character);
 
-            LightUpButtons(buttons);
             RunFirstEnabledButtonCommand(buttons);
+
+            LightUpButtons(buttons);
         }
     }
 }
@@ -601,8 +601,6 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs
                         LightUpButtons(buttons);
                     }
                 }
-
-                RunFirstEnabledButtonCommand(buttons);
             }
         }
     }
