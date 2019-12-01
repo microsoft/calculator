@@ -11,7 +11,7 @@ namespace CalculatorApp
     {
     public:
         EngineResourceProvider();
-        virtual std::wstring GetCEngineString(const std::wstring& id) override;
+        virtual std::wstring GetCEngineString(std::wstring_view id) override;
 
     private:
         Windows::ApplicationModel::Resources::ResourceLoader ^ m_resLoader;
