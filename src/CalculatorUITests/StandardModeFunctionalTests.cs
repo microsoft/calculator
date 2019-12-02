@@ -314,11 +314,11 @@ namespace CalculatorUITests
         //}
         //#endregion
 
-        #region Basic UI Fuctionality via Mouse input
+        #region Basic UI Functionality via Mouse input
 
         /// <summary>
         /// Test Case 23624584: BVT: All: Verify mouse input
-        /// This automated test test verifies clicking each of the buttons and getting an expected result
+        /// These automated tests verify clicking each of the buttons in the Calculator UI and getting an expected result
         /// Via mouse input, all basic UI functionality is checked 
         /// </summary>
 
@@ -450,11 +450,11 @@ namespace CalculatorUITests
 
         /// <summary>
         /// Test Case 23466694: BVT: All: Verify hotkeys common to all modes
-        /// This automated test verifies the functionality of all hotkeys, that are common for all calculator modes, in  standard calculator mode.
-        /// Via keyboard input, basic functionality of the calculator in standard is checked 
+        /// These automated tests verify the functionality of all hotkeys, that are common for all calculator modes, as well as the all keyboard input used in standard mode on the Standard Calculator.
+        /// Via keyboard input, all basic UI functionality is checked.
         /// To-do:
-        /// - Active issue "Bug 23811901: Clicking on the History Label causes the [Shift] + [Ctrl] + [D] hotkeys to break" causes this case to fail
-        /// - Keyboard Numberpad input testing is not part of this automated test to unstability.  WinAppDrive command does not toggle Num Lock.  
+        /// - Active issue "Bug 23811901: Clicking on the History Label causes the [Shift] + [Ctrl] + [D] hotkeys to break" causes KeyboardInput_HistoryHotkeys() to fail.
+        /// It is currently commented out until the active bug is fixed.
         /// </summary>
 
         [TestMethod]
@@ -612,14 +612,14 @@ namespace CalculatorUITests
 
         #endregion
 
-        #region Arithmetic Operators Functionlity via mixed input
+        #region Arithmetic Operators Functionality via mixed input
 
         /// <summary>
-        /// Arithmetic Operators for standard calculator are also automated in: 
-        /// 	Region: Basic UI Functionality via Mouse input
-        /// 	Region: Basic Calculator Functionality via Keyboard input
-        /// These automated test not only verify each opperator individually, but they also simultaneously verify mixed user input.
         /// Test Case 17416430: BVT: Standard: Verify arithmetic operators
+        /// These automated test not only verify each opperator individually, but they also simultaneously verify mixed user input.
+        /// Arithmetic Operators for standard calculator are also automated in: 
+        /// - Region: Basic UI Functionality via Mouse input
+        /// - Region: Basic Calculator Functionality via Keyboard input
         /// </summary>
 
         [TestMethod]
@@ -807,7 +807,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
-        [Priority(2)]
+        [Priority(0)]
         public void MixedInput_Operators_ClearEntryClear()
         {
             //Verify Clear Entery
@@ -849,7 +849,7 @@ namespace CalculatorUITests
         /// <summary>
         /// Test Case 23624587: BVT: All: Verify memory functions
         /// These automated tests verify using memory related buttons in the Memory Panel, and in the memory flyout
-        /// Memory control buttons are veriifed at the end of automated tested in MouseInput_MemoryButtons()
+        /// Memory control buttons are verified at the end of automated tested in MouseInput_MemoryButtons()
         /// </summary>
 
         [TestMethod]
@@ -928,13 +928,12 @@ namespace CalculatorUITests
 
         /// <summary>
         /// - Test Case 23480026: BVT: Standard/Scientific: Verify history panel
-        ///     - This automated test verifies using using the history panel in Standard mode
-        ///     - To-Do: An empty history on initial launch cannot be verified.  The automation cannot see the Windows element "HistoryEmpty."
-        ///       Even though this element is there; I see it, and Inspect sees it, WinAppDriver cannot find it.
-        ///       The only time the automation is successful at finding this element is after creating and deleting history items.
-        ///       Will write this part of the test later, once issue is solved.
         /// - Test Case 23466739: BVT: Standard/Scientific: Verify history flyout
-        ///     - This automated test verifies using using the history history flyout in Standard mode
+        /// These automated tests (that replace this manual test case) verify using
+        /// history related button/keyboard actions in the History Panel,
+        /// and in the History flyout. The History button is verified in the automated test MouseInput_HistoryButtons().
+        /// To-Do: Currently, an empty history panel on initial launch cannot be verified through automation.
+        /// The automation cannot see the Windows element "HistoryEmpty."  This should be automated once the issue is resolved.
         /// </summary>
 
         [TestMethod]
@@ -1051,14 +1050,14 @@ namespace CalculatorUITests
         }
         #endregion
 
-        #region AoT(Keep on top) Tests
+        #region AoT (Always on top) Tests
         [TestMethod]
         [Priority(0)]
         public void AoT_EnterExitKeepOnTop()
         {
             /// <summary>
             /// Test Case 23456961: BVT: KOT: Verify entering and exiting AoT mode
-            /// This automated test verifies the caculator can enter AoT mode and that the window within AoT size range
+            /// This automated test verifies the calculator can enter AoT mode, the AoT window is within a range of size, 
             /// and it verifies exiting AoT mode
             /// </summary>
             page.StandardAoTMode();
@@ -1073,7 +1072,7 @@ namespace CalculatorUITests
         {
             /// <summary>
             /// Test Case 23456329: BVT: KOT: Verify tooltip
-            /// This automated test verifies english AoT button tooltips
+            /// This automated test verifies AoT button tooltips (in English)
             /// </summary>
             Assert.AreEqual("Keep on top", page.GetAoTToolTipText());
             page.StandardAoTMode();
@@ -1088,7 +1087,6 @@ namespace CalculatorUITests
             /// Test Case 23458498: BVT: KOT: Verify Memory function is not accessible while in AoT mode
             /// This automated test verifies memory function cannot be triggered in AoT calculator
             /// </summary>
-            ///
             page.StandardOperators.NumberPad.Num9Button.Click();
             page.StandardOperators.MinusButton.Click();
             page.StandardOperators.NumberPad.Num3Button.Click();
@@ -1108,7 +1106,7 @@ namespace CalculatorUITests
             /// <summary>
             /// Test Case 23458436: BVT: KOT: Verify History is not accessible while in AoT mode, but it is still tracked
             /// This automated test verifies the history flyout cannot be opened in AoT mode and
-            /// that history is tracked while in AoT mode and avalible upon ext of AoT mode
+            /// that history is tracked while in AoT mode and available upon exit of AoT mode
             /// </summary>
             page.HistoryPanel.ClearHistory();
             page.StandardOperators.NumberPad.Num3Button.Click();
@@ -1136,7 +1134,7 @@ namespace CalculatorUITests
         {
             /// <summary>
             /// Test Case 23459163: BVT: KOT: Verify AoT button is only available in Standard mode
-            /// This automated test verifies that Sandard calculator has AoT button, but other major
+            /// This automated test verifies that Standard calculator has AoT button, but other major
             /// calculator modes do not
             /// </summary>
 
@@ -1172,7 +1170,7 @@ namespace CalculatorUITests
             /// <summary>
             /// Test Case 23456757: BVT: KOT: Verify UI while scaling
             /// This automated test verifies that the app can scale to smallest size, largest size, and to a medium size 
-            /// without crashing
+            /// without crashing.  It does not test the visual appears of the UI while scaling. 
             /// </summary>
             page.StandardAoTMode();
             page.AoTWindowSizeWithinRange();
@@ -1193,9 +1191,9 @@ namespace CalculatorUITests
         public void AoT_ScaleRetention()
         {
             /// <summary>
-            /// (Half) Test Case 23458956: BVT: KOT: Verify scale retention
+            /// Test Case 23458956: BVT: KOT: Verify scale retention
             /// This automated test verifies the window scale retention is maintained when switching between AoT and Non-AoT
-            /// Note: This does not verify scale retention across calculator session
+            /// To-Do: Verify scale retention across calculator session
             /// </summary>
 
             Size smallWindowSize = new Size(464, 502);
@@ -1222,8 +1220,8 @@ namespace CalculatorUITests
         {
             /// <summary>
             /// Test Case 23459118: BVT: KOT: Verify error message display
-            /// This automated test verifies the window scale retention is maintained when switching between AoT and Non-AoT
-            /// Note: This test case is in progress: Need to verify " All operator buttons (except for "CE", "C", "Delete" and "="), and memory buttons are disabled"
+            /// This automated test verifies error messaging while AoT mode
+            /// To-do: Need to verify "All operator buttons (except for "CE", "C", "Delete" and "="), and memory buttons are disabled" when in AoT mode
             /// </summary>
 
             Size largeAoTWindowSize = new Size(502, 502);
