@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -35,7 +35,6 @@ namespace CalculatorApp
     private:
         void OnAngleButtonPressed(_In_ Platform::Object ^ commandParameter);
         void FToEButton_Toggled(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void HypButton_Toggled(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
 
         bool m_isErrorVisualState;
     };

@@ -7,6 +7,7 @@
 #include "CalcViewModel\GraphingCalculator\EquationViewModel.h"
 #include "Controls/MathRichEditBox.h"
 #include "Controls/EquationTextBox.h"
+#include "TemplateSelectors/KeyGraphFeaturesTemplateSelector.h"
 
 namespace CalculatorApp
 {

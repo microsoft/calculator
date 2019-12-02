@@ -15,11 +15,10 @@ name: $(BuildDefinitionName)_$(date:yyMM).$(date:dd)$(rev:rrr)
 jobs:
 - job: Localize
   pool:
-    vmImage: vs2017-win2016
+    vmImage: windows-2019
   variables:
     skipComponentGovernanceDetection: true
   steps:
-
   - task: MicrosoftTDBuild.tdbuild-task.tdbuild-task.TouchdownBuildTask@1
     displayName: Send resources to Touchdown Build
     inputs:

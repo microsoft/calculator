@@ -296,7 +296,7 @@ void ChangeConstants(uint32_t radix, int32_t precision)
 //
 //----------------------------------------------------------------------------
 
-void intrat(PRAT* px, uint32_t radix, int32_t precision)
+void intrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
 {
     // Only do the intrat operation if number is nonzero.
     // and only if the bottom part is not one.
@@ -328,7 +328,7 @@ void intrat(PRAT* px, uint32_t radix, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-bool rat_equ(PRAT a, PRAT b, int32_t precision)
+bool rat_equ(_In_ PRAT a, _In_ PRAT b, int32_t precision)
 
 {
     PRAT rattmp = nullptr;
@@ -351,7 +351,7 @@ bool rat_equ(PRAT a, PRAT b, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-bool rat_ge(PRAT a, PRAT b, int32_t precision)
+bool rat_ge(_In_ PRAT a, _In_ PRAT b, int32_t precision)
 
 {
     PRAT rattmp = nullptr;
@@ -375,7 +375,7 @@ bool rat_ge(PRAT a, PRAT b, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-bool rat_gt(PRAT a, PRAT b, int32_t precision)
+bool rat_gt(_In_ PRAT a, _In_ PRAT b, int32_t precision)
 
 {
     PRAT rattmp = nullptr;
@@ -399,7 +399,7 @@ bool rat_gt(PRAT a, PRAT b, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-bool rat_le(PRAT a, PRAT b, int32_t precision)
+bool rat_le(_In_ PRAT a, _In_ PRAT b, int32_t precision)
 
 {
     PRAT rattmp = nullptr;
@@ -423,7 +423,7 @@ bool rat_le(PRAT a, PRAT b, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-bool rat_lt(PRAT a, PRAT b, int32_t precision)
+bool rat_lt(_In_ PRAT a, _In_ PRAT b, int32_t precision)
 
 {
     PRAT rattmp = nullptr;
@@ -447,7 +447,7 @@ bool rat_lt(PRAT a, PRAT b, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-bool rat_neq(PRAT a, PRAT b, int32_t precision)
+bool rat_neq(_In_ PRAT a, _In_ PRAT b, int32_t precision)
 
 {
     PRAT rattmp = nullptr;
@@ -470,7 +470,7 @@ bool rat_neq(PRAT a, PRAT b, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-void scale(PRAT* px, PRAT scalefact, uint32_t radix, int32_t precision)
+void scale(_Inout_ PRAT* px, _In_ PRAT scalefact, uint32_t radix, int32_t precision)
 {
     PRAT pret = nullptr;
     DUPRAT(pret, *px);
@@ -503,7 +503,7 @@ void scale(PRAT* px, PRAT scalefact, uint32_t radix, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-void scale2pi(PRAT* px, uint32_t radix, int32_t precision)
+void scale2pi(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
 {
     PRAT pret = nullptr;
     PRAT my_two_pi = nullptr;
@@ -546,7 +546,7 @@ void scale2pi(PRAT* px, uint32_t radix, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-void inbetween(PRAT* px, PRAT range, int32_t precision)
+void inbetween(_In_ PRAT* px, _In_ PRAT range, int32_t precision)
 
 {
     if (rat_gt(*px, range, precision))
@@ -575,7 +575,7 @@ void inbetween(PRAT* px, PRAT range, int32_t precision)
 //
 //---------------------------------------------------------------------------
 
-void _dumprawrat(const wchar_t* varname, PRAT rat, wostream& out)
+void _dumprawrat(_In_ const wchar_t* varname, _In_ PRAT rat, wostream& out)
 
 {
     _dumprawnum(varname, rat->pp, out);
@@ -593,7 +593,7 @@ void _dumprawrat(const wchar_t* varname, PRAT rat, wostream& out)
 //
 //---------------------------------------------------------------------------
 
-void _dumprawnum(const wchar_t* varname, PNUMBER num, wostream& out)
+void _dumprawnum(_In_ const wchar_t* varname, _In_ PNUMBER num, wostream& out)
 
 {
     int i;
@@ -676,7 +676,7 @@ void _readconstants(void)
 //
 //---------------------------------------------------------------------------
 
-void trimit(PRAT* px, int32_t precision)
+void trimit(_Inout_ PRAT* px, int32_t precision)
 
 {
     if (!g_ftrueinfinite)

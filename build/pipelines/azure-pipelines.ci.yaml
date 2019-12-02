@@ -41,15 +41,9 @@ jobs:
 - template: ./templates/run-unit-tests.yaml
   parameters:
     platform: x64
-    reimageServiceConnection: essential-experiences-interactive-reimage
-    reimageSubscriptionId: a8f5eb47-e59c-44b4-8e42-e70811a047b5
-    reimageResourceGroup: EETestPublic
 
 - template: ./templates/run-unit-tests.yaml
   parameters:
     platform: x86
-    reimageServiceConnection: essential-experiences-interactive-reimage
-    reimageSubscriptionId: a8f5eb47-e59c-44b4-8e42-e70811a047b5
-    reimageResourceGroup: EETestPublic
 
 - template: ./templates/package-appxbundle.yaml
