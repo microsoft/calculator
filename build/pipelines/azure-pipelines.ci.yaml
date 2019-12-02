@@ -7,9 +7,11 @@
 trigger:
 - master
 - servicing/*
+- feature/*
 pr:
 - master
 - servicing/*
+- feature/*
 
 name: 0.$(Date:yyMM).$(DayOfMonth)$(Rev:rr).0
 
