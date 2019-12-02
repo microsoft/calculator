@@ -56,7 +56,6 @@ namespace CalculatorUITests
         [TestCleanup]
         public void TestCleanup()
         {
-            page.StandardOperators.EqualButton.Click();
             page.ClearAll();
         }
 
@@ -1052,70 +1051,70 @@ namespace CalculatorUITests
         }
         #endregion
 
-        #region KOT(Keep on top) Tests
+        #region AoT(Keep on top) Tests
         [TestMethod]
         [Priority(0)]
-        public void KOT_EnterExitKeepOnTop()
+        public void AoT_EnterExitKeepOnTop()
         {
             /// <summary>
-            /// Test Case 23456961: BVT: KOT: Verify entering and exiting KOT mode
-            /// This automated test verifies the caculator can enter KOT mode and that the window within KOT size range
-            /// and it verifies exiting KOT mode
+            /// Test Case 23456961: BVT: KOT: Verify entering and exiting AoT mode
+            /// This automated test verifies the caculator can enter AoT mode and that the window within AoT size range
+            /// and it verifies exiting AoT mode
             /// </summary>
-            page.StandardKoTMode();
-            page.KOTWindowSizeWithinRange();
-            page.StandardNonKoTMode();
+            page.StandardAoTMode();
+            page.AoTWindowSizeWithinRange();
+            page.StandardNonAoTMode();
 
         }
 
         [TestMethod]
         [Priority(0)]
-        public void KOT_Tootip()
+        public void AoT_Tootip()
         {
             /// <summary>
             /// Test Case 23456329: BVT: KOT: Verify tooltip
-            /// This automated test verifies english KOT button tooltips
+            /// This automated test verifies english AoT button tooltips
             /// </summary>
-            Assert.AreEqual("Keep on top", page.GetKOTToolTipText());
-            page.StandardKoTMode();
-            Assert.AreEqual("Back to full view", page.GetKOTToolTipText());
+            Assert.AreEqual("Keep on top", page.GetAoTToolTipText());
+            page.StandardAoTMode();
+            Assert.AreEqual("Back to full view", page.GetAoTToolTipText());
         }
 
         [TestMethod]
         [Priority(1)]
-        public void KOT_NoMemoryFunction()
+        public void AoT_NoMemoryFunction()
         {
             /// <summary>
-            /// Test Case 23458498: BVT: KOT: Verify Memory function is not accessible while in KOT mode
-            /// This automated test verifies memory function cannot be triggered in KOT calculator
+            /// Test Case 23458498: BVT: KOT: Verify Memory function is not accessible while in AoT mode
+            /// This automated test verifies memory function cannot be triggered in AoT calculator
             /// </summary>
             ///
             page.StandardOperators.NumberPad.Num9Button.Click();
             page.StandardOperators.MinusButton.Click();
             page.StandardOperators.NumberPad.Num3Button.Click();
-            page.StandardKoTMode();
+            page.StandardAoTMode();
             page.GlobalCalculatorUI.Window.SendKeys(Keys.Enter);
             page.GlobalCalculatorUI.Window.SendKeys(Keys.Control + "P" + Keys.Control);
             page.GlobalCalculatorUI.Window.SendKeys(Keys.Shift); //Hotkeys such as "Delete" will break without this line
-            page.StandardNonKoTMode();
+            page.StandardNonAoTMode();
             page.MemoryPanel.OpenMemoryPanel();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
         }
 
         [TestMethod]
         [Priority(1)]
-        public void KOT_HistoryFunction()
+        public void AoT_HistoryFunction()
         {
             /// <summary>
-            /// Test Case 23458436: BVT: KOT: Verify History is not accessible while in KOT mode, but it is still tracked
-            /// This automated test verifies the history flyout cannot be opened in KOT mode and
-            /// that history is tracked while in KOT mode and avalible upon ext of KOT mode
+            /// Test Case 23458436: BVT: KOT: Verify History is not accessible while in AoT mode, but it is still tracked
+            /// This automated test verifies the history flyout cannot be opened in AoT mode and
+            /// that history is tracked while in AoT mode and avalible upon ext of AoT mode
             /// </summary>
             page.HistoryPanel.ClearHistory();
             page.StandardOperators.NumberPad.Num3Button.Click();
             page.StandardOperators.PlusButton.Click();
             page.StandardOperators.NumberPad.Num3Button.Click();
-            page.StandardKoTMode();
+            page.StandardAoTMode();
             page.GlobalCalculatorUI.Window.SendKeys(Keys.Enter);
             page.GlobalCalculatorUI.Window.SendKeys(Keys.Control + "H" + Keys.Control);
             string source0 = WinAppDriver.Instance.CalculatorSession.PageSource;
@@ -1125,7 +1124,7 @@ namespace CalculatorUITests
             }
             else
             {
-                page.StandardNonKoTMode();
+                page.StandardNonAoTMode();
                 var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
                 Assert.IsTrue(historyItems[0].Text.Equals("3 + 3= 6", StringComparison.InvariantCultureIgnoreCase));
             }
@@ -1133,119 +1132,119 @@ namespace CalculatorUITests
 
         [TestMethod]
         [Priority(2)]
-        public void KOT_ButtonOnlyInStandard()
+        public void AoT_ButtonOnlyInStandard()
         {
             /// <summary>
-            /// Test Case 23459163: BVT: KOT: Verify KOT button is only available in Standard mode
-            /// This automated test verifies that Sandard calculator has KOT button, but other major
+            /// Test Case 23459163: BVT: KOT: Verify AoT button is only available in Standard mode
+            /// This automated test verifies that Sandard calculator has AoT button, but other major
             /// calculator modes do not
             /// </summary>
 
             page.GlobalCalculatorUI.AppName.Click();
             page.GlobalCalculatorUI.Header.SendKeys(Keys.Alt + "2" + Keys.Alt);
             Assert.AreEqual("Scientific", page.GlobalCalculatorUI.GetCalculatorHeaderText());
-            page.GetKOTPresence();
-            Assert.AreEqual("False", page.GetKOTPresence());
+            page.GetAoTPresence();
+            Assert.AreEqual("False", page.GetAoTPresence());
 
             page.GlobalCalculatorUI.AppName.Click();
             page.GlobalCalculatorUI.Header.SendKeys(Keys.Alt + "3" + Keys.Alt);
             Assert.AreEqual("Programmer", page.GlobalCalculatorUI.GetCalculatorHeaderText());
-            page.GetKOTPresence();
-            Assert.AreEqual("False", page.GetKOTPresence());
+            page.GetAoTPresence();
+            Assert.AreEqual("False", page.GetAoTPresence());
 
             page.GlobalCalculatorUI.AppName.Click();
             page.GlobalCalculatorUI.Header.SendKeys(Keys.Alt + "4" + Keys.Alt);
             Assert.AreEqual("Date Calculation", page.GlobalCalculatorUI.GetCalculatorHeaderText());
-            page.GetKOTPresence();
-            Assert.AreEqual("False", page.GetKOTPresence());
+            page.GetAoTPresence();
+            Assert.AreEqual("False", page.GetAoTPresence());
 
             page.GlobalCalculatorUI.AppName.Click();
             page.GlobalCalculatorUI.Header.SendKeys(Keys.Alt + "1" + Keys.Alt);
             Assert.AreEqual("Standard", page.GlobalCalculatorUI.GetCalculatorHeaderText());
-            page.GetKOTPresence();
-            Assert.AreEqual("True", page.GetKOTPresence());
+            page.GetAoTPresence();
+            Assert.AreEqual("True", page.GetAoTPresence());
         }
 
         [TestMethod]
         [Priority(2)]
-        public void KOT_Scaling()
+        public void AoT_Scaling()
         {
             /// <summary>
             /// Test Case 23456757: BVT: KOT: Verify UI while scaling
             /// This automated test verifies that the app can scale to smallest size, largest size, and to a medium size 
             /// without crashing
             /// </summary>
-            page.StandardKoTMode();
-            page.KOTWindowSizeWithinRange();
-            Size smallKOTWindowSize = new Size(161, 168);
-            Size largeKOTWindowSize = new Size(502, 502);
-            Size mediumKOTWindowSize = new Size(396, 322);
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = smallKOTWindowSize;
+            page.StandardAoTMode();
+            page.AoTWindowSizeWithinRange();
+            Size smallAoTWindowSize = new Size(161, 168);
+            Size largeAoTWindowSize = new Size(502, 502);
+            Size mediumAoTWindowSize = new Size(396, 322);
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = smallAoTWindowSize;
             Assert.AreEqual("(161, 168)", page.GetCalculatorWindowSize());
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeKOTWindowSize;
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeAoTWindowSize;
             Assert.AreEqual("(502, 502)", page.GetCalculatorWindowSize());
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = mediumKOTWindowSize;
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = mediumAoTWindowSize;
             Assert.AreEqual("(396, 322)", page.GetCalculatorWindowSize());
-            page.StandardNonKoTMode();
+            page.StandardNonAoTMode();
         }
 
         [TestMethod]
         [Priority(2)]
-        public void KOT_ScaleRetention()
+        public void AoT_ScaleRetention()
         {
             /// <summary>
             /// (Half) Test Case 23458956: BVT: KOT: Verify scale retention
-            /// This automated test verifies the window scale retention is maintained when switching between KOT and Non-KOT
+            /// This automated test verifies the window scale retention is maintained when switching between AoT and Non-AoT
             /// Note: This does not verify scale retention across calculator session
             /// </summary>
 
             Size smallWindowSize = new Size(464, 502);
-            Size largeKOTWindowSize = new Size(502, 502);
+            Size largeAoTWindowSize = new Size(502, 502);
 
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = smallWindowSize;
             Assert.AreEqual("(464, 502)", page.GetCalculatorWindowSize());
 
-            page.StandardKoTMode();
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeKOTWindowSize;
+            page.StandardAoTMode();
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeAoTWindowSize;
             Assert.AreEqual("(502, 502)", page.GetCalculatorWindowSize());
 
-            page.StandardNonKoTMode();
+            page.StandardNonAoTMode();
             Assert.AreEqual("(464, 502)", page.GetCalculatorWindowSize());
 
-            page.StandardKoTMode();
+            page.StandardAoTMode();
             Assert.AreEqual("(502, 502)", page.GetCalculatorWindowSize());
 
         }
 
         [TestMethod]
         [Priority(2)]
-        public void KOT_ErrorMessage()
+        public void AoT_ErrorMessage()
         {
             /// <summary>
             /// Test Case 23459118: BVT: KOT: Verify error message display
-            /// This automated test verifies the window scale retention is maintained when switching between KOT and Non-KOT
+            /// This automated test verifies the window scale retention is maintained when switching between AoT and Non-AoT
             /// Note: This test case is in progress: Need to verify " All operator buttons (except for "CE", "C", "Delete" and "="), and memory buttons are disabled"
             /// </summary>
 
-            Size largeKOTWindowSize = new Size(502, 502);
-            Point largeKOTWindowPosition = new Point(0, 0);
-            page.StandardKoTMode();
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = largeKOTWindowPosition;
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeKOTWindowSize;
+            Size largeAoTWindowSize = new Size(502, 502);
+            Point largeAoTWindowPosition = new Point(0, 0);
+            page.StandardAoTMode();
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = largeAoTWindowPosition;
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeAoTWindowSize;
             page.StandardOperators.DivideButton.Click();
             page.StandardOperators.NumberPad.Num0Button.Click();
             page.StandardOperators.EqualButton.Click();
-            page.KOTModeCheck();
-            Assert.AreEqual("True", page.KOTModeCheck());
-            Assert.AreEqual("Result is undefined", page.GetKOTCalculatorResultText());
+            page.AoTModeCheck();
+            Assert.AreEqual("True", page.AoTModeCheck());
+            Assert.AreEqual("Result is undefined", page.GetAoTCalculatorResultText());
             page.StandardOperators.ClearButton.Click();
             page.StandardOperators.InvertButton.Click();
-            page.KOTModeCheck();
-            Assert.AreEqual("True", page.KOTModeCheck());
-            Assert.AreEqual("Cannot divide by zero", page.GetKOTCalculatorResultText());
-            page.StandardNonKoTMode();
-            page.KOTModeCheck();
-            Assert.AreEqual("False", page.KOTModeCheck());
+            page.AoTModeCheck();
+            Assert.AreEqual("True", page.AoTModeCheck());
+            Assert.AreEqual("Cannot divide by zero", page.GetAoTCalculatorResultText());
+            page.StandardNonAoTMode();
+            page.AoTModeCheck();
+            Assert.AreEqual("False", page.AoTModeCheck());
             Assert.AreEqual("Cannot divide by zero", page.GlobalCalculatorUI.GetCalculatorResultText());
         }
 

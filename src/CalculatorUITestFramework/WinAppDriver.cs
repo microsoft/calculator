@@ -73,8 +73,6 @@ namespace CalculatorUITestFramework
                 this.CalculatorSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 Assert.IsNotNull(this.CalculatorSession);
                 this.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
-                //Size windowSize = new Size(1200, 1050);
-                //this.CalculatorSession.Manage().Window.Size = windowSize;
             }
         }
 

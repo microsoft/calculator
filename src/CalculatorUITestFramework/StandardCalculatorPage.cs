@@ -38,21 +38,21 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ClearAll()
         {
-            this.StandardNonKoTMode();
+            this.StandardNonAoTMode();
             this.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
             this.StandardOperators.ClearButton.Click();
             this.MemoryPanel.MemoryClear.Click();
             this.HistoryPanel.ClearHistory();
         }
         /// <summary>
-        /// Gets the text from the display control in KOT mode and removes the narrator text that is not displayed in the UI.
+        /// Gets the text from the display control in AoT mode and removes the narrator text that is not displayed in the UI.
         /// </summary>
         /// <returns>The string shown in the UI.</returns>
-        public string GetKOTCalculatorResultText()
+        public string GetAoTCalculatorResultText()
         {
             return this.CalculatorAlwaysOnTopResults.Text.Replace("Display is", string.Empty).Trim();
         }
-        public void StandardNonKoTMode()
+        public void StandardNonAoTMode()
         {
             string sourceF = this.session.PageSource;
             if (sourceF.Contains("ExitAlwaysOnTopButton"))
@@ -74,9 +74,9 @@ namespace CalculatorUITestFramework
             }
         }
         ///// <summary>
-        ///// Ensures the calculator is in KOT(Keep on top) mode, and verifies that the KOT mode through the absence of the header
+        ///// Ensures the calculator is in AoT(Keep on top) mode, and verifies that the AoT mode through the absence of the header
         ///// </summary>
-        public void StandardKoTMode()
+        public void StandardAoTMode()
         {
             string sourceG = this.session.PageSource;
             if (sourceG.Contains("NormalAlwaysOnTopButton"))
@@ -86,7 +86,7 @@ namespace CalculatorUITestFramework
                 string sourceH = WinAppDriver.Instance.CalculatorSession.PageSource;
                 if (sourceH.Contains("Header"))
                 {
-                    throw new NotFoundException("Failed to enter 'Keep on top' mode; In KoT mode, Calculator does not have header");
+                    throw new NotFoundException("Failed to enter 'Keep on top' mode; In AoT mode, Calculator does not have header");
                 }
                 else
                 {
@@ -99,10 +99,10 @@ namespace CalculatorUITestFramework
             }
         }
         /// <summary>
-        /// Checks to see if the size of the Calculator window is within the KOT arange of size
+        /// Checks to see if the size of the Calculator window is within the AoT arange of size
         /// </summary>
         /// <returns>The string shown in the UI.</returns>
-        public void KOTWindowSizeWithinRange()
+        public void AoTWindowSizeWithinRange()
         {
             Size getCalculatorWindowSize = WinAppDriver.Instance.CalculatorSession.Manage().Window.Size;
             int Width = getCalculatorWindowSize.Width;
@@ -128,18 +128,18 @@ namespace CalculatorUITestFramework
             return CalculatorWindowSize.ToString();
         }
         ///// <summary>
-        ///// Gets the KOT ToolTip text
+        ///// Gets the AoT ToolTip text
         ///// </summary>
-        public string GetKOTToolTipText()
+        public string GetAoTToolTipText()
         {
             string sourceH = this.session.PageSource;
             if ((sourceH.Contains("Keep on top")) || (sourceH.Contains("Back to full view")))
             {
                 if (sourceH.Contains("Keep on top"))
                 {
-                    Actions moveToKOTButton = new Actions(WinAppDriver.Instance.CalculatorSession);
-                    moveToKOTButton.MoveToElement(EnterAlwaysOnTopButton);
-                    moveToKOTButton.Perform();
+                    Actions moveToAoTButton = new Actions(WinAppDriver.Instance.CalculatorSession);
+                    moveToAoTButton.MoveToElement(EnterAlwaysOnTopButton);
+                    moveToAoTButton.Perform();
                 }
                 else
                 {
@@ -156,38 +156,38 @@ namespace CalculatorUITestFramework
             return ToolTipText;
         }
         ///// <summary>
-        ///// Checks in KOT (Keep on top) button is present
+        ///// Checks in AoT (Keep on top) button is present
         ///// </summary>
-        public string GetKOTPresence()
+        public string GetAoTPresence()
         {
-            bool KOTPresent;
+            bool AoTPresent;
             string sourceJ = this.session.PageSource;
             if (sourceJ.Contains("Keep on top"))
             {
-                KOTPresent = true;
+                AoTPresent = true;
             }
             else
             {
-                KOTPresent = false;
+                AoTPresent = false;
             }
-            return KOTPresent.ToString();
+            return AoTPresent.ToString();
         }
         ///// <summary>
-        ///// Checks Standard calculator to see if it's in KOT (Keep on top)
+        ///// Checks Standard calculator to see if it's in AoT (Keep on top)
         ///// </summary>
-        public string KOTModeCheck()
+        public string AoTModeCheck()
         {
-            bool InKOTMode;
+            bool InAoTMode;
             string sourceK = this.session.PageSource;
             if ((sourceK.Contains("Keep on top")) && (sourceK.Contains("Header")))
             {
-                InKOTMode = false;
+                InAoTMode = false;
             }
             else
             {
-                InKOTMode = true;
+                InAoTMode = true;
             }
-            return InKOTMode.ToString();
+            return InAoTMode.ToString();
         }
         ///// <summary>
         ///// Gets the calculators window's X and Y position and returns it as a string. e.g. "(0, 0)"

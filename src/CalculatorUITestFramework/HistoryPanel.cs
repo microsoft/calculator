@@ -48,27 +48,14 @@ namespace CalculatorUITestFramework
         {
 
             this.HistoryLabel.Click();
-            try
+            string source = this.session.PageSource;
+            if (source.Contains("ClearHistory"))
             {
-                string source = this.session.PageSource;
-                if (source.Contains("ClearHistory"))
-                {
-                    this.ClearHistoryButton.Click();
-                }
-                else
-                {
-                    return;
-                }
+                this.ClearHistoryButton.Click();
             }
-            catch (WebDriverException ex)
+            else
             {
-                if (ex.Message.Contains("element could not be located"))
-                {
-                    Assert.IsNotNull(this.HistoryEmpty);
-                    return;
-                }
-
-                throw;
+                return;
             }
         }
         /// <summary>
