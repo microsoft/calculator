@@ -46,7 +46,7 @@ namespace GraphControl::DX
 
         void CreateWindowSizeDependentResources();
 
-        void RunRenderPass();
+        bool RunRenderPass();
 
         // Indicates if we are in active tracing mode (the tracing box is being used and controlled through keyboard input)
         property bool ActiveTracing

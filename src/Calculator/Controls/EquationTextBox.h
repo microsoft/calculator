@@ -22,6 +22,7 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::SolidColorBrush^, EquationColor);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Controls::Flyout^, ColorChooserFlyout);
             DEPENDENCY_PROPERTY(Platform::String ^, EquationButtonContentIndex);
+            DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, HasError);
 
             PROPERTY_R(bool, HasFocus);
 
@@ -60,6 +61,8 @@ namespace CalculatorApp
 
             void OnColorFlyoutOpened(Platform::Object^ sender, Platform::Object^ e);
             void OnColorFlyoutClosed(Platform::Object^ sender, Platform::Object^ e);
+
+            void OnHasErrorPropertyChanged(bool oldValue, bool newValue);
 
             CalculatorApp::Controls::MathRichEditBox^ m_richEditBox;
             Windows::UI::Xaml::Controls::Primitives::ToggleButton^ m_equationButton;
