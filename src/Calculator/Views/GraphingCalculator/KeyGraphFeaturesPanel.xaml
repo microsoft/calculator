@@ -156,8 +156,7 @@
                                     MinHeight="44"
                                     VerticalAlignment="Stretch"
                                     BorderThickness="1">
-                                <Button.Content>
-                                    <StackPanel x:Name="FunctionNumberLabel"
+                                <StackPanel x:Name="FunctionNumberLabel"
                                                 Margin="5,0"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
