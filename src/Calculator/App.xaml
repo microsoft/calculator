@@ -1607,10 +1607,10 @@
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackgroundPointerOver" Color="{StaticResource SystemColorHighlightColor}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{StaticResource SystemColorBackgroundColor}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonBorderBrushPointerOver" Color="{StaticResource SystemColorWindowTextColor}"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonBorderBrushPointerOver" Color="{StaticResource SystemColorHighlightColor}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="{StaticResource SystemColorHighlightColor}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{StaticResource SystemColorWindowColor}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonBorderBrushPressed" Color="{StaticResource SystemColorWindowTextColor}"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonBorderBrushPressed" Color="Orange"/>
                                                 </ResourceDictionary>
                                             </ResourceDictionary.ThemeDictionaries>
                                         </ResourceDictionary>
