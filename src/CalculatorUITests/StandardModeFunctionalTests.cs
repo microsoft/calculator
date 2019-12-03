@@ -59,262 +59,7 @@ namespace CalculatorUITests
             page.ClearAll();
         }
 
-        //#region Smoke Tests
-
-        //[TestMethod]
-        //public void SmokeTest_Add()
-        //{
-        //    page.StandardOperators.NumberPad.Input(3.5);
-        //    page.StandardOperators.PlusButton.Click();
-        //    page.StandardOperators.NumberPad.Input(0.25);
-        //    page.StandardOperators.EqualButton.Click();
-        //    Assert.AreEqual("3.75", page.CalculatorResults.GetCalculatorResultText());
-        //}
-
-        //[TestMethod]
-        //public void SmokeTest_Add_KeyboardInput()
-        //{
-        //    page.GlobalCalculatorUI.Header.SendKeys("3+3=");
-        //    Assert.AreEqual("6", page.CalculatorResults.GetCalculatorResultText());
-        //}
-
-        //[TestMethod]
-        //public void SmokeTest_Subtract()
-        //{
-        //    page.StandardOperators.NumberPad.Input(4.3);
-        //    page.StandardOperators.MinusButton.Click();
-        //    page.StandardOperators.NumberPad.Input(2.6);
-        //    page.StandardOperators.EqualButton.Click();
-        //    Assert.AreEqual("1.7", page.CalculatorResults.GetCalculatorResultText());
-        //}
-
-        //[TestMethod]
-        //public void SmokeTest_History()
-        //{
-        //    page.StandardOperators.NumberPad.Input(-3);
-        //    page.StandardOperators.PlusButton.Click();
-        //    page.StandardOperators.NumberPad.Input(-2.6);
-        //    page.StandardOperators.EqualButton.Click();
-
-        //    page.StandardOperators.NumberPad.Input(2);
-        //    page.StandardOperators.MinusButton.Click();
-        //    page.StandardOperators.NumberPad.Input(3);
-        //    page.StandardOperators.EqualButton.Click();
-
-        //    page.StandardOperators.NumberPad.Input(1);
-        //    page.StandardOperators.MultiplyButton.Click();
-        //    page.StandardOperators.NumberPad.Input(3);
-        //    page.StandardOperators.EqualButton.Click();
-
-        //    var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-        //    Assert.IsTrue(historyItems[0].Text.Equals("1 × 3= 3", StringComparison.InvariantCultureIgnoreCase));
-        //    Assert.IsTrue(historyItems[1].Text.Equals("2 Minus ( 3= Minus (1", StringComparison.InvariantCultureIgnoreCase));
-        //    Assert.IsTrue(historyItems[2].Text.Equals("-3 + -2.6= Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
-
-        //}
-
-        //[TestMethod]
-        //public void SmokeTest_Memory()
-        //{
-        //    page.StandardOperators.NumberPad.Input(3);
-        //    page.StandardOperators.PlusButton.Click();
-        //    page.StandardOperators.NumberPad.Input(0);
-        //    page.StandardOperators.EqualButton.Click();
-        //    page.MemoryPanel.MemButton.Click();
-
-        //    page.StandardOperators.NumberPad.Input(2);
-        //    page.StandardOperators.DivideButton.Click();
-        //    page.StandardOperators.NumberPad.Input(3);
-        //    page.StandardOperators.EqualButton.Click();
-        //    page.MemoryPanel.MemButton.Click();
-
-        //    page.StandardOperators.NumberPad.Input(7);
-        //    page.StandardOperators.MultiplyButton.Click();
-        //    page.StandardOperators.NumberPad.Input(9);
-        //    page.StandardOperators.EqualButton.Click();
-        //    page.MemoryPanel.MemButton.Click();
-
-        //    var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
-
-        //    Assert.IsTrue(memoryItems[0].Text.Equals("63", StringComparison.InvariantCultureIgnoreCase));
-        //    Assert.IsTrue(memoryItems[1].Text.Equals("0.6666666666666667‬", StringComparison.InvariantCultureIgnoreCase));
-        //    Assert.IsTrue(memoryItems[2].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
-        //    return;
-
-        //}
-
-        //#endregion
-
-        //#region Basic Arthimetic Tests
-        //[TestMethod]
-        //public void Operator_Reciprocal()
-        //{
-        //    page.StandardOperators.NumberPad.Input(4);
-        //    page.StandardOperators.InvertButton.Click();
-        //    Assert.AreEqual("0.25", page.CalculatorResults.GetCalculatorResultText());
-        //}
-
-        //[TestMethod]
-        //public void Operator_Squared()
-        //{
-        //    page.StandardOperators.NumberPad.Input(-15.5);
-        //    page.StandardOperators.XPower2Button.Click();
-        //    Assert.AreEqual("240.25", page.CalculatorResults.GetCalculatorResultText());
-        //}
-
-        //[TestMethod]
-        //public void Operator_SquareRoot()
-        //{
-        //    page.StandardOperators.NumberPad.Input(144);
-        //    page.StandardOperators.SquareRootButton.Click();
-        //    Assert.AreEqual("12", page.CalculatorResults.GetCalculatorResultText());
-        //}
-
-        //[TestMethod]
-        //public void Operator_Percent()
-        //{
-        //    page.StandardOperators.NumberPad.Input(600);
-        //    page.StandardOperators.MultiplyButton.Click();
-        //    page.StandardOperators.NumberPad.Input(15);
-        //    page.StandardOperators.PercentButton.Click();
-        //    page.StandardOperators.EqualButton.Click();
-        //    Assert.AreEqual("90", page.CalculatorResults.GetCalculatorResultText());
-        //}
-
-        //[TestMethod]
-        //public void Operator_Delete()
-        //{
-        //    page.StandardOperators.NumberPad.Input(-12345);
-        //    page.StandardOperators.BackSpaceButton.Click();
-        //    Assert.AreEqual("-1,234", page.CalculatorResults.GetCalculatorResultText());
-        //}
-
-        //[TestMethod]
-        //public void Operator_ClearAll()
-        //{
-        //    page.StandardOperators.NumberPad.Input(12345);
-        //    page.StandardOperators.PlusButton.Click();
-        //    page.StandardOperators.NumberPad.Input(6789);
-        //    page.StandardOperators.ClearButton.Click();
-        //    Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText());
-        //}
-
-        //[TestMethod]
-        //public void Operator_ClearEntry()
-        //{
-        //    page.StandardOperators.NumberPad.Input(-12345);
-        //    page.StandardOperators.MinusButton.Click();
-        //    page.StandardOperators.NumberPad.Input(5678);
-        //    page.StandardOperators.ClearEntryButton.Click();
-        //    Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText());
-        //}
-        //#endregion
-
-        //#region Keyboard Input Tests
-        //[TestMethod]
-        //public void KeyboardInput_Subtract()
-        //{
-        //    page.GlobalCalculatorUI.Header.SendKeys("70090");
-        //    page.GlobalCalculatorUI.Header.SendKeys(Keys.Subtract);
-        //    page.GlobalCalculatorUI.Header.SendKeys("890987");
-        //    page.GlobalCalculatorUI.Header.SendKeys(Keys.Equal);
-        //    Assert.AreEqual("-820,897", page.CalculatorResults.GetCalculatorResultText());
-        //}
-
-        //[TestMethod]
-        //public void KeyboardInput_Multiply()
-        //{
-        //    page.GlobalCalculatorUI.Header.SendKeys("-15*3=");
-        //    page.GlobalCalculatorUI.CalculatorResult.Click();
-        //    Assert.AreEqual("-45", page.CalculatorResults.GetCalculatorResultText());
-        //}
-
-        //[TestMethod]
-        //public void KeyboardInput_Divide()
-        //{
-        //    page.GlobalCalculatorUI.Header.SendKeys("26/13=");
-        //    Assert.AreEqual("2", page.CalculatorResults.GetCalculatorResultText());
-        //}
-
-        //[TestMethod]
-        //public void KeyboardInput_SquareRoot()
-        //{
-        //    page.GlobalCalculatorUI.Header.SendKeys("100@");
-        //    Assert.AreEqual("10", page.CalculatorResults.GetCalculatorResultText());
-        //}
-
-        //[TestMethod]
-        //public void KeyboardInput_Percent()
-        //{
-        //    page.GlobalCalculatorUI.Header.SendKeys("34+7%=");
-        //    Assert.AreEqual("36.38", page.CalculatorResults.GetCalculatorResultText());
-        //}
-
-        //#endregion
-
-        //#region Memory Tests
-        //[TestMethod]
-        //public void StandardMemory_AddTest()
-        //{
-        //    page.StandardOperators.NumberPad.Input(12);
-        //    page.StandardOperators.DivideButton.Click();
-        //    page.StandardOperators.NumberPad.Input(3);
-        //    page.StandardOperators.EqualButton.Click();
-
-        //    page.MemoryPanel.MemButton.Click();
-        //    page.StandardOperators.NumberPad.Input(15);
-        //    page.MemoryPanel.MemPlus.Click();
-        //    var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
-        //    Assert.IsTrue(memoryItems[0].Text.Equals("19", StringComparison.InvariantCultureIgnoreCase));
-        //}
-
-        //[TestMethod]
-        //public void StandardMemory_SubtractTest()
-        //{
-        //    page.StandardOperators.NumberPad.Input(12);
-        //    page.StandardOperators.DivideButton.Click();
-        //    page.StandardOperators.NumberPad.Input(3);
-        //    page.StandardOperators.EqualButton.Click();
-
-        //    page.MemoryPanel.MemButton.Click();
-        //    page.StandardOperators.NumberPad.Input(3.3);
-        //    page.MemoryPanel.MemMinus.Click();
-        //    var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
-        //    Assert.IsTrue(memoryItems[0].Text.Equals("0.7", StringComparison.InvariantCultureIgnoreCase));
-        //}
-
-        //[TestMethod]
-        //public void StandardMemory_RecallTest()
-        //{
-        //    page.StandardOperators.NumberPad.Input(12);
-        //    page.StandardOperators.DivideButton.Click();
-        //    page.StandardOperators.NumberPad.Input(3);
-        //    page.StandardOperators.EqualButton.Click();
-
-        //    page.MemoryPanel.MemButton.Click();
-        //    page.StandardOperators.NumberPad.Input(3.3);
-        //    page.MemoryPanel.MemRecall.Click();
-        //    var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
-        //    Assert.IsTrue(memoryItems[0].Text.Equals("4", StringComparison.InvariantCultureIgnoreCase));
-        //}
-
-        //[TestMethod]
-        //public void StandardMemory_ClearTest()
-        //{
-        //    page.StandardOperators.NumberPad.Input(12);
-        //    page.StandardOperators.DivideButton.Click();
-        //    page.StandardOperators.NumberPad.Input(3);
-        //    page.StandardOperators.EqualButton.Click();
-
-        //    page.MemoryPanel.MemButton.Click();
-        //    page.StandardOperators.NumberPad.Input(3.3);
-        //    page.MemoryPanel.MemoryClear.Click();
-        //    page.MemoryPanel.OpenMemoryPanel();
-        //    Assert.IsNotNull(page.MemoryPanel.MemoryPaneEmptyLabel);
-        //}
-        //#endregion
-
-        #region Basic UI Functionality via Mouse input
+        #region Basic UI Functionality via Mouse Input Tests
 
         /// <summary>
         /// These automated tests verify clicking each of the buttons in the Calculator UI and getting an expected result
@@ -445,7 +190,7 @@ namespace CalculatorUITests
         }
         #endregion
 
-        #region Basic Calculator Functionality via keyboard input
+        #region Basic Calculator Functionality via Keyboard Input Tests
 
         /// <summary>
         /// These automated tests verify the functionality of all hotkeys, that are common for all calculator modes, as well as the all keyboard input used in standard mode on the Standard Calculator.
@@ -610,7 +355,7 @@ namespace CalculatorUITests
 
         #endregion
 
-        #region Arithmetic Operators Functionality via mixed input
+        #region Arithmetic Operators Functionality via Mixed Input
 
         /// <summary>
         /// These automated test not only verify each opperator individually, but they also simultaneously verify mixed user input.
@@ -837,7 +582,7 @@ namespace CalculatorUITests
 
         #endregion
 
-        #region Standard Memory
+        #region Standard Memory Tests
 
         /// <summary>
         /// These automated tests verify using memory related buttons in the Memory Panel, and in the memory flyout
@@ -916,7 +661,7 @@ namespace CalculatorUITests
 
         #endregion
 
-        #region Standard History
+        #region Standard History Tests
 
         /// <summary>
         /// These automated tests (that replace this manual test case) verify using
@@ -1218,7 +963,7 @@ namespace CalculatorUITests
 
         #endregion
 
-        #region Stress Testing
+        #region Stress Tests
         /// <summary>
         /// These automated tests mildly stress that app to verify stability
         /// To-Do: Verify multiple sessions
