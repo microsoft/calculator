@@ -1565,7 +1565,7 @@
                                                                             <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPointerOverOpacity}"/>
                                                                             <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                             <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
-                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xE890;"/>
+                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xF6AC;"/>
                                                                         </VisualState.Setters>
                                                                     </VisualState>
                                                                     <VisualState x:Name="Pressed">
@@ -1575,7 +1575,7 @@
                                                                             <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPressedOpacity}"/>
                                                                             <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                             <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
-                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xE890;"/>
+                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xF6AC;"/>
                                                                         </VisualState.Setters>
                                                                     </VisualState>
                                                                     <VisualState x:Name="Checked">
@@ -1593,7 +1593,7 @@
                                                                             <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPointerOverOpacity}"/>
                                                                             <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                             <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
-                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xED1A;"/>
+                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xE890;"/>
                                                                         </VisualState.Setters>
                                                                     </VisualState>
                                                                     <VisualState x:Name="CheckedPressed">
@@ -1604,7 +1604,7 @@
                                                                             <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPressedOpacity}"/>
                                                                             <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                             <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
-                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xED1A;"/>
+                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xE890;"/>
                                                                         </VisualState.Setters>
                                                                     </VisualState>
                                                                 </VisualStateGroup>
@@ -1617,7 +1617,7 @@
                                                                               AutomationProperties.AccessibilityView="Raw"
                                                                               IsHitTestVisible="False"/>
                                                             <FontIcon x:Name="ShowHideIcon"
-                                                                      FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                      FontFamily="{StaticResource CalculatorFontFamily}"
                                                                       Visibility="Collapsed"/>
                                                         </Grid>
                                                     </ControlTemplate>
@@ -1721,8 +1721,9 @@
                                                 Foreground="{TemplateBinding EquationColor}"
                                                 BorderThickness="{TemplateBinding BorderThickness}"
                                                 FontSize="{TemplateBinding FontSize}"
+                                                FontFamily="{StaticResource CalculatorFontFamily}"
                                                 AutomationProperties.AccessibilityView="Raw"
-                                                Content="ƒₓ"
+                                                Content="&#xE3B5;"
                                                 IsTabStop="False"
                                                 Visibility="Collapsed"/>
                                     </Grid>

@@ -378,8 +378,7 @@
                           ToolTipService.ToolTip="{x:Bind local:GraphingCalculator.GetInfoForSwitchModeToggleButton(SwitchModeToggleButton.IsChecked.Value), Mode=OneWay}"
                           Unchecked="SwitchModeToggleButton_Checked"
                           Visibility="Collapsed">
-                <!-- TODO: update this icon -->
-                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph=""/>
+                <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xE3B4;"/>
             </ToggleButton>
         </Grid>
         <!-- Left portion of the screen -->
