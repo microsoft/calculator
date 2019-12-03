@@ -65,7 +65,11 @@ MathRichEditBox::MathRichEditBox()
     // TextDocument->SetMathMode(Windows::UI::Text::RichEditMathMode::MathOnly);
     Microsoft::WRL::ComPtr<Windows_2004_Prerelease::ITextDocument4> textDocument4;
     reinterpret_cast<IInspectable*>(this->TextDocument)->QueryInterface(IID_PPV_ARGS(&textDocument4));
-    textDocument4->SetMathMode(Windows_2004_Prerelease::RichEditMathMode_MathOnly);
+    auto hr = textDocument4->SetMathMode(Windows_2004_Prerelease::RichEditMathMode_MathOnly);
+    if (FAILED(hr))
+    {
+        throw Exception::CreateException(hr);
+    }
 }
 
 String ^ MathRichEditBox::GetMathTextProperty()
@@ -78,7 +82,11 @@ String ^ MathRichEditBox::GetMathTextProperty()
     Microsoft::WRL::ComPtr<Windows_2004_Prerelease::ITextDocument4> textDocument4;
     reinterpret_cast<IInspectable*>(this->TextDocument)->QueryInterface(IID_PPV_ARGS(&textDocument4));
     HSTRING math;
-    textDocument4->GetMath(&math);
+    auto hr = textDocument4->GetMath(&math);
+    if (FAILED(hr))
+    {
+        throw Exception::CreateException(hr);
+    }
     return reinterpret_cast<String ^>(math);
 }
 
@@ -91,7 +99,11 @@ void MathRichEditBox::SetMathTextProperty(String ^ newValue)
     // TextDocument->SetMath(newValue);
     Microsoft::WRL::ComPtr<Windows_2004_Prerelease::ITextDocument4> textDocument4;
     reinterpret_cast<IInspectable*>(this->TextDocument)->QueryInterface(IID_PPV_ARGS(&textDocument4));
-    textDocument4->SetMath(reinterpret_cast<HSTRING>(newValue));
+    auto hr = textDocument4->SetMath(reinterpret_cast<HSTRING>(newValue));
+    if (FAILED(hr))
+    {
+        throw Exception::CreateException(hr);
+    }
 
     this->IsReadOnly = readOnlyState;
 }
