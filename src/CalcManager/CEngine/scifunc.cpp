@@ -46,8 +46,8 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             }
             break;
 
-            // Rotate Left with hi bit wrapped over to lo bit
         case IDC_ROL:
+        case IDC_ROLC:
             if (m_fIntegerMode)
             {
                 result = Integer(rat);
@@ -55,14 +55,23 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
                 uint64_t w64Bits = result.ToUInt64_t();
                 uint64_t msb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
                 w64Bits <<= 1;  // LShift by 1
-                w64Bits |= msb; // Set the prev Msb as the current Lsb
+
+                if (op == IDC_ROL)
+                {
+                    w64Bits |= msb; // Set the prev Msb as the current Lsb
+                }
+                else
+                {
+                    w64Bits |= m_carryBit; // Set the carry bit as the LSB
+                    m_carryBit = msb; // Store the msb as the next carry bit
+                }
 
                 result = w64Bits;
             }
             break;
 
-            // Rotate right with lo bit wrapped over to hi bit
         case IDC_ROR:
+        case IDC_RORC:
             if (m_fIntegerMode)
             {
                 result = Integer(rat);
@@ -70,7 +79,16 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
                 uint64_t w64Bits = result.ToUInt64_t();
                 uint64_t lsb = ((w64Bits & 0x01) == 1) ? 1 : 0;
                 w64Bits >>= 1; // RShift by 1
-                w64Bits |= (lsb << (m_dwWordBitWidth - 1));
+
+                if (op == IDC_ROR)
+                {
+                    w64Bits |= (lsb << (m_dwWordBitWidth - 1));
+                }
+                else
+                {
+                    w64Bits |= (m_carryBit << (m_dwWordBitWidth - 1));
+                    m_carryBit = lsb;
+                }
 
                 result = w64Bits;
             }
@@ -133,6 +151,48 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             }
             break;
 
+        case IDC_SEC:
+            if (!m_fIntegerMode)
+            {
+                result = m_bInv ? ACos(Invert(rat), m_angletype) : Invert(Cos(rat, m_angletype));
+            }
+            break;
+
+        case IDC_CSC:
+            if (!m_fIntegerMode)
+            {
+                result = m_bInv ? ASin(Invert(rat), m_angletype) : Invert(Sin(rat, m_angletype));
+            }
+            break;
+
+        case IDC_COT:
+            if (!m_fIntegerMode)
+            {
+                result = m_bInv ? ATan(Invert(rat), m_angletype) : Invert(Tan(rat, m_angletype));
+            }
+            break;
+
+        case IDC_SECH:
+            if (!m_fIntegerMode)
+            {
+                result = m_bInv ? ACosh(Invert(rat)) : Invert(Cosh(rat));
+            }
+            break;
+
+        case IDC_CSCH:
+            if (!m_fIntegerMode)
+            {
+                result = m_bInv ? ASinh(Invert(rat)) : Invert(Sinh(rat));
+            }
+            break;
+
+        case IDC_COTH:
+            if (!m_fIntegerMode)
+            {
+                result = m_bInv ? ATanh(Invert(rat)) : Invert(Tanh(rat));
+            }
+            break;
+
         case IDC_REC: /* Reciprocal. */
             result = Invert(rat);
             break;
@@ -156,6 +216,10 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
 
         case IDC_POW10:
             result = Pow(10, rat);
+            break;
+
+        case IDC_POW2:
+            result = Pow(2, rat);
             break;
 
         case IDC_LN: /* Functions for natural log. */
@@ -202,6 +266,18 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             }
             break;
         }
+        case IDC_CEIL:
+            result = (Frac(rat) > 0) ? Integer(rat + 1) : Integer(rat);
+            break;
+
+        case IDC_FLOOR:
+            result = (Frac(rat) < 0) ? Integer(rat - 1 ) : Integer(rat);
+            break;
+
+        case IDC_ABS:
+            result = Abs(rat);
+            break;
+
         } // end switch( op )
     }
     catch (uint32_t nErrCode)

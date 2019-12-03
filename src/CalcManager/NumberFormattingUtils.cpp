@@ -16,8 +16,7 @@ namespace CalcManager::NumberFormattingUtils
             return;
         }
 
-        wstring::iterator iter;
-        for (iter = number.end() - 1;; iter--)
+        for (auto iter = number.end() - 1;; iter--)
         {
             if (*iter != L'0')
             {
@@ -25,9 +24,9 @@ namespace CalcManager::NumberFormattingUtils
                 break;
             }
         }
-        if (*(number.end() - 1) == L'.')
+        if (number.back() == L'.')
         {
-            number.erase(number.end() - 1, number.end());
+            number.pop_back();
         }
     }
 

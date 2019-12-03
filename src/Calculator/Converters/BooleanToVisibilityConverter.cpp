@@ -1,10 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
 #include "BooleanToVisibilityConverter.h"
-
-using namespace CalculatorApp::Common;
 
 using namespace Platform;
 using namespace Windows::Foundation;

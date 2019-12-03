@@ -179,7 +179,7 @@ bool CalcInput::TryAddDecimalPt()
 
     if (m_base.IsEmpty())
     {
-        m_base.value += L"0"; // Add a leading zero
+        m_base.value += L'0'; // Add a leading zero
     }
 
     m_decPtIndex = m_base.value.size();
@@ -259,6 +259,11 @@ void CalcInput::SetDecimalSymbol(wchar_t decSymbol)
             m_base.value[m_decPtIndex] = m_decSymbol;
         }
     }
+}
+
+bool CalcInput::IsEmpty()
+{
+    return m_base.IsEmpty() && !m_hasExponent && m_exponent.IsEmpty() && !m_hasDecimal;
 }
 
 wstring CalcInput::ToString(uint32_t radix)

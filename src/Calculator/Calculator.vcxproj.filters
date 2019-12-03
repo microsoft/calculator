@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Common">
@@ -302,6 +302,15 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="Views\TitleBar.xaml.cpp" />
+    <ClCompile Include="Views\StateTriggers\ControlSizeTrigger.cpp">
+      <Filter>Views\StateTriggers</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\OperatorPanelListView.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\OperatorPanelButton.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
     <ClCompile Include="Views\GraphingCalculator\EquationInputArea.xaml.cpp" />
     <ClCompile Include="Views\GraphingCalculator\GraphingCalculator.xaml.cpp" />
     <ClCompile Include="Controls\EquationTextBox.cpp">
@@ -392,7 +401,16 @@
     <ClInclude Include="Controls\HorizontalNoOverflowStackPanel.h">
       <Filter>Controls</Filter>
     </ClInclude>
+    <ClInclude Include="Views\StateTriggers\ControlSizeTrigger.h">
+      <Filter>Views\StateTriggers</Filter>
+    </ClInclude>
     <ClInclude Include="Views\TitleBar.xaml.h" />
+    <ClInclude Include="Controls\OperatorPanelListView.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\OperatorPanelButton.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
     <ClInclude Include="Views\GraphingCalculator\EquationInputArea.xaml.h" />
     <ClInclude Include="Views\GraphingCalculator\GraphingCalculator.xaml.h" />
     <ClInclude Include="Controls\EquationTextBox.h">
@@ -476,9 +494,8 @@
     <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml">
       <Filter>Views\GraphingCalculator</Filter>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)DensityStyles\Compact.xaml" />
-    <Page Include="EquationStylePanelControl.xaml">
-      <Filter>Views\GraphingCalculator</Filter>
+    <Page Include="Views\TitleBar.xaml">
+      <Filter>Views</Filter>
     </Page>
     <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" >
           <Filter>Views\GraphingCalculator</Filter>
@@ -1481,6 +1498,42 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-lightunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-lightunplated_devicefamily-colorfulunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-black_devicefamily-colorfulunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-white_devicefamily-colorfulunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_devicefamily-colorfulunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-lightunplated_devicefamily-colorfulunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-black_devicefamily-colorfulunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-white_devicefamily-colorfulunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_devicefamily-colorfulunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-lightunplated_devicefamily-colorfulunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-black_devicefamily-colorfulunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-white_devicefamily-colorfulunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_devicefamily-colorfulunplated.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>

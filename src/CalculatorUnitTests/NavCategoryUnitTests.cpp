@@ -257,9 +257,26 @@ namespace CalculatorUnitTests
     void NavCategoryUnitTests::GetIndex()
     {
         // Index is the 0-based ordering of modes
-        vector<ViewMode> orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Programmer, ViewMode::Date,        ViewMode::Graphing,
-                                          ViewMode::Currency, ViewMode::Area,       ViewMode::Speed,      ViewMode::Time,        ViewMode::Power,
-                                          ViewMode::Data,     ViewMode::Pressure,   ViewMode::Angle };
+        ViewMode orderedModes[] = {
+            ViewMode::Standard,
+            ViewMode::Scientific,
+            ViewMode::Programmer,
+            ViewMode::Date,
+            ViewMode::Graphing,
+            ViewMode::Currency,
+            ViewMode::Volume,
+            ViewMode::Length,
+            ViewMode::Weight,
+            ViewMode::Temperature,
+            ViewMode::Energy,
+            ViewMode::Area,
+            ViewMode::Speed,
+            ViewMode::Time,
+            ViewMode::Power,
+            ViewMode::Data,
+            ViewMode::Pressure,
+            ViewMode::Angle
+        };
 
         auto orderedModesSize = size(orderedModes);
         for (size_t index = 0; index < orderedModesSize; index++)
@@ -359,7 +376,7 @@ namespace CalculatorUnitTests
         NavCategoryGroup ^ calculatorGroup = menuOptions->GetAt(0);
         VERIFY_ARE_EQUAL(CategoryGroupType::Calculator, calculatorGroup->GroupType);
 
-        IObservableVector<NavCategory ^> ^ calculatorCategories = calculatorGroup->Categories;
+        IObservableVector<NavCategory^>^ calculatorCategories = calculatorGroup->Categories;
         VERIFY_ARE_EQUAL(5, calculatorCategories->Size);
         ValidateNavCategory(calculatorCategories, 0u, ViewMode::Standard, 1);
         ValidateNavCategory(calculatorCategories, 1u, ViewMode::Scientific, 2);
