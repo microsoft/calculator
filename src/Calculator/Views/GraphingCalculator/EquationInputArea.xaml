@@ -34,6 +34,22 @@
                 </Style>
             </ListView.Style>
 
+            <ListView.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Default">
+                            <Thickness x:Key="EquationTextBoxMargin">1,0,1,0</Thickness>
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="Light">
+                            <Thickness x:Key="EquationTextBoxMargin">1,0,1,0</Thickness>
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="HighContrast">
+                            <Thickness x:Key="EquationTextBoxMargin">1,2</Thickness>
+                        </ResourceDictionary>
+                    </ResourceDictionary.ThemeDictionaries>
+                </ResourceDictionary>
+            </ListView.Resources>
+
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="IsTabStop" Value="False"/>
@@ -47,7 +63,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:EquationViewModel">
                     <controls:EquationTextBox x:Uid="EquationInputButton"
-                                              Margin="1,0,1,0"
+                                              Margin="{ThemeResource EquationTextBoxMargin}"
                                               Style="{StaticResource EquationTextBoxStyle}"
                                               EquationColor="{x:Bind LineColor, Mode=OneWay}"
                                               EquationButtonClicked="EquationTextBox_EquationButtonClicked"
