@@ -49,6 +49,7 @@
                                      Opacity="0.9"
                                      Color="{ThemeResource SystemAccentColor}"/>
 
+                    <SolidColorBrush x:Key="AppControlForegroundAccentBrush" Color="{ThemeResource SystemAccentColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextRedColorBrush" Color="Red"/>
                     <RevealBorderBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
                                        FallbackColor="Transparent"
@@ -1617,7 +1618,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            
+
             <Style x:Name="EquationTextBoxButtonStyle" TargetType="Button">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="Transparent"/>
