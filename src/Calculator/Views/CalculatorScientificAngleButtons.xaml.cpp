@@ -35,10 +35,6 @@ CalculatorScientificAngleButtons::CalculatorScientificAngleButtons()
     InitializeComponent();
 }
 
-void CalculatorScientificAngleButtons::HypButton_Toggled(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
-{
-}
-
 void CalculatorScientificAngleButtons::FToEButton_Toggled(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     auto viewModel = safe_cast<StandardCalculatorViewModel ^>(this->DataContext);

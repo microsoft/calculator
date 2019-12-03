@@ -153,21 +153,13 @@
     <value>เกี่ยวกับเท่ากับ</value>
     <comment>The text that shows at the bottom of the converter to head the supplementary results. Indicates that the main result is approximately equal to the supplementary results.</comment>
   </data>
-  <data name="BitAutomationName" xml:space="preserve">
-    <value>บิต</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  <data name="BitFlipItemAutomationName" xml:space="preserve">
+    <value>%1, ค่า %2</value>
+    <comment>{Locked="%1","%2"}. String used in automation name for each bit in bit flip. %1 will be replaced by the position of the bit (1st bit, 3rd bit), %2 by a binary value (1 or 0)</comment>
   </data>
-  <data name="ValueAutomationName" xml:space="preserve">
-    <value>ค่า</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
-  </data>
-  <data name="BinaryZeroValueAutomationName" xml:space="preserve">
-    <value>ศูนย์</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
-  </data>
-  <data name="BinaryOneValueAutomationName" xml:space="preserve">
-    <value>หนึ่ง</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  <data name="BitPosition" xml:space="preserve">
+    <value>บิต%1</value>
+    <comment>{Locked="%1"}. Sub-string used to indicate the position of a bit (e.g. 1st bit, 2nd bit...)</comment>
   </data>
   <data name="63" xml:space="preserve">
     <value>ที่ 63</value>
@@ -421,9 +413,9 @@
     <value>ที่ 1</value>
     <comment>Sub-string used in automation name for 1 bit in bit flip</comment>
   </data>
-  <data name="0" xml:space="preserve">
-    <value>ที่ 0</value>
-    <comment>Sub-string used in automation name for 0 bit in bit flip</comment>
+  <data name="LeastSignificantBit" xml:space="preserve">
+    <value>บิตที่สำคัญน้อยที่สุด</value>
+    <comment>Used to describe the first bit of a binary number. Used in bit flip</comment>
   </data>
   <data name="MemoryButton_Open" xml:space="preserve">
     <value>เปิดแถบลอยหน่วยความจำ</value>
@@ -704,6 +696,10 @@
   <data name="DeleteHistorySwipeItem.Text" xml:space="preserve">
     <value>ลบ</value>
     <comment>Text string for the Calculator Delete swipe button in the History list</comment>
+  </data>
+  <data name="CopyHistoryMenuItem.Text" xml:space="preserve"> 
+     <value>คัดลอก</value> 
+     <comment>Text string for the Calculator Copy option in the History list context menu</comment> 
   </data>
   <data name="DeleteHistoryMenuItem.Text" xml:space="preserve">
     <value>ลบ</value>
@@ -2895,6 +2891,114 @@
     <value>แปลงกลับไฮเพอร์โบลิกแทนเจนต์</value>
     <comment>Name for the inverse hyperbolic tangent function. Used by screen readers.</comment>
   </data>
+  <data name="SecantDegrees" xml:space="preserve">
+    <value>องศาซีแคนต์</value>
+    <comment>Name for the secant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="SecantRadians" xml:space="preserve">
+    <value>เรเดียนซีแคนต์</value>
+    <comment>Name for the secant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="SecantGradians" xml:space="preserve">
+    <value>เกรเดียนซีแคนต์</value>
+    <comment>Name for the secant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantDegrees" xml:space="preserve">
+    <value>องศาซีแคนต์ผกผัน</value>
+    <comment>Name for the inverse secant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantRadians" xml:space="preserve">
+    <value>เรเดียนซีแคนต์ผกผัน</value>
+    <comment>Name for the inverse secant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantGradians" xml:space="preserve">
+    <value>เกรเดียนซีแคนต์ผกผัน</value>
+    <comment>Name for the inverse secant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicSecant" xml:space="preserve">
+    <value>ไฮเพอร์โบลิกซีแคนต์</value>
+    <comment>Name for the hyperbolic secant function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicSecant" xml:space="preserve">
+    <value>ไฮเพอร์โบลิกซีแคนต์ผกผัน</value>
+    <comment>Name for the inverse hyperbolic secant function. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantDegrees" xml:space="preserve">
+    <value>องศาโคซีแคนต์</value>
+    <comment>Name for the cosecant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantRadians" xml:space="preserve">
+    <value>เรเดียนโคซีแคนต์</value>
+    <comment>Name for the cosecant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantGradians" xml:space="preserve">
+    <value>เกรเดียนโคซีแคนต์</value>
+    <comment>Name for the cosecant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantDegrees" xml:space="preserve">
+    <value>องศาโคซีแคนต์ผกผัน</value>
+    <comment>Name for the inverse cosecant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantRadians" xml:space="preserve">
+    <value>เรเดียนโคซีแคนต์ผกผัน</value>
+    <comment>Name for the inverse cosecant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantGradians" xml:space="preserve">
+    <value>เกรเดียนโคซีแคนต์ผกผัน</value>
+    <comment>Name for the inverse cosecant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicCosecant" xml:space="preserve">
+    <value>ไฮเพอร์โบลิกโคซีแคนต์</value>
+    <comment>Name for the hyperbolic cosecant function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicCosecant" xml:space="preserve">
+    <value>ไฮเพอร์โบลิกโคซีแคนต์ผกผัน</value>
+    <comment>Name for the inverse hyperbolic cosecant function. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentDegrees" xml:space="preserve">
+    <value>องศาโคแทนเจนต์</value>
+    <comment>Name for the cotangent function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentRadians" xml:space="preserve">
+    <value>เรเดียนโคแทนเจนต์</value>
+    <comment>Name for the cotangent function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentGradians" xml:space="preserve">
+    <value>เกรเดียนโคแทนเจนต์</value>
+    <comment>Name for the cotangent function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentDegrees" xml:space="preserve">
+    <value>องศาโคแทนเจนต์ผกผัน</value>
+    <comment>Name for the inverse cotangent function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentRadians" xml:space="preserve">
+    <value>เรเดียนโคแทนเจนต์ผกผัน</value>
+    <comment>Name for the inverse cotangent function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentGradians" xml:space="preserve">
+    <value>เกรเดียนโคแทนเจนต์ผกผัน</value>
+    <comment>Name for the inverse cotangent function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicCotangent" xml:space="preserve">
+    <value>ไฮเพอร์โบลิกโคแทนเจนต์</value>
+    <comment>Name for the hyperbolic cotangent function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicCotangent" xml:space="preserve">
+    <value>ไฮเพอร์โบลิกโคแทนเจนต์ผกผัน</value>
+    <comment>Name for the inverse hyperbolic cotangent function. Used by screen readers.</comment>
+  </data>
+  <data name="CubeRoot" xml:space="preserve">
+    <value>รากที่สาม</value>
+    <comment>Name for the cube root function. Used by screen readers.</comment>
+  </data>
+  <data name="Logx" xml:space="preserve">
+    <value>ล็อกฐาน</value>
+    <comment>Name for the logbasex function. Used by screen readers.</comment>
+  </data>
+  <data name="AbsoluteValue" xml:space="preserve">
+    <value>ค่าสัมบูรณ์</value>
+    <comment>Name for the absolute value function. Used by screen readers.</comment>
+  </data>
   <data name="LeftShift" xml:space="preserve">
     <value>Shift ซ้าย</value>
     <comment>Name for the programmer function that shifts bits to the left. Used by screen readers.</comment>
@@ -2957,6 +3061,194 @@
   </data>
   <data name="CalculationFailed" xml:space="preserve">
     <value>ไม่สามารถคำนวณได้</value>
-    <comment>Text displayed when the application is not able to do a calculation</comment>
+    <comment>Text displayed when the application is not able to do a calculation</comment>  
+  </data>
+  <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ล็อก X ฐาน</value>
+    <comment>Screen reader prompt for the logBaseX button</comment>
+  </data>
+  <data name="trigButton.Text" xml:space="preserve">
+    <value>ตรีโกณมิติ</value>
+    <comment>Displayed on the button that contains a flyout for the trig functions in scientific mode.</comment>
+  </data>
+  <data name="funcButton.Text" xml:space="preserve">
+    <value>ฟังก์ชัน</value>
+    <comment>Displayed on the button that contains a flyout for the general functions in scientific mode.</comment>
+  </data>
+  <data name="bitwiseButton.Text" xml:space="preserve">
+    <value>แบบบิต</value>
+    <comment>Displayed on the button that contains a flyout for the bitwise functions in programmer mode.</comment>
+  </data>
+  <data name="bitShiftButton.Text" xml:space="preserve">
+    <value>การเลื่อนบิต</value>
+    <comment>Displayed on the button that contains a flyout for the bit shift functions in programmer mode.</comment>
+  </data>
+  <data name="trigShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ฟังก์ชันผกผัน</value>
+    <comment>Screen Reader prompt for the shift button in the trig flyout in scientific mode.</comment>
+  </data>
+  <data name="hypButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ฟังก์ชันไฮเพอร์โบลิก</value>
+    <comment>Screen reader prompt for the Calculator button HYP in the scientific flyout keypad</comment>
+  </data>
+  <data name="secButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ซีแคนต์</value>
+    <comment>Screen reader prompt for the Calculator button sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="sechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ไฮเพอร์โบลิกซีแคนต์</value>
+    <comment>Screen reader prompt for the Calculator button sech in the scientific flyout keypad</comment>
+  </data>
+  <data name="invsecButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>อาร์กซีแคนต์</value>
+    <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="invsechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ไฮเพอร์โบลิกอาร์กซีแคนต์</value>
+    <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="cscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>โคซีแคนต์</value>
+    <comment>Screen reader prompt for the Calculator button csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="cschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ไฮเพอร์โบลิกโคซีแคนต์</value>
+    <comment>Screen reader prompt for the Calculator button csch in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>อาร์กโคซีแคนต์</value>
+    <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ไฮเพอร์โบลิกอาร์กโคซีแคนต์</value>
+    <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="cotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>โคแทนเจนต์</value>
+    <comment>Screen reader prompt for the Calculator button cot in the scientific flyout keypad</comment>
+  </data>
+  <data name="cothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ไฮเพอร์โบลิกโคแทนเจนต์</value>
+    <comment>Screen reader prompt for the Calculator button coth in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>อาร์กโคแทนเจนต์</value>
+    <comment>Screen reader prompt for the Calculator button arc cot in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ไฮเพอร์โบลิกอาร์กโคแทนเจนต์</value>
+    <comment>Screen reader prompt for the Calculator button arc coth in the scientific flyout keypad</comment>
+  </data>
+  <data name="floorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>พื้น</value>
+    <comment>Screen reader prompt for the Calculator button floor in the scientific flyout keypad</comment>
+  </data>
+  <data name="ceilButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>เพดาน</value>
+    <comment>Screen reader prompt for the Calculator button ceiling in the scientific flyout keypad</comment>
+  </data>
+  <data name="randButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>แบบสุ่ม</value>
+    <comment>Screen reader prompt for the Calculator button random in the scientific flyout keypad</comment>
+  </data>
+  <data name="absButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ค่าสัมบูรณ์</value>
+    <comment>Screen reader prompt for the Calculator button abs in the scientific flyout keypad</comment>
+  </data>
+  <data name="eulerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>จำนวนของออยเลอร์</value>
+    <comment>Screen reader prompt for the Calculator button e in the scientific flyout keypad</comment>
+  </data>
+  <data name="twoPowerXButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>สองยกกำลัง</value>
+    <comment>Screen reader prompt for the Calculator button 2^x in the scientific flyout keypad</comment>
+  </data>
+  <data name="nandButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>แนนด์</value>
+    <comment>Screen reader prompt for the Calculator button nand in the scientific flyout keypad</comment>
+  </data>
+  <data name="nandButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>แนนด์</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="norButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>นอร์</value>
+    <comment>Screen reader prompt for the Calculator button nor in the scientific flyout keypad</comment>
+  </data>
+  <data name="norButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>นอร์</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="rolCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>หมุนไปทางซ้ายแบบมีตัวทด</value>
+    <comment>Screen reader prompt for the Calculator button rol with carry in the scientific flyout keypad</comment>
+  </data>
+  <data name="rorCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>หมุนไปทางขวาแบบมีตัวทด</value>
+    <comment>Screen reader prompt for the Calculator button ror with carry in the scientific flyout keypad</comment>
+  </data>
+  <data name="lshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>การเลื่อนไปทางซ้าย</value>
+    <comment>Screen reader prompt for the Calculator button lshLogical in the scientific flyout keypad</comment>
+  </data>
+  <data name="lshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>การเลื่อนไปทางซ้าย</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="rshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>การเลื่อนไปทางขวา</value>
+    <comment>Screen reader prompt for the Calculator button rshLogical in the scientific flyout keypad</comment>
+  </data>
+  <data name="rshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>การเลื่อนไปทางขวา</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="arithmeticShiftButton.Content" xml:space="preserve">
+    <value>การเลื่อนเชิงคำนวณ</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButton.Content" xml:space="preserve">
+    <value>การเลื่อนแบบตรรกะ</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButton.Content" xml:space="preserve">
+    <value>การเลื่อนวนแบบหมุน</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButton.Content" xml:space="preserve">
+    <value>การเลื่อนวนแบบหมุนผ่านตัวทด</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
+  <data name="cubeRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>รากที่สาม</value>
+    <comment>Screen reader prompt for the cube root button on the scientific operator keypad</comment>
+  </data>
+  <data name="trigButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ตรีโกณมิติ</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="funcButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ฟังก์ชัน</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="bitwiseButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>แบบบิต</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="bitShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>การเลื่อนบิต</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="ScientificOperatorPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>แผงตัวดำเนินการทางวิทยาศาสตร์</value>
+    <comment>Screen reader prompt for the Scientific Operator Panels on the scientific operator keypad</comment>
+  </data>
+  <data name="ProgrammerOperatorPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>แผงตัวดำเนินการของนักเขียนโปรแกรม</value>
+    <comment>Screen reader prompt for the Programmer Operator Panels on the programmer operator keypad</comment>
+  </data>
+  <data name="MostSignificantBit" xml:space="preserve">
+    <value>บิตที่สำคัญมากที่สุด</value>
+    <comment>Used to describe the last bit of a binary number. Used in bit flip</comment>
   </data>
 </root>

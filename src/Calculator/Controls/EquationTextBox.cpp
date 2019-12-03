@@ -50,7 +50,7 @@ void EquationTextBox::OnApplyTemplate()
 
          auto toolTip = ref new ToolTip();
          auto resProvider = AppResourceProvider::GetInstance();
-         toolTip->Content = m_equationButton->IsChecked->Value ? resProvider.GetResourceString(L"showEquationButtonToolTip") : resProvider.GetResourceString(L"hideEquationButtonToolTip");
+         toolTip->Content = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip") : resProvider->GetResourceString(L"hideEquationButtonToolTip");
          ToolTipService::SetToolTip(m_equationButton, toolTip);
     }
 
@@ -190,7 +190,7 @@ void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^
 
     auto toolTip = ref new ToolTip();
     auto resProvider = AppResourceProvider::GetInstance();
-    toolTip->Content = m_equationButton->IsChecked->Value ? resProvider.GetResourceString(L"showEquationButtonToolTip") : resProvider.GetResourceString(L"hideEquationButtonToolTip");
+    toolTip->Content = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip") : resProvider->GetResourceString(L"hideEquationButtonToolTip");
 
     ToolTipService::SetToolTip(m_equationButton, toolTip);
 }

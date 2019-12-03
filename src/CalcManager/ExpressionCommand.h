@@ -23,14 +23,14 @@ class CUnaryCommand final : public IUnaryCommand
 public:
     CUnaryCommand(int command);
     CUnaryCommand(int command1, int command2);
-    const std::shared_ptr<CalculatorVector<int>>& GetCommands() const override;
+    const std::shared_ptr<std::vector<int>>& GetCommands() const override;
     CalculationManager::CommandType GetCommandType() const override;
     void SetCommand(int command) override;
     void SetCommands(int command1, int command2) override;
     void Accept(_In_ ISerializeCommandVisitor& commandVisitor) override;
 
 private:
-    std::shared_ptr<CalculatorVector<int>> m_command;
+    std::shared_ptr<std::vector<int>> m_command;
 };
 
 class CBinaryCommand final : public IBinaryCommand
@@ -49,11 +49,11 @@ private:
 class COpndCommand final : public IOpndCommand
 {
 public:
-    COpndCommand(std::shared_ptr<CalculatorVector<int>> const& commands, bool fNegative, bool fDecimal, bool fSciFmt);
+    COpndCommand(std::shared_ptr<std::vector<int>> const& commands, bool fNegative, bool fDecimal, bool fSciFmt);
     void Initialize(CalcEngine::Rational const& rat);
 
-    const std::shared_ptr<CalculatorVector<int>>& GetCommands() const override;
-    void SetCommands(std::shared_ptr<CalculatorVector<int>> const& commands) override;
+    const std::shared_ptr<std::vector<int>>& GetCommands() const override;
+    void SetCommands(std::shared_ptr<std::vector<int>> const& commands) override;
     void AppendCommand(int command) override;
     void ToggleSign() override;
     void RemoveFromEnd() override;
@@ -66,7 +66,7 @@ public:
     std::wstring GetString(uint32_t radix, int32_t precision);
 
 private:
-    std::shared_ptr<CalculatorVector<int>> m_commands;
+    std::shared_ptr<std::vector<int>> m_commands;
     bool m_fNegative;
     bool m_fSciFmt;
     bool m_fDecimal;

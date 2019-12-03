@@ -28,33 +28,31 @@ namespace CalculatorApp
         }
     };
 
-    class TraceLogger
+public
+    ref class TraceLogger sealed
     {
     public:
-        TraceLogger(_In_ TraceLogger const&) = delete;
-        TraceLogger const& operator=(_In_ TraceLogger const&) = delete;
-        ~TraceLogger();
-        static TraceLogger& GetInstance();
-        bool GetTraceLoggingProviderEnabled() const;
-
-        void LogModeChange(CalculatorApp::Common::ViewMode mode) const;
-        void LogHistoryItemLoad(CalculatorApp::Common::ViewMode mode, int historyListSize, int loadedIndex) const;
-        void LogMemoryItemLoad(CalculatorApp::Common::ViewMode mode, int memoryListSize, int loadedIndex) const;
+        static TraceLogger ^ GetInstance();
+        bool GetTraceLoggingProviderEnabled();
+        void LogModeChange(CalculatorApp::Common::ViewMode mode);
+        void LogHistoryItemLoad(CalculatorApp::Common::ViewMode mode, int historyListSize, int loadedIndex);
+        void LogMemoryItemLoad(CalculatorApp::Common::ViewMode mode, int memoryListSize, int loadedIndex);
         void UpdateButtonUsage(CalculatorApp::NumbersAndOperatorsEnum button, CalculatorApp::Common::ViewMode mode);
         void LogButtonUsage();
         void LogDateCalculationModeUsed(bool AddSubtractMode);
-        void UpdateWindowCount(size_t windowCount = 0);
+        void UpdateWindowCount(uint64 windowCount);
+        void DecreaseWindowCount();
         bool IsWindowIdInLog(int windowId);
-        void LogVisualStateChanged(CalculatorApp::Common::ViewMode mode, std::wstring_view state, bool isAlwaysOnTop = false) const;
+        void LogVisualStateChanged(CalculatorApp::Common::ViewMode mode, Platform::String ^ state, bool isAlwaysOnTop);
         void LogWindowCreated(CalculatorApp::Common::ViewMode mode, int windowId);
-        void LogConverterInputReceived(CalculatorApp::Common::ViewMode mode) const;
-        void LogNavBarOpened() const;
-
-        void LogError(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, std::wstring_view errorString);
-        void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e) const;
-        void LogWinRTException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ winrt::hresult_error const& e) const;
-        void LogPlatformException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ Platform::Exception ^ e) const;
-        void LogInputPasted(CalculatorApp::Common::ViewMode mode) const;
+        void LogConverterInputReceived(CalculatorApp::Common::ViewMode mode);
+        void LogNavBarOpened();
+        void LogError(CalculatorApp::Common::ViewMode mode, Platform::String ^ functionName, Platform::String ^ errorString);
+    internal :
+        void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e);
+        void LogWinRTException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ winrt::hresult_error const& e);
+        void LogPlatformException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ Platform::Exception ^ e);
+        void LogInputPasted(CalculatorApp::Common::ViewMode mode);
 
     private:
         // Create an instance of TraceLogger
@@ -64,11 +62,11 @@ namespace CalculatorApp
         // sampling is involved in Microsoft's diagnostic data collection process.
         // These keywords provide additional input into how frequently an event might be sampled.
         // The lower the level of the keyword, the higher the possibility that the corresponding event may be sampled.
-        void LogLevel1Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
-        void LogLevel2Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
-        void LogLevel3Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
+        void LogLevel1Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields);
+        void LogLevel2Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields);
+        void LogLevel3Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields);
 
-        std::unique_ptr<TraceActivity> CreateTraceActivity(std::wstring_view activityName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields) const;
+        std::unique_ptr<TraceActivity> CreateTraceActivity(std::wstring_view activityName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields);
 
         winrt::Windows::Foundation::Diagnostics::LoggingChannel g_calculatorProvider;
 
@@ -76,7 +74,7 @@ namespace CalculatorApp
         std::vector<int> windowIdLog;
 
         GUID sessionGuid;
-        size_t currentWindowCount = 0;
+        uint64 currentWindowCount = 0;
 
         winrt::Windows::Foundation::Diagnostics::LoggingActivity m_appLaunchActivity;
     };
