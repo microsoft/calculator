@@ -75,14 +75,19 @@ namespace CalculationManager
         m_displayCallback->MemoryItemChanged(indexOfMemory);
     }
 
+    void CalculatorManager::InputChanged()
+    {
+        m_displayCallback->InputChanged();
+    }
+
     /// <summary>
     /// Call the callback function using passed in IDisplayHelper.
     /// Used to set the expression display value on ViewModel
     /// </summary>
     /// <param name="expressionString">wstring representing expression to be displayed</param>
     void CalculatorManager::SetExpressionDisplay(
-        _Inout_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& tokens,
-        _Inout_ shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>> const& commands)
+        _Inout_ shared_ptr<vector<pair<wstring, int>>> const& tokens,
+        _Inout_ shared_ptr<vector<shared_ptr<IExpressionCommand>>> const& commands)
     {
         if (!m_inHistoryItemLoadMode)
         {
@@ -240,6 +245,7 @@ namespace CalculationManager
                 m_savedCommands.push_back(MapCommandForSerialize(command));
             }
             m_savedDegreeMode = m_currentDegreeMode;
+            InputChanged();
             return;
         }
 
@@ -283,6 +289,30 @@ namespace CalculationManager
             m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
             m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandTANH));
             break;
+        case Command::CommandASEC:
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandSEC));
+            break;
+        case Command::CommandACSC:
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandCSC));
+            break;
+        case Command::CommandACOT:
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandCOT));
+            break;
+        case Command::CommandASECH:
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandSECH));
+            break;
+        case Command::CommandACSCH:
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandCSCH));
+            break;
+        case Command::CommandACOTH:
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandCOTH));
+            break;
         case Command::CommandFE:
             m_isExponentialFormat = !m_isExponentialFormat;
             [[fallthrough]];
@@ -290,6 +320,8 @@ namespace CalculationManager
             m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(command));
             break;
         }
+
+        InputChanged();
     }
 
     /// <summary>
@@ -330,6 +362,7 @@ namespace CalculationManager
     {
         m_currentCalculatorEngine->PersistedMemObject(m_persistedPrimaryValue);
         m_currentCalculatorEngine->ProcessCommand(IDC_RECALL);
+        InputChanged();
     }
 
     /// <summary>
@@ -376,6 +409,7 @@ namespace CalculationManager
 
         this->MemorizedNumberSelect(indexOfMemory);
         m_currentCalculatorEngine->ProcessCommand(IDC_RECALL);
+        InputChanged();
     }
 
     /// <summary>
@@ -606,9 +640,9 @@ namespace CalculationManager
         if (pHistory)
         {
             pHistory->ClearHistory();
-            for (unsigned int i = 0; i < history.size(); ++i)
+            for (auto const& historyItem : history)
             {
-                pHistory->AddItem(history[i]);
+                pHistory->AddItem(historyItem);
             }
         }
     }
@@ -636,6 +670,11 @@ namespace CalculationManager
     bool CalculatorManager::IsEngineRecording()
     {
         return m_currentCalculatorEngine->FInRecordingState() ? true : false;
+    }
+
+    bool CalculatorManager::IsInputEmpty()
+    {
+        return m_currentCalculatorEngine->IsInputEmpty();
     }
 
     void CalculatorManager::SetInHistoryItemLoadMode(_In_ bool isHistoryItemLoadMode)

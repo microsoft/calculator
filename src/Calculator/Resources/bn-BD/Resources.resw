@@ -153,277 +153,265 @@
     <value>সমান বিষয়ক</value>
     <comment>The text that shows at the bottom of the converter to head the supplementary results. Indicates that the main result is approximately equal to the supplementary results.</comment>
   </data>
-  <data name="BitAutomationName" xml:space="preserve">
-    <value>বিট </value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  <data name="BitFlipItemAutomationName" xml:space="preserve">
+    <value>%1, মান %2</value>
+    <comment>{Locked="%1","%2"}. String used in automation name for each bit in bit flip. %1 will be replaced by the position of the bit (1st bit, 3rd bit), %2 by a binary value (1 or 0)</comment>
   </data>
-  <data name="ValueAutomationName" xml:space="preserve">
-    <value>মান</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
-  </data>
-  <data name="BinaryZeroValueAutomationName" xml:space="preserve">
-    <value>শূন্য</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
-  </data>
-  <data name="BinaryOneValueAutomationName" xml:space="preserve">
-    <value>এক</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  <data name="BitPosition" xml:space="preserve">
+    <value>%1 বিট</value>
+    <comment>{Locked="%1"}. Sub-string used to indicate the position of a bit (e.g. 1st bit, 2nd bit...)</comment>
   </data>
   <data name="63" xml:space="preserve">
-    <value>63rd </value>
+    <value>63rd</value>
     <comment>Sub-string used in automation name for 63 bit in bit flip</comment>
   </data>
   <data name="62" xml:space="preserve">
-    <value>62nd </value>
+    <value>62nd</value>
     <comment>Sub-string used in automation name for 62 bit in bit flip</comment>
   </data>
   <data name="61" xml:space="preserve">
-    <value>61st </value>
+    <value>61st</value>
     <comment>Sub-string used in automation name for 61 bit in bit flip</comment>
   </data>
   <data name="60" xml:space="preserve">
-    <value>60th </value>
+    <value>60th</value>
     <comment>Sub-string used in automation name for 60 bit in bit flip</comment>
   </data>
   <data name="59" xml:space="preserve">
-    <value>59th </value>
+    <value>59th</value>
     <comment>Sub-string used in automation name for 59 bit in bit flip</comment>
   </data>
   <data name="58" xml:space="preserve">
-    <value>58th </value>
+    <value>58th</value>
     <comment>Sub-string used in automation name for 58 bit in bit flip</comment>
   </data>
   <data name="57" xml:space="preserve">
-    <value>57th </value>
+    <value>57th</value>
     <comment>Sub-string used in automation name for 57 bit in bit flip</comment>
   </data>
   <data name="56" xml:space="preserve">
-    <value>56th </value>
+    <value>56th</value>
     <comment>Sub-string used in automation name for 56 bit in bit flip</comment>
   </data>
   <data name="55" xml:space="preserve">
-    <value>55th </value>
+    <value>55th</value>
     <comment>Sub-string used in automation name for 55 bit in bit flip</comment>
   </data>
   <data name="54" xml:space="preserve">
-    <value>54th </value>
+    <value>54th</value>
     <comment>Sub-string used in automation name for 54 bit in bit flip</comment>
   </data>
   <data name="53" xml:space="preserve">
-    <value>53rd </value>
+    <value>53rd</value>
     <comment>Sub-string used in automation name for 53 bit in bit flip</comment>
   </data>
   <data name="52" xml:space="preserve">
-    <value>52nd </value>
+    <value>52nd</value>
     <comment>Sub-string used in automation name for 52 bit in bit flip</comment>
   </data>
   <data name="51" xml:space="preserve">
-    <value>51st </value>
+    <value>51st</value>
     <comment>Sub-string used in automation name for 51 bit in bit flip</comment>
   </data>
   <data name="50" xml:space="preserve">
-    <value>50th </value>
+    <value>50th</value>
     <comment>Sub-string used in automation name for 50 bit in bit flip</comment>
   </data>
   <data name="49" xml:space="preserve">
-    <value>49th </value>
+    <value>49th</value>
     <comment>Sub-string used in automation name for 49 bit in bit flip</comment>
   </data>
   <data name="48" xml:space="preserve">
-    <value>48th </value>
+    <value>48th</value>
     <comment>Sub-string used in automation name for 48 bit in bit flip</comment>
   </data>
   <data name="47" xml:space="preserve">
-    <value>47th </value>
+    <value>47th</value>
     <comment>Sub-string used in automation name for 47 bit in bit flip</comment>
   </data>
   <data name="46" xml:space="preserve">
-    <value>46th </value>
+    <value>46th</value>
     <comment>Sub-string used in automation name for 46 bit in bit flip</comment>
   </data>
   <data name="45" xml:space="preserve">
-    <value>45th </value>
+    <value>45th</value>
     <comment>Sub-string used in automation name for 45 bit in bit flip</comment>
   </data>
   <data name="44" xml:space="preserve">
-    <value>44th </value>
+    <value>44th</value>
     <comment>Sub-string used in automation name for 44 bit in bit flip</comment>
   </data>
   <data name="43" xml:space="preserve">
-    <value>43rd </value>
+    <value>43rd</value>
     <comment>Sub-string used in automation name for 43 bit in bit flip</comment>
   </data>
   <data name="42" xml:space="preserve">
-    <value>42nd </value>
+    <value>42nd</value>
     <comment>Sub-string used in automation name for 42 bit in bit flip</comment>
   </data>
   <data name="41" xml:space="preserve">
-    <value>41st </value>
+    <value>41st</value>
     <comment>Sub-string used in automation name for 41 bit in bit flip</comment>
   </data>
   <data name="40" xml:space="preserve">
-    <value>40th </value>
+    <value>40th</value>
     <comment>Sub-string used in automation name for 40 bit in bit flip</comment>
   </data>
   <data name="39" xml:space="preserve">
-    <value>39th </value>
+    <value>39th</value>
     <comment>Sub-string used in automation name for 39 bit in bit flip</comment>
   </data>
   <data name="38" xml:space="preserve">
-    <value>38th </value>
+    <value>38th</value>
     <comment>Sub-string used in automation name for 38 bit in bit flip</comment>
   </data>
   <data name="37" xml:space="preserve">
-    <value>37th </value>
+    <value>37th</value>
     <comment>Sub-string used in automation name for 37 bit in bit flip</comment>
   </data>
   <data name="36" xml:space="preserve">
-    <value>36th </value>
+    <value>36th</value>
     <comment>Sub-string used in automation name for 36 bit in bit flip</comment>
   </data>
   <data name="35" xml:space="preserve">
-    <value>35th </value>
+    <value>35th</value>
     <comment>Sub-string used in automation name for 35 bit in bit flip</comment>
   </data>
   <data name="34" xml:space="preserve">
-    <value>34th </value>
+    <value>34th</value>
     <comment>Sub-string used in automation name for 34 bit in bit flip</comment>
   </data>
   <data name="33" xml:space="preserve">
-    <value>33rd </value>
+    <value>33rd</value>
     <comment>Sub-string used in automation name for 33 bit in bit flip</comment>
   </data>
   <data name="32" xml:space="preserve">
-    <value>32nd </value>
+    <value>32nd</value>
     <comment>Sub-string used in automation name for 32 bit in bit flip</comment>
   </data>
   <data name="31" xml:space="preserve">
-    <value>31st </value>
+    <value>31st</value>
     <comment>Sub-string used in automation name for 31 bit in bit flip</comment>
   </data>
   <data name="30" xml:space="preserve">
-    <value>30th </value>
+    <value>30th</value>
     <comment>Sub-string used in automation name for 30 bit in bit flip</comment>
   </data>
   <data name="29" xml:space="preserve">
-    <value>29th </value>
+    <value>29th</value>
     <comment>Sub-string used in automation name for 29 bit in bit flip</comment>
   </data>
   <data name="28" xml:space="preserve">
-    <value>28th </value>
+    <value>28th</value>
     <comment>Sub-string used in automation name for 28 bit in bit flip</comment>
   </data>
   <data name="27" xml:space="preserve">
-    <value>27th </value>
+    <value>27th</value>
     <comment>Sub-string used in automation name for 27 bit in bit flip</comment>
   </data>
   <data name="26" xml:space="preserve">
-    <value>26th </value>
+    <value>26th</value>
     <comment>Sub-string used in automation name for 26 bit in bit flip</comment>
   </data>
   <data name="25" xml:space="preserve">
-    <value>25th </value>
+    <value>25th</value>
     <comment>Sub-string used in automation name for 25 bit in bit flip</comment>
   </data>
   <data name="24" xml:space="preserve">
-    <value>24th </value>
+    <value>24th</value>
     <comment>Sub-string used in automation name for 24 bit in bit flip</comment>
   </data>
   <data name="23" xml:space="preserve">
-    <value>23rd </value>
+    <value>23rd</value>
     <comment>Sub-string used in automation name for 23 bit in bit flip</comment>
   </data>
   <data name="22" xml:space="preserve">
-    <value>22nd </value>
+    <value>22nd</value>
     <comment>Sub-string used in automation name for 22 bit in bit flip</comment>
   </data>
   <data name="21" xml:space="preserve">
-    <value>21st </value>
+    <value>21st</value>
     <comment>Sub-string used in automation name for 21 bit in bit flip</comment>
   </data>
   <data name="20" xml:space="preserve">
-    <value>20th </value>
+    <value>20th</value>
     <comment>Sub-string used in automation name for 20 bit in bit flip</comment>
   </data>
   <data name="19" xml:space="preserve">
-    <value>19th </value>
+    <value>19th</value>
     <comment>Sub-string used in automation name for 19 bit in bit flip</comment>
   </data>
   <data name="18" xml:space="preserve">
-    <value>18th </value>
+    <value>18th</value>
     <comment>Sub-string used in automation name for 18 bit in bit flip</comment>
   </data>
   <data name="17" xml:space="preserve">
-    <value>17th </value>
+    <value>17th</value>
     <comment>Sub-string used in automation name for 17 bit in bit flip</comment>
   </data>
   <data name="16" xml:space="preserve">
-    <value>16th </value>
+    <value>16th</value>
     <comment>Sub-string used in automation name for 16 bit in bit flip</comment>
   </data>
   <data name="15" xml:space="preserve">
-    <value>15th </value>
+    <value>15th</value>
     <comment>Sub-string used in automation name for 15 bit in bit flip</comment>
   </data>
   <data name="14" xml:space="preserve">
-    <value>14th </value>
+    <value>14th</value>
     <comment>Sub-string used in automation name for 14 bit in bit flip</comment>
   </data>
   <data name="13" xml:space="preserve">
-    <value>13th </value>
+    <value>13th</value>
     <comment>Sub-string used in automation name for 13 bit in bit flip</comment>
   </data>
   <data name="12" xml:space="preserve">
-    <value>12th </value>
+    <value>12th</value>
     <comment>Sub-string used in automation name for 12 bit in bit flip</comment>
   </data>
   <data name="11" xml:space="preserve">
-    <value>11th </value>
+    <value>11th</value>
     <comment>Sub-string used in automation name for 11 bit in bit flip</comment>
   </data>
   <data name="10" xml:space="preserve">
-    <value>10th </value>
+    <value>10th</value>
     <comment>Sub-string used in automation name for 10 bit in bit flip</comment>
   </data>
   <data name="9" xml:space="preserve">
-    <value>9th </value>
+    <value>9th</value>
     <comment>Sub-string used in automation name for 9 bit in bit flip</comment>
   </data>
   <data name="8" xml:space="preserve">
-    <value>8th </value>
+    <value>8th</value>
     <comment>Sub-string used in automation name for 8 bit in bit flip</comment>
   </data>
   <data name="7" xml:space="preserve">
-    <value>7th </value>
+    <value>7th</value>
     <comment>Sub-string used in automation name for 7 bit in bit flip</comment>
   </data>
   <data name="6" xml:space="preserve">
-    <value>6th </value>
+    <value>6th</value>
     <comment>Sub-string used in automation name for 6 bit in bit flip</comment>
   </data>
   <data name="5" xml:space="preserve">
-    <value>5th </value>
+    <value>5th</value>
     <comment>Sub-string used in automation name for 5 bit in bit flip</comment>
   </data>
   <data name="4" xml:space="preserve">
-    <value>4th </value>
+    <value>4th</value>
     <comment>Sub-string used in automation name for 4 bit in bit flip</comment>
   </data>
   <data name="3" xml:space="preserve">
-    <value>3rd </value>
+    <value>3rd</value>
     <comment>Sub-string used in automation name for 3 bit in bit flip</comment>
   </data>
   <data name="2" xml:space="preserve">
-    <value>2nd </value>
+    <value>2nd</value>
     <comment>Sub-string used in automation name for 2 bit in bit flip</comment>
   </data>
   <data name="1" xml:space="preserve">
-    <value>1st </value>
+    <value>1st</value>
     <comment>Sub-string used in automation name for 1 bit in bit flip</comment>
-  </data>
-  <data name="0" xml:space="preserve">
-    <value>0th </value>
-    <comment>Sub-string used in automation name for 0 bit in bit flip</comment>
   </data>
   <data name="MemoryButton_Open" xml:space="preserve">
     <value>মেমোরি ফ্লাইআউট খুলুন</value>
@@ -2957,6 +2945,6 @@
   </data>
   <data name="CalculationFailed" xml:space="preserve">
     <value>গণনা ব্যর্থ হয়েছে</value>
-    <comment>Text displayed when the application is not able to do a calculation</comment>
+    <comment>Text displayed when the application is not able to do a calculation</comment>  
   </data>
 </root>

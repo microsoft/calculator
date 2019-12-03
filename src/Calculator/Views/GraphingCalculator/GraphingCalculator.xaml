@@ -314,6 +314,15 @@
                 </Setter>
             </Style>
 
+            <Style x:Key="AccentCalcButtonStyle"
+                   BasedOn="{StaticResource SymbolOperatorButtonStyle}"
+                   TargetType="controls:CalculatorButton">
+                <Setter Property="HoverBackground" Value="{ThemeResource AppControlHighlightAccentRevealBackgroundBrush}"/>
+                <Setter Property="HoverForeground" Value="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
+                <Setter Property="PressBackground" Value="{ThemeResource AppControlBackgroundListAccentHighRevealBackgroundBrush}"/>
+                <Setter Property="PressForeground" Value="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
+            </Style>
+
             <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter"/>
             <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
             <ResourceDictionary.ThemeDictionaries>
@@ -700,10 +709,10 @@
             <!-- Ideally the KeyGraphFeaturesPanel should be a frame so that navigation to and from the panel could be handled nicely -->
             <local:KeyGraphFeaturesPanel x:Name="KeyGraphFeaturesControl"
                                          Grid.RowSpan="2"
-                                         x:Load="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"
                                          KeyGraphFeaturesClosed="OnKeyGraphFeaturesClosed"
                                          ViewModel="{x:Bind EquationInputAreaControl.EquationVM, Mode=OneWay}"
-                                         Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"/>
+                                         Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"
+                                         x:Load="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"/>
 
             <!-- This control should be within a grid that limits the hight to keep the sticky footer functionality from breaking -->
             <local:EquationInputArea x:Name="EquationInputAreaControl"

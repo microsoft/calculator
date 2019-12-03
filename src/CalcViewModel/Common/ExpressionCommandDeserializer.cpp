@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -47,13 +47,13 @@ COpndCommand CommandDeserializer::DeserializeOperand()
     bool fDecimal = m_dataReader->ReadBoolean();
     bool fSciFmt = m_dataReader->ReadBoolean();
 
-    std::shared_ptr<CalculatorVector<int>> cmdVector = std::make_shared<CalculatorVector<int>>();
+    std::shared_ptr<std::vector<int>> cmdVector = std::make_shared<std::vector<int>>();
     auto cmdVectorSize = m_dataReader->ReadUInt32();
 
     for (unsigned int j = 0; j < cmdVectorSize; ++j)
     {
         int eachOpndcmd = m_dataReader->ReadInt32();
-        cmdVector->Append(eachOpndcmd);
+        cmdVector->push_back(eachOpndcmd);
     }
 
     return COpndCommand(cmdVector, fNegative, fDecimal, fSciFmt);
@@ -68,7 +68,6 @@ CParentheses CommandDeserializer::DeserializeParentheses()
 CUnaryCommand CommandDeserializer::DeserializeUnary()
 {
     auto cmdSize = m_dataReader->ReadUInt32();
-    std::shared_ptr<CalculatorVector<int>> cmdVector = std::make_shared<CalculatorVector<int>>();
 
     if (cmdSize == 1)
     {

@@ -1,10 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 // Declaration of the NarratorNotifier class.
 
 #pragma once
-#include "INarratorAnnouncementHost.h"
+#include "NarratorAnnouncement.h"
 
 namespace CalculatorApp::Common::Automation
 {
@@ -47,6 +47,6 @@ public
         static Windows::UI::Xaml::DependencyProperty ^ s_announcementProperty;
 
     private:
-        INarratorAnnouncementHost ^ m_announcementHost;
+        Windows::UI::Xaml::UIElement ^ m_announcementElement;
     };
 }

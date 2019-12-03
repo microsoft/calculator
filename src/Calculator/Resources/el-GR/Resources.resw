@@ -153,277 +153,269 @@
     <value>Ισούται περίπου με</value>
     <comment>The text that shows at the bottom of the converter to head the supplementary results. Indicates that the main result is approximately equal to the supplementary results.</comment>
   </data>
-  <data name="BitAutomationName" xml:space="preserve">
-    <value>Bit </value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  <data name="BitFlipItemAutomationName" xml:space="preserve">
+    <value>%1, τιμή %2</value>
+    <comment>{Locked="%1","%2"}. String used in automation name for each bit in bit flip. %1 will be replaced by the position of the bit (1st bit, 3rd bit), %2 by a binary value (1 or 0)</comment>
   </data>
-  <data name="ValueAutomationName" xml:space="preserve">
-    <value>Τιμή </value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
-  </data>
-  <data name="BinaryZeroValueAutomationName" xml:space="preserve">
-    <value>Μηδέν</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
-  </data>
-  <data name="BinaryOneValueAutomationName" xml:space="preserve">
-    <value>Ένα</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  <data name="BitPosition" xml:space="preserve">
+    <value>%1 bit</value>
+    <comment>{Locked="%1"}. Sub-string used to indicate the position of a bit (e.g. 1st bit, 2nd bit...)</comment>
   </data>
   <data name="63" xml:space="preserve">
-    <value>63ο </value>
+    <value>63ο</value>
     <comment>Sub-string used in automation name for 63 bit in bit flip</comment>
   </data>
   <data name="62" xml:space="preserve">
-    <value>62ο </value>
+    <value>62ο</value>
     <comment>Sub-string used in automation name for 62 bit in bit flip</comment>
   </data>
   <data name="61" xml:space="preserve">
-    <value>61ο </value>
+    <value>61ο</value>
     <comment>Sub-string used in automation name for 61 bit in bit flip</comment>
   </data>
   <data name="60" xml:space="preserve">
-    <value>60ο </value>
+    <value>60ο</value>
     <comment>Sub-string used in automation name for 60 bit in bit flip</comment>
   </data>
   <data name="59" xml:space="preserve">
-    <value>59ο </value>
+    <value>59ο</value>
     <comment>Sub-string used in automation name for 59 bit in bit flip</comment>
   </data>
   <data name="58" xml:space="preserve">
-    <value>58ο </value>
+    <value>58ο</value>
     <comment>Sub-string used in automation name for 58 bit in bit flip</comment>
   </data>
   <data name="57" xml:space="preserve">
-    <value>57ο </value>
+    <value>57ο</value>
     <comment>Sub-string used in automation name for 57 bit in bit flip</comment>
   </data>
   <data name="56" xml:space="preserve">
-    <value>56ο </value>
+    <value>56ο</value>
     <comment>Sub-string used in automation name for 56 bit in bit flip</comment>
   </data>
   <data name="55" xml:space="preserve">
-    <value>55ο </value>
+    <value>55ο</value>
     <comment>Sub-string used in automation name for 55 bit in bit flip</comment>
   </data>
   <data name="54" xml:space="preserve">
-    <value>54ο </value>
+    <value>54ο</value>
     <comment>Sub-string used in automation name for 54 bit in bit flip</comment>
   </data>
   <data name="53" xml:space="preserve">
-    <value>53ο </value>
+    <value>53ο</value>
     <comment>Sub-string used in automation name for 53 bit in bit flip</comment>
   </data>
   <data name="52" xml:space="preserve">
-    <value>52ο </value>
+    <value>52ο</value>
     <comment>Sub-string used in automation name for 52 bit in bit flip</comment>
   </data>
   <data name="51" xml:space="preserve">
-    <value>51ο </value>
+    <value>51ο</value>
     <comment>Sub-string used in automation name for 51 bit in bit flip</comment>
   </data>
   <data name="50" xml:space="preserve">
-    <value>50ο </value>
+    <value>50ο</value>
     <comment>Sub-string used in automation name for 50 bit in bit flip</comment>
   </data>
   <data name="49" xml:space="preserve">
-    <value>49ο </value>
+    <value>49ο</value>
     <comment>Sub-string used in automation name for 49 bit in bit flip</comment>
   </data>
   <data name="48" xml:space="preserve">
-    <value>48ο </value>
+    <value>48ο</value>
     <comment>Sub-string used in automation name for 48 bit in bit flip</comment>
   </data>
   <data name="47" xml:space="preserve">
-    <value>47ο </value>
+    <value>47ο</value>
     <comment>Sub-string used in automation name for 47 bit in bit flip</comment>
   </data>
   <data name="46" xml:space="preserve">
-    <value>46ο </value>
+    <value>46ο</value>
     <comment>Sub-string used in automation name for 46 bit in bit flip</comment>
   </data>
   <data name="45" xml:space="preserve">
-    <value>45ο </value>
+    <value>45ο</value>
     <comment>Sub-string used in automation name for 45 bit in bit flip</comment>
   </data>
   <data name="44" xml:space="preserve">
-    <value>44ο </value>
+    <value>44ο</value>
     <comment>Sub-string used in automation name for 44 bit in bit flip</comment>
   </data>
   <data name="43" xml:space="preserve">
-    <value>43ο </value>
+    <value>43ο</value>
     <comment>Sub-string used in automation name for 43 bit in bit flip</comment>
   </data>
   <data name="42" xml:space="preserve">
-    <value>42ο </value>
+    <value>42ο</value>
     <comment>Sub-string used in automation name for 42 bit in bit flip</comment>
   </data>
   <data name="41" xml:space="preserve">
-    <value>41ο </value>
+    <value>41ο</value>
     <comment>Sub-string used in automation name for 41 bit in bit flip</comment>
   </data>
   <data name="40" xml:space="preserve">
-    <value>40ο </value>
+    <value>40ο</value>
     <comment>Sub-string used in automation name for 40 bit in bit flip</comment>
   </data>
   <data name="39" xml:space="preserve">
-    <value>39ο </value>
+    <value>39ο</value>
     <comment>Sub-string used in automation name for 39 bit in bit flip</comment>
   </data>
   <data name="38" xml:space="preserve">
-    <value>38ο </value>
+    <value>38ο</value>
     <comment>Sub-string used in automation name for 38 bit in bit flip</comment>
   </data>
   <data name="37" xml:space="preserve">
-    <value>37ο </value>
+    <value>37ο</value>
     <comment>Sub-string used in automation name for 37 bit in bit flip</comment>
   </data>
   <data name="36" xml:space="preserve">
-    <value>36ο </value>
+    <value>36ο</value>
     <comment>Sub-string used in automation name for 36 bit in bit flip</comment>
   </data>
   <data name="35" xml:space="preserve">
-    <value>35ο </value>
+    <value>35ο</value>
     <comment>Sub-string used in automation name for 35 bit in bit flip</comment>
   </data>
   <data name="34" xml:space="preserve">
-    <value>34ο </value>
+    <value>34ο</value>
     <comment>Sub-string used in automation name for 34 bit in bit flip</comment>
   </data>
   <data name="33" xml:space="preserve">
-    <value>33ο </value>
+    <value>33ο</value>
     <comment>Sub-string used in automation name for 33 bit in bit flip</comment>
   </data>
   <data name="32" xml:space="preserve">
-    <value>32ο </value>
+    <value>32ο</value>
     <comment>Sub-string used in automation name for 32 bit in bit flip</comment>
   </data>
   <data name="31" xml:space="preserve">
-    <value>31ο </value>
+    <value>31ο</value>
     <comment>Sub-string used in automation name for 31 bit in bit flip</comment>
   </data>
   <data name="30" xml:space="preserve">
-    <value>30ο </value>
+    <value>30ο</value>
     <comment>Sub-string used in automation name for 30 bit in bit flip</comment>
   </data>
   <data name="29" xml:space="preserve">
-    <value>29ο </value>
+    <value>29ο</value>
     <comment>Sub-string used in automation name for 29 bit in bit flip</comment>
   </data>
   <data name="28" xml:space="preserve">
-    <value>28ο </value>
+    <value>28ο</value>
     <comment>Sub-string used in automation name for 28 bit in bit flip</comment>
   </data>
   <data name="27" xml:space="preserve">
-    <value>27ο </value>
+    <value>27ο</value>
     <comment>Sub-string used in automation name for 27 bit in bit flip</comment>
   </data>
   <data name="26" xml:space="preserve">
-    <value>26ο </value>
+    <value>26ο</value>
     <comment>Sub-string used in automation name for 26 bit in bit flip</comment>
   </data>
   <data name="25" xml:space="preserve">
-    <value>25ο </value>
+    <value>25ο</value>
     <comment>Sub-string used in automation name for 25 bit in bit flip</comment>
   </data>
   <data name="24" xml:space="preserve">
-    <value>24ο </value>
+    <value>24ο</value>
     <comment>Sub-string used in automation name for 24 bit in bit flip</comment>
   </data>
   <data name="23" xml:space="preserve">
-    <value>23ο </value>
+    <value>23ο</value>
     <comment>Sub-string used in automation name for 23 bit in bit flip</comment>
   </data>
   <data name="22" xml:space="preserve">
-    <value>22ο </value>
+    <value>22ο</value>
     <comment>Sub-string used in automation name for 22 bit in bit flip</comment>
   </data>
   <data name="21" xml:space="preserve">
-    <value>21ο </value>
+    <value>21ο</value>
     <comment>Sub-string used in automation name for 21 bit in bit flip</comment>
   </data>
   <data name="20" xml:space="preserve">
-    <value>20ο </value>
+    <value>20ο</value>
     <comment>Sub-string used in automation name for 20 bit in bit flip</comment>
   </data>
   <data name="19" xml:space="preserve">
-    <value>19ο </value>
+    <value>19ο</value>
     <comment>Sub-string used in automation name for 19 bit in bit flip</comment>
   </data>
   <data name="18" xml:space="preserve">
-    <value>18ο </value>
+    <value>18ο</value>
     <comment>Sub-string used in automation name for 18 bit in bit flip</comment>
   </data>
   <data name="17" xml:space="preserve">
-    <value>17ο </value>
+    <value>17ο</value>
     <comment>Sub-string used in automation name for 17 bit in bit flip</comment>
   </data>
   <data name="16" xml:space="preserve">
-    <value>16ο </value>
+    <value>16ο</value>
     <comment>Sub-string used in automation name for 16 bit in bit flip</comment>
   </data>
   <data name="15" xml:space="preserve">
-    <value>15ο </value>
+    <value>15ο</value>
     <comment>Sub-string used in automation name for 15 bit in bit flip</comment>
   </data>
   <data name="14" xml:space="preserve">
-    <value>14ο </value>
+    <value>14ο</value>
     <comment>Sub-string used in automation name for 14 bit in bit flip</comment>
   </data>
   <data name="13" xml:space="preserve">
-    <value>13ο </value>
+    <value>13ο</value>
     <comment>Sub-string used in automation name for 13 bit in bit flip</comment>
   </data>
   <data name="12" xml:space="preserve">
-    <value>12ο </value>
+    <value>12ο</value>
     <comment>Sub-string used in automation name for 12 bit in bit flip</comment>
   </data>
   <data name="11" xml:space="preserve">
-    <value>11ο </value>
+    <value>11ο</value>
     <comment>Sub-string used in automation name for 11 bit in bit flip</comment>
   </data>
   <data name="10" xml:space="preserve">
-    <value>10ο </value>
+    <value>10ο</value>
     <comment>Sub-string used in automation name for 10 bit in bit flip</comment>
   </data>
   <data name="9" xml:space="preserve">
-    <value>9ο </value>
+    <value>9ο</value>
     <comment>Sub-string used in automation name for 9 bit in bit flip</comment>
   </data>
   <data name="8" xml:space="preserve">
-    <value>8ο </value>
+    <value>8ο</value>
     <comment>Sub-string used in automation name for 8 bit in bit flip</comment>
   </data>
   <data name="7" xml:space="preserve">
-    <value>7ο </value>
+    <value>7ο</value>
     <comment>Sub-string used in automation name for 7 bit in bit flip</comment>
   </data>
   <data name="6" xml:space="preserve">
-    <value>6ο </value>
+    <value>6ο</value>
     <comment>Sub-string used in automation name for 6 bit in bit flip</comment>
   </data>
   <data name="5" xml:space="preserve">
-    <value>5ο </value>
+    <value>5ο</value>
     <comment>Sub-string used in automation name for 5 bit in bit flip</comment>
   </data>
   <data name="4" xml:space="preserve">
-    <value>4ο </value>
+    <value>4ο</value>
     <comment>Sub-string used in automation name for 4 bit in bit flip</comment>
   </data>
   <data name="3" xml:space="preserve">
-    <value>3ο </value>
+    <value>3ο</value>
     <comment>Sub-string used in automation name for 3 bit in bit flip</comment>
   </data>
   <data name="2" xml:space="preserve">
-    <value>2ο </value>
+    <value>2ο</value>
     <comment>Sub-string used in automation name for 2 bit in bit flip</comment>
   </data>
   <data name="1" xml:space="preserve">
-    <value>1ο </value>
+    <value>1ο</value>
     <comment>Sub-string used in automation name for 1 bit in bit flip</comment>
   </data>
-  <data name="0" xml:space="preserve">
-    <value>0ο </value>
-    <comment>Sub-string used in automation name for 0 bit in bit flip</comment>
+  <data name="LeastSignificantBit" xml:space="preserve">
+    <value>λιγότερο σημαντικό bit</value>
+    <comment>Used to describe the first bit of a binary number. Used in bit flip</comment>
   </data>
   <data name="MemoryButton_Open" xml:space="preserve">
     <value>Άνοιγμα αναδυόμενου στοιχείου μνήμης</value>
@@ -704,6 +696,10 @@
   <data name="DeleteHistorySwipeItem.Text" xml:space="preserve">
     <value>Διαγραφή</value>
     <comment>Text string for the Calculator Delete swipe button in the History list</comment>
+  </data>
+  <data name="CopyHistoryMenuItem.Text" xml:space="preserve"> 
+     <value>Αντιγραφή</value> 
+     <comment>Text string for the Calculator Copy option in the History list context menu</comment> 
   </data>
   <data name="DeleteHistoryMenuItem.Text" xml:space="preserve">
     <value>Διαγραφή</value>
@@ -2895,6 +2891,114 @@
     <value>τόξο υπερβολικής εφαπτομένης</value>
     <comment>Name for the inverse hyperbolic tangent function. Used by screen readers.</comment>
   </data>
+  <data name="SecantDegrees" xml:space="preserve">
+    <value>μοίρες τέμνουσας</value>
+    <comment>Name for the secant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="SecantRadians" xml:space="preserve">
+    <value>ακτίνια τέμνουσας</value>
+    <comment>Name for the secant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="SecantGradians" xml:space="preserve">
+    <value>βαθμοί τέμνουσας</value>
+    <comment>Name for the secant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantDegrees" xml:space="preserve">
+    <value>μοίρες αντίστροφης τέμνουσας</value>
+    <comment>Name for the inverse secant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantRadians" xml:space="preserve">
+    <value>ακτίνια αντίστροφης τέμνουσας</value>
+    <comment>Name for the inverse secant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantGradians" xml:space="preserve">
+    <value>βαθμοί αντίστροφης τέμνουσας</value>
+    <comment>Name for the inverse secant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicSecant" xml:space="preserve">
+    <value>υπερβολική τέμνουσα</value>
+    <comment>Name for the hyperbolic secant function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicSecant" xml:space="preserve">
+    <value>αντίστροφη υπερβολική τέμνουσα</value>
+    <comment>Name for the inverse hyperbolic secant function. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantDegrees" xml:space="preserve">
+    <value>μοίρες συντέμνουσας</value>
+    <comment>Name for the cosecant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantRadians" xml:space="preserve">
+    <value>ακτίνια συντέμνουσας</value>
+    <comment>Name for the cosecant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantGradians" xml:space="preserve">
+    <value>βαθμοί συντέμνουσας</value>
+    <comment>Name for the cosecant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantDegrees" xml:space="preserve">
+    <value>μοίρες αντίστροφης συντέμνουσας</value>
+    <comment>Name for the inverse cosecant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantRadians" xml:space="preserve">
+    <value>ακτίνια αντίστροφης συντέμνουσας</value>
+    <comment>Name for the inverse cosecant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantGradians" xml:space="preserve">
+    <value>βαθμοί αντίστροφης συντέμνουσας</value>
+    <comment>Name for the inverse cosecant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicCosecant" xml:space="preserve">
+    <value>υπερβολική συντέμνουσα</value>
+    <comment>Name for the hyperbolic cosecant function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicCosecant" xml:space="preserve">
+    <value>αντίστροφη υπερβολική συντέμνουσα</value>
+    <comment>Name for the inverse hyperbolic cosecant function. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentDegrees" xml:space="preserve">
+    <value>μοίρες συνεφαπτομένης</value>
+    <comment>Name for the cotangent function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentRadians" xml:space="preserve">
+    <value>Ακτίνια συνεφαπτομένης</value>
+    <comment>Name for the cotangent function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentGradians" xml:space="preserve">
+    <value>βαθμοί συνεφαπτομένης</value>
+    <comment>Name for the cotangent function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentDegrees" xml:space="preserve">
+    <value>μοίρες αντίστροφης συνεφαπτομένης</value>
+    <comment>Name for the inverse cotangent function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentRadians" xml:space="preserve">
+    <value>ακτίνια αντίστροφης συνεφαπτομένης</value>
+    <comment>Name for the inverse cotangent function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentGradians" xml:space="preserve">
+    <value>βαθμοί αντίστροφης συνεφαπτομένης</value>
+    <comment>Name for the inverse cotangent function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicCotangent" xml:space="preserve">
+    <value>υπερβολική συνεφαπτομένη</value>
+    <comment>Name for the hyperbolic cotangent function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicCotangent" xml:space="preserve">
+    <value>αντίστροφη υπερβολική συνεφαπτομένη</value>
+    <comment>Name for the inverse hyperbolic cotangent function. Used by screen readers.</comment>
+  </data>
+  <data name="CubeRoot" xml:space="preserve">
+    <value>Ρίζα κύβου</value>
+    <comment>Name for the cube root function. Used by screen readers.</comment>
+  </data>
+  <data name="Logx" xml:space="preserve">
+    <value>Βασικός λογάριθμος</value>
+    <comment>Name for the logbasex function. Used by screen readers.</comment>
+  </data>
+  <data name="AbsoluteValue" xml:space="preserve">
+    <value>Απόλυτη τιμή</value>
+    <comment>Name for the absolute value function. Used by screen readers.</comment>
+  </data>
   <data name="LeftShift" xml:space="preserve">
     <value>μετακίνηση αριστερά</value>
     <comment>Name for the programmer function that shifts bits to the left. Used by screen readers.</comment>
@@ -2957,6 +3061,194 @@
   </data>
   <data name="CalculationFailed" xml:space="preserve">
     <value>Ο υπολογισμός απέτυχε</value>
-    <comment>Text displayed when the application is not able to do a calculation</comment>
+    <comment>Text displayed when the application is not able to do a calculation</comment>  
+  </data>
+  <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Βασικός λογάριθμός X</value>
+    <comment>Screen reader prompt for the logBaseX button</comment>
+  </data>
+  <data name="trigButton.Text" xml:space="preserve">
+    <value>Τριγωνομετρία</value>
+    <comment>Displayed on the button that contains a flyout for the trig functions in scientific mode.</comment>
+  </data>
+  <data name="funcButton.Text" xml:space="preserve">
+    <value>Συνάρτηση</value>
+    <comment>Displayed on the button that contains a flyout for the general functions in scientific mode.</comment>
+  </data>
+  <data name="bitwiseButton.Text" xml:space="preserve">
+    <value>Λειτουργία bit</value>
+    <comment>Displayed on the button that contains a flyout for the bitwise functions in programmer mode.</comment>
+  </data>
+  <data name="bitShiftButton.Text" xml:space="preserve">
+    <value>Μετατόπιση bit</value>
+    <comment>Displayed on the button that contains a flyout for the bit shift functions in programmer mode.</comment>
+  </data>
+  <data name="trigShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Αντίστροφη συνάρτηση</value>
+    <comment>Screen Reader prompt for the shift button in the trig flyout in scientific mode.</comment>
+  </data>
+  <data name="hypButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Υπερβολική συνάρτηση</value>
+    <comment>Screen reader prompt for the Calculator button HYP in the scientific flyout keypad</comment>
+  </data>
+  <data name="secButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Τέμνουσα</value>
+    <comment>Screen reader prompt for the Calculator button sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="sechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Υπερβολική τέμνουσα</value>
+    <comment>Screen reader prompt for the Calculator button sech in the scientific flyout keypad</comment>
+  </data>
+  <data name="invsecButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Τόξο τέμνουσας</value>
+    <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="invsechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Υπερβολικό τόξο τέμνουσας</value>
+    <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="cscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Συντέμνουσα</value>
+    <comment>Screen reader prompt for the Calculator button csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="cschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Υπερβολική συντέμνουσα</value>
+    <comment>Screen reader prompt for the Calculator button csch in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Τόξο συντέμνουσας</value>
+    <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Υπερβολικό τόξο συντέμνουσας</value>
+    <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="cotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Συνεφαπτομένη</value>
+    <comment>Screen reader prompt for the Calculator button cot in the scientific flyout keypad</comment>
+  </data>
+  <data name="cothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Υπερβολική συνεφαπτομένη</value>
+    <comment>Screen reader prompt for the Calculator button coth in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Τόξο συνεφαπτομένης</value>
+    <comment>Screen reader prompt for the Calculator button arc cot in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Υπερβολικό τόξο συνεφαπτομένης</value>
+    <comment>Screen reader prompt for the Calculator button arc coth in the scientific flyout keypad</comment>
+  </data>
+  <data name="floorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Δάπεδο</value>
+    <comment>Screen reader prompt for the Calculator button floor in the scientific flyout keypad</comment>
+  </data>
+  <data name="ceilButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Οροφή</value>
+    <comment>Screen reader prompt for the Calculator button ceiling in the scientific flyout keypad</comment>
+  </data>
+  <data name="randButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Τυχαία</value>
+    <comment>Screen reader prompt for the Calculator button random in the scientific flyout keypad</comment>
+  </data>
+  <data name="absButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Απόλυτη τιμή</value>
+    <comment>Screen reader prompt for the Calculator button abs in the scientific flyout keypad</comment>
+  </data>
+  <data name="eulerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Αριθμός Euler</value>
+    <comment>Screen reader prompt for the Calculator button e in the scientific flyout keypad</comment>
+  </data>
+  <data name="twoPowerXButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Δύο εις τον εκθέτη</value>
+    <comment>Screen reader prompt for the Calculator button 2^x in the scientific flyout keypad</comment>
+  </data>
+  <data name="nandButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Όχι και</value>
+    <comment>Screen reader prompt for the Calculator button nand in the scientific flyout keypad</comment>
+  </data>
+  <data name="nandButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Όχι και</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="norButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Όχι ή</value>
+    <comment>Screen reader prompt for the Calculator button nor in the scientific flyout keypad</comment>
+  </data>
+  <data name="norButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Όχι ή</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="rolCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Περιστροφή αριστερά με μεταφορά</value>
+    <comment>Screen reader prompt for the Calculator button rol with carry in the scientific flyout keypad</comment>
+  </data>
+  <data name="rorCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Περιστροφή δεξιά με μεταφορά</value>
+    <comment>Screen reader prompt for the Calculator button ror with carry in the scientific flyout keypad</comment>
+  </data>
+  <data name="lshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Αριστερή μετατόπιση</value>
+    <comment>Screen reader prompt for the Calculator button lshLogical in the scientific flyout keypad</comment>
+  </data>
+  <data name="lshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Αριστερή μετατόπιση</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="rshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Δεξιά μετατόπιση</value>
+    <comment>Screen reader prompt for the Calculator button rshLogical in the scientific flyout keypad</comment>
+  </data>
+  <data name="rshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Δεξιά μετατόπιση</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="arithmeticShiftButton.Content" xml:space="preserve">
+    <value>Αριθμητική μετατόπιση</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButton.Content" xml:space="preserve">
+    <value>Λογική μετατόπιση</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButton.Content" xml:space="preserve">
+    <value>Περιστροφή κυκλικής μετατόπισης</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButton.Content" xml:space="preserve">
+    <value>Περιστροφή μέσω κυκλικής μετατόπισης με μεταφορά</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
+  <data name="cubeRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ρίζα κύβου</value>
+    <comment>Screen reader prompt for the cube root button on the scientific operator keypad</comment>
+  </data>
+  <data name="trigButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Τριγωνομετρία</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="funcButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Συναρτήσεις</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="bitwiseButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Λειτουργία bit</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="bitShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Μετατόπιση bit</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="ScientificOperatorPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Πίνακες επιστημονικών τελεστών</value>
+    <comment>Screen reader prompt for the Scientific Operator Panels on the scientific operator keypad</comment>
+  </data>
+  <data name="ProgrammerOperatorPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Πίνακες τελεστών προγραμματιστή</value>
+    <comment>Screen reader prompt for the Programmer Operator Panels on the programmer operator keypad</comment>
+  </data>
+  <data name="MostSignificantBit" xml:space="preserve">
+    <value>περισσότερο σημαντικό bit</value>
+    <comment>Used to describe the last bit of a binary number. Used in bit flip</comment>
   </data>
 </root>

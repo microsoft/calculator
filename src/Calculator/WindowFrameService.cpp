@@ -118,7 +118,7 @@ namespace CalculatorApp
 
     void WindowFrameService::OnConsolidated(_In_ ApplicationView ^ sender, _In_ ApplicationViewConsolidatedEventArgs ^ e)
     {
-        TraceLogger::GetInstance().UpdateWindowCount();
+        TraceLogger::GetInstance()->DecreaseWindowCount();
         auto parent = m_parent.Resolve<App>();
         if (parent != nullptr)
         {

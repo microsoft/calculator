@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -18,8 +18,6 @@ using namespace Windows::UI::Xaml::Data;
 
 String ^ RadixButton::GetRawDisplayValue()
 {
-    wstring rawValue;
     String ^ radixContent = Content->ToString();
-    LocalizationSettings::GetInstance().RemoveGroupSeparators(radixContent->Data(), radixContent->Length(), &rawValue);
-    return ref new String(rawValue.c_str());
+    return LocalizationSettings::GetInstance().RemoveGroupSeparators(radixContent);
 }

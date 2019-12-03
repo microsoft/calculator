@@ -75,7 +75,7 @@ namespace CalculatorFunctionalTests
         {
             m_standardViewModel->SetHistoryExpressionDisplay(e->GetTokens(), e->GetCommands());
             m_standardViewModel->SetExpressionDisplay(e->GetTokens(), e->GetCommands());
-            m_standardViewModel->SetPrimaryDisplay(e->Result->Data(), false /*IsError*/);
+            m_standardViewModel->SetPrimaryDisplay(e->Result, false /*IsError*/);
             m_standardViewModel->IsFToEEnabled = false;
         }
 

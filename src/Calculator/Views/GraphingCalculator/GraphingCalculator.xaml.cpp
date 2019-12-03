@@ -59,7 +59,7 @@ GraphingCalculator::GraphingCalculator()
 
     auto toolTip = ref new ToolTip();
     auto resProvider = AppResourceProvider::GetInstance();
-    auto tracingMessage = ActiveTracingOn ? resProvider.GetResourceString(L"disableTracingButtonToolTip") : resProvider.GetResourceString(L"enableTracingButtonToolTip");
+    auto tracingMessage = ActiveTracingOn ? resProvider->GetResourceString(L"disableTracingButtonToolTip") : resProvider->GetResourceString(L"enableTracingButtonToolTip");
     toolTip->Content = tracingMessage;
     ToolTipService::SetToolTip(ActiveTracing, toolTip);
     AutomationProperties::SetName(ActiveTracing, tracingMessage);
@@ -256,7 +256,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
     }
     catch (Exception ^ ex)
     {
-        TraceLogger::GetInstance().LogPlatformException(ViewMode::Graphing, __FUNCTIONW__, ex);
+        TraceLogger::GetInstance()->LogPlatformException(ViewMode::Graphing, __FUNCTIONW__, ex);
 
         // Something went wrong, notify the user.
 
@@ -352,7 +352,7 @@ void GraphingCalculator::OnActiveTracingClick(Object ^ sender, RoutedEventArgs ^
 
     auto toolTip = ref new ToolTip();
     auto resProvider = AppResourceProvider::GetInstance();
-    auto tracingMessage = ActiveTracingOn ? resProvider.GetResourceString(L"disableTracingButtonToolTip") : resProvider.GetResourceString(L"enableTracingButtonToolTip");
+    auto tracingMessage = ActiveTracingOn ? resProvider->GetResourceString(L"disableTracingButtonToolTip") : resProvider->GetResourceString(L"enableTracingButtonToolTip");
     toolTip->Content = tracingMessage;
     ToolTipService::SetToolTip(ActiveTracing, toolTip);
     AutomationProperties::SetName(ActiveTracing, tracingMessage);
@@ -402,11 +402,11 @@ Platform::String ^ GraphingCalculator::GetInfoForSwitchModeToggleButton(bool isC
 {
     if (isChecked)
     {
-        return AppResourceProvider::GetInstance().GetResourceString(L"GraphSwitchToGraphMode");
+        return AppResourceProvider::GetInstance()->GetResourceString(L"GraphSwitchToGraphMode");
     }
     else
     {
-        return AppResourceProvider::GetInstance().GetResourceString(L"GraphSwitchToEquationMode");
+        return AppResourceProvider::GetInstance()->GetResourceString(L"GraphSwitchToEquationMode");
     }
 }
 
@@ -416,11 +416,11 @@ void GraphingCalculator::SwitchModeToggleButton_Checked(Platform::Object ^ sende
     String ^ announcementText;
     if (SwitchModeToggleButton->IsChecked->Value)
     {
-        announcementText = AppResourceProvider::GetInstance().GetResourceString(L"GraphSwitchedToEquationModeAnnouncement");
+        announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphSwitchedToEquationModeAnnouncement");
     }
     else
     {
-        announcementText = AppResourceProvider::GetInstance().GetResourceString(L"GraphSwitchedToGraphModeAnnouncement");
+        announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphSwitchedToGraphModeAnnouncement");
     }
 
     auto announcement = CalculatorAnnouncement::GetGraphModeChangedAnnouncement(announcementText);

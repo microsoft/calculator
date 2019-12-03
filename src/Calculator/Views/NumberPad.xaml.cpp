@@ -30,6 +30,7 @@ using namespace CalculatorApp::Common;
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 DEPENDENCY_PROPERTY_INITIALIZATION(NumberPad, ButtonStyle);
+DEPENDENCY_PROPERTY_INITIALIZATION(NumberPad, CurrentRadixType);
 
 NumberPad::NumberPad()
     : m_isErrorVisualState(false)
@@ -51,7 +52,7 @@ NumberPad::NumberPad()
     this->Num9Button->Content = localizationSettings.GetDigitSymbolFromEnUsDigit('9');
 }
 
-void NumberPad::ProgModeRadixChange()
+void NumberPad::OnCurrentRadixTypePropertyChanged(NumberBase /* oldValue */, NumberBase newValue)
 {
     Num0Button->IsEnabled = true;
     Num1Button->IsEnabled = true;
@@ -64,10 +65,7 @@ void NumberPad::ProgModeRadixChange()
     Num8Button->IsEnabled = true;
     Num9Button->IsEnabled = true;
 
-    auto vm = safe_cast<StandardCalculatorViewModel ^>(this->DataContext);
-    RADIX_TYPE radixType = vm->GetCurrentRadixType();
-
-    if (radixType == RADIX_TYPE::BIN_RADIX)
+    if (newValue == NumberBase::BinBase)
     {
         Num2Button->IsEnabled = false;
         Num3Button->IsEnabled = false;
@@ -78,7 +76,7 @@ void NumberPad::ProgModeRadixChange()
         Num8Button->IsEnabled = false;
         Num9Button->IsEnabled = false;
     }
-    else if (radixType == RADIX_TYPE::OCT_RADIX)
+    else if (newValue == NumberBase::OctBase)
     {
         Num8Button->IsEnabled = false;
         Num9Button->IsEnabled = false;

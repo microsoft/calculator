@@ -124,9 +124,9 @@ namespace CalculatorApp
             std::shared_ptr<UCM::IViewModelCurrencyCallback> m_vmCallback;
 
             Windows::Globalization::NumberFormatting::DecimalFormatter ^ m_ratioFormatter;
-            std::wstring m_ratioFormat;
+            Platform::String ^ m_ratioFormat;
             Windows::Foundation::DateTime m_cacheTimestamp;
-            std::wstring m_timestampFormat;
+            Platform::String ^ m_timestampFormat;
 
             CurrencyLoadStatus m_loadStatus;
 

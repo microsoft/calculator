@@ -10,6 +10,7 @@ using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace Concurrency;
 using namespace std;
+using namespace Platform;
 using namespace winrt;
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Foundation::Diagnostics;
@@ -57,47 +58,43 @@ namespace CalculatorApp
 
     TraceLogger::TraceLogger()
         : g_calculatorProvider(
-              L"MicrosoftCalculator",
-              LoggingChannelOptions(GUID{ 0x4f50731a, 0x89cf, 0x4782, 0xb3, 0xe0, 0xdc, 0xe8, 0xc9, 0x4, 0x76, 0xba }),
-              GUID{ 0x905ca09, 0x610e, 0x401e, 0xb6, 0x50, 0x2f, 0x21, 0x29, 0x80, 0xb9, 0xe0 })
+            L"MicrosoftCalculator",
+            LoggingChannelOptions(GUID{ 0x4f50731a, 0x89cf, 0x4782, 0xb3, 0xe0, 0xdc, 0xe8, 0xc9, 0x4, 0x76, 0xba }),
+            GUID{ 0x905ca09, 0x610e, 0x401e, 0xb6, 0x50, 0x2f, 0x21, 0x29, 0x80, 0xb9, 0xe0 })
         , // Unique providerID {0905CA09-610E-401E-B650-2F212980B9E0}
         m_appLaunchActivity{ nullptr }
     {
         CoCreateGuid(&sessionGuid);
     }
 
-    TraceLogger::~TraceLogger()
+    TraceLogger ^ TraceLogger::GetInstance()
     {
-    }
-
-    TraceLogger& TraceLogger::GetInstance()
-    {
-        static TraceLogger s_selfInstance;
+        static TraceLogger ^ s_selfInstance = ref new TraceLogger();
         return s_selfInstance;
     }
 
-    bool TraceLogger::GetTraceLoggingProviderEnabled() const
+    bool TraceLogger::GetTraceLoggingProviderEnabled()
     {
         return g_calculatorProvider.Enabled();
     }
 
 #pragma region Tracing methods
-    void TraceLogger::LogLevel1Event(wstring_view eventName, LoggingFields fields) const
+    void TraceLogger::LogLevel1Event(wstring_view eventName, LoggingFields fields)
     {
         g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_1));
     }
 
-    void TraceLogger::LogLevel2Event(wstring_view eventName, LoggingFields fields) const
+    void TraceLogger::LogLevel2Event(wstring_view eventName, LoggingFields fields)
     {
         g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_2));
     }
 
-    void TraceLogger::LogLevel3Event(wstring_view eventName, LoggingFields fields) const
+    void TraceLogger::LogLevel3Event(wstring_view eventName, LoggingFields fields)
     {
         g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_3));
     }
 
-    unique_ptr<TraceActivity> TraceLogger::CreateTraceActivity(wstring_view eventName, LoggingFields fields) const
+    unique_ptr<TraceActivity> TraceLogger::CreateTraceActivity(wstring_view eventName, LoggingFields fields)
     {
         return make_unique<TraceActivity>(g_calculatorProvider, eventName, fields);
     }
@@ -117,7 +114,7 @@ namespace CalculatorApp
         return true;
     }
 
-    void TraceLogger::LogVisualStateChanged(ViewMode mode, wstring_view state, bool isAlwaysOnTop) const
+    void TraceLogger::LogVisualStateChanged(ViewMode mode, String ^ state, bool isAlwaysOnTop)
     {
         if (!GetTraceLoggingProviderEnabled())
         {
@@ -127,7 +124,7 @@ namespace CalculatorApp
         LoggingFields fields{};
         fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddString(L"CalcMode", NavCategory::GetFriendlyName(mode)->Data());
-        fields.AddString(L"VisualState", state);
+        fields.AddString(L"VisualState", state->Data());
         fields.AddBoolean(L"IsAlwaysOnTop", isAlwaysOnTop);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_VISUAL_STATE_CHANGED, fields);
@@ -152,7 +149,7 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_WINDOW_ON_CREATED, fields);
     }
 
-    void TraceLogger::LogModeChange(ViewMode mode) const
+    void TraceLogger::LogModeChange(ViewMode mode)
     {
         if (!GetTraceLoggingProviderEnabled())
             return;
@@ -167,7 +164,7 @@ namespace CalculatorApp
         }
     }
 
-    void TraceLogger::LogHistoryItemLoad(ViewMode mode, int historyListSize, int loadedIndex) const
+    void TraceLogger::LogHistoryItemLoad(ViewMode mode, int historyListSize, int loadedIndex)
     {
         if (!GetTraceLoggingProviderEnabled())
         {
@@ -183,7 +180,7 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_HISTORY_ITEM_LOAD, fields);
     }
 
-    void TraceLogger::LogMemoryItemLoad(ViewMode mode, int memoryListSize, int loadedIndex) const
+    void TraceLogger::LogMemoryItemLoad(ViewMode mode, int memoryListSize, int loadedIndex)
     {
         if (!GetTraceLoggingProviderEnabled())
         {
@@ -199,7 +196,7 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_MEMORY_ITEM_LOAD, fields);
     }
 
-    void TraceLogger::LogError(ViewMode mode, wstring_view functionName, wstring_view errorString)
+    void TraceLogger::LogError(ViewMode mode, Platform::String ^ functionName, Platform::String ^ errorString)
     {
         if (!GetTraceLoggingProviderEnabled())
             return;
@@ -207,13 +204,13 @@ namespace CalculatorApp
         LoggingFields fields{};
         fields.AddGuid(L"SessionGuid", sessionGuid);
         fields.AddString(L"CalcMode", NavCategory::GetFriendlyName(mode)->Data());
-        fields.AddString(L"FunctionName", functionName);
-        fields.AddString(L"Message", errorString);
+        fields.AddString(L"FunctionName", functionName->Data());
+        fields.AddString(L"Message", errorString->Data());
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
 
-    void TraceLogger::LogStandardException(ViewMode mode, wstring_view functionName, const exception& e) const
+    void TraceLogger::LogStandardException(ViewMode mode, wstring_view functionName, const exception& e)
     {
         if (!GetTraceLoggingProviderEnabled())
             return;
@@ -229,7 +226,7 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
 
-    void TraceLogger::LogWinRTException(ViewMode mode, wstring_view functionName, hresult_error const& e) const
+    void TraceLogger::LogWinRTException(ViewMode mode, wstring_view functionName, hresult_error const& e)
     {
         if (!GetTraceLoggingProviderEnabled())
             return;
@@ -244,7 +241,7 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
 
-    void TraceLogger::LogPlatformException(ViewMode mode, wstring_view functionName, Platform::Exception ^ e) const
+    void TraceLogger::LogPlatformException(ViewMode mode, wstring_view functionName, Platform::Exception ^ e)
     {
         if (!GetTraceLoggingProviderEnabled())
             return;
@@ -291,7 +288,7 @@ namespace CalculatorApp
         }
     }
 
-    void TraceLogger::UpdateWindowCount(size_t windowCount)
+    void TraceLogger::UpdateWindowCount(uint64 windowCount)
     {
         if (windowCount == 0)
         {
@@ -299,6 +296,11 @@ namespace CalculatorApp
             return;
         }
         currentWindowCount = windowCount;
+    }
+
+    void TraceLogger::DecreaseWindowCount()
+    {
+        currentWindowCount = 0;
     }
 
     void TraceLogger::LogButtonUsage()
@@ -348,7 +350,7 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_DATE_CALCULATION_MODE_USED, fields);
     }
 
-    void TraceLogger::LogConverterInputReceived(ViewMode mode) const
+    void TraceLogger::LogConverterInputReceived(ViewMode mode)
     {
         if (!GetTraceLoggingProviderEnabled())
             return;
@@ -360,7 +362,7 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_CONVERTER_INPUT_RECEIVED, fields);
     }
 
-    void TraceLogger::LogNavBarOpened() const
+    void TraceLogger::LogNavBarOpened()
     {
         if (!GetTraceLoggingProviderEnabled())
             return;
@@ -371,7 +373,7 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_NAV_BAR_OPENED, fields);
     }
 
-    void TraceLogger::LogInputPasted(ViewMode mode) const
+    void TraceLogger::LogInputPasted(ViewMode mode)
     {
         if (!GetTraceLoggingProviderEnabled())
             return;
