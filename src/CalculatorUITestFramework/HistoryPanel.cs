@@ -53,10 +53,6 @@ namespace CalculatorUITestFramework
             {
                 this.ClearHistoryButton.Click();
             }
-            else
-            {
-                return;
-            }
         }
         /// <summary>
         /// If the History label is not displayed, resize the window
@@ -117,10 +113,6 @@ namespace CalculatorUITestFramework
                 {
                     throw new NotFoundException("Could not the History Button");
                 }
-            }
-            else
-            {
-                return;
             }
         }
         /// <summary>

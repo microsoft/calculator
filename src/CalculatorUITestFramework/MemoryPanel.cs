@@ -66,10 +66,6 @@ namespace CalculatorUITestFramework
                 {
                     this.ClearMemory.Click();
                 }
-                else
-                {
-                    return;
-                }
             }
             catch (WebDriverException ex)
             {
