@@ -308,46 +308,51 @@ Verify the following:
 Steps:
 1.  Launch the "Calculator" app
 2.  Navigate to "Graphing" Calculator
-3.  Enter a function of x in the input field
+3.  Enter a function of x in the input field <br>
 *Expected: Function is plotted in the graph area. Line color matches the colored square next to the input field*
-4.  Select the "+" button below the function input and enter more functions in the fields that appear
+4.  Select the "+" button below the function input and enter more functions in the fields that appear <br>
 *Expected: All functions are plotted in the graph area and match the colors of the input field squares*
-5.  Select the colored square for any function
+5.  Select the colored square for any function <br>
 *Expected: Visibility of the function in the graph is toggled off/on*
-6.  Select the "Zoom In", "Zoom Out", and "Reset View' buttons in the graph area
+6.  Select the "Zoom In", "Zoom Out", and "Reset View' buttons in the graph area <br>
 *Expected: Both X and Y axes zoom in, out, and revert to default settings, respectively*
-7.  Select the Trace button, then click + drag the graph until the red square is near a graphed function
+7.  Select the Trace button, then click + drag the graph until the red square is near a graphed function<br>
 *Expected: Closest (X, Y) coordinates of the function to the red square are displayed with a black dot to indicate the location*
-8.  Enter "y=mx+b" into a function input field, then select "Variables" button
-*Expected: y=x+1 function is plotted in the graph, "Variables" modal window shows two variables "m" and "b" with values set to 1*
-9.  Adjust the value, minimum, maximum, and step for each variable
+8.  Enter "y=mx+b" into a function input field, then select "Variables" button <br>
+*Expected: y=x+1 function is plotted in the graph, "Variables" modal window shows two variables "m" and "b" with values set to 1.*
+9.  Adjust the value, minimum, maximum, and step for each variable <br>
 *Expected: y=mx+b graph adjusts to the new values for m and b, step size changes the increments of the slider for each value*
-10.  Share the graph via OneNote, Outlook/Mail, Twitter, and Feedback Hub
+10.  Share the graph via OneNote, Outlook/Mail, Twitter, and Feedback Hub <br>
 *Expected: Modifiable message that contains an image of the graph customized for the chosen application opens*
-11.  Verify Key Graph Features tab shows the correct information for the following functions:
-    **(Note: IP = Inflection Points, VA = Vertical Asymptotes, HA = Horizontal Asymptotes, OA = Oblique Asymptotes)**
-    a.  **y=x**
-    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅y∈ℝ⁆; X/Y Intercepts: (0)/(0); Max: none; Min: none; IP: none; VA: none; HA: none; OA: none; Parity: Odd; Monotonicity: (-∞, ∞) Increasing*
-    b.  **y=1/x**
-    *Expected: Domain: ⁅𝑥≠0⁆; Range: ⁅y∈ℝ\{0}⁆; X/Y Intercepts: ø/ø; Max: none; Min: none; IP: none; VA: x=0; HA: y=0; OA: none; Parity: Odd; Monotonicity: (0, ∞) Decreasing, (-∞, 0) Increasing*
-    c.  **y=x^2**
-    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅y∈{0, ∞)⁆; X/Y Intercepts: (0)/(0); Max: none; Min: (0,0); IP: none; VA: none; HA: none; OA: none; Parity: Even; Monotonicity: (0, ∞) Increasing, (-∞, 0) Decreasing
-    d.  **y=x^3**
-    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅y∈ℝ⁆; X/Y Intercepts: (0)/(0); Max: none; Min: none; IP: (0,0); VA: none; HA: none; OA: none; Parity: Odd; Monotonicity: (-∞, ∞) Increasing*
-    e.  **y=e^x**
-    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅y∈(0, ∞)⁆; X/Y Intercepts: ø/(1); Max: none; Min: none; IP: none; VA: none; HA: y=0; OA: none; Parity: none; Monotonicity: (-∞, ∞) Increasing*
-    f.  **y=ln(x)**
-    *Expected: Domain: ⁅𝑥>0⁆; Range: ⁅y∈ℝ⁆; X/Y Intercepts: (1)/ø; Max: none; Min: none; IP: none; VA: x=0; HA: none; OA: none; Parity: none; Monotonicity: (0, ∞) Increasing
-    g.  **y=sin(x)**
-    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅𝑦∈[−1,1]⁆; X/Y Intercepts: (⁅𝜋n1,n1∈ℤ⁆)/(0); Max: ⁅(2𝜋n1+𝜋/2,1),n1∈ℤ⁆; Min: ⁅(2𝜋n1+3𝜋/2,−1),n1∈ℤ⁆; IP: ⁅(𝜋n1,0),n1∈ℤ⁆; VA: none; HA: none; OA: none; Parity: Odd; Monotonicity: ⁅(2𝜋n1+𝜋/2,2𝜋n1+3𝜋/2),n1∈ℤ⁆ Decreasing; ⁅(2𝜋n1+3𝜋/2,2𝜋n1+5𝜋/2),n1∈ℤ⁆ Increasing; Period: 2𝜋*
-    h.  **y=cos(x)**
-    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅𝑦∈[−1,1]⁆; X/Y Intercepts: (⁅𝜋n1+𝜋/2,n1∈ℤ⁆)/(1); Max: ⁅(2𝜋n1,1),n1∈ℤ⁆; Min: ⁅(2𝜋n1+𝜋,-1),n1∈ℤ⁆; IP: ⁅(𝜋n1+𝜋/2,0),n1∈ℤ⁆; VA: none; HA: none; OA: none; Parity: Even; Monotonicity: ⁅(2𝜋n1+𝜋,2𝜋n1+2𝜋),n1∈ℤ⁆ Increasing, ⁅(2𝜋n1,2𝜋n1+𝜋),n1∈ℤ⁆ Decreasing; Period: 2𝜋*
-    i.  **y=tan(x)**
-    *Expected: Domain: ⁅x≠𝜋n1+𝜋/2,∀n1∈ℤ⁆; Range: ⁅𝑦∈ℝ⁆; X/Y Intercepts: (x=𝜋n1, n1 ∈ℤ)/(0); Max: none; Min: none; IP: x=𝜋n1, n1 ∈ℤ; VA: x=𝜋n1+𝜋/2, n1∈ℤ; HA: none; OA: none; Parity: Odd; Monotonicity: ⁅(𝜋n1+𝜋/2,𝜋n1+3𝜋/2),n1∈ℤ⁆ Increasing; Period: 𝜋*
-    j.  **y=sqrt(25-x^2)**
-    *Expected: Domain: ⁅x∈[-5,5]⁆; Range: ⁅𝑦∈[0,5]⁆; X/Y Intercepts: (5),(-5)/(5); Max: (0,5); Min: (-5,0) and (5,0); IP: none; VA: none; HA: none; OA: none; Parity: Even; Monotonicity: (0,5) Decreasing, (-5,0) Increasing*
-    k.  **y=(-3x^2+2)/(x-1)**
-    *Expected: Domain: ⁅x≠1⁆; Range: ⁅𝑦∈(-∞, -2√3 - 6}U{2√3 -6,∞⁆; X/Y Intercepts: (-√6/3),(√6/3)/(-2); Max: ⁅(√3/3+1,-2√3−6)⁆; Min: ⁅(−√3/3+1,2√3−6)⁆; IP: none; VA: x=1; HA: none; OA: y=-3x-3; Parity: none; Monotonicity: (√3/3+1,∞) Decreasing, (1,√3/3+1,) Increasing(-√3/3+1,1), Increasing, (-∞,-√3/3+1) Decreasing*
+11.  Verify Key Graph Features tab shows the correct information for the following functions: <br>
+    *(Note: IP = Inflection Points, VA = Vertical Asymptotes, HA = Horizontal Asymptotes, OA = Oblique Asymptotes)* <br>
+    a.  **y=x** <br>
+    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅y∈ℝ⁆; X/Y Intercepts: (0)/(0); Max: none; Min: none; IP: none; VA: none; HA: none; OA: none; Parity: Odd; Monotonicity: (-∞, ∞) Increasing* <br>
+    b.  **y=1/x** <br>
+    *Expected: Domain: ⁅𝑥≠0⁆; Range: ⁅y∈ℝ\{0}⁆; X/Y Intercepts: ø/ø; Max: none; Min: none; IP: none; VA: x=0; HA: y=0; OA: none; Parity: Odd; Monotonicity: (0, ∞) Decreasing, (-∞, 0) Increasing* <br>
+    c.  **y=x^2** <br>
+    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅y∈{0, ∞)⁆; X/Y Intercepts: (0)/(0); Max: none; Min: (0,0); IP: none; VA: none; HA: none; OA: none; Parity: Even; Monotonicity: (0, ∞) Increasing, (-∞, 0) Decreasing* <br>
+    d.  **y=x^3** <br>
+    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅y∈ℝ⁆; X/Y Intercepts: (0)/(0); Max: none; Min: none; IP: (0,0); VA: none; HA: none; OA: none; Parity: Odd; Monotonicity: (-∞, ∞) Increasing* <br>
+    e.  **y=e^x** <br>
+    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅y∈(0, ∞)⁆; X/Y Intercepts: ø/(1); Max: none; Min: none; IP: none; VA: none; HA: y=0; OA: none; Parity: none; Monotonicity: (-∞, ∞) Increasing* <br>
+    f.  **y=ln(x)** <br>
+    *Expected: Domain: ⁅𝑥>0⁆; Range: ⁅y∈ℝ⁆; X/Y Intercepts: (1)/ø; Max: none; Min: none; IP: none; VA: x=0; HA: none; OA: none; Parity: none; Monotonicity: (0, ∞) Increasing* <br>
+    g.  **y=sin(x)** <br>
+    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅𝑦∈[−1,1]⁆; X/Y Intercepts: (⁅𝜋n1,n1∈ℤ⁆)/(0); Max: ⁅(2𝜋n1+𝜋/2,1),n1∈ℤ⁆; Min: ⁅(2𝜋n1+3𝜋/2,−1),n1∈ℤ⁆; IP: ⁅(𝜋n1,0),n1∈ℤ⁆; VA: none; HA: none; OA: none; Parity: Odd; Monotonicity: ⁅(2𝜋n1+𝜋/2,2𝜋n1+3𝜋/2),n1∈ℤ⁆ Decreasing; ⁅(2𝜋n1+3𝜋/2,2𝜋n1+5𝜋/2),n1∈ℤ⁆ Increasing; Period: 2𝜋* <br>
+    h.  **y=cos(x)** <br>
+    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅𝑦∈[−1,1]⁆; X/Y Intercepts: (⁅𝜋n1+𝜋/2,n1∈ℤ⁆)/(1); Max: ⁅(2𝜋n1,1),n1∈ℤ⁆; Min: ⁅(2𝜋n1+𝜋,-1),n1∈ℤ⁆; IP: ⁅(𝜋n1+𝜋/2,0),n1∈ℤ⁆; VA: none; HA: none; OA: none; Parity: Even; Monotonicity: ⁅(2𝜋n1+𝜋,2𝜋n1+2𝜋),n1∈ℤ⁆ Increasing, ⁅(2𝜋n1,2𝜋n1+𝜋),n1∈ℤ⁆ Decreasing; Period: 2𝜋* <br>
+    i.  **y=tan(x)** <br>
+    *Expected: Domain: ⁅x≠𝜋n1+𝜋/2,∀n1∈ℤ⁆; Range: ⁅𝑦∈ℝ⁆; X/Y Intercepts: (x=𝜋n1, n1 ∈ℤ)/(0); Max: none; Min: none; IP: x=𝜋n1, n1 ∈ℤ; VA: x=𝜋n1+𝜋/2, n1∈ℤ; HA: none; OA: none; Parity: Odd; Monotonicity: ⁅(𝜋n1+𝜋/2,𝜋n1+3𝜋/2),n1∈ℤ⁆ Increasing; Period: 𝜋* <br>
+    j.  **y=sqrt(25-x^2)** <br>
+    *Expected: Domain: ⁅x∈[-5,5]⁆; Range: ⁅𝑦∈[0,5]⁆; X/Y Intercepts: (5),(-5)/(5); Max: (0,5); Min: (-5,0) and (5,0); IP: none; VA: none; HA: none; OA: none; Parity: Even; Monotonicity: (0,5) Decreasing, (-5,0) Increasing* <br>
+    k.  **y=(-3x^2+2)/(x-1)** <br>
+    *Expected: Domain: ⁅x≠1⁆; Range: ⁅𝑦∈(-∞, -2√3 - 6}U{2√3 -6,∞⁆; X/Y Intercepts: (-√6/3),(√6/3)/(-2); Max: ⁅(√3/3+1,-2√3−6)⁆; Min: ⁅(−√3/3+1,2√3−6)⁆; IP: none; VA: x=1; HA: none; OA: y=-3x-3; Parity: none; Monotonicity: (√3/3+1,∞) Decreasing, (1,√3/3+1,) Increasing(-√3/3+1,1), Increasing, (-∞,-√3/3+1) Decreasing* <br>
+    l. **y=sin(sin(x))** ("too complex" error test) <br>
+    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: Unable to calculate range for this function; X/Y Intercepts: none; Max: none; Min: none; IP: none; VA: none; HA: none; OA: none; Parity: odd; Monotonicity: Unable to determine the monotonicity of the function* <br>
+    *These features are too complex for Calculator to calculate: Range, X Intercept, Period, Minima, Maxima, Inflection Points, Monotonicity*
+    m. **y=mx+b** <br>
+    *Expected: Analysis is not supported for this function*
 
 **Date Calculation Test: Verify dates can be calculated.**
 Steps:
