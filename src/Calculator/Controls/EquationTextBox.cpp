@@ -125,6 +125,7 @@ void EquationTextBox::OnApplyTemplate()
     }
 
     UpdateCommonVisualState();
+    UpdateEquationModeVisualState();
 }
 
 void EquationTextBox::OnPointerEntered(PointerRoutedEventArgs ^ e)

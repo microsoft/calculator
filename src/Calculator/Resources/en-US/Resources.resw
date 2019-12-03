@@ -4218,4 +4218,8 @@
     <value>Current mode is graph mode</value>
     <comment>Announcement used in Graphing Calculator when switching to the graph mode</comment>
   </data>
+  <data name="equationMathRichEditBox.PlaceholderText" xml:space="preserve">
+    <value>Enter an equation</value>
+    <comment>Used in the Graphing Calculator to indicate to users that they can enter an equation in the textbox</comment>
+  </data>
 </root>
