@@ -581,7 +581,7 @@
                             Style="{StaticResource GraphButtonStyle}"
                             Click="OnActiveTracingClick"
                             RequestedTheme="Light">
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE73F;"/>
+                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xE3B3;"/>
                     </Button>
 
                     <Button x:Name="Share"

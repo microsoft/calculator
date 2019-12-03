@@ -1166,6 +1166,7 @@
             <Style x:Name="EquationTextBoxButtonStyle" TargetType="Button">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="Transparent"/>
+                <Setter Property="FontSize" Value="16"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -1221,7 +1222,7 @@
                                            VerticalAlignment="Center"
                                            Foreground="{ThemeResource EquationBoxHoverButtonForegroundBrush}"
                                            FontFamily="{TemplateBinding FontFamily}"
-                                           FontSize="12"
+                                           FontSize="{TemplateBinding FontSize}"
                                            FontStyle="Normal"
                                            AutomationProperties.AccessibilityView="Raw"
                                            Text="{TemplateBinding Content}"/>
@@ -1529,9 +1530,9 @@
                                                     VerticalAlignment="Center"
                                                     Background="Transparent"
                                                     Orientation="Horizontal">
-                                            <TextBlock Text="ƒ"/>
-                                            <TextBlock Margin="0,10,0,0"
-                                                       FontSize="9"
+                                            <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
+                                            <TextBlock Margin="-5,19,0,0"
+                                                       FontSize="11"
                                                        Text="{TemplateBinding EquationButtonContentIndex}"/>
                                         </StackPanel>
                                     </ToggleButton.Content>
@@ -1663,7 +1664,7 @@
                                                 Foreground="{TemplateBinding EquationColor}"
                                                 BorderThickness="0"
                                                 FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                FontSize="{TemplateBinding FontSize}"
+                                                FontSize="12"
                                                 AutomationProperties.AccessibilityView="Raw"
                                                 Content="&#xE10A;"
                                                 IsTabStop="False"
@@ -1678,8 +1679,7 @@
                                                 Background="{TemplateBinding EquationColor}"
                                                 Foreground="{TemplateBinding EquationColor}"
                                                 BorderThickness="0"
-                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                FontSize="{TemplateBinding FontSize}"
+                                                FontFamily="{StaticResource CalculatorFontFamily}"
                                                 AutomationProperties.AccessibilityView="Raw"
                                                 Content="&#xECC9;"
                                                 IsTabStop="False"
@@ -1692,8 +1692,7 @@
                                                       VerticalAlignment="Stretch"
                                                       Background="{ThemeResource AppControlTransparentButtonBackgroundBrush}"
                                                       BorderThickness="0"
-                                                      FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                      FontSize="{TemplateBinding FontSize}"
+                                                      FontFamily="{StaticResource CalculatorFontFamily}"
                                                       AutomationProperties.AccessibilityView="Raw"
                                                       Content="&#xE790;"
                                                       IsTabStop="False"
@@ -1720,7 +1719,6 @@
                                                 Background="{TemplateBinding EquationColor}"
                                                 Foreground="{TemplateBinding EquationColor}"
                                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                                FontSize="{TemplateBinding FontSize}"
                                                 FontFamily="{StaticResource CalculatorFontFamily}"
                                                 AutomationProperties.AccessibilityView="Raw"
                                                 Content="&#xE3B5;"
