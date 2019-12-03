@@ -39,6 +39,7 @@ using namespace Windows::UI::Core;
 using namespace Windows::UI::Input;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Automation;
+using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
@@ -129,6 +130,14 @@ void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationView
 void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
 {
     TraceValue->Text = "(" + newPoint.X.ToString() + ", " + newPoint.Y.ToString() + ")";
+
+    auto peer = FrameworkElementAutomationPeer::FromElement(TraceValue);
+
+    if (peer != nullptr)
+    {
+        peer->RaiseAutomationEvent(AutomationEvents::LiveRegionChanged);
+    }
+
     PositionGraphPopup();
 }
 

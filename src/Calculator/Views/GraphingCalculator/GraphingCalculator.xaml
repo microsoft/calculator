@@ -688,6 +688,7 @@
                         <TranslateTransform x:Name="TraceValuePopupTransform"/>
                     </Border.RenderTransform>
                     <TextBlock x:Name="TraceValue"
+                               AutomationProperties.LiveSetting="Polite"
                                Foreground="{ThemeResource ToolTipForeground}"
                                Text="x=0,y=0"/>
                 </Border>
