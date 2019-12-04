@@ -387,8 +387,7 @@
                           ToolTipService.ToolTip="{x:Bind local:GraphingCalculator.GetInfoForSwitchModeToggleButton(SwitchModeToggleButton.IsChecked.Value), Mode=OneWay}"
                           Unchecked="SwitchModeToggleButton_Checked"
                           Visibility="Collapsed">
-                <!-- TODO: update this icon -->
-                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph=""/>
+                <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF770;"/>
                 <ToggleButton.Resources>
                     <ResourceDictionary>
                         <ResourceDictionary.ThemeDictionaries>
@@ -604,7 +603,7 @@
                             Style="{StaticResource GraphButtonStyle}"
                             Click="OnActiveTracingClick"
                             RequestedTheme="Light">
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE73F;"/>
+                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xE3B3;"/>
                     </Button>
 
                     <Button x:Name="Share"

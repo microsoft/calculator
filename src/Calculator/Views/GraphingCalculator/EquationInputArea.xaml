@@ -70,6 +70,7 @@
                                               EquationButtonContentIndex="{x:Bind FunctionLabelIndex, Mode=OneWay}"
                                               EquationSubmitted="InputTextBox_Submitted"
                                               GotFocus="InputTextBox_GotFocus"
+                                              HasError="{x:Bind GraphEquation.HasGraphError, Mode=OneWay}"
                                               Loaded="EquationTextBoxLoaded"
                                               LostFocus="InputTextBox_LostFocus"
                                               RemoveButtonClicked="EquationTextBox_RemoveButtonClicked"

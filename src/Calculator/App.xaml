@@ -49,6 +49,7 @@
                                      Opacity="0.9"
                                      Color="{ThemeResource SystemAccentColor}"/>
 
+                    <SolidColorBrush x:Key="AppControlForegroundAccentBrush" Color="{ThemeResource SystemAccentColor}"/>
                     <SolidColorBrush x:Key="AppControlPageTextRedColorBrush" Color="Red"/>
                     <RevealBorderBrush x:Key="AppControlForegroundTransparentRevealBorderBrush"
                                        FallbackColor="Transparent"
@@ -73,6 +74,8 @@
                     <SolidColorBrush x:Key="EquationTextBoxTransparentBackgroundBrush" Color="Transparent"/>
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource TextControlBackground}"/>
                     <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="White"/>
+                    <SolidColorBrush x:Key="EquationBoxErrorBackgroundBrush" Color="#33EB5757"/>
+                    <SolidColorBrush x:Key="EquationBoxErrorBorderBrush" Color="#FFEB5757"/>
                     <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush"
                                      Opacity="0.4"
                                      Color="#FFFFFF"/>
@@ -167,6 +170,8 @@
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource TextControlBackground}"/>
                     <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="Black"/>
+                    <SolidColorBrush x:Key="EquationBoxErrorBackgroundBrush" Color="#33EB5757"/>
+                    <SolidColorBrush x:Key="EquationBoxErrorBorderBrush" Color="#FFEB5757"/>
                     <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush"
                                      Opacity="0.4"
                                      Color="#000000"/>
@@ -229,7 +234,9 @@
                     <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="Transparent"/>
                     <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush" Color="{StaticResource SystemColorWindowColor}"/>
-                    <!-- TODO: Figure out what colors we can use in high contrast -->
+                    <SolidColorBrush x:Key="EquationBoxErrorBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                    <SolidColorBrush x:Key="EquationBoxErrorBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
+                    <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush" Color="{StaticResource SystemColorGrayTextColor}"/>
                     <SolidColorBrush x:Key="EquationBrush1" Color="{ThemeResource SystemColorGrayTextColor}"/>
                     <SolidColorBrush x:Key="EquationBrush2" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="EquationBrush3" Color="{ThemeResource SystemColorHotlightColor}"/>
@@ -1624,10 +1631,11 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            
+
             <Style x:Name="EquationTextBoxButtonStyle" TargetType="Button">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="Transparent"/>
+                <Setter Property="FontSize" Value="16"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -1684,7 +1692,7 @@
                                            VerticalAlignment="Center"
                                            Foreground="{ThemeResource EquationBoxHoverButtonForegroundBrush}"
                                            FontFamily="{TemplateBinding FontFamily}"
-                                           FontSize="12"
+                                           FontSize="{TemplateBinding FontSize}"
                                            FontStyle="Normal"
                                            AutomationProperties.AccessibilityView="Raw"
                                            Text="{TemplateBinding Content}"/>
@@ -1694,7 +1702,7 @@
                 </Setter>
             </Style>
 
-            <Style x:Key="MathRichEdit_EquationTextBoxStyle" TargetType="Controls:MathRichEditBox">
+            <Style x:Key="MathRichEditBoxStyle" TargetType="Controls:MathRichEditBox">
                 <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}"/>
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="ContentLinkForegroundColor" Value="{ThemeResource ContentLinkForegroundColor}"/>
@@ -1922,14 +1930,29 @@
 
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
+                                        
                                         <VisualState x:Name="Normal">
-
                                             <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackground}"/>
-                                                </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource EquationBoxBorderBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+
+                                        <VisualState x:Name="Error">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource EquationBoxErrorBorderBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource EquationBoxErrorBackgroundBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ErrorIcon" Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                        <DiscreteObjectKeyFrame.Value>
+                                                            <Visibility>Visible</Visibility>
+                                                        </DiscreteObjectKeyFrame.Value>
+                                                    </DiscreteObjectKeyFrame>
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
@@ -1937,9 +1960,6 @@
                                         <VisualState x:Name="PointerOver">
 
                                             <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlBackground}"/>
-                                                </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource EquationBoxBorderBrushPointerOver}"/>
                                                 </ObjectAnimationUsingKeyFrames>
@@ -1961,6 +1981,53 @@
                                                     <DiscreteObjectKeyFrame KeyTime="0">
                                                         <DiscreteObjectKeyFrame.Value>
                                                             <Visibility>Visible</Visibility>
+                                                        </DiscreteObjectKeyFrame.Value>
+                                                    </DiscreteObjectKeyFrame>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ErrorIcon" Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                        <DiscreteObjectKeyFrame.Value>
+                                                            <Visibility>Collapsed</Visibility>
+                                                        </DiscreteObjectKeyFrame.Value>
+                                                    </DiscreteObjectKeyFrame>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+
+                                        <VisualState x:Name="PointerOverError">
+
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource EquationBoxErrorBackgroundBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ColorChooserButton" Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                        <DiscreteObjectKeyFrame.Value>
+                                                            <Visibility>Visible</Visibility>
+                                                        </DiscreteObjectKeyFrame.Value>
+                                                    </DiscreteObjectKeyFrame>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FunctionButton" Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                        <DiscreteObjectKeyFrame.Value>
+                                                            <Visibility>Collapsed</Visibility>
+                                                        </DiscreteObjectKeyFrame.Value>
+                                                    </DiscreteObjectKeyFrame>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RemoveButton" Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                        <DiscreteObjectKeyFrame.Value>
+                                                            <Visibility>Visible</Visibility>
+                                                        </DiscreteObjectKeyFrame.Value>
+                                                    </DiscreteObjectKeyFrame>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ErrorIcon" Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                        <DiscreteObjectKeyFrame.Value>
+                                                            <Visibility>Collapsed</Visibility>
                                                         </DiscreteObjectKeyFrame.Value>
                                                     </DiscreteObjectKeyFrame>
                                                 </ObjectAnimationUsingKeyFrames>
@@ -2004,6 +2071,13 @@
                                                         </DiscreteObjectKeyFrame.Value>
                                                     </DiscreteObjectKeyFrame>
                                                 </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ErrorIcon" Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                        <DiscreteObjectKeyFrame.Value>
+                                                            <Visibility>Collapsed</Visibility>
+                                                        </DiscreteObjectKeyFrame.Value>
+                                                    </DiscreteObjectKeyFrame>
+                                                </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
                                         <VisualState x:Name="ButtonCollapsed"/>
@@ -2028,9 +2102,9 @@
                                                     VerticalAlignment="Center"
                                                     Background="Transparent"
                                                     Orientation="Horizontal">
-                                            <TextBlock Text="ƒ"/>
-                                            <TextBlock Margin="0,10,0,0"
-                                                       FontSize="9"
+                                            <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
+                                            <TextBlock Margin="-5,19,0,0"
+                                                       FontSize="11"
                                                        Text="{TemplateBinding EquationButtonContentIndex}"/>
                                         </StackPanel>
                                     </ToggleButton.Content>
@@ -2098,7 +2172,7 @@
                                                                             <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPointerOverOpacity}"/>
                                                                             <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                             <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
-                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xE890;"/>
+                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xF6AC;"/>
                                                                         </VisualState.Setters>
                                                                     </VisualState>
                                                                     <VisualState x:Name="Pressed">
@@ -2109,7 +2183,7 @@
                                                                             <Setter Target="ShowHideIcon.Foreground" Value="{ThemeResource ToggleButtonForegroundPressed}"/>
                                                                             <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                             <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
-                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xE890;"/>
+                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xF6AC;"/>
                                                                         </VisualState.Setters>
                                                                     </VisualState>
                                                                     <VisualState x:Name="Checked">
@@ -2127,7 +2201,7 @@
                                                                             <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPointerOverOpacity}"/>
                                                                             <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                             <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
-                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xED1A;"/>
+                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xE890;"/>
                                                                         </VisualState.Setters>
                                                                     </VisualState>
                                                                     <VisualState x:Name="CheckedPressed">
@@ -2138,7 +2212,7 @@
                                                                             <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPressedOpacity}"/>
                                                                             <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                             <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
-                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xED1A;"/>
+                                                                            <Setter Target="ShowHideIcon.Glyph" Value="&#xE890;"/>
                                                                         </VisualState.Setters>
                                                                     </VisualState>
                                                                 </VisualStateGroup>
@@ -2151,7 +2225,7 @@
                                                                               AutomationProperties.AccessibilityView="Raw"
                                                                               IsHitTestVisible="False"/>
                                                             <FontIcon x:Name="ShowHideIcon"
-                                                                      FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                      FontFamily="{StaticResource CalculatorFontFamily}"
                                                                       Visibility="Collapsed"/>
                                                         </Grid>
                                                     </ControlTemplate>
@@ -2173,11 +2247,11 @@
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <Controls:MathRichEditBox x:Name="EquationTextBox"
+                                        <Controls:MathRichEditBox x:Name="MathRichEditBox"
                                                                   MinHeight="44"
                                                                   Padding="{TemplateBinding Padding}"
                                                                   VerticalAlignment="Stretch"
-                                                                  Style="{StaticResource MathRichEdit_EquationTextBoxStyle}"
+                                                                  Style="{StaticResource MathRichEditBoxStyle}"
                                                                   BorderThickness="0"
                                                                   FontFamily="{TemplateBinding FontFamily}"
                                                                   FontSize="{TemplateBinding FontSize}"
@@ -2197,7 +2271,7 @@
                                                 Foreground="{TemplateBinding EquationColor}"
                                                 BorderThickness="0"
                                                 FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                FontSize="{TemplateBinding FontSize}"
+                                                FontSize="12"
                                                 AutomationProperties.AccessibilityView="Raw"
                                                 Content="&#xE10A;"
                                                 IsTabStop="False"
@@ -2233,6 +2307,15 @@
                                                 </ResourceDictionary>
                                             </Button.Resources>
                                         </Button>
+                                        <FontIcon x:Name="ErrorIcon"
+                                                Grid.Column="3"
+                                                MinWidth="34"
+                                                VerticalAlignment="Stretch"
+                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                AutomationProperties.AccessibilityView="Raw"
+                                                Glyph="&#xE783;"
+                                                FontSize="16"
+                                                Visibility="Collapsed"/>
                                         <Button x:Name="RemoveButton"
                                                 x:Uid="removeButton"
                                                 Grid.Column="3"
@@ -2243,8 +2326,7 @@
                                                 Background="{TemplateBinding EquationColor}"
                                                 Foreground="{TemplateBinding EquationColor}"
                                                 BorderThickness="0"
-                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                FontSize="{TemplateBinding FontSize}"
+                                                FontFamily="{StaticResource CalculatorFontFamily}"
                                                 AutomationProperties.AccessibilityView="Raw"
                                                 Content="&#xECC9;"
                                                 IsTabStop="False"
@@ -2288,8 +2370,7 @@
                                                       VerticalAlignment="Stretch"
                                                       Background="{ThemeResource AppControlTransparentButtonBackgroundBrush}"
                                                       BorderThickness="0"
-                                                      FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                      FontSize="{TemplateBinding FontSize}"
+                                                      FontFamily="{StaticResource CalculatorFontFamily}"
                                                       AutomationProperties.AccessibilityView="Raw"
                                                       Content="&#xE790;"
                                                       IsTabStop="False"
@@ -2344,9 +2425,9 @@
                                                 Background="{TemplateBinding EquationColor}"
                                                 Foreground="{TemplateBinding EquationColor}"
                                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                                FontSize="{TemplateBinding FontSize}"
+                                                FontFamily="{StaticResource CalculatorFontFamily}"
                                                 AutomationProperties.AccessibilityView="Raw"
-                                                Content="ƒₓ"
+                                                Content="&#xE3B5;"
                                                 IsTabStop="False"
                                                 Visibility="Collapsed">
                                             <Button.Resources>

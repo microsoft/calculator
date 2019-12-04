@@ -26,119 +26,6 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="controls:EquationTextBox">
                         <Grid>
-                            <Grid.Resources>
-                                <Style x:Key="KGF_EquationTextBoxStyle" TargetType="controls:MathRichEditBox">
-                                    <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}"/>
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="ContentLinkForegroundColor" Value="{ThemeResource ContentLinkForegroundColor}"/>
-                                    <Setter Property="ContentLinkBackgroundColor" Value="{ThemeResource ContentLinkBackgroundColor}"/>
-                                    <Setter Property="SelectionHighlightColor" Value="{ThemeResource TextControlSelectionHighlightColor}"/>
-                                    <Setter Property="BorderBrush" Value="{ThemeResource TextControlBorderBrush}"/>
-                                    <Setter Property="BorderThickness" Value="{ThemeResource TextControlBorderThemeThickness}"/>
-                                    <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-                                    <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-                                    <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Auto"/>
-                                    <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto"/>
-                                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
-                                    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
-                                    <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False"/>
-                                    <Setter Property="Padding" Value="{ThemeResource TextControlThemePadding}"/>
-                                    <Setter Property="UseSystemFocusVisuals" Value="{ThemeResource IsApplicationFocusVisualKindReveal}"/>
-                                    <Setter Property="ContextFlyout" Value="{StaticResource TextControlCommandBarContextFlyout}"/>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="controls:MathRichEditBox">
-                                                <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="*"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                    </Grid.RowDefinitions>
-
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <VisualStateManager.VisualStateGroups>
-                                                        <VisualStateGroup x:Name="CommonStates">
-                                                            <VisualState x:Name="Disabled"/>
-                                                            <VisualState x:Name="Normal"/>
-                                                            <VisualState x:Name="PointerOver"/>
-                                                            <VisualState x:Name="Focused"/>
-                                                        </VisualStateGroup>
-                                                    </VisualStateManager.VisualStateGroups>
-
-                                                    <ContentPresenter x:Name="HeaderContentPresenter"
-                                                                      Grid.Row="0"
-                                                                      Grid.Column="0"
-                                                                      Grid.ColumnSpan="4"
-                                                                      Margin="{ThemeResource RichEditBoxTopHeaderMargin}"
-                                                                      Foreground="{ThemeResource TextControlHeaderForeground}"
-                                                                      FontWeight="Normal"
-                                                                      x:DeferLoadStrategy="Lazy"
-                                                                      Content="{TemplateBinding Header}"
-                                                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                                      TextWrapping="Wrap"
-                                                                      Visibility="Collapsed"/>
-                                                    <Border x:Name="BorderElement"
-                                                            Grid.Row="1"
-                                                            Grid.RowSpan="1"
-                                                            Grid.Column="0"
-                                                            Grid.ColumnSpan="4"
-                                                            MinWidth="{ThemeResource TextControlThemeMinWidth}"
-                                                            MinHeight="{ThemeResource TextControlThemeMinHeight}"
-                                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                                            BorderThickness="0"
-                                                            Control.IsTemplateFocusTarget="True"
-                                                            CornerRadius="{TemplateBinding CornerRadius}"/>
-                                                    <ScrollViewer x:Name="ContentElement"
-                                                                  Grid.Row="1"
-                                                                  Grid.Column="0"
-                                                                  Margin="{TemplateBinding BorderThickness}"
-                                                                  Padding="{TemplateBinding Padding}"
-                                                                  VerticalAlignment="Center"
-                                                                  AutomationProperties.AccessibilityView="Raw"
-                                                                  HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                                                                  HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
-                                                                  IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
-                                                                  IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
-                                                                  IsTabStop="False"
-                                                                  IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
-                                                                  VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
-                                                                  VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
-                                                                  ZoomMode="Disabled"/>
-                                                    <TextBlock x:Name="PlaceholderTextContentPresenter"
-                                                               Grid.Row="1"
-                                                               Grid.Column="0"
-                                                               Grid.ColumnSpan="4"
-                                                               Margin="{TemplateBinding BorderThickness}"
-                                                               Padding="{TemplateBinding Padding}"
-                                                               VerticalAlignment="Center"
-                                                               Foreground="{ThemeResource TextControlPlaceholderForeground}"
-                                                               IsHitTestVisible="False"
-                                                               Text="{TemplateBinding PlaceholderText}"
-                                                               TextAlignment="{TemplateBinding TextAlignment}"
-                                                               TextWrapping="{TemplateBinding TextWrapping}"/>
-                                                    <ContentPresenter x:Name="DescriptionPresenter"
-                                                                      Grid.Row="2"
-                                                                      Grid.Column="0"
-                                                                      Grid.ColumnSpan="4"
-                                                                      Background="Transparent"
-                                                                      Foreground="{ThemeResource SystemControlDescriptionTextForegroundBrush}"
-                                                                      x:Load="False"
-                                                                      AutomationProperties.AccessibilityView="Raw"
-                                                                      Content="{TemplateBinding Description}"/>
-
-                                                </Grid>
-
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </Grid.Resources>
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -165,12 +52,12 @@
                                     <FontIcon VerticalAlignment="Center"
                                                   FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                   FontSize="16"
-                                                  Glyph="&#xE72B;"/>
-                                    <TextBlock Margin="12,0,0,0" Text="ƒ"/>
-                                    <TextBlock Margin="0,10,0,0"
-                                                   FontSize="9"
-                                                   Text="{TemplateBinding EquationButtonContentIndex}"/>
-                                </StackPanel>
+                                                  Glyph="&#xE72B;" Margin="0,0,6,0"/>
+                                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
+                                        <TextBlock Margin="-5,19,0,0"
+                                                       FontSize="11"
+                                                       Text="{TemplateBinding EquationButtonContentIndex}"/>
+                                    </StackPanel>
                                 <Button.Resources>
                                     <ResourceDictionary>
                                         <ResourceDictionary.ThemeDictionaries>
@@ -216,12 +103,12 @@
                                 </Button.Resources>
                             </Button>
 
-                            <controls:MathRichEditBox x:Name="EquationTextBox"
+                            <controls:MathRichEditBox x:Name="MathRichEditBox"
                                                       Grid.Column="1"
                                                       MinHeight="44"
                                                       Padding="{TemplateBinding Padding}"
                                                       VerticalAlignment="Stretch"
-                                                      Style="{StaticResource MathRichEdit_EquationTextBoxStyle}"
+                                                      Style="{StaticResource MathRichEditBoxStyle}"
                                                       Background="Transparent"
                                                       BorderThickness="0"
                                                       FontFamily="{TemplateBinding FontFamily}"
