@@ -55,10 +55,10 @@
                                         <FontIcon VerticalAlignment="Center"
                                                   FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                   FontSize="16"
-                                                  Glyph="&#xE72B;"/>
-                                        <TextBlock Text="ƒ" Margin="12,0,0,0"/>
-                                        <TextBlock Margin="0,10,0,0"
-                                                       FontSize="9"
+                                                  Glyph="&#xE72B;" Margin="0,0,6,0"/>
+                                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
+                                        <TextBlock Margin="-5,19,0,0"
+                                                       FontSize="11"
                                                        Text="{TemplateBinding EquationButtonContentIndex}"/>
                                     </StackPanel>
 
