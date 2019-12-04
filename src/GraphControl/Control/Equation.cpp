@@ -26,7 +26,13 @@ namespace GraphControl
     DependencyProperty ^ Equation::s_isLineEnabledProperty;
     static constexpr auto s_propertyName_IsLineEnabled = L"IsLineEnabled";
 
-	DependencyProperty ^ Equation::s_xInterceptProperty;
+    DependencyProperty ^ Equation::s_hasGraphErrorProperty;
+    static constexpr auto s_propertyName_HasGraphError = L"HasGraphError";
+
+    DependencyProperty ^ Equation::s_isValidatedProperty;
+    static constexpr auto s_propertyName_IsValidated = L"IsValidated";
+
+    DependencyProperty ^ Equation::s_xInterceptProperty;
     static constexpr auto s_propertyName_XIntercept = L"XIntercept";
 
     DependencyProperty ^ Equation::s_yInterceptProperty;
@@ -79,6 +85,8 @@ namespace GraphControl
         String ^ Expression = StringReference(s_propertyName_Expression);
         String ^ LineColor = StringReference(s_propertyName_LineColor);
         String ^ IsLineEnabled = StringReference(s_propertyName_IsLineEnabled);
+        String ^ HasGraphError = StringReference(s_propertyName_HasGraphError);
+        String ^ IsValidated = StringReference(s_propertyName_IsValidated);
         String ^ XIntercept = StringReference(s_propertyName_XIntercept);
         String ^ YIntercept = StringReference(s_propertyName_YIntercept);
         String ^ Parity = StringReference(s_propertyName_Parity);
@@ -127,6 +135,24 @@ namespace GraphControl
                 bool ::typeid,
                 Equation::typeid,
                 ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
+        }
+
+        if (!s_hasGraphErrorProperty)
+        {
+            s_hasGraphErrorProperty = DependencyProperty::Register(
+                EquationProperties::HasGraphError,
+                bool ::typeid,
+                Equation::typeid,
+                ref new PropertyMetadata(false, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
+        }
+
+        if (!s_isValidatedProperty)
+        {
+            s_isValidatedProperty = DependencyProperty::Register(
+                EquationProperties::IsValidated,
+                bool ::typeid,
+                Equation::typeid,
+                ref new PropertyMetadata(false, ref new PropertyChangedCallback(&Equation::OnCustomDependencyPropertyChanged)));
         }
 
         if (!s_xInterceptProperty)
@@ -354,6 +380,14 @@ namespace GraphControl
             {
                 propertyName = EquationProperties::AnalysisError;
             }
+            else if (args->Property == s_hasGraphErrorProperty)
+            {
+                propertyName = EquationProperties::HasGraphError;
+            }
+            else if (args->Property == s_isValidatedProperty)
+            {
+                propertyName = EquationProperties::IsValidated;
+            }
 
             eq->PropertyChanged(eq, propertyName);
         }
@@ -397,5 +431,10 @@ namespace GraphControl
     wstring Equation::GetLineColor()
     {
         return L""s;
+    }
+
+    bool Equation::IsGraphableEquation()
+    {
+        return !Expression->IsEmpty() && IsLineEnabled && !HasGraphError;
     }
 }

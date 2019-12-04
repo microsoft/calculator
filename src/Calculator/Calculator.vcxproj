@@ -8,7 +8,7 @@
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0.19019.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0.18362.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
     <!-- We want to manually control the MinVersion/MaxVersionTested in the manifest so turn of the replacement. -->
     <AppxOSMinVersionReplaceManifestVersion>false</AppxOSMinVersionReplaceManifestVersion>
@@ -251,6 +251,8 @@
     <ClInclude Include="Converters\RadixToStringConverter.h" />
     <ClInclude Include="Converters\VisibilityNegationConverter.h" />
     <ClInclude Include="Controls\HorizontalNoOverflowStackPanel.h" />
+    <ClInclude Include="Controls\OperatorPanelListView.h" />
+    <ClInclude Include="Controls\OperatorPanelButton.h" />
     <ClInclude Include="Controls\EquationTextBox.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
@@ -312,6 +314,7 @@
       <DependentUpon>Views\OperatorsPanel.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Views\StateTriggers\AspectRatioTrigger.h" />
+    <ClInclude Include="Views\StateTriggers\ControlSizeTrigger.h" />
     <ClInclude Include="Views\SupplementaryResults.xaml.h">
       <DependentUpon>Views\SupplementaryResults.xaml</DependentUpon>
     </ClInclude>
@@ -401,6 +404,8 @@
     <ClCompile Include="Converters\RadixToStringConverter.cpp" />
     <ClCompile Include="Converters\VisibilityNegationConverter.cpp" />
     <ClCompile Include="Controls\HorizontalNoOverflowStackPanel.cpp" />
+    <ClCompile Include="Controls\OperatorPanelListView.cpp" />
+    <ClCompile Include="Controls\OperatorPanelButton.cpp" />
     <ClCompile Include="Controls\EquationTextBox.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -468,6 +473,7 @@
       <DependentUpon>Views\OperatorsPanel.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Views\StateTriggers\AspectRatioTrigger.cpp" />
+    <ClCompile Include="Views\StateTriggers\ControlSizeTrigger.cpp" />
     <ClCompile Include="Views\SupplementaryResults.xaml.cpp">
       <DependentUpon>Views\SupplementaryResults.xaml</DependentUpon>
     </ClCompile>
@@ -672,9 +678,13 @@
     <Image Include="Assets\CalculatorAppList.targetsize-24_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-lightunplated.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-lightunplated_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-black.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-black_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-white.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-white_devicefamily-colorfulunplated.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-30.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-30_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-30_altform-unplated.png" />
@@ -697,9 +707,13 @@
     <Image Include="Assets\CalculatorAppList.targetsize-40_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48_altform-lightunplated.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-lightunplated_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-black.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-black_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-white.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-white_devicefamily-colorfulunplated.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-60.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-60_altform-lightunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-60_altform-unplated.png" />
@@ -722,9 +736,13 @@
     <Image Include="Assets\CalculatorAppList.targetsize-80_altform-unplated_contrast-white.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-96.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-96_altform-lightunplated.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-lightunplated_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-black.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-black_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-white.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-white_devicefamily-colorfulunplated.png" />
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_devicefamily-colorfulunplated.png" />
     <Image Include="Assets\CalculatorLargeTile.contrast-black_scale-100.png" />
     <Image Include="Assets\CalculatorLargeTile.contrast-black_scale-125.png" />
     <Image Include="Assets\CalculatorLargeTile.contrast-black_scale-150.png" />
@@ -851,7 +869,7 @@
   </Target>
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets" Condition="Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" />
-    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -859,6 +877,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.1.190405004.2\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets'))" />
   </Target>
 </Project>

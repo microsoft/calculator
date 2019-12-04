@@ -40,8 +40,6 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::ViewManagement;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
 // Calculate number of 100-nanosecond intervals in 500 milliseconds.
 // There are 10,000 intervals in 1 ms.
 static const long long DURATION_500_MS = 10000 * 500;
@@ -66,14 +64,14 @@ UnitConverter::UnitConverter()
     m_isAnimationEnabled = userSettings->AnimationsEnabled;
 
     auto resLoader = AppResourceProvider::GetInstance();
-    m_chargesMayApplyText = resLoader.GetResourceString(L"DataChargesMayApply");
-    m_failedToRefreshText = resLoader.GetResourceString(L"FailedToRefresh");
+    m_chargesMayApplyText = resLoader->GetResourceString(L"DataChargesMayApply");
+    m_failedToRefreshText = resLoader->GetResourceString(L"FailedToRefresh");
 
     InitializeOfflineStatusTextBlock();
 
     m_resultsFlyout = static_cast<MenuFlyout ^>(Resources->Lookup(L"CalculationResultContextMenu"));
-    CopyMenuItem->Text = resLoader.GetResourceString(L"copyMenuItem");
-    PasteMenuItem->Text = resLoader.GetResourceString(L"pasteMenuItem");
+    CopyMenuItem->Text = resLoader->GetResourceString(L"copyMenuItem");
+    PasteMenuItem->Text = resLoader->GetResourceString(L"pasteMenuItem");
 }
 
 void UnitConverter::OnPropertyChanged(_In_ Object ^ sender, _In_ PropertyChangedEventArgs ^ e)
@@ -165,7 +163,7 @@ void UnitConverter::SetFailedToRefreshStatus()
 void UnitConverter::InitializeOfflineStatusTextBlock()
 {
     auto resProvider = AppResourceProvider::GetInstance();
-    std::wstring offlineStatusHyperlinkText = static_cast<String ^>(resProvider.GetResourceString(L"OfflineStatusHyperlinkText"))->Data();
+    std::wstring offlineStatusHyperlinkText = resProvider->GetResourceString(L"OfflineStatusHyperlinkText")->Data();
 
     // The resource string has the 'NetworkSettings' hyperlink wrapped with '%HL%'.
     // Break the string and assign pieces appropriately.
@@ -245,9 +243,9 @@ void UnitConverter::OnCopyMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEvent
 
 void UnitConverter::OnPasteMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    CopyPasteManager::GetStringToPaste(Model->Mode, CategoryGroupType::Converter).then([this](String ^ pastedString) {
-        Model->OnPaste(pastedString);
-    });
+    auto that(this);
+    create_task(CopyPasteManager::GetStringToPaste(Model->Mode, CategoryGroupType::Converter, NumberBase::Unknown, BitLength::BitLengthUnknown))
+        .then([that](String ^ pastedString) { that->Model->OnPaste(pastedString); });
 }
 
 void UnitConverter::AnimateConverter()
@@ -291,12 +289,17 @@ void UnitConverter::SetDefaultFocus()
 
 void UnitConverter::CurrencyRefreshButton_Click(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
 {
-    if (Model->NetworkBehavior == NetworkAccessBehavior::OptIn)
+    // If IsCurrencyLoadingVisible is true that means CurrencyRefreshButton_Click was recently called
+    // and is still executing. In this case there is no reason to process the click.
+    if (!Model->IsCurrencyLoadingVisible)
     {
-        m_meteredConnectionOverride = true;
-    }
+        if (Model->NetworkBehavior == NetworkAccessBehavior::OptIn)
+        {
+            m_meteredConnectionOverride = true;
+        }
 
-    Model->RefreshCurrencyRatios();
+        Model->RefreshCurrencyRatios();
+    }
 }
 
 void UnitConverter::OnDataContextChanged(_In_ FrameworkElement ^ sender, _In_ DataContextChangedEventArgs ^ args)
@@ -320,15 +323,16 @@ void UnitConverter::OnIsDisplayVisibleChanged()
 {
     if (Model->IsCurrencyLoadingVisible)
     {
+        VisualStateManager::GoToState(this, L"CurrencyLoadingState", false);
         StartProgressRingWithDelay();
     }
     else
     {
         HideProgressRing();
 
-        if (m_isAnimationEnabled && Model->IsCurrencyCurrentCategory && !Model->CurrencyTimestamp->IsEmpty())
+        if (Model->IsCurrencyCurrentCategory && !Model->CurrencyTimestamp->IsEmpty())
         {
-            TimestampFadeInAnimation->Begin();
+            VisualStateManager::GoToState(this, L"CurrencyLoadedState", m_isAnimationEnabled);
         }
     }
 }
@@ -373,6 +377,5 @@ void CalculatorApp::UnitConverter::SupplementaryResultsPanelInGrid_SizeChanged(P
 void CalculatorApp::UnitConverter::OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e)
 {
     auto mode = NavCategory::Deserialize(Model->CurrentCategory->GetModelCategory().id);
-    auto state = std::wstring(e->NewState->Name->Begin());
-    TraceLogger::GetInstance().LogVisualStateChanged(mode, state);
+    TraceLogger::GetInstance()->LogVisualStateChanged(mode, e->NewState->Name, false);
 }

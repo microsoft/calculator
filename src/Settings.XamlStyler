@@ -18,7 +18,8 @@
         "FontFamily, FontSize, LineHeight, FontWeight, FontStyle, FontStretch",
         "*:*, *",
         "PageSource, PageIndex, Offset, Color, TargetName, Property, Value, StartPoint, EndPoint",
-        "mc:Ignorable, d:IsDataSource, d:LayoutOverrides, d:IsStaticText"
+        "mc:Ignorable, d:IsDataSource, d:LayoutOverrides, d:IsStaticText",
+		"IsEnabled, x:Load, Load"
     ],
     "OrderAttributesByName": true,
     "PutEndingBracketOnNewLine": false,

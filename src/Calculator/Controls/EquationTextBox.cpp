@@ -24,13 +24,13 @@ using namespace Windows::UI::Xaml::Controls::Primitives;
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, ColorChooserFlyout);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonContentIndex);
-
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, HasError);
 
 void EquationTextBox::OnApplyTemplate()
 {
     m_equationButton = dynamic_cast<ToggleButton ^>(GetTemplateChild("EquationButton"));
     m_kgfEquationButton = dynamic_cast<Button ^>(GetTemplateChild("KGFEquationButton"));
-    m_richEditBox = dynamic_cast<MathRichEditBox ^>(GetTemplateChild("EquationTextBox"));
+    m_richEditBox = dynamic_cast<MathRichEditBox ^>(GetTemplateChild("MathRichEditBox"));
     m_deleteButton = dynamic_cast<Button ^>(GetTemplateChild("DeleteButton"));
     m_removeButton = dynamic_cast<Button ^>(GetTemplateChild("RemoveButton"));
     m_functionButton = dynamic_cast<Button ^>(GetTemplateChild("FunctionButton"));
@@ -50,7 +50,7 @@ void EquationTextBox::OnApplyTemplate()
 
          auto toolTip = ref new ToolTip();
          auto resProvider = AppResourceProvider::GetInstance();
-         toolTip->Content = m_equationButton->IsChecked->Value ? resProvider.GetResourceString(L"showEquationButtonToolTip") : resProvider.GetResourceString(L"hideEquationButtonToolTip");
+         toolTip->Content = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip") : resProvider->GetResourceString(L"hideEquationButtonToolTip");
          ToolTipService::SetToolTip(m_equationButton, toolTip);
     }
 
@@ -127,7 +127,7 @@ void EquationTextBox::OnKeyDown(KeyRoutedEventArgs ^ e)
 
 void EquationTextBox::OnLostFocus(RoutedEventArgs ^ e)
 {
-    if (!m_richEditBox->ContextFlyout->IsOpen)
+    if (m_richEditBox != nullptr && !m_richEditBox->ContextFlyout->IsOpen)
     {
         EquationSubmitted(this, ref new RoutedEventArgs());
         if (m_functionButton && m_richEditBox->MathText != L"")
@@ -168,6 +168,7 @@ void EquationTextBox::OnRichEditBoxLostFocus(Object ^ sender, RoutedEventArgs ^ 
     {
         m_HasFocus = false;
     }
+
     UpdateCommonVisualState();
     UpdateDeleteButtonVisualState();
 }
@@ -190,7 +191,7 @@ void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^
 
     auto toolTip = ref new ToolTip();
     auto resProvider = AppResourceProvider::GetInstance();
-    toolTip->Content = m_equationButton->IsChecked->Value ? resProvider.GetResourceString(L"showEquationButtonToolTip") : resProvider.GetResourceString(L"hideEquationButtonToolTip");
+    toolTip->Content = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip") : resProvider->GetResourceString(L"hideEquationButtonToolTip");
 
     ToolTipService::SetToolTip(m_equationButton, toolTip);
 }
@@ -259,12 +260,25 @@ void EquationTextBox::UpdateCommonVisualState()
     {
         state = "Focused";
     }
+    else if ((m_isPointerOver && HasError) || (m_isColorChooserFlyoutOpen && HasError))
+    {
+        state = "PointerOverError";
+    }
     else if (m_isPointerOver || m_isColorChooserFlyoutOpen)
     {
         state = "PointerOver";
     }
+    else if (HasError)
+    {
+        state = "Error";
+    }
 
     VisualStateManager::GoToState(this, state, true);
+}
+
+void EquationTextBox::OnHasErrorPropertyChanged(bool, bool)
+{
+    UpdateCommonVisualState();
 }
 
 Platform::String ^ EquationTextBox::GetEquationText()
@@ -272,13 +286,12 @@ Platform::String ^ EquationTextBox::GetEquationText()
     String ^ text;
     if (m_richEditBox != nullptr)
     {
-        // Clear formatting since the graph control doesn't work with bold/italic/underlines
+        // Clear formatting since the graph control doesn't work with bold/underlines
         ITextRange ^ range = m_richEditBox->TextDocument->GetRange(0, m_richEditBox->TextDocument->Selection->EndPosition);
 
         if (range != nullptr)
         {
             range->CharacterFormat->Bold = FormatEffect::Off;
-            range->CharacterFormat->Italic = FormatEffect::Off;
             range->CharacterFormat->Underline = UnderlineType::None;
         }
 

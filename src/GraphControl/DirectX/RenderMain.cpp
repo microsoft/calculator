@@ -68,8 +68,6 @@ namespace GraphControl::DX
                 renderer->SetGraphSize(static_cast<unsigned int>(m_swapChainPanel->ActualWidth), static_cast<unsigned int>(m_swapChainPanel->ActualHeight));
             }
         }
-
-        RunRenderPass();
     }
 
     void RenderMain::BackgroundColor::set(Windows::UI::Color backgroundColor)
@@ -125,12 +123,16 @@ namespace GraphControl::DX
         RunRenderPass();
     }
 
-    void RenderMain::RunRenderPass()
+    bool RenderMain::RunRenderPass()
     {
-        if (Render())
+        bool succesful = Render();
+
+        if (succesful)
         {
             m_deviceResources.Present();
         }
+
+        return succesful;
     }
 
     // Renders the current frame according to the current application state.

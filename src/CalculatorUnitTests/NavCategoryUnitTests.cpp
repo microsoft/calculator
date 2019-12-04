@@ -257,9 +257,26 @@ namespace CalculatorUnitTests
     void NavCategoryUnitTests::GetIndex()
     {
         // Index is the 0-based ordering of modes
-        vector<ViewMode> orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Programmer, ViewMode::Date,        ViewMode::Graphing,
-                                          ViewMode::Currency, ViewMode::Area,       ViewMode::Speed,      ViewMode::Time,        ViewMode::Power,
-                                          ViewMode::Data,     ViewMode::Pressure,   ViewMode::Angle };
+        ViewMode orderedModes[] = {
+            ViewMode::Standard,
+            ViewMode::Scientific,
+            ViewMode::Programmer,
+            ViewMode::Graphing,
+            ViewMode::Date,
+            ViewMode::Currency,
+            ViewMode::Volume,
+            ViewMode::Length,
+            ViewMode::Weight,
+            ViewMode::Temperature,
+            ViewMode::Energy,
+            ViewMode::Area,
+            ViewMode::Speed,
+            ViewMode::Time,
+            ViewMode::Power,
+            ViewMode::Data,
+            ViewMode::Pressure,
+            ViewMode::Angle
+        };
 
         auto orderedModesSize = size(orderedModes);
         for (size_t index = 0; index < orderedModesSize; index++)
@@ -274,7 +291,7 @@ namespace CalculatorUnitTests
     void NavCategoryUnitTests::GetPosition()
     {
         // Position is the 1-based ordering of modes
-        vector<ViewMode> orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Programmer, ViewMode::Date,     ViewMode::Graphing,
+        vector<ViewMode> orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Programmer, ViewMode::Graphing, ViewMode::Date,
                                           ViewMode::Currency, ViewMode::Volume,   ViewMode::Length,     ViewMode::Weight,     ViewMode::Temperature,
                                           ViewMode::Energy,   ViewMode::Area,     ViewMode::Speed,      ViewMode::Time,       ViewMode::Power,
                                           ViewMode::Data,     ViewMode::Pressure, ViewMode::Angle };
@@ -303,8 +320,8 @@ namespace CalculatorUnitTests
         VERIFY_ARE_EQUAL(0, NavCategory::GetIndexInGroup(ViewMode::Standard, CategoryGroupType::Calculator));
         VERIFY_ARE_EQUAL(1, NavCategory::GetIndexInGroup(ViewMode::Scientific, CategoryGroupType::Calculator));
         VERIFY_ARE_EQUAL(2, NavCategory::GetIndexInGroup(ViewMode::Programmer, CategoryGroupType::Calculator));
-        VERIFY_ARE_EQUAL(3, NavCategory::GetIndexInGroup(ViewMode::Date, CategoryGroupType::Calculator));
-        VERIFY_ARE_EQUAL(4, NavCategory::GetIndexInGroup(ViewMode::Graphing, CategoryGroupType::Calculator));
+        VERIFY_ARE_EQUAL(3, NavCategory::GetIndexInGroup(ViewMode::Graphing, CategoryGroupType::Calculator));
+        VERIFY_ARE_EQUAL(4, NavCategory::GetIndexInGroup(ViewMode::Date, CategoryGroupType::Calculator));
 
         VERIFY_ARE_EQUAL(0, NavCategory::GetIndexInGroup(ViewMode::Currency, CategoryGroupType::Converter));
         VERIFY_ARE_EQUAL(1, NavCategory::GetIndexInGroup(ViewMode::Volume, CategoryGroupType::Converter));
@@ -359,13 +376,13 @@ namespace CalculatorUnitTests
         NavCategoryGroup ^ calculatorGroup = menuOptions->GetAt(0);
         VERIFY_ARE_EQUAL(CategoryGroupType::Calculator, calculatorGroup->GroupType);
 
-        IObservableVector<NavCategory ^> ^ calculatorCategories = calculatorGroup->Categories;
+        IObservableVector<NavCategory^>^ calculatorCategories = calculatorGroup->Categories;
         VERIFY_ARE_EQUAL(5, calculatorCategories->Size);
         ValidateNavCategory(calculatorCategories, 0u, ViewMode::Standard, 1);
         ValidateNavCategory(calculatorCategories, 1u, ViewMode::Scientific, 2);
         ValidateNavCategory(calculatorCategories, 2u, ViewMode::Programmer, 3);
-        ValidateNavCategory(calculatorCategories, 3u, ViewMode::Date, 4);
-        ValidateNavCategory(calculatorCategories, 4u, ViewMode::Graphing, 5);
+        ValidateNavCategory(calculatorCategories, 3u, ViewMode::Graphing, 4);
+        ValidateNavCategory(calculatorCategories, 4u, ViewMode::Date, 5);
 
         NavCategoryGroup ^ converterGroup = menuOptions->GetAt(1);
         VERIFY_ARE_EQUAL(CategoryGroupType::Converter, converterGroup->GroupType);

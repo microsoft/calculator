@@ -7,7 +7,7 @@
 
 namespace GraphControl
 {
-    delegate void EquationChangedEventHandler();
+    delegate void EquationChangedEventHandler(Equation ^ sender);
     delegate void VisibilityChangedEventHandler(Equation ^ sender);
 
 public
@@ -151,19 +151,19 @@ public
         event EquationChangedEventHandler ^ EquationLineEnabledChanged;
 
     private:
-        void OnEquationPropertyChanged(GraphControl::Equation ^, Platform::String ^ propertyName)
+        void OnEquationPropertyChanged(GraphControl::Equation ^ sender, Platform::String ^ propertyName)
         {
             if (propertyName == EquationProperties::LineColor)
             {
-                EquationStyleChanged();
+                EquationStyleChanged(sender);
             }
             else if (propertyName == EquationProperties::Expression)
             {
-                EquationChanged();
+                EquationChanged(sender);
             }
             else if (propertyName == EquationProperties::IsLineEnabled)
             {
-                EquationLineEnabledChanged();
+                EquationLineEnabledChanged(sender);
             }
         }
 

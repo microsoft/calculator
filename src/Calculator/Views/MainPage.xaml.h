@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -80,9 +80,9 @@ public
         void AnnounceCategoryName();
 
         CalculatorApp::Calculator ^ m_calculator;
+		GraphingCalculator^ m_graphingCalculator;
         CalculatorApp::UnitConverter ^ m_converter;
         CalculatorApp::DateCalculator ^ m_dateCalculator;
-        CalculatorApp::GraphingCalculator^ m_graphingCalculator;
         Windows::Foundation::EventRegistrationToken m_windowSizeEventToken;
         CalculatorApp::ViewModel::ApplicationViewModel ^ m_model;
         Windows::Foundation::EventRegistrationToken m_accessibilitySettingsToken;

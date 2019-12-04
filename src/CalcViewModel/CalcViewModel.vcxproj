@@ -42,7 +42,7 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion>10.0.19019.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
   </PropertyGroup>
@@ -315,12 +315,8 @@
     <ClInclude Include="ApplicationViewModel.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h" />
     <ClInclude Include="Common\AppResourceProvider.h" />
-    <ClInclude Include="Common\Automation\INarratorAnnouncementHost.h" />
-    <ClInclude Include="Common\Automation\LiveRegionHost.h" />
     <ClInclude Include="Common\Automation\NarratorAnnouncement.h" />
-    <ClInclude Include="Common\Automation\NarratorAnnouncementHostFactory.h" />
     <ClInclude Include="Common\Automation\NarratorNotifier.h" />
-    <ClInclude Include="Common\Automation\NotificationHost.h" />
     <ClInclude Include="Common\BindableBase.h" />
     <ClInclude Include="Common\BitLength.h" />
     <ClInclude Include="Common\CalculatorButtonPressedEventArgs.h" />
@@ -341,6 +337,7 @@
     <ClInclude Include="Common\MyVirtualKey.h" />
     <ClInclude Include="Common\NavCategory.h" />
     <ClInclude Include="Common\NetworkManager.h" />
+    <ClInclude Include="Common\NumberBase.h" />
     <ClInclude Include="Common\TraceActivity.h" />
     <ClInclude Include="Common\TraceLogger.h" />
     <ClInclude Include="Common\Utils.h" />
@@ -361,16 +358,12 @@
     <ClInclude Include="StandardCalculatorViewModel.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UnitConverterViewModel.h" />
-    <ClInclude Include="ViewState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationViewModel.cpp" />
     <ClCompile Include="Common\AppResourceProvider.cpp" />
-    <ClCompile Include="Common\Automation\LiveRegionHost.cpp" />
     <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp" />
-    <ClCompile Include="Common\Automation\NarratorAnnouncementHostFactory.cpp" />
     <ClCompile Include="Common\Automation\NarratorNotifier.cpp" />
-    <ClCompile Include="Common\Automation\NotificationHost.cpp" />
     <ClCompile Include="Common\BindableBase.cpp" />
     <ClCompile Include="Common\CalculatorButtonPressedEventArgs.cpp" />
     <ClCompile Include="Common\CalculatorDisplay.cpp" />
@@ -407,7 +400,6 @@
     </ClCompile>
     <ClCompile Include="StandardCalculatorViewModel.cpp" />
     <ClCompile Include="UnitConverterViewModel.cpp" />
-    <ClCompile Include="ViewState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalcManager\CalcManager.vcxproj">
@@ -440,12 +432,12 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.0.181018003.1\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.0.181018003.1\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see https://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.0.181018003.1\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.0.181018003.1\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets'))" />
   </Target>
 </Project>

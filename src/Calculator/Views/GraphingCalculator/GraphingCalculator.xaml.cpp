@@ -58,7 +58,7 @@ GraphingCalculator::GraphingCalculator()
 
     auto toolTip = ref new ToolTip();
     auto resProvider = AppResourceProvider::GetInstance();
-    toolTip->Content = ActiveTracingOn ? resProvider.GetResourceString(L"disableTracingButtonToolTip") : resProvider.GetResourceString(L"enableTracingButtonToolTip");
+    toolTip->Content = ActiveTracingOn ? resProvider->GetResourceString(L"disableTracingButtonToolTip") : resProvider->GetResourceString(L"enableTracingButtonToolTip");
     ToolTipService::SetToolTip(ActiveTracing, toolTip);
 
     DataTransferManager ^ dataTransferManager = DataTransferManager::GetForCurrentView();
@@ -110,17 +110,47 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
 
 void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationViewModel ^> ^ sender, IVectorChangedEventArgs ^ event)
 {
-    if (event->CollectionChange != ::CollectionChange::ItemChanged)
+    // If an item is already added to the graph, changing it should automatically trigger a graph update
+    if (event->CollectionChange == ::CollectionChange::ItemChanged)
     {
-        GraphingControl->Equations->Clear();
-
-        for (auto equationViewModel : ViewModel->Equations)
-        {
-            GraphingControl->Equations->Append(equationViewModel->GraphEquation);
-        }
-
-        GraphingControl->PlotGraph();
+        return;
     }
+
+    // Do not plot the graph if we are removing an empty equation, just remove it
+    if (event->CollectionChange == ::CollectionChange::ItemRemoved)
+    {
+        auto itemToRemove = GraphingControl->Equations->GetAt(event->Index);
+
+        if (itemToRemove->Expression->IsEmpty())
+        {
+            GraphingControl->Equations->RemoveAt(event->Index);
+
+            return;
+        }
+    }
+
+    // Do not plot the graph if we are adding an empty equation, just add it
+    if (event->CollectionChange == ::CollectionChange::ItemInserted)
+    {
+        auto itemToAdd = sender->GetAt(event->Index);
+
+        if (itemToAdd->Expression->IsEmpty())
+        {
+            GraphingControl->Equations->Append(itemToAdd->GraphEquation);
+
+            return;
+        }
+    }
+
+    // We are either adding or removing a valid equation, or resetting the collection. We will need to plot the graph
+    GraphingControl->Equations->Clear();
+
+    for (auto equationViewModel : ViewModel->Equations)
+    {
+        GraphingControl->Equations->Append(equationViewModel->GraphEquation);
+    }
+
+    GraphingControl->PlotGraph();
 }
 
 void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
@@ -253,7 +283,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
     }
     catch (Exception ^ ex)
     {
-        TraceLogger::GetInstance().LogPlatformException(ViewMode::Graphing, __FUNCTIONW__, ex);
+        TraceLogger::GetInstance()->LogPlatformException(ViewMode::Graphing, __FUNCTIONW__, ex);
 
         // Something went wrong, notify the user.
 
@@ -349,7 +379,7 @@ void GraphingCalculator::OnActiveTracingClick(Object ^ sender, RoutedEventArgs ^
 
     auto toolTip = ref new ToolTip();
     auto resProvider = AppResourceProvider::GetInstance();
-    toolTip->Content = ActiveTracingOn ? resProvider.GetResourceString(L"disableTracingButtonToolTip") : resProvider.GetResourceString(L"enableTracingButtonToolTip");
+    toolTip->Content = ActiveTracingOn ? resProvider->GetResourceString(L"disableTracingButtonToolTip") : resProvider->GetResourceString(L"enableTracingButtonToolTip");
     ToolTipService::SetToolTip(ActiveTracing, toolTip);
 }
 
@@ -397,11 +427,11 @@ Platform::String ^ GraphingCalculator::GetInfoForSwitchModeToggleButton(bool isC
 {
     if (isChecked)
     {
-        return AppResourceProvider::GetInstance().GetResourceString(L"GraphSwitchToGraphMode");
+        return AppResourceProvider::GetInstance()->GetResourceString(L"GraphSwitchToGraphMode");
     }
     else
     {
-        return AppResourceProvider::GetInstance().GetResourceString(L"GraphSwitchToEquationMode");
+        return AppResourceProvider::GetInstance()->GetResourceString(L"GraphSwitchToEquationMode");
     }
 }
 
@@ -411,11 +441,11 @@ void GraphingCalculator::SwitchModeToggleButton_Checked(Platform::Object ^ sende
     String ^ announcementText;
     if (SwitchModeToggleButton->IsChecked->Value)
     {
-        announcementText = AppResourceProvider::GetInstance().GetResourceString(L"GraphSwitchedToEquationModeAnnouncement");
+        announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphSwitchedToEquationModeAnnouncement");
     }
     else
     {
-        announcementText = AppResourceProvider::GetInstance().GetResourceString(L"GraphSwitchedToGraphModeAnnouncement");
+        announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphSwitchedToGraphModeAnnouncement");
     }
 
     auto announcement = CalculatorAnnouncement::GetGraphModeChangedAnnouncement(announcementText);

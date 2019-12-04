@@ -62,7 +62,7 @@ namespace GraphControl
         , m_Moving{ false }
     {
         m_solver->ParsingOptions().SetFormatType(s_defaultFormatType);
-        m_solver->FormatOptions().SetFormatType(FormatType::MathML);
+        m_solver->FormatOptions().SetFormatType(s_defaultFormatType);
         m_solver->FormatOptions().SetMathMLPrefix(wstring(L"mml"));
 
         DefaultStyleKey = StringReference(s_defaultStyleKey);
@@ -144,7 +144,7 @@ namespace GraphControl
             m_renderMain = ref new RenderMain(swapChainPanel);
         }
 
-        UpdateGraph();
+        TryUpdateGraph();
     }
 
     void Grapher::RegisterDependencyProperties()
@@ -229,19 +229,26 @@ namespace GraphControl
                 ref new EquationChangedEventHandler(this, &Grapher::OnEquationLineEnabledChanged);
         }
 
-        UpdateGraph();
+        PlotGraph();
     }
 
-    void Grapher::OnEquationChanged()
+    void Grapher::OnEquationChanged(Equation ^ equation)
     {
-        UpdateGraph();
+        // If the equation was previously valid, we should try to graph again in the event of the failure
+        bool shouldRetry = equation->IsValidated;
+
+        // Reset these properties if the equation is requesting to be graphed again
+        equation->HasGraphError = false;
+        equation->IsValidated = false;
+
+        TryPlotGraph(shouldRetry);
     }
 
-    void Grapher::OnEquationStyleChanged()
+    void Grapher::OnEquationStyleChanged(Equation ^)
     {
         if (m_graph)
         {
-            UpdateGraphOptions(m_graph->GetOptions(), GetValidEquations());
+            UpdateGraphOptions(m_graph->GetOptions(), GetGraphableEquations());
         }
 
         if (m_renderMain)
@@ -250,14 +257,15 @@ namespace GraphControl
         }
     }
 
-    void Grapher::OnEquationLineEnabledChanged()
+    void Grapher::OnEquationLineEnabledChanged(Equation ^ equation)
     {
-        UpdateGraph();
-    }
+        // If the equation is in an error state or is empty, it should not be graphed anyway.
+        if (equation->HasGraphError || equation->Expression->IsEmpty())
+        {
+            return;
+        }
 
-    void Grapher::PlotGraph()
-    {
-        UpdateGraph();
+        PlotGraph();
     }
 
     void Grapher::AnalyzeEquation(Equation ^ equation)
@@ -307,13 +315,43 @@ namespace GraphControl
         equation->AnalysisError = CalculatorApp::AnalysisErrorType::AnalysisCouldNotBePerformed;
     }
 
-    void Grapher::UpdateGraph()
+    void Grapher::PlotGraph()
+    {
+        TryPlotGraph(false);
+    }
+
+    void Grapher::TryPlotGraph(bool shouldRetry)
+    {
+        if (TryUpdateGraph())
+        {
+            SetEquationsAsValid();
+        }
+        else
+        {
+            SetEquationErrors();
+
+            // If we failed to plot the graph, try again after the bad equations are flagged.
+            if (shouldRetry)
+            {
+                TryUpdateGraph();
+            }
+        }
+    }
+
+    bool Grapher::TryUpdateGraph()
     {
         optional<vector<shared_ptr<IEquation>>> initResult = nullopt;
+        bool successful = false;
 
         if (m_renderMain && m_graph != nullptr)
         {
-            auto validEqs = GetValidEquations();
+            unique_ptr<IExpression> graphExpression;
+            wstring request;
+
+            auto validEqs = GetGraphableEquations();
+
+            // Will be set to true if the previous graph should be kept in the event of an error
+            bool shouldKeepPreviousGraph = false;
 
             if (!validEqs.empty())
             {
@@ -323,6 +361,11 @@ namespace GraphControl
                 int numValidEquations = 0;
                 for (Equation ^ eq : validEqs)
                 {
+                    if (eq->IsValidated)
+                    {
+                        shouldKeepPreviousGraph = true;
+                    }
+
                     if (numValidEquations++ > 0)
                     {
                         ss << L"<mo>,</mo>";
@@ -333,26 +376,78 @@ namespace GraphControl
 
                 ss << s_getGraphClosingTags;
 
-                wstring request = ss.str();
-                unique_ptr<IExpression> graphExpression;
-                if (graphExpression = m_solver->ParseInput(request))
+                request = ss.str();
+            }
+
+            if (graphExpression = m_solver->ParseInput(request))
+            {
+                initResult = m_graph->TryInitialize(graphExpression.get());
+
+                if (initResult != nullopt)
                 {
-                    initResult = m_graph->TryInitialize(graphExpression.get());
+                    UpdateGraphOptions(m_graph->GetOptions(), validEqs);
+                    SetGraphArgs();
+
+                    m_renderMain->Graph = m_graph;
+
+                    // It is possible that the render fails, in that case fall through to explicit empty initialization
+                    if (m_renderMain->RunRenderPass())
+                    {
+                        UpdateVariables();
+                        successful = true;
+                    }
+                    else
+                    {
+                        // If we failed to render then we have already lost the previous graph
+                        shouldKeepPreviousGraph = false;
+                        initResult = nullopt;
+                    }
                 }
             }
 
             if (initResult == nullopt)
             {
-                initResult = m_graph->TryInitialize();
+                // Do not re-initialize the graph to empty if there are still valid equations graphed
+                if (!shouldKeepPreviousGraph)
+                {
+                    initResult = m_graph->TryInitialize();
+
+                    if (initResult != nullopt)
+                    {
+                        UpdateGraphOptions(m_graph->GetOptions(), validEqs);
+                        SetGraphArgs();
+
+                        m_renderMain->Graph = m_graph;
+                        m_renderMain->RunRenderPass();
+
+                        UpdateVariables();
+
+                        // Initializing an empty graph is only a success if there were no equations to graph.
+                        successful = (validEqs.size() == 0);
+                    }
+                }
             }
+        }
 
-            if (initResult != nullopt)
+        // Return true if we were able to graph and render all graphable equations
+        return successful;
+    }
+
+    void Grapher::SetEquationsAsValid()
+    {
+        for (Equation ^ eq : GetGraphableEquations())
+        {
+            eq->IsValidated = true;
+        }
+    }
+
+    void Grapher::SetEquationErrors()
+    {
+        for (Equation ^ eq : GetGraphableEquations())
+        {
+            if (!eq->IsValidated)
             {
-                UpdateGraphOptions(m_graph->GetOptions(), validEqs);
-                SetGraphArgs();
-
-                UpdateVariables();
-                m_renderMain->Graph = m_graph;
+                eq->HasGraphError = true;
             }
         }
     }
@@ -417,6 +512,7 @@ namespace GraphControl
     void Grapher::UpdateVariables()
     {
         auto updatedVariables = ref new Map<String ^, double>();
+
         if (m_graph)
         {
             auto graphVariables = m_graph->GetVariables();
@@ -484,13 +580,13 @@ namespace GraphControl
         }
     }
 
-    vector<Equation ^> Grapher::GetValidEquations()
+    vector<Equation ^> Grapher::GetGraphableEquations()
     {
         vector<Equation ^> validEqs;
 
         for (Equation ^ eq : Equations)
         {
-            if (!eq->Expression->IsEmpty() && eq->IsLineEnabled)
+            if (eq->IsGraphableEquation())
             {
                 validEqs.push_back(eq);
             }
@@ -501,7 +597,7 @@ namespace GraphControl
 
     void Grapher::OnForceProportionalAxesChanged(DependencyPropertyChangedEventArgs ^ args)
     {
-        UpdateGraph();
+        TryUpdateGraph();
     }
 
     void Grapher::OnBackgroundColorChanged(const Windows::UI::Color& color)

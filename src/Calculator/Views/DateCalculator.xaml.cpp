@@ -92,7 +92,7 @@ DateCalculator::DateCalculator()
     DateDiff_FromDate->PlaceholderText = placeholderText;
     DateDiff_ToDate->PlaceholderText = placeholderText;
 
-    CopyMenuItem->Text = AppResourceProvider::GetInstance().GetResourceString(L"copyMenuItem");
+    CopyMenuItem->Text = AppResourceProvider::GetInstance()->GetResourceString(L"copyMenuItem");
     m_dateCalcOptionChangedEventToken = DateCalculationOption->SelectionChanged +=
         ref new SelectionChangedEventHandler(this, &DateCalculator::DateCalcOption_Changed);
 }
@@ -103,7 +103,7 @@ void DateCalculator::FromDate_DateChanged(_In_ CalendarDatePicker ^ sender, _In_
     {
         auto dateCalcViewModel = safe_cast<DateCalculatorViewModel ^>(this->DataContext);
         dateCalcViewModel->FromDate = e->NewDate->Value;
-        TraceLogger::GetInstance().LogDateCalculationModeUsed(false /* AddSubtractMode */);
+        TraceLogger::GetInstance()->LogDateCalculationModeUsed(false /* AddSubtractMode */);
     }
     else
     {
@@ -117,7 +117,7 @@ void DateCalculator::ToDate_DateChanged(_In_ CalendarDatePicker ^ sender, _In_ C
     {
         auto dateCalcViewModel = safe_cast<DateCalculatorViewModel ^>(this->DataContext);
         dateCalcViewModel->ToDate = e->NewDate->Value;
-        TraceLogger::GetInstance().LogDateCalculationModeUsed(false /* AddSubtractMode */);
+        TraceLogger::GetInstance()->LogDateCalculationModeUsed(false /* AddSubtractMode */);
     }
     else
     {
@@ -131,7 +131,7 @@ void DateCalculator::AddSubtract_DateChanged(_In_ CalendarDatePicker ^ sender, _
     {
         auto dateCalcViewModel = safe_cast<DateCalculatorViewModel ^>(this->DataContext);
         dateCalcViewModel->StartDate = e->NewDate->Value;
-        TraceLogger::GetInstance().LogDateCalculationModeUsed(true /* AddSubtractMode */);
+        TraceLogger::GetInstance()->LogDateCalculationModeUsed(true /* AddSubtractMode */);
     }
     else
     {
@@ -145,7 +145,7 @@ void CalculatorApp::DateCalculator::OffsetValue_Changed(_In_ Platform::Object ^ 
     // do not log diagnostics for no-ops and initialization of combo boxes
     if (dateCalcViewModel->DaysOffset != 0 || dateCalcViewModel->MonthsOffset != 0 || dateCalcViewModel->YearsOffset != 0)
     {
-        TraceLogger::GetInstance().LogDateCalculationModeUsed(true /* AddSubtractMode */);
+        TraceLogger::GetInstance()->LogDateCalculationModeUsed(true /* AddSubtractMode */);
     }
 }
 
@@ -237,6 +237,5 @@ void DateCalculator::AddSubtractOption_Checked(_In_ Object ^ sender, _In_ Routed
 
 void CalculatorApp::DateCalculator::OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e)
 {
-    auto state = std::wstring(e->NewState->Name->Begin());
-    TraceLogger::GetInstance().LogVisualStateChanged(ViewMode::Date, state);
+    TraceLogger::GetInstance()->LogVisualStateChanged(ViewMode::Date, e->NewState->Name, false);
 }
