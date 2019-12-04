@@ -4128,47 +4128,75 @@
   </data>
   <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Back</value>
-    <comment>This is the tooltip contents for the back button in the equation analysis page in the graphing calculator</comment>
+    <comment>This is the tooltip for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+    <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Back</value>
+    <comment>This is the automation name for the back button in the equation analysis page in the graphing calculator</comment>
   </data>
   <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Analyze equation</value>
-    <comment>This is the tooltip automation name for the analyze equation button</comment>
+    <comment>This is the tooltip for the analyze equation button</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Analyze equation</value>
+    <comment>This is the automation name for the analyze equation button</comment>
   </data>
   <data name="removeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Remove equation</value>
-    <comment>This is the tool tip automation name for the graphing calculator remove equation buttons</comment>
+    <comment>This is the tooltip for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Remove equation</value>
+    <comment>This is the automation name for the graphing calculator remove equation buttons</comment>
   </data>
   <data name="shareButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Share</value>
-    <comment>This is the tool tip automation name for the graphing calculator share button.</comment>
+    <comment>This is the automation name for the graphing calculator share button.</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Share</value>
+    <comment>This is the tooltip for the graphing calculator share button.</comment>
   </data>
   <data name="colorChooserButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Change equation style</value>
-    <comment>This is the tool tip automation name for the graphing calculator equation style button</comment>
+    <comment>This is the tooltip for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Change equation style</value>
+    <comment>This is the automation name for the graphing calculator equation style button</comment>
   </data>
   <data name="showEquationButtonToolTip" xml:space="preserve">
     <value>Show</value>
-    <comment>This is the tooltip shown when visibility is set to hidden in the graphing calculator</comment>
+    <comment>This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator</comment>
   </data>
   <data name="hideEquationButtonToolTip" xml:space="preserve">
     <value>Hide</value>
-    <comment>This is the tooltip shown when visibility is set to visible in the graphing calculator</comment>
+    <comment>This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator</comment>
   </data>
   <data name="disableTracingButtonToolTip" xml:space="preserve">
     <value>Stop tracing</value>
-    <comment>This is the tool tip automation name for the graphing calculator stop tracing button</comment>
+    <comment>This is the tooltip/automation name for the graphing calculator stop tracing button</comment>
   </data>
   <data name="enableTracingButtonToolTip" xml:space="preserve">
     <value>Start tracing</value>
-    <comment>This is the tool tip automation name for the graphing calculator start tracing button</comment>
+    <comment>This is the tooltip/automation name for the graphing calculator start tracing button</comment>
   </data>
   <data name="variablesButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Variables</value>
-    <comment>This is the tool tip automation name for the Calculator variables button.</comment>
+    <comment>This is the tooltip for the Calculator variables button.</comment>
+  </data>
+    <data name="variablesButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Variables</value>
+    <comment>This is the automation name for the Calculator variables button.</comment>
   </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Configure slider</value>
-    <comment>This is the tool tip text for teh slider options button in Graphing Calculator</comment>
+    <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Configure slider</value>
+    <comment>This is the automation name text for the slider options button in Graphing Calculator</comment>
   </data>
   <data name="GraphSwitchToEquationMode" xml:space="preserve">
     <value>Switch to equation mode</value>

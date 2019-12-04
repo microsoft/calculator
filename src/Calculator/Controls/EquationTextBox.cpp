@@ -17,6 +17,7 @@ using namespace Windows::Foundation;
 using namespace Windows::ApplicationModel;
 using namespace Windows::UI::Text;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Controls::Primitives;
@@ -50,8 +51,10 @@ void EquationTextBox::OnApplyTemplate()
 
          auto toolTip = ref new ToolTip();
          auto resProvider = AppResourceProvider::GetInstance();
-         toolTip->Content = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip") : resProvider->GetResourceString(L"hideEquationButtonToolTip");
+         auto equationButtonMessage = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip") : resProvider->GetResourceString(L"hideEquationButtonToolTip");
+         toolTip->Content = equationButtonMessage;
          ToolTipService::SetToolTip(m_equationButton, toolTip);
+         AutomationProperties::SetName(m_equationButton, equationButtonMessage);
     }
 
     if (m_kgfEquationButton != nullptr)
@@ -191,9 +194,10 @@ void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^
 
     auto toolTip = ref new ToolTip();
     auto resProvider = AppResourceProvider::GetInstance();
-    toolTip->Content = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip") : resProvider->GetResourceString(L"hideEquationButtonToolTip");
-
+    auto equationButtonMessage = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip") : resProvider->GetResourceString(L"hideEquationButtonToolTip");
+    toolTip->Content = equationButtonMessage;
     ToolTipService::SetToolTip(m_equationButton, toolTip);
+    AutomationProperties::SetName(m_equationButton, equationButtonMessage);
 }
 
 void EquationTextBox::OnKGFEquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
