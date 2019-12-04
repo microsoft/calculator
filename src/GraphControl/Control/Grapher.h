@@ -98,6 +98,105 @@ public
         void SetVariable(Platform::String ^ variableName, double newValue);
         Platform::String ^ ConvertToLinear(Platform::String ^ mmlString);
         void PlotGraph();
+        void AnalyzeEquation(GraphControl::Equation ^ equation);
+       // We can't use the EValTrigUnitMode enum directly in as the property type because it comes from another module which doesn't expose
+        // it as a public enum class.  So the compiler doesn't recognize it as a valid type for the ABI boundary.
+        property int TrigUnitMode
+        {
+            void set(int value)
+            {
+                if (value != (int)m_solver->EvalOptions().GetTrigUnitMode())
+                {
+                    m_solver->EvalOptions().SetTrigUnitMode((Graphing::EvalTrigUnitMode)value);
+                    UpdateGraph();
+                }
+            }
+
+            int get()
+            {
+                return (int)m_solver->EvalOptions().GetTrigUnitMode();
+            }
+        }
+
+        property double XAxisMin
+        {
+            double get()
+            {
+                return m_graph->GetOptions().GetDefaultXRange().first;
+            }
+            void set(double value)
+            {
+                std::pair<double, double> newValue(value, XAxisMax);
+                m_graph->GetOptions().SetDefaultXRange(newValue);
+                m_renderMain->RunRenderPass();
+            }
+        }
+
+        property double XAxisMax
+        {
+            double get()
+            {
+                return m_graph->GetOptions().GetDefaultXRange().second;
+            }
+            void set(double value)
+            {
+                std::pair<double, double> newValue(XAxisMax, value);
+                m_graph->GetOptions().SetDefaultXRange(newValue);
+                m_renderMain->RunRenderPass();
+            }
+        }
+
+        property double YAxisMin
+        {
+            double get()
+            {
+                return m_graph->GetOptions().GetDefaultXRange().first;
+            }
+            void set(double value)
+            {
+                std::pair<double, double> newValue(value, YAxisMax);
+                m_graph->GetOptions().SetDefaultYRange(newValue);
+                m_renderMain->RunRenderPass();
+            }
+        }
+
+        property double YAxisMax
+        {
+            double get()
+            {
+                return m_graph->GetOptions().GetDefaultXRange().second;
+            }
+            void set(double value)
+            {
+                std::pair<double, double> newValue(YAxisMax, value);
+                m_graph->GetOptions().SetDefaultYRange(newValue);
+                m_renderMain->RunRenderPass();
+            }
+        }
+
+        void GetDisplayRanges(double* xMin, double* xMax, double* yMin, double* yMax)
+        {
+            try
+            {
+                m_graph->GetRenderer()->GetDisplayRanges(*xMin, *xMax, *yMin, *yMax);
+            }
+            catch (const std::exception&)
+            {
+                OutputDebugString(L"GetDisplayRanges failed\r\n");
+            }
+        }
+
+        void SetDisplayRanges(double xMin, double xMax, double yMin, double yMax)
+        {
+            try
+            {
+                m_graph->GetRenderer()->SetDisplayRanges(xMin, xMax, yMin, yMax);
+            }
+            catch (const std::exception&)
+            {
+                OutputDebugString(L"SetDisplayRanges failed\r\n");
+            }
+        }
         GraphControl::KeyGraphFeaturesInfo ^ AnalyzeEquation(GraphControl::Equation ^ equation);
 
     protected:

@@ -130,16 +130,16 @@ namespace Graphing
     enum class EvalTrigUnitMode
     {
         // Invalid value.
-        Invalid,
+        Invalid = 3,
 
         // Default trig unit. Period of sin is 2pi
-        Radians,
+        Radians = 0,
 
         // Degrees as trig unit. Period of sin is 360 degrees
-        Degrees,
+        Degrees = 1,
 
         // Grads as trig unit. Period of sin is 400 grads
-        Grads
+        Grads = 2
     };
 
     // Specifies the type of contextual action

@@ -36,6 +36,10 @@ namespace Graphing
     struct IEvalOptions : public NonCopyable, public NonMoveable
     {
         virtual ~IEvalOptions() = default;
+
+        virtual Graphing::EvalTrigUnitMode GetTrigUnitMode() = 0;
+        virtual void SetTrigUnitMode(Graphing::EvalTrigUnitMode value) = 0;
+
     };
 
     struct IFormatOptions : public NonCopyable, public NonMoveable
