@@ -15,6 +15,7 @@
 #include "Calculator/Controls/EquationTextBox.h"
 #include "Calculator/Views/GraphingCalculator/EquationInputArea.xaml.h"
 #include "CalcViewModel/Common/Utils.h"
+#include "GraphingSettings.xaml.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -102,6 +103,9 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
 
     m_variableUpdatedToken = ViewModel->VariableUpdated +=
         ref new EventHandler<VariableChangedEventArgs>(this, &CalculatorApp::GraphingCalculator::OnVariableChanged);
+
+    // Let the graph settings know who it's parent is.
+    GraphSettings->DataContext = GraphingControl;
 }
 
 void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationViewModel ^> ^ sender, IVectorChangedEventArgs ^ event)

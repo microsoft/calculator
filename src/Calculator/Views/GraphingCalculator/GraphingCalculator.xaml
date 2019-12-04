@@ -396,6 +396,23 @@
                                   FontSize="18"
                                   Glyph="&#xE72D;"/>
                     </Button>
+
+                    <Button x:Name="Settings"
+                            x:Uid="settingsButton"
+                            MinWidth="44"
+                            MinHeight="44"
+                            Margin="0,0,10,0"
+                            Style="{StaticResource GraphButtonStyle}"
+                            RequestedTheme="Light">
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE713;"/>
+                        <Button.Flyout>
+                            <Flyout>
+                                <StackPanel>
+                                    <controls:GraphingSettings x:Name="GraphSettings"/>
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>                    
                 </StackPanel>
             </Border>
             <Border MinWidth="36"
