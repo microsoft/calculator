@@ -431,9 +431,9 @@ void KeyboardShortcutManager::OnCharacterReceivedHandler(CoreWindow ^ sender, Ch
         {
             wchar_t character = static_cast<wchar_t>(args->KeyCode);
             auto buttons = s_CharacterForButtons.find(viewId)->second.equal_range(character);
+            RunFirstEnabledButtonCommand(buttons);
 
             LightUpButtons(buttons);
-            RunFirstEnabledButtonCommand(buttons);
         }
     }
 }
@@ -519,7 +519,7 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs
             auto navView = buttons.first->second.Resolve<MUXC::NavigationView>();
             auto appViewModel = safe_cast<ApplicationViewModel ^>(navView->DataContext);
             appViewModel->Mode = ViewMode::Date;
-            auto categoryName = AppResourceProvider::GetInstance().GetResourceString(L"DateCalculationModeText");
+            auto categoryName = AppResourceProvider::GetInstance()->GetResourceString(L"DateCalculationModeText");
             appViewModel->CategoryName = categoryName;
 
             auto menuItems = static_cast<IObservableVector<Object ^> ^>(navView->MenuItemsSource);
@@ -601,8 +601,6 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs
                         LightUpButtons(buttons);
                     }
                 }
-
-                RunFirstEnabledButtonCommand(buttons);
             }
         }
     }
