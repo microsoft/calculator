@@ -52,17 +52,18 @@ wchar_t* towchar_t(int number)
 
 extern "C"
 {
-    WINADVAPI LSTATUS APIENTRY RegOpenKeyW(_In_ HKEY hKey, _In_opt_ LPCWSTR lpSubKey, _Out_ PHKEY phkResult);
-#define RegOpenKey RegOpenKeyW
-    WINADVAPI LSTATUS APIENTRY RegQueryValueExW(
-        _In_ HKEY hKey,
-        _In_opt_ LPCWSTR lpValueName,
-        _Reserved_ LPDWORD lpReserved,
-        _Out_opt_ LPDWORD lpType,
-        _Out_writes_bytes_to_opt_(*lpcbData, *lpcbData) __out_data_source(REGISTRY) LPBYTE lpData,
-        _When_(lpData == NULL, _Out_opt_) _When_(lpData != NULL, _Inout_opt_) LPDWORD lpcbData);
-    WINADVAPI LSTATUS APIENTRY RegCloseKey(_In_ HKEY hKey);
-#define RegQueryValueEx RegQueryValueExW
+    WINADVAPI LSTATUS APIENTRY RegGetValueW(
+        _In_ HKEY hkey,
+        _In_opt_ LPCWSTR lpSubKey,
+        _In_opt_ LPCWSTR lpValue,
+        _In_ DWORD dwFlags,
+        _Out_opt_ LPDWORD pdwType,
+        _When_(
+            (dwFlags & 0x7F) == RRF_RT_REG_SZ || (dwFlags & 0x7F) == RRF_RT_REG_EXPAND_SZ || (dwFlags & 0x7F) == (RRF_RT_REG_SZ | RRF_RT_REG_EXPAND_SZ)
+                || *pdwType == REG_SZ || *pdwType == REG_EXPAND_SZ,
+            _Post_z_) _When_((dwFlags & 0x7F) == RRF_RT_REG_MULTI_SZ || *pdwType == REG_MULTI_SZ, _Post_ _NullNull_terminated_)
+            _Out_writes_bytes_to_opt_(*pcbData, *pcbData) PVOID pvData,
+        _Inout_opt_ LPDWORD pcbData);
 }
 
 bool IsGraphingModeAvailable()
@@ -83,21 +84,22 @@ bool IsGraphingModeEnabled()
     {
         return _isGraphingModeEnabledCached->Value;
     }
-    HKEY key;
     DWORD allowGraphingCalculator{ 0 };
     DWORD bufferSize{ sizeof(allowGraphingCalculator) };
     // Make sure to call RegOpenKey only on Windows 10 1903+
-    if (RegOpenKey(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Calculator"), &key) != ERROR_SUCCESS)
+    if (!RegGetValueW(
+            HKEY_LOCAL_MACHINE,
+            L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Calculator",
+            L"AllowGraphingCalculator",
+            RRF_RT_REG_DWORD,
+            nullptr,
+            reinterpret_cast<LPBYTE>(&allowGraphingCalculator),
+            &bufferSize) != ERROR_SUCCESS)
     {
         _isGraphingModeEnabledCached = true;
         return true;
     }
-    if (RegQueryValueEx(key, TEXT("AllowGraphingCalculator"), NULL, NULL, reinterpret_cast<LPBYTE>(&allowGraphingCalculator), &bufferSize) != ERROR_SUCCESS)
-    {
-        RegCloseKey(key);
-        _isGraphingModeEnabledCached = true;
-        return true;
-    }
+
     _isGraphingModeEnabledCached = allowGraphingCalculator != 0;
     return _isGraphingModeEnabledCached->Value;
 }
