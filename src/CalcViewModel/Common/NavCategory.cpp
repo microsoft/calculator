@@ -65,10 +65,19 @@ extern "C"
 #define RegQueryValueEx RegQueryValueExW
 }
 
+bool IsGraphingModeAvailable()
+{
+    static bool supportGraph = Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath");
+    return supportGraph;
+}
+
 Box<bool> ^ _isGraphingModeEnabledCached = nullptr;
 bool IsGraphingModeEnabled()
 {
-    // Make sure to call this function only on Windows 10 1903+
+    if (!IsGraphingModeAvailable())
+    {
+        return false;
+    }
 
     if (_isGraphingModeEnabledCached != nullptr)
     {
@@ -77,6 +86,7 @@ bool IsGraphingModeEnabled()
     HKEY key;
     DWORD allowGraphingCalculator{ 0 };
     DWORD bufferSize{ sizeof(allowGraphingCalculator) };
+    // Make sure to call RegOpenKey only on Windows 10 1903+
     if (RegOpenKey(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Calculator"), &key) != ERROR_SUCCESS)
     {
         _isGraphingModeEnabledCached = true;
@@ -115,9 +125,9 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                                                      SUPPORTS_ALL,
                                                                      true } };
 
-    auto supportGraph = Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath");
     int currentIndex = 3;
-    if (supportGraph)
+    bool supportGraphingCalculator = IsGraphingModeAvailable();
+    if (supportGraphingCalculator)
     {
         const bool isEnabled = IsGraphingModeEnabled();
         res.push_back(NavCategoryInitializer{ ViewMode::Graphing,
@@ -140,7 +150,7 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   L"ProgrammerMode",
                                   L"\uECCE",
                                   CategoryGroupType::Calculator,
-                                  supportGraph ? MyVirtualKey::Number4 : MyVirtualKey::Number3,
+                                  supportGraphingCalculator ? MyVirtualKey::Number4 : MyVirtualKey::Number3,
                                   towchar_t(currentIndex++),
                                   SUPPORTS_ALL,
                                   true },
@@ -150,7 +160,7 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   L"DateCalculationMode",
                                   L"\uE787",
                                   CategoryGroupType::Calculator,
-                                  supportGraph ? MyVirtualKey::Number5 : MyVirtualKey::Number4,
+                                  supportGraphingCalculator ? MyVirtualKey::Number5 : MyVirtualKey::Number4,
                                   towchar_t(currentIndex++),
                                   SUPPORTS_ALL,
                                   true },
