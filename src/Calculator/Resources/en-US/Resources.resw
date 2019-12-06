@@ -4142,6 +4142,10 @@
     <value>Analyze equation</value>
     <comment>This is the automation name for the analyze equation button</comment>
   </data>
+  <data name="functionAnalysisMenuItem" xml:space="preserve">
+    <value>Analyze equation</value>
+    <comment>This is the text for the for the analyze equation context menu command</comment>
+  </data>
   <data name="removeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Remove equation</value>
     <comment>This is the tooltip for the graphing calculator remove equation buttons</comment>
@@ -4149,6 +4153,10 @@
   <data name="removeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Remove equation</value>
     <comment>This is the automation name for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeMenuItem" xml:space="preserve">
+    <value>Remove equation</value>
+    <comment>This is the text for the for the remove equation context menu command</comment>
   </data>
   <data name="shareButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Share</value>
@@ -4165,6 +4173,10 @@
   <data name="colorChooserButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Change equation style</value>
     <comment>This is the automation name for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserMenuItem" xml:space="preserve">
+    <value>Change equation style</value>
+    <comment>This is the text for the for the equation style context menu command</comment>
   </data>
   <data name="showEquationButtonToolTip" xml:space="preserve">
     <value>Show</value>

@@ -36,6 +36,12 @@ void EquationTextBox::OnApplyTemplate()
     m_removeButton = dynamic_cast<Button ^>(GetTemplateChild("RemoveButton"));
     m_functionButton = dynamic_cast<Button ^>(GetTemplateChild("FunctionButton"));
     m_colorChooserButton = dynamic_cast<ToggleButton ^>(GetTemplateChild("ColorChooserButton"));
+    m_richEditContextMenu = dynamic_cast<MenuFlyout ^>(GetTemplateChild("MathRichEditContextMenu"));
+    m_kgfEquationMenuItem = dynamic_cast<MenuFlyoutItem ^>(GetTemplateChild("FunctionAnalysisMenuItem"));
+    m_removeMenuItem = dynamic_cast<MenuFlyoutItem ^>(GetTemplateChild("RemoveFunctionMenuItem"));
+    m_colorChooserMenuItem = dynamic_cast<MenuFlyoutItem ^>(GetTemplateChild("ChangeFunctionStyleMenuItem"));
+
+    auto resProvider = AppResourceProvider::GetInstance();
 
     if (m_richEditBox != nullptr)
     {
@@ -50,11 +56,16 @@ void EquationTextBox::OnApplyTemplate()
         m_equationButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnEquationButtonClicked);
 
          auto toolTip = ref new ToolTip();
-         auto resProvider = AppResourceProvider::GetInstance();
          auto equationButtonMessage = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip") : resProvider->GetResourceString(L"hideEquationButtonToolTip");
          toolTip->Content = equationButtonMessage;
          ToolTipService::SetToolTip(m_equationButton, toolTip);
          AutomationProperties::SetName(m_equationButton, equationButtonMessage);
+    }
+
+    if (m_richEditContextMenu != nullptr)
+    {
+        m_richEditContextMenu->Opening +=
+            ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpening);
     }
 
     if (m_kgfEquationButton != nullptr)
@@ -72,15 +83,33 @@ void EquationTextBox::OnApplyTemplate()
         m_removeButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnRemoveButtonClicked);
     }
 
+    if (m_removeMenuItem != nullptr)
+    {
+        m_removeMenuItem->Text = resProvider->GetResourceString(L"removeMenuItem");
+        m_removeMenuItem->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnRemoveButtonClicked);
+    }
+
     if (m_colorChooserButton != nullptr)
     {
         m_colorChooserButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnColorChooserButtonClicked);
+    }
+
+    if (m_colorChooserMenuItem != nullptr)
+    {
+        m_colorChooserMenuItem->Text = resProvider->GetResourceString(L"colorChooserMenuItem");
+        m_colorChooserMenuItem->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnColorChooserButtonClicked);
     }
 
     if (m_functionButton != nullptr)
     {
         m_functionButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnFunctionButtonClicked);
         m_functionButton->IsEnabled = false;
+    }
+
+    if (m_kgfEquationMenuItem != nullptr)
+    {
+        m_kgfEquationMenuItem->Text = resProvider->GetResourceString(L"functionAnalysisMenuItem");
+        m_kgfEquationMenuItem->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnFunctionButtonClicked);
     }
 
     if (ColorChooserFlyout != nullptr)
@@ -244,7 +273,7 @@ void EquationTextBox::UpdateDeleteButtonVisualState()
 {
     String ^ state;
 
-    if (ShouldDeleteButtonBeVisible())
+    if (RichEditHasContent())
     {
         state = "ButtonVisible";
     }
@@ -313,7 +342,7 @@ void EquationTextBox::SetEquationText(Platform::String ^ equationText)
     }
 }
 
-bool EquationTextBox::ShouldDeleteButtonBeVisible()
+bool EquationTextBox::RichEditHasContent()
 {
     String ^ text;
 
@@ -322,4 +351,12 @@ bool EquationTextBox::ShouldDeleteButtonBeVisible()
         text = m_richEditBox->MathText;
     }
     return (!text->IsEmpty() && m_HasFocus);
+}
+
+void EquationTextBox::OnRichEditMenuOpening(Platform::Object ^ sender, Platform::Object ^ args)
+{
+    if (m_kgfEquationMenuItem != nullptr)
+    {
+        m_kgfEquationMenuItem->IsEnabled = EquationTextBox::RichEditHasContent();
+    }
 }
