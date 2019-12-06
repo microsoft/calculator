@@ -1,12 +1,11 @@
 #include "pch.h"
 
 #include "GraphingSettings.xaml.h"
-#include <CalcViewModel\Common\AppResourceProvider.cpp>
+#include "CalcViewModel\Common\AppResourceProvider.cpp"
 
 using namespace Graphing;
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::Controls;
 
 using namespace Platform;
 using namespace Windows::Foundation;
@@ -22,26 +21,12 @@ using namespace Windows::UI::Xaml::Navigation;
 GraphingSettings::GraphingSettings()
 {
     InitializeComponent();
-
-    auto resLoader = AppResourceProvider::GetInstance();
-
-    x_MinHeading->Text = resLoader.GetResourceString(L"x-min");
-    x_MaxHeading->Text = resLoader.GetResourceString(L"x-max");
-    y_MinHeading->Text = resLoader.GetResourceString(L"y-min");
-    y_MaxHeading->Text = resLoader.GetResourceString(L"y-max");
-
-    GridHeading->Text = resLoader.GetResourceString(L"GridHeading");
-    UnitsHeading->Text = resLoader.GetResourceString(L"UnitsHeading");
-
-    Radians->Content = resLoader.GetResourceString(L"TrigModeRadians");
-    Degrees->Content = resLoader.GetResourceString(L"TrigModeDegrees");
-    Gradians->Content = resLoader.GetResourceString(L"TrigModeGradians");
 }
 
 void GraphingSettings::GraphingCalculator_DataContextChanged(FrameworkElement ^ sender, DataContextChangedEventArgs ^ args)
 {
     // The graph control we are working with
-    m_ParentGrapher = (GraphControl::Grapher ^) args->NewValue;
+    m_ParentGrapher = dynamic_cast<GraphControl::Grapher ^>(args->NewValue);
 }
 
 void GraphingSettings::TrigUnitModeClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
@@ -64,39 +49,39 @@ void GraphingSettings::TrigUnitModeClick(Platform::Object ^ sender, Windows::UI:
 
 void GraphingSettings::UpdateExtents(Platform::Object ^ sender)
 {
-    FrameworkElement ^ fe = (FrameworkElement ^) sender;
-    FrameworkElement ^ currentFocus = (FrameworkElement ^) FocusManager::GetFocusedElement();
+    Control ^ senderControl = static_cast<Control ^>(sender);
+    bool thisControlHasFocus = senderControl->FocusState != ::FocusState::Unfocused;
 
-    bool thisControlHasFocus = (fe == currentFocus);
-    TextBox ^ tb = reinterpret_cast<TextBox ^>(sender);
+    TextBox ^ tb = static_cast<TextBox ^>(sender);
+
     bool widthChanged = false;
     bool heightChanged = false;
 
     try
     {
         double newVal = std::stod(tb->Text->Begin());
-        if (tb->Name == "x_min" && newVal != m_xMin)
+        if (tb->Name == "x_Min" && newVal != m_xMin)
         {
             widthChanged = true;
             m_xMin = newVal;
             m_ParentGrapher->XAxisMin = m_xMin;
         }
 
-        if (tb->Name == "x_max" && newVal != m_xMax)
+        if (tb->Name == "x_Max" && newVal != m_xMax)
         {
             widthChanged = true;
             m_xMax = newVal;
             m_ParentGrapher->XAxisMax = m_xMax;
         }
 
-        if (tb->Name == "y_min" && newVal != m_yMin)
+        if (tb->Name == "y_Min" && newVal != m_yMin)
         {
             heightChanged = true;
             m_yMin = newVal;
             m_ParentGrapher->YAxisMin = m_yMin;
         }
 
-        if (tb->Name == "y_max" && newVal != m_yMax)
+        if (tb->Name == "y_Max" && newVal != m_yMax)
         {
             heightChanged = true;
             m_yMax = newVal;
@@ -133,11 +118,11 @@ void GraphingSettings::UpdateExtents(Platform::Object ^ sender)
 
                 if (widthChanged || heightChanged)
                 {
-                    x_min->Text = m_xMin.ToString();
-                    x_max->Text = m_xMax.ToString();
+                    x_Min->Text = m_xMin.ToString();
+                    x_Max->Text = m_xMax.ToString();
 
-                    y_min->Text = m_yMin.ToString();
-                    y_max->Text = m_yMax.ToString();
+                    y_Min->Text = m_yMin.ToString();
+                    y_Max->Text = m_yMax.ToString();
 
                     m_ParentGrapher->SetDisplayRanges(m_xMin, m_xMax, m_yMin, m_yMax);
                 }
@@ -149,16 +134,16 @@ void GraphingSettings::UpdateExtents(Platform::Object ^ sender)
     }
 }
 
-void CalculatorApp::Controls::GraphingSettings::OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void GraphingSettings::OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     m_ParentGrapher->GetDisplayRanges(&m_xMin, &m_xMax, &m_yMin, &m_yMax);
 
     // Now we can load our UX
-    x_min->Text = m_xMin.ToString();
-    x_max->Text = m_xMax.ToString();
+    x_Min->Text = m_xMin.ToString();
+    x_Max->Text = m_xMax.ToString();
 
-    y_min->Text = m_yMin.ToString();
-    y_max->Text = m_yMax.ToString();
+    y_Min->Text = m_yMin.ToString();
+    y_Max->Text = m_yMax.ToString();
 
     switch ((Graphing::EvalTrigUnitMode)m_ParentGrapher->TrigUnitMode)
     {
@@ -203,7 +188,7 @@ void GraphingSettings::OnKeyDown(Platform::Object ^ sender, Windows::UI::Xaml::I
     }
 }
 
-void CalculatorApp::Controls::GraphingSettings::OnPreserveAspectRatioClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void GraphingSettings::OnPreserveAspectRatioClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     if (m_preserveAspectRatio)
     {
