@@ -6,9 +6,6 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System;
 using System.Diagnostics;
-using System.Drawing;
-using OpenQA.Selenium;
-using System.Windows.Input;
 
 namespace CalculatorUITestFramework
 {
