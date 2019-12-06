@@ -353,7 +353,7 @@ bool EquationTextBox::RichEditHasContent()
     return (!text->IsEmpty() && m_HasFocus);
 }
 
-void EquationTextBox::OnRichEditMenuOpening(Platform::Object ^ sender, Platform::Object ^ args)
+void EquationTextBox::OnRichEditMenuOpening(Object ^ /*sender*/, Object ^ /*args*/)
 {
     if (m_kgfEquationMenuItem != nullptr)
     {
