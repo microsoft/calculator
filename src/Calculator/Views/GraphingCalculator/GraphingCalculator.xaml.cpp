@@ -314,23 +314,35 @@ void GraphingCalculator::OnVariableChanged(Platform::Object ^ sender, VariableCh
 void GraphingCalculator::SubmitTextbox(TextBox ^ sender)
 {
     auto variableViewModel = static_cast<VariableViewModel ^>(sender->DataContext);
-
+    double val;
     if (sender->Name == "ValueTextBox")
     {
-        variableViewModel->Value = validateDouble(sender->Text, variableViewModel->Value);
+        val = validateDouble(sender->Text, variableViewModel->Value);
+        variableViewModel->Value = val;
     }
     else if (sender->Name == "MinTextBox")
     {
-        variableViewModel->Min = validateDouble(sender->Text, variableViewModel->Min);
+        val = validateDouble(sender->Text, variableViewModel->Min);
+        variableViewModel->Min = val;
     }
     else if (sender->Name == "MaxTextBox")
     {
-        variableViewModel->Max = validateDouble(sender->Text, variableViewModel->Max);
+        val = validateDouble(sender->Text, variableViewModel->Max);
+        variableViewModel->Max = val;
     }
     else if (sender->Name == "StepTextBox")
     {
-        variableViewModel->Step = validateDouble(sender->Text, variableViewModel->Step);
+        val = validateDouble(sender->Text, variableViewModel->Step);
+        variableViewModel->Step = val;
     }
+    else
+    {
+        return;
+    }
+
+    wostringstream oss;
+    oss << std::noshowpoint << val;
+    sender->Text = ref new String(oss.str().c_str());
 }
 
 void GraphingCalculator::TextBoxLosingFocus(TextBox ^ sender, LosingFocusEventArgs ^)

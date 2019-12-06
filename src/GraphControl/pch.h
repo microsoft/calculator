@@ -18,6 +18,10 @@
 #include <functional>
 #include <string>
 #include <sstream>
+#include <vector>
+#include <map>
+#include <type_traits>
+
 
 // DirectX headers
 #include <d2d1_3.h>

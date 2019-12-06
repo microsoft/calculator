@@ -3,9 +3,7 @@
 
 #pragma once
 #include "Utils.h"
-#include <string>
-#include <vector>
-#include <map>
+
 
 namespace Graphing
 {

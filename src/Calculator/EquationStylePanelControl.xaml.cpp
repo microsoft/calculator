@@ -32,7 +32,7 @@ void EquationStylePanelControl::SelectionChanged(Object ^ /*sender */, Selection
 {
     if (e->AddedItems->Size > 0)
     {
-        auto brush = static_cast<SolidColorBrush ^>(e->AddedItems->GetAt(0));
+        auto brush = dynamic_cast<SolidColorBrush ^>(e->AddedItems->GetAt(0));
         if (brush == nullptr)
         {
             SelectedColor = Colors::Black;
