@@ -7,6 +7,7 @@
 #include "CalcViewModel\GraphingCalculator\GraphingCalculatorViewModel.h"
 #include "Views\NumberPad.xaml.h"
 #include "Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h"
+#include "Views\GraphingCalculator\GraphingNumPad.xaml.h"
 
 namespace CalculatorApp
 {

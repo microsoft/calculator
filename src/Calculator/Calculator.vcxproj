@@ -295,6 +295,9 @@
     <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h">
       <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\GraphingNumPad.xaml.h">
+      <DependentUpon>Views\GraphingCalculator\GraphingNumPad.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="Views\HistoryList.xaml.h">
       <DependentUpon>Views\HistoryList.xaml</DependentUpon>
     </ClInclude>
@@ -357,6 +360,7 @@
     <Page Include="Views\GraphingCalculator\EquationInputArea.xaml" />
     <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml" />
     <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" />
+    <Page Include="Views\GraphingCalculator\GraphingNumPad.xaml"/>
     <Page Include="Views\HistoryList.xaml" />
     <Page Include="Views\MainPage.xaml" />
     <Page Include="Views\Memory.xaml" />
@@ -453,6 +457,9 @@
     </ClCompile>
     <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp">
       <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\GraphingNumPad.xaml.cpp">
+      <DependentUpon>Views\GraphingCalculator\GraphingNumPad.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Views\HistoryList.xaml.cpp">
       <DependentUpon>Views\HistoryList.xaml</DependentUpon>
