@@ -251,7 +251,7 @@ namespace CalculatorApp
                 return m_numberGrouping;
             }
 
-            Platform::String^ RemoveGroupSeparators(Platform::String^ source) const
+            Platform::String ^ RemoveGroupSeparators(Platform::String ^ source) const
             {
                 std::wstring destination;
                 std::copy_if(
