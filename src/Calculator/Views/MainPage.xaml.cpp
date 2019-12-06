@@ -499,6 +499,7 @@ MUXC::NavigationViewItem ^ MainPage::CreateNavViewItemFromCategory(NavCategory ^
 
     item->Content = category->Name;
     item->AccessKey = category->AccessKey;
+    item->IsEnabled = category->IsEnabled;
     item->Style = static_cast<Windows::UI::Xaml::Style ^>(Resources->Lookup(L"NavViewItemStyle"));
 
     AutomationProperties::SetName(item, category->AutomationName);

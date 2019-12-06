@@ -260,8 +260,8 @@ namespace CalculatorUnitTests
         ViewMode orderedModes[] = {
             ViewMode::Standard,
             ViewMode::Scientific,
-            ViewMode::Programmer,
             ViewMode::Graphing,
+            ViewMode::Programmer,
             ViewMode::Date,
             ViewMode::Currency,
             ViewMode::Volume,
@@ -291,7 +291,7 @@ namespace CalculatorUnitTests
     void NavCategoryUnitTests::GetPosition()
     {
         // Position is the 1-based ordering of modes
-        vector<ViewMode> orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Programmer, ViewMode::Graphing, ViewMode::Date,
+        vector<ViewMode> orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Graphing, ViewMode::Programmer, ViewMode::Date,
                                           ViewMode::Currency, ViewMode::Volume,   ViewMode::Length,     ViewMode::Weight,     ViewMode::Temperature,
                                           ViewMode::Energy,   ViewMode::Area,     ViewMode::Speed,      ViewMode::Time,       ViewMode::Power,
                                           ViewMode::Data,     ViewMode::Pressure, ViewMode::Angle };
@@ -319,8 +319,8 @@ namespace CalculatorUnitTests
     {
         VERIFY_ARE_EQUAL(0, NavCategory::GetIndexInGroup(ViewMode::Standard, CategoryGroupType::Calculator));
         VERIFY_ARE_EQUAL(1, NavCategory::GetIndexInGroup(ViewMode::Scientific, CategoryGroupType::Calculator));
-        VERIFY_ARE_EQUAL(2, NavCategory::GetIndexInGroup(ViewMode::Programmer, CategoryGroupType::Calculator));
-        VERIFY_ARE_EQUAL(3, NavCategory::GetIndexInGroup(ViewMode::Graphing, CategoryGroupType::Calculator));
+        VERIFY_ARE_EQUAL(2, NavCategory::GetIndexInGroup(ViewMode::Graphing, CategoryGroupType::Calculator));
+        VERIFY_ARE_EQUAL(3, NavCategory::GetIndexInGroup(ViewMode::Programmer, CategoryGroupType::Calculator));
         VERIFY_ARE_EQUAL(4, NavCategory::GetIndexInGroup(ViewMode::Date, CategoryGroupType::Calculator));
 
         VERIFY_ARE_EQUAL(0, NavCategory::GetIndexInGroup(ViewMode::Currency, CategoryGroupType::Converter));
@@ -345,9 +345,17 @@ namespace CalculatorUnitTests
     {
         VERIFY_ARE_EQUAL(ViewMode::Standard, NavCategory::GetViewModeForVirtualKey(MyVirtualKey::Number1));
         VERIFY_ARE_EQUAL(ViewMode::Scientific, NavCategory::GetViewModeForVirtualKey(MyVirtualKey::Number2));
-        VERIFY_ARE_EQUAL(ViewMode::Programmer, NavCategory::GetViewModeForVirtualKey(MyVirtualKey::Number3));
-        VERIFY_ARE_EQUAL(ViewMode::Date, NavCategory::GetViewModeForVirtualKey(MyVirtualKey::Number4));
-        VERIFY_ARE_EQUAL(ViewMode::Graphing, NavCategory::GetViewModeForVirtualKey(MyVirtualKey::Number5));
+        if (Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath"))
+        {
+            VERIFY_ARE_EQUAL(ViewMode::Graphing, NavCategory::GetViewModeForVirtualKey(MyVirtualKey::Number3));
+            VERIFY_ARE_EQUAL(ViewMode::Programmer, NavCategory::GetViewModeForVirtualKey(MyVirtualKey::Number4));
+            VERIFY_ARE_EQUAL(ViewMode::Date, NavCategory::GetViewModeForVirtualKey(MyVirtualKey::Number5));
+        }
+        else
+        {
+            VERIFY_ARE_EQUAL(ViewMode::Programmer, NavCategory::GetViewModeForVirtualKey(MyVirtualKey::Number3));
+            VERIFY_ARE_EQUAL(ViewMode::Date, NavCategory::GetViewModeForVirtualKey(MyVirtualKey::Number4));
+        }
     }
 
     TEST_CLASS(NavCategoryGroupUnitTests)
@@ -356,14 +364,13 @@ namespace CalculatorUnitTests
         TEST_METHOD(CreateNavCategoryGroup);
 
     private:
-        void ValidateNavCategory(IObservableVector<NavCategory ^> ^ categories, unsigned int index, ViewMode expectedMode, int expectedPosition)
+        void ValidateNavCategory(IObservableVector<NavCategory ^> ^ categories, unsigned int index, ViewMode expectedMode)
         {
             VERIFY_IS_LESS_THAN(0u, categories->Size);
             VERIFY_IS_GREATER_THAN(categories->Size, index);
 
             NavCategory ^ category = categories->GetAt(index);
             VERIFY_ARE_EQUAL(expectedMode, category->Mode);
-            VERIFY_ARE_EQUAL(expectedPosition, category->Position);
         }
     };
 
@@ -378,29 +385,37 @@ namespace CalculatorUnitTests
 
         IObservableVector<NavCategory^>^ calculatorCategories = calculatorGroup->Categories;
         VERIFY_ARE_EQUAL(5, calculatorCategories->Size);
-        ValidateNavCategory(calculatorCategories, 0u, ViewMode::Standard, 1);
-        ValidateNavCategory(calculatorCategories, 1u, ViewMode::Scientific, 2);
-        ValidateNavCategory(calculatorCategories, 2u, ViewMode::Programmer, 3);
-        ValidateNavCategory(calculatorCategories, 3u, ViewMode::Graphing, 4);
-        ValidateNavCategory(calculatorCategories, 4u, ViewMode::Date, 5);
+		ValidateNavCategory(calculatorCategories, 0u, ViewMode::Standard);
+		ValidateNavCategory(calculatorCategories, 1u, ViewMode::Scientific);
+		if (Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath"))
+		{
+			ValidateNavCategory(calculatorCategories, 2u, ViewMode::Graphing);
+			ValidateNavCategory(calculatorCategories, 3u, ViewMode::Programmer);
+			ValidateNavCategory(calculatorCategories, 4u, ViewMode::Date);
+		}
+		else 
+		{
+			ValidateNavCategory(calculatorCategories, 2u, ViewMode::Programmer);
+			ValidateNavCategory(calculatorCategories, 3u, ViewMode::Date);
+		}
 
         NavCategoryGroup ^ converterGroup = menuOptions->GetAt(1);
         VERIFY_ARE_EQUAL(CategoryGroupType::Converter, converterGroup->GroupType);
 
         IObservableVector<NavCategory ^> ^ converterCategories = converterGroup->Categories;
         VERIFY_ARE_EQUAL(13, converterCategories->Size);
-        ValidateNavCategory(converterCategories, 0u, ViewMode::Currency, 6);
-        ValidateNavCategory(converterCategories, 1u, ViewMode::Volume, 7);
-        ValidateNavCategory(converterCategories, 2u, ViewMode::Length, 8);
-        ValidateNavCategory(converterCategories, 3u, ViewMode::Weight, 9);
-        ValidateNavCategory(converterCategories, 4u, ViewMode::Temperature, 10);
-        ValidateNavCategory(converterCategories, 5u, ViewMode::Energy, 11);
-        ValidateNavCategory(converterCategories, 6u, ViewMode::Area, 12);
-        ValidateNavCategory(converterCategories, 7u, ViewMode::Speed, 13);
-        ValidateNavCategory(converterCategories, 8u, ViewMode::Time, 14);
-        ValidateNavCategory(converterCategories, 9u, ViewMode::Power, 15);
-        ValidateNavCategory(converterCategories, 10u, ViewMode::Data, 16);
-        ValidateNavCategory(converterCategories, 11u, ViewMode::Pressure, 17);
-        ValidateNavCategory(converterCategories, 12u, ViewMode::Angle, 18);
+        ValidateNavCategory(converterCategories, 0u, ViewMode::Currency);
+        ValidateNavCategory(converterCategories, 1u, ViewMode::Volume);
+        ValidateNavCategory(converterCategories, 2u, ViewMode::Length);
+        ValidateNavCategory(converterCategories, 3u, ViewMode::Weight);
+        ValidateNavCategory(converterCategories, 4u, ViewMode::Temperature);
+        ValidateNavCategory(converterCategories, 5u, ViewMode::Energy);
+        ValidateNavCategory(converterCategories, 6u, ViewMode::Area);
+        ValidateNavCategory(converterCategories, 7u, ViewMode::Speed);
+        ValidateNavCategory(converterCategories, 8u, ViewMode::Time);
+        ValidateNavCategory(converterCategories, 9u, ViewMode::Power);
+        ValidateNavCategory(converterCategories, 10u, ViewMode::Data);
+        ValidateNavCategory(converterCategories, 11u, ViewMode::Pressure);
+        ValidateNavCategory(converterCategories, 12u, ViewMode::Angle);
     }
 }

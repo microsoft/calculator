@@ -38,28 +38,29 @@
                             </Grid.RowDefinitions>
 
                             <Button x:Name="KGFEquationButton"
-                                          x:Uid="equationAnalysisBack"
-                                          MinWidth="44"
-                                          MinHeight="44"
-                                          VerticalAlignment="Stretch"
-                                          Background="{TemplateBinding EquationColor}"
-                                          Foreground="{StaticResource SystemChromeWhiteColor}"
-                                          BorderThickness="0">
+                                    x:Uid="equationAnalysisBack"
+                                    MinWidth="44"
+                                    MinHeight="44"
+                                    VerticalAlignment="Stretch"
+                                    Background="{TemplateBinding EquationColor}"
+                                    Foreground="{StaticResource SystemChromeWhiteColor}"
+                                    BorderThickness="0">
                                 <Button.Content>
                                     <StackPanel x:Name="FunctionNumberLabel"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    Background="Transparent"
-                                                    Orientation="Horizontal"
-                                                    Margin="5,0">
-                                        <FontIcon VerticalAlignment="Center"
+                                                Margin="5,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Background="Transparent"
+                                                Orientation="Horizontal">
+                                        <FontIcon Margin="0,0,6,0"
+                                                  VerticalAlignment="Center"
                                                   FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                   FontSize="16"
-                                                  Glyph="&#xE72B;" Margin="0,0,6,0"/>
+                                                  Glyph="&#xE72B;"/>
                                         <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
                                         <TextBlock Margin="-5,19,0,0"
-                                                       FontSize="11"
-                                                       Text="{TemplateBinding EquationButtonContentIndex}"/>
+                                                   FontSize="11"
+                                                   Text="{TemplateBinding EquationButtonContentIndex}"/>
                                     </StackPanel>
 
                                 </Button.Content>
@@ -201,9 +202,9 @@
                             <ContentPresenter x:Name="DescriptionPresenter"
                                               Grid.Row="2"
                                               Foreground="{ThemeResource SystemControlDescriptionTextForegroundBrush}"
-                                              x:Load="False"
                                               AutomationProperties.AccessibilityView="Raw"
-                                              Content="{TemplateBinding Description}"/>
+                                              Content="{TemplateBinding Description}"
+                                              x:Load="False"/>
 
                         </Grid>
 
