@@ -213,6 +213,15 @@
                 </Setter>
             </Style>
 
+            <Style x:Key="AccentCalcButtonStyle"
+                   BasedOn="{StaticResource SymbolOperatorButtonStyle}"
+                   TargetType="controls:CalculatorButton">
+                <Setter Property="HoverBackground" Value="{ThemeResource AppControlHighlightAccentRevealBackgroundBrush}"/>
+                <Setter Property="HoverForeground" Value="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
+                <Setter Property="PressBackground" Value="{ThemeResource AppControlBackgroundListAccentHighRevealBackgroundBrush}"/>
+                <Setter Property="PressForeground" Value="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
+            </Style>
+
             <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
@@ -651,7 +660,7 @@
                                          Grid.RowSpan="2"
                                          Margin="0,4,0,0"
                                          KeyGraphFeaturesClosed="OnKeyGraphFeaturesClosed"
-                                         ViewModel="{x:Bind EquationInputAreaControl.EquationVM, Mode=OneWay}"
+                                         ViewModel="{x:Bind ViewModel.SelectedEquation, Mode=OneWay}"
                                          Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"
                                          x:Load="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"/>
 

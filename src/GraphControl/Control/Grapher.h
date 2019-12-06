@@ -122,15 +122,13 @@ public
         void OnEquationsPropertyChanged(EquationCollection ^ oldValue, EquationCollection ^ newValue);
         void OnDependencyPropertyChanged(Windows::UI::Xaml::DependencyObject ^ obj, Windows::UI::Xaml::DependencyProperty ^ p);
 
-        void OnEquationsChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
-        void OnEquationChanged();
-        void OnEquationStyleChanged();
-        void OnEquationLineEnabledChanged();
+        void OnEquationChanged(Equation ^ equation);
+        void OnEquationStyleChanged(Equation ^ equation);
+        void OnEquationLineEnabledChanged(Equation ^ equation);
         bool TryUpdateGraph();
         void TryPlotGraph(bool shouldRetry);
-        void UpdateGraph();
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
-        std::vector<Equation ^> GetValidEquations();
+        std::vector<Equation ^> GetGraphableEquations();
         void SetGraphArgs();
         std::shared_ptr<Graphing::IGraph> GetGraph(GraphControl::Equation ^ equation);
         void UpdateVariables();
