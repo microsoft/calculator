@@ -16,13 +16,13 @@ namespace CalculatorUITestFramework
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
         public GlobalCalculatorUI GlobalCalculatorUI = new GlobalCalculatorUI();
         public WindowsElement HistoryButton => this.session.TryFindElementByAccessibilityId("HistoryButton");
-        public WindowsElement HistoryLabel => this.session.TryFindElementByAccessibilityId("HistoryLabel");
-        public AppiumWebElement HistoryEmpty => this.session.TryFindElementByAccessibilityId("DockPivot").FindElementByAccessibilityId("HistoryEmpty");
-        public WindowsElement HistoryListView => this.session.TryFindElementByAccessibilityId("HistoryListView");
+        private WindowsElement HistoryLabel => this.session.TryFindElementByAccessibilityId("HistoryLabel");
+        private AppiumWebElement HistoryEmpty => this.session.TryFindElementByAccessibilityId("DockPivot").FindElementByAccessibilityId("HistoryEmpty");
+        private WindowsElement HistoryListView => this.session.TryFindElementByAccessibilityId("HistoryListView");
         public WindowsElement ListViewItem => this.session.FindElementByClassName("ListViewItem");
-        public WindowsElement ResultTextBlock => this.session.TryFindElementByAccessibilityId("ResultTextBlock");
+        private WindowsElement ResultTextBlock => this.session.TryFindElementByAccessibilityId("ResultTextBlock");
         public WindowsElement ClearHistoryButton => this.session.TryFindElementByAccessibilityId("ClearHistory");
-        public WindowsElement HistoryFlyout => this.session.TryFindElementByAccessibilityId("HistoryFlyout");
+        private WindowsElement HistoryFlyout => this.session.TryFindElementByAccessibilityId("HistoryFlyout");
 
         /// <summary>
         /// Opens the Memory Pane by clicking the Memory pivot label.
@@ -121,7 +121,7 @@ namespace CalculatorUITestFramework
         public void OpenHistoryFlyout()
         {
             this.ResizeWindowToNotDisplayHistoryLabel();
-            this.GlobalCalculatorUI.AppName.Click();
+            this.GlobalCalculatorUI.EnsureCalculatorHasFocus();
             this.GlobalCalculatorUI.Header.SendKeys(Keys.Control + "h" + Keys.Control);
             Actions moveToHistoryFlyout = new Actions(WinAppDriver.Instance.CalculatorSession);
             moveToHistoryFlyout.MoveToElement(HistoryFlyout);

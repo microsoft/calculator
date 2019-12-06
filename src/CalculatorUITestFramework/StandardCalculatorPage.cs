@@ -3,7 +3,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium.Windows;
-using System.Drawing;
+
 
 namespace CalculatorUITestFramework
 {
@@ -25,7 +25,7 @@ namespace CalculatorUITestFramework
         {
             // Ensure that calculator is in standard mode
             this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            Assert.IsNotNull(this.CalculatorResults.CalculatorResult);
+            this.CalculatorResults.CalculatorResultsDisplayIsPresent();
         }
         /// <summary>
         /// Clear the Calculator display, Memory Panel and optionally the History Panel
@@ -37,28 +37,6 @@ namespace CalculatorUITestFramework
             this.StandardOperators.ClearButton.Click();
             this.MemoryPanel.MemoryClear.Click();
             this.HistoryPanel.ClearHistory();
-        }
-        ///// <summary>
-        ///// Gets the calculators window's X and Y position and returns it as a string. e.g. "(0, 0)"
-        ///// </summary>
-        public string GetCalculatorWindowPosition()
-        {
-            Point getCalculatorWindowPosition = WinAppDriver.Instance.CalculatorSession.Manage().Window.Position;
-            int X = getCalculatorWindowPosition.X;
-            int Y = getCalculatorWindowPosition.Y;
-            var CalculatorWindowPosition = (X, Y);
-            return CalculatorWindowPosition.ToString();
-        }
-        ///// <summary>
-        ///// Gets the calculators window's width and height and returns it as a string. e.g. "(322, 396)"
-        ///// </summary>
-        public string GetCalculatorWindowSize()
-        {
-            Size getCalculatorWindowSize = WinAppDriver.Instance.CalculatorSession.Manage().Window.Size;
-            int Width = getCalculatorWindowSize.Width;
-            int Height = getCalculatorWindowSize.Height;
-            var CalculatorWindowSize = (Width, Height);
-            return CalculatorWindowSize.ToString();
         }
     }
 

@@ -19,8 +19,6 @@ namespace CalculatorUITestFramework
         public GlobalCalculatorUI GlobalCalculatorUI = new GlobalCalculatorUI();
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public NavigationMenu NavigationMenu = new NavigationMenu();
-
-
         public WindowsElement EnterAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("NormalAlwaysOnTopButton");
         public WindowsElement ExitAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("ExitAlwaysOnTopButton");
         public AppiumWebElement ToolTip => WinAppDriver.Instance.CalculatorSession.FindElementByClassName("ToolTip").FindElementByClassName("TextBlock");

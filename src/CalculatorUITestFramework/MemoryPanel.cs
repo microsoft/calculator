@@ -22,16 +22,16 @@ namespace CalculatorUITestFramework
         public WindowsElement MemMinus => this.session.TryFindElementByAccessibilityId("MemMinus");
         public WindowsElement MemButton => this.session.TryFindElementByAccessibilityId("memButton");
         public WindowsElement MemoryButton => this.session.TryFindElementByAccessibilityId("MemoryButton");
-        public WindowsElement MemoryPane => this.session.TryFindElementByAccessibilityId("MemoryPanel");
-        public WindowsElement MemoryLabel => this.session.TryFindElementByAccessibilityId("MemoryLabel");
-        public WindowsElement MemoryListView => this.session.TryFindElementByAccessibilityId("MemoryListView");
-        public WindowsElement MemoryPaneEmptyLabel => this.session.TryFindElementByAccessibilityId("MemoryPaneEmpty");
+        private WindowsElement MemoryPane => this.session.TryFindElementByAccessibilityId("MemoryPanel");
+        private WindowsElement MemoryLabel => this.session.TryFindElementByAccessibilityId("MemoryLabel");
+        private WindowsElement MemoryListView => this.session.TryFindElementByAccessibilityId("MemoryListView");
+        private WindowsElement MemoryPaneEmptyLabel => this.session.TryFindElementByAccessibilityId("MemoryPaneEmpty");
         public WindowsElement ClearMemoryItemButton => this.session.TryFindElementByAccessibilityId("MClearButton");
         public WindowsElement MemMinusItem => this.session.TryFindElementByAccessibilityId("MSubButton");
         public WindowsElement MemPlusItem => this.session.TryFindElementByAccessibilityId("MAddButton");
         public WindowsElement ClearMemory => this.session.TryFindElementByAccessibilityId("ClearMemory");
         public WindowsElement ListViewItem => this.session.FindElementByClassName("ListViewItem");
-        public WindowsElement MemoryFlyout => this.session.TryFindElementByAccessibilityId("MemoryFlyout");
+        private WindowsElement MemoryFlyout => this.session.TryFindElementByAccessibilityId("MemoryFlyout");
 
 
         /// <summary>
@@ -152,15 +152,13 @@ namespace CalculatorUITestFramework
                 }
             }
         }
-
-        //CalcMemoryFlyout
         /// <summary>
         /// Opens the Memory Flyout.
         /// </summary>
         public void OpenMemoryFlyout()
         {
             this.ResizeWindowToDiplayMemoryButton();
-            this.GlobalCalculatorUI.AppName.Click();
+            this.GlobalCalculatorUI.EnsureCalculatorHasFocus();
             Actions moveToMemoryButton = new Actions(WinAppDriver.Instance.CalculatorSession);
             moveToMemoryButton.MoveToElement(MemoryButton);
             moveToMemoryButton.Perform();
