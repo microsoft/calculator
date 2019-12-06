@@ -3762,41 +3762,40 @@
     <value>Current mode is graph mode</value>
     <comment>Announcement used in Graphing Calculator when switching to the graph mode</comment>
   </data>
-  <data name="GridHeading" xml:space="preserve">
+  <data name="GridHeading.Text" xml:space="preserve">
     <value>Grid</value>
     <comment>Heading for grid extents on the settings </comment>
   </data>
-  <data name="TrigModeDegrees" xml:space="preserve">
+  <data name="TrigModeDegrees.Content" xml:space="preserve">
     <value>Degrees</value>
     <comment>Degrees mode on settings page</comment>
   </data>
-  <data name="TrigModeGradians" xml:space="preserve">
+  <data name="TrigModeGradians.Content" xml:space="preserve">
     <value>Gradians</value>
     <comment>Gradian mode on settings page</comment>
   </data>
-  <data name="TrigModeRadians" xml:space="preserve">
+  <data name="TrigModeRadians.Content" xml:space="preserve">
     <value>Radians</value>
     <comment>Radians mode on settings page</comment>
   </data>
-  <data name="UnitsHeading" xml:space="preserve">
+  <data name="UnitsHeading.Text" xml:space="preserve">
     <value>Unit</value>
     <comment>Heading for Unit's on the settings</comment>
   </data>
-  <data name="x-max" xml:space="preserve">
+  <data name="x_MaxHeading.Text" xml:space="preserve">
     <value>x-max</value>
     <comment>X maximum value header</comment>
   </data>
-  <data name="x-min" xml:space="preserve">
+  <data name="x_MinHeading.Text" xml:space="preserve">
     <value>x-min</value>
     <comment>X minimum value header</comment>
   </data>
-  <data name="y-max" xml:space="preserve">
+  <data name="y_MaxHeading.Text" xml:space="preserve">
     <value>y-max</value>
     <comment>Y Maximum value header</comment>
   </data>
-  <data name="y-min" xml:space="preserve">
+  <data name="y_MinHeading.Text" xml:space="preserve">
     <value>y-min</value>
     <comment>Y minimum value header</comment>
   </data>
-  
 </root>

@@ -308,8 +308,8 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="Controls\MathRichEditBox.cpp" />
-    <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp" >
-          <Filter>Views\GraphingCalculator</Filter>
+    <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp">
+      <Filter>Views\GraphingCalculator</Filter>
     </ClCompile>
     <ClCompile Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.cpp" />
   </ItemGroup>
@@ -399,7 +399,7 @@
       <Filter>Controls</Filter>
     </ClInclude>
     <ClInclude Include="Controls\MathRichEditBox.h" />
-    <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h" >
+    <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h">
       <Filter>Views\GraphingCalculator</Filter>
     </ClInclude>
     <ClInclude Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.h" />
@@ -480,8 +480,11 @@
     <Page Include="EquationStylePanelControl.xaml">
       <Filter>Views\GraphingCalculator</Filter>
     </Page>
-    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" >
-          <Filter>Views\GraphingCalculator</Filter>
+    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
+    </Page>
+    <Page Include="Views\GraphingCalculator\GraphingSettings.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -1493,6 +1496,8 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>
