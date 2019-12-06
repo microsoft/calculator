@@ -62,11 +62,11 @@ void EquationInputArea::OnEquationsPropertyChanged()
 void EquationInputArea::AddNewEquation()
 {
     auto eq = ref new EquationViewModel(ref new Equation());
-    eq->IsLastItem = true;
+    eq->IsLastItemInList = true;
 
     if (Equations->Size > 0)
     {
-        Equations->GetAt(Equations->Size - 1)->IsLastItem = false;
+        Equations->GetAt(Equations->Size - 1)->IsLastItemInList = false;
     }
 
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
@@ -164,7 +164,7 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
 
         if (index == Equations->Size - 1 && Equations->Size > 1)
         {
-            Equations->GetAt(Equations->Size - 2)->IsLastItem = true;
+            Equations->GetAt(Equations->Size - 2)->IsLastItemInList = true;
         }
         Equations->RemoveAt(index);
     }

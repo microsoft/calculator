@@ -125,7 +125,7 @@ void EquationTextBox::OnApplyTemplate()
     }
 
     UpdateCommonVisualState();
-    UpdateEquationModeVisualState();
+    UpdateButtonsVisualState();
 }
 
 void EquationTextBox::OnPointerEntered(PointerRoutedEventArgs ^ e)
@@ -172,7 +172,7 @@ void EquationTextBox::OnKeyDown(KeyRoutedEventArgs ^ e)
 
 void EquationTextBox::OnLostFocus(RoutedEventArgs ^ e)
 {
-    if (m_richEditBox != nullptr && !m_richEditBox->ContextFlyout->IsOpen)
+    if (m_richEditBox == nullptr || m_richEditBox->ContextFlyout->IsOpen)
     {
         return;
     }

@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "pch.h"
 #include "VisualTree.h"
 
@@ -60,27 +63,7 @@ DependencyObject ^ VisualTree::FindDescendant(DependencyObject ^ element, TypeNa
 
     return retValue;
 }
-/*
-IIterable<DependencyObject ^> ^ VisualTree::FindDescendants(DependencyObject ^ element, TypeName typeName);
-{
-    auto childrenCount = VisualTreeHelper::GetChildrenCount(element);
 
-    for (auto i = 0; i < childrenCount; i++)
-    {
-        auto child = VisualTreeHelper::GetChild(element, i);
-        auto type = child as T;
-        if (child->GetType() == typeName)
-        {
-            yield return type;
-        }
-
-        foreach (T childofChild in child->FindDescendants<T>())
-        {
-            yield return childofChild;
-        }
-    }
-}
-*/
 FrameworkElement ^ VisualTree::FindAscendantByName(DependencyObject ^ element, String ^ name)
 {
     if (element == nullptr || name == nullptr || name->Length() == 0)
@@ -119,16 +102,3 @@ Object ^ VisualTree::FindAscendant(DependencyObject ^ element, TypeName typeName
 
     return FindAscendant(parent, typeName);
 }
-
-/*
-IIterable<DependencyObject ^> VisualTree::FindAscendants(DependencyObject ^ element)
-{
-    auto parent = VisualTreeHelper::GetParent(element);
-
-    while (parent != nullptr)
-    {
-        yield return parent;
-        parent = VisualTreeHelper::GetParent(parent);
-    }
-}
-*/
