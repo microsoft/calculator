@@ -61,6 +61,7 @@ namespace CalculatorUITests
 
         #region Smoke Tests
         [TestMethod]
+        [Priority(0)]
         public void SmokeTest_Cube()
         {
             page.ScientificOperators.NumberPad.Input(3);
@@ -70,6 +71,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void SmokeTest_Sin()
         {
             page.ScientificOperators.NumberPad.Input(90);
@@ -80,6 +82,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void SmokeTest_Tanh()
         {
             page.ScientificOperators.NumberPad.Input(90);
@@ -91,6 +94,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void SmokeTest_InvCos()
         {
             page.ScientificOperators.NumberPad.Input(1);
@@ -102,6 +106,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void SmokeTest_Floor()
         {
             page.ScientificOperators.NumberPad.Input(5.9);
@@ -112,6 +117,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void SmokeTest_Parentheses()
         {
             page.ScientificOperators.NumberPad.Input(3);
@@ -126,6 +132,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void SmokeTest_RadianAngleOperator()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Radians);
@@ -138,6 +145,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void SmokeTest_GradianAngleOperator()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Gradians);
@@ -150,6 +158,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void SmokeTest_FixedToExponential()
         {
             page.ScientificOperators.FixedToExponentialButton.Click();
@@ -160,6 +169,7 @@ namespace CalculatorUITests
 
         #region Advanced Arithmetic Tests
         [TestMethod]
+        [Priority(1)]
         public void Operator_XPowerY()
         {
             page.ScientificOperators.NumberPad.Input(3);
@@ -170,6 +180,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void Operator_PowerOf10Button()
         {
             page.ScientificOperators.NumberPad.Input(5);
@@ -179,6 +190,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void Operator_LogButton()
         {
             page.ScientificOperators.NumberPad.Input(10000);
@@ -188,6 +200,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void Operator_LnButton()
         {
             page.ScientificOperators.EulerButton.Click();
@@ -197,6 +210,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void Operator_AbsButton()
         {
             page.ScientificOperators.NumberPad.Input(25);
@@ -207,6 +221,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void Operator_ExpButton()
         {
             page.ScientificOperators.NumberPad.Input(4);
@@ -217,6 +232,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void Operator_ModButton()
         {
             page.ScientificOperators.NumberPad.Input(53);
@@ -227,6 +243,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void Operator_FactorialButton()
         {
             page.ScientificOperators.NumberPad.Input(4);
@@ -236,6 +253,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void Operator_CeilingButton()
         {
             page.ScientificOperators.NumberPad.Input(4.1);
@@ -246,6 +264,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void Operator_RandomButton()
         {
             page.ScientificOperators.FuncButton.Click();
@@ -255,6 +274,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void Operator_DmsButton()
         {
             page.ScientificOperators.NumberPad.Input(2.999);
@@ -265,6 +285,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void Operator_DegreesButton()
         {
             page.ScientificOperators.NumberPad.Input(2.59564);
@@ -277,6 +298,7 @@ namespace CalculatorUITests
 
         #region Trigonometry Tests
         [TestMethod]
+        [Priority(2)]
         public void Trig_CosButton()
         {
 
@@ -289,6 +311,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_TanButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -302,6 +325,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_SecButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -315,6 +339,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_CscButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -328,6 +353,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_CotButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
