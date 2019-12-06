@@ -154,7 +154,8 @@ public
         Platform::String ^ ConvertToLinear(Platform::String ^ mmlString);
         void PlotGraph();
         void AnalyzeEquation(GraphControl::Equation ^ equation);
-       // We can't use the EValTrigUnitMode enum directly in as the property type because it comes from another module which doesn't expose
+
+        // We can't use the EValTrigUnitMode enum directly in as the property type because it comes from another module which doesn't expose
         // it as a public enum class.  So the compiler doesn't recognize it as a valid type for the ABI boundary.
         property int TrigUnitMode
         {
@@ -195,7 +196,7 @@ public
             }
             void set(double value)
             {
-                std::pair<double, double> newValue(XAxisMax, value);
+                std::pair<double, double> newValue(XAxisMin, value);
                 m_graph->GetOptions().SetDefaultXRange(newValue);
                 m_renderMain->RunRenderPass();
             }
@@ -223,7 +224,7 @@ public
             }
             void set(double value)
             {
-                std::pair<double, double> newValue(YAxisMax, value);
+                std::pair<double, double> newValue(YAxisMin, value);
                 m_graph->GetOptions().SetDefaultYRange(newValue);
                 m_renderMain->RunRenderPass();
             }

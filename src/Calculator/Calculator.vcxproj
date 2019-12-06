@@ -257,9 +257,6 @@
     <ClInclude Include="Controls\OperatorPanelListView.h" />
     <ClInclude Include="Controls\OperatorPanelButton.h" />
     <ClInclude Include="Controls\EquationTextBox.h" />
-    <ClInclude Include="GraphingSettings.xaml.h">
-      <DependentUpon>GraphingSettings.xaml</DependentUpon>
-    </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -298,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="Views\GraphingCalculator\GraphingCalculator.xaml.h">
       <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\GraphingSettings.xaml.h">
+      <DependentUpon>Views\GraphingCalculator\GraphingSettings.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h">
       <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
@@ -344,9 +344,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="AboutFlyout.xaml" />
-    <Page Include="GraphingSettings.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="EquationStylePanelControl.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -369,6 +366,7 @@
     <Page Include="Views\DelighterUnitStyles.xaml" />
     <Page Include="Views\GraphingCalculator\EquationInputArea.xaml" />
     <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml" />
+    <Page Include="Views\GraphingCalculator\GraphingSettings.xaml" />
     <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" />
     <Page Include="Views\GraphingCalculator\GraphingNumPad.xaml"/>
     <Page Include="Views\HistoryList.xaml" />
@@ -421,9 +419,6 @@
     <ClCompile Include="Controls\OperatorPanelListView.cpp" />
     <ClCompile Include="Controls\OperatorPanelButton.cpp" />
     <ClCompile Include="Controls\EquationTextBox.cpp" />
-    <ClCompile Include="GraphingSettings.xaml.cpp">
-      <DependentUpon>GraphingSettings.xaml</DependentUpon>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -468,6 +463,9 @@
     </ClCompile>
     <ClCompile Include="Views\GraphingCalculator\GraphingCalculator.xaml.cpp">
       <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\GraphingSettings.xaml.cpp">
+      <DependentUpon>Views\GraphingCalculator\GraphingSettings.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp">
       <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>

@@ -408,11 +408,11 @@
                         <Button.Flyout>
                             <Flyout>
                                 <StackPanel>
-                                    <controls:GraphingSettings x:Name="GraphSettings"/>
+                                    <local:GraphingSettings x:Name="GraphSettings"/>
                                 </StackPanel>
                             </Flyout>
                         </Button.Flyout>
-                    </Button>                    
+                    </Button>
                 </StackPanel>
             </Border>
             <Border MinWidth="36"
