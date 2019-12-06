@@ -84,23 +84,26 @@ bool IsGraphingModeEnabled()
     {
         return _isGraphingModeEnabledCached->Value;
     }
+
     DWORD allowGraphingCalculator{ 0 };
     DWORD bufferSize{ sizeof(allowGraphingCalculator) };
-    // Make sure to call RegOpenKey only on Windows 10 1903+
-    if (!RegGetValueW(
+    // Make sure to call RegGetValueW only on Windows 10 1903+
+    if (RegGetValueW(
             HKEY_LOCAL_MACHINE,
             L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Calculator",
             L"AllowGraphingCalculator",
-            RRF_RT_REG_DWORD,
+            RRF_RT_REG_DWORD | RRF_RT_REG_BINARY,
             nullptr,
             reinterpret_cast<LPBYTE>(&allowGraphingCalculator),
-            &bufferSize) != ERROR_SUCCESS)
+            &bufferSize)
+        == ERROR_SUCCESS)
+    {
+        _isGraphingModeEnabledCached = allowGraphingCalculator != 0;
+    }
+    else
     {
         _isGraphingModeEnabledCached = true;
-        return true;
     }
-
-    _isGraphingModeEnabledCached = allowGraphingCalculator != 0;
     return _isGraphingModeEnabledCached->Value;
 }
 
