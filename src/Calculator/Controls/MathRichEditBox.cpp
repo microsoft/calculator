@@ -19,13 +19,18 @@ DEPENDENCY_PROPERTY_INITIALIZATION(MathRichEditBox, MathText);
 // TODO remove when Windows 10 version 2004 SDK is adopted
 namespace Windows_2004_Prerelease
 {
-    constexpr auto RichEditMathMode_MathOnly = 1;
-
-    [uuid("619c20f2-cb3b-4521-981f-2865b1b93f04")] __interface ITextDocument4 : IInspectable
+    enum RichEditMathMode : int
     {
-        HRESULT SetMath(HSTRING value);
-        HRESULT GetMath(HSTRING * value);
-        HRESULT SetMathMode(int32_t mathMode);
+        NoMath,
+        MathOnly,
+    };
+    MIDL_INTERFACE("619c20f2-cb3b-4521-981f-2865b1b93f04")
+    ITextDocument4 : public IInspectable
+    {
+    public:
+        virtual HRESULT STDMETHODCALLTYPE SetMath(HSTRING value) = 0;
+        virtual HRESULT STDMETHODCALLTYPE GetMath(HSTRING * value) = 0;
+        virtual HRESULT STDMETHODCALLTYPE SetMathMode(RichEditMathMode mathMode) = 0;
     };
 }
 
@@ -65,7 +70,7 @@ MathRichEditBox::MathRichEditBox()
     // TextDocument->SetMathMode(Windows::UI::Text::RichEditMathMode::MathOnly);
     Microsoft::WRL::ComPtr<Windows_2004_Prerelease::ITextDocument4> textDocument4;
     reinterpret_cast<IInspectable*>(this->TextDocument)->QueryInterface(IID_PPV_ARGS(&textDocument4));
-    auto hr = textDocument4->SetMathMode(Windows_2004_Prerelease::RichEditMathMode_MathOnly);
+    auto hr = textDocument4->SetMathMode(Windows_2004_Prerelease::RichEditMathMode::MathOnly);
     if (FAILED(hr))
     {
         throw Exception::CreateException(hr);
