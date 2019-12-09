@@ -404,6 +404,8 @@ namespace GraphControl
     wstring Equation::GetRequestHeader()
     {
         wstring expr{ Expression->Data() };
+
+        // Check for unicode characters of less than, less than or equal to, greater than and greater than or equal to.
         if (expr.find(L">&#x3E;<") != wstring::npos || expr.find(L">&#x3C;<") != wstring::npos || expr.find(L">&#x2265;<") != wstring::npos
             || expr.find(L">&#x2264;<") != wstring::npos)
         {
