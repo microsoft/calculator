@@ -46,7 +46,7 @@ namespace CalculatorApp
         private:
             void UpdateCommonVisualState();
             void UpdateDeleteButtonVisualState();
-            bool ShouldDeleteButtonBeVisible();
+            bool RichEditHasContent();
 
             void OnRichEditBoxGotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnRichEditBoxLostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
@@ -58,6 +58,7 @@ namespace CalculatorApp
             void OnRemoveButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnColorChooserButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnFunctionButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+            void OnRichEditMenuOpening(Platform::Object ^ sender, Platform::Object ^ args);
 
             void OnColorFlyoutOpened(Platform::Object^ sender, Platform::Object^ e);
             void OnColorFlyoutClosed(Platform::Object^ sender, Platform::Object^ e);
@@ -71,6 +72,11 @@ namespace CalculatorApp
             Windows::UI::Xaml::Controls::Button^ m_removeButton;
             Windows::UI::Xaml::Controls::Button^ m_functionButton;
             Windows::UI::Xaml::Controls::Primitives::ToggleButton^ m_colorChooserButton;
+
+            Windows::UI::Xaml::Controls::MenuFlyout^ m_richEditContextMenu;
+            Windows::UI::Xaml::Controls::MenuFlyoutItem^ m_kgfEquationMenuItem;
+            Windows::UI::Xaml::Controls::MenuFlyoutItem^ m_removeMenuItem;
+            Windows::UI::Xaml::Controls::MenuFlyoutItem^ m_colorChooserMenuItem;
 
             bool m_isPointerOver;
             bool m_isColorChooserFlyoutOpen;

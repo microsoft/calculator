@@ -36,7 +36,7 @@ EquationInputArea::EquationInputArea()
         ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &EquationInputArea::OnHighContrastChanged);
 
     ReloadAvailableColors(m_accessibilitySettings->HighContrast);
-  
+
     InitializeComponent();
 }
 
@@ -88,7 +88,12 @@ void EquationInputArea::InputTextBox_Submitted(Object ^ sender, RoutedEventArgs 
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
-    eq->Expression = tb->GetEquationText();
+
+    // eq can be null if the equation has been removed
+    if (eq != nullptr)
+    {
+        eq->Expression = tb->GetEquationText();
+    }
 
     if (tb->HasFocus)
     {
@@ -115,8 +120,16 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
 void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
+
+    // ensure the equation has been submitted before trying to get key graph features out of it
+    if (tb->HasFocus)
+    {
+        EquationInputArea::InputTextBox_Submitted(sender, e);
+    }
+
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
     EquationVM = eq;
+
     KeyGraphFeaturesRequested(EquationVM, ref new RoutedEventArgs());
 }
 
