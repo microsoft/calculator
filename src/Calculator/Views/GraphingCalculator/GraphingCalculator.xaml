@@ -314,15 +314,6 @@
                 </Setter>
             </Style>
 
-            <Style x:Key="AccentCalcButtonStyle"
-                   BasedOn="{StaticResource SymbolOperatorButtonStyle}"
-                   TargetType="controls:CalculatorButton">
-                <Setter Property="HoverBackground" Value="{ThemeResource AppControlHighlightAccentRevealBackgroundBrush}"/>
-                <Setter Property="HoverForeground" Value="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
-                <Setter Property="PressBackground" Value="{ThemeResource AppControlBackgroundListAccentHighRevealBackgroundBrush}"/>
-                <Setter Property="PressForeground" Value="{ThemeResource SystemControlHighlightAltAltHighBrush}"/>
-            </Style>
-
             <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter"/>
             <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
             <ResourceDictionary.ThemeDictionaries>
@@ -687,8 +678,8 @@
                         <TranslateTransform x:Name="TraceValuePopupTransform"/>
                     </Border.RenderTransform>
                     <TextBlock x:Name="TraceValue"
-                               AutomationProperties.LiveSetting="Polite"
                                Foreground="{ThemeResource ToolTipForeground}"
+                               AutomationProperties.LiveSetting="Polite"
                                Text="x=0,y=0"/>
                 </Border>
             </Grid>
@@ -702,8 +693,8 @@
               Grid.Column="1"
               Visibility="{x:Bind local:GraphingCalculator.ShouldDisplayPanel(IsSmallState, SwitchModeToggleButton.IsChecked.Value, x:False), Mode=OneWay}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1.8*"/>
             </Grid.RowDefinitions>
 
             <!-- Ideally the KeyGraphFeaturesPanel should be a frame so that navigation to and from the panel could be handled nicely -->
@@ -721,190 +712,10 @@
                                      KeyGraphFeaturesRequested="OnEquationKeyGraphFeaturesRequested"
                                      Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
 
-            <Grid x:Name="ButtonContainerGrid"
-                  Grid.Row="1"
-                  Margin="2,0,2,2"
-                  UseLayoutRounding="False"
-                  Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+            <local:GraphingNumPad Grid.Row="1"
+                                  Margin="2,0,2,2"
+                                  Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
 
-                <controls:CalculatorButton x:Name="XButton"
-                                           x:Uid="xButton"
-                                           Grid.Row="0"
-                                           Grid.Column="0"
-                                           Style="{StaticResource OperatorButtonStyle}"
-                                           FontSize="16"
-                                           ButtonId="X"
-                                           Content="𝑥"
-                                           FlowDirection="LeftToRight"/>
-                <controls:CalculatorButton x:Name="YButton"
-                                           x:Uid="yButton"
-                                           Grid.Row="0"
-                                           Grid.Column="1"
-                                           Style="{StaticResource OperatorButtonStyle}"
-                                           FontSize="16"
-                                           ButtonId="Y"
-                                           Content="𝑦"
-                                           FlowDirection="LeftToRight"/>
-                <controls:CalculatorButton x:Name="PowerButton"
-                                           x:Uid="graphingPowerButton"
-                                           Grid.Row="0"
-                                           Grid.Column="2"
-                                           Style="{StaticResource OperatorButtonStyle}"
-                                           ButtonId="XPowerY"
-                                           Content="^"/>
-                <controls:CalculatorButton x:Name="squareRootButton"
-                                           x:Uid="squareRootButton"
-                                           Grid.Row="0"
-                                           Grid.Column="3"
-                                           Style="{StaticResource SymbolOperatorButtonStyle}"
-                                           FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                           ButtonId="Sqrt"
-                                           Content="&#xE94B;"/>
-
-                <!-- Display controls -->
-                <controls:CalculatorButton x:Name="ClearButton"
-                                           x:Uid="clearButton"
-                                           Grid.Row="1"
-                                           Grid.Column="2"
-                                           Style="{StaticResource OperatorButtonStyle}"
-                                           FontSize="16"
-                                           ButtonId="Clear"
-                                           Content="C"/>
-                <controls:CalculatorButton x:Name="BackSpaceButton"
-                                           x:Uid="backSpaceButton"
-                                           Grid.Row="1"
-                                           Grid.Column="3"
-                                           Style="{StaticResource SymbolOperatorButtonStyle}"
-                                           FontSize="16"
-                                           ButtonId="Backspace"
-                                           Content="&#xE94F;"/>
-
-                <!-- Basic operators -->
-                <controls:CalculatorButton x:Name="EqualButton"
-                                           x:Uid="graphingEqualButton"
-                                           Grid.Row="0"
-                                           Grid.Column="4"
-                                           Style="{StaticResource AccentCalcButtonStyle}"
-                                           ButtonId="Equals"
-                                           Content="&#xE94E;"/>
-                <controls:CalculatorButton x:Name="DivideButton"
-                                           x:Uid="divideButton"
-                                           Grid.Row="1"
-                                           Grid.Column="4"
-                                           Style="{StaticResource AccentCalcButtonStyle}"
-                                           ButtonId="Divide"
-                                           Content="&#xE94A;"/>
-                <controls:CalculatorButton x:Name="MultiplyButton"
-                                           x:Uid="multiplyButton"
-                                           Grid.Row="2"
-                                           Grid.Column="4"
-                                           Style="{StaticResource AccentCalcButtonStyle}"
-                                           ButtonId="Multiply"
-                                           Content="&#xE947;"/>
-                <controls:CalculatorButton x:Name="MinusButton"
-                                           x:Uid="minusButton"
-                                           Grid.Row="3"
-                                           Grid.Column="4"
-                                           Style="{StaticResource AccentCalcButtonStyle}"
-                                           ButtonId="Subtract"
-                                           Content="&#xE949;"/>
-                <controls:CalculatorButton x:Name="PlusButton"
-                                           x:Uid="plusButton"
-                                           Grid.Row="4"
-                                           Grid.Column="4"
-                                           Style="{StaticResource AccentCalcButtonStyle}"
-                                           ButtonId="Add"
-                                           Content="&#xE948;"/>
-
-
-                <controls:CalculatorButton x:Name="logBase10Button"
-                                           x:Uid="logBase10Button"
-                                           Grid.Row="1"
-                                           Grid.Column="0"
-                                           Style="{StaticResource OperatorButtonStyle}"
-                                           ButtonId="LogBase10"
-                                           Content="log"/>
-                <controls:CalculatorButton x:Name="logBaseEButton"
-                                           x:Uid="logBaseEButton"
-                                           Grid.Row="1"
-                                           Grid.Column="1"
-                                           Style="{StaticResource OperatorButtonStyle}"
-                                           ButtonId="LogBaseE"
-                                           Content="ln"/>
-                <controls:CalculatorButton x:Name="powerOf10Button"
-                                           x:Uid="powerOf10Button"
-                                           Grid.Row="2"
-                                           Grid.Column="0"
-                                           Style="{StaticResource SymbolOperatorButtonStyle}"
-                                           AutomationProperties.AutomationId="powerOf10Button"
-                                           ButtonId="TenPowerX"
-                                           Content="&#xF7CC;"/>
-                <controls:CalculatorButton x:Name="powerOfEButton"
-                                           x:Uid="powerOfEButton"
-                                           Grid.Row="3"
-                                           Grid.Column="0"
-                                           Style="{StaticResource SymbolOperatorButtonStyle}"
-                                           ButtonId="EPowerX"
-                                           Content="&#xf7ce;"/>
-                <controls:CalculatorButton x:Name="piButton"
-                                           x:Uid="piButton"
-                                           Grid.Row="4"
-                                           Grid.Column="0"
-                                           Style="{StaticResource SymbolOperatorButtonStyle}"
-                                           FontSize="14"
-                                           ButtonId="Pi"
-                                           Content="&#xf7cf;"/>
-
-                <controls:CalculatorButton x:Name="openParenthesisButton"
-                                           x:Uid="openParenthesisButton"
-                                           Grid.Row="5"
-                                           Grid.Column="0"
-                                           Style="{StaticResource ParenthesisCalcButtonStyle}"
-                                           FontSize="19"
-                                           ButtonId="OpenParenthesis"
-                                           Content="("/>
-                <controls:CalculatorButton x:Name="closeParenthesisButton"
-                                           x:Uid="closeParenthesisButton"
-                                           Grid.Row="5"
-                                           Grid.Column="1"
-                                           Style="{StaticResource OperatorButtonStyle}"
-                                           FontSize="19"
-                                           ButtonId="CloseParenthesis"
-                                           Content=")"/>
-
-                <!-- The Numberpad -->
-                <local:NumberPad x:Name="NumberPad"
-                                 x:Uid="NumberPad"
-                                 Grid.Row="2"
-                                 Grid.RowSpan="4"
-                                 Grid.Column="1"
-                                 Grid.ColumnSpan="3"
-                                 ButtonStyle="{StaticResource NumericButtonStyle24}"/>
-
-                <controls:CalculatorButton x:Name="PlotButton"
-                                           x:Uid="plotButton"
-                                           Grid.Row="5"
-                                           Grid.Column="4"
-                                           Style="{StaticResource AccentCalcButtonStyle}"
-                                           FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                           ButtonId="Plot"
-                                           Content="&#xE72A;"/>
-            </Grid>
         </Grid>
     </Grid>
 </UserControl>

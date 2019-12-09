@@ -3535,6 +3535,10 @@
     <value>Function</value>
     <comment>Displayed on the button that contains a flyout for the general functions in scientific mode.</comment>
   </data>
+  <data name="inequalityButton.Text" xml:space="preserve">
+    <value>Inequalities</value>
+    <comment>Displayed on the button that contains a flyout for the inequality functions.</comment>
+  </data>
   <data name="bitwiseButton.Text" xml:space="preserve">
     <value>Bitwise</value>
     <comment>Displayed on the button that contains a flyout for the bitwise functions in programmer mode.</comment>
