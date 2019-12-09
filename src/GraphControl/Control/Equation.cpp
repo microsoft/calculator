@@ -404,7 +404,12 @@ namespace GraphControl
     wstring Equation::GetRequestHeader()
     {
         wstring expr{ Expression->Data() };
-        if (expr.find(L">=<") != wstring::npos)
+        if (expr.find(L">&#x3E;<") != wstring::npos || expr.find(L">&#x3C;<") != wstring::npos || expr.find(L">&#x2265;<") != wstring::npos
+            || expr.find(L">&#x2264;<") != wstring::npos)
+        {
+            return L"<mrow><mi>plotIneq2D</mi><mfenced separators=\"\">"s;
+        }
+        else if (expr.find(L">=<") != wstring::npos)
         {
             return L"<mrow><mi>plotEq2d</mi><mfenced separators=\"\">"s;
         }
