@@ -119,10 +119,14 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
 
 void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
-    // ensure the equation has been submitted before trying to get key graph features out of it
-    EquationInputArea::InputTextBox_Submitted(sender, e);
-
     auto tb = static_cast<EquationTextBox ^>(sender);
+
+    // ensure the equation has been submitted before trying to get key graph features out of it
+    if (tb->HasFocus)
+    {
+        EquationInputArea::InputTextBox_Submitted(sender, e);
+    }
+
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
     EquationVM = eq;
 
