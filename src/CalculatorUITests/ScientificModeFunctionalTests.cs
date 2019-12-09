@@ -367,6 +367,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_InvSinButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -381,6 +382,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_InvTanButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -395,6 +397,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_InvSecButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -410,6 +413,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_InvCscButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -424,6 +428,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_InvCotButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -438,6 +443,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_SinhButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -452,6 +458,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_CoshButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -466,6 +473,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_SechButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -480,6 +488,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_CschButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -494,6 +503,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_CothButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -508,6 +518,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_InvSinhButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -523,6 +534,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_InvCoshButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -538,6 +550,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_InvTanhButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -553,6 +566,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_InvSechButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -568,6 +582,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_InvCschButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
@@ -583,6 +598,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(2)]
         public void Trig_InvCothButton()
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
