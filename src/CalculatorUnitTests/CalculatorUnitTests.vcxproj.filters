@@ -29,6 +29,7 @@
     </ClCompile>
     <ClCompile Include="LocalizationServiceUnitTests.cpp" />
     <ClCompile Include="RationalTest.cpp" />
+    <ClCompile Include="LocalizationSettingsUnitTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DateUtils.h" />
