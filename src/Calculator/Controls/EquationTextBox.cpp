@@ -254,7 +254,7 @@ void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e
 {
     if (IsAddEquationMode)
     {
-        //Don't remove the last equation
+        // Don't remove the last equation
         return;
     }
 
@@ -319,7 +319,7 @@ void EquationTextBox::UpdateCommonVisualState()
     {
         state = "Focused";
     }
-    else if ((m_isPointerOver && HasError) || (m_isColorChooserFlyoutOpen && HasError))
+    else if (HasError && (m_isPointerOver || m_isColorChooserFlyoutOpen))
     {
         state = "PointerOverError";
     }
@@ -339,7 +339,7 @@ void EquationTextBox::UpdateCommonVisualState()
     {
         state = "Normal";
     }
-    VisualStateManager::GoToState(this, state, true);
+    VisualStateManager::GoToState(this, state, false);
 }
 
 void EquationTextBox::OnHasErrorPropertyChanged(bool, bool)
