@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include "CalculatorHistory.h"
+#include "sal_cross_platform.h"
 
 using namespace std;
 using namespace CalculationManager;

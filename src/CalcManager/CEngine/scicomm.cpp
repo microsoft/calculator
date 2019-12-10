@@ -13,7 +13,9 @@
 * Author:
 \****************************************************************************/
 
+#include <iomanip>
 #include <string>
+#include <sstream>
 #include "Header Files/CalcEngine.h"
 #include "Header Files/CalcUtils.h"
 #include "NumberFormattingUtils.h"

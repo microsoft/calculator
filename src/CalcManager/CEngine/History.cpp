@@ -4,6 +4,7 @@
 #include "Header Files/CalcEngine.h"
 #include "Command.h"
 #include "ExpressionCommand.h"
+#include "winerror_cross_platform.h"
 
 constexpr int ASCII_0 = 48;
 
