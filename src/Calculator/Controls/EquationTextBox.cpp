@@ -26,6 +26,11 @@ DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, ColorChooserFlyout);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonContentIndex);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, HasError);
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, IsAddEquationMode);
+
+EquationTextBox::EquationTextBox()
+{
+}
 
 void EquationTextBox::OnApplyTemplate()
 {
@@ -55,17 +60,17 @@ void EquationTextBox::OnApplyTemplate()
     {
         m_equationButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnEquationButtonClicked);
 
-         auto toolTip = ref new ToolTip();
-         auto equationButtonMessage = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip") : resProvider->GetResourceString(L"hideEquationButtonToolTip");
-         toolTip->Content = equationButtonMessage;
-         ToolTipService::SetToolTip(m_equationButton, toolTip);
-         AutomationProperties::SetName(m_equationButton, equationButtonMessage);
+        auto toolTip = ref new ToolTip();
+        auto equationButtonMessage = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip")
+                                                                        : resProvider->GetResourceString(L"hideEquationButtonToolTip");
+        toolTip->Content = equationButtonMessage;
+        ToolTipService::SetToolTip(m_equationButton, toolTip);
+        AutomationProperties::SetName(m_equationButton, equationButtonMessage);
     }
 
     if (m_richEditContextMenu != nullptr)
     {
-        m_richEditContextMenu->Opening +=
-            ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpening);
+        m_richEditContextMenu->Opening += ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpening);
     }
 
     if (m_kgfEquationButton != nullptr)
@@ -119,6 +124,7 @@ void EquationTextBox::OnApplyTemplate()
     }
 
     UpdateCommonVisualState();
+    UpdateButtonsVisualState();
 }
 
 void EquationTextBox::OnPointerEntered(PointerRoutedEventArgs ^ e)
@@ -149,23 +155,31 @@ void EquationTextBox::OnKeyDown(KeyRoutedEventArgs ^ e)
 {
     if (e->Key == VirtualKey::Enter)
     {
-        EquationSubmitted(this, ref new RoutedEventArgs());
-        if (m_functionButton && m_richEditBox->MathText != L"")
+        m_sourceSubmission = EquationSubmissionSource::ENTER_KEY;
+        // We will rely on OnLostFocus to submit the equation to prevent the launch of 2 events
+        if (!m_HasFocus || !FocusManager::TryMoveFocusAsync(::FocusNavigationDirection::Next))
         {
-            m_functionButton->IsEnabled = true;
+            m_sourceSubmission = EquationSubmissionSource::FOCUS_LOST;
+            EquationSubmitted(this, EquationSubmissionSource::ENTER_KEY);
+            if (m_functionButton && m_richEditBox->MathText != L"")
+            {
+                m_functionButton->IsEnabled = true;
+            }
         }
     }
 }
 
 void EquationTextBox::OnLostFocus(RoutedEventArgs ^ e)
 {
-    if (m_richEditBox != nullptr && !m_richEditBox->ContextFlyout->IsOpen)
+    if (m_richEditBox == nullptr || m_richEditBox->ContextFlyout->IsOpen)
     {
-        EquationSubmitted(this, ref new RoutedEventArgs());
-        if (m_functionButton && m_richEditBox->MathText != L"")
-        {
-            m_functionButton->IsEnabled = true;
-        }
+        return;
+    }
+
+    EquationSubmitted(this, m_sourceSubmission);
+    if (m_functionButton && m_richEditBox->MathText != L"")
+    {
+        m_functionButton->IsEnabled = true;
     }
 }
 
@@ -184,14 +198,15 @@ void EquationTextBox::OnColorFlyoutClosed(Object ^ sender, Object ^ e)
 
 void EquationTextBox::OnRichEditBoxTextChanged(Object ^ sender, RoutedEventArgs ^ e)
 {
-    UpdateDeleteButtonVisualState();
+    UpdateButtonsVisualState();
 }
 
 void EquationTextBox::OnRichEditBoxGotFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     m_HasFocus = true;
+    m_sourceSubmission = EquationSubmissionSource::FOCUS_LOST;
     UpdateCommonVisualState();
-    UpdateDeleteButtonVisualState();
+    UpdateButtonsVisualState();
 }
 
 void EquationTextBox::OnRichEditBoxLostFocus(Object ^ sender, RoutedEventArgs ^ e)
@@ -202,7 +217,7 @@ void EquationTextBox::OnRichEditBoxLostFocus(Object ^ sender, RoutedEventArgs ^ 
     }
 
     UpdateCommonVisualState();
-    UpdateDeleteButtonVisualState();
+    UpdateButtonsVisualState();
 }
 
 void EquationTextBox::OnDeleteButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
@@ -223,7 +238,8 @@ void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^
 
     auto toolTip = ref new ToolTip();
     auto resProvider = AppResourceProvider::GetInstance();
-    auto equationButtonMessage = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip") : resProvider->GetResourceString(L"hideEquationButtonToolTip");
+    auto equationButtonMessage = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip")
+                                                                    : resProvider->GetResourceString(L"hideEquationButtonToolTip");
     toolTip->Content = equationButtonMessage;
     ToolTipService::SetToolTip(m_equationButton, toolTip);
     AutomationProperties::SetName(m_equationButton, equationButtonMessage);
@@ -236,6 +252,12 @@ void EquationTextBox::OnKGFEquationButtonClicked(Object ^ sender, RoutedEventArg
 
 void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
+    if (IsAddEquationMode)
+    {
+        // Don't remove the last equation
+        return;
+    }
+
     if (m_richEditBox != nullptr)
     {
         m_richEditBox->MathText = L"";
@@ -269,11 +291,15 @@ void EquationTextBox::OnFunctionButtonClicked(Object ^ sender, RoutedEventArgs ^
     KeyGraphFeaturesButtonClicked(this, ref new RoutedEventArgs());
 }
 
-void EquationTextBox::UpdateDeleteButtonVisualState()
+void EquationTextBox::UpdateButtonsVisualState()
 {
     String ^ state;
 
-    if (RichEditHasContent())
+    if (IsAddEquationMode)
+    {
+        state = "ButtonHideRemove";
+    }
+    else if (RichEditHasContent())
     {
         state = "ButtonVisible";
     }
@@ -287,13 +313,13 @@ void EquationTextBox::UpdateDeleteButtonVisualState()
 
 void EquationTextBox::UpdateCommonVisualState()
 {
-    String ^ state = "Normal";
+    String ^ state = nullptr;
 
     if (m_HasFocus)
     {
         state = "Focused";
     }
-    else if ((m_isPointerOver && HasError) || (m_isColorChooserFlyoutOpen && HasError))
+    else if (HasError && (m_isPointerOver || m_isColorChooserFlyoutOpen))
     {
         state = "PointerOverError";
     }
@@ -305,8 +331,15 @@ void EquationTextBox::UpdateCommonVisualState()
     {
         state = "Error";
     }
-
-    VisualStateManager::GoToState(this, state, true);
+    else if (IsAddEquationMode)
+    {
+        state = "AddEquation";
+    }
+    else
+    {
+        state = "Normal";
+    }
+    VisualStateManager::GoToState(this, state, false);
 }
 
 void EquationTextBox::OnHasErrorPropertyChanged(bool, bool)
@@ -358,5 +391,19 @@ void EquationTextBox::OnRichEditMenuOpening(Object ^ /*sender*/, Object ^ /*args
     if (m_kgfEquationMenuItem != nullptr)
     {
         m_kgfEquationMenuItem->IsEnabled = EquationTextBox::RichEditHasContent();
+    }
+}
+
+void EquationTextBox::OnIsAddEquationModePropertyChanged(bool /*oldValue*/, bool /*newValue*/)
+{
+    UpdateCommonVisualState();
+    UpdateButtonsVisualState();
+}
+
+void EquationTextBox::FocusTextBox()
+{
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->Focus(::FocusState::Programmatic);
     }
 }

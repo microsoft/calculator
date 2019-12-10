@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="using:CalculatorApp.Controls"
              xmlns:common="using:CalculatorApp.Common"
+             xmlns:contract7Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,7)"
              xmlns:local="using:CalculatorApp">
 
     <Application.Resources>
@@ -68,10 +69,10 @@
                                   FallbackColor="{ThemeResource SystemChromeMediumColor}"
                                   TintColor="{ThemeResource SystemChromeLowColor}"
                                   TintOpacity="0.7"/>
+                    <SolidColorBrush x:Key="EquationBoxAddBackgroundBrush" Color="#9d000000"/>
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemControlBackgroundAltMediumBrush}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="AppChromeAcrylicOperatorFlyoutBackgroundBrush" Color="#FF2F2F2F"/>
-                    <SolidColorBrush x:Key="EquationTextBoxTransparentBackgroundBrush" Color="Transparent"/>
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource TextControlBackground}"/>
                     <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="White"/>
                     <SolidColorBrush x:Key="EquationBoxErrorBackgroundBrush" Color="#33EB5757"/>
@@ -164,6 +165,7 @@
                                   FallbackColor="{ThemeResource SystemChromeMediumColor}"
                                   TintColor="{ThemeResource SystemChromeLowColor}"
                                   TintOpacity="0.8"/>
+                    <SolidColorBrush x:Key="EquationBoxAddBackgroundBrush" Color="#D0FFFFFF"/>
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemControlBackgroundAltMediumBrush}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemBaseHighColor}"/>
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource TextControlBackground}"/>
@@ -222,6 +224,7 @@
                     <SolidColorBrush x:Key="AppControlHighlightCalcButtonBrush" Color="{ThemeResource SystemColorWindowColor}"/>
                     <SolidColorBrush x:Key="AppControlHighlightCalcButtonToggledBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="AppControlHighlightCalcButtonHoverBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
+                    <SolidColorBrush x:Key="EquationBoxAddBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="EquationBoxPointerOverBackgroundBrush" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="EquationBoxHoverButtonForegroundBrush" Color="{ThemeResource SystemColorCaptionTextColor}"/>
                     <SolidColorBrush x:Key="EquationBoxBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
@@ -1856,7 +1859,6 @@
                                                   AutomationProperties.AccessibilityView="Raw"
                                                   Content="{TemplateBinding Description}"
                                                   x:Load="False"/>
-
                             </Grid>
 
                         </ControlTemplate>
@@ -1890,155 +1892,71 @@
 
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
-
                                         <VisualState x:Name="Normal">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource EquationBoxBorderBrush}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
+                                            <VisualState.Setters>
+                                                <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource EquationBoxBorderBrush}"/>
+                                            </VisualState.Setters>
                                         </VisualState>
-
+                                        <VisualState x:Name="AddEquation">
+                                            <VisualState.Setters>
+                                                <Setter Target="RemoveButtonPanel.Visibility" Value="Collapsed"/>
+                                                <Setter Target="MathRichEditBox.PlaceholderText" Value="Enter an equation"/>
+                                                <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource EquationBoxAddBackgroundBrush}"/>
+                                                <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource EquationBoxBorderBrush}"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
                                         <VisualState x:Name="Error">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource EquationBoxErrorBorderBrush}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource EquationBoxErrorBackgroundBrush}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ErrorIcon" Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <Visibility>Visible</Visibility>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
+                                            <VisualState.Setters>
+                                                <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource EquationBoxErrorBorderBrush}"/>
+                                                <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource EquationBoxErrorBackgroundBrush}"/>
+                                                <Setter Target="ErrorIcon.Visibility" Value="Visible"/>
+                                            </VisualState.Setters>
                                         </VisualState>
-
                                         <VisualState x:Name="PointerOver">
-
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ColorChooserButton" Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <Visibility>Visible</Visibility>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FunctionButton" Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <Visibility>Visible</Visibility>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RemoveButton" Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <Visibility>Visible</Visibility>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ErrorIcon" Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <Visibility>Collapsed</Visibility>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
+                                            <VisualState.Setters>
+                                                <Setter Target="EquationBoxBorder.BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor}"/>
+                                                <Setter Target="ColorChooserButton.Visibility" Value="Visible"/>
+                                                <Setter Target="FunctionButton.Visibility" Value="Visible"/>
+                                                <Setter Target="RemoveButton.Visibility" Value="Visible"/>
+                                                <Setter Target="ErrorIcon.Visibility" Value="Collapsed"/>
+                                            </VisualState.Setters>
                                         </VisualState>
-
                                         <VisualState x:Name="PointerOverError">
-
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource EquationBoxErrorBackgroundBrush}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ColorChooserButton" Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <Visibility>Visible</Visibility>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FunctionButton" Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <Visibility>Collapsed</Visibility>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RemoveButton" Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <Visibility>Visible</Visibility>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ErrorIcon" Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <Visibility>Collapsed</Visibility>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
+                                            <VisualState.Setters>
+                                                <Setter Target="EquationBoxBorder.BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor}"/>
+                                                <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource EquationBoxErrorBackgroundBrush}"/>
+                                                <Setter Target="ColorChooserButton.Visibility" Value="Visible"/>
+                                                <Setter Target="FunctionButton.Visibility" Value="Collapsed"/>
+                                                <Setter Target="RemoveButton.Visibility" Value="Visible"/>
+                                                <Setter Target="ErrorIcon.Visibility" Value="Collapsed"/>
+                                            </VisualState.Setters>
                                         </VisualState>
-
                                         <VisualState x:Name="Disabled">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextBoxDisabledBackgroundThemeBrush}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextBoxDisabledBorderThemeBrush}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationTextBox" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppControlTransparentButtonBackgroundBrush}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
+                                            <VisualState.Setters>
+                                                <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource TextBoxDisabledBackgroundThemeBrush}"/>
+                                                <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource TextBoxDisabledBorderThemeBrush}"/>
+                                                <Setter Target="EquationTextBox.Background" Value="{ThemeResource AppControlTransparentButtonBackgroundBrush}"/>
+                                            </VisualState.Setters>
                                         </VisualState>
-
                                         <VisualState x:Name="Focused">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EquationBoxBorder" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextBoxBackgroundThemeBrush}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
+                                            <VisualState.Setters>
+                                                <Setter Target="EquationBoxBorder.BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor}"/>
+                                                <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource TextBoxBackgroundThemeBrush}"/>
+                                            </VisualState.Setters>
                                         </VisualState>
-
                                     </VisualStateGroup>
-
                                     <VisualStateGroup x:Name="ButtonStates">
                                         <VisualState x:Name="ButtonVisible">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeleteButton" Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <Visibility>Visible</Visibility>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ErrorIcon" Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0">
-                                                        <DiscreteObjectKeyFrame.Value>
-                                                            <Visibility>Collapsed</Visibility>
-                                                        </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
+                                            <VisualState.Setters>
+                                                <Setter Target="DeleteButton.Visibility" Value="Visible"/>
+                                                <Setter Target="ErrorIcon.Visibility" Value="Collapsed"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="ButtonHideRemove">
+                                            <VisualState.Setters>
+                                                <Setter Target="RemoveButtonPanel.Visibility" Value="Collapsed"/>
+                                                <Setter Target="RemoveFunctionMenuItem.IsEnabled" Value="False"/>
+                                            </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="ButtonCollapsed"/>
                                     </VisualStateGroup>
@@ -2158,8 +2076,8 @@
                                         Grid.Column="1"
                                         Background="{ThemeResource TextControlBackground}"
                                         BorderBrush="{TemplateBinding EquationColor}"
-                                        BorderThickness="{TemplateBinding BorderThickness}">
-
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        contract7Present:BackgroundSizing="OuterBorderEdge">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -2218,28 +2136,29 @@
                                                 Visibility="Collapsed"/>
                                         <FontIcon x:Name="ErrorIcon"
                                                   Grid.Column="3"
-                                                  MinWidth="34"
+                                                  MinWidth="28"
                                                   VerticalAlignment="Stretch"
                                                   FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                   FontSize="16"
                                                   AutomationProperties.AccessibilityView="Raw"
                                                   Glyph="&#xE783;"
                                                   Visibility="Collapsed"/>
-                                        <Button x:Name="RemoveButton"
-                                                x:Uid="removeButton"
-                                                Grid.Column="3"
-                                                MinWidth="34"
-                                                Margin="{ThemeResource HelperButtonThemePadding}"
-                                                VerticalAlignment="Stretch"
-                                                Style="{StaticResource EquationTextBoxButtonStyle}"
-                                                Background="{TemplateBinding EquationColor}"
-                                                Foreground="{TemplateBinding EquationColor}"
-                                                BorderThickness="0"
-                                                FontFamily="{StaticResource CalculatorFontFamily}"
-                                                AutomationProperties.AccessibilityView="Raw"
-                                                Content="&#xECC9;"
-                                                IsTabStop="False"
-                                                Visibility="Collapsed"/>
+                                        <Grid x:Name="RemoveButtonPanel" Grid.Column="3">
+                                            <Button x:Name="RemoveButton"
+                                                    x:Uid="removeButton"
+                                                    MinWidth="34"
+                                                    Margin="{ThemeResource HelperButtonThemePadding}"
+                                                    VerticalAlignment="Stretch"
+                                                    Style="{StaticResource EquationTextBoxButtonStyle}"
+                                                    Background="{TemplateBinding EquationColor}"
+                                                    Foreground="{TemplateBinding EquationColor}"
+                                                    BorderThickness="0"
+                                                    FontFamily="{StaticResource CalculatorFontFamily}"
+                                                    AutomationProperties.AccessibilityView="Raw"
+                                                    Content="&#xECC9;"
+                                                    IsTabStop="False"
+                                                    Visibility="Collapsed"/>
+                                        </Grid>
                                         <ToggleButton x:Name="ColorChooserButton"
                                                       x:Uid="colorChooserButton"
                                                       Grid.Column="2"

@@ -3907,7 +3907,7 @@
     <value>Zoom Out</value>
     <comment>Screen reader prompt for the zoom out button.</comment>
   </data>
-  <data name="EquationInputButtonPlaceholder.Text" xml:space="preserve">
+  <data name="EquationTextBoxAddPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Add Equation</value>
     <comment>Placeholder text for the equation input button</comment>
   </data>
@@ -4217,5 +4217,9 @@
   <data name="GraphSwitchedToGraphModeAnnouncement" xml:space="preserve">
     <value>Current mode is graph mode</value>
     <comment>Announcement used in Graphing Calculator when switching to the graph mode</comment>
+  </data>
+  <data name="equationMathRichEditBox.PlaceholderText" xml:space="preserve">
+    <value>Enter an equation</value>
+    <comment>Used in the Graphing Calculator to indicate to users that they can enter an equation in the textbox</comment>
   </data>
 </root>

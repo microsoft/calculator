@@ -221,6 +221,9 @@
     <Filter Include="Views\GraphingCalculator">
       <UniqueIdentifier>{e23e2a6e-491b-4200-9bf7-d355a1ee695b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{b491a249-26b8-4814-9f50-2c3a57018c56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -321,6 +324,9 @@
       <Filter>Views\GraphingCalculator</Filter>
     </ClCompile>
     <ClCompile Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.cpp" />
+    <ClCompile Include="Utils\VisualTree.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -421,6 +427,9 @@
       <Filter>Views\GraphingCalculator</Filter>
     </ClInclude>
     <ClInclude Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.h" />
+    <ClInclude Include="Utils\VisualTree.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -1549,8 +1558,6 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="$(GraphingImplDll)" />
-    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>
