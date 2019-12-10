@@ -31,7 +31,7 @@ namespace GraphControl
         if (expr.find(L">&#x3E;<") != wstring::npos || expr.find(L">&#x3C;<") != wstring::npos || expr.find(L">&#x2265;<") != wstring::npos
             || expr.find(L">&#x2264;<") != wstring::npos)
         {
-            return L"<mrow><mi>plotIneq2D</mi><mfenced separators=\"\">"s;
+            ss << L"<mrow><mi>plotIneq2D</mi><mfenced separators=\"\">"s;
         }
         else if (expr.find(L">=<") != wstring::npos)
         {
