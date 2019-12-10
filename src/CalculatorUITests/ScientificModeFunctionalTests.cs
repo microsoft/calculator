@@ -25,8 +25,8 @@ namespace CalculatorUITests
             // Create session to launch a Calculator window
             WinAppDriver.Instance.SetupCalculatorSession(context);
 
-            // Ensure that calculator is in standard mode
-            page.NavigateToCalculatorMode(CalculatorMode.ScientificCalculator);
+            // Ensure that calculator is in scientific mode
+            page.NavigateToScientificCalculator();
         }
 
         /// <summary>
