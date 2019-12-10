@@ -74,8 +74,9 @@ void EquationInputArea::AddNewEquation()
     eq->LineColor = AvailableColors->GetAt(m_lastLineColorIndex);
     eq->IsLineEnabled = true;
     eq->FunctionLabelIndex = ++m_lastFunctionLabelIndex;
-    Equations->Append(eq);
     m_equationToFocus = eq;
+    Equations->Append(eq);
+    EquationInputList->ScrollIntoView(eq);
 }
 
 void EquationInputArea::InputTextBox_GotFocus(Object ^ sender, RoutedEventArgs ^ e)
@@ -182,7 +183,6 @@ void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ s
 
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
     EquationVM = eq;
-
     KeyGraphFeaturesRequested(EquationVM, ref new RoutedEventArgs());
 }
 
@@ -257,4 +257,76 @@ void EquationInputArea::ReloadAvailableColors(bool isHighContrast)
         equationViewModel->LineColor = blankBrush;
         equationViewModel->LineColor = AvailableColors->GetAt(m_lastLineColorIndex);
     }
+}
+
+void CalculatorApp::EquationInputArea::EquationInputList_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e)
+{
+    auto item = Equations->GetAt(Equations->Size - 1);
+    if (item == m_equationToFocus)
+    {
+        auto container = EquationInputList->TryGetElement(Equations->Size - 1);
+        if (container != nullptr)
+        {
+            container->StartBringIntoView();
+        }
+        m_equationToFocus = nullptr;
+    }
+}
+
+void EquationInputArea::TextBoxGotFocus(TextBox ^ sender, RoutedEventArgs ^ e)
+{
+    sender->SelectAll();
+}
+
+
+void EquationInputArea::SubmitTextbox(TextBox ^ sender)
+{
+    auto variableViewModel = static_cast<VariableViewModel ^>(sender->DataContext);
+
+    if (sender->Name == "ValueTextBox")
+    {
+        variableViewModel->SetValue(validateDouble(sender->Text, variableViewModel->Value));
+    }
+    else if (sender->Name == "MinTextBox")
+    {
+        variableViewModel->Min = validateDouble(sender->Text, variableViewModel->Min);
+    }
+    else if (sender->Name == "MaxTextBox")
+    {
+        variableViewModel->Max = validateDouble(sender->Text, variableViewModel->Max);
+    }
+    else if (sender->Name == "StepTextBox")
+    {
+        variableViewModel->Step = validateDouble(sender->Text, variableViewModel->Step);
+    }
+}
+
+void EquationInputArea::TextBoxLosingFocus(TextBox ^ sender, LosingFocusEventArgs ^)
+{
+    SubmitTextbox(sender);
+}
+
+void EquationInputArea::TextBoxKeyDown(TextBox ^ sender, KeyRoutedEventArgs ^ e)
+{
+    if (e->Key == ::VirtualKey::Enter)
+    {
+        SubmitTextbox(sender);
+    }
+}
+
+double EquationInputArea::validateDouble(String ^ value, double defaultValue)
+{
+    try
+    {
+        return stod(value->Data());
+    }
+    catch (...)
+    {
+        return defaultValue;
+    }
+}
+
+::Visibility EquationInputArea::ManageEditVariablesButtonVisibility(unsigned int numberOfVariables)
+{
+    return numberOfVariables == 0 ? ::Visibility::Collapsed : ::Visibility::Visible;
 }

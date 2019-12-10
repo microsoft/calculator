@@ -5,64 +5,201 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mux="using:Microsoft.UI.Xaml.Controls"
              xmlns:vm="using:CalculatorApp.ViewModel"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="White"/>
+                    <x:Double x:Key="TextControlThemeMinWidth">32</x:Double>
+                    <x:Double x:Key="TextControlThemeMinHeight">16</x:Double>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="Black"/>
+                    <x:Double x:Key="TextControlThemeMinWidth">32</x:Double>
+                    <x:Double x:Key="TextControlThemeMinHeight">16</x:Double>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="HighContrast">
+                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{StaticResource SystemColorButtonFaceColor}"/>
+                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="{ThemeResource SystemColorButtonTextColor}"/>
+                    <x:Double x:Key="TextControlThemeMinWidth">32</x:Double>
+                    <x:Double x:Key="TextControlThemeMinHeight">16</x:Double>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
 
-    <Grid>
-        <ListView x:Name="EquationInputList"
-                  IsItemClickEnabled="False"
-                  ItemsSource="{x:Bind Equations}"
-                  SelectionMode="None">
+            <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
 
-            <!-- Removes animations from the ListView Style. -->
-            <ListView.Style>
-                <Style TargetType="ListView">
-                    <Setter Property="ItemContainerTransitions">
-                        <Setter.Value>
-                            <TransitionCollection/>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListView.Style>
+            <DataTemplate x:Key="VariableDataTemplate" x:DataType="vm:VariableViewModel">
+                <StackPanel Margin="0,3"
+                            Padding="12,0"
+                            Background="#34ffffff"
+                            DataContext="{x:Bind}">
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock MinWidth="10"
+                                   VerticalAlignment="Center"
+                                   Text="{x:Bind Name}"/>
+                        <TextBox x:Name="ValueTextBox"
+                                 Grid.Column="1"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Center"
+                                 Style="{StaticResource VariableTextBoxStyle}"
+                                 GotFocus="TextBoxGotFocus"
+                                 KeyDown="TextBoxKeyDown"
+                                 LosingFocus="TextBoxLosingFocus"
+                                 Text="{x:Bind Value, Mode=OneWay}"/>
+                        <ToggleButton x:Uid="sliderOptionsButton"
+                                      Grid.Column="2"
+                                      Margin="0,0,-8,0"
+                                      HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"
+                                      Background="Transparent"
+                                      FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                      Content="&#xE713;"
+                                      IsChecked="{x:Bind SliderSettingsVisible, Mode=TwoWay}">
+                            <ToggleButton.Resources>
+                                <SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPointerOver" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ToggleButtonBorderBrushCheckedPointerOver" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ToggleButtonBackgroundPointerOver" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ToggleButtonBorderBrushPointerOver" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="Transparent"/>
+                                <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{ThemeResource SystemAccentColor}"/>
+                                <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{ThemeResource SystemAccentColor}"/>
+                                <SolidColorBrush x:Key="ToggleButtonForegroundChecked" Color="{ThemeResource SystemAccentColor}"/>
+                                <SolidColorBrush x:Key="ToggleButtonForegroundCheckedPressed" Color="{ThemeResource SystemAccentColor}"/>
+                                <SolidColorBrush x:Key="ToggleButtonForegroundCheckedPointerOver" Color="{ThemeResource SystemAccentColor}"/>
+                                <x:Double x:Key="TextControlThemeMinWidth">32</x:Double>
+                            </ToggleButton.Resources>
+                        </ToggleButton>
+                    </Grid>
+                    <Slider Maximum="{x:Bind Max, Mode=TwoWay}"
+                            Minimum="{x:Bind Min, Mode=TwoWay}"
+                            StepFrequency="{x:Bind Step, Mode=TwoWay}"
+                            Visibility="{x:Bind SliderSettingsVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"
+                            Value="{x:Bind Value, Mode=TwoWay}"/>
+                    <Grid Grid.Row="1"
+                          Padding="0,0,0,12"
+                          HorizontalAlignment="Stretch"
+                          Visibility="{x:Bind SliderSettingsVisible, Mode=OneWay}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Uid="MinTextBlock"
+                                       VerticalAlignment="Center"
+                                       FontWeight="SemiBold"/>
+                            <TextBox x:Name="MinTextBox"
+                                     MaxWidth="96"
+                                     Style="{StaticResource VariableTextBoxStyle}"
+                                     GotFocus="TextBoxGotFocus"
+                                     KeyDown="TextBoxKeyDown"
+                                     LosingFocus="TextBoxLosingFocus"
+                                     Text="{x:Bind Min, Mode=OneWay}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    Orientation="Horizontal">
+                            <TextBlock x:Uid="StepTextBlock"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="SemiBold"/>
+                            <TextBox x:Name="StepTextBox"
+                                     MaxWidth="96"
+                                     HorizontalAlignment="Center"
+                                     Style="{StaticResource VariableTextBoxStyle}"
+                                     GotFocus="TextBoxGotFocus"
+                                     KeyDown="TextBoxKeyDown"
+                                     LosingFocus="TextBoxLosingFocus"
+                                     Text="{x:Bind Step, Mode=OneWay}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <TextBlock x:Uid="MaxTextBlock"
+                                       VerticalAlignment="Center"
+                                       FontWeight="SemiBold"/>
+                            <TextBox x:Name="MaxTextBox"
+                                     MaxWidth="96"
+                                     Style="{StaticResource VariableTextBoxStyle}"
+                                     GotFocus="TextBoxGotFocus"
+                                     KeyDown="TextBoxKeyDown"
+                                     LosingFocus="TextBoxLosingFocus"
+                                     Text="{x:Bind Max, Mode=OneWay}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </DataTemplate>
 
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="IsTabStop" Value="False"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="Padding" Value="0"/>
-                    <Setter Property="Margin" Value="1,0,1,0"/>
-                </Style>
-            </ListView.ItemContainerStyle>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <mux:ItemsRepeaterScrollHost>
+            <ScrollViewer>
+                <StackPanel>
+                    <mux:ItemsRepeater x:Name="EquationInputList"
+                                       ItemsSource="{x:Bind Equations}"
+                                       SizeChanged="EquationInputList_SizeChanged">
+                        <mux:ItemsRepeater.ItemTemplate>
+                            <DataTemplate x:DataType="vm:EquationViewModel">
+                                <controls:EquationTextBox x:Uid="EquationInputButton"
+                                                          Margin="1,0,1,0"
+                                                          Style="{StaticResource EquationTextBoxStyle}"
+                                                          DataContext="{x:Bind Mode=OneWay}"
+                                                          EquationButtonClicked="EquationTextBox_EquationButtonClicked"
+                                                          EquationButtonContentIndex="{x:Bind FunctionLabelIndex, Mode=OneWay}"
+                                                          EquationColor="{x:Bind LineColor, Mode=OneWay}"
+                                                          EquationSubmitted="InputTextBox_Submitted"
+                                                          GotFocus="InputTextBox_GotFocus"
+                                                          HasError="{x:Bind GraphEquation.HasGraphError, Mode=OneWay}"
+                                                          IsAddEquationMode="{x:Bind IsLastItemInList, Mode=OneWay}"
+                                                          KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked"
+                                                          Loaded="EquationTextBoxLoaded"
+                                                          LostFocus="InputTextBox_LostFocus"
+                                                          RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
+                                    <controls:EquationTextBox.ColorChooserFlyout>
+                                        <Flyout x:Name="ColorChooserFlyout"
+                                                x:Uid="ColorChooserFlyout"
+                                                Placement="Bottom">
+                                            <local:EquationStylePanelControl SelectedColor="{x:Bind LineColor, Mode=TwoWay}"/>
+                                        </Flyout>
+                                    </controls:EquationTextBox.ColorChooserFlyout>
+                                </controls:EquationTextBox>
+                            </DataTemplate>
+                        </mux:ItemsRepeater.ItemTemplate>
+                    </mux:ItemsRepeater>
 
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="vm:EquationViewModel">
-                    <controls:EquationTextBox x:Name="EquationInputButton"
-                                              x:Uid="EquationInputButton"
-                                              Margin="1"
-                                              Style="{StaticResource EquationTextBoxStyle}"
-                                              EquationButtonClicked="EquationTextBox_EquationButtonClicked"
-                                              EquationButtonContentIndex="{x:Bind FunctionLabelIndex, Mode=OneWay}"
-                                              EquationColor="{x:Bind LineColor, Mode=OneWay}"
-                                              EquationSubmitted="InputTextBox_Submitted"
-                                              GotFocus="InputTextBox_GotFocus"
-                                              HasError="{x:Bind GraphEquation.HasGraphError, Mode=OneWay}"
-                                              IsAddEquationMode="{x:Bind IsLastItemInList, Mode=OneWay}"
-                                              KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked"
-                                              Loaded="EquationTextBoxLoaded"
-                                              LostFocus="InputTextBox_LostFocus"
-                                              RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
-                        <controls:EquationTextBox.ColorChooserFlyout>
-                            <Flyout x:Name="ColorChooserFlyout"
-                                    x:Uid="ColorChooserFlyout"
-                                    Placement="Bottom">
-                                <local:EquationStylePanelControl SelectedColor="{x:Bind LineColor, Mode=TwoWay}"/>
-                            </Flyout>
-                        </controls:EquationTextBox.ColorChooserFlyout>
-                    </controls:EquationTextBox>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    <StackPanel Margin="12" Visibility="{x:Bind local:EquationInputArea.ManageEditVariablesButtonVisibility(Variables.Size), Mode=OneWay}">
+                        <TextBlock x:Uid="VaiablesHeader"
+                                   Margin="0,6"
+                                   FontWeight="Bold"/>
+
+                        <mux:ItemsRepeater x:Name="VariableListView"
+                                           ItemTemplate="{StaticResource VariableDataTemplate}"
+                                           ItemsSource="{x:Bind Variables, Mode=OneWay}"/>
+                    </StackPanel>
+                </StackPanel>
+
+            </ScrollViewer>
+        </mux:ItemsRepeaterScrollHost>
+
     </Grid>
 </UserControl>

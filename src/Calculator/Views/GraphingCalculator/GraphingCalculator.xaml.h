@@ -35,7 +35,6 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
 
         static Windows::UI::Xaml::Visibility ShouldDisplayPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel);
         static Platform::String ^ GetInfoForSwitchModeToggleButton(bool isChecked);
-        static Windows::UI::Xaml::Visibility ManageEditVariablesButtonVisibility(unsigned int numberOfVariables);
     private:
         void GraphingCalculator_DataContextChanged(Windows::UI::Xaml::FrameworkElement ^ sender, Windows::UI::Xaml::DataContextChangedEventArgs ^ args);
 
@@ -44,15 +43,9 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
             Windows::Foundation::Collections::IObservableVector<CalculatorApp::ViewModel::EquationViewModel ^> ^ sender,
             Windows::Foundation::Collections::IVectorChangedEventArgs ^ event);
 
-        void TextBoxLosingFocus(Windows::UI::Xaml::Controls::TextBox ^ textbox, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
-        void TextBoxKeyDown(Windows::UI::Xaml::Controls::TextBox ^ textbox, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);
-        void SubmitTextbox(Windows::UI::Xaml::Controls::TextBox ^ textbox);
-
         void OnZoomInCommand(Object ^ parameter);
         void OnZoomOutCommand(Object ^ parameter);
         void OnZoomResetCommand(Object ^ parameter);
-
-        double validateDouble(Platform::String ^ value, double defaultValue);
 
         CalculatorApp::ViewModel::GraphingCalculatorViewModel ^ m_viewModel;
 
@@ -68,7 +61,6 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
             Windows::ApplicationModel::DataTransfer::DataTransferManager ^ sender,
             Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs ^ e);
 
-        void TextBoxGotFocus(Windows::UI::Xaml::Controls::TextBox ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnActiveTracingClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void GraphingControl_LostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void GraphingControl_LosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
