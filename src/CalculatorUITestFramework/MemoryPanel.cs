@@ -84,7 +84,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ResizeWindowToDiplayMemoryLabel()
         {
-            Point newWindowPostion = new Point(0, 0);
+            Point newWindowPostion = new Point(8, 8);
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
             string source0 = this.session.PageSource;
             if (source0.Contains("MemoryLabel"))
@@ -121,7 +121,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ResizeWindowToDiplayMemoryButton()
         {
-            Point newWindowPostion = new Point(0, 0);
+            Point newWindowPostion = new Point(8, 8);
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
             string source0 = this.session.PageSource;
             if (source0.Contains("Alt, M"))

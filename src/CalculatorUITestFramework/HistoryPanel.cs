@@ -59,7 +59,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ResizeWindowToDisplayHistoryLabel()
         {
-            Point newWindowPostion = new Point(0, 0);
+            Point newWindowPostion = new Point(8, 8);
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
             string source0 = this.session.PageSource;
             if (source0.Contains("HistoryLabel"))
@@ -96,7 +96,7 @@ namespace CalculatorUITestFramework
         ///// </summary>
         public void ResizeWindowToNotDisplayHistoryLabel()
         {
-            Point newWindowPostion = new Point(0, 0);
+            Point newWindowPostion = new Point(8, 8);
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
             string source1 = this.session.PageSource;
             if (source1.Contains("HistoryLabel"))

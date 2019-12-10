@@ -64,13 +64,12 @@ namespace CalculatorUITestFramework
         /// <summary>
         /// Checks to see if the size of the Calculator window is within the AoT arange of size
         /// </summary>
-        /// <returns>The string shown in the UI.</returns>
         public void AoTWindowSizeWithinRange()
         {
             Size getCalculatorWindowSize = WinAppDriver.Instance.CalculatorSession.Manage().Window.Size;
             int Width = getCalculatorWindowSize.Width;
             int Height = getCalculatorWindowSize.Height;
-            if ((Width >= 168) || (Width <= 502) && (Height >= 361) || (Height <= 502))
+            if ((Width >= 168) && (Width <= 502) && (Height >= 320) && (Height <= 502))
             {
                 return;
             }
@@ -140,6 +139,25 @@ namespace CalculatorUITestFramework
                 InAoTMode = true;
             }
             return InAoTMode.ToString();
+        }
+        /// <summary>
+        /// Checks to see if the size of the Calculator window is within the AoT arange of size
+        /// To-do: Find a way to get resolution and then do something like monitor quadrant location, or
+        /// something like (X >= (0.8*screenWidth))... etc.
+        /// </summary>
+        public void AoTWindowPositionWithinRange()
+        {
+            Point getCalculatorWindowPosition = WinAppDriver.Instance.CalculatorSession.Manage().Window.Position;
+            int X = getCalculatorWindowPosition.X;
+            int Y = getCalculatorWindowPosition.Y;
+            if ((X >= 1388) && (X <= 1722) && (Y >= 25) && (Y <= 35))
+            {
+                return;
+            }
+            else
+            {
+                throw new Exception("'Keep on top' window is not within range of its default position");
+            }
         }
     }
 }

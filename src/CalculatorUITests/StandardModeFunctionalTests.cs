@@ -314,7 +314,7 @@ namespace CalculatorUITests
         public void KeyboardInput_HistoryHotkeys()
         {
             ////Verifies history hotkeys
-            /// Note: Commenting this section out until following active issue in calculator is fixed
+            /// To-do: Commenting this section out until following active issue in calculator is fixed
             /// - Active issue "Bug 23811901: Clicking on the History Label causes the [Shift] + [Ctrl] + [D] hotkeys to break" causes this case to fail
 
             //page.GlobalCalculatorUI.EnsureCalculatorHasFocus();
@@ -801,7 +801,7 @@ namespace CalculatorUITests
         /// - That Standard calculator has AoT button, but other major calculator modes do not
         /// - That the app can scale to smallest size, largest size, and to a medium size without crashing.  It does not test the visual appears of the UI while scaling. 
         /// - The window scale retention is maintained when switching between AoT and Non-AoT 
-        ///     - To-Do: Verify scale retention across calculator session
+        ///     - To-do: Verify scale retention across calculator session
         /// - Error messaging while AoT mode
         ///     -  To-do: Need to verify "All operator buttons (except for "CE", "C", "Delete" and "="), and memory buttons are disabled" when in AoT mode
         /// - Verify app positioning after entering and exiting KOT mode
@@ -813,6 +813,7 @@ namespace CalculatorUITests
         {
             page.StandardAoTCalculatorPage.StandardAoTMode();
             page.StandardAoTCalculatorPage.AoTWindowSizeWithinRange();
+            page.StandardAoTCalculatorPage.AoTWindowPositionWithinRange();
             page.StandardAoTCalculatorPage.StandardNonAoTMode();
 
         }
@@ -941,7 +942,7 @@ namespace CalculatorUITests
         public void AoT_ErrorMessage()
         {
             Size largeAoTWindowSize = new Size(502, 502);
-            Point largeAoTWindowPosition = new Point(0, 0);
+            Point largeAoTWindowPosition = new Point(8, 8);
             page.StandardAoTCalculatorPage.StandardAoTMode();
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = largeAoTWindowPosition;
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeAoTWindowSize;
