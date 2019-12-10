@@ -62,7 +62,7 @@ void EquationTextBox::OnApplyTemplate()
 
         auto toolTip = ref new ToolTip();
         auto equationButtonMessage = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip")
-                                                                     : resProvider->GetResourceString(L"hideEquationButtonToolTip");
+                                                                        : resProvider->GetResourceString(L"hideEquationButtonToolTip");
         toolTip->Content = equationButtonMessage;
         ToolTipService::SetToolTip(m_equationButton, toolTip);
         AutomationProperties::SetName(m_equationButton, equationButtonMessage);
@@ -70,8 +70,7 @@ void EquationTextBox::OnApplyTemplate()
 
     if (m_richEditContextMenu != nullptr)
     {
-        m_richEditContextMenu->Opening +=
-            ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpening);
+        m_richEditContextMenu->Opening += ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpening);
     }
 
     if (m_kgfEquationButton != nullptr)
@@ -253,6 +252,12 @@ void EquationTextBox::OnKGFEquationButtonClicked(Object ^ sender, RoutedEventArg
 
 void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
+    if (IsAddEquationMode)
+    {
+        //Don't remove the last equation
+        return;
+    }
+
     if (m_richEditBox != nullptr)
     {
         m_richEditBox->MathText = L"";

@@ -177,7 +177,7 @@ void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ s
     // ensure the equation has been submitted before trying to get key graph features out of it
     if (tb->HasFocus)
     {
-        EquationInputArea::InputTextBox_Submitted(sender, e);
+        EquationInputArea::InputTextBox_Submitted(sender, EquationSubmissionSource::FOCUS_LOST);
     }
 
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);

@@ -2052,6 +2052,7 @@
                                         <VisualState x:Name="ButtonHideRemove">
                                             <VisualState.Setters>
                                                 <Setter Target="RemoveButtonPanel.Visibility" Value="Collapsed"/>
+                                                <Setter Target="RemoveFunctionMenuItem.IsEnabled" Value="False"/>
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="ButtonCollapsed"/>
@@ -2193,7 +2194,27 @@
                                                                   AcceptsReturn="false"
                                                                   InputScope="Text"
                                                                   MaxLength="2048"
-                                                                  TextWrapping="NoWrap"/>
+                                                                  TextWrapping="NoWrap">
+                                            <Controls:MathRichEditBox.ContextFlyout>
+                                                <MenuFlyout x:Name="MathRichEditContextMenu">
+                                                    <MenuFlyoutItem x:Name="FunctionAnalysisMenuItem">
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xE3B5;"/>
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
+                                                    <MenuFlyoutItem x:Name="ChangeFunctionStyleMenuItem">
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xE790;"/>
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
+                                                    <MenuFlyoutItem x:Name="RemoveFunctionMenuItem">
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xECC9;"/>
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
+                                                </MenuFlyout>
+                                            </Controls:MathRichEditBox.ContextFlyout>
+                                        </Controls:MathRichEditBox>
                                         <!-- TODO: Use brush overrides here instead of a new style, use a new style for the EquationButton above once that has more functionality -->
                                         <Button x:Name="DeleteButton"
                                                 Grid.Column="3"
