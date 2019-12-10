@@ -24,7 +24,7 @@ namespace CalculatorUITests
             WinAppDriver.Instance.SetupCalculatorSession(context);
 
             // Ensure that calculator is in standard mode
-            page.NavigateToCalculatorMode(CalculatorMode.StandardCalculator);
+            page.NavigateToStandardCalculator();
         }
 
         /// <summary>

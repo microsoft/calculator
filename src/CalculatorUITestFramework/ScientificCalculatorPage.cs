@@ -20,10 +20,10 @@ namespace CalculatorUITestFramework
 
         public WindowsElement CalculatorResult => this.session.TryFindElementByAccessibilityId("CalculatorResults");
 
-        public void NavigateToCalculatorMode(CalculatorMode mode)
+        public void NavigateToScientificCalculator()
         {
-            // Ensure that calculator is in standard mode
-            this.NavigationMenu.ChangeCalculatorMode(mode);
+            // Ensure that calculator is in scientific mode
+            this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.ScientificCalculator);
             Assert.IsNotNull(CalculatorResult);
         }
 
