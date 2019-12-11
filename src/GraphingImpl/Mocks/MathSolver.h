@@ -17,7 +17,7 @@ namespace MockGraphingImpl
 
     class EvalOptions : public Graphing::IEvalOptions
     {
-        Graphing::EvalTrigUnitMode  GetTrigUnitMode() override
+        Graphing::EvalTrigUnitMode GetTrigUnitMode() const override
         {
             return Graphing::EvalTrigUnitMode::Invalid;
         }

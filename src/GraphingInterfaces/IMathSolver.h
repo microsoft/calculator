@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include "Common.h"
@@ -37,9 +40,8 @@ namespace Graphing
     {
         virtual ~IEvalOptions() = default;
 
-        virtual Graphing::EvalTrigUnitMode GetTrigUnitMode() = 0;
-        virtual void SetTrigUnitMode(Graphing::EvalTrigUnitMode value) = 0;
-
+        virtual EvalTrigUnitMode GetTrigUnitMode() const = 0;
+        virtual void SetTrigUnitMode(EvalTrigUnitMode value) = 0;
     };
 
     struct IFormatOptions : public NonCopyable, public NonMoveable

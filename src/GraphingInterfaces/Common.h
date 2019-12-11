@@ -1,7 +1,11 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include <memory>
 #include <string>
+
 #ifndef GRAPHINGAPI
 #ifdef GRAPHING_ENGINE_IMPL
 #define GRAPHINGAPI __declspec(dllexport)
