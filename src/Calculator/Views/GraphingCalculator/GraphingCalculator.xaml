@@ -15,9 +15,6 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-
-            <converters:ItemSizeToVisibilityConverter x:Key="ItemSizeToVisibilityConverter"/>
-
             <Style x:Key="GraphButtonStyle" TargetType="Button">
                 <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                 <Setter Property="Background" Value="{ThemeResource AppControlTransparentButtonBackgroundBrush}"/>
@@ -314,7 +311,6 @@
                 </Setter>
             </Style>
 
-            <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter"/>
             <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
