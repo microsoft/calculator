@@ -76,7 +76,6 @@ void EquationInputArea::AddNewEquation()
     eq->FunctionLabelIndex = ++m_lastFunctionLabelIndex;
     m_equationToFocus = eq;
     Equations->Append(eq);
-    EquationInputList->ScrollIntoView(eq);
 }
 
 void EquationInputArea::InputTextBox_GotFocus(Object ^ sender, RoutedEventArgs ^ e)
@@ -129,25 +128,33 @@ void EquationInputArea::InputTextBox_Submitted(Object ^ sender, EquationSubmissi
 
 void EquationInputArea::FocusEquationTextBox(EquationViewModel ^ equation)
 {
-    auto nextContainer = EquationInputList->ContainerFromItem(equation);
-    if (nextContainer == nullptr)
+    unsigned int index;
+    if (!Equations->IndexOf(equation, &index) || index < 0)
     {
         return;
     }
-    auto listviewItem = dynamic_cast<ListViewItem ^>(nextContainer);
-    if (listviewItem == nullptr)
+    auto container = EquationInputList->TryGetElement(index);
+    if (container == nullptr)
     {
         return;
     }
-    auto equationInput = VisualTree::FindDescendantByName(nextContainer, "EquationInputButton");
-    if (equationInput == nullptr)
-    {
-        return;
-    }
-    auto equationTextBox = dynamic_cast<EquationTextBox ^>(equationInput);
+    auto equationTextBox = dynamic_cast<EquationTextBox ^>(container);
     if (equationTextBox != nullptr)
     {
         equationTextBox->FocusTextBox();
+    }
+    else
+    {
+        auto equationInput = VisualTree::FindDescendantByName(container, "EquationInputButton");
+        if (equationInput == nullptr)
+        {
+            return;
+        }
+        equationTextBox = dynamic_cast<EquationTextBox ^>(equationInput);
+        if (equationTextBox != nullptr)
+        {
+            equationTextBox->FocusTextBox();
+        }
     }
 }
 
@@ -204,6 +211,16 @@ void EquationInputArea::EquationTextBoxLoaded(Object ^ sender, RoutedEventArgs ^
     {
         m_equationToFocus = nullptr;
         tb->FocusTextBox();
+
+        unsigned int index;
+        if (Equations->IndexOf(m_equationToFocus, &index))
+        {
+            auto container = EquationInputList->TryGetElement(index);
+            if (container != nullptr)
+            {
+                container->StartBringIntoView();
+            }
+        }
     }
 }
 
@@ -259,25 +276,10 @@ void EquationInputArea::ReloadAvailableColors(bool isHighContrast)
     }
 }
 
-void CalculatorApp::EquationInputArea::EquationInputList_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e)
-{
-    auto item = Equations->GetAt(Equations->Size - 1);
-    if (item == m_equationToFocus)
-    {
-        auto container = EquationInputList->TryGetElement(Equations->Size - 1);
-        if (container != nullptr)
-        {
-            container->StartBringIntoView();
-        }
-        m_equationToFocus = nullptr;
-    }
-}
-
 void EquationInputArea::TextBoxGotFocus(TextBox ^ sender, RoutedEventArgs ^ e)
 {
     sender->SelectAll();
 }
-
 
 void EquationInputArea::SubmitTextbox(TextBox ^ sender)
 {
