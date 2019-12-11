@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculatorUITests", "Calcul
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculatorUITestFramework", "CalculatorUITestFramework\CalculatorUITestFramework.csproj", "{96454213-94AF-457D-9DF9-B14F80E7770F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MockGraphingImpl", "MockGraphingImpl\MockGraphingImpl.vcxproj", "{52E03A58-B378-4F50-8BFB-F659FB85E790}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphingImpl", "GraphingImpl\GraphingImpl.vcxproj", "{52E03A58-B378-4F50-8BFB-F659FB85E790}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphControl", "GraphControl\GraphControl.vcxproj", "{E727A92B-F149-492C-8117-C039A298719B}"
 EndProject

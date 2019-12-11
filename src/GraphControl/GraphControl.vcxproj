@@ -121,29 +121,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <GenerateManifest>false</GenerateManifest>
+    <GenerateProjectSpecificOutputFolder>true</GenerateProjectSpecificOutputFolder>
   </PropertyGroup>
   <PropertyGroup>
     <GraphingInterfaceDir>$([MSBuild]::ValueOrDefault($(GraphingInterfaceDir), '$(SolutionDir)\GraphingInterfaces\'))</GraphingInterfaceDir>
@@ -337,7 +317,7 @@
     <Page Include="Themes\generic.xaml" />
   </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::ValueOrDefault($(UseMockGraphingImpl), true))">
-    <ProjectReference Include="$(SolutionDir)\MockGraphingImpl\MockGraphingImpl.vcxproj">
+    <ProjectReference Include="$(SolutionDir)\GraphingImpl\GraphingImpl.vcxproj">
       <Project>{52E03A58-B378-4F50-8BFB-F659FB85E790}</Project>
     </ProjectReference>
   </ItemGroup>
