@@ -58,13 +58,6 @@ GraphingCalculator::GraphingCalculator()
     Grapher::RegisterDependencyProperties();
     InitializeComponent();
 
-    auto toolTip = ref new ToolTip();
-    auto resProvider = AppResourceProvider::GetInstance();
-    auto tracingMessage = ActiveTracingOn ? resProvider->GetResourceString(L"disableTracingButtonToolTip") : resProvider->GetResourceString(L"enableTracingButtonToolTip");
-    toolTip->Content = tracingMessage;
-    ToolTipService::SetToolTip(ActiveTracing, toolTip);
-    AutomationProperties::SetName(ActiveTracing, tracingMessage);
-
     DataTransferManager ^ dataTransferManager = DataTransferManager::GetForCurrentView();
 
     // Register the current control as a share source.
@@ -159,7 +152,12 @@ void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationView
 
 void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
 {
-    TraceValue->Text = "(" + newPoint.X.ToString() + ", " + newPoint.Y.ToString() + ")";
+    wstringstream traceValueString;
+
+    // TODO: The below precision should ideally be dynamic based on the current scale of the graph.
+    traceValueString << "(" << fixed << setprecision(1) << newPoint.X << "," << fixed << setprecision(1) << newPoint.Y << ")";
+
+    TraceValue->Text = ref new String(traceValueString.str().c_str());
 
     auto peer = FrameworkElementAutomationPeer::FromElement(TraceValue);
 
@@ -389,9 +387,15 @@ void GraphingCalculator::OnActiveTracingClick(Object ^ sender, RoutedEventArgs ^
     ActiveTracingOn = !ActiveTracingOn;
     GraphingControl->ActiveTracing = ActiveTracingOn;
 
+    if (ActiveTracingOn)
+    {
+        GraphingControl->Focus(::FocusState::Programmatic);
+    }
+
     auto toolTip = ref new ToolTip();
     auto resProvider = AppResourceProvider::GetInstance();
-    auto tracingMessage = ActiveTracingOn ? resProvider->GetResourceString(L"disableTracingButtonToolTip") : resProvider->GetResourceString(L"enableTracingButtonToolTip");
+    auto tracingMessage =
+        ActiveTracingOn ? resProvider->GetResourceString(L"disableTracingButtonToolTip") : resProvider->GetResourceString(L"enableTracingButtonToolTip");
     toolTip->Content = tracingMessage;
     ToolTipService::SetToolTip(ActiveTracing, toolTip);
     AutomationProperties::SetName(ActiveTracing, tracingMessage);

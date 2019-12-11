@@ -25,7 +25,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="controls:EquationTextBox">
-                        <Grid>
+                        <Grid Background="{ThemeResource TextControlBackground}">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -102,7 +102,8 @@
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="IsEnabled" Value="True"/>
-            <Setter Property="Margin" Value="-8,0,0,0"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Padding" Value="0,3,4,0"/>
             <Setter Property="UseSystemFocusVisuals" Value="True"/>
             <Setter Property="TextWrapping" Value="NoWrap"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -169,8 +170,8 @@
                             <Border x:Name="BorderElement"
                                     Grid.Row="1"
                                     Grid.RowSpan="1"
-                                    MinWidth="{ThemeResource TextControlThemeMinWidth}"
-                                    MinHeight="{ThemeResource TextControlThemeMinHeight}"
+                                    MinWidth="0"
+                                    MinHeight="0"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
@@ -224,6 +225,7 @@
         <Style x:Name="KGF_TextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="FontSize" Value="14"/>
+            <Setter Property="IsTextSelectionEnabled" Value="True"/>
             <Setter Property="TextWrapping" Value="WrapWholeWords"/>
         </Style>
 
@@ -243,6 +245,11 @@
                            Style="{StaticResource KGF_TitleTextBlockStyle}"
                            Text="{x:Bind Title, Mode=OneWay}"/>
                 <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}" UseSystemFocusVisuals="True">
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Margin" Value="0"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="x:String">
                             <controls:MathRichEditBox HorizontalAlignment="Left"
@@ -265,7 +272,7 @@
                         <DataTemplate x:DataType="vm:GridDisplayItems">
                             <Grid VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto" MinWidth="64"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <controls:MathRichEditBox Grid.Column="0"
@@ -308,7 +315,7 @@
         <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
     </UserControl.Resources>
 
-    <Grid Margin="0,7,0,0" Background="Transparent">
+    <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>

@@ -315,7 +315,11 @@ void EquationTextBox::UpdateCommonVisualState()
 {
     String ^ state = nullptr;
 
-    if (m_HasFocus)
+    if (m_HasFocus && HasError)
+    {
+        state = "FocusedError";
+    }
+    else if (m_HasFocus)
     {
         state = "Focused";
     }

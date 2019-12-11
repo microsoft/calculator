@@ -35,7 +35,7 @@ namespace GraphControl::DX
         , m_backgroundColor{ {} }
         , m_swapChainPanel{ panel }
         , m_TraceValue(Point(0, 0))
-        , m_TraceLocation(Point(0,0))
+        , m_TraceLocation(Point(0, 0))
         , m_Tracing(false)
         , m_ActiveTracingPointRenderer{ &m_deviceResources }
     {
@@ -195,6 +195,14 @@ namespace GraphControl::DX
 
                         if (!isnan(nearestPointLocation.X) && !isnan(nearestPointLocation.Y))
                         {
+                            auto lineColors = m_graph->GetOptions().GetGraphColors();
+
+                            if (formulaId >= 0 && formulaId < lineColors.size())
+                            {
+                                auto dotColor = lineColors[formulaId];
+                                m_nearestPointRenderer.SetColor(D2D1::ColorF(dotColor.R * 65536 + dotColor.G * 256 + dotColor.B, 1.0));
+                            }
+
                             m_nearestPointRenderer.Render(nearestPointLocation);
                             m_Tracing = true;
                             m_TraceLocation = Point(nearestPointLocation.X, nearestPointLocation.Y);

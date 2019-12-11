@@ -700,6 +700,7 @@
             <!-- Ideally the KeyGraphFeaturesPanel should be a frame so that navigation to and from the panel could be handled nicely -->
             <local:KeyGraphFeaturesPanel x:Name="KeyGraphFeaturesControl"
                                          Grid.RowSpan="2"
+                                         Margin="0,4,0,0"
                                          KeyGraphFeaturesClosed="OnKeyGraphFeaturesClosed"
                                          ViewModel="{x:Bind EquationInputAreaControl.EquationVM, Mode=OneWay}"
                                          Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"
