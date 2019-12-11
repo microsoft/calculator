@@ -112,7 +112,7 @@ namespace CalculatorUITestFramework
                 }
                 else
                 {
-                    throw new NotFoundException("Could not the Memory Label");
+                    throw new NotFoundException("Could not find the Memory Label");
                 }
             }
         }

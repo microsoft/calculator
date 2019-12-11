@@ -54,6 +54,7 @@ namespace CalculatorUITests
             }
             page.GlobalCalculatorUI.EnsureCalculatorHasFocus();
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
+            page.ScientificOperators.ResetFEButton(fEButtonState.Normal);
         }
 
         [TestCleanup]

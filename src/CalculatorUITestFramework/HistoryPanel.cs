@@ -110,7 +110,7 @@ namespace CalculatorUITestFramework
                 }
                 else
                 {
-                    throw new NotFoundException("Could not the History Button");
+                    throw new NotFoundException("Could not find the History Button");
                 }
             }
         }

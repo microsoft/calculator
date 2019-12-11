@@ -159,5 +159,43 @@ namespace CalculatorUITestFramework
                 throw new Exception("'Keep on top' window is not within range of its default position");
             }
         }
+        /// <summary>
+        /// If the Invert button is not displayed, resize the window
+        /// Two attempts are made, the the button is not found a "not found" exception is thrown
+        /// </summary>
+        public void ResizeAoTWindowToDiplayInvertButton()
+        {
+            Point newWindowPostion = new Point(8, 8);
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
+            string source0 = this.session.PageSource;
+            if (source0.Contains("invertButton"))
+            {
+                return;
+            }
+            else
+            {
+                Size newWindowSize = new Size(502, 502);
+                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
+                string source1 = this.session.PageSource;
+                if (source1.Contains("invertButton"))
+                {
+                    return;
+                }
+                else
+                {
+                    Size newWindowSize2 = new Size(750, 750);
+                    WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
+                }
+                string source2 = this.session.PageSource;
+                if (source2.Contains("invertButton"))
+                {
+                    return;
+                }
+                else
+                {
+                    throw new NotFoundException("Could not find the Invert Button");
+                }
+            }
+        }
     }
 }

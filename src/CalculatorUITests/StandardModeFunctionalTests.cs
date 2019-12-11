@@ -941,11 +941,8 @@ namespace CalculatorUITests
         [Priority(2)]
         public void AoT_ErrorMessage()
         {
-            Size largeAoTWindowSize = new Size(502, 502);
-            Point largeAoTWindowPosition = new Point(8, 8);
             page.StandardAoTCalculatorPage.StandardAoTMode();
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = largeAoTWindowPosition;
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeAoTWindowSize;
+            page.StandardAoTCalculatorPage.ResizeAoTWindowToDiplayInvertButton();
             page.StandardOperators.DivideButton.Click();
             page.StandardOperators.NumberPad.Num0Button.Click();
             page.StandardOperators.EqualButton.Click();
