@@ -12,19 +12,20 @@ namespace CalculatorUITestFramework
     public class ScientificCalculatorPage
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        public GlobalCalculatorUI GlobalCalculatorUI = new GlobalCalculatorUI();
         public ScientificOperatorsPanel ScientificOperators = new ScientificOperatorsPanel();
         public MemoryPanel MemoryPanel = new MemoryPanel();
         public HistoryPanel HistoryPanel = new HistoryPanel();
         public NavigationMenu NavigationMenu = new NavigationMenu();
         public WindowsElement Header => this.session.TryFindElementByAccessibilityId("Header");
 
-        public WindowsElement CalculatorResult => this.session.TryFindElementByAccessibilityId("CalculatorResults");
+        public CalculatorResults CalculatorResults = new CalculatorResults();
 
         public void NavigateToScientificCalculator()
         {
             // Ensure that calculator is in scientific mode
             this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.ScientificCalculator);
-            Assert.IsNotNull(CalculatorResult);
+            this.CalculatorResults.CalculatorResultsDisplayIsPresent();
         }
 
         /// <summary>
@@ -43,17 +44,9 @@ namespace CalculatorUITestFramework
             {
                 this.ScientificOperators.ClearButton.Click();
             }
+            this.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
             this.MemoryPanel.MemoryClear.Click();
             this.HistoryPanel.ClearHistory();
-        }
-
-        /// <summary>
-        /// Gets the text from the display control and removes the narrator text that is not displayed in the UI.
-        /// </summary>
-        /// <returns>The string shown in the UI.</returns>
-        public string GetCalculatorResultText()
-        {
-            return this.CalculatorResult.Text.Replace("Display is", string.Empty).Trim();
         }
     }
 }

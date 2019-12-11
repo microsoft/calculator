@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices.ComTypes;
 using System;
+using System.Diagnostics;
 
 namespace CalculatorUITestFramework
 {
@@ -15,7 +16,13 @@ namespace CalculatorUITestFramework
         Degrees,
         Radians,
         Gradians
-    };
+    }
+
+    public enum fEButtonState
+    {
+        Normal,
+        Exponential
+    }
 
     /// <summary>
     /// UI elements and helper methods to perform common mathematical standard operations.
@@ -135,6 +142,15 @@ namespace CalculatorUITestFramework
                 {
                     this.DegRadGradButton.Click();
                 }
+        }
+
+        public void ResetFEButton(fEButtonState value)
+        {
+           if (this.FixedToExponentialButton.GetAttribute("Toggle.ToggleState") != "Off(0)")
+            {
+                FixedToExponentialButton.Click();
+            }
+            
         }
 
         public WindowsElement ResetTrigDropdownToggles()
