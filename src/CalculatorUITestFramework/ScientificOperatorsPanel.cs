@@ -146,11 +146,10 @@ namespace CalculatorUITestFramework
 
         public void ResetFEButton(fEButtonState value)
         {
-           if (this.FixedToExponentialButton.GetAttribute("Toggle.ToggleState") != "Off(0)")
+            if (this.FixedToExponentialButton.GetAttribute("Toggle.ToggleState") != "0")
             {
                 FixedToExponentialButton.Click();
             }
-            
         }
 
         public WindowsElement ResetTrigDropdownToggles()
