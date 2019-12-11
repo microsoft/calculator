@@ -27,6 +27,9 @@ namespace CalculatorUITests
 
             // Ensure that calculator is in scientific mode
             page.NavigateToScientificCalculator();
+
+            // Ensure that calculator window is large enough to display the memory/history panel; a good size for most tests
+            page.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
         }
 
         /// <summary>
@@ -45,11 +48,11 @@ namespace CalculatorUITests
         [TestInitialize]
         public void TestInit()
         {
-            if ("0" != page.GetCalculatorResultText())
+            if ("0" != page.CalculatorResults.GetCalculatorResultText())
             {
                 page.ClearAll();
             }
-
+            page.GlobalCalculatorUI.EnsureCalculatorHasFocus();
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
         }
 
@@ -67,7 +70,7 @@ namespace CalculatorUITests
             page.ScientificOperators.NumberPad.Input(3);
             page.ScientificOperators.XPower3Button.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("27", page.GetCalculatorResultText());
+            Assert.AreEqual("27", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -78,7 +81,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.SinButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("1", page.GetCalculatorResultText());
+            Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -90,7 +93,7 @@ namespace CalculatorUITests
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.TanhButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("1", page.GetCalculatorResultText());
+            Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -102,7 +105,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.InvCosButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("0", page.GetCalculatorResultText());
+            Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -113,7 +116,7 @@ namespace CalculatorUITests
             page.ScientificOperators.FuncButton.Click();
             page.ScientificOperators.FloorButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("5", page.GetCalculatorResultText());
+            Assert.AreEqual("5", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -128,7 +131,7 @@ namespace CalculatorUITests
             page.ScientificOperators.NumberPad.Input(2);
             page.ScientificOperators.ParenthesisRightButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("12", page.GetCalculatorResultText());
+            Assert.AreEqual("12", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -141,7 +144,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.CosButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("-1", page.GetCalculatorResultText());
+            Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -154,7 +157,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.SinButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("1", page.GetCalculatorResultText());
+            Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -163,7 +166,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.FixedToExponentialButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("0.e+0", page.GetCalculatorResultText());
+            Assert.AreEqual("0.e+0", page.CalculatorResults.GetCalculatorResultText());
         }
         #endregion
 
@@ -176,7 +179,7 @@ namespace CalculatorUITests
             page.ScientificOperators.XPowerYButton.Click();
             page.ScientificOperators.NumberPad.Input(5);
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("243", page.GetCalculatorResultText());
+            Assert.AreEqual("243", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -186,7 +189,7 @@ namespace CalculatorUITests
             page.ScientificOperators.NumberPad.Input(5);
             page.ScientificOperators.PowerOf10Button.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("100,000", page.GetCalculatorResultText());
+            Assert.AreEqual("100,000", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -196,7 +199,7 @@ namespace CalculatorUITests
             page.ScientificOperators.NumberPad.Input(10000);
             page.ScientificOperators.LogButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("4", page.GetCalculatorResultText());
+            Assert.AreEqual("4", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -206,7 +209,7 @@ namespace CalculatorUITests
             page.ScientificOperators.EulerButton.Click();
             page.ScientificOperators.LnButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("1", page.GetCalculatorResultText());
+            Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -217,7 +220,7 @@ namespace CalculatorUITests
             page.ScientificOperators.NegateButton.Click();
             page.ScientificOperators.AbsButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("25", page.GetCalculatorResultText());
+            Assert.AreEqual("25", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -228,7 +231,7 @@ namespace CalculatorUITests
             page.ScientificOperators.ExpButton.Click();
             page.ScientificOperators.NumberPad.Input(4);
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("40,000", page.GetCalculatorResultText());
+            Assert.AreEqual("40,000", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -239,7 +242,7 @@ namespace CalculatorUITests
             page.ScientificOperators.ModButton.Click();
             page.ScientificOperators.NumberPad.Input(10);
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("3", page.GetCalculatorResultText());
+            Assert.AreEqual("3", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -249,7 +252,7 @@ namespace CalculatorUITests
             page.ScientificOperators.NumberPad.Input(4);
             page.ScientificOperators.FactorialButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("24", page.GetCalculatorResultText());
+            Assert.AreEqual("24", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -260,7 +263,7 @@ namespace CalculatorUITests
             page.ScientificOperators.FuncButton.Click();
             page.ScientificOperators.CeilButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("5", page.GetCalculatorResultText());
+            Assert.AreEqual("5", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -270,7 +273,7 @@ namespace CalculatorUITests
             page.ScientificOperators.FuncButton.Click();
             page.ScientificOperators.RandButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0."));
+            Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("0."));
         }
 
         [TestMethod]
@@ -281,7 +284,7 @@ namespace CalculatorUITests
             page.ScientificOperators.FuncButton.Click();
             page.ScientificOperators.DmsButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("2.59564", page.GetCalculatorResultText());
+            Assert.AreEqual("2.59564", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -292,7 +295,7 @@ namespace CalculatorUITests
             page.ScientificOperators.FuncButton.Click();
             page.ScientificOperators.DegreesButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("2.999", page.GetCalculatorResultText());
+            Assert.AreEqual("2.999", page.CalculatorResults.GetCalculatorResultText());
         }
         #endregion
 
@@ -306,7 +309,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.CosButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("-1", page.GetCalculatorResultText());
+            Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
 
         }
 
@@ -320,7 +323,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TanButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("1", page.GetCalculatorResultText());
+            Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText());
 
         }
 
@@ -334,7 +337,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.SecButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("-1", page.GetCalculatorResultText());
+            Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
 
         }
 
@@ -348,7 +351,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.CscButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("1", page.GetCalculatorResultText());
+            Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText());
 
         }
 
@@ -362,7 +365,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.CotButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("1", page.GetCalculatorResultText());
+            Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText());
 
         }
 
@@ -377,7 +380,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.InvSinButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("90", page.GetCalculatorResultText());
+            Assert.AreEqual("90", page.CalculatorResults.GetCalculatorResultText());
 
         }
 
@@ -392,7 +395,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.InvTanButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("45", page.GetCalculatorResultText());
+            Assert.AreEqual("45", page.CalculatorResults.GetCalculatorResultText());
 
         }
 
@@ -408,7 +411,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.InvSecButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("180", page.GetCalculatorResultText());
+            Assert.AreEqual("180", page.CalculatorResults.GetCalculatorResultText());
 
         }
 
@@ -423,7 +426,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.InvCscButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("90", page.GetCalculatorResultText());
+            Assert.AreEqual("90", page.CalculatorResults.GetCalculatorResultText());
 
         }
 
@@ -438,7 +441,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.InvCotButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("45", page.GetCalculatorResultText());
+            Assert.AreEqual("45", page.CalculatorResults.GetCalculatorResultText());
 
         }
 
@@ -453,7 +456,7 @@ namespace CalculatorUITests
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.SinhButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("1.175201"));
+            Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("1.175201"));
 
         }
 
@@ -468,7 +471,7 @@ namespace CalculatorUITests
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.CoshButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("1.54308"));
+            Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("1.54308"));
 
         }
 
@@ -483,7 +486,7 @@ namespace CalculatorUITests
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.SechButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.64805"));
+            Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("0.64805"));
 
         }
 
@@ -498,7 +501,7 @@ namespace CalculatorUITests
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.CschButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.850918"));
+            Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("0.850918"));
 
         }
 
@@ -513,7 +516,7 @@ namespace CalculatorUITests
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.CothButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("1", page.GetCalculatorResultText());
+            Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText());
 
         }
 
@@ -529,7 +532,7 @@ namespace CalculatorUITests
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.InvSinhButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.881373"));
+            Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("0.881373"));
 
         }
 
@@ -545,7 +548,7 @@ namespace CalculatorUITests
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.InvCoshButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("0", page.GetCalculatorResultText());
+            Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText());
 
         }
 
@@ -561,7 +564,7 @@ namespace CalculatorUITests
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.InvTanhButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("0", page.GetCalculatorResultText());
+            Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText());
 
         }
 
@@ -577,7 +580,7 @@ namespace CalculatorUITests
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.InvSechButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.AreEqual("0", page.GetCalculatorResultText());
+            Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText());
 
         }
 
@@ -593,7 +596,7 @@ namespace CalculatorUITests
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.InvCschButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.881373"));
+            Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("0.881373"));
 
         }
 
@@ -609,7 +612,7 @@ namespace CalculatorUITests
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.InvCothButton.Click();
             page.ScientificOperators.EqualButton.Click();
-            Assert.IsTrue(page.GetCalculatorResultText().StartsWith("0.549306"));
+            Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("0.549306"));
 
         }
         #endregion
