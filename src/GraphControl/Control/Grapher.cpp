@@ -567,6 +567,11 @@ namespace GraphControl
     {
         options.SetForceProportional(ForceProportionalAxes);
 
+        if (!options.GetAllowKeyGraphFeaturesForFunctionsWithParameters())
+        {
+            options.SetAllowKeyGraphFeaturesForFunctionsWithParameters(true);
+        }
+
         if (!validEqs.empty())
         {
             vector<Graphing::Color> graphColors;

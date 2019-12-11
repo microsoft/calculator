@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 namespace Graphing
@@ -130,16 +133,16 @@ namespace Graphing
     enum class EvalTrigUnitMode
     {
         // Invalid value.
-        Invalid = 3,
+        Invalid,
 
         // Default trig unit. Period of sin is 2pi
-        Radians = 0,
+        Radians,
 
         // Degrees as trig unit. Period of sin is 360 degrees
-        Degrees = 1,
+        Degrees,
 
         // Grads as trig unit. Period of sin is 400 grads
-        Grads = 2
+        Grads
     };
 
     // Specifies the type of contextual action
