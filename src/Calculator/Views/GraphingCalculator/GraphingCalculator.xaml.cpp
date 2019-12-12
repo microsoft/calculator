@@ -51,19 +51,11 @@ constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, IsSmallState);
 
-GraphingCalculator::GraphingCalculator()
-    : ActiveTracingOn(false)
+GraphingCalculator::GraphingCalculator()    
 {
     Equation::RegisterDependencyProperties();
     Grapher::RegisterDependencyProperties();
     InitializeComponent();
-
-    auto toolTip = ref new ToolTip();
-    auto resProvider = AppResourceProvider::GetInstance();
-    auto tracingMessage = ActiveTracingOn ? resProvider->GetResourceString(L"disableTracingButtonToolTip") : resProvider->GetResourceString(L"enableTracingButtonToolTip");
-    toolTip->Content = tracingMessage;
-    ToolTipService::SetToolTip(ActiveTracing, toolTip);
-    AutomationProperties::SetName(ActiveTracing, tracingMessage);
 
     DataTransferManager ^ dataTransferManager = DataTransferManager::GetForCurrentView();
 
@@ -383,23 +375,39 @@ void GraphingCalculator::OnZoomResetCommand(Object ^ /* parameter */)
     GraphingControl->ResetGrid();
 }
 
-void GraphingCalculator::OnActiveTracingClick(Object ^ sender, RoutedEventArgs ^ e)
+String ^ GraphingCalculator::GetTracingLegend(Platform::IBox<bool> ^ isTracing)
 {
-    // The focus change to this button will have turned off the tracing if it was on
-    ActiveTracingOn = !ActiveTracingOn;
-    GraphingControl->ActiveTracing = ActiveTracingOn;
-
-    auto toolTip = ref new ToolTip();
     auto resProvider = AppResourceProvider::GetInstance();
-    auto tracingMessage = ActiveTracingOn ? resProvider->GetResourceString(L"disableTracingButtonToolTip") : resProvider->GetResourceString(L"enableTracingButtonToolTip");
-    toolTip->Content = tracingMessage;
-    ToolTipService::SetToolTip(ActiveTracing, toolTip);
-    AutomationProperties::SetName(ActiveTracing, tracingMessage);
+    return isTracing != nullptr && isTracing->Value ? resProvider->GetResourceString(L"disableTracingButtonToolTip")
+                                                    : resProvider->GetResourceString(L"enableTracingButtonToolTip");
 }
 
 void GraphingCalculator::GraphingControl_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     // If the graph is losing focus while we are in active tracing we need to turn it off so we don't try to eat keys in other controls.
+    if (GraphingControl->ActiveTracing)
+    {
+        if (ActiveTracing->Equals(FocusManager::GetFocusedElement()) && ActiveTracing->IsPressed)
+        {
+            m_ActiveTracingPointerCaptureLost = ActiveTracing->PointerCaptureLost +=
+                ref new Windows::UI::Xaml::Input::PointerEventHandler(this, &CalculatorApp::GraphingCalculator::ActiveTracing_PointerCaptureLost);
+        }
+        else
+        {
+            GraphingControl->ActiveTracing = false;
+            OnShowTracePopupChanged(false);
+        }
+    }
+}
+
+void CalculatorApp::GraphingCalculator::ActiveTracing_PointerCaptureLost(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e)
+{
+    if (m_ActiveTracingPointerCaptureLost.Value != 0)
+    {
+        ActiveTracing->PointerCaptureLost -= m_ActiveTracingPointerCaptureLost;
+        m_ActiveTracingPointerCaptureLost.Value = 0;
+    }
+
     if (GraphingControl->ActiveTracing)
     {
         GraphingControl->ActiveTracing = false;
@@ -487,11 +495,46 @@ void GraphingCalculator::PositionGraphPopup()
     }
 }
 
-void GraphingCalculator::TraceValuePopup_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e)
+void GraphingCalculator::TraceValuePopup_SizeChanged(Object ^ sender, SizeChangedEventArgs ^ e)
 {
     PositionGraphPopup();
 }
+
 ::Visibility GraphingCalculator::ManageEditVariablesButtonVisibility(unsigned int numberOfVariables)
 {
     return numberOfVariables == 0 ? ::Visibility::Collapsed : ::Visibility::Visible;
+}
+
+void CalculatorApp::GraphingCalculator::ActiveTracing_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    m_activeTracingKeyUpToken = Window::Current->CoreWindow->KeyUp +=
+        ref new Windows::Foundation::TypedEventHandler<Windows::UI::Core::CoreWindow ^, Windows::UI::Core::KeyEventArgs ^>(
+            this, &CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp);
+
+    KeyboardShortcutManager::IgnoreEscape(false);
+}
+
+void CalculatorApp::GraphingCalculator::ActiveTracing_Unchecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    if (m_ActiveTracingPointerCaptureLost.Value != 0)
+    {
+        ActiveTracing->PointerCaptureLost -= m_ActiveTracingPointerCaptureLost;
+        m_ActiveTracingPointerCaptureLost.Value = 0;
+    }
+
+    if (m_activeTracingKeyUpToken.Value != 0)
+    {
+        Window::Current->CoreWindow->KeyUp -= m_activeTracingKeyUpToken;
+        m_activeTracingKeyUpToken.Value = 0;
+    }
+    KeyboardShortcutManager::HonorEscape();
+}
+
+void CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args)
+{
+    if (args->VirtualKey == VirtualKey::Escape)
+    {
+        GraphingControl->ActiveTracing = false;
+        args->Handled = true;
+    }
 }
