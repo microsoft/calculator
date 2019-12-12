@@ -70,19 +70,19 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void GraphingControl_VariablesUpdated(Platform::Object ^ sender, Object ^ args);
         void OnEquationKeyGraphFeaturesRequested(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnKeyGraphFeaturesClosed(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        bool ActiveTracingOn;
         void SwitchModeToggleButton_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void TraceValuePopup_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
         void PositionGraphPopup();
         void ActiveTracing_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void ActiveTracing_Unchecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void ActiveTracing_KeyUp(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args);
-
+        void ActiveTracing_PointerCaptureLost(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
     private:
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
         Windows::Foundation::EventRegistrationToken m_vectorChangedToken;
         Windows::Foundation::EventRegistrationToken m_variableUpdatedToken;
         Windows::Foundation::EventRegistrationToken m_activeTracingKeyUpToken;
+        Windows::Foundation::EventRegistrationToken m_ActiveTracingPointerCaptureLost;
         CalculatorApp::ViewModel::GraphingCalculatorViewModel ^ m_viewModel;
     };
 
