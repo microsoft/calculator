@@ -28,7 +28,8 @@
                                 <Setter Property="BorderThickness" Value="0,0,0,1"/>
                                 <Setter Property="FontSize" Value="14"/>
                                 <Setter Property="InputScope" Value="Number"/>
-                                <Setter Property="MaxWidth" Value="80"/>
+                                <Setter Property="MaxWidth" Value="46"/>
+                                <Setter Property="MinWidth" Value="30"/>
                             </Style>
 
                             <ResourceDictionary.ThemeDictionaries>
@@ -73,15 +74,17 @@
                                     </Style>
                                     <Style x:Key="ThemedVariableTextBoxStyle" TargetType="TextBox">
                                         <Setter Property="InputScope" Value="Number"/>
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="InputScope" Value="Number"/>
+                                        <Setter Property="MaxWidth" Value="80"/>
+                                        <Setter Property="MinWidth" Value="40"/>
                                     </Style>
                                 </ResourceDictionary>
                             </ResourceDictionary.ThemeDictionaries>
                         </ResourceDictionary>
                     </Grid.Resources>
-                    <Border Style="{ThemeResource VariableContainerStyle}">
-                        <StackPanel Margin="0,3"
-                                    Padding="12,0"
-                                    DataContext="{x:Bind}">
+                    <Border Margin="0,3" Style="{ThemeResource VariableContainerStyle}">
+                        <StackPanel Padding="12,0" DataContext="{x:Bind}">
                             <Grid HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -154,49 +157,61 @@
                                   HorizontalAlignment="Stretch"
                                   Visibility="{x:Bind SliderSettingsVisible, Mode=OneWay}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Orientation="Horizontal">
+                                <Grid HorizontalAlignment="Left">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
                                     <TextBlock x:Uid="MinTextBlock"
                                                Margin="0,4,0,0"
                                                VerticalAlignment="Center"/>
                                     <TextBox x:Name="MinTextBox"
-                                             HorizontalAlignment="Left"
+                                             Grid.Column="1"
                                              Style="{StaticResource ThemedVariableTextBoxStyle}"
                                              GotFocus="TextBoxGotFocus"
                                              KeyDown="TextBoxKeyDown"
                                              LosingFocus="TextBoxLosingFocus"
                                              Text="{x:Bind Min, Mode=OneWay}"/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            HorizontalAlignment="Center"
-                                            Orientation="Horizontal">
+                                </Grid>
+                                <Grid Grid.Column="1"
+                                      Margin="4,0"
+                                      HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
                                     <TextBlock x:Uid="StepTextBlock"
                                                Margin="0,4,0,0"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"/>
                                     <TextBox x:Name="StepTextBox"
-                                             HorizontalAlignment="Center"
+                                             Grid.Column="1"
                                              Style="{StaticResource ThemedVariableTextBoxStyle}"
                                              GotFocus="TextBoxGotFocus"
                                              KeyDown="TextBoxKeyDown"
                                              LosingFocus="TextBoxLosingFocus"
                                              Text="{x:Bind Step, Mode=OneWay}"/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                </Grid>
+                                <Grid Grid.Column="2" HorizontalAlignment="Right">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
                                     <TextBlock x:Uid="MaxTextBlock"
                                                Margin="0,4,0,0"
                                                VerticalAlignment="Center"/>
                                     <TextBox x:Name="MaxTextBox"
-                                             HorizontalAlignment="Left"
+                                             Grid.Column="1"
                                              Style="{StaticResource ThemedVariableTextBoxStyle}"
                                              GotFocus="TextBoxGotFocus"
                                              KeyDown="TextBoxKeyDown"
                                              LosingFocus="TextBoxLosingFocus"
                                              Text="{x:Bind Max, Mode=OneWay}"/>
-                                </StackPanel>
+                                </Grid>
                             </Grid>
                         </StackPanel>
                     </Border>
@@ -205,66 +220,59 @@
 
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid VerticalAlignment="Top">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <mux:ItemsRepeaterScrollHost>
-            <ScrollViewer>
-                <StackPanel>
-                    <mux:ItemsRepeater x:Name="EquationInputList"
-                                       ItemsSource="{x:Bind Equations}"
+    <mux:ItemsRepeaterScrollHost>
+        <ScrollViewer>
+            <StackPanel>
+                <mux:ItemsRepeater x:Name="EquationInputList"
+                                   ItemsSource="{x:Bind Equations}"
+                                   TabFocusNavigation="Local">
+                    <mux:ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="vm:EquationViewModel">
+                            <controls:EquationTextBox x:Uid="EquationInputButton"
+                                                      Margin="1,0,1,2"
+                                                      Style="{StaticResource EquationTextBoxStyle}"
+                                                      DataContext="{x:Bind Mode=OneWay}"
+                                                      EquationButtonClicked="EquationTextBox_EquationButtonClicked"
+                                                      EquationButtonContentIndex="{x:Bind FunctionLabelIndex, Mode=OneWay}"
+                                                      EquationColor="{x:Bind LineColor, Mode=OneWay}"
+                                                      EquationSubmitted="InputTextBox_Submitted"
+                                                      GotFocus="InputTextBox_GotFocus"
+                                                      HasError="{x:Bind GraphEquation.HasGraphError, Mode=OneWay}"
+                                                      IsAddEquationMode="{x:Bind IsLastItemInList, Mode=OneWay}"
+                                                      KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked"
+                                                      Loaded="InputTextBox_Loaded"
+                                                      LostFocus="InputTextBox_LostFocus"
+                                                      RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
+                                <controls:EquationTextBox.ColorChooserFlyout>
+                                    <Flyout x:Name="ColorChooserFlyout"
+                                            x:Uid="ColorChooserFlyout"
+                                            Placement="Bottom">
+                                        <local:EquationStylePanelControl SelectedColor="{x:Bind LineColor, Mode=TwoWay}"/>
+                                    </Flyout>
+                                </controls:EquationTextBox.ColorChooserFlyout>
+                            </controls:EquationTextBox>
+                        </DataTemplate>
+                    </mux:ItemsRepeater.ItemTemplate>
+                </mux:ItemsRepeater>
+
+                <StackPanel Margin="12" Visibility="{x:Bind local:EquationInputArea.ManageEditVariablesButtonVisibility(Variables.Size), Mode=OneWay}">
+                    <TextBlock x:Uid="VaiablesHeader"
+                               Margin="0,6"
+                               FontWeight="SemiBold"/>
+                    <mux:ItemsRepeater x:Name="VariableListView"
+                                       ItemTemplate="{StaticResource VariableDataTemplate}"
+                                       ItemsSource="{x:Bind Variables, Mode=OneWay}"
                                        TabFocusNavigation="Local">
-                        <mux:ItemsRepeater.ItemTemplate>
-                            <DataTemplate x:DataType="vm:EquationViewModel">
-                                <controls:EquationTextBox x:Uid="EquationInputButton"
-                                                          Margin="1,0,1,0"
-                                                          Style="{StaticResource EquationTextBoxStyle}"
-                                                          DataContext="{x:Bind Mode=OneWay}"
-                                                          EquationButtonClicked="EquationTextBox_EquationButtonClicked"
-                                                          EquationButtonContentIndex="{x:Bind FunctionLabelIndex, Mode=OneWay}"
-                                                          EquationColor="{x:Bind LineColor, Mode=OneWay}"
-                                                          EquationSubmitted="InputTextBox_Submitted"
-                                                          GotFocus="InputTextBox_GotFocus"
-                                                          HasError="{x:Bind GraphEquation.HasGraphError, Mode=OneWay}"
-                                                          IsAddEquationMode="{x:Bind IsLastItemInList, Mode=OneWay}"
-                                                          KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked"
-                                                          Loaded="EquationTextBoxLoaded"
-                                                          LostFocus="InputTextBox_LostFocus"
-                                                          RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
-
-                                    <controls:EquationTextBox.ColorChooserFlyout>
-                                        <Flyout x:Name="ColorChooserFlyout"
-                                                x:Uid="ColorChooserFlyout"
-                                                Placement="Bottom">
-                                            <local:EquationStylePanelControl SelectedColor="{x:Bind LineColor, Mode=TwoWay}"/>
-                                        </Flyout>
-                                    </controls:EquationTextBox.ColorChooserFlyout>
-                                </controls:EquationTextBox>
-                            </DataTemplate>
-                        </mux:ItemsRepeater.ItemTemplate>
+                        <mux:ItemsRepeater.Transitions>
+                            <TransitionCollection>
+                                <AddDeleteThemeTransition/>
+                            </TransitionCollection>
+                        </mux:ItemsRepeater.Transitions>
                     </mux:ItemsRepeater>
-
-                    <StackPanel Margin="12" Visibility="{x:Bind local:EquationInputArea.ManageEditVariablesButtonVisibility(Variables.Size), Mode=OneWay}">
-                        <TextBlock x:Uid="VaiablesHeader"
-                                   Margin="0,6"
-                                   FontWeight="SemiBold"/>
-                        <mux:ItemsRepeater x:Name="VariableListView"
-                                           ItemTemplate="{StaticResource VariableDataTemplate}"
-                                           ItemsSource="{x:Bind Variables, Mode=OneWay}"
-                                           TabFocusNavigation="Local">
-                            <mux:ItemsRepeater.Transitions>
-                                <TransitionCollection>
-                                    <AddDeleteThemeTransition/>
-                                </TransitionCollection>
-                            </mux:ItemsRepeater.Transitions>
-                        </mux:ItemsRepeater>
-                    </StackPanel>
                 </StackPanel>
+            </StackPanel>
 
-            </ScrollViewer>
-        </mux:ItemsRepeaterScrollHost>
+        </ScrollViewer>
+    </mux:ItemsRepeaterScrollHost>
 
-    </Grid>
 </UserControl>

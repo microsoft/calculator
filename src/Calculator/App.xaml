@@ -1899,7 +1899,6 @@
                                         </VisualState>
                                         <VisualState x:Name="AddEquation">
                                             <VisualState.Setters>
-                                                <Setter Target="RemoveButtonPanel.Visibility" Value="Collapsed"/>
                                                 <Setter Target="MathRichEditBox.PlaceholderText" Value="Enter an equation"/>
                                                 <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource EquationBoxAddBackgroundBrush}"/>
                                                 <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource EquationBoxBorderBrush}"/>

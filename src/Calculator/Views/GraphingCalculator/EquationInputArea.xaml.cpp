@@ -113,15 +113,18 @@ void EquationInputArea::InputTextBox_Submitted(Object ^ sender, EquationSubmissi
     if (source == EquationSubmissionSource::ENTER_KEY || eq->Expression != nullptr && eq->Expression->Length() > 0)
     {
         unsigned int index = 0;
-        if (Equations->IndexOf(eq, &index) && index == Equations->Size - 1)
+        if (Equations->IndexOf(eq, &index))
         {
-            // If it's the last equation of the list
-            AddNewEquation();
-        }
-        else
-        {
-            auto nextEquation = Equations->GetAt(index + 1);
-            FocusEquationTextBox(nextEquation);
+            if (index == Equations->Size - 1)
+            {
+                // If it's the last equation of the list
+                AddNewEquation();
+            }
+            else
+            {
+                auto nextEquation = Equations->GetAt(index + 1);
+                FocusEquationTextBox(nextEquation);
+            }
         }
     }
 }
@@ -200,7 +203,7 @@ void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, R
     eq->IsLineEnabled = !eq->IsLineEnabled;
 }
 
-void EquationInputArea::EquationTextBoxLoaded(Object ^ sender, RoutedEventArgs ^ e)
+void EquationInputArea::InputTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e)
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
 
