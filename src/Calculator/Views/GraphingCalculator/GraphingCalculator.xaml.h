@@ -36,6 +36,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         static Windows::UI::Xaml::Visibility ShouldDisplayPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel);
         static Platform::String ^ GetInfoForSwitchModeToggleButton(bool isChecked);
         static Windows::UI::Xaml::Visibility ManageEditVariablesButtonVisibility(unsigned int numberOfVariables);
+        static Platform::String ^ GetTracingLegend(Platform::IBox<bool> ^ isTracing);
     private:
         void GraphingCalculator_DataContextChanged(Windows::UI::Xaml::FrameworkElement ^ sender, Windows::UI::Xaml::DataContextChangedEventArgs ^ args);
 
@@ -54,22 +55,16 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
 
         double validateDouble(Platform::String ^ value, double defaultValue);
 
-        CalculatorApp::ViewModel::GraphingCalculatorViewModel ^ m_viewModel;
-
         void OnShareClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
         void OnShowTracePopupChanged(bool newValue);
         void OnTracePointChanged(Windows::Foundation::Point newPoint);
     private:
-        Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
-        Windows::Foundation::EventRegistrationToken m_vectorChangedToken;
-        Windows::Foundation::EventRegistrationToken m_variableUpdatedToken;
         void OnDataRequested(
             Windows::ApplicationModel::DataTransfer::DataTransferManager ^ sender,
             Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs ^ e);
 
         void TextBoxGotFocus(Windows::UI::Xaml::Controls::TextBox ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void OnActiveTracingClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void GraphingControl_LostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void GraphingControl_LosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
         void GraphingControl_VariablesUpdated(Platform::Object ^ sender, Object ^ args);
@@ -79,6 +74,16 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void SwitchModeToggleButton_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void TraceValuePopup_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
         void PositionGraphPopup();
+        void ActiveTracing_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void ActiveTracing_Unchecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void ActiveTracing_KeyUp(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args);
+
+    private:
+        Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
+        Windows::Foundation::EventRegistrationToken m_vectorChangedToken;
+        Windows::Foundation::EventRegistrationToken m_variableUpdatedToken;
+        Windows::Foundation::EventRegistrationToken m_activeTracingKeyUpToken;
+        CalculatorApp::ViewModel::GraphingCalculatorViewModel ^ m_viewModel;
     };
 
 }
