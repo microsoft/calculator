@@ -50,87 +50,39 @@ void GraphingSettings::TrigUnitModeClick(Platform::Object ^ sender, Windows::UI:
 void GraphingSettings::UpdateExtents(Platform::Object ^ sender)
 {
     Control ^ senderControl = static_cast<Control ^>(sender);
-    bool thisControlHasFocus = senderControl->FocusState != ::FocusState::Unfocused;
 
     TextBox ^ tb = static_cast<TextBox ^>(sender);
 
     bool widthChanged = false;
     bool heightChanged = false;
 
-    try
+    double newVal = std::stod(tb->Text->Begin());
+    if (tb->Name == "x_Min" && newVal != m_xMin)
     {
-        double newVal = std::stod(tb->Text->Begin());
-        if (tb->Name == "x_Min" && newVal != m_xMin)
-        {
-            widthChanged = true;
-            m_xMin = newVal;
-            m_ParentGrapher->XAxisMin = m_xMin;
-        }
-
-        if (tb->Name == "x_Max" && newVal != m_xMax)
-        {
-            widthChanged = true;
-            m_xMax = newVal;
-            m_ParentGrapher->XAxisMax = m_xMax;
-        }
-
-        if (tb->Name == "y_Min" && newVal != m_yMin)
-        {
-            heightChanged = true;
-            m_yMin = newVal;
-            m_ParentGrapher->YAxisMin = m_yMin;
-        }
-
-        if (tb->Name == "y_Max" && newVal != m_yMax)
-        {
-            heightChanged = true;
-            m_yMax = newVal;
-            m_ParentGrapher->YAxisMax = m_yMax;
-        }
-
-        // Only the focused element get's to trigger the recompute
-
-        if (thisControlHasFocus)
-        {
-            if (m_preserveAspectRatio)
-            {
-                if (widthChanged)
-                {
-                    m_width = m_xMax - m_xMin;
-                    m_height = m_width / m_currentAspectRatio;
-                    double bounds = m_height / 2;
-                    m_yMin = -bounds;
-                    m_yMax = bounds;
-                    m_ParentGrapher->YAxisMin = m_yMin;
-                    m_ParentGrapher->YAxisMax = m_yMax;
-                }
-
-                if (heightChanged)
-                {
-                    m_height = m_yMax - m_yMin;
-                    m_width = m_height * m_currentAspectRatio;
-                    double bounds = m_width / 2;
-                    m_xMin = -bounds;
-                    m_xMax = bounds;
-                    m_ParentGrapher->XAxisMin = m_xMin;
-                    m_ParentGrapher->XAxisMax = m_xMax;
-                }
-
-                if (widthChanged || heightChanged)
-                {
-                    x_Min->Text = m_xMin.ToString();
-                    x_Max->Text = m_xMax.ToString();
-
-                    y_Min->Text = m_yMin.ToString();
-                    y_Max->Text = m_yMax.ToString();
-
-                    m_ParentGrapher->SetDisplayRanges(m_xMin, m_xMax, m_yMin, m_yMax);
-                }
-            }
-        }
+        widthChanged = true;
+        m_xMin = newVal;
+        m_ParentGrapher->XAxisMin = m_xMin;
     }
-    catch (const std::exception&)
+
+    if (tb->Name == "x_Max" && newVal != m_xMax)
     {
+        widthChanged = true;
+        m_xMax = newVal;
+        m_ParentGrapher->XAxisMax = m_xMax;
+    }
+
+    if (tb->Name == "y_Min" && newVal != m_yMin)
+    {
+        heightChanged = true;
+        m_yMin = newVal;
+        m_ParentGrapher->YAxisMin = m_yMin;
+    }
+
+    if (tb->Name == "y_Max" && newVal != m_yMax)
+    {
+        heightChanged = true;
+        m_yMax = newVal;
+        m_ParentGrapher->YAxisMax = m_yMax;
     }
 }
 
@@ -147,32 +99,27 @@ void GraphingSettings::OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::Ro
 
     switch ((Graphing::EvalTrigUnitMode)m_ParentGrapher->TrigUnitMode)
     {
-    case Graphing::EvalTrigUnitMode::Degrees:
-    {
-        Degrees->IsChecked = true;
+        case Graphing::EvalTrigUnitMode::Degrees:
+        {
+            Degrees->IsChecked = true;
+            break;
+        }
+        case Graphing::EvalTrigUnitMode::Radians:
+        {
+            Radians->IsChecked = true;
+            break;
+        }
+        case Graphing::EvalTrigUnitMode::Grads:
+        {
+            Gradians->IsChecked = true;
+            break;
+        }
+        case Graphing::EvalTrigUnitMode::Invalid:
+        {
+            m_ParentGrapher->TrigUnitMode = (int)Graphing::EvalTrigUnitMode::Radians;
+            break;
+        }
     }
-    break;
-    case Graphing::EvalTrigUnitMode::Radians:
-    {
-        Radians->IsChecked = true;
-    }
-    break;
-    case Graphing::EvalTrigUnitMode::Grads:
-    {
-        Gradians->IsChecked = true;
-    }
-    break;
-
-    case Graphing::EvalTrigUnitMode::Invalid:
-    {
-        OutputDebugString(L"GraphingSettings::GraphingCalculator_DataContextChanged Unsupported TrigUnitMode\r\n");
-        m_ParentGrapher->TrigUnitMode = (int)Graphing::EvalTrigUnitMode::Radians;
-    }
-    }
-
-    m_width = m_xMax - m_xMin;
-    m_height = m_yMax - m_yMin;
-    m_currentAspectRatio = m_height / m_width;
 }
 
 void GraphingSettings::OnLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args)
@@ -185,21 +132,5 @@ void GraphingSettings::OnKeyDown(Platform::Object ^ sender, Windows::UI::Xaml::I
     if (e->Key == Windows::System::VirtualKey::Enter)
     {
         UpdateExtents(sender);
-    }
-}
-
-void GraphingSettings::OnPreserveAspectRatioClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
-{
-    if (m_preserveAspectRatio)
-    {
-        // On now, turning it off
-        m_preserveAspectRatio = false;
-        PreserveAspectRatioSymbol->Opacity = 0.25;
-    }
-    else
-    {
-        // Off now, turning it on
-        m_preserveAspectRatio = true;
-        PreserveAspectRatioSymbol->Opacity = 1.0;
     }
 }

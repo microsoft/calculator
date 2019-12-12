@@ -422,7 +422,7 @@
                             Margin="0,0,10,0"
                             Style="{StaticResource GraphButtonStyle}"
                             RequestedTheme="Light">
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE713;"/>
+                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xE3B4;"/>
                         <Button.Flyout>
                             <Flyout>
                                 <StackPanel>
