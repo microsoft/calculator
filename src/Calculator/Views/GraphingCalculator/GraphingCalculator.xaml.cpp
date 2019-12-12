@@ -313,58 +313,6 @@ void GraphingCalculator::OnVariableChanged(Platform::Object ^ sender, VariableCh
     GraphingControl->SetVariable(args.variableName, args.newValue);
 }
 
-void GraphingCalculator::SubmitTextbox(TextBox ^ sender)
-{
-    auto variableViewModel = static_cast<VariableViewModel ^>(sender->DataContext);
-
-    if (sender->Name == "ValueTextBox")
-    {
-        variableViewModel->SetValue(validateDouble(sender->Text, variableViewModel->Value));
-    }
-    else if (sender->Name == "MinTextBox")
-    {
-        variableViewModel->Min = validateDouble(sender->Text, variableViewModel->Min);
-    }
-    else if (sender->Name == "MaxTextBox")
-    {
-        variableViewModel->Max = validateDouble(sender->Text, variableViewModel->Max);
-    }
-    else if (sender->Name == "StepTextBox")
-    {
-        variableViewModel->Step = validateDouble(sender->Text, variableViewModel->Step);
-    }
-}
-
-void GraphingCalculator::TextBoxLosingFocus(TextBox ^ sender, LosingFocusEventArgs ^)
-{
-    SubmitTextbox(sender);
-}
-
-void GraphingCalculator::TextBoxKeyDown(TextBox ^ sender, KeyRoutedEventArgs ^ e)
-{
-    if (e->Key == ::VirtualKey::Enter)
-    {
-        SubmitTextbox(sender);
-    }
-}
-
-double GraphingCalculator::validateDouble(String ^ value, double defaultValue)
-{
-    try
-    {
-        return stod(value->Data());
-    }
-    catch (...)
-    {
-        return defaultValue;
-    }
-}
-
-void GraphingCalculator::TextBoxGotFocus(TextBox ^ sender, RoutedEventArgs ^ e)
-{
-    sender->SelectAll();
-}
-
 void GraphingCalculator::OnZoomInCommand(Object ^ /* parameter */)
 {
     GraphingControl->ZoomFromCenter(zoomInScale);

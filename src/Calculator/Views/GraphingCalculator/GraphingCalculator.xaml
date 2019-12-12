@@ -14,7 +14,6 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <converters:ItemSizeToVisibilityConverter x:Key="ItemSizeToVisibilityConverter"/>
 
             <Style x:Key="GraphToggleButtonStyle" TargetType="ToggleButton">
                 <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
@@ -213,7 +212,6 @@
                 </Setter>
             </Style>
 
-            <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter"/>
             <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
@@ -278,7 +276,9 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"
+                              MinWidth="300"
+                              MaxWidth="420"/>
         </Grid.ColumnDefinitions>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -368,180 +368,8 @@
                     VerticalAlignment="Top"
                     Style="{ThemeResource GraphControlCommandPanel}"
                     RequestedTheme="Light">
-                <StackPanel Orientation="Horizontal">
-                    <!-- Temporary button until the final UI is created -->
-                    <Button x:Name="VariableEditing"
-                            x:Uid="variablesButton"
-                            MinWidth="40"
-                            Style="{ThemeResource ThemedGraphButtonStyle}"
-                            Visibility="{x:Bind local:GraphingCalculator.ManageEditVariablesButtonVisibility(ViewModel.Variables.Size), Mode=OneWay}">
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                  FontSize="18"
-                                  Glyph="&#xE70F;"/>
-                        <Button.Flyout>
-                            <Flyout Placement="BottomEdgeAlignedLeft">
-                                <Flyout.FlyoutPresenterStyle>
-                                    <Style TargetType="FlyoutPresenter">
-                                        <Setter Property="RequestedTheme" Value="Default"/>
-                                        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
-                                        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
-                                        <Setter Property="Margin" Value="0,0,0,0"/>
-                                    </Style>
-                                </Flyout.FlyoutPresenterStyle>
-                                <ListView x:Name="VariableListView"
-                                          MinWidth="300"
-                                          ItemsSource="{x:Bind ViewModel.Variables}"
-                                          SelectionMode="None">
-                                    <ListView.Resources>
-                                        <ResourceDictionary>
-                                            <ResourceDictionary.ThemeDictionaries>
-                                                <ResourceDictionary x:Key="Default">
-                                                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
-                                                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
-                                                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="White"/>
-                                                    <x:Double x:Key="TextControlThemeMinWidth">32</x:Double>
-                                                    <x:Double x:Key="TextControlThemeMinHeight">16</x:Double>
-                                                </ResourceDictionary>
-                                                <ResourceDictionary x:Key="Light">
-                                                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
-                                                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
-                                                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="Black"/>
-                                                    <x:Double x:Key="TextControlThemeMinWidth">32</x:Double>
-                                                    <x:Double x:Key="TextControlThemeMinHeight">16</x:Double>
-                                                </ResourceDictionary>
-                                                <ResourceDictionary x:Key="HighContrast">
-                                                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{ThemeResource SystemColorButtonFaceColor}"/>
-                                                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{StaticResource SystemColorButtonFaceColor}"/>
-                                                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="{ThemeResource SystemColorButtonTextColor}"/>
-                                                    <x:Double x:Key="TextControlThemeMinWidth">32</x:Double>
-                                                    <x:Double x:Key="TextControlThemeMinHeight">16</x:Double>
-                                                </ResourceDictionary>
-                                            </ResourceDictionary.ThemeDictionaries>
-                                        </ResourceDictionary>
-                                    </ListView.Resources>
-                                    <ListView.Header>
-                                        <TextBlock x:Uid="VaiablesHeader" Margin="0,0,0,12"/>
-                                    </ListView.Header>
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="ListViewItem">
-                                            <Setter Property="IsTabStop" Value="False"/>
-                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                            <Setter Property="Margin" Value="0,0,0,12"/>
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
-
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="vm:VariableViewModel">
-                                            <StackPanel>
-                                                <Grid HorizontalAlignment="Stretch">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Padding="0,0,0,8"
-                                                               VerticalAlignment="Bottom"
-                                                               Text="{x:Bind Name}"/>
-                                                    <TextBox x:Name="ValueTextBox"
-                                                             Grid.Column="1"
-                                                             HorizontalAlignment="Left"
-                                                             Style="{StaticResource VariableTextBoxStyle}"
-                                                             GotFocus="TextBoxGotFocus"
-                                                             KeyDown="TextBoxKeyDown"
-                                                             LosingFocus="TextBoxLosingFocus"
-                                                             Text="{x:Bind Value, Mode=OneWay}"/>
-                                                    <ToggleButton x:Uid="sliderOptionsButton"
-                                                                  Grid.Column="2"
-                                                                  HorizontalAlignment="Right"
-                                                                  Background="Transparent"
-                                                                  FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                                                  Content="&#xE713;"
-                                                                  IsChecked="{x:Bind SliderSettingsVisible, Mode=TwoWay}">
-                                                        <ToggleButton.Resources>
-                                                            <SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="Transparent"/>
-                                                            <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="Transparent"/>
-                                                            <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPointerOver" Color="Transparent"/>
-                                                            <SolidColorBrush x:Key="ToggleButtonBorderBrushCheckedPointerOver" Color="Transparent"/>
-                                                            <SolidColorBrush x:Key="ToggleButtonBackgroundPointerOver" Color="Transparent"/>
-                                                            <SolidColorBrush x:Key="ToggleButtonBorderBrushPointerOver" Color="Transparent"/>
-                                                            <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="Transparent"/>
-                                                            <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{ThemeResource SystemAccentColor}"/>
-                                                            <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{ThemeResource SystemAccentColor}"/>
-                                                            <SolidColorBrush x:Key="ToggleButtonForegroundChecked" Color="{ThemeResource SystemAccentColor}"/>
-                                                            <SolidColorBrush x:Key="ToggleButtonForegroundCheckedPressed" Color="{ThemeResource SystemAccentColor}"/>
-                                                            <SolidColorBrush x:Key="ToggleButtonForegroundCheckedPointerOver" Color="{ThemeResource SystemAccentColor}"/>
-                                                            <x:Double x:Key="TextControlThemeMinWidth">32</x:Double>
-                                                        </ToggleButton.Resources>
-                                                    </ToggleButton>
-                                                </Grid>
-                                                <Slider MinHeight="38"
-                                                        Maximum="{x:Bind Max, Mode=TwoWay}"
-                                                        Minimum="{x:Bind Min, Mode=TwoWay}"
-                                                        StepFrequency="{x:Bind Step, Mode=TwoWay}"
-                                                        Visibility="{x:Bind SliderSettingsVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"
-                                                        Value="{x:Bind Value, Mode=TwoWay}"/>
-                                                <Grid Grid.Row="1"
-                                                      MinHeight="38"
-                                                      HorizontalAlignment="Stretch"
-                                                      Visibility="{x:Bind SliderSettingsVisible, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <TextBlock x:Uid="MinTextBlock"
-                                                                   Padding="0,0,0,8"
-                                                                   VerticalAlignment="Bottom"
-                                                                   FontWeight="SemiBold"/>
-                                                        <TextBox x:Name="MinTextBox"
-                                                                 MaxWidth="96"
-                                                                 Style="{StaticResource VariableTextBoxStyle}"
-                                                                 GotFocus="TextBoxGotFocus"
-                                                                 KeyDown="TextBoxKeyDown"
-                                                                 LosingFocus="TextBoxLosingFocus"
-                                                                 Text="{x:Bind Min, Mode=OneWay}"/>
-                                                    </StackPanel>
-                                                    <StackPanel Grid.Column="1"
-                                                                HorizontalAlignment="Center"
-                                                                Orientation="Horizontal">
-                                                        <TextBlock x:Uid="StepTextBlock"
-                                                                   Padding="0,0,0,8"
-                                                                   HorizontalAlignment="Center"
-                                                                   VerticalAlignment="Bottom"
-                                                                   FontWeight="SemiBold"/>
-                                                        <TextBox x:Name="StepTextBox"
-                                                                 MaxWidth="96"
-                                                                 HorizontalAlignment="Center"
-                                                                 Style="{StaticResource VariableTextBoxStyle}"
-                                                                 GotFocus="TextBoxGotFocus"
-                                                                 KeyDown="TextBoxKeyDown"
-                                                                 LosingFocus="TextBoxLosingFocus"
-                                                                 Text="{x:Bind Step, Mode=OneWay}"/>
-                                                    </StackPanel>
-                                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                                        <TextBlock x:Uid="MaxTextBlock"
-                                                                   Padding="0,0,0,8"
-                                                                   VerticalAlignment="Bottom"
-                                                                   FontWeight="SemiBold"/>
-                                                        <TextBox x:Name="MaxTextBox"
-                                                                 MaxWidth="96"
-                                                                 Style="{StaticResource VariableTextBoxStyle}"
-                                                                 GotFocus="TextBoxGotFocus"
-                                                                 KeyDown="TextBoxKeyDown"
-                                                                 LosingFocus="TextBoxLosingFocus"
-                                                                 Text="{x:Bind Max, Mode=OneWay}"/>
-                                                    </StackPanel>
-                                                </Grid>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-
-                    <ToggleButton x:Name="ActiveTracing"
+                    <StackPanel Orientation="Horizontal">
+                        <ToggleButton x:Name="ActiveTracing"
                                   MinWidth="40"
                                   Margin="0,-1"
                                   Style="{ThemeResource ThemedGraphToggleButtonStyle}"
@@ -644,7 +472,7 @@
               Visibility="{x:Bind local:GraphingCalculator.ShouldDisplayPanel(IsSmallState, SwitchModeToggleButton.IsChecked.Value, x:False), Mode=OneWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="1.8*"/>
+                <RowDefinition Height="2.2*" MaxHeight="400"/>
             </Grid.RowDefinitions>
 
             <!-- Ideally the KeyGraphFeaturesPanel should be a frame so that navigation to and from the panel could be handled nicely -->
@@ -661,6 +489,7 @@
                                      Margin="0,4,0,0"
                                      Equations="{x:Bind ViewModel.Equations}"
                                      KeyGraphFeaturesRequested="OnEquationKeyGraphFeaturesRequested"
+                                     Variables="{x:Bind ViewModel.Variables}"
                                      Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
 
             <local:GraphingNumPad Grid.Row="1"

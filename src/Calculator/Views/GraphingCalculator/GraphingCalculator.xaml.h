@@ -45,10 +45,6 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
             Windows::Foundation::Collections::IObservableVector<CalculatorApp::ViewModel::EquationViewModel ^> ^ sender,
             Windows::Foundation::Collections::IVectorChangedEventArgs ^ event);
 
-        void TextBoxLosingFocus(Windows::UI::Xaml::Controls::TextBox ^ textbox, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
-        void TextBoxKeyDown(Windows::UI::Xaml::Controls::TextBox ^ textbox, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);
-        void SubmitTextbox(Windows::UI::Xaml::Controls::TextBox ^ textbox);
-
         void OnZoomInCommand(Object ^ parameter);
         void OnZoomOutCommand(Object ^ parameter);
         void OnZoomResetCommand(Object ^ parameter);

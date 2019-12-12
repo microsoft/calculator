@@ -1816,8 +1816,8 @@
                                         Grid.RowSpan="1"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="4"
-                                        MinWidth="{ThemeResource TextControlThemeMinWidth}"
-                                        MinHeight="{ThemeResource TextControlThemeMinHeight}"
+                                        MinWidth="32"
+                                        MinHeight="16"
                                         Background="{TemplateBinding Background}"
                                         BorderBrush="{TemplateBinding BorderBrush}"
                                         BorderThickness="{TemplateBinding BorderThickness}"
@@ -1899,7 +1899,6 @@
                                         </VisualState>
                                         <VisualState x:Name="AddEquation">
                                             <VisualState.Setters>
-                                                <Setter Target="RemoveButtonPanel.Visibility" Value="Collapsed"/>
                                                 <Setter Target="MathRichEditBox.PlaceholderText" Value="Enter an equation"/>
                                                 <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource EquationBoxAddBackgroundBrush}"/>
                                                 <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource EquationBoxBorderBrush}"/>
@@ -2211,16 +2210,6 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-            </Style>
-
-            <Style x:Key="VariableTextBoxStyle" TargetType="TextBox">
-                <Setter Property="Margin" Value="12,4,4,4"/>
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                <Setter Property="FontSize" Value="14"/>
-                <Setter Property="AcceptsReturn" Value="False"/>
-                <Setter Property="InputScope" Value="Number"/>
-                <Setter Property="TextWrapping" Value="NoWrap"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>
