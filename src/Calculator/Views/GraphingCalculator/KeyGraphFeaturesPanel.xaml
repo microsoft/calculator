@@ -102,7 +102,6 @@
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="IsEnabled" Value="True"/>
-            <Setter Property="Margin" Value="0,0,0,0"/>
             <Setter Property="Padding" Value="0,3,4,0"/>
             <Setter Property="UseSystemFocusVisuals" Value="True"/>
             <Setter Property="TextWrapping" Value="NoWrap"/>
@@ -342,8 +341,7 @@
 
         <ListView x:Name="KeyGraphFeaturesListView"
                   Grid.Row="2"
-                  Margin="12,10,10,0"
-                  Padding="0,0,0,12"
+                  Padding="12,10,10,12"
                   IsItemClickEnabled="False"
                   ItemContainerStyle="{StaticResource KGF_ListViewItemContainerStyle}"
                   ItemTemplateSelector="{StaticResource KGFTemplateSelector}"
@@ -357,6 +355,7 @@
                    Margin="12,10,10,0"
                    Style="{StaticResource KGF_TextBlockStyle}"
                    FontWeight="Normal"
+                   IsTextSelectionEnabled="False"
                    Text="{x:Bind ViewModel.AnalysisErrorString, Mode=OneWay}"
                    Visibility="{x:Bind ViewModel.AnalysisErrorVisible, Mode=OneWay}"/>
     </Grid>
