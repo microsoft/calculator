@@ -232,6 +232,7 @@
                                                       Margin="1,0,1,2"
                                                       Style="{StaticResource EquationTextBoxStyle}"
                                                       DataContext="{x:Bind Mode=OneWay}"
+                                                      DataContextChanged="InputTextBox_DataContextChanged"
                                                       EquationButtonClicked="EquationTextBox_EquationButtonClicked"
                                                       EquationButtonContentIndex="{x:Bind FunctionLabelIndex, Mode=OneWay}"
                                                       EquationColor="{x:Bind LineColor, Mode=OneWay}"

@@ -203,14 +203,14 @@ void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, R
     eq->IsLineEnabled = !eq->IsLineEnabled;
 }
 
-void EquationInputArea::InputTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e)
+void CalculatorApp::EquationInputArea::InputTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e)
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
 
     auto colorChooser = static_cast<EquationStylePanelControl ^>(tb->ColorChooserFlyout->Content);
     colorChooser->AvailableColors = AvailableColors;
 
-    if (tb->DataContext == m_equationToFocus)
+    if (m_equationToFocus!=nullptr && tb->DataContext == m_equationToFocus)
     {
         m_equationToFocus = nullptr;
         tb->FocusTextBox();
@@ -226,6 +226,39 @@ void EquationInputArea::InputTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e
         }
     }
 }
+
+void CalculatorApp::EquationInputArea::InputTextBox_DataContextChanged(
+    Windows::UI::Xaml::FrameworkElement ^ sender,
+    Windows::UI::Xaml::DataContextChangedEventArgs ^ args)
+{
+    auto tb = static_cast<EquationTextBox ^>(sender);
+    if (!tb->IsLoaded)
+    {
+        return;
+    }
+
+   FocusEquationIfNecessary(tb);
+}
+
+void CalculatorApp::EquationInputArea::FocusEquationIfNecessary(CalculatorApp::Controls::EquationTextBox ^ textBox)
+{
+    if (m_equationToFocus != nullptr && textBox->DataContext == m_equationToFocus)
+    {
+        m_equationToFocus = nullptr;
+        textBox->FocusTextBox();
+
+        unsigned int index;
+        if (Equations->IndexOf(m_equationToFocus, &index))
+        {
+            auto container = EquationInputList->TryGetElement(index);
+            if (container != nullptr)
+            {
+                container->StartBringIntoView();
+            }
+        }
+    }
+}
+
 
 void EquationInputArea::OnHighContrastChanged(AccessibilitySettings ^ sender, Object ^ args)
 {
