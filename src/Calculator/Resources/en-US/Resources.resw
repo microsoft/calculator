@@ -4227,29 +4227,35 @@
     <comment>Radians mode on settings page</comment>
   </data>
   <data name="UnitsHeading.Text" xml:space="preserve">
-    <value>Unit</value>
+    <value>Units</value>
     <comment>Heading for Unit's on the settings</comment>
   </data>
   <data name="x_MaxHeading.Text" xml:space="preserve">
-    <value>x-max</value>
+    <value>X-Max</value>
     <comment>X maximum value header</comment>
   </data>
   <data name="x_MinHeading.Text" xml:space="preserve">
-    <value>x-min</value>
+    <value>X-Min</value>
     <comment>X minimum value header</comment>
   </data>
   <data name="y_MaxHeading.Text" xml:space="preserve">
-    <value>y-max</value>
+    <value>Y-Max</value>
     <comment>Y Maximum value header</comment>
   </data>
   <data name="y_MinHeading.Text" xml:space="preserve">
-    <value>y-min</value>
+    <value>Y-Min</value>
     <comment>Y minimum value header</comment>
   </data>
-  
-</root>
   <data name="equationMathRichEditBox.PlaceholderText" xml:space="preserve">
     <value>Enter an equation</value>
     <comment>Used in the Graphing Calculator to indicate to users that they can enter an equation in the textbox</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Grid options</value>
+    <comment>This is the tooltip text for the grid options button in Graphing Calculator</comment>
+  </data>
+    <data name="graphSettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Grid options</value>
+    <comment>This is the automation name text for the grid options button in Graphing Calculator</comment>
   </data>
 </root>

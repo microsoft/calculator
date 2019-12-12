@@ -397,8 +397,8 @@
                                   Glyph="&#xE72D;"/>
                     </Button>
 
-                    <Button x:Name="Settings"
-                            x:Uid="settingsButton"
+                    <Button x:Name="GraphSettingsButton"
+                            x:Uid="graphSettingsButton"
                             MinWidth="44"
                             MinHeight="44"
                             Margin="0,0,10,0"

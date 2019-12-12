@@ -1,122 +1,66 @@
-<Page x:Class="CalculatorApp.GraphingSettings"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-      DataContextChanged="GraphingCalculator_DataContextChanged"
-      Loaded="OnLoaded"
-      mc:Ignorable="d">
-    <Page.Resources>
-        <SolidColorBrush x:Key="ListMediumControlBackgroundBrush" Color="{StaticResource SystemListMediumColor}"/>
-        <SolidColorBrush x:Key="ControlPointerOverBorderBrush" Color="LightGray"/>
-        <SolidColorBrush x:Key="ControlSelectedBackgroundBrush" Color="LightGray"/>
-        <SolidColorBrush x:Key="BaseMediumLowPressedBackgroundBrush" Color="{StaticResource SystemBaseMediumLowColor}"/>
-        <SolidColorBrush x:Key="ChromeWhiteHighControlSelectedForegroundBrush" Color="#FFFFFFFF"/>
-        <SolidColorBrush x:Key="BackgroundColorBrush" Color="CornflowerBlue"/>
-        <SolidColorBrush x:Key="ForegroundColorBrush" Color="White"/>
+<UserControl x:Class="CalculatorApp.GraphingSettings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+             DataContextChanged="GraphingCalculator_DataContextChanged"
+             Loaded="OnLoaded"
+             mc:Ignorable="d">
+    <UserControl.Resources>
 
-        <Style x:Key="FilterRadioButtonStyle" TargetType="RadioButton">
+        <Style x:Key="TrigUnitsRadioButtonStyle" TargetType="RadioButton">
             <Setter Property="MinHeight" Value="44"/>
-            <Setter Property="MinWidth" Value="0"/>
-            <Setter Property="Padding" Value="4,4"/>
+            <Setter Property="MinWidth" Value="90"/>
+            <Setter Property="Padding" Value="4,6"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="FocusVisualMargin" Value="0"/>
-            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
-                        <Grid Name="RootGrid" Margin="0,0">
+                        <Grid Name="LayoutRoot"
+                              Margin="0,6"
+                              Background="{ThemeResource GraphSettingsRadioButtonBackgroundBrush}">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal">
-                                        <Storyboard>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
-                                        </Storyboard>
-                                    </VisualState>
+                                    <VisualState x:Name="Normal"/>
                                     <VisualState x:Name="PointerOver">
                                         <VisualState.Setters>
-                                            <Setter Target="RootGrid.Background" Value="{ThemeResource AppControlHoverButtonFaceBrush}"/>
+                                            <Setter Target="LayoutRoot.Background" Value="{ThemeResource GraphSettingsMediumControlBackgroundBrush}"/>
+                                            <Setter Target="AccessibilityBorder.BorderBrush" Value="{ThemeResource GraphSettingsControlPointerOverBorderBrush}"/>
+                                            <Setter Target="AccessibilityBorder.Background" Value="{ThemeResource GraphSettingsControlSelectedBackgroundBrush}"/>
                                         </VisualState.Setters>
-                                        <Storyboard>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
-                                        </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Pressed">
                                         <VisualState.Setters>
-                                            <Setter Target="RootGrid.Background" Value="{ThemeResource AppControlPressedButtonFaceBrush}"/>
+                                            <Setter Target="LayoutRoot.Background" Value="{ThemeResource GraphSettingsBaseMediumLowPressedBackgroundBrush}"/>
+                                            <Setter Target="AccessibilityBorder.BorderBrush" Value="{ThemeResource GraphSettingsControlPointerOverBorderBrush}"/>
+                                            <Setter Target="AccessibilityBorder.Background" Value="{ThemeResource GraphSettingsControlSelectedBackgroundBrush}"/>
                                         </VisualState.Setters>
-                                        <Storyboard>
-                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Disabled">
-                                        <VisualState.Setters>
-                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ToggleButtonRevealBackgroundDisabled}"/>
-                                            <Setter Target="ContentPresenter.Opacity" Value="0.5"/>
-                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SystemControlDisabledBaseLowBrush}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Checked">
-                                        <VisualState.Setters>
-                                            <Setter Target="RootGrid.Background" Value="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                                            <Setter Target="ContentPresenter.Opacity" Value="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                                        </VisualState.Setters>
-                                        <Storyboard>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Unchecked">
-                                        <VisualState.Setters>
-                                            <Setter Target="RootGrid.Background" Value="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                                            <Setter Target="ContentPresenter.Opacity" Value="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                                        </VisualState.Setters>
-                                        <Storyboard>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="CheckedPointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Target="RootGrid.Background" Value="{ThemeResource AppControlHighlightCalcButtonHoverBrush}"/>
-                                        </VisualState.Setters>
-                                        <Storyboard>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="CheckedPressed">
-                                        <VisualState.Setters>
-                                            <Setter Target="RootGrid.Background" Value="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                                        </VisualState.Setters>
-                                        <Storyboard>
-                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Indeterminate">
-                                        <VisualState.Setters>
-                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ToggleButtonRevealBackgroundIndeterminate}"/>
-                                            <Setter Target="ContentPresenter.BorderBrush" Value="{ThemeResource ToggleButtonRevealBorderBrushIndeterminate}"/>
-                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ToggleButtonForegroundIndeterminate}"/>
-                                        </VisualState.Setters>
-                                        <Storyboard>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
-                                        </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
+                                <VisualStateGroup x:Name="CheckStates">
+                                    <VisualState x:Name="Checked">
+                                        <VisualState.Setters>
+                                            <Setter Target="SelectedBackgroundRectangle.Opacity" Value="1"/>
+                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ChromeWhiteHighControlSelectedForegroundBrush}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked"/>
+                                    <VisualState x:Name="Indeterminate"/>
+                                </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <Rectangle x:Name="Overlay"
-                                       Fill="{ThemeResource EquationButtonOverlayBackgroundBrush}"
-                                       Opacity="0"
-                                       IsHitTestVisible="False"/>
+                            <Border Name="AccessibilityBorder"
+                                    BorderBrush="{ThemeResource GraphSettingsControlBorderBrush}"
+                                    BorderThickness="1"/>
+                            <Rectangle Name="SelectedBackgroundRectangle"
+                                       Fill="{ThemeResource GraphSettingsControlSelectedBackgroundAccentBrush}"
+                                       Opacity="0"/>
                             <ContentPresenter Name="ContentPresenter"
+                                              Grid.Column="1"
                                               Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
-                                              Background="Transparent"
                                               Foreground="{TemplateBinding Foreground}"
-                                              BorderBrush="{TemplateBinding BorderBrush}"
-                                              BorderThickness="{TemplateBinding BorderThickness}"
                                               AutomationProperties.AccessibilityView="Raw"
                                               Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -126,40 +70,52 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    </Page.Resources>
+    </UserControl.Resources>
 
     <Grid>
         <StackPanel Margin="10,10,10,10">
-            <TextBlock x:Name="GridHeading"
-                       x:Uid="GridHeading"
-                       FontSize="28"
-                       Text="Grid_d"/>
+            <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
+                <TextBlock x:Name="GridHeading"
+                           x:Uid="GridHeading"
+                           FontSize="28"
+                           AutomationProperties.HeadingLevel="Level1"/>
+                <FontIcon x:Name="ErrorIcon"
+                          Grid.Column="3"
+                          MinWidth="28"
+                          Margin="10,5,0,0"
+                          VerticalAlignment="Stretch"
+                          FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                          FontSize="28"
+                          AutomationProperties.AccessibilityView="Raw"
+                          Glyph="&#xE783;"
+                          Visibility="Collapsed"/>
+            </StackPanel>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition MinHeight="30"/>
-                    <RowDefinition MinHeight="40"/>
                     <RowDefinition MinHeight="20"/>
                     <RowDefinition MinHeight="30"/>
-                    <RowDefinition MinHeight="40"/>
+                    <RowDefinition MinHeight="20"/>
+                    <RowDefinition MinHeight="30"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock x:Name="x_MinHeading"
                            x:Uid="x_MinHeading"
                            Grid.Row="0"
                            Grid.Column="0"
+                           Margin="0,0,0,5"
                            VerticalAlignment="Center"
-                           Text="x-min_d"/>
+                           AutomationProperties.HeadingLevel="Level2"/>
                 <TextBlock x:Name="x_MaxHeading"
                            x:Uid="x_MaxHeading"
                            Grid.Row="0"
                            Grid.Column="1"
+                           Margin="10,0,0,5"
                            VerticalAlignment="Center"
-                           Text="x-max_d"/>
+                           AutomationProperties.HeadingLevel="Level2"/>
 
                 <TextBox x:Name="x_Min"
                          Grid.Row="1"
@@ -170,32 +126,36 @@
                 <TextBox x:Name="x_Max"
                          Grid.Row="1"
                          Grid.Column="1"
+                         Margin="10,0,0,0"
                          VerticalAlignment="Center"
                          KeyDown="OnKeyDown"
                          LosingFocus="OnLosingFocus"/>
 
                 <TextBlock x:Name="y_MinHeading"
                            x:Uid="y_MinHeading"
-                           Grid.Row="3"
+                           Grid.Row="2"
                            Grid.Column="0"
+                           Margin="0,20,0,5"
                            VerticalAlignment="Center"
-                           Text="y-min_d"/>
+                           AutomationProperties.HeadingLevel="Level2"/>
                 <TextBlock x:Name="y_MaxHeading"
                            x:Uid="y_MaxHeading"
-                           Grid.Row="3"
+                           Grid.Row="2"
                            Grid.Column="1"
+                           Margin="10,20,0,5"
                            VerticalAlignment="Center"
-                           Text="y-max_d"/>
+                           AutomationProperties.HeadingLevel="Level2"/>
 
                 <TextBox x:Name="y_Min"
-                         Grid.Row="4"
+                         Grid.Row="3"
                          Grid.Column="0"
                          VerticalAlignment="Center"
                          KeyDown="OnKeyDown"
                          LosingFocus="OnLosingFocus"/>
                 <TextBox x:Name="y_Max"
-                         Grid.Row="4"
+                         Grid.Row="3"
                          Grid.Column="1"
+                         Margin="10,0,0,0"
                          VerticalAlignment="Center"
                          KeyDown="OnKeyDown"
                          LosingFocus="OnLosingFocus"/>
@@ -203,28 +163,25 @@
 
             <TextBlock x:Name="UnitsHeading"
                        x:Uid="UnitsHeading"
-                       Margin="0,10"
+                       Margin="0,10,0,5"
                        FontSize="28"
-                       Text="Units_d"/>
+                       AutomationProperties.HeadingLevel="Level1"/>
 
             <StackPanel Orientation="Horizontal">
                 <RadioButton x:Name="Radians"
                              x:Uid="TrigModeRadians"
-                             Style="{StaticResource FilterRadioButtonStyle}"
+                             Style="{StaticResource TrigUnitsRadioButtonStyle}"
                              Click="TrigUnitModeClick"
-                             Content="Radians_d"
                              IsChecked="True"/>
                 <RadioButton x:Name="Degrees"
                              x:Uid="TrigModeDegrees"
-                             Style="{StaticResource FilterRadioButtonStyle}"
-                             Click="TrigUnitModeClick"
-                             Content="Degrees_d"/>
+                             Style="{StaticResource TrigUnitsRadioButtonStyle}"
+                             Click="TrigUnitModeClick"/>
                 <RadioButton x:Name="Gradians"
                              x:Uid="TrigModeGradians"
-                             Style="{StaticResource FilterRadioButtonStyle}"
-                             Click="TrigUnitModeClick"
-                             Content="Gradians_d"/>
+                             Style="{StaticResource TrigUnitsRadioButtonStyle}"
+                             Click="TrigUnitModeClick"/>
             </StackPanel>
         </StackPanel>
     </Grid>
-</Page>
+</UserControl>
