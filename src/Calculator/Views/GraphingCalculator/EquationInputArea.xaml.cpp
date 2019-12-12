@@ -62,9 +62,6 @@ void EquationInputArea::OnEquationsPropertyChanged()
 
 void EquationInputArea::AddNewEquation()
 {
-    auto eq = ref new EquationViewModel(ref new Equation());
-    eq->IsLastItemInList = true;
-
     if (Equations->Size > 0)
     {
         Equations->GetAt(Equations->Size - 1)->IsLastItemInList = false;
@@ -72,6 +69,7 @@ void EquationInputArea::AddNewEquation()
 
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
     auto eq = ref new EquationViewModel(ref new Equation(), ++m_lastFunctionLabelIndex, AvailableColors->GetAt(m_lastLineColorIndex)->Color);
+    eq->IsLastItemInList = true;
     Equations->Append(eq);
     m_equationToFocus = eq;
 }
