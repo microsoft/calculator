@@ -58,6 +58,14 @@ GraphingCalculator::GraphingCalculator()
     Grapher::RegisterDependencyProperties();
     InitializeComponent();
 
+    auto toolTip = ref new ToolTip();
+    auto resProvider = AppResourceProvider::GetInstance();
+    auto tracingMessage =
+        ActiveTracingOn ? resProvider->GetResourceString(L"disableTracingButtonToolTip") : resProvider->GetResourceString(L"enableTracingButtonToolTip");
+    toolTip->Content = tracingMessage;
+    ToolTipService::SetToolTip(ActiveTracing, toolTip);
+    AutomationProperties::SetName(ActiveTracing, tracingMessage);
+
     DataTransferManager ^ dataTransferManager = DataTransferManager::GetForCurrentView();
 
     // Register the current control as a share source.
