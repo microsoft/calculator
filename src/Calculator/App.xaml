@@ -84,6 +84,14 @@
                                      Opacity="0.6"
                                      Color="{StaticResource SystemChromeWhiteColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
+                    <SolidColorBrush x:Key="GraphSettingsRadioButtonBackgroundBrush" Color="{ThemeResource SystemListLowColor}" />
+                    <SolidColorBrush x:Key="GraphSettingsControlBorderBrush" Color="Transparent" />
+                    <SolidColorBrush x:Key="GraphSettingsControlSelectedBackgroundAccentBrush" Color="{StaticResource SystemAccentColor}" />
+                    <SolidColorBrush x:Key="GraphSettingsMediumControlBackgroundBrush" Color="{ThemeResource SystemListMediumColor}" />
+                    <SolidColorBrush x:Key="GraphSettingsControlPointerOverBorderBrush" Color="Transparent" />
+                    <SolidColorBrush x:Key="GraphSettingsControlSelectedBackgroundBrush" Color="Transparent" />
+                    <SolidColorBrush x:Key="ChromeWhiteHighControlSelectedForegroundBrush" Color="#FFFFFFFF" />
+                    <SolidColorBrush x:Key="GraphSettingsBaseMediumLowPressedBackgroundBrush" Color="{ThemeResource SystemBaseMediumLowColor}" />
 
                     <SolidColorBrush x:Key="EquationBrush1" Color="#FF0078D7"/>
                     <SolidColorBrush x:Key="EquationBrush2" Color="#FFFFB900"/>
@@ -177,6 +185,14 @@
                                      Color="#000000"/>
                     <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush" Color="{StaticResource SystemChromeWhiteColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
+                    <SolidColorBrush x:Key="GraphSettingsRadioButtonBackgroundBrush" Color="{ThemeResource SystemListLowColor}" />
+                    <SolidColorBrush x:Key="GraphSettingsControlBorderBrush" Color="Transparent" />
+                    <SolidColorBrush x:Key="GraphSettingsControlSelectedBackgroundAccentBrush" Color="{StaticResource SystemAccentColor}" />
+                    <SolidColorBrush x:Key="GraphSettingsMediumControlBackgroundBrush" Color="{ThemeResource SystemListMediumColor}" />
+                    <SolidColorBrush x:Key="GraphSettingsControlPointerOverBorderBrush" Color="Transparent" />
+                    <SolidColorBrush x:Key="GraphSettingsControlSelectedBackgroundBrush" Color="Transparent" />
+                    <SolidColorBrush x:Key="ChromeWhiteHighControlSelectedForegroundBrush" Color="#FFFFFFFF" />
+                    <SolidColorBrush x:Key="GraphSettingsBaseMediumLowPressedBackgroundBrush" Color="{ThemeResource SystemBaseMediumLowColor}" />
 
                     <SolidColorBrush x:Key="EquationBrush1" Color="#FF0078D7"/>
                     <SolidColorBrush x:Key="EquationBrush2" Color="#FFFFB900"/>
@@ -234,6 +250,15 @@
                     <SolidColorBrush x:Key="EquationBoxErrorBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="EquationBoxErrorBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
                     <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush" Color="{StaticResource SystemColorGrayTextColor}"/>
+                    <SolidColorBrush x:Key="GraphSettingsRadioButtonBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}" />
+                    <SolidColorBrush x:Key="GraphSettingsControlBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}" />
+                    <SolidColorBrush x:Key="GraphSettingsControlSelectedBackgroundAccentBrush" Color="{StaticResource SystemColorHighlightColor}" />
+                    <SolidColorBrush x:Key="GraphSettingsMediumControlBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}" />
+                    <SolidColorBrush x:Key="GraphSettingsControlPointerOverBorderBrush" Color="{ThemeResource SystemColorHighlightColor}" />
+                    <SolidColorBrush x:Key="GraphSettingsControlSelectedBackgroundBrush" Color="{ThemeResource SystemColorHighlightColor}" />
+                    <SolidColorBrush x:Key="ChromeWhiteHighControlPressedForegroundBrush" Color="{ThemeResource SystemColorHighlightTextColor}" />
+                    <SolidColorBrush x:Key="GraphSettingsBaseMediumLowPressedBackgroundBrush" Color="{ThemeResource SystemColorHighlightColor}" />
+
                     <!-- TODO: Figure out what colors we can use in high contrast -->
                     <SolidColorBrush x:Key="EquationBrush1" Color="{ThemeResource SystemColorGrayTextColor}"/>
                     <SolidColorBrush x:Key="EquationBrush2" Color="{ThemeResource SystemColorHighlightColor}"/>

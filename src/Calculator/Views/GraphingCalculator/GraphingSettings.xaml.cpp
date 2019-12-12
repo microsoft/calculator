@@ -53,36 +53,39 @@ void GraphingSettings::UpdateExtents(Platform::Object ^ sender)
 
     TextBox ^ tb = static_cast<TextBox ^>(sender);
 
-    bool widthChanged = false;
-    bool heightChanged = false;
-
     double newVal = std::stod(tb->Text->Begin());
     if (tb->Name == "x_Min" && newVal != m_xMin)
     {
-        widthChanged = true;
         m_xMin = newVal;
         m_ParentGrapher->XAxisMin = m_xMin;
     }
 
     if (tb->Name == "x_Max" && newVal != m_xMax)
     {
-        widthChanged = true;
         m_xMax = newVal;
         m_ParentGrapher->XAxisMax = m_xMax;
     }
 
     if (tb->Name == "y_Min" && newVal != m_yMin)
     {
-        heightChanged = true;
         m_yMin = newVal;
         m_ParentGrapher->YAxisMin = m_yMin;
     }
 
     if (tb->Name == "y_Max" && newVal != m_yMax)
     {
-        heightChanged = true;
         m_yMax = newVal;
         m_ParentGrapher->YAxisMax = m_yMax;
+    }
+
+    if (m_yMin < m_yMax && m_xMin < m_xMax)
+    {
+        m_ParentGrapher->SetDisplayRanges(m_xMin, m_xMax, m_yMin, m_yMax);
+        ErrorIcon->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+    }
+    else
+    {
+        ErrorIcon->Visibility = Windows::UI::Xaml::Visibility::Visible;
     }
 }
 
@@ -99,26 +102,26 @@ void GraphingSettings::OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::Ro
 
     switch ((Graphing::EvalTrigUnitMode)m_ParentGrapher->TrigUnitMode)
     {
-        case Graphing::EvalTrigUnitMode::Degrees:
-        {
-            Degrees->IsChecked = true;
-            break;
-        }
-        case Graphing::EvalTrigUnitMode::Radians:
-        {
-            Radians->IsChecked = true;
-            break;
-        }
-        case Graphing::EvalTrigUnitMode::Grads:
-        {
-            Gradians->IsChecked = true;
-            break;
-        }
-        case Graphing::EvalTrigUnitMode::Invalid:
-        {
-            m_ParentGrapher->TrigUnitMode = (int)Graphing::EvalTrigUnitMode::Radians;
-            break;
-        }
+    case Graphing::EvalTrigUnitMode::Degrees:
+    {
+        Degrees->IsChecked = true;
+        break;
+    }
+    case Graphing::EvalTrigUnitMode::Radians:
+    {
+        Radians->IsChecked = true;
+        break;
+    }
+    case Graphing::EvalTrigUnitMode::Grads:
+    {
+        Gradians->IsChecked = true;
+        break;
+    }
+    case Graphing::EvalTrigUnitMode::Invalid:
+    {
+        m_ParentGrapher->TrigUnitMode = (int)Graphing::EvalTrigUnitMode::Radians;
+        break;
+    }
     }
 }
 
