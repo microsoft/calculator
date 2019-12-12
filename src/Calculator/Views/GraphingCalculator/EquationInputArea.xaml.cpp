@@ -203,7 +203,7 @@ void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, R
     eq->IsLineEnabled = !eq->IsLineEnabled;
 }
 
-void CalculatorApp::EquationInputArea::InputTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e)
+void EquationInputArea::InputTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e)
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
 
@@ -227,7 +227,7 @@ void CalculatorApp::EquationInputArea::InputTextBox_Loaded(Object ^ sender, Rout
     }
 }
 
-void CalculatorApp::EquationInputArea::InputTextBox_DataContextChanged(
+void EquationInputArea::InputTextBox_DataContextChanged(
     Windows::UI::Xaml::FrameworkElement ^ sender,
     Windows::UI::Xaml::DataContextChangedEventArgs ^ args)
 {
@@ -240,7 +240,7 @@ void CalculatorApp::EquationInputArea::InputTextBox_DataContextChanged(
    FocusEquationIfNecessary(tb);
 }
 
-void CalculatorApp::EquationInputArea::FocusEquationIfNecessary(CalculatorApp::Controls::EquationTextBox ^ textBox)
+void EquationInputArea::FocusEquationIfNecessary(CalculatorApp::Controls::EquationTextBox ^ textBox)
 {
     if (m_equationToFocus != nullptr && textBox->DataContext == m_equationToFocus)
     {
@@ -258,7 +258,6 @@ void CalculatorApp::EquationInputArea::FocusEquationIfNecessary(CalculatorApp::C
         }
     }
 }
-
 
 void EquationInputArea::OnHighContrastChanged(AccessibilitySettings ^ sender, Object ^ args)
 {
