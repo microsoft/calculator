@@ -9,6 +9,7 @@
 #include "IGraphAnalyzer.h"
 #include "IMathSolver.h"
 #include "Common.h"
+using namespace Graphing;
 
 namespace GraphControl
 {

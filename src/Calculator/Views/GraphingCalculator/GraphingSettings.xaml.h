@@ -30,9 +30,7 @@ namespace CalculatorApp
         std::mutex m_updating;
         bool m_loading;
 
-        double m_currentAspectRatio, m_width, m_height, m_xMin, m_yMin, m_xMax, m_yMax;
-
-        bool m_preserveAspectRatio = true;
+        double m_xMin, m_yMin, m_xMax, m_yMax;
 
         void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);

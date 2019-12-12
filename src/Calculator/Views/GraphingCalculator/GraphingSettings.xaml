@@ -22,55 +22,101 @@
             <Setter Property="Padding" Value="4,4"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="FocusVisualMargin" Value="0"/>
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
-                        <Grid Name="LayoutRoot"
-                              Margin="0,0"
-                              Background="{ThemeResource RadioButtonBackground}">
+                        <Grid Name="RootGrid" Margin="0,0">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
                                     <VisualState x:Name="PointerOver">
                                         <VisualState.Setters>
-                                            <Setter Target="LayoutRoot.Background" Value="{ThemeResource ListMediumControlBackgroundBrush}"/>
-                                            <Setter Target="AccessibilityBorder.BorderBrush" Value="{ThemeResource ControlPointerOverBorderBrush}"/>
-                                            <Setter Target="AccessibilityBorder.Background" Value="{ThemeResource ControlSelectedBackgroundBrush}"/>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource AppControlHoverButtonFaceBrush}"/>
                                         </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Pressed">
                                         <VisualState.Setters>
-                                            <Setter Target="LayoutRoot.Background" Value="{ThemeResource BaseMediumLowPressedBackgroundBrush}"/>
-                                            <Setter Target="AccessibilityBorder.BorderBrush" Value="{ThemeResource ControlPointerOverBorderBrush}"/>
-                                            <Setter Target="AccessibilityBorder.Background" Value="{ThemeResource ControlSelectedBackgroundBrush}"/>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource AppControlPressedButtonFaceBrush}"/>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ToggleButtonRevealBackgroundDisabled}"/>
+                                            <Setter Target="ContentPresenter.Opacity" Value="0.5"/>
+                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SystemControlDisabledBaseLowBrush}"/>
                                         </VisualState.Setters>
                                     </VisualState>
-                                </VisualStateGroup>
-                                <VisualStateGroup x:Name="CheckStates">
                                     <VisualState x:Name="Checked">
                                         <VisualState.Setters>
-                                            <Setter Target="VisualBorder.BorderBrush" Value="{ThemeResource BackgroundColorBrush}"/>
-                                            <Setter Target="VisualBorder.Background" Value="{ThemeResource BackgroundColorBrush}"/>
-                                            <Setter Target="ContentPresenter.Background" Value="{ThemeResource BackgroundColorBrush}"/>
-                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ForegroundColorBrush}"/>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource SystemControlHighlightAccentBrush}"/>
+                                            <Setter Target="ContentPresenter.Opacity" Value="{ThemeResource SystemControlHighlightAccentBrush}"/>
                                         </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
                                     </VisualState>
-                                    <VisualState x:Name="Unchecked"/>
-                                    <VisualState x:Name="Indeterminate"/>
+                                    <VisualState x:Name="Unchecked">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource SystemControlHighlightAccentBrush}"/>
+                                            <Setter Target="ContentPresenter.Opacity" Value="{ThemeResource SystemControlHighlightAccentBrush}"/>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="CheckedPointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource AppControlHighlightCalcButtonHoverBrush}"/>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="CheckedPressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource SystemControlHighlightAccentBrush}"/>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Indeterminate">
+                                        <VisualState.Setters>
+                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ToggleButtonRevealBackgroundIndeterminate}"/>
+                                            <Setter Target="ContentPresenter.BorderBrush" Value="{ThemeResource ToggleButtonRevealBorderBrushIndeterminate}"/>
+                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ToggleButtonForegroundIndeterminate}"/>
+                                        </VisualState.Setters>
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <Border Name="AccessibilityBorder"
-                                    BorderBrush="{ThemeResource RadioButtonBorderBrush}"
-                                    BorderThickness="1"/>
-                            <Border Name="VisualBorder"
-                                    BorderBrush="{ThemeResource RadioButtonBorderBrush}"
-                                    BorderThickness="1"/>
+                            <Rectangle x:Name="Overlay"
+                                       Fill="{ThemeResource EquationButtonOverlayBackgroundBrush}"
+                                       Opacity="0"
+                                       IsHitTestVisible="False"/>
                             <ContentPresenter Name="ContentPresenter"
-                                              Grid.Column="1"
                                               Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
+                                              Background="Transparent"
                                               Foreground="{TemplateBinding Foreground}"
+                                              BorderBrush="{TemplateBinding BorderBrush}"
+                                              BorderThickness="{TemplateBinding BorderThickness}"
                                               AutomationProperties.AccessibilityView="Raw"
                                               Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -153,29 +199,6 @@
                          VerticalAlignment="Center"
                          KeyDown="OnKeyDown"
                          LosingFocus="OnLosingFocus"/>
-
-                <Polyline Grid.RowSpan="5"
-                          Grid.Column="2"
-                          Stroke="Blue"
-                          StrokeThickness="3"
-                          Points="0,50 50,50 50,65"/>
-                <Polyline Grid.RowSpan="5"
-                          Grid.Column="2"
-                          Stroke="Blue"
-                          StrokeThickness="3"
-                          Points="50,115 50,140 0,140"/>
-
-                <Button x:Name="PreserveAspectRatio"
-                        Grid.RowSpan="5"
-                        Grid.Column="2"
-                        Margin="30,20,0,0"
-                        VerticalAlignment="Center"
-                        Click="OnPreserveAspectRatioClicked">
-                    <FontIcon x:Name="PreserveAspectRatioSymbol"
-                              FontFamily="Segoe UI Symbol"
-                              Glyph="&#x26D3;"/>
-                </Button>
-
             </Grid>
 
             <TextBlock x:Name="UnitsHeading"
