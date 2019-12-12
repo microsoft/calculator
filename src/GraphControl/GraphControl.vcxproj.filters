@@ -10,6 +10,9 @@
     <Filter Include="Control">
       <UniqueIdentifier>{e8d91a71-6933-4fd8-b333-421085d13896}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{0f768477-7ceb-42c4-a32a-cb024320dbc3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -28,8 +31,10 @@
     <ClCompile Include="DirectX\ActiveTracingPointRenderer.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="Models\Equation.cpp" />
     <ClCompile Include="Models\KeyGraphFeaturesInfo.cpp" />
+    <ClCompile Include="Models\Equation.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -53,9 +58,13 @@
       <Filter>DirectX</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h" />
-    <ClInclude Include="Models\Equation.h" />
-    <ClInclude Include="Models\EquationCollection.h" />
     <ClInclude Include="Models\KeyGraphFeaturesInfo.h" />
+    <ClInclude Include="Models\Equation.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\EquationCollection.h">
+      <Filter>Models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\generic.xaml">
@@ -66,6 +75,8 @@
     <None Include="$(ProjectDir)\GraphingImplOverrides.props" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>
