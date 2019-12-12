@@ -151,7 +151,12 @@ void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationView
 
 void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
 {
-    TraceValue->Text = "(" + newPoint.X.ToString() + ", " + newPoint.Y.ToString() + ")";
+    wstringstream traceValueString;
+
+    // TODO: The below precision should ideally be dynamic based on the current scale of the graph.
+    traceValueString << "x=" << fixed << setprecision(1) << newPoint.X << ", y=" << fixed << setprecision(1) << newPoint.Y;
+
+    TraceValue->Text = ref new String(traceValueString.str().c_str());
 
     auto peer = FrameworkElementAutomationPeer::FromElement(TraceValue);
 
@@ -507,6 +512,8 @@ void GraphingCalculator::TraceValuePopup_SizeChanged(Object ^ sender, SizeChange
 
 void CalculatorApp::GraphingCalculator::ActiveTracing_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
+    GraphingControl->Focus(::FocusState::Programmatic);
+
     m_activeTracingKeyUpToken = Window::Current->CoreWindow->KeyUp +=
         ref new Windows::Foundation::TypedEventHandler<Windows::UI::Core::CoreWindow ^, Windows::UI::Core::KeyEventArgs ^>(
             this, &CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp);

@@ -621,10 +621,9 @@ namespace GraphControl
 
     void Grapher::UpdateTracingChanged()
     {
-        if (m_renderMain->Tracing || m_renderMain->ActiveTracing)
+        if (m_renderMain->Tracing)
         {
             TracingChangedEvent(true);
-
             TracingValueChangedEvent(m_renderMain->TraceValue);
         }
         else
@@ -650,11 +649,7 @@ namespace GraphControl
         if (m_renderMain)
         {
             m_renderMain->DrawNearestPoint = false;
-            if (ActiveTracing == false)
-            {
-                // IF we are active tracing we never want to hide the popup..
-                TracingChangedEvent(false);
-            }
+            TracingChangedEvent(false);
             e->Handled = true;
         }
     }
