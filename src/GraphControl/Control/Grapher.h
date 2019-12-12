@@ -18,11 +18,12 @@ public
 public
     delegate void TracingValueChangedEventHandler(Windows::Foundation::Point value);
 
-    [Windows::UI::Xaml::Markup::ContentPropertyAttribute(Name = L"Equations")] public ref class Grapher sealed : public Windows::UI::Xaml::Controls::Control
+    [Windows::UI::Xaml::Markup::ContentPropertyAttribute(Name = L"Equations")] public ref class Grapher sealed : public Windows::UI::Xaml::Controls::Control, public Windows::UI::Xaml::Data::INotifyPropertyChanged
     {
     public:
         event TracingValueChangedEventHandler ^ TracingValueChangedEvent;
         event TracingChangedEventHandler ^ TracingChangedEvent;
+        virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler ^ PropertyChanged;
 
     public:
         Grapher();
@@ -93,17 +94,22 @@ public
 #pragma endregion
 
         // Pass active tracing turned on or off down to the renderer
+
         property bool ActiveTracing
         {
             bool get()
             {
-                return m_renderMain->ActiveTracing;
+                return m_renderMain != nullptr && m_renderMain->ActiveTracing;
             }
 
             void set(bool value)
             {
-                m_renderMain->ActiveTracing = value;
-                UpdateTracingChanged();
+                if (m_renderMain != nullptr && m_renderMain->ActiveTracing != value)
+                {
+                    m_renderMain->ActiveTracing = value;
+                    UpdateTracingChanged();
+                    PropertyChanged(this, ref new Windows::UI::Xaml::Data::PropertyChangedEventArgs(L"ActiveTracing"));
+                }
             }
         }
 

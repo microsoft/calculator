@@ -1922,9 +1922,9 @@
                                         </VisualState>
                                         <VisualState x:Name="PointerOverError">
                                             <VisualState.Setters>
-                                                <Setter Target="EquationBoxBorder.BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor}"/>
+                                                <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource EquationBoxErrorBorderBrush}"/>
                                                 <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource EquationBoxErrorBackgroundBrush}"/>
-                                                <Setter Target="ColorChooserButton.Visibility" Value="Visible"/>
+                                                <Setter Target="ColorChooserButton.Visibility" Value="Collapsed"/>
                                                 <Setter Target="FunctionButton.Visibility" Value="Collapsed"/>
                                                 <Setter Target="RemoveButton.Visibility" Value="Visible"/>
                                                 <Setter Target="ErrorIcon.Visibility" Value="Collapsed"/>
@@ -1943,12 +1943,18 @@
                                                 <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource TextBoxBackgroundThemeBrush}"/>
                                             </VisualState.Setters>
                                         </VisualState>
+                                        <VisualState x:Name="FocusedError">
+                                            <VisualState.Setters>
+                                                <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource EquationBoxErrorBorderBrush}"/>
+                                                <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource TextBoxBackgroundThemeBrush}"/>
+                                                <Setter Target="ErrorIcon.Visibility" Value="Collapsed"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
                                     </VisualStateGroup>
                                     <VisualStateGroup x:Name="ButtonStates">
                                         <VisualState x:Name="ButtonVisible">
                                             <VisualState.Setters>
                                                 <Setter Target="DeleteButton.Visibility" Value="Visible"/>
-                                                <Setter Target="ErrorIcon.Visibility" Value="Collapsed"/>
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="ButtonHideRemove">

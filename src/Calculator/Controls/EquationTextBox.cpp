@@ -316,7 +316,11 @@ void EquationTextBox::UpdateCommonVisualState()
 {
     String ^ state = nullptr;
 
-    if (m_HasFocus)
+    if (m_HasFocus && HasError)
+    {
+        state = "FocusedError";
+    }
+    else if (m_HasFocus)
     {
         state = "Focused";
     }
@@ -391,7 +395,12 @@ void EquationTextBox::OnRichEditMenuOpening(Object ^ /*sender*/, Object ^ /*args
 {
     if (m_kgfEquationMenuItem != nullptr)
     {
-        m_kgfEquationMenuItem->IsEnabled = EquationTextBox::RichEditHasContent();
+        m_kgfEquationMenuItem->IsEnabled = RichEditHasContent();
+    }
+
+    if (m_colorChooserMenuItem != nullptr)
+    {
+        m_colorChooserMenuItem->IsEnabled = !HasError;
     }
 }
 
