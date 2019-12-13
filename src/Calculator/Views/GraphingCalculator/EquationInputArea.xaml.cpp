@@ -205,7 +205,7 @@ void EquationInputArea::InputTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e
     auto colorChooser = static_cast<EquationStylePanelControl ^>(tb->ColorChooserFlyout->Content);
     colorChooser->AvailableColors = AvailableColors;
 
-    if (m_equationToFocus!=nullptr && tb->DataContext == m_equationToFocus)
+    if (m_equationToFocus != nullptr && tb->DataContext == m_equationToFocus)
     {
         m_equationToFocus = nullptr;
         tb->FocusTextBox();
@@ -222,9 +222,7 @@ void EquationInputArea::InputTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e
     }
 }
 
-void EquationInputArea::InputTextBox_DataContextChanged(
-    Windows::UI::Xaml::FrameworkElement ^ sender,
-    Windows::UI::Xaml::DataContextChangedEventArgs ^ args)
+void EquationInputArea::InputTextBox_DataContextChanged(Windows::UI::Xaml::FrameworkElement ^ sender, Windows::UI::Xaml::DataContextChangedEventArgs ^ args)
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
     if (!tb->IsLoaded)
@@ -232,26 +230,7 @@ void EquationInputArea::InputTextBox_DataContextChanged(
         return;
     }
 
-   FocusEquationIfNecessary(tb);
-}
-
-void EquationInputArea::FocusEquationIfNecessary(CalculatorApp::Controls::EquationTextBox ^ textBox)
-{
-    if (m_equationToFocus != nullptr && textBox->DataContext == m_equationToFocus)
-    {
-        m_equationToFocus = nullptr;
-        textBox->FocusTextBox();
-
-        unsigned int index;
-        if (Equations->IndexOf(m_equationToFocus, &index))
-        {
-            auto container = EquationInputList->TryGetElement(index);
-            if (container != nullptr)
-            {
-                container->StartBringIntoView();
-            }
-        }
-    }
+    FocusEquationIfNecessary(tb);
 }
 
 void EquationInputArea::FocusEquationIfNecessary(CalculatorApp::Controls::EquationTextBox ^ textBox)
@@ -319,9 +298,69 @@ void EquationInputArea::ReloadAvailableColors(bool isHighContrast)
     }
 }
 
+void EquationInputArea::TextBoxGotFocus(TextBox ^ sender, RoutedEventArgs ^ e)
+{
+    sender->SelectAll();
+}
 
+void EquationInputArea::SubmitTextbox(TextBox ^ sender)
+{
+    auto variableViewModel = static_cast<VariableViewModel ^>(sender->DataContext);
+    double val;
+    if (sender->Name == "ValueTextBox")
+    {
+        val = validateDouble(sender->Text, variableViewModel->Value);
+        variableViewModel->Value = val;
+    }
+    else if (sender->Name == "MinTextBox")
+    {
+        val = validateDouble(sender->Text, variableViewModel->Min);
+        variableViewModel->Min = val;
+    }
+    else if (sender->Name == "MaxTextBox")
+    {
+        val = validateDouble(sender->Text, variableViewModel->Max);
+        variableViewModel->Max = val;
+    }
+    else if (sender->Name == "StepTextBox")
+    {
+        val = validateDouble(sender->Text, variableViewModel->Step);
+        variableViewModel->Step = val;
+    }
+    else
+    {
+        return;
+    }
 
+    wostringstream oss;
+    oss << std::noshowpoint << val;
+    sender->Text = ref new String(oss.str().c_str());
+}
 
+void EquationInputArea::TextBoxLosingFocus(TextBox ^ sender, LosingFocusEventArgs ^)
+{
+    SubmitTextbox(sender);
+}
+
+void EquationInputArea::TextBoxKeyDown(TextBox ^ sender, KeyRoutedEventArgs ^ e)
+{
+    if (e->Key == ::VirtualKey::Enter)
+    {
+        SubmitTextbox(sender);
+    }
+}
+
+double EquationInputArea::validateDouble(String ^ value, double defaultValue)
+{
+    try
+    {
+        return stod(value->Data());
+    }
+    catch (...)
+    {
+        return defaultValue;
+    }
+}
 
 ::Visibility EquationInputArea::ManageEditVariablesButtonVisibility(unsigned int numberOfVariables)
 {
