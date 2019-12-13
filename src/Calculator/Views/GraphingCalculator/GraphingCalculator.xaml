@@ -474,8 +474,8 @@
                 </Border.RenderTransform>
                 <TextBlock x:Name="TraceValue"
                            Foreground="{ThemeResource ToolTipForeground}"
-                           AutomationProperties.LiveSetting="Polite"
-                           Text="x=0,y=0"/>
+                           FontSize="{ThemeResource ToolTipContentThemeFontSize}"
+                           AutomationProperties.LiveSetting="Polite"/>
             </Border>
         </Grid>
 
