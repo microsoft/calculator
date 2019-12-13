@@ -377,7 +377,7 @@ void EquationTextBox::FocusTextBox()
 {
     if (m_richEditBox != nullptr)
     {
-        m_richEditBox->Focus(::FocusState::Programmatic);
+        FocusManager::TryFocusAsync(m_richEditBox, ::FocusState::Programmatic);
     }
 }
 

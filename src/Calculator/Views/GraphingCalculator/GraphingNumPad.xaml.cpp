@@ -32,7 +32,7 @@ void GraphingNumPad::ShiftButton_Uncheck(_In_ Platform::Object ^ /*sender*/, _In
 {
     ShiftButton->IsChecked = false;
     SetOperatorRowVisibility();
-    ShiftButton->Focus(::FocusState::Programmatic);
+    FocusManager::TryFocusAsync(ShiftButton, ::FocusState::Programmatic);
 }
 
 void GraphingNumPad::TrigFlyoutShift_Toggle(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
