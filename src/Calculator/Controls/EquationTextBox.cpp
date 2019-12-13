@@ -55,7 +55,7 @@ void EquationTextBox::OnApplyTemplate()
         m_richEditBox->LostFocus += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxLostFocus);
         m_richEditBox->SelectionFlyout = nullptr;
         m_richEditBox->EquationSubmitted +=
-            ref new EventHandler<CalculatorApp::Controls::MathRichEditBoxSubmission ^>(this, &CalculatorApp::Controls::EquationTextBox::OnEquationSubmitted);
+            ref new EventHandler<MathRichEditBoxSubmission ^>(this, &EquationTextBox::OnEquationSubmitted);
     }
 
     if (m_equationButton != nullptr)
@@ -72,7 +72,7 @@ void EquationTextBox::OnApplyTemplate()
 
     if (m_richEditContextMenu != nullptr)
     {
-        m_richEditContextMenu->Opening += ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpening);
+        m_richEditContextMenu->Opening += ref new EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpening);
     }
 
     if (m_kgfEquationButton != nullptr)
@@ -381,7 +381,7 @@ void EquationTextBox::FocusTextBox()
     }
 }
 
-void CalculatorApp::Controls::EquationTextBox::OnEquationSubmitted(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxSubmission ^ args)
+void EquationTextBox::OnEquationSubmitted(Platform::Object ^ sender, MathRichEditBoxSubmission ^ args)
 {
     if (args->HasTextChanged)
     {
