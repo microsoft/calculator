@@ -14,6 +14,7 @@ namespace CalculatorUITestFramework
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
         public GlobalCalculatorUI GlobalCalculatorUI = new GlobalCalculatorUI();
         public ScientificOperatorsPanel ScientificOperators = new ScientificOperatorsPanel();
+        public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public MemoryPanel MemoryPanel = new MemoryPanel();
         public HistoryPanel HistoryPanel = new HistoryPanel();
         public NavigationMenu NavigationMenu = new NavigationMenu();
@@ -37,12 +38,12 @@ namespace CalculatorUITestFramework
 
             if (source.Contains("clearEntryButton"))
             {
-                this.ScientificOperators.ClearEntryButton.Click();
+                this.StandardOperators.ClearEntryButton.Click();
                 source = this.session.PageSource;
             }
             if (source.Contains("clearButton"))
             {
-                this.ScientificOperators.ClearButton.Click();
+                this.StandardOperators.ClearButton.Click();
             }
             this.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
             this.MemoryPanel.MemoryClear.Click();

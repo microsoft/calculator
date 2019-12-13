@@ -32,14 +32,12 @@ namespace CalculatorUITestFramework
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
         public NumberPad NumberPad = new NumberPad();
 
-        public WindowsElement XPower2Button => this.session.TryFindElementByAccessibilityId("xpower2Button");
         public WindowsElement XPower3Button => this.session.TryFindElementByAccessibilityId("xpower3Button");
         public WindowsElement XPowerYButton => this.session.TryFindElementByAccessibilityId("powerButton");
         public WindowsElement PowerOf10Button => this.session.TryFindElementByAccessibilityId("powerOf10Button");
         public WindowsElement LogButton => this.session.TryFindElementByAccessibilityId("logBase10Button");
         public WindowsElement LnButton => this.session.TryFindElementByAccessibilityId("logBaseEButton");
         public WindowsElement PiButton => this.session.TryFindElementByAccessibilityId("piButton");
-        public WindowsElement InvertButton => this.session.TryFindElementByAccessibilityId("invertButton");
         public WindowsElement EulerButton => this.session.TryFindElementByAccessibilityId("eulerButton");
         public WindowsElement AbsButton => this.session.TryFindElementByAccessibilityId("absButton");
         public WindowsElement ExpButton => this.session.TryFindElementByAccessibilityId("expButton");
@@ -47,13 +45,6 @@ namespace CalculatorUITestFramework
         public WindowsElement ParenthesisLeftButton => this.session.TryFindElementByAccessibilityId("openParenthesisButton");
         public WindowsElement ParenthesisRightButton => this.session.TryFindElementByAccessibilityId("closeParenthesisButton");
         public WindowsElement FactorialButton => this.session.TryFindElementByAccessibilityId("factorialButton");
-        public WindowsElement DivideButton => this.session.TryFindElementByAccessibilityId("divideButton");
-        public WindowsElement MultiplyButton => this.session.TryFindElementByAccessibilityId("multiplyButton");
-        public WindowsElement MinusButton => this.session.TryFindElementByAccessibilityId("minusButton");
-        public WindowsElement PlusButton => this.session.TryFindElementByAccessibilityId("plusButton");
-        public WindowsElement EqualButton => this.session.TryFindElementByAccessibilityId("equalButton");
-        public WindowsElement ClearEntryButton => this.session.TryFindElementByAccessibilityId("clearEntryButton");
-        public WindowsElement ClearButton => this.session.TryFindElementByAccessibilityId("clearButton");
         public WindowsElement BackSpaceButton => this.session.TryFindElementByAccessibilityId("backSpaceButton");
         public WindowsElement DegButton => this.session.TryFindElementByAccessibilityId("degButton");
         public WindowsElement RadButton => this.session.TryFindElementByAccessibilityId("radButton");
@@ -97,7 +88,6 @@ namespace CalculatorUITestFramework
         public WindowsElement TrigFlyout => this.session.TryFindElementByAccessibilityId("Trigflyout");
         public WindowsElement LightDismiss => this.session.TryFindElementByAccessibilityId("Light Dismiss");
         private WindowsElement DegRadGradButton => GetAngleOperatorButton();
-        
         private WindowsElement GetAngleOperatorButton()
         {
             string source = this.session.PageSource;
