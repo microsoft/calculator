@@ -13,6 +13,7 @@ using namespace Windows::ApplicationModel;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::System;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(MathRichEditBox, MathText);
 
@@ -75,6 +76,9 @@ MathRichEditBox::MathRichEditBox()
     {
         throw Exception::CreateException(hr);
     }
+    this->LosingFocus += ref new Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::UIElement ^, Windows::UI::Xaml::Input::LosingFocusEventArgs ^>(
+        this, &CalculatorApp::Controls::MathRichEditBox::OnLosingFocus);
+    this->KeyUp += ref new Windows::UI::Xaml::Input::KeyEventHandler(this, &CalculatorApp::Controls::MathRichEditBox::OnKeyUp);
 }
 
 String ^ MathRichEditBox::GetMathTextProperty()
@@ -111,4 +115,41 @@ void MathRichEditBox::SetMathTextProperty(String ^ newValue)
     }
 
     this->IsReadOnly = readOnlyState;
+    SetValue(MathTextProperty, newValue);
+}
+
+void CalculatorApp::Controls::MathRichEditBox::OnLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args)
+{
+    auto newVal = GetMathTextProperty();
+    if (MathText != newVal)
+    {
+        SetValue(MathTextProperty, newVal);
+        EquationSubmitted(this, ref new MathRichEditBoxSubmission(true, EquationSubmissionSource::FOCUS_LOST));
+    }
+    else
+    {
+        EquationSubmitted(this, ref new MathRichEditBoxSubmission(false, EquationSubmissionSource::FOCUS_LOST));
+    }
+}
+
+void CalculatorApp::Controls::MathRichEditBox::OnKeyUp(Platform::Object ^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e)
+{
+    if (e->Key == VirtualKey::Enter)
+    {
+        auto newVal = GetMathTextProperty();
+        if (MathText != newVal)
+        {
+            SetValue(MathTextProperty, newVal);
+            EquationSubmitted(this, ref new MathRichEditBoxSubmission(true, EquationSubmissionSource::ENTER_KEY));
+        }
+        else
+        {
+            EquationSubmitted(this, ref new MathRichEditBoxSubmission(true, EquationSubmissionSource::ENTER_KEY));
+        }
+    }
+}
+
+void MathRichEditBox::OnMathTextPropertyChanged(Platform::String ^ oldValue, Platform::String ^ newValue)
+{
+    SetMathTextProperty(newValue);
 }
