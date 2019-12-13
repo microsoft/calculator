@@ -175,7 +175,6 @@ void EquationTextBox::OnLostFocus(RoutedEventArgs ^ e)
         return;
     }
 
-    EquationSubmitted(this, m_sourceSubmission);
     if (m_functionButton && m_richEditBox->MathText != L"")
     {
         m_functionButton->IsEnabled = true;
@@ -217,6 +216,8 @@ void EquationTextBox::OnRichEditBoxLostFocus(Object ^ sender, RoutedEventArgs ^ 
 
     UpdateCommonVisualState();
     UpdateButtonsVisualState();
+
+    EquationSubmitted(this, m_sourceSubmission);
 }
 
 void EquationTextBox::OnDeleteButtonClicked(Object ^ sender, RoutedEventArgs ^ e)

@@ -4182,14 +4182,6 @@
     <value>Start tracing</value>
     <comment>This is the tooltip/automation name for the graphing calculator start tracing button</comment>
   </data>
-  <data name="variablesButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Variables</value>
-    <comment>This is the tooltip for the Calculator variables button.</comment>
-  </data>
-    <data name="variablesButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Variables</value>
-    <comment>This is the automation name for the Calculator variables button.</comment>
-  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Configure slider</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
