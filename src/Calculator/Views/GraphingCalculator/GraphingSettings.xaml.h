@@ -31,10 +31,15 @@ namespace CalculatorApp
         bool m_loading;
 
         double m_xMin, m_yMin, m_xMax, m_yMax;
+        bool m_xHasError;
+        bool m_yHasError;
 
         void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
         void OnKeyDown(Platform::Object ^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);
-        void OnPreserveAspectRatioClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+
+        void OnGettingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::GettingFocusEventArgs ^ args);
+        void OnPointerEntered(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
+        void OnPointerExited(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
     };
 }

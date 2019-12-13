@@ -78,14 +78,35 @@ void GraphingSettings::UpdateExtents(Platform::Object ^ sender)
         m_ParentGrapher->YAxisMax = m_yMax;
     }
 
-    if (m_yMin < m_yMax && m_xMin < m_xMax)
+    if (m_yMin < m_yMax)
+    {
+        m_yHasError = false;
+        VisualStateManager::GoToState(y_Min, "Normal", false);
+        VisualStateManager::GoToState(y_Max, "Normal", false);
+    }
+    if (m_xMin < m_xMax)
+    {
+        m_xHasError = false;
+        VisualStateManager::GoToState(x_Min, "Normal", false);
+        VisualStateManager::GoToState(x_Max, "Normal", false);
+    }
+
+    if (m_yMin >= m_yMax)
+    {
+        m_yHasError = true;
+        VisualStateManager::GoToState(y_Min, "Error", false);
+        VisualStateManager::GoToState(y_Max, "Error", false);
+    }
+    if (m_xMin >= m_xMax)
+    {
+        m_xHasError = true;
+        VisualStateManager::GoToState(x_Min, "Error", false);
+        VisualStateManager::GoToState(x_Max, "Error", false);
+    }
+
+    if (!m_yHasError && !m_xHasError)
     {
         m_ParentGrapher->SetDisplayRanges(m_xMin, m_xMax, m_yMin, m_yMax);
-        ErrorIcon->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-    }
-    else
-    {
-        ErrorIcon->Visibility = Windows::UI::Xaml::Visibility::Visible;
     }
 }
 
@@ -127,6 +148,21 @@ void GraphingSettings::OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::Ro
 
 void GraphingSettings::OnLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args)
 {
+    String ^ state = "Normal";
+    TextBox ^ tb = static_cast<TextBox ^>(sender);
+    String ^ textBoxName = tb->Name;
+
+    if ((textBoxName == "x_Min" || textBoxName == "x_Max") && m_xHasError)
+    {
+        state = "Error";
+    }
+
+    if ((textBoxName == "y_Min" || textBoxName == "y_Max") && m_yHasError)
+    {
+        state = "Error";
+    }
+    VisualStateManager::GoToState(this, state, false);
+
     UpdateExtents(sender);
 }
 
@@ -136,4 +172,60 @@ void GraphingSettings::OnKeyDown(Platform::Object ^ sender, Windows::UI::Xaml::I
     {
         UpdateExtents(sender);
     }
+}
+
+void CalculatorApp::GraphingSettings::OnGettingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::GettingFocusEventArgs ^ args)
+{
+    String ^ state = "Focused";
+    TextBox ^ tb = static_cast<TextBox ^>(sender);
+    String ^ textBoxName = tb->Name;
+
+    if ((textBoxName == "x_Min" || textBoxName == "x_Max") && m_xHasError)
+    {
+        state = "FocusedError";
+    }
+
+    if ((textBoxName == "y_Min" || textBoxName == "y_Max") && m_yHasError)
+    {
+        state = "FocusedError";
+    }
+
+    VisualStateManager::GoToState(this, state, false);
+}
+
+void CalculatorApp::GraphingSettings::OnPointerEntered(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e)
+{
+    String ^ state = "PointerOver";
+    TextBox ^ tb = static_cast<TextBox ^>(sender);
+    String ^ textBoxName = tb->Name;
+
+    if ((textBoxName == "x_Min" || textBoxName == "x_Max") && m_xHasError)
+    {
+        state = "PointerOverError";
+    }
+
+    if ((textBoxName == "y_Min" || textBoxName == "y_Max") && m_yHasError)
+    {
+        state = "PointerOverError";
+    }
+
+    VisualStateManager::GoToState(this, state, false);
+}
+
+void CalculatorApp::GraphingSettings::OnPointerExited(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e)
+{
+    String ^ state = "Normal";
+    TextBox ^ tb = static_cast<TextBox ^>(sender);
+    String ^ textBoxName = tb->Name;
+
+    if ((textBoxName == "x_Min" || textBoxName == "x_Max") && m_xHasError)
+    {
+        state = "Error";
+    }
+
+    if ((textBoxName == "y_Min" || textBoxName == "y_Max") && m_yHasError)
+    {
+        state = "Error";
+    }
+    VisualStateManager::GoToState(this, state, false);
 }
