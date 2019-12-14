@@ -198,6 +198,12 @@ public
         MemoryRecall = (int)CM::Command::CommandRECALL,
         MemoryClear = (int)CM::Command::CommandMCLEAR,
         BitflipButton = 1000,
-        FullKeypadButton = 1001
+        FullKeypadButton = 1001,
+
+        // Inequalities. used in graphing calculator
+        LessThan,
+        LessThanOrEqualTo,
+        GreaterThan,
+        GreaterThanOrEqualTo
     };
 }

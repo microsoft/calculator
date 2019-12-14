@@ -5,6 +5,8 @@
 
 #include "Views\GraphingCalculator\GraphingNumPad.g.h"
 #include "CalcViewModel/GraphingCalculator/GraphingCalculatorViewModel.h"
+#include "Views/GraphingCalculator/EquationInputArea.xaml.h"
+#include "CalcViewModel/Common/CalculatorButtonUser.h"
 
 namespace CalculatorApp
 {
@@ -23,5 +25,11 @@ namespace CalculatorApp
         void ShiftButton_IsEnabledChanged(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ e);
         void SetOperatorRowVisibility();
         void SetTrigRowVisibility();
-	};
+        void Button_Clicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ e);
+        void SubmitButton_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void ClearButton_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void BackSpaceButton_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void GraphingNumPad_PointerPressed(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
+        Controls::MathRichEditBox^ GetActiveRichEdit();
+    };
 }

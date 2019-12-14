@@ -115,7 +115,6 @@ void MathRichEditBox::SetMathTextProperty(String ^ newValue)
     }
 
     this->IsReadOnly = readOnlyState;
-    SetValue(MathTextProperty, newValue);
 }
 
 void CalculatorApp::Controls::MathRichEditBox::OnLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args)
@@ -152,4 +151,68 @@ void CalculatorApp::Controls::MathRichEditBox::OnKeyUp(Platform::Object ^ sender
 void MathRichEditBox::OnMathTextPropertyChanged(Platform::String ^ oldValue, Platform::String ^ newValue)
 {
     SetMathTextProperty(newValue);
+    SetValue(MathTextProperty, newValue);
+}
+
+void CalculatorApp::Controls::MathRichEditBox::InsertText(Platform::String ^ text, int cursorOffSet, int selectionLength)
+{
+    // If the rich edit is empty, the math zone may not exist, and so selection (and thus the resulting text) will not be in a math zone.
+    // If the rich edit has content already, then the mathzone will already be created due to mathonly mode being set and the selection will exist inside the
+    // math zone. To handle this, we will force a math zone to be created in teh case of the text being empty and then replacing the text inside of the math
+    // zone with the newly inserted text.
+    if (GetMathTextProperty() == nullptr)
+    {
+        SetMathTextProperty("<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi></math>");
+        TextDocument->Selection->StartPosition = 0;
+        TextDocument->Selection->EndPosition = 1;
+    }
+
+    // insert the text in place of selection
+    TextDocument->Selection->SetText(Windows::UI::Text::TextSetOptions::FormatRtf, text);
+
+    // Move the cursor to the next logical place for users to enter text.
+    TextDocument->Selection->StartPosition += cursorOffSet;
+    TextDocument->Selection->EndPosition = TextDocument->Selection->StartPosition + selectionLength;
+}
+
+void CalculatorApp::Controls::MathRichEditBox::BackSpace()
+{
+    // if anything is selected, just delete the selection.  Note: EndPosition can be before start position.
+    if (TextDocument->Selection->StartPosition != TextDocument->Selection->EndPosition)
+    {
+        TextDocument->Selection->SetText(Windows::UI::Text::TextSetOptions::None, L"");
+        return;
+    }
+
+    // if we are at the start of the string, do nothing
+    if (TextDocument->Selection->StartPosition == 0)
+    {
+        return;
+    }
+
+    // Select the previous group.
+    TextDocument->Selection->EndPosition = TextDocument->Selection->StartPosition;
+    TextDocument->Selection->StartPosition -= 1;
+
+    // If the group contains anything complex, we want to give the user a chance to preview the deletion.
+    // If it's a single character, then just delete it.  Otherwise do nothing until the user triggers backspace again.
+    auto text = TextDocument->Selection->Text;
+    if (text->Length() == 1)
+    {
+        TextDocument->Selection->SetText(Windows::UI::Text::TextSetOptions::None, L"");
+    }
+}
+
+void CalculatorApp::Controls::MathRichEditBox::SubmitEquation()
+{
+    auto newVal = GetMathTextProperty();
+    if (MathText != newVal)
+    {
+        SetValue(MathTextProperty, newVal);
+        EquationSubmitted(this, ref new MathRichEditBoxSubmission(true, EquationSubmissionSource::ENTER_KEY));
+    }
+    else
+    {
+        EquationSubmitted(this, ref new MathRichEditBoxSubmission(true, EquationSubmissionSource::ENTER_KEY));
+    }
 }

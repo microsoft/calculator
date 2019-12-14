@@ -40,6 +40,9 @@ namespace CalculatorApp
 
             event Windows::Foundation::EventHandler<MathRichEditBoxSubmission^> ^ EquationSubmitted;
             void OnMathTextPropertyChanged(Platform::String ^ oldValue, Platform::String ^ newValue);
+            void InsertText(Platform::String ^ text, int cursorOffSet, int selectionLength);
+            void SubmitEquation();
+            void BackSpace();
 
         private:
             Platform::String ^ GetMathTextProperty();

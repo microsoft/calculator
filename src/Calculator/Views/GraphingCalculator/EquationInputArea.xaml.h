@@ -31,7 +31,7 @@ namespace CalculatorApp
 
         static Windows::UI::Xaml::Media::SolidColorBrush
             ^ ToSolidColorBrush(Windows::UI::Color color) { return ref new Windows::UI::Xaml::Media::SolidColorBrush(color); }
-    
+
     private:
         void OnPropertyChanged(Platform::String^ propertyName);
         void OnEquationsPropertyChanged();
@@ -59,7 +59,6 @@ namespace CalculatorApp
         void TextBoxKeyDown(Windows::UI::Xaml::Controls::TextBox ^ textbox, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);
         void SubmitTextbox(Windows::UI::Xaml::Controls::TextBox ^ textbox);
 
-    private:
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         int m_lastLineColorIndex;
         int m_lastFunctionLabelIndex;

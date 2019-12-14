@@ -492,7 +492,8 @@
                                      Variables="{x:Bind ViewModel.Variables}"
                                      Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
 
-            <local:GraphingNumPad Grid.Row="1"
+            <local:GraphingNumPad x:Name="GraphingNumberPad"
+                                  Grid.Row="1"
                                   Margin="2,0,2,2"
                                   Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
 
