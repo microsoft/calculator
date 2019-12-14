@@ -18,31 +18,16 @@ public
         KeyGraphFeaturesPanel();
 
         OBSERVABLE_OBJECT();
+        OBSERVABLE_PROPERTY_RW(CalculatorApp::ViewModel::EquationViewModel ^, ViewModel);
 
     public:
-        property CalculatorApp::ViewModel::EquationViewModel ^ ViewModel
-        {
-            CalculatorApp::ViewModel::EquationViewModel ^ get()
-            {
-                return m_viewModel;
-            }
-            void set(CalculatorApp::ViewModel::EquationViewModel ^ value)
-            {
-                m_viewModel = value;
-                RaisePropertyChanged(L"EquationViewModel");
-                if (value != nullptr)
-                {
-                    SetEquationTextBoxProperties();
-                }
-            }
-        }
-
         event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesClosed;
 
+        static Windows::UI::Xaml::Media::SolidColorBrush
+            ^ ToSolidColorBrush(Windows::UI::Color color) { return ref new Windows::UI::Xaml::Media::SolidColorBrush(color); }
     private:
-        void EquationButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void SetEquationTextBoxProperties();
-        void EquationInputTextBox_Loaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void KeyGraphFeaturesPanel_Loaded(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void BackButton_Click(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
     private:
         CalculatorApp::ViewModel::EquationViewModel ^ m_viewModel;

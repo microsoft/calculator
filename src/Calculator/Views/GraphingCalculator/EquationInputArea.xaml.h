@@ -38,9 +38,9 @@ namespace CalculatorApp
 
         void AddNewEquation();
 
-        void InputTextBox_GotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void InputTextBox_LostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void InputTextBox_Submitted(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxSubmission ^ e);
+        void EquationTextBox_GotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void EquationTextBox_LostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void EquationTextBox_Submitted(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxSubmission ^ e);
 
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
         void ReloadAvailableColors(bool isHighContrast);
@@ -49,8 +49,8 @@ namespace CalculatorApp
         void EquationTextBox_RemoveButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void EquationTextBox_KeyGraphFeaturesButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void EquationTextBox_EquationButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void InputTextBox_Loaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void InputTextBox_DataContextChanged(Windows::UI::Xaml::FrameworkElement ^ sender, Windows::UI::Xaml::DataContextChangedEventArgs ^ args);
+        void EquationTextBox_Loaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void EquationTextBox_DataContextChanged(Windows::UI::Xaml::FrameworkElement ^ sender, Windows::UI::Xaml::DataContextChangedEventArgs ^ args);
         void FocusEquationIfNecessary(_In_ CalculatorApp::Controls::EquationTextBox ^ textBox);
 
         double validateDouble(Platform::String ^ value, double defaultValue);
