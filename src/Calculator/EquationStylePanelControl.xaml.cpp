@@ -32,11 +32,19 @@ void EquationStylePanelControl::SelectionChanged(Object ^ /*sender */, Selection
 {
     if (e->AddedItems->Size > 0)
     {
-        SelectedColor = static_cast<SolidColorBrush ^>(e->AddedItems->GetAt(0));
+        auto brush = dynamic_cast<SolidColorBrush ^>(e->AddedItems->GetAt(0));
+        if (brush == nullptr)
+        {
+            SelectedColor = Colors::Black;
+        }
+        else
+        {
+            SelectedColor = brush->Color;
+        }
     }
 }
 
-void EquationStylePanelControl::OnSelectedColorPropertyChanged(SolidColorBrush ^ /*oldColor*/, SolidColorBrush ^ newColor)
+void EquationStylePanelControl::OnSelectedColorPropertyChanged(Color /*oldColor*/, Color newColor)
 {
     SelectColor(newColor);
 }
@@ -46,13 +54,8 @@ void EquationStylePanelControl::ColorChooserLoaded(Object ^ sender, RoutedEventA
     SelectColor(SelectedColor);
 }
 
-void EquationStylePanelControl::SelectColor(SolidColorBrush ^ selectedColor)
+void EquationStylePanelControl::SelectColor(Color selectedColor)
 {
-    if (selectedColor == nullptr)
-    {
-        return;
-    }
-
     for (auto item : ColorChooser->Items->GetView())
     {
         auto brush = static_cast<SolidColorBrush ^>(item);
@@ -63,7 +66,7 @@ void EquationStylePanelControl::SelectColor(SolidColorBrush ^ selectedColor)
             continue;
         }
 
-        if (brush->Color == selectedColor->Color)
+        if (Utils::AreColorsEqual(brush->Color, selectedColor))
         {
             gridViewItem->IsSelected = true;
             return;

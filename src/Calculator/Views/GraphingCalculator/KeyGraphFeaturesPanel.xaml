@@ -67,7 +67,7 @@
                                 <Button.Resources>
                                     <SolidColorBrush x:Name="ButtonBackgroundPointerOver"
                                                      Opacity="0.7"
-                                                     Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
+                                                     Color="{TemplateBinding EquationColor}"/>
                                     <SolidColorBrush x:Name="ButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
                                     <SolidColorBrush x:Name="ButtonBorderBrushPointerOver" Color="Transparent"/>
                                 </Button.Resources>
@@ -330,8 +330,11 @@
                                   DataContext="{x:Bind ViewModel, Mode=OneWay}"
                                   EquationButtonClicked="EquationButtonClicked"
                                   EquationButtonContentIndex="{x:Bind ViewModel.FunctionLabelIndex, Mode=OneWay}"
-                                  EquationColor="{x:Bind ViewModel.LineColor, Mode=OneWay}"
-                                  Loaded="EquationInputTextBox_Loaded"/>
+                                  Loaded="EquationInputTextBox_Loaded">
+            <controls:EquationTextBox.EquationColor>
+                <SolidColorBrush Color="{x:Bind ViewModel.LineColor, Mode=OneWay}"/>
+            </controls:EquationTextBox.EquationColor>
+        </controls:EquationTextBox>
         <TextBlock x:Uid="KeyGraphFeaturesLabel"
                    Grid.Row="1"
                    Margin="12,20,10,0"

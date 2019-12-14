@@ -23,13 +23,15 @@ namespace CalculatorApp
         OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<ViewModel::EquationViewModel ^> ^, Equations);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<ViewModel::VariableViewModel ^> ^, Variables);
-        OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(ViewModel::EquationViewModel ^, EquationVM);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Windows::UI::Xaml::Media::SolidColorBrush ^> ^, AvailableColors);
-        event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesRequested;
+        event Windows::Foundation::EventHandler<ViewModel::EquationViewModel^>^ KeyGraphFeaturesRequested;
 
     public:
         static Windows::UI::Xaml::Visibility ManageEditVariablesButtonVisibility(unsigned int numberOfVariables);
 
+        static Windows::UI::Xaml::Media::SolidColorBrush
+            ^ ToSolidColorBrush(Windows::UI::Color color) { return ref new Windows::UI::Xaml::Media::SolidColorBrush(color); }
+    
     private:
         void OnPropertyChanged(Platform::String^ propertyName);
         void OnEquationsPropertyChanged();

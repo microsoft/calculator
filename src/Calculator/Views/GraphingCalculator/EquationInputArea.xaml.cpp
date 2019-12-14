@@ -7,6 +7,7 @@
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
+using namespace GraphControl;
 using namespace CalculatorApp::ViewModel;
 using namespace CalculatorApp::Controls;
 using namespace Platform;
@@ -61,19 +62,14 @@ void EquationInputArea::OnEquationsPropertyChanged()
 
 void EquationInputArea::AddNewEquation()
 {
-    auto eq = ref new EquationViewModel(ref new Equation());
-    eq->IsLastItemInList = true;
-
     if (Equations->Size > 0)
     {
         Equations->GetAt(Equations->Size - 1)->IsLastItemInList = false;
     }
 
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
-
-    eq->LineColor = AvailableColors->GetAt(m_lastLineColorIndex);
-    eq->IsLineEnabled = true;
-    eq->FunctionLabelIndex = ++m_lastFunctionLabelIndex;
+    auto eq = ref new EquationViewModel(ref new Equation(), ++m_lastFunctionLabelIndex, AvailableColors->GetAt(m_lastLineColorIndex)->Color);
+    eq->IsLastItemInList = true;
     m_equationToFocus = eq;
     Equations->Append(eq);
 }
@@ -192,8 +188,7 @@ void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ s
     }
 
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
-    EquationVM = eq;
-    KeyGraphFeaturesRequested(EquationVM, ref new RoutedEventArgs());
+    KeyGraphFeaturesRequested(this, eq);
 }
 
 void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
@@ -210,7 +205,7 @@ void EquationInputArea::InputTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e
     auto colorChooser = static_cast<EquationStylePanelControl ^>(tb->ColorChooserFlyout->Content);
     colorChooser->AvailableColors = AvailableColors;
 
-    if (m_equationToFocus!=nullptr && tb->DataContext == m_equationToFocus)
+    if (m_equationToFocus != nullptr && tb->DataContext == m_equationToFocus)
     {
         m_equationToFocus = nullptr;
         tb->FocusTextBox();
@@ -227,9 +222,7 @@ void EquationInputArea::InputTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e
     }
 }
 
-void EquationInputArea::InputTextBox_DataContextChanged(
-    Windows::UI::Xaml::FrameworkElement ^ sender,
-    Windows::UI::Xaml::DataContextChangedEventArgs ^ args)
+void EquationInputArea::InputTextBox_DataContextChanged(Windows::UI::Xaml::FrameworkElement ^ sender, Windows::UI::Xaml::DataContextChangedEventArgs ^ args)
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
     if (!tb->IsLoaded)
@@ -237,7 +230,7 @@ void EquationInputArea::InputTextBox_DataContextChanged(
         return;
     }
 
-   FocusEquationIfNecessary(tb);
+    FocusEquationIfNecessary(tb);
 }
 
 void EquationInputArea::FocusEquationIfNecessary(CalculatorApp::Controls::EquationTextBox ^ textBox)
@@ -296,18 +289,12 @@ void EquationInputArea::ReloadAvailableColors(bool isHighContrast)
         return;
     }
 
-    // Use a blank brush to clear out the color before setting it. This is needed because going
-    // from High Contrast White -> High Contrast Black, the high contrast colors seem to be equivalent,
-    // causing the change to not take place.
-    auto blankBrush = ref new SolidColorBrush();
-
     // Reassign colors for each equation
     m_lastLineColorIndex = -1;
     for (auto equationViewModel : Equations)
     {
         m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
-        equationViewModel->LineColor = blankBrush;
-        equationViewModel->LineColor = AvailableColors->GetAt(m_lastLineColorIndex);
+        equationViewModel->LineColor = AvailableColors->GetAt(m_lastLineColorIndex)->Color;
     }
 }
 
@@ -319,23 +306,35 @@ void EquationInputArea::TextBoxGotFocus(TextBox ^ sender, RoutedEventArgs ^ e)
 void EquationInputArea::SubmitTextbox(TextBox ^ sender)
 {
     auto variableViewModel = static_cast<VariableViewModel ^>(sender->DataContext);
-
+    double val;
     if (sender->Name == "ValueTextBox")
     {
-        variableViewModel->SetValue(validateDouble(sender->Text, variableViewModel->Value));
+        val = validateDouble(sender->Text, variableViewModel->Value);
+        variableViewModel->Value = val;
     }
     else if (sender->Name == "MinTextBox")
     {
-        variableViewModel->Min = validateDouble(sender->Text, variableViewModel->Min);
+        val = validateDouble(sender->Text, variableViewModel->Min);
+        variableViewModel->Min = val;
     }
     else if (sender->Name == "MaxTextBox")
     {
-        variableViewModel->Max = validateDouble(sender->Text, variableViewModel->Max);
+        val = validateDouble(sender->Text, variableViewModel->Max);
+        variableViewModel->Max = val;
     }
     else if (sender->Name == "StepTextBox")
     {
-        variableViewModel->Step = validateDouble(sender->Text, variableViewModel->Step);
+        val = validateDouble(sender->Text, variableViewModel->Step);
+        variableViewModel->Step = val;
     }
+    else
+    {
+        return;
+    }
+
+    wostringstream oss;
+    oss << std::noshowpoint << val;
+    sender->Text = ref new String(oss.str().c_str());
 }
 
 void EquationInputArea::TextBoxLosingFocus(TextBox ^ sender, LosingFocusEventArgs ^)

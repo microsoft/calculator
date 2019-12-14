@@ -480,7 +480,7 @@
                                          Grid.RowSpan="2"
                                          Margin="0,4,0,0"
                                          KeyGraphFeaturesClosed="OnKeyGraphFeaturesClosed"
-                                         ViewModel="{x:Bind EquationInputAreaControl.EquationVM, Mode=OneWay}"
+                                         ViewModel="{x:Bind ViewModel.SelectedEquation, Mode=OneWay}"
                                          Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"
                                          x:Load="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"/>
 

@@ -38,7 +38,7 @@ public
         {
             m_vector->Append(value);
             m_tokens.emplace_back(
-                value->PropertyChanged += ref new GraphControl::PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged));
+                value->PropertyChanged += ref new Windows::UI::Xaml::Data::PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged));
         }
 
         virtual void Clear()
@@ -75,7 +75,8 @@ public
         {
             m_vector->InsertAt(index, value);
             m_tokens.insert(
-                m_tokens.begin() + index, value->PropertyChanged += ref new PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged));
+                m_tokens.begin() + index,
+                value->PropertyChanged += ref new Windows::UI::Xaml::Data::PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged));
         }
 
         virtual void RemoveAt(unsigned int index)
@@ -110,7 +111,8 @@ public
             m_tokens.resize(size);
             for (auto i = 0u; i < size; i++)
             {
-                m_tokens[i] = items[i]->PropertyChanged += ref new PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged);
+                m_tokens[i] = items[i]->PropertyChanged +=
+                    ref new Windows::UI::Xaml::Data::PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged);
             }
 
             m_vector->ReplaceAll(items);
@@ -121,7 +123,8 @@ public
             m_vector->GetAt(index)->PropertyChanged -= m_tokens[index];
 
             m_vector->SetAt(index, value);
-            m_tokens[index] = value->PropertyChanged += ref new PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged);
+            m_tokens[index] = value->PropertyChanged +=
+                ref new Windows::UI::Xaml::Data::PropertyChangedEventHandler(this, &EquationCollection::OnEquationPropertyChanged);
         }
 #pragma endregion
 
@@ -151,19 +154,21 @@ public
         event EquationChangedEventHandler ^ EquationLineEnabledChanged;
 
     private:
-        void OnEquationPropertyChanged(GraphControl::Equation ^ sender, Platform::String ^ propertyName)
+        void OnEquationPropertyChanged(Object^ sender, Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ args)
         {
-            if (propertyName == EquationProperties::LineColor)
+            auto equation = static_cast<Equation ^>(sender);
+            auto propertyName = args->PropertyName;
+            if (propertyName == GraphControl::Equation::LineColorPropertyName)
             {
-                EquationStyleChanged(sender);
+                EquationStyleChanged(equation);
             }
-            else if (propertyName == EquationProperties::Expression)
+            else if (propertyName == GraphControl::Equation::ExpressionPropertyName)
             {
-                EquationChanged(sender);
+                EquationChanged(equation);
             }
-            else if (propertyName == EquationProperties::IsLineEnabled)
+            else if (propertyName == GraphControl::Equation::IsLineEnabledPropertyName)
             {
-                EquationLineEnabledChanged(sender);
+                EquationLineEnabledChanged(equation);
             }
         }
 

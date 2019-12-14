@@ -24,15 +24,16 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
+using namespace GraphControl;
+
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, ForceProportionalAxes);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Variables);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Equations);
 
 namespace
 {
     constexpr auto s_defaultStyleKey = L"GraphControl.Grapher";
     constexpr auto s_templateKey_SwapChainPanel = L"GraphSurface";
-
-    constexpr auto s_propertyName_Equations = L"Equations";
-    constexpr auto s_propertyName_Variables = L"Variables";
-    constexpr auto s_propertyName_ForceProportionalAxes = L"ForceProportionalAxes";
 
     constexpr auto s_X = L"x";
     constexpr auto s_Y = L"y";
@@ -52,23 +53,18 @@ namespace
 
 namespace GraphControl
 {
-    DependencyProperty ^ Grapher::s_equationsProperty;
-    DependencyProperty ^ Grapher::s_variablesProperty;
-    DependencyProperty ^ Grapher::s_forceProportionalAxesTemplateProperty;
-
     Grapher::Grapher()
         : m_solver{ IMathSolver::CreateMathSolver() }
         , m_graph{ m_solver->CreateGrapher() }
         , m_Moving{ false }
     {
+        Equations = ref new EquationCollection();
+
         m_solver->ParsingOptions().SetFormatType(s_defaultFormatType);
         m_solver->FormatOptions().SetFormatType(s_defaultFormatType);
         m_solver->FormatOptions().SetMathMLPrefix(wstring(L"mml"));
 
         DefaultStyleKey = StringReference(s_defaultStyleKey);
-
-        this->SetValue(EquationsProperty, ref new EquationCollection());
-        this->SetValue(VariablesProperty, ref new Map<String ^, double>());
 
         this->Loaded += ref new RoutedEventHandler(this, &Grapher::OnLoaded);
         this->Unloaded += ref new RoutedEventHandler(this, &Grapher::OnUnloaded);
@@ -147,52 +143,6 @@ namespace GraphControl
         TryUpdateGraph();
     }
 
-    void Grapher::RegisterDependencyProperties()
-    {
-        if (!s_equationsProperty)
-        {
-            s_equationsProperty = DependencyProperty::Register(
-                StringReference(s_propertyName_Equations),
-                EquationCollection::typeid,
-                Grapher::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
-        }
-
-        if (!s_variablesProperty)
-        {
-            s_variablesProperty = DependencyProperty::Register(
-                StringReference(s_propertyName_Variables),
-                IObservableMap<String ^, double>::typeid,
-                Grapher::typeid,
-                ref new PropertyMetadata(nullptr, ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
-        }
-
-        if (!s_forceProportionalAxesTemplateProperty)
-        {
-            s_forceProportionalAxesTemplateProperty = DependencyProperty::Register(
-                StringReference(s_propertyName_ForceProportionalAxes),
-                bool ::typeid,
-                Grapher::typeid,
-                ref new PropertyMetadata(true, ref new PropertyChangedCallback(&Grapher::OnCustomDependencyPropertyChanged)));
-        }
-    }
-
-    void Grapher::OnCustomDependencyPropertyChanged(DependencyObject ^ obj, DependencyPropertyChangedEventArgs ^ args)
-    {
-        auto self = static_cast<Grapher ^>(obj);
-        if (self)
-        {
-            if (args->Property == EquationsProperty)
-            {
-                self->OnEquationsChanged(args);
-            }
-            else if (args->Property == ForceProportionalAxesTemplateProperty)
-            {
-                self->OnForceProportionalAxesChanged(args);
-            }
-        }
-    }
-
     void Grapher::OnDependencyPropertyChanged(DependencyObject ^ obj, DependencyProperty ^ p)
     {
         if (p == SolidColorBrush::ColorProperty)
@@ -202,30 +152,36 @@ namespace GraphControl
         }
     }
 
-    void Grapher::OnEquationsChanged(DependencyPropertyChangedEventArgs ^ args)
+    void Grapher::OnEquationsPropertyChanged(EquationCollection ^ oldValue, EquationCollection ^ newValue)
     {
-        if (auto older = static_cast<EquationCollection ^>(args->OldValue))
+        if (oldValue != nullptr)
         {
             if (m_tokenEquationChanged.Value != 0)
             {
-                older->EquationChanged -= m_tokenEquationChanged;
+                oldValue->EquationChanged -= m_tokenEquationChanged;
                 m_tokenEquationChanged.Value = 0;
             }
 
             if (m_tokenEquationStyleChanged.Value != 0)
             {
-                older->EquationStyleChanged -= m_tokenEquationStyleChanged;
+                oldValue->EquationStyleChanged -= m_tokenEquationStyleChanged;
                 m_tokenEquationStyleChanged.Value = 0;
+            }
+
+            if (m_tokenEquationLineEnabledChanged.Value != 0)
+            {
+                oldValue->EquationLineEnabledChanged -= m_tokenEquationLineEnabledChanged;
+                m_tokenEquationLineEnabledChanged.Value = 0;
             }
         }
 
-        if (auto newer = static_cast<EquationCollection ^>(args->NewValue))
+        if (newValue != nullptr)
         {
-            m_tokenEquationChanged = newer->EquationChanged += ref new EquationChangedEventHandler(this, &Grapher::OnEquationChanged);
+            m_tokenEquationChanged = newValue->EquationChanged += ref new EquationChangedEventHandler(this, &Grapher::OnEquationChanged);
 
-            m_tokenEquationStyleChanged = newer->EquationStyleChanged += ref new EquationChangedEventHandler(this, &Grapher::OnEquationStyleChanged);
+            m_tokenEquationStyleChanged = newValue->EquationStyleChanged += ref new EquationChangedEventHandler(this, &Grapher::OnEquationStyleChanged);
 
-            m_tokenEquationLineEnabledChanged = newer->EquationLineEnabledChanged +=
+            m_tokenEquationLineEnabledChanged = newValue->EquationLineEnabledChanged +=
                 ref new EquationChangedEventHandler(this, &Grapher::OnEquationLineEnabledChanged);
         }
 
@@ -268,8 +224,9 @@ namespace GraphControl
         PlotGraph();
     }
 
-    void Grapher::AnalyzeEquation(Equation ^ equation)
+    KeyGraphFeaturesInfo ^ Grapher::AnalyzeEquation(Equation ^ equation)
     {
+        auto result = ref new KeyGraphFeaturesInfo();
         if (auto graph = GetGraph(equation))
         {
             if (auto analyzer = graph->GetAnalyzer())
@@ -281,38 +238,17 @@ namespace GraphControl
                             (Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All))
                     {
                         Graphing::IGraphFunctionAnalysisData functionAnalysisData = m_solver->Analyze(analyzer.get());
-                        {
-                            equation->XIntercept = ref new String(functionAnalysisData.Zeros.c_str());
-                            equation->YIntercept = ref new String(functionAnalysisData.YIntercept.c_str());
-                            equation->Domain = ref new String(functionAnalysisData.Domain.c_str());
-                            equation->Range = ref new String(functionAnalysisData.Range.c_str());
-                            equation->Parity = functionAnalysisData.Parity;
-                            equation->PeriodicityDirection = functionAnalysisData.PeriodicityDirection;
-                            equation->PeriodicityExpression = ref new String(functionAnalysisData.PeriodicityExpression.c_str());
-                            equation->Minima = ConvertWStringVector(functionAnalysisData.Minima);
-                            equation->Maxima = ConvertWStringVector(functionAnalysisData.Maxima);
-                            equation->InflectionPoints = ConvertWStringVector(functionAnalysisData.InflectionPoints);
-                            equation->Monotonicity = ConvertWStringIntMap(functionAnalysisData.MonotoneIntervals);
-                            equation->VerticalAsymptotes = ConvertWStringVector(functionAnalysisData.VerticalAsymptotes);
-                            equation->HorizontalAsymptotes = ConvertWStringVector(functionAnalysisData.HorizontalAsymptotes);
-                            equation->ObliqueAsymptotes = ConvertWStringVector(functionAnalysisData.ObliqueAsymptotes);
-                            equation->TooComplexFeatures = functionAnalysisData.TooComplexFeatures;
-                            equation->AnalysisError = CalculatorApp::AnalysisErrorType::NoError;
-
-                            return;
-                        }
+                        return KeyGraphFeaturesInfo::Create(functionAnalysisData);
                     }
                 }
                 else
                 {
-                    equation->AnalysisError = CalculatorApp::AnalysisErrorType::AnalysisNotSupported;
-
-                    return;
+                    return KeyGraphFeaturesInfo::Create(CalculatorApp::AnalysisErrorType::AnalysisNotSupported);
                 }
             }
         }
 
-        equation->AnalysisError = CalculatorApp::AnalysisErrorType::AnalysisCouldNotBePerformed;
+        return KeyGraphFeaturesInfo::Create(CalculatorApp::AnalysisErrorType::AnalysisCouldNotBePerformed);
     }
 
     void Grapher::PlotGraph()
@@ -371,7 +307,7 @@ namespace GraphControl
                         ss << L"<mo>,</mo>";
                     }
 
-                    ss << eq->GetRequest();
+                    ss << eq->GetRequest()->Data();
                 }
 
                 ss << s_getGraphClosingTags;
@@ -463,13 +399,13 @@ namespace GraphControl
         }
     }
 
-    shared_ptr<IGraph> Grapher::GetGraph(GraphControl::Equation ^ equation)
+    shared_ptr<IGraph> Grapher::GetGraph(Equation ^ equation)
     {
         std::shared_ptr<Graphing::IGraph> graph = m_solver->CreateGrapher();
 
         wstringstream ss{};
         ss << s_getGraphOpeningTags;
-        ss << equation->GetRequest();
+        ss << equation->GetRequest()->Data();
         ss << s_getGraphClosingTags;
 
         wstring request = ss.str();
@@ -483,30 +419,6 @@ namespace GraphControl
         }
 
         return nullptr;
-    }
-
-    IObservableVector<String ^> ^ Grapher::ConvertWStringVector(vector<wstring> inVector)
-    {
-        Vector<String ^> ^ outVector = ref new Vector<String ^>();
-
-        for (auto v : inVector)
-        {
-            outVector->Append(ref new String(v.c_str()));
-        }
-
-        return outVector;
-    }
-
-    IObservableMap<String ^, String ^> ^ Grapher::ConvertWStringIntMap(map<wstring, int> inMap)
-    {
-        Map<String ^, String ^> ^ outMap = ref new Map<String ^, String ^>();
-        ;
-        for (auto m : inMap)
-        {
-            outMap->Insert(ref new String(m.first.c_str()), m.second.ToString());
-        }
-
-        return outMap;
     }
 
     void Grapher::UpdateVariables()
@@ -573,7 +485,7 @@ namespace GraphControl
             graphColors.reserve(validEqs.size());
             for (Equation ^ eq : validEqs)
             {
-                auto lineColor = eq->LineColor->Color;
+                auto lineColor = eq->LineColor;
                 graphColors.emplace_back(lineColor.R, lineColor.G, lineColor.B, lineColor.A);
             }
             options.SetGraphColors(graphColors);
@@ -595,7 +507,7 @@ namespace GraphControl
         return validEqs;
     }
 
-    void Grapher::OnForceProportionalAxesChanged(DependencyPropertyChangedEventArgs ^ args)
+    void Grapher::OnForceProportionalAxesPropertyChanged(bool /*oldValue*/, bool /*newValue*/)
     {
         TryUpdateGraph();
     }

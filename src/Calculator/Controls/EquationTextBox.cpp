@@ -11,7 +11,6 @@ using namespace Platform;
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Controls;
-using namespace CalculatorApp::ViewModel;
 using namespace Windows::System;
 using namespace Windows::Foundation;
 using namespace Windows::ApplicationModel;

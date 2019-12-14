@@ -4,11 +4,14 @@
 #pragma once
 
 #include "DirectX/RenderMain.h"
-#include "Equation.h"
-#include "EquationCollection.h"
+#include "../Models/Equation.h"
+#include "../Models/EquationCollection.h"
+#include "../Utils.h"
 #include "IGraphAnalyzer.h"
 #include "IMathSolver.h"
 #include "Common.h"
+#include "Models/KeyGraphFeaturesInfo.h"
+#include <ppltasks.h>
 
 namespace GraphControl
 {
@@ -28,71 +31,13 @@ public
     public:
         Grapher();
 
-        static void RegisterDependencyProperties();
-
-#pragma region GraphControl::EquationCollection ^ Equations DependencyProperty
-        static property Windows::UI::Xaml::DependencyProperty^ EquationsProperty
-        {
-            Windows::UI::Xaml::DependencyProperty^ get()
-            {
-                return s_equationsProperty;
-            }
-        }
-
-        property GraphControl::EquationCollection^ Equations
-        {
-            GraphControl::EquationCollection^ get()
-            {
-                return static_cast< GraphControl::EquationCollection^ >(GetValue(s_equationsProperty));
-            }
-        }
-#pragma endregion
-
-#pragma region Windows::Foundation::Collections::IObservableMap < Platform::String ^, double> ^ Variables DependencyProperty
-        static property Windows::UI::Xaml::DependencyProperty^ VariablesProperty
-        {
-            Windows::UI::Xaml::DependencyProperty^ get()
-            {
-                return s_variablesProperty;
-            }
-        }
-
-        property Windows::Foundation::Collections::IObservableMap<Platform::String^, double>^ Variables
-        {
-            Windows::Foundation::Collections::IObservableMap<Platform::String^, double>^ get()
-            {
-                return static_cast<Windows::Foundation::Collections::IObservableMap<Platform::String^, double>^>(GetValue(s_variablesProperty));
-            }
-
-            void set(Windows::Foundation::Collections::IObservableMap<Platform::String^, double>^ value)
-            {
-                SetValue(s_variablesProperty, value);
-            }
-        }
-#pragma endregion
-
-#pragma region Windows::UI::Xaml::DataTemplate ^ ForceProportionalAxes DependencyProperty
-        static property Windows::UI::Xaml::DependencyProperty^ ForceProportionalAxesTemplateProperty
-        {
-            Windows::UI::Xaml::DependencyProperty^ get()
-            {
-                return s_forceProportionalAxesTemplateProperty;
-            }
-        }
-
-        property bool ForceProportionalAxes
-        {
-            bool get()
-            {
-                return static_cast<bool>(GetValue(s_forceProportionalAxesTemplateProperty));
-            }
-            void set(bool value)
-            {
-                SetValue(s_forceProportionalAxesTemplateProperty, value);
-            }
-        }
-#pragma endregion
-
+        DEPENDENCY_PROPERTY_OWNER(Grapher);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, ForceProportionalAxes, true);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT(
+            SINGLE_ARG(Windows::Foundation::Collections::IObservableMap<Platform::String ^, double> ^),
+            Variables,
+            SINGLE_ARG(ref new Platform::Collections::Map<Platform::String ^, double>()));
+        DEPENDENCY_PROPERTY_R_WITH_DEFAULT_AND_CALLBACK(GraphControl::EquationCollection ^, Equations, nullptr);
         // Pass active tracing turned on or off down to the renderer
 
         property bool ActiveTracing
@@ -153,7 +98,7 @@ public
         void SetVariable(Platform::String ^ variableName, double newValue);
         Platform::String ^ ConvertToLinear(Platform::String ^ mmlString);
         void PlotGraph();
-        void AnalyzeEquation(GraphControl::Equation ^ equation);
+        GraphControl::KeyGraphFeaturesInfo ^ AnalyzeEquation(GraphControl::Equation ^ equation);
 
     protected:
 #pragma region Control Overrides
@@ -173,13 +118,13 @@ public
         void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ args);
         void OnUnloaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ args);
 
-        static void OnCustomDependencyPropertyChanged(Windows::UI::Xaml::DependencyObject ^ obj, Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
+        void OnForceProportionalAxesPropertyChanged(bool oldValue, bool newValue);
+        void OnEquationsPropertyChanged(EquationCollection ^ oldValue, EquationCollection ^ newValue);
         void OnDependencyPropertyChanged(Windows::UI::Xaml::DependencyObject ^ obj, Windows::UI::Xaml::DependencyProperty ^ p);
 
-        void OnEquationsChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
-        void OnEquationChanged(GraphControl::Equation ^ equation);
-        void OnEquationStyleChanged(GraphControl::Equation ^ equation);
-        void OnEquationLineEnabledChanged(GraphControl::Equation ^ equation);
+        void OnEquationChanged(Equation ^ equation);
+        void OnEquationStyleChanged(Equation ^ equation);
+        void OnEquationLineEnabledChanged(Equation ^ equation);
         bool TryUpdateGraph();
         void TryPlotGraph(bool shouldRetry);
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
@@ -187,8 +132,6 @@ public
         void SetGraphArgs();
         std::shared_ptr<Graphing::IGraph> GetGraph(GraphControl::Equation ^ equation);
         void UpdateVariables();
-
-        void OnForceProportionalAxesChanged(Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ args);
 
         void OnBackgroundColorChanged(const Windows::UI::Color& color);
 
@@ -221,8 +164,6 @@ public
         Windows::Foundation::EventRegistrationToken m_tokenEquationStyleChanged;
         Windows::Foundation::EventRegistrationToken m_tokenEquationChanged;
         Windows::Foundation::EventRegistrationToken m_tokenEquationLineEnabledChanged;
-
-        static Windows::UI::Xaml::DependencyProperty ^ s_forceProportionalAxesTemplateProperty;
 
         Windows::Foundation::EventRegistrationToken m_tokenBackgroundColorChanged;
 

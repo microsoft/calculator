@@ -17,15 +17,34 @@ public
     public:
         KeyGraphFeaturesPanel();
 
-        OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
-        OBSERVABLE_PROPERTY_RW_ALWAYS_NOTIFY(CalculatorApp::ViewModel::EquationViewModel ^, ViewModel);
+        OBSERVABLE_OBJECT();
+
+    public:
+        property CalculatorApp::ViewModel::EquationViewModel ^ ViewModel
+        {
+            CalculatorApp::ViewModel::EquationViewModel ^ get()
+            {
+                return m_viewModel;
+            }
+            void set(CalculatorApp::ViewModel::EquationViewModel ^ value)
+            {
+                m_viewModel = value;
+                RaisePropertyChanged(L"EquationViewModel");
+                if (value != nullptr)
+                {
+                    SetEquationTextBoxProperties();
+                }
+            }
+        }
+
         event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesClosed;
 
     private:
-
-        void OnPropertyChanged(Platform::String ^ propertyName);
         void EquationButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void SetEquationTextBoxProperties();
         void EquationInputTextBox_Loaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+
+    private:
+        CalculatorApp::ViewModel::EquationViewModel ^ m_viewModel;
     };
 }

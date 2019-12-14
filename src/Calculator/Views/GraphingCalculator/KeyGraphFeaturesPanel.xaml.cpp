@@ -18,19 +18,6 @@ KeyGraphFeaturesPanel::KeyGraphFeaturesPanel()
     InitializeComponent();
 }
 
-void KeyGraphFeaturesPanel::OnPropertyChanged(String ^ propertyName)
-{
-    if (propertyName == L"ViewModel")
-    {
-        if (ViewModel == nullptr)
-        {
-            return;
-        }
-
-        SetEquationTextBoxProperties();
-    }
-}
-
 void KeyGraphFeaturesPanel::EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
     KeyGraphFeaturesClosed(this, ref new RoutedEventArgs());

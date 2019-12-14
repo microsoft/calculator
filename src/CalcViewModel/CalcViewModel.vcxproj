@@ -331,6 +331,7 @@
     <ClInclude Include="GraphingCalculatorEnums.h" />
     <ClInclude Include="GraphingCalculator\EquationViewModel.h" />
     <ClInclude Include="GraphingCalculator\GraphingCalculatorViewModel.h" />
+    <ClInclude Include="GraphingCalculator\VariableViewModel.h" />
     <ClInclude Include="HistoryItemViewModel.h" />
     <ClInclude Include="HistoryViewModel.h" />
     <ClInclude Include="MemoryItemViewModel.h" />

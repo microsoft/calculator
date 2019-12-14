@@ -284,24 +284,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Control\Equation.h" />
-    <ClInclude Include="Control\EquationCollection.h" />
     <ClInclude Include="Control\Grapher.h" />
     <ClInclude Include="DirectX\ActiveTracingPointRenderer.h" />
     <ClInclude Include="DirectX\DeviceResources.h" />
     <ClInclude Include="DirectX\DirectXHelper.h" />
     <ClInclude Include="DirectX\NearestPointRenderer.h" />
     <ClInclude Include="DirectX\RenderMain.h" />
+    <ClInclude Include="Models\Equation.h" />
+    <ClInclude Include="Models\EquationCollection.h" />
+    <ClInclude Include="Models\KeyGraphFeaturesInfo.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="winrtHeaders.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Control\Equation.cpp" />
     <ClCompile Include="Control\Grapher.cpp" />
     <ClCompile Include="DirectX\ActiveTracingPointRenderer.cpp" />
     <ClCompile Include="DirectX\DeviceResources.cpp" />
     <ClCompile Include="DirectX\NearestPointRenderer.cpp" />
     <ClCompile Include="DirectX\RenderMain.cpp" />
+    <ClCompile Include="Models\Equation.cpp" />
+    <ClCompile Include="Models\KeyGraphFeaturesInfo.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
