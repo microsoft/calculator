@@ -197,7 +197,7 @@ namespace GraphControl::DX
                         {
                             auto lineColors = m_graph->GetOptions().GetGraphColors();
 
-                            if (formulaId >= 0 && formulaId < lineColors.size())
+                            if (formulaId >= 0 && static_cast<unsigned int>(formulaId) < lineColors.size())
                             {
                                 auto dotColor = lineColors[formulaId];
                                 m_nearestPointRenderer.SetColor(D2D1::ColorF(dotColor.R * 65536 + dotColor.G * 256 + dotColor.B, 1.0));
