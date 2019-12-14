@@ -26,6 +26,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, ColorChooserFlyout);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonContentIndex);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, HasError);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, IsAddEquationMode);
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, MathEquation);
 
 EquationTextBox::EquationTextBox()
 {
@@ -51,8 +52,9 @@ void EquationTextBox::OnApplyTemplate()
     {
         m_richEditBox->GotFocus += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxGotFocus);
         m_richEditBox->LostFocus += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxLostFocus);
-        m_richEditBox->TextChanged += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxTextChanged);
         m_richEditBox->SelectionFlyout = nullptr;
+        m_richEditBox->EquationSubmitted +=
+            ref new EventHandler<MathRichEditBoxSubmission ^>(this, &EquationTextBox::OnEquationSubmitted);
     }
 
     if (m_equationButton != nullptr)
@@ -69,7 +71,7 @@ void EquationTextBox::OnApplyTemplate()
 
     if (m_richEditContextMenu != nullptr)
     {
-        m_richEditContextMenu->Opening += ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpening);
+        m_richEditContextMenu->Opening += ref new EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpening);
     }
 
     if (m_kgfEquationButton != nullptr)
@@ -150,37 +152,6 @@ void EquationTextBox::OnPointerCaptureLost(PointerRoutedEventArgs ^ e)
     UpdateCommonVisualState();
 }
 
-void EquationTextBox::OnKeyDown(KeyRoutedEventArgs ^ e)
-{
-    if (e->Key == VirtualKey::Enter)
-    {
-        m_sourceSubmission = EquationSubmissionSource::ENTER_KEY;
-        // We will rely on OnLostFocus to submit the equation to prevent the launch of 2 events
-        if (!m_HasFocus || !FocusManager::TryMoveFocusAsync(::FocusNavigationDirection::Next))
-        {
-            m_sourceSubmission = EquationSubmissionSource::FOCUS_LOST;
-            EquationSubmitted(this, EquationSubmissionSource::ENTER_KEY);
-            if (m_functionButton && m_richEditBox->MathText != L"")
-            {
-                m_functionButton->IsEnabled = true;
-            }
-        }
-    }
-}
-
-void EquationTextBox::OnLostFocus(RoutedEventArgs ^ e)
-{
-    if (m_richEditBox == nullptr || m_richEditBox->ContextFlyout->IsOpen)
-    {
-        return;
-    }
-
-    if (m_functionButton && m_richEditBox->MathText != L"")
-    {
-        m_functionButton->IsEnabled = true;
-    }
-}
-
 void EquationTextBox::OnColorFlyoutOpened(Object ^ sender, Object ^ e)
 {
     m_isColorChooserFlyoutOpen = true;
@@ -194,15 +165,9 @@ void EquationTextBox::OnColorFlyoutClosed(Object ^ sender, Object ^ e)
     UpdateCommonVisualState();
 }
 
-void EquationTextBox::OnRichEditBoxTextChanged(Object ^ sender, RoutedEventArgs ^ e)
-{
-    UpdateButtonsVisualState();
-}
-
 void EquationTextBox::OnRichEditBoxGotFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     m_HasFocus = true;
-    m_sourceSubmission = EquationSubmissionSource::FOCUS_LOST;
     UpdateCommonVisualState();
     UpdateButtonsVisualState();
 }
@@ -216,8 +181,6 @@ void EquationTextBox::OnRichEditBoxLostFocus(Object ^ sender, RoutedEventArgs ^ 
 
     UpdateCommonVisualState();
     UpdateButtonsVisualState();
-
-    EquationSubmitted(this, m_sourceSubmission);
 }
 
 void EquationTextBox::OnDeleteButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
@@ -413,6 +376,19 @@ void EquationTextBox::FocusTextBox()
 {
     if (m_richEditBox != nullptr)
     {
-        m_richEditBox->Focus(::FocusState::Programmatic);
+        FocusManager::TryFocusAsync(m_richEditBox, ::FocusState::Programmatic);
     }
+}
+
+void EquationTextBox::OnEquationSubmitted(Platform::Object ^ sender, MathRichEditBoxSubmission ^ args)
+{
+    if (args->HasTextChanged)
+    {
+        if (m_functionButton && m_richEditBox->MathText != L"")
+        {
+            m_functionButton->IsEnabled = true;
+        }
+    }
+
+    EquationSubmitted(this, args);
 }

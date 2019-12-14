@@ -12,13 +12,6 @@ namespace CalculatorApp
     namespace Controls
     {
     public
-        enum class EquationSubmissionSource
-        {
-            FOCUS_LOST,
-            ENTER_KEY
-        };
-
-    public
         ref class EquationTextBox sealed : public Windows::UI::Xaml::Controls::Control
         {
         public:
@@ -28,6 +21,7 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::SolidColorBrush ^, EquationColor);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Controls::Flyout ^, ColorChooserFlyout);
             DEPENDENCY_PROPERTY(Platform::String ^, EquationButtonContentIndex);
+            DEPENDENCY_PROPERTY(Platform::String ^, MathEquation);
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, HasError);
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, IsAddEquationMode);
 
@@ -35,7 +29,7 @@ namespace CalculatorApp
 
             event Windows::UI::Xaml::RoutedEventHandler ^ RemoveButtonClicked;
             event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesButtonClicked;
-            event Windows::Foundation::EventHandler<EquationSubmissionSource> ^ EquationSubmitted;
+            event Windows::Foundation::EventHandler<MathRichEditBoxSubmission ^> ^ EquationSubmitted;
             event Windows::UI::Xaml::RoutedEventHandler ^ EquationButtonClicked;
 
             Platform::String ^ GetEquationText();
@@ -48,8 +42,6 @@ namespace CalculatorApp
             virtual void OnPointerExited(Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e) override;
             virtual void OnPointerCanceled(Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e) override;
             virtual void OnPointerCaptureLost(Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e) override;
-            virtual void OnKeyDown(Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e) override;
-            virtual void OnLostFocus(Windows::UI::Xaml::RoutedEventArgs ^ e) override;
             void OnIsAddEquationModePropertyChanged(bool oldValue, bool newValue);
 
         private:
@@ -59,7 +51,6 @@ namespace CalculatorApp
 
             void OnRichEditBoxGotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
             void OnRichEditBoxLostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-            void OnRichEditBoxTextChanged(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
             void OnDeleteButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnEquationButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
@@ -89,7 +80,7 @@ namespace CalculatorApp
 
             bool m_isPointerOver;
             bool m_isColorChooserFlyoutOpen;
-			EquationSubmissionSource m_sourceSubmission;
-		};
+            void OnEquationSubmitted(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxSubmission ^ args);
+        };
     }
 }

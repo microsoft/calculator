@@ -2101,6 +2101,7 @@
                                                                   FontWeight="{TemplateBinding FontWeight}"
                                                                   AcceptsReturn="false"
                                                                   InputScope="Text"
+                                                                  MathText="{Binding MathEquation, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                                                   MaxLength="2048"
                                                                   TextWrapping="NoWrap">
                                             <Controls:MathRichEditBox.ContextFlyout>

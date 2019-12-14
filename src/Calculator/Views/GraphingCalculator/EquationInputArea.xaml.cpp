@@ -84,7 +84,7 @@ void EquationInputArea::InputTextBox_LostFocus(Object ^ sender, RoutedEventArgs 
     KeyboardShortcutManager::HonorShortcuts(true);
 }
 
-void EquationInputArea::InputTextBox_Submitted(Object ^ sender, EquationSubmissionSource source)
+void EquationInputArea::InputTextBox_Submitted(Object ^ sender, MathRichEditBoxSubmission ^ submission)
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
     if (tb == nullptr)
@@ -97,16 +97,8 @@ void EquationInputArea::InputTextBox_Submitted(Object ^ sender, EquationSubmissi
         return;
     }
 
-    auto expressionText = tb->GetEquationText();
-    if (source == EquationSubmissionSource::FOCUS_LOST && eq->Expression == expressionText)
-    {
-        // The expression didn't change.
-        return;
-    }
-
-    eq->Expression = expressionText;
-
-    if (source == EquationSubmissionSource::ENTER_KEY || eq->Expression != nullptr && eq->Expression->Length() > 0)
+    if (submission->Source == EquationSubmissionSource::ENTER_KEY ||
+        (submission->Source == EquationSubmissionSource::FOCUS_LOST && submission->HasTextChanged && eq->Expression != nullptr && eq->Expression->Length() > 0))
     {
         unsigned int index = 0;
         if (Equations->IndexOf(eq, &index))
@@ -180,13 +172,6 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
 void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
-
-    // ensure the equation has been submitted before trying to get key graph features out of it
-    if (tb->HasFocus)
-    {
-        EquationInputArea::InputTextBox_Submitted(sender, EquationSubmissionSource::FOCUS_LOST);
-    }
-
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
     KeyGraphFeaturesRequested(this, eq);
 }

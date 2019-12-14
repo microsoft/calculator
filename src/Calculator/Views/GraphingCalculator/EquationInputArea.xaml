@@ -243,6 +243,7 @@
                                                       KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked"
                                                       Loaded="InputTextBox_Loaded"
                                                       LostFocus="InputTextBox_LostFocus"
+                                                      MathEquation="{x:Bind Expression, Mode=TwoWay}"
                                                       RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
                                 <controls:EquationTextBox.ColorChooserFlyout>
                                     <Flyout x:Name="ColorChooserFlyout"

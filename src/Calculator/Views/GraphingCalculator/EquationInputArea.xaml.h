@@ -38,9 +38,9 @@ namespace CalculatorApp
 
         void AddNewEquation();
 
-        void InputTextBox_GotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void InputTextBox_LostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void InputTextBox_Submitted(Platform::Object ^ sender, CalculatorApp::Controls::EquationSubmissionSource e);
+        void InputTextBox_GotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void InputTextBox_LostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void InputTextBox_Submitted(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxSubmission ^ e);
 
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
         void ReloadAvailableColors(bool isHighContrast);

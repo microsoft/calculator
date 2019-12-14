@@ -461,7 +461,7 @@ void GraphingCalculator::TraceValuePopup_SizeChanged(Object ^ sender, SizeChange
 
 void CalculatorApp::GraphingCalculator::ActiveTracing_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
-    GraphingControl->Focus(::FocusState::Programmatic);
+    FocusManager::TryFocusAsync(GraphingControl, ::FocusState::Programmatic);
 
     m_activeTracingKeyUpToken = Window::Current->CoreWindow->KeyUp +=
         ref new Windows::Foundation::TypedEventHandler<Windows::UI::Core::CoreWindow ^, Windows::UI::Core::KeyEventArgs ^>(

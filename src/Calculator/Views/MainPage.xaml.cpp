@@ -296,7 +296,7 @@ void MainPage::SetDefaultFocus()
     }
     if (m_graphingCalculator != nullptr && m_graphingCalculator->Visibility == ::Visibility::Visible)
     {
-        m_graphingCalculator->Focus(::FocusState::Programmatic);
+        FocusManager::TryFocusAsync(m_graphingCalculator, ::FocusState::Programmatic);
     }
     if (m_converter != nullptr && m_converter->Visibility == ::Visibility::Visible)
     {
