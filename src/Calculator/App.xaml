@@ -1885,11 +1885,6 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition MinHeight="44"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal">
@@ -1917,17 +1912,13 @@
                                                 <Setter Target="ColorChooserButton.Visibility" Value="Visible"/>
                                                 <Setter Target="FunctionButton.Visibility" Value="Visible"/>
                                                 <Setter Target="RemoveButton.Visibility" Value="Visible"/>
-                                                <Setter Target="ErrorIcon.Visibility" Value="Collapsed"/>
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="PointerOverError">
                                             <VisualState.Setters>
                                                 <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource EquationBoxErrorBorderBrush}"/>
                                                 <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource EquationBoxErrorBackgroundBrush}"/>
-                                                <Setter Target="ColorChooserButton.Visibility" Value="Collapsed"/>
-                                                <Setter Target="FunctionButton.Visibility" Value="Collapsed"/>
                                                 <Setter Target="RemoveButton.Visibility" Value="Visible"/>
-                                                <Setter Target="ErrorIcon.Visibility" Value="Collapsed"/>
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="Disabled">
@@ -1947,7 +1938,6 @@
                                             <VisualState.Setters>
                                                 <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource EquationBoxErrorBorderBrush}"/>
                                                 <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource TextBoxBackgroundThemeBrush}"/>
-                                                <Setter Target="ErrorIcon.Visibility" Value="Collapsed"/>
                                             </VisualState.Setters>
                                         </VisualState>
                                     </VisualStateGroup>
@@ -1974,18 +1964,15 @@
                                               Background="{TemplateBinding EquationColor}"
                                               Foreground="{StaticResource SystemChromeWhiteColor}"
                                               BorderBrush="{TemplateBinding EquationColor}">
-                                    <ToggleButton.Content>
-                                        <StackPanel x:Name="FunctionNumberLabel"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    Background="Transparent"
-                                                    Orientation="Horizontal">
-                                            <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
-                                            <TextBlock Margin="-5,19,0,0"
-                                                       FontSize="11"
-                                                       Text="{TemplateBinding EquationButtonContentIndex}"/>
-                                        </StackPanel>
-                                    </ToggleButton.Content>
+                                    <StackPanel x:Name="FunctionNumberLabel"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Orientation="Horizontal">
+                                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
+                                        <TextBlock Margin="-5,19,0,0"
+                                                   FontSize="11"
+                                                   Text="{TemplateBinding EquationButtonContentIndex}"/>
+                                    </StackPanel>
                                     <ToggleButton.Resources>
                                         <SolidColorBrush x:Name="ButtonBackgroundBrush" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                         <SolidColorBrush x:Name="ButtonBorderBrush" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
@@ -1995,9 +1982,7 @@
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="ToggleButton">
-                                                        <Grid x:Name="RootGrid"
-                                                              Background="Transparent"
-                                                              BorderBrush="Transparent">
+                                                        <Grid x:Name="RootGrid">
                                                             <VisualStateManager.VisualStateGroups>
                                                                 <VisualStateGroup x:Name="CommonStates">
                                                                     <VisualState x:Name="Normal">
@@ -2005,8 +1990,6 @@
                                                                             <Setter Target="RootGrid.Background" Value="{ThemeResource ButtonBackgroundBrush}"/>
                                                                             <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
                                                                             <Setter Target="Overlay.Opacity" Value="0.0"/>
-                                                                            <Setter Target="ContentPresenter.Visibility" Value="Visible"/>
-                                                                            <Setter Target="ShowHideIcon.Visibility" Value="Collapsed"/>
                                                                         </VisualState.Setters>
                                                                     </VisualState>
                                                                     <VisualState x:Name="PointerOver">
