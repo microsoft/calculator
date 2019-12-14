@@ -43,6 +43,7 @@ using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
@@ -53,6 +54,7 @@ constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, IsSmallState);
 
 GraphingCalculator::GraphingCalculator()
+    : m_flyoutGraphSettings(nullptr)
 {
     InitializeComponent();
 
@@ -112,9 +114,6 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
 
     m_variableUpdatedToken = ViewModel->VariableUpdated +=
         ref new EventHandler<VariableChangedEventArgs>(this, &CalculatorApp::GraphingCalculator::OnVariableChanged);
-
-    // Let the graph settings know who it's parent is.
-    GraphSettings->DataContext = GraphingControl;
 }
 
 void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationViewModel ^> ^ sender, IVectorChangedEventArgs ^ event)
@@ -508,4 +507,21 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp(Windows::UI::Core::C
         GraphingControl->ActiveTracing = false;
         args->Handled = true;
     }
+}
+
+void GraphingCalculator::GraphSettingsButton_Click(Object ^ sender, RoutedEventArgs ^ e)
+{
+    if (m_flyoutGraphSettings == nullptr)
+    {
+        auto graphSettings = ref new GraphingSettings();
+        graphSettings->SetGrapher(this->GraphingControl);
+        m_flyoutGraphSettings = ref new Flyout();
+        m_flyoutGraphSettings->Content = graphSettings;
+        auto that(this);
+        m_flyoutGraphSettings->Closed += ref new Windows::Foundation::EventHandler<Platform::Object ^>(
+            [that](Platform::Object ^, Platform::Object ^) { that->GraphingNumPad->IsEnabled = true; });
+    }
+
+    GraphingNumPad->IsEnabled = false;
+    m_flyoutGraphSettings->ShowAt(GraphSettingsButton);
 }

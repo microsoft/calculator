@@ -8,6 +8,7 @@
 #include "Views\NumberPad.xaml.h"
 #include "Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h"
 #include "Views\GraphingCalculator\GraphingNumPad.xaml.h"
+#include "Views\GraphingCalculator\GraphingSettings.xaml.h"
 
 namespace CalculatorApp
 {
@@ -73,6 +74,8 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void ActiveTracing_Unchecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void ActiveTracing_KeyUp(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args);
         void ActiveTracing_PointerCaptureLost(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
+        void GraphSettingsButton_Click(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+
     private:
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
         Windows::Foundation::EventRegistrationToken m_vectorChangedToken;
@@ -80,6 +83,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         Windows::Foundation::EventRegistrationToken m_activeTracingKeyUpToken;
         Windows::Foundation::EventRegistrationToken m_ActiveTracingPointerCaptureLost;
         CalculatorApp::ViewModel::GraphingCalculatorViewModel ^ m_viewModel;
+        Windows::UI::Xaml::Controls::Flyout ^ m_flyoutGraphSettings;
     };
 
 }

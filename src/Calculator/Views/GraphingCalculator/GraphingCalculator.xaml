@@ -7,7 +7,6 @@
              xmlns:graphControl="using:GraphControl"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:CalculatorApp.ViewModel"
              x:Name="Control"
              DataContextChanged="GraphingCalculator_DataContextChanged"
              mc:Ignorable="d">
@@ -408,7 +407,6 @@
                             x:Uid="shareButton"
                             MinWidth="40"
                             Style="{ThemeResource ThemedGraphButtonStyle}"
-                            contract7Present:CornerRadius="{ThemeResource RightButtonCornerRadius}"
                             Click="OnShareClick">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
                                   FontSize="18"
@@ -419,17 +417,13 @@
                             x:Uid="graphSettingsButton"
                             MinWidth="44"
                             MinHeight="44"
-                            Margin="0,0,10,0"
                             Style="{StaticResource GraphButtonStyle}"
+                            contract7Present:CornerRadius="{ThemeResource RightButtonCornerRadius}"
+                            Click="GraphSettingsButton_Click"
                             RequestedTheme="Light">
-                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xE3B4;"/>
-                        <Button.Flyout>
-                            <Flyout>
-                                <StackPanel>
-                                    <local:GraphingSettings x:Name="GraphSettings"/>
-                                </StackPanel>
-                            </Flyout>
-                        </Button.Flyout>
+                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
+                                  FontSize="18"
+                                  Glyph="&#xE3B4;"/>
                     </Button>
                 </StackPanel>
             </Border>
@@ -531,7 +525,7 @@
                                      Variables="{x:Bind ViewModel.Variables}"
                                      Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
 
-            <local:GraphingNumPad x:Name="GraphingNumberPad"
+            <local:GraphingNumPad x:Name="GraphingNumPad"
                                   Grid.Row="1"
                                   Margin="2,0,2,2"
                                   Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>

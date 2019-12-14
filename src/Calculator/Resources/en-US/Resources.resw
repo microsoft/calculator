@@ -4222,19 +4222,19 @@
     <value>Units</value>
     <comment>Heading for Unit's on the settings</comment>
   </data>
-  <data name="x_MaxHeading.Text" xml:space="preserve">
+  <data name="GraphSettingsXMax.Header" xml:space="preserve">
     <value>X-Max</value>
     <comment>X maximum value header</comment>
   </data>
-  <data name="x_MinHeading.Text" xml:space="preserve">
+  <data name="GraphSettingsXMin.Header" xml:space="preserve">
     <value>X-Min</value>
     <comment>X minimum value header</comment>
   </data>
-  <data name="y_MaxHeading.Text" xml:space="preserve">
+  <data name="GraphSettingsYMax.Header" xml:space="preserve">
     <value>Y-Max</value>
     <comment>Y Maximum value header</comment>
   </data>
-  <data name="y_MinHeading.Text" xml:space="preserve">
+  <data name="GraphSettingsYMin.Header" xml:space="preserve">
     <value>Y-Min</value>
     <comment>Y minimum value header</comment>
   </data>

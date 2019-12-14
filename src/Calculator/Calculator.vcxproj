@@ -226,7 +226,7 @@
     <AppVersion Condition="'$(AppVersion)' == ''">0.0.0.0</AppVersion>
   </PropertyGroup>
   <PropertyGroup>
-      <GenerateProjectSpecificOutputFolder>true</GenerateProjectSpecificOutputFolder>
+    <GenerateProjectSpecificOutputFolder>true</GenerateProjectSpecificOutputFolder>
   </PropertyGroup>
   <ItemGroup>
     <ResourceCompile Include="Calculator.rc" PreprocessorDefinitions="%(PreprocessorDefinitions);APP_VERSION_MAJOR=$(AppVersion.Split(`.`)[0]);APP_VERSION_MINOR=$(AppVersion.Split(`.`)[1]);APP_VERSION_BUILD=$(AppVersion.Split(`.`)[2]);APP_VERSION_REVISION=$(AppVersion.Split(`.`)[3])" />
@@ -257,6 +257,7 @@
     <ClInclude Include="Controls\OperatorPanelListView.h" />
     <ClInclude Include="Controls\OperatorPanelButton.h" />
     <ClInclude Include="Controls\EquationTextBox.h" />
+    <ClInclude Include="GraphingSettingsViewModel.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -368,7 +369,7 @@
     <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml" />
     <Page Include="Views\GraphingCalculator\GraphingSettings.xaml" />
     <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" />
-    <Page Include="Views\GraphingCalculator\GraphingNumPad.xaml"/>
+    <Page Include="Views\GraphingCalculator\GraphingNumPad.xaml" />
     <Page Include="Views\HistoryList.xaml" />
     <Page Include="Views\MainPage.xaml" />
     <Page Include="Views\Memory.xaml" />
@@ -419,6 +420,7 @@
     <ClCompile Include="Controls\OperatorPanelListView.cpp" />
     <ClCompile Include="Controls\OperatorPanelButton.cpp" />
     <ClCompile Include="Controls\EquationTextBox.cpp" />
+    <ClCompile Include="GraphingSettingsViewModel.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
