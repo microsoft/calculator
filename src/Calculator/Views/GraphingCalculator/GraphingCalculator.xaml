@@ -231,6 +231,13 @@
                     <Style x:Key="ThemedGraphToggleButtonStyle"
                            BasedOn="{StaticResource GraphToggleButtonStyle}"
                            TargetType="ToggleButton"/>
+
+                    <Style x:Key="GraphTooltipStyle" TargetType="Border">
+                        <Setter Property="BorderBrush" Value="#e0e0e0"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="CornerRadius" Value="4"/>
+                        <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
+                    </Style>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
                     <Style x:Key="ThemedSwitchModeToggleButtonStyle"
@@ -251,6 +258,12 @@
                     <Style x:Key="ThemedGraphToggleButtonStyle"
                            BasedOn="{StaticResource GraphToggleButtonStyle}"
                            TargetType="ToggleButton"/>
+                    <Style x:Key="GraphTooltipStyle" TargetType="Border">
+                        <Setter Property="BorderBrush" Value="#e0e0e0"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="CornerRadius" Value="4"/>
+                        <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
+                    </Style>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
                     <Style x:Key="ThemedSwitchModeToggleButtonStyle" TargetType="ToggleButton"/>
@@ -263,6 +276,11 @@
                     </Style>
                     <Style x:Key="ThemedGraphToggleButtonStyle" TargetType="ToggleButton">
                         <Setter Property="Margin" Value="1"/>
+                    </Style>
+                    <Style x:Key="GraphTooltipStyle" TargetType="Border">
+                        <Setter Property="BorderBrush" Value="{ThemeResource ToolTipBorderBrush}"/>
+                        <Setter Property="BorderThickness" Value="{ThemeResource ToolTipBorderThemeThickness}"/>
+                        <Setter Property="Background" Value="{ThemeResource ToolTipBackground}"/>
                     </Style>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
@@ -368,8 +386,8 @@
                     VerticalAlignment="Top"
                     Style="{ThemeResource GraphControlCommandPanel}"
                     RequestedTheme="Light">
-                    <StackPanel Orientation="Horizontal">
-                        <ToggleButton x:Name="ActiveTracing"
+                <StackPanel Orientation="Horizontal">
+                    <ToggleButton x:Name="ActiveTracing"
                                   MinWidth="40"
                                   Margin="0,-1"
                                   Style="{ThemeResource ThemedGraphToggleButtonStyle}"
@@ -447,10 +465,7 @@
                     Padding="{ThemeResource ToolTipBorderThemePadding}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Background="{ThemeResource ToolTipBackground}"
-                    BorderBrush="{ThemeResource ToolTipBorderBrush}"
-                    BorderThickness="{ThemeResource ToolTipBorderThemeThickness}"
-                    contract7Present:BackgroundSizing="OuterBorderEdge"
+                    Style="{ThemeResource GraphTooltipStyle}"
                     IsHitTestVisible="False"
                     SizeChanged="TraceValuePopup_SizeChanged"
                     Visibility="Collapsed">
@@ -459,8 +474,8 @@
                 </Border.RenderTransform>
                 <TextBlock x:Name="TraceValue"
                            Foreground="{ThemeResource ToolTipForeground}"
-                           AutomationProperties.LiveSetting="Polite"
-                           Text="x=0,y=0"/>
+                           FontSize="{ThemeResource ToolTipContentThemeFontSize}"
+                           AutomationProperties.LiveSetting="Polite"/>
             </Border>
         </Grid>
 

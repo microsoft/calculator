@@ -152,7 +152,7 @@ void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint
     wstringstream traceValueString;
 
     // TODO: The below precision should ideally be dynamic based on the current scale of the graph.
-    traceValueString << "x=" << fixed << setprecision(1) << newPoint.X << ", y=" << fixed << setprecision(1) << newPoint.Y;
+    traceValueString << "(" << fixed << setprecision(1) << newPoint.X << ", " << fixed << setprecision(1) << newPoint.Y << ")";
 
     TraceValue->Text = ref new String(traceValueString.str().c_str());
 
