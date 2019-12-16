@@ -7,73 +7,88 @@
              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <Style x:Key="TrigUnitsRadioButtonStyle" TargetType="RadioButton">
-            <Setter Property="MinHeight" Value="38"/>
-            <Setter Property="MinWidth" Value="90"/>
-            <Setter Property="Padding" Value="4,0"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="RadioButton">
-                        <Grid Name="LayoutRoot" Background="{ThemeResource GraphSettingsRadioButtonBackgroundBrush}">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal"/>
-                                    <VisualState x:Name="PointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Target="LayoutRoot.Background" Value="{ThemeResource GraphSettingsMediumControlBackgroundBrush}"/>
-                                            <Setter Target="AccessibilityBorder.BorderBrush" Value="{ThemeResource GraphSettingsControlPointerOverBorderBrush}"/>
-                                            <Setter Target="AccessibilityBorder.Background" Value="{ThemeResource GraphSettingsControlSelectedBackgroundBrush}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Pressed">
-                                        <VisualState.Setters>
-                                            <Setter Target="LayoutRoot.Background" Value="{ThemeResource GraphSettingsBaseMediumLowPressedBackgroundBrush}"/>
-                                            <Setter Target="AccessibilityBorder.BorderBrush" Value="{ThemeResource GraphSettingsControlPointerOverBorderBrush}"/>
-                                            <Setter Target="AccessibilityBorder.Background" Value="{ThemeResource GraphSettingsControlSelectedBackgroundBrush}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                                <VisualStateGroup x:Name="CheckStates">
-                                    <VisualState x:Name="Checked">
-                                        <VisualState.Setters>
-                                            <Setter Target="SelectedBackgroundRectangle.Opacity" Value="1"/>
-                                            <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ChromeWhiteHighControlSelectedForegroundBrush}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Unchecked"/>
-                                    <VisualState x:Name="Indeterminate"/>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Border Name="AccessibilityBorder"
-                                    BorderBrush="{ThemeResource GraphSettingsControlBorderBrush}"
-                                    BorderThickness="1"/>
-                            <Rectangle Name="SelectedBackgroundRectangle"
-                                       Fill="{ThemeResource GraphSettingsControlSelectedBackgroundAccentBrush}"
-                                       Opacity="0"/>
-                            <ContentPresenter Name="ContentPresenter"
-                                              Grid.Column="1"
-                                              Margin="{TemplateBinding Padding}"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"
-                                              Foreground="{TemplateBinding Foreground}"
-                                              AutomationProperties.AccessibilityView="Raw"
-                                              Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              ContentTransitions="{TemplateBinding ContentTransitions}"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="SubTitleTextBoxStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="#33EB5757"/>
+                    <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="#FFEB5757"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="#33EB5757"/>
+                    <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="#FFEB5757"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="HighContrast">
+                    <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                    <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="Red"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+            <Style x:Key="TrigUnitsRadioButtonStyle" TargetType="RadioButton">
+                <Setter Property="MinHeight" Value="38"/>
+                <Setter Property="MinWidth" Value="90"/>
+                <Setter Property="Padding" Value="4,0"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Grid Name="LayoutRoot" Background="{ThemeResource ToggleButtonBackground}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="PointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Target="LayoutRoot.Background" Value="{ThemeResource ToggleButtonBackgroundPointerOver}"/>
+                                                <Setter Target="AccessibilityBorder.BorderBrush" Value="{ThemeResource ToggleButtonBorderBrushPointerOver}"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Target="LayoutRoot.Background" Value="{ThemeResource ToggleButtonBackgroundPressed}"/>
+                                                <Setter Target="AccessibilityBorder.BorderBrush" Value="{ThemeResource ToggleButtonBorderBrushPressed}"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="CheckStates">
+                                        <VisualState x:Name="Checked">
+                                            <VisualState.Setters>
+                                                <Setter Target="SelectedBackgroundRectangle.Opacity" Value="1"/>
+                                                <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ToggleButtonForegroundChecked}"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Unchecked"/>
+                                        <VisualState x:Name="Indeterminate"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border Name="AccessibilityBorder"
+                                        BorderBrush="{ThemeResource ToggleButtonBorderBrush}"
+                                        BorderThickness="1"/>
+                                <Rectangle Name="SelectedBackgroundRectangle"
+                                           Fill="{ThemeResource ToggleButtonBackgroundChecked}"
+                                           Opacity="0"/>
+                                <ContentPresenter Name="ContentPresenter"
+                                                  Grid.Column="1"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  Foreground="{TemplateBinding Foreground}"
+                                                  AutomationProperties.AccessibilityView="Raw"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTransitions="{TemplateBinding ContentTransitions}"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="SubTitleTextBoxStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+            </Style>
 
-        <Style x:Key="ErrorTextBoxStyle" TargetType="TextBox">
-            <Setter Property="BorderBrush" Value="Red"/>
-        </Style>
+            <Style x:Key="ErrorTextBoxStyle" TargetType="TextBox">
+                <Setter Property="BorderBrush" Value="{ThemeResource GraphSettingsErrorBorderBrush}"/>
+                <Setter Property="Background" Value="{ThemeResource GraphSettingsErrorBackgroundBrush}"/>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>

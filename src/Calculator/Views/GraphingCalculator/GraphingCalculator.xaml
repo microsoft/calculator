@@ -415,9 +415,8 @@
 
                     <Button x:Name="GraphSettingsButton"
                             x:Uid="graphSettingsButton"
-                            MinWidth="44"
-                            MinHeight="44"
-                            Style="{StaticResource GraphButtonStyle}"
+                            MinWidth="40"
+                            Style="{ThemeResource ThemedGraphButtonStyle}"
                             contract7Present:CornerRadius="{ThemeResource RightButtonCornerRadius}"
                             Click="GraphSettingsButton_Click"
                             RequestedTheme="Light">
