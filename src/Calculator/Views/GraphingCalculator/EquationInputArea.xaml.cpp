@@ -97,8 +97,9 @@ void EquationInputArea::InputTextBox_Submitted(Object ^ sender, MathRichEditBoxS
         return;
     }
 
-    if (submission->Source == EquationSubmissionSource::ENTER_KEY ||
-        (submission->Source == EquationSubmissionSource::FOCUS_LOST && submission->HasTextChanged && eq->Expression != nullptr && eq->Expression->Length() > 0))
+    if (submission->Source == EquationSubmissionSource::ENTER_KEY
+        || (submission->Source == EquationSubmissionSource::FOCUS_LOST && submission->HasTextChanged && eq->Expression != nullptr
+            && eq->Expression->Length() > 0))
     {
         unsigned int index = 0;
         if (Equations->IndexOf(eq, &index))
@@ -110,8 +111,11 @@ void EquationInputArea::InputTextBox_Submitted(Object ^ sender, MathRichEditBoxS
             }
             else
             {
-                auto nextEquation = Equations->GetAt(index + 1);
-                FocusEquationTextBox(nextEquation);
+                if (submission->Source == EquationSubmissionSource::ENTER_KEY)
+                {
+                    auto nextEquation = Equations->GetAt(index + 1);
+                    FocusEquationTextBox(nextEquation);
+                }
             }
         }
     }
@@ -192,11 +196,12 @@ void EquationInputArea::InputTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e
 
     if (m_equationToFocus != nullptr && tb->DataContext == m_equationToFocus)
     {
+        auto copyEquationToFocus = m_equationToFocus;
         m_equationToFocus = nullptr;
         tb->FocusTextBox();
 
         unsigned int index;
-        if (Equations->IndexOf(m_equationToFocus, &index))
+        if (Equations->IndexOf(copyEquationToFocus, &index))
         {
             auto container = EquationInputList->TryGetElement(index);
             if (container != nullptr)
