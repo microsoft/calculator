@@ -741,8 +741,10 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
         destroynum(pnumret);
         pnumret = nullptr;
     }
-
-    stripzeroesnum(pnumret, precision);
+    else
+    {
+        stripzeroesnum(pnumret, precision);
+    }
 
     return pnumret;
 }
