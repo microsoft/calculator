@@ -74,17 +74,17 @@ void EquationInputArea::AddNewEquation()
     Equations->Append(eq);
 }
 
-void EquationInputArea::InputTextBox_GotFocus(Object ^ sender, RoutedEventArgs ^ e)
+void EquationInputArea::EquationTextBox_GotFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     KeyboardShortcutManager::HonorShortcuts(false);
 }
 
-void EquationInputArea::InputTextBox_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
+void EquationInputArea::EquationTextBox_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     KeyboardShortcutManager::HonorShortcuts(true);
 }
 
-void EquationInputArea::InputTextBox_Submitted(Object ^ sender, MathRichEditBoxSubmission ^ submission)
+void EquationInputArea::EquationTextBox_Submitted(Object ^ sender, MathRichEditBoxSubmission ^ submission)
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
     if (tb == nullptr)
@@ -187,7 +187,7 @@ void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, R
     eq->IsLineEnabled = !eq->IsLineEnabled;
 }
 
-void EquationInputArea::InputTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e)
+void EquationInputArea::EquationTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e)
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
 
@@ -212,7 +212,7 @@ void EquationInputArea::InputTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e
     }
 }
 
-void EquationInputArea::InputTextBox_DataContextChanged(Windows::UI::Xaml::FrameworkElement ^ sender, Windows::UI::Xaml::DataContextChangedEventArgs ^ args)
+void EquationInputArea::EquationTextBox_DataContextChanged(Windows::UI::Xaml::FrameworkElement ^ sender, Windows::UI::Xaml::DataContextChangedEventArgs ^ args)
 {
     auto tb = static_cast<EquationTextBox ^>(sender);
     if (!tb->IsLoaded)

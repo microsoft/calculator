@@ -35,7 +35,6 @@ EquationTextBox::EquationTextBox()
 void EquationTextBox::OnApplyTemplate()
 {
     m_equationButton = dynamic_cast<ToggleButton ^>(GetTemplateChild("EquationButton"));
-    m_kgfEquationButton = dynamic_cast<Button ^>(GetTemplateChild("KGFEquationButton"));
     m_richEditBox = dynamic_cast<MathRichEditBox ^>(GetTemplateChild("MathRichEditBox"));
     m_deleteButton = dynamic_cast<Button ^>(GetTemplateChild("DeleteButton"));
     m_removeButton = dynamic_cast<Button ^>(GetTemplateChild("RemoveButton"));
@@ -72,11 +71,6 @@ void EquationTextBox::OnApplyTemplate()
     if (m_richEditContextMenu != nullptr)
     {
         m_richEditContextMenu->Opening += ref new EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpening);
-    }
-
-    if (m_kgfEquationButton != nullptr)
-    {
-        m_kgfEquationButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnKGFEquationButtonClicked);
     }
 
     if (m_deleteButton != nullptr)
@@ -206,11 +200,6 @@ void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^
     toolTip->Content = equationButtonMessage;
     ToolTipService::SetToolTip(m_equationButton, toolTip);
     AutomationProperties::SetName(m_equationButton, equationButtonMessage);
-}
-
-void EquationTextBox::OnKGFEquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
-{
-    EquationButtonClicked(this, ref new RoutedEventArgs());
 }
 
 void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
@@ -350,7 +339,7 @@ bool EquationTextBox::RichEditHasContent()
     {
         text = m_richEditBox->MathText;
     }
-    return (!text->IsEmpty() && m_HasFocus);
+    return !text->IsEmpty() && m_HasFocus;
 }
 
 void EquationTextBox::OnRichEditMenuOpening(Object ^ /*sender*/, Object ^ /*args*/)
