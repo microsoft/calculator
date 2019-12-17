@@ -109,11 +109,10 @@ CategorySelectionInitializer UnitConverter::SetCurrentCategory(const Category& i
     {
         if (m_currentCategory.id != input.id)
         {
-            vector<Unit>& unitVector = m_categoryToUnits[m_currentCategory];
-            for (unsigned int i = 0; i < unitVector.size(); i++)
+            for (auto& unit : m_categoryToUnits[m_currentCategory])
             {
-                unitVector[i].isConversionSource = (unitVector[i].id == m_fromType.id);
-                unitVector[i].isConversionTarget = (unitVector[i].id == m_toType.id);
+                unit.isConversionSource = (unit.id == m_fromType.id);
+                unit.isConversionTarget = (unit.id == m_toType.id);
             }
             m_currentCategory = input;
             if (!m_currentCategory.supportsNegative && m_currentDisplay.front() == L'-')
@@ -192,41 +191,51 @@ void UnitConverter::SwitchActive(const wstring& newValue)
     }
 }
 
-wstring UnitConverter::CategoryToString(const Category& c, const wchar_t* delimiter)
+wstring UnitConverter::CategoryToString(const Category& c, wstring_view delimiter)
 {
-    wstringstream out(wstringstream::out);
-    out << Quote(std::to_wstring(c.id)) << delimiter << Quote(std::to_wstring(c.supportsNegative)) << delimiter << Quote(c.name) << delimiter;
-    return out.str();
+    return Quote(std::to_wstring(c.id))
+        .append(delimiter)
+        .append(Quote(std::to_wstring(c.supportsNegative)))
+        .append(delimiter)
+        .append(Quote(c.name))
+        .append(delimiter);
 }
 
-vector<wstring> UnitConverter::StringToVector(const wstring& w, const wchar_t* delimiter, bool addRemainder)
+vector<wstring> UnitConverter::StringToVector(wstring_view w, wstring_view delimiter, bool addRemainder)
 {
     size_t delimiterIndex = w.find(delimiter);
     size_t startIndex = 0;
-    vector<wstring> serializedTokens = vector<wstring>();
-    while (delimiterIndex != wstring::npos)
+    vector<wstring> serializedTokens;
+    while (delimiterIndex != wstring_view::npos)
     {
-        serializedTokens.push_back(w.substr(startIndex, delimiterIndex - startIndex));
-        startIndex = delimiterIndex + (int)wcslen(delimiter);
+        serializedTokens.emplace_back(w.substr(startIndex, delimiterIndex - startIndex));
+        startIndex = delimiterIndex + (int)delimiter.size();
         delimiterIndex = w.find(delimiter, startIndex);
     }
     if (addRemainder)
     {
         delimiterIndex = w.size();
-        serializedTokens.push_back(w.substr(startIndex, delimiterIndex - startIndex));
+        serializedTokens.emplace_back(w.substr(startIndex, delimiterIndex - startIndex));
     }
     return serializedTokens;
 }
-wstring UnitConverter::UnitToString(const Unit& u, const wchar_t* delimiter)
+wstring UnitConverter::UnitToString(const Unit& u, wstring_view delimiter)
 {
-    wstringstream out(wstringstream::out);
-    out << Quote(std::to_wstring(u.id)) << delimiter << Quote(u.name) << delimiter << Quote(u.abbreviation) << delimiter
-        << std::to_wstring(u.isConversionSource) << delimiter << std::to_wstring(u.isConversionTarget) << delimiter << std::to_wstring(u.isWhimsical)
-        << delimiter;
-    return out.str();
+    return Quote(std::to_wstring(u.id))
+        .append(delimiter)
+        .append(Quote(u.name))
+        .append(delimiter)
+        .append(Quote(u.abbreviation))
+        .append(delimiter)
+        .append(std::to_wstring(u.isConversionSource))
+        .append(delimiter)
+        .append(std::to_wstring(u.isConversionTarget))
+        .append(delimiter)
+        .append(std::to_wstring(u.isWhimsical))
+        .append(delimiter);
 }
 
-Unit UnitConverter::StringToUnit(const wstring& w)
+Unit UnitConverter::StringToUnit(wstring_view w)
 {
     vector<wstring> tokenList = StringToVector(w, L";");
     assert(tokenList.size() == EXPECTEDSERIALIZEDUNITTOKENCOUNT);
@@ -241,7 +250,7 @@ Unit UnitConverter::StringToUnit(const wstring& w)
     return serializedUnit;
 }
 
-Category UnitConverter::StringToCategory(const wstring& w)
+Category UnitConverter::StringToCategory(wstring_view w)
 {
     vector<wstring> tokenList = StringToVector(w, L";");
     assert(tokenList.size() == EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT);
@@ -255,8 +264,8 @@ Category UnitConverter::StringToCategory(const wstring& w)
 /// <summary>
 /// De-Serializes the data in the converter from a string
 /// </summary>
-/// <param name="userPreferences">wstring holding the serialized data. If it does not have expected number of parameters, we will ignore it</param>
-void UnitConverter::RestoreUserPreferences(const wstring& userPreferences)
+/// <param name="userPreferences">wstring_view holding the serialized data. If it does not have expected number of parameters, we will ignore it</param>
+void UnitConverter::RestoreUserPreferences(wstring_view userPreferences)
 {
     if (userPreferences.empty())
     {
@@ -294,58 +303,57 @@ void UnitConverter::RestoreUserPreferences(const wstring& userPreferences)
 /// </summary>
 wstring UnitConverter::SaveUserPreferences()
 {
-    wstringstream out(wstringstream::out);
-    const wchar_t* delimiter = L";";
-
-    out << UnitToString(m_fromType, delimiter) << "|";
-    out << UnitToString(m_toType, delimiter) << "|";
-    out << CategoryToString(m_currentCategory, delimiter) << "|";
-    wstring test = out.str();
-    return test;
+    constexpr auto delimiter = L";"sv;
+    constexpr auto pipe = L"|"sv;
+    return UnitToString(m_fromType, delimiter)
+        .append(pipe)
+        .append(UnitToString(m_toType, delimiter))
+        .append(pipe)
+        .append(CategoryToString(m_currentCategory, delimiter))
+        .append(pipe);
 }
 
 /// <summary>
 /// Sanitizes the input string, escape quoting any symbols we rely on for our delimiters, and returns the sanitized string.
 /// </summary>
-/// <param name="s">wstring to be sanitized</param>
-wstring UnitConverter::Quote(const wstring& s)
+/// <param name="s">wstring_view to be sanitized</param>
+wstring UnitConverter::Quote(wstring_view s)
 {
-    wstringstream quotedString(wstringstream::out);
+    wstring quotedString;
 
     // Iterate over the delimiter characters we need to quote
-    wstring::const_iterator cursor = s.begin();
-    while (cursor != s.end())
+    for (const auto ch : s)
     {
-        if (quoteConversions.find(*cursor) != quoteConversions.end())
+        if (quoteConversions.find(ch) != quoteConversions.end())
         {
-            quotedString << quoteConversions[*cursor];
+            quotedString += quoteConversions[ch];
         }
         else
         {
-            quotedString << *cursor;
+            quotedString += ch;
         }
-        ++cursor;
     }
-    return quotedString.str();
+
+    return quotedString;
 }
 
 /// <summary>
 /// Unsanitizes the sanitized input string, returning it to its original contents before we had quoted it.
 /// </summary>
-/// <param name="s">wstring to be unsanitized</param>
-wstring UnitConverter::Unquote(const wstring& s)
+/// <param name="s">wstring_view to be unsanitized</param>
+wstring UnitConverter::Unquote(wstring_view s)
 {
-    wstringstream quotedSubString(wstringstream::out);
-    wstringstream unquotedString(wstringstream::out);
-    wstring::const_iterator cursor = s.begin();
+    wstring quotedSubString;
+    wstring unquotedString;
+    wstring_view::const_iterator cursor = s.begin();
     while (cursor != s.end())
     {
         if (*cursor == LEFTESCAPECHAR)
         {
-            quotedSubString.str(L"");
+            quotedSubString.clear();
             while (cursor != s.end() && *cursor != RIGHTESCAPECHAR)
             {
-                quotedSubString << *cursor;
+                quotedSubString += *cursor;
                 ++cursor;
             }
             if (cursor == s.end())
@@ -355,17 +363,17 @@ wstring UnitConverter::Unquote(const wstring& s)
             }
             else
             {
-                quotedSubString << *cursor;
-                unquotedString << unquoteConversions[quotedSubString.str()];
+                quotedSubString += *cursor;
+                unquotedString += unquoteConversions[quotedSubString];
             }
         }
         else
         {
-            unquotedString << *cursor;
+            unquotedString += *cursor;
         }
         ++cursor;
     }
-    return unquotedString.str();
+    return unquotedString;
 }
 
 /// <summary>
@@ -381,16 +389,7 @@ void UnitConverter::SendCommand(Command command)
 
     // TODO: Localization of characters
     bool clearFront = false;
-    if (m_currentDisplay == L"0")
-    {
-        clearFront = true;
-    }
     bool clearBack = false;
-    if ((m_currentHasDecimal && m_currentDisplay.size() - 1 >= MAXIMUMDIGITSALLOWED)
-        || (!m_currentHasDecimal && m_currentDisplay.size() >= MAXIMUMDIGITSALLOWED))
-    {
-        clearBack = true;
-    }
     if (command != Command::Negate && m_switchedActive)
     {
         ClearValues();
@@ -398,6 +397,14 @@ void UnitConverter::SendCommand(Command command)
         clearFront = true;
         clearBack = false;
     }
+    else
+    {
+        clearFront = (m_currentDisplay == L"0");
+        clearBack =
+            ((m_currentHasDecimal && m_currentDisplay.size() - 1 >= MAXIMUMDIGITSALLOWED)
+             || (!m_currentHasDecimal && m_currentDisplay.size() >= MAXIMUMDIGITSALLOWED));
+    }
+
     switch (command)
     {
     case Command::Zero:
@@ -453,9 +460,9 @@ void UnitConverter::SendCommand(Command command)
     case Command::Backspace:
         clearFront = false;
         clearBack = false;
-        if ((m_currentDisplay.front() != '-' && m_currentDisplay.size() > 1) || m_currentDisplay.size() > 2)
+        if ((m_currentDisplay.front() != L'-' && m_currentDisplay.size() > 1) || m_currentDisplay.size() > 2)
         {
-            if (m_currentDisplay.back() == '.')
+            if (m_currentDisplay.back() == L'.')
             {
                 m_currentHasDecimal = false;
             }
@@ -473,13 +480,13 @@ void UnitConverter::SendCommand(Command command)
         clearBack = false;
         if (m_currentCategory.supportsNegative)
         {
-            if (m_currentDisplay.front() == '-')
+            if (m_currentDisplay.front() == L'-')
             {
                 m_currentDisplay.erase(0, 1);
             }
             else
             {
-                m_currentDisplay.insert(0, 1, '-');
+                m_currentDisplay.insert(0, 1, L'-');
             }
         }
         break;
@@ -507,7 +514,7 @@ void UnitConverter::SendCommand(Command command)
     }
     if (clearBack)
     {
-        m_currentDisplay.erase(m_currentDisplay.size() - 1, 1);
+        m_currentDisplay.pop_back();
         m_vmCallback->MaxDigitsReached();
     }
 
@@ -555,7 +562,7 @@ future<pair<bool, wstring>> UnitConverter::RefreshCurrencyRatios()
     return async([this, currencyDataLoader, sharedLoadResult]() {
         sharedLoadResult.wait();
         bool didLoad = sharedLoadResult.get();
-        wstring timestamp = L"";
+        wstring timestamp;
         if (currencyDataLoader != nullptr)
         {
             timestamp = currencyDataLoader->GetCurrencyTimestamp();
@@ -571,11 +578,11 @@ shared_ptr<ICurrencyConverterDataLoader> UnitConverter::GetCurrencyConverterData
 }
 
 /// <summary>
-/// Converts a double value into another unit type, currently by multiplying by the given double ratio
+/// Converts a double value into another unit type
 /// </summary>
 /// <param name="value">double input value to convert</param>
-/// <param name="ratio">double conversion ratio to use</param>
-double UnitConverter::Convert(double value, ConversionData conversionData)
+/// <param name="conversionData">offset and ratio to use</param>
+double UnitConverter::Convert(double value, const ConversionData& conversionData)
 {
     if (conversionData.offsetFirst)
     {
@@ -649,7 +656,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         if (stod(roundedString) != 0.0 || m_currentCategory.supportsNegative)
         {
             TrimTrailingZeros(roundedString);
-            returnVector.push_back(make_tuple(roundedString, entry.type));
+            returnVector.emplace_back(roundedString, entry.type);
         }
     }
 
@@ -689,13 +696,13 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         if (stod(roundedString) != 0.0)
         {
             TrimTrailingZeros(roundedString);
-            whimsicalReturnVector.push_back(make_tuple(roundedString, entry.type));
+            whimsicalReturnVector.emplace_back(roundedString, entry.type);
         }
     }
     // Pickup the 'best' whimsical value - currently the first one
-    if (whimsicalReturnVector.size() != 0)
+    if (!whimsicalReturnVector.empty())
     {
-        returnVector.push_back(whimsicalReturnVector.at(0));
+        returnVector.push_back(whimsicalReturnVector.front());
     }
 
     return returnVector;
@@ -738,7 +745,7 @@ void UnitConverter::ResetCategoriesAndRatios()
         // we just want to make sure we don't let an unready category be the default.
         if (!units.empty())
         {
-            for (Unit u : units)
+            for (const Unit& u : units)
             {
                 m_ratioMap[u] = activeDataLoader->LoadOrderedRatios(u);
             }
@@ -788,7 +795,7 @@ void UnitConverter::InitializeSelectedUnits()
         return;
     }
 
-    vector<Unit> curUnits = itr->second;
+    const vector<Unit>& curUnits = itr->second;
     if (!curUnits.empty())
     {
         // Units may already have been initialized through UnitConverter::RestoreUserPreferences().
@@ -896,8 +903,8 @@ void UnitConverter::Calculate()
                 }
                 else
                 {
-					// Fewer digits are needed following the decimal if the number is large,
-					// we calculate the number of decimals necessary based on the number of digits in the integer part.
+                    // Fewer digits are needed following the decimal if the number is large,
+                    // we calculate the number of decimals necessary based on the number of digits in the integer part.
                     precision = max(0, max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits)) - numPreDecimal);
                 }
 

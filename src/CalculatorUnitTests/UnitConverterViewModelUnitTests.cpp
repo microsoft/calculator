@@ -227,7 +227,7 @@ void UnitConverterMock::SwitchActive(const std::wstring& newValue)
         return L"TEST";
     };
 
-void UnitConverterMock::RestoreUserPreferences(_In_ const std::wstring& /*userPreferences*/){};
+void UnitConverterMock::RestoreUserPreferences(_In_ std::wstring_view /*userPreferences*/){};
 
 void UnitConverterMock::SendCommand(UCM::Command command)
 {
