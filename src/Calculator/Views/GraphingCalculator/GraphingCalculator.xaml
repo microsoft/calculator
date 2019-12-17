@@ -11,10 +11,8 @@
              x:Name="Control"
              DataContextChanged="GraphingCalculator_DataContextChanged"
              mc:Ignorable="d">
-
     <UserControl.Resources>
         <ResourceDictionary>
-
             <Style x:Key="GraphToggleButtonStyle" TargetType="ToggleButton">
                 <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                 <Setter Property="Background" Value="Transparent"/>
