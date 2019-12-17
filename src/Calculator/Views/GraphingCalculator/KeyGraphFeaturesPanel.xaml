@@ -10,143 +10,140 @@
              xmlns:vm="using:CalculatorApp.ViewModel"
              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
              mc:Ignorable="d">
-
     <UserControl.Resources>
-        <Style x:Key="TitleRichEditBoxStyle" TargetType="controls:MathRichEditBox">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="IsEnabled" Value="True"/>
-            <Setter Property="UseSystemFocusVisuals" Value="True"/>
-            <Setter Property="TextWrapping" Value="NoWrap"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="Typography.StylisticSet20" Value="True"/>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <!-- Can't be #ffffff due to a bug in RichEditBox considering it as the default value -->
+                    <!-- and replacing it by the system value (#000000) when dark theme is used -->
+                    <SolidColorBrush x:Key="TitleMathRichEditBoxForegroundBrush" Color="#feffff"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="TitleMathRichEditBoxForegroundBrush" Color="Black"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="HighContrast">
+                    <SolidColorBrush x:Key="TitleMathRichEditBoxForegroundBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+            <Style x:Key="KGF_RichEditBoxStyle" TargetType="controls:MathRichEditBox">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="UseSystemFocusVisuals" Value="True"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Typography.StylisticSet20" Value="True"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="controls:MathRichEditBox">
+                            <ScrollViewer x:Name="ContentElement"
+                                          Grid.Row="1"
+                                          Margin="{TemplateBinding BorderThickness}"
+                                          Padding="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center"
+                                          AutomationProperties.AccessibilityView="Raw"
+                                          HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                          HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                          IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                                          IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+                                          IsTabStop="False"
+                                          IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+                                          VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                          VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                          ZoomMode="Disabled"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
 
-        <Style x:Key="KGF_RichEditBoxStyle" TargetType="controls:MathRichEditBox">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="IsEnabled" Value="True"/>
-            <Setter Property="UseSystemFocusVisuals" Value="True"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Typography.StylisticSet20" Value="True"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="controls:MathRichEditBox">
-                        <ScrollViewer x:Name="ContentElement"
-                                      Grid.Row="1"
-                                      Margin="{TemplateBinding BorderThickness}"
-                                      Padding="{TemplateBinding Padding}"
-                                      VerticalAlignment="Center"
-                                      AutomationProperties.AccessibilityView="Raw"
-                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                                      HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
-                                      IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
-                                      IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
-                                      IsTabStop="False"
-                                      IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
-                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
-                                      VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
-                                      ZoomMode="Disabled"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+            <Style x:Name="KGF_TitleTextBlockStyle" TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="Medium"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+                <Setter Property="AutomationProperties.HeadingLevel" Value="Level2"/>
+            </Style>
 
+            <Style x:Name="KGF_TextBlockStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="IsTextSelectionEnabled" Value="True"/>
+                <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+            </Style>
 
-        <Style x:Name="KGF_TitleTextBlockStyle" TargetType="TextBlock">
-            <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="TextWrapping" Value="WrapWholeWords"/>
-            <Setter Property="AutomationProperties.HeadingLevel" Value="Level2"/>
-        </Style>
+            <Style x:Name="KGF_ListViewItemContainerStyle" TargetType="ListViewItem">
+                <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="AutomationProperties.AccessibilityView" Value="Raw"/>
+                <Setter Property="Padding" Value="0,10"/>
+            </Style>
 
-        <Style x:Name="KGF_TextBlockStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="IsTextSelectionEnabled" Value="True"/>
-            <Setter Property="TextWrapping" Value="WrapWholeWords"/>
-        </Style>
+            <DataTemplate x:Key="KGFRichEditDataTemplate" x:DataType="vm:KeyGraphFeaturesItem">
+                <StackPanel>
+                    <TextBlock x:Name="TitleTextBlock"
+                               Style="{StaticResource KGF_TitleTextBlockStyle}"
+                               Text="{x:Bind Title, Mode=OneWay}"/>
+                    <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}" UseSystemFocusVisuals="True">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <controls:MathRichEditBox Style="{StaticResource KGF_RichEditBoxStyle}" MathText="{x:Bind}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </DataTemplate>
 
-        <Style x:Name="KGF_ListViewItemContainerStyle" TargetType="ListViewItem">
-            <Setter Property="IsTabStop" Value="False"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="AutomationProperties.AccessibilityView" Value="Raw"/>
-            <Setter Property="Padding" Value="0,10"/>
-        </Style>
+            <DataTemplate x:Key="KGFGridDataTemplate" x:DataType="vm:KeyGraphFeaturesItem">
+                <StackPanel>
+                    <TextBlock x:Name="TitleTextBlock"
+                               Style="{StaticResource KGF_TitleTextBlockStyle}"
+                               Text="{x:Bind Title, Mode=OneWay}"/>
+                    <ItemsControl ItemsSource="{x:Bind GridItems, Mode=OneWay}" UseSystemFocusVisuals="True">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="vm:GridDisplayItems">
+                                <Grid VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" MinWidth="64"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <controls:MathRichEditBox Style="{StaticResource KGF_RichEditBoxStyle}" MathText="{x:Bind Expression}"/>
+                                    <TextBlock Grid.Column="1"
+                                               Margin="0,-2,0,0"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Center"
+                                               Style="{StaticResource KGF_TextBlockStyle}"
+                                               Text="{x:Bind Direction}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </DataTemplate>
 
-        <DataTemplate x:Key="KGFRichEditDataTemplate" x:DataType="vm:KeyGraphFeaturesItem">
-            <StackPanel>
-                <TextBlock x:Name="TitleTextBlock"
-                           Style="{StaticResource KGF_TitleTextBlockStyle}"
-                           Text="{x:Bind Title, Mode=OneWay}"/>
-                <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}" UseSystemFocusVisuals="True">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="x:String">
-                            <controls:MathRichEditBox Style="{StaticResource KGF_RichEditBoxStyle}" MathText="{x:Bind}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-        </DataTemplate>
+            <DataTemplate x:Key="KGFTextBlockDataTemplate" x:DataType="vm:KeyGraphFeaturesItem">
+                <StackPanel>
+                    <TextBlock x:Name="TitleTextBlock"
+                               Style="{StaticResource KGF_TitleTextBlockStyle}"
+                               Text="{x:Bind Title, Mode=OneWay}"/>
+                    <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}" UseSystemFocusVisuals="True">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <TextBlock Style="{StaticResource KGF_TextBlockStyle}" Text="{x:Bind}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </DataTemplate>
 
-        <DataTemplate x:Key="KGFGridDataTemplate" x:DataType="vm:KeyGraphFeaturesItem">
-            <StackPanel>
-                <TextBlock x:Name="TitleTextBlock"
-                           Style="{StaticResource KGF_TitleTextBlockStyle}"
-                           Text="{x:Bind Title, Mode=OneWay}"/>
-                <ItemsControl ItemsSource="{x:Bind GridItems, Mode=OneWay}" UseSystemFocusVisuals="True">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="vm:GridDisplayItems">
-                            <Grid VerticalAlignment="Center">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" MinWidth="64"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <controls:MathRichEditBox Grid.Column="0"
-                                                          Style="{StaticResource KGF_RichEditBoxStyle}"
-                                                          MathText="{x:Bind Expression}"/>
-                                <TextBlock Grid.Column="1"
-                                           Margin="0,-2,0,0"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center"
-                                           Style="{StaticResource KGF_TextBlockStyle}"
-                                           Text="{x:Bind Direction}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-        </DataTemplate>
+            <ts:KeyGraphFeaturesTemplateSelector x:Key="KGFTemplateSelector"
+                                                 GridTemplate="{StaticResource KGFGridDataTemplate}"
+                                                 RichEditTemplate="{StaticResource KGFRichEditDataTemplate}"
+                                                 TextBlockTemplate="{StaticResource KGFTextBlockDataTemplate}"/>
 
-        <DataTemplate x:Key="KGFTextBlockDataTemplate" x:DataType="vm:KeyGraphFeaturesItem">
-            <StackPanel>
-                <TextBlock x:Name="TitleTextBlock"
-                           Style="{StaticResource KGF_TitleTextBlockStyle}"
-                           Text="{x:Bind Title, Mode=OneWay}"/>
-                <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}" UseSystemFocusVisuals="True">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="x:String">
-                            <TextBlock Style="{StaticResource KGF_TextBlockStyle}" Text="{x:Bind}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-        </DataTemplate>
+            <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
 
-        <ts:KeyGraphFeaturesTemplateSelector x:Key="KGFTemplateSelector"
-                                             GridTemplate="{StaticResource KGFGridDataTemplate}"
-                                             RichEditTemplate="{StaticResource KGFRichEditDataTemplate}"
-                                             TextBlockTemplate="{StaticResource KGFTextBlockDataTemplate}"/>
-
-        <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
-
-        <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
-        <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
+            <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
+            <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
@@ -155,7 +152,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Padding="0,4,0,0">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -163,12 +160,10 @@
             <Button x:Name="BackButton"
                     x:Uid="equationAnalysisBack"
                     MinWidth="44"
-                    MinHeight="44"
                     VerticalAlignment="Stretch"
                     Style="{StaticResource ButtonRevealStyle}"
                     Background="{x:Bind local:KeyGraphFeaturesPanel.ToSolidColorBrush(ViewModel.LineColor), Mode=OneWay}"
                     Foreground="{ThemeResource SystemChromeWhiteColor}"
-                    BorderThickness="0"
                     Click="BackButton_Click">
                 <StackPanel Margin="5,0"
                             HorizontalAlignment="Center"
@@ -185,15 +180,14 @@
                                Text="{x:Bind ViewModel.FunctionLabelIndex}"/>
                 </StackPanel>
             </Button>
-            <controls:MathRichEditBox x:Name="EquationTextBox"
-                                      Grid.Column="1"
-                                      Padding="10,14,6,0"
+            <controls:MathRichEditBox Grid.Column="1"
+                                      Padding="10,0,6,0"
                                       VerticalAlignment="Stretch"
                                       VerticalContentAlignment="Center"
-                                      Style="{StaticResource TitleRichEditBoxStyle}"
+                                      Style="{StaticResource KGF_RichEditBoxStyle}"
+                                      Foreground="{ThemeResource TitleMathRichEditBoxForegroundBrush}"
                                       MathText="{x:Bind ViewModel.Expression, Mode=OneWay}"/>
         </Grid>
-
         <TextBlock x:Uid="KeyGraphFeaturesLabel"
                    Grid.Row="1"
                    Margin="12,12,10,0"
