@@ -177,21 +177,20 @@ String ^ StandardCalculatorViewModel::CalculateNarratorDisplayValue(_In_ wstring
 
 String ^ StandardCalculatorViewModel::GetNarratorStringReadRawNumbers(_In_ String ^ localizedDisplayValue)
 {
-    wstringstream wss;
-    auto& locSettings = LocalizationSettings::GetInstance();
+    wstring ws;
+    const auto& locSettings = LocalizationSettings::GetInstance();
 
     // Insert a space after each digit in the string, to force Narrator to read them as separate numbers.
-    wstring wstrValue(localizedDisplayValue->Data());
-    for (wchar_t& c : wstrValue)
+    for (const wchar_t& c : localizedDisplayValue)
     {
-        wss << c;
+        ws += c;
         if (locSettings.IsLocalizedHexDigit(c))
         {
-            wss << L' ';
+            ws += L' ';
         }
     }
 
-    return ref new String(wss.str().c_str());
+    return ref new String(ws.c_str());
 }
 
 void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ String ^ displayStringValue, _In_ bool isError)
