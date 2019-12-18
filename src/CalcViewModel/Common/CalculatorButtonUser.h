@@ -120,11 +120,7 @@ public
         RshL = (int)CM::Command::CommandRSHFL,
         RolC = (int)CM::Command::CommandROLC,
         RorC = (int)CM::Command::CommandRORC,
-
-        Plot,
-        X,
-        Y,
-
+            
         BINSTART = (int)CM::Command::CommandBINEDITSTART,
         BINPOS0 = (int)CM::Command::CommandBINPOS0,
         BINPOS1 = (int)CM::Command::CommandBINPOS1,
@@ -200,10 +196,12 @@ public
         BitflipButton = 1000,
         FullKeypadButton = 1001,
 
-        // Inequalities. used in graphing calculator
+        // Buttons used in graphing calculator
         LessThan,
         LessThanOrEqualTo,
         GreaterThan,
-        GreaterThanOrEqualTo
+        GreaterThanOrEqualTo,
+        X,
+        Y
     };
 }

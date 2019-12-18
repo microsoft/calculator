@@ -35,7 +35,6 @@ namespace CalculatorApp
             Platform::String ^ GetEquationText();
             void SetEquationText(Platform::String ^ equationText);
             void FocusTextBox();
-            void SubmitEquation();
 
         protected:
             virtual void OnApplyTemplate() override;

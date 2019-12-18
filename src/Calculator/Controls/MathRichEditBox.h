@@ -13,6 +13,7 @@ namespace CalculatorApp
         {
             FOCUS_LOST,
             ENTER_KEY,
+            PROGRAMMATIC
         };
 
     public
@@ -41,7 +42,7 @@ namespace CalculatorApp
             event Windows::Foundation::EventHandler<MathRichEditBoxSubmission^> ^ EquationSubmitted;
             void OnMathTextPropertyChanged(Platform::String ^ oldValue, Platform::String ^ newValue);
             void InsertText(Platform::String ^ text, int cursorOffSet, int selectionLength);
-            void SubmitEquation();
+            void SubmitEquation(EquationSubmissionSource source);
             void BackSpace();
 
         private:

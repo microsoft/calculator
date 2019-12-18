@@ -21,7 +21,8 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-static const std::unordered_map<CalculatorApp::NumbersAndOperatorsEnum, std::tuple<Platform::String ^, int, int>> buttonOutput = {
+// Dictionary of the enum of the button clicked mapped to an object with the string to enter into the rich edit, and the start and end of the selection after text has been entered.
+static const std::unordered_map<NumbersAndOperatorsEnum, std::tuple<Platform::String ^, int, int>> buttonOutput = {
     { NumbersAndOperatorsEnum::Sin, { L"sin()", 4, 0 } },
     { NumbersAndOperatorsEnum::Cos, { L"cos()", 4, 0 } },
     { NumbersAndOperatorsEnum::Tan, { L"tan()", 4, 0 } },
@@ -109,12 +110,12 @@ GraphingNumPad::GraphingNumPad()
     Num9Button->Content = localizationSettings.GetDigitSymbolFromEnUsDigit('9');
 }
 
-void GraphingNumPad::ShiftButton_Check(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
+void GraphingNumPad::ShiftButton_Check(_In_ Platform::Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
 {
     SetOperatorRowVisibility();
 }
 
-void GraphingNumPad::ShiftButton_Uncheck(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
+void GraphingNumPad::ShiftButton_Uncheck(_In_ Platform::Object ^ sender, _In_ RoutedEventArgs ^ /*e*/)
 {
     ShiftButton->IsChecked = false;
     SetOperatorRowVisibility();
@@ -122,17 +123,17 @@ void GraphingNumPad::ShiftButton_Uncheck(_In_ Platform::Object ^ sender, _In_ Wi
     GraphingNumPad::Button_Clicked(sender, nullptr);
 }
 
-void GraphingNumPad::TrigFlyoutShift_Toggle(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
+void GraphingNumPad::TrigFlyoutShift_Toggle(_In_ Platform::Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
 {
     SetTrigRowVisibility();
 }
 
-void GraphingNumPad::TrigFlyoutHyp_Toggle(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
+void GraphingNumPad::TrigFlyoutHyp_Toggle(_In_ Platform::Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)
 {
     SetTrigRowVisibility();
 }
 
-void GraphingNumPad::FlyoutButton_Clicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
+void GraphingNumPad::FlyoutButton_Clicked(_In_ Platform::Object ^ sender, _In_ RoutedEventArgs ^ /*e*/)
 {
     this->HypButton->IsChecked = false;
     this->TrigShiftButton->IsChecked = false;
@@ -143,7 +144,7 @@ void GraphingNumPad::FlyoutButton_Clicked(_In_ Platform::Object ^ sender, _In_ W
     GraphingNumPad::Button_Clicked(sender, nullptr);
 }
 
-void GraphingNumPad::ShiftButton_IsEnabledChanged(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ /*e*/)
+void GraphingNumPad::ShiftButton_IsEnabledChanged(_In_ Platform::Object ^ /*sender*/, _In_ DependencyPropertyChangedEventArgs ^ /*e*/)
 {
     SetOperatorRowVisibility();
 }
@@ -194,7 +195,7 @@ void GraphingNumPad::SetOperatorRowVisibility()
     InvRow1->Visibility = invRowVis;
 }
 
-void GraphingNumPad::Button_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ /*e*/)
+void GraphingNumPad::Button_Clicked(Platform::Object ^ sender, DependencyPropertyChangedEventArgs ^ /*e*/)
 {
     auto mathRichEdit = GetActiveRichEdit();
     auto button = dynamic_cast<CalculatorApp::Controls::CalculatorButton ^>(sender);
@@ -206,27 +207,26 @@ void GraphingNumPad::Button_Clicked(Platform::Object ^ sender, Windows::UI::Xaml
     }
 }
 
-void GraphingNumPad::SubmitButton_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void GraphingNumPad::SubmitButton_Clicked(Platform::Object ^ /*sender*/, RoutedEventArgs ^ /*e*/)
 {
     auto mathRichEdit = GetActiveRichEdit();
     if (mathRichEdit != nullptr)
     {
-        mathRichEdit->SubmitEquation();
+        mathRichEdit->SubmitEquation(CalculatorApp::Controls::EquationSubmissionSource::ENTER_KEY);
     }
 }
 
-void GraphingNumPad::ClearButton_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void GraphingNumPad::ClearButton_Clicked(Platform::Object ^ /*sender*/, RoutedEventArgs ^ /*e*/)
 {
     auto mathRichEdit = GetActiveRichEdit();
     if (mathRichEdit != nullptr)
     {
         mathRichEdit->MathText = L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"></math>";
-        mathRichEdit->SubmitEquation();
+        mathRichEdit->SubmitEquation(CalculatorApp::Controls::EquationSubmissionSource::PROGRAMMATIC);
     }
-
 }
 
-void GraphingNumPad::BackSpaceButton_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void GraphingNumPad::BackSpaceButton_Clicked(Platform::Object ^ /*sender*/, RoutedEventArgs ^ /*e*/)
 {
     auto mathRichEdit = GetActiveRichEdit();
     if (mathRichEdit != nullptr)
@@ -236,12 +236,12 @@ void GraphingNumPad::BackSpaceButton_Clicked(Platform::Object ^ sender, Windows:
 }
 
 // To avoid focus moving when the space between buttons is clicked, handle click events that make it through the keypad.
-void CalculatorApp::GraphingNumPad::GraphingNumPad_PointerPressed(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e)
+void GraphingNumPad::GraphingNumPad_PointerPressed(Platform::Object ^ /*sender*/, PointerRoutedEventArgs ^ e)
 {
     e->Handled = true;
 }
 
-CalculatorApp::Controls::MathRichEditBox ^ CalculatorApp::GraphingNumPad::GetActiveRichEdit()
+CalculatorApp::Controls::MathRichEditBox ^ GraphingNumPad::GetActiveRichEdit()
 {
-    return dynamic_cast<CalculatorApp::Controls::MathRichEditBox ^>(FocusManager::GetFocusedElement());
+    return dynamic_cast<Controls::MathRichEditBox ^>(FocusManager::GetFocusedElement());
 }

@@ -119,32 +119,14 @@ void MathRichEditBox::SetMathTextProperty(String ^ newValue)
 
 void CalculatorApp::Controls::MathRichEditBox::OnLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args)
 {
-    auto newVal = GetMathTextProperty();
-    if (MathText != newVal)
-    {
-        SetValue(MathTextProperty, newVal);
-        EquationSubmitted(this, ref new MathRichEditBoxSubmission(true, EquationSubmissionSource::FOCUS_LOST));
-    }
-    else
-    {
-        EquationSubmitted(this, ref new MathRichEditBoxSubmission(false, EquationSubmissionSource::FOCUS_LOST));
-    }
+    SubmitEquation(EquationSubmissionSource::FOCUS_LOST);
 }
 
 void CalculatorApp::Controls::MathRichEditBox::OnKeyUp(Platform::Object ^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e)
 {
     if (e->Key == VirtualKey::Enter)
     {
-        auto newVal = GetMathTextProperty();
-        if (MathText != newVal)
-        {
-            SetValue(MathTextProperty, newVal);
-            EquationSubmitted(this, ref new MathRichEditBoxSubmission(true, EquationSubmissionSource::ENTER_KEY));
-        }
-        else
-        {
-            EquationSubmitted(this, ref new MathRichEditBoxSubmission(true, EquationSubmissionSource::ENTER_KEY));
-        }
+        SubmitEquation(EquationSubmissionSource::ENTER_KEY);
     }
 }
 
@@ -154,7 +136,7 @@ void MathRichEditBox::OnMathTextPropertyChanged(Platform::String ^ oldValue, Pla
     SetValue(MathTextProperty, newValue);
 }
 
-void CalculatorApp::Controls::MathRichEditBox::InsertText(Platform::String ^ text, int cursorOffSet, int selectionLength)
+void MathRichEditBox::InsertText(Platform::String ^ text, int cursorOffSet, int selectionLength)
 {
     // If the rich edit is empty, the math zone may not exist, and so selection (and thus the resulting text) will not be in a math zone.
     // If the rich edit has content already, then the mathzone will already be created due to mathonly mode being set and the selection will exist inside the
@@ -175,7 +157,7 @@ void CalculatorApp::Controls::MathRichEditBox::InsertText(Platform::String ^ tex
     TextDocument->Selection->EndPosition = TextDocument->Selection->StartPosition + selectionLength;
 }
 
-void CalculatorApp::Controls::MathRichEditBox::BackSpace()
+void MathRichEditBox::BackSpace()
 {
     // if anything is selected, just delete the selection.  Note: EndPosition can be before start position.
     if (TextDocument->Selection->StartPosition != TextDocument->Selection->EndPosition)
@@ -203,16 +185,16 @@ void CalculatorApp::Controls::MathRichEditBox::BackSpace()
     }
 }
 
-void CalculatorApp::Controls::MathRichEditBox::SubmitEquation()
+void MathRichEditBox::SubmitEquation(EquationSubmissionSource source)
 {
     auto newVal = GetMathTextProperty();
     if (MathText != newVal)
     {
         SetValue(MathTextProperty, newVal);
-        EquationSubmitted(this, ref new MathRichEditBoxSubmission(true, EquationSubmissionSource::ENTER_KEY));
+        EquationSubmitted(this, ref new MathRichEditBoxSubmission(true, source));
     }
     else
     {
-        EquationSubmitted(this, ref new MathRichEditBoxSubmission(true, EquationSubmissionSource::ENTER_KEY));
+        EquationSubmitted(this, ref new MathRichEditBoxSubmission(false, source));
     }
 }

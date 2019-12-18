@@ -392,11 +392,3 @@ void EquationTextBox::OnEquationSubmitted(Platform::Object ^ sender, MathRichEdi
 
     EquationSubmitted(this, args);
 }
-
-void CalculatorApp::Controls::EquationTextBox::SubmitEquation()
-{
-    if (m_richEditBox != nullptr)
-    {
-        m_richEditBox->SubmitEquation();
-    }
-}
