@@ -31,5 +31,6 @@ namespace CalculatorApp
         void BackSpaceButton_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void GraphingNumPad_PointerPressed(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
         Controls::MathRichEditBox^ GetActiveRichEdit();
+        void Flyout_Opening(Platform::Object ^ sender, Platform::Object ^ e);
     };
 }

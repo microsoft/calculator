@@ -245,3 +245,13 @@ CalculatorApp::Controls::MathRichEditBox ^ GraphingNumPad::GetActiveRichEdit()
 {
     return dynamic_cast<Controls::MathRichEditBox ^>(FocusManager::GetFocusedElement());
 }
+
+// Adding event because the ShowMode property is ignored in xaml.
+void GraphingNumPad::Flyout_Opening(Platform::Object ^ sender, Platform::Object ^ /*e*/)
+{
+    auto flyout = dynamic_cast<Flyout ^>(sender);
+    if (flyout)
+    {
+        flyout->ShowMode = FlyoutShowMode::Transient;
+    }
+}

@@ -395,7 +395,8 @@
                                 Windows10version1809:AreOpenCloseAnimationsEnabled="False"
                                 Windows10version1809:Placement="BottomEdgeAlignedLeft"
                                 AllowFocusOnInteraction="False"
-                                FlyoutPresenterStyle="{ThemeResource OperatorPanelFlyoutStyle}">
+                                FlyoutPresenterStyle="{ThemeResource OperatorPanelFlyoutStyle}"
+                                Opening="Flyout_Opening">
                             <Grid x:Name="TrigGrid"
                                   MinWidth="258"
                                   MinHeight="96"
@@ -758,6 +759,7 @@
                                 Windows10version1809:AreOpenCloseAnimationsEnabled="False"
                                 AllowFocusOnInteraction="False"
                                 FlyoutPresenterStyle="{ThemeResource OperatorPanelFlyoutStyle}"
+                                Opening="Flyout_Opening"
                                 Placement="Bottom">
 
                             <Grid x:Name="InequalityGrid"
@@ -840,6 +842,7 @@
                                 Windows10version1809:AreOpenCloseAnimationsEnabled="False"
                                 AllowFocusOnInteraction="False"
                                 FlyoutPresenterStyle="{ThemeResource OperatorPanelFlyoutStyle}"
+                                Opening="Flyout_Opening"
                                 Placement="Bottom">
 
                             <Grid x:Name="FuncGrid"
