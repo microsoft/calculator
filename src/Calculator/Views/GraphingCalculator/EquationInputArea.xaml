@@ -633,7 +633,6 @@
                                                             <SolidColorBrush x:Name="ToggleButtonForegroundPressed" Color="{ThemeResource SystemChromeWhiteColor}"/>
                                                             <SolidColorBrush x:Name="ToggleButtonForegroundChecked" Color="{ThemeResource SystemChromeWhiteColor}"/>
                                                             <SolidColorBrush x:Name="ToggleButtonForegroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                            <SolidColorBrush x:Name="ToggleButtonRevealBorderBrushPointerOver" Color="{ThemeResource AppControlTransparentButtonBackgroundBrush}"/>
                                                             <SolidColorBrush x:Name="ToggleButtonRevealBackground" Color="Transparent"/>
                                                             <SolidColorBrush x:Name="ToggleButtonRevealBackgroundChecked" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                             <SolidColorBrush x:Name="ToggleButtonRevealBackgroundCheckedPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
