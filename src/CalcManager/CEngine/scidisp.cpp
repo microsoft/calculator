@@ -367,7 +367,7 @@ wstring CCalcEngine::GroupDigits(wstring_view delimiter, vector<uint32_t> const&
         result += displayString[0];
     }
 
-    std::reverse(result.begin(), result.end());
+    reverse(result.begin(), result.end());
     // Add the right (fractional or exponential) part of the number to the final string.
     if (hasDecimal)
     {

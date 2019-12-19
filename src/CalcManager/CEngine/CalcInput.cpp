@@ -278,7 +278,7 @@ wstring CalcInput::ToString(uint32_t radix)
 
     if (m_base.IsNegative())
     {
-        result += L'-';
+        result = L'-';
     }
 
     if (m_base.IsEmpty())

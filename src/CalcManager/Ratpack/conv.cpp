@@ -1204,12 +1204,12 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
     }
 
     // Begin building the result string
-    wstring result{};
+    wstring result;
 
     // Make sure negative zeros aren't allowed.
     if ((pnum->sign == -1) && (length > 0))
     {
-        result += L'-';
+        result = L'-';
     }
 
     if (exponent <= 0 && !useSciForm)
