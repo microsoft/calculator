@@ -529,6 +529,11 @@ void GraphingCalculator::DisplayGraphSettings()
         m_flyoutGraphSettings->Closed += ref new EventHandler<Platform::Object ^>(
             [that](Platform::Object ^, Platform::Object ^) { that->GraphingNumPad->IsEnabled = true; });
     }
+    else
+    {
+        auto graphingSetting = static_cast<GraphingSettings ^>(m_flyoutGraphSettings->Content);
+        graphingSetting->RefreshRanges();
+    }
 
     GraphingNumPad->IsEnabled = false;
     m_flyoutGraphSettings->ShowAt(GraphSettingsButton);

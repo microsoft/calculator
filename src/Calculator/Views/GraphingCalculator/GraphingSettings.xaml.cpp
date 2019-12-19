@@ -85,5 +85,10 @@ bool GraphingSettings::CanBeClose()
             ViewModel->YMax = textbox->Text;
         }
     }
-            return ViewModel != nullptr && ViewModel->HasError();
-    }
+    return ViewModel != nullptr && ViewModel->HasError();
+}
+
+void GraphingSettings::RefreshRanges()
+{
+    ViewModel->InitRanges();
+}

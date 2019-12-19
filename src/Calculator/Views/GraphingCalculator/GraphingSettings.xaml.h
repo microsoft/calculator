@@ -21,6 +21,7 @@ namespace CalculatorApp
         Windows::UI::Xaml::Style ^ SelectTextBoxStyle(bool incorrectRange, bool error);
         void SetGrapher(GraphControl::Grapher ^ grapher);
         bool CanBeClose();
+        void RefreshRanges();
     private:
         void GridSettingsTextBox_PreviewKeyDown(Platform::Object ^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);
     };
