@@ -215,10 +215,11 @@ int CCalcEngine::IsNumberInvalid(const wstring& numberString, int iMaxExp, int i
 \****************************************************************************/
 vector<uint32_t> CCalcEngine::DigitGroupingStringToGroupingVector(wstring_view groupingString)
 {
-    vector<uint32_t> grouping{};
+    vector<uint32_t> grouping;
     uint32_t currentGroup = 0;
     wchar_t* next = nullptr;
-    for (const wchar_t* itr = groupingString.data(); *itr != L'\0'; ++itr)
+    const wchar_t* end = groupingString.data() + groupingString.size();
+    for (auto itr = groupingString.data(); itr != end; ++itr)
     {
         // Try to parse a grouping number from the string
         currentGroup = wcstoul(itr, &next, 10);
