@@ -85,22 +85,20 @@
                                      Color="{StaticResource SystemChromeWhiteColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
 
-                    <SolidColorBrush x:Key="EquationBrush1" Color="#FF0078D7"/>
-                    <SolidColorBrush x:Key="EquationBrush2" Color="#FFFFB900"/>
-                    <SolidColorBrush x:Key="EquationBrush3" Color="#FFFF8C00"/>
-                    <SolidColorBrush x:Key="EquationBrush4" Color="#FFF7630C"/>
-                    <SolidColorBrush x:Key="EquationBrush5" Color="#FFCA5010"/>
-                    <SolidColorBrush x:Key="EquationBrush6" Color="#FFE3008C"/>
-                    <SolidColorBrush x:Key="EquationBrush7" Color="#FFBF0077"/>
-                    <SolidColorBrush x:Key="EquationBrush8" Color="#FFC239B3"/>
-                    <SolidColorBrush x:Key="EquationBrush9" Color="#FF0063B1"/>
-                    <SolidColorBrush x:Key="EquationBrush10" Color="#FF2D7D9A"/>
-                    <SolidColorBrush x:Key="EquationBrush11" Color="#FF00B7C3"/>
-                    <SolidColorBrush x:Key="EquationBrush12" Color="#FF00CC6A"/>
-                    <SolidColorBrush x:Key="EquationBrush13" Color="#FF00B294"/>
-                    <SolidColorBrush x:Key="EquationBrush14" Color="#FF018574"/>
-                    <SolidColorBrush x:Key="EquationBrush15" Color="#FF10893E"/>
-                    <SolidColorBrush x:Key="EquationBrush16" Color="#FF000000"/>
+                    <SolidColorBrush x:Key="EquationBrush1" Color="#FFE81123"/>
+                    <SolidColorBrush x:Key="EquationBrush2" Color="#FFE3008C"/>
+                    <SolidColorBrush x:Key="EquationBrush3" Color="#FFB31564"/>
+                    <SolidColorBrush x:Key="EquationBrush4" Color="#FF107C10"/>
+                    <SolidColorBrush x:Key="EquationBrush5" Color="#FF00CC6A"/>
+                    <SolidColorBrush x:Key="EquationBrush6" Color="#FF008055"/>
+                    <SolidColorBrush x:Key="EquationBrush7" Color="#FF58595B"/>
+                    <SolidColorBrush x:Key="EquationBrush8" Color="#FF0063B1"/>
+                    <SolidColorBrush x:Key="EquationBrush9" Color="#FF00B7C3"/>
+                    <SolidColorBrush x:Key="EquationBrush10" Color="#FF6600CC"/>
+                    <SolidColorBrush x:Key="EquationBrush11" Color="#FFFFB900"/>
+                    <SolidColorBrush x:Key="EquationBrush12" Color="#FFF7630C"/>
+                    <SolidColorBrush x:Key="EquationBrush13" Color="#FF8E562E"/>
+                    <SolidColorBrush x:Key="EquationBrush14" Color="#FF000000"/>
 
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
@@ -178,22 +176,20 @@
                     <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush" Color="{StaticResource SystemChromeWhiteColor}"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
 
-                    <SolidColorBrush x:Key="EquationBrush1" Color="#FF0078D7"/>
-                    <SolidColorBrush x:Key="EquationBrush2" Color="#FFFFB900"/>
-                    <SolidColorBrush x:Key="EquationBrush3" Color="#FFFF8C00"/>
-                    <SolidColorBrush x:Key="EquationBrush4" Color="#FFF7630C"/>
-                    <SolidColorBrush x:Key="EquationBrush5" Color="#FFCA5010"/>
-                    <SolidColorBrush x:Key="EquationBrush6" Color="#FFE3008C"/>
-                    <SolidColorBrush x:Key="EquationBrush7" Color="#FFBF0077"/>
-                    <SolidColorBrush x:Key="EquationBrush8" Color="#FFC239B3"/>
-                    <SolidColorBrush x:Key="EquationBrush9" Color="#FF0063B1"/>
-                    <SolidColorBrush x:Key="EquationBrush10" Color="#FF2D7D9A"/>
-                    <SolidColorBrush x:Key="EquationBrush11" Color="#FF00B7C3"/>
-                    <SolidColorBrush x:Key="EquationBrush12" Color="#FF00CC6A"/>
-                    <SolidColorBrush x:Key="EquationBrush13" Color="#FF00B294"/>
-                    <SolidColorBrush x:Key="EquationBrush14" Color="#FF018574"/>
-                    <SolidColorBrush x:Key="EquationBrush15" Color="#FF10893E"/>
-                    <SolidColorBrush x:Key="EquationBrush16" Color="#FF000000"/>
+                    <SolidColorBrush x:Key="EquationBrush1" Color="#FFE81123"/>
+                    <SolidColorBrush x:Key="EquationBrush2" Color="#FFE3008C"/>
+                    <SolidColorBrush x:Key="EquationBrush3" Color="#FFB31564"/>
+                    <SolidColorBrush x:Key="EquationBrush4" Color="#FF107C10"/>
+                    <SolidColorBrush x:Key="EquationBrush5" Color="#FF00CC6A"/>
+                    <SolidColorBrush x:Key="EquationBrush6" Color="#FF008055"/>
+                    <SolidColorBrush x:Key="EquationBrush7" Color="#FF58595B"/>
+                    <SolidColorBrush x:Key="EquationBrush8" Color="#FF0063B1"/>
+                    <SolidColorBrush x:Key="EquationBrush9" Color="#FF00B7C3"/>
+                    <SolidColorBrush x:Key="EquationBrush10" Color="#FF6600CC"/>
+                    <SolidColorBrush x:Key="EquationBrush11" Color="#FFFFB900"/>
+                    <SolidColorBrush x:Key="EquationBrush12" Color="#FFF7630C"/>
+                    <SolidColorBrush x:Key="EquationBrush13" Color="#FF8E562E"/>
+                    <SolidColorBrush x:Key="EquationBrush14" Color="#FF000000"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
                     <Thickness x:Key="HighContrastThicknessTop">0,1,0,0</Thickness>
@@ -653,6 +649,30 @@
                 </Setter>
             </Style>
 
+            <Style x:Key="OperatorPanelButtonSmallStyle"
+                   BasedOn="{StaticResource OperatorPanelButtonStyle}"
+                   TargetType="Controls:OperatorPanelButton">
+                <Setter Property="FontSize" Value="{StaticResource OperatorPanelFontSizeSmall}"/>
+                <Setter Property="GlyphFontSize" Value="{StaticResource OperatorPanelGlyphFontSizeSmall}"/>
+                <Setter Property="ChevronFontSize" Value="{StaticResource OperatorPanelChevronFontSizeSmall}"/>
+            </Style>
+
+            <Style x:Key="OperatorPanelButtonMediumStyle"
+                   BasedOn="{StaticResource OperatorPanelButtonStyle}"
+                   TargetType="Controls:OperatorPanelButton">
+                <Setter Property="FontSize" Value="{StaticResource OperatorPanelFontSizeMedium}"/>
+                <Setter Property="GlyphFontSize" Value="{StaticResource OperatorPanelGlyphFontSizeMedium}"/>
+                <Setter Property="ChevronFontSize" Value="{StaticResource OperatorPanelChevronFontSizeMedium}"/>
+            </Style>
+
+            <Style x:Key="OperatorPanelButtonLargeStyle"
+                   BasedOn="{StaticResource OperatorPanelButtonStyle}"
+                   TargetType="Controls:OperatorPanelButton">
+                <Setter Property="FontSize" Value="{StaticResource OperatorPanelFontSizeLarge}"/>
+                <Setter Property="GlyphFontSize" Value="{StaticResource OperatorPanelGlyphFontSizeLarge}"/>
+                <Setter Property="ChevronFontSize" Value="{StaticResource OperatorPanelChevronFontSizeLarge}"/>
+            </Style>
+
             <Style x:Key="OperatorPanelButtonStyle" TargetType="Controls:OperatorPanelButton">
                 <Setter Property="FontSize" Value="{StaticResource CaptionFontSize}"/>
                 <Setter Property="GlyphFontSize" Value="{StaticResource CaptionFontSize}"/>
@@ -753,8 +773,7 @@
                                                   FontFamily="{StaticResource CalculatorFontFamily}"
                                                   FontSize="{TemplateBinding GlyphFontSize}"
                                                   Glyph="{TemplateBinding Glyph}"/>
-                                        <TextBlock x:Name="trigTextBlock"
-                                                   VerticalAlignment="Center"
+                                        <TextBlock VerticalAlignment="Center"
                                                    FontSize="{TemplateBinding FontSize}"
                                                    Text="{TemplateBinding Text}"/>
                                         <FontIcon Margin="8,4,0,0"
@@ -2127,10 +2146,11 @@
                                                   Grid.Column="3"
                                                   MinWidth="28"
                                                   VerticalAlignment="Stretch"
+                                                  Foreground="{ThemeResource EquationBoxHoverButtonForegroundBrush}"
                                                   FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                   FontSize="16"
                                                   AutomationProperties.AccessibilityView="Raw"
-                                                  Glyph="&#xE783;"
+                                                  Glyph="&#xE7BA;"
                                                   Visibility="Collapsed"/>
                                         <Grid x:Name="RemoveButtonPanel" Grid.Column="3">
                                             <Button x:Name="RemoveButton"
