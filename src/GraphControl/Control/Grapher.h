@@ -100,7 +100,7 @@ public
         void SetVariable(Platform::String ^ variableName, double newValue);
         Platform::String ^ ConvertToLinear(Platform::String ^ mmlString);
         void PlotGraph();
-        void AnalyzeEquation(GraphControl::Equation ^ equation);
+        GraphControl::KeyGraphFeaturesInfo ^ AnalyzeEquation(GraphControl::Equation ^ equation);
 
         // We can't use the EvalTrigUnitMode enum directly in as the property type because it comes from another module which doesn't expose
         // it as a public enum class.  So the compiler doesn't recognize it as a valid type for the ABI boundary.
@@ -110,7 +110,7 @@ public
             {
                 if (value != (int)m_solver->EvalOptions().GetTrigUnitMode())
                 {
-                    m_solver->EvalOptions().SetTrigUnitMode((EvalTrigUnitMode)value);
+                    m_solver->EvalOptions().SetTrigUnitMode((Graphing::EvalTrigUnitMode)value);
                     PlotGraph();
                 }
             }
@@ -226,8 +226,6 @@ public
                 OutputDebugString(L"SetDisplayRanges failed\r\n");
             }
         }
-        GraphControl::KeyGraphFeaturesInfo ^ AnalyzeEquation(GraphControl::Equation ^ equation);
-
     protected:
 #pragma region Control Overrides
         void OnApplyTemplate() override;
