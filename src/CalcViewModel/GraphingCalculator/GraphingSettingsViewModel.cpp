@@ -56,7 +56,7 @@ void GraphingSettingsViewModel::InitRanges()
 
 void GraphingSettingsViewModel::RefreshPosition()
 {
-    if (m_XMinError || m_XMaxError || m_YMinError || m_YMaxError)
+    if (HasError())
     {
         InitRanges();
     }
@@ -71,7 +71,7 @@ void GraphingSettingsViewModel::RefreshPosition()
 
 void GraphingSettingsViewModel::UpdateDisplayRange()
 {
-    if (m_Graph == nullptr || m_dontUpdateDisplayRange || m_XMinError || m_XMaxError || m_YMinError || m_YMaxError || m_Graph == nullptr)
+    if (m_Graph == nullptr || m_dontUpdateDisplayRange || HasError())
     {
         return;
     }

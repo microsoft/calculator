@@ -51,8 +51,17 @@ namespace CalculatorApp::ViewModel
                 {
                     try
                     {
-                        m_Graph->XAxisMin = m_XMinValue = std::stod(value->Data());
-                        XMinError = false;
+                        size_t sz;
+                        auto number = std::stod(value->Data(), &sz);
+                        if (value->Length() == sz)
+                        {
+                            m_Graph->XAxisMin = m_XMinValue = number;
+                            XMinError = false;
+                        }
+                        else
+                        {
+                            XMinError = true;
+                        }
                     }
                     catch (...)
                     {
@@ -82,8 +91,17 @@ namespace CalculatorApp::ViewModel
                 {
                     try
                     {
-                        m_Graph->XAxisMax = m_XMaxValue = std::stod(value->Data());
-                        XMaxError = false;
+                        size_t sz;
+                        auto number = std::stod(value->Data(), &sz);
+                        if (value->Length() == sz)
+                        {
+                            m_Graph->XAxisMax = m_XMaxValue = number;
+                            XMaxError = false;
+                        }
+                        else
+                        {
+                            XMaxError = true;
+                        }
                     }
                     catch (...)
                     {
@@ -113,8 +131,17 @@ namespace CalculatorApp::ViewModel
                 {
                     try
                     {
-                        m_Graph->YAxisMin = m_YMinValue = std::stod(value->Data());
-                        YMinError = false;
+                        size_t sz;
+                        auto number = std::stod(value->Data(), &sz);
+                        if (value->Length() == sz)
+                        {
+                            m_Graph->YAxisMin = m_YMinValue = number;
+                            YMinError = false;
+                        }
+                        else
+                        {
+                            YMinError = true;
+                        }
                     }
                     catch (...)
                     {
@@ -144,8 +171,17 @@ namespace CalculatorApp::ViewModel
                 {
                     try
                     {
-                        m_Graph->YAxisMax = m_YMaxValue = std::stod(value->Data());
-                        YMaxError = false;
+                        size_t sz;
+                        auto number = std::stod(value->Data(), &sz);
+                        if (value->Length() == sz)
+                        {
+                            m_Graph->YAxisMax = m_YMaxValue = number;
+                            YMaxError = false;
+                        }
+                        else
+                        {
+                            YMaxError = true;
+                        }
                     }
                     catch (...)
                     {
