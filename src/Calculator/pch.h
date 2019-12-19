@@ -27,6 +27,7 @@
 #include <concrt.h>
 #include <regex>
 #include <string>
+#include <tuple>
 #include <iomanip>
 
 // C++\WinRT Headers
