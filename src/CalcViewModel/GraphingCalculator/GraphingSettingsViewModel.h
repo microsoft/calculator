@@ -51,10 +51,8 @@ namespace CalculatorApp::ViewModel
                 {
                     try
                     {
-                       
-                            m_Graph->XAxisMin = m_XMinValue = std::stod(value->Data());
-                            XMinError = false;
-                      
+                        m_Graph->XAxisMin = m_XMinValue = std::stod(value->Data());
+                        XMinError = false;
                     }
                     catch (...)
                     {
@@ -242,10 +240,12 @@ namespace CalculatorApp::ViewModel
     public:
         void UpdateDisplayRange();
         void RefreshPosition();
+
     public:
         void SetGrapher(GraphControl::Grapher ^ grapher);
         void InitRanges();
         bool HasError();
+
     private:
         Platform::String ^ m_XMin;
         Platform::String ^ m_XMax;
