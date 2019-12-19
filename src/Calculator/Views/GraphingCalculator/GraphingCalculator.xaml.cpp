@@ -161,7 +161,7 @@ void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationView
     GraphingControl->PlotGraph();
 }
 
-void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
+void GraphingCalculator::OnTracePointChanged(Point newPoint)
 {
     wstringstream traceValueString;
 
@@ -478,7 +478,7 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_Checked(Platform::Object ^
     FocusManager::TryFocusAsync(GraphingControl, ::FocusState::Programmatic);
 
     m_activeTracingKeyUpToken = Window::Current->CoreWindow->KeyUp +=
-        ref new Windows::Foundation::TypedEventHandler<Windows::UI::Core::CoreWindow ^, Windows::UI::Core::KeyEventArgs ^>(
+        ref new TypedEventHandler<Windows::UI::Core::CoreWindow ^, Windows::UI::Core::KeyEventArgs ^>(
             this, &CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp);
 
     KeyboardShortcutManager::IgnoreEscape(false);
@@ -511,17 +511,33 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp(Windows::UI::Core::C
 
 void GraphingCalculator::GraphSettingsButton_Click(Object ^ sender, RoutedEventArgs ^ e)
 {
+    DisplayGraphSettings();
+}
+
+void GraphingCalculator::DisplayGraphSettings()
+{
     if (m_flyoutGraphSettings == nullptr)
     {
         auto graphSettings = ref new GraphingSettings();
         graphSettings->SetGrapher(this->GraphingControl);
         m_flyoutGraphSettings = ref new Flyout();
         m_flyoutGraphSettings->Content = graphSettings;
+        m_flyoutGraphSettings->Closing += ref new 
+            TypedEventHandler<FlyoutBase ^, FlyoutBaseClosingEventArgs ^>(
+                this, &GraphingCalculator::OnSettingsFlyout_Closing);
         auto that(this);
-        m_flyoutGraphSettings->Closed += ref new Windows::Foundation::EventHandler<Platform::Object ^>(
+        m_flyoutGraphSettings->Closed += ref new EventHandler<Platform::Object ^>(
             [that](Platform::Object ^, Platform::Object ^) { that->GraphingNumPad->IsEnabled = true; });
     }
 
     GraphingNumPad->IsEnabled = false;
     m_flyoutGraphSettings->ShowAt(GraphSettingsButton);
+}
+
+void GraphingCalculator::OnSettingsFlyout_Closing(
+    FlyoutBase ^ sender,
+    FlyoutBaseClosingEventArgs ^ args)
+{
+    auto graphingSetting = static_cast<GraphingSettings ^>(static_cast<Flyout ^>(sender)->Content);
+    args->Cancel = graphingSetting->CanBeClose();
 }

@@ -76,6 +76,8 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void ActiveTracing_PointerCaptureLost(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
         void GraphSettingsButton_Click(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
+        void DisplayGraphSettings();
+
     private:
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
         Windows::Foundation::EventRegistrationToken m_vectorChangedToken;
@@ -84,6 +86,8 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         Windows::Foundation::EventRegistrationToken m_ActiveTracingPointerCaptureLost;
         CalculatorApp::ViewModel::GraphingCalculatorViewModel ^ m_viewModel;
         Windows::UI::Xaml::Controls::Flyout ^ m_flyoutGraphSettings;
+        void
+            OnSettingsFlyout_Closing(Windows::UI::Xaml::Controls::Primitives::FlyoutBase ^ sender, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs ^ args);
     };
 
 }

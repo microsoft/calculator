@@ -3,6 +3,7 @@
 #include "GraphingSettings.xaml.h"
 #include "CalcViewModel\Common\AppResourceProvider.cpp"
 
+using namespace std;
 using namespace Graphing;
 using namespace GraphControl;
 
@@ -32,9 +33,9 @@ void GraphingSettings::SetGrapher(Grapher ^ grapher)
     m_ViewModel->SetGrapher(grapher);
 }
 
-Style ^ GraphingSettings::SelectTextBoxStyle(bool isError)
+Style ^ GraphingSettings::SelectTextBoxStyle(bool incorrectRange, bool error)
 {
-    if (isError)
+    if (incorrectRange || error)
     {
         return static_cast<::Style ^>(this->Resources->Lookup(L"ErrorTextBoxStyle"));
     }
@@ -55,3 +56,34 @@ void GraphingSettings::GridSettingsTextBox_PreviewKeyDown(Platform::Object ^ sen
         e->Handled = true;
     }
 }
+
+bool GraphingSettings::CanBeClose()
+{
+    auto focusedElement = FocusManager::GetFocusedElement();
+
+    // Move focus so we are sure all values are in sync with the VM
+    if (focusedElement != nullptr)
+    {
+        if (focusedElement->Equals(SettingsXMin))
+        {
+            auto textbox = static_cast<TextBox ^>(focusedElement);
+            ViewModel->XMin = textbox->Text;
+        }
+        else if (focusedElement->Equals(SettingsXMax))
+        {
+            auto textbox = static_cast<TextBox ^>(focusedElement);
+            ViewModel->XMax = textbox->Text;
+        }
+        else if (focusedElement->Equals(SettingsYMin))
+        {
+            auto textbox = static_cast<TextBox ^>(focusedElement);
+            ViewModel->YMin = textbox->Text;
+        }
+        else if (focusedElement->Equals(SettingsYMax))
+        {
+            auto textbox = static_cast<TextBox ^>(focusedElement);
+            ViewModel->YMax = textbox->Text;
+        }
+    }
+            return ViewModel != nullptr && ViewModel->HasError();
+    }

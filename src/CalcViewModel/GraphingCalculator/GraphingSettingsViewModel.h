@@ -10,19 +10,37 @@ namespace CalculatorApp::ViewModel
     {
     public:
         OBSERVABLE_OBJECT();
-        OBSERVABLE_PROPERTY_R(bool, YError);
-        OBSERVABLE_PROPERTY_R(bool, XError);
+        OBSERVABLE_PROPERTY_R(bool, YMinError);
+        OBSERVABLE_PROPERTY_R(bool, XMinError);
+        OBSERVABLE_PROPERTY_R(bool, XMaxError);
+        OBSERVABLE_PROPERTY_R(bool, YMaxError);
         OBSERVABLE_PROPERTY_R(GraphControl::Grapher ^, Graph);
 
         GraphingSettingsViewModel();
 
-        property double XMin
+        property bool XError
         {
-            double get()
+            bool get()
+            {
+                return !m_XMinError && !m_XMaxError && m_XMinValue >= m_XMaxValue;
+            }
+        }
+
+        property bool YError
+        {
+            bool get()
+            {
+                return !m_YMinError && !m_YMaxError && m_YMinValue >= m_YMaxValue;
+            }
+        }
+
+        property Platform::String ^ XMin
+        {
+            Platform::String ^ get()
             {
                 return m_XMin;
             }
-            void set(double value)
+            void set(Platform::String ^ value)
             {
                 if (m_XMin == value)
                 {
@@ -31,21 +49,31 @@ namespace CalculatorApp::ViewModel
                 m_XMin = value;
                 if (m_Graph != nullptr)
                 {
-                    m_Graph->XAxisMin = value;
+                    try
+                    {
+                       
+                            m_Graph->XAxisMin = m_XMinValue = std::stod(value->Data());
+                            XMinError = false;
+                      
+                    }
+                    catch (...)
+                    {
+                        XMinError = true;
+                    }
                 }
-                XError = m_XMin >= m_XMax;
+                RaisePropertyChanged("XError");
                 RaisePropertyChanged("XMin");
                 UpdateDisplayRange();
             }
         }
 
-        property double XMax
+        property Platform::String ^  XMax
         {
-            double get()
+            Platform::String ^ get()
             {
                 return m_XMax;
             }
-            void set(double value)
+            void set(Platform::String ^ value)
             {
                 if (m_XMax == value)
                 {
@@ -54,21 +82,30 @@ namespace CalculatorApp::ViewModel
                 m_XMax = value;
                 if (m_Graph != nullptr)
                 {
-                    m_Graph->XAxisMax = value;
+                    try
+                    {
+                     Graph->XAxisMax = m_XMaxValue = std::stod(value->Data());
+                            XMaxError = false;
+                        
+                    }
+                    catch (...)
+                    {
+                        XMaxError = true;
+                    }
                 }
-                XError = m_XMin >= m_XMax;
+                RaisePropertyChanged("XError");
                 RaisePropertyChanged("XMax");
                 UpdateDisplayRange();
             }
         }
 
-        property double YMin
+        property Platform::String ^  YMin
         {
-            double get()
+            Platform::String ^ get()
             {
                 return m_YMin;
             }
-            void set(double value)
+            void set(Platform::String ^ value)
             {
                 if (m_YMin == value)
                 {
@@ -77,21 +114,31 @@ namespace CalculatorApp::ViewModel
                 m_YMin = value;
                 if (m_Graph != nullptr)
                 {
-                    m_Graph->YAxisMin = value;
+                    try
+                    {
+                     
+                            m_Graph->YAxisMin = m_YMinValue = std::stod(value->Data());
+                            YMinError = false;
+                        
+                    }
+                    catch (...)
+                    {
+                        YMinError = true;
+                    }
                 }
-                YError = m_YMin >= m_YMax;
+                RaisePropertyChanged("YError");
                 RaisePropertyChanged("YMin");
                 UpdateDisplayRange();
             }
         }
 
-        property double YMax
+        property Platform::String ^  YMax
         {
-            double get()
+            Platform::String ^ get()
             {
                 return m_YMax;
             }
-            void set(double value)
+            void set(Platform::String ^  value)
             {
                 if (m_YMax == value)
                 {
@@ -100,9 +147,19 @@ namespace CalculatorApp::ViewModel
                 m_YMax = value;
                 if (m_Graph != nullptr)
                 {
-                    m_Graph->YAxisMax = value;
+                    try
+                    {
+                    
+                            m_Graph->YAxisMax = m_YMaxValue = std::stod(value->Data());
+                            YMaxError = false;
+                        
+                    }
+                    catch (...)
+                    {
+                        YMaxError = true;
+                    }
                 }
-                YError = m_YMin >= m_YMax;
+                RaisePropertyChanged("YError");
                 RaisePropertyChanged("YMax");
                 UpdateDisplayRange();
             }
@@ -139,6 +196,7 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeRadians");
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeGradians");
+                    RefreshPosition();
                 }
             }
         }
@@ -157,6 +215,7 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeRadians");
                     RaisePropertyChanged(L"TrigModeGradians");
+                    RefreshPosition();
                 }
             }
         }
@@ -175,28 +234,27 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeGradians");
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeRadians");
+                    RefreshPosition();
                 }
             }
         }
 
     public:
-        void UpdateDisplayRange()
-        {
-            if (m_dontUpdateDisplayRange || m_XError || m_YError || m_Graph == nullptr)
-            {
-                return;
-            }
-            m_Graph->SetDisplayRanges(m_XMin, m_XMax, m_YMin, m_YMax);
-        }
-
+        void UpdateDisplayRange();
+        void RefreshPosition();
     public:
         void SetGrapher(GraphControl::Grapher ^ grapher);
-
+        void InitRanges();
+        bool HasError();
     private:
-        double m_XMin;
-        double m_XMax;
-        double m_YMin;
-        double m_YMax;
+        Platform::String ^ m_XMin;
+        Platform::String ^ m_XMax;
+        Platform::String ^ m_YMin;
+        Platform::String ^ m_YMax;
+        double m_XMinValue;
+        double m_XMaxValue;
+        double m_YMinValue;
+        double m_YMaxValue;
         bool m_dontUpdateDisplayRange;
     };
 }

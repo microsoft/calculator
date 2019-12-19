@@ -191,7 +191,12 @@ public
         {
             try
             {
-                m_graph->GetRenderer()->SetDisplayRanges(xMin, xMax, yMin, yMax);
+                auto render = m_graph->GetRenderer();
+                render->SetDisplayRanges(xMin, xMax, yMin, yMax);
+                if (m_renderMain)
+                {
+                    m_renderMain->RunRenderPass();
+                }
             }
             catch (const std::exception&)
             {

@@ -110,34 +110,38 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBox x:Name="SettingsXMin"
                          x:Uid="GraphSettingsXMin"
-                         Style="{x:Bind SelectTextBoxStyle(ViewModel.XError), Mode=OneWay}"
+                         MaxWidth="160"
+                         Style="{x:Bind SelectTextBoxStyle(ViewModel.XError, ViewModel.XMinError), Mode=OneWay}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.XMin, Mode=TwoWay}"/>
                 <TextBox x:Name="SettingsXMax"
                          x:Uid="GraphSettingsXMax"
                          Grid.Column="2"
-                         Style="{x:Bind SelectTextBoxStyle(ViewModel.XError), Mode=OneWay}"
+                         MaxWidth="160"
+                         Style="{x:Bind SelectTextBoxStyle(ViewModel.XError, ViewModel.XMaxError), Mode=OneWay}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.XMax, Mode=TwoWay}"/>
 
                 <TextBox x:Name="SettingsYMin"
                          x:Uid="GraphSettingsYMin"
                          Grid.Row="2"
-                         Style="{x:Bind SelectTextBoxStyle(ViewModel.YError), Mode=OneWay}"
+                         MaxWidth="160"
+                         Style="{x:Bind SelectTextBoxStyle(ViewModel.YError, ViewModel.YMinError), Mode=OneWay}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.YMin, Mode=TwoWay}"/>
                 <TextBox x:Name="SettingsYMax"
                          x:Uid="GraphSettingsYMax"
                          Grid.Row="2"
                          Grid.Column="2"
-                         Style="{x:Bind SelectTextBoxStyle(ViewModel.YError), Mode=OneWay}"
+                         MaxWidth="160"
+                         Style="{x:Bind SelectTextBoxStyle(ViewModel.YError, ViewModel.YMaxError), Mode=OneWay}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.YMax, Mode=TwoWay}"/>
             </Grid>
