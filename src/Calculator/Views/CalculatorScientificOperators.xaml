@@ -99,8 +99,8 @@
             <VisualStateGroup x:Name="SizeLayouts">
                 <VisualState x:Name="Large">
                     <VisualState.StateTriggers>
-                        <triggers:ControlSizeTrigger MinWidth="530"
-                                                     MinHeight="530"
+                        <triggers:ControlSizeTrigger MinWidth="878"
+                                                     MinHeight="851"
                                                      Source="{x:Bind ScientificOperators}"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
