@@ -51,7 +51,7 @@ constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, IsSmallState);
 
-GraphingCalculator::GraphingCalculator()    
+GraphingCalculator::GraphingCalculator()
 {
     InitializeComponent();
 
@@ -66,6 +66,17 @@ GraphingCalculator::GraphingCalculator()
 
     // And when the actual trace value changes
     GraphingControl->TracingValueChangedEvent += ref new TracingValueChangedEventHandler(this, &GraphingCalculator::OnTracePointChanged);
+
+    // OemMinus and OemAdd aren't declared in the VirtualKey enum, we can't add this accelerator XAML-side
+    auto virtualKey = ref new KeyboardAccelerator();
+    virtualKey->Key = (VirtualKey)187; //OemMinus key
+    virtualKey->Modifiers = VirtualKeyModifiers::Control;
+    ZoomOutButton->KeyboardAccelerators->Append(virtualKey);
+
+    virtualKey = ref new KeyboardAccelerator();
+    virtualKey->Key = (VirtualKey)189; //OemAdd key
+    virtualKey->Modifiers = VirtualKeyModifiers::Control;
+    ZoomInButton->KeyboardAccelerators->Append(virtualKey);
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)

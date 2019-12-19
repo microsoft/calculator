@@ -423,8 +423,8 @@
                     Style="{ThemeResource GraphControlCommandPanel}"
                     RequestedTheme="Light">
                 <StackPanel Orientation="Vertical">
-
-                    <RepeatButton x:Uid="zoomInButton"
+                    <RepeatButton x:Name="ZoomInButton"
+                                  x:Uid="zoomInButton"
                                   MinHeight="40"
                                   HorizontalAlignment="Stretch"
                                   Style="{ThemeResource ThemedGraphRepeatButtonStyle}"
@@ -435,9 +435,13 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
                                   FontSize="14"
                                   Glyph="&#xE710;"/>
+                        <RepeatButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="Add" Modifiers="Control"/>
+                        </RepeatButton.KeyboardAccelerators>
                     </RepeatButton>
 
-                    <RepeatButton x:Uid="zoomOutButton"
+                    <RepeatButton x:Name="ZoomOutButton"
+                                  x:Uid="zoomOutButton"
                                   MinHeight="40"
                                   HorizontalAlignment="Stretch"
                                   Style="{ThemeResource ThemedGraphRepeatButtonStyle}"
@@ -447,6 +451,9 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
                                   FontSize="14"
                                   Glyph="&#xE738;"/>
+                        <RepeatButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="Subtract" Modifiers="Control"/>
+                        </RepeatButton.KeyboardAccelerators>
                     </RepeatButton>
 
                     <Button x:Uid="zoomResetButton"
