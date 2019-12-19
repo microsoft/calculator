@@ -69,16 +69,27 @@ void EquationInputArea::AddNewEquation()
         Equations->GetAt(Equations->Size - 1)->IsLastItemInList = false;
     }
 
-    // Cap equations at number of available colors
-    if (Equations->Size >= m_AvailableColors->Size)
+    // Cap equations at 14
+    if (Equations->Size >= 14)
     {
         return;
     }
 
-    m_lastLineColorIndex = (m_lastLineColorIndex + 1) % colorAssignmentMapping.size();
+    
+    m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
 
-    auto eq =
-        ref new EquationViewModel(ref new Equation(), ++m_lastFunctionLabelIndex, AvailableColors->GetAt(colorAssignmentMapping[m_lastLineColorIndex])->Color);
+    int colorIndex;
+
+    if (m_accessibilitySettings->HighContrast)
+    {
+        colorIndex = m_lastLineColorIndex;
+    }
+    else
+    {
+        colorIndex = colorAssignmentMapping[m_lastLineColorIndex];
+    }
+
+    auto eq = ref new EquationViewModel(ref new Equation(), ++m_lastFunctionLabelIndex, AvailableColors->GetAt(colorIndex)->Color);
     eq->IsLastItemInList = true;
     m_equationToFocus = eq;
     Equations->Append(eq);

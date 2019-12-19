@@ -115,8 +115,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeLarge}"/>
 
-                        <Setter Target="BitwiseButton.Style" Value="{ThemeResource OperatorPanelButtonLargeStyle}"/>
-                        <Setter Target="BitShiftButton.Style" Value="{ThemeResource OperatorPanelButtonLargeStyle}"/>
+                        <Setter Target="BitwiseButton.Style" Value="{StaticResource OperatorPanelButtonLargeStyle}"/>
+                        <Setter Target="BitShiftButton.Style" Value="{StaticResource OperatorPanelButtonLargeStyle}"/>
 
                         <Setter Target="BitwiseGrid.MinWidth" Value="387"/>
                         <Setter Target="BitwiseGrid.MinHeight" Value="192"/>
@@ -167,8 +167,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeMedium}"/>
 
-                        <Setter Target="BitwiseButton.Style" Value="{ThemeResource OperatorPanelButtonMediumStyle}"/>
-                        <Setter Target="BitShiftButton.Style" Value="{ThemeResource OperatorPanelButtonMediumStyle}"/>
+                        <Setter Target="BitwiseButton.Style" Value="{StaticResource OperatorPanelButtonMediumStyle}"/>
+                        <Setter Target="BitShiftButton.Style" Value="{StaticResource OperatorPanelButtonMediumStyle}"/>
 
                         <Setter Target="BitwiseGrid.MinWidth" Value="416"/>
                         <Setter Target="BitwiseGrid.MinHeight" Value="144"/>
@@ -217,8 +217,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeSmall}"/>
 
-                        <Setter Target="BitwiseButton.Style" Value="{ThemeResource OperatorPanelButtonSmallStyle}"/>
-                        <Setter Target="BitShiftButton.Style" Value="{ThemeResource OperatorPanelButtonSmallStyle}"/>
+                        <Setter Target="BitwiseButton.Style" Value="{StaticResource OperatorPanelButtonSmallStyle}"/>
+                        <Setter Target="BitShiftButton.Style" Value="{StaticResource OperatorPanelButtonSmallStyle}"/>
 
                         <Setter Target="BitwiseGrid.MinWidth" Value="194"/>
                         <Setter Target="BitwiseGrid.MinHeight" Value="96"/>

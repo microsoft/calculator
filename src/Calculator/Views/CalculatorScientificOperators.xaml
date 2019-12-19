@@ -177,8 +177,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeLarge}"/>
 
-                        <Setter Target="TrigButton.Style" Value="{ThemeResource OperatorPanelButtonLargeStyle}"/>
-                        <Setter Target="FuncButton.Style" Value="{ThemeResource OperatorPanelButtonLargeStyle}"/>
+                        <Setter Target="TrigButton.Style" Value="{StaticResource OperatorPanelButtonLargeStyle}"/>
+                        <Setter Target="FuncButton.Style" Value="{StaticResource OperatorPanelButtonLargeStyle}"/>
 
                         <Setter Target="TrigGrid.MinWidth" Value="516"/>
                         <Setter Target="TrigGrid.MinHeight" Value="192"/>
@@ -267,8 +267,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeMedium}"/>
 
-                        <Setter Target="TrigButton.Style" Value="{ThemeResource OperatorPanelButtonMediumStyle}"/>
-                        <Setter Target="FuncButton.Style" Value="{ThemeResource OperatorPanelButtonMediumStyle}"/>
+                        <Setter Target="TrigButton.Style" Value="{StaticResource OperatorPanelButtonMediumStyle}"/>
+                        <Setter Target="FuncButton.Style" Value="{StaticResource OperatorPanelButtonMediumStyle}"/>
 
                         <Setter Target="TrigGrid.MinWidth" Value="480"/>
                         <Setter Target="TrigGrid.MinHeight" Value="144"/>
@@ -355,8 +355,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{ThemeResource OperatorPanelButtonRowSizeSmall}"/>
 
-                        <Setter Target="TrigButton.Style" Value="{ThemeResource OperatorPanelButtonSmallStyle}"/>
-                        <Setter Target="FuncButton.Style" Value="{ThemeResource OperatorPanelButtonSmallStyle}"/>
+                        <Setter Target="TrigButton.Style" Value="{StaticResource OperatorPanelButtonSmallStyle}"/>
+                        <Setter Target="FuncButton.Style" Value="{StaticResource OperatorPanelButtonSmallStyle}"/>
 
                         <Setter Target="TrigGrid.MinWidth" Value="258"/>
                         <Setter Target="TrigGrid.MinHeight" Value="96"/>
