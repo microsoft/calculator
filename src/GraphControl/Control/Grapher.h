@@ -21,7 +21,9 @@ public
 public
     delegate void TracingValueChangedEventHandler(Windows::Foundation::Point value);
 
-    [Windows::UI::Xaml::Markup::ContentPropertyAttribute(Name = L"Equations")] public ref class Grapher sealed : public Windows::UI::Xaml::Controls::Control, public Windows::UI::Xaml::Data::INotifyPropertyChanged
+    [Windows::UI::Xaml::Markup::ContentPropertyAttribute(Name = L"Equations")] public ref class Grapher sealed
+        : public Windows::UI::Xaml::Controls::Control,
+          public Windows::UI::Xaml::Data::INotifyPropertyChanged
     {
     public:
         event TracingValueChangedEventHandler ^ TracingValueChangedEvent;
@@ -128,8 +130,14 @@ public
             void set(double value)
             {
                 std::pair<double, double> newValue(value, XAxisMax);
-                m_graph->GetOptions().SetDefaultXRange(newValue);
-                m_renderMain->RunRenderPass();
+                if (m_graph != nullptr)
+                {
+                    m_graph->GetOptions().SetDefaultXRange(newValue);
+                    if (m_renderMain != nullptr)
+                    {
+                        m_renderMain->RunRenderPass();
+                    }
+                }
             }
         }
 
@@ -142,8 +150,14 @@ public
             void set(double value)
             {
                 std::pair<double, double> newValue(XAxisMin, value);
-                m_graph->GetOptions().SetDefaultXRange(newValue);
-                m_renderMain->RunRenderPass();
+                if (m_graph != nullptr)
+                {
+                    m_graph->GetOptions().SetDefaultXRange(newValue);
+                    if (m_renderMain != nullptr)
+                    {
+                        m_renderMain->RunRenderPass();
+                    }
+                }
             }
         }
 
@@ -156,8 +170,14 @@ public
             void set(double value)
             {
                 std::pair<double, double> newValue(value, YAxisMax);
-                m_graph->GetOptions().SetDefaultYRange(newValue);
-                m_renderMain->RunRenderPass();
+                if (m_graph != nullptr)
+                {
+                    m_graph->GetOptions().SetDefaultYRange(newValue);
+                    if (m_renderMain != nullptr)
+                    {
+                        m_renderMain->RunRenderPass();
+                    }
+                }
             }
         }
 
@@ -171,7 +191,10 @@ public
             {
                 std::pair<double, double> newValue(YAxisMin, value);
                 m_graph->GetOptions().SetDefaultYRange(newValue);
-                m_renderMain->RunRenderPass();
+                if (m_renderMain != nullptr)
+                {
+                    m_renderMain->RunRenderPass();
+                }
             }
         }
 

@@ -190,7 +190,7 @@ void ApplicationViewModel::OnCopyCommand(Object ^ parameter)
     {
         DateCalcViewModel->OnCopyCommand(parameter);
     }
-    else
+    else if (NavCategory::IsCalculatorViewMode(m_mode))
     {
         CalculatorViewModel->OnCopyCommand(parameter);
     }

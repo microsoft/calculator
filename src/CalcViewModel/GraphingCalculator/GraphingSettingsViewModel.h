@@ -82,9 +82,8 @@ namespace CalculatorApp::ViewModel
                 {
                     try
                     {
-                     Graph->XAxisMax = m_XMaxValue = std::stod(value->Data());
-                            XMaxError = false;
-                        
+                        m_Graph->XAxisMax = m_XMaxValue = std::stod(value->Data());
+                        XMaxError = false;
                     }
                     catch (...)
                     {
@@ -114,10 +113,8 @@ namespace CalculatorApp::ViewModel
                 {
                     try
                     {
-                     
-                            m_Graph->YAxisMin = m_YMinValue = std::stod(value->Data());
-                            YMinError = false;
-                        
+                        m_Graph->YAxisMin = m_YMinValue = std::stod(value->Data());
+                        YMinError = false;
                     }
                     catch (...)
                     {
@@ -147,10 +144,8 @@ namespace CalculatorApp::ViewModel
                 {
                     try
                     {
-                    
-                            m_Graph->YAxisMax = m_YMaxValue = std::stod(value->Data());
-                            YMaxError = false;
-                        
+                        m_Graph->YAxisMax = m_YMaxValue = std::stod(value->Data());
+                        YMaxError = false;
                     }
                     catch (...)
                     {

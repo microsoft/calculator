@@ -38,7 +38,10 @@ void GraphingSettingsViewModel::SetGrapher(Grapher ^ grapher)
 void GraphingSettingsViewModel::InitRanges()
 {
     double xMin = 0, xMax = 0, yMin = 0, yMax = 0;
-    m_Graph->GetDisplayRanges(&xMin, &xMax, &yMin, &yMax);
+    if (m_Graph != nullptr)
+    {
+        m_Graph->GetDisplayRanges(&xMin, &xMax, &yMin, &yMax);
+    }
     m_dontUpdateDisplayRange = true;
     m_XMinValue = xMin;
     m_XMaxValue = xMax;
@@ -59,13 +62,16 @@ void GraphingSettingsViewModel::RefreshPosition()
     }
     else
     {
-        m_Graph->SetDisplayRanges(m_XMinValue, m_XMaxValue, m_YMinValue, m_YMaxValue);
+        if (m_Graph != nullptr)
+        {
+            m_Graph->SetDisplayRanges(m_XMinValue, m_XMaxValue, m_YMinValue, m_YMaxValue);
+        }
     }
 }
 
 void GraphingSettingsViewModel::UpdateDisplayRange()
 {
-    if (m_dontUpdateDisplayRange || m_XMinError || m_XMaxError || m_YMinError || m_YMaxError || m_Graph == nullptr)
+    if (m_Graph == nullptr || m_dontUpdateDisplayRange || m_XMinError || m_XMaxError || m_YMinError || m_YMaxError || m_Graph == nullptr)
     {
         return;
     }
