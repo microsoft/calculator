@@ -258,7 +258,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
 
             rawHtml << L"<br><span style=\"color: rgb(68, 114, 196); font-style: bold; font-size: 13pt;\">";
             rawHtml << resourceLoader->GetString(L"VariablesShareHeader")->Data();
-            rawHtml << L"</span><br><div style=\"margin: 8pt 0pt 0pt 0pt;\"><span>";
+            rawHtml << L"</span><br><div style=\"margin: 4pt 0pt 0pt 0pt;\"><span>";
 
             for (unsigned i = 0; i < variables->Size; i++)
             {
