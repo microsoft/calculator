@@ -11,10 +11,8 @@
              x:Name="Control"
              DataContextChanged="GraphingCalculator_DataContextChanged"
              mc:Ignorable="d">
-
     <UserControl.Resources>
         <ResourceDictionary>
-
             <Style x:Key="GraphToggleButtonStyle" TargetType="ToggleButton">
                 <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                 <Setter Property="Background" Value="Transparent"/>
@@ -219,7 +217,9 @@
                            BasedOn="{StaticResource SwitchModeToggleButtonStyle}"
                            TargetType="ToggleButton"/>
                     <Style x:Key="GraphControlCommandPanel" TargetType="Border">
-                        <Setter Property="Background" Value="#80000000"/>
+                        <Setter Property="Background" Value="{StaticResource SystemControlAcrylicElementBrush}"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
                         <Setter Property="CornerRadius" Value="4"/>
                     </Style>
                     <Style x:Key="ThemedGraphRepeatButtonStyle"
@@ -353,39 +353,47 @@
                             <CornerRadius x:Key="BottomButtonCornerRadius">0,0,4,4</CornerRadius>
                             <CornerRadius x:Key="LeftButtonCornerRadius">4,0,0,4</CornerRadius>
                             <CornerRadius x:Key="RightButtonCornerRadius">0,4,4,0</CornerRadius>
+                            <Style x:Key="ThemedGrapherStyle" TargetType="graphControl:Grapher">
+                                <Setter Property="AxesColor" Value="Black"/>
+                                <Setter Property="GraphBackground" Value="White"/>
+                            </Style>
                         </ResourceDictionary>
                         <ResourceDictionary x:Key="Dark">
                             <CornerRadius x:Key="TopButtonCornerRadius">4,4,0,0</CornerRadius>
                             <CornerRadius x:Key="BottomButtonCornerRadius">0,0,4,4</CornerRadius>
                             <CornerRadius x:Key="LeftButtonCornerRadius">4,0,0,4</CornerRadius>
                             <CornerRadius x:Key="RightButtonCornerRadius">0,4,4,0</CornerRadius>
+                            <Style x:Key="ThemedGrapherStyle" TargetType="graphControl:Grapher">
+                                <Setter Property="AxesColor" Value="White"/>
+                                <Setter Property="GraphBackground" Value="Black"/>
+                            </Style>
                         </ResourceDictionary>
                         <ResourceDictionary x:Key="HighContrast">
                             <CornerRadius x:Key="TopButtonCornerRadius">0</CornerRadius>
                             <CornerRadius x:Key="BottomButtonCornerRadius">0</CornerRadius>
                             <CornerRadius x:Key="LeftButtonCornerRadius">0</CornerRadius>
                             <CornerRadius x:Key="RightButtonCornerRadius">0</CornerRadius>
+                            <Style x:Key="ThemedGrapherStyle" TargetType="graphControl:Grapher">
+                                <Setter Property="AxesColor" Value="{ThemeResource SystemColorWindowTextColor}"/>
+                                <Setter Property="GraphBackground" Value="{ThemeResource SystemColorWindowColor}"/>
+                            </Style>
                         </ResourceDictionary>
                     </ResourceDictionary.ThemeDictionaries>
                 </ResourceDictionary>
             </Grid.Resources>
             <graphControl:Grapher Name="GraphingControl"
+                                  Style="{ThemeResource ThemedGrapherStyle}"
                                   ForceProportionalAxes="True"
                                   LosingFocus="GraphingControl_LosingFocus"
                                   LostFocus="GraphingControl_LostFocus"
+                                  RequestedTheme="Light"
                                   UseSystemFocusVisuals="True"
-                                  VariablesUpdated="GraphingControl_VariablesUpdated">
-                <graphControl:Grapher.Background>
-                    <SolidColorBrush Color="White"/>
-                </graphControl:Grapher.Background>
-            </graphControl:Grapher>
-
+                                  VariablesUpdated="GraphingControl_VariablesUpdated"/>
             <Border MinHeight="36"
                     Margin="0,12,12,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
-                    Style="{ThemeResource GraphControlCommandPanel}"
-                    RequestedTheme="Light">
+                    Style="{ThemeResource GraphControlCommandPanel}">
                 <StackPanel Orientation="Horizontal">
                     <ToggleButton x:Name="ActiveTracing"
                                   MinWidth="40"
@@ -420,8 +428,7 @@
                     Margin="0,0,12,12"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
-                    Style="{ThemeResource GraphControlCommandPanel}"
-                    RequestedTheme="Light">
+                    Style="{ThemeResource GraphControlCommandPanel}">
                 <StackPanel Orientation="Vertical">
                     <RepeatButton x:Name="ZoomInButton"
                                   x:Uid="zoomInButton"

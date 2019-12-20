@@ -29,6 +29,8 @@ using namespace GraphControl;
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, ForceProportionalAxes);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Variables);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Equations);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, AxesColor);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GraphBackground);
 
 namespace
 {
@@ -66,9 +68,6 @@ namespace GraphControl
 
         DefaultStyleKey = StringReference(s_defaultStyleKey);
 
-        this->Loaded += ref new RoutedEventHandler(this, &Grapher::OnLoaded);
-        this->Unloaded += ref new RoutedEventHandler(this, &Grapher::OnUnloaded);
-
         this->ManipulationMode = ManipulationModes::TranslateX | ManipulationModes::TranslateY | ManipulationModes::TranslateInertia | ManipulationModes::Scale
                                  | ManipulationModes::ScaleInertia;
 
@@ -77,25 +76,6 @@ namespace GraphControl
         cw->KeyUp += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &Grapher::OnCoreKeyUp);
 
         auto& formatOptions = m_solver->FormatOptions();
-    }
-
-    void Grapher::OnLoaded(Object ^ sender, RoutedEventArgs ^ args)
-    {
-        if (auto backgroundBrush = safe_cast<SolidColorBrush ^>(this->Background))
-        {
-            m_tokenBackgroundColorChanged.Value = backgroundBrush->RegisterPropertyChangedCallback(
-                SolidColorBrush::ColorProperty, ref new DependencyPropertyChangedCallback(this, &Grapher::OnDependencyPropertyChanged));
-
-            OnBackgroundColorChanged(backgroundBrush->Color);
-        }
-    }
-
-    void Grapher::OnUnloaded(Object ^ sender, RoutedEventArgs ^ args)
-    {
-        if (auto backgroundBrush = safe_cast<SolidColorBrush ^>(this->Background))
-        {
-            this->UnregisterPropertyChangedCallback(BackgroundProperty, m_tokenBackgroundColorChanged.Value);
-        }
     }
 
     void Grapher::ZoomFromCenter(double scale)
@@ -138,18 +118,10 @@ namespace GraphControl
         {
             swapChainPanel->AllowFocusOnInteraction = true;
             m_renderMain = ref new RenderMain(swapChainPanel);
+            m_renderMain->BackgroundColor = GraphBackground;
         }
 
         TryUpdateGraph();
-    }
-
-    void Grapher::OnDependencyPropertyChanged(DependencyObject ^ obj, DependencyProperty ^ p)
-    {
-        if (p == SolidColorBrush::ColorProperty)
-        {
-            auto brush = static_cast<SolidColorBrush ^>(obj);
-            OnBackgroundColorChanged(brush->Color);
-        }
     }
 
     void Grapher::OnEquationsPropertyChanged(EquationCollection ^ oldValue, EquationCollection ^ newValue)
@@ -510,14 +482,6 @@ namespace GraphControl
     void Grapher::OnForceProportionalAxesPropertyChanged(bool /*oldValue*/, bool /*newValue*/)
     {
         TryUpdateGraph();
-    }
-
-    void Grapher::OnBackgroundColorChanged(const Windows::UI::Color& color)
-    {
-        if (m_renderMain)
-        {
-            m_renderMain->BackgroundColor = color;
-        }
     }
 
     void Grapher::OnPointerEntered(PointerRoutedEventArgs ^ e)
@@ -893,4 +857,28 @@ String ^ Grapher::ConvertToLinear(String ^ mmlString)
     m_solver->FormatOptions().SetFormatType(s_defaultFormatType);
 
     return ref new String(linearExpression.c_str());
+}
+
+void Grapher::OnAxesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue)
+{
+    if (m_graph)
+    {
+        auto axesColor = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
+        m_graph->GetOptions().SetAxisColor(axesColor);
+        m_graph->GetOptions().SetFontColor(axesColor);
+    }
+}
+
+void Grapher::OnGraphBackgroundPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue)
+{
+    if (m_renderMain)
+    {
+        m_renderMain->BackgroundColor = newValue;
+    }
+    if (m_graph)
+    {
+        auto color = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
+        m_graph->GetOptions().SetBackColor(color);
+        m_graph->GetOptions().SetBoxColor(color);
+    }
 }
