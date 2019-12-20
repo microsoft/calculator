@@ -218,7 +218,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
             equationHtml << L"<span style=\"color: rgb(68, 114, 196); font-style: bold; font-size : 13pt;\">";
             equationHtml << resourceLoader->GetString(L"EquationsShareHeader")->Data();
             equationHtml << L"</span>";
-            equationHtml << L"<table cellpadding=\"0\">";
+            equationHtml << L"<table cellpadding=\"0\" cellspacing=\"0\" >";
 
             for (auto equation : equations)
             {
@@ -237,8 +237,8 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
                 equationColorHtml << L"color:rgb(" << color.R.ToString()->Data() << L"," << color.G.ToString()->Data() << L"," << color.B.ToString()->Data()
                                   << L");";
 
-                equationHtml << L"<tr><td><span style=\"line-height: 0; font-size: 24pt;" << equationColorHtml.str()
-                             << L"\">&#x25A0;</span></td><td><div style=\"margin: 4pt 0pt 0pt 0pt; \">";
+                equationHtml << L"<tr style=\"margin: 0pt 0pt 0pt 0pt; padding: 0pt 0pt 0pt 0pt; \"><td><span style=\"font-size: 22pt; line-height: 0;" << equationColorHtml.str()
+                             << L"\">&#x25A0;</span></td><td><div style=\"margin: 4pt 0pt 0pt 6pt;\">";
                 equationHtml << EscapeHtmlSpecialCharacters(expression)->Data();
                 equationHtml << L"</div></td>";
             }
@@ -256,9 +256,9 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
         {
             auto localizedSeperator = LocalizationSettings::GetInstance().GetListSeparator() + L" ";
 
-            rawHtml << L"<span style=\"color: rgb(68, 114, 196); font-style: bold; font-size: 13pt;\">";
+            rawHtml << L"<br><span style=\"color: rgb(68, 114, 196); font-style: bold; font-size: 13pt;\">";
             rawHtml << resourceLoader->GetString(L"VariablesShareHeader")->Data();
-            rawHtml << L"</span><br><span>";
+            rawHtml << L"</span><br><div style=\"margin: 8pt 0pt 0pt 0pt;\"><span>";
 
             for (unsigned i = 0; i < variables->Size; i++)
             {
@@ -277,7 +277,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
                 }
             }
 
-            rawHtml << L"</span>";
+            rawHtml << L"</span></div>";
         }
 
         rawHtml << L"<br><br>";
