@@ -4254,7 +4254,6 @@
     <value>Graph Options</value>
     <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
   </data>
-</root>
   <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
     <value>Enter an equation</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>

@@ -47,6 +47,7 @@ namespace CalculatorApp::ViewModel
                     return;
                 }
                 m_XMin = value;
+                m_XIsMinLastChanged = true;
                 if (m_Graph != nullptr)
                 {
                     try
@@ -70,11 +71,11 @@ namespace CalculatorApp::ViewModel
                 }
                 RaisePropertyChanged("XError");
                 RaisePropertyChanged("XMin");
-                UpdateDisplayRange();
+                UpdateDisplayRange(true);
             }
         }
 
-        property Platform::String ^  XMax
+        property Platform::String ^ XMax
         {
             Platform::String ^ get()
             {
@@ -87,6 +88,7 @@ namespace CalculatorApp::ViewModel
                     return;
                 }
                 m_XMax = value;
+                m_XIsMinLastChanged = false;
                 if (m_Graph != nullptr)
                 {
                     try
@@ -110,11 +112,11 @@ namespace CalculatorApp::ViewModel
                 }
                 RaisePropertyChanged("XError");
                 RaisePropertyChanged("XMax");
-                UpdateDisplayRange();
+                UpdateDisplayRange(true);
             }
         }
 
-        property Platform::String ^  YMin
+        property Platform::String ^ YMin
         {
             Platform::String ^ get()
             {
@@ -127,6 +129,7 @@ namespace CalculatorApp::ViewModel
                     return;
                 }
                 m_YMin = value;
+                m_YIsMinLastChanged = true;
                 if (m_Graph != nullptr)
                 {
                     try
@@ -150,11 +153,11 @@ namespace CalculatorApp::ViewModel
                 }
                 RaisePropertyChanged("YError");
                 RaisePropertyChanged("YMin");
-                UpdateDisplayRange();
+                UpdateDisplayRange(false);
             }
         }
 
-        property Platform::String ^  YMax
+        property Platform::String ^ YMax
         {
             Platform::String ^ get()
             {
@@ -167,6 +170,7 @@ namespace CalculatorApp::ViewModel
                     return;
                 }
                 m_YMax = value;
+                m_YIsMinLastChanged = false;
                 if (m_Graph != nullptr)
                 {
                     try
@@ -190,7 +194,7 @@ namespace CalculatorApp::ViewModel
                 }
                 RaisePropertyChanged("YError");
                 RaisePropertyChanged("YMax");
-                UpdateDisplayRange();
+                UpdateDisplayRange(false);
             }
         }
 
@@ -269,7 +273,7 @@ namespace CalculatorApp::ViewModel
         }
 
     public:
-        void UpdateDisplayRange();
+        void UpdateDisplayRange(bool XValuesModified);
         void RefreshPosition();
 
     public:
@@ -287,5 +291,7 @@ namespace CalculatorApp::ViewModel
         double m_YMinValue;
         double m_YMaxValue;
         bool m_dontUpdateDisplayRange;
+        bool m_XIsMinLastChanged;
+        bool m_YIsMinLastChanged;
     };
 }

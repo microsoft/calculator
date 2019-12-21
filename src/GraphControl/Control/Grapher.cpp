@@ -484,8 +484,9 @@ namespace GraphControl
         return validEqs;
     }
 
-    void Grapher::OnForceProportionalAxesPropertyChanged(bool /*oldValue*/, bool /*newValue*/)
+    void Grapher::OnForceProportionalAxesPropertyChanged(bool /*oldValue*/, bool newValue)
     {
+        m_calculatedForceProportional = newValue;
         TryUpdateGraph();
     }
 

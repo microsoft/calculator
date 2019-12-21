@@ -192,10 +192,13 @@ public
             void set(double value)
             {
                 std::pair<double, double> newValue(YAxisMin, value);
-                m_graph->GetOptions().SetDefaultYRange(newValue);
-                if (m_renderMain != nullptr)
+                if (m_graph != nullptr)
                 {
-                    m_renderMain->RunRenderPass();
+                    m_graph->GetOptions().SetDefaultYRange(newValue);
+                    if (m_renderMain != nullptr)
+                    {
+                        m_renderMain->RunRenderPass();
+                    }
                 }
             }
         }
@@ -204,7 +207,13 @@ public
         {
             try
             {
-                m_graph->GetRenderer()->GetDisplayRanges(*xMin, *xMax, *yMin, *yMax);
+                if (m_graph != nullptr)
+                {
+                    if (auto render = m_graph->GetRenderer())
+                    {
+                        render->GetDisplayRanges(*xMin, *xMax, *yMin, *yMax);
+                    }
+                }
             }
             catch (const std::exception&)
             {
@@ -216,11 +225,13 @@ public
         {
             try
             {
-                auto render = m_graph->GetRenderer();
-                render->SetDisplayRanges(xMin, xMax, yMin, yMax);
-                if (m_renderMain)
+                if (auto render = m_graph->GetRenderer())
                 {
-                    m_renderMain->RunRenderPass();
+                    render->SetDisplayRanges(xMin, xMax, yMin, yMax);
+                    if (m_renderMain)
+                    {
+                        m_renderMain->RunRenderPass();
+                    }
                 }
             }
             catch (const std::exception&)
@@ -228,6 +239,7 @@ public
                 OutputDebugString(L"SetDisplayRanges failed\r\n");
             }
         }
+
     protected:
 #pragma region Control Overrides
         void OnApplyTemplate() override;
@@ -270,9 +282,6 @@ public
         void SetEquationsAsValid();
         void SetEquationErrors();
 
-        Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^ ConvertWStringVector(std::vector<std::wstring> inVector);
-        Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ ConvertWStringIntMap(std::map<std::wstring, int> inMap);
-
     private:
         DX::RenderMain ^ m_renderMain = nullptr;
 
@@ -292,7 +301,7 @@ public
 
         const std::unique_ptr<Graphing::IMathSolver> m_solver;
         const std::shared_ptr<Graphing::IGraph> m_graph;
-
+        bool m_calculatedForceProportional = false;
         bool m_tracingTracking;
         enum KeysPressedSlots
         {
@@ -305,7 +314,6 @@ public
 
         bool m_KeysPressed[5];
         bool m_Moving;
-
         Windows::UI::Xaml::DispatcherTimer ^ m_TracingTrackingTimer;
 
     public:

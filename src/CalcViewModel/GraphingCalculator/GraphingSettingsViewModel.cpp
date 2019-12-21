@@ -3,7 +3,10 @@
 
 #include "pch.h"
 #include "GraphingSettingsViewModel.h"
+#include <CalcManager\NumberFormattingUtils.h>
+
 using namespace CalculatorApp::ViewModel;
+using namespace CalcManager::NumberFormattingUtils;
 using namespace GraphControl;
 using namespace std;
 using namespace Platform;
@@ -18,6 +21,8 @@ GraphingSettingsViewModel::GraphingSettingsViewModel()
     , m_YMinError(false)
     , m_YMaxError(false)
     , m_dontUpdateDisplayRange(false)
+    , m_XIsMinLastChanged(true)
+    , m_YIsMinLastChanged(true)
 {
 }
 
@@ -47,10 +52,22 @@ void GraphingSettingsViewModel::InitRanges()
     m_XMaxValue = xMax;
     m_YMinValue = yMin;
     m_YMaxValue = yMax;
-    XMin = ref new String(to_wstring(m_XMinValue).c_str());
-    XMax = ref new String(to_wstring(m_XMaxValue).c_str());
-    YMin = ref new String(to_wstring(m_YMinValue).c_str());
-    YMax = ref new String(to_wstring(m_YMaxValue).c_str());
+    auto valueStr = to_wstring(m_XMinValue);
+    TrimTrailingZeros(valueStr);
+    m_XMin = ref new String(valueStr.c_str());
+
+    valueStr = to_wstring(m_XMaxValue);
+    TrimTrailingZeros(valueStr);
+    m_XMax = ref new String(valueStr.c_str());
+
+    valueStr = to_wstring(m_YMinValue);
+    TrimTrailingZeros(valueStr);
+    m_YMin = ref new String(valueStr.c_str());
+
+    valueStr = to_wstring(m_YMaxValue);
+    TrimTrailingZeros(valueStr);
+    m_YMax = ref new String(valueStr.c_str());
+
     m_dontUpdateDisplayRange = false;
 }
 
@@ -69,13 +86,75 @@ void GraphingSettingsViewModel::RefreshPosition()
     }
 }
 
-void GraphingSettingsViewModel::UpdateDisplayRange()
+void GraphingSettingsViewModel::UpdateDisplayRange(bool XValuesModified)
 {
     if (m_Graph == nullptr || m_dontUpdateDisplayRange || HasError())
     {
         return;
     }
 
+    if (m_Graph->ForceProportionalAxes)
+    {
+        // If ForceProportionalAxes is set, the graph will try to automatically adjust ranges to remain proportional.
+        // but without a logic to choose which values can be modified or not.
+        // To solve this problem, we calculate the new ranges here, taking care to not modify the current axis and
+        // modifying only the least recently updated value of the other axis.
+
+        if (XValuesModified)
+        {
+            if (m_YIsMinLastChanged)
+            {
+                auto yMaxValue = m_YMinValue + (m_XMaxValue - m_XMinValue) * m_Graph->ActualHeight / m_Graph->ActualWidth;
+                if (m_YMaxValue != yMaxValue)
+                {
+                    m_YMaxValue = yMaxValue;
+                    auto valueStr = to_wstring(m_YMaxValue);
+                    TrimTrailingZeros(valueStr);
+                    m_YMax = ref new String(valueStr.c_str());
+                    RaisePropertyChanged("YMax");
+                }
+            }
+            else
+            {
+                auto yMinValue = m_YMaxValue - (m_XMaxValue - m_XMinValue) * m_Graph->ActualHeight / m_Graph->ActualWidth;
+                if (m_YMinValue != yMinValue)
+                {
+                    m_YMinValue = yMinValue;
+                    auto valueStr = to_wstring(m_YMinValue);
+                    TrimTrailingZeros(valueStr);
+                    m_YMin = ref new String(valueStr.c_str());
+                    RaisePropertyChanged("YMin");
+                }
+            }
+        }
+        else
+        {
+            if (m_XIsMinLastChanged)
+            {
+                auto xMaxValue = m_XMinValue + (m_YMaxValue - m_YMinValue) * m_Graph->ActualWidth / m_Graph->ActualHeight;
+                if (m_XMaxValue != xMaxValue)
+                {
+                    m_XMaxValue = xMaxValue;
+                    auto valueStr = to_wstring(m_XMaxValue);
+                    TrimTrailingZeros(valueStr);
+                    m_XMax = ref new String(valueStr.c_str());
+                    RaisePropertyChanged("XMax");
+                }
+            }
+            else
+            {
+                auto xMinValue = m_XMaxValue - (m_YMaxValue - m_YMinValue) * m_Graph->ActualWidth / m_Graph->ActualHeight;
+                if (m_XMinValue != xMinValue)
+                {
+                    m_XMinValue = xMinValue;
+                    auto valueStr = to_wstring(m_XMinValue);
+                    TrimTrailingZeros(valueStr);
+                    m_XMin = ref new String(valueStr.c_str());
+                    RaisePropertyChanged("XMin");
+                }
+            }
+        }
+    }
     m_Graph->SetDisplayRanges(m_XMinValue, m_XMaxValue, m_YMinValue, m_YMaxValue);
 }
 

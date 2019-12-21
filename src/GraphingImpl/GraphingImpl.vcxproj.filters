@@ -48,5 +48,20 @@
     <ClInclude Include="..\GraphingInterfaces\IGraphAnalyzer.h">
       <Filter>GraphingInterfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Mocks\GraphingOptions.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Mocks\Graph.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GraphingInterfaces\IBitmap.h">
+      <Filter>GraphingInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Mocks\Bitmap.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Mocks\GraphRenderer.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

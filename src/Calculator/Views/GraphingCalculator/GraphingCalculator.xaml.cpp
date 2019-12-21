@@ -54,7 +54,6 @@ constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, IsSmallState);
 
 GraphingCalculator::GraphingCalculator()
-    : m_flyoutGraphSettings(nullptr)
 {
     InitializeComponent();
 
@@ -72,12 +71,12 @@ GraphingCalculator::GraphingCalculator()
 
     // OemMinus and OemAdd aren't declared in the VirtualKey enum, we can't add this accelerator XAML-side
     auto virtualKey = ref new KeyboardAccelerator();
-    virtualKey->Key = (VirtualKey)187; //OemMinus key
+    virtualKey->Key = (VirtualKey)187; // OemMinus key
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomOutButton->KeyboardAccelerators->Append(virtualKey);
 
     virtualKey = ref new KeyboardAccelerator();
-    virtualKey->Key = (VirtualKey)189; //OemAdd key
+    virtualKey->Key = (VirtualKey)189; // OemAdd key
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomInButton->KeyboardAccelerators->Append(virtualKey);
 }
@@ -516,29 +515,17 @@ void GraphingCalculator::GraphSettingsButton_Click(Object ^ sender, RoutedEventA
 
 void GraphingCalculator::DisplayGraphSettings()
 {
-    if (m_flyoutGraphSettings == nullptr)
-    {
-        auto graphSettings = ref new GraphingSettings();
-        graphSettings->SetGrapher(this->GraphingControl);
-        m_flyoutGraphSettings = ref new Flyout();
-        m_flyoutGraphSettings->Content = graphSettings;
-        m_flyoutGraphSettings->Closing += ref new 
-            TypedEventHandler<FlyoutBase ^, FlyoutBaseClosingEventArgs ^>(
-                this, &GraphingCalculator::OnSettingsFlyout_Closing);
-    }
-    else
-    {
-        auto graphingSetting = static_cast<GraphingSettings ^>(m_flyoutGraphSettings->Content);
-        graphingSetting->RefreshRanges();
-    }
-
-    m_flyoutGraphSettings->ShowAt(GraphSettingsButton);
+    auto graphSettings = ref new GraphingSettings();
+    graphSettings->SetGrapher(this->GraphingControl);
+    auto flyoutGraphSettings = ref new Flyout();
+    flyoutGraphSettings->Content = graphSettings;
+    flyoutGraphSettings->Closing += ref new TypedEventHandler<FlyoutBase ^, FlyoutBaseClosingEventArgs ^>(this, &GraphingCalculator::OnSettingsFlyout_Closing);
+    flyoutGraphSettings->ShowAt(GraphSettingsButton);
 }
 
-void GraphingCalculator::OnSettingsFlyout_Closing(
-    FlyoutBase ^ sender,
-    FlyoutBaseClosingEventArgs ^ args)
+void GraphingCalculator::OnSettingsFlyout_Closing(FlyoutBase ^ sender, FlyoutBaseClosingEventArgs ^ args)
 {
-    auto graphingSetting = static_cast<GraphingSettings ^>(static_cast<Flyout ^>(sender)->Content);
+    auto flyout = static_cast<Flyout ^>(sender);
+    auto graphingSetting = static_cast<GraphingSettings ^>(flyout->Content);
     args->Cancel = graphingSetting->CanBeClose();
 }
