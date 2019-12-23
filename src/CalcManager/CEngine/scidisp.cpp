@@ -218,8 +218,9 @@ vector<uint32_t> CCalcEngine::DigitGroupingStringToGroupingVector(wstring_view g
     vector<uint32_t> grouping;
     uint32_t currentGroup = 0;
     wchar_t* next = nullptr;
-    const wchar_t* end = groupingString.data() + groupingString.size();
-    for (auto itr = groupingString.data(); itr != end; ++itr)
+    const wchar_t* begin = groupingString.data();
+    const wchar_t* end = begin + groupingString.length();
+    for (auto itr = begin; itr != end; ++itr)
     {
         // Try to parse a grouping number from the string
         currentGroup = wcstoul(itr, &next, 10);
@@ -233,7 +234,7 @@ vector<uint32_t> CCalcEngine::DigitGroupingStringToGroupingVector(wstring_view g
         // If we found a grouping and aren't at the end of the string yet,
         // jump to the next position in the string (the ';').
         // The loop will then increment us to the next character, which should be a number.
-        if (next && (static_cast<size_t>(next - groupingString.data()) < groupingString.length()))
+        if (next && (static_cast<size_t>(next - begin) < groupingString.length()))
         {
             itr = next;
         }
