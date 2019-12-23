@@ -844,6 +844,7 @@ void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
     else
     {
         ActiveTraceCursorPosition = curPos;
+        PointerValueChangedEvent(curPos);
     }
 }
 

@@ -28,9 +28,6 @@
     <ClCompile Include="DirectX\NearestPointRenderer.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="DirectX\ActiveTracingPointRenderer.cpp">
-      <Filter>DirectX</Filter>
-    </ClCompile>
     <ClCompile Include="Models\KeyGraphFeaturesInfo.cpp" />
     <ClCompile Include="Models\Equation.cpp">
       <Filter>Models</Filter>
@@ -54,9 +51,6 @@
     <ClInclude Include="DirectX\NearestPointRenderer.h">
       <Filter>DirectX</Filter>
     </ClInclude>
-    <ClInclude Include="DirectX\ActiveTracingPointRenderer.h">
-      <Filter>DirectX</Filter>
-    </ClInclude>
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Models\KeyGraphFeaturesInfo.h" />
     <ClInclude Include="Models\Equation.h">
@@ -75,8 +69,6 @@
     <None Include="$(ProjectDir)\GraphingImplOverrides.props" />
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="$(GraphingImplDll)" />
-    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>

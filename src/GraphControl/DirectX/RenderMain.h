@@ -7,7 +7,6 @@
 
 #include "DeviceResources.h"
 #include "NearestPointRenderer.h"
-#include "ActiveTracingPointRenderer.h"
 #include "IGraph.h"
 
 // Renders Direct2D and 3D content on the screen.
@@ -67,7 +66,6 @@ namespace GraphControl::DX
                 if (m_activeTracingPointerLocation != newValue)
                 {
                     m_activeTracingPointerLocation = newValue;
-                    m_ActiveTracingPointRenderer.Render(m_activeTracingPointerLocation);
                     RunRenderPass();
                 }
             }
@@ -123,7 +121,6 @@ namespace GraphControl::DX
     private:
         DX::DeviceResources m_deviceResources;
         NearestPointRenderer m_nearestPointRenderer;
-        ActiveTracingPointRenderer m_ActiveTracingPointRenderer;
 
         // Cached Graph object with Renderer property.
         std::shared_ptr<Graphing::IGraph> m_graph = nullptr;

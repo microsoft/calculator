@@ -424,6 +424,18 @@
                     </Button>
                 </StackPanel>
             </Border>
+            <Border x:Name="TracePointer"
+                    Width="16"
+                    Height="18"
+                    Margin="50,50,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Visibility="Collapsed">
+                <FontIcon Foreground="Red"
+                          FontFamily="{StaticResource CalculatorFontFamily}"
+                          FontSize="18"
+                          Glyph="&#xE3B3;"/>
+            </Border>
             <Border MinWidth="36"
                     Margin="0,0,12,12"
                     HorizontalAlignment="Right"

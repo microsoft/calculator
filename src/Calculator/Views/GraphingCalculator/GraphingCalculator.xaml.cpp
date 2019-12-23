@@ -67,6 +67,9 @@ GraphingCalculator::GraphingCalculator()
     // And when the actual trace value changes
     GraphingControl->TracingValueChangedEvent += ref new TracingValueChangedEventHandler(this, &GraphingCalculator::OnTracePointChanged);
 
+    // Update where the pointer value is (ie: where the user cursor from keyboard inputs moves the point to)
+    GraphingControl->PointerValueChangedEvent += ref new PointerValueChangedEventHandler(this, &GraphingCalculator::OnPointerPointChanged);
+
     // OemMinus and OemAdd aren't declared in the VirtualKey enum, we can't add this accelerator XAML-side
     auto virtualKey = ref new KeyboardAccelerator();
     virtualKey->Key = (VirtualKey)187; //OemMinus key
@@ -175,6 +178,11 @@ void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint
     }
 
     PositionGraphPopup();
+}
+
+void CalculatorApp::GraphingCalculator::OnPointerPointChanged(Windows::Foundation::Point newPoint)
+{
+    TracePointer->Margin = Thickness(newPoint.X, newPoint.Y, 0, 0);
 }
 
 GraphingCalculatorViewModel ^ GraphingCalculator::ViewModel::get()
@@ -479,6 +487,8 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_Checked(Platform::Object ^
             this, &CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp);
 
     KeyboardShortcutManager::IgnoreEscape(false);
+
+    TracePointer->Visibility = ::Visibility::Visible;
 }
 
 void CalculatorApp::GraphingCalculator::ActiveTracing_Unchecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
@@ -495,6 +505,8 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_Unchecked(Platform::Object
         m_activeTracingKeyUpToken.Value = 0;
     }
     KeyboardShortcutManager::HonorEscape();
+
+    TracePointer->Visibility = ::Visibility::Collapsed;
 }
 
 void CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args)

@@ -55,6 +55,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
 
         void OnShowTracePopupChanged(bool newValue);
         void OnTracePointChanged(Windows::Foundation::Point newPoint);
+        void OnPointerPointChanged(Windows::Foundation::Point newPoint);
     private:
         void OnDataRequested(
             Windows::ApplicationModel::DataTransfer::DataTransferManager ^ sender,
