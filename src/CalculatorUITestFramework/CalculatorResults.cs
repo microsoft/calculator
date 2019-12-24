@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium.Windows;
+using System;
 
 namespace CalculatorUITestFramework
 {
@@ -40,9 +41,21 @@ namespace CalculatorUITestFramework
         /// Verifies that CalculatorResult is not null
         /// </summary>
         /// <returns>The string shown in the UI.</returns>
-        public void CalculatorResultsDisplayIsPresent()
+        public void CheckIfResultsDisplayIsPresent()
         {
             Assert.IsNotNull(this.CalculatorResult);
+        }
+        /// <summary>
+        /// Verifies that Calculator Expression is clear
+        /// </summary>
+        /// <returns>The string shown in the UI.</returns>
+        public void CheckIfResultsExpressionIsClear()
+        {
+            string source = WinAppDriver.Instance.CalculatorSession.PageSource;
+            if (source.Contains("CalculatorExpression"))
+            {
+                throw new Exception("The Calculator Expression is not clear");
+            }
         }
     }
 }

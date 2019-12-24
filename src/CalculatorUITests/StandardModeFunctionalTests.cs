@@ -74,30 +74,43 @@ namespace CalculatorUITests
         {
             //Verifies the +, -, CE, C, 2, and 3 button
             page.StandardOperators.NumberPad.Num2Button.Click();
+            Assert.AreEqual("2", page.CalculatorResults.GetCalculatorResultText()); //verifies 2 button
             page.StandardOperators.PlusButton.Click();
+            Assert.AreEqual("2 +", page.CalculatorResults.GetCalculatorExpressionText()); //verifies + button
             page.StandardOperators.NumberPad.Num2Button.Click();
             page.StandardOperators.MinusButton.Click();
+            Assert.AreEqual("4", page.CalculatorResults.GetCalculatorResultText()); //verifies addition
+            Assert.AreEqual("2 + 2 Minus (", page.CalculatorResults.GetCalculatorExpressionText()); //verifies - button
             page.StandardOperators.NumberPad.Num3Button.Click();
-            Assert.AreEqual("3", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("3", page.CalculatorResults.GetCalculatorResultText()); //verifies 3 button
+            page.StandardOperators.EqualButton.Click();
+            Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText()); //verifies subtraction
             page.StandardOperators.ClearEntryButton.Click();
-            Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText());
-            Assert.AreEqual("2 + 2 Minus (", page.CalculatorResults.GetCalculatorExpressionText());
+            Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText()); //verifies the CE button
             page.StandardOperators.ClearButton.Click();
+            page.CalculatorResults.CheckIfResultsExpressionIsClear(); //verifies the C button
+
         }
 
         [TestMethod]
         [Priority(0)]
         public void MouseInput_MultiplyDivideEqualFourFiveSix()
         {
-            //Verifies the multiplication, division, and equal, 4, 5, and 6 button
+            //Verifies the multiplication, and division, and the x, ÷, equal, 4, 5, and 6 button
             page.StandardOperators.NumberPad.Num4Button.Click();
+            Assert.AreEqual("4", page.CalculatorResults.GetCalculatorResultText()); //verifies 4 button
             page.StandardOperators.MultiplyButton.Click();
+            Assert.AreEqual("4 ×", page.CalculatorResults.GetCalculatorExpressionText()); //verifies x button
             page.StandardOperators.NumberPad.Num5Button.Click();
+            Assert.AreEqual("5", page.CalculatorResults.GetCalculatorResultText()); //verifies 5 button
             page.StandardOperators.DivideButton.Click();
+            Assert.AreEqual("20", page.CalculatorResults.GetCalculatorResultText()); //verifies multiplication
+            Assert.AreEqual("4 × 5 ÷", page.CalculatorResults.GetCalculatorExpressionText()); //verifies ÷ button
             page.StandardOperators.NumberPad.Num6Button.Click();
+            Assert.AreEqual("6", page.CalculatorResults.GetCalculatorResultText()); //verifies 6 button
             page.StandardOperators.EqualButton.Click();
-            Assert.AreEqual("3.333333333333333", page.CalculatorResults.GetCalculatorResultText());
-            page.StandardOperators.ClearButton.Click();
+            Assert.AreEqual("3.333333333333333", page.CalculatorResults.GetCalculatorResultText()); //verifies division
+            Assert.AreEqual("4 × 5 ÷ 6=", page.CalculatorResults.GetCalculatorExpressionText()); //verifies = button
         }
 
         [TestMethod]
@@ -106,44 +119,46 @@ namespace CalculatorUITests
         {
             //Verifies the invert, squared, 7, 8, and 9 button
             page.StandardOperators.NumberPad.Num7Button.Click();
+            Assert.AreEqual("7", page.CalculatorResults.GetCalculatorResultText()); //verifies 7 button
             page.StandardOperators.InvertButton.Click();
-            Assert.AreEqual("0.1428571428571429", page.CalculatorResults.GetCalculatorResultText());
-            Assert.AreEqual("1/(7)", page.CalculatorResults.GetCalculatorExpressionText());
+            Assert.AreEqual("0.1428571428571429", page.CalculatorResults.GetCalculatorResultText()); //verifies inversion
+            Assert.AreEqual("1/(7)", page.CalculatorResults.GetCalculatorExpressionText()); //verifies the invert button
             page.StandardOperators.ClearButton.Click();
             page.StandardOperators.NumberPad.Num8Button.Click();
-            Assert.AreEqual("8", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("8", page.CalculatorResults.GetCalculatorResultText()); //verifies 8 button
             page.StandardOperators.ClearButton.Click();
             page.StandardOperators.NumberPad.Num9Button.Click();
+            Assert.AreEqual("9", page.CalculatorResults.GetCalculatorResultText()); //verifies 9 button
             page.StandardOperators.XPower2Button.Click();
-            Assert.AreEqual("81", page.CalculatorResults.GetCalculatorResultText());
-            Assert.AreEqual("square (9)", page.CalculatorResults.GetCalculatorExpressionText());
-            page.StandardOperators.ClearButton.Click();
+            Assert.AreEqual("81", page.CalculatorResults.GetCalculatorResultText()); //verifies squaring
+            Assert.AreEqual("square (9)", page.CalculatorResults.GetCalculatorExpressionText()); //verifies squared button
         }
 
         [TestMethod]
         [Priority(0)]
-        public void MouseInput_PercentSquareRootBackspaceDecimalNegateAddOneZero()
+        public void MouseInput_PercentSquareRootBackspaceDecimalNegateOneZero()
         {
-            //Verifies the %, square root, backspace, decimal, negate, +, 1, and 0 button
+            //Verifies the %, square root, backspace, decimal, negate, 1, and 0 button
             page.StandardOperators.NumberPad.Num1Button.Click();
             page.StandardOperators.NumberPad.Num0Button.Click();
             page.StandardOperators.NumberPad.Num0Button.Click();
             page.StandardOperators.BackSpaceButton.Click();
-            Assert.AreEqual("10", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("10", page.CalculatorResults.GetCalculatorResultText()); // verifies the 1 button, the 0 button, and the backspace button
             page.StandardOperators.PlusButton.Click();
             page.StandardOperators.PercentButton.Click();
-            Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText());
-            Assert.AreEqual("10 + 1", page.CalculatorResults.GetCalculatorExpressionText());
+            Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText()); //verifies percent calculation
+            Assert.AreEqual("10 + 1", page.CalculatorResults.GetCalculatorExpressionText()); //verifies percent button
             page.StandardOperators.PercentButton.Click();
-            Assert.AreEqual("0.1", page.CalculatorResults.GetCalculatorResultText());
-            Assert.AreEqual("10 + 0.1", page.CalculatorResults.GetCalculatorExpressionText());
             page.StandardOperators.SquareRootButton.Click();
-            Assert.AreEqual("0.3162277660168379", page.CalculatorResults.GetCalculatorResultText());
-            Assert.AreEqual("10 + √(0.1)", page.CalculatorResults.GetCalculatorExpressionText());
+            Assert.AreEqual("0.3162277660168379", page.CalculatorResults.GetCalculatorResultText()); //verifies square root calculation
+            Assert.AreEqual("10 + √(0.1)", page.CalculatorResults.GetCalculatorExpressionText()); //verifies 2√x button
             page.StandardOperators.NumberPad.DecimalButton.Click();
+            Assert.AreEqual("0 point", page.CalculatorResults.GetCalculatorResultText()); //verifies decimal button
             page.StandardOperators.NumberPad.NegateButton.Click();
-            Assert.AreEqual("-0 point", page.CalculatorResults.GetCalculatorResultText());
-            Assert.AreEqual("10 +", page.CalculatorResults.GetCalculatorExpressionText());
+            page.StandardOperators.NumberPad.Num1Button.Click();
+            Assert.AreEqual("-0.1", page.CalculatorResults.GetCalculatorResultText()); //verifies negate button
+            page.StandardOperators.EqualButton.Click();
+            Assert.AreEqual("9.9", page.CalculatorResults.GetCalculatorResultText()); //verifies calculation with decimal point and negative number
         }
 
         [TestMethod]
@@ -157,14 +172,15 @@ namespace CalculatorUITests
             page.StandardOperators.DivideButton.Click();
             page.StandardOperators.NumberPad.Num6Button.Click();
             page.StandardOperators.EqualButton.Click();
-            page.HistoryPanel.ResizeWindowToNotDisplayHistoryLabel();
+            page.HistoryPanel.ResizeWindowToDisplayHistoryButton();
             page.StandardOperators.HistoryButton.Click();
+            var historyFlyoutItems = page.HistoryPanel.GetAllHistoryFlyoutListViewItems();
+            Assert.IsTrue(historyFlyoutItems[0].Text.Equals("4 × 5 ÷ 6= 3.333333333333333", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
             page.HistoryPanel.ResizeWindowToDisplayHistoryLabel();
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
             Assert.IsTrue(historyItems[0].Text.Equals("4 × 5 ÷ 6= 3.333333333333333", StringComparison.InvariantCultureIgnoreCase));
             page.HistoryPanel.ClearHistoryButton.Click();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
-            page.StandardOperators.ClearButton.Click();
+            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty")); //verifies the History panel's clear history button
         }
 
         [TestMethod]
@@ -175,20 +191,19 @@ namespace CalculatorUITests
             page.StandardOperators.NumberPad.Num1Button.Click();
             page.MemoryPanel.MemButton.Click();
             var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
-            Assert.IsTrue(memoryItems[0].Text.Equals("1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(memoryItems[0].Text.Equals("1", StringComparison.InvariantCultureIgnoreCase)); //verifies memory button
             page.MemoryPanel.MemPlus.Click();
-            var memoryItems1 = page.MemoryPanel.GetAllMemoryListViewItems();
-            Assert.IsTrue(memoryItems1[0].Text.Equals("2", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(memoryItems[0].Text.Equals("2", StringComparison.InvariantCultureIgnoreCase)); //verifies memory plus button
             page.MemoryPanel.MemRecall.Click();
-            Assert.AreEqual("2", page.CalculatorResults.GetCalculatorResultText());
-            page.StandardOperators.NumberPad.Num1Button.Click();
+            Assert.AreEqual("2", page.CalculatorResults.GetCalculatorResultText()); //verifies memory recall button
             page.StandardOperators.MinusButton.Click();
+            page.StandardOperators.NumberPad.Num1Button.Click();
             page.StandardOperators.EqualButton.Click();
             page.MemoryPanel.MemMinus.Click();
-            var memoryItems2 = page.MemoryPanel.GetAllMemoryListViewItems();
-            Assert.IsTrue(memoryItems2[0].Text.Equals("2", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(memoryItems[0].Text.Equals("1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText()); //verifies MemMinus button
             page.MemoryPanel.MemoryClear.Click();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty")); //verifies the Memory panel's memory clear button
         }
         #endregion
 
@@ -575,11 +590,7 @@ namespace CalculatorUITests
             page.GlobalCalculatorUI.Header.SendKeys(Keys.Subtract);
             page.GlobalCalculatorUI.Header.SendKeys("9");
             page.StandardOperators.ClearButton.Click();
-            string source0 = WinAppDriver.Instance.CalculatorSession.PageSource;
-            if (source0.Contains("CalculatorExpression"))
-            {
-                throw new NotFoundException("This test fails; the Calculator Expression should be cleared");
-            }
+            page.CalculatorResults.CheckIfResultsExpressionIsClear();
         }
 
         #endregion

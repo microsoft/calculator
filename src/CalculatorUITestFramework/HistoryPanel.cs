@@ -94,17 +94,17 @@ namespace CalculatorUITestFramework
         ///// <summary>
         ///// If the History button is not displayed, resize the window
         ///// </summary>
-        public void ResizeWindowToNotDisplayHistoryLabel()
+        public void ResizeWindowToDisplayHistoryButton()
         {
             Point newWindowPostion = new Point(8, 8);
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
-            string source1 = this.session.PageSource;
-            if (source1.Contains("HistoryLabel"))
+            string source = this.session.PageSource;
+            if (source.Contains("HistoryLabel"))
             {
                 Size newWindowSize = new Size(464, 464);
                 WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
-                string source2 = this.session.PageSource;
-                if (source2.Contains("HistoryButton"))
+                source = this.session.PageSource;
+                if (source.Contains("HistoryButton"))
                 {
                     return;
                 }
@@ -119,7 +119,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void OpenHistoryFlyout()
         {
-            this.ResizeWindowToNotDisplayHistoryLabel();
+            this.ResizeWindowToDisplayHistoryButton();
             this.GlobalCalculatorUI.EnsureCalculatorHasFocus();
             this.GlobalCalculatorUI.Header.SendKeys(Keys.Control + "h" + Keys.Control);
             Actions moveToHistoryFlyout = new Actions(WinAppDriver.Instance.CalculatorSession);
