@@ -31,13 +31,12 @@ String
         _In_ String ^ fallbackExpression)
 {
     // updating accessibility names for expression and result
-    wstringstream accExpression{};
-    accExpression << L"";
+    wstring accExpression{};
 
     for (const auto& tokenItem : *spTokens)
     {
-        accExpression << LocalizationService::GetNarratorReadableToken(StringReference(tokenItem.first.c_str()))->Data();
+        accExpression += LocalizationService::GetNarratorReadableToken(StringReference(tokenItem.first.c_str()))->Data();
     }
 
-    return ref new String(accExpression.str().c_str());
+    return ref new String(accExpression.c_str());
 }
