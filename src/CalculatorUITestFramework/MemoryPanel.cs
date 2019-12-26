@@ -15,7 +15,7 @@ namespace CalculatorUITestFramework
     public class MemoryPanel
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
-        public GlobalCalculatorUI GlobalCalculatorUI = new GlobalCalculatorUI();
+        public CalculatorApp CalculatorApp = new CalculatorApp();
         public WindowsElement MemoryClear => this.session.TryFindElementByAccessibilityId("ClearMemoryButton");
         public WindowsElement MemRecall => this.session.TryFindElementByAccessibilityId("MemRecall");
         public WindowsElement MemPlus => this.session.TryFindElementByAccessibilityId("MemPlus");
@@ -158,11 +158,11 @@ namespace CalculatorUITestFramework
         public void OpenMemoryFlyout()
         {
             this.ResizeWindowToDiplayMemoryButton();
-            this.GlobalCalculatorUI.EnsureCalculatorHasFocus();
+            this.CalculatorApp.EnsureCalculatorHasFocus();
             Actions moveToMemoryButton = new Actions(WinAppDriver.Instance.CalculatorSession);
             moveToMemoryButton.MoveToElement(MemoryButton);
             moveToMemoryButton.Perform();
-            this.GlobalCalculatorUI.Header.SendKeys(Keys.Alt + "m" + Keys.Alt);
+            this.CalculatorApp.Header.SendKeys(Keys.Alt + "m" + Keys.Alt);
             Actions moveToMemoryFlyout = new Actions(WinAppDriver.Instance.CalculatorSession);
             moveToMemoryFlyout.MoveToElement(MemoryFlyout);
             moveToMemoryFlyout.Perform();

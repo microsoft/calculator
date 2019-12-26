@@ -16,20 +16,20 @@ namespace CalculatorUITestFramework
     public class StandardAoTCalculatorPage
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
-        public GlobalCalculatorUI GlobalCalculatorUI = new GlobalCalculatorUI();
+        public CalculatorApp CalculatorApp = new CalculatorApp();
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public NavigationMenu NavigationMenu = new NavigationMenu();
         public WindowsElement EnterAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("NormalAlwaysOnTopButton");
         public WindowsElement ExitAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("ExitAlwaysOnTopButton");
         public AppiumWebElement ToolTip => WinAppDriver.Instance.CalculatorSession.FindElementByClassName("ToolTip").FindElementByClassName("TextBlock");
 
-        public void StandardNonAoTMode()
+        public void NavigateToStandardMode()
         {
             string sourceF = this.session.PageSource;
             if (sourceF.Contains("ExitAlwaysOnTopButton"))
             {
                 this.ExitAlwaysOnTopButton.Click();
-                Assert.AreEqual("Standard", this.GlobalCalculatorUI.GetCalculatorHeaderText());
+                Assert.AreEqual("Standard", this.CalculatorApp.GetCalculatorHeaderText());
             }
             else
             {
@@ -47,7 +47,7 @@ namespace CalculatorUITestFramework
         ///// <summary>
         ///// Ensures the calculator is in AoT(Keep on top) mode, and verifies that the AoT mode through the absence of the header
         ///// </summary>
-        public void StandardAoTMode()
+        public void NavigateToStandardAoTMode()
         {
             string sourceG = this.session.PageSource;
             if (sourceG.Contains("NormalAlwaysOnTopButton"))
@@ -94,9 +94,9 @@ namespace CalculatorUITestFramework
                 }
                 else
                 {
-                    Actions moveToBTFVButton = new Actions(WinAppDriver.Instance.CalculatorSession);
-                    moveToBTFVButton.MoveToElement(ExitAlwaysOnTopButton);
-                    moveToBTFVButton.Perform();
+                    Actions moveToBackToFullViewVButton = new Actions(WinAppDriver.Instance.CalculatorSession);
+                    moveToBackToFullViewVButton.MoveToElement(ExitAlwaysOnTopButton);
+                    moveToBackToFullViewVButton.Perform();
                 }
             }
             else

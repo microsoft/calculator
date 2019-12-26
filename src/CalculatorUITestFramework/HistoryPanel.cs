@@ -13,7 +13,7 @@ namespace CalculatorUITestFramework
     public class HistoryPanel
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
-        public GlobalCalculatorUI GlobalCalculatorUI = new GlobalCalculatorUI();
+        public CalculatorApp CalculatorApp = new CalculatorApp();
         public WindowsElement HistoryButton => this.session.TryFindElementByAccessibilityId("HistoryButton");
         private WindowsElement HistoryLabel => this.session.TryFindElementByAccessibilityId("HistoryLabel");
         private AppiumWebElement HistoryEmpty => this.session.TryFindElementByAccessibilityId("DockPivot").FindElementByAccessibilityId("HistoryEmpty");
@@ -120,8 +120,8 @@ namespace CalculatorUITestFramework
         public void OpenHistoryFlyout()
         {
             this.ResizeWindowToDisplayHistoryButton();
-            this.GlobalCalculatorUI.EnsureCalculatorHasFocus();
-            this.GlobalCalculatorUI.Header.SendKeys(Keys.Control + "h" + Keys.Control);
+            this.CalculatorApp.EnsureCalculatorHasFocus();
+            this.CalculatorApp.Header.SendKeys(Keys.Control + "h" + Keys.Control);
             Actions moveToHistoryFlyout = new Actions(WinAppDriver.Instance.CalculatorSession);
             moveToHistoryFlyout.MoveToElement(HistoryFlyout);
             moveToHistoryFlyout.Perform();

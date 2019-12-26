@@ -12,7 +12,6 @@ namespace CalculatorUITestFramework
     public sealed class WinAppDriver
     {
         private WindowsDriverLocalService windowsDriverService = null;
-        public MemoryPanel MemoryPanel = new MemoryPanel();
         private const string defaultAppId = "Microsoft.WindowsCalculator.Dev_8wekyb3d8bbwe!App";
         private static WinAppDriver instance = null;
         public static WinAppDriver Instance

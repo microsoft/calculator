@@ -13,7 +13,7 @@ namespace CalculatorUITestFramework
     public class StandardCalculatorPage
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
-        public GlobalCalculatorUI GlobalCalculatorUI = new GlobalCalculatorUI();
+        public CalculatorApp CalculatorApp = new CalculatorApp();
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public MemoryPanel MemoryPanel = new MemoryPanel();
         public HistoryPanel HistoryPanel = new HistoryPanel();
@@ -32,7 +32,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ClearAll()
         {
-            this.StandardAoTCalculatorPage.StandardNonAoTMode();
+            this.StandardAoTCalculatorPage.NavigateToStandardMode();
             this.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
             this.StandardOperators.ClearButton.Click();
             this.MemoryPanel.MemoryClear.Click();

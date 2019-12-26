@@ -8,7 +8,7 @@ namespace CalculatorUITestFramework
     /// <summary>
     /// This class contains the UI automation objects and helper methods available when the Calculator is in any mode.
     /// </summary>
-    public class GlobalCalculatorUI
+    public class CalculatorApp
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
         public WindowsElement Header => this.session.TryFindElementByAccessibilityId("Header");
