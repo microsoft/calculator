@@ -24,7 +24,7 @@ namespace CalculatorUITestFramework
         private WindowsElement HistoryFlyout => this.session.TryFindElementByAccessibilityId("HistoryFlyout");
 
         /// <summary>
-        /// Opens the Memory Pane by clicking the Memory pivot label.
+        /// Opens the History Pane by clicking the History pivot label.
         /// </summary>
         public void OpenHistoryPanel()
         {
