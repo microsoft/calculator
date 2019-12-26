@@ -24,7 +24,7 @@ namespace CalculatorUITestFramework
         private WindowsElement HistoryFlyout => this.session.TryFindElementByAccessibilityId("HistoryFlyout");
 
         /// <summary>
-        /// Opens the Memory Pane by clicking the Memory pivot label.
+        /// Opens the History Pane by clicking the History pivot label.
         /// </summary>
         public void OpenHistoryPanel()
         {
@@ -70,8 +70,8 @@ namespace CalculatorUITestFramework
             {
                 Size newWindowSize = new Size(1200, 1050);
                 WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
-                string source1 = this.session.PageSource;
-                if (source1.Contains("HistoryLabel"))
+                string source = this.session.PageSource;
+                if (source.Contains("HistoryLabel"))
                 {
                     return;
                 }
@@ -80,8 +80,8 @@ namespace CalculatorUITestFramework
                     Size newWindowSize2 = new Size(2097, 1282);
                     WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
                 }
-                string source2 = this.session.PageSource;
-                if (source2.Contains("HistoryLabel"))
+                source = this.session.PageSource;
+                if (source.Contains("HistoryLabel"))
                 {
                     return;
                 }
