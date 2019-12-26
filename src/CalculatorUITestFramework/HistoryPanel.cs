@@ -81,7 +81,7 @@ namespace CalculatorUITestFramework
                     WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
                 }
                 source = this.session.PageSource;
-                if (source2.Contains("HistoryLabel"))
+                if (source.Contains("HistoryLabel"))
                 {
                     return;
                 }
