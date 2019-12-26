@@ -25,16 +25,16 @@ namespace CalculatorUITestFramework
 
         public void NavigateToStandardMode()
         {
-            string sourceF = this.session.PageSource;
-            if (sourceF.Contains("ExitAlwaysOnTopButton"))
+            string source = this.session.PageSource;
+            if (source.Contains("ExitAlwaysOnTopButton"))
             {
                 this.ExitAlwaysOnTopButton.Click();
                 Assert.AreEqual("Standard", this.CalculatorApp.GetCalculatorHeaderText());
             }
             else
             {
-                string source2 = this.session.PageSource;
-                if (source2.Contains("NormalAlwaysOnTopButton"))
+                source = this.session.PageSource;
+                if (source.Contains("NormalAlwaysOnTopButton"))
                 {
                     return;
                 }
@@ -49,13 +49,13 @@ namespace CalculatorUITestFramework
         ///// </summary>
         public void NavigateToStandardAoTMode()
         {
-            string sourceG = this.session.PageSource;
-            if (sourceG.Contains("NormalAlwaysOnTopButton"))
+            string source = this.session.PageSource;
+            if (source.Contains("NormalAlwaysOnTopButton"))
             {
                 this.EnterAlwaysOnTopButton.Click();
                 this.ExitAlwaysOnTopButton.WaitForDisplayed();
-                string sourceH = WinAppDriver.Instance.CalculatorSession.PageSource;
-                if (sourceH.Contains("Header"))
+                source = WinAppDriver.Instance.CalculatorSession.PageSource;
+                if (source.Contains("Header"))
                 {
                     throw new NotFoundException("Failed to enter 'Keep on top' mode; In AoT mode, Calculator does not have header");
                 }
@@ -83,10 +83,10 @@ namespace CalculatorUITestFramework
         ///// </summary>
         public string GetAoTToolTipText()
         {
-            string sourceH = this.session.PageSource;
-            if ((sourceH.Contains("Keep on top")) || (sourceH.Contains("Back to full view")))
+            string source = this.session.PageSource;
+            if ((source.Contains("Keep on top")) || (source.Contains("Back to full view")))
             {
-                if (sourceH.Contains("Keep on top"))
+                if (source.Contains("Keep on top"))
                 {
                     Actions moveToAoTButton = new Actions(WinAppDriver.Instance.CalculatorSession);
                     moveToAoTButton.MoveToElement(EnterAlwaysOnTopButton);
@@ -112,8 +112,8 @@ namespace CalculatorUITestFramework
         public string GetAoTPresence()
         {
             bool AoTPresent;
-            string sourceJ = this.session.PageSource;
-            if (sourceJ.Contains("Keep on top"))
+            string source = this.session.PageSource;
+            if (source.Contains("Keep on top"))
             {
                 AoTPresent = true;
             }
@@ -129,8 +129,8 @@ namespace CalculatorUITestFramework
         public string AoTModeCheck()
         {
             bool InAoTMode;
-            string sourceK = this.session.PageSource;
-            if ((sourceK.Contains("Keep on top")) && (sourceK.Contains("Header")))
+            string source = this.session.PageSource;
+            if ((source.Contains("Keep on top")) && (source.Contains("Header")))
             {
                 InAoTMode = false;
             }
@@ -167,8 +167,8 @@ namespace CalculatorUITestFramework
         {
             Point newWindowPostion = new Point(8, 8);
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
-            string source0 = this.session.PageSource;
-            if (source0.Contains("invertButton"))
+            string source = this.session.PageSource;
+            if (source.Contains("invertButton"))
             {
                 return;
             }
@@ -176,8 +176,8 @@ namespace CalculatorUITestFramework
             {
                 Size newWindowSize = new Size(502, 502);
                 WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
-                string source1 = this.session.PageSource;
-                if (source1.Contains("invertButton"))
+                source = this.session.PageSource;
+                if (source.Contains("invertButton"))
                 {
                     return;
                 }
@@ -186,8 +186,8 @@ namespace CalculatorUITestFramework
                     Size newWindowSize2 = new Size(750, 750);
                     WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
                 }
-                string source2 = this.session.PageSource;
-                if (source2.Contains("invertButton"))
+                source = this.session.PageSource;
+                if (source.Contains("invertButton"))
                 {
                     return;
                 }

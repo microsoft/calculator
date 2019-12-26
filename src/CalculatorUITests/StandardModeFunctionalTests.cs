@@ -882,8 +882,8 @@ namespace CalculatorUITests
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
             page.CalculatorApp.Window.SendKeys(Keys.Enter);
             page.CalculatorApp.Window.SendKeys(Keys.Control + "H" + Keys.Control);
-            string source0 = WinAppDriver.Instance.CalculatorSession.PageSource;
-            if (source0.Contains("HistoryFlyout"))
+            string source = WinAppDriver.Instance.CalculatorSession.PageSource;
+            if (source.Contains("HistoryFlyout"))
             {
                 throw new NotFoundException("This test fails; history flyout is present");
             }

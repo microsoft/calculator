@@ -61,8 +61,8 @@ namespace CalculatorUITestFramework
         {
             Point newWindowPostion = new Point(8, 8);
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
-            string source0 = this.session.PageSource;
-            if (source0.Contains("HistoryLabel"))
+            string source = this.session.PageSource;
+            if (source.Contains("HistoryLabel"))
             {
                 return;
             }
@@ -70,7 +70,7 @@ namespace CalculatorUITestFramework
             {
                 Size newWindowSize = new Size(1200, 1050);
                 WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
-                string source = this.session.PageSource;
+                source = this.session.PageSource;
                 if (source.Contains("HistoryLabel"))
                 {
                     return;
