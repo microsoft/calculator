@@ -21,7 +21,9 @@ public
 public
     delegate void TracingValueChangedEventHandler(Windows::Foundation::Point value);
 
-    [Windows::UI::Xaml::Markup::ContentPropertyAttribute(Name = L"Equations")] public ref class Grapher sealed : public Windows::UI::Xaml::Controls::Control, public Windows::UI::Xaml::Data::INotifyPropertyChanged
+    [Windows::UI::Xaml::Markup::ContentPropertyAttribute(Name = L"Equations")] public ref class Grapher sealed
+        : public Windows::UI::Xaml::Controls::Control,
+          public Windows::UI::Xaml::Data::INotifyPropertyChanged
     {
     public:
         event TracingValueChangedEventHandler ^ TracingValueChangedEvent;
@@ -38,8 +40,10 @@ public
             Variables,
             SINGLE_ARG(ref new Platform::Collections::Map<Platform::String ^, double>()));
         DEPENDENCY_PROPERTY_R_WITH_DEFAULT_AND_CALLBACK(GraphControl::EquationCollection ^, Equations, nullptr);
-        // Pass active tracing turned on or off down to the renderer
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, AxesColor, Windows::UI::Colors::Transparent);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, GraphBackground, Windows::UI::Colors::Transparent);
 
+        // Pass active tracing turned on or off down to the renderer
         property bool ActiveTracing
         {
             bool get()
@@ -115,13 +119,10 @@ public
 #pragma endregion
 
     private:
-        void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ args);
-        void OnUnloaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ args);
-
         void OnForceProportionalAxesPropertyChanged(bool oldValue, bool newValue);
         void OnEquationsPropertyChanged(EquationCollection ^ oldValue, EquationCollection ^ newValue);
-        void OnDependencyPropertyChanged(Windows::UI::Xaml::DependencyObject ^ obj, Windows::UI::Xaml::DependencyProperty ^ p);
-
+        void OnAxesColorPropertyChanged(Windows::UI::Color oldValue, Windows::UI::Color newValue);
+        void OnGraphBackgroundPropertyChanged(Windows::UI::Color oldValue, Windows::UI::Color newValue);
         void OnEquationChanged(Equation ^ equation);
         void OnEquationStyleChanged(Equation ^ equation);
         void OnEquationLineEnabledChanged(Equation ^ equation);
@@ -132,8 +133,6 @@ public
         void SetGraphArgs();
         std::shared_ptr<Graphing::IGraph> GetGraph(GraphControl::Equation ^ equation);
         void UpdateVariables();
-
-        void OnBackgroundColorChanged(const Windows::UI::Color& color);
 
         void ScaleRange(double centerX, double centerY, double scale);
 
