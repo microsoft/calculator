@@ -71,12 +71,12 @@ GraphingCalculator::GraphingCalculator()
 
     // OemMinus and OemAdd aren't declared in the VirtualKey enum, we can't add this accelerator XAML-side
     auto virtualKey = ref new KeyboardAccelerator();
-    virtualKey->Key = (VirtualKey)187; // OemMinus key
+    virtualKey->Key = (VirtualKey)189; // OemPlus key
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomOutButton->KeyboardAccelerators->Append(virtualKey);
 
     virtualKey = ref new KeyboardAccelerator();
-    virtualKey->Key = (VirtualKey)189; // OemAdd key
+    virtualKey->Key = (VirtualKey)187; // OemAdd key
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomInButton->KeyboardAccelerators->Append(virtualKey);
 }
