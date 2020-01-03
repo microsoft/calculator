@@ -746,7 +746,7 @@
                                                   Grid.Column="3"
                                                   MinWidth="28"
                                                   VerticalAlignment="Stretch"
-                                                  Foreground="{ThemeResource EquationBoxHoverButtonForegroundBrush}"
+                                                  Foreground="{ThemeResource ButtonForeground}"
                                                   FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                   FontSize="16"
                                                   AutomationProperties.AccessibilityView="Raw"
