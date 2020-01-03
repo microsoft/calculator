@@ -140,3 +140,19 @@ String ^ CalculatorScientificOperators::ParenthesisCountToString(unsigned int co
 {
     return (count == 0) ? ref new String() : ref new String(to_wstring(count).data());
 }
+
+void CalculatorScientificOperators::ClearEntryButton_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
+{
+    if (ClearEntryButton->Visibility == ::Visibility::Collapsed && ClearButton->Visibility == ::Visibility::Visible)
+    {
+        ClearButton->Focus(::FocusState::Programmatic);
+    }
+}
+
+void CalculatorScientificOperators::ClearButton_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
+{
+    if (ClearEntryButton->Visibility == ::Visibility::Visible && ClearButton->Visibility == ::Visibility::Collapsed)
+    {
+        ClearEntryButton->Focus(::FocusState::Programmatic);
+    }
+}

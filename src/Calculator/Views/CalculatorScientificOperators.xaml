@@ -914,7 +914,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <controls:CalculatorButton Name="ClearEntryButton"
+            <controls:CalculatorButton x:Name="ClearEntryButton"
                                        x:Uid="clearEntryButton"
                                        Grid.Column="1"
                                        Style="{StaticResource OperatorButtonStyle}"
@@ -922,6 +922,7 @@
                                        AutomationProperties.AutomationId="clearEntryButton"
                                        ButtonId="ClearEntry"
                                        Content="CE"
+                                       LostFocus="ClearEntryButton_LostFocus"
                                        Visibility="{x:Bind Model.IsInputEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
 
             <controls:CalculatorButton x:Name="ClearButton"
@@ -932,6 +933,7 @@
                                        AutomationProperties.AutomationId="clearButton"
                                        ButtonId="Clear"
                                        Content="C"
+                                       LostFocus="ClearButton_LostFocus"
                                        Visibility="{x:Bind Model.IsInputEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <controls:CalculatorButton x:Name="BackSpaceButton"
