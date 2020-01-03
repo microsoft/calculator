@@ -3912,15 +3912,15 @@
     <comment>Used on the dismiss button of the share action error dialog.</comment>
   </data>
   <data name="ShareActionTitle" xml:space="preserve">
-    <value>Look what I graphed.</value>
+    <value>Look what I graphed with Windows Calculator</value>
     <comment>Sent as part of the shared content. The title for the share.</comment>
   </data>
   <data name="EquationsShareHeader" xml:space="preserve">
-    <value>Equations:</value>
+    <value>Equations</value>
     <comment>Header that appears over the equations section when sharing</comment>
   </data>
   <data name="VariablesShareHeader" xml:space="preserve">
-    <value>Variables:</value>
+    <value>Variables</value>
     <comment>Header that appears over the variables section when sharing</comment>
   </data>
   <data name="GraphImageAltText" xml:space="preserve">
