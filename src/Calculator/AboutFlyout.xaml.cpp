@@ -21,7 +21,7 @@ using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Data;
 
 #ifndef BUILD_YEAR
-#define BUILD_YEAR 2019
+#define BUILD_YEAR 2020
 #endif
 
 AboutFlyout::AboutFlyout()
