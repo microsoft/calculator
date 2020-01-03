@@ -20,6 +20,8 @@ public
 
 public
     delegate void TracingValueChangedEventHandler(Windows::Foundation::Point value);
+public
+    delegate void PointerValueChangedEventHandler(Windows::Foundation::Point value);
 
     [Windows::UI::Xaml::Markup::ContentPropertyAttribute(Name = L"Equations")] public ref class Grapher sealed
         : public Windows::UI::Xaml::Controls::Control,
@@ -27,6 +29,7 @@ public
     {
     public:
         event TracingValueChangedEventHandler ^ TracingValueChangedEvent;
+        event PointerValueChangedEventHandler ^ PointerValueChangedEvent;
         event TracingChangedEventHandler ^ TracingChangedEvent;
         virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler ^ PropertyChanged;
 

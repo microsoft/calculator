@@ -37,7 +37,6 @@ namespace GraphControl::DX
         , m_TraceValue(Point(0, 0))
         , m_TraceLocation(Point(0, 0))
         , m_Tracing(false)
-        , m_ActiveTracingPointRenderer{ &m_deviceResources }
     {
         // Register to be notified if the Device is lost or recreated
         m_deviceResources.RegisterDeviceNotify(this);
@@ -177,8 +176,6 @@ namespace GraphControl::DX
                         {
                             // Active tracing takes over for draw nearest point input from the mouse pointer.
                             trackPoint = m_activeTracingPointerLocation;
-
-                            m_ActiveTracingPointRenderer.Render(m_activeTracingPointerLocation);
                         }
 
                         int formulaId;

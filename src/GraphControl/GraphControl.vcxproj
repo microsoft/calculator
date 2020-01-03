@@ -285,7 +285,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Control\Grapher.h" />
-    <ClInclude Include="DirectX\ActiveTracingPointRenderer.h" />
     <ClInclude Include="DirectX\DeviceResources.h" />
     <ClInclude Include="DirectX\DirectXHelper.h" />
     <ClInclude Include="DirectX\NearestPointRenderer.h" />
@@ -299,7 +298,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Control\Grapher.cpp" />
-    <ClCompile Include="DirectX\ActiveTracingPointRenderer.cpp" />
     <ClCompile Include="DirectX\DeviceResources.cpp" />
     <ClCompile Include="DirectX\NearestPointRenderer.cpp" />
     <ClCompile Include="DirectX\RenderMain.cpp" />
