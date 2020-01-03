@@ -182,7 +182,9 @@ void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint
 
 void CalculatorApp::GraphingCalculator::OnPointerPointChanged(Windows::Foundation::Point newPoint)
 {
-    TracePointer->Margin = Thickness(newPoint.X, newPoint.Y, 0, 0);
+    // Move the pointer glyph to where it is supposed to be.
+    // because the glyph is centered and has some spacing, to get the point to properly line up with the glyph, move the x point over 2 px
+    TracePointer->Margin = Thickness(newPoint.X - 2, newPoint.Y, 0, 0);
 }
 
 GraphingCalculatorViewModel ^ GraphingCalculator::ViewModel::get()

@@ -427,7 +427,7 @@
             <Border x:Name="TracePointer"
                     Width="16"
                     Height="18"
-                    Margin="50,50,0,0"
+                    Margin="48,50,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Visibility="Collapsed">
