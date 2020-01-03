@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include <vector>
@@ -48,6 +51,10 @@ namespace Graphing
         virtual Graphing::Color GetBackColor() const = 0;
         virtual void SetBackColor(const Graphing::Color& value) = 0;
         virtual void ResetBackColor() = 0;
+
+        virtual void SetAllowKeyGraphFeaturesForFunctionsWithParameters(bool kgf) = 0;
+        virtual bool GetAllowKeyGraphFeaturesForFunctionsWithParameters() const = 0;
+        virtual void ResetAllowKeyGraphFeaturesForFunctionsWithParameters() = 0;
 
         virtual Graphing::Color GetZerosColor() const = 0;
         virtual void SetZerosColor(const Graphing::Color& value) = 0;

@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 namespace Graphing
@@ -12,10 +15,10 @@ namespace Graphing
 
     enum class EquationParsingMode
     {
-        // Solving an equation. At least one equal sign is required        
+        // Solving an equation. At least one equal sign is required
         SolveEquation,
 
-        // Graphing an equation. At least one equal sign is required        
+        // Graphing an equation. At least one equal sign is required
         GraphEquation,
 
         // Not expecting an equation. No equal sign is allowed
@@ -29,9 +32,9 @@ namespace Graphing
     {
         // This format is not very human-readable, but best for machine processing and unit test.
         // The meaning of an expression is precise, there is no need for parentheses, and it's easy to parse.
-        // While other serializers may contain little tweaks to make the UI component work as expected, this 
-        // format doesn't change often because no real UI uses it.        
-        // Example: Sum[1,Divide[2,x]]        
+        // While other serializers may contain little tweaks to make the UI component work as expected, this
+        // format doesn't change often because no real UI uses it.
+        // Example: Sum[1,Divide[2,x]]
         Formula,
 
         // Similar to Formula, except the variables are in the format of Var(0), Var(1), ... instead of in their names.
@@ -39,9 +42,9 @@ namespace Graphing
         // Example: Sum[1,Divide[2,Var(0)]]
         InvariantFormula,
 
-        // Similar to Formula, except the aggregates (grouping parentheses) are silently removed during serialization. 
+        // Similar to Formula, except the aggregates (grouping parentheses) are silently removed during serialization.
         // The primary usage for this format is in internal test cases.
-        // When used in parsing, it's identical to Formula        
+        // When used in parsing, it's identical to Formula
         // Example: Sum[1,Divide[2,x]]
         FormulaWithoutAggregate,
 
@@ -50,29 +53,29 @@ namespace Graphing
         // Example: 1+2/x
         Linear,
 
-        // This format is similar to linear format, but during serialization it uses ASCII characters only (except for variable 
+        // This format is similar to linear format, but during serialization it uses ASCII characters only (except for variable
         // named specified by the user) and can round trip back to the linear parser.
-        // 
-        // When used in parsing it's identical to Linear.        
+        //
+        // When used in parsing it's identical to Linear.
         LinearInput,
 
         // The standard MathML format. Note that the math engine can only parse a subset of the syntax in the MathML specification.
         // Example: &lt;math&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;/mfrac&gt;&lt;/math&gt;
         MathML,
 
-        // Same as MathML, except this format type won't generate the root element &lt;math&gt; . 
+        // Same as MathML, except this format type won't generate the root element &lt;math&gt; .
         // Used in serialization only (CasContext.FormatOptions) but not in parsing (CasContext.ParsingOptions)
         // Example: &lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;/mfrac&gt;
         MathMLNoWrapper,
 
         // This format type is for the RichEdit wrapper to render math in RichEdit.
-        // 
+        //
         // Used in serialization only (CasContext.FormatOptions) but not in parsing (CasContext.ParsingOptions)
         // Example: 1 + \frac{2,x}
         MathRichEdit,
 
         // This format type is for the RichEdit wrapper to render math in RichEdit.
-        // It's same with MathRichEdit format with one exception: fractions are rendered 
+        // It's same with MathRichEdit format with one exception: fractions are rendered
         // horizontally instead of vertically. This is a better choice if the display area
         // is confined with a small height.
         //
@@ -125,7 +128,7 @@ namespace Graphing
 
     // Specify the current trigonometry unit mode: Radians, Degrees, Grads. This has effect on these trig operators:
     // Sin Cos Tan Cot Sec Csc
-    // ASin ACos ATan ACot ASec ACsc. 
+    // ASin ACos ATan ACot ASec ACsc.
     // It has NO effect on hyperbolic trig operators (same behavior as Windows Calc), and any other operators.
     enum class EvalTrigUnitMode
     {
@@ -272,7 +275,7 @@ namespace Graphing
         ShowVerboseSolution,
 
         // bit mask of action type. Can be used to remove the Informational flag
-        TypeMask, // mask to get the type 
+        TypeMask, // mask to get the type
 
         // A flag that can be added onto any type. This is informational only that explains what the straight input would do.
         // No action should be performed
@@ -385,188 +388,188 @@ namespace Graphing
         };
     }
 
-	namespace Analyzer {
+    namespace Analyzer
+    {
+        // Graph Analyzer Messages
+        enum GraphAnalyzerMessage
+        {
+            // "No data"
+            GraphAnalyzerMessage_None = 0,
 
-		// Graph Analyzer Messages
-		enum GraphAnalyzerMessage
-		{
-			// "No data"
-			GraphAnalyzerMessage_None = 0,
+            // "No zeros"
+            GraphAnalyzerMessage_NoZeros = 1,
 
-			// "No zeros"
-			GraphAnalyzerMessage_NoZeros = 1,
+            // "No y-intercept"
+            GraphAnalyzerMessage_NoYIntercept = 2,
 
-			// "No y-intercept"
-			GraphAnalyzerMessage_NoYIntercept = 2,
+            // "No minima"
+            GraphAnalyzerMessage_NoMinima = 3,
 
-			// "No minima"
-			GraphAnalyzerMessage_NoMinima = 3,
+            // "No maxima"
+            GraphAnalyzerMessage_NoMaxima = 4,
 
-			// "No maxima"
-			GraphAnalyzerMessage_NoMaxima = 4,
+            // "No inflection points"
+            GraphAnalyzerMessage_NoInflectionPoints = 5,
 
-			// "No inflection points"
-			GraphAnalyzerMessage_NoInflectionPoints = 5,
+            // "No vertical asymptotes"
+            GraphAnalyzerMessage_NoVerticalAsymptotes = 6,
 
-			// "No vertical asymptotes"
-			GraphAnalyzerMessage_NoVerticalAsymptotes = 6,
+            // "No horizontal asymptotes"
+            GraphAnalyzerMessage_NoHorizontalAsymptotes = 7,
 
-			// "No horizontal asymptotes"
-			GraphAnalyzerMessage_NoHorizontalAsymptotes = 7,
+            // "No oblique asymptotes"
+            GraphAnalyzerMessage_NoObliqueAsymptotes = 8,
 
-			// "No oblique asymptotes"
-			GraphAnalyzerMessage_NoObliqueAsymptotes = 8,
+            // "Not able to calculate"
+            GraphAnalyzerMessage_NotAbleToCalculate = 9,
 
-			// "Not able to calculate"
-			GraphAnalyzerMessage_NotAbleToCalculate = 9,
+            // "Not able to mark all graph features"
+            GraphAnalyzerMessage_NotAbleToMarkAllGraphFeatures = 10,
 
-			// "Not able to mark all graph features"
-			GraphAnalyzerMessage_NotAbleToMarkAllGraphFeatures = 10,
+            // These features are too complex for {APPLICATION_NAME} to calculate
+            GraphAnalyzerMessage_TheseFeaturesAreTooComplexToCalculate = 11,
 
-			// These features are too complex for {APPLICATION_NAME} to calculate
-			GraphAnalyzerMessage_TheseFeaturesAreTooComplexToCalculate = 11,
+            // "This feature is too complex for {APPLICATION_NAME} to calculate"
+            GraphAnalyzerMessage_ThisFeatureIsTooComplexToCalculate = 12
+        };
 
-			// "This feature is too complex for {APPLICATION_NAME} to calculate"
-			GraphAnalyzerMessage_ThisFeatureIsTooComplexToCalculate = 12
-		};
+        // define which data should be filled into result object
+        enum AnalysisType
+        {
+            // fill domain data
+            AnalysisType_Domain = 0,
 
-		// define which data should be filled into result object
-		enum AnalysisType
-		{
-			// fill domain data
-			AnalysisType_Domain = 0,
+            // fill range data
+            AnalysisType_Range = 1,
 
-			// fill range data
-			AnalysisType_Range = 1,
+            // fill parity data
+            AnalysisType_Parity = 2,
 
-			// fill parity data
-			AnalysisType_Parity = 2,
+            // fill zeros
+            AnalysisType_Zeros = 3,
 
-			// fill zeros
-			AnalysisType_Zeros = 3,
+            // fill interception with y axis
+            AnalysisType_YIntercept = 4,
 
-			// fill interception with y axis
-			AnalysisType_YIntercept = 4,
+            // fill minima
+            AnalysisType_Minima = 5,
 
-			// fill minima
-			AnalysisType_Minima = 5,
+            // fill maxima
+            AnalysisType_Maxima = 6,
 
-			// fill maxima
-			AnalysisType_Maxima = 6,
+            // fill inflection points
+            AnalysisType_InflectionPoints = 7,
 
-			// fill inflection points
-			AnalysisType_InflectionPoints = 7,
+            // fill vertical asymptotes
+            AnalysisType_VerticalAsymptotes = 8,
 
-			// fill vertical asymptotes
-			AnalysisType_VerticalAsymptotes = 8,
+            // fill horizontal asymptotes
+            AnalysisType_HorizontalAsymptotes = 9,
 
-			// fill horizontal asymptotes
-			AnalysisType_HorizontalAsymptotes = 9,
+            // fill oblique asymptotes
+            AnalysisType_ObliqueAsymptotes = 10,
 
-			// fill oblique asymptotes
-			AnalysisType_ObliqueAsymptotes = 10,
+            // fill monotonicity
+            AnalysisType_Monotonicity = 11,
 
-			// fill monotonicity
-			AnalysisType_Monotonicity = 11,
+            // fill period
+            AnalysisType_Period = 12
+        };
 
-			// fill period
-			AnalysisType_Period = 12
-		};
+        // define which additional data should be calculated
+        enum class PerformAnalysisType
+        {
+            // Calculate nothing
+            // PerformAnalysisType_None = 0x0,
 
-		// define which additional data should be calculated
-		enum class PerformAnalysisType
-		{
-			// Calculate nothing
-			//PerformAnalysisType_None = 0x0,
+            // Calculate domain data
+            PerformAnalysisType_Domain = 0x01,
 
-			// Calculate domain data
-			PerformAnalysisType_Domain = 0x01,
+            // Calculate range data
+            PerformAnalysisType_Range = 0x02,
 
-			// Calculate range data
-			PerformAnalysisType_Range = 0x02,
+            // Calculate parity data
+            PerformAnalysisType_Parity = 0x04,
 
-			// Calculate parity data
-			PerformAnalysisType_Parity = 0x04,
+            // Calculate zeros and interception with y axis
+            PerformAnalysisType_InterceptionPointsWithXAndYAxis = 0x08,
 
-			// Calculate zeros and interception with y axis
-			PerformAnalysisType_InterceptionPointsWithXAndYAxis = 0x08,
+            // Calculate Extrema and inflection points
+            PerformAnalysisType_CriticalPoints = 0x10,
 
-			// Calculate Extrema and inflection points
-			PerformAnalysisType_CriticalPoints = 0x10,
+            // Calculate asymptotes
+            PerformAnalysisType_Asymptotes = 0x20,
 
-			// Calculate asymptotes
-			PerformAnalysisType_Asymptotes = 0x20,
+            // Calculate monotonicity
+            PerformAnalysisType_Monotonicity = 0x40,
 
-			// Calculate monotonicity
-			PerformAnalysisType_Monotonicity = 0x40,
+            // Calculate period
+            PerformAnalysisType_Period = 0x80,
 
-			// Calculate period
-			PerformAnalysisType_Period = 0x80,
+            // Calculate all additional data
+            PerformAnalysisType_All = 0xFF
+        };
 
-			// Calculate all additional data
-			PerformAnalysisType_All = 0xFF
-		};
+        // function parity for function analysis
+        enum class FunctionParityType
+        {
+            // parity not calculated or not possible to calculate
+            FunctionParityType_Unknown = 0,
 
-		// function parity for function analysis
-		enum class FunctionParityType
-		{
-			// parity not calculated or not possible to calculate
-			FunctionParityType_Unknown = 0,
+            // parity is odd
+            FunctionParityType_Odd = 1,
 
-			// parity is odd
-			FunctionParityType_Odd = 1,
+            // parity is even
+            FunctionParityType_Even = 2,
 
-			// parity is even
-			FunctionParityType_Even = 2,
+            // function is not odd nor even
+            FunctionParityType_None = 3
+        };
 
-			// function is not odd nor even
-			FunctionParityType_None = 3
-		};
+        // monotonicity direction for function analysis
+        enum class FunctionMonotonicityType
+        {
+            // unknown or not calculated
+            FunctionMonotonicityType_Unknown = 0,
 
-		// monotonicity direction for function analysis
-		enum class FunctionMonotonicityType
-		{
-			// unknown or not calculated
-			FunctionMonotonicityType_Unknown = 0,
+            // ascending monotonicity on interval
+            FunctionMonotonicityType_Ascending = 1,
 
-			// ascending monotonicity on interval
-			FunctionMonotonicityType_Ascending = 1,
+            // descending monotonicity on interval
+            FunctionMonotonicityType_Descending = 2,
 
-			// descending monotonicity on interval
-			FunctionMonotonicityType_Descending = 2,
+            // constant monotonicity on interval
+            FunctionMonotonicityType_Constant = 3
+        };
 
-			// constant monotonicity on interval
-			FunctionMonotonicityType_Constant = 3
-		};
+        // asymptote description for function analysis
+        enum class AsymptoteType
+        {
+            // unknown or not calculated
+            AsymptoteType_Unknown = 0,
 
-		// asymptote description for function analysis
-		enum class AsymptoteType
-		{
-			// unknown or not calculated
-			AsymptoteType_Unknown = 0,
+            // when x goes to positive infinity
+            AsymptoteType_PositiveInfinity = 1,
 
-			// when x goes to positive infinity
-			AsymptoteType_PositiveInfinity = 1,
+            // when x goes to negative infinity
+            AsymptoteType_NegativeInfinity = 2,
 
-			// when x goes to negative infinity
-			AsymptoteType_NegativeInfinity = 2,
+            // when x goes to positive or negative infinity
+            AsymptoteType_AnyInfinity = 3
+        };
 
-			// when x goes to positive or negative infinity
-			AsymptoteType_AnyInfinity = 3
-		};
+        // function periodicity for function analysis
+        enum class FunctionPeriodicityType
+        {
+            // periodicity not calculated or not possible to calculate
+            FunctionPeriodicityType_Unknown = 0,
 
-		// function periodicity for function analysis
-		enum class FunctionPeriodicityType
-		{
-			// periodicity not calculated or not possible to calculate
-			FunctionPeriodicityType_Unknown = 0,
+            // parity is odd
+            FunctionPeriodicityType_Periodic = 1,
 
-			// parity is odd
-			FunctionPeriodicityType_Periodic = 1,
+            // parity is even
+            FunctionPeriodicityType_NotPeriodic = 2
+        };
 
-			// parity is even
-			FunctionPeriodicityType_NotPeriodic = 2
-		};
-
-	}
+    }
 }

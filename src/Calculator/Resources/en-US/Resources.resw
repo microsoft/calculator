@@ -4202,9 +4202,57 @@
     <value>Current mode is graph mode</value>
     <comment>Announcement used in Graphing Calculator when switching to the graph mode</comment>
   </data>
+  <data name="GridHeading.Text" xml:space="preserve">
+    <value>Grid</value>
+    <comment>Heading for grid extents on the settings </comment>
+  </data>
+  <data name="TrigModeDegrees.Content" xml:space="preserve">
+    <value>Degrees</value>
+    <comment>Degrees mode on settings page</comment>
+  </data>
+  <data name="TrigModeGradians.Content" xml:space="preserve">
+    <value>Gradians</value>
+    <comment>Gradian mode on settings page</comment>
+  </data>
+  <data name="TrigModeRadians.Content" xml:space="preserve">
+    <value>Radians</value>
+    <comment>Radians mode on settings page</comment>
+  </data>
+  <data name="UnitsHeading.Text" xml:space="preserve">
+    <value>Units</value>
+    <comment>Heading for Unit's on the settings</comment>
+  </data>
+  <data name="GraphSettingsXMax.Header" xml:space="preserve">
+    <value>X-Max</value>
+    <comment>X maximum value header</comment>
+  </data>
+  <data name="GraphSettingsXMin.Header" xml:space="preserve">
+    <value>X-Min</value>
+    <comment>X minimum value header</comment>
+  </data>
+  <data name="GraphSettingsYMax.Header" xml:space="preserve">
+    <value>Y-Max</value>
+    <comment>Y Maximum value header</comment>
+  </data>
+  <data name="GraphSettingsYMin.Header" xml:space="preserve">
+    <value>Y-Min</value>
+    <comment>Y minimum value header</comment>
+  </data>
   <data name="equationMathRichEditBox.PlaceholderText" xml:space="preserve">
     <value>Enter an equation</value>
     <comment>Used in the Graphing Calculator to indicate to users that they can enter an equation in the textbox</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Grid options</value>
+    <comment>This is the tooltip text for the grid options button in Graphing Calculator</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Grid options</value>
+    <comment>This is the automation name text for the grid options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphOptionsHeading.Text" xml:space="preserve">
+    <value>Graph Options</value>
+    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
   </data>
   <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
     <value>Enter an equation</value>

@@ -15,6 +15,7 @@
 #include "Calculator/Controls/EquationTextBox.h"
 #include "Calculator/Views/GraphingCalculator/EquationInputArea.xaml.h"
 #include "CalcViewModel/Common/Utils.h"
+#include "GraphingSettings.xaml.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -42,6 +43,7 @@ using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
@@ -72,12 +74,12 @@ GraphingCalculator::GraphingCalculator()
 
     // OemMinus and OemAdd aren't declared in the VirtualKey enum, we can't add this accelerator XAML-side
     auto virtualKey = ref new KeyboardAccelerator();
-    virtualKey->Key = (VirtualKey)187; //OemMinus key
+    virtualKey->Key = (VirtualKey)189; // OemPlus key
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomOutButton->KeyboardAccelerators->Append(virtualKey);
 
     virtualKey = ref new KeyboardAccelerator();
-    virtualKey->Key = (VirtualKey)189; //OemAdd key
+    virtualKey->Key = (VirtualKey)187; // OemAdd key
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomInButton->KeyboardAccelerators->Append(virtualKey);
 }
@@ -161,7 +163,7 @@ void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationView
     GraphingControl->PlotGraph();
 }
 
-void GraphingCalculator::OnTracePointChanged(Windows::Foundation::Point newPoint)
+void GraphingCalculator::OnTracePointChanged(Point newPoint)
 {
     wstringstream traceValueString;
 
@@ -485,7 +487,7 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_Checked(Platform::Object ^
     FocusManager::TryFocusAsync(GraphingControl, ::FocusState::Programmatic);
 
     m_activeTracingKeyUpToken = Window::Current->CoreWindow->KeyUp +=
-        ref new Windows::Foundation::TypedEventHandler<Windows::UI::Core::CoreWindow ^, Windows::UI::Core::KeyEventArgs ^>(
+        ref new TypedEventHandler<Windows::UI::Core::CoreWindow ^, Windows::UI::Core::KeyEventArgs ^>(
             this, &CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp);
 
     KeyboardShortcutManager::IgnoreEscape(false);
@@ -518,4 +520,26 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp(Windows::UI::Core::C
         GraphingControl->ActiveTracing = false;
         args->Handled = true;
     }
+}
+
+void GraphingCalculator::GraphSettingsButton_Click(Object ^ sender, RoutedEventArgs ^ e)
+{
+    DisplayGraphSettings();
+}
+
+void GraphingCalculator::DisplayGraphSettings()
+{
+    auto graphSettings = ref new GraphingSettings();
+    graphSettings->SetGrapher(this->GraphingControl);
+    auto flyoutGraphSettings = ref new Flyout();
+    flyoutGraphSettings->Content = graphSettings;
+    flyoutGraphSettings->Closing += ref new TypedEventHandler<FlyoutBase ^, FlyoutBaseClosingEventArgs ^>(this, &GraphingCalculator::OnSettingsFlyout_Closing);
+    flyoutGraphSettings->ShowAt(GraphSettingsButton);
+}
+
+void GraphingCalculator::OnSettingsFlyout_Closing(FlyoutBase ^ sender, FlyoutBaseClosingEventArgs ^ args)
+{
+    auto flyout = static_cast<Flyout ^>(sender);
+    auto graphingSetting = static_cast<GraphingSettings ^>(flyout->Content);
+    args->Cancel = graphingSetting->CanBeClose();
 }

@@ -17,6 +17,23 @@ namespace MockGraphingImpl
 
     class EvalOptions : public Graphing::IEvalOptions
     {
+    public:
+        EvalOptions()
+            : m_unit(Graphing::EvalTrigUnitMode::Invalid)
+        {
+        }
+
+        Graphing::EvalTrigUnitMode GetTrigUnitMode() const override
+        {
+            return m_unit;
+        }
+        void SetTrigUnitMode(Graphing::EvalTrigUnitMode value) override
+        {
+            m_unit = value;
+        }
+
+    private:
+        Graphing::EvalTrigUnitMode m_unit;
     };
 
     class FormatOptions : public Graphing::IFormatOptions
@@ -34,6 +51,10 @@ namespace MockGraphingImpl
     class MathSolver : public Graphing::IMathSolver
     {
     public:
+        MathSolver()
+        {
+        }
+
         Graphing::IParsingOptions& ParsingOptions() override
         {
             return m_parsingOptions;
@@ -54,19 +75,13 @@ namespace MockGraphingImpl
             return nullptr;
         }
 
-        std::shared_ptr<Graphing::IGraph> CreateGrapher(const Graphing::IExpression* expression) override
-        {
-            return nullptr;
-        }
+        std::shared_ptr<Graphing::IGraph> CreateGrapher(const Graphing::IExpression* expression) override;
 
-        std::shared_ptr<Graphing::IGraph> CreateGrapher() override
-        {
-            return nullptr;
-        }
+        std::shared_ptr<Graphing::IGraph> CreateGrapher() override;
 
         std::wstring Serialize(const Graphing::IExpression* expression) override
         {
-            return std::wstring{};
+            return L"";
         }
 
         Graphing::IGraphFunctionAnalysisData IMathSolver::Analyze(const Graphing::Analyzer::IGraphAnalyzer* analyzer)

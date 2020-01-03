@@ -226,7 +226,7 @@
     <AppVersion Condition="'$(AppVersion)' == ''">0.0.0.0</AppVersion>
   </PropertyGroup>
   <PropertyGroup>
-      <GenerateProjectSpecificOutputFolder>true</GenerateProjectSpecificOutputFolder>
+    <GenerateProjectSpecificOutputFolder>true</GenerateProjectSpecificOutputFolder>
   </PropertyGroup>
   <ItemGroup>
     <ResourceCompile Include="Calculator.rc" PreprocessorDefinitions="%(PreprocessorDefinitions);APP_VERSION_MAJOR=$(AppVersion.Split(`.`)[0]);APP_VERSION_MINOR=$(AppVersion.Split(`.`)[1]);APP_VERSION_BUILD=$(AppVersion.Split(`.`)[2]);APP_VERSION_REVISION=$(AppVersion.Split(`.`)[3])" />
@@ -296,6 +296,9 @@
     <ClInclude Include="Views\GraphingCalculator\GraphingCalculator.xaml.h">
       <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\GraphingSettings.xaml.h">
+      <DependentUpon>Views\GraphingCalculator\GraphingSettings.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h">
       <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
     </ClInclude>
@@ -363,8 +366,9 @@
     <Page Include="Views\DelighterUnitStyles.xaml" />
     <Page Include="Views\GraphingCalculator\EquationInputArea.xaml" />
     <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml" />
+    <Page Include="Views\GraphingCalculator\GraphingSettings.xaml" />
     <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" />
-    <Page Include="Views\GraphingCalculator\GraphingNumPad.xaml"/>
+    <Page Include="Views\GraphingCalculator\GraphingNumPad.xaml" />
     <Page Include="Views\HistoryList.xaml" />
     <Page Include="Views\MainPage.xaml" />
     <Page Include="Views\Memory.xaml" />
@@ -459,6 +463,9 @@
     </ClCompile>
     <ClCompile Include="Views\GraphingCalculator\GraphingCalculator.xaml.cpp">
       <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\GraphingSettings.xaml.cpp">
+      <DependentUpon>Views\GraphingCalculator\GraphingSettings.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp">
       <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>

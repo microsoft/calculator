@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include "Common.h"
@@ -26,6 +29,8 @@ namespace Graphing::Renderer
 		virtual HRESULT ChangeRange(ChangeRangeAction action) = 0;
 		virtual HRESULT MoveRangeByRatio(double ratioX, double ratioY) = 0;
 		virtual HRESULT ResetRange() = 0;
+		virtual HRESULT GetDisplayRanges(double& xMin, double& xMax, double& yMin, double& yMax) = 0;
+		virtual HRESULT SetDisplayRanges(double xMin, double xMax, double yMin, double yMax) = 0;
 
 		virtual HRESULT GetBitmap(std::shared_ptr<Graphing::IBitmap>& bitmapOut, bool& hasSomeMissingDataOut) = 0;
 

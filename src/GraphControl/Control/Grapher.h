@@ -107,6 +107,142 @@ public
         void PlotGraph();
         GraphControl::KeyGraphFeaturesInfo ^ AnalyzeEquation(GraphControl::Equation ^ equation);
 
+        // We can't use the EvalTrigUnitMode enum directly in as the property type because it comes from another module which doesn't expose
+        // it as a public enum class.  So the compiler doesn't recognize it as a valid type for the ABI boundary.
+        property int TrigUnitMode
+        {
+            void set(int value)
+            {
+                if (value != (int)m_solver->EvalOptions().GetTrigUnitMode())
+                {
+                    m_solver->EvalOptions().SetTrigUnitMode((Graphing::EvalTrigUnitMode)value);
+                    PlotGraph();
+                }
+            }
+
+            int get()
+            {
+                return (int)m_solver->EvalOptions().GetTrigUnitMode();
+            }
+        }
+
+        property double XAxisMin
+        {
+            double get()
+            {
+                return m_graph->GetOptions().GetDefaultXRange().first;
+            }
+            void set(double value)
+            {
+                std::pair<double, double> newValue(value, XAxisMax);
+                if (m_graph != nullptr)
+                {
+                    m_graph->GetOptions().SetDefaultXRange(newValue);
+                    if (m_renderMain != nullptr)
+                    {
+                        m_renderMain->RunRenderPass();
+                    }
+                }
+            }
+        }
+
+        property double XAxisMax
+        {
+            double get()
+            {
+                return m_graph->GetOptions().GetDefaultXRange().second;
+            }
+            void set(double value)
+            {
+                std::pair<double, double> newValue(XAxisMin, value);
+                if (m_graph != nullptr)
+                {
+                    m_graph->GetOptions().SetDefaultXRange(newValue);
+                    if (m_renderMain != nullptr)
+                    {
+                        m_renderMain->RunRenderPass();
+                    }
+                }
+            }
+        }
+
+        property double YAxisMin
+        {
+            double get()
+            {
+                return m_graph->GetOptions().GetDefaultXRange().first;
+            }
+            void set(double value)
+            {
+                std::pair<double, double> newValue(value, YAxisMax);
+                if (m_graph != nullptr)
+                {
+                    m_graph->GetOptions().SetDefaultYRange(newValue);
+                    if (m_renderMain != nullptr)
+                    {
+                        m_renderMain->RunRenderPass();
+                    }
+                }
+            }
+        }
+
+        property double YAxisMax
+        {
+            double get()
+            {
+                return m_graph->GetOptions().GetDefaultXRange().second;
+            }
+            void set(double value)
+            {
+                std::pair<double, double> newValue(YAxisMin, value);
+                if (m_graph != nullptr)
+                {
+                    m_graph->GetOptions().SetDefaultYRange(newValue);
+                    if (m_renderMain != nullptr)
+                    {
+                        m_renderMain->RunRenderPass();
+                    }
+                }
+            }
+        }
+
+        void GetDisplayRanges(double* xMin, double* xMax, double* yMin, double* yMax)
+        {
+            try
+            {
+                if (m_graph != nullptr)
+                {
+                    if (auto render = m_graph->GetRenderer())
+                    {
+                        render->GetDisplayRanges(*xMin, *xMax, *yMin, *yMax);
+                    }
+                }
+            }
+            catch (const std::exception&)
+            {
+                OutputDebugString(L"GetDisplayRanges failed\r\n");
+            }
+        }
+
+        void SetDisplayRanges(double xMin, double xMax, double yMin, double yMax)
+        {
+            try
+            {
+                if (auto render = m_graph->GetRenderer())
+                {
+                    render->SetDisplayRanges(xMin, xMax, yMin, yMax);
+                    if (m_renderMain)
+                    {
+                        m_renderMain->RunRenderPass();
+                    }
+                }
+            }
+            catch (const std::exception&)
+            {
+                OutputDebugString(L"SetDisplayRanges failed\r\n");
+            }
+        }
+
     protected:
 #pragma region Control Overrides
         void OnApplyTemplate() override;
@@ -149,9 +285,6 @@ public
         void SetEquationsAsValid();
         void SetEquationErrors();
 
-        Windows::Foundation::Collections::IObservableVector<Platform::String ^> ^ ConvertWStringVector(std::vector<std::wstring> inVector);
-        Windows::Foundation::Collections::IObservableMap<Platform::String ^, Platform::String ^> ^ ConvertWStringIntMap(std::map<std::wstring, int> inMap);
-
     private:
         DX::RenderMain ^ m_renderMain = nullptr;
 
@@ -171,7 +304,7 @@ public
 
         const std::unique_ptr<Graphing::IMathSolver> m_solver;
         const std::shared_ptr<Graphing::IGraph> m_graph;
-
+        bool m_calculatedForceProportional = false;
         bool m_tracingTracking;
         enum KeysPressedSlots
         {
@@ -184,7 +317,6 @@ public
 
         bool m_KeysPressed[5];
         bool m_Moving;
-
         Windows::UI::Xaml::DispatcherTimer ^ m_TracingTrackingTimer;
 
     public:

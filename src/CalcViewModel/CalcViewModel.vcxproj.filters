@@ -92,6 +92,9 @@
     <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp">
       <Filter>Common\Automation</Filter>
     </ClCompile>
+    <ClCompile Include="GraphingCalculator\GraphingSettingsViewModel.cpp">
+      <Filter>GraphingCalculator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -218,6 +221,9 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="GraphingCalculator\VariableViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculator\GraphingSettingsViewModel.h">
       <Filter>GraphingCalculator</Filter>
     </ClInclude>
   </ItemGroup>

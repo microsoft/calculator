@@ -242,6 +242,7 @@
   <ItemGroup>
     <ClInclude Include="..\GraphingInterfaces\Common.h" />
     <ClInclude Include="..\GraphingInterfaces\GraphingEnums.h" />
+    <ClInclude Include="..\GraphingInterfaces\IBitmap.h" />
     <ClInclude Include="..\GraphingInterfaces\IGraph.h" />
     <ClInclude Include="..\GraphingInterfaces\IGraphAnalyzer.h" />
     <ClInclude Include="..\GraphingInterfaces\IGraphingOptions.h" />
@@ -249,6 +250,10 @@
     <ClInclude Include="..\GraphingInterfaces\IMathSolver.h" />
     <ClInclude Include="..\GraphingInterfaces\IEquation.h" />
     <ClInclude Include="..\GraphingInterfaces\IEquationOptions.h" />
+    <ClInclude Include="Mocks\Bitmap.h" />
+    <ClInclude Include="Mocks\GraphRenderer.h" />
+    <ClInclude Include="Mocks\Graph.h" />
+    <ClInclude Include="Mocks\GraphingOptions.h" />
     <ClInclude Include="Mocks\MathSolver.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />

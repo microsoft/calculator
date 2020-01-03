@@ -171,28 +171,23 @@ namespace GraphControl::DX
                     if (m_drawNearestPoint || m_drawActiveTracing)
                     {
                         Point trackPoint = m_pointerLocation;
-
                         if (m_drawActiveTracing)
                         {
                             // Active tracing takes over for draw nearest point input from the mouse pointer.
                             trackPoint = m_activeTracingPointerLocation;
                         }
 
-                        int formulaId;
-                        Point nearestPointLocation;
-                        pair<float, float> nearestPointValue;
-                        renderer->GetClosePointData(
-                            trackPoint.X,
-                            trackPoint.Y,
-                            formulaId,
-                            nearestPointLocation.X,
-                            nearestPointLocation.Y,
-                            nearestPointValue.first,
-                            nearestPointValue.second);
+                        int formulaId = -1;
+                        float nearestPointLocationX, nearestPointLocationY;
+                        float nearestPointValueX, nearestPointValueY;
 
-                        if (!isnan(nearestPointLocation.X) && !isnan(nearestPointLocation.Y))
+                        if (renderer->GetClosePointData(
+                                trackPoint.X, trackPoint.Y, formulaId, nearestPointLocationX, nearestPointLocationY, nearestPointValueX, nearestPointValueY)
+                            == S_OK)
                         {
-                            auto lineColors = m_graph->GetOptions().GetGraphColors();
+                            if (!isnan(nearestPointLocationX) && !isnan(nearestPointLocationY))
+                            {
+                                auto lineColors = m_graph->GetOptions().GetGraphColors();
 
                             if (formulaId >= 0 && static_cast<unsigned int>(formulaId) < lineColors.size())
                             {
@@ -200,10 +195,16 @@ namespace GraphControl::DX
                                 m_nearestPointRenderer.SetColor(D2D1::ColorF(dotColor.R * 65536 + dotColor.G * 256 + dotColor.B, 1.0));
                             }
 
-                            m_nearestPointRenderer.Render(nearestPointLocation);
-                            m_Tracing = true;
-                            m_TraceLocation = Point(nearestPointLocation.X, nearestPointLocation.Y);
-                            m_TraceValue = Point(nearestPointValue.first, nearestPointValue.second);
+                                m_TraceLocation = Point(nearestPointLocationX, nearestPointLocationY);
+                                m_nearestPointRenderer.Render(m_TraceLocation);
+                                m_Tracing = true;
+                                m_TraceLocation = Point(nearestPointLocationX, nearestPointLocationY);
+                                m_TraceValue = Point(nearestPointValueX, nearestPointValueY);
+                            }
+                            else
+                            {
+                                m_Tracing = false;
+                            }
                         }
                         else
                         {
