@@ -104,7 +104,13 @@ public
         event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String ^, double> ^> ^ VariablesUpdated;
         void SetVariable(Platform::String ^ variableName, double newValue);
         Platform::String ^ ConvertToLinear(Platform::String ^ mmlString);
-        void PlotGraph(bool keepRanges);
+
+        /// <summary>
+        /// Draw the graph. Call this method if you add or modify an equation.
+        /// </summary>
+        /// <param name="keepCurrentView">Force the graph control to not pan or zoom to adapt the view.</param>
+        void PlotGraph(bool keepCurrentView);
+
         GraphControl::KeyGraphFeaturesInfo ^ AnalyzeEquation(GraphControl::Equation ^ equation);
 
         // We can't use the EvalTrigUnitMode enum directly in as the property type because it comes from another module which doesn't expose
@@ -265,8 +271,8 @@ public
         void OnEquationChanged(Equation ^ equation);
         void OnEquationStyleChanged(Equation ^ equation);
         void OnEquationLineEnabledChanged(Equation ^ equation);
-        bool TryUpdateGraph(bool keepRanges);
-        void TryPlotGraph(bool keepRanges, bool shouldRetry);
+        bool TryUpdateGraph(bool keepCurrentView);
+        void TryPlotGraph(bool keepCurrentView, bool shouldRetry);
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
         std::vector<Equation ^> GetGraphableEquations();
         void SetGraphArgs();
@@ -284,7 +290,7 @@ public
 
         void SetEquationsAsValid();
         void SetEquationErrors();
-
+        std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> TryInitializeGraph(bool keepCurrentView, _In_ const Graphing::IExpression* graphingExp = nullptr);
     private:
         DX::RenderMain ^ m_renderMain = nullptr;
 
