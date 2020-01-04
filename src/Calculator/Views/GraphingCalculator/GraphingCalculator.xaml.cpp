@@ -160,7 +160,7 @@ void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationView
         GraphingControl->Equations->Append(equationViewModel->GraphEquation);
     }
 
-    GraphingControl->PlotGraph();
+    GraphingControl->PlotGraph(false);
 }
 
 void GraphingCalculator::OnTracePointChanged(Point newPoint)

@@ -104,7 +104,7 @@ public
         event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String ^, double> ^> ^ VariablesUpdated;
         void SetVariable(Platform::String ^ variableName, double newValue);
         Platform::String ^ ConvertToLinear(Platform::String ^ mmlString);
-        void PlotGraph();
+        void PlotGraph(bool keepRanges);
         GraphControl::KeyGraphFeaturesInfo ^ AnalyzeEquation(GraphControl::Equation ^ equation);
 
         // We can't use the EvalTrigUnitMode enum directly in as the property type because it comes from another module which doesn't expose
@@ -116,7 +116,7 @@ public
                 if (value != (int)m_solver->EvalOptions().GetTrigUnitMode())
                 {
                     m_solver->EvalOptions().SetTrigUnitMode((Graphing::EvalTrigUnitMode)value);
-                    PlotGraph();
+                    PlotGraph(true);
                 }
             }
 
@@ -265,8 +265,8 @@ public
         void OnEquationChanged(Equation ^ equation);
         void OnEquationStyleChanged(Equation ^ equation);
         void OnEquationLineEnabledChanged(Equation ^ equation);
-        bool TryUpdateGraph();
-        void TryPlotGraph(bool shouldRetry);
+        bool TryUpdateGraph(bool keepRanges);
+        void TryPlotGraph(bool keepRanges, bool shouldRetry);
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
         std::vector<Equation ^> GetGraphableEquations();
         void SetGraphArgs();

@@ -229,7 +229,6 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeRadians");
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeGradians");
-                    RefreshPosition();
                 }
             }
         }
@@ -248,7 +247,6 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeRadians");
                     RaisePropertyChanged(L"TrigModeGradians");
-                    RefreshPosition();
                 }
             }
         }
@@ -267,14 +265,12 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeGradians");
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeRadians");
-                    RefreshPosition();
                 }
             }
         }
 
     public:
         void UpdateDisplayRange(bool XValuesModified);
-        void RefreshPosition();
 
     public:
         void SetGrapher(GraphControl::Grapher ^ grapher);
