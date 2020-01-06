@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include "CalcManager/CalculatorVector.h"
 #include "CalcManager/ExpressionCommandInterface.h"
 #include "DelegateCommand.h"
 
@@ -189,7 +188,7 @@ public:
 private:                                                                                                                                                       \
     static Windows::UI::Xaml::DependencyProperty ^ s_##n##Property;                                                                                            \
                                                                                                                                                                \
-public:
+private:
 
 // Utilities for DependencyProperties
 namespace Utils
@@ -380,17 +379,28 @@ namespace Utils
     void IFTPlatformException(HRESULT hr);
     Platform::String ^ GetStringValue(Platform::String ^ input);
     bool IsLastCharacterTarget(std::wstring const& input, wchar_t target);
-    std::wstring RemoveUnwantedCharsFromWstring(std::wstring inputString, wchar_t* unwantedChars, unsigned int size);
+
+    // Return wstring after removing characters specified by unwantedChars array
+    template <size_t N>
+    std::wstring RemoveUnwantedCharsFromString(std::wstring inputString, const wchar_t (&unwantedChars)[N])
+    {
+        for (const wchar_t unwantedChar : unwantedChars)
+        {
+            inputString.erase(std::remove(inputString.begin(), inputString.end(), unwantedChar), inputString.end());
+        }
+        return inputString;
+    }
+
     double GetDoubleFromWstring(std::wstring input);
     int GetWindowId();
     void RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Windows::UI::Core::CoreDispatcher ^ currentDispatcher);
     void SerializeCommandsAndTokens(
-        _In_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
-        _In_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands,
+        _In_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
+        _In_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands,
         Windows::Storage::Streams::DataWriter ^ writer);
 
-    const std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> DeserializeCommands(Windows::Storage::Streams::DataReader ^ reader);
-    const std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> DeserializeTokens(Windows::Storage::Streams::DataReader ^ reader);
+    const std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> DeserializeCommands(Windows::Storage::Streams::DataReader ^ reader);
+    const std::shared_ptr<std::vector<std::pair<std::wstring, int>>> DeserializeTokens(Windows::Storage::Streams::DataReader ^ reader);
 
     Windows::Foundation::DateTime GetUniversalSystemTime();
     bool IsDateTimeOlderThan(Windows::Foundation::DateTime dateTime, const long long duration);

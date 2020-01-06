@@ -29,8 +29,7 @@ namespace CalculatorApp
         virtual void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs ^ args) override;
         virtual void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs ^ args) override;
 
-        static Platform::String ^ GetAppViewState();
-        static float GetAppWindowHeight();
+    internal:
         void RemoveWindow(_In_ WindowFrameService ^ frameService);
         void RemoveSecondaryWindow(_In_ WindowFrameService ^ frameService);
 

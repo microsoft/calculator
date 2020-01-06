@@ -35,7 +35,7 @@ namespace CalculatorUnitTests
         void SetCurrentUnitTypes(const UCM::Unit& fromType, const UCM::Unit& toType) override;
         void SwitchActive(const std::wstring& newValue);
         std::wstring SaveUserPreferences() override;
-        void RestoreUserPreferences(_In_ const std::wstring& userPreferences) override;
+        void RestoreUserPreferences(_In_ std::wstring_view userPreferences) override;
         void SendCommand(UCM::Command command) override;
         void SetViewModelCallback(const std::shared_ptr<UCM::IUnitConverterVMCallback>& newCallback) override;
         void SetViewModelCurrencyCallback(_In_ const std::shared_ptr<UCM::IViewModelCurrencyCallback>& /*newCallback*/) override

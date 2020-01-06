@@ -83,7 +83,7 @@ void asinanglerat(_Inout_ PRAT* pa, ANGLE_TYPE angletype, uint32_t radix, int32_
     ascalerat(pa, angletype, precision);
 }
 
-void asinrat(PRAT* px, uint32_t radix, int32_t precision)
+void asinrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
 
 {
     PRAT pret = nullptr;
@@ -190,7 +190,7 @@ void _acosrat(PRAT* px, int32_t precision)
     DESTROYTAYLOR();
 }
 
-void acosrat(PRAT* px, uint32_t radix, int32_t precision)
+void acosrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
 
 {
     int32_t sgn = SIGN(*px);
@@ -276,7 +276,7 @@ void _atanrat(PRAT* px, int32_t precision)
     DESTROYTAYLOR();
 }
 
-void atanrat(PRAT* px, uint32_t radix, int32_t precision)
+void atanrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
 
 {
     PRAT tmpx = nullptr;

@@ -58,10 +58,11 @@ namespace CalculatorApp
 
             Windows::Globalization::NumberFormatting::DecimalFormatter ^ GetRegionalSettingsAwareDecimalFormatter() const;
             Windows::Globalization::DateTimeFormatting::DateTimeFormatter ^ GetRegionalSettingsAwareDateTimeFormatter(_In_ Platform::String ^ format) const;
-            Windows::Globalization::DateTimeFormatting::DateTimeFormatter ^ GetRegionalSettingsAwareDateTimeFormatter(
-                _In_ Platform::String ^ format,
-                _In_ Platform::String ^ calendarIdentifier,
-                _In_ Platform::String ^ clockIdentifier) const;
+            Windows::Globalization::DateTimeFormatting::DateTimeFormatter
+                ^ GetRegionalSettingsAwareDateTimeFormatter(
+                    _In_ Platform::String ^ format,
+                    _In_ Platform::String ^ calendarIdentifier,
+                    _In_ Platform::String ^ clockIdentifier) const;
 
             Windows::Globalization::NumberFormatting::CurrencyFormatter ^ GetRegionalSettingsAwareCurrencyFormatter() const;
 

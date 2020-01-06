@@ -247,11 +247,11 @@ int CalculatorProgrammerBitFlipPanel::GetIndexOfLastBit(BitLength length) const
 String ^ CalculatorProgrammerBitFlipPanel::GenerateAutomationPropertiesName(int position, bool value)
 {
     auto resourceLoader = AppResourceProvider::GetInstance();
-    String ^ automationNameTemplate = resourceLoader.GetResourceString(L"BitFlipItemAutomationName");
-    wstring bitPosition;
+    String ^ automationNameTemplate = resourceLoader->GetResourceString(L"BitFlipItemAutomationName");
+    String ^ bitPosition;
     if (position == 0)
     {
-        bitPosition = wstring(resourceLoader.GetResourceString(L"LeastSignificantBit")->Data());
+        bitPosition = resourceLoader->GetResourceString(L"LeastSignificantBit");
     }
     else
     {
@@ -263,14 +263,14 @@ String ^ CalculatorProgrammerBitFlipPanel::GenerateAutomationPropertiesName(int 
 
         if (position == lastPosition)
         {
-            bitPosition = wstring(resourceLoader.GetResourceString(L"MostSignificantBit")->Data());
+            bitPosition = resourceLoader->GetResourceString(L"MostSignificantBit");
         }
         else
         {
-            String ^ indexName = resourceLoader.GetResourceString(ref new Platform::String(to_wstring(position).c_str()));
-            String ^ bitPositionTemplate = resourceLoader.GetResourceString(L"BitPosition");
-            bitPosition = LocalizationStringUtil::GetLocalizedString(bitPositionTemplate->Data(), indexName->Data());
+            String ^ indexName = resourceLoader->GetResourceString(ref new Platform::String(to_wstring(position).c_str()));
+            String ^ bitPositionTemplate = resourceLoader->GetResourceString(L"BitPosition");
+            bitPosition = LocalizationStringUtil::GetLocalizedString(bitPositionTemplate, indexName);
         }
     }
-    return ref new String(LocalizationStringUtil::GetLocalizedString(automationNameTemplate->Data(), bitPosition.c_str(), value ? L"1" : L"0").c_str());
+    return LocalizationStringUtil::GetLocalizedString(automationNameTemplate, bitPosition, value ? L"1" : L"0");
 }

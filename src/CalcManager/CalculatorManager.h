@@ -76,12 +76,6 @@ namespace CalculationManager
 
         void LoadPersistedPrimaryValue();
 
-        static std::vector<long> SerializeRational(CalcEngine::Rational const& rat);
-        static CalcEngine::Rational DeSerializeRational(std::vector<long>::const_iterator itr);
-
-        static std::vector<long> SerializeNumber(CalcEngine::Number const& num);
-        static CalcEngine::Number DeSerializeNumber(std::vector<long>::const_iterator itr);
-
         std::shared_ptr<CalculatorHistory> m_pStdHistory;
         std::shared_ptr<CalculatorHistory> m_pSciHistory;
         CalculatorHistory* m_pHistory;
@@ -91,8 +85,8 @@ namespace CalculationManager
         void SetPrimaryDisplay(_In_ const std::wstring& displayString, _In_ bool isError) override;
         void SetIsInError(bool isError) override;
         void SetExpressionDisplay(
-            _Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const& tokens,
-            _Inout_ std::shared_ptr<CalculatorVector<std::shared_ptr<IExpressionCommand>>> const& commands) override;
+            _Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
+            _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands) override;
         void SetMemorizedNumbers(_In_ const std::vector<std::wstring>& memorizedNumbers) override;
         void OnHistoryItemAdded(_In_ unsigned int addedItemIndex) override;
         void SetParenthesisNumber(_In_ unsigned int parenthesisCount) override;
@@ -102,7 +96,7 @@ namespace CalculationManager
         void BinaryOperatorReceived() override;
         void MemoryItemChanged(unsigned int indexOfMemory) override;
         void InputChanged() override;
-        CalculatorManager(ICalcDisplay* displayCallback, IResourceProvider* resourceProvider);
+        CalculatorManager(_In_ ICalcDisplay* displayCallback, _In_ IResourceProvider* resourceProvider);
 
         void Reset(bool clearMemory = true);
         void SetStandardMode();
@@ -119,7 +113,7 @@ namespace CalculationManager
 
         bool IsEngineRecording();
         bool IsInputEmpty();
-        std::vector<unsigned char> GetSavedCommands()
+        const std::vector<unsigned char>& GetSavedCommands() const
         {
             return m_savedCommands;
         }

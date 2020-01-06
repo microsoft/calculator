@@ -27,8 +27,6 @@ namespace DateCalculationUnitTests
     const int c_subtractCases = 3;
     const int c_dateDiff = 14;
 
-    DateCalculationEngine m_DateCalcEngine(CalendarIdentifiers::Gregorian);
-
     typedef struct
     {
         SYSTEMTIME startDate;
@@ -45,10 +43,20 @@ namespace DateCalculationUnitTests
     DateTimeTestCase datetimeSubtractCase[c_subtractCases];
 
     // Test Class
-    TEST_CLASS(DateCalculatorUnitTests){ public: TEST_CLASS_INITIALIZE(TestClassSetup){ /* Test Case Data */
+    TEST_CLASS(DateCalculatorUnitTests)
+    {
+        static DateCalculationEngine ^ m_DateCalcEngine;
 
-                                                                                        // Dates - DD.MM.YYYY
-                                                                                        /*31.12.9999*/ date[0].wYear = 9999;
+    public:
+    TEST_CLASS_INITIALIZE(TestClassSetup)
+    {
+    m_DateCalcEngine = ref new DateCalculationEngine(CalendarIdentifiers::Gregorian);
+
+    /* Test Case Data */
+
+    // Dates - DD.MM.YYYY
+    /*31.12.9999*/
+    date[0].wYear = 9999;
     date[0].wMonth = 12;
     date[0].wDayOfWeek = 5;
     date[0].wDay = 31;
@@ -300,7 +308,7 @@ TEST_METHOD(TestDateDiff)
     //    }
 
     //    // Calculate the difference
-    //    m_DateCalcEngine.TryGetDateDifference(DateUtils::SystemTimeToDateTime(datetimeDifftest[testIndex].startDate),
+    //    m_DateCalcEngine->TryGetDateDifference(DateUtils::SystemTimeToDateTime(datetimeDifftest[testIndex].startDate),
     //    DateUtils::SystemTimeToDateTime(datetimeDifftest[testIndex].endDate), dateOutputFormat, &diff);
 
     //    // Assert for the result
@@ -327,7 +335,7 @@ TEST_METHOD(TestAddOob)
     //    DateTime endDate;
 
     //    // Add Duration
-    //    bool isValid = m_DateCalcEngine.AddDuration(DateUtils::SystemTimeToDateTime(datetimeBoundAdd[testIndex].startDate),
+    //    bool isValid = m_DateCalcEngine->AddDuration(DateUtils::SystemTimeToDateTime(datetimeBoundAdd[testIndex].startDate),
     //    datetimeBoundAdd[testIndex].dateDiff, &endDate);
 
     //    // Assert for the result
@@ -340,14 +348,12 @@ TEST_METHOD(TestSubtractOob)
 {
     for (int testIndex = 0; testIndex < c_numSubtractOobDate; testIndex++)
     {
-        DateTime endDate;
-
         // Subtract Duration
-        bool isValid = m_DateCalcEngine.SubtractDuration(
-            DateUtils::SystemTimeToDateTime(datetimeBoundSubtract[testIndex].startDate), datetimeBoundSubtract[testIndex].dateDiff, &endDate);
+        auto endDate = m_DateCalcEngine->SubtractDuration(
+            DateUtils::SystemTimeToDateTime(datetimeBoundSubtract[testIndex].startDate), datetimeBoundSubtract[testIndex].dateDiff);
 
         // Assert for the result
-        VERIFY_IS_FALSE(isValid);
+        VERIFY_IS_NULL(endDate);
     }
 }
 
@@ -361,7 +367,7 @@ TEST_METHOD(TestAddition)
     //    DateTime endDate;
 
     //    // Add Duration
-    //    bool isValid = m_DateCalcEngine.AddDuration(DateUtils::SystemTimeToDateTime(datetimeAddCase[testIndex].startDate),
+    //    bool isValid = m_DateCalcEngine->AddDuration(DateUtils::SystemTimeToDateTime(datetimeAddCase[testIndex].startDate),
     //    datetimeAddCase[testIndex].dateDiff, &endDate);
 
     //    // Assert for the result
@@ -390,7 +396,7 @@ TEST_METHOD(TestSubtraction)
     //    DateTime endDate;
 
     //    // Subtract Duration
-    //    bool isValid = m_DateCalcEngine.SubtractDuration(DateUtils::SystemTimeToDateTime(datetimeSubtractCase[testIndex].startDate),
+    //    bool isValid = m_DateCalcEngine->SubtractDuration(DateUtils::SystemTimeToDateTime(datetimeSubtractCase[testIndex].startDate),
     //    datetimeSubtractCase[testIndex].dateDiff, &endDate);
 
     //    // assert for the result
@@ -408,13 +414,9 @@ TEST_METHOD(TestSubtraction)
     //    VERIFY_IS_TRUE(isValid);
     //}
 }
-
-private:
-}
-;
+};
 
 TEST_CLASS(DateCalculatorViewModelTests){ public: TEST_CLASS_INITIALIZE(TestClassSetup){ /* Test Case Data */
-
                                                                                          // Dates - DD.MM.YYYY
                                                                                          /*31.12.9999*/ date[0].wYear = 9999;
 date[0].wMonth = 12;
@@ -683,7 +685,6 @@ TEST_METHOD(DateCalcViewModelAddSubtractInitTest)
 TEST_METHOD(DateCalcViewModelDateDiffDaylightSavingTimeTest)
 {
     auto viewModel = ref new DateCalculatorViewModel();
-
     viewModel->IsDateDiffMode = true;
     VERIFY_IS_TRUE(viewModel->IsDateDiffMode);
 
@@ -922,8 +923,6 @@ TEST_METHOD(DateCalcViewModelDateDiffFromDateHigherThanToDate)
 // contains the DayOfWeek, Day, Month, and Year
 TEST_METHOD(DateCalcViewModelAddSubtractResultAutomationNameTest)
 {
-    auto viewModel = ref new DateCalculatorViewModel();
-
     auto cal = ref new Calendar();
     cal->Year = 2007;
     cal->Month = 5;
@@ -934,6 +933,8 @@ TEST_METHOD(DateCalcViewModelAddSubtractResultAutomationNameTest)
     cal->Second = 0;
 
     DateTime startDate = cal->GetDateTime();
+    auto viewModel = ref new DateCalculatorViewModel();
+
     viewModel->StartDate = startDate;
 
     viewModel->IsDateDiffMode = false;
@@ -955,7 +956,7 @@ TEST_METHOD(DateCalcViewModelAddSubtractResultAutomationNameTest)
 
 TEST_METHOD(JaEraTransitionAddition)
 {
-    auto viewModel = make_unique<DateCalculationEngine>(CalendarIdentifiers::Japanese);
+    auto engine = ref new DateCalculationEngine(CalendarIdentifiers::Japanese);
     auto cal = ref new Calendar();
 
     // The Showa period ended in Jan 1989.
@@ -973,10 +974,9 @@ TEST_METHOD(JaEraTransitionAddition)
     DateDifference yearDuration;
     yearDuration.year = 1;
 
-    DateTime actualYearResult;
-    viewModel->AddDuration(startTime, yearDuration, &actualYearResult);
+    auto actualYearResult = engine->AddDuration(startTime, yearDuration);
 
-    VERIFY_ARE_EQUAL(expectedYearResult.UniversalTime, actualYearResult.UniversalTime);
+    VERIFY_ARE_EQUAL(expectedYearResult.UniversalTime, actualYearResult->Value.UniversalTime);
 
     cal->Year = 1989;
     cal->Month = 2;
@@ -987,15 +987,14 @@ TEST_METHOD(JaEraTransitionAddition)
     DateDifference monthDuration;
     monthDuration.month = 1;
 
-    DateTime actualMonthResult;
-    viewModel->AddDuration(startTime, monthDuration, &actualMonthResult);
+    auto actualMonthResult = engine->AddDuration(startTime, monthDuration);
 
-    VERIFY_ARE_EQUAL(expectedMonthResult.UniversalTime, actualMonthResult.UniversalTime);
+    VERIFY_ARE_EQUAL(expectedMonthResult.UniversalTime, actualMonthResult->Value.UniversalTime);
 }
 
 TEST_METHOD(JaEraTransitionSubtraction)
 {
-    auto viewModel = make_unique<DateCalculationEngine>(CalendarIdentifiers::Japanese);
+    auto engine = ref new DateCalculationEngine(CalendarIdentifiers::Japanese);
     auto cal = ref new Calendar();
 
     // The Showa period ended in Jan 1989.
@@ -1013,10 +1012,9 @@ TEST_METHOD(JaEraTransitionSubtraction)
     DateDifference yearDuration;
     yearDuration.year = 1;
 
-    DateTime actualYearResult;
-    viewModel->SubtractDuration(startTime, yearDuration, &actualYearResult);
+    auto actualYearResult = engine->SubtractDuration(startTime, yearDuration);
 
-    VERIFY_ARE_EQUAL(expectedYearResult.UniversalTime, actualYearResult.UniversalTime);
+    VERIFY_ARE_EQUAL(expectedYearResult.UniversalTime, actualYearResult->Value.UniversalTime);
 
     cal->Year = 1989;
     cal->Month = 1;
@@ -1027,15 +1025,14 @@ TEST_METHOD(JaEraTransitionSubtraction)
     DateDifference monthDuration;
     monthDuration.month = 1;
 
-    DateTime actualMonthResult;
-    viewModel->SubtractDuration(startTime, monthDuration, &actualMonthResult);
+    auto actualMonthResult = engine->SubtractDuration(startTime, monthDuration);
 
-    VERIFY_ARE_EQUAL(expectedMonthResult.UniversalTime, actualMonthResult.UniversalTime);
+    VERIFY_ARE_EQUAL(expectedMonthResult.UniversalTime, actualMonthResult->Value.UniversalTime);
 }
 
 TEST_METHOD(JaEraTransitionDifference)
 {
-    auto viewModel = make_unique<DateCalculationEngine>(CalendarIdentifiers::Japanese);
+    auto engine = ref new DateCalculationEngine(CalendarIdentifiers::Japanese);
     auto cal = ref new Calendar();
 
     // The Showa period ended in Jan 8, 1989.  Pick 2 days across that boundary
@@ -1049,10 +1046,12 @@ TEST_METHOD(JaEraTransitionDifference)
     cal->Day = 20;
     auto endTime = cal->GetDateTime();
 
-    DateDifference diff;
-    VERIFY_IS_TRUE(viewModel->TryGetDateDifference(startTime, endTime, DateUnit::Day, &diff));
-    VERIFY_ARE_EQUAL(diff.day, 19);
+    auto diff = engine->TryGetDateDifference(startTime, endTime, DateUnit::Day);
+    VERIFY_IS_NOT_NULL(diff);
+    VERIFY_ARE_EQUAL(diff->Value.day, 19);
 }
 }
 ;
+
+DateCalculationEngine ^ DateCalculatorUnitTests::m_DateCalcEngine;
 }

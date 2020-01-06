@@ -1,10 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
 
 #pragma once
 #include "CalcViewModel/Common/CalculatorButtonUser.h"
+#include <CppUnitTest.h>
 
 namespace CalculatorUnitTests
 {
@@ -95,3 +96,15 @@ namespace CalculatorUnitTests
     {                                                                                                                                                          \
         Assert::IsTrue(__expectedGreater >= __expectedLess, __VA_ARGS__);                                                                                      \
     }
+
+template <typename T>
+void VERIFY_VECTORS_ARE_EQUAL(Windows::Foundation::Collections::IVector<T> ^ vecA, Windows::Foundation::Collections::IVector<T> ^ vecB, ...)
+{
+    if (vecA->Size != vecB->Size)
+        Assert::Fail();
+
+    for (unsigned int i = 0; i < vecA->Size; ++i)
+    {
+        VERIFY_ARE_EQUAL(vecA->GetAt(i), vecB->GetAt(i), __VA_ARGS__);
+    }
+};
