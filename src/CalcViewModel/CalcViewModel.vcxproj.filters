@@ -10,6 +10,9 @@
     <Filter Include="DataLoaders">
       <UniqueIdentifier>{0184f727-b8aa-4af8-a699-63f1b56e7853}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GraphingCalculator">
+      <UniqueIdentifier>{cf7dca32-9727-4f98-83c3-1c0ca7dd1e0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -80,8 +83,17 @@
     <ClCompile Include="DataLoaders\UnitConverterDataLoader.cpp">
       <Filter>DataLoaders</Filter>
     </ClCompile>
+    <ClCompile Include="GraphingCalculator\EquationViewModel.cpp">
+      <Filter>GraphingCalculator</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphingCalculator\GraphingCalculatorViewModel.cpp">
+      <Filter>GraphingCalculator</Filter>
+    </ClCompile>
     <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp">
       <Filter>Common\Automation</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphingCalculator\GraphingSettingsViewModel.cpp">
+      <Filter>GraphingCalculator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +210,21 @@
     </ClInclude>
     <ClInclude Include="Common\NumberBase.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculator\EquationViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculator\GraphingCalculatorViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculatorEnums.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculator\VariableViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculator\GraphingSettingsViewModel.h">
+      <Filter>GraphingCalculator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

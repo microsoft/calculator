@@ -43,6 +43,7 @@ namespace
 ApplicationViewModel::ApplicationViewModel()
     : m_CalculatorViewModel(nullptr)
     , m_DateCalcViewModel(nullptr)
+	, m_GraphingCalcViewModel(nullptr)
     , m_ConverterViewModel(nullptr)
     , m_PreviousMode(ViewMode::None)
     , m_mode(ViewMode::None)
@@ -132,6 +133,13 @@ void ApplicationViewModel::OnModeChanged()
         }
         m_CalculatorViewModel->SetCalculatorType(m_mode);
     }
+    else if (NavCategory::IsGraphingCalculatorViewMode(m_mode))
+    {
+        if (!m_GraphingCalcViewModel)
+        {
+            m_GraphingCalcViewModel = ref new GraphingCalculatorViewModel();
+        }
+    }
     else if (NavCategory::IsDateCalculatorViewMode(m_mode))
     {
         if (!m_DateCalcViewModel)
@@ -182,7 +190,7 @@ void ApplicationViewModel::OnCopyCommand(Object ^ parameter)
     {
         DateCalcViewModel->OnCopyCommand(parameter);
     }
-    else
+    else if (NavCategory::IsCalculatorViewMode(m_mode))
     {
         CalculatorViewModel->OnCopyCommand(parameter);
     }

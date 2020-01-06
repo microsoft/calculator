@@ -122,29 +122,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <GenerateManifest>false</GenerateManifest>
+    <GenerateProjectSpecificOutputFolder>true</GenerateProjectSpecificOutputFolder>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -348,6 +328,11 @@
     <ClInclude Include="DataLoaders\UnitConverterDataConstants.h" />
     <ClInclude Include="DataLoaders\UnitConverterDataLoader.h" />
     <ClInclude Include="DateCalculatorViewModel.h" />
+    <ClInclude Include="GraphingCalculatorEnums.h" />
+    <ClInclude Include="GraphingCalculator\EquationViewModel.h" />
+    <ClInclude Include="GraphingCalculator\GraphingCalculatorViewModel.h" />
+    <ClInclude Include="GraphingCalculator\VariableViewModel.h" />
+    <ClInclude Include="GraphingCalculator\GraphingSettingsViewModel.h" />
     <ClInclude Include="HistoryItemViewModel.h" />
     <ClInclude Include="HistoryViewModel.h" />
     <ClInclude Include="MemoryItemViewModel.h" />
@@ -380,6 +365,9 @@
     <ClCompile Include="DataLoaders\CurrencyHttpClient.cpp" />
     <ClCompile Include="DataLoaders\UnitConverterDataLoader.cpp" />
     <ClCompile Include="DateCalculatorViewModel.cpp" />
+    <ClCompile Include="GraphingCalculator\EquationViewModel.cpp" />
+    <ClCompile Include="GraphingCalculator\GraphingCalculatorViewModel.cpp" />
+    <ClCompile Include="GraphingCalculator\GraphingSettingsViewModel.cpp" />
     <ClCompile Include="HistoryItemViewModel.cpp" />
     <ClCompile Include="HistoryViewModel.cpp" />
     <ClCompile Include="MemoryItemViewModel.cpp" />
@@ -399,6 +387,9 @@
   <ItemGroup>
     <ProjectReference Include="..\CalcManager\CalcManager.vcxproj">
       <Project>{311e866d-8b93-4609-a691-265941fee101}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphControl\GraphControl.vcxproj">
+      <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemDefinitionGroup Condition="!Exists('DataLoaders\DataLoaderConstants.h')">

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -6,6 +6,7 @@
 #include "Views/Calculator.xaml.h"
 #include "Views/MainPage.g.h"
 #include "Views/DateCalculator.xaml.h"
+#include "Views/GraphingCalculator/GraphingCalculator.xaml.h"
 #include "Views/UnitConverter.xaml.h"
 #include "CalcViewModel/ApplicationViewModel.h"
 
@@ -71,13 +72,15 @@ public
         void App_Suspending(Object ^ sender, Windows::ApplicationModel::SuspendingEventArgs ^ e);
 
         void EnsureCalculator();
-        void EnsureConverter();
         void EnsureDateCalculator();
+        void EnsureGraphingCalculator();
+        void EnsureConverter();
         void ShowAboutPage();
 
         void AnnounceCategoryName();
 
         CalculatorApp::Calculator ^ m_calculator;
+		GraphingCalculator^ m_graphingCalculator;
         CalculatorApp::UnitConverter ^ m_converter;
         CalculatorApp::DateCalculator ^ m_dateCalculator;
         Windows::Foundation::EventRegistrationToken m_windowSizeEventToken;

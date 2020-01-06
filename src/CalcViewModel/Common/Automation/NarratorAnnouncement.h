@@ -66,5 +66,8 @@ public
 
         static NarratorAnnouncement ^ GetOpenParenthesisCountChangedAnnouncement(Platform::String ^ announcement);
         static NarratorAnnouncement ^ GetNoRightParenthesisAddedAnnouncement(Platform::String ^ announcement);
+
+        static NarratorAnnouncement ^ GetGraphModeChangedAnnouncement(Platform::String ^ announcement);
+
     };
 }
