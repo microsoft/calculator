@@ -511,6 +511,7 @@
     </Page>
     <Page Include="Views\GraphingCalculator\GraphingSettings.xaml">
       <Filter>Views\GraphingCalculator</Filter>
+    </Page>
     <Page Include="Views\GraphingCalculator\GraphingNumPad.xaml">
       <Filter>Views\GraphingCalculator</Filter>
     </Page>
