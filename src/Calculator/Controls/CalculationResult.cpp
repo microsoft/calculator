@@ -370,6 +370,7 @@ void CalculationResult::ModifyFontAndMargin(TextBlock ^ textBox, double fontChan
 
 void CalculationResult::OnTapped(TappedRoutedEventArgs ^ e)
 {
+    this->Focus(::FocusState::Programmatic);
     RaiseSelectedEvent();
 }
 
