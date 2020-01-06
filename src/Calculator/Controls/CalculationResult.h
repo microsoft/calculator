@@ -43,9 +43,7 @@ namespace CalculatorApp
             virtual void OnApplyTemplate() override;
             virtual void OnTapped(Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e) override;
             virtual void OnRightTapped(Windows::UI::Xaml::Input::RightTappedRoutedEventArgs ^ e) override;
-            virtual void OnGotFocus(Windows::UI::Xaml::RoutedEventArgs ^ e) override;
-            virtual void OnLostFocus(Windows::UI::Xaml::RoutedEventArgs ^ e) override;
-
+ 
             virtual Windows::UI::Xaml::Automation::Peers::AutomationPeer ^ OnCreateAutomationPeer() override;
 
         private:
@@ -66,10 +64,6 @@ namespace CalculatorApp
             void ScrollLeft();
             void ScrollRight();
             void RaiseSelectedEvent();
-
-            // Visual states for focused
-            static Platform::StringReference s_FocusedState;
-            static Platform::StringReference s_UnfocusedState;
 
             Windows::UI::Xaml::Controls::ScrollViewer ^ m_textContainer;
             Windows::UI::Xaml::Controls::TextBlock ^ m_textBlock;
