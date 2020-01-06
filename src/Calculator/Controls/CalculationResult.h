@@ -42,6 +42,7 @@ namespace CalculatorApp
             virtual void OnKeyDown(Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e) override;
             virtual void OnApplyTemplate() override;
             virtual void OnTapped(Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e) override;
+            virtual void OnRightTapped(Windows::UI::Xaml::Input::RightTappedRoutedEventArgs ^ e) override;
  
             virtual Windows::UI::Xaml::Automation::Peers::AutomationPeer ^ OnCreateAutomationPeer() override;
 
