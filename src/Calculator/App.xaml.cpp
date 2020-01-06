@@ -83,16 +83,6 @@ App::App()
 #endif
 }
 
-bool App::m_isAnimationEnabled = true;
-
-/// <summary>
-/// Return True if animation is enabled by user setting.
-/// </summary>
-bool App::IsAnimationEnabled()
-{
-    return App::m_isAnimationEnabled;
-}
-
 void App::AddWindowToMap(_In_ WindowFrameService ^ frameService)
 {
     reader_writer_lock::scoped_lock lock(m_windowsMapLock);
@@ -217,9 +207,6 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
     //        DebugSettings->EnableFrameRateCounter = true;
     //    }
     //#endif
-
-    auto userSettings = ref new Windows::UI::ViewManagement::UISettings();
-    m_isAnimationEnabled = userSettings->AnimationsEnabled;
 
     args->SplashScreen->Dismissed += ref new TypedEventHandler<SplashScreen ^, Object ^>(this, &App::DismissedEventHandler);
 
