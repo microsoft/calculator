@@ -7,9 +7,11 @@
 trigger:
 - master
 - servicing/*
+- feature/*
 pr:
 - master
 - servicing/*
+- feature/*
 
 name: 0.$(Date:yyMM).$(DayOfMonth)$(Rev:rr).0
 
@@ -21,7 +23,6 @@ jobs:
 - template: ./templates/build-app-public.yaml
   parameters:
     platform: x86
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/build-app-public.yaml
   parameters:

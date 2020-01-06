@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -160,7 +160,7 @@ static constexpr array<const NavCategoryInitializer, 17> s_categoryManifest = { 
                                                                                                         L"\uE945",
                                                                                                         CategoryGroupType::Converter,
                                                                                                         MyVirtualKey::None,
-                                                                                                        POSITIVE_ONLY },
+                                                                                                        SUPPORTS_NEGATIVE },
                                                                                 NavCategoryInitializer{ ViewMode::Data,
                                                                                                         DATA_ID,
                                                                                                         L"Data",
@@ -184,7 +184,7 @@ static constexpr array<const NavCategoryInitializer, 17> s_categoryManifest = { 
                                                                                                         L"\uF515",
                                                                                                         CategoryGroupType::Converter,
                                                                                                         MyVirtualKey::None,
-                                                                                                        POSITIVE_ONLY } };
+                                                                                                        SUPPORTS_NEGATIVE } };
 
 // This function should only be used when storing the mode to app data.
 int NavCategory::Serialize(ViewMode mode)
@@ -368,33 +368,28 @@ NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupIniti
     m_GroupType = groupInitializer.type;
 
     auto resProvider = AppResourceProvider::GetInstance();
-    String ^ headerResourceKey = StringReference(groupInitializer.headerResourceKey);
-    String ^ modeResourceKey = StringReference(groupInitializer.modeResourceKey);
-    String ^ automationResourceKey = StringReference(groupInitializer.automationResourceKey);
-    m_Name = resProvider.GetResourceString(headerResourceKey);
-    String ^ groupMode = resProvider.GetResourceString(modeResourceKey);
-    String ^ automationName = resProvider.GetResourceString(automationResourceKey);
+    m_Name = resProvider->GetResourceString(StringReference(groupInitializer.headerResourceKey));
+    String ^ groupMode = resProvider->GetResourceString(StringReference(groupInitializer.modeResourceKey));
+    String ^ automationName = resProvider->GetResourceString(StringReference(groupInitializer.automationResourceKey));
 
-    String ^ navCategoryHeaderAutomationNameFormat = resProvider.GetResourceString(L"NavCategoryHeader_AutomationNameFormat");
-    m_AutomationName =
-        ref new String(LocalizationStringUtil::GetLocalizedString(navCategoryHeaderAutomationNameFormat->Data(), automationName->Data()).c_str());
+    String ^ navCategoryHeaderAutomationNameFormat = resProvider->GetResourceString(L"NavCategoryHeader_AutomationNameFormat");
+    m_AutomationName = LocalizationStringUtil::GetLocalizedString(navCategoryHeaderAutomationNameFormat, automationName);
 
-    String ^ navCategoryItemAutomationNameFormat = resProvider.GetResourceString(L"NavCategoryItem_AutomationNameFormat");
+    String ^ navCategoryItemAutomationNameFormat = resProvider->GetResourceString(L"NavCategoryItem_AutomationNameFormat");
 
     for (const NavCategoryInitializer& categoryInitializer : s_categoryManifest)
     {
         if (categoryInitializer.groupType == groupInitializer.type)
         {
             String ^ nameResourceKey = StringReference(categoryInitializer.nameResourceKey);
-            String ^ categoryName = resProvider.GetResourceString(nameResourceKey + "Text");
-            String ^ categoryAutomationName = ref new String(
-                LocalizationStringUtil::GetLocalizedString(navCategoryItemAutomationNameFormat->Data(), categoryName->Data(), m_Name->Data()).c_str());
+            String ^ categoryName = resProvider->GetResourceString(nameResourceKey + "Text");
+            String ^ categoryAutomationName = LocalizationStringUtil::GetLocalizedString(navCategoryItemAutomationNameFormat, categoryName, m_Name);
 
             m_Categories->Append(ref new NavCategory(
                 categoryName,
                 categoryAutomationName,
                 StringReference(categoryInitializer.glyph),
-                resProvider.GetResourceString(nameResourceKey + "AccessKey"),
+                resProvider->GetResourceString(nameResourceKey + "AccessKey"),
                 groupMode,
                 categoryInitializer.viewMode,
                 categoryInitializer.supportsNegative));

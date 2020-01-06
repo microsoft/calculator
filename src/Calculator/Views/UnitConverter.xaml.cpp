@@ -40,8 +40,6 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::ViewManagement;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
 // Calculate number of 100-nanosecond intervals in 500 milliseconds.
 // There are 10,000 intervals in 1 ms.
 static const long long DURATION_500_MS = 10000 * 500;
@@ -66,14 +64,14 @@ UnitConverter::UnitConverter()
     m_isAnimationEnabled = userSettings->AnimationsEnabled;
 
     auto resLoader = AppResourceProvider::GetInstance();
-    m_chargesMayApplyText = resLoader.GetResourceString(L"DataChargesMayApply");
-    m_failedToRefreshText = resLoader.GetResourceString(L"FailedToRefresh");
+    m_chargesMayApplyText = resLoader->GetResourceString(L"DataChargesMayApply");
+    m_failedToRefreshText = resLoader->GetResourceString(L"FailedToRefresh");
 
     InitializeOfflineStatusTextBlock();
 
     m_resultsFlyout = static_cast<MenuFlyout ^>(Resources->Lookup(L"CalculationResultContextMenu"));
-    CopyMenuItem->Text = resLoader.GetResourceString(L"copyMenuItem");
-    PasteMenuItem->Text = resLoader.GetResourceString(L"pasteMenuItem");
+    CopyMenuItem->Text = resLoader->GetResourceString(L"copyMenuItem");
+    PasteMenuItem->Text = resLoader->GetResourceString(L"pasteMenuItem");
 }
 
 void UnitConverter::OnPropertyChanged(_In_ Object ^ sender, _In_ PropertyChangedEventArgs ^ e)
@@ -165,7 +163,7 @@ void UnitConverter::SetFailedToRefreshStatus()
 void UnitConverter::InitializeOfflineStatusTextBlock()
 {
     auto resProvider = AppResourceProvider::GetInstance();
-    std::wstring offlineStatusHyperlinkText = static_cast<String ^>(resProvider.GetResourceString(L"OfflineStatusHyperlinkText"))->Data();
+    std::wstring offlineStatusHyperlinkText = resProvider->GetResourceString(L"OfflineStatusHyperlinkText")->Data();
 
     // The resource string has the 'NetworkSettings' hyperlink wrapped with '%HL%'.
     // Break the string and assign pieces appropriately.
@@ -245,9 +243,9 @@ void UnitConverter::OnCopyMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEvent
 
 void UnitConverter::OnPasteMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    CopyPasteManager::GetStringToPaste(Model->Mode, CategoryGroupType::Converter).then([this](String ^ pastedString) {
-        Model->OnPaste(pastedString);
-    });
+    auto that(this);
+    create_task(CopyPasteManager::GetStringToPaste(Model->Mode, CategoryGroupType::Converter, NumberBase::Unknown, BitLength::BitLengthUnknown))
+        .then([that](String ^ pastedString) { that->Model->OnPaste(pastedString); });
 }
 
 void UnitConverter::AnimateConverter()
@@ -379,6 +377,5 @@ void CalculatorApp::UnitConverter::SupplementaryResultsPanelInGrid_SizeChanged(P
 void CalculatorApp::UnitConverter::OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e)
 {
     auto mode = NavCategory::Deserialize(Model->CurrentCategory->GetModelCategory().id);
-    auto state = std::wstring(e->NewState->Name->Begin());
-    TraceLogger::GetInstance().LogVisualStateChanged(mode, state);
+    TraceLogger::GetInstance()->LogVisualStateChanged(mode, e->NewState->Name, false);
 }

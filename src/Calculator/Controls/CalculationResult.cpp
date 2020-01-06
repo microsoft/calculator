@@ -60,11 +60,7 @@ CalculationResult::CalculationResult()
 
 Platform::String ^ CalculationResult::GetRawDisplayValue()
 {
-    std::wstring rawValue;
-
-    LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue->Data(), DisplayValue->Length(), &rawValue);
-
-    return ref new Platform::String(rawValue.c_str());
+    return LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue);
 }
 
 void CalculationResult::OnApplyTemplate()
@@ -86,6 +82,12 @@ void CalculationResult::OnApplyTemplate()
             m_textContainer->ViewChanged -= m_textContainerViewChangedToken;
             m_textContainerViewChangedToken.Value = 0;
         }
+    }
+
+    if (m_textBlock != nullptr && m_textBlockSizeChangedToken.Value != 0)
+    {
+        m_textBlock->SizeChanged -= m_textBlockSizeChangedToken;
+        m_textBlockSizeChangedToken.Value = 0;
     }
 
     if (m_scrollLeft != nullptr && m_scrollLeftClickToken.Value != 0)
@@ -129,6 +131,7 @@ void CalculationResult::OnApplyTemplate()
         if (m_textBlock)
         {
             m_textBlock->Visibility = ::Visibility::Visible;
+            m_textBlockSizeChangedToken = m_textBlock->SizeChanged += ref new SizeChangedEventHandler(this, &CalculationResult::OnTextBlockSizeChanged);
         }
     }
     UpdateVisualState();
@@ -370,6 +373,20 @@ void CalculationResult::OnTapped(TappedRoutedEventArgs ^ e)
     RaiseSelectedEvent();
 }
 
+void CalculationResult::OnRightTapped(RightTappedRoutedEventArgs ^ e)
+{
+    auto requestedElement = e->OriginalSource;
+
+    if (requestedElement->Equals(dynamic_cast<Object ^>(m_textBlock)))
+    {
+        m_textBlock->Focus(::FocusState::Programmatic);
+    }
+    else
+    {
+        this->Focus(::FocusState::Programmatic);
+    }
+}
+
 AutomationPeer ^ CalculationResult::OnCreateAutomationPeer()
 {
     return ref new CalculationResultAutomationPeer(this);
@@ -386,6 +403,11 @@ void CalculationResult::RaiseSelectedEvent()
 }
 
 void CalculationResult::OnTextContainerOnViewChanged(Object ^ /*sender*/, ScrollViewerViewChangedEventArgs ^ e)
+{
+    UpdateScrollButtons();
+}
+
+void CalculationResult::OnTextBlockSizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ /*e*/)
 {
     UpdateScrollButtons();
 }

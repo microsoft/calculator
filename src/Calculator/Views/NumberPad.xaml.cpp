@@ -52,7 +52,7 @@ NumberPad::NumberPad()
     this->Num9Button->Content = localizationSettings.GetDigitSymbolFromEnUsDigit('9');
 }
 
-void NumberPad::OnCurrentRadixTypePropertyChanged(int /* oldValue */, int newValue)
+void NumberPad::OnCurrentRadixTypePropertyChanged(NumberBase /* oldValue */, NumberBase newValue)
 {
     Num0Button->IsEnabled = true;
     Num1Button->IsEnabled = true;
@@ -65,9 +65,7 @@ void NumberPad::OnCurrentRadixTypePropertyChanged(int /* oldValue */, int newVal
     Num8Button->IsEnabled = true;
     Num9Button->IsEnabled = true;
 
-    auto radixType = safe_cast<RADIX_TYPE>(newValue);
-
-    if (radixType == RADIX_TYPE::BIN_RADIX)
+    if (newValue == NumberBase::BinBase)
     {
         Num2Button->IsEnabled = false;
         Num3Button->IsEnabled = false;
@@ -78,7 +76,7 @@ void NumberPad::OnCurrentRadixTypePropertyChanged(int /* oldValue */, int newVal
         Num8Button->IsEnabled = false;
         Num9Button->IsEnabled = false;
     }
-    else if (radixType == RADIX_TYPE::OCT_RADIX)
+    else if (newValue == NumberBase::OctBase)
     {
         Num8Button->IsEnabled = false;
         Num9Button->IsEnabled = false;
