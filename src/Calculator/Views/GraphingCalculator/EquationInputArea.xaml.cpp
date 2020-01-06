@@ -27,6 +27,7 @@ using namespace Calculator::Utils;
 
 namespace
 {
+    inline constexpr auto maxEquationSize = 14;
     inline constexpr std::array<int, 14> colorAssignmentMapping = { 0, 3, 7, 10, 1, 4, 8, 11, 2, 5, 9, 12, 6, 13 };
 
     StringReference EquationsPropertyName(L"Equations");
@@ -70,7 +71,7 @@ void EquationInputArea::AddNewEquation()
     }
 
     // Cap equations at 14
-    if (Equations->Size >= 14)
+    if (Equations->Size >= maxEquationSize)
     {
         return;
     }
