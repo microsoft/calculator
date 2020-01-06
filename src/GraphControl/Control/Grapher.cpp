@@ -121,7 +121,7 @@ namespace GraphControl
             m_renderMain->BackgroundColor = GraphBackground;
         }
 
-        TryUpdateGraph();
+        TryUpdateGraph(false);
     }
 
     void Grapher::OnEquationsPropertyChanged(EquationCollection ^ oldValue, EquationCollection ^ newValue)
@@ -157,7 +157,7 @@ namespace GraphControl
                 ref new EquationChangedEventHandler(this, &Grapher::OnEquationLineEnabledChanged);
         }
 
-        PlotGraph();
+        PlotGraph(false);
     }
 
     void Grapher::OnEquationChanged(Equation ^ equation)
@@ -169,7 +169,7 @@ namespace GraphControl
         equation->HasGraphError = false;
         equation->IsValidated = false;
 
-        TryPlotGraph(shouldRetry);
+        TryPlotGraph(false, shouldRetry);
     }
 
     void Grapher::OnEquationStyleChanged(Equation ^)
@@ -193,7 +193,7 @@ namespace GraphControl
             return;
         }
 
-        PlotGraph();
+        PlotGraph(true);
     }
 
     KeyGraphFeaturesInfo ^ Grapher::AnalyzeEquation(Equation ^ equation)
@@ -223,14 +223,14 @@ namespace GraphControl
         return KeyGraphFeaturesInfo::Create(CalculatorApp::AnalysisErrorType::AnalysisCouldNotBePerformed);
     }
 
-    void Grapher::PlotGraph()
+    void Grapher::PlotGraph(bool keepCurrentView)
     {
-        TryPlotGraph(false);
+        TryPlotGraph(keepCurrentView, false);
     }
 
-    void Grapher::TryPlotGraph(bool shouldRetry)
+    void Grapher::TryPlotGraph(bool keepCurrentView, bool shouldRetry)
     {
-        if (TryUpdateGraph())
+        if (TryUpdateGraph(keepCurrentView))
         {
             SetEquationsAsValid();
         }
@@ -241,12 +241,12 @@ namespace GraphControl
             // If we failed to plot the graph, try again after the bad equations are flagged.
             if (shouldRetry)
             {
-                TryUpdateGraph();
+                TryUpdateGraph(keepCurrentView);
             }
         }
     }
 
-    bool Grapher::TryUpdateGraph()
+    bool Grapher::TryUpdateGraph(bool keepCurrentView)
     {
         optional<vector<shared_ptr<IEquation>>> initResult = nullopt;
         bool successful = false;
@@ -289,8 +289,8 @@ namespace GraphControl
 
             if (graphExpression = m_solver->ParseInput(request))
             {
-                initResult = m_graph->TryInitialize(graphExpression.get());
-
+                initResult = TryInitializeGraph(keepCurrentView, graphExpression.get());
+                
                 if (initResult != nullopt)
                 {
                     UpdateGraphOptions(m_graph->GetOptions(), validEqs);
@@ -318,8 +318,7 @@ namespace GraphControl
                 // Do not re-initialize the graph to empty if there are still valid equations graphed
                 if (!shouldKeepPreviousGraph)
                 {
-                    initResult = m_graph->TryInitialize();
-
+                    initResult = TryInitializeGraph(keepCurrentView, graphExpression.get());
                     if (initResult != nullopt)
                     {
                         UpdateGraphOptions(m_graph->GetOptions(), validEqs);
@@ -373,7 +372,7 @@ namespace GraphControl
 
     shared_ptr<IGraph> Grapher::GetGraph(Equation ^ equation)
     {
-        std::shared_ptr<Graphing::IGraph> graph = m_solver->CreateGrapher();
+        shared_ptr<Graphing::IGraph> graph = m_solver->CreateGrapher();
 
         wstringstream ss{};
         ss << s_getGraphOpeningTags;
@@ -487,7 +486,7 @@ namespace GraphControl
     void Grapher::OnForceProportionalAxesPropertyChanged(bool /*oldValue*/, bool newValue)
     {
         m_calculatedForceProportional = newValue;
-        TryUpdateGraph();
+        TryUpdateGraph(false);
     }
 
     void Grapher::OnPointerEntered(PointerRoutedEventArgs ^ e)
@@ -646,14 +645,14 @@ namespace GraphControl
         {
             if (auto renderer = m_graph->GetRenderer())
             {
-                std::shared_ptr<Graphing::IBitmap> BitmapOut;
+                shared_ptr<Graphing::IBitmap> BitmapOut;
                 bool hasSomeMissingDataOut = false;
                 HRESULT hr = E_FAIL;
                 hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
                 if (SUCCEEDED(hr))
                 {
                     // Get the raw date
-                    std::vector<BYTE> byteVector = BitmapOut->GetData();
+                    vector<BYTE> byteVector = BitmapOut->GetData();
                     auto arr = ref new Array<BYTE>(&byteVector[0], (unsigned int)byteVector.size());
 
                     // create a memory stream wrapper
@@ -887,5 +886,21 @@ void Grapher::OnGraphBackgroundPropertyChanged(Windows::UI::Color /*oldValue*/, 
         auto color = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
         m_graph->GetOptions().SetBackColor(color);
         m_graph->GetOptions().SetBoxColor(color);
+    }
+}
+
+optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bool keepCurrentView, const IExpression* graphingExp)
+{
+    if (keepCurrentView)
+    {
+        double xMin, xMax, yMin, yMax;
+        m_graph->GetRenderer()->GetDisplayRanges(xMin, xMax, yMin, yMax);
+        auto initResult = m_graph->TryInitialize(graphingExp);
+        m_graph->GetRenderer()->SetDisplayRanges(xMin, xMax, yMin, yMax);
+        return initResult;
+    }
+    else
+    {
+        return m_graph->TryInitialize(graphingExp);
     }
 }

@@ -71,21 +71,6 @@ void GraphingSettingsViewModel::InitRanges()
     m_dontUpdateDisplayRange = false;
 }
 
-void GraphingSettingsViewModel::RefreshPosition()
-{
-    if (HasError())
-    {
-        InitRanges();
-    }
-    else
-    {
-        if (m_Graph != nullptr)
-        {
-            m_Graph->SetDisplayRanges(m_XMinValue, m_XMaxValue, m_YMinValue, m_YMaxValue);
-        }
-    }
-}
-
 void GraphingSettingsViewModel::UpdateDisplayRange(bool XValuesModified)
 {
     if (m_Graph == nullptr || m_dontUpdateDisplayRange || HasError())
