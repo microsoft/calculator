@@ -27,6 +27,9 @@ using namespace Calculator::Utils;
 
 namespace
 {
+    inline constexpr auto maxEquationSize = 14;
+    inline constexpr std::array<int, 14> colorAssignmentMapping = { 0, 3, 7, 10, 1, 4, 8, 11, 2, 5, 9, 12, 6, 13 };
+
     StringReference EquationsPropertyName(L"Equations");
 }
 
@@ -67,8 +70,27 @@ void EquationInputArea::AddNewEquation()
         Equations->GetAt(Equations->Size - 1)->IsLastItemInList = false;
     }
 
+    // Cap equations at 14
+    if (Equations->Size >= maxEquationSize)
+    {
+        return;
+    }
+
+    
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
-    auto eq = ref new EquationViewModel(ref new Equation(), ++m_lastFunctionLabelIndex, AvailableColors->GetAt(m_lastLineColorIndex)->Color);
+
+    int colorIndex;
+
+    if (m_accessibilitySettings->HighContrast)
+    {
+        colorIndex = m_lastLineColorIndex;
+    }
+    else
+    {
+        colorIndex = colorAssignmentMapping[m_lastLineColorIndex];
+    }
+
+    auto eq = ref new EquationViewModel(ref new Equation(), ++m_lastFunctionLabelIndex, AvailableColors->GetAt(colorIndex)->Color);
     eq->IsLastItemInList = true;
     m_equationToFocus = eq;
     Equations->Append(eq);
@@ -269,8 +291,6 @@ void EquationInputArea::ReloadAvailableColors(bool isHighContrast)
         m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush12")));
         m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush13")));
         m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush14")));
-        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush15")));
-        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush16")));
     }
 
     // If there are no equations to reload, quit early

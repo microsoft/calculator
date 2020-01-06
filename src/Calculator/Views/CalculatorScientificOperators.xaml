@@ -177,14 +177,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeLarge}"/>
 
-                        <Setter Target="TrigButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeLarge}"/>
-                        <Setter Target="TrigButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeLarge}"/>
-                        <Setter Target="TrigButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeLarge}"/>
-
-
-                        <Setter Target="FuncButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeLarge}"/>
-                        <Setter Target="FuncButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeLarge}"/>
-                        <Setter Target="FuncButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeLarge}"/>
+                        <Setter Target="TrigButton.Style" Value="{StaticResource OperatorPanelButtonLargeStyle}"/>
+                        <Setter Target="FuncButton.Style" Value="{StaticResource OperatorPanelButtonLargeStyle}"/>
 
                         <Setter Target="TrigGrid.MinWidth" Value="516"/>
                         <Setter Target="TrigGrid.MinHeight" Value="192"/>
@@ -273,13 +267,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeMedium}"/>
 
-                        <Setter Target="TrigButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeMedium}"/>
-                        <Setter Target="TrigButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeMedium}"/>
-                        <Setter Target="TrigButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeMedium}"/>
-
-                        <Setter Target="FuncButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeMedium}"/>
-                        <Setter Target="FuncButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeMedium}"/>
-                        <Setter Target="FuncButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeMedium}"/>
+                        <Setter Target="TrigButton.Style" Value="{StaticResource OperatorPanelButtonMediumStyle}"/>
+                        <Setter Target="FuncButton.Style" Value="{StaticResource OperatorPanelButtonMediumStyle}"/>
 
                         <Setter Target="TrigGrid.MinWidth" Value="480"/>
                         <Setter Target="TrigGrid.MinHeight" Value="144"/>
@@ -366,13 +355,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{ThemeResource OperatorPanelButtonRowSizeSmall}"/>
 
-                        <Setter Target="TrigButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeSmall}"/>
-                        <Setter Target="TrigButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeSmall}"/>
-                        <Setter Target="TrigButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeSmall}"/>
-
-                        <Setter Target="FuncButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeSmall}"/>
-                        <Setter Target="FuncButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeSmall}"/>
-                        <Setter Target="FuncButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeSmall}"/>
+                        <Setter Target="TrigButton.Style" Value="{StaticResource OperatorPanelButtonSmallStyle}"/>
+                        <Setter Target="FuncButton.Style" Value="{StaticResource OperatorPanelButtonSmallStyle}"/>
 
                         <Setter Target="TrigGrid.MinWidth" Value="258"/>
                         <Setter Target="TrigGrid.MinHeight" Value="96"/>

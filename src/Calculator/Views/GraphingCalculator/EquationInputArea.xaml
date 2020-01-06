@@ -746,10 +746,11 @@
                                                   Grid.Column="3"
                                                   MinWidth="28"
                                                   VerticalAlignment="Stretch"
+                                                  Foreground="{ThemeResource ButtonForeground}"
                                                   FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                   FontSize="16"
                                                   AutomationProperties.AccessibilityView="Raw"
-                                                  Glyph="&#xE783;"
+                                                  Glyph="&#xE7BA;"
                                                   Visibility="Collapsed"/>
                                     </Grid>
                                 </Border>
