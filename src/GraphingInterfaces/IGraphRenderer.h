@@ -23,7 +23,7 @@ namespace Graphing::Renderer
 		virtual HRESULT SetDpi(float dpiX, float dpiY) = 0;
 
 		virtual HRESULT DrawD2D1(ID2D1Factory* pDirect2dFactory, ID2D1RenderTarget* pRenderTarget, bool& hasSomeMissingDataOut) = 0;
-		virtual HRESULT GetClosePointData(float inScreenPointX, float inScreenPointY, int& formulaIdOut, float& xScreenPointOut, float& yScreenPointOut, float& xValueOut, float& yValueOut) = 0;
+        virtual HRESULT GetClosePointData(double inScreenPointX, double inScreenPointY, int& formulaIdOut, float& xScreenPointOut, float& yScreenPointOut, double& xValueOut, double& yValueOut, double& rhoValeOut, double& thetaValueOut, double& tValueOut) = 0;
 
 		virtual HRESULT ScaleRange(double centerX, double centerY, double scale) = 0;
 		virtual HRESULT ChangeRange(ChangeRangeAction action) = 0;

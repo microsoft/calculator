@@ -38,19 +38,25 @@ namespace MockGraphingImpl
         }
 
         virtual HRESULT GetClosePointData(
-            float inScreenPointX,
-            float inScreenPointY,
+            double inScreenPointX,
+            double inScreenPointY,
             int& formulaIdOut,
             float& xScreenPointOut,
             float& yScreenPointOut,
-            float& xValueOut,
-            float& yValueOut)
+            double& xValueOut,
+            double& yValueOut,
+            double& rhoValeOut,
+            double& thetaValueOut,
+            double& tValueOut)
         {
             formulaIdOut = 0;
             xScreenPointOut = 0;
             yScreenPointOut = 0;
             xValueOut = 0;
             yValueOut = 0;
+            rhoValeOut = 0;
+            thetaValueOut = 0;
+            tValueOut = 0;
             return S_OK;
         }
 
