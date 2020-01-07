@@ -9,7 +9,6 @@
     <PRIResource Include="Test.resw" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AsyncHelper.cpp" />
     <ClCompile Include="CalcEngineTests.cpp" />
     <ClCompile Include="CalcInputTest.cpp" />
     <ClCompile Include="CalculatorManagerTest.cpp" />
@@ -17,7 +16,6 @@
     <ClCompile Include="CurrencyConverterUnitTests.cpp" />
     <ClCompile Include="DateCalculatorUnitTests.cpp" />
     <ClCompile Include="HistoryTests.cpp" />
-    <ClCompile Include="Module.cpp" />
     <ClCompile Include="MultiWindowUnitTests.cpp" />
     <ClCompile Include="NavCategoryUnitTests.cpp" />
     <ClCompile Include="StandardViewModelUnitTests.cpp" />
@@ -31,21 +29,17 @@
     </ClCompile>
     <ClCompile Include="LocalizationServiceUnitTests.cpp" />
     <ClCompile Include="RationalTest.cpp" />
+    <ClCompile Include="LocalizationSettingsUnitTests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AsyncHelper.h" />
     <ClInclude Include="DateUtils.h" />
     <ClInclude Include="Helpers.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="UnitConverterViewModelUnitTests.h" />
     <ClInclude Include="UnitTestApp.xaml.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Mocks\CurrencyHttpClient.h">
       <Filter>Mocks</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="CalculatorUnitTests.rc" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="UnitTestApp.rd.xml" />

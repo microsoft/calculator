@@ -102,9 +102,9 @@ namespace CalculatorUITests
             page.StandardOperators.EqualButton.Click();
 
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyItems[0].Text.Equals("1 × 3 = 3", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].Text.Equals("2 Minus ( 3 = Minus (1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[2].Text.Equals("-3 + -2.6 = Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].Text.Equals("1 × 3= 3", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].Text.Equals("2 Minus ( 3= Minus (1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[2].Text.Equals("-3 + -2.6= Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
 
         }
 
@@ -166,14 +166,6 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
-        public void Operator_Cubed()
-        {
-            page.StandardOperators.NumberPad.Input(-3);
-            page.StandardOperators.XPower3Button.Click();
-            Assert.AreEqual("-27", page.GetCalculatorResultText());
-        }
-
-        [TestMethod]
         public void Operator_Percent()
         {
             page.StandardOperators.NumberPad.Input(600);
@@ -190,6 +182,17 @@ namespace CalculatorUITests
             page.StandardOperators.NumberPad.Input(-12345);
             page.StandardOperators.BackSpaceButton.Click();
             Assert.AreEqual("-1,234", page.GetCalculatorResultText());
+        }
+
+        // Issue #817: Prefixed multiple zeros
+        [TestMethod]
+        public void Operator_Delete_Prefix_Zeros()
+        {
+            page.StandardOperators.NumberPad.Input(0.1); // To enter decimal point
+            page.StandardOperators.BackSpaceButton.Click();
+            page.StandardOperators.BackSpaceButton.Click();
+            page.StandardOperators.NumberPad.Input(0);
+            Assert.AreEqual("0", page.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -240,13 +243,6 @@ namespace CalculatorUITests
         {
             page.Header.SendKeys("100@");
             Assert.AreEqual("10", page.GetCalculatorResultText());
-        }
-
-        [TestMethod]
-        public void KeyboardInput_Cubed()
-        {
-            page.Header.SendKeys("3#");
-            Assert.AreEqual("27", page.GetCalculatorResultText());
         }
 
         [TestMethod]

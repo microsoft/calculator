@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -14,9 +14,9 @@ AppResourceProvider::AppResourceProvider()
     m_cEngineStringResLoader = ResourceLoader::GetForViewIndependentUse(L"CEngineStrings");
 }
 
-AppResourceProvider& AppResourceProvider::GetInstance()
+AppResourceProvider ^ AppResourceProvider::GetInstance()
 {
-    static AppResourceProvider s_instance;
+    static AppResourceProvider ^ s_instance = ref new AppResourceProvider();
     return s_instance;
 }
 

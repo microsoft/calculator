@@ -12,7 +12,6 @@
 #include "CalcViewModel/Common/Automation/NarratorNotifier.h"
 #include "CalcViewModel/Common/AppResourceProvider.h"
 #include "CalcViewModel/Common/LocalizationSettings.h"
-#include "CalcViewModel/ViewState.h"
 #include "Views/MainPage.xaml.h"
 
 using namespace CalculatorApp;
@@ -84,41 +83,11 @@ App::App()
 #endif
 }
 
-bool App::m_isAnimationEnabled = true;
-
-/// <summary>
-/// Return True if animation is enabled by user setting.
-/// </summary>
-bool App::IsAnimationEnabled()
-{
-    return App::m_isAnimationEnabled;
-}
-
-/// <summary>
-/// Return the current application view state. The value
-/// will match one of the constants in the ViewState namespace.
-/// </summary>
-String ^ App::GetAppViewState()
-{
-    String ^ newViewState;
-    CoreWindow ^ window = CoreWindow::GetForCurrentThread();
-    if ((window->Bounds.Width >= 560) && (window->Bounds.Height >= 356))
-    {
-        newViewState = ViewState::DockedView;
-    }
-    else
-    {
-        newViewState = ViewState::Snap;
-    }
-
-    return newViewState;
-}
-
 void App::AddWindowToMap(_In_ WindowFrameService ^ frameService)
 {
     reader_writer_lock::scoped_lock lock(m_windowsMapLock);
     m_secondaryWindows[frameService->GetViewId()] = frameService;
-    TraceLogger::GetInstance().UpdateWindowCount(m_secondaryWindows.size());
+    TraceLogger::GetInstance()->UpdateWindowCount(m_secondaryWindows.size());
 }
 
 WindowFrameService ^ App::GetWindowFromMap(int viewId)
@@ -238,9 +207,6 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
     //        DebugSettings->EnableFrameRateCounter = true;
     //    }
     //#endif
-
-    auto userSettings = ref new Windows::UI::ViewManagement::UISettings();
-    m_isAnimationEnabled = userSettings->AnimationsEnabled;
 
     args->SplashScreen->Dismissed += ref new TypedEventHandler<SplashScreen ^, Object ^>(this, &App::DismissedEventHandler);
 
@@ -384,7 +350,7 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
                 }
                 else
                 {
-                    TraceLogger::GetInstance().LogError(ViewMode::None, L"App::OnAppLaunch", L"Null_ActivationViewSwitcher");
+                    TraceLogger::GetInstance()->LogError(ViewMode::None, L"App::OnAppLaunch", L"Null_ActivationViewSwitcher");
                 }
             }
             // Set the preLaunched flag to false
@@ -460,7 +426,7 @@ void App::OnActivated(IActivatedEventArgs ^ args)
 
 void CalculatorApp::App::OnSuspending(Object ^ sender, SuspendingEventArgs ^ args)
 {
-    TraceLogger::GetInstance().LogButtonUsage();
+    TraceLogger::GetInstance()->LogButtonUsage();
 }
 
 void App::DismissedEventHandler(SplashScreen ^ sender, Object ^ e)
@@ -468,10 +434,5 @@ void App::DismissedEventHandler(SplashScreen ^ sender, Object ^ e)
     SetupJumpList();
 }
 
-float App::GetAppWindowHeight()
-{
-    CoreWindow ^ window = CoreWindow::GetForCurrentThread();
-    return window->Bounds.Height;
-}
 
 

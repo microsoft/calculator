@@ -49,9 +49,6 @@ DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, IsOperatorCommand);
 // and no events are launched when they scroll again in the same direction
 #define SCROLL_BUTTONS_APPROXIMATION_RANGE 4
 
-StringReference CalculationResult::s_FocusedState(L"Focused");
-StringReference CalculationResult::s_UnfocusedState(L"Unfocused");
-
 CalculationResult::CalculationResult()
     : m_isScalingText(false)
     , m_haveCalculatedMax(false)
@@ -60,11 +57,7 @@ CalculationResult::CalculationResult()
 
 Platform::String ^ CalculationResult::GetRawDisplayValue()
 {
-    std::wstring rawValue;
-
-    LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue->Data(), DisplayValue->Length(), &rawValue);
-
-    return ref new Platform::String(rawValue.c_str());
+    return LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue);
 }
 
 void CalculationResult::OnApplyTemplate()
@@ -86,6 +79,12 @@ void CalculationResult::OnApplyTemplate()
             m_textContainer->ViewChanged -= m_textContainerViewChangedToken;
             m_textContainerViewChangedToken.Value = 0;
         }
+    }
+
+    if (m_textBlock != nullptr && m_textBlockSizeChangedToken.Value != 0)
+    {
+        m_textBlock->SizeChanged -= m_textBlockSizeChangedToken;
+        m_textBlockSizeChangedToken.Value = 0;
     }
 
     if (m_scrollLeft != nullptr && m_scrollLeftClickToken.Value != 0)
@@ -129,11 +128,11 @@ void CalculationResult::OnApplyTemplate()
         if (m_textBlock)
         {
             m_textBlock->Visibility = ::Visibility::Visible;
+            m_textBlockSizeChangedToken = m_textBlock->SizeChanged += ref new SizeChangedEventHandler(this, &CalculationResult::OnTextBlockSizeChanged);
         }
     }
     UpdateVisualState();
     UpdateTextState();
-    VisualStateManager::GoToState(this, s_UnfocusedState, false);
 }
 
 void CalculationResult::OnTextContainerLayoutUpdated(Object ^ /*sender*/, Object ^ /*e*/)
@@ -361,20 +360,16 @@ void CalculationResult::OnTapped(TappedRoutedEventArgs ^ e)
 
 void CalculationResult::OnRightTapped(RightTappedRoutedEventArgs ^ e)
 {
-    this->Focus(::FocusState::Programmatic);
-}
+    auto requestedElement = e->OriginalSource;
 
-void CalculationResult::OnGotFocus(RoutedEventArgs ^ e)
-{
-    if (this->FocusState == ::FocusState::Keyboard)
+    if (requestedElement->Equals(dynamic_cast<Object ^>(m_textBlock)))
     {
-        VisualStateManager::GoToState(this, s_FocusedState, true);
+        m_textBlock->Focus(::FocusState::Programmatic);
     }
-}
-
-void CalculationResult::OnLostFocus(RoutedEventArgs ^ e)
-{
-    VisualStateManager::GoToState(this, s_UnfocusedState, true);
+    else
+    {
+        this->Focus(::FocusState::Programmatic);
+    }
 }
 
 AutomationPeer ^ CalculationResult::OnCreateAutomationPeer()
@@ -393,6 +388,11 @@ void CalculationResult::RaiseSelectedEvent()
 }
 
 void CalculationResult::OnTextContainerOnViewChanged(Object ^ /*sender*/, ScrollViewerViewChangedEventArgs ^ e)
+{
+    UpdateScrollButtons();
+}
+
+void CalculationResult::OnTextBlockSizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ /*e*/)
 {
     UpdateScrollButtons();
 }
