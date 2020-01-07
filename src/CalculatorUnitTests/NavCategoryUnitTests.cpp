@@ -106,7 +106,10 @@ namespace CalculatorUnitTests
         VERIFY_IS_TRUE(NavCategory::IsValidViewMode(ViewMode::Scientific));
         VERIFY_IS_TRUE(NavCategory::IsValidViewMode(ViewMode::Programmer));
         VERIFY_IS_TRUE(NavCategory::IsValidViewMode(ViewMode::Date));
-        VERIFY_IS_TRUE(NavCategory::IsValidViewMode(ViewMode::Graphing));
+        if (Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath"))
+        {
+            VERIFY_IS_TRUE(NavCategory::IsValidViewMode(ViewMode::Graphing));
+        }
         VERIFY_IS_TRUE(NavCategory::IsValidViewMode(ViewMode::Currency));
         VERIFY_IS_TRUE(NavCategory::IsValidViewMode(ViewMode::Volume));
         VERIFY_IS_TRUE(NavCategory::IsValidViewMode(ViewMode::Length));
@@ -126,9 +129,18 @@ namespace CalculatorUnitTests
     {
         VERIFY_IS_FALSE(NavCategory::IsValidViewMode(ViewMode::None));
 
-        // There are 18 total options so int 18 should be the first invalid
-        VERIFY_IS_TRUE(NavCategory::IsValidViewMode(static_cast<ViewMode>(17)));
-        VERIFY_IS_FALSE(NavCategory::IsValidViewMode(static_cast<ViewMode>(18)));
+        if (Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath"))
+        {
+            // There are 18 total options so int 18 should be the first invalid
+            VERIFY_IS_TRUE(NavCategory::IsValidViewMode(static_cast<ViewMode>(17)));
+            VERIFY_IS_FALSE(NavCategory::IsValidViewMode(static_cast<ViewMode>(18)));
+        }
+        else
+        {
+            // There are 17 total options when graphing calculator is not present, so int 17 should be the first invalid
+            VERIFY_IS_TRUE(NavCategory::IsValidViewMode(static_cast<ViewMode>(16)));
+            VERIFY_IS_FALSE(NavCategory::IsValidViewMode(static_cast<ViewMode>(17)));
+        }
 
         // Also verify the lower bound
         VERIFY_IS_TRUE(NavCategory::IsValidViewMode(static_cast<ViewMode>(0)));
@@ -142,7 +154,10 @@ namespace CalculatorUnitTests
         VERIFY_IS_TRUE(NavCategory::IsCalculatorViewMode(ViewMode::Programmer));
 
         VERIFY_IS_FALSE(NavCategory::IsCalculatorViewMode(ViewMode::Date));
-        VERIFY_IS_FALSE(NavCategory::IsCalculatorViewMode(ViewMode::Graphing));
+        if (Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath"))
+        {
+            VERIFY_IS_FALSE(NavCategory::IsCalculatorViewMode(ViewMode::Graphing));
+        }
 
         VERIFY_IS_FALSE(NavCategory::IsCalculatorViewMode(ViewMode::Currency));
         VERIFY_IS_FALSE(NavCategory::IsCalculatorViewMode(ViewMode::Volume));
@@ -166,8 +181,10 @@ namespace CalculatorUnitTests
         VERIFY_IS_FALSE(NavCategory::IsDateCalculatorViewMode(ViewMode::Programmer));
 
         VERIFY_IS_TRUE(NavCategory::IsDateCalculatorViewMode(ViewMode::Date));
-
-        VERIFY_IS_FALSE(NavCategory::IsDateCalculatorViewMode(ViewMode::Graphing));
+        if (Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath"))
+        {
+            VERIFY_IS_FALSE(NavCategory::IsDateCalculatorViewMode(ViewMode::Graphing));
+        }
 
         VERIFY_IS_FALSE(NavCategory::IsDateCalculatorViewMode(ViewMode::Currency));
         VERIFY_IS_FALSE(NavCategory::IsDateCalculatorViewMode(ViewMode::Volume));
@@ -190,7 +207,10 @@ namespace CalculatorUnitTests
         VERIFY_IS_FALSE(NavCategory::IsConverterViewMode(ViewMode::Scientific));
         VERIFY_IS_FALSE(NavCategory::IsConverterViewMode(ViewMode::Programmer));
         VERIFY_IS_FALSE(NavCategory::IsConverterViewMode(ViewMode::Date));
-        VERIFY_IS_FALSE(NavCategory::IsConverterViewMode(ViewMode::Graphing));
+        if (Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath"))
+        {
+            VERIFY_IS_FALSE(NavCategory::IsConverterViewMode(ViewMode::Graphing));
+        }
 
         VERIFY_IS_TRUE(NavCategory::IsConverterViewMode(ViewMode::Currency));
         VERIFY_IS_TRUE(NavCategory::IsConverterViewMode(ViewMode::Volume));
@@ -213,7 +233,10 @@ namespace CalculatorUnitTests
         VERIFY_ARE_EQUAL(StringReference(L"Scientific"), NavCategory::GetFriendlyName(ViewMode::Scientific));
         VERIFY_ARE_EQUAL(StringReference(L"Programmer"), NavCategory::GetFriendlyName(ViewMode::Programmer));
         VERIFY_ARE_EQUAL(StringReference(L"Date"), NavCategory::GetFriendlyName(ViewMode::Date));
-        VERIFY_ARE_EQUAL(StringReference(L"Graphing"), NavCategory::GetFriendlyName(ViewMode::Graphing));
+        if (Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath"))
+        {
+            VERIFY_ARE_EQUAL(StringReference(L"Graphing"), NavCategory::GetFriendlyName(ViewMode::Graphing));
+        }
         VERIFY_ARE_EQUAL(StringReference(L"Currency"), NavCategory::GetFriendlyName(ViewMode::Currency));
         VERIFY_ARE_EQUAL(StringReference(L"Volume"), NavCategory::GetFriendlyName(ViewMode::Volume));
         VERIFY_ARE_EQUAL(StringReference(L"Length"), NavCategory::GetFriendlyName(ViewMode::Length));
@@ -237,7 +260,10 @@ namespace CalculatorUnitTests
         VERIFY_ARE_EQUAL(CategoryGroupType::Calculator, NavCategory::GetGroupType(ViewMode::Scientific));
         VERIFY_ARE_EQUAL(CategoryGroupType::Calculator, NavCategory::GetGroupType(ViewMode::Programmer));
         VERIFY_ARE_EQUAL(CategoryGroupType::Calculator, NavCategory::GetGroupType(ViewMode::Date));
-        VERIFY_ARE_EQUAL(CategoryGroupType::Calculator, NavCategory::GetGroupType(ViewMode::Graphing));
+        if (Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath"))
+        {
+            VERIFY_ARE_EQUAL(CategoryGroupType::Calculator, NavCategory::GetGroupType(ViewMode::Graphing));
+        }
 
         VERIFY_ARE_EQUAL(CategoryGroupType::Converter, NavCategory::GetGroupType(ViewMode::Currency));
         VERIFY_ARE_EQUAL(CategoryGroupType::Converter, NavCategory::GetGroupType(ViewMode::Volume));
@@ -257,9 +283,20 @@ namespace CalculatorUnitTests
     void NavCategoryUnitTests::GetIndex()
     {
         // Index is the 0-based ordering of modes
-        ViewMode orderedModes[] = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Graphing, ViewMode::Programmer,  ViewMode::Date,     ViewMode::Currency,
-                                    ViewMode::Volume,   ViewMode::Length,     ViewMode::Weight,   ViewMode::Temperature, ViewMode::Energy,   ViewMode::Area,
-                                    ViewMode::Speed,    ViewMode::Time,       ViewMode::Power,    ViewMode::Data,        ViewMode::Pressure, ViewMode::Angle };
+        vector<ViewMode> orderedModes;
+
+        if (Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath"))
+        {
+            orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Graphing, ViewMode::Programmer,  ViewMode::Date,     ViewMode::Currency,
+                             ViewMode::Volume,   ViewMode::Length,     ViewMode::Weight,   ViewMode::Temperature, ViewMode::Energy,   ViewMode::Area,
+                             ViewMode::Speed,    ViewMode::Time,       ViewMode::Power,    ViewMode::Data,        ViewMode::Pressure, ViewMode::Angle };
+        }
+        else
+        {
+            orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Programmer,  ViewMode::Date,     ViewMode::Currency, ViewMode::Volume,
+                             ViewMode::Length,   ViewMode::Weight,     ViewMode::Temperature, ViewMode::Energy,   ViewMode::Area,     ViewMode::Speed,
+                             ViewMode::Time,     ViewMode::Power,      ViewMode::Data,        ViewMode::Pressure, ViewMode::Angle };
+        }
 
         auto orderedModesSize = size(orderedModes);
         for (size_t index = 0; index < orderedModesSize; index++)
@@ -274,10 +311,20 @@ namespace CalculatorUnitTests
     void NavCategoryUnitTests::GetPosition()
     {
         // Position is the 1-based ordering of modes
-        vector<ViewMode> orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Graphing, ViewMode::Programmer, ViewMode::Date,
-                                          ViewMode::Currency, ViewMode::Volume,     ViewMode::Length,   ViewMode::Weight,     ViewMode::Temperature,
-                                          ViewMode::Energy,   ViewMode::Area,       ViewMode::Speed,    ViewMode::Time,       ViewMode::Power,
-                                          ViewMode::Data,     ViewMode::Pressure,   ViewMode::Angle };
+        vector<ViewMode> orderedModes;
+
+        if (Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath"))
+        {
+            orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Graphing, ViewMode::Programmer,  ViewMode::Date,     ViewMode::Currency,
+                             ViewMode::Volume,   ViewMode::Length,     ViewMode::Weight,   ViewMode::Temperature, ViewMode::Energy,   ViewMode::Area,
+                             ViewMode::Speed,    ViewMode::Time,       ViewMode::Power,    ViewMode::Data,        ViewMode::Pressure, ViewMode::Angle };
+        }
+        else
+        {
+            orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Programmer,  ViewMode::Date,     ViewMode::Currency, ViewMode::Volume,
+                             ViewMode::Length,   ViewMode::Weight,     ViewMode::Temperature, ViewMode::Energy,   ViewMode::Area,     ViewMode::Speed,
+                             ViewMode::Time,     ViewMode::Power,      ViewMode::Data,        ViewMode::Pressure, ViewMode::Angle };
+        }
 
         auto orderedModesSize = size(orderedModes);
         for (size_t pos = 1; pos <= orderedModesSize; pos++)
