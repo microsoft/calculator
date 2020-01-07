@@ -118,7 +118,7 @@ namespace CalculatorUnitTests
             m_decimalSeparator = ref new Platform::String(m_engineResourceProvider->GetCEngineString(L"sDecimal").c_str());
         }
 
-        void ValidateViewModelValueAndExpression(String ^ value, String ^ expression = nullptr)
+        void ValidateViewModelValue(String ^ value)
         {
             String ^ displayValue = m_viewModel->DisplayValue;
             if (value != nullptr)
@@ -390,18 +390,18 @@ namespace CalculatorUnitTests
             m_viewModel->IsScientific = false;
 
             m_viewModel->OnPaste("-0.99");
-            ValidateViewModelValueAndExpression("-0" + m_decimalSeparator + "99", "");
+            ValidateViewModelValue("-0" + m_decimalSeparator + "99");
 
             m_viewModel->OnPaste("1+1=");
-            ValidateViewModelValueAndExpression("2", "");
+            ValidateViewModelValue("2");
 
             // This result is not obvious: it's the result of the previous operation
             m_viewModel->OnPaste("0=");
-            ValidateViewModelValueAndExpression("1", "");
+            ValidateViewModelValue("1");
 
             // Negative value
             m_viewModel->OnPaste("-1");
-            ValidateViewModelValueAndExpression("-1", "");
+            ValidateViewModelValue("-1");
 
             // Negated expression
             m_viewModel->OnPaste("-(1+1)");
@@ -418,24 +418,24 @@ namespace CalculatorUnitTests
 
             //// Positive exponent
             m_viewModel->OnPaste("1.23e+10");
-            ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e+10", "");
+            ValidateViewModelValue("1" + m_decimalSeparator + "23e+10");
 
             m_viewModel->OnPaste("1.23e10");
-            ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e+10", "");
+            ValidateViewModelValue("1" + m_decimalSeparator + "23e+10");
 
             m_viewModel->OnPaste("135e10");
-            ValidateViewModelValueAndExpression("135" + m_decimalSeparator + "e+10", "");
+            ValidateViewModelValue("135" + m_decimalSeparator + "e+10");
 
             //// Negative exponent
             m_viewModel->OnPaste("1.23e-10");
-            ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e-10", "");
+            ValidateViewModelValue("1" + m_decimalSeparator + "23e-10");
 
             //// Uppercase E (for exponent)
             m_viewModel->OnPaste("1.23E-10");
-            ValidateViewModelValueAndExpression("1" + m_decimalSeparator + "23e-10", "");
+            ValidateViewModelValue("1" + m_decimalSeparator + "23e-10");
 
             m_viewModel->OnPaste("135E10");
-            ValidateViewModelValueAndExpression("135" + m_decimalSeparator + "e+10", "");
+            ValidateViewModelValue("135" + m_decimalSeparator + "e+10");
         }
 
         // Verify Calculator CalculationResultAutomationName is set correctly
