@@ -26,16 +26,12 @@ using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace std;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, IsActive);
-DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, AccentColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, MinFontSize);
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, MaxFontSize);
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, DisplayMargin);
-DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, MaxExpressionHistoryCharacters);
-DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, ExpressionVisibility);
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, DisplayValue);
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, IsInError);
 DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, IsOperatorCommand);
-DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, DisplayStringExpression);
 
 #define SCALEFACTOR 0.357143
 #define SMALLHEIGHTSCALEFACTOR 0
@@ -46,6 +42,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, DisplayStringExpression);
 #define WIDTHTOFONTOFFSET 3
 #define WIDTHCUTOFF 50
 #define FONTTOLERANCE 0.001
+#define SCROLL_RATIO 0.7
 
 // We need a safety margin to guarantee we correctly always show/hide ScrollLeft and ScrollRight buttons when necessary.
 // In rare cases, ScrollViewer::HorizontalOffset is a little low by a few (sub)pixels when users scroll to one of the extremity
@@ -120,12 +117,12 @@ void CalculationResult::OnApplyTemplate()
         m_scrollLeft = dynamic_cast<HyperlinkButton ^>(GetTemplateChild("ScrollLeft"));
         if (m_scrollLeft)
         {
-            m_scrollLeftClickToken = m_scrollLeft->Click += ref new RoutedEventHandler(this, &CalculationResult::OnScrollClick);
+            m_scrollLeftClickToken = m_scrollLeft->Click += ref new RoutedEventHandler(this, &CalculationResult::OnScrollLeftClick);
         }
         m_scrollRight = dynamic_cast<HyperlinkButton ^>(GetTemplateChild("ScrollRight"));
         if (m_scrollRight)
         {
-            m_scrollRightClickToken = m_scrollRight->Click += ref new RoutedEventHandler(this, &CalculationResult::OnScrollClick);
+            m_scrollRightClickToken = m_scrollRight->Click += ref new RoutedEventHandler(this, &CalculationResult::OnScrollRightClick);
         }
         m_textBlock = dynamic_cast<TextBlock ^>(GetTemplateChild("NormalOutput"));
         if (m_textBlock)
@@ -154,16 +151,6 @@ void CalculationResult::OnTextContainerSizeChanged(Object ^ /*sender*/, SizeChan
 void CalculationResult::OnIsActivePropertyChanged(bool /*oldValue*/, bool /*newValue */)
 {
     UpdateVisualState();
-}
-
-void CalculationResult::OnAccentColorPropertyChanged(Brush ^ /*oldValue*/, Brush ^ /*newValue*/)
-{
-    // Force the "Active" transition to happen again
-    if (IsActive)
-    {
-        VisualStateManager::GoToState(this, "Normal", true);
-        VisualStateManager::GoToState(this, "Active", true);
-    }
 }
 
 void CalculationResult::OnDisplayValuePropertyChanged(String ^ /*oldValue*/, String ^ /*newValue*/)
@@ -287,7 +274,7 @@ void CalculationResult::ScrollLeft()
     }
     if (m_textContainer->HorizontalOffset > 0)
     {
-        double offset = m_textContainer->HorizontalOffset - (scrollRatio * m_textContainer->ViewportWidth);
+        double offset = m_textContainer->HorizontalOffset - (SCROLL_RATIO * m_textContainer->ViewportWidth);
         m_textContainer->ChangeView(offset, nullptr, nullptr);
     }
 }
@@ -301,7 +288,7 @@ void CalculationResult::ScrollRight()
 
     if (m_textContainer->HorizontalOffset < m_textContainer->ExtentWidth - m_textContainer->ViewportWidth)
     {
-        double offset = m_textContainer->HorizontalOffset + (scrollRatio * m_textContainer->ViewportWidth);
+        double offset = m_textContainer->HorizontalOffset + (SCROLL_RATIO * m_textContainer->ViewportWidth);
         m_textContainer->ChangeView(offset, nullptr, nullptr);
     }
 }
@@ -319,17 +306,14 @@ void CalculationResult::OnKeyDown(KeyRoutedEventArgs ^ e)
     }
 }
 
-void CalculationResult::OnScrollClick(Object ^ sender, RoutedEventArgs ^ /*e*/)
+void CalculationResult::OnScrollLeftClick(Object ^ sender, RoutedEventArgs ^ /*e*/)
 {
-    auto clicked = dynamic_cast<HyperlinkButton ^>(sender);
-    if (clicked == m_scrollLeft)
-    {
-        this->ScrollLeft();
-    }
-    else
-    {
-        this->ScrollRight();
-    }
+    ScrollLeft();
+}
+
+void CalculationResult::OnScrollRightClick(Object ^ sender, RoutedEventArgs ^ /*e*/)
+{
+    ScrollRight();
 }
 
 void CalculationResult::UpdateScrollButtons()

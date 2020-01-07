@@ -20,15 +20,11 @@ namespace CalculatorApp
 
             DEPENDENCY_PROPERTY_OWNER(CalculationResult);
 
-            DEPENDENCY_PROPERTY(Windows::UI::Xaml::Visibility, ExpressionVisibility);
             DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(double, MinFontSize, 0.0);
             DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(double, MaxFontSize, 30.0);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Thickness, DisplayMargin);
-            DEPENDENCY_PROPERTY(int, MaxExpressionHistoryCharacters);
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, IsActive);
-            DEPENDENCY_PROPERTY_WITH_CALLBACK(Windows::UI::Xaml::Media::Brush ^, AccentColor);
             DEPENDENCY_PROPERTY_WITH_CALLBACK(Platform::String ^, DisplayValue);
-            DEPENDENCY_PROPERTY(Platform::String ^, DisplayStringExpression);
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, IsInError);
             DEPENDENCY_PROPERTY_WITH_DEFAULT(bool, IsOperatorCommand, false);
 
@@ -48,7 +44,6 @@ namespace CalculatorApp
 
         private:
             void OnIsActivePropertyChanged(bool oldValue, bool newValue);
-            void OnAccentColorPropertyChanged(Windows::UI::Xaml::Media::Brush ^ oldValue, Windows::UI::Xaml::Media::Brush ^ newValue);
             void OnDisplayValuePropertyChanged(Platform::String ^ oldValue, Platform::String ^ newValue);
             void OnIsInErrorPropertyChanged(bool oldValue, bool newValue);
             void OnMinFontSizePropertyChanged(double oldValue, double newValue);
@@ -58,7 +53,11 @@ namespace CalculatorApp
             void OnTextContainerLayoutUpdated(Object ^ sender, Object ^ e);
             void OnTextContainerOnViewChanged(Object ^ sender, Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs ^ e);
             void UpdateVisualState();
-            void OnScrollClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+            void UpdateAllState();
+            void OnScrollLeftClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+            void OnScrollRightClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+            void OnPointerEntered(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
+            void OnPointerExited(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
             void ModifyFontAndMargin(Windows::UI::Xaml::Controls::TextBlock ^ textBlock, double fontChange);
             void UpdateScrollButtons();
             void ScrollLeft();
@@ -69,7 +68,6 @@ namespace CalculatorApp
             Windows::UI::Xaml::Controls::TextBlock ^ m_textBlock;
             Windows::UI::Xaml::Controls::HyperlinkButton ^ m_scrollLeft;
             Windows::UI::Xaml::Controls::HyperlinkButton ^ m_scrollRight;
-            double scrollRatio = 0.7;
             bool m_isScalingText;
             bool m_haveCalculatedMax;
             Windows::Foundation::EventRegistrationToken m_textContainerLayoutChangedToken;

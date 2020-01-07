@@ -57,7 +57,6 @@ namespace CalculatorApp
             PROPERTY_R(Platform::String ^, SelectedExpressionLastData);
             OBSERVABLE_NAMED_PROPERTY_R(bool, IsInError);
             OBSERVABLE_PROPERTY_R(bool, IsOperatorCommand);
-            OBSERVABLE_PROPERTY_R(Platform::String ^, DisplayStringExpression);
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Common::DisplayExpressionToken ^> ^, ExpressionTokens);
             OBSERVABLE_PROPERTY_R(Platform::String ^, DecimalDisplayValue);
             OBSERVABLE_PROPERTY_R(Platform::String ^, HexDisplayValue);
