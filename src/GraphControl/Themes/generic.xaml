@@ -1,0 +1,13 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="using:GraphControl">
+    <Style TargetType="local:Grapher">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Grapher">
+                    <SwapChainPanel x:Name="GraphSurface"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

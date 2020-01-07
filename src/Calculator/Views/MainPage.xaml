@@ -86,8 +86,9 @@
                     Command="{x:Bind Model.PasteCommand}"/>
         </StackPanel>
 
-        <local:TitleBar Grid.Row="0" IsAlwaysOnTopMode="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"
-                        AlwaysOnTopClick="TitleBarAlwaysOnTopButtonClick"/>
+        <local:TitleBar Grid.Row="0"
+                        AlwaysOnTopClick="TitleBarAlwaysOnTopButtonClick"
+                        IsAlwaysOnTopMode="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"/>
 
         <Grid Grid.Row="1">
             <Border x:Name="CalcHolder">
@@ -95,6 +96,9 @@
             </Border>
             <Border x:Name="DateCalcHolder">
                 <!-- PLACEHOLDER!!!! This is where the date calculator goes when it is delay loaded -->
+            </Border>
+            <Border x:Name="GraphingCalcHolder">
+                <!-- PLACEHOLDER!!!! This is where the graphing calculator goes when it is delay loaded -->
             </Border>
             <Border x:Name="ConverterHolder">
                 <!-- PLACEHOLDER!!!! This is where the converter goes when it is delay loaded -->
@@ -108,7 +112,6 @@
                              DataContext="{x:Bind Model}"
                              ExpandedModeThresholdWidth="Infinity"
                              IsBackButtonVisible="Collapsed"
-                             IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                              IsPaneToggleButtonVisible="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                              IsSettingsVisible="False"
                              ItemInvoked="OnNavItemInvoked"
@@ -126,9 +129,9 @@
                 <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
                     <muxc:NavigationViewList x:Name="NavFooter"
                                              Width="{x:Bind NavView.OpenPaneLength, Mode=Oneway}"
-                                             x:Load="False"
                                              IsItemClickEnabled="True"
-                                             ItemClick="OnAboutButtonClick">
+                                             ItemClick="OnAboutButtonClick"
+                                             x:Load="False">
                         <muxc:NavigationViewList.ItemContainerTransitions>
                             <!-- Remove EntranceThemeTransition which is a default transition for NavigationViewList -->
                             <TransitionCollection/>
@@ -180,7 +183,7 @@
                         Content="&#xEE49;"
                         Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}">
                     <Button.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="Menu" Key="Up"/>
+                        <KeyboardAccelerator Key="Up" Modifiers="Menu"/>
                     </Button.KeyboardAccelerators>
                 </Button>
             </Grid>

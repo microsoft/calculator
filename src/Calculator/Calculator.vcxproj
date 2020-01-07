@@ -130,6 +130,9 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup>
+    <Import Project="$(SolutionDir)\GraphControl\GraphingImplOverrides.props" Condition="Exists('$(SolutionDir)\GraphControl\GraphingImplOverrides.props')" />
+  </ImportGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /await /std:c++17 /utf-8</AdditionalOptions>
@@ -222,6 +225,9 @@
   <PropertyGroup>
     <AppVersion Condition="'$(AppVersion)' == ''">0.0.0.0</AppVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <GenerateProjectSpecificOutputFolder>true</GenerateProjectSpecificOutputFolder>
+  </PropertyGroup>
   <ItemGroup>
     <ResourceCompile Include="Calculator.rc" PreprocessorDefinitions="%(PreprocessorDefinitions);APP_VERSION_MAJOR=$(AppVersion.Split(`.`)[0]);APP_VERSION_MINOR=$(AppVersion.Split(`.`)[1]);APP_VERSION_BUILD=$(AppVersion.Split(`.`)[2]);APP_VERSION_REVISION=$(AppVersion.Split(`.`)[3])" />
   </ItemGroup>
@@ -234,6 +240,7 @@
     <ClInclude Include="Common\ValidatingConverters.h" />
     <ClInclude Include="Common\ViewState.h" />
     <ClInclude Include="Controls\CalculationResultAutomationPeer.h" />
+    <ClInclude Include="Controls\MathRichEditBox.h" />
     <ClInclude Include="Controls\OverflowTextBlockAutomationPeer.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h" />
     <ClInclude Include="Controls\CalculationResult.h" />
@@ -251,10 +258,16 @@
     <ClInclude Include="Controls\HorizontalNoOverflowStackPanel.h" />
     <ClInclude Include="Controls\OperatorPanelListView.h" />
     <ClInclude Include="Controls\OperatorPanelButton.h" />
+    <ClInclude Include="Controls\EquationTextBox.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="EquationStylePanelControl.xaml.h">
+      <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.h" />
+    <ClInclude Include="Utils\VisualTree.h" />
     <ClInclude Include="Views\Calculator.xaml.h">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
     </ClInclude>
@@ -278,6 +291,21 @@
     </ClInclude>
     <ClInclude Include="Views\CalculatorStandardOperators.xaml.h">
       <DependentUpon>Views\CalculatorStandardOperators.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\EquationInputArea.xaml.h">
+      <DependentUpon>Views\GraphingCalculator\EquationInputArea.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\GraphingCalculator.xaml.h">
+      <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\GraphingSettings.xaml.h">
+      <DependentUpon>Views\GraphingCalculator\GraphingSettings.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h">
+      <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\GraphingNumPad.xaml.h">
+      <DependentUpon>Views\GraphingCalculator\GraphingNumPad.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Views\HistoryList.xaml.h">
       <DependentUpon>Views\HistoryList.xaml</DependentUpon>
@@ -318,6 +346,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="AboutFlyout.xaml" />
+    <Page Include="EquationStylePanelControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Calculator.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -335,6 +366,11 @@
     </Page>
     <Page Include="Views\CalculatorStandardOperators.xaml" />
     <Page Include="Views\DelighterUnitStyles.xaml" />
+    <Page Include="Views\GraphingCalculator\EquationInputArea.xaml" />
+    <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml" />
+    <Page Include="Views\GraphingCalculator\GraphingSettings.xaml" />
+    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml" />
+    <Page Include="Views\GraphingCalculator\GraphingNumPad.xaml" />
     <Page Include="Views\HistoryList.xaml" />
     <Page Include="Views\MainPage.xaml" />
     <Page Include="Views\Memory.xaml" />
@@ -368,6 +404,7 @@
     <ClCompile Include="Common\KeyboardShortcutManager.cpp" />
     <ClCompile Include="Common\ViewState.cpp" />
     <ClCompile Include="Controls\CalculationResultAutomationPeer.cpp" />
+    <ClCompile Include="Controls\MathRichEditBox.cpp" />
     <ClCompile Include="Controls\OverflowTextBlockAutomationPeer.cpp" />
     <ClCompile Include="Controls\CalculationResult.cpp" />
     <ClCompile Include="Controls\CalculatorButton.cpp" />
@@ -384,6 +421,7 @@
     <ClCompile Include="Controls\HorizontalNoOverflowStackPanel.cpp" />
     <ClCompile Include="Controls\OperatorPanelListView.cpp" />
     <ClCompile Include="Controls\OperatorPanelButton.cpp" />
+    <ClCompile Include="Controls\EquationTextBox.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -394,6 +432,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="EquationStylePanelControl.xaml.cpp">
+      <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.cpp" />
+    <ClCompile Include="Utils\VisualTree.cpp" />
     <ClCompile Include="Views\Calculator.xaml.cpp">
       <DependentUpon>Views\Calculator.xaml</DependentUpon>
     </ClCompile>
@@ -417,6 +460,21 @@
     </ClCompile>
     <ClCompile Include="Views\CalculatorStandardOperators.xaml.cpp">
       <DependentUpon>Views\CalculatorStandardOperators.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\EquationInputArea.xaml.cpp">
+      <DependentUpon>Views\GraphingCalculator\EquationInputArea.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\GraphingCalculator.xaml.cpp">
+      <DependentUpon>Views\GraphingCalculator\GraphingCalculator.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\GraphingSettings.xaml.cpp">
+      <DependentUpon>Views\GraphingCalculator\GraphingSettings.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp">
+      <DependentUpon>Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\GraphingNumPad.xaml.cpp">
+      <DependentUpon>Views\GraphingCalculator\GraphingNumPad.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Views\HistoryList.xaml.cpp">
       <DependentUpon>Views\HistoryList.xaml</DependentUpon>
@@ -810,6 +868,9 @@
   <ItemGroup>
     <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">
       <Project>{90e9761d-9262-4773-942d-caeae75d7140}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphControl\GraphControl.vcxproj">
+      <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

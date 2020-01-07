@@ -103,8 +103,6 @@ namespace CalculatorUnitTests
 {
     constexpr auto sc_Language_EN = L"en-US";
 
-    const UCM::Category CURRENCY_CATEGORY = { NavCategory::Serialize(ViewMode::Currency), L"Currency", false /*supportsNegative*/ };
-
     unique_ptr<CurrencyDataLoader> MakeLoaderWithResults(String ^ staticResponse, String ^ allRatiosResponse)
     {
         auto client = make_unique<MockCurrencyHttpClientWithResult>(staticResponse, allRatiosResponse);
@@ -382,8 +380,12 @@ TEST_METHOD(Load_Success_LoadedFromWeb)
 }
 ;
 
-TEST_CLASS(CurrencyConverterUnitTests){ const UCM::Unit GetUnit(const vector<UCM::Unit>& unitList, const wstring& target){
-    return *find_if(begin(unitList), end(unitList), [&target](const UCM::Unit& u) { return u.abbreviation == target; });
+TEST_CLASS(CurrencyConverterUnitTests){
+
+    const UCM::Category CURRENCY_CATEGORY = { NavCategory::Serialize(ViewMode::Currency), L"Currency", false /*supportsNegative*/ };
+
+    const UCM::Unit GetUnit(const vector<UCM::Unit>& unitList, const wstring& target){
+        return *find_if(begin(unitList), end(unitList), [&target](const UCM::Unit& u) { return u.abbreviation == target; });
 }
 
 TEST_METHOD(Loaded_LoadOrderedUnits)

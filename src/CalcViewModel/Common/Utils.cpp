@@ -14,11 +14,13 @@
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace concurrency;
+using namespace Graphing::Renderer;
 using namespace Platform;
 using namespace std;
 using namespace Utils;
 using namespace Windows::ApplicationModel::Resources;
 using namespace Windows::Storage::Streams;
+using namespace Windows::UI;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
@@ -195,4 +197,119 @@ task<String ^> Utils::ReadFileFromFolder(IStorageFolder ^ folder, String ^ fileN
 
     String ^ contents = co_await FileIO::ReadTextAsync(file);
     co_return contents;
+}
+
+bool Utils::AreColorsEqual(const Color& color1, const Color& color2)
+{
+    return ((color1.A == color2.A)
+         && (color1.R == color2.R)
+         && (color1.G == color2.G)
+         && (color1.B == color2.B));
+}
+
+String^ Utils::Trim(String^ value)
+{
+    if (!value)
+    {
+        return nullptr;
+    }
+
+    wstring trimmed = value->Data();
+    Trim(trimmed);
+    return ref new String(trimmed.c_str());
+}
+
+void Utils::Trim(wstring& value)
+{
+    TrimFront(value);
+    TrimBack(value);
+}
+
+void Utils::TrimFront(wstring& value)
+{
+    value.erase(value.begin(), find_if(value.cbegin(), value.cend(), [](int ch){
+        return !isspace(ch);
+    }));
+}
+
+void Utils::TrimBack(wstring& value)
+{
+    value.erase(find_if(value.crbegin(), value.crend(), [](int ch) {
+        return !isspace(ch);
+    }).base(), value.end());
+}
+
+String^ Utils::EscapeHtmlSpecialCharacters(String^ originalString, shared_ptr<vector<wchar_t>> specialCharacters)
+{
+    // Construct a default special characters if not provided.
+    if (specialCharacters == nullptr)
+    {
+        specialCharacters = make_shared<vector<wchar_t>>();
+        specialCharacters->push_back(L'&');
+        specialCharacters->push_back(L'\"');
+        specialCharacters->push_back(L'\'');
+        specialCharacters->push_back(L'<');
+        specialCharacters->push_back(L'>');
+    }
+
+    bool replaceCharacters = false;
+    const wchar_t* pCh;
+    String^ replacementString = nullptr;
+
+    // First step is scanning the string for special characters.
+    // If there isn't any special character, we simply return the original string
+    for (pCh = originalString->Data(); *pCh; pCh++)
+    {
+        if (std::find(specialCharacters->begin(), specialCharacters->end(), *pCh) != specialCharacters->end())
+        {
+            replaceCharacters = true;
+            break;
+        }
+    }
+
+    if (replaceCharacters)
+    {
+        // If we indeed find a special character, we step back one character (the special
+        // character), and we create a new string where we replace those characters one by one
+        pCh--;
+        wstringstream buffer;
+        buffer << wstring(originalString->Data(), pCh);
+
+        for (; *pCh; pCh++)
+        {
+            switch (*pCh)
+            {
+            case L'&':
+                buffer << L"&amp;";
+                break;
+            case L'\"':
+                buffer << L"&quot;";
+                break;
+            case L'\'':
+                buffer << L"&apos;";
+                break;
+            case L'<':
+                buffer << L"&lt;";
+                break;
+            case L'>':
+                buffer << L"&gt;";
+                break;
+            default:
+                buffer << *pCh;
+            }
+        }
+        replacementString = ref new String(buffer.str().c_str());
+    }
+
+    return replaceCharacters ? replacementString : originalString;
+}
+
+bool operator==(const Color& color1, const Color& color2)
+{
+    return equal_to<Color>()(color1, color2);
+}
+
+bool operator!=(const Color& color1, const Color& color2)
+{
+    return !(color1 == color2);
 }
