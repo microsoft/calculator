@@ -231,6 +231,10 @@ void CalcInput::Backspace()
         if (!m_base.IsEmpty())
         {
             m_base.value.pop_back();
+            if (m_base.value == L"0")
+            {
+                m_base.value.pop_back();
+            }
         }
 
         if (m_base.value.size() <= m_decPtIndex)
@@ -269,34 +273,47 @@ bool CalcInput::IsEmpty()
 wstring CalcInput::ToString(uint32_t radix)
 {
     // In theory both the base and exponent could be C_NUM_MAX_DIGITS long.
-    wstringstream resStream;
-
     if ((m_base.value.size() > MAX_STRLEN) || (m_hasExponent && m_exponent.value.size() > MAX_STRLEN))
     {
         return wstring();
     }
 
+    wstring result;
+
     if (m_base.IsNegative())
     {
-        resStream << L'-';
+        result = L'-';
     }
 
-    resStream << (m_base.IsEmpty() ? L"0" : m_base.value);
+    if (m_base.IsEmpty())
+    {
+        result += L'0';
+    }
+    else
+    {
+        result += m_base.value;
+    }
 
     if (m_hasExponent)
     {
         // Add a decimal point if it is not already there
         if (!m_hasDecimal)
         {
-            resStream << m_decSymbol;
+            result += m_decSymbol;
         }
 
-        resStream << ((radix == 10) ? L'e' : L'^');
-        resStream << (m_exponent.IsNegative() ? L'-' : L'+');
-        resStream << (m_exponent.IsEmpty() ? L"0" : m_exponent.value);
-    }
+        result += ((radix == 10) ? L'e' : L'^');
+        result += (m_exponent.IsNegative() ? L'-' : L'+');
 
-    auto result = resStream.str();
+        if (m_exponent.IsEmpty())
+        {
+            result += L'0';
+        }
+        else
+        {
+            result += m_exponent.value;
+        }
+    }
 
     // Base and Exp can each be up to C_NUM_MAX_DIGITS in length, plus 4 characters for sign, dec, exp, and expSign.
     if (result.size() > C_NUM_MAX_DIGITS * 2 + 4)

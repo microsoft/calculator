@@ -327,12 +327,12 @@ namespace UnitConverterUnitTests
     // Test input escaping
     void UnitConverterTest::UnitConverterTestQuote()
     {
-        wstring input1 = L"Weight";
-        wstring output1 = L"Weight";
-        wstring input2 = L"{p}Weig;[ht|";
-        wstring output2 = L"{lb}p{rb}Weig{sc}{lc}ht{p}";
-        wstring input3 = L"{{{t;s}}},:]";
-        wstring output3 = L"{lb}{lb}{lb}t{sc}s{rb}{rb}{rb}{cm}{co}{rc}";
+        constexpr wstring_view input1 = L"Weight";
+        constexpr wstring_view output1 = L"Weight";
+        constexpr wstring_view input2 = L"{p}Weig;[ht|";
+        constexpr wstring_view output2 = L"{lb}p{rb}Weig{sc}{lc}ht{p}";
+        constexpr wstring_view input3 = L"{{{t;s}}},:]";
+        constexpr wstring_view output3 = L"{lb}{lb}{lb}t{sc}s{rb}{rb}{rb}{cm}{co}{rc}";
         VERIFY_IS_TRUE(UnitConverter::Quote(input1) == output1);
         VERIFY_IS_TRUE(UnitConverter::Quote(input2) == output2);
         VERIFY_IS_TRUE(UnitConverter::Quote(input3) == output3);
@@ -341,9 +341,9 @@ namespace UnitConverterUnitTests
     // Test output unescaping
     void UnitConverterTest::UnitConverterTestUnquote()
     {
-        wstring input1 = L"Weight";
-        wstring input2 = L"{p}Weig;[ht|";
-        wstring input3 = L"{{{t;s}}},:]";
+        constexpr wstring_view input1 = L"Weight";
+        constexpr wstring_view input2 = L"{p}Weig;[ht|";
+        constexpr wstring_view input3 = L"{{{t;s}}},:]";
         VERIFY_IS_TRUE(UnitConverter::Unquote(input1) == input1);
         VERIFY_IS_TRUE(UnitConverter::Unquote(UnitConverter::Quote(input1)) == input1);
         VERIFY_IS_TRUE(UnitConverter::Unquote(UnitConverter::Quote(input2)) == input2);

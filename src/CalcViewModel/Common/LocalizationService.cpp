@@ -599,16 +599,15 @@ String ^ LocalizationService::GetNarratorReadableToken(String ^ rawToken)
 
 String ^ LocalizationService::GetNarratorReadableString(String ^ rawString)
 {
-    wstringstream readableString{};
-    readableString << L"";
+    wstring readableString{};
 
     wstring asWstring = rawString->Data();
     for (const auto& c : asWstring)
     {
-        readableString << LocalizationService::GetNarratorReadableToken(L"" + c)->Data();
+        readableString += LocalizationService::GetNarratorReadableToken(ref new String(&c, 1))->Data();
     }
 
-    return ref new String(readableString.str().c_str());
+    return ref new String(readableString.c_str());
 }
 
 void LocalizationService::Sort(std::vector<Platform::String ^>& source)

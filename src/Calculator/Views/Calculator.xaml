@@ -454,7 +454,6 @@
                         <Setter Target="M5.MaxWidth" Value="80"/>
                         <Setter Target="MemButton.(Grid.Column)" Value="5"/>
                         <Setter Target="MemoryButton.(Grid.Column)" Value="6"/>
-                        <Setter Target="HistoryButton.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                     <Storyboard Completed="OnModeVisualStateCompleted"/>
                 </VisualState>
@@ -491,7 +490,6 @@
                         <Setter Target="ColumnMain.Width" Value="320*"/>
                         <Setter Target="ColumnHistory.Width" Value="240*"/>
                         <Setter Target="DockPanel.Visibility" Value="Visible"/>
-                        <Setter Target="HistoryButton.Visibility" Value="Collapsed"/>
                         <Setter Target="M6.Width" Value="0"/>
                     </VisualState.Setters>
                     <Storyboard Completed="OnLayoutVisualStateCompleted"/>
@@ -549,7 +547,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Results.MaxFontSize" Value="72"/>
-                        <Setter Target="Results.MaxExpressionHistoryCharacters" Value="51"/>
                         <Setter Target="RowResult.MinHeight" Value="108"/>
                         <Setter Target="RowResult.Height" Value="72*"/>
                     </VisualState.Setters>
@@ -560,7 +557,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Results.MaxFontSize" Value="46"/>
-                        <Setter Target="Results.MaxExpressionHistoryCharacters" Value="30"/>
                         <Setter Target="RowResult.MinHeight" Value="72"/>
                         <Setter Target="RowResult.Height" Value="72*"/>
                     </VisualState.Setters>
@@ -571,7 +567,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Results.MaxFontSize" Value="26"/>
-                        <Setter Target="Results.MaxExpressionHistoryCharacters" Value="30"/>
                         <Setter Target="RowResult.MinHeight" Value="42"/>
                         <Setter Target="RowResult.Height" Value="42*"/>
                     </VisualState.Setters>
@@ -617,9 +612,7 @@
                                         AutomationProperties.Name="{x:Bind Model.CalculationResultAutomationName, Mode=OneWay}"
                                         ContextCanceled="OnContextCanceled"
                                         ContextRequested="OnContextRequested"
-                                        DisplayStringExpression="{x:Bind Model.DisplayStringExpression, Mode=OneWay}"
                                         DisplayValue="{x:Bind Model.DisplayValue, Mode=OneWay}"
-                                        ExpressionVisibility="Visible"
                                         IsInError="{x:Bind Model.IsInError, Mode=OneWay}"
                                         IsOperatorCommand="{x:Bind Model.IsOperatorCommand, Mode=OneWay}"
                                         TabIndex="1"
@@ -657,27 +650,26 @@
                                                     IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
                                                     x:Load="False"/>
 
-            <Grid x:Name="HistoryButtonParent" Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
-                <Button x:Name="HistoryButton"
-                        x:Uid="HistoryButton"
-                        Grid.Row="0"
-                        Style="{StaticResource HistoryButtonStyle}"
-                        AutomationProperties.AutomationId="HistoryButton"
-                        Command="{x:Bind HistoryButtonPressed, Mode=OneTime}"
-                        Content="&#xe81c;"
-                        ExitDisplayModeOnAccessKeyInvoked="False"
-                        TabIndex="2"
-                        IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
-                    <FlyoutBase.AttachedFlyout>
-                        <Flyout x:Name="HistoryFlyout"
-                                AutomationProperties.AutomationId="HistoryFlyout"
-                                Closed="HistoryFlyout_Closed"
-                                FlyoutPresenterStyle="{StaticResource HistoryFlyoutStyle}"
-                                Opened="HistoryFlyout_Opened"
-                                Placement="Full"/>
-                    </FlyoutBase.AttachedFlyout>
-                </Button>
-            </Grid>
+            <Button x:Name="HistoryButton"
+                    x:Uid="HistoryButton"
+                    Grid.Row="0"
+                    Style="{StaticResource HistoryButtonStyle}"
+                    AutomationProperties.AutomationId="HistoryButton"
+                    Command="{x:Bind HistoryButtonPressed, Mode=OneTime}"
+                    Content="&#xe81c;"
+                    ExitDisplayModeOnAccessKeyInvoked="False"
+                    TabIndex="2"
+                    Visibility="{x:Bind local:Calculator.ShouldDisplayHistoryButton(Model.IsAlwaysOnTop, Model.IsProgrammer, DockPanel.Visibility), Mode=OneWay}"
+                    IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout x:Name="HistoryFlyout"
+                            AutomationProperties.AutomationId="HistoryFlyout"
+                            Closed="HistoryFlyout_Closed"
+                            FlyoutPresenterStyle="{StaticResource HistoryFlyoutStyle}"
+                            Opened="HistoryFlyout_Opened"
+                            Placement="Full"/>
+                </FlyoutBase.AttachedFlyout>
+            </Button>
 
             <!-- Scientific angle buttons -->
             <local:CalculatorScientificAngleButtons x:Name="ScientificAngleButtons"

@@ -98,7 +98,7 @@ public:
     {
         return s_engineStrings[std::to_wstring(ids)];
     }
-    static std::wstring_view GetString(std::wstring ids)
+    static std::wstring_view GetString(std::wstring_view ids)
     {
         return s_engineStrings[ids];
     }
@@ -161,7 +161,7 @@ private:
 
     std::array<CalcEngine::Rational, NUM_WIDTH_LENGTH> m_chopNumbers;      // word size enforcement
     std::array<std::wstring, NUM_WIDTH_LENGTH> m_maxDecimalValueStrings;   // maximum values represented by a given word width based off m_chopNumbers
-    static std::unordered_map<std::wstring, std::wstring> s_engineStrings; // the string table shared across all instances
+    static std::unordered_map<std::wstring_view, std::wstring> s_engineStrings; // the string table shared across all instances
     wchar_t m_decimalSeparator;
     wchar_t m_groupSeparator;
 

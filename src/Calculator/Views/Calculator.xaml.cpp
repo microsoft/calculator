@@ -195,7 +195,8 @@ void Calculator::UpdateViewState()
 
 void Calculator::AnimateCalculator(bool resultAnimate)
 {
-    if (App::IsAnimationEnabled())
+    static auto uiSettings = ref new UISettings(); 
+    if (uiSettings->AnimationsEnabled)
     {
         m_doAnimate = true;
         m_resultAnimate = resultAnimate;
@@ -368,7 +369,7 @@ void Calculator::EnsureProgrammer()
     }
 
     OpsPanel->EnsureProgrammerRadixOps();
-    ProgrammerOperators->SetRadixButton(Model->GetCurrentRadixType());
+    ProgrammerOperators->SetRadixButton(Model->CurrentRadixType);
 }
 
 void Calculator::OnCalcPropertyChanged(_In_ Object ^ sender, _In_ PropertyChangedEventArgs ^ e)
@@ -714,3 +715,7 @@ void Calculator::Calculator_SizeChanged(Object ^ /*sender*/, SizeChangedEventArg
     }
 }
 
+::Visibility Calculator::ShouldDisplayHistoryButton(bool isAlwaysOnTop, bool isProgrammer, ::Visibility dockPanelVisibility)
+{
+    return !isAlwaysOnTop && !isProgrammer && dockPanelVisibility == ::Visibility::Collapsed ? ::Visibility::Visible : ::Visibility::Collapsed;
+}

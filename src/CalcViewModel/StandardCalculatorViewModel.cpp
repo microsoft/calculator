@@ -78,8 +78,8 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_IsShiftProgrammerChecked(false)
     , m_valueBitLength(BitLength::BitLengthQWord)
     , m_isBitFlipChecked(false)
-    , m_isBinaryBitFlippingEnabled(false)
-    , m_CurrentRadixType(RADIX_TYPE::DEC_RADIX)
+    , m_IsBinaryBitFlippingEnabled(false)
+    , m_CurrentRadixType(NumberBase::DecBase)
     , m_CurrentAngleType(NumbersAndOperatorsEnum::Degree)
     , m_Announcement(nullptr)
     , m_OpenParenthesisCount(0)
@@ -93,6 +93,8 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     , m_localizedMemoryCleared(nullptr)
     , m_localizedOpenParenthesisCountChangedAutomationFormat(nullptr)
     , m_localizedNoRightParenthesisAddedFormat(nullptr)
+    , m_TokenPosition(-1)
+    , m_isLastOperationHistoryLoad(false)
 {
     WeakReference calculatorViewModel(this);
     auto appResourceProvider = AppResourceProvider::GetInstance();
@@ -130,9 +132,6 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     IsDecimalEnabled = true;
     AreHistoryShortcutsEnabled = true;
     AreProgrammerRadixOperatorsEnabled = false;
-
-    m_tokenPosition = -1;
-    m_isLastOperationHistoryLoad = false;
 }
 
 String ^ StandardCalculatorViewModel::LocalizeDisplayValue(_In_ wstring const& displayValue, _In_ bool isError)
@@ -168,7 +167,7 @@ String ^ StandardCalculatorViewModel::CalculateNarratorDisplayValue(_In_ wstring
     }
 
     // In Programmer modes using non-base10, we want the strings to be read as literal digits.
-    if (IsProgrammer && CurrentRadixType != RADIX_TYPE::DEC_RADIX)
+    if (IsProgrammer && CurrentRadixType != NumberBase::DecBase)
     {
         localizedValue = GetNarratorStringReadRawNumbers(localizedValue);
     }
@@ -178,21 +177,20 @@ String ^ StandardCalculatorViewModel::CalculateNarratorDisplayValue(_In_ wstring
 
 String ^ StandardCalculatorViewModel::GetNarratorStringReadRawNumbers(_In_ String ^ localizedDisplayValue)
 {
-    wstringstream wss;
-    auto& locSettings = LocalizationSettings::GetInstance();
+    wstring ws;
+    const auto& locSettings = LocalizationSettings::GetInstance();
 
     // Insert a space after each digit in the string, to force Narrator to read them as separate numbers.
-    wstring wstrValue(localizedDisplayValue->Data());
-    for (wchar_t& c : wstrValue)
+    for (const wchar_t& c : localizedDisplayValue)
     {
-        wss << c;
+        ws += c;
         if (locSettings.IsLocalizedHexDigit(c))
         {
-            wss << L' ';
+            ws += L' ';
         }
     }
 
-    return ref new String(wss.str().c_str());
+    return ref new String(ws.c_str());
 }
 
 void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ String ^ displayStringValue, _In_ bool isError)
@@ -455,7 +453,7 @@ void StandardCalculatorViewModel::FtoEButtonToggled()
 
 void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
 {
-    DisplayExpressionToken ^ displayExpressionToken = ExpressionTokens->GetAt(m_tokenPosition);
+    DisplayExpressionToken ^ displayExpressionToken = ExpressionTokens->GetAt(m_TokenPosition);
     if (displayExpressionToken == nullptr)
     {
         return;
@@ -583,7 +581,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
     }
 
     String ^ updatedData = ref new String(temp);
-    UpdateOperand(m_tokenPosition, updatedData);
+    UpdateOperand(m_TokenPosition, updatedData);
     displayExpressionToken->Token = updatedData;
     IsOperandUpdatedUsingViewModel = true;
     displayExpressionToken->CommandIndex = commandIndex;
@@ -622,7 +620,7 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
         && numOpEnum != NumbersAndOperatorsEnum::IsProgrammerMode && numOpEnum != NumbersAndOperatorsEnum::FToE
         && (numOpEnum != NumbersAndOperatorsEnum::Degree) && (numOpEnum != NumbersAndOperatorsEnum::Radians) && (numOpEnum != NumbersAndOperatorsEnum::Grads))
     {
-        if (!m_keyPressed)
+        if (!m_KeyPressed)
         {
             SaveEditedCommand(m_selectedExpressionToken->TokenPosition, cmdenum);
         }
@@ -681,23 +679,18 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
     }
 }
 
-NumberBase StandardCalculatorViewModel::GetNumberBase()
+RADIX_TYPE StandardCalculatorViewModel::GetRadixTypeFromNumberBase(NumberBase base)
 {
-    if (CurrentRadixType == HEX_RADIX)
+    switch (base)
     {
-        return NumberBase::HexBase;
-    }
-    else if (CurrentRadixType == DEC_RADIX)
-    {
-        return NumberBase::DecBase;
-    }
-    else if (CurrentRadixType == OCT_RADIX)
-    {
-        return NumberBase::OctBase;
-    }
-    else
-    {
-        return NumberBase::BinBase;
+    case NumberBase::BinBase:
+        return RADIX_TYPE::BIN_RADIX;
+    case NumberBase::HexBase:
+        return RADIX_TYPE::HEX_RADIX;
+    case NumberBase::OctBase:
+        return RADIX_TYPE::OCT_RADIX;
+    default:
+        return RADIX_TYPE::DEC_RADIX;
     }
 }
 
@@ -713,8 +706,8 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
 {
     auto that(this);
     ViewMode mode;
-    NumberBase numberBase = NumberBase::Unknown;
     BitLength bitLengthType = BitLength::BitLengthUnknown;
+    NumberBase numberBase = NumberBase::Unknown;
     if (IsScientific)
     {
         mode = ViewMode::Scientific;
@@ -722,8 +715,8 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     else if (IsProgrammer)
     {
         mode = ViewMode::Programmer;
-        numberBase = GetNumberBase();
         bitLengthType = m_valueBitLength;
+        numberBase = CurrentRadixType;
     }
     else
     {
@@ -770,9 +763,10 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString)
     while (it != pastedString->End())
     {
         bool sendCommand = true;
-        bool canSendNegate = false;
+        auto buttonInfo = MapCharacterToButtonId(*it);
 
-        NumbersAndOperatorsEnum mappedNumOp = MapCharacterToButtonId(*it, canSendNegate);
+        NumbersAndOperatorsEnum mappedNumOp = buttonInfo.buttonId;
+        bool canSendNegate = buttonInfo.canSendNegate;
 
         if (mappedNumOp == NumbersAndOperatorsEnum::None)
         {
@@ -874,7 +868,7 @@ void StandardCalculatorViewModel::OnPaste(String ^ pastedString)
         if (mappedNumOp == NumbersAndOperatorsEnum::Exp)
         {
             // Check the following item
-            switch (MapCharacterToButtonId(*(it + 1), canSendNegate))
+            switch (MapCharacterToButtonId(*(it + 1)).buttonId)
             {
             case NumbersAndOperatorsEnum::Subtract:
             {
@@ -909,10 +903,11 @@ void StandardCalculatorViewModel::OnClearMemoryCommand(Object ^ parameter)
     Announcement = CalculatorAnnouncement::GetMemoryClearedAnnouncement(m_localizedMemoryCleared);
 }
 
-NumbersAndOperatorsEnum StandardCalculatorViewModel::MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate)
+ButtonInfo StandardCalculatorViewModel::MapCharacterToButtonId(char16 ch)
 {
-    NumbersAndOperatorsEnum mappedValue = NumbersAndOperatorsEnum::None;
-    canSendNegate = false;
+    ButtonInfo result;
+    result.buttonId = NumbersAndOperatorsEnum::None;
+    result.canSendNegate = false;
 
     switch (ch)
     {
@@ -926,112 +921,111 @@ NumbersAndOperatorsEnum StandardCalculatorViewModel::MapCharacterToButtonId(cons
     case '7':
     case '8':
     case '9':
-        mappedValue = NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - L'0');
-        canSendNegate = true;
+        result.buttonId = NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - L'0');
+        result.canSendNegate = true;
         break;
 
     case '*':
-        mappedValue = NumbersAndOperatorsEnum::Multiply;
+        result.buttonId = NumbersAndOperatorsEnum::Multiply;
         break;
 
     case '+':
-        mappedValue = NumbersAndOperatorsEnum::Add;
+        result.buttonId = NumbersAndOperatorsEnum::Add;
         break;
 
     case '-':
-        mappedValue = NumbersAndOperatorsEnum::Subtract;
+        result.buttonId = NumbersAndOperatorsEnum::Subtract;
         break;
 
     case '/':
-        mappedValue = NumbersAndOperatorsEnum::Divide;
+        result.buttonId = NumbersAndOperatorsEnum::Divide;
         break;
 
     case '^':
         if (IsScientific)
         {
-            mappedValue = NumbersAndOperatorsEnum::XPowerY;
+            result.buttonId = NumbersAndOperatorsEnum::XPowerY;
         }
         break;
 
     case '%':
         if (IsScientific || IsProgrammer)
         {
-            mappedValue = NumbersAndOperatorsEnum::Mod;
+            result.buttonId = NumbersAndOperatorsEnum::Mod;
         }
         break;
 
     case '=':
-        mappedValue = NumbersAndOperatorsEnum::Equals;
+        result.buttonId = NumbersAndOperatorsEnum::Equals;
         break;
 
     case '(':
-        mappedValue = NumbersAndOperatorsEnum::OpenParenthesis;
+        result.buttonId = NumbersAndOperatorsEnum::OpenParenthesis;
         break;
 
     case ')':
-        mappedValue = NumbersAndOperatorsEnum::CloseParenthesis;
+        result.buttonId = NumbersAndOperatorsEnum::CloseParenthesis;
         break;
 
     case 'a':
     case 'A':
-        mappedValue = NumbersAndOperatorsEnum::A;
+        result.buttonId = NumbersAndOperatorsEnum::A;
         break;
     case 'b':
     case 'B':
-        mappedValue = NumbersAndOperatorsEnum::B;
+        result.buttonId = NumbersAndOperatorsEnum::B;
         break;
     case 'c':
     case 'C':
-        mappedValue = NumbersAndOperatorsEnum::C;
+        result.buttonId = NumbersAndOperatorsEnum::C;
         break;
     case 'd':
     case 'D':
-        mappedValue = NumbersAndOperatorsEnum::D;
+        result.buttonId = NumbersAndOperatorsEnum::D;
         break;
     case 'e':
     case 'E':
         // Only allow scientific notation in scientific mode
         if (IsProgrammer)
         {
-            mappedValue = NumbersAndOperatorsEnum::E;
+            result.buttonId = NumbersAndOperatorsEnum::E;
         }
         else
         {
-            mappedValue = NumbersAndOperatorsEnum::Exp;
+            result.buttonId = NumbersAndOperatorsEnum::Exp;
         }
         break;
     case 'f':
     case 'F':
-        mappedValue = NumbersAndOperatorsEnum::F;
+        result.buttonId = NumbersAndOperatorsEnum::F;
         break;
     default:
         // For the decimalSeparator, we need to respect the user setting.
         if (ch == m_decimalSeparator)
         {
-            mappedValue = NumbersAndOperatorsEnum::Decimal;
+            result.buttonId = NumbersAndOperatorsEnum::Decimal;
         }
         break;
     }
 
-    if (mappedValue == NumbersAndOperatorsEnum::None)
+    if (result.buttonId == NumbersAndOperatorsEnum::None)
     {
         if (LocalizationSettings::GetInstance().IsLocalizedDigit(ch))
         {
-            mappedValue =
-                NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit('0'));
-            canSendNegate = true;
+            result.buttonId = NumbersAndOperatorsEnum::Zero
+                              + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit('0'));
+            result.canSendNegate = true;
         }
     }
 
     // Negate cannot be sent for leading zeroes
-    if (NumbersAndOperatorsEnum::Zero == mappedValue)
+    if (NumbersAndOperatorsEnum::Zero == result.buttonId)
     {
-        canSendNegate = false;
+        result.canSendNegate = false;
     }
 
-    return mappedValue;
+    return result;
 }
-
 void StandardCalculatorViewModel::OnInputChanged()
 {
     IsInputEmpty = m_standardCalculatorManager.IsInputEmpty();
@@ -1233,7 +1227,7 @@ String ^ StandardCalculatorViewModel::GetLocalizedStringFormat(String ^ format, 
 void StandardCalculatorViewModel::ResetDisplay()
 {
     AreHEXButtonsEnabled = false;
-    CurrentRadixType = (int)RADIX_TYPE::DEC_RADIX;
+    CurrentRadixType = NumberBase::DecBase;
     m_standardCalculatorManager.SetRadix(DEC_RADIX);
 }
 
@@ -1242,16 +1236,16 @@ void StandardCalculatorViewModel::SetPrecision(int32_t precision)
     m_standardCalculatorManager.SetPrecision(precision);
 }
 
-void StandardCalculatorViewModel::SwitchProgrammerModeBase(RADIX_TYPE radixType)
+void StandardCalculatorViewModel::SwitchProgrammerModeBase(NumberBase numberBase)
 {
     if (IsInError)
     {
         m_standardCalculatorManager.SendCommand(Command::CommandCLEAR);
     }
 
-    AreHEXButtonsEnabled = (radixType == RADIX_TYPE::HEX_RADIX);
-    CurrentRadixType = (int)radixType;
-    m_standardCalculatorManager.SetRadix(radixType);
+    AreHEXButtonsEnabled = numberBase == NumberBase::HexBase;
+    CurrentRadixType = numberBase;
+    m_standardCalculatorManager.SetRadix(GetRadixTypeFromNumberBase(numberBase));
 }
 
 void StandardCalculatorViewModel::SetMemorizedNumbersString()
@@ -1670,9 +1664,8 @@ void StandardCalculatorViewModel::UpdateOperand(int pos, String ^ text)
     }
 }
 
-void StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
+void StandardCalculatorViewModel::UpdateCommandsInRecordingMode()
 {
-    vector<unsigned char> savedCommands = m_standardCalculatorManager.GetSavedCommands();
     shared_ptr<vector<int>> commands = make_shared<vector<int>>();
     bool isDecimal = false;
     bool isNegative = false;
@@ -1680,12 +1673,9 @@ void StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
     bool ePlusMode = false;
     bool eMinusMode = false;
 
-    int num = 0;
-    Command val;
-    for (unsigned int i = 0; i < savedCommands.size(); ++i)
+    for (const auto savedCommand : m_standardCalculatorManager.GetSavedCommands())
     {
-        val = safe_cast<Command>(savedCommands[i]);
-        num = static_cast<int>(val);
+        const Command val = static_cast<Command>(savedCommand);
         if (val == Command::CommandSIGN)
         {
             isNegative = true;
@@ -1723,7 +1713,7 @@ void StandardCalculatorViewModel::UpdatecommandsInRecordingMode()
             commands->clear();
             continue;
         }
-        commands->push_back(num);
+        commands->push_back(static_cast<int>(val));
     }
 
     if (!commands->empty())
