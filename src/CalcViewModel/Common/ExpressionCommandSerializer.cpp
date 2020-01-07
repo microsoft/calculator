@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -18,28 +18,22 @@ void SerializeCommandVisitor::Visit(_In_ COpndCommand& opndCmd)
     m_dataWriter->WriteBoolean(opndCmd.IsDecimalPresent());
     m_dataWriter->WriteBoolean(opndCmd.IsSciFmt());
 
-    auto opndCmds = opndCmd.GetCommands();
-    unsigned int opndCmdSize;
-    opndCmds->GetSize(&opndCmdSize);
+    const auto& opndCmds = opndCmd.GetCommands();
+    unsigned int opndCmdSize = static_cast<unsigned int>(opndCmds->size());
     m_dataWriter->WriteUInt32(opndCmdSize);
-    for (unsigned int j = 0; j < opndCmdSize; ++j)
+    for (int eachOpndcmd : *opndCmds)
     {
-        int eachOpndcmd;
-        opndCmds->GetAt(j, &eachOpndcmd);
         m_dataWriter->WriteInt32(eachOpndcmd);
     }
 }
 
 void SerializeCommandVisitor::Visit(_In_ CUnaryCommand& unaryCmd)
 {
-    auto cmds = unaryCmd.GetCommands();
-    unsigned int cmdSize;
-    cmds->GetSize(&cmdSize);
+    const auto& cmds = unaryCmd.GetCommands();
+    unsigned int cmdSize = static_cast<unsigned int>(cmds->size());
     m_dataWriter->WriteUInt32(cmdSize);
-    for (unsigned int j = 0; j < cmdSize; ++j)
+    for (int eachOpndcmd : *cmds)
     {
-        int eachOpndcmd;
-        cmds->GetAt(j, &eachOpndcmd);
         m_dataWriter->WriteInt32(eachOpndcmd);
     }
 }

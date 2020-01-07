@@ -20,8 +20,9 @@ public
         TitleBar();
 
         DEPENDENCY_PROPERTY_OWNER(TitleBar);
-        DEPENDENCY_PROPERTY(ViewModel::ApplicationViewModel ^, ApplicationViewModel);
+        DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, IsAlwaysOnTopMode);
 
+        event Windows::UI::Xaml::RoutedEventHandler ^ AlwaysOnTopClick;
     private:
         void OnLoaded(_In_ Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnUnloaded(_In_ Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
@@ -32,6 +33,7 @@ public
         void ColorValuesChanged(_In_ Windows::UI::ViewManagement::UISettings ^ sender, _In_ Platform::Object ^ e);
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
         void OnWindowActivated(Platform::Object ^ sender, Windows::UI::Core::WindowActivatedEventArgs ^ e);
+        void OnIsAlwaysOnTopModePropertyChanged(bool oldValue, bool newValue);
 
         Platform::Agile<Windows::ApplicationModel::Core::CoreApplicationViewTitleBar ^> m_coreTitleBar;
         Windows::Foundation::EventRegistrationToken m_layoutChangedToken;
@@ -41,6 +43,6 @@ public
         Windows::Foundation::EventRegistrationToken m_accessibilitySettingsToken;
         Windows::UI::ViewManagement::UISettings ^ m_uiSettings;
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
-        void AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void AlwaysOnTopButton_Click(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }

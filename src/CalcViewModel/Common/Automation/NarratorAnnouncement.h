@@ -5,32 +5,6 @@
 
 namespace CalculatorApp::Common::Automation
 {
-    // These enum types are copied from the types available in
-    // Windows::UI::Xaml::Automation::Peers in the RS3 SDK.
-    // When this app switches to min version RS3, these custom
-    // enums should be removed and the Windows types should be used
-    // instead.
-    // TODO - MSFT 12735088
-public
-    enum class AutomationNotificationKind
-    {
-        ItemAdded = 0,
-        ItemRemoved = 1,
-        ActionCompleted = 2,
-        ActionAborted = 3,
-        Other = 4
-    };
-
-public
-    enum class AutomationNotificationProcessing
-    {
-        ImportantAll = 0,
-        ImportantMostRecent = 1,
-        All = 2,
-        MostRecent = 3,
-        CurrentThenMostRecent = 4
-    };
-
 public
     ref class NarratorAnnouncement sealed
     {
@@ -41,14 +15,14 @@ public
             property Platform::String
             ^ ActivityId { Platform::String ^ get(); }
 
-            property AutomationNotificationKind Kind
+            property Windows::UI::Xaml::Automation::Peers::AutomationNotificationKind Kind
         {
-            AutomationNotificationKind get();
+            Windows::UI::Xaml::Automation::Peers::AutomationNotificationKind get();
         }
 
-        property AutomationNotificationProcessing Processing
+        property Windows::UI::Xaml::Automation::Peers::AutomationNotificationProcessing Processing
         {
-            AutomationNotificationProcessing get();
+            Windows::UI::Xaml::Automation::Peers::AutomationNotificationProcessing get();
         }
 
         static bool IsValid(NarratorAnnouncement ^ announcement);
@@ -61,13 +35,13 @@ public
         NarratorAnnouncement(
             Platform::String ^ announcement,
             Platform::String ^ activityId,
-            AutomationNotificationKind kind,
-            AutomationNotificationProcessing processing);
+            Windows::UI::Xaml::Automation::Peers::AutomationNotificationKind kind,
+            Windows::UI::Xaml::Automation::Peers::AutomationNotificationProcessing processing);
 
         Platform::String ^ m_announcement;
         Platform::String ^ m_activityId;
-        AutomationNotificationKind m_kind;
-        AutomationNotificationProcessing m_processing;
+        Windows::UI::Xaml::Automation::Peers::AutomationNotificationKind m_kind;
+        Windows::UI::Xaml::Automation::Peers::AutomationNotificationProcessing m_processing;
     };
 
     // CalculatorAnnouncement is intended to contain only static methods

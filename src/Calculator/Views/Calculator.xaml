@@ -34,26 +34,6 @@
                        Text="{x:Bind Token, Mode=OneWay}"/>
         </DataTemplate>
 
-        <DataTemplate x:Key="AlwaysOnTopOperand" x:DataType="common:DisplayExpressionToken">
-            <TextBlock Margin="2,0,0,0"
-                       Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{x:Bind Token, Mode=OneWay}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="AlwaysOnTopOperator" x:DataType="common:DisplayExpressionToken">
-            <TextBlock Margin="2,0,0,0"
-                       Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{x:Bind Token, Mode=OneWay}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="AlwaysOnTopSeparator" x:DataType="common:DisplayExpressionToken">
-            <TextBlock x:Name="MainText"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{x:Bind Token, Mode=OneWay}"/>
-        </DataTemplate>
-
         <!-- TextBox Styles -->
 
         <Style x:Key="NormalStyle" TargetType="controls:OverflowTextBlock">
@@ -73,22 +53,23 @@
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           Style="{StaticResource ResultsScrollerSnapped}"
                                           AutomationProperties.AccessibilityView="Raw">
-                                <ItemsControl x:Name="TokenList"
-                                              Padding="0"
-                                              VerticalAlignment="Stretch"
-                                              HorizontalContentAlignment="Right"
-                                              VerticalContentAlignment="Stretch"
-                                              IsTabStop="False"
-                                              ItemTemplateSelector="{StaticResource ExpressionItemTemplateSelector}"
-                                              ItemsSource="{Binding ExpressionTokens}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <ItemsStackPanel HorizontalAlignment="Right"
-                                                             VerticalAlignment="Stretch"
-                                                             Orientation="Horizontal"/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                </ItemsControl>
+                                <Grid x:Name="ExpressionContent">
+                                    <ItemsControl x:Name="TokenList"
+                                                  VerticalAlignment="Stretch"
+                                                  HorizontalContentAlignment="Right"
+                                                  VerticalContentAlignment="Stretch"
+                                                  IsTabStop="False"
+                                                  ItemTemplateSelector="{StaticResource ExpressionItemTemplateSelector}"
+                                                  ItemsSource="{Binding ExpressionTokens}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <ItemsStackPanel HorizontalAlignment="Right"
+                                                                 VerticalAlignment="Stretch"
+                                                                 Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </Grid>
                             </ScrollViewer>
                             <Button x:Name="ScrollLeft"
                                     x:Uid="scrollLeft"
@@ -114,11 +95,8 @@
             </Setter>
         </Style>
 
-        <Style x:Key="AlwaysOnTopStyleS" TargetType="controls:OverflowTextBlock">
+        <Style x:Key="AOTResultsStyle" TargetType="controls:OverflowTextBlock">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="ColumnWidth" Value="14"/>
-            <Setter Property="ColumnHeight" Value="14"/>
-            <Setter Property="ScrollButtonFontSize" Value="12"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="controls:OverflowTextBlock">
@@ -131,26 +109,42 @@
                                             <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
                                             <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent"/>
                                             <SolidColorBrush x:Key="ButtonForeground" Color="#99000000"/>
-                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemAccentColor}" Opacity="0.8"/>
-                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemAccentColor}" Opacity="1.0"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver"
+                                                             Opacity="0.8"
+                                                             Color="{ThemeResource SystemAccentColor}"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPressed"
+                                                             Opacity="1.0"
+                                                             Color="{ThemeResource SystemAccentColor}"/>
                                             <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="#33000000"/>
                                         </ResourceDictionary>
                                         <ResourceDictionary x:Key="HighContrast">
                                             <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
                                             <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
                                             <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent"/>
-                                            <SolidColorBrush x:Key="ButtonForeground" Color="{ThemeResource SystemColorWindowTextColor}" Opacity="0.6"/>
-                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemColorHighlightColor}" Opacity="0.8"/>
-                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemColorHighlightColor}" Opacity="1.0"/>
-                                            <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="{ThemeResource SystemColorGrayTextColor}" Opacity="0.2"/>
+                                            <SolidColorBrush x:Key="ButtonForeground"
+                                                             Opacity="0.6"
+                                                             Color="{ThemeResource SystemColorWindowTextColor}"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver"
+                                                             Opacity="0.8"
+                                                             Color="{ThemeResource SystemColorHighlightColor}"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPressed"
+                                                             Opacity="1.0"
+                                                             Color="{ThemeResource SystemColorHighlightColor}"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundDisabled"
+                                                             Opacity="0.2"
+                                                             Color="{ThemeResource SystemColorGrayTextColor}"/>
                                         </ResourceDictionary>
                                         <ResourceDictionary x:Key="Dark">
                                             <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
                                             <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
                                             <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent"/>
                                             <SolidColorBrush x:Key="ButtonForeground" Color="#99FFFFFF"/>
-                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemAccentColorLight1}" Opacity="0.8"/>
-                                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource SystemAccentColorLight1}" Opacity="1.0"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver"
+                                                             Opacity="0.8"
+                                                             Color="{ThemeResource SystemAccentColorLight1}"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPressed"
+                                                             Opacity="1.0"
+                                                             Color="{ThemeResource SystemAccentColorLight1}"/>
                                             <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="#33FFFFFF"/>
                                         </ResourceDictionary>
                                     </ResourceDictionary.ThemeDictionaries>
@@ -168,54 +162,47 @@
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           Style="{StaticResource ResultsScrollerSnapped}"
                                           AutomationProperties.AccessibilityView="Control">
-                                <TextBlock x:Name="EditableToken"
-                                           AutomationProperties.AccessibilityView="Raw"
-                                           Text="{Binding DisplayValue, Mode=OneWay}"
-                                           Margin="4,0,4,0"
-                                           Padding="0"
-                                           VerticalAlignment="Stretch"
-                                           FontWeight="SemiBold"
-                                           Grid.Row="2"
-                                           HorizontalAlignment="Right"/>
+                                <Grid x:Name="ExpressionContent">
+                                    <TextBlock x:Name="EditableToken"
+                                               Grid.Row="2"
+                                               Margin="4,0,4,0"
+                                               Padding="0"
+                                               HorizontalAlignment="Right"
+                                               VerticalAlignment="Stretch"
+                                               FontWeight="SemiBold"
+                                               AutomationProperties.AccessibilityView="Raw"
+                                               Text="{Binding DisplayValue, Mode=OneWay}"/>
+                                </Grid>
                             </ScrollViewer>
-                            <Border Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
-                                    Grid.Column="0">
-                                <Button x:Name="ScrollLeft"
+
+                            <Button x:Name="ScrollLeft"
                                     x:Uid="scrollLeft"
+                                    Grid.Column="0"
+                                    Width="{TemplateBinding ScrollButtonsWidth}"
                                     Margin="0,3,0,0"
+                                    VerticalAlignment="Stretch"
                                     Style="{StaticResource AlwaysOnTopScrollButtonStyleS}"
-                                    MinWidth="{TemplateBinding ColumnWidth}"
-                                    MinHeight="{TemplateBinding ColumnHeight}"
                                     Background="Transparent">
-                                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                          FontSize="{TemplateBinding ScrollButtonFontSize}"
+                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                          FontSize="{TemplateBinding ScrollButtonsFontSize}"
                                           Glyph="&#xE26C;"/>
-                                </Button>
-                            </Border>
-                            <Border Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
-                                    Grid.Column="2">
-                                <Button x:Name="ScrollRight"
+                            </Button>
+                            <Button x:Name="ScrollRight"
                                     x:Uid="scrollRight"
+                                    Grid.Column="2"
+                                    Width="{TemplateBinding ScrollButtonsWidth}"
                                     Margin="0,3,0,0"
+                                    VerticalAlignment="Stretch"
                                     Style="{StaticResource AlwaysOnTopScrollButtonStyleS}"
-                                    MinWidth="{TemplateBinding ColumnWidth}"
-                                    MinHeight="{TemplateBinding ColumnHeight}"
                                     Background="Transparent">
-                                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                          FontSize="{TemplateBinding ScrollButtonFontSize}"
+                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                          FontSize="{TemplateBinding ScrollButtonsFontSize}"
                                           Glyph="&#xE26B;"/>
-                                </Button>
-                            </Border>
+                            </Button>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
-
-        <Style x:Key="AlwaysOnTopStyleM" BasedOn="{StaticResource AlwaysOnTopStyleS}" TargetType="controls:OverflowTextBlock">
-            <Setter Property="ColumnWidth" Value="28"/>
-            <Setter Property="ColumnHeight" Value="280"/>
-            <Setter Property="ScrollButtonFontSize" Value="28"/>
         </Style>
 
         <!-- Calculation Result Styles -->
@@ -243,7 +230,7 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Visibility" Value="Collapsed"/>
         </Style>
-        
+
         <Style x:Key="AlwaysOnTopScrollButtonStyleS" TargetType="Button">
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="0,0,0,0"/>
@@ -377,11 +364,6 @@
                                                    OperatorTemplate="{StaticResource Operator}"
                                                    SeparatorTemplate="{StaticResource Separator}"/>
 
-        <converters:ExpressionItemTemplateSelector x:Key="AlwaysOnTopExpressionItemTemplateSelector"
-                                                   OperandTemplate="{StaticResource AlwaysOnTopOperand}"
-                                                   OperatorTemplate="{StaticResource AlwaysOnTopOperator}"
-                                                   SeparatorTemplate="{StaticResource AlwaysOnTopSeparator}"/>
-
         <!-- Miscellaneous Resources -->
 
         <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind Model.Announcement, Mode=OneWay}"/>
@@ -421,12 +403,12 @@
                         <Setter Target="MemMinus.IsEnabled" Value="False"/>
                         <Setter Target="MemButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnErrorLayoutCompleted"/>
+                    <Storyboard Completed="OnErrorVisualStateCompleted"/>
                 </VisualState>
             </VisualStateGroup>
             <!-- Always-on-Top specific -->
-            <VisualStateGroup x:Name="AlwaysOnTopStates">
-                <VisualState x:Name="AlwaysOnTop">
+            <VisualStateGroup x:Name="DisplayModeVisualStates">
+                <VisualState x:Name="DisplayModeAlwaysOnTop">
                     <VisualState.Setters>
                         <Setter Target="ClearMemoryButton.IsEnabled" Value="False"/>
                         <Setter Target="MemRecall.IsEnabled" Value="False"/>
@@ -437,19 +419,21 @@
                         <Setter Target="RowHamburger.Height" Value="0"/>
                         <Setter Target="RowMemoryControls.Height" Value="0*"/>
                     </VisualState.Setters>
+                    <Storyboard Completed="OnDisplayVisualStateCompleted"/>
                 </VisualState>
-                <VisualState x:Name="Normal">
+                <VisualState x:Name="DisplayModeNormal">
                     <VisualState.Setters>
                         <Setter Target="RowExpression.Height" Value="20*"/>
                         <Setter Target="RowHamburger.Height" Value="{StaticResource HamburgerHeightGridLength}"/>
                         <Setter Target="RowMemoryControls.Height" Value="32*"/>
                     </VisualState.Setters>
+                    <Storyboard Completed="OnDisplayVisualStateCompleted"/>
                 </VisualState>
             </VisualStateGroup>
             <!-- Mode specific -->
-            <VisualStateGroup x:Name="Mode">
+            <VisualStateGroup x:Name="ModeVisualStates">
                 <VisualState x:Name="Standard">
-                    <Storyboard Completed="OnStoryboardCompleted"/>
+                    <Storyboard Completed="OnModeVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="Scientific">
                     <VisualState.Setters>
@@ -457,7 +441,7 @@
                         <Setter Target="RowDisplayControls.MinHeight" Value="32"/>
                         <Setter Target="RowNumPad.Height" Value="276*"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnStoryboardCompleted"/>
+                    <Storyboard Completed="OnModeVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="Programmer">
                     <VisualState.Setters>
@@ -470,13 +454,12 @@
                         <Setter Target="M5.MaxWidth" Value="80"/>
                         <Setter Target="MemButton.(Grid.Column)" Value="5"/>
                         <Setter Target="MemoryButton.(Grid.Column)" Value="6"/>
-                        <Setter Target="HistoryButton.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnStoryboardCompleted"/>
+                    <Storyboard Completed="OnModeVisualStateCompleted"/>
                 </VisualState>
             </VisualStateGroup>
             <!-- Layout specific -->
-            <VisualStateGroup CurrentStateChanged="OnVisualStateChanged">
+            <VisualStateGroup x:Name="LayoutVisualStates" CurrentStateChanged="OnVisualStateChanged">
                 <VisualState x:Name="Portrait768x1366">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="1366" MinWindowWidth="768"/>
@@ -486,7 +469,7 @@
                         <Setter Target="DockPanel.Visibility" Value="Visible"/>
                         <Setter Target="M6.Width" Value="0"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="LargeWideView">
                     <VisualState.StateTriggers>
@@ -497,7 +480,7 @@
                         <Setter Target="DockPanel.Visibility" Value="Visible"/>
                         <Setter Target="M6.Width" Value="0"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="DockVisible">
                     <VisualState.StateTriggers>
@@ -509,13 +492,13 @@
                         <Setter Target="DockPanel.Visibility" Value="Visible"/>
                         <Setter Target="M6.Width" Value="0"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="MinSizeLayout">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}" MinWindowWidth="{StaticResource AppMinWindowWidth}"/>
                     </VisualState.StateTriggers>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="DefaultLayout">
                     <VisualState.StateTriggers>
@@ -523,7 +506,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="RowMemoryControls.MinHeight" Value="0"/>
-
                         <Setter Target="ClearMemoryButton.Style" Value="{StaticResource CaptionButtonStyle}"/>
                         <Setter Target="MemRecall.Style" Value="{StaticResource CaptionButtonStyle}"/>
                         <Setter Target="MemPlus.Style" Value="{StaticResource CaptionButtonStyle}"/>
@@ -531,7 +513,7 @@
                         <Setter Target="MemButton.Style" Value="{StaticResource CaptionButtonStyle}"/>
                         <Setter Target="MemoryButton.MinHeight" Value="0"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
             </VisualStateGroup>
             <!-- Results display specific -->
@@ -543,8 +525,6 @@
                     <VisualState.Setters>
                         <Setter Target="RowResult.MinHeight" Value="54"/>
                         <Setter Target="RowResult.Height" Value="72*"/>
-                        <Setter Target="AlwaysOnTopResults.FontSize" Value="40"/>
-                        <Setter Target="AlwaysOnTopResults.Style" Value="{ThemeResource AlwaysOnTopStyleM}"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="MinAlwaysOnTop">
@@ -555,7 +535,8 @@
                         <Setter Target="RowResult.MinHeight" Value="20"/>
                         <Setter Target="RowResult.Height" Value="72*"/>
                         <Setter Target="AlwaysOnTopResults.FontSize" Value="18"/>
-                        <Setter Target="AlwaysOnTopResults.Style" Value="{ThemeResource AlwaysOnTopStyleS}"/>
+                        <Setter Target="AlwaysOnTopResults.ScrollButtonsWidth" Value="14"/>
+                        <Setter Target="AlwaysOnTopResults.ScrollButtonsFontSize" Value="12"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -566,7 +547,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Results.MaxFontSize" Value="72"/>
-                        <Setter Target="Results.MaxExpressionHistoryCharacters" Value="51"/>
                         <Setter Target="RowResult.MinHeight" Value="108"/>
                         <Setter Target="RowResult.Height" Value="72*"/>
                     </VisualState.Setters>
@@ -577,7 +557,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Results.MaxFontSize" Value="46"/>
-                        <Setter Target="Results.MaxExpressionHistoryCharacters" Value="30"/>
                         <Setter Target="RowResult.MinHeight" Value="72"/>
                         <Setter Target="RowResult.Height" Value="72*"/>
                     </VisualState.Setters>
@@ -588,7 +567,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Results.MaxFontSize" Value="26"/>
-                        <Setter Target="Results.MaxExpressionHistoryCharacters" Value="30"/>
                         <Setter Target="RowResult.MinHeight" Value="42"/>
                         <Setter Target="RowResult.Height" Value="42*"/>
                     </VisualState.Setters>
@@ -617,8 +595,8 @@
             <controls:OverflowTextBlock x:Name="ExpressionText"
                                         Grid.Row="1"
                                         Margin="6,0,6,0"
-                                        Style="{ThemeResource NormalStyle}"
                                         VerticalAlignment="Bottom"
+                                        Style="{StaticResource NormalStyle}"
                                         AutomationProperties.AutomationId="CalculatorExpression"
                                         AutomationProperties.Name="{x:Bind Model.CalculationExpressionAutomationName, Mode=OneWay}"
                                         IsTabStop="False"
@@ -628,15 +606,13 @@
                                         x:Uid="CalculatorResults"
                                         Grid.Row="2"
                                         Margin="0,0,0,0"
-                                        Style="{ThemeResource ResultsStyle}"
+                                        Style="{StaticResource ResultsStyle}"
                                         AutomationProperties.AutomationId="CalculatorResults"
                                         AutomationProperties.HeadingLevel="Level1"
                                         AutomationProperties.Name="{x:Bind Model.CalculationResultAutomationName, Mode=OneWay}"
                                         ContextCanceled="OnContextCanceled"
                                         ContextRequested="OnContextRequested"
-                                        DisplayStringExpression="{x:Bind Model.DisplayStringExpression, Mode=OneWay}"
                                         DisplayValue="{x:Bind Model.DisplayValue, Mode=OneWay}"
-                                        ExpressionVisibility="Visible"
                                         IsInError="{x:Bind Model.IsInError, Mode=OneWay}"
                                         IsOperatorCommand="{x:Bind Model.IsOperatorCommand, Mode=OneWay}"
                                         TabIndex="1"
@@ -645,68 +621,71 @@
                                         x:Uid="CalculatorAlwaysOnTopResults"
                                         Grid.Row="2"
                                         Margin="6,0,6,0"
+                                        HorizontalContentAlignment="Right"
+                                        Style="{StaticResource AOTResultsStyle}"
+                                        FontSize="40"
                                         AutomationProperties.AutomationId="CalculatorAlwaysOnTopResults"
                                         AutomationProperties.HeadingLevel="Level1"
                                         AutomationProperties.Name="{x:Bind Model.CalculationResultAutomationName, Mode=OneWay}"
-                                        TokensUpdated="{x:Bind Model.AreAlwaysOnTopResultsUpdated, Mode=OneWay}"
-                                        HorizontalContentAlignment="Right"
                                         IsActive="True"
+                                        ScrollButtonsFontSize="28"
+                                        ScrollButtonsPlacement="Above"
+                                        ScrollButtonsWidth="28"
+                                        TokensUpdated="{x:Bind Model.AreAlwaysOnTopResultsUpdated, Mode=OneWay}"
                                         UseSystemFocusVisuals="True"
                                         Visibility="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"/>
 
             <!-- Programmer display panel controls -->
             <local:CalculatorProgrammerOperators x:Name="ProgrammerOperators"
                                                  Grid.Row="3"
-                                                 x:Load="False"
-                                                 IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
                                                  TabIndex="6"
-                                                 Visibility="{x:Bind Model.IsProgrammer, Mode=OneWay}"/>
+                                                 Visibility="{x:Bind Model.IsProgrammer, Mode=OneWay}"
+                                                 IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
+                                                 x:Load="False"/>
 
             <local:CalculatorProgrammerDisplayPanel x:Name="ProgrammerDisplayPanel"
                                                     Grid.Row="4"
-                                                    x:Load="False"
-                                                    IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
                                                     TabIndex="7"
-                                                    Visibility="{x:Bind Model.IsProgrammer, Mode=OneWay}"/>
+                                                    Visibility="{x:Bind Model.IsProgrammer, Mode=OneWay}"
+                                                    IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
+                                                    x:Load="False"/>
 
-            <Grid x:Name="HistoryButtonParent"
-                  Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
-                <Button x:Name="HistoryButton"
+            <Button x:Name="HistoryButton"
                     x:Uid="HistoryButton"
                     Grid.Row="0"
-                    IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                     Style="{StaticResource HistoryButtonStyle}"
                     AutomationProperties.AutomationId="HistoryButton"
                     Command="{x:Bind HistoryButtonPressed, Mode=OneTime}"
                     Content="&#xe81c;"
                     ExitDisplayModeOnAccessKeyInvoked="False"
-                    TabIndex="2">
-                    <FlyoutBase.AttachedFlyout>
-                        <Flyout x:Name="HistoryFlyout"
-                                AutomationProperties.AutomationId="HistoryFlyout"
-                                Closed="HistoryFlyout_Closed"
-                                FlyoutPresenterStyle="{ThemeResource HistoryFlyoutStyle}"
-                                Opened="HistoryFlyout_Opened"
-                                Placement="Full"/>
-                    </FlyoutBase.AttachedFlyout>
-                </Button>
-            </Grid>
-            
+                    TabIndex="2"
+                    Visibility="{x:Bind local:Calculator.ShouldDisplayHistoryButton(Model.IsAlwaysOnTop, Model.IsProgrammer, DockPanel.Visibility), Mode=OneWay}"
+                    IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout x:Name="HistoryFlyout"
+                            AutomationProperties.AutomationId="HistoryFlyout"
+                            Closed="HistoryFlyout_Closed"
+                            FlyoutPresenterStyle="{StaticResource HistoryFlyoutStyle}"
+                            Opened="HistoryFlyout_Opened"
+                            Placement="Full"/>
+                </FlyoutBase.AttachedFlyout>
+            </Button>
+
             <!-- Scientific angle buttons -->
             <local:CalculatorScientificAngleButtons x:Name="ScientificAngleButtons"
                                                     Grid.Row="3"
-                                                    x:Load="False"
-                                                    IsEnabled="{x:Bind Model.IsScientific, Mode=OneWay}"
                                                     TabIndex="6"
-                                                    Visibility="{x:Bind Model.IsScientific, Mode=OneWay}"/>
+                                                    Visibility="{x:Bind Model.IsScientific, Mode=OneWay}"
+                                                    IsEnabled="{x:Bind Model.IsScientific, Mode=OneWay}"
+                                                    x:Load="False"/>
 
             <!-- Memory panel controls -->
             <Grid x:Name="MemoryPanel"
                   x:Uid="MemoryPanel"
                   Grid.Row="4"
                   Margin="3,0,3,0"
-                  Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"
-                  AutomationProperties.HeadingLevel="Level1">
+                  AutomationProperties.HeadingLevel="Level1"
+                  Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" MaxWidth="80"/>
                     <ColumnDefinition Width="1*" MaxWidth="80"/>
@@ -777,14 +756,14 @@
                         Click="ToggleMemoryFlyout"
                         Content="M0,9.46968e-006L1.96199,9.46968e-006L4.17099,5.59502C4.33899,6.02501 4.44899,6.34502 4.5,6.55602L4.52899,6.55602C4.67299,6.11501 4.791,5.78701 4.87999,5.57201L7.12999,9.46968e-006L9.023,9.46968e-006L9.023,8.402L7.64,8.402L7.64,2.96501C7.64,2.519 7.668,1.97401 7.722,1.33L7.69899,1.33C7.613,1.697 7.53699,1.96101 7.46999,2.12102L4.96199,8.402L4.002,8.402L1.48799,2.16801C1.418,1.98399 1.34299,1.705 1.265,1.33L1.24199,1.33C1.273,1.666 1.28899,2.21501 1.28899,2.976L1.28899,8.402L0,8.402zM10.5,0L15.5,0L12.99,2.5z"
                         ExitDisplayModeOnAccessKeyInvoked="False"
-                        IsEnabled="{x:Bind Model.IsMemoryEmpty, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
-                        TabIndex="15">
+                        TabIndex="15"
+                        IsEnabled="{x:Bind Model.IsMemoryEmpty, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
                     <FlyoutBase.AttachedFlyout>
                         <Flyout x:Name="MemoryFlyout"
                                 x:Uid="MemoryFlyout"
                                 AutomationProperties.AutomationId="MemoryFlyout"
                                 Closed="OnMemoryFlyoutClosed"
-                                FlyoutPresenterStyle="{ThemeResource MemoryFlyoutStyle}"
+                                FlyoutPresenterStyle="{StaticResource MemoryFlyoutStyle}"
                                 Opened="OnMemoryFlyoutOpened"
                                 Placement="Full"/>
                     </FlyoutBase.AttachedFlyout>
@@ -1103,10 +1082,10 @@
                                                 VerticalAlignment="Top"
                                                 Background="Transparent"
                                                 Opacity="0"
-                                                IsEnabled="False"
                                                 IsTabStop="False"
                                                 Template="{StaticResource PreviousTemplate}"
-                                                UseSystemFocusVisuals="False"/>
+                                                UseSystemFocusVisuals="False"
+                                                IsEnabled="False"/>
                                         <Button x:Name="NextButton"
                                                 Grid.Column="1"
                                                 Width="20"
@@ -1116,10 +1095,10 @@
                                                 VerticalAlignment="Top"
                                                 Background="Transparent"
                                                 Opacity="0"
-                                                IsEnabled="False"
                                                 IsTabStop="False"
                                                 Template="{StaticResource NextTemplate}"
-                                                UseSystemFocusVisuals="False"/>
+                                                UseSystemFocusVisuals="False"
+                                                IsEnabled="False"/>
                                         <ContentPresenter x:Name="RightHeaderPresenter"
                                                           Grid.Column="2"
                                                           HorizontalAlignment="Stretch"

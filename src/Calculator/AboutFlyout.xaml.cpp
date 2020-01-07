@@ -21,7 +21,7 @@ using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Data;
 
 #ifndef BUILD_YEAR
-#define BUILD_YEAR 2019
+#define BUILD_YEAR 2020
 #endif
 
 AboutFlyout::AboutFlyout()
@@ -35,11 +35,11 @@ AboutFlyout::AboutFlyout()
 
     this->SetVersionString();
 
-    Header->Text = resourceLoader.GetResourceString("AboutButton/Content");
+    Header->Text = resourceLoader->GetResourceString("AboutButton/Content");
 
     auto copyrightText =
-        LocalizationStringUtil::GetLocalizedString(resourceLoader.GetResourceString("AboutControlCopyright")->Data(), to_wstring(BUILD_YEAR).c_str());
-    AboutControlCopyrightRun->Text = ref new String(copyrightText.c_str());
+        LocalizationStringUtil::GetLocalizedString(resourceLoader->GetResourceString("AboutControlCopyright"), StringReference(to_wstring(BUILD_YEAR).c_str()));
+    AboutControlCopyrightRun->Text = copyrightText;
 }
 
 void AboutFlyout::FeedbackButton_Click(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
@@ -53,7 +53,7 @@ void AboutFlyout::FeedbackButton_Click(_In_ Object ^ sender, _In_ RoutedEventArg
 void AboutFlyout::SetVersionString()
 {
     PackageVersion version = Package::Current->Id->Version;
-    String ^ appName = AppResourceProvider::GetInstance().GetResourceString(L"AppName");
+    String ^ appName = AppResourceProvider::GetInstance()->GetResourceString(L"AppName");
     AboutFlyoutVersion->Text = appName + L" " + version.Major + L"." + version.Minor + L"." + version.Build + L"." + version.Revision;
 }
 

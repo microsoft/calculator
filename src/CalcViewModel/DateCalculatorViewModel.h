@@ -176,7 +176,7 @@ namespace CalculatorApp
             CalculatorApp::Common::DateCalculation::DateDifference m_dateDiffResultInDays;
 
             // Private members
-            std::shared_ptr<CalculatorApp::Common::DateCalculation::DateCalculationEngine> m_dateCalcEngine;
+            CalculatorApp::Common::DateCalculation::DateCalculationEngine ^ m_dateCalcEngine;
             CalculatorApp::Common::DateCalculation::DateUnit m_daysOutputFormat;
             CalculatorApp::Common::DateCalculation::DateUnit m_allDateUnitsOutputFormat;
             Windows::Globalization::DateTimeFormatting::DateTimeFormatter ^ m_dateTimeFormatter;
