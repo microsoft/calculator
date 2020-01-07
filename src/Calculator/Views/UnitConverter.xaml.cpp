@@ -11,9 +11,9 @@
 #include "Controls/CalculationResult.h"
 #include "Controls/CalculatorButton.h"
 #include "CalcViewModel/Common/CopyPasteManager.h"
-#include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "CalcViewModel/Common/LocalizationService.h"
 #include "CalcViewModel/Common/LocalizationSettings.h"
+#include "Common/KeyboardShortcutManager.h"
 
 using namespace std;
 using namespace CalculatorApp;

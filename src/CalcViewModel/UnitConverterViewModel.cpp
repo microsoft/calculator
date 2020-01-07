@@ -478,21 +478,11 @@ void UnitConverterViewModel::OnButtonPressed(Platform::Object ^ parameter)
 
     static constexpr UCM::Command OPERANDS[] = { UCM::Command::Zero, UCM::Command::One, UCM::Command::Two,   UCM::Command::Three, UCM::Command::Four,
                                                    UCM::Command::Five, UCM::Command::Six, UCM::Command::Seven, UCM::Command::Eight, UCM::Command::Nine };
-
-    if (find(begin(OPERANDS), end(OPERANDS), command) != end(OPERANDS))
-    {
-        if (m_isInputBlocked)
-        {
-            return;
-        }
-
-        if (m_IsCurrencyCurrentCategory)
-        {
-            StartConversionResultTimer();
-        }
-    }
-
-    m_model->SendCommand(command);
+	if (m_isInputBlocked)
+	{
+		return;
+	}
+	m_model->SendCommand(command);
 
     TraceLogger::GetInstance()->LogConverterInputReceived(Mode);
 }
@@ -996,18 +986,6 @@ void UnitConverterViewModel::OnMaxDigitsReached()
 bool UnitConverterViewModel::UnitsAreValid()
 {
     return UnitFrom != nullptr && !UnitFrom->Abbreviation->IsEmpty() && UnitTo != nullptr && !UnitTo->Abbreviation->IsEmpty();
-}
-
-void UnitConverterViewModel::StartConversionResultTimer()
-{
-    auto that(this);
-    m_conversionResultTaskHelper = make_unique<ConversionResultTaskHelper>(CONVERSION_FINALIZED_DELAY_IN_MS, [that]() {
-        if (that->UnitsAreValid())
-        {
-            String ^ valueFrom = that->m_Value1Active ? that->m_Value1 : that->m_Value2;
-            String ^ valueTo = that->m_Value1Active ? that->m_Value2 : that->m_Value1;
-        }
-    });
 }
 
 String ^ SupplementaryResult::GetLocalizedAutomationName()

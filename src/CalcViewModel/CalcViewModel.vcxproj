@@ -313,16 +313,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ApplicationViewModel.h" />
-    <ClInclude Include="Common\AlwaysSelectedCollectionView.h" />
     <ClInclude Include="Common\AppResourceProvider.h" />
     <ClInclude Include="Common\Automation\NarratorAnnouncement.h" />
     <ClInclude Include="Common\Automation\NarratorNotifier.h" />
-    <ClInclude Include="Common\BindableBase.h" />
     <ClInclude Include="Common\BitLength.h" />
     <ClInclude Include="Common\CalculatorButtonPressedEventArgs.h" />
     <ClInclude Include="Common\CalculatorButtonUser.h" />
     <ClInclude Include="Common\CalculatorDisplay.h" />
-    <ClInclude Include="Common\ConversionResultTaskHelper.h" />
     <ClInclude Include="Common\CopyPasteManager.h" />
     <ClInclude Include="Common\DateCalculator.h" />
     <ClInclude Include="Common\DelegateCommand.h" />
@@ -330,7 +327,6 @@
     <ClInclude Include="Common\EngineResourceProvider.h" />
     <ClInclude Include="Common\ExpressionCommandDeserializer.h" />
     <ClInclude Include="Common\ExpressionCommandSerializer.h" />
-    <ClInclude Include="Common\KeyboardShortcutManager.h" />
     <ClInclude Include="Common\LocalizationService.h" />
     <ClInclude Include="Common\LocalizationSettings.h" />
     <ClInclude Include="Common\LocalizationStringUtil.h" />
@@ -341,7 +337,6 @@
     <ClInclude Include="Common\TraceActivity.h" />
     <ClInclude Include="Common\TraceLogger.h" />
     <ClInclude Include="Common\Utils.h" />
-    <ClInclude Include="Common\ValidatingConverters.h" />
     <ClInclude Include="DataLoaders\CurrencyDataLoader.h" />
     <ClInclude Include="DataLoaders\CurrencyHttpClient.h" />
     <ClInclude Include="DataLoaders\ICurrencyHttpClient.h" />
@@ -361,16 +356,13 @@
     <ClCompile Include="Common\AppResourceProvider.cpp" />
     <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp" />
     <ClCompile Include="Common\Automation\NarratorNotifier.cpp" />
-    <ClCompile Include="Common\BindableBase.cpp" />
     <ClCompile Include="Common\CalculatorButtonPressedEventArgs.cpp" />
     <ClCompile Include="Common\CalculatorDisplay.cpp" />
-    <ClCompile Include="Common\ConversionResultTaskHelper.cpp" />
     <ClCompile Include="Common\CopyPasteManager.cpp" />
     <ClCompile Include="Common\DateCalculator.cpp" />
     <ClCompile Include="Common\EngineResourceProvider.cpp" />
     <ClCompile Include="Common\ExpressionCommandDeserializer.cpp" />
     <ClCompile Include="Common\ExpressionCommandSerializer.cpp" />
-    <ClCompile Include="Common\KeyboardShortcutManager.cpp" />
     <ClCompile Include="Common\LocalizationService.cpp" />
     <ClCompile Include="Common\NavCategory.cpp" />
     <ClCompile Include="Common\NetworkManager.cpp" />
@@ -420,16 +412,7 @@
   </Choose>
   <ItemGroup>
     <None Include="DataLoaders\DefaultFromToCurrency.json" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets')" />
-  </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets'))" />
-  </Target>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>
