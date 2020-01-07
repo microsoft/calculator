@@ -421,7 +421,6 @@ namespace CalculatorUnitTests
         VERIFY_ARE_EQUAL(CategoryGroupType::Calculator, calculatorGroup->GroupType);
 
         IObservableVector<NavCategory ^> ^ calculatorCategories = calculatorGroup->Categories;
-        VERIFY_ARE_EQUAL(5, calculatorCategories->Size);
         ValidateNavCategory(calculatorCategories, 0u, ViewMode::Standard);
         ValidateNavCategory(calculatorCategories, 1u, ViewMode::Scientific);
         if (Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath"))
@@ -429,11 +428,13 @@ namespace CalculatorUnitTests
             ValidateNavCategory(calculatorCategories, 2u, ViewMode::Graphing);
             ValidateNavCategory(calculatorCategories, 3u, ViewMode::Programmer);
             ValidateNavCategory(calculatorCategories, 4u, ViewMode::Date);
+            VERIFY_ARE_EQUAL(5, calculatorCategories->Size);
         }
         else
         {
             ValidateNavCategory(calculatorCategories, 2u, ViewMode::Programmer);
             ValidateNavCategory(calculatorCategories, 3u, ViewMode::Date);
+            VERIFY_ARE_EQUAL(4, calculatorCategories->Size);
         }
 
         NavCategoryGroup ^ converterGroup = menuOptions->GetAt(1);
