@@ -57,7 +57,6 @@ namespace CalculatorApp
             PROPERTY_R(Platform::String ^, SelectedExpressionLastData);
             OBSERVABLE_NAMED_PROPERTY_R(bool, IsInError);
             OBSERVABLE_PROPERTY_R(bool, IsOperatorCommand);
-            OBSERVABLE_PROPERTY_R(Platform::String ^, DisplayStringExpression);
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Common::DisplayExpressionToken ^> ^, ExpressionTokens);
             OBSERVABLE_PROPERTY_R(Platform::String ^, DecimalDisplayValue);
             OBSERVABLE_PROPERTY_R(Platform::String ^, HexDisplayValue);
@@ -72,7 +71,6 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_R(bool, IsUnaryOperatorEnabled);
             OBSERVABLE_PROPERTY_R(bool, IsNegateEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsDecimalEnabled);
-            OBSERVABLE_PROPERTY_R(bool, IsCurrentViewPinned);
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IVector<MemoryItemViewModel ^> ^, MemorizedNumbers);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsMemoryEmpty);
             OBSERVABLE_PROPERTY_R(bool, IsFToEChecked);
@@ -210,7 +208,6 @@ namespace CalculatorApp
                 {
                     if (m_isEditingEnabled != value)
                     {
-                        //                        Numbers::Common::KeyboardShortcutManager::IsCalculatorInEditingMode = value;
                         m_isEditingEnabled = value;
                         bool currentEditToggleValue = !m_isEditingEnabled;
                         IsBinaryOperatorEnabled = currentEditToggleValue;
@@ -263,7 +260,6 @@ namespace CalculatorApp
             void OnMemoryAdd(Platform::Object ^ memoryItemPosition);
             void OnMemorySubtract(Platform::Object ^ memoryItemPosition);
             void OnMemoryClear(_In_ Platform::Object ^ memoryItemPosition);
-            void OnPinUnpinCommand(Platform::Object ^ parameter);
 
             void OnInputChanged();
             void DisplayPasteError();
@@ -333,7 +329,6 @@ namespace CalculatorApp
             Platform::String ^ m_localizedOpenParenthesisCountChangedAutomationFormat;
             Platform::String ^ m_localizedNoRightParenthesisAddedFormat;
 
-            bool m_pinned;
             bool m_isOperandEnabled;
             bool m_isEditingEnabled;
             bool m_isStandard;
@@ -373,11 +368,7 @@ namespace CalculatorApp
             bool IsOpnd(CalculationManager::Command command);
             bool IsRecoverableCommand(CalculationManager::Command command);
 
-            CalculationManager::CommandType GetSelectedTokenType(_In_ unsigned int);
             void SaveEditedCommand(_In_ unsigned int index, _In_ CalculationManager::Command command);
-
-            bool IsViewPinned();
-            void SetViewPinnedState(bool pinned);
 
             CalculatorApp::Common::ViewMode GetCalculatorMode();
 

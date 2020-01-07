@@ -11,9 +11,9 @@
 #include "Controls/CalculationResult.h"
 #include "Controls/CalculatorButton.h"
 #include "CalcViewModel/Common/CopyPasteManager.h"
-#include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "CalcViewModel/Common/LocalizationService.h"
 #include "CalcViewModel/Common/LocalizationSettings.h"
+#include "Common/KeyboardShortcutManager.h"
 
 using namespace std;
 using namespace CalculatorApp;
@@ -46,7 +46,6 @@ static const long long DURATION_500_MS = 10000 * 500;
 
 UnitConverter::UnitConverter()
     : m_meteredConnectionOverride(false)
-    , m_isAnimationEnabled(false)
 {
     m_layoutDirection = LocalizationService::GetInstance()->GetFlowDirection();
     m_FlowDirectionHorizontalAlignment = m_layoutDirection == ::FlowDirection::RightToLeft ? ::HorizontalAlignment::Right : ::HorizontalAlignment::Left;
@@ -59,9 +58,6 @@ UnitConverter::UnitConverter()
     // Is currency symbol preference set to right side
     bool preferRight = LocalizationSettings::GetInstance().GetCurrencySymbolPrecedence() == 0;
     VisualStateManager::GoToState(this, preferRight ? "CurrencySymbolRightState" : "CurrencySymbolLeftState", false);
-
-    auto userSettings = ref new UISettings();
-    m_isAnimationEnabled = userSettings->AnimationsEnabled;
 
     auto resLoader = AppResourceProvider::GetInstance();
     m_chargesMayApplyText = resLoader->GetResourceString(L"DataChargesMayApply");
@@ -250,7 +246,8 @@ void UnitConverter::OnPasteMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEven
 
 void UnitConverter::AnimateConverter()
 {
-    if (App::IsAnimationEnabled())
+    static auto uiSettings = ref new UISettings();
+    if (uiSettings->AnimationsEnabled)
     {
         AnimationStory->Begin();
     }
@@ -332,7 +329,7 @@ void UnitConverter::OnIsDisplayVisibleChanged()
 
         if (Model->IsCurrencyCurrentCategory && !Model->CurrencyTimestamp->IsEmpty())
         {
-            VisualStateManager::GoToState(this, L"CurrencyLoadedState", m_isAnimationEnabled);
+            VisualStateManager::GoToState(this, L"CurrencyLoadedState", true);
         }
     }
 }
