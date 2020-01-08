@@ -253,7 +253,6 @@ namespace GraphControl
 
         if (m_renderMain && m_graph != nullptr)
         {
-            unique_ptr<IExpression> graphExpression;
             wstring request;
 
             auto validEqs = GetGraphableEquations();
@@ -263,8 +262,7 @@ namespace GraphControl
 
             if (!validEqs.empty())
             {
-                wstringstream ss{};
-                ss << s_getGraphOpeningTags;
+                request = s_getGraphOpeningTags;
 
                 int numValidEquations = 0;
                 for (Equation ^ eq : validEqs)
@@ -276,18 +274,16 @@ namespace GraphControl
 
                     if (numValidEquations++ > 0)
                     {
-                        ss << L"<mo>,</mo>";
+                        request += L"<mo>,</mo>";
                     }
 
-                    ss << eq->GetRequest()->Data();
+                    request += eq->GetRequest()->Data();
                 }
 
-                ss << s_getGraphClosingTags;
-
-                request = ss.str();
+                request += s_getGraphClosingTags;
             }
 
-            if (graphExpression = m_solver->ParseInput(request))
+            if (unique_ptr<IExpression> graphExpression = m_solver->ParseInput(request))
             {
                 initResult = m_graph->TryInitialize(graphExpression.get());
 
@@ -375,14 +371,11 @@ namespace GraphControl
     {
         std::shared_ptr<Graphing::IGraph> graph = m_solver->CreateGrapher();
 
-        wstringstream ss{};
-        ss << s_getGraphOpeningTags;
-        ss << equation->GetRequest()->Data();
-        ss << s_getGraphClosingTags;
+        wstring request = s_getGraphOpeningTags;
+        request += equation->GetRequest()->Data();
+        request += s_getGraphClosingTags;
 
-        wstring request = ss.str();
-        unique_ptr<IExpression> graphExpression;
-        if (graphExpression = m_solver->ParseInput(request))
+        if (unique_ptr<IExpression> graphExpression = m_solver->ParseInput(request))
         {
             if (graph->TryInitialize(graphExpression.get()))
             {
