@@ -88,6 +88,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         CalculatorApp::ViewModel::GraphingCalculatorViewModel ^ m_viewModel;
         void
             OnSettingsFlyout_Closing(Windows::UI::Xaml::Controls::Primitives::FlyoutBase ^ sender, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs ^ args);
+        void LeftGrid_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
     };
 
 }

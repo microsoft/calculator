@@ -339,6 +339,7 @@
         <Grid x:Name="LeftGrid"
               Grid.Row="1"
               Padding="0,4,0,0"
+              SizeChanged="LeftGrid_SizeChanged"
               Visibility="{x:Bind ShouldDisplayPanel(IsSmallState, SwitchModeToggleButton.IsChecked.Value, x:True), Mode=OneWay}">
             <Grid.Resources>
                 <ResourceDictionary>
@@ -434,16 +435,18 @@
                 </StackPanel>
             </Border>
             <Border x:Name="TracePointer"
-                    Width="16"
+                    Width="18"
                     Height="18"
-                    Margin="48,50,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Visibility="Collapsed">
-                <FontIcon Foreground="Red"
-                          FontFamily="{StaticResource CalculatorFontFamily}"
-                          FontSize="18"
-                          Glyph="&#xE3B3;"/>
+                <Path Width="18"
+                      Height="18"
+                      Fill="White"
+                      Stroke="Black"
+                      StrokeThickness="1"
+                      Data="M0 0 l1371 1371 H538 l-538 538 Z"
+                      Stretch="Uniform"/>
             </Border>
             <Border MinWidth="36"
                     Margin="0,0,12,12"

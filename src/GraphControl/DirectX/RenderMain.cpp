@@ -44,8 +44,6 @@ namespace GraphControl::DX
         RegisterEventHandlers();
 
         m_drawActiveTracing = false;
-        m_activeTracingPointerLocation.X = 50;
-        m_activeTracingPointerLocation.Y = 50;
     }
 
     RenderMain::~RenderMain()
@@ -65,6 +63,7 @@ namespace GraphControl::DX
                 renderer->SetDpi(dpi, dpi);
 
                 renderer->SetGraphSize(static_cast<unsigned int>(m_swapChainPanel->ActualWidth), static_cast<unsigned int>(m_swapChainPanel->ActualHeight));
+              
             }
         }
     }
@@ -120,6 +119,13 @@ namespace GraphControl::DX
     {
         // TODO: Replace this with the sizedependent initialization of your app's content.
         RunRenderPass();
+
+        if (m_swapChainPanel != nullptr)
+        {
+            // Initialize the active tracing location to just above and to the right of the center of the graph area
+            m_activeTracingPointerLocation.X = m_swapChainPanel->ActualWidth / 2 + 40;
+            m_activeTracingPointerLocation.Y = m_swapChainPanel->ActualHeight / 2 - 40;
+        }
     }
 
     bool RenderMain::RunRenderPass()
