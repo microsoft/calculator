@@ -434,11 +434,11 @@ Platform::String ^ GraphingCalculator::GetInfoForSwitchModeToggleButton(bool isC
     }
 }
 
-void GraphingCalculator::SwitchModeToggleButton_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void GraphingCalculator::SwitchModeToggleButton_Toggled(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     auto narratorNotifier = ref new NarratorNotifier();
     String ^ announcementText;
-    if (SwitchModeToggleButton->IsChecked->Value)
+    if (SwitchModeToggleButton->IsOn)
     {
         announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphSwitchedToEquationModeAnnouncement");
     }
