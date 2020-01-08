@@ -36,7 +36,7 @@
         <DataTemplate x:Key="NavMenuItemPreviewDataTemplate" x:DataType="x:String">
             <StackPanel Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Text="{x:Bind}"/>
-                <controls:PreviewTagControl Margin="6,0,0,0" VerticalAlignment="Center"/>
+                <controls:PreviewTagControl Margin="10,0,0,0" VerticalAlignment="Center"/>
             </StackPanel>
         </DataTemplate>
 
@@ -177,7 +177,7 @@
                                Style="{StaticResource SubtitleTextBlockStyle}"
                                Text="{x:Bind Model.CategoryName, Mode=OneWay}"
                                Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
-                    <controls:PreviewTagControl Margin="6,0,0,0"
+                    <controls:PreviewTagControl Margin="10,0,0,0"
                                                 VerticalAlignment="Center"
                                                 Visibility="{x:Bind Model.IsModePreview, Mode=OneWay}"/>
                 </StackPanel>
