@@ -236,15 +236,20 @@
       <DependentUpon>AboutFlyout.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Common\AppLifecycleLogger.h" />
+    <ClInclude Include="Common\KeyboardShortcutManager.h" />
+    <ClInclude Include="Common\ValidatingConverters.h" />
+    <ClInclude Include="Common\ViewState.h" />
     <ClInclude Include="Controls\CalculationResultAutomationPeer.h" />
     <ClInclude Include="Controls\MathRichEditBox.h" />
     <ClInclude Include="Controls\OverflowTextBlockAutomationPeer.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h" />
-    <ClInclude Include="Common\BindableBase.h" />
     <ClInclude Include="Controls\CalculationResult.h" />
     <ClInclude Include="Controls\CalculatorButton.h" />
     <ClInclude Include="Controls\FlipButtons.h" />
     <ClInclude Include="Controls\OverflowTextBlock.h" />
+    <ClInclude Include="Controls\PreviewTagControl.xaml.h">
+      <DependentUpon>Controls\PreviewTagControl.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="Controls\RadixButton.h" />
     <ClInclude Include="Controls\SupplementaryItemsControl.h" />
     <ClInclude Include="Converters\BooleanNegationConverter.h" />
@@ -344,6 +349,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="AboutFlyout.xaml" />
+    <Page Include="Controls\PreviewTagControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="EquationStylePanelControl.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -399,14 +407,18 @@
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Common\AppLifecycleLogger.cpp" />
+    <ClCompile Include="Common\KeyboardShortcutManager.cpp" />
+    <ClCompile Include="Common\ViewState.cpp" />
     <ClCompile Include="Controls\CalculationResultAutomationPeer.cpp" />
     <ClCompile Include="Controls\MathRichEditBox.cpp" />
     <ClCompile Include="Controls\OverflowTextBlockAutomationPeer.cpp" />
-    <ClCompile Include="Common\BindableBase.cpp" />
     <ClCompile Include="Controls\CalculationResult.cpp" />
     <ClCompile Include="Controls\CalculatorButton.cpp" />
     <ClCompile Include="Controls\FlipButtons.cpp" />
     <ClCompile Include="Controls\OverflowTextBlock.cpp" />
+    <ClCompile Include="Controls\PreviewTagControl.xaml.cpp">
+      <DependentUpon>Controls\PreviewTagControl.xaml</DependentUpon>
+    </ClCompile>
     <ClCompile Include="Controls\RadixButton.cpp" />
     <ClCompile Include="Controls\SupplementaryItemsControl.cpp" />
     <ClCompile Include="Converters\BooleanNegationConverter.cpp" />

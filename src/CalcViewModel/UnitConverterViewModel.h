@@ -7,7 +7,6 @@
 #include "Common/Utils.h"
 #include "Common/NetworkManager.h"
 #include "Common/Automation/NarratorAnnouncement.h"
-#include "Common/ConversionResultTaskHelper.h"
 #include "Common/CalculatorButtonUser.h"
 #include "Common/NavCategory.h"
 
@@ -264,8 +263,6 @@ namespace CalculatorApp
             void OnButtonPressed(Platform::Object ^ parameter);
             Platform::String ^ ConvertToLocalizedString(const std::wstring& stringToLocalize, bool allowPartialStrings);
 
-            void StartConversionResultTimer();
-
             std::shared_ptr<UnitConversionManager::IUnitConverter> m_model;
             wchar_t m_decimalSeparator;
 
@@ -326,8 +323,6 @@ namespace CalculatorApp
             Platform::String ^ m_lastAnnouncedConversionResult;
 
             bool m_isCurrencyDataLoaded;
-
-            std::unique_ptr<CalculatorApp::Common::ConversionResultTaskHelper> m_conversionResultTaskHelper;
         };
 
         class UnitConverterVMCallback : public UnitConversionManager::IUnitConverterVMCallback

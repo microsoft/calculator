@@ -16,14 +16,11 @@ namespace CalcManager::NumberFormattingUtils
             return;
         }
 
-        for (auto iter = number.end() - 1;; iter--)
+        if (auto i = number.find_last_not_of(L'0'); i != wstring::npos)
         {
-            if (*iter != L'0')
-            {
-                number.erase(iter + 1, number.end());
-                break;
-            }
+            number.erase(number.cbegin() + i + 1, number.cend());
         }
+
         if (number.back() == L'.')
         {
             number.pop_back();

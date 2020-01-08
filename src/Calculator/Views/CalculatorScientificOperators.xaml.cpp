@@ -8,7 +8,7 @@
 
 #include "pch.h"
 #include "CalculatorScientificOperators.xaml.h"
-#include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "Common/KeyboardShortcutManager.h"
 #include "CalcViewModel/Common/TraceLogger.h"
 #include "Controls/CalculatorButton.h"
 #include "CalcViewModel/StandardCalculatorViewModel.h"

@@ -7,14 +7,12 @@ jobs:
     - Buildx64
     - Buildx86
     - BuildARM
-    - BuildARM64
   condition: |
     and
     (
       in(dependencies.Buildx64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
       in(dependencies.Buildx86.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
-      in(dependencies.BuildARM.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
-      in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+      in(dependencies.BuildARM.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
     ) 
   pool:
     vmImage: windows-2019

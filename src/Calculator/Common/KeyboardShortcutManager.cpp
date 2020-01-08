@@ -3,9 +3,9 @@
 
 #include "pch.h"
 #include "KeyboardShortcutManager.h"
-#include "AppResourceProvider.h"
-#include "ApplicationViewModel.h"
-#include "LocalizationSettings.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
+#include "CalcViewModel/ApplicationViewModel.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
 
 using namespace Concurrency;
 using namespace Platform;

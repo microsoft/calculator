@@ -4,7 +4,6 @@
 #include "pch.h"
 #include "MainPage.xaml.h"
 #include "CalcViewModel/Common/TraceLogger.h"
-#include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "CalcViewModel/Common/LocalizationService.h"
 #include "CalcViewModel/Common/Automation/NarratorNotifier.h"
 #include "CalcViewModel/Common/AppResourceProvider.h"
@@ -12,6 +11,8 @@
 #include "Converters/BooleanToVisibilityConverter.h"
 #include "CalcViewModel/Common/LocalizationStringUtil.h"
 #include "Common/AppLifecycleLogger.h"
+#include "Common/KeyboardShortcutManager.h"
+
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Common::Automation;
@@ -497,7 +498,17 @@ MUXC::NavigationViewItem ^ MainPage::CreateNavViewItemFromCategory(NavCategory ^
     icon->Glyph = category->Glyph;
     item->Icon = icon;
 
-    item->Content = category->Name;
+    if (category->IsPreview)
+    {
+        auto contentPresenter = ref new ContentPresenter();
+        contentPresenter->Content = category->Name;
+        contentPresenter->ContentTemplate = static_cast<DataTemplate ^>(Resources->Lookup(L"NavMenuItemPreviewDataTemplate"));
+        item->Content = contentPresenter;
+    }
+    else
+    {
+        item->Content = category->Name;
+    }
     item->AccessKey = category->AccessKey;
     item->IsEnabled = category->IsEnabled;
     item->Style = static_cast<Windows::UI::Xaml::Style ^>(Resources->Lookup(L"NavViewItemStyle"));

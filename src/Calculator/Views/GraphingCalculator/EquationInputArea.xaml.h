@@ -8,7 +8,7 @@
 #include "CalcViewModel/GraphingCalculator/EquationViewModel.h"
 #include "CalcViewModel/GraphingCalculator/GraphingCalculatorViewModel.h"
 #include "EquationStylePanelControl.xaml.h"
-#include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "Common/KeyboardShortcutManager.h"
 #include "Controls/EquationTextBox.h"
 #include "Converters/BooleanNegationConverter.h"
 #include "Controls/MathRichEditBox.h"

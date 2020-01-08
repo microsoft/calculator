@@ -76,12 +76,6 @@ namespace CalculationManager
 
         void LoadPersistedPrimaryValue();
 
-        static std::vector<long> SerializeRational(CalcEngine::Rational const& rat);
-        static CalcEngine::Rational DeSerializeRational(std::vector<long>::const_iterator itr);
-
-        static std::vector<long> SerializeNumber(CalcEngine::Number const& num);
-        static CalcEngine::Number DeSerializeNumber(std::vector<long>::const_iterator itr);
-
         std::shared_ptr<CalculatorHistory> m_pStdHistory;
         std::shared_ptr<CalculatorHistory> m_pSciHistory;
         CalculatorHistory* m_pHistory;

@@ -184,6 +184,17 @@ namespace CalculatorUITests
             Assert.AreEqual("-1,234", page.GetCalculatorResultText());
         }
 
+        // Issue #817: Prefixed multiple zeros
+        [TestMethod]
+        public void Operator_Delete_Prefix_Zeros()
+        {
+            page.StandardOperators.NumberPad.Input(0.1); // To enter decimal point
+            page.StandardOperators.BackSpaceButton.Click();
+            page.StandardOperators.BackSpaceButton.Click();
+            page.StandardOperators.NumberPad.Input(0);
+            Assert.AreEqual("0", page.GetCalculatorResultText());
+        }
+
         [TestMethod]
         public void Operator_ClearAll()
         {

@@ -7,7 +7,7 @@
 #include "CalcViewModel/Common/TraceLogger.h"
 #include "CalcViewModel/Common/LocalizationSettings.h"
 #include "CalcViewModel/Common/LocalizationStringUtil.h"
-#include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "Common/KeyboardShortcutManager.h"
 #include "CalcViewModel/Common/Automation/NarratorAnnouncement.h"
 #include "CalcViewModel/Common/Automation/NarratorNotifier.h"
 #include "Controls/CalculationResult.h"

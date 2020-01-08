@@ -177,21 +177,20 @@ String ^ StandardCalculatorViewModel::CalculateNarratorDisplayValue(_In_ wstring
 
 String ^ StandardCalculatorViewModel::GetNarratorStringReadRawNumbers(_In_ String ^ localizedDisplayValue)
 {
-    wstringstream wss;
-    auto& locSettings = LocalizationSettings::GetInstance();
+    wstring ws;
+    const auto& locSettings = LocalizationSettings::GetInstance();
 
     // Insert a space after each digit in the string, to force Narrator to read them as separate numbers.
-    wstring wstrValue(localizedDisplayValue->Data());
-    for (wchar_t& c : wstrValue)
+    for (const wchar_t& c : localizedDisplayValue)
     {
-        wss << c;
+        ws += c;
         if (locSettings.IsLocalizedHexDigit(c))
         {
-            wss << L' ';
+            ws += L' ';
         }
     }
 
-    return ref new String(wss.str().c_str());
+    return ref new String(ws.c_str());
 }
 
 void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ String ^ displayStringValue, _In_ bool isError)
@@ -904,21 +903,6 @@ void StandardCalculatorViewModel::OnClearMemoryCommand(Object ^ parameter)
     Announcement = CalculatorAnnouncement::GetMemoryClearedAnnouncement(m_localizedMemoryCleared);
 }
 
-void StandardCalculatorViewModel::OnPinUnpinCommand(Object ^ parameter)
-{
-    SetViewPinnedState(!IsViewPinned());
-}
-
-bool StandardCalculatorViewModel::IsViewPinned()
-{
-    return m_IsCurrentViewPinned;
-}
-
-void StandardCalculatorViewModel::SetViewPinnedState(bool pinned)
-{
-    IsCurrentViewPinned = pinned;
-}
-
 ButtonInfo StandardCalculatorViewModel::MapCharacterToButtonId(char16 ch)
 {
     ButtonInfo result;
@@ -1477,15 +1461,6 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
     }
 }
 
-CommandType StandardCalculatorViewModel::GetSelectedTokenType(_In_ unsigned int tokenPosition)
-{
-    const pair<wstring, int>& token = m_tokens->at(tokenPosition);
-    unsigned int tokenCommandIndex = token.second;
-    const shared_ptr<IExpressionCommand>& tokenCommand = m_commands->at(tokenCommandIndex);
-
-    return tokenCommand->GetCommandType();
-}
-
 bool StandardCalculatorViewModel::IsOpnd(Command command)
 {
     static constexpr Command opnd[] = { Command::Command0, Command::Command1, Command::Command2, Command::Command3, Command::Command4,  Command::Command5,
@@ -1625,26 +1600,6 @@ void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
 void StandardCalculatorViewModel::SwitchAngleType(NumbersAndOperatorsEnum num)
 {
     OnButtonPressed(num);
-}
-
-NumbersAndOperatorsEnum StandardCalculatorViewModel::ConvertIntegerToNumbersAndOperatorsEnum(unsigned int parameter)
-{
-    NumbersAndOperatorsEnum angletype;
-    switch (parameter)
-    {
-    case 321:
-        angletype = NumbersAndOperatorsEnum::Degree;
-        break;
-    case 322:
-        angletype = NumbersAndOperatorsEnum::Radians;
-        break;
-    case 323:
-        angletype = NumbersAndOperatorsEnum::Grads;
-        break;
-    default:
-        angletype = NumbersAndOperatorsEnum::Degree;
-    };
-    return angletype;
 }
 
 void StandardCalculatorViewModel::UpdateOperand(int pos, String ^ text)

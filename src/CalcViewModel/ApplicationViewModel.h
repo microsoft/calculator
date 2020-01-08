@@ -26,6 +26,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(UnitConverterViewModel ^, ConverterViewModel);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::ViewMode, PreviousMode);
             OBSERVABLE_PROPERTY_R(bool, IsAlwaysOnTop);
+            OBSERVABLE_PROPERTY_R(bool, IsModePreview);
             OBSERVABLE_NAMED_PROPERTY_RW(Platform::String ^, CategoryName);
 
             // Indicates whether calculator is currently in standard mode _and_ supports CompactOverlay _and_ is not in Always-on-Top mode
