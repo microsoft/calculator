@@ -24,26 +24,27 @@ namespace GraphControl
 
     String ^ Equation::GetRequest()
     {
-        wstringstream ss;
-        wstring expr{ Expression->Data() };
+        wstring request;
+        wstring_view expr{ Expression->Data() };
 
         // Check for unicode characters of less than, less than or equal to, greater than and greater than or equal to.
-        if (expr.find(L">&#x3E;<") != wstring::npos || expr.find(L">&#x3C;<") != wstring::npos || expr.find(L">&#x2265;<") != wstring::npos
-            || expr.find(L">&#x2264;<") != wstring::npos)
+        if (expr.find(L">&#x3E;<") != wstring_view::npos || expr.find(L">&#x3C;<") != wstring_view::npos || expr.find(L">&#x2265;<") != wstring_view::npos
+            || expr.find(L">&#x2264;<") != wstring_view::npos)
         {
-            ss << L"<mrow><mi>plotIneq2D</mi><mfenced separators=\"\">"s;
+            request = L"<mrow><mi>plotIneq2D</mi><mfenced separators=\"\">";
         }
-        else if (expr.find(L">=<") != wstring::npos)
+        else if (expr.find(L">=<") != wstring_view::npos)
         {
-            ss << L"<mrow><mi>plotEq2d</mi><mfenced separators=\"\">";
+            request = L"<mrow><mi>plotEq2d</mi><mfenced separators=\"\">";
         }
         else
         {
-            ss << L"<mrow><mi>plot2d</mi><mfenced separators=\"\">";
+            request = L"<mrow><mi>plot2d</mi><mfenced separators=\"\">";
         }
-        ss << GetExpression() << L"</mfenced></mrow>";
+        request += GetExpression();
+        request += L"</mfenced></mrow>";
 
-        return ref new String(ss.str().c_str());
+        return ref new String(request.c_str());
     }
 
     wstring Equation::GetExpression()
@@ -51,7 +52,7 @@ namespace GraphControl
         wstring mathML = Expression->Data();
 
         size_t mathPrefix = 0;
-        while ((mathPrefix = mathML.find(s_mathPrefix, mathPrefix)) != std::string::npos)
+        while ((mathPrefix = mathML.find(s_mathPrefix, mathPrefix)) != wstring::npos)
         {
             mathML.replace(mathPrefix, s_mathPrefix.length(), L"");
             mathPrefix += s_mathPrefix.length();
