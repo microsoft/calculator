@@ -253,6 +253,7 @@ namespace GraphControl
 
         if (m_renderMain && m_graph != nullptr)
         {
+            unique_ptr<IExpression> graphExpression;
             wstring request;
 
             auto validEqs = GetGraphableEquations();
@@ -283,7 +284,7 @@ namespace GraphControl
                 request += s_getGraphClosingTags;
             }
 
-            if (unique_ptr<IExpression> graphExpression = m_solver->ParseInput(request))
+            if (graphExpression = m_solver->ParseInput(request))
             {
                 initResult = m_graph->TryInitialize(graphExpression.get());
 
