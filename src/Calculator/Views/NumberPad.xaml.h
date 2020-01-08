@@ -9,7 +9,7 @@
 #pragma once
 
 #include "Views/NumberPad.g.h"
-#include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "Common/KeyboardShortcutManager.h"
 #include "CalcViewModel/Common/NumberBase.h"
 #include "CalcManager/Header Files/RadixType.h"
 

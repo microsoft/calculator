@@ -41,7 +41,6 @@ namespace CalculatorApp
             event HistoryItemClickedHandler ^ HistoryItemClicked;
             void ShowItem(_In_ CalculatorApp::ViewModel::HistoryItemViewModel ^ e);
             void ClearHistory();
-            void RestoreCompleteHistory();
 
             internal : HistoryViewModel(_In_ CalculationManager::CalculatorManager* calculatorManager);
             void SetCalculatorDisplay(CalculatorDisplay& calculatorDisplay);

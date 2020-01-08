@@ -120,7 +120,7 @@ public
         RshL = (int)CM::Command::CommandRSHFL,
         RolC = (int)CM::Command::CommandROLC,
         RorC = (int)CM::Command::CommandRORC,
-
+            
         BINSTART = (int)CM::Command::CommandBINEDITSTART,
         BINPOS0 = (int)CM::Command::CommandBINPOS0,
         BINPOS1 = (int)CM::Command::CommandBINPOS1,
@@ -194,6 +194,14 @@ public
         MemoryRecall = (int)CM::Command::CommandRECALL,
         MemoryClear = (int)CM::Command::CommandMCLEAR,
         BitflipButton = 1000,
-        FullKeypadButton = 1001
+        FullKeypadButton = 1001,
+
+        // Buttons used in graphing calculator
+        LessThan,
+        LessThanOrEqualTo,
+        GreaterThan,
+        GreaterThanOrEqualTo,
+        X,
+        Y
     };
 }

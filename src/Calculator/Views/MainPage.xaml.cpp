@@ -4,7 +4,6 @@
 #include "pch.h"
 #include "MainPage.xaml.h"
 #include "CalcViewModel/Common/TraceLogger.h"
-#include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "CalcViewModel/Common/LocalizationService.h"
 #include "CalcViewModel/Common/Automation/NarratorNotifier.h"
 #include "CalcViewModel/Common/AppResourceProvider.h"
@@ -12,6 +11,8 @@
 #include "Converters/BooleanToVisibilityConverter.h"
 #include "CalcViewModel/Common/LocalizationStringUtil.h"
 #include "Common/AppLifecycleLogger.h"
+#include "Common/KeyboardShortcutManager.h"
+
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Common::Automation;
@@ -167,6 +168,10 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
             }
             EnsureDateCalculator();
         }
+        else if (newValue == ViewMode::Graphing)
+        {
+            EnsureGraphingCalculator();
+        }
         else if (NavCategory::IsConverterViewMode(newValue))
         {
             if (m_model->CalculatorViewModel)
@@ -197,6 +202,7 @@ void MainPage::ShowHideControls(ViewMode mode)
 {
     auto isCalcViewMode = NavCategory::IsCalculatorViewMode(mode);
     auto isDateCalcViewMode = NavCategory::IsDateCalculatorViewMode(mode);
+    auto isGraphingCalcViewMode = NavCategory::IsGraphingCalculatorViewMode(mode);
     auto isConverterViewMode = NavCategory::IsConverterViewMode(mode);
 
     if (m_calculator)
@@ -209,6 +215,12 @@ void MainPage::ShowHideControls(ViewMode mode)
     {
         m_dateCalculator->Visibility = BooleanToVisibilityConverter::Convert(isDateCalcViewMode);
         m_dateCalculator->IsEnabled = isDateCalcViewMode;
+    }
+
+    if (m_graphingCalculator)
+    {
+        m_graphingCalculator->Visibility = BooleanToVisibilityConverter::Convert(isGraphingCalcViewMode);
+        m_graphingCalculator->IsEnabled = isGraphingCalcViewMode;
     }
 
     if (m_converter)
@@ -238,7 +250,7 @@ void MainPage::UpdatePanelViewState()
 
 void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
 {
-    if (!m_converter && !m_calculator && !m_dateCalculator)
+    if (!m_converter && !m_calculator && !m_dateCalculator && !m_graphingCalculator)
     {
         // We have just launched into our default mode (standard calc) so ensure calc is loaded
         EnsureCalculator();
@@ -282,6 +294,10 @@ void MainPage::SetDefaultFocus()
     if (m_dateCalculator != nullptr && m_dateCalculator->Visibility == ::Visibility::Visible)
     {
         m_dateCalculator->SetDefaultFocus();
+    }
+    if (m_graphingCalculator != nullptr && m_graphingCalculator->Visibility == ::Visibility::Visible)
+    {
+        FocusManager::TryFocusAsync(m_graphingCalculator, ::FocusState::Programmatic);
     }
     if (m_converter != nullptr && m_converter->Visibility == ::Visibility::Visible)
     {
@@ -341,6 +357,18 @@ void MainPage::EnsureDateCalculator()
     {
         m_calculator->CloseHistoryFlyout();
         m_calculator->CloseMemoryFlyout();
+    }
+}
+
+void MainPage::EnsureGraphingCalculator()
+{
+    if (!m_graphingCalculator)
+    {
+        m_graphingCalculator = ref new GraphingCalculator();
+        m_graphingCalculator->Name = L"GraphingCalculator";
+        m_graphingCalculator->DataContext = m_model->GraphingCalcViewModel;
+
+        GraphingCalcHolder->Child = m_graphingCalculator;
     }
 }
 
@@ -472,6 +500,7 @@ MUXC::NavigationViewItem ^ MainPage::CreateNavViewItemFromCategory(NavCategory ^
 
     item->Content = category->Name;
     item->AccessKey = category->AccessKey;
+    item->IsEnabled = category->IsEnabled;
     item->Style = static_cast<Windows::UI::Xaml::Style ^>(Resources->Lookup(L"NavViewItemStyle"));
 
     AutomationProperties::SetName(item, category->AutomationName);
@@ -516,7 +545,7 @@ void MainPage::SetHeaderAutomationName()
     else
     {
         String ^ full;
-        if (NavCategory::IsCalculatorViewMode(mode))
+        if (NavCategory::IsCalculatorViewMode(mode) || NavCategory::IsGraphingCalculatorViewMode(mode))
         {
             full = resProvider->GetResourceString(L"HeaderAutomationName_Calculator");
         }
