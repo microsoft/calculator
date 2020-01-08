@@ -247,6 +247,9 @@
     <ClInclude Include="Controls\CalculatorButton.h" />
     <ClInclude Include="Controls\FlipButtons.h" />
     <ClInclude Include="Controls\OverflowTextBlock.h" />
+    <ClInclude Include="Controls\PreviewTagControl.xaml.h">
+      <DependentUpon>Controls\PreviewTagControl.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="Controls\RadixButton.h" />
     <ClInclude Include="Controls\SupplementaryItemsControl.h" />
     <ClInclude Include="Converters\BooleanNegationConverter.h" />
@@ -346,6 +349,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="AboutFlyout.xaml" />
+    <Page Include="Controls\PreviewTagControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="EquationStylePanelControl.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -410,6 +416,9 @@
     <ClCompile Include="Controls\CalculatorButton.cpp" />
     <ClCompile Include="Controls\FlipButtons.cpp" />
     <ClCompile Include="Controls\OverflowTextBlock.cpp" />
+    <ClCompile Include="Controls\PreviewTagControl.xaml.cpp">
+      <DependentUpon>Controls\PreviewTagControl.xaml</DependentUpon>
+    </ClCompile>
     <ClCompile Include="Controls\RadixButton.cpp" />
     <ClCompile Include="Controls\SupplementaryItemsControl.cpp" />
     <ClCompile Include="Converters\BooleanNegationConverter.cpp" />

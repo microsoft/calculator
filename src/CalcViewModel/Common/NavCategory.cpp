@@ -118,7 +118,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                                                      MyVirtualKey::Number1,
                                                                      L"1",
                                                                      SUPPORTS_ALL,
-                                                                     true },
+                                                                     true,
+                                                                     false },
                                              NavCategoryInitializer{ ViewMode::Scientific,
                                                                      SCIENTIFIC_ID,
                                                                      L"Scientific",
@@ -128,7 +129,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                                                      MyVirtualKey::Number2,
                                                                      L"2",
                                                                      SUPPORTS_ALL,
-                                                                     true } };
+                                                                     true,
+                                                                     false } };
 
     int currentIndex = 3;
     bool supportGraphingCalculator = IsGraphingModeAvailable();
@@ -144,7 +146,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                               MyVirtualKey::Number3,
                                               L"3",
                                               SUPPORTS_ALL,
-                                              isEnabled });
+                                              isEnabled,
+                                              true });
         ++currentIndex;
     }
     res.insert(
@@ -158,7 +161,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   supportGraphingCalculator ? MyVirtualKey::Number4 : MyVirtualKey::Number3,
                                   towchar_t(currentIndex++),
                                   SUPPORTS_ALL,
-                                  true },
+                                  true,
+                                  false },
           NavCategoryInitializer{ ViewMode::Date,
                                   DATE_ID,
                                   L"Date",
@@ -168,7 +172,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   supportGraphingCalculator ? MyVirtualKey::Number5 : MyVirtualKey::Number4,
                                   towchar_t(currentIndex++),
                                   SUPPORTS_ALL,
-                                  true },
+                                  true,
+                                  false },
           NavCategoryInitializer{ ViewMode::Currency,
                                   CURRENCY_ID,
                                   L"Currency",
@@ -178,7 +183,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   MyVirtualKey::None,
                                   nullptr,
                                   POSITIVE_ONLY,
-                                  true },
+                                  true,
+                                  false },
           NavCategoryInitializer{ ViewMode::Volume,
                                   VOLUME_ID,
                                   L"Volume",
@@ -188,7 +194,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   MyVirtualKey::None,
                                   nullptr,
                                   POSITIVE_ONLY,
-                                  true },
+                                  true,
+                                  false },
           NavCategoryInitializer{ ViewMode::Length,
                                   LENGTH_ID,
                                   L"Length",
@@ -198,7 +205,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   MyVirtualKey::None,
                                   nullptr,
                                   POSITIVE_ONLY,
-                                  true },
+                                  true,
+                                  false },
           NavCategoryInitializer{ ViewMode::Weight,
                                   WEIGHT_ID,
                                   L"Weight and Mass",
@@ -208,7 +216,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   MyVirtualKey::None,
                                   nullptr,
                                   POSITIVE_ONLY,
-                                  true },
+                                  true,
+                                  false },
           NavCategoryInitializer{ ViewMode::Temperature,
                                   TEMPERATURE_ID,
                                   L"Temperature",
@@ -218,7 +227,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   MyVirtualKey::None,
                                   nullptr,
                                   SUPPORTS_NEGATIVE,
-                                  true },
+                                  true,
+                                  false },
           NavCategoryInitializer{ ViewMode::Energy,
                                   ENERGY_ID,
                                   L"Energy",
@@ -228,7 +238,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   MyVirtualKey::None,
                                   nullptr,
                                   POSITIVE_ONLY,
-                                  true },
+                                  true,
+                                  false },
           NavCategoryInitializer{ ViewMode::Area,
                                   AREA_ID,
                                   L"Area",
@@ -238,7 +249,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   MyVirtualKey::None,
                                   nullptr,
                                   POSITIVE_ONLY,
-                                  true },
+                                  true,
+                                  false },
           NavCategoryInitializer{ ViewMode::Speed,
                                   SPEED_ID,
                                   L"Speed",
@@ -248,7 +260,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   MyVirtualKey::None,
                                   nullptr,
                                   POSITIVE_ONLY,
-                                  true },
+                                  true,
+                                  false },
           NavCategoryInitializer{ ViewMode::Time,
                                   TIME_ID,
                                   L"Time",
@@ -258,7 +271,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   MyVirtualKey::None,
                                   nullptr,
                                   POSITIVE_ONLY,
-                                  true },
+                                  true,
+                                  false },
           NavCategoryInitializer{ ViewMode::Power,
                                   POWER_ID,
                                   L"Power",
@@ -268,7 +282,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   MyVirtualKey::None,
                                   nullptr,
                                   SUPPORTS_NEGATIVE,
-                                  true },
+                                  true,
+                                  false },
           NavCategoryInitializer{ ViewMode::Data,
                                   DATA_ID,
                                   L"Data",
@@ -278,7 +293,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   MyVirtualKey::None,
                                   nullptr,
                                   POSITIVE_ONLY,
-                                  true },
+                                  true,
+                                  false },
           NavCategoryInitializer{ ViewMode::Pressure,
                                   PRESSURE_ID,
                                   L"Pressure",
@@ -288,7 +304,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   MyVirtualKey::None,
                                   nullptr,
                                   POSITIVE_ONLY,
-                                  true },
+                                  true,
+                                  false },
           NavCategoryInitializer{ ViewMode::Angle,
                                   ANGLE_ID,
                                   L"Angle",
@@ -298,7 +315,8 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   MyVirtualKey::None,
                                   nullptr,
                                   SUPPORTS_NEGATIVE,
-                                  true } });
+                                  true,
+                                  false } });
     return res;
 }();
 
@@ -522,7 +540,8 @@ NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupIniti
                 groupMode,
                 categoryInitializer.viewMode,
                 categoryInitializer.supportsNegative,
-                categoryInitializer.isEnabled));
+                categoryInitializer.isEnabled,
+                categoryInitializer.isPreview));
         }
     }
 }
@@ -545,4 +564,16 @@ NavCategoryGroup ^ NavCategoryGroup::CreateConverterCategory()
 {
     return ref new NavCategoryGroup(
         NavCategoryGroupInitializer{ CategoryGroupType::Converter, L"ConverterModeTextCaps", L"ConverterModeText", L"ConverterModePluralText" });
+}
+
+bool NavCategory::IsViewModePreview(ViewMode mode)
+{
+    auto iter =
+        find_if(begin(s_categoryManifest), end(s_categoryManifest), [mode](const NavCategoryInitializer& initializer) { return initializer.viewMode == mode; });
+
+    if (iter != s_categoryManifest.end())
+    {
+        return iter->isPreview;
+    }
+    return false;
 }

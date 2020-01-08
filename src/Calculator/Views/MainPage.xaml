@@ -33,6 +33,13 @@
             <Setter Property="KeyTipPlacementMode" Value="Right"/>
         </Style>
 
+        <DataTemplate x:Key="NavMenuItemPreviewDataTemplate" x:DataType="x:String">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="{x:Bind}"/>
+                <controls:PreviewTagControl Margin="6,0,0,0" VerticalAlignment="Center"/>
+            </StackPanel>
+        </DataTemplate>
+
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
     </Page.Resources>
@@ -157,23 +164,28 @@
                     </muxc:NavigationViewList>
                 </StackPanel>
             </muxc:NavigationView.PaneFooter>
-            <Grid>
+            <Grid Height="{StaticResource HamburgerHeight}" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="Header"
-                           Grid.Column="0"
-                           Margin="52,6,12,0"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Top"
-                           Style="{StaticResource SubtitleTextBlockStyle}"
-                           Text="{x:Bind Model.CategoryName, Mode=OneWay}"
-                           Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+                <StackPanel Margin="52,0,0,0" Orientation="Horizontal">
+                    <TextBlock x:Name="Header"
+                               Margin="0,-3,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               Text="{x:Bind Model.CategoryName, Mode=OneWay}"
+                               Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+                    <controls:PreviewTagControl Margin="6,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Visibility="{x:Bind Model.IsModePreview, Mode=OneWay}"/>
+                </StackPanel>
                 <Button x:Name="NormalAlwaysOnTopButton"
                         x:Uid="EnterAlwaysOnTopButton"
                         Grid.Column="1"
-                        VerticalAlignment="Top"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
                         HorizontalContentAlignment="Center"
                         Style="{StaticResource SquareIconButtonStyle}"
                         Background="Transparent"
