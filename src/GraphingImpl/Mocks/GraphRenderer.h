@@ -45,7 +45,7 @@ namespace MockGraphingImpl
             float& yScreenPointOut,
             double& xValueOut,
             double& yValueOut,
-            double& rhoValeOut,
+            double& rhoValueOut,
             double& thetaValueOut,
             double& tValueOut)
         {
@@ -54,7 +54,7 @@ namespace MockGraphingImpl
             yScreenPointOut = 0;
             xValueOut = 0;
             yValueOut = 0;
-            rhoValeOut = 0;
+            rhoValueOut = 0;
             thetaValueOut = 0;
             tValueOut = 0;
             return S_OK;
