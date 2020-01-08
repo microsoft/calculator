@@ -81,7 +81,7 @@
                 </Setter>
             </Style>
             <Style x:Key="SubTitleTextBoxStyle" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontSize" Value="16"/>
                 <Setter Property="FontWeight" Value="Medium"/>
             </Style>
 
@@ -90,7 +90,7 @@
                 <Setter Property="Background" Value="{ThemeResource GraphSettingsErrorBackgroundBrush}"/>
             </Style>
             <DataTemplate x:Key="XYTextBoxHeaderTemplate" x:DataType="x:String">
-                <TextBlock Text="{x:Bind}" FontSize="14" />
+                <TextBlock FontSize="14" Text="{x:Bind}"/>
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -99,7 +99,7 @@
         <StackPanel Margin="4,0,4,4">
             <TextBlock x:Name="GraphOptionsHeading"
                        x:Uid="GraphOptionsHeading"
-                       FontSize="18"
+                       FontSize="20"
                        FontWeight="Medium"
                        AutomationProperties.HeadingLevel="Level1"/>
             <TextBlock x:Name="GridHeading"
@@ -122,8 +122,8 @@
                 <TextBox x:Name="SettingsXMin"
                          x:Uid="GraphSettingsXMin"
                          MaxWidth="160"
-                         HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.XError, ViewModel.XMinError), Mode=OneWay}"
+                         HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.XMin, Mode=TwoWay}"/>
                 <TextBox x:Name="SettingsXMax"
@@ -131,6 +131,7 @@
                          Grid.Column="2"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.XError, ViewModel.XMaxError), Mode=OneWay}"
+                         HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.XMax, Mode=TwoWay}"/>
 
@@ -139,6 +140,7 @@
                          Grid.Row="2"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.YError, ViewModel.YMinError), Mode=OneWay}"
+                         HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.YMin, Mode=TwoWay}"/>
                 <TextBox x:Name="SettingsYMax"
@@ -147,6 +149,7 @@
                          Grid.Column="2"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.YError, ViewModel.YMaxError), Mode=OneWay}"
+                         HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.YMax, Mode=TwoWay}"/>
             </Grid>
