@@ -224,7 +224,9 @@
                                                   FontFamily="{StaticResource CalculatorFontFamily}"
                                                   FontSize="14"
                                                   Glyph="&#xF770;"/>
-                                        <Grid Margin="-2,0,2,0" VerticalAlignment="Center" FlowDirection="LeftToRight">
+                                        <Grid Margin="-2,0,2,0"
+                                              VerticalAlignment="Center"
+                                              FlowDirection="LeftToRight">
                                             <FontIcon x:Name="EquationsIcon"
                                                       VerticalAlignment="Center"
                                                       FontFamily="{StaticResource CalculatorFontFamily}"
@@ -244,7 +246,7 @@
                                                 Margin="8,0"
                                                 Opacity="0"
                                                 Orientation="Horizontal">
-                                        <FontIcon Margin="0,0,20,0"
+                                        <FontIcon Margin="0,0,22,0"
                                                   VerticalAlignment="Center"
                                                   FontFamily="{StaticResource CalculatorFontFamily}"
                                                   FontSize="14"
