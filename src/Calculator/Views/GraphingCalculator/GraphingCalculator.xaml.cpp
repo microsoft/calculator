@@ -48,12 +48,14 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::UI::Popups;
+using namespace Windows::UI::ViewManagement;
 
 constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, IsSmallState);
 
 GraphingCalculator::GraphingCalculator()
+    : m_accessibilitySettings{ ref new AccessibilitySettings() }
 {
     InitializeComponent();
 
@@ -83,12 +85,12 @@ GraphingCalculator::GraphingCalculator()
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomInButton->KeyboardAccelerators->Append(virtualKey);
 
-    // add shadow to the trace pointer when not in high contrast mode
-    auto accessibilitySettings = ref new Windows::UI::ViewManagement::AccessibilitySettings();
-    if (!accessibilitySettings->HighContrast)
-    {
-        AddShadow();
-    }
+    // add shadow to the trace pointer
+    AddTracePointerShadow();
+    // hide the shadow in high contrast mode
+    CursorShadow->Visibility = m_accessibilitySettings->HighContrast ? ::Visibility::Collapsed : ::Visibility::Visible;
+    m_accessibilitySettings->HighContrastChanged +=
+        ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &GraphingCalculator::OnHighContrastChanged);
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
@@ -543,7 +545,7 @@ void GraphingCalculator::DisplayGraphSettings()
     flyoutGraphSettings->ShowAt(GraphSettingsButton);
 }
 
-void CalculatorApp::GraphingCalculator::AddShadow()
+void CalculatorApp::GraphingCalculator::AddTracePointerShadow()
 {
     auto compositor = ::Hosting::ElementCompositionPreview::GetElementVisual(CursorPath)->Compositor;
     auto dropShadow = compositor->CreateDropShadow();
@@ -569,4 +571,9 @@ void GraphingCalculator::LeftGrid_SizeChanged(Object ^ /*sender*/, SizeChangedEv
 {
     // Initialize the pointer to the correct location to match initial value in GraphControl\DirectX\RenderMain.cpp
     TracePointer->Margin = Thickness(e->NewSize.Width/2 + 40, e->NewSize.Height/2 - 40, 0, 0);
+}
+
+void GraphingCalculator::OnHighContrastChanged(AccessibilitySettings ^ sender, Object ^ /*args*/)
+{
+    CursorShadow->Visibility = sender->HighContrast ? ::Visibility::Collapsed : ::Visibility::Visible;
 }

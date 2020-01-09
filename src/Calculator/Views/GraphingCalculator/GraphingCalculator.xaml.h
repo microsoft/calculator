@@ -74,7 +74,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void GraphSettingsButton_Click(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void SwitchModeToggleButton_Toggled(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void DisplayGraphSettings();
-        void AddShadow();
+        void AddTracePointerShadow();
 
     private:
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
@@ -83,9 +83,11 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         Windows::Foundation::EventRegistrationToken m_activeTracingKeyUpToken;
         Windows::Foundation::EventRegistrationToken m_ActiveTracingPointerCaptureLost;
         CalculatorApp::ViewModel::GraphingCalculatorViewModel ^ m_viewModel;
+        Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         void
             OnSettingsFlyout_Closing(Windows::UI::Xaml::Controls::Primitives::FlyoutBase ^ sender, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs ^ args);
         void LeftGrid_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
+        void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
     };
 
 }
