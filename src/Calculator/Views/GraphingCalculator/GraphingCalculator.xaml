@@ -567,6 +567,9 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
                                   FontSize="14"
                                   Glyph="&#xE895;"/>
+                        <Button.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="Number0" Modifiers="Control"/>
+                        </Button.KeyboardAccelerators>
                     </Button>
                 </StackPanel>
             </Border>
