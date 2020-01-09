@@ -762,7 +762,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <mux:ItemsRepeaterScrollHost>
-        <ScrollViewer>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <mux:ItemsRepeater x:Name="EquationInputList"
                                    ItemsSource="{x:Bind Equations}"
