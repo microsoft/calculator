@@ -92,7 +92,7 @@ bool IsGraphingModeEnabled()
             HKEY_CURRENT_USER,
             L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Calculator",
             L"AllowGraphingCalculator",
-            RRF_RT_REG_DWORD | RRF_RT_REG_BINARY,
+            RRF_RT_DWORD, // RRF_RT_DWORD == RRF_RT_REG_DWORD | RRF_RT_REG_BINARY
             nullptr,
             reinterpret_cast<LPBYTE>(&allowGraphingCalculator),
             &bufferSize)
