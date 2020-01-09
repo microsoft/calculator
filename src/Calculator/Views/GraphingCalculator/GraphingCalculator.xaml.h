@@ -78,6 +78,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void GraphSettingsButton_Click(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
         void DisplayGraphSettings();
+        void AddShadow();
 
     private:
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;

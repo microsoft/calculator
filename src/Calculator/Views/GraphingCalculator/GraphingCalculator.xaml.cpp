@@ -82,6 +82,13 @@ GraphingCalculator::GraphingCalculator()
     virtualKey->Key = (VirtualKey)187; // OemAdd key
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomInButton->KeyboardAccelerators->Append(virtualKey);
+
+    // add shadow to the trace pointer when not in high contrast mode
+    auto accessibilitySettings = ref new Windows::UI::ViewManagement::AccessibilitySettings();
+    if (!accessibilitySettings->HighContrast)
+    {
+        AddShadow();
+    }
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
@@ -534,6 +541,21 @@ void GraphingCalculator::DisplayGraphSettings()
     flyoutGraphSettings->Content = graphSettings;
     flyoutGraphSettings->Closing += ref new TypedEventHandler<FlyoutBase ^, FlyoutBaseClosingEventArgs ^>(this, &GraphingCalculator::OnSettingsFlyout_Closing);
     flyoutGraphSettings->ShowAt(GraphSettingsButton);
+}
+
+void CalculatorApp::GraphingCalculator::AddShadow()
+{
+    auto compositor = ::Hosting::ElementCompositionPreview::GetElementVisual(CursorPath)->Compositor;
+    auto dropShadow = compositor->CreateDropShadow();
+    dropShadow->BlurRadius = 6;
+    dropShadow->Opacity = 0.33f;
+    dropShadow->Offset = ::Numerics::float3(2, 2, 0); 
+    dropShadow->Mask = CursorPath->GetAlphaMask();
+
+    auto shadowSpriteVisual = compositor->CreateSpriteVisual();
+    shadowSpriteVisual->Size = ::Numerics::float2(static_cast<float>(CursorPath->ActualWidth), static_cast<float>(CursorPath->ActualHeight));
+    shadowSpriteVisual->Shadow = dropShadow;
+    ::Hosting::ElementCompositionPreview::SetElementChildVisual(CursorShadow, shadowSpriteVisual);
 }
 
 void GraphingCalculator::OnSettingsFlyout_Closing(FlyoutBase ^ sender, FlyoutBaseClosingEventArgs ^ args)
