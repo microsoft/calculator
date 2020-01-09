@@ -76,7 +76,6 @@ void EquationInputArea::AddNewEquation()
         return;
     }
 
-    
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
 
     int colorIndex;
@@ -375,4 +374,15 @@ double EquationInputArea::validateDouble(String ^ value, double defaultValue)
 ::Visibility EquationInputArea::ManageEditVariablesButtonVisibility(unsigned int numberOfVariables)
 {
     return numberOfVariables == 0 ? ::Visibility::Collapsed : ::Visibility::Visible;
+}
+
+String ^ EquationInputArea::GetChevronIcon(bool isCollapsed)
+{
+    return isCollapsed ? L"\uE70E" : L"\uE70D";
+}
+
+void EquationInputArea::VariableAreaTapped(Object ^ sender, TappedRoutedEventArgs ^ e)
+{
+    auto variableViewModel = static_cast<VariableViewModel ^>(static_cast<Grid ^>(sender)->DataContext);
+    variableViewModel->SliderSettingsVisible = !variableViewModel->SliderSettingsVisible;
 }

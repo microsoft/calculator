@@ -17,19 +17,18 @@
             <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
 
             <DataTemplate x:Key="VariableDataTemplate" x:DataType="vm:VariableViewModel">
-                <Grid>
+                <Grid DataContext="{x:Bind}" Tapped="VariableAreaTapped">
                     <Grid.Resources>
                         <ResourceDictionary>
 
                             <Style x:Key="VariableTextBoxStyle" TargetType="TextBox">
-                                <Setter Property="Margin" Value="10,0,0,0"/>
+                                <Setter Property="Margin" Value="1,0,0,0"/>
                                 <Setter Property="Padding" Value="2,6,2,2"/>
                                 <Setter Property="TextAlignment" Value="Center"/>
                                 <Setter Property="Background" Value="Transparent"/>
                                 <Setter Property="BorderThickness" Value="0,0,0,1"/>
                                 <Setter Property="FontSize" Value="14"/>
                                 <Setter Property="InputScope" Value="Number"/>
-                                <Setter Property="MaxWidth" Value="46"/>
                                 <Setter Property="MinWidth" Value="30"/>
                             </Style>
 
@@ -54,7 +53,7 @@
                                     <SolidColorBrush x:Key="TextControlForegroundFocused" Color="Black"/>
                                     <SolidColorBrush x:Key="SliderLegendBrush" Color="#B2000000"/>
                                     <Style x:Key="VariableContainerStyle" TargetType="Border">
-                                        <Setter Property="Background" Value="#34ffffff"/>
+                                        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltMediumLowBrush}"/>
                                     </Style>
                                     <Style x:Key="ThemedVariableTextBoxStyle"
                                            BasedOn="{StaticResource VariableTextBoxStyle}"
@@ -74,87 +73,70 @@
                                         <Setter Property="BorderBrush" Value="{StaticResource SystemColorWindowTextColor}"/>
                                     </Style>
                                     <Style x:Key="ThemedVariableTextBoxStyle" TargetType="TextBox">
-                                        <Setter Property="InputScope" Value="Number"/>
+                                        <Setter Property="Margin" Value="1,0,0,0"/>
+                                        <Setter Property="Padding" Value="2,6,2,2"/>
                                         <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                        <Setter Property="FontSize" Value="14"/>
                                         <Setter Property="InputScope" Value="Number"/>
-                                        <Setter Property="MaxWidth" Value="80"/>
-                                        <Setter Property="MinWidth" Value="40"/>
+                                        <Setter Property="MinWidth" Value="30"/>
                                     </Style>
                                 </ResourceDictionary>
                             </ResourceDictionary.ThemeDictionaries>
                         </ResourceDictionary>
                     </Grid.Resources>
                     <Border Margin="0,3" Style="{ThemeResource VariableContainerStyle}">
-                        <StackPanel Padding="12,0" DataContext="{x:Bind}">
+                        <StackPanel Padding="12,0,12,6">
                             <Grid HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock MinWidth="10"
-                                           Margin="0,4,0,0"
+                                <TextBlock MinWidth="16"
+                                           Margin="8,8,0,0"
                                            VerticalAlignment="Center"
-                                           FontWeight="SemiBold"
+                                           FontSize="16"
+                                           FontStyle="Italic"
                                            Text="{x:Bind Name}"/>
+
+                                <TextBlock Grid.Column="1"
+                                           MinWidth="16"
+                                           Margin="6,8,0,0"
+                                           VerticalAlignment="Center"
+                                           FontSize="16"
+                                           FontStyle="Italic"
+                                           Text="="/>
+
                                 <TextBox x:Name="ValueTextBox"
-                                         Grid.Column="1"
+                                         Grid.Column="2"
+                                         Margin="6,0,0,0"
+                                         Padding="0,10,0,0"
                                          HorizontalAlignment="Left"
                                          VerticalAlignment="Center"
                                          Style="{StaticResource ThemedVariableTextBoxStyle}"
+                                         FontStyle="Italic"
                                          GotFocus="TextBoxGotFocus"
                                          KeyDown="TextBoxKeyDown"
                                          LosingFocus="TextBoxLosingFocus"
-                                         Text="{x:Bind Value, Mode=OneWay}"/>
-                                <ToggleButton x:Uid="sliderOptionsButton"
-                                              Grid.Column="2"
-                                              Margin="0,0,-8,0"
-                                              HorizontalAlignment="Right"
-                                              VerticalAlignment="Center"
-                                              Background="Transparent"
-                                              FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                              Content="&#xE713;"
-                                              IsChecked="{x:Bind SliderSettingsVisible, Mode=TwoWay}">
-                                    <ToggleButton.Resources>
-                                        <SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="Transparent"/>
-                                        <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="Transparent"/>
-                                        <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPointerOver" Color="Transparent"/>
-                                        <SolidColorBrush x:Key="ToggleButtonBorderBrushCheckedPointerOver" Color="Transparent"/>
-                                        <SolidColorBrush x:Key="ToggleButtonBackgroundPointerOver" Color="Transparent"/>
-                                        <SolidColorBrush x:Key="ToggleButtonBorderBrushPointerOver" Color="Transparent"/>
-                                        <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="Transparent"/>
-                                        <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{ThemeResource SystemAccentColor}"/>
-                                        <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{ThemeResource SystemAccentColor}"/>
-                                        <SolidColorBrush x:Key="ToggleButtonForegroundChecked" Color="{ThemeResource SystemAccentColor}"/>
-                                        <SolidColorBrush x:Key="ToggleButtonForegroundCheckedPressed" Color="{ThemeResource SystemAccentColor}"/>
-                                        <SolidColorBrush x:Key="ToggleButtonForegroundCheckedPointerOver" Color="{ThemeResource SystemAccentColor}"/>
+                                         Text="{x:Bind Value, Mode=OneWay}">
+                                    <TextBox.Resources>
                                         <x:Double x:Key="TextControlThemeMinWidth">32</x:Double>
-                                    </ToggleButton.Resources>
-                                </ToggleButton>
+                                    </TextBox.Resources>
+                                </TextBox>
                             </Grid>
-                            <Grid Visibility="{x:Bind SliderSettingsVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock VerticalAlignment="Center"
-                                           Foreground="{ThemeResource SliderLegendBrush}"
-                                           Text="{x:Bind Min, Mode=OneWay}"/>
-                                <Slider Grid.Column="1"
-                                        Margin="8,0"
-                                        VerticalAlignment="Center"
-                                        Maximum="{x:Bind Max, Mode=TwoWay}"
-                                        Minimum="{x:Bind Min, Mode=TwoWay}"
-                                        StepFrequency="{x:Bind Step, Mode=TwoWay}"
-                                        Value="{x:Bind Value, Mode=TwoWay}"/>
-                                <TextBlock Grid.Column="2"
-                                           VerticalAlignment="Center"
-                                           Foreground="{ThemeResource SliderLegendBrush}"
-                                           Text="{x:Bind Max, Mode=OneWay}"/>
-                            </Grid>
+
+                            <Slider Grid.Column="1"
+                                    Margin="8,0,8,-6"
+                                    VerticalAlignment="Center"
+                                    Maximum="{x:Bind Max, Mode=TwoWay}"
+                                    Minimum="{x:Bind Min, Mode=TwoWay}"
+                                    StepFrequency="{x:Bind Step, Mode=TwoWay}"
+                                    Value="{x:Bind Value, Mode=TwoWay}"/>
+
                             <Grid Grid.Row="1"
-                                  Padding="0,6,0,12"
+                                  Padding="8,0,8,8"
                                   HorizontalAlignment="Stretch"
                                   Visibility="{x:Bind SliderSettingsVisible, Mode=OneWay}">
                                 <Grid.ColumnDefinitions>
@@ -168,30 +150,36 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock x:Uid="MinTextBlock"
-                                               Margin="0,4,0,0"
-                                               VerticalAlignment="Center"/>
+                                               Margin="0,12,4,0"
+                                               VerticalAlignment="Center"
+                                               FontSize="11"/>
                                     <TextBox x:Name="MinTextBox"
                                              Grid.Column="1"
+                                             MaxWidth="18"
+                                             Padding="2,16,2,2"
                                              Style="{StaticResource ThemedVariableTextBoxStyle}"
+                                             FontSize="11"
                                              GotFocus="TextBoxGotFocus"
                                              KeyDown="TextBoxKeyDown"
                                              LosingFocus="TextBoxLosingFocus"
                                              Text="{x:Bind Min, Mode=OneWay}"/>
                                 </Grid>
-                                <Grid Grid.Column="1"
-                                      Margin="4,0"
-                                      HorizontalAlignment="Center">
+                                <Grid Grid.Column="1" HorizontalAlignment="Center">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock x:Uid="StepTextBlock"
-                                               Margin="0,4,0,0"
+                                               Margin="0,12,4,0"
                                                HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"/>
+                                               VerticalAlignment="Center"
+                                               FontSize="11"/>
                                     <TextBox x:Name="StepTextBox"
                                              Grid.Column="1"
+                                             MaxWidth="18"
+                                             Padding="2,16,2,2"
                                              Style="{StaticResource ThemedVariableTextBoxStyle}"
+                                             FontSize="11"
                                              GotFocus="TextBoxGotFocus"
                                              KeyDown="TextBoxKeyDown"
                                              LosingFocus="TextBoxLosingFocus"
@@ -203,17 +191,26 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock x:Uid="MaxTextBlock"
-                                               Margin="0,4,0,0"
-                                               VerticalAlignment="Center"/>
+                                               Margin="0,12,4,0"
+                                               VerticalAlignment="Center"
+                                               FontSize="11"/>
                                     <TextBox x:Name="MaxTextBox"
                                              Grid.Column="1"
+                                             MaxWidth="18"
+                                             Padding="2,16,2,2"
                                              Style="{StaticResource ThemedVariableTextBoxStyle}"
+                                             FontSize="11"
                                              GotFocus="TextBoxGotFocus"
                                              KeyDown="TextBoxKeyDown"
                                              LosingFocus="TextBoxLosingFocus"
                                              Text="{x:Bind Max, Mode=OneWay}"/>
                                 </Grid>
                             </Grid>
+                            <FontIcon Margin="0,6,0,0"
+                                      VerticalAlignment="Center"
+                                      FontFamily="{StaticResource CalculatorFontFamily}"
+                                      FontSize="9"
+                                      Glyph="{x:Bind local:EquationInputArea.GetChevronIcon(SliderSettingsVisible), Mode=OneWay}"/>
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -797,11 +794,10 @@
                         </DataTemplate>
                     </mux:ItemsRepeater.ItemTemplate>
                 </mux:ItemsRepeater>
-
-                <StackPanel Margin="12" Visibility="{x:Bind local:EquationInputArea.ManageEditVariablesButtonVisibility(Variables.Size), Mode=OneWay}">
-                    <TextBlock x:Uid="VaiablesHeader"
-                               Margin="0,6"
-                               FontWeight="SemiBold"/>
+                <StackPanel Visibility="{x:Bind local:EquationInputArea.ManageEditVariablesButtonVisibility(Variables.Size), Mode=OneWay}">
+                    <Rectangle Height="1"
+                               Margin="12"
+                               Fill="#33000000"/>
                     <mux:ItemsRepeater x:Name="VariableListView"
                                        ItemTemplate="{StaticResource VariableDataTemplate}"
                                        ItemsSource="{x:Bind Variables, Mode=OneWay}"
