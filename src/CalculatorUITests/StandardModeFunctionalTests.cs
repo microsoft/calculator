@@ -225,10 +225,10 @@ namespace CalculatorUITests
             page.CalculatorApp.Header.SendKeys(Keys.Alt + "2" + Keys.Alt);
             Assert.AreEqual("Scientific", page.CalculatorApp.GetCalculatorHeaderText()); //verifies Scientific navigation hotkey
             page.CalculatorApp.EnsureCalculatorHasFocus();
-            page.CalculatorApp.Header.SendKeys(Keys.Alt + "3" + Keys.Alt);
+            page.CalculatorApp.Header.SendKeys(Keys.Alt + "4" + Keys.Alt);
             Assert.AreEqual("Programmer", page.CalculatorApp.GetCalculatorHeaderText()); //verifies Programmer navigation hotkey
             page.CalculatorApp.EnsureCalculatorHasFocus();
-            page.CalculatorApp.Header.SendKeys(Keys.Alt + "4" + Keys.Alt);
+            page.CalculatorApp.Header.SendKeys(Keys.Alt + "5" + Keys.Alt);
             Assert.AreEqual("Date Calculation", page.CalculatorApp.GetCalculatorHeaderText()); //verifies Date Calculation navigation hotkey
             page.CalculatorApp.EnsureCalculatorHasFocus();
             page.CalculatorApp.Header.SendKeys(Keys.Alt + "1" + Keys.Alt);
@@ -467,17 +467,6 @@ namespace CalculatorUITests
 
         }
 
-        // Issue #817: Prefixed multiple zeros
-        [TestMethod]
-        public void Operator_Delete_Prefix_Zeros()
-        {
-            page.StandardOperators.NumberPad.Input(0.1); // To enter decimal point
-            page.StandardOperators.BackSpaceButton.Click();
-            page.StandardOperators.BackSpaceButton.Click();
-            page.StandardOperators.NumberPad.Input(0);
-            Assert.AreEqual("0", page.GetCalculatorResultText());
-        }
-
         [TestMethod]
         [Priority(2)]
         public void MixedInput_Operators_Square()
@@ -619,6 +608,21 @@ namespace CalculatorUITests
             page.CalculatorApp.Header.SendKeys("9");
             page.StandardOperators.ClearButton.Click();
             page.CalculatorResults.CheckIfResultsExpressionIsClear();
+        }
+
+        // Issue #817: Prefixed multiple zeros
+        [TestMethod]
+        [Priority(2)]
+        public void MixedInput_Operators_DeletingDecimalDoesNotPrefixZeros()
+        {
+            page.StandardOperators.NumberPad.DecimalButton.Click(); // To enter decimal point
+            page.CalculatorApp.Header.SendKeys("1");
+            page.StandardOperators.BackSpaceButton.Click();
+            page.StandardOperators.BackSpaceButton.Click();
+            page.StandardOperators.NumberPad.Input(0);
+            page.StandardOperators.NumberPad.Num0Button.Click();
+            page.StandardOperators.NumberPad.Input(0);
+            Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText());
         }
 
         #endregion
@@ -918,13 +922,13 @@ namespace CalculatorUITests
             Assert.AreEqual("False", page.StandardAoTCalculatorPage.GetAoTPresence());
 
             page.CalculatorApp.EnsureCalculatorHasFocus();
-            page.CalculatorApp.Header.SendKeys(Keys.Alt + "3" + Keys.Alt);
+            page.CalculatorApp.Header.SendKeys(Keys.Alt + "4" + Keys.Alt);
             Assert.AreEqual("Programmer", page.CalculatorApp.GetCalculatorHeaderText());
             page.StandardAoTCalculatorPage.GetAoTPresence();
             Assert.AreEqual("False", page.StandardAoTCalculatorPage.GetAoTPresence());
 
             page.CalculatorApp.EnsureCalculatorHasFocus();
-            page.CalculatorApp.Header.SendKeys(Keys.Alt + "4" + Keys.Alt);
+            page.CalculatorApp.Header.SendKeys(Keys.Alt + "5" + Keys.Alt);
             Assert.AreEqual("Date Calculation", page.CalculatorApp.GetCalculatorHeaderText());
             page.StandardAoTCalculatorPage.GetAoTPresence();
             Assert.AreEqual("False", page.StandardAoTCalculatorPage.GetAoTPresence());
