@@ -50,8 +50,6 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void OnZoomOutCommand(Object ^ parameter);
         void OnZoomResetCommand(Object ^ parameter);
 
-        double validateDouble(Platform::String ^ value, double defaultValue);
-
         void OnShareClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
         void OnShowTracePopupChanged(bool newValue);
@@ -62,13 +60,11 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
             Windows::ApplicationModel::DataTransfer::DataTransferManager ^ sender,
             Windows::ApplicationModel::DataTransfer::DataRequestedEventArgs ^ e);
 
-        void TextBoxGotFocus(Windows::UI::Xaml::Controls::TextBox ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void GraphingControl_LostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void GraphingControl_LosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
         void GraphingControl_VariablesUpdated(Platform::Object ^ sender, Object ^ args);
         void OnEquationKeyGraphFeaturesRequested(Platform::Object ^ sender, CalculatorApp::ViewModel::EquationViewModel ^ e);
         void OnKeyGraphFeaturesClosed(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void SwitchModeToggleButton_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void TraceValuePopup_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
         void PositionGraphPopup();
         void ActiveTracing_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
@@ -76,7 +72,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void ActiveTracing_KeyUp(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args);
         void ActiveTracing_PointerCaptureLost(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
         void GraphSettingsButton_Click(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-
+        void SwitchModeToggleButton_Toggled(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void DisplayGraphSettings();
         void AddShadow();
 

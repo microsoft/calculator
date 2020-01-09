@@ -185,10 +185,19 @@ namespace GraphControl::DX
 
                         int formulaId = -1;
                         float nearestPointLocationX, nearestPointLocationY;
-                        float nearestPointValueX, nearestPointValueY;
+                        double nearestPointValueX, nearestPointValueY, rhoValueOut, thetaValueOut, tValueOut;
 
                         if (renderer->GetClosePointData(
-                                trackPoint.X, trackPoint.Y, formulaId, nearestPointLocationX, nearestPointLocationY, nearestPointValueX, nearestPointValueY)
+                                trackPoint.X,
+                                trackPoint.Y,
+                                formulaId,
+                                nearestPointLocationX,
+                                nearestPointLocationY,
+                                nearestPointValueX,
+                                nearestPointValueY,
+                                rhoValueOut,
+                                thetaValueOut,
+                                tValueOut)
                             == S_OK)
                         {
                             if (!isnan(nearestPointLocationX) && !isnan(nearestPointLocationY))
