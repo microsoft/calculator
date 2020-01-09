@@ -5,6 +5,7 @@ using CalculatorUITestFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Drawing;
 
@@ -638,31 +639,29 @@ namespace CalculatorUITests
         [Priority(2)]
         public void StandardMemory_Panel()
         {
-
-            //Verify hover buttons MemMinusItem, MemPlusItem, and ClearMemoryItemButton, and verify the clear memory button in the Memory panel
+            //Verify context menu MC, M+, M-, and verify the clear memory button in the Memory panel
             page.StandardOperators.NumberPad.Num3Button.Click();
             page.MemoryPanel.MemButton.Click();
             page.MemoryPanel.MemButton.Click();
             page.MemoryPanel.OpenMemoryPanel();
+
             Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
-            moveToListView.MoveToElement(page.MemoryPanel.ListViewItem);
+            var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
+            moveToListView.MoveToElement(memoryItems[0]);
+            moveToListView.ContextClick(memoryItems[0]);
             moveToListView.Perform();
-            Actions clickSubtractFromMemoryItem = new Actions(WinAppDriver.Instance.CalculatorSession);
-            clickSubtractFromMemoryItem.MoveByOffset(125, 10).Click();
-            clickSubtractFromMemoryItem.Perform();
-            var memoryItems0 = page.MemoryPanel.GetAllMemoryListViewItems();
-            Assert.IsTrue(memoryItems0[0].Text.Equals("0", StringComparison.InvariantCultureIgnoreCase));
+            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
+            Assert.IsTrue(memoryItems[0].Text.Equals("0", StringComparison.InvariantCultureIgnoreCase));
+
             moveToListView.Perform();
-            Actions clickAddToMemoryItem = new Actions(WinAppDriver.Instance.CalculatorSession);
-            clickAddToMemoryItem.MoveByOffset(100, 10).Click();
-            clickAddToMemoryItem.Perform();
-            Assert.IsTrue(memoryItems0[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
+            page.CalculatorApp.Window.SendKeys(Keys.ArrowUp + Keys.ArrowUp + Keys.Enter);
+            Assert.IsTrue(memoryItems[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
+
             moveToListView.Perform();
-            Actions clickClearMemoryItem = new Actions(WinAppDriver.Instance.CalculatorSession);
-            clickClearMemoryItem.MoveByOffset(50, 10).Click();
-            clickClearMemoryItem.Perform();
+            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
             var memoryItems2 = page.MemoryPanel.GetAllMemoryListViewItems();
             Assert.IsTrue(memoryItems2[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
+
             page.MemoryPanel.ClearMemory.Click();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
         }
@@ -671,34 +670,35 @@ namespace CalculatorUITests
         [Priority(2)]
         public void StandardMemory_Flyout()
         {
-            //Verify hover buttons MemMinusItem, MemPlusItem, and ClearMemoryItemButton, and verify the clear memory button in the dropdown Memory flyout
+            //Verify context menu MC, M+, M-, and ClearMemoryItemButton, and verify the clear memory button in the Memory flyout
             page.StandardOperators.NumberPad.Num3Button.Click();
             page.MemoryPanel.MemButton.Click();
             page.MemoryPanel.MemButton.Click();
+
             page.MemoryPanel.OpenMemoryFlyout();
-            Actions moveToListView2 = new Actions(WinAppDriver.Instance.CalculatorSession);
-            moveToListView2.MoveToElement(page.MemoryPanel.ListViewItem);
-            moveToListView2.Perform();
-            Actions clickSubtractFromMemoryItem2 = new Actions(WinAppDriver.Instance.CalculatorSession);
-            clickSubtractFromMemoryItem2.MoveByOffset(190, 10).Click();
-            clickSubtractFromMemoryItem2.Perform();
             var memoryItems = page.MemoryPanel.GetAllMemoryFlyoutListViewItems();
+            Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
+            moveToListView.MoveToElement(memoryItems[0]);
+            moveToListView.ContextClick(memoryItems[0]);
+            moveToListView.Perform();
+            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
             Assert.IsTrue(memoryItems[0].Text.Equals("0", StringComparison.InvariantCultureIgnoreCase));
+
             page.MemoryPanel.OpenMemoryFlyout();
-            moveToListView2.Perform();
-            Actions clickAddToMemoryItem2 = new Actions(WinAppDriver.Instance.CalculatorSession);
-            clickAddToMemoryItem2.MoveByOffset(150, 10).Click();
-            clickAddToMemoryItem2.Perform();
+            moveToListView.Perform();
+            page.CalculatorApp.Window.SendKeys(Keys.ArrowUp + Keys.ArrowUp + Keys.Enter);
             Assert.IsTrue(memoryItems[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
+
             page.MemoryPanel.OpenMemoryFlyout();
-            moveToListView2.Perform();
-            Actions clickClearMemoryItem2 = new Actions(WinAppDriver.Instance.CalculatorSession);
-            clickClearMemoryItem2.MoveByOffset(115, 10).Click();
-            clickClearMemoryItem2.Perform();
-            Assert.IsTrue(memoryItems[1].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
+            moveToListView.Perform();
+            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
+            var memoryItems2 = page.MemoryPanel.GetAllMemoryListViewItems();
+            Assert.IsTrue(memoryItems2[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
+
             page.MemoryPanel.OpenMemoryFlyout();
             page.MemoryPanel.ClearMemory.Click();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+
             page.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
         }

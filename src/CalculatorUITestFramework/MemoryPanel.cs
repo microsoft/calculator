@@ -33,7 +33,6 @@ namespace CalculatorUITestFramework
         public WindowsElement ListViewItem => this.session.FindElementByClassName("ListViewItem");
         private WindowsElement MemoryFlyout => this.session.TryFindElementByAccessibilityId("MemoryFlyout");
 
-
         /// <summary>
         /// Opens the Memory Pane by clicking the Memory pivot label.
         /// </summary>
