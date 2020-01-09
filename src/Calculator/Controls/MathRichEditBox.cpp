@@ -58,15 +58,6 @@ MathRichEditBox::MathRichEditBox()
                                 ->Status;
     }
 
-    else if (packageName == L"Microsoft.WindowsCalculator.Graphing")
-    {
-        m_lafResultStatus = LimitedAccessFeatures::TryUnlockFeature(
-                                "com.microsoft.windows.richeditmath",
-                                "H6wflFFz3gkOsAHtG/D9Tg==", // Microsoft.WindowsCalculator.Graphing
-                                "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.")
-                                ->Status;
-    }
-
     // TODO when Windows 10 version 2004 SDK is adopted, replace with:
     // TextDocument->SetMathMode(Windows::UI::Text::RichEditMathMode::MathOnly);
     Microsoft::WRL::ComPtr<Windows_2004_Prerelease::ITextDocument4> textDocument4;
