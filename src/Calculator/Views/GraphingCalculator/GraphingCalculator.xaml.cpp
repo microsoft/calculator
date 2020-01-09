@@ -194,7 +194,8 @@ void GraphingCalculator::OnTracePointChanged(Point newPoint)
 void CalculatorApp::GraphingCalculator::OnPointerPointChanged(Windows::Foundation::Point newPoint)
 {
     // Move the pointer glyph to where it is supposed to be.
-    TracePointer->Margin = Thickness(newPoint.X, newPoint.Y, 0, 0);
+    Canvas::SetLeft(TracePointer, newPoint.X);
+    Canvas::SetTop(TracePointer, newPoint.Y);
 }
 
 GraphingCalculatorViewModel ^ GraphingCalculator::ViewModel::get()
@@ -570,7 +571,8 @@ void GraphingCalculator::OnSettingsFlyout_Closing(FlyoutBase ^ sender, FlyoutBas
 void GraphingCalculator::LeftGrid_SizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ e)
 {
     // Initialize the pointer to the correct location to match initial value in GraphControl\DirectX\RenderMain.cpp
-    TracePointer->Margin = Thickness(e->NewSize.Width/2 + 40, e->NewSize.Height/2 - 40, 0, 0);
+    Canvas::SetLeft(TracePointer, e->NewSize.Width / 2 + 40);
+    Canvas::SetTop(TracePointer, e->NewSize.Height / 2 - 40);
 }
 
 void GraphingCalculator::OnHighContrastChanged(AccessibilitySettings ^ sender, Object ^ /*args*/)

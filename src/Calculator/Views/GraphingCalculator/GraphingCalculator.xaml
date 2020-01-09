@@ -508,20 +508,19 @@
                     </Button>
                 </StackPanel>
             </Border>
-            <Grid x:Name="TracePointer"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Top"
-                  Visibility="Collapsed">
-                <Border x:Name="CursorShadow"/>
-                <Path x:Name="CursorPath"
-                      Width="18"
-                      Height="18"
-                      Fill="{ThemeResource SystemColorHighlightTextColor}"
-                      Stroke="{ThemeResource SystemColorWindowTextColor}"
-                      StrokeThickness="1"
-                      Data="M0 0 l1371 1371 H538 l-538 538 Z"
-                      Stretch="Uniform"/>
-            </Grid>
+            <Canvas>
+                <Grid x:Name="TracePointer" Visibility="Collapsed">
+                    <Border x:Name="CursorShadow"/>
+                    <Path x:Name="CursorPath"
+                          Width="18"
+                          Height="18"
+                          Fill="{ThemeResource SystemColorHighlightTextColor}"
+                          Stroke="{ThemeResource SystemColorWindowTextColor}"
+                          StrokeThickness="1"
+                          Data="M0 0 l1371 1371 H538 l-538 538 Z"
+                          Stretch="Uniform"/>
+                </Grid>
+            </Canvas>
             <Border MinWidth="36"
                     Margin="0,0,12,12"
                     HorizontalAlignment="Right"
