@@ -29,7 +29,7 @@ namespace CalculatorUITests
             page.NavigateToScientificCalculator();
 
             // Ensure that calculator window is large enough to display the memory/history panel; a good size for most tests
-            page.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
+            page.MemoryPanel.ResizeWindowToDisplayMemoryLabel();
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace CalculatorUITests
         [Priority(0)]
         public void SmokeTest_Cube()
         {
-            page.ScientificOperators.NumberPad.Input(3);
+            page.StandardOperators.NumberPad.Input(3);
             page.ScientificOperators.XPower3Button.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("27", page.CalculatorResults.GetCalculatorResultText());
@@ -78,7 +78,7 @@ namespace CalculatorUITests
         [Priority(0)]
         public void SmokeTest_Sin()
         {
-            page.ScientificOperators.NumberPad.Input(90);
+            page.StandardOperators.NumberPad.Input(90);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.SinButton.Click();
             page.StandardOperators.EqualButton.Click();
@@ -89,7 +89,7 @@ namespace CalculatorUITests
         [Priority(0)]
         public void SmokeTest_Tanh()
         {
-            page.ScientificOperators.NumberPad.Input(90);
+            page.StandardOperators.NumberPad.Input(90);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.TanhButton.Click();
@@ -101,7 +101,7 @@ namespace CalculatorUITests
         [Priority(0)]
         public void SmokeTest_InvCos()
         {
-            page.ScientificOperators.NumberPad.Input(1);
+            page.StandardOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.InvCosButton.Click();
@@ -113,7 +113,7 @@ namespace CalculatorUITests
         [Priority(0)]
         public void SmokeTest_Floor()
         {
-            page.ScientificOperators.NumberPad.Input(5.9);
+            page.StandardOperators.NumberPad.Input(5.9);
             page.ScientificOperators.FuncButton.Click();
             page.ScientificOperators.FloorButton.Click();
             page.StandardOperators.EqualButton.Click();
@@ -124,12 +124,12 @@ namespace CalculatorUITests
         [Priority(0)]
         public void SmokeTest_Parentheses()
         {
-            page.ScientificOperators.NumberPad.Input(3);
+            page.StandardOperators.NumberPad.Input(3);
             page.StandardOperators.MultiplyButton.Click();
             page.ScientificOperators.ParenthesisLeftButton.Click();
-            page.ScientificOperators.NumberPad.Input(2);
+            page.StandardOperators.NumberPad.Input(2);
             page.StandardOperators.PlusButton.Click();
-            page.ScientificOperators.NumberPad.Input(2);
+            page.StandardOperators.NumberPad.Input(2);
             page.ScientificOperators.ParenthesisRightButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("12", page.CalculatorResults.GetCalculatorResultText());
@@ -154,7 +154,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Gradians);
 
-            page.ScientificOperators.NumberPad.Input(100);
+            page.StandardOperators.NumberPad.Input(100);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.SinButton.Click();
             page.StandardOperators.EqualButton.Click();
@@ -176,9 +176,9 @@ namespace CalculatorUITests
         [Priority(1)]
         public void Operator_XPowerY()
         {
-            page.ScientificOperators.NumberPad.Input(3);
+            page.StandardOperators.NumberPad.Input(3);
             page.ScientificOperators.XPowerYButton.Click();
-            page.ScientificOperators.NumberPad.Input(5);
+            page.StandardOperators.NumberPad.Input(5);
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("243", page.CalculatorResults.GetCalculatorResultText());
         }
@@ -187,7 +187,7 @@ namespace CalculatorUITests
         [Priority(1)]
         public void Operator_PowerOf10Button()
         {
-            page.ScientificOperators.NumberPad.Input(5);
+            page.StandardOperators.NumberPad.Input(5);
             page.ScientificOperators.PowerOf10Button.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("100,000", page.CalculatorResults.GetCalculatorResultText());
@@ -197,7 +197,7 @@ namespace CalculatorUITests
         [Priority(1)]
         public void Operator_LogButton()
         {
-            page.ScientificOperators.NumberPad.Input(10000);
+            page.StandardOperators.NumberPad.Input(10000);
             page.ScientificOperators.LogButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("4", page.CalculatorResults.GetCalculatorResultText());
@@ -217,7 +217,7 @@ namespace CalculatorUITests
         [Priority(1)]
         public void Operator_AbsButton()
         {
-            page.ScientificOperators.NumberPad.Input(25);
+            page.StandardOperators.NumberPad.Input(25);
             page.ScientificOperators.NegateButton.Click();
             page.ScientificOperators.AbsButton.Click();
             page.StandardOperators.EqualButton.Click();
@@ -228,9 +228,9 @@ namespace CalculatorUITests
         [Priority(1)]
         public void Operator_ExpButton()
         {
-            page.ScientificOperators.NumberPad.Input(4);
+            page.StandardOperators.NumberPad.Input(4);
             page.ScientificOperators.ExpButton.Click();
-            page.ScientificOperators.NumberPad.Input(4);
+            page.StandardOperators.NumberPad.Input(4);
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("40,000", page.CalculatorResults.GetCalculatorResultText());
         }
@@ -239,9 +239,9 @@ namespace CalculatorUITests
         [Priority(1)]
         public void Operator_ModButton()
         {
-            page.ScientificOperators.NumberPad.Input(53);
+            page.StandardOperators.NumberPad.Input(53);
             page.ScientificOperators.ModButton.Click();
-            page.ScientificOperators.NumberPad.Input(10);
+            page.StandardOperators.NumberPad.Input(10);
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("3", page.CalculatorResults.GetCalculatorResultText());
         }
@@ -250,7 +250,7 @@ namespace CalculatorUITests
         [Priority(1)]
         public void Operator_FactorialButton()
         {
-            page.ScientificOperators.NumberPad.Input(4);
+            page.StandardOperators.NumberPad.Input(4);
             page.ScientificOperators.FactorialButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("24", page.CalculatorResults.GetCalculatorResultText());
@@ -260,7 +260,7 @@ namespace CalculatorUITests
         [Priority(1)]
         public void Operator_CeilingButton()
         {
-            page.ScientificOperators.NumberPad.Input(4.1);
+            page.StandardOperators.NumberPad.Input(4.1);
             page.ScientificOperators.FuncButton.Click();
             page.ScientificOperators.CeilButton.Click();
             page.StandardOperators.EqualButton.Click();
@@ -281,7 +281,7 @@ namespace CalculatorUITests
         [Priority(1)]
         public void Operator_DmsButton()
         {
-            page.ScientificOperators.NumberPad.Input(2.999);
+            page.StandardOperators.NumberPad.Input(2.999);
             page.ScientificOperators.FuncButton.Click();
             page.ScientificOperators.DmsButton.Click();
             page.StandardOperators.EqualButton.Click();
@@ -292,7 +292,7 @@ namespace CalculatorUITests
         [Priority(1)]
         public void Operator_DegreesButton()
         {
-            page.ScientificOperators.NumberPad.Input(2.59564);
+            page.StandardOperators.NumberPad.Input(2.59564);
             page.ScientificOperators.FuncButton.Click();
             page.ScientificOperators.DegreesButton.Click();
             page.StandardOperators.EqualButton.Click();
@@ -306,7 +306,7 @@ namespace CalculatorUITests
         public void Trig_CosButton()
         {
 
-            page.ScientificOperators.NumberPad.Input(180);
+            page.StandardOperators.NumberPad.Input(180);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.CosButton.Click();
             page.StandardOperators.EqualButton.Click();
@@ -320,7 +320,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(45);
+            page.StandardOperators.NumberPad.Input(45);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TanButton.Click();
             page.StandardOperators.EqualButton.Click();
@@ -334,7 +334,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(180);
+            page.StandardOperators.NumberPad.Input(180);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.SecButton.Click();
             page.StandardOperators.EqualButton.Click();
@@ -348,7 +348,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(90);
+            page.StandardOperators.NumberPad.Input(90);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.CscButton.Click();
             page.StandardOperators.EqualButton.Click();
@@ -362,7 +362,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(45);
+            page.StandardOperators.NumberPad.Input(45);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.CotButton.Click();
             page.StandardOperators.EqualButton.Click();
@@ -376,7 +376,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(1);
+            page.StandardOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.InvSinButton.Click();
@@ -391,7 +391,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(1);
+            page.StandardOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.InvTanButton.Click();
@@ -406,7 +406,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(1);
+            page.StandardOperators.NumberPad.Input(1);
             page.ScientificOperators.NegateButton.Click();
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TrigShiftButton.Click();
@@ -422,7 +422,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(1);
+            page.StandardOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.InvCscButton.Click();
@@ -437,7 +437,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(1);
+            page.StandardOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.InvCotButton.Click();
@@ -452,7 +452,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(1);
+            page.StandardOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.SinhButton.Click();
@@ -467,7 +467,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(1);
+            page.StandardOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.CoshButton.Click();
@@ -482,7 +482,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(1);
+            page.StandardOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.SechButton.Click();
@@ -497,7 +497,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(1);
+            page.StandardOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.CschButton.Click();
@@ -512,7 +512,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(45);
+            page.StandardOperators.NumberPad.Input(45);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.HypShiftButton.Click();
             page.ScientificOperators.CothButton.Click();
@@ -527,7 +527,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(1);
+            page.StandardOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.HypShiftButton.Click();
@@ -543,7 +543,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(1);
+            page.StandardOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.HypShiftButton.Click();
@@ -559,7 +559,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(0.0);
+            page.StandardOperators.NumberPad.Input(0.0);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.HypShiftButton.Click();
@@ -575,7 +575,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(1);
+            page.StandardOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.HypShiftButton.Click();
@@ -591,7 +591,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(1);
+            page.StandardOperators.NumberPad.Input(1);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.HypShiftButton.Click();
@@ -607,7 +607,7 @@ namespace CalculatorUITests
         {
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
 
-            page.ScientificOperators.NumberPad.Input(2);
+            page.StandardOperators.NumberPad.Input(2);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.TrigShiftButton.Click();
             page.ScientificOperators.HypShiftButton.Click();

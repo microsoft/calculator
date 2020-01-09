@@ -9,12 +9,13 @@ namespace CalculatorUITestFramework
     /// <summary>
     /// This class contains the UI automation objects and helper methods available when the Calculator is in Scientific Mode.
     /// </summary>
-    public class ScientificCalculatorPage
+    public class ProgrammerCalculatorPage
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
         public GlobalCalculatorUI GlobalCalculatorUI = new GlobalCalculatorUI();
         public ScientificOperatorsPanel ScientificOperators = new ScientificOperatorsPanel();
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
+        public ProgrammerOperatorsPanel ProgrammerOperators = new ProgrammerOperatorsPanel();
         public MemoryPanel MemoryPanel = new MemoryPanel();
         public HistoryPanel HistoryPanel = new HistoryPanel();
         public NavigationMenu NavigationMenu = new NavigationMenu();
@@ -22,11 +23,11 @@ namespace CalculatorUITestFramework
 
         public CalculatorResults CalculatorResults = new CalculatorResults();
 
-        public void NavigateToScientificCalculator()
+        public void NavigateToProgrammerCalculator()
         {
             // Ensure that calculator is in scientific mode
-            this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.ScientificCalculator);
-            this.CalculatorResults.CalculatorResultsDisplayIsPresent();
+            NavigationMenu.ChangeCalculatorMode(CalculatorMode.ProgrammerCalculator);
+            CalculatorResults.CalculatorResultsDisplayIsPresent();
         }
 
         /// <summary>
@@ -38,16 +39,18 @@ namespace CalculatorUITestFramework
 
             if (source.Contains("clearEntryButton"))
             {
-                this.StandardOperators.ClearEntryButton.Click();
-                source = this.session.PageSource;
+                StandardOperators.ClearEntryButton.Click();
+                StandardOperators.ClearButton.Click();
             }
             if (source.Contains("clearButton"))
             {
-                this.StandardOperators.ClearButton.Click();
+                StandardOperators.ClearButton.Click();
             }
-            this.MemoryPanel.ResizeWindowToDisplayMemoryLabel();
-            this.MemoryPanel.ClearMemory.Click();
-            this.HistoryPanel.ClearHistory();
+            MemoryPanel.ResizeWindowToDisplayMemoryLabel();
+            if (source.Contains("ClearMemory"))
+            {
+                MemoryPanel.ClearMemory.Click();
+            }
         }
     }
 }

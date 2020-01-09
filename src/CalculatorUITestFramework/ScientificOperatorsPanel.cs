@@ -25,13 +25,11 @@ namespace CalculatorUITestFramework
     }
 
     /// <summary>
-    /// UI elements and helper methods to perform common mathematical standard operations.
+    /// UI elements unique to Scientific mode
     /// </summary>
     public class ScientificOperatorsPanel
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
-        public NumberPad NumberPad = new NumberPad();
-
         public WindowsElement XPower3Button => this.session.TryFindElementByAccessibilityId("xpower3Button");
         public WindowsElement XPowerYButton => this.session.TryFindElementByAccessibilityId("powerButton");
         public WindowsElement PowerOf10Button => this.session.TryFindElementByAccessibilityId("powerOf10Button");
