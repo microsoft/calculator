@@ -374,6 +374,7 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     Background="Transparent"
+                                                    FlowDirection="LeftToRight"
                                                     Orientation="Horizontal">
                                             <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
                                             <TextBlock Margin="-5,19,0,0"
