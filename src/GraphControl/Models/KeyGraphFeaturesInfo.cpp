@@ -20,7 +20,7 @@ IObservableVector<String ^> ^ KeyGraphFeaturesInfo::ConvertWStringVector(vector<
 {
     auto outVector = ref new Vector<String ^>();
 
-    for (auto v : inVector)
+    for (const auto& v : inVector)
     {
         outVector->Append(ref new String(v.c_str()));
     }
@@ -32,7 +32,7 @@ IObservableMap<String ^, String ^> ^ KeyGraphFeaturesInfo::ConvertWStringIntMap(
 {
     Map<String ^, String ^> ^ outMap = ref new Map<String ^, String ^>();
     ;
-    for (auto m : inMap)
+    for (const auto& m : inMap)
     {
         outMap->Insert(ref new String(m.first.c_str()), m.second.ToString());
     }
