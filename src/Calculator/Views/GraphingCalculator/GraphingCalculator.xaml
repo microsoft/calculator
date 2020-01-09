@@ -516,8 +516,8 @@
                 <Path x:Name="CursorPath"
                       Width="18"
                       Height="18"
-                      Fill="White"
-                      Stroke="Black"
+                      Fill="{ThemeResource SystemColorHighlightTextColor}"
+                      Stroke="{ThemeResource SystemColorWindowTextColor}"
                       StrokeThickness="1"
                       Data="M0 0 l1371 1371 H538 l-538 538 Z"
                       Stretch="Uniform"/>
