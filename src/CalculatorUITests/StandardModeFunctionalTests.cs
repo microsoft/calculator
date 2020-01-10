@@ -223,12 +223,15 @@ namespace CalculatorUITests
             page.CalculatorApp.EnsureCalculatorHasFocus();
             page.CalculatorApp.Header.SendKeys(Keys.Alt + "2" + Keys.Alt);
             Assert.AreEqual("Scientific", page.CalculatorApp.GetCalculatorHeaderText()); //verifies Scientific navigation hotkey
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            page.CalculatorApp.Header.SendKeys(Keys.Alt + "4" + Keys.Alt);
-            Assert.AreEqual("Programmer", page.CalculatorApp.GetCalculatorHeaderText()); //verifies Programmer navigation hotkey
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            page.CalculatorApp.Header.SendKeys(Keys.Alt + "5" + Keys.Alt);
-            Assert.AreEqual("Date Calculation", page.CalculatorApp.GetCalculatorHeaderText()); //verifies Date Calculation navigation hotkey
+
+            //To-do: Waiting for hotkey difinitions to become settled once graphing calculator is full add into the build process 
+            //page.CalculatorApp.EnsureCalculatorHasFocus();
+            //page.CalculatorApp.Header.SendKeys(Keys.Alt + "4" + Keys.Alt);
+            //Assert.AreEqual("Programmer", page.CalculatorApp.GetCalculatorHeaderText()); //verifies Programmer navigation hotkey
+            //page.CalculatorApp.EnsureCalculatorHasFocus();
+            //page.CalculatorApp.Header.SendKeys(Keys.Alt + "5" + Keys.Alt);
+            //Assert.AreEqual("Date Calculation", page.CalculatorApp.GetCalculatorHeaderText()); //verifies Date Calculation navigation hotkey
+
             page.CalculatorApp.EnsureCalculatorHasFocus();
             page.CalculatorApp.Header.SendKeys(Keys.Alt + "1" + Keys.Alt);
             Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText()); //verifies Standard navigation hotkey
@@ -912,27 +915,25 @@ namespace CalculatorUITests
         [Priority(2)]
         public void AoT_ButtonOnlyInStandard()
         {
-
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            page.CalculatorApp.Header.SendKeys(Keys.Alt + "2" + Keys.Alt);
+            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.ScientificCalculator);
             Assert.AreEqual("Scientific", page.CalculatorApp.GetCalculatorHeaderText());
             page.StandardAoTCalculatorPage.GetAoTPresence();
             Assert.AreEqual("False", page.StandardAoTCalculatorPage.GetAoTPresence());
 
             page.CalculatorApp.EnsureCalculatorHasFocus();
-            page.CalculatorApp.Header.SendKeys(Keys.Alt + "4" + Keys.Alt);
+            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.ProgrammerCalculator);
             Assert.AreEqual("Programmer", page.CalculatorApp.GetCalculatorHeaderText());
             page.StandardAoTCalculatorPage.GetAoTPresence();
             Assert.AreEqual("False", page.StandardAoTCalculatorPage.GetAoTPresence());
 
             page.CalculatorApp.EnsureCalculatorHasFocus();
-            page.CalculatorApp.Header.SendKeys(Keys.Alt + "5" + Keys.Alt);
+            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.DateCalculator);
             Assert.AreEqual("Date Calculation", page.CalculatorApp.GetCalculatorHeaderText());
             page.StandardAoTCalculatorPage.GetAoTPresence();
             Assert.AreEqual("False", page.StandardAoTCalculatorPage.GetAoTPresence());
 
             page.CalculatorApp.EnsureCalculatorHasFocus();
-            page.CalculatorApp.Header.SendKeys(Keys.Alt + "1" + Keys.Alt);
+            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
             Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
             page.StandardAoTCalculatorPage.GetAoTPresence();
             Assert.AreEqual("True", page.StandardAoTCalculatorPage.GetAoTPresence());
