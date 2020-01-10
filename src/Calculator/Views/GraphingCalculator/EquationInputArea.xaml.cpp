@@ -76,7 +76,6 @@ void EquationInputArea::AddNewEquation()
         return;
     }
 
-    
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
 
     int colorIndex;
@@ -375,4 +374,9 @@ double EquationInputArea::validateDouble(String ^ value, double defaultValue)
 ::Visibility EquationInputArea::ManageEditVariablesButtonVisibility(unsigned int numberOfVariables)
 {
     return numberOfVariables == 0 ? ::Visibility::Collapsed : ::Visibility::Visible;
+}
+
+void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
+{
+    EquationFormatRequested(sender, e);
 }

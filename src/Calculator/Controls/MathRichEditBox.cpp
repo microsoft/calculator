@@ -190,6 +190,15 @@ void MathRichEditBox::SubmitEquation(EquationSubmissionSource source)
     auto newVal = GetMathTextProperty();
     if (MathText != newVal)
     {
+        // Request the final formatting of the text
+        auto formatRequset = ref new MathRichEditBoxFormatRequest(newVal);
+        FormatRequest(this, formatRequset);
+
+        if (!formatRequset->FormattedText->IsEmpty())
+        {
+            newVal = formatRequset->FormattedText;
+        }
+
         SetValue(MathTextProperty, newVal);
         EquationSubmitted(this, ref new MathRichEditBoxSubmission(true, source));
     }

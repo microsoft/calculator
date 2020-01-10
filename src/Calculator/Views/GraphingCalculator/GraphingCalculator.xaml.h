@@ -84,6 +84,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         CalculatorApp::ViewModel::GraphingCalculatorViewModel ^ m_viewModel;
         void
             OnSettingsFlyout_Closing(Windows::UI::Xaml::Controls::Primitives::FlyoutBase ^ sender, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs ^ args);
+        void OnEquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ e);
     };
 
 }
