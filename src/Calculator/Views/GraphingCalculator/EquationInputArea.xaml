@@ -39,7 +39,7 @@
                                     <SolidColorBrush x:Key="TextControlForegroundFocused" Color="White"/>
                                     <SolidColorBrush x:Key="SliderLegendBrush" Color="#B2ffffff"/>
                                     <Style x:Key="VariableContainerStyle" TargetType="Border">
-                                        <Setter Property="Background" Value="#34000000"/>
+                                        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltMediumLowBrush}"/>
                                     </Style>
                                     <Style x:Key="ThemedVariableTextBoxStyle"
                                            BasedOn="{StaticResource VariableTextBoxStyle}"
