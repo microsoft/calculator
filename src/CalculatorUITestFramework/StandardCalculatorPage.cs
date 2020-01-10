@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium.Windows;
 
 namespace CalculatorUITestFramework
@@ -36,6 +35,39 @@ namespace CalculatorUITestFramework
             this.StandardOperators.ClearButton.Click();
             this.MemoryPanel.MemoryClear.Click();
             this.HistoryPanel.ClearHistory();
+        }
+        ///// <summary>
+        ///// Ensures that the calculator result text is zero; if not, clears all
+        ///// </summary>
+        public void EnsureCalculatorResultTextIsZero()
+        {
+            if ("0" != this.CalculatorResults.GetCalculatorResultText())
+            {
+                this.ClearAll();
+            }
+        }
+        ///// <summary>
+        ///// Ensures that the calculator is in Standard Mode
+        ///// </summary>
+        public void EnsureCalculatorIsInStandardMode()
+        {
+            string source = WinAppDriver.Instance.CalculatorSession.PageSource;
+            if (source.Contains("Header"))
+            {
+                string header = CalculatorApp.Header.Text;
+                if (header == "Standard")
+                {
+                    return;
+                }
+                else
+                {
+                    this.NavigateToStandardCalculator();
+                }
+            }
+            else
+            {
+                this.StandardAoTCalculatorPage.NavigateToStandardMode();
+            }
         }
     }
 

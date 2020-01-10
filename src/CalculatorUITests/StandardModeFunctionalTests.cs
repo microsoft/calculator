@@ -5,7 +5,6 @@ using CalculatorUITestFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Drawing;
 
@@ -49,16 +48,15 @@ namespace CalculatorUITests
         [TestInitialize]
         public void TestInit()
         {
-            if ("0" != page.CalculatorResults.GetCalculatorResultText())
-            {
-                page.ClearAll();
-            }
+            page.EnsureCalculatorIsInStandardMode();
+            page.EnsureCalculatorResultTextIsZero();
             page.CalculatorApp.EnsureCalculatorHasFocus();
         }
 
         [TestCleanup]
         public void TestCleanup()
         {
+            page.EnsureCalculatorIsInStandardMode();
             page.ClearAll();
         }
 
