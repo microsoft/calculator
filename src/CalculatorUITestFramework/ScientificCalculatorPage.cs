@@ -46,7 +46,10 @@ namespace CalculatorUITestFramework
                 this.StandardOperators.ClearButton.Click();
             }
             this.MemoryPanel.ResizeWindowToDisplayMemoryLabel();
-            this.MemoryPanel.ClearMemory.Click();
+            if (source.Contains("ClearMemory"))
+            {
+                this.MemoryPanel.ClearMemory.Click();
+            }
             this.HistoryPanel.ClearHistory();
         }
     }
