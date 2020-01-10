@@ -383,11 +383,15 @@ String ^ EquationInputArea::GetChevronIcon(bool isCollapsed)
 
 void EquationInputArea::VariableAreaTapped(Object ^ sender, TappedRoutedEventArgs ^ e)
 {
-    auto activeVariableViewModel = static_cast<VariableViewModel ^>(static_cast<Grid ^>(sender)->DataContext);
+    auto selectedVariableViewModel = static_cast<VariableViewModel ^>(static_cast<Grid ^>(sender)->DataContext);
+    selectedVariableViewModel->SliderSettingsVisible = !selectedVariableViewModel->SliderSettingsVisible;
 
     // Collapse all other slider settings that are open
     for (auto variableViewModel : Variables)
     {
-        variableViewModel->SliderSettingsVisible = (activeVariableViewModel == variableViewModel);
+        if (variableViewModel != selectedVariableViewModel)
+        {
+            variableViewModel->SliderSettingsVisible = false;
+        }
     }
 }
