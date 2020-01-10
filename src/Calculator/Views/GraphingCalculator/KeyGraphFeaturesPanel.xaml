@@ -18,80 +18,66 @@
                     <!-- Can't be #ffffff due to a bug in RichEditBox considering it as the default value -->
                     <!-- and replacing it by the system value (#000000) when dark theme is used -->
                     <SolidColorBrush x:Key="TitleMathRichEditBoxForegroundBrush" Color="#feffff"/>
+                    <x:Double x:Key="EquationButtonOverlayPointerOverOpacity">0.3</x:Double>
+                    <x:Double x:Key="EquationButtonOverlayPressedOpacity">0.5</x:Double>
+                    <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="White"/>
+                    <Style x:Key="ThemedBackButtonStyle"
+                           BasedOn="{StaticResource BackButtonStyle}"
+                           TargetType="Button"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
                     <SolidColorBrush x:Key="TitleMathRichEditBoxForegroundBrush" Color="Black"/>
+                    <x:Double x:Key="EquationButtonOverlayPointerOverOpacity">0.2</x:Double>
+                    <x:Double x:Key="EquationButtonOverlayPressedOpacity">0.4</x:Double>
+                    <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="Black"/>
+                    <Style x:Key="ThemedBackButtonStyle"
+                           BasedOn="{StaticResource BackButtonStyle}"
+                           TargetType="Button"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
                     <SolidColorBrush x:Key="TitleMathRichEditBoxForegroundBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
+                    <x:Double x:Key="EquationButtonOverlayPointerOverOpacity">0</x:Double>
+                    <x:Double x:Key="EquationButtonOverlayPressedOpacity">0</x:Double>
+                    <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="Transparent"/>
+                    <Style x:Key="ThemedBackButtonStyle" TargetType="Button"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
+            <SolidColorBrush x:Key="EquationButtonBackgroundBrush" Color="{x:Bind ViewModel.LineColor, Mode=OneWay}"/>
+            <SolidColorBrush x:Key="EquationButtonBorderBrush" Color="{x:Bind ViewModel.LineColor, Mode=OneWay}"/>
             <Style x:Key="BackButtonStyle" TargetType="Button">
-                <Setter Property="Background" Value="{ThemeResource ButtonRevealBackground}"/>
-                <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}"/>
-                <Setter Property="BorderBrush" Value="{ThemeResource ButtonRevealBorderBrush}"/>
-                <Setter Property="BorderThickness" Value="{ThemeResource ButtonRevealBorderThemeThickness}"/>
-                <Setter Property="Padding" Value="{ThemeResource ButtonPadding}"/>
-                <Setter Property="HorizontalAlignment" Value="Left"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-                <Setter Property="FontWeight" Value="Normal"/>
-                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-                <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
-                <Setter Property="FocusVisualMargin" Value="-3"/>
+                <Setter Property="Background" Value="{ThemeResource EquationButtonBackgroundBrush}"/>
+                <Setter Property="BorderBrush" Value="{ThemeResource EquationButtonBorderBrush}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
                             <Grid x:Name="RootGrid"
                                   Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
                                   CornerRadius="{TemplateBinding CornerRadius}">
 
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal">
-
-                                            <Storyboard>
-                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
-                                            </Storyboard>
+                                            <VisualState.Setters>
+                                                <Setter Target="Overlay.Opacity" Value="0.0"/>
+                                            </VisualState.Setters>
                                         </VisualState>
-
                                         <VisualState x:Name="PointerOver">
                                             <VisualState.Setters>
-                                                <Setter Target="RootGrid.(RevealBrush.State)" Value="PointerOver"/>
-                                                <Setter Target="RootGrid.Background" Value="{ThemeResource ButtonRevealBackgroundPointerOver}"/>
-                                                <Setter Target="ContentPresenter.BorderBrush" Value="{ThemeResource ButtonRevealBorderBrushPointerOver}"/>
-                                                <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ButtonForegroundPointerOver}"/>
+                                                <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPointerOverOpacity}"/>
                                             </VisualState.Setters>
-
-                                            <Storyboard>
-                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
-                                            </Storyboard>
                                         </VisualState>
-
                                         <VisualState x:Name="Pressed">
                                             <VisualState.Setters>
-                                                <Setter Target="RootGrid.(RevealBrush.State)" Value="Pressed"/>
-                                                <Setter Target="RootGrid.Background" Value="{ThemeResource ButtonRevealBackgroundPressed}"/>
-                                                <Setter Target="ContentPresenter.BorderBrush" Value="{ThemeResource ButtonRevealBorderBrushPressed}"/>
-                                                <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ButtonForegroundPressed}"/>
-                                            </VisualState.Setters>
-
-                                            <Storyboard>
-                                                <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
-                                            </Storyboard>
-                                        </VisualState>
-
-                                        <VisualState x:Name="Disabled">
-                                            <VisualState.Setters>
-                                                <Setter Target="RootGrid.Background" Value="{ThemeResource ButtonRevealBackgroundDisabled}"/>
-                                                <Setter Target="ContentPresenter.BorderBrush" Value="{ThemeResource ButtonRevealBorderBrushDisabled}"/>
-                                                <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource ButtonForegroundDisabled}"/>
+                                                <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPressedOpacity}"/>
                                             </VisualState.Setters>
                                         </VisualState>
-
                                     </VisualStateGroup>
-
                                 </VisualStateManager.VisualStateGroups>
+                                <Rectangle x:Name="Overlay"
+                                           Fill="{ThemeResource EquationButtonOverlayBackgroundBrush}"
+                                           Opacity="0"
+                                           IsHitTestVisible="False"/>
                                 <ContentPresenter x:Name="ContentPresenter"
                                                   Padding="{TemplateBinding Padding}"
                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -103,7 +89,6 @@
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                   ContentTransitions="{TemplateBinding ContentTransitions}"
                                                   CornerRadius="{TemplateBinding CornerRadius}"/>
-
                             </Grid>
 
                         </ControlTemplate>
@@ -140,7 +125,6 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
 
             <Style x:Name="KGF_TitleTextBlockStyle" TargetType="TextBlock">
                 <Setter Property="FontWeight" Value="Medium"/>
@@ -246,8 +230,7 @@
                     x:Uid="equationAnalysisBack"
                     MinWidth="44"
                     VerticalAlignment="Stretch"
-                    Style="{ThemeResource ButtonRevealStyle}"
-                    Background="{x:Bind local:KeyGraphFeaturesPanel.ToSolidColorBrush(ViewModel.LineColor), Mode=OneWay}"
+                    Style="{ThemeResource ThemedBackButtonStyle}"
                     Foreground="{ThemeResource SystemChromeWhiteColor}"
                     contract7Present:CornerRadius="0"
                     Click="BackButton_Click">
