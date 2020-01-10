@@ -859,6 +859,13 @@ String ^ Grapher::ConvertToLinear(String ^ mmlString)
     return ref new String(linearExpression.c_str());
 }
 
+String ^ Grapher::FormatMathML(String ^ mmlString)
+{
+    auto expression = m_solver->ParseInput(mmlString->Data());
+    auto formattedExpression = m_solver->Serialize(expression.get());
+    return ref new String(formattedExpression.c_str());
+}
+
 void Grapher::OnAxesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue)
 {
     if (m_graph)
