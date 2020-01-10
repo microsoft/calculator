@@ -1741,7 +1741,7 @@
                                            Grid.Row="1"
                                            Grid.Column="0"
                                            Grid.ColumnSpan="4"
-                                           Margin="{TemplateBinding BorderThickness}"
+                                           Margin="0,-1,0,0"
                                            Padding="{TemplateBinding Padding}"
                                            VerticalAlignment="Center"
                                            Foreground="{ThemeResource TextControlPlaceholderForeground}"

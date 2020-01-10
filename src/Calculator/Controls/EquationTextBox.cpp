@@ -361,7 +361,7 @@ void EquationTextBox::OnRichEditMenuOpening(Object ^ /*sender*/, Object ^ /*args
 
     if (m_colorChooserMenuItem != nullptr)
     {
-        m_colorChooserMenuItem->IsEnabled = !HasError;
+        m_colorChooserMenuItem->IsEnabled = !HasError && !IsAddEquationMode;
     }
 }
 
