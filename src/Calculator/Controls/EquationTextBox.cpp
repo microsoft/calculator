@@ -277,7 +277,7 @@ void EquationTextBox::UpdateCommonVisualState()
     {
         state = "FocusedError";
     }
-    else if (IsAddEquationMode && ((m_HasFocus && !RichEditHasContent()) || m_isPointerOver))
+    else if (IsAddEquationMode && ((m_HasFocus || m_isPointerOver) && !RichEditHasContent()))
     {
         state = "AddEquation";
     }
