@@ -244,6 +244,12 @@
                                                 <SolidColorBrush x:Key="EquationBoxAddBackgroundBrush" Color="#9d000000"/>
                                                 <SolidColorBrush x:Key="EquationBoxErrorBackgroundBrush" Color="#33EB5757"/>
                                                 <SolidColorBrush x:Key="EquationBoxErrorBorderBrush" Color="#FFEB5757"/>
+                                                <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush"
+                                                                 Opacity="0.6"
+                                                                 Color="{StaticResource SystemChromeWhiteColor}"/>
+                                                <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush"
+                                                                 Opacity="0.4"
+                                                                 Color="#FFFFFF"/>
                                                 <Thickness x:Key="EquationTextBoxBorderThickness">0,1,1,1</Thickness>
                                             </ResourceDictionary>
                                             <ResourceDictionary x:Key="Light">
@@ -255,6 +261,10 @@
                                                 <SolidColorBrush x:Key="EquationBoxAddBackgroundBrush" Color="#D0FFFFFF"/>
                                                 <SolidColorBrush x:Key="EquationBoxErrorBackgroundBrush" Color="#33EB5757"/>
                                                 <SolidColorBrush x:Key="EquationBoxErrorBorderBrush" Color="#FFEB5757"/>
+                                                <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush" Color="{StaticResource SystemChromeWhiteColor}"/>
+                                                <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush"
+                                                                 Opacity="0.4"
+                                                                 Color="#000000"/>
                                                 <Thickness x:Key="EquationTextBoxBorderThickness">0,1,1,1</Thickness>
                                             </ResourceDictionary>
                                             <ResourceDictionary x:Key="HighContrast">
@@ -289,7 +299,29 @@
                                         </VisualState>
                                         <VisualState x:Name="AddEquation">
                                             <VisualState.Setters>
-                                                <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource EquationBoxAddBackgroundBrush}"/>
+                                                <Setter Target="FunctionNumberLabelTextBlock.Visibility" Value="Collapsed"/>
+                                                <Setter Target="EquationButton.Background" Value="{ThemeResource EquationButtonHideLineBackgroundBrush}"/>
+                                                <Setter Target="EquationButton.BorderBrush" Value="{ThemeResource EquationButtonHideLineBackgroundBrush}"/>
+                                                <Setter Target="EquationButton.Foreground" Value="{ThemeResource EquationButtonHideLineForegroundBrush}"/>
+                                                <Setter Target="EquationButton.IsEnabled" Value="false"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="AddEquationPointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Target="FunctionNumberLabelTextBlock.Visibility" Value="Collapsed"/>
+                                                <Setter Target="EquationButton.Background" Value="{ThemeResource EquationButtonHideLineBackgroundBrush}"/>
+                                                <Setter Target="EquationButton.BorderBrush" Value="{ThemeResource EquationButtonHideLineBackgroundBrush}"/>
+                                                <Setter Target="EquationButton.Foreground" Value="{ThemeResource EquationButtonHideLineForegroundBrush}"/>
+                                                <Setter Target="EquationButton.IsEnabled" Value="false"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="AddEquationFocused">
+                                            <VisualState.Setters>
+                                                <Setter Target="FunctionNumberLabelTextBlock.Visibility" Value="Collapsed"/>
+                                                <Setter Target="EquationButton.Background" Value="{ThemeResource EquationButtonHideLineBackgroundBrush}"/>
+                                                <Setter Target="EquationButton.BorderBrush" Value="{ThemeResource EquationButtonHideLineBackgroundBrush}"/>
+                                                <Setter Target="EquationButton.Foreground" Value="{ThemeResource EquationButtonHideLineForegroundBrush}"/>
+                                                <Setter Target="EquationButton.IsEnabled" Value="false"/>
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="Error">
@@ -376,7 +408,8 @@
                                                     Background="Transparent"
                                                     Orientation="Horizontal">
                                             <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
-                                            <TextBlock Margin="-5,19,0,0"
+                                            <TextBlock x:Name="FunctionNumberLabelTextBlock"
+                                                       Margin="-5,19,0,0"
                                                        FontSize="11"
                                                        Text="{TemplateBinding EquationButtonContentIndex}"/>
                                         </StackPanel>
@@ -397,12 +430,6 @@
                                                     <SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{ThemeResource SystemChromeWhiteColor}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrushPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                    <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush"
-                                                                     Opacity="0.6"
-                                                                     Color="{StaticResource SystemChromeWhiteColor}"/>
-                                                    <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush"
-                                                                     Opacity="0.4"
-                                                                     Color="#FFFFFF"/>
                                                     <StaticResource x:Key="ToggleButtonBackgroundChecked" ResourceKey="EquationButtonHideLineBackgroundBrush"/>
                                                     <StaticResource x:Key="ToggleButtonBorderBrushChecked" ResourceKey="EquationButtonHideLineBackgroundBrush"/>
                                                     <StaticResource x:Key="ToggleButtonForegroundChecked" ResourceKey="EquationButtonHideLineForegroundBrush"/>
@@ -426,10 +453,6 @@
                                                     <SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{ThemeResource SystemChromeWhiteColor}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrushPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                    <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush" Color="{StaticResource SystemChromeWhiteColor}"/>
-                                                    <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush"
-                                                                     Opacity="0.4"
-                                                                     Color="#000000"/>
                                                     <StaticResource x:Key="ToggleButtonBackgroundChecked" ResourceKey="EquationButtonHideLineBackgroundBrush"/>
                                                     <StaticResource x:Key="ToggleButtonBorderBrushChecked" ResourceKey="EquationButtonHideLineBackgroundBrush"/>
                                                     <StaticResource x:Key="ToggleButtonForegroundChecked" ResourceKey="EquationButtonHideLineForegroundBrush"/>
@@ -450,19 +473,19 @@
                                     </ToggleButton.Resources>
                                     <ToggleButton.Style>
                                         <Style TargetType="ToggleButton">
+                                            <Setter Property="Background" Value="{ThemeResource ToggleButtonBackground}"/>
+                                            <Setter Property="BorderBrush" Value="{ThemeResource ToggleButtonBorderBrush}"/>
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="ToggleButton">
                                                         <Grid x:Name="RootGrid"
-                                                              Background="Transparent"
-                                                              BorderBrush="Transparent"
+                                                              Background="{TemplateBinding Background}"
+                                                              BorderBrush="{TemplateBinding BorderBrush}"
                                                               BorderThickness="1">
                                                             <VisualStateManager.VisualStateGroups>
                                                                 <VisualStateGroup x:Name="CommonStates">
                                                                     <VisualState x:Name="Normal">
                                                                         <VisualState.Setters>
-                                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ToggleButtonBackground}"/>
-                                                                            <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ToggleButtonBorderBrush}"/>
                                                                             <Setter Target="Overlay.Opacity" Value="0.0"/>
                                                                             <Setter Target="ContentPresenter.Visibility" Value="Visible"/>
                                                                             <Setter Target="ShowHideIcon.Visibility" Value="Collapsed"/>

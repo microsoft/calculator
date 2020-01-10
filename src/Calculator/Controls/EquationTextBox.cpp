@@ -51,9 +51,9 @@ void EquationTextBox::OnApplyTemplate()
     {
         m_richEditBox->GotFocus += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxGotFocus);
         m_richEditBox->LostFocus += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditBoxLostFocus);
+        m_richEditBox->TextChanged += ref new RoutedEventHandler(this, &EquationTextBox::OnRichEditTextChanged);
         m_richEditBox->SelectionFlyout = nullptr;
-        m_richEditBox->EquationSubmitted +=
-            ref new EventHandler<MathRichEditBoxSubmission ^>(this, &EquationTextBox::OnEquationSubmitted);
+        m_richEditBox->EquationSubmitted += ref new EventHandler<MathRichEditBoxSubmission ^>(this, &EquationTextBox::OnEquationSubmitted);
     }
 
     if (m_equationButton != nullptr)
@@ -159,6 +159,12 @@ void EquationTextBox::OnColorFlyoutClosed(Object ^ sender, Object ^ e)
     UpdateCommonVisualState();
 }
 
+void EquationTextBox::OnRichEditTextChanged(Object ^ sender, RoutedEventArgs ^ e)
+{
+    UpdateCommonVisualState();
+    UpdateButtonsVisualState();
+}
+
 void EquationTextBox::OnRichEditBoxGotFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     m_HasFocus = true;
@@ -181,7 +187,7 @@ void EquationTextBox::OnDeleteButtonClicked(Object ^ sender, RoutedEventArgs ^ e
 {
     if (m_richEditBox != nullptr)
     {
-        m_richEditBox->MathText = L"";
+        m_richEditBox->TextDocument->SetText(::TextSetOptions::None, "");
         if (m_functionButton)
         {
             m_functionButton->IsEnabled = false;
@@ -247,13 +253,13 @@ void EquationTextBox::UpdateButtonsVisualState()
 {
     String ^ state;
 
-    if (IsAddEquationMode)
-    {
-        state = "ButtonHideRemove";
-    }
-    else if (RichEditHasContent())
+    if (m_HasFocus && RichEditHasContent())
     {
         state = "ButtonVisible";
+    }
+    else if (IsAddEquationMode)
+    {
+        state = "ButtonHideRemove";
     }
     else
     {
@@ -270,6 +276,10 @@ void EquationTextBox::UpdateCommonVisualState()
     if (m_HasFocus && HasError)
     {
         state = "FocusedError";
+    }
+    else if (IsAddEquationMode && ((m_HasFocus && !RichEditHasContent()) || m_isPointerOver))
+    {
+        state = "AddEquation";
     }
     else if (m_HasFocus)
     {
@@ -337,16 +347,16 @@ bool EquationTextBox::RichEditHasContent()
 
     if (m_richEditBox != nullptr)
     {
-        text = m_richEditBox->MathText;
+        m_richEditBox->TextDocument->GetText(Windows::UI::Text::TextGetOptions::NoHidden, &text);
     }
-    return !text->IsEmpty() && m_HasFocus;
+    return !text->IsEmpty();
 }
 
 void EquationTextBox::OnRichEditMenuOpening(Object ^ /*sender*/, Object ^ /*args*/)
 {
     if (m_kgfEquationMenuItem != nullptr)
     {
-        m_kgfEquationMenuItem->IsEnabled = RichEditHasContent();
+        m_kgfEquationMenuItem->IsEnabled = m_HasFocus && RichEditHasContent();
     }
 
     if (m_colorChooserMenuItem != nullptr)
