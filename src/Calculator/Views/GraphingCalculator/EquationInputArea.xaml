@@ -371,6 +371,7 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     Background="Transparent"
+                                                    FlowDirection="LeftToRight"
                                                     Orientation="Horizontal">
                                             <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
                                             <TextBlock Margin="-5,19,0,0"
@@ -759,7 +760,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <mux:ItemsRepeaterScrollHost>
-        <ScrollViewer>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <mux:ItemsRepeater x:Name="EquationInputList"
                                    ItemsSource="{x:Bind Equations}"

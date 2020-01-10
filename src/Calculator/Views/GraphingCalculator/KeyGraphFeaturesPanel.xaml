@@ -174,10 +174,12 @@
                               FontFamily="{ThemeResource SymbolThemeFontFamily}"
                               FontSize="16"
                               Glyph="&#xE72B;"/>
-                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
-                    <TextBlock Margin="-5,19,0,0"
-                               FontSize="11"
-                               Text="{x:Bind ViewModel.FunctionLabelIndex}"/>
+                    <StackPanel FlowDirection="LeftToRight" Orientation="Horizontal">
+                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
+                        <TextBlock Margin="-5,19,0,0"
+                                   FontSize="11"
+                                   Text="{x:Bind ViewModel.FunctionLabelIndex}"/>
+                    </StackPanel>
                 </StackPanel>
             </Button>
             <controls:MathRichEditBox Grid.Column="1"
