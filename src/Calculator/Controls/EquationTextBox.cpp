@@ -54,6 +54,7 @@ void EquationTextBox::OnApplyTemplate()
         m_richEditBox->SelectionFlyout = nullptr;
         m_richEditBox->EquationSubmitted +=
             ref new EventHandler<MathRichEditBoxSubmission ^>(this, &EquationTextBox::OnEquationSubmitted);
+        m_richEditBox->FormatRequest += ref new EventHandler<MathRichEditBoxFormatRequest ^>(this, &EquationTextBox::OnEquationFormatRequested);
     }
 
     if (m_equationButton != nullptr)
@@ -380,4 +381,9 @@ void EquationTextBox::OnEquationSubmitted(Platform::Object ^ sender, MathRichEdi
     }
 
     EquationSubmitted(this, args);
+}
+
+void EquationTextBox::OnEquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ args)
+{
+    EquationFormatRequested(this, args);
 }

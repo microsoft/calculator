@@ -775,6 +775,7 @@
                                                       EquationButtonClicked="EquationTextBox_EquationButtonClicked"
                                                       EquationButtonContentIndex="{x:Bind FunctionLabelIndex, Mode=OneWay}"
                                                       EquationColor="{x:Bind local:EquationInputArea.ToSolidColorBrush(LineColor), Mode=OneWay}"
+                                                      EquationFormatRequested="EquationTextBox_EquationFormatRequested"
                                                       EquationSubmitted="EquationTextBox_Submitted"
                                                       GotFocus="EquationTextBox_GotFocus"
                                                       HasError="{x:Bind GraphEquation.HasGraphError, Mode=OneWay}"

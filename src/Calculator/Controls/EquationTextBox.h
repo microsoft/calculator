@@ -30,6 +30,7 @@ namespace CalculatorApp
             event Windows::UI::Xaml::RoutedEventHandler ^ RemoveButtonClicked;
             event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesButtonClicked;
             event Windows::Foundation::EventHandler<MathRichEditBoxSubmission ^> ^ EquationSubmitted;
+            event Windows::Foundation::EventHandler<MathRichEditBoxFormatRequest ^> ^ EquationFormatRequested;
             event Windows::UI::Xaml::RoutedEventHandler ^ EquationButtonClicked;
 
             Platform::String ^ GetEquationText();
@@ -79,6 +80,7 @@ namespace CalculatorApp
             bool m_isPointerOver;
             bool m_isColorChooserFlyoutOpen;
             void OnEquationSubmitted(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxSubmission ^ args);
+            void OnEquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ args);
         };
     }
 }

@@ -395,3 +395,8 @@ void EquationInputArea::VariableAreaTapped(Object ^ sender, TappedRoutedEventArg
         }
     }
 }
+  
+void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
+{
+    EquationFormatRequested(sender, e);
+}
