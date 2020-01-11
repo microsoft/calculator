@@ -104,6 +104,7 @@ public
         event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String ^, double> ^> ^ VariablesUpdated;
         void SetVariable(Platform::String ^ variableName, double newValue);
         Platform::String ^ ConvertToLinear(Platform::String ^ mmlString);
+        Platform::String ^ FormatMathML(Platform::String ^ mmlString);
 
         /// <summary>
         /// Draw the graph. Call this method if you add or modify an equation.

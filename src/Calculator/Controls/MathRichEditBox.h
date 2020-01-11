@@ -31,6 +31,20 @@ namespace CalculatorApp
         };
 
     public
+        ref class MathRichEditBoxFormatRequest sealed
+        {
+        public:
+            PROPERTY_R(Platform::String^, OriginalText);
+            PROPERTY_RW(Platform::String ^, FormattedText);
+
+        public:
+            MathRichEditBoxFormatRequest(Platform::String^ originalText)
+            {
+                m_OriginalText = originalText;
+            }
+        };
+
+    public
         ref class MathRichEditBox sealed : Windows::UI::Xaml::Controls::RichEditBox
         {
         public:
@@ -39,6 +53,7 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY_OWNER(MathRichEditBox);
             DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Platform::String ^, MathText, L"");
 
+            event Windows::Foundation::EventHandler<MathRichEditBoxFormatRequest ^> ^ FormatRequest;
             event Windows::Foundation::EventHandler<MathRichEditBoxSubmission^> ^ EquationSubmitted;
             void OnMathTextPropertyChanged(Platform::String ^ oldValue, Platform::String ^ newValue);
             void InsertText(Platform::String ^ text, int cursorOffSet, int selectionLength);

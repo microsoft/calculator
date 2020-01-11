@@ -58,15 +58,6 @@ MathRichEditBox::MathRichEditBox()
                                 ->Status;
     }
 
-    else if (packageName == L"Microsoft.WindowsCalculator.Graphing")
-    {
-        m_lafResultStatus = LimitedAccessFeatures::TryUnlockFeature(
-                                "com.microsoft.windows.richeditmath",
-                                "H6wflFFz3gkOsAHtG/D9Tg==", // Microsoft.WindowsCalculator.Graphing
-                                "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.")
-                                ->Status;
-    }
-
     // TODO when Windows 10 version 2004 SDK is adopted, replace with:
     // TextDocument->SetMathMode(Windows::UI::Text::RichEditMathMode::MathOnly);
     Microsoft::WRL::ComPtr<Windows_2004_Prerelease::ITextDocument4> textDocument4;
@@ -190,6 +181,15 @@ void MathRichEditBox::SubmitEquation(EquationSubmissionSource source)
     auto newVal = GetMathTextProperty();
     if (MathText != newVal)
     {
+        // Request the final formatting of the text
+        auto formatRequest = ref new MathRichEditBoxFormatRequest(newVal);
+        FormatRequest(this, formatRequest);
+
+        if (!formatRequest->FormattedText->IsEmpty())
+        {
+            newVal = formatRequest->FormattedText;
+        }
+
         SetValue(MathTextProperty, newVal);
         EquationSubmitted(this, ref new MathRichEditBoxSubmission(true, source));
     }
