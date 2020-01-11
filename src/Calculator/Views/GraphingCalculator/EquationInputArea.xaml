@@ -388,6 +388,7 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     Background="Transparent"
+                                                    FlowDirection="LeftToRight"
                                                     Orientation="Horizontal">
                                             <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
                                             <TextBlock x:Name="FunctionNumberLabelTextBlock"
@@ -767,7 +768,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <mux:ItemsRepeaterScrollHost>
-        <ScrollViewer>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <mux:ItemsRepeater x:Name="EquationInputList"
                                    ItemsSource="{x:Bind Equations}"
@@ -782,6 +783,7 @@
                                                       EquationButtonClicked="EquationTextBox_EquationButtonClicked"
                                                       EquationButtonContentIndex="{x:Bind FunctionLabelIndex, Mode=OneWay}"
                                                       EquationColor="{x:Bind local:EquationInputArea.ToSolidColorBrush(LineColor), Mode=OneWay}"
+                                                      EquationFormatRequested="EquationTextBox_EquationFormatRequested"
                                                       EquationSubmitted="EquationTextBox_Submitted"
                                                       GotFocus="EquationTextBox_GotFocus"
                                                       HasError="{x:Bind GraphEquation.HasGraphError, Mode=OneWay}"

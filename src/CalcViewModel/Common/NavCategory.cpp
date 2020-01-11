@@ -89,10 +89,10 @@ bool IsGraphingModeEnabled()
     DWORD bufferSize{ sizeof(allowGraphingCalculator) };
     // Make sure to call RegGetValueW only on Windows 10 1903+
     if (RegGetValueW(
-            HKEY_LOCAL_MACHINE,
+            HKEY_CURRENT_USER,
             L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Calculator",
             L"AllowGraphingCalculator",
-            RRF_RT_REG_DWORD | RRF_RT_REG_BINARY,
+            RRF_RT_DWORD, // RRF_RT_DWORD == RRF_RT_REG_DWORD | RRF_RT_REG_BINARY
             nullptr,
             reinterpret_cast<LPBYTE>(&allowGraphingCalculator),
             &bufferSize)

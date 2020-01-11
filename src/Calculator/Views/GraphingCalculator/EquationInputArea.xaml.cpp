@@ -385,3 +385,8 @@ double EquationInputArea::validateDouble(String ^ value, double defaultValue)
 {
     return numberOfVariables == 0 ? ::Visibility::Collapsed : ::Visibility::Visible;
 }
+
+void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
+{
+    EquationFormatRequested(sender, e);
+}

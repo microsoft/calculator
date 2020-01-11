@@ -151,8 +151,7 @@ namespace GraphControl::DX
         // Note the ordering should be preserved.
         // Don't forget to declare your application's minimum required feature level in its
         // description.  All applications are assumed to support 9.1 unless otherwise stated.
-        static constexpr UINT featureLevelsSize = 9;
-        static constexpr std::array<D3D_FEATURE_LEVEL, featureLevelsSize> featureLevels =
+        static constexpr std::array featureLevels =
         {
             D3D_FEATURE_LEVEL_12_1,
             D3D_FEATURE_LEVEL_12_0,
@@ -174,8 +173,8 @@ namespace GraphControl::DX
             D3D_DRIVER_TYPE_HARDWARE,   // Create a device using the hardware graphics driver.
             0,                          // Should be 0 unless the driver is D3D_DRIVER_TYPE_SOFTWARE.
             creationFlags,              // Set debug and Direct2D compatibility flags.
-            &featureLevels[0],          // List of feature levels this app can support.
-            featureLevelsSize,       // Size of the list above.
+            featureLevels.data(),       // List of feature levels this app can support.
+            featureLevels.size(),       // Size of the list above.
             D3D11_SDK_VERSION,          // Always set this to D3D11_SDK_VERSION for Windows Store apps.
             &device,                    // Returns the Direct3D device created.
             &m_d3dFeatureLevel,         // Returns feature level of device created.
@@ -193,8 +192,8 @@ namespace GraphControl::DX
                     D3D_DRIVER_TYPE_WARP, // Create a WARP device instead of a hardware device.
                     0,
                     creationFlags,
-                    &featureLevels[0],
-                    featureLevelsSize,
+                    featureLevels.data(),
+                    featureLevels.size(),
                     D3D11_SDK_VERSION,
                     &device,
                     &m_d3dFeatureLevel,

@@ -69,16 +69,17 @@
                     <ApplicationTheme x:Key="CalcApplicationTheme">Dark</ApplicationTheme>
                     <SolidColorBrush x:Key="AppChromeAcrylicOperatorFlyoutBackgroundBrush" Color="#FF2F2F2F"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
-                    <SolidColorBrush x:Key="EquationBrush1" Color="#FFE81123"/>
-                    <SolidColorBrush x:Key="EquationBrush2" Color="#FFE3008C"/>
-                    <SolidColorBrush x:Key="EquationBrush3" Color="#FFB31564"/>
+
+                    <SolidColorBrush x:Key="EquationBrush1" Color="#FF0063B1"/>
+                    <SolidColorBrush x:Key="EquationBrush2" Color="#FF00B7C3"/>
+                    <SolidColorBrush x:Key="EquationBrush3" Color="#FF6600CC"/>
                     <SolidColorBrush x:Key="EquationBrush4" Color="#FF107C10"/>
                     <SolidColorBrush x:Key="EquationBrush5" Color="#FF00CC6A"/>
                     <SolidColorBrush x:Key="EquationBrush6" Color="#FF008055"/>
                     <SolidColorBrush x:Key="EquationBrush7" Color="#FF58595B"/>
-                    <SolidColorBrush x:Key="EquationBrush8" Color="#FF0063B1"/>
-                    <SolidColorBrush x:Key="EquationBrush9" Color="#FF00B7C3"/>
-                    <SolidColorBrush x:Key="EquationBrush10" Color="#FF6600CC"/>
+                    <SolidColorBrush x:Key="EquationBrush8" Color="#FFE81123"/>
+                    <SolidColorBrush x:Key="EquationBrush9" Color="#FFE3008C"/>
+                    <SolidColorBrush x:Key="EquationBrush10" Color="#FFB31564"/>
                     <SolidColorBrush x:Key="EquationBrush11" Color="#FFFFB900"/>
                     <SolidColorBrush x:Key="EquationBrush12" Color="#FFF7630C"/>
                     <SolidColorBrush x:Key="EquationBrush13" Color="#FF8E562E"/>
@@ -147,16 +148,17 @@
                                   TintOpacity="0.8"/>
                     <ApplicationTheme x:Key="CalcApplicationTheme">Light</ApplicationTheme>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
-                    <SolidColorBrush x:Key="EquationBrush1" Color="#FFE81123"/>
-                    <SolidColorBrush x:Key="EquationBrush2" Color="#FFE3008C"/>
-                    <SolidColorBrush x:Key="EquationBrush3" Color="#FFB31564"/>
+
+                    <SolidColorBrush x:Key="EquationBrush1" Color="#FF0063B1"/>
+                    <SolidColorBrush x:Key="EquationBrush2" Color="#FF00B7C3"/>
+                    <SolidColorBrush x:Key="EquationBrush3" Color="#FF6600CC"/>
                     <SolidColorBrush x:Key="EquationBrush4" Color="#FF107C10"/>
                     <SolidColorBrush x:Key="EquationBrush5" Color="#FF00CC6A"/>
                     <SolidColorBrush x:Key="EquationBrush6" Color="#FF008055"/>
                     <SolidColorBrush x:Key="EquationBrush7" Color="#FF58595B"/>
-                    <SolidColorBrush x:Key="EquationBrush8" Color="#FF0063B1"/>
-                    <SolidColorBrush x:Key="EquationBrush9" Color="#FF00B7C3"/>
-                    <SolidColorBrush x:Key="EquationBrush10" Color="#FF6600CC"/>
+                    <SolidColorBrush x:Key="EquationBrush8" Color="#FFE81123"/>
+                    <SolidColorBrush x:Key="EquationBrush9" Color="#FFE3008C"/>
+                    <SolidColorBrush x:Key="EquationBrush10" Color="#FFB31564"/>
                     <SolidColorBrush x:Key="EquationBrush11" Color="#FFFFB900"/>
                     <SolidColorBrush x:Key="EquationBrush12" Color="#FFF7630C"/>
                     <SolidColorBrush x:Key="EquationBrush13" Color="#FF8E562E"/>

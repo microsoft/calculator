@@ -59,7 +59,7 @@
 
             <Style x:Name="KGF_TitleTextBlockStyle" TargetType="TextBlock">
                 <Setter Property="FontWeight" Value="Medium"/>
-                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontSize" Value="16"/>
                 <Setter Property="TextWrapping" Value="WrapWholeWords"/>
                 <Setter Property="AutomationProperties.HeadingLevel" Value="Level2"/>
             </Style>
@@ -174,10 +174,12 @@
                               FontFamily="{ThemeResource SymbolThemeFontFamily}"
                               FontSize="16"
                               Glyph="&#xE72B;"/>
-                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
-                    <TextBlock Margin="-5,19,0,0"
-                               FontSize="11"
-                               Text="{x:Bind ViewModel.FunctionLabelIndex}"/>
+                    <StackPanel FlowDirection="LeftToRight" Orientation="Horizontal">
+                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
+                        <TextBlock Margin="-5,19,0,0"
+                                   FontSize="11"
+                                   Text="{x:Bind ViewModel.FunctionLabelIndex}"/>
+                    </StackPanel>
                 </StackPanel>
             </Button>
             <controls:MathRichEditBox Grid.Column="1"
@@ -192,7 +194,7 @@
                    Grid.Row="1"
                    Margin="12,12,10,0"
                    Style="{StaticResource KGF_TitleTextBlockStyle}"
-                   FontSize="18"
+                   FontSize="20"
                    AutomationProperties.HeadingLevel="Level1"/>
 
         <ListView x:Name="KeyGraphFeaturesListView"

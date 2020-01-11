@@ -249,8 +249,8 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
                 equationColorHtml << L"color:rgb(" << color.R.ToString()->Data() << L"," << color.G.ToString()->Data() << L"," << color.B.ToString()->Data()
                                   << L");";
 
-                equationHtml << L"<tr style=\"margin: 0pt 0pt 0pt 0pt; padding: 0pt 0pt 0pt 0pt; \"><td><span style=\"font-size: 22pt; line-height: 0;" << equationColorHtml.str()
-                             << L"\">&#x25A0;</span></td><td><div style=\"margin: 4pt 0pt 0pt 6pt;\">";
+                equationHtml << L"<tr style=\"margin: 0pt 0pt 0pt 0pt; padding: 0pt 0pt 0pt 0pt; \"><td><span style=\"font-size: 22pt; line-height: 0;"
+                             << equationColorHtml.str() << L"\">&#x25A0;</span></td><td><div style=\"margin: 4pt 0pt 0pt 6pt;\">";
                 equationHtml << EscapeHtmlSpecialCharacters(expression)->Data();
                 equationHtml << L"</div></td>";
             }
@@ -542,4 +542,12 @@ void GraphingCalculator::OnSettingsFlyout_Closing(FlyoutBase ^ sender, FlyoutBas
     auto flyout = static_cast<Flyout ^>(sender);
     auto graphingSetting = static_cast<GraphingSettings ^>(flyout->Content);
     args->Cancel = graphingSetting->CanBeClose();
+}
+
+void GraphingCalculator::OnEquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
+{
+    if (!e->OriginalText->IsEmpty())
+    {
+        e->FormattedText = GraphingControl->FormatMathML(e->OriginalText);
+    }
 }

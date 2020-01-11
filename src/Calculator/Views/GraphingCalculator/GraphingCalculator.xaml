@@ -567,6 +567,9 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
                                   FontSize="14"
                                   Glyph="&#xE895;"/>
+                        <Button.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="Number0" Modifiers="Control"/>
+                        </Button.KeyboardAccelerators>
                     </Button>
                 </StackPanel>
             </Border>
@@ -611,6 +614,7 @@
             <!-- This control should be within a grid that limits the hight to keep the sticky footer functionality from breaking -->
             <local:EquationInputArea x:Name="EquationInputAreaControl"
                                      Margin="0,4,0,0"
+                                     EquationFormatRequested="OnEquationFormatRequested"
                                      Equations="{x:Bind ViewModel.Equations}"
                                      KeyGraphFeaturesRequested="OnEquationKeyGraphFeaturesRequested"
                                      Variables="{x:Bind ViewModel.Variables}"
