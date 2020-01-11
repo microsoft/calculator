@@ -277,6 +277,8 @@
                                                 <SolidColorBrush x:Key="EquationBoxErrorBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                                                 <SolidColorBrush x:Key="EquationBoxErrorBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
                                                 <Thickness x:Key="EquationTextBoxBorderThickness">1</Thickness>
+                                                <SolidColorBrush x:Key="EquationButtonHideLineForegroundBrush" Color="{ThemeResource SystemColorButtonTextColor}"/>
+                                                <SolidColorBrush x:Key="EquationButtonHideLineBackgroundBrush" Color="{ThemeResource SystemColorGrayTextColor}"/>
                                             </ResourceDictionary>
                                         </ResourceDictionary.ThemeDictionaries>
                                     </ResourceDictionary>
