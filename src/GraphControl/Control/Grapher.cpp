@@ -287,7 +287,7 @@ namespace GraphControl
             if (graphExpression = m_solver->ParseInput(request))
             {
                 initResult = TryInitializeGraph(keepCurrentView, graphExpression.get());
-                
+
                 if (initResult != nullopt)
                 {
                     UpdateGraphOptions(m_graph->GetOptions(), validEqs);

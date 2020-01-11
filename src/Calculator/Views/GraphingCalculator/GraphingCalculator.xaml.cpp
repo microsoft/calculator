@@ -48,12 +48,14 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::UI::Popups;
+using namespace Windows::UI::ViewManagement;
 
 constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, IsSmallState);
 
 GraphingCalculator::GraphingCalculator()
+    : m_accessibilitySettings{ ref new AccessibilitySettings() }
 {
     InitializeComponent();
 
@@ -82,6 +84,13 @@ GraphingCalculator::GraphingCalculator()
     virtualKey->Key = (VirtualKey)187; // OemAdd key
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomInButton->KeyboardAccelerators->Append(virtualKey);
+
+    // add shadow to the trace pointer
+    AddTracePointerShadow();
+    // hide the shadow in high contrast mode
+    CursorShadow->Visibility = m_accessibilitySettings->HighContrast ? ::Visibility::Collapsed : ::Visibility::Visible;
+    m_accessibilitySettings->HighContrastChanged +=
+        ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &GraphingCalculator::OnHighContrastChanged);
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
@@ -185,8 +194,8 @@ void GraphingCalculator::OnTracePointChanged(Point newPoint)
 void CalculatorApp::GraphingCalculator::OnPointerPointChanged(Windows::Foundation::Point newPoint)
 {
     // Move the pointer glyph to where it is supposed to be.
-    // because the glyph is centered and has some spacing, to get the point to properly line up with the glyph, move the x point over 2 px
-    TracePointer->Margin = Thickness(newPoint.X - 2, newPoint.Y, 0, 0);
+    Canvas::SetLeft(TracePointer, newPoint.X);
+    Canvas::SetTop(TracePointer, newPoint.Y);
 }
 
 GraphingCalculatorViewModel ^ GraphingCalculator::ViewModel::get()
@@ -537,11 +546,38 @@ void GraphingCalculator::DisplayGraphSettings()
     flyoutGraphSettings->ShowAt(GraphSettingsButton);
 }
 
+void CalculatorApp::GraphingCalculator::AddTracePointerShadow()
+{
+    auto compositor = ::Hosting::ElementCompositionPreview::GetElementVisual(CursorPath)->Compositor;
+    auto dropShadow = compositor->CreateDropShadow();
+    dropShadow->BlurRadius = 6;
+    dropShadow->Opacity = 0.33f;
+    dropShadow->Offset = ::Numerics::float3(2, 2, 0); 
+    dropShadow->Mask = CursorPath->GetAlphaMask();
+
+    auto shadowSpriteVisual = compositor->CreateSpriteVisual();
+    shadowSpriteVisual->Size = ::Numerics::float2(static_cast<float>(CursorPath->ActualWidth), static_cast<float>(CursorPath->ActualHeight));
+    shadowSpriteVisual->Shadow = dropShadow;
+    ::Hosting::ElementCompositionPreview::SetElementChildVisual(CursorShadow, shadowSpriteVisual);
+}
+
 void GraphingCalculator::OnSettingsFlyout_Closing(FlyoutBase ^ sender, FlyoutBaseClosingEventArgs ^ args)
 {
     auto flyout = static_cast<Flyout ^>(sender);
     auto graphingSetting = static_cast<GraphingSettings ^>(flyout->Content);
     args->Cancel = graphingSetting->CanBeClose();
+}
+
+void GraphingCalculator::LeftGrid_SizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ e)
+{
+    // Initialize the pointer to the correct location to match initial value in GraphControl\DirectX\RenderMain.cpp
+    Canvas::SetLeft(TracePointer, e->NewSize.Width / 2 + 40);
+    Canvas::SetTop(TracePointer, e->NewSize.Height / 2 - 40);
+}
+
+void GraphingCalculator::OnHighContrastChanged(AccessibilitySettings ^ sender, Object ^ /*args*/)
+{
+    CursorShadow->Visibility = sender->HighContrast ? ::Visibility::Collapsed : ::Visibility::Visible;
 }
 
 void GraphingCalculator::OnEquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)

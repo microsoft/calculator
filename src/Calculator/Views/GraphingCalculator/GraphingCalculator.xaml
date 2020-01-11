@@ -312,6 +312,11 @@
                         <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
                     </Style>
                     <SolidColorBrush x:Key="SwitchToggleBackground" Color="#40000000"/>
+                    <Style x:Key="TracePointerPathStyle" TargetType="Path">
+                        <Setter Property="Fill" Value="White"/>
+                        <Setter Property="Stroke" Value="Black"/>
+                        <Setter Property="StrokeThickness" Value="1"/>
+                    </Style>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
                     <Style x:Key="ThemedSwitchModeToggleButtonStyle"
@@ -338,6 +343,11 @@
                         <Setter Property="CornerRadius" Value="4"/>
                         <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
                     </Style>
+                    <Style x:Key="TracePointerPathStyle" TargetType="Path">
+                        <Setter Property="Fill" Value="White"/>
+                        <Setter Property="Stroke" Value="Black"/>
+                        <Setter Property="StrokeThickness" Value="1"/>
+                    </Style>
                     <SolidColorBrush x:Key="SwitchToggleBackground" Color="#60ffffff"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
@@ -358,6 +368,11 @@
                         <Setter Property="Background" Value="{ThemeResource ToolTipBackground}"/>
                     </Style>
                     <SolidColorBrush x:Key="SwitchToggleBackground" Color="{ThemeResource SystemColorWindowColor}"/>
+                    <Style x:Key="TracePointerPathStyle" TargetType="Path">
+                        <Setter Property="Fill" Value="{ThemeResource SystemColorHighlightTextColor}"/>
+                        <Setter Property="Stroke" Value="{ThemeResource SystemColorWindowTextColor}"/>
+                        <Setter Property="StrokeThickness" Value="2"/>
+                    </Style>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
@@ -413,6 +428,7 @@
         <Grid x:Name="LeftGrid"
               Grid.Row="1"
               Padding="0,4,0,0"
+              SizeChanged="LeftGrid_SizeChanged"
               Visibility="{x:Bind ShouldDisplayPanel(IsSmallState, SwitchModeToggleButton.IsOn, x:True), Mode=OneWay}">
             <Grid.Resources>
                 <ResourceDictionary>
@@ -507,18 +523,17 @@
                     </Button>
                 </StackPanel>
             </Border>
-            <Border x:Name="TracePointer"
-                    Width="16"
-                    Height="18"
-                    Margin="48,50,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Visibility="Collapsed">
-                <FontIcon Foreground="Red"
-                          FontFamily="{StaticResource CalculatorFontFamily}"
-                          FontSize="18"
-                          Glyph="&#xE3B3;"/>
-            </Border>
+            <Canvas>
+                <Grid x:Name="TracePointer" Visibility="Collapsed">
+                    <Border x:Name="CursorShadow"/>
+                    <Path x:Name="CursorPath"
+                          Width="18"
+                          Height="18"
+                          Style="{ThemeResource TracePointerPathStyle}"
+                          Data="M0 0 l1371 1371 H538 l-538 538 Z"
+                          Stretch="Uniform"/>
+                </Grid>
+            </Canvas>
             <Border MinWidth="36"
                     Margin="0,0,12,12"
                     HorizontalAlignment="Right"
