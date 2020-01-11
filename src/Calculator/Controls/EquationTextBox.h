@@ -52,6 +52,7 @@ namespace CalculatorApp
 
             void OnRichEditBoxGotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
             void OnRichEditBoxLostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+            void OnRichEditTextChanged(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
             void OnDeleteButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnEquationButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);

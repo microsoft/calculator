@@ -179,18 +179,28 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
     auto tb = static_cast<EquationTextBox ^>(sender);
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
     unsigned int index;
+
     if (Equations->IndexOf(eq, &index))
     {
-        if (eq->FunctionLabelIndex == m_lastFunctionLabelIndex)
+        // Prevent removing the last equation
+        if (index == Equations->Size - 1)
         {
-            m_lastFunctionLabelIndex--;
+            return;
         }
 
-        if (index == Equations->Size - 1 && Equations->Size > 1)
-        {
-            Equations->GetAt(Equations->Size - 2)->IsLastItemInList = true;
-        }
         Equations->RemoveAt(index);
+        int lastIndex = Equations->Size - 1;
+
+        if (Equations->Size <= 1)
+        {
+            m_lastFunctionLabelIndex = 1;
+        }
+        else
+        {
+            m_lastFunctionLabelIndex = Equations->GetAt(lastIndex - 1)->FunctionLabelIndex + 1;
+        }
+
+        Equations->GetAt(lastIndex)->FunctionLabelIndex = m_lastFunctionLabelIndex;
     }
 }
 
