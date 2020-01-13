@@ -386,6 +386,26 @@ double EquationInputArea::validateDouble(String ^ value, double defaultValue)
     return numberOfVariables == 0 ? ::Visibility::Collapsed : ::Visibility::Visible;
 }
 
+String ^ EquationInputArea::GetChevronIcon(bool isCollapsed)
+{
+    return isCollapsed ? L"\uE70E" : L"\uE70D";
+}
+
+void EquationInputArea::VariableAreaTapped(Object ^ sender, TappedRoutedEventArgs ^ e)
+{
+    auto selectedVariableViewModel = static_cast<VariableViewModel ^>(static_cast<Grid ^>(sender)->DataContext);
+    selectedVariableViewModel->SliderSettingsVisible = !selectedVariableViewModel->SliderSettingsVisible;
+
+    // Collapse all other slider settings that are open
+    for (auto variableViewModel : Variables)
+    {
+        if (variableViewModel != selectedVariableViewModel)
+        {
+            variableViewModel->SliderSettingsVisible = false;
+        }
+    }
+}
+  
 void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
 {
     EquationFormatRequested(sender, e);
