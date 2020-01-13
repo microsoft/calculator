@@ -464,8 +464,15 @@ namespace GraphControl
     vector<Equation ^> Grapher::GetGraphableEquations()
     {
         vector<Equation ^> validEqs;
-        copy_if(begin(Equations), end(Equations), back_inserter(validEqs),
-            [](auto eq) { return eq->IsGraphableEquation(); });
+
+        for (Equation ^ eq : Equations)
+        {
+            if (eq->IsGraphableEquation())
+            {
+                validEqs.push_back(eq);
+            }
+        }
+
         return validEqs;
     }
 
