@@ -81,6 +81,8 @@ jobs:
       pushPkgName: calculator.app
       version: $(versionMajor).$(versionMinor).$(versionBuild)
       owner: paxeeapps
+      provData: false
+
 
   - task: PublishBuildArtifacts@1
     displayName: Publish vpack\app artifact with vpack manifest
