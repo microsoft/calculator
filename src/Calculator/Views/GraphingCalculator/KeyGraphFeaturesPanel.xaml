@@ -42,11 +42,14 @@
                     <Style x:Key="ThemedBackButtonStyle" TargetType="Button"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
-            <SolidColorBrush x:Key="EquationButtonBackgroundBrush" Color="{x:Bind ViewModel.LineColor, Mode=OneWay}"/>
-            <SolidColorBrush x:Key="EquationButtonBorderBrush" Color="{x:Bind ViewModel.LineColor, Mode=OneWay}"/>
+            <!-- EquationButtonBackgroundBrush is only used in Dark and Light theme. -->
+            <!-- The x:Name property is required for High Contrast theme so the brush is indexed properly. -->
+            <SolidColorBrush x:Key="EquationButtonBackgroundBrush"
+                             x:Name="EquationButtonBackgroundBrush"
+                             Color="{x:Bind ViewModel.LineColor, Mode=OneWay}"/>
             <Style x:Key="BackButtonStyle" TargetType="Button">
                 <Setter Property="Background" Value="{ThemeResource EquationButtonBackgroundBrush}"/>
-                <Setter Property="BorderBrush" Value="{ThemeResource EquationButtonBorderBrush}"/>
+                <Setter Property="Foreground" Value="{ThemeResource SystemChromeWhiteColor}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -231,7 +234,6 @@
                     MinWidth="44"
                     VerticalAlignment="Stretch"
                     Style="{ThemeResource ThemedBackButtonStyle}"
-                    Foreground="{ThemeResource SystemChromeWhiteColor}"
                     contract7Present:CornerRadius="0"
                     Click="BackButton_Click">
                 <StackPanel Margin="5,0"
