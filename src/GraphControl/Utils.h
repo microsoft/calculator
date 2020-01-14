@@ -349,14 +349,6 @@ namespace Utils
                 defaultValue,
                 ref new Windows::UI::Xaml::PropertyChangedCallback(callback)));
     }
-
-    template <typename T>
-    void Swap(T *ref1, T *ref2)
-    {
-        T temp = *ref1;
-        *ref1 = *ref2;
-        *ref2 = temp;
-    }
 }
 
 // This goes into the header to define the property, in the public: section of the class

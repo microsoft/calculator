@@ -372,14 +372,6 @@ namespace Utils
                 ref new Windows::UI::Xaml::PropertyChangedCallback(callback)));
     }
 
-    template <typename T>
-    void Swap(T *ref1, T *ref2)
-    {
-        T temp = *ref1;
-        *ref1 = *ref2;
-        *ref2 = temp;
-    }
-
     void IFTPlatformException(HRESULT hr);
     Platform::String ^ GetStringValue(Platform::String ^ input);
     bool IsLastCharacterTarget(std::wstring const& input, wchar_t target);
