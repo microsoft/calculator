@@ -30,6 +30,7 @@ namespace CalculatorApp
             event Windows::UI::Xaml::RoutedEventHandler ^ RemoveButtonClicked;
             event Windows::UI::Xaml::RoutedEventHandler ^ KeyGraphFeaturesButtonClicked;
             event Windows::Foundation::EventHandler<MathRichEditBoxSubmission ^> ^ EquationSubmitted;
+            event Windows::Foundation::EventHandler<MathRichEditBoxFormatRequest ^> ^ EquationFormatRequested;
             event Windows::UI::Xaml::RoutedEventHandler ^ EquationButtonClicked;
 
             Platform::String ^ GetEquationText();
@@ -51,6 +52,7 @@ namespace CalculatorApp
 
             void OnRichEditBoxGotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
             void OnRichEditBoxLostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+            void OnRichEditTextChanged(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
             void OnDeleteButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnEquationButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
@@ -79,6 +81,7 @@ namespace CalculatorApp
             bool m_isPointerOver;
             bool m_isColorChooserFlyoutOpen;
             void OnEquationSubmitted(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxSubmission ^ args);
+            void OnEquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ args);
         };
     }
 }

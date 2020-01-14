@@ -76,7 +76,6 @@ void EquationInputArea::AddNewEquation()
         return;
     }
 
-    
     m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
 
     int colorIndex;
@@ -180,18 +179,28 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
     auto tb = static_cast<EquationTextBox ^>(sender);
     auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
     unsigned int index;
+
     if (Equations->IndexOf(eq, &index))
     {
-        if (eq->FunctionLabelIndex == m_lastFunctionLabelIndex)
+        // Prevent removing the last equation
+        if (index == Equations->Size - 1)
         {
-            m_lastFunctionLabelIndex--;
+            return;
         }
 
-        if (index == Equations->Size - 1 && Equations->Size > 1)
-        {
-            Equations->GetAt(Equations->Size - 2)->IsLastItemInList = true;
-        }
         Equations->RemoveAt(index);
+        int lastIndex = Equations->Size - 1;
+
+        if (Equations->Size <= 1)
+        {
+            m_lastFunctionLabelIndex = 1;
+        }
+        else
+        {
+            m_lastFunctionLabelIndex = Equations->GetAt(lastIndex - 1)->FunctionLabelIndex + 1;
+        }
+
+        Equations->GetAt(lastIndex)->FunctionLabelIndex = m_lastFunctionLabelIndex;
     }
 }
 
@@ -375,4 +384,29 @@ double EquationInputArea::validateDouble(String ^ value, double defaultValue)
 ::Visibility EquationInputArea::ManageEditVariablesButtonVisibility(unsigned int numberOfVariables)
 {
     return numberOfVariables == 0 ? ::Visibility::Collapsed : ::Visibility::Visible;
+}
+
+String ^ EquationInputArea::GetChevronIcon(bool isCollapsed)
+{
+    return isCollapsed ? L"\uE70E" : L"\uE70D";
+}
+
+void EquationInputArea::VariableAreaTapped(Object ^ sender, TappedRoutedEventArgs ^ e)
+{
+    auto selectedVariableViewModel = static_cast<VariableViewModel ^>(static_cast<Grid ^>(sender)->DataContext);
+    selectedVariableViewModel->SliderSettingsVisible = !selectedVariableViewModel->SliderSettingsVisible;
+
+    // Collapse all other slider settings that are open
+    for (auto variableViewModel : Variables)
+    {
+        if (variableViewModel != selectedVariableViewModel)
+        {
+            variableViewModel->SliderSettingsVisible = false;
+        }
+    }
+}
+  
+void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
+{
+    EquationFormatRequested(sender, e);
 }

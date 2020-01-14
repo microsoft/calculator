@@ -25,9 +25,12 @@ namespace CalculatorApp
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<ViewModel::VariableViewModel ^> ^, Variables);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Windows::UI::Xaml::Media::SolidColorBrush ^> ^, AvailableColors);
         event Windows::Foundation::EventHandler<ViewModel::EquationViewModel^>^ KeyGraphFeaturesRequested;
+        event Windows::Foundation::EventHandler<CalculatorApp::Controls::MathRichEditBoxFormatRequest^> ^ EquationFormatRequested;
 
     public:
         static Windows::UI::Xaml::Visibility ManageEditVariablesButtonVisibility(unsigned int numberOfVariables);
+
+        static Platform::String ^ GetChevronIcon(bool isCollapsed);
 
         static Windows::UI::Xaml::Media::SolidColorBrush
             ^ ToSolidColorBrush(Windows::UI::Color color) { return ref new Windows::UI::Xaml::Media::SolidColorBrush(color); }
@@ -63,5 +66,7 @@ namespace CalculatorApp
         int m_lastLineColorIndex;
         int m_lastFunctionLabelIndex;
         ViewModel::EquationViewModel ^ m_equationToFocus;
+        void VariableAreaTapped(Platform::Object ^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
+        void EquationTextBox_EquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ e);
     };
 }

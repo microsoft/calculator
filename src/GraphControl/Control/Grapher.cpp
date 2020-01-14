@@ -287,7 +287,7 @@ namespace GraphControl
             if (graphExpression = m_solver->ParseInput(request))
             {
                 initResult = TryInitializeGraph(keepCurrentView, graphExpression.get());
-                
+
                 if (initResult != nullopt)
                 {
                     UpdateGraphOptions(m_graph->GetOptions(), validEqs);
@@ -857,6 +857,13 @@ String ^ Grapher::ConvertToLinear(String ^ mmlString)
     m_solver->FormatOptions().SetFormatType(s_defaultFormatType);
 
     return ref new String(linearExpression.c_str());
+}
+
+String ^ Grapher::FormatMathML(String ^ mmlString)
+{
+    auto expression = m_solver->ParseInput(mmlString->Data());
+    auto formattedExpression = m_solver->Serialize(expression.get());
+    return ref new String(formattedExpression.c_str());
 }
 
 void Grapher::OnAxesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue)

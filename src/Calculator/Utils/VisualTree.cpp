@@ -19,8 +19,6 @@ FrameworkElement ^ VisualTree::FindDescendantByName(DependencyObject ^ element, 
     }
 
     auto frameworkElement = dynamic_cast<FrameworkElement ^>(element);
-    auto nsame = frameworkElement->Name->Data();
-    nsame = nsame;
     if (frameworkElement != nullptr && name->Equals(frameworkElement->Name))
     {
         return frameworkElement;
