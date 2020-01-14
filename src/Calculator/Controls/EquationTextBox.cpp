@@ -273,18 +273,23 @@ void EquationTextBox::UpdateButtonsVisualState()
 void EquationTextBox::UpdateCommonVisualState()
 {
     String ^ state = nullptr;
+    bool richEditHasContent = RichEditHasContent();
 
     if (m_HasFocus && HasError)
     {
         state = "FocusedError";
     }
-    else if (IsAddEquationMode && ((m_HasFocus || m_isPointerOver) && !RichEditHasContent()))
+    else if (IsAddEquationMode && m_HasFocus && !richEditHasContent)
     {
-        state = "AddEquation";
+        state = "AddEquationFocused";
     }
     else if (m_HasFocus)
     {
         state = "Focused";
+    }
+    else if (IsAddEquationMode && m_isPointerOver && !richEditHasContent)
+    {
+        state = "AddEquation";
     }
     else if (HasError && (m_isPointerOver || m_isColorChooserFlyoutOpen))
     {

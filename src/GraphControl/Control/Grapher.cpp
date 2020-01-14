@@ -277,8 +277,15 @@ namespace GraphControl
                     {
                         request += L"<mo>,</mo>";
                     }
+                    auto equationRequest = eq->GetRequest()->Data();
 
-                    request += eq->GetRequest()->Data();
+                    // If the equation request failed, then fail graphing.
+                    if (equationRequest == nullptr)
+                    {
+                        return false;
+                    }
+
+                    request += equationRequest;
                 }
 
                 request += s_getGraphClosingTags;
