@@ -264,9 +264,9 @@ void UnitConverterViewModel::OnSwitchActive(Platform::Object ^ unused)
     }
 
     m_valueFromUnlocalized.swap(m_valueToUnlocalized);
-    Utils::Swap(&m_localizedValueFromFormat, &m_localizedValueToFormat);
+    swap(m_localizedValueFromFormat, m_localizedValueToFormat);
 
-    Utils::Swap(&m_Unit1AutomationName, &m_Unit2AutomationName);
+    swap(m_Unit1AutomationName, m_Unit2AutomationName);
     RaisePropertyChanged(Unit1AutomationNamePropertyName);
     RaisePropertyChanged(Unit2AutomationNamePropertyName);
 
