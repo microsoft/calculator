@@ -48,3 +48,4 @@ jobs:
       runSettingsFile: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/${{ parameters.runsettingsFileName }}
       platform: ${{ parameters.platform }}
       configuration: Release
+      testFiltercriteria: Priority=0
