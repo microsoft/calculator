@@ -57,6 +57,7 @@ namespace CalculatorUITests
 
         #region Smoke Tests
         [TestMethod]
+        [Priority(0)]
         public void SmokeTest_Add()
         {
             page.StandardOperators.NumberPad.Input(3.5);
@@ -67,6 +68,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void SmokeTest_Add_KeyboardInput()
         {
             page.Header.SendKeys("3+3=");
@@ -74,6 +76,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void SmokeTest_Subtract()
         {
             page.StandardOperators.NumberPad.Input(4.3);
@@ -84,6 +87,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void SmokeTest_History()
         {
             page.StandardOperators.NumberPad.Input(-3);
@@ -109,6 +113,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void SmokeTest_Memory()
         {
             page.StandardOperators.NumberPad.Input(3);
@@ -142,6 +147,7 @@ namespace CalculatorUITests
 
         #region Basic Arthimetic Tests
         [TestMethod]
+        [Priority(1)]
         public void Operator_Reciprocal()
         {
             page.StandardOperators.NumberPad.Input(4);
@@ -150,6 +156,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void Operator_Squared()
         {
             page.StandardOperators.NumberPad.Input(-15.5);
@@ -158,6 +165,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void Operator_SquareRoot()
         {
             page.StandardOperators.NumberPad.Input(144);
@@ -166,6 +174,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void Operator_Percent()
         {
             page.StandardOperators.NumberPad.Input(600);
@@ -177,6 +186,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void Operator_Delete()
         {
             page.StandardOperators.NumberPad.Input(-12345);
@@ -186,6 +196,7 @@ namespace CalculatorUITests
 
         // Issue #817: Prefixed multiple zeros
         [TestMethod]
+        [Priority(1)]
         public void Operator_Delete_Prefix_Zeros()
         {
             page.StandardOperators.NumberPad.Input(0.1); // To enter decimal point
@@ -196,6 +207,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void Operator_ClearAll()
         {
             page.StandardOperators.NumberPad.Input(12345);
@@ -206,6 +218,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void Operator_ClearEntry()
         {
             page.StandardOperators.NumberPad.Input(-12345);
@@ -218,6 +231,7 @@ namespace CalculatorUITests
 
         #region Keyboard Input Tests
         [TestMethod]
+        [Priority(0)]
         public void KeyboardInput_Subtract()
         {
             page.Header.SendKeys("70090-890987=");
@@ -225,6 +239,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void KeyboardInput_Multiply()
         {
             page.Header.SendKeys("-15*3=");
@@ -232,6 +247,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void KeyboardInput_Divide()
         {
             page.Header.SendKeys("26/13=");
@@ -239,6 +255,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void KeyboardInput_SquareRoot()
         {
             page.Header.SendKeys("100@");
@@ -246,6 +263,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(1)]
         public void KeyboardInput_Percent()
         {
             page.Header.SendKeys("34+7%=");
@@ -256,6 +274,7 @@ namespace CalculatorUITests
 
         #region Memory Tests
         [TestMethod]
+        [Priority(0)]
         public void Memory_AddTest()
         {
             page.StandardOperators.NumberPad.Input(12);
@@ -271,6 +290,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void Memory_SubtractTest()
         {
             page.StandardOperators.NumberPad.Input(12);
@@ -286,6 +306,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void Memory_RecallTest()
         {
             page.StandardOperators.NumberPad.Input(12);
@@ -301,6 +322,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
+        [Priority(0)]
         public void Memory_ClearTest()
         {
             page.StandardOperators.NumberPad.Input(12);
