@@ -30,11 +30,6 @@ jobs:
     platform: ARM
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-- template: ./templates/build-app-internal.yaml
-  parameters:
-    platform: ARM64
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
-
 - template: ./templates/run-ui-tests.yaml
   parameters:
     platform: x64
