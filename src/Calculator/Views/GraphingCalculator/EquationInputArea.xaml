@@ -305,6 +305,16 @@
                                                 <Setter Target="EquationButton.IsEnabled" Value="false"/>
                                             </VisualState.Setters>
                                         </VisualState>
+                                        <VisualState x:Name="AddEquationFocused">
+                                            <VisualState.Setters>
+                                                <Setter Target="FunctionNumberLabelTextBlock.Visibility" Value="Collapsed"/>
+                                                <Setter Target="EquationButton.Background" Value="{ThemeResource EquationButtonHideLineBackgroundBrush}"/>
+                                                <Setter Target="EquationButton.BorderBrush" Value="{ThemeResource EquationButtonHideLineBackgroundBrush}"/>
+                                                <Setter Target="EquationButton.Foreground" Value="{ThemeResource EquationButtonHideLineForegroundBrush}"/>
+                                                <Setter Target="EquationButton.IsEnabled" Value="false"/>
+                                                <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource TextBoxBackgroundThemeBrush}"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
                                         <VisualState x:Name="Error">
                                             <VisualState.Setters>
                                                 <Setter Target="MathRichEditBox.PlaceholderText" Value=""/>
