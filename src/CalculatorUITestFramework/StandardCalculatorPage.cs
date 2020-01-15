@@ -23,7 +23,7 @@ namespace CalculatorUITestFramework
         {
             // Ensure that calculator is in standard mode
             this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            this.CalculatorResults.CheckIfResultsDisplayIsPresent();
+            this.CalculatorResults.IsResultsDisplayPresent();
         }
         /// <summary>
         /// Clear the Calculator display, Memory Panel and optionally the History Panel

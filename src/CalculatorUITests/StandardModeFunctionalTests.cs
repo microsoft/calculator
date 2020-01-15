@@ -4,7 +4,6 @@
 using CalculatorUITestFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 using System;
 using System.Drawing;
 
@@ -48,9 +47,9 @@ namespace CalculatorUITests
         [TestInitialize]
         public void TestInit()
         {
+            page.CalculatorApp.EnsureCalculatorHasFocus();
             page.EnsureCalculatorIsInStandardMode();
             page.EnsureCalculatorResultTextIsZero();
-            page.CalculatorApp.EnsureCalculatorHasFocus();
         }
 
         [TestCleanup]
@@ -87,7 +86,7 @@ namespace CalculatorUITests
             page.StandardOperators.ClearEntryButton.Click();
             Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText()); //verifies the CE button
             page.StandardOperators.ClearButton.Click();
-            page.CalculatorResults.CheckIfResultsExpressionIsClear(); //verifies the C button
+            page.CalculatorResults.IsResultsExpressionClear(); //verifies the C button
         }
 
         [TestMethod]
@@ -260,7 +259,7 @@ namespace CalculatorUITests
             Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText()); //verifies the CE hotkey
             page.CalculatorApp.EnsureCalculatorHasFocus();
             page.CalculatorApp.Header.SendKeys(Keys.Escape);
-            page.CalculatorResults.CheckIfResultsExpressionIsClear(); //verifies the C hotkey
+            page.CalculatorResults.IsResultsExpressionClear(); //verifies the C hotkey
         }
 
         [TestMethod]
@@ -609,7 +608,7 @@ namespace CalculatorUITests
             page.CalculatorApp.Header.SendKeys(Keys.Subtract);
             page.CalculatorApp.Header.SendKeys("9");
             page.StandardOperators.ClearButton.Click();
-            page.CalculatorResults.CheckIfResultsExpressionIsClear();
+            page.CalculatorResults.IsResultsExpressionClear();
         }
 
         // Issue #817: Prefixed multiple zeros
@@ -629,212 +628,6 @@ namespace CalculatorUITests
 
         #endregion
 
-        #region Standard Memory Tests
-
-        /// <summary>
-        /// These automated tests verify using memory related buttons in the Memory Panel, and in the memory flyout
-        /// Memory control buttons are verified at the end of automated tested in MouseInput_MemoryButtons()
-        /// </summary>
-
-        [TestMethod]
-        [Priority(2)]
-        public void StandardMemory_Panel()
-        {
-            //Verify context menu MC, M+, M-, and verify the clear memory button in the Memory panel
-            page.StandardOperators.NumberPad.Num3Button.Click();
-            page.MemoryPanel.MemButton.Click();
-            page.MemoryPanel.MemButton.Click();
-            page.MemoryPanel.OpenMemoryPanel();
-
-            Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
-            var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
-            moveToListView.MoveToElement(memoryItems[0]);
-            moveToListView.ContextClick(memoryItems[0]);
-            moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
-            Assert.IsTrue(memoryItems[0].Text.Equals("0", StringComparison.InvariantCultureIgnoreCase));
-
-            moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowUp + Keys.ArrowUp + Keys.Enter);
-            Assert.IsTrue(memoryItems[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
-
-            moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
-            var memoryItems2 = page.MemoryPanel.GetAllMemoryListViewItems();
-            Assert.IsTrue(memoryItems2[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
-
-            page.MemoryPanel.ClearMemory.Click();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
-        }
-
-        [TestMethod]
-        [Priority(2)]
-        public void StandardMemory_Flyout()
-        {
-            //Verify context menu MC, M+, M-, and ClearMemoryItemButton, and verify the clear memory button in the Memory flyout
-            page.StandardOperators.NumberPad.Num3Button.Click();
-            page.MemoryPanel.MemButton.Click();
-            page.MemoryPanel.MemButton.Click();
-
-            page.MemoryPanel.OpenMemoryFlyout();
-            var memoryItems = page.MemoryPanel.GetAllMemoryFlyoutListViewItems();
-            Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
-            moveToListView.MoveToElement(memoryItems[0]);
-            moveToListView.ContextClick(memoryItems[0]);
-            moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
-            Assert.IsTrue(memoryItems[0].Text.Equals("0", StringComparison.InvariantCultureIgnoreCase));
-
-            page.MemoryPanel.OpenMemoryFlyout();
-            moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowUp + Keys.ArrowUp + Keys.Enter);
-            Assert.IsTrue(memoryItems[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
-
-            page.MemoryPanel.OpenMemoryFlyout();
-            moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
-            var memoryItems2 = page.MemoryPanel.GetAllMemoryListViewItems();
-            Assert.IsTrue(memoryItems2[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
-
-            page.MemoryPanel.OpenMemoryFlyout();
-            page.MemoryPanel.ClearMemory.Click();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
-
-            page.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
-        }
-
-        #endregion
-
-        #region Standard History Tests
-
-        /// <summary>
-        /// These automated tests (that replace this manual test case) verify using
-        /// history related button/keyboard actions in the History Panel,
-        /// and in the History flyout. The History button is verified in the automated test MouseInput_HistoryButtons().
-        /// To-Do: Currently, an empty history panel on initial launch cannot be verified through automation.
-        /// The automation cannot see the Windows element "HistoryEmpty."  This should be automated once the issue is resolved.
-        /// </summary>
-
-        [TestMethod]
-        [Priority(2)]
-        public void StandardHistory_Panel()
-        {
-
-            //Verify selecting history items form the history panel, and clearing the history panel
-            page.HistoryPanel.OpenHistoryPanel();
-
-            page.StandardOperators.NumberPad.Input(-3);
-            page.StandardOperators.PlusButton.Click();
-            page.StandardOperators.NumberPad.Input(-2.6);
-            page.StandardOperators.EqualButton.Click();
-
-            page.StandardOperators.NumberPad.Input(2);
-            page.StandardOperators.MinusButton.Click();
-            page.StandardOperators.NumberPad.Input(3);
-            page.StandardOperators.EqualButton.Click();
-
-            var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyItems[0].Text.Equals("2 Minus ( 3= Minus (1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].Text.Equals("-3 + -2.6= Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
-
-            Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
-
-            Actions clickHistoryItemsw1 = new Actions(WinAppDriver.Instance.CalculatorSession);
-            clickHistoryItemsw1.Click(historyItems[1]);
-            clickHistoryItemsw1.Perform();
-
-            Assert.AreEqual("-5.6", page.CalculatorResults.GetCalculatorResultText());
-            Assert.AreEqual("-3 + -2.6=", page.CalculatorResults.GetCalculatorExpressionText());
-
-            Actions clickHistoryItemsw0 = new Actions(WinAppDriver.Instance.CalculatorSession);
-            clickHistoryItemsw0.Click(historyItems[0]);
-            clickHistoryItemsw0.Perform();
-
-            Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
-
-            page.HistoryPanel.ClearHistory();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
-        }
-
-        [TestMethod]
-        [Priority(2)]
-        public void StandardHistory_Flyout()
-        {
-
-            //Verify selecting history items form the history flyout, using up/down arrows and [enter] to select history items,
-            // and clearing the history flyout.  Additionally, verify history panel and history flyout have same information.
-
-            page.HistoryPanel.OpenHistoryPanel();
-
-            page.StandardOperators.NumberPad.Input(-3);
-            page.StandardOperators.PlusButton.Click();
-            page.StandardOperators.NumberPad.Input(-2.6);
-            page.StandardOperators.EqualButton.Click();
-
-            page.StandardOperators.NumberPad.Input(2);
-            page.StandardOperators.MinusButton.Click();
-            page.StandardOperators.NumberPad.Input(3);
-            page.StandardOperators.EqualButton.Click();
-
-            var historyPanelItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyPanelItems[0].Text.Equals("2 Minus ( 3= Minus (1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyPanelItems[1].Text.Equals("-3 + -2.6= Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
-
-            Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
-
-            var historyItems = page.HistoryPanel.GetAllHistoryFlyoutListViewItems();
-            Assert.IsTrue(historyItems[0].Text.Equals("2 Minus ( 3= Minus (1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].Text.Equals("-3 + -2.6= Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
-
-            Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
-
-            page.HistoryPanel.ListViewItem.SendKeys(Keys.ArrowDown + Keys.Enter);
-
-            Assert.AreEqual("-5.6", page.CalculatorResults.GetCalculatorResultText());
-            Assert.AreEqual("-3 + -2.6=", page.CalculatorResults.GetCalculatorExpressionText());
-
-            page.HistoryPanel.OpenHistoryFlyout();
-            page.HistoryPanel.ListViewItem.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
-            Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
-
-            page.HistoryPanel.OpenHistoryFlyout();
-            page.HistoryPanel.ClearHistoryButton.Click();
-
-            page.HistoryPanel.OpenHistoryFlyout();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
-
-            page.HistoryPanel.OpenHistoryPanel();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
-        }
-
-        #endregion
-
-        #region Error Tests
-        /// <summary>
-        /// These automated tests verify errors display gracefully
-        /// Via mouse input, all basic UI functionality is checked 
-        /// </summary>
-
-        [TestMethod]
-        [Priority(1)]
-        public void Error_DivideByZero()
-        {
-            page.StandardOperators.InvertButton.Click();
-            Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText() == "Cannot divide by zero");
-        }
-
-        [TestMethod]
-        [Priority(1)]
-        public void Error_CubedNegativeNumber()
-        {
-            page.StandardOperators.NumberPad.Input(9);
-            page.StandardOperators.NegateButton.Click();
-            page.StandardOperators.SquareRootButton.Click();
-            Assert.AreEqual("Invalid input", page.CalculatorResults.GetCalculatorResultText());
-        }
-        #endregion
-
         #region AoT (Always on top) Tests
         /// <summary>
         /// These automated tests verify:
@@ -850,6 +643,7 @@ namespace CalculatorUITests
         ///     -  To-do: Need to verify "All operator buttons (except for "CE", "C", "Delete" and "="), and memory buttons are disabled" when in AoT mode
         /// - Verify app positioning after entering and exiting KOT mode
         /// </summary>
+        ///
 
         [TestMethod]
         [Priority(0)]
@@ -891,12 +685,11 @@ namespace CalculatorUITests
         [Priority(1)]
         public void AoT_HistoryFunction()
         {
-            page.HistoryPanel.ClearHistory();
             page.StandardOperators.NumberPad.Num3Button.Click();
             page.StandardOperators.PlusButton.Click();
             page.StandardOperators.NumberPad.Num3Button.Click();
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
-            page.CalculatorApp.Window.SendKeys(Keys.Enter);
+            page.StandardOperators.EqualButton.Click();
             page.CalculatorApp.Window.SendKeys(Keys.Control + "H" + Keys.Control);
             string source = WinAppDriver.Instance.CalculatorSession.PageSource;
             if (source.Contains("HistoryFlyout"))
@@ -949,12 +742,15 @@ namespace CalculatorUITests
             Size largeAoTWindowSize = new Size(502, 502);
             Size mediumAoTWindowSize = new Size(396, 322);
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = smallAoTWindowSize;
-            Assert.AreEqual("(161, 168)", page.CalculatorApp.GetCalculatorWindowSize());
+            var getSmallWindowSize = page.CalculatorApp.GetCalculatorWindowSize();
+            Assert.AreEqual(getSmallWindowSize, page.CalculatorApp.GetCalculatorWindowSize());
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeAoTWindowSize;
-            Assert.AreEqual("(502, 502)", page.CalculatorApp.GetCalculatorWindowSize());
+            var getLargeWindowSize = page.CalculatorApp.GetCalculatorWindowSize();
+            Assert.AreEqual(getLargeWindowSize, page.CalculatorApp.GetCalculatorWindowSize());
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = mediumAoTWindowSize;
-            Assert.AreEqual("(396, 322)", page.CalculatorApp.GetCalculatorWindowSize());
-            page.StandardAoTCalculatorPage.NavigateToStandardMode();
+            var getMediumAoTWindowSize = page.CalculatorApp.GetCalculatorWindowSize();
+            Assert.AreEqual(getMediumAoTWindowSize, page.CalculatorApp.GetCalculatorWindowSize());
+            page.StandardAoTCalculatorPage.ResizeAoTWindowToDiplayInvertButton(); //Resets AoT size
         }
 
         [TestMethod]
@@ -962,26 +758,29 @@ namespace CalculatorUITests
         public void AoT_ScaleRetention()
         {
             Size smallWindowSize = new Size(464, 502);
-            Size largeAoTWindowSize = new Size(502, 502);
+            //Size largeAoTWindowSize = new Size(502, 502);
 
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = smallWindowSize;
-            Assert.AreEqual("(464, 502)", page.CalculatorApp.GetCalculatorWindowSize());
+            var getSmallWindowSize = page.CalculatorApp.GetCalculatorWindowSize();
+            Assert.AreEqual(getSmallWindowSize, page.CalculatorApp.GetCalculatorWindowSize());
 
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeAoTWindowSize;
-            Assert.AreEqual("(502, 502)", page.CalculatorApp.GetCalculatorWindowSize());
+            //WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeAoTWindowSize;
+            var getLargeWindowSize = page.CalculatorApp.GetCalculatorWindowSize();
+            Assert.AreEqual(getLargeWindowSize, page.CalculatorApp.GetCalculatorWindowSize());
 
             page.StandardAoTCalculatorPage.NavigateToStandardMode();
-            Assert.AreEqual("(464, 502)", page.CalculatorApp.GetCalculatorWindowSize());
+            Assert.AreEqual(getSmallWindowSize, page.CalculatorApp.GetCalculatorWindowSize());
 
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
-            Assert.AreEqual("(502, 502)", page.CalculatorApp.GetCalculatorWindowSize());
+            Assert.AreEqual(getLargeWindowSize, page.CalculatorApp.GetCalculatorWindowSize());
+            page.StandardAoTCalculatorPage.ResizeAoTWindowToDiplayInvertButton(); //Resets AoT size
 
         }
 
         [TestMethod]
         [Priority(2)]
-        public void AoT_ErrorMessage()
+        public void AoT_ErrorMessage_ResultUndefined()
         {
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
             page.StandardAoTCalculatorPage.ResizeAoTWindowToDiplayInvertButton();
@@ -991,6 +790,27 @@ namespace CalculatorUITests
             page.StandardAoTCalculatorPage.AoTModeCheck();
             Assert.AreEqual("True", page.StandardAoTCalculatorPage.AoTModeCheck());
             Assert.AreEqual("Result is undefined", page.CalculatorResults.GetAoTCalculatorResultText());
+        }
+
+        [TestMethod]
+        [Priority(2)]
+        public void AoT_ErrorMessage_CannotDivideByZero()
+        {
+            page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
+            page.StandardAoTCalculatorPage.ResizeAoTWindowToDiplayInvertButton();
+            page.StandardOperators.ClearButton.Click();
+            page.StandardOperators.InvertButton.Click();
+            page.StandardAoTCalculatorPage.AoTModeCheck();
+            Assert.AreEqual("True", page.StandardAoTCalculatorPage.AoTModeCheck());
+            Assert.AreEqual("Cannot divide by zero", page.CalculatorResults.GetAoTCalculatorResultText());
+        }
+
+        [TestMethod]
+        [Priority(2)]
+        public void AoT_ErrorMessage_MessageRetentionUponExitingAoT()
+        {
+            page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
+            page.StandardAoTCalculatorPage.ResizeAoTWindowToDiplayInvertButton();
             page.StandardOperators.ClearButton.Click();
             page.StandardOperators.InvertButton.Click();
             page.StandardAoTCalculatorPage.AoTModeCheck();
@@ -1000,128 +820,6 @@ namespace CalculatorUITests
             page.StandardAoTCalculatorPage.AoTModeCheck();
             Assert.AreEqual("False", page.StandardAoTCalculatorPage.AoTModeCheck());
             Assert.AreEqual("Cannot divide by zero", page.CalculatorResults.GetCalculatorResultText());
-        }
-
-        #endregion
-
-        #region Stress Tests
-        /// <summary>
-        /// These automated tests mildly stress that app to verify stability
-        /// To-Do: Verify multiple sessions
-        /// </summary>
-        [TestMethod]
-        [Priority(3)]
-        public void Stress_SwitchBetweenStandardAndOtherTypes()
-        {
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.ScientificCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Scientific", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.ProgrammerCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Programmer", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.DateCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Date Calculation", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Currency);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Currency", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Volume);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Volume", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Length);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Length", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Length);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Length", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Weight);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Weight and Mass", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Weight);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Weight and Mass", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Temperature);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Temperature", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Energy);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Energy", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Area);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Area", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Speed);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Speed", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Time);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Time", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Power);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Power", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Data);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Data", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Pressure);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Pressure", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Angle);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Angle", page.CalculatorApp.GetCalculatorHeaderText());
-            page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            page.CalculatorApp.EnsureCalculatorHasFocus();
-            Assert.AreEqual("Standard", page.CalculatorApp.GetCalculatorHeaderText());
         }
 
         #endregion

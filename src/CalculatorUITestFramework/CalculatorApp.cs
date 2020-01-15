@@ -31,9 +31,9 @@ namespace CalculatorUITestFramework
         public string GetCalculatorWindowPosition()
         {
             Point getCalculatorWindowPosition = WinAppDriver.Instance.CalculatorSession.Manage().Window.Position;
-            int X = getCalculatorWindowPosition.X;
-            int Y = getCalculatorWindowPosition.Y;
-            var CalculatorWindowPosition = (X, Y);
+            int x = getCalculatorWindowPosition.X;
+            int y = getCalculatorWindowPosition.Y;
+            var CalculatorWindowPosition = (x, y);
             return CalculatorWindowPosition.ToString();
         }
         ///// <summary>

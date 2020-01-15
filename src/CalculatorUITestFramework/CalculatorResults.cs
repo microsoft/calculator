@@ -41,7 +41,7 @@ namespace CalculatorUITestFramework
         /// Verifies that CalculatorResult is not null
         /// </summary>
         /// <returns>The string shown in the UI.</returns>
-        public void CheckIfResultsDisplayIsPresent()
+        public void IsResultsDisplayPresent()
         {
             Assert.IsNotNull(this.CalculatorResult);
         }
@@ -49,7 +49,7 @@ namespace CalculatorUITestFramework
         /// Verifies that Calculator Expression is clear
         /// </summary>
         /// <returns>The string shown in the UI.</returns>
-        public void CheckIfResultsExpressionIsClear()
+        public void IsResultsExpressionClear()
         {
             string source = WinAppDriver.Instance.CalculatorSession.PageSource;
             if (source.Contains("CalculatorExpression"))

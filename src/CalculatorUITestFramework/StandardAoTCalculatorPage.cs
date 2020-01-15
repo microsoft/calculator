@@ -69,7 +69,7 @@ namespace CalculatorUITestFramework
             Size getCalculatorWindowSize = WinAppDriver.Instance.CalculatorSession.Manage().Window.Size;
             int Width = getCalculatorWindowSize.Width;
             int Height = getCalculatorWindowSize.Height;
-            if ((Width >= 168) && (Width <= 502) && (Height >= 320) && (Height <= 502))
+            if ((Width >= 168) && (Width <= 844) && (Height >= 320) && (Height <= 914))
             {
                 return;
             }
@@ -150,7 +150,7 @@ namespace CalculatorUITestFramework
             Point getCalculatorWindowPosition = WinAppDriver.Instance.CalculatorSession.Manage().Window.Position;
             int X = getCalculatorWindowPosition.X;
             int Y = getCalculatorWindowPosition.Y;
-            if ((X >= 1388) && (X <= 1722) && (Y >= 25) && (Y <= 35))
+            if ((X >= 1388) && (X <= 2525) && (Y >= 25) && (Y <= 65))
             {
                 return;
             }
@@ -165,8 +165,6 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ResizeAoTWindowToDiplayInvertButton()
         {
-            Point newWindowPostion = new Point(8, 8);
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
             string source = this.session.PageSource;
             if (source.Contains("invertButton"))
             {
@@ -183,7 +181,7 @@ namespace CalculatorUITestFramework
                 }
                 else
                 {
-                    Size newWindowSize2 = new Size(750, 750);
+                    Size newWindowSize2 = new Size(750, 850);
                     WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
                 }
                 source = this.session.PageSource;
