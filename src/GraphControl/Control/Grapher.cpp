@@ -198,7 +198,6 @@ namespace GraphControl
 
     KeyGraphFeaturesInfo ^ Grapher::AnalyzeEquation(Equation ^ equation)
     {
-        auto result = ref new KeyGraphFeaturesInfo();
         if (auto graph = GetGraph(equation))
         {
             if (auto analyzer = graph->GetAnalyzer())
@@ -652,9 +651,9 @@ namespace GraphControl
                 hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
                 if (SUCCEEDED(hr))
                 {
-                    // Get the raw date
+                    // Get the raw data
                     vector<BYTE> byteVector = BitmapOut->GetData();
-                    auto arr = ref new Array<BYTE>(&byteVector[0], (unsigned int)byteVector.size());
+                    auto arr = ArrayReference<BYTE>(byteVector.data(), (unsigned int)byteVector.size());
 
                     // create a memory stream wrapper
                     InMemoryRandomAccessStream ^ stream = ref new InMemoryRandomAccessStream();
