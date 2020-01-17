@@ -59,29 +59,23 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ResizeWindowToDisplayHistoryLabel()
         {
-            Point newWindowPostion = new Point(8, 8);
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
-            string source = this.session.PageSource;
-            if (source.Contains("HistoryLabel"))
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
+            if (this.session.PageSource.Contains("HistoryLabel"))
             {
                 return;
             }
             else
             {
-                Size newWindowSize = new Size(1200, 1050);
-                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
-                source = this.session.PageSource;
-                if (source.Contains("HistoryLabel"))
+                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(1200, 1050);
+                if (this.session.PageSource.Contains("HistoryLabel"))
                 {
                     return;
                 }
                 else
                 {
-                    Size newWindowSize2 = new Size(2097, 1282);
-                    WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
+                    WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(2097, 1282);
                 }
-                source = this.session.PageSource;
-                if (source.Contains("HistoryLabel"))
+                if(this.session.PageSource.Contains("HistoryLabel"))
                 {
                     return;
                 }
@@ -96,15 +90,11 @@ namespace CalculatorUITestFramework
         ///// </summary>
         public void ResizeWindowToDisplayHistoryButton()
         {
-            Point newWindowPostion = new Point(8, 8);
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
-            string source = this.session.PageSource;
-            if (source.Contains("HistoryLabel"))
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
+            if (this.session.PageSource.Contains("HistoryLabel"))
             {
-                Size newWindowSize = new Size(464, 464);
-                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
-                source = this.session.PageSource;
-                if (source.Contains("HistoryButton"))
+                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(464, 464);
+                if (this.session.PageSource.Contains("HistoryButton"))
                 {
                     return;
                 }

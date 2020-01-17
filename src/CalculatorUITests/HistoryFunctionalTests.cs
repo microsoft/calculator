@@ -10,7 +10,7 @@ using System;
 namespace CalculatorUITests
 {
     [TestClass]
-    public class CalculatorAppFunctionalTests
+    public class HistoryFunctionalTests
     {
         private static StandardCalculatorPage page = new StandardCalculatorPage();
 
@@ -58,108 +58,6 @@ namespace CalculatorUITests
             page.EnsureCalculatorIsInStandardMode();
             page.ClearAll();
         }
-
-        #region Error Tests
-        /// <summary>
-        /// These automated tests verify errors display gracefully
-        /// Via mouse input, all basic UI functionality is checked 
-        /// </summary>
-
-        [TestMethod]
-        [Priority(1)]
-        public void Error_DivideByZero()
-        {
-            page.StandardOperators.InvertButton.Click();
-            Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText() == "Cannot divide by zero");
-        }
-
-        [TestMethod]
-        [Priority(1)]
-        public void Error_ErrorSquareRootNegativeNumber()
-        {
-            page.StandardOperators.NumberPad.Input(9);
-            page.StandardOperators.NegateButton.Click();
-            page.StandardOperators.SquareRootButton.Click();
-            Assert.AreEqual("Invalid input", page.CalculatorResults.GetCalculatorResultText());
-        }
-        #endregion
-
-        #region Standard Memory Tests
-
-        /// <summary>
-        /// These automated tests verify using memory related buttons in the Memory Panel, and in the memory flyout
-        /// Memory control buttons are verified at the end of automated tested in MouseInput_MemoryButtons()
-        /// </summary>
-
-        [TestMethod]
-        [Priority(2)]
-        public void StandardMemory_Panel()
-        {
-            //Verify context menu MC, M+, M-, and verify the clear memory button in the Memory panel
-            page.StandardOperators.NumberPad.Num3Button.Click();
-            page.MemoryPanel.MemButton.Click();
-            page.MemoryPanel.MemButton.Click();
-            page.MemoryPanel.OpenMemoryPanel();
-
-            Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
-            var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
-            moveToListView.MoveToElement(memoryItems[0]);
-            moveToListView.ContextClick(memoryItems[0]);
-            moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
-            Assert.IsTrue(memoryItems[0].Text.Equals("0", StringComparison.InvariantCultureIgnoreCase));
-
-            moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowUp + Keys.ArrowUp + Keys.Enter);
-            Assert.IsTrue(memoryItems[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
-
-            moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
-            var memoryItems2 = page.MemoryPanel.GetAllMemoryListViewItems();
-            Assert.IsTrue(memoryItems2[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
-
-            page.MemoryPanel.ClearMemory.Click();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
-        }
-
-        [TestMethod]
-        [Priority(2)]
-        public void StandardMemory_Flyout()
-        {
-            //Verify context menu MC, M+, M-, and ClearMemoryItemButton, and verify the clear memory button in the Memory flyout
-            page.StandardOperators.NumberPad.Num3Button.Click();
-            page.MemoryPanel.MemButton.Click();
-            page.MemoryPanel.MemButton.Click();
-
-            page.MemoryPanel.OpenMemoryFlyout();
-            var memoryItems = page.MemoryPanel.GetAllMemoryFlyoutListViewItems();
-            Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
-            moveToListView.MoveToElement(memoryItems[0]);
-            moveToListView.ContextClick(memoryItems[0]);
-            moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
-            Assert.IsTrue(memoryItems[0].Text.Equals("0", StringComparison.InvariantCultureIgnoreCase));
-
-            page.MemoryPanel.OpenMemoryFlyout();
-            moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowUp + Keys.ArrowUp + Keys.Enter);
-            Assert.IsTrue(memoryItems[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
-
-            page.MemoryPanel.OpenMemoryFlyout();
-            moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
-            var memoryItems2 = page.MemoryPanel.GetAllMemoryListViewItems();
-            Assert.IsTrue(memoryItems2[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
-
-            page.MemoryPanel.OpenMemoryFlyout();
-            page.MemoryPanel.ClearMemory.Click();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
-
-            page.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
-        }
-
-        #endregion
 
         #region Standard History Tests
 

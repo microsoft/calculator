@@ -60,8 +60,7 @@ namespace CalculatorUITestFramework
 
             try
             {
-                string source = this.session.PageSource;
-                if (source.Contains("ClearMemoryButton"))
+                if (this.session.PageSource.Contains("ClearMemoryButton"))
                 {
                     this.ClearMemory.Click();
                 }
@@ -83,29 +82,23 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ResizeWindowToDiplayMemoryLabel()
         {
-            Point newWindowPostion = new Point(8, 8);
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
-            string source = this.session.PageSource;
-            if (source.Contains("MemoryLabel"))
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
+            if (this.session.PageSource.Contains("MemoryLabel"))
             {
                 return;
             }
             else
             {
-                Size newWindowSize = new Size(1200, 1050);
-                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
-                source = this.session.PageSource;
-                if (source.Contains("MemoryLabel"))
+                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(1200, 1050);
+                if (this.session.PageSource.Contains("MemoryLabel"))
                 {
                     return;
                 }
                 else
                 {
-                    Size newWindowSize2 = new Size(2097, 1282);
-                    WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
+                    WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(2097, 1282);
                 }
-                source = this.session.PageSource;
-                if (source.Contains("MemoryLabel"))
+                if (this.session.PageSource.Contains("MemoryLabel"))
                 {
                     return;
                 }
@@ -120,10 +113,9 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ResizeWindowToDiplayMemoryButton()
         {
-            Point newWindowPostion = new Point(8, 8);
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
             string source = this.session.PageSource;
-            if (source.Contains("Alt, M"))
+            if (this.session.PageSource.Contains("Alt, M"))
             {
                 return;
             }
@@ -131,14 +123,13 @@ namespace CalculatorUITestFramework
             {
                 //this.MemButton.Click();
                 source = this.session.PageSource;
-                if (source.Contains("Alt, M"))
+                if (this.session.PageSource.Contains("Alt, M"))
                 {
                     return;
                 }
                 else
                 {
-                    Size newWindowSize2 = new Size(464, 464);
-                    WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
+                    WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(464, 464);
                     source = this.session.PageSource;
                     if (source.Contains("Alt, M"))
                     {

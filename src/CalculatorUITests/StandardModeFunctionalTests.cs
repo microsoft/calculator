@@ -28,7 +28,7 @@ namespace CalculatorUITests
             page.NavigateToStandardCalculator();
 
             // Ensure that calculator window is large enough to display the memory/history panel; a good size for most tests
-            page.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
+            page.CalculatorApp.ResizeWindowToDiplayMemoryHistoryDockPanel();
         }
 
         /// <summary>
@@ -650,8 +650,6 @@ namespace CalculatorUITests
         public void AoT_EnterExitKeepOnTop()
         {
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
-            page.StandardAoTCalculatorPage.AoTWindowSizeWithinRange();
-            page.StandardAoTCalculatorPage.AoTWindowPositionWithinRange();
             page.StandardAoTCalculatorPage.NavigateToStandardMode();
 
         }
@@ -734,52 +732,6 @@ namespace CalculatorUITests
 
         [TestMethod]
         [Priority(2)]
-        public void AoT_Scaling()
-        {
-            page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
-            page.StandardAoTCalculatorPage.AoTWindowSizeWithinRange();
-            Size smallAoTWindowSize = new Size(161, 168);
-            Size largeAoTWindowSize = new Size(502, 502);
-            Size mediumAoTWindowSize = new Size(396, 322);
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = smallAoTWindowSize;
-            var getSmallWindowSize = page.CalculatorApp.GetCalculatorWindowSize();
-            Assert.AreEqual(getSmallWindowSize, page.CalculatorApp.GetCalculatorWindowSize());
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeAoTWindowSize;
-            var getLargeWindowSize = page.CalculatorApp.GetCalculatorWindowSize();
-            Assert.AreEqual(getLargeWindowSize, page.CalculatorApp.GetCalculatorWindowSize());
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = mediumAoTWindowSize;
-            var getMediumAoTWindowSize = page.CalculatorApp.GetCalculatorWindowSize();
-            Assert.AreEqual(getMediumAoTWindowSize, page.CalculatorApp.GetCalculatorWindowSize());
-            page.StandardAoTCalculatorPage.ResizeAoTWindowToDiplayInvertButton(); //Resets AoT size
-        }
-
-        [TestMethod]
-        [Priority(2)]
-        public void AoT_ScaleRetention()
-        {
-            Size smallWindowSize = new Size(464, 502);
-            //Size largeAoTWindowSize = new Size(502, 502);
-
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = smallWindowSize;
-            var getSmallWindowSize = page.CalculatorApp.GetCalculatorWindowSize();
-            Assert.AreEqual(getSmallWindowSize, page.CalculatorApp.GetCalculatorWindowSize());
-
-            page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
-            //WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = largeAoTWindowSize;
-            var getLargeWindowSize = page.CalculatorApp.GetCalculatorWindowSize();
-            Assert.AreEqual(getLargeWindowSize, page.CalculatorApp.GetCalculatorWindowSize());
-
-            page.StandardAoTCalculatorPage.NavigateToStandardMode();
-            Assert.AreEqual(getSmallWindowSize, page.CalculatorApp.GetCalculatorWindowSize());
-
-            page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
-            Assert.AreEqual(getLargeWindowSize, page.CalculatorApp.GetCalculatorWindowSize());
-            page.StandardAoTCalculatorPage.ResizeAoTWindowToDiplayInvertButton(); //Resets AoT size
-
-        }
-
-        [TestMethod]
-        [Priority(2)]
         public void AoT_ErrorMessage_ResultUndefined()
         {
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
@@ -822,6 +774,31 @@ namespace CalculatorUITests
             Assert.AreEqual("Cannot divide by zero", page.CalculatorResults.GetCalculatorResultText());
         }
 
+        #endregion
+
+        #region Error Tests
+        /// <summary>
+        /// These automated tests verify errors display gracefully
+        /// Via mouse input, all basic UI functionality is checked 
+        /// </summary>
+
+        [TestMethod]
+        [Priority(1)]
+        public void Error_DivideByZero()
+        {
+            page.StandardOperators.InvertButton.Click();
+            Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText() == "Cannot divide by zero");
+        }
+
+        [TestMethod]
+        [Priority(1)]
+        public void Error_ErrorSquareRootNegativeNumber()
+        {
+            page.StandardOperators.NumberPad.Input(9);
+            page.StandardOperators.NegateButton.Click();
+            page.StandardOperators.SquareRootButton.Click();
+            Assert.AreEqual("Invalid input", page.CalculatorResults.GetCalculatorResultText());
+        }
         #endregion
     }
 }
