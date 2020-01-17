@@ -38,6 +38,13 @@ jobs:
   parameters:
     platform: x64
     runsettingsFileName: CalculatorUITests.ci.runsettings
+    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+
+- template: ./templates/run-ui-tests-pr.yaml
+  parameters:
+    platform: x64
+    runsettingsFileName: CalculatorUITests.ci.runsettings
+    condition: eq(variables['Build.Reason'], 'PullRequest')
 
 - template: ./templates/run-unit-tests.yaml
   parameters:

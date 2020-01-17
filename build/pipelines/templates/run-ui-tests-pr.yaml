@@ -6,8 +6,8 @@ parameters:
   condition: ''
 
 jobs:
-- job: UITests${{ parameters.platform }}
-  displayName: UITests ${{ parameters.platform }}
+- job: UITestsPR${{ parameters.platform }}
+  displayName: UITests-PR ${{ parameters.platform }}
   dependsOn: Build${{ parameters.platform }}
   condition: ${{ parameters.condition }}
   pool:
@@ -40,7 +40,7 @@ jobs:
     inputs:
       filePath: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
       arguments: -Force
-    
+
   - task: VSTest@2
     displayName: Run CalculatorUITests
     inputs:
@@ -49,3 +49,4 @@ jobs:
       runSettingsFile: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/${{ parameters.runsettingsFileName }}
       platform: ${{ parameters.platform }}
       configuration: Release
+      testFiltercriteria: Priority=0
