@@ -321,7 +321,7 @@ namespace GraphControl
                 // Do not re-initialize the graph to empty if there are still valid equations graphed
                 if (!shouldKeepPreviousGraph)
                 {
-                    initResult = TryInitializeGraph(keepCurrentView, graphExpression.get());
+                    initResult = m_graph->TryInitialize();
                     if (initResult != nullopt)
                     {
                         UpdateGraphOptions(m_graph->GetOptions(), validEqs);
