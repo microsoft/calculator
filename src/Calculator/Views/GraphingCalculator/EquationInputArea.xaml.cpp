@@ -330,6 +330,9 @@ void EquationInputArea::SubmitTextbox(TextBox ^ sender)
     {
         val = validateDouble(sender->Text, variableViewModel->Value);
         variableViewModel->Value = val;
+
+        // Assign back to val in case it gets changed due to min/max
+        val = variableViewModel->Value;
     }
     else if (sender->Name == "MinTextBox")
     {
