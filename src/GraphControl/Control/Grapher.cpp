@@ -199,6 +199,8 @@ namespace GraphControl
         {
             if (auto analyzer = graph->GetAnalyzer())
             {
+                graph->GetOptions().SetAllowKeyGraphFeaturesForFunctionsWithParameters(true);
+                auto isVariableAnalysisAllowed = graph->GetOptions().GetAllowKeyGraphFeaturesForFunctionsWithParameters();
                 if (analyzer->CanFunctionAnalysisBePerformed())
                 {
                     if (S_OK
