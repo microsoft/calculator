@@ -195,10 +195,10 @@ namespace CalculatorManagerTest
         TEST_METHOD(CalculatorManagerNumberFormattingUtils_GetNumberDigitsWholeNumberPart);
         TEST_METHOD(CalculatorManagerNumberFormattingUtils_RoundSignificantDigits);
         TEST_METHOD(CalculatorManagerNumberFormattingUtils_ToScientificNumber);
-        // TODO re-enable when cause of failure is determined. Bug 20226670
-        // TEST_METHOD(CalculatorManagerTestBinaryOperatorReceived);
-        // TEST_METHOD(CalculatorManagerTestBinaryOperatorReceived_Multiple);
-        // TEST_METHOD(CalculatorManagerTestBinaryOperatorReceived_LongInput);
+
+        TEST_METHOD(CalculatorManagerTestBinaryOperatorReceived);
+        TEST_METHOD(CalculatorManagerTestBinaryOperatorReceived_Multiple);
+        TEST_METHOD(CalculatorManagerTestBinaryOperatorReceived_LongInput);
 
         TEST_METHOD_CLEANUP(Cleanup);
 
@@ -1008,72 +1008,72 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(result, L"-3.432432e-09");
     }
 
-    // TODO re-enable when cause of failure is determined. Bug 20226670
-    // void CalculatorManagerTest::CalculatorManagerTestBinaryOperatorReceived()
-    // {
-    //     CalculatorManagerDisplayTester* pCalculatorDisplay = (CalculatorManagerDisplayTester *)m_calculatorDisplayTester.get();
+     void CalculatorManagerTest::CalculatorManagerTestBinaryOperatorReceived()
+     {
+         CalculatorManagerDisplayTester* pCalculatorDisplay = (CalculatorManagerDisplayTester *)m_calculatorDisplayTester.get();
 
-    //     VERIFY_ARE_EQUAL(0, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
+         VERIFY_ARE_EQUAL(0, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
 
-    //     ExecuteCommands({
-    //         Command::Command1,
-    //         Command::CommandADD
-    //     });
+         m_calculatorManager->SetStandardMode();
+         ExecuteCommands({
+             Command::Command1,
+             Command::CommandADD
+         });
 
-    //     wstring display = pCalculatorDisplay->GetPrimaryDisplay();
-    //     VERIFY_ARE_EQUAL(wstring(L"1"), display);
+         wstring display = pCalculatorDisplay->GetPrimaryDisplay();
+         VERIFY_ARE_EQUAL(L"1", display);
 
-    //     // Verify BinaryOperatorReceived
-    //     VERIFY_ARE_EQUAL(1, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
-    // }
+         // Verify BinaryOperatorReceived
+         VERIFY_ARE_EQUAL(1, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
+     }
 
-    // TODO re-enable when cause of failure is determined. Bug 20226670
-    // void CalculatorManagerTest::CalculatorManagerTestBinaryOperatorReceived_Multiple()
-    // {
-    //     CalculatorManagerDisplayTester* pCalculatorDisplay = (CalculatorManagerDisplayTester *)m_calculatorDisplayTester.get();
+     void CalculatorManagerTest::CalculatorManagerTestBinaryOperatorReceived_Multiple()
+     {
+         CalculatorManagerDisplayTester* pCalculatorDisplay = (CalculatorManagerDisplayTester *)m_calculatorDisplayTester.get();
 
-    //     VERIFY_ARE_EQUAL(0, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
+         VERIFY_ARE_EQUAL(0, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
 
-    //     ExecuteCommands({
-    //         Command::Command1,
-    //         Command::CommandADD,
-    //         Command::CommandSUB,
-    //         Command::CommandMUL
-    //     });
+         m_calculatorManager->SetStandardMode();
+         ExecuteCommands({
+             Command::Command1,
+             Command::CommandADD,
+             Command::CommandSUB,
+             Command::CommandMUL
+         });
 
-    //     wstring display = pCalculatorDisplay->GetPrimaryDisplay();
-    //     VERIFY_ARE_EQUAL(wstring(L"1"), display);
+         wstring display = pCalculatorDisplay->GetPrimaryDisplay();
+         VERIFY_ARE_EQUAL(L"1", display);
 
-    //     // Verify BinaryOperatorReceived
-    //     VERIFY_ARE_EQUAL(3, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
-    // }
+         // Verify BinaryOperatorReceived
+         VERIFY_ARE_EQUAL(3, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
+     }
 
-    // TODO re-enable when cause of failure is determined. Bug 20226670
-    // void CalculatorManagerTest::CalculatorManagerTestBinaryOperatorReceived_LongInput()
-    // {
-    //     CalculatorManagerDisplayTester* pCalculatorDisplay = (CalculatorManagerDisplayTester *)m_calculatorDisplayTester.get();
+     void CalculatorManagerTest::CalculatorManagerTestBinaryOperatorReceived_LongInput()
+     {
+         CalculatorManagerDisplayTester* pCalculatorDisplay = (CalculatorManagerDisplayTester *)m_calculatorDisplayTester.get();
 
-    //     VERIFY_ARE_EQUAL(0, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
+         VERIFY_ARE_EQUAL(0, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
 
-    //     ExecuteCommands({
-    //         Command::Command1,
-    //         Command::CommandADD,
-    //         Command::Command2,
-    //         Command::CommandMUL,
-    //         Command::Command1,
-    //         Command::Command0,
-    //         Command::CommandSUB,
-    //         Command::Command5,
-    //         Command::CommandDIV,
-    //         Command::Command5,
-    //         Command::CommandEQU
-    //     });
+         m_calculatorManager->SetStandardMode();
+         ExecuteCommands({
+             Command::Command1,
+             Command::CommandADD,
+             Command::Command2,
+             Command::CommandMUL,
+             Command::Command1,
+             Command::Command0,
+             Command::CommandSUB,
+             Command::Command5,
+             Command::CommandDIV,
+             Command::Command5,
+             Command::CommandEQU
+         });
 
-    //     wstring display = pCalculatorDisplay->GetPrimaryDisplay();
-    //     VERIFY_ARE_EQUAL(wstring(L"5"), display);
+         wstring display = pCalculatorDisplay->GetPrimaryDisplay();
+         VERIFY_ARE_EQUAL(L"5", display);
 
-    //     // Verify BinaryOperatorReceived
-    //     VERIFY_ARE_EQUAL(4, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
-    // }
+         // Verify BinaryOperatorReceived
+         VERIFY_ARE_EQUAL(4, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
+     }
 
 } /* namespace CalculationManagerUnitTests */
