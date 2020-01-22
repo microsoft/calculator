@@ -162,14 +162,11 @@ namespace GraphControl
 
     void Grapher::OnEquationChanged(Equation ^ equation)
     {
-        // If the equation was previously valid, we should try to graph again in the event of the failure
-        bool shouldRetry = equation->IsValidated;
-
         // Reset these properties if the equation is requesting to be graphed again
         equation->HasGraphError = false;
         equation->IsValidated = false;
 
-        TryPlotGraph(false, shouldRetry);
+        TryPlotGraph(false, true);
     }
 
     void Grapher::OnEquationStyleChanged(Equation ^)
@@ -321,7 +318,7 @@ namespace GraphControl
                 // Do not re-initialize the graph to empty if there are still valid equations graphed
                 if (!shouldKeepPreviousGraph)
                 {
-                    initResult = TryInitializeGraph(keepCurrentView, graphExpression.get());
+                    initResult = m_graph->TryInitialize();
                     if (initResult != nullopt)
                     {
                         UpdateGraphOptions(m_graph->GetOptions(), validEqs);
