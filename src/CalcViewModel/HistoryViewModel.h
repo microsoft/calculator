@@ -41,7 +41,6 @@ namespace CalculatorApp
             event HistoryItemClickedHandler ^ HistoryItemClicked;
             void ShowItem(_In_ CalculatorApp::ViewModel::HistoryItemViewModel ^ e);
             void ClearHistory();
-            void RestoreCompleteHistory();
 
             internal : HistoryViewModel(_In_ CalculationManager::CalculatorManager* calculatorManager);
             void SetCalculatorDisplay(CalculatorDisplay& calculatorDisplay);
@@ -67,8 +66,6 @@ namespace CalculatorApp
             void ClearHistoryContainer(_In_ CalculationManager::CALCULATOR_MODE cMode);
             void UpdateHistoryVectorLength(_In_ int newValue, _In_ CalculationManager::CALCULATOR_MODE cMode);
             bool IsValid(_In_ CalculationManager::HISTORYITEM item);
-
-            void MakeHistoryClearedNarratorAnnouncement(Platform::String ^ resourceKey, Platform::String ^ &formatVariable);
 
             friend class CalculatorDisplay;
             void UpdateItemSize();

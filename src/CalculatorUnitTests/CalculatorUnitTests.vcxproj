@@ -207,12 +207,10 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AsyncHelper.h" />
     <ClInclude Include="DateUtils.h" />
     <ClInclude Include="Helpers.h" />
     <ClInclude Include="Mocks\CurrencyHttpClient.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="UnitConverterViewModelUnitTests.h" />
     <ClInclude Include="UnitTestApp.xaml.h">
       <DependentUpon>UnitTestApp.xaml</DependentUpon>
@@ -238,7 +236,6 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AsyncHelper.cpp" />
     <ClCompile Include="CalcEngineTests.cpp" />
     <ClCompile Include="CalcInputTest.cpp" />
     <ClCompile Include="CalculatorManagerTest.cpp" />
@@ -247,8 +244,8 @@
     <ClCompile Include="DateCalculatorUnitTests.cpp" />
     <ClCompile Include="HistoryTests.cpp" />
     <ClCompile Include="LocalizationServiceUnitTests.cpp" />
+    <ClCompile Include="LocalizationSettingsUnitTests.cpp" />
     <ClCompile Include="Mocks\CurrencyHttpClient.cpp" />
-    <ClCompile Include="Module.cpp" />
     <ClCompile Include="MultiWindowUnitTests.cpp" />
     <ClCompile Include="NavCategoryUnitTests.cpp" />
     <ClCompile Include="RationalTest.cpp" />
@@ -272,7 +269,6 @@
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="CppUnitTestFramework.Universal, Version=$(UnitTestPlatformVersion)" />
-    <SDKReference Include="Microsoft.VCLibs.Desktop, Version=14.0" />
     <SDKReference Include="TestPlatform.Universal, Version=$(UnitTestPlatformVersion)" />
   </ItemGroup>
   <ItemGroup>
@@ -287,9 +283,6 @@
     <PRIResource Include="Test.resw">
       <SubType>Designer</SubType>
     </PRIResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="CalculatorUnitTests.rc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalcManager\CalcManager.vcxproj">

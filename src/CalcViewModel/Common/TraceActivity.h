@@ -1,12 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
+#include <winmeta.h>
 
 namespace CalculatorApp
 {
-    constexpr int64_t WINEVENT_KEYWORD_RESPONSE_TIME = 0x1000000000000;
-
     // RAII wrapper that automatically sends the Stop event when the class gets destructed.
     class TraceActivity
     {

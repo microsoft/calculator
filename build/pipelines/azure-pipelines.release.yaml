@@ -9,8 +9,8 @@ pr: none
 
 variables:
   versionMajor: 10
-  versionMinor: 1909
-  versionBuild: $[counter('10.1909.*', 0)]
+  versionMinor: 1912
+  versionBuild: $[counter('10.1912.*', 0)]
   versionPatch: 0
 
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
@@ -28,11 +28,6 @@ jobs:
 - template: ./templates/build-app-internal.yaml
   parameters:
     platform: ARM
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
-
-- template: ./templates/build-app-internal.yaml
-  parameters:
-    platform: ARM64
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/run-ui-tests.yaml

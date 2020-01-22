@@ -218,6 +218,12 @@
     <Filter Include="Views\StateTriggers">
       <UniqueIdentifier>{0120c344-0bc0-4a1d-b82c-df7945f46189}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Views\GraphingCalculator">
+      <UniqueIdentifier>{e23e2a6e-491b-4200-9bf7-d355a1ee695b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{b491a249-26b8-4814-9f50-2c3a57018c56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -225,9 +231,6 @@
   <ItemGroup>
     <ClCompile Include="App.xaml.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Common\BindableBase.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="Controls\CalculationResult.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -308,14 +311,28 @@
     <ClCompile Include="Controls\OperatorPanelButton.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\EquationInputArea.xaml.cpp" />
+    <ClCompile Include="Views\GraphingCalculator\GraphingCalculator.xaml.cpp" />
+    <ClCompile Include="Controls\EquationTextBox.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\MathRichEditBox.cpp" />
+    <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp">
+      <Filter>Views\GraphingCalculator</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.cpp" />
+    <ClCompile Include="Utils\VisualTree.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\KeyboardShortcutManager.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ViewState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\BindableBase.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Controls\CalculationResult.h">
@@ -398,6 +415,26 @@
     <ClInclude Include="Controls\OperatorPanelButton.h">
       <Filter>Controls</Filter>
     </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\EquationInputArea.xaml.h" />
+    <ClInclude Include="Views\GraphingCalculator\GraphingCalculator.xaml.h" />
+    <ClInclude Include="Controls\EquationTextBox.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\MathRichEditBox.h" />
+    <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h">
+      <Filter>Views\GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.h" />
+    <ClInclude Include="Utils\VisualTree.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\KeyboardShortcutManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ValidatingConverters.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ViewState.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -465,6 +502,25 @@
     <Page Include="Views\TitleBar.xaml">
       <Filter>Views</Filter>
     </Page>
+    <Page Include="Views\GraphingCalculator\EquationInputArea.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
+    </Page>
+    <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
+    </Page>
+    <Page Include="Views\TitleBar.xaml">
+      <Filter>Views</Filter>
+    </Page>
+    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
+    </Page>
+    <Page Include="Views\GraphingCalculator\GraphingSettings.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
+    </Page>
+    <Page Include="Views\GraphingCalculator\GraphingNumPad.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)DensityStyles\Compact.xaml" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Resources\en-US\CEngineStrings.resw">
@@ -1509,5 +1565,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Calculator.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>
 </Project>

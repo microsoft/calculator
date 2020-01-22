@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "Utils.h"
-#include "MyVirtualKey.h"
+#include "CalcViewModel/Common/Utils.h"
+#include "CalcViewModel/Common/MyVirtualKey.h"
 
 namespace CalculatorApp
 {
@@ -43,7 +43,6 @@ namespace CalculatorApp
             static void IgnoreEscape(bool onlyOnce);
             static void HonorEscape();
             static void HonorShortcuts(bool allow);
-            static void HandledEnter(bool ishandled);
             static void UpdateDropDownState(bool);
             static void ShiftButtonChecked(bool checked);
             static void UpdateDropDownState(Windows::UI::Xaml::Controls::Flyout ^ aboutPageFlyout);

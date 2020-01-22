@@ -13,7 +13,10 @@
 #include "Controls/OverflowTextBlock.h"
 #include "Controls/OperatorPanelListView.h"
 #include "Controls/OperatorPanelButton.h"
+#include "Controls/EquationTextBox.h"
+#include "Controls/MathRichEditBox.h"
 #include "CalcViewModel/HistoryViewModel.h"
+#include "TemplateSelectors/KeyGraphFeaturesTemplateSelector.h"
 #include "Views/CalculatorProgrammerDisplayPanel.xaml.h"
 #include "Views/CalculatorProgrammerOperators.xaml.h"
 #include "Views/CalculatorScientificAngleButtons.xaml.h"
@@ -70,6 +73,8 @@ public
 
         void SetDefaultFocus();
 
+        // Methods used by native bindings
+        static Windows::UI::Xaml::Visibility ShouldDisplayHistoryButton(bool isAlwaysOnTop, bool isProgrammer, Windows::UI::Xaml::Visibility dockPanelVisibility);
     private:
         void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
@@ -94,7 +99,7 @@ public
         void EnsureScientific();
         void EnsureProgrammer();
         void SetFontSizeResources();
-        std::wstring GetCurrentLayoutState();
+        Platform::String ^ GetCurrentLayoutState();
         void Calculator_SizeChanged(Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
 
     private:
@@ -140,10 +145,10 @@ public
         void EnableMemoryControls(bool enable);
         void OnMemoryFlyOutTapped(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         void OnHistoryFlyOutTapped(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
-        bool IsValidRegularExpression(std::wstring str);
         void DockPanelTapped(_In_ Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         void OnHistoryAccessKeyInvoked(_In_ Windows::UI::Xaml::UIElement ^ sender, _In_ Windows::UI::Xaml::Input::AccessKeyInvokedEventArgs ^ args);
         void OnMemoryAccessKeyInvoked(_In_ Windows::UI::Xaml::UIElement ^ sender, _In_ Windows::UI::Xaml::Input::AccessKeyInvokedEventArgs ^ args);
         void OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e);
-    };
+
+   };
 }

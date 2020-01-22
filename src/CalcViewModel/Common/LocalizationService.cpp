@@ -94,16 +94,16 @@ LocalizationService::LocalizationService(_In_ const wchar_t * const overridedLan
         m_locale = locale("");
     }
     auto resourceLoader = AppResourceProvider::GetInstance();
-    m_fontFamilyOverride = resourceLoader.GetResourceString(L"LocalizedFontFamilyOverride");
+    m_fontFamilyOverride = resourceLoader->GetResourceString(L"LocalizedFontFamilyOverride");
 
     String ^ reserved = L"RESERVED_FOR_FONTLOC";
 
     m_overrideFontApiValues = ((m_fontFamilyOverride != nullptr) && (m_fontFamilyOverride != reserved));
     if (m_overrideFontApiValues)
     {
-        String ^ localizedUICaptionFontSizeFactorOverride = resourceLoader.GetResourceString(L"LocalizedUICaptionFontSizeFactorOverride");
-        String ^ localizedUITextFontSizeFactorOverride = resourceLoader.GetResourceString(L"LocalizedUITextFontSizeFactorOverride");
-        String ^ localizedFontWeightOverride = resourceLoader.GetResourceString(L"LocalizedFontWeightOverride");
+        String ^ localizedUICaptionFontSizeFactorOverride = resourceLoader->GetResourceString(L"LocalizedUICaptionFontSizeFactorOverride");
+        String ^ localizedUITextFontSizeFactorOverride = resourceLoader->GetResourceString(L"LocalizedUITextFontSizeFactorOverride");
+        String ^ localizedFontWeightOverride = resourceLoader->GetResourceString(L"LocalizedFontWeightOverride");
 
         // If any of the font overrides are modified then all of them need to be modified
         assert(localizedFontWeightOverride != reserved);
@@ -554,12 +554,12 @@ unordered_map<wstring, wstring> LocalizationService::GetTokenToReadableNameMap()
     unordered_map<wstring, wstring> tokenToReadableNameMap{};
     auto resProvider = AppResourceProvider::GetInstance();
 
-    static const wstring openParen = resProvider.GetCEngineString(StringReference(s_openParenResourceKey))->Data();
+    static const wstring openParen = resProvider->GetCEngineString(StringReference(s_openParenResourceKey))->Data();
 
     for (const auto& keyPair : s_parenEngineKeyResourceMap)
     {
-        wstring engineStr = resProvider.GetCEngineString(StringReference(keyPair.first.c_str()))->Data();
-        wstring automationName = resProvider.GetResourceString(StringReference(keyPair.second.c_str()))->Data();
+        wstring engineStr = resProvider->GetCEngineString(StringReference(keyPair.first.c_str()))->Data();
+        wstring automationName = resProvider->GetResourceString(StringReference(keyPair.second.c_str()))->Data();
 
         tokenToReadableNameMap.emplace(engineStr + openParen, automationName);
     }
@@ -567,15 +567,15 @@ unordered_map<wstring, wstring> LocalizationService::GetTokenToReadableNameMap()
 
     for (const auto& keyPair : s_noParenEngineKeyResourceMap)
     {
-        wstring engineStr = resProvider.GetCEngineString(StringReference(keyPair.first.c_str()))->Data();
-        wstring automationName = resProvider.GetResourceString(StringReference(keyPair.second.c_str()))->Data();
+        wstring engineStr = resProvider->GetCEngineString(StringReference(keyPair.first.c_str()))->Data();
+        wstring automationName = resProvider->GetResourceString(StringReference(keyPair.second.c_str()))->Data();
 
         tokenToReadableNameMap.emplace(engineStr, automationName);
     }
     s_noParenEngineKeyResourceMap.clear();
 
     // Also replace hyphens with "minus"
-    wstring minusText = resProvider.GetResourceString(L"minus")->Data();
+    wstring minusText = resProvider->GetResourceString(L"minus")->Data();
     tokenToReadableNameMap.emplace(L"-", minusText);
 
     return tokenToReadableNameMap;
@@ -592,23 +592,22 @@ String ^ LocalizationService::GetNarratorReadableToken(String ^ rawToken)
     }
     else
     {
-        static const String ^ openParen = AppResourceProvider::GetInstance().GetCEngineString(StringReference(s_openParenResourceKey));
+        static const String ^ openParen = AppResourceProvider::GetInstance()->GetCEngineString(StringReference(s_openParenResourceKey));
         return ref new String(itr->second.c_str()) + L" " + openParen;
     }
 }
 
 String ^ LocalizationService::GetNarratorReadableString(String ^ rawString)
 {
-    wstringstream readableString{};
-    readableString << L"";
+    wstring readableString{};
 
     wstring asWstring = rawString->Data();
     for (const auto& c : asWstring)
     {
-        readableString << LocalizationService::GetNarratorReadableToken(L"" + c)->Data();
+        readableString += LocalizationService::GetNarratorReadableToken(ref new String(&c, 1))->Data();
     }
 
-    return ref new String(readableString.str().c_str());
+    return ref new String(readableString.c_str());
 }
 
 void LocalizationService::Sort(std::vector<Platform::String ^>& source)

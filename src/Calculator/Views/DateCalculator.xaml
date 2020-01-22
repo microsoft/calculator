@@ -403,7 +403,7 @@
               Grid.Row="2"
               Visibility="{Binding IsDateDiffMode, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.RowDefinitions>
-				<RowDefinition Height="1*" MaxHeight="17"/>
+                <RowDefinition Height="1*" MaxHeight="17"/>
                 <RowDefinition Height="Auto" MinHeight="32"/>
                 <RowDefinition Height="1*" MaxHeight="24"/>
                 <RowDefinition Height="Auto" MinHeight="32"/>

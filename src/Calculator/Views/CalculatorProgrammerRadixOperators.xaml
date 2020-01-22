@@ -115,13 +115,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeLarge}"/>
 
-                        <Setter Target="BitwiseButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeLarge}"/>
-                        <Setter Target="BitwiseButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeLarge}"/>
-                        <Setter Target="BitwiseButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeLarge}"/>
-
-                        <Setter Target="BitShiftButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeLarge}"/>
-                        <Setter Target="BitShiftButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeLarge}"/>
-                        <Setter Target="BitShiftButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeLarge}"/>
+                        <Setter Target="BitwiseButton.Style" Value="{StaticResource OperatorPanelButtonLargeStyle}"/>
+                        <Setter Target="BitShiftButton.Style" Value="{StaticResource OperatorPanelButtonLargeStyle}"/>
 
                         <Setter Target="BitwiseGrid.MinWidth" Value="387"/>
                         <Setter Target="BitwiseGrid.MinHeight" Value="192"/>
@@ -172,13 +167,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeMedium}"/>
 
-                        <Setter Target="BitwiseButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeMedium}"/>
-                        <Setter Target="BitwiseButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeMedium}"/>
-                        <Setter Target="BitwiseButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeMedium}"/>
-
-                        <Setter Target="BitShiftButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeMedium}"/>
-                        <Setter Target="BitShiftButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeMedium}"/>
-                        <Setter Target="BitShiftButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeMedium}"/>
+                        <Setter Target="BitwiseButton.Style" Value="{StaticResource OperatorPanelButtonMediumStyle}"/>
+                        <Setter Target="BitShiftButton.Style" Value="{StaticResource OperatorPanelButtonMediumStyle}"/>
 
                         <Setter Target="BitwiseGrid.MinWidth" Value="416"/>
                         <Setter Target="BitwiseGrid.MinHeight" Value="144"/>
@@ -227,13 +217,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeSmall}"/>
 
-                        <Setter Target="BitwiseButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeSmall}"/>
-                        <Setter Target="BitwiseButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeSmall}"/>
-                        <Setter Target="BitwiseButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeSmall}"/>
-
-                        <Setter Target="BitShiftButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeSmall}"/>
-                        <Setter Target="BitShiftButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeSmall}"/>
-                        <Setter Target="BitShiftButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeSmall}"/>
+                        <Setter Target="BitwiseButton.Style" Value="{StaticResource OperatorPanelButtonSmallStyle}"/>
+                        <Setter Target="BitShiftButton.Style" Value="{StaticResource OperatorPanelButtonSmallStyle}"/>
 
                         <Setter Target="BitwiseGrid.MinWidth" Value="194"/>
                         <Setter Target="BitwiseGrid.MinHeight" Value="96"/>

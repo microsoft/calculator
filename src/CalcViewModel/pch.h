@@ -31,6 +31,8 @@
 #include <regex>
 #include <iterator>
 #include <intsafe.h>
+#include <ppltasks.h>
+
 // C++\WinRT Headers
 #include "winrt/base.h"
 #include "winrt/Windows.Foundation.Diagnostics.h"
@@ -38,6 +40,7 @@
 #include "winrt/Windows.Globalization.DateTimeFormatting.h"
 #include "winrt/Windows.System.UserProfile.h"
 #include "winrt/Windows.UI.Xaml.h"
+#include "winrt/Windows.Foundation.Metadata.h"
 
 // The following namespaces exist as a convenience to resolve
 // ambiguity for Windows types in the Windows::UI::Xaml::Automation::Peers

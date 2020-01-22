@@ -33,6 +33,13 @@
             <Setter Property="KeyTipPlacementMode" Value="Right"/>
         </Style>
 
+        <DataTemplate x:Key="NavMenuItemPreviewDataTemplate" x:DataType="x:String">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="{x:Bind}"/>
+                <controls:PreviewTagControl Margin="10,0,0,0" VerticalAlignment="Center"/>
+            </StackPanel>
+        </DataTemplate>
+
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
     </Page.Resources>
@@ -86,8 +93,9 @@
                     Command="{x:Bind Model.PasteCommand}"/>
         </StackPanel>
 
-        <local:TitleBar Grid.Row="0" IsAlwaysOnTopMode="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"
-                        AlwaysOnTopClick="TitleBarAlwaysOnTopButtonClick"/>
+        <local:TitleBar Grid.Row="0"
+                        AlwaysOnTopClick="TitleBarAlwaysOnTopButtonClick"
+                        IsAlwaysOnTopMode="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"/>
 
         <Grid Grid.Row="1">
             <Border x:Name="CalcHolder">
@@ -95,6 +103,9 @@
             </Border>
             <Border x:Name="DateCalcHolder">
                 <!-- PLACEHOLDER!!!! This is where the date calculator goes when it is delay loaded -->
+            </Border>
+            <Border x:Name="GraphingCalcHolder">
+                <!-- PLACEHOLDER!!!! This is where the graphing calculator goes when it is delay loaded -->
             </Border>
             <Border x:Name="ConverterHolder">
                 <!-- PLACEHOLDER!!!! This is where the converter goes when it is delay loaded -->
@@ -108,7 +119,6 @@
                              DataContext="{x:Bind Model}"
                              ExpandedModeThresholdWidth="Infinity"
                              IsBackButtonVisible="Collapsed"
-                             IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                              IsPaneToggleButtonVisible="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                              IsSettingsVisible="False"
                              ItemInvoked="OnNavItemInvoked"
@@ -126,9 +136,9 @@
                 <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
                     <muxc:NavigationViewList x:Name="NavFooter"
                                              Width="{x:Bind NavView.OpenPaneLength, Mode=Oneway}"
-                                             x:Load="False"
                                              IsItemClickEnabled="True"
-                                             ItemClick="OnAboutButtonClick">
+                                             ItemClick="OnAboutButtonClick"
+                                             x:Load="False">
                         <muxc:NavigationViewList.ItemContainerTransitions>
                             <!-- Remove EntranceThemeTransition which is a default transition for NavigationViewList -->
                             <TransitionCollection/>
@@ -154,23 +164,28 @@
                     </muxc:NavigationViewList>
                 </StackPanel>
             </muxc:NavigationView.PaneFooter>
-            <Grid>
+            <Grid Height="{StaticResource HamburgerHeight}" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="Header"
-                           Grid.Column="0"
-                           Margin="52,6,12,0"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Top"
-                           Style="{StaticResource SubtitleTextBlockStyle}"
-                           Text="{x:Bind Model.CategoryName, Mode=OneWay}"
-                           Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+                <StackPanel Margin="52,0,0,0" Orientation="Horizontal">
+                    <TextBlock x:Name="Header"
+                               Margin="0,-3,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               Text="{x:Bind Model.CategoryName, Mode=OneWay}"
+                               Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+                    <controls:PreviewTagControl Margin="10,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Visibility="{x:Bind Model.IsModePreview, Mode=OneWay}"/>
+                </StackPanel>
                 <Button x:Name="NormalAlwaysOnTopButton"
                         x:Uid="EnterAlwaysOnTopButton"
                         Grid.Column="1"
-                        VerticalAlignment="Top"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
                         HorizontalContentAlignment="Center"
                         Style="{StaticResource SquareIconButtonStyle}"
                         Background="Transparent"
@@ -180,7 +195,7 @@
                         Content="&#xEE49;"
                         Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}">
                     <Button.KeyboardAccelerators>
-                        <KeyboardAccelerator Modifiers="Menu" Key="Up"/>
+                        <KeyboardAccelerator Key="Up" Modifiers="Menu"/>
                     </Button.KeyboardAccelerators>
                 </Button>
             </Grid>

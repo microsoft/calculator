@@ -50,10 +50,6 @@ namespace UnitConversionManager
             accessibleName = nameValue1 + L" " + nameValue2;
         }
 
-        virtual ~Unit()
-        {
-        }
-
         int id;
         std::wstring name;
         std::wstring accessibleName;
@@ -142,10 +138,6 @@ namespace UnitConversionManager
             : ratio(ratio)
             , offset(offset)
             , offsetFirst(offsetFirst)
-        {
-        }
-
-        virtual ~ConversionData()
         {
         }
 
@@ -238,7 +230,7 @@ namespace UnitConversionManager
         virtual void SetCurrentUnitTypes(const Unit& fromType, const Unit& toType) = 0;
         virtual void SwitchActive(const std::wstring& newValue) = 0;
         virtual std::wstring SaveUserPreferences() = 0;
-        virtual void RestoreUserPreferences(_In_ const std::wstring& userPreferences) = 0;
+        virtual void RestoreUserPreferences(_In_ std::wstring_view userPreferences) = 0;
         virtual void SendCommand(Command command) = 0;
         virtual void SetViewModelCallback(_In_ const std::shared_ptr<IUnitConverterVMCallback>& newCallback) = 0;
         virtual void SetViewModelCurrencyCallback(_In_ const std::shared_ptr<IViewModelCurrencyCallback>& newCallback) = 0;
@@ -261,7 +253,7 @@ namespace UnitConversionManager
         void SetCurrentUnitTypes(const Unit& fromType, const Unit& toType) override;
         void SwitchActive(const std::wstring& newValue) override;
         std::wstring SaveUserPreferences() override;
-        void RestoreUserPreferences(const std::wstring& userPreference) override;
+        void RestoreUserPreferences(std::wstring_view userPreference) override;
         void SendCommand(Command command) override;
         void SetViewModelCallback(_In_ const std::shared_ptr<IUnitConverterVMCallback>& newCallback) override;
         void SetViewModelCurrencyCallback(_In_ const std::shared_ptr<IViewModelCurrencyCallback>& newCallback) override;
@@ -270,20 +262,20 @@ namespace UnitConversionManager
         void ResetCategoriesAndRatios() override;
         // IUnitConverter
 
-        static std::vector<std::wstring> StringToVector(const std::wstring& w, const wchar_t* delimiter, bool addRemainder = false);
-        static std::wstring Quote(const std::wstring& s);
-        static std::wstring Unquote(const std::wstring& s);
+        static std::vector<std::wstring> StringToVector(std::wstring_view w, std::wstring_view delimiter, bool addRemainder = false);
+        static std::wstring Quote(std::wstring_view s);
+        static std::wstring Unquote(std::wstring_view s);
 
     private:
         bool CheckLoad();
-        double Convert(double value, ConversionData conversionData);
+        double Convert(double value, const ConversionData& conversionData);
         std::vector<std::tuple<std::wstring, Unit>> CalculateSuggested();
         void ClearValues();
         void InitializeSelectedUnits();
-        Category StringToCategory(const std::wstring& w);
-        std::wstring CategoryToString(const Category& c, const wchar_t* delimiter);
-        std::wstring UnitToString(const Unit& u, const wchar_t* delimiter);
-        Unit StringToUnit(const std::wstring& w);
+        Category StringToCategory(std::wstring_view w);
+        std::wstring CategoryToString(const Category& c, std::wstring_view delimiter);
+        std::wstring UnitToString(const Unit& u, std::wstring_view delimiter);
+        Unit StringToUnit(std::wstring_view w);
         void UpdateCurrencySymbols();
         void UpdateViewModel();
         bool AnyUnitIsEmpty();

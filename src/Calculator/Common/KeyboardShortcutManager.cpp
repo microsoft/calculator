@@ -3,13 +3,14 @@
 
 #include "pch.h"
 #include "KeyboardShortcutManager.h"
-#include "AppResourceProvider.h"
-#include "ApplicationViewModel.h"
-#include "LocalizationSettings.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
+#include "CalcViewModel/ApplicationViewModel.h"
+#include "CalcViewModel/Common/LocalizationSettings.h"
 
 using namespace Concurrency;
 using namespace Platform;
 using namespace std;
+using namespace std::chrono;
 using namespace Windows::ApplicationModel::Resources;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
@@ -43,10 +44,15 @@ static multimap<int, multimap<MyVirtualKey, WeakReference>> s_VirtualKeyControlS
 static multimap<int, multimap<MyVirtualKey, WeakReference>> s_VirtualKeyInverseChordsForButtons;
 static multimap<int, multimap<MyVirtualKey, WeakReference>> s_VirtualKeyControlInverseChordsForButtons;
 
-static multimap<int, bool> s_ShiftKeyPressed;
-static multimap<int, bool> s_ControlKeyPressed;
-static multimap<int, bool> s_ShiftButtonChecked;
-static multimap<int, bool> s_IsDropDownOpen;
+static map<int, bool> s_ShiftKeyPressed;
+static map<int, bool> s_ControlKeyPressed;
+static map<int, bool> s_ShiftButtonChecked;
+static map<int, bool> s_IsDropDownOpen;
+
+static map<int, bool> s_ignoreNextEscape;
+static map<int, bool> s_keepIgnoringEscape;
+static map<int, bool> s_fHonorShortcuts;
+static map<int, Flyout ^> s_AboutFlyout;
 
 static reader_writer_lock s_keyboardShortcutMapLock;
 
@@ -157,12 +163,6 @@ namespace CalculatorApp
     }
 }
 
-static multimap<int, bool> s_ignoreNextEscape;
-static multimap<int, bool> s_keepIgnoringEscape;
-static multimap<int, bool> s_fHonorShortcuts;
-static multimap<int, bool> s_fHandledEnter;
-static multimap<int, Flyout ^> s_AboutFlyout;
-
 void KeyboardShortcutManager::IgnoreEscape(bool onlyOnce)
 {
     // Writer lock for the static maps
@@ -172,14 +172,12 @@ void KeyboardShortcutManager::IgnoreEscape(bool onlyOnce)
 
     if (s_ignoreNextEscape.find(viewId) != s_ignoreNextEscape.end())
     {
-        s_ignoreNextEscape.erase(viewId);
-        s_ignoreNextEscape.insert(std::make_pair(viewId, true));
+        s_ignoreNextEscape[viewId] = true;
     }
 
     if (s_keepIgnoringEscape.find(viewId) != s_keepIgnoringEscape.end())
     {
-        s_keepIgnoringEscape.erase(viewId);
-        s_keepIgnoringEscape.insert(std::make_pair(viewId, !onlyOnce));
+        s_keepIgnoringEscape[viewId] = !onlyOnce;
     }
 }
 
@@ -192,14 +190,12 @@ void KeyboardShortcutManager::HonorEscape()
 
     if (s_ignoreNextEscape.find(viewId) != s_ignoreNextEscape.end())
     {
-        s_ignoreNextEscape.erase(viewId);
-        s_ignoreNextEscape.insert(std::make_pair(viewId, false));
+        s_ignoreNextEscape[viewId] = false;
     }
 
     if (s_keepIgnoringEscape.find(viewId) != s_keepIgnoringEscape.end())
     {
-        s_keepIgnoringEscape.erase(viewId);
-        s_keepIgnoringEscape.insert(std::make_pair(viewId, false));
+        s_keepIgnoringEscape[viewId] = false;
     }
 }
 
@@ -430,7 +426,6 @@ void KeyboardShortcutManager::OnCharacterReceivedHandler(CoreWindow ^ sender, Ch
         {
             wchar_t character = static_cast<wchar_t>(args->KeyCode);
             auto buttons = s_CharacterForButtons.find(viewId)->second.equal_range(character);
-
             RunFirstEnabledButtonCommand(buttons);
 
             LightUpButtons(buttons);
@@ -474,8 +469,8 @@ const std::multimap<MyVirtualKey, WeakReference>& GetCurrentKeyDictionary(MyVirt
         }
         else
         {
-            auto iterViewMap = s_VirtualKeyControlInverseChordsForButtons.find(viewId);
-            if (iterViewMap != s_VirtualKeyControlInverseChordsForButtons.end())
+            auto iterViewMap = s_VirtualKeyInverseChordsForButtons.find(viewId);
+            if (iterViewMap != s_VirtualKeyInverseChordsForButtons.end())
             {
                 for (auto iterator = iterViewMap->second.begin(); iterator != iterViewMap->second.end(); ++iterator)
                 {
@@ -519,7 +514,7 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs
             auto navView = buttons.first->second.Resolve<MUXC::NavigationView>();
             auto appViewModel = safe_cast<ApplicationViewModel ^>(navView->DataContext);
             appViewModel->Mode = ViewMode::Date;
-            auto categoryName = AppResourceProvider::GetInstance().GetResourceString(L"DateCalculationModeText");
+            auto categoryName = AppResourceProvider::GetInstance()->GetResourceString(L"DateCalculationModeText");
             appViewModel->CategoryName = categoryName;
 
             auto menuItems = static_cast<IObservableVector<Object ^> ^>(navView->MenuItemsSource);
@@ -558,8 +553,7 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs
 
             if (currControlKeyPressed != s_ControlKeyPressed.end())
             {
-                s_ControlKeyPressed.erase(viewId);
-                s_ControlKeyPressed.insert(std::make_pair(viewId, true));
+                s_ControlKeyPressed[viewId] = true;
             }
             return;
         }
@@ -572,26 +566,24 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs
 
             if (currShiftKeyPressed != s_ShiftKeyPressed.end())
             {
-                s_ShiftKeyPressed.erase(viewId);
-                s_ShiftKeyPressed.insert(std::make_pair(viewId, true));
+                s_ShiftKeyPressed[viewId] = true;
             }
             return;
         }
-
-        const auto& lookupMap = GetCurrentKeyDictionary(static_cast<MyVirtualKey>(key));
-        auto buttons = lookupMap.equal_range(static_cast<MyVirtualKey>(key));
-
-        auto currentIsDropDownOpen = s_IsDropDownOpen.find(viewId);
 
         if (currentHonorShortcuts != s_fHonorShortcuts.end())
         {
             if (currentHonorShortcuts->second)
             {
+                const auto myVirtualKey = static_cast<MyVirtualKey>(key);
+                const auto& lookupMap = GetCurrentKeyDictionary(myVirtualKey);
+                auto buttons = lookupMap.equal_range(myVirtualKey);
                 RunFirstEnabledButtonCommand(buttons);
 
                 // Ctrl+C and Ctrl+V shifts focus to some button because of which enter doesn't work after copy/paste. So don't shift focus if Ctrl+C or Ctrl+V
                 // is pressed. When drop down is open, pressing escape shifts focus to clear button. So dont's shift focus if drop down is open. Ctrl+Insert is
                 // equivalent to Ctrl+C and Shift+Insert is equivalent to Ctrl+V
+                auto currentIsDropDownOpen = s_IsDropDownOpen.find(viewId);
                 if (currentIsDropDownOpen != s_IsDropDownOpen.end() && !currentIsDropDownOpen->second)
                 {
                     // Do not Light Up Buttons when Ctrl+C, Ctrl+V, Ctrl+Insert or Shift+Insert is pressed
@@ -620,8 +612,7 @@ void KeyboardShortcutManager::OnKeyUpHandler(CoreWindow ^ sender, KeyEventArgs ^
 
         if (currentShiftKeyPressed != s_ShiftKeyPressed.end())
         {
-            s_ShiftKeyPressed.erase(viewId);
-            s_ShiftKeyPressed.insert(std::make_pair(viewId, false));
+            s_ShiftKeyPressed[viewId] = false;
         }
     }
     else if (key == VirtualKey::Control)
@@ -633,8 +624,7 @@ void KeyboardShortcutManager::OnKeyUpHandler(CoreWindow ^ sender, KeyEventArgs ^
 
         if (currControlKeyPressed != s_ControlKeyPressed.end())
         {
-            s_ControlKeyPressed.erase(viewId);
-            s_ControlKeyPressed.insert(std::make_pair(viewId, false));
+            s_ControlKeyPressed[viewId] = false;
         }
     }
 }
@@ -712,8 +702,7 @@ void KeyboardShortcutManager::ShiftButtonChecked(bool checked)
 
     if (s_ShiftButtonChecked.find(viewId) != s_ShiftButtonChecked.end())
     {
-        s_ShiftButtonChecked.erase(viewId);
-        s_ShiftButtonChecked.insert(std::make_pair(viewId, checked));
+        s_ShiftButtonChecked[viewId] = checked;
     }
 }
 
@@ -723,8 +712,7 @@ void KeyboardShortcutManager::UpdateDropDownState(bool isOpen)
 
     if (s_IsDropDownOpen.find(viewId) != s_IsDropDownOpen.end())
     {
-        s_IsDropDownOpen.erase(viewId);
-        s_IsDropDownOpen.insert(std::make_pair(viewId, isOpen));
+        s_IsDropDownOpen[viewId] = isOpen;
     }
 }
 
@@ -734,8 +722,7 @@ void KeyboardShortcutManager::UpdateDropDownState(Flyout ^ aboutPageFlyout)
 
     if (s_AboutFlyout.find(viewId) != s_AboutFlyout.end())
     {
-        s_AboutFlyout.erase(viewId);
-        s_AboutFlyout.insert(std::make_pair(viewId, aboutPageFlyout));
+        s_AboutFlyout[viewId] = aboutPageFlyout;
     }
 }
 
@@ -748,19 +735,7 @@ void KeyboardShortcutManager::HonorShortcuts(bool allow)
 
     if (s_fHonorShortcuts.find(viewId) != s_fHonorShortcuts.end())
     {
-        s_fHonorShortcuts.erase(viewId);
-        s_fHonorShortcuts.insert(std::make_pair(viewId, allow));
-    }
-}
-
-void KeyboardShortcutManager::HandledEnter(bool ishandled)
-{
-    int viewId = Utils::GetWindowId();
-
-    if (s_fHandledEnter.find(viewId) != s_fHandledEnter.end())
-    {
-        s_fHandledEnter.erase(viewId);
-        s_fHandledEnter.insert(std::make_pair(viewId, ishandled));
+        s_fHonorShortcuts[viewId] = allow;
     }
 }
 
@@ -812,15 +787,14 @@ void KeyboardShortcutManager::RegisterNewAppViewId()
         s_VirtualKeyControlInverseChordsForButtons.insert(std::make_pair(appViewId, std::multimap<MyVirtualKey, WeakReference>()));
     }
 
-    s_ShiftKeyPressed.insert(std::make_pair(appViewId, false));
-    s_ControlKeyPressed.insert(std::make_pair(appViewId, false));
-    s_ShiftButtonChecked.insert(std::make_pair(appViewId, false));
-    s_IsDropDownOpen.insert(std::make_pair(appViewId, false));
-    s_ignoreNextEscape.insert(std::make_pair(appViewId, false));
-    s_keepIgnoringEscape.insert(std::make_pair(appViewId, false));
-    s_fHonorShortcuts.insert(std::make_pair(appViewId, true));
-    s_fHandledEnter.insert(std::make_pair(appViewId, true));
-    s_AboutFlyout.insert(std::make_pair(appViewId, nullptr));
+    s_ShiftKeyPressed[appViewId] = false;
+    s_ControlKeyPressed[appViewId] = false;
+    s_ShiftButtonChecked[appViewId] = false;
+    s_IsDropDownOpen[appViewId] = false;
+    s_ignoreNextEscape[appViewId] = false;
+    s_keepIgnoringEscape[appViewId] = false;
+    s_fHonorShortcuts[appViewId] = true;
+    s_AboutFlyout[appViewId] = nullptr;
 }
 
 void KeyboardShortcutManager::OnWindowClosed(int viewId)
@@ -845,6 +819,5 @@ void KeyboardShortcutManager::OnWindowClosed(int viewId)
     s_ignoreNextEscape.erase(viewId);
     s_keepIgnoringEscape.erase(viewId);
     s_fHonorShortcuts.erase(viewId);
-    s_fHandledEnter.erase(viewId);
     s_AboutFlyout.erase(viewId);
 }

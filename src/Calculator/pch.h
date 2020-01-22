@@ -27,6 +27,9 @@
 #include <concrt.h>
 #include <regex>
 #include <string>
+#include <tuple>
+#include <iomanip>
+#include <WindowsNumerics.h>
 
 // C++\WinRT Headers
 #include "winrt/base.h"
