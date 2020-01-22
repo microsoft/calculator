@@ -18,6 +18,14 @@ namespace MockGraphingImpl
         }
         virtual std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> TryInitialize(const Graphing::IExpression* graphingExp = nullptr)
         {
+            if (graphingExp != nullptr)
+            {
+                std::vector<std::shared_ptr<Graphing::IEquation>> equations;
+                equations.push_back(nullptr);
+                m_variables.push_back(std::make_shared<MockVariable>(MockVariable{}));
+                return std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>>(equations);
+            }
+
             return std::nullopt;
         }
 
