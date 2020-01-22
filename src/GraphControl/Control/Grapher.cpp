@@ -314,6 +314,10 @@ namespace GraphControl
                         initResult = nullopt;
                     }
                 }
+                else
+                {
+                    shouldKeepPreviousGraph = false;
+                }
             }
 
             if (initResult == nullopt)
