@@ -19,13 +19,24 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::Xaml::Shapes;
+using namespace GraphControl;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationStylePanelControl, SelectedColor);
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationStylePanelControl, SelectedStyle);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationStylePanelControl, AvailableColors);
 
 EquationStylePanelControl::EquationStylePanelControl()
 {
     InitializeComponent();
+    Windows::Foundation::Collections::IVector<EquationLineStyle> ^ allStyles = ref new Vector<EquationLineStyle>();
+
+    allStyles->Append(::EquationLineStyle::Solid);
+    allStyles->Append(::EquationLineStyle::Dash);
+    allStyles->Append(::EquationLineStyle::DashDot);
+    allStyles->Append(::EquationLineStyle::DashDotDot);
+    allStyles->Append(::EquationLineStyle::Dot);
+
+    StyleChooser->ItemsSource = allStyles;
 }
 
 void EquationStylePanelControl::SelectionChanged(Object ^ /*sender */, SelectionChangedEventArgs ^ e)
@@ -75,5 +86,16 @@ void EquationStylePanelControl::SelectColor(Color selectedColor)
         {
             gridViewItem->IsSelected = false;
         }
+    }
+}
+
+void CalculatorApp::EquationStylePanelControl::StyleChooser_SelectionChanged(
+    Platform::Object ^ sender,
+    Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e)
+{
+    if (e->AddedItems->Size > 0)
+    {
+        auto lineStyle = static_cast<EquationLineStyle>(e->AddedItems->GetAt(0));
+        SelectedStyle = lineStyle;
     }
 }

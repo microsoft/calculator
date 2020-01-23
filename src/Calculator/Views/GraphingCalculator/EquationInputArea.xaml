@@ -806,7 +806,7 @@
                                     <Flyout x:Name="ColorChooserFlyout"
                                             x:Uid="ColorChooserFlyout"
                                             Placement="Bottom">
-                                        <local:EquationStylePanelControl SelectedColor="{x:Bind LineColor, Mode=TwoWay}"/>
+                                        <local:EquationStylePanelControl SelectedColor="{x:Bind LineColor, Mode=TwoWay}" SelectedStyle="{x:Bind GraphEquation.EquationStyle, Mode=TwoWay}"/>
                                     </Flyout>
                                 </controls:EquationTextBox.ColorChooserFlyout>
                             </controls:EquationTextBox>

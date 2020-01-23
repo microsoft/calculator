@@ -15,6 +15,7 @@ namespace CalculatorApp
         DEPENDENCY_PROPERTY_OWNER(EquationStylePanelControl);
 
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, SelectedColor, Windows::UI::Colors::Black);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT(GraphControl::EquationLineStyle, SelectedStyle, GraphControl::EquationLineStyle::Solid);
         DEPENDENCY_PROPERTY_WITH_DEFAULT(Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::SolidColorBrush ^> ^, AvailableColors, nullptr);
 
 	private:
@@ -24,5 +25,6 @@ namespace CalculatorApp
             Platform::Object ^ sender,
             Windows::UI::Xaml::RoutedEventArgs ^ e);
         void SelectColor(Windows::UI::Color selectedColor);
+        void StyleChooser_SelectionChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e);
     };
 }

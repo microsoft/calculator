@@ -296,6 +296,13 @@ namespace GraphControl
 
                 if (initResult != nullopt)
                 {
+                    auto graphedEquations = initResult.value();
+
+                    for (int i = 0; i < validEqs.size(); i++)
+                    {
+                        validEqs[i]->GraphedEquation = graphedEquations[i];
+                    }
+
                     UpdateGraphOptions(m_graph->GetOptions(), validEqs);
                     SetGraphArgs();
 
