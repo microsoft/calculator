@@ -17,7 +17,6 @@
     <AppxOSMinVersionReplaceManifestVersion>true</AppxOSMinVersionReplaceManifestVersion>
     <AppxOSMaxVersionTestedReplaceManifestVersion>true</AppxOSMaxVersionTestedReplaceManifestVersion>
     <PackageCertificateKeyFile>CalculatorUnitTests_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>be776c83699dbce4969de9ee730aeaf66c5d5182</PackageCertificateThumbprint>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -132,7 +131,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
     <PackageCertificateKeyFile>CalculatorUnitTests_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>BE776C83699DBCE4969DE9EE730AEAF66C5D5182</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>479B71D75C958053AEE4A3D02C623056D5C932C4</PackageCertificateThumbprint>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
