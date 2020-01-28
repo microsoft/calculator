@@ -1464,7 +1464,7 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
 bool StandardCalculatorViewModel::IsOpnd(Command command)
 {
     static constexpr Command opnd[] = { Command::Command0, Command::Command1, Command::Command2, Command::Command3, Command::Command4,  Command::Command5,
-                              Command::Command6, Command::Command7, Command::Command8, Command::Command9, Command::CommandPNT };
+                                        Command::Command6, Command::Command7, Command::Command8, Command::Command9, Command::CommandPNT };
 
     return find(begin(opnd), end(opnd), command) != end(opnd);
 }
@@ -1472,9 +1472,9 @@ bool StandardCalculatorViewModel::IsOpnd(Command command)
 bool StandardCalculatorViewModel::IsUnaryOp(Command command)
 {
     static constexpr Command unaryOp[] = { Command::CommandSQRT,  Command::CommandFAC,  Command::CommandSQR,   Command::CommandLOG,
-                                 Command::CommandPOW10, Command::CommandPOWE, Command::CommandLN,    Command::CommandREC,
-                                 Command::CommandSIGN,  Command::CommandSINH, Command::CommandASINH, Command::CommandCOSH,
-                                 Command::CommandACOSH, Command::CommandTANH, Command::CommandATANH, Command::CommandCUB };
+                                           Command::CommandPOW10, Command::CommandPOWE, Command::CommandLN,    Command::CommandREC,
+                                           Command::CommandSIGN,  Command::CommandSINH, Command::CommandASINH, Command::CommandCOSH,
+                                           Command::CommandACOSH, Command::CommandTANH, Command::CommandATANH, Command::CommandCUB };
 
     if (find(begin(unaryOp), end(unaryOp), command) != end(unaryOp))
     {
@@ -1501,7 +1501,7 @@ bool StandardCalculatorViewModel::IsTrigOp(Command command)
 bool StandardCalculatorViewModel::IsBinOp(Command command)
 {
     static constexpr Command binOp[] = { Command::CommandADD, Command::CommandSUB,  Command::CommandMUL, Command::CommandDIV,
-                               Command::CommandEXP, Command::CommandROOT, Command::CommandMOD, Command::CommandPWR };
+                                         Command::CommandEXP, Command::CommandROOT, Command::CommandMOD, Command::CommandPWR };
 
     return find(begin(binOp), end(binOp), command) != end(binOp);
 }
@@ -1775,6 +1775,20 @@ ViewMode StandardCalculatorViewModel::GetCalculatorMode()
         return ViewMode::Scientific;
     }
     return ViewMode::Programmer;
+}
+
+void StandardCalculatorViewModel::IsUnsigned::set(bool isUnsigned)
+{
+    if (m_isUnsigned != isUnsigned)
+    {
+        m_isUnsigned = isUnsigned;
+        RaisePropertyChanged(L"IsUnsigned");
+
+        if (isUnsigned)
+            ButtonPressed->Execute(NumbersAndOperatorsEnum::Unsigned);
+        else
+            ButtonPressed->Execute(NumbersAndOperatorsEnum::Signed);
+    }
 }
 
 void StandardCalculatorViewModel::ValueBitLength::set(CalculatorApp::Common::BitLength value)

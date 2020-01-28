@@ -29,6 +29,8 @@
 #define IDM_RAD 322
 #define IDM_GRAD 323
 #define IDM_DEGREES 324
+#define IDM_SIGNED 325
+#define IDM_UNSIGNED 326
 
 #define IDC_HEX IDM_HEX
 #define IDC_DEC IDM_DEC
@@ -44,6 +46,9 @@
 #define IDC_DWORD IDM_DWORD
 #define IDC_WORD IDM_WORD
 #define IDC_BYTE IDM_BYTE
+
+#define IDC_SIGNED IDM_SIGNED
+#define IDC_UNSIGNED IDM_UNSIGNED
 
 // Key IDs:
 // These id's must be consecutive from IDC_FIRSTCONTROL to IDC_LASTCONTROL.

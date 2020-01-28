@@ -65,6 +65,7 @@ CCalcEngine::CCalcEngine(
     __in_opt shared_ptr<IHistoryDisplay> pHistoryDisplay)
     : m_fPrecedence(fPrecedence)
     , m_fIntegerMode(fIntegerMode)
+    , m_fUnsignedMode(false)
     , m_pCalcDisplay(pCalcDisplay)
     , m_resourceProvider(pResourceProvider)
     , m_nOpCode(0)
@@ -125,10 +126,12 @@ void CCalcEngine::InitChopNumbers()
     assert(m_chopNumbers.size() == m_maxDecimalValueStrings.size());
     for (size_t i = 0; i < m_chopNumbers.size(); i++)
     {
-        auto maxVal = m_chopNumbers[i] / 2;
-        maxVal = RationalMath::Integer(maxVal);
+        auto maxVal = m_chopNumbers[i];
+        auto maxUnsignedVal = RationalMath::Integer(maxVal);
+        m_maxUnsignedValueStrings[i] = maxUnsignedVal.ToString(10, FMT_FLOAT, m_precision);
 
-        m_maxDecimalValueStrings[i] = maxVal.ToString(10, FMT_FLOAT, m_precision);
+        auto maxSignedVal = RationalMath::Integer(maxVal / 2);
+        m_maxDecimalValueStrings[i] = maxSignedVal.ToString(10, FMT_FLOAT, m_precision);
     }
 }
 

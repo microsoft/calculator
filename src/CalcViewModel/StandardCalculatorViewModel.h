@@ -118,6 +118,15 @@ namespace CalculatorApp
             static property Platform::String
                 ^ IsBitFlipCheckedPropertyName { Platform::String ^ get() { return Platform::StringReference(L"IsBitFlipChecked"); } }
 
+            property bool IsUnsigned
+            {
+                bool get()
+                {
+                    return m_isUnsigned;
+                }
+                void set(bool isUnsigned);
+            }
+
             property CalculatorApp::Common::BitLength ValueBitLength
             {
                 CalculatorApp::Common::BitLength get()
@@ -198,7 +207,7 @@ namespace CalculatorApp
             static property Platform::String
                 ^ IsProgrammerPropertyName { Platform::String ^ get() { return Platform::StringReference(L"IsProgrammer"); } }
 
-            property bool IsEditingEnabled
+                property bool IsEditingEnabled
             {
                 bool get()
                 {
@@ -283,7 +292,7 @@ namespace CalculatorApp
             void SetMemorizedNumbersString();
             void SwitchAngleType(NumbersAndOperatorsEnum num);
             void ResetDisplay();
-          
+
             void SetPrecision(int32_t precision);
             void UpdateMaxIntDigits()
             {
@@ -338,6 +347,7 @@ namespace CalculatorApp
             bool m_isRtlLanguage;
             bool m_operandUpdated;
             bool m_isLastOperationHistoryLoad;
+            bool m_isUnsigned;
             CalculatorApp::Common::BitLength m_valueBitLength;
             Platform::String ^ m_selectedExpressionLastData;
             Common::DisplayExpressionToken ^ m_selectedExpressionToken;

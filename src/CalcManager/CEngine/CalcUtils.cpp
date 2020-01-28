@@ -33,7 +33,7 @@ bool IsDigitOpCode(OpCode opCode)
 // was never inout, we need to revert the state changes made as a result of this test
 bool IsGuiSettingOpCode(OpCode opCode)
 {
-    if (IsOpInRange(opCode, IDM_HEX, IDM_BIN) || IsOpInRange(opCode, IDM_QWORD, IDM_BYTE) || IsOpInRange(opCode, IDM_DEG, IDM_GRAD))
+    if (IsOpInRange(opCode, IDM_HEX, IDM_BIN) || IsOpInRange(opCode, IDM_QWORD, IDM_BYTE) || IsOpInRange(opCode, IDM_DEG, IDM_GRAD) || IsOpInRange(opCode, IDM_SIGNED, IDM_UNSIGNED))
     {
         return true;
     }

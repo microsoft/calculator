@@ -92,6 +92,8 @@ public
         Dword = (int)CM::Command::CommandDword,
         Word = (int)CM::Command::CommandWord,
         Byte = (int)CM::Command::CommandByte,
+        Signed = (int)CM::Command::CommandSigned,
+        Unsigned = (int)CM::Command::CommandUnsigned,
         Cube = (int)CM::Command::CommandCUB,
         DMS = (int)CM::Command::CommandDMS,
         Hyp = (int) CM::Command::CommandHYP,

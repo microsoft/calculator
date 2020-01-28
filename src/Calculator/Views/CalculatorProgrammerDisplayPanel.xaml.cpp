@@ -59,7 +59,27 @@ void CalculatorProgrammerDisplayPanel::OnBitLengthButtonPressed(Object ^ paramet
         QwordButton->Visibility = ::Visibility::Visible;
         QwordButton->Focus(::FocusState::Programmatic);
     }
+}
 
+void CalculatorProgrammerDisplayPanel::OnSignednessButtonPressed(Object ^ parameter)
+{
+    String ^ buttonId = parameter->ToString();
+
+    SignedButton->Visibility = ::Visibility::Collapsed;
+    UnsignedButton->Visibility = ::Visibility::Collapsed;
+
+    if (buttonId == "0")
+    {
+        Model->IsUnsigned = true;
+        UnsignedButton->Visibility = ::Visibility::Visible;
+        UnsignedButton->Focus(::FocusState::Programmatic);
+    }
+    else if (buttonId == "1")
+    {
+        Model->IsUnsigned = false;
+        SignedButton->Visibility = ::Visibility::Visible;
+        SignedButton->Focus(::FocusState::Programmatic);
+    }
 }
 
 bool CalculatorProgrammerDisplayPanel::IsErrorVisualState::get()

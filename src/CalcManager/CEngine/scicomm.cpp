@@ -105,6 +105,16 @@ void CCalcEngine::ProcessCommand(OpCode wParam)
 void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 {
     int nx, ni;
+    std::wstring_view maxValStr;
+
+    if (m_fUnsignedMode)
+    {
+        maxValStr = m_maxUnsignedValueStrings[m_numwidth];
+    }
+    else
+    {
+        maxValStr = m_maxDecimalValueStrings[m_numwidth];
+    }
 
     // Save the last command.  Some commands are not saved in this manor, these
     // commands are:
@@ -151,6 +161,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             IsOpInRange(wParam, IDC_OPENP, IDC_CLOSEP) ||
             IsOpInRange(wParam, IDM_HEX, IDM_BIN) ||
             IsOpInRange(wParam, IDM_QWORD, IDM_BYTE) ||
+            IsOpInRange(wParam, IDM_SIGNED, IDM_UNSIGNED) ||
             IsOpInRange(wParam, IDM_DEG, IDM_GRAD) ||
             IsOpInRange(wParam, IDC_BINEDITSTART, IDC_BINEDITEND) ||
             (IDC_INV == wParam) ||
@@ -185,7 +196,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             return;
         }
 
-        if (!m_input.TryAddDigit(iValue, m_radix, m_fIntegerMode, m_maxDecimalValueStrings[m_numwidth], m_dwWordBitWidth, m_cIntDigitsSav))
+        if (!m_input.TryAddDigit(iValue, m_radix, m_fIntegerMode, maxValStr, m_dwWordBitWidth, m_cIntDigitsSav))
         {
             HandleErrorCommand(wParam);
             HandleMaxDigitsReached();
@@ -651,7 +662,16 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         // Compat. mode BaseX: Qword, Dword, Word, Byte
         SetRadixTypeAndNumWidth((RADIX_TYPE)-1, (NUM_WIDTH)(wParam - IDM_QWORD));
         break;
-
+    
+    case IDM_SIGNED:
+        m_fUnsignedMode = false;
+        SetRadixTypeAndNumWidth((RADIX_TYPE)-1, (NUM_WIDTH)-1);
+        break;
+    case IDM_UNSIGNED:
+        m_fUnsignedMode = true;
+        SetRadixTypeAndNumWidth((RADIX_TYPE)-1, (NUM_WIDTH)-1);
+        break;
+    
     case IDM_DEG:
     case IDM_RAD:
     case IDM_GRAD:
@@ -662,7 +682,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     {
         if (m_bRecord)
         {
-            if (m_input.TryToggleSign(m_fIntegerMode, m_maxDecimalValueStrings[m_numwidth]))
+            if (m_input.TryToggleSign(m_fIntegerMode, maxValStr))
             {
                 DisplayNum();
             }
@@ -1105,7 +1125,7 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
         {
             uint64_t w64Bits = tempRat.ToUInt64_t();
             bool fMsb = ((w64Bits >> (m_dwWordBitWidth - 1)) & 1);
-            if ((radix == 10) && fMsb)
+            if ((radix == 10) && fMsb && !m_fUnsignedMode)
             {
                 // If high bit is set, then get the decimal number in negative 2's complement form.
                 tempRat = -((tempRat ^ m_chopNumbers[m_numwidth]) + 1);

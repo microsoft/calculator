@@ -205,6 +205,9 @@ namespace CalculationManager
         CommandWord = 319,
         CommandByte = 320,
 
+        CommandSigned = 325,
+        CommandUnsigned = 326,
+
         CommandBINEDITSTART = 700,
         CommandBINPOS0 = 700,
         CommandBINPOS1 = 701,

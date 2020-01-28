@@ -21,7 +21,7 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwid
         uint64_t w64Bits = m_currentVal.ToUInt64_t();
         bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1; // make sure you use the old width
 
-        if (fMsb)
+        if (fMsb && !m_fUnsignedMode)
         {
             // If high bit is set, then get the decimal number in -ve 2'scompl form.
             auto tempResult = m_currentVal ^ m_chopNumbers[m_numwidth];

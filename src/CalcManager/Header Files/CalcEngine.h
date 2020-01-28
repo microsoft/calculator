@@ -112,6 +112,7 @@ public:
 private:
     bool m_fPrecedence;
     bool m_fIntegerMode; /* This is true if engine is explicitly called to be in integer mode. All bases are restricted to be in integers only */
+    bool m_fUnsignedMode;
     ICalcDisplay* m_pCalcDisplay;
     CalculationManager::IResourceProvider* const m_resourceProvider;
     int m_nOpCode;     /* ID value of operation.                       */
@@ -161,6 +162,7 @@ private:
 
     std::array<CalcEngine::Rational, NUM_WIDTH_LENGTH> m_chopNumbers;      // word size enforcement
     std::array<std::wstring, NUM_WIDTH_LENGTH> m_maxDecimalValueStrings;   // maximum values represented by a given word width based off m_chopNumbers
+    std::array<std::wstring, NUM_WIDTH_LENGTH> m_maxUnsignedValueStrings;   // maximum values represented by a given word width based off m_chopNumbers
     static std::unordered_map<std::wstring_view, std::wstring> s_engineStrings; // the string table shared across all instances
     wchar_t m_decimalSeparator;
     wchar_t m_groupSeparator;

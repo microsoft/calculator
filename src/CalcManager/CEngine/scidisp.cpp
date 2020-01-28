@@ -46,9 +46,10 @@ typedef struct
     bool fIntMath;
     bool bRecord;
     bool bUseSep;
+    bool bUnsigned;
 } LASTDISP;
 
-static LASTDISP gldPrevious = { 0, -1, 0, -1, (NUM_WIDTH)-1, false, false, false };
+static LASTDISP gldPrevious = { 0, -1, 0, -1, (NUM_WIDTH)-1, false, false, false, false };
 
 // Truncates if too big, makes it a non negative - the number in rat. Doesn't do anything if not in INT mode
 CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational const& rat)
@@ -85,7 +86,7 @@ void CCalcEngine::DisplayNum(void)
     //  called.
     //
     if (m_bRecord || gldPrevious.value != m_currentVal || gldPrevious.precision != m_precision || gldPrevious.radix != m_radix || gldPrevious.nFE != (int)m_nFE
-        || gldPrevious.bUseSep != true || gldPrevious.numwidth != m_numwidth || gldPrevious.fIntMath != m_fIntegerMode || gldPrevious.bRecord != m_bRecord)
+        || gldPrevious.bUseSep != true || gldPrevious.numwidth != m_numwidth || gldPrevious.fIntMath != m_fIntegerMode || gldPrevious.bRecord != m_bRecord || gldPrevious.bUnsigned != m_fUnsignedMode)
     {
         gldPrevious.precision = m_precision;
         gldPrevious.radix = m_radix;
@@ -95,6 +96,7 @@ void CCalcEngine::DisplayNum(void)
         gldPrevious.fIntMath = m_fIntegerMode;
         gldPrevious.bRecord = m_bRecord;
         gldPrevious.bUseSep = true;
+        gldPrevious.bUnsigned = m_fUnsignedMode;
 
         if (m_bRecord)
         {

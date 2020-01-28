@@ -20,8 +20,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" MaxWidth="160"/>
             <ColumnDefinition Width="0.01*"/>
-            <ColumnDefinition Width="1*" MaxWidth="80"/>
-            <ColumnDefinition Width="1*" MaxWidth="80"/>
+            <ColumnDefinition Width="2*" MaxWidth="160"/>
             <ColumnDefinition Width="1*" MaxWidth="80"/>
             <ColumnDefinition Width="1*" MaxWidth="80"/>
         </Grid.ColumnDefinitions>
@@ -74,44 +73,65 @@
                          IsChecked="{x:Bind Model.IsBitFlipChecked, Mode=TwoWay}"/>
         </Grid>
 
-        <Button x:Name="QwordButton"
+        <Grid x:Uid="DataTypeGroup"
+              Grid.Column="2"
+              AutomationProperties.HeadingLevel="Level1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" MaxWidth="80"/>
+                <ColumnDefinition Width="1*" MaxWidth="80"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="QwordButton"
                 x:Uid="qwordButton"
                 Grid.Column="0"
-                Grid.ColumnSpan="7"
                 Style="{StaticResource ProgWordSizeButtonStyle}"
                 AutomationProperties.AutomationId="qwordButton"
                 Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
                 CommandParameter="0"
                 Content="QWORD"/>
-        <Button x:Name="DwordButton"
+            <Button x:Name="DwordButton"
                 x:Uid="dwordButton"
                 Grid.Column="0"
-                Grid.ColumnSpan="7"
                 Style="{StaticResource ProgWordSizeButtonStyle}"
                 AutomationProperties.AutomationId="dwordButton"
                 Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
                 CommandParameter="1"
                 Content="DWORD"
                 Visibility="Collapsed"/>
-        <Button x:Name="WordButton"
+            <Button x:Name="WordButton"
                 x:Uid="wordButton"
                 Grid.Column="0"
-                Grid.ColumnSpan="7"
                 Style="{StaticResource ProgWordSizeButtonStyle}"
                 AutomationProperties.AutomationId="wordButton"
                 Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
                 CommandParameter="2"
                 Content="WORD"
                 Visibility="Collapsed"/>
-        <Button x:Name="ByteButton"
+            <Button x:Name="ByteButton"
                 x:Uid="byteButton"
                 Grid.Column="0"
-                Grid.ColumnSpan="7"
                 Style="{StaticResource ProgWordSizeButtonStyle}"
                 AutomationProperties.AutomationId="byteButton"
                 Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
                 CommandParameter="3"
                 Content="BYTE"
                 Visibility="Collapsed"/>
+            <Button x:Name="SignedButton"
+                x:Uid="signedButton"
+                Grid.Column="1"
+                Style="{StaticResource ProgWordSizeButtonStyle}"
+                AutomationProperties.AutomationId="byteButton"
+                Command="{x:Bind SignednessButtonPressed, Mode=OneTime}"
+                CommandParameter="0"
+                Content="Signed"/>
+            <Button x:Name="UnsignedButton"
+                x:Uid="unsignedButton"
+                Grid.Column="1"
+                Style="{StaticResource ProgWordSizeButtonStyle}"
+                AutomationProperties.AutomationId="byteButton"
+                Command="{x:Bind SignednessButtonPressed, Mode=OneTime}"
+                CommandParameter="1"
+                Content="Unsigned"
+                Visibility="Collapsed"/>
+        </Grid>
     </Grid>
 </UserControl>
