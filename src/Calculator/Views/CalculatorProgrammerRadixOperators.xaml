@@ -17,6 +17,7 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
     </UserControl.Resources>
 
@@ -686,6 +687,7 @@
                                    FontWeight="Normal"
                                    AutomationProperties.AutomationId="negateButton"
                                    ButtonId="Negate"
+                                   IsEnabled="{x:Bind Model.IsUnsigned, Mode=OneWay, Converter={StaticResource BooleanNegationConverter}}"
                                    Content="&#xF898;"/>
     </Grid>
 </UserControl>
