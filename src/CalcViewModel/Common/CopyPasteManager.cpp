@@ -70,24 +70,14 @@ void CopyPasteManager::CopyToClipboard(String ^ stringToCopy)
 }
 
 IAsyncOperation<
-    String
-    ^> ^ CopyPasteManager::GetStringToPaste(
-        ViewMode mode,
-        CategoryGroupType modeType,
-        NumberBase programmerNumberBase,
-        BitLength bitLengthType)
+    String ^> ^ CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupType modeType, NumberBase programmerNumberBase, BitLength bitLengthType)
 {
     return GetStringToPaste(mode, modeType, programmerNumberBase, bitLengthType, false);
 }
 
 IAsyncOperation<
     String
-    ^> ^ CopyPasteManager::GetStringToPaste(
-        ViewMode mode,
-        CategoryGroupType modeType,
-        NumberBase programmerNumberBase,
-        BitLength bitLengthType,
-        bool unsignedMode)
+    ^> ^ CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupType modeType, NumberBase programmerNumberBase, BitLength bitLengthType, bool unsignedMode)
 {
     // Retrieve the text in the clipboard
     auto dataPackageView = Clipboard::GetContent();
@@ -112,8 +102,7 @@ bool CopyPasteManager::HasStringToPaste()
     return Clipboard::GetContent()->Contains(StandardDataFormats::Text);
 }
 
-String
-    ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode mode, NumberBase programmerNumberBase, BitLength bitLengthType)
+String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode mode, NumberBase programmerNumberBase, BitLength bitLengthType)
 {
     return ValidatePasteExpression(pastedText, mode, NavCategory::GetGroupType(mode), programmerNumberBase, bitLengthType, false);
 }
@@ -352,6 +341,12 @@ bool CopyPasteManager::ExpressionRegExMatch(
 
         if (operandMatched)
         {
+            if (unsignedMode && IsOperandNegative(operand))
+            {
+                expMatched = false;
+                break;
+            }
+
             // Remove characters that are valid in the expression but we do not want to include in length calculations
             // or which will break conversion from string-to-ULL.
             auto operandValue = SanitizeOperand(operand);
@@ -388,11 +383,8 @@ bool CopyPasteManager::ExpressionRegExMatch(
     return expMatched;
 }
 
-CopyPasteMaxOperandLengthAndValue CopyPasteManager::GetMaxOperandLengthAndValue(
-    ViewMode mode,
-    CategoryGroupType modeType,
-    NumberBase programmerNumberBase,
-    BitLength bitLengthType)
+CopyPasteMaxOperandLengthAndValue
+CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType modeType, NumberBase programmerNumberBase, BitLength bitLengthType)
 {
     return GetMaxOperandLengthAndValue(mode, modeType, programmerNumberBase, bitLengthType, false);
 }
@@ -478,6 +470,13 @@ CopyPasteMaxOperandLengthAndValue CopyPasteManager::GetMaxOperandLengthAndValue(
     res.maxLength = defaultMaxOperandLength;
     res.maxValue = defaultMaxValue;
     return res;
+}
+
+bool CopyPasteManager::IsOperandNegative(Platform::String ^ operand)
+{
+    const wstring negativePrefix = L"-";
+    wstring operandWstring = wstring(operand->Data());
+    return (operandWstring.compare(0, negativePrefix.length(), negativePrefix) == 0);
 }
 
 Platform::String ^ CopyPasteManager::SanitizeOperand(Platform::String ^ operand)

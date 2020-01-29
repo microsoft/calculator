@@ -143,6 +143,7 @@ public
             CalculatorApp::Common::NumberBase programmerNumberBase,
             CalculatorApp::Common::BitLength bitLengthType,
             bool unsignedMode);
+        static bool IsOperandNegative(Platform::String ^ operand);
         static Platform::String ^ SanitizeOperand(Platform::String ^ operand);
         static Platform::String ^ RemoveUnwantedCharsFromString(Platform::String ^ input);
         static Platform::IBox<unsigned long long int> ^ TryOperandToULL(Platform::String ^ operand, CalculatorApp::Common::NumberBase numberBase);
