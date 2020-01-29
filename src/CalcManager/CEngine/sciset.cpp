@@ -141,7 +141,10 @@ void CCalcEngine::UpdateMaxIntDigits()
         // if in integer mode you still have to honor the max digits you can enter based on bit width
         if (m_fIntegerMode)
         {
-            m_cIntDigitsSav = static_cast<int>(m_maxDecimalValueStrings[m_numwidth].length()) - 1;
+            if (m_fUnsignedMode)
+                m_cIntDigitsSav = static_cast<int>(m_maxUnsignedValueStrings[m_numwidth].length()) - 1;
+            else
+                m_cIntDigitsSav = static_cast<int>(m_maxDecimalValueStrings[m_numwidth].length()) - 1;
             // This is the max digits you can enter a decimal in fixed width mode aka integer mode -1. The last digit
             // has to be checked separately
         }
