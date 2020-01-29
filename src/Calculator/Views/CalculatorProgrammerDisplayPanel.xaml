@@ -46,6 +46,8 @@
                         <Setter Target="DwordButton.IsEnabled" Value="False"/>
                         <Setter Target="WordButton.IsEnabled" Value="False"/>
                         <Setter Target="ByteButton.IsEnabled" Value="False"/>
+                        <Setter Target="SignedButton.IsEnabled" Value="False"/>
+                        <Setter Target="UnsignedButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
