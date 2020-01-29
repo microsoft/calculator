@@ -69,7 +69,25 @@ void CopyPasteManager::CopyToClipboard(String ^ stringToCopy)
     Clipboard::SetContent(dataPackage);
 }
 
-IAsyncOperation<String ^> ^ CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupType modeType, NumberBase programmerNumberBase, BitLength bitLengthType)
+IAsyncOperation<
+    String
+    ^> ^ CopyPasteManager::GetStringToPaste(
+        ViewMode mode,
+        CategoryGroupType modeType,
+        NumberBase programmerNumberBase,
+        BitLength bitLengthType)
+{
+    return GetStringToPaste(mode, modeType, programmerNumberBase, bitLengthType, false);
+}
+
+IAsyncOperation<
+    String
+    ^> ^ CopyPasteManager::GetStringToPaste(
+        ViewMode mode,
+        CategoryGroupType modeType,
+        NumberBase programmerNumberBase,
+        BitLength bitLengthType,
+        bool unsignedMode)
 {
     // Retrieve the text in the clipboard
     auto dataPackageView = Clipboard::GetContent();
@@ -79,11 +97,11 @@ IAsyncOperation<String ^> ^ CopyPasteManager::GetStringToPaste(ViewMode mode, Ca
     //-- add support to allow pasting for expressions like .2 , -.2
     //-- add support to allow pasting for expressions like 1.3e12(as of now we allow 1.3e+12)
 
-    return create_async([dataPackageView, mode, modeType, programmerNumberBase, bitLengthType] {
+    return create_async([dataPackageView, mode, modeType, programmerNumberBase, bitLengthType, unsignedMode] {
         return create_task(dataPackageView->GetTextAsync(::StandardDataFormats::Text))
             .then(
-                [mode, modeType, programmerNumberBase, bitLengthType](String ^ pastedText) {
-                    return ValidatePasteExpression(pastedText, mode, modeType, programmerNumberBase, bitLengthType);
+                [mode, modeType, programmerNumberBase, bitLengthType, unsignedMode](String ^ pastedText) {
+                    return ValidatePasteExpression(pastedText, mode, modeType, programmerNumberBase, bitLengthType, unsignedMode);
                 },
                 task_continuation_context::use_arbitrary());
     });
@@ -94,9 +112,21 @@ bool CopyPasteManager::HasStringToPaste()
     return Clipboard::GetContent()->Contains(StandardDataFormats::Text);
 }
 
-String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode mode, NumberBase programmerNumberBase, BitLength bitLengthType)
+String
+    ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode mode, NumberBase programmerNumberBase, BitLength bitLengthType)
 {
-    return ValidatePasteExpression(pastedText, mode, NavCategory::GetGroupType(mode), programmerNumberBase, bitLengthType);
+    return ValidatePasteExpression(pastedText, mode, NavCategory::GetGroupType(mode), programmerNumberBase, bitLengthType, false);
+}
+
+String
+    ^ CopyPasteManager::ValidatePasteExpression(
+        String ^ pastedText,
+        ViewMode mode,
+        CategoryGroupType modeType,
+        NumberBase programmerNumberBase,
+        BitLength bitLengthType)
+{
+    return ValidatePasteExpression(pastedText, mode, modeType, programmerNumberBase, bitLengthType, false);
 }
 
 // return "NoOp" if pastedText is invalid else return pastedText
@@ -106,7 +136,8 @@ String
         ViewMode mode,
         CategoryGroupType modeType,
         NumberBase programmerNumberBase,
-        BitLength bitLengthType)
+        BitLength bitLengthType,
+        bool unsignedMode)
 {
     if (pastedText->Length() > MaxPasteableLength)
     {
@@ -143,7 +174,7 @@ String
     }
 
     // validate each operand with patterns for different modes
-    if (!ExpressionRegExMatch(operands, mode, modeType, programmerNumberBase, bitLengthType))
+    if (!ExpressionRegExMatch(operands, mode, modeType, programmerNumberBase, bitLengthType, unsignedMode))
     {
         TraceLogger::GetInstance()->LogError(mode, L"CopyPasteManager::ValidatePasteExpression", L"InvalidExpressionForPresentMode");
         return PasteErrorString;
@@ -270,6 +301,17 @@ bool CopyPasteManager::ExpressionRegExMatch(
     NumberBase programmerNumberBase,
     BitLength bitLengthType)
 {
+    return ExpressionRegExMatch(operands, mode, modeType, programmerNumberBase, bitLengthType, false);
+}
+
+bool CopyPasteManager::ExpressionRegExMatch(
+    IVector<String ^> ^ operands,
+    ViewMode mode,
+    CategoryGroupType modeType,
+    NumberBase programmerNumberBase,
+    BitLength bitLengthType,
+    bool unsignedMode)
+{
     if (operands->Size == 0)
     {
         return false;
@@ -296,7 +338,7 @@ bool CopyPasteManager::ExpressionRegExMatch(
         patterns.assign(unitConverterPatterns.begin(), unitConverterPatterns.end());
     }
 
-    auto maxOperandLengthAndValue = GetMaxOperandLengthAndValue(mode, modeType, programmerNumberBase, bitLengthType);
+    auto maxOperandLengthAndValue = GetMaxOperandLengthAndValue(mode, modeType, programmerNumberBase, bitLengthType, unsignedMode);
     bool expMatched = true;
 
     for (const auto& operand : operands)
@@ -346,8 +388,21 @@ bool CopyPasteManager::ExpressionRegExMatch(
     return expMatched;
 }
 
-CopyPasteMaxOperandLengthAndValue
-CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType modeType, NumberBase programmerNumberBase, BitLength bitLengthType)
+CopyPasteMaxOperandLengthAndValue CopyPasteManager::GetMaxOperandLengthAndValue(
+    ViewMode mode,
+    CategoryGroupType modeType,
+    NumberBase programmerNumberBase,
+    BitLength bitLengthType)
+{
+    return GetMaxOperandLengthAndValue(mode, modeType, programmerNumberBase, bitLengthType, false);
+}
+
+CopyPasteMaxOperandLengthAndValue CopyPasteManager::GetMaxOperandLengthAndValue(
+    ViewMode mode,
+    CategoryGroupType modeType,
+    NumberBase programmerNumberBase,
+    BitLength bitLengthType,
+    bool unsignedMode)
 {
     constexpr size_t defaultMaxOperandLength = 0;
     constexpr uint64_t defaultMaxValue = 0;
@@ -401,6 +456,10 @@ CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType m
         }
 
         unsigned int signBit = (programmerNumberBase == NumberBase::DecBase) ? 1 : 0;
+        if (unsignedMode)
+        {
+            signBit = 0;
+        }
 
         const auto maxLength = static_cast<unsigned int>(ceil((bitLength - signBit) / bitsPerDigit));
         const uint64_t maxValue = UINT64_MAX >> (MaxProgrammerBitLength - (bitLength - signBit));

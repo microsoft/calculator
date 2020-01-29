@@ -28,7 +28,19 @@ public
         static void CopyToClipboard(Platform::String ^ stringToCopy);
         static Windows::Foundation::IAsyncOperation<
             Platform::String
-            ^> ^ GetStringToPaste(CalculatorApp::Common::ViewMode mode, CalculatorApp::Common::CategoryGroupType modeType, CalculatorApp::Common::NumberBase programmerNumberBase, CalculatorApp::Common::BitLength bitLengthType);
+            ^> ^ GetStringToPaste(
+                CalculatorApp::Common::ViewMode mode,
+                CalculatorApp::Common::CategoryGroupType modeType,
+                CalculatorApp::Common::NumberBase programmerNumberBase,
+                CalculatorApp::Common::BitLength bitLengthType);
+        static Windows::Foundation::IAsyncOperation<
+            Platform::String
+            ^> ^ GetStringToPaste(
+                CalculatorApp::Common::ViewMode mode,
+                CalculatorApp::Common::CategoryGroupType modeType,
+                CalculatorApp::Common::NumberBase programmerNumberBase,
+                CalculatorApp::Common::BitLength bitLengthType,
+                bool unsignedMode);
         static bool HasStringToPaste();
         static bool IsErrorMessage(Platform::String ^ message);
         static property unsigned int MaxPasteableLength
@@ -97,11 +109,25 @@ public
                 CalculatorApp::Common::CategoryGroupType modeType,
                 CalculatorApp::Common::NumberBase programmerNumberBase,
                 CalculatorApp::Common::BitLength bitLengthType);
+        static Platform::String
+            ^ ValidatePasteExpression(
+                Platform::String ^ pastedText,
+                CalculatorApp::Common::ViewMode mode,
+                CalculatorApp::Common::CategoryGroupType modeType,
+                CalculatorApp::Common::NumberBase programmerNumberBase,
+                CalculatorApp::Common::BitLength bitLengthType,
+                bool unsignedMode);
         static CopyPasteMaxOperandLengthAndValue GetMaxOperandLengthAndValue(
             CalculatorApp::Common::ViewMode mode,
             CalculatorApp::Common::CategoryGroupType modeType,
             CalculatorApp::Common::NumberBase programmerNumberBase,
             CalculatorApp::Common::BitLength bitLengthType);
+        static CopyPasteMaxOperandLengthAndValue GetMaxOperandLengthAndValue(
+            CalculatorApp::Common::ViewMode mode,
+            CalculatorApp::Common::CategoryGroupType modeType,
+            CalculatorApp::Common::NumberBase programmerNumberBase,
+            CalculatorApp::Common::BitLength bitLengthType,
+            bool unsignedMode);
         static Windows::Foundation::Collections::IVector<
             Platform::String ^> ^ ExtractOperands(Platform::String ^ pasteExpression, CalculatorApp::Common::ViewMode mode);
         static bool ExpressionRegExMatch(
@@ -110,6 +136,13 @@ public
             CalculatorApp::Common::CategoryGroupType modeType,
             CalculatorApp::Common::NumberBase programmerNumberBase,
             CalculatorApp::Common::BitLength bitLengthType);
+        static bool ExpressionRegExMatch(
+            Windows::Foundation::Collections::IVector<Platform::String ^> ^ operands,
+            CalculatorApp::Common::ViewMode mode,
+            CalculatorApp::Common::CategoryGroupType modeType,
+            CalculatorApp::Common::NumberBase programmerNumberBase,
+            CalculatorApp::Common::BitLength bitLengthType,
+            bool unsignedMode);
         static Platform::String ^ SanitizeOperand(Platform::String ^ operand);
         static Platform::String ^ RemoveUnwantedCharsFromString(Platform::String ^ input);
         static Platform::IBox<unsigned long long int> ^ TryOperandToULL(Platform::String ^ operand, CalculatorApp::Common::NumberBase numberBase);
@@ -118,7 +151,7 @@ public
             Platform::String ^ operand,
             CalculatorApp::Common::ViewMode mode,
             CalculatorApp::Common::CategoryGroupType modeType,
-        CalculatorApp::Common::NumberBase programmerNumberBase);
+            CalculatorApp::Common::NumberBase programmerNumberBase);
         static ULONG32 ProgrammerOperandLength(Platform::String ^ operand, CalculatorApp::Common::NumberBase numberBase);
 
     private:

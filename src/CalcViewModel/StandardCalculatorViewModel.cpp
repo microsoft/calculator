@@ -708,6 +708,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     ViewMode mode;
     BitLength bitLengthType = BitLength::BitLengthUnknown;
     NumberBase numberBase = NumberBase::Unknown;
+    bool isUnsigned = false;
     if (IsScientific)
     {
         mode = ViewMode::Scientific;
@@ -717,6 +718,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
         mode = ViewMode::Programmer;
         bitLengthType = m_valueBitLength;
         numberBase = CurrentRadixType;
+        isUnsigned = m_isUnsigned;
     }
     else
     {
@@ -729,7 +731,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     }
 
     // Ensure that the paste happens on the UI thread
-    create_task(CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), numberBase, bitLengthType))
+    create_task(CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), numberBase, bitLengthType, isUnsigned))
         .then([that, mode](String ^ pastedString) { that->OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 
