@@ -28,15 +28,15 @@ DEPENDENCY_PROPERTY_INITIALIZATION(EquationStylePanelControl, AvailableColors);
 EquationStylePanelControl::EquationStylePanelControl()
 {
     InitializeComponent();
-    Windows::Foundation::Collections::IVector<EquationLineStyle> ^ allStyles = ref new Vector<EquationLineStyle>();
 
+    auto allStyles = ref new Vector<EquationLineStyle>();
     allStyles->Append(::EquationLineStyle::Solid);
     allStyles->Append(::EquationLineStyle::Dash);
+    allStyles->Append(::EquationLineStyle::Dot);
     allStyles->Append(::EquationLineStyle::DashDot);
     allStyles->Append(::EquationLineStyle::DashDotDot);
-    allStyles->Append(::EquationLineStyle::Dot);
 
-    StyleChooser->ItemsSource = allStyles;
+    StyleChooserBox->ItemsSource = allStyles;
 }
 
 void EquationStylePanelControl::SelectionChanged(Object ^ /*sender */, SelectionChangedEventArgs ^ e)
@@ -89,13 +89,95 @@ void EquationStylePanelControl::SelectColor(Color selectedColor)
     }
 }
 
-void CalculatorApp::EquationStylePanelControl::StyleChooser_SelectionChanged(
-    Platform::Object ^ sender,
-    Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e)
+void CalculatorApp::EquationStylePanelControl::OnSelectedStylePropertyChanged(
+    GraphControl::EquationLineStyle,
+    GraphControl::EquationLineStyle newStyle)
+{
+    SelectStyle(newStyle);
+}
+
+void EquationStylePanelControl::SelectStyle(EquationLineStyle selectedStyle)
+{
+    for (auto item : StyleChooserBox->Items->GetView())
+    {
+        auto style = static_cast<EquationLineStyle>(item);
+        auto comboBoxItem = dynamic_cast<ComboBoxItem ^>(StyleChooserBox->ContainerFromItem(style));
+
+        if (!comboBoxItem)
+        {
+            continue;
+        }
+
+        if (style == selectedStyle)
+        {
+            comboBoxItem->IsSelected = true;
+            return;
+        }
+        else
+        {
+            comboBoxItem->IsSelected = false;
+        }
+    }
+}
+
+void EquationStylePanelControl::StyleChooser_SelectionChanged(Object ^ sender, SelectionChangedEventArgs ^ e)
 {
     if (e->AddedItems->Size > 0)
     {
-        auto lineStyle = static_cast<EquationLineStyle>(e->AddedItems->GetAt(0));
-        SelectedStyle = lineStyle;
+        SelectedStyle = static_cast<EquationLineStyle>(e->AddedItems->GetAt(0));
     }
+}
+
+void EquationStylePanelControl::StyleChooserBox_SelectionChanged(
+    Object ^ sender,
+    SelectionChangedEventArgs ^ e)
+{
+    if (e->AddedItems->Size > 0)
+    {
+        SelectedStyle = static_cast<EquationLineStyle>(e->AddedItems->GetAt(0));
+    }
+}
+
+void EquationStylePanelControl::StyleChooserBox_Loaded(Object ^ sender, RoutedEventArgs ^ e)
+{
+    SelectStyle(SelectedStyle);
+}
+
+DoubleCollection ^ EquationStylePanelControl::GetLinePattern(Object ^line)
+{
+    auto lineStyle = static_cast<Box<EquationLineStyle> ^>(line)->Value;
+
+    auto linePattern = ref new DoubleCollection();
+    switch (lineStyle)
+    {
+    case ::EquationLineStyle::Dot:
+        linePattern->Append(1);
+        break;
+    case ::EquationLineStyle::Dash:
+        linePattern->Append(2);
+        linePattern->Append(1);
+        break;
+    case ::EquationLineStyle::DashDot:
+        linePattern->Append(2.5);
+        linePattern->Append(1);
+        linePattern->Append(1);
+        linePattern->Append(1);
+        linePattern->Append(2.5);
+        linePattern->Append(1);
+        linePattern->Append(1);
+        linePattern->Append(1);
+        break;
+    case ::EquationLineStyle::DashDotDot:
+        linePattern->Append(3);
+        linePattern->Append(1);
+        linePattern->Append(1);
+        linePattern->Append(1);
+        linePattern->Append(1);
+        linePattern->Append(1);
+        break;
+    default:
+        break;
+    }
+
+    return linePattern;
 }

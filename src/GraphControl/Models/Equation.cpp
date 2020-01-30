@@ -90,12 +90,4 @@ namespace GraphControl
     {
         return !Expression->IsEmpty() && IsLineEnabled && !HasGraphError;
     }
-
-    void Equation::OnPropertyChanged(String ^ propertyName)
-    {
-        if (propertyName == EquationStylePropertyName)
-        {
-            m_graphedEquation->GetGraphEquationOptions()->SetLineStyle(static_cast<Graphing::Renderer::LineStyle>(EquationStyle));
-        }
-    }
 }

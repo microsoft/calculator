@@ -7,7 +7,8 @@
 
 namespace GraphControl
 {
-    public enum class EquationLineStyle
+public
+    enum class EquationLineStyle : int
     {
         Solid,
         Dot,
@@ -21,12 +22,12 @@ namespace GraphControl
     public:
         Equation();
 
-        OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
+        OBSERVABLE_OBJECT();
         OBSERVABLE_NAMED_PROPERTY_RW(Platform::String ^, Expression);
         OBSERVABLE_NAMED_PROPERTY_RW(bool, IsLineEnabled);
         OBSERVABLE_NAMED_PROPERTY_RW(bool, IsValidated);
         OBSERVABLE_NAMED_PROPERTY_RW(bool, HasGraphError);
-        OBSERVABLE_NAMED_PROPERTY_RW(GraphControl::EquationLineStyle, EquationStyle);
+        OBSERVABLE_NAMED_PROPERTY_RW(EquationLineStyle, EquationStyle);
 
         property Windows::UI::Color LineColor
         {
@@ -42,18 +43,20 @@ namespace GraphControl
 
         bool IsGraphableEquation();
 
-    internal:
-        property std::shared_ptr<Graphing::IEquation> GraphedEquation
+        internal : property std::shared_ptr<Graphing::IEquation> GraphedEquation
         {
             void set(std::shared_ptr<Graphing::IEquation> graphedEquation)
             {
                 m_graphedEquation = graphedEquation;
             }
+            std::shared_ptr<Graphing::IEquation> get()
+            {
+                return m_graphedEquation;
+            }
         }
 
     private:
         std::wstring GetExpression();
-        void OnPropertyChanged(Platform::String ^ propertyName);
 
     private:
         Windows::UI::Color m_LineColor;

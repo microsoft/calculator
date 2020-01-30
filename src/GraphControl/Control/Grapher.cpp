@@ -470,6 +470,8 @@ namespace GraphControl
             {
                 auto lineColor = eq->LineColor;
                 graphColors.emplace_back(lineColor.R, lineColor.G, lineColor.B, lineColor.A);
+
+                eq->GraphedEquation->GetGraphEquationOptions()->SetLineStyle(static_cast<::Graphing::Renderer::LineStyle>(eq->EquationStyle));
             }
             options.SetGraphColors(graphColors);
         }

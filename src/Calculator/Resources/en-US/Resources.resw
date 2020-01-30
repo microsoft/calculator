@@ -3944,8 +3944,12 @@
     <comment>Label text for the max text box</comment>
   </data>
   <data name="LineColorText.Text" xml:space="preserve">
-    <value>Line Color</value>
+    <value>Color</value>
     <comment>Label for the Line Color section of the style picker</comment>
+  </data>
+  <data name="StyleChooserBox.Header" xml:space="preserve">
+    <value>Style</value>
+    <comment>Label for the Line Style section of the style picker</comment>
   </data>
   <data name="KeyGraphFeaturesLabel.Text" xml:space="preserve">
     <value>Key Graph Features</value>

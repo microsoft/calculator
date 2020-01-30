@@ -200,7 +200,7 @@
       <Filter>GraphingCalculator</Filter>
     </ClInclude>
     <ClInclude Include="Common\DelegateCommand.h">
-	    <Filter>Common</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
