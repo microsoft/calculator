@@ -194,18 +194,6 @@ namespace CalculatorUITests
             Assert.AreEqual("-1,234", page.GetCalculatorResultText());
         }
 
-        // Issue #817: Prefixed multiple zeros
-        [TestMethod]
-        [Priority(1)]
-        public void Operator_Delete_Prefix_Zeros()
-        {
-            page.StandardOperators.NumberPad.Input(0.1); // To enter decimal point
-            page.StandardOperators.BackSpaceButton.Click();
-            page.StandardOperators.BackSpaceButton.Click();
-            page.StandardOperators.NumberPad.Input(0);
-            Assert.AreEqual("0", page.GetCalculatorResultText());
-        }
-
         [TestMethod]
         [Priority(0)]
         public void Operator_ClearAll()
@@ -239,7 +227,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
-        [Priority(0)]
+        [Priority(1)]
         public void KeyboardInput_Multiply()
         {
             page.Header.SendKeys("-15*3=");
@@ -247,7 +235,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
-        [Priority(0)]
+        [Priority(1)]
         public void KeyboardInput_Divide()
         {
             page.Header.SendKeys("26/13=");
@@ -274,7 +262,7 @@ namespace CalculatorUITests
 
         #region Memory Tests
         [TestMethod]
-        [Priority(0)]
+        [Priority(1)]
         public void Memory_AddTest()
         {
             page.StandardOperators.NumberPad.Input(12);
@@ -290,7 +278,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
-        [Priority(0)]
+        [Priority(1)]
         public void Memory_SubtractTest()
         {
             page.StandardOperators.NumberPad.Input(12);
@@ -306,7 +294,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
-        [Priority(0)]
+        [Priority(1)]
         public void Memory_RecallTest()
         {
             page.StandardOperators.NumberPad.Input(12);
@@ -322,7 +310,7 @@ namespace CalculatorUITests
         }
 
         [TestMethod]
-        [Priority(0)]
+        [Priority(1)]
         public void Memory_ClearTest()
         {
             page.StandardOperators.NumberPad.Input(12);
