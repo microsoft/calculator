@@ -45,7 +45,7 @@ namespace GraphControl::DX
 
         void CreateWindowSizeDependentResources();
 
-        bool RunRenderPass(bool allowCancel = true);
+        bool RunRenderPass();
 
         Windows::Foundation::IAsyncAction ^ RunRenderPassAsync(bool allowCancel = true);
 

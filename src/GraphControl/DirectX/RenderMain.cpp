@@ -127,17 +127,15 @@ namespace GraphControl::DX
         }
     }
 
-    bool RenderMain::RunRenderPass(bool allowCancel)
+    bool RenderMain::RunRenderPass()
     {
-        if (allowCancel)
+        // Non async render passes cancel if they can't obtain the lock immediatly
+        if (!m_criticalSection.try_lock())
         {
-            if (!m_criticalSection.try_lock())
-            {
-                return false;
-            }
-
-            m_criticalSection.unlock();
+            return false;
         }
+
+        m_criticalSection.unlock();
 
         critical_section::scoped_lock lock(m_criticalSection);
 
@@ -146,6 +144,7 @@ namespace GraphControl::DX
 
     IAsyncAction ^ RenderMain::RunRenderPassAsync(bool allowCancel)
     {
+        // Try to cancel the renderPass that is in progress
         if (m_renderPass != nullptr && m_renderPass->Status == ::AsyncStatus::Started)
         {
             m_renderPass->Cancel();
@@ -155,6 +154,8 @@ namespace GraphControl::DX
         auto workItemHandler = ref new WorkItemHandler([this, allowCancel](IAsyncAction ^ action) {
             critical_section::scoped_lock lock(m_criticalSection);
 
+            // allowCancel is passed as false when the grapher relies on the render pass to validate that an equation can be succesfully rendered.
+            // Passing false garauntees that another render pass doesn't cancel this one.
             if (allowCancel && action->Status == ::AsyncStatus::Canceled)
             {
                 return;
@@ -170,6 +171,8 @@ namespace GraphControl::DX
 
     bool RenderMain::RunRenderPassInternal()
     {
+        // We are accessing Direct3D resources directly without Direct2D's knowledge, so we
+        // must manually acquire and apply the Direct2D factory lock.
         ID2D1Multithread* m_D2DMultithread;
         m_deviceResources.GetD2DFactory()->QueryInterface(IID_PPV_ARGS(&m_D2DMultithread));
         m_D2DMultithread->Enter();
