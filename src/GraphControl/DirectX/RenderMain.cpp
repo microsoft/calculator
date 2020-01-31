@@ -127,20 +127,24 @@ namespace GraphControl::DX
         }
     }
 
-    bool RenderMain::RunRenderPass(bool mustRun)
+    bool RenderMain::RunRenderPass(bool allowCancel)
     {
-        if (!mustRun && !m_criticalSection.try_lock())
+        if (allowCancel)
         {
-            return false;
+            if (!m_criticalSection.try_lock())
+            {
+                return false;
+            }
+
+            m_criticalSection.unlock();
         }
 
-        m_criticalSection.unlock();
         critical_section::scoped_lock lock(m_criticalSection);
 
         return RunRenderPassInternal();
     }
 
-    bool RenderMain::RunRenderPassAsync()
+    IAsyncAction ^ RenderMain::RunRenderPassAsync(bool allowCancel)
     {
         if (m_renderPass != nullptr && m_renderPass->Status == ::AsyncStatus::Started)
         {
@@ -148,10 +152,10 @@ namespace GraphControl::DX
         }
 
         auto device = m_deviceResources;
-        auto workItemHandler = ref new WorkItemHandler([this](IAsyncAction ^ action) {
+        auto workItemHandler = ref new WorkItemHandler([this, allowCancel](IAsyncAction ^ action) {
             critical_section::scoped_lock lock(m_criticalSection);
 
-            if (action->Status == ::AsyncStatus::Canceled)
+            if (allowCancel && action->Status == ::AsyncStatus::Canceled)
             {
                 return;
             }
@@ -161,14 +165,14 @@ namespace GraphControl::DX
 
         m_renderPass = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::None);
 
-        return true;
+        return m_renderPass;
     }
 
     bool RenderMain::RunRenderPassInternal()
     {
         ID2D1Multithread* m_D2DMultithread;
         m_deviceResources.GetD2DFactory()->QueryInterface(IID_PPV_ARGS(&m_D2DMultithread));
-        //m_D2DMultithread->Enter();
+        m_D2DMultithread->Enter();
 
         bool succesful = Render();
 
@@ -179,9 +183,10 @@ namespace GraphControl::DX
 
         // It is absolutely critical that the factory lock be released upon
         // exiting this function, or else any consequent Direct2D calls will be blocked.
-        //m_D2DMultithread->Leave();
+        m_D2DMultithread->Leave();
 
-        return succesful;
+        m_isRenderPassSuccesful = succesful;
+        return m_isRenderPassSuccesful;
     }
 
     // Renders the current frame according to the current application state.

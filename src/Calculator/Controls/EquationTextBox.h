@@ -33,7 +33,6 @@ namespace CalculatorApp
             event Windows::Foundation::EventHandler<MathRichEditBoxFormatRequest ^> ^ EquationFormatRequested;
             event Windows::UI::Xaml::RoutedEventHandler ^ EquationButtonClicked;
 
-            Platform::String ^ GetEquationText();
             void SetEquationText(Platform::String ^ equationText);
             void FocusTextBox();
 

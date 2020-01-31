@@ -319,26 +319,6 @@ void EquationTextBox::OnHasErrorPropertyChanged(bool, bool)
     UpdateCommonVisualState();
 }
 
-Platform::String ^ EquationTextBox::GetEquationText()
-{
-    String ^ text;
-    if (m_richEditBox != nullptr)
-    {
-        // Clear formatting since the graph control doesn't work with bold/underlines
-        ITextRange ^ range = m_richEditBox->TextDocument->GetRange(0, m_richEditBox->TextDocument->Selection->EndPosition);
-
-        if (range != nullptr)
-        {
-            range->CharacterFormat->Bold = FormatEffect::Off;
-            range->CharacterFormat->Underline = UnderlineType::None;
-        }
-
-        text = m_richEditBox->MathText;
-    }
-
-    return text;
-}
-
 void EquationTextBox::SetEquationText(Platform::String ^ equationText)
 {
     if (m_richEditBox != nullptr)

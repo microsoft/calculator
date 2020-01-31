@@ -45,13 +45,18 @@ namespace GraphControl::DX
 
         void CreateWindowSizeDependentResources();
 
-        bool RunRenderPass(bool mustRun = false);
+        bool RunRenderPass(bool allowCancel = true);
 
-        bool RunRenderPassAsync();
+        Windows::Foundation::IAsyncAction ^ RunRenderPassAsync(bool allowCancel = true);
 
         Concurrency::critical_section& GetCriticalSection()
         {
             return m_criticalSection;
+        }
+
+        bool IsRenderPassSuccesful()
+        {
+            return m_isRenderPassSuccesful;
         }
 
         // Indicates if we are in active tracing mode (the tracing box is being used and controlled through keyboard input)
@@ -175,5 +180,7 @@ namespace GraphControl::DX
         Concurrency::critical_section m_criticalSection;
 
          Windows::Foundation::IAsyncAction ^ m_renderPass = nullptr;
+
+         bool m_isRenderPassSuccesful;
     };
 }

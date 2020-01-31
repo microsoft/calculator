@@ -226,9 +226,9 @@ namespace GraphControl
         TryPlotGraph(keepCurrentView, false);
     }
 
-    void Grapher::TryPlotGraph(bool keepCurrentView, bool shouldRetry)
+    task<void> Grapher::TryPlotGraph(bool keepCurrentView, bool shouldRetry)
     {
-        if (TryUpdateGraph(keepCurrentView))
+        if (co_await TryUpdateGraph(keepCurrentView))
         {
             SetEquationsAsValid();
         }
@@ -239,12 +239,12 @@ namespace GraphControl
             // If we failed to plot the graph, try again after the bad equations are flagged.
             if (shouldRetry)
             {
-                TryUpdateGraph(keepCurrentView);
+                co_await TryUpdateGraph(keepCurrentView);
             }
         }
     }
 
-    bool Grapher::TryUpdateGraph(bool keepCurrentView)
+    task<bool> Grapher::TryUpdateGraph(bool keepCurrentView)
     {
         optional<vector<shared_ptr<IEquation>>> initResult = nullopt;
         bool successful = false;
@@ -280,7 +280,7 @@ namespace GraphControl
                     // If the equation request failed, then fail graphing.
                     if (equationRequest == nullptr)
                     {
-                        return false;
+                        co_return false;
                     }
 
                     request += equationRequest;
@@ -301,7 +301,8 @@ namespace GraphControl
                     m_renderMain->Graph = m_graph;
 
                     // It is possible that the render fails, in that case fall through to explicit empty initialization
-                    if (m_renderMain->RunRenderPassAsync())
+                    co_await m_renderMain->RunRenderPassAsync(false);
+                    if (m_renderMain->IsRenderPassSuccesful())
                     {
                         UpdateVariables();
                         successful = true;
@@ -327,7 +328,7 @@ namespace GraphControl
                         SetGraphArgs();
 
                         m_renderMain->Graph = m_graph;
-                        m_renderMain->RunRenderPassAsync();
+                        co_await m_renderMain->RunRenderPassAsync();
 
                         UpdateVariables();
 
@@ -339,7 +340,7 @@ namespace GraphControl
         }
 
         // Return true if we were able to graph and render all graphable equations
-        return successful;
+        co_return successful;
     }
 
     void Grapher::SetEquationsAsValid()
@@ -363,8 +364,10 @@ namespace GraphControl
 
     void Grapher::SetGraphArgs()
     {
-        if (m_graph)
+        if (m_graph != nullptr && m_renderMain != nullptr)
         {
+            critical_section::scoped_lock lock(m_renderMain->GetCriticalSection());
+
             for (auto variable : Variables)
             {
                 m_graph->SetArgValue(variable->Key->Data(), variable->Value);
