@@ -12,11 +12,13 @@ using namespace GraphControl::DX;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace std;
+using namespace Concurrency;
 using namespace Windows::Devices::Input;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage::Streams;
 using namespace Windows::System;
+using namespace Windows::System::Threading;
 using namespace Windows::UI;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Input;
@@ -299,7 +301,7 @@ namespace GraphControl
                     m_renderMain->Graph = m_graph;
 
                     // It is possible that the render fails, in that case fall through to explicit empty initialization
-                    if (m_renderMain->RunRenderPass())
+                    if (m_renderMain->RunRenderPassAsync())
                     {
                         UpdateVariables();
                         successful = true;
@@ -325,7 +327,7 @@ namespace GraphControl
                         SetGraphArgs();
 
                         m_renderMain->Graph = m_graph;
-                        m_renderMain->RunRenderPass();
+                        m_renderMain->RunRenderPassAsync();
 
                         UpdateVariables();
 
@@ -432,14 +434,19 @@ namespace GraphControl
 
         Variables->Insert(variableName, newValue);
 
-        if (m_graph)
+        if (m_graph != nullptr && m_renderMain != nullptr)
         {
-            m_graph->SetArgValue(variableName->Data(), newValue);
 
-            if (m_renderMain)
-            {
-                m_renderMain->RunRenderPass();
-            }
+                auto workItemHandler = ref new WorkItemHandler([this, variableName, newValue](IAsyncAction ^ action) {
+                m_renderMain->GetCriticalSection().lock();
+                m_graph->SetArgValue(variableName->Data(), newValue);
+                m_renderMain->GetCriticalSection().unlock();
+
+                m_renderMain->RunRenderPassAsync();
+            });
+
+            ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::None);
+
         }
     }
 

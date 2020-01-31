@@ -63,7 +63,6 @@ namespace GraphControl::DX
                 renderer->SetDpi(dpi, dpi);
 
                 renderer->SetGraphSize(static_cast<unsigned int>(m_swapChainPanel->ActualWidth), static_cast<unsigned int>(m_swapChainPanel->ActualHeight));
-              
             }
         }
     }
@@ -128,14 +127,59 @@ namespace GraphControl::DX
         }
     }
 
-    bool RenderMain::RunRenderPass()
+    bool RenderMain::RunRenderPass(bool mustRun)
     {
+        if (!mustRun && !m_criticalSection.try_lock())
+        {
+            return false;
+        }
+
+        m_criticalSection.unlock();
+        critical_section::scoped_lock lock(m_criticalSection);
+
+        return RunRenderPassInternal();
+    }
+
+    bool RenderMain::RunRenderPassAsync()
+    {
+        if (m_renderPass != nullptr && m_renderPass->Status == ::AsyncStatus::Started)
+        {
+            m_renderPass->Cancel();
+        }
+
+        auto device = m_deviceResources;
+        auto workItemHandler = ref new WorkItemHandler([this](IAsyncAction ^ action) {
+            critical_section::scoped_lock lock(m_criticalSection);
+
+            if (action->Status == ::AsyncStatus::Canceled)
+            {
+                return;
+            }
+
+            RunRenderPassInternal();
+        });
+
+        m_renderPass = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::None);
+
+        return true;
+    }
+
+    bool RenderMain::RunRenderPassInternal()
+    {
+        ID2D1Multithread* m_D2DMultithread;
+        m_deviceResources.GetD2DFactory()->QueryInterface(IID_PPV_ARGS(&m_D2DMultithread));
+        //m_D2DMultithread->Enter();
+
         bool succesful = Render();
 
         if (succesful)
         {
             m_deviceResources.Present();
         }
+
+        // It is absolutely critical that the factory lock be released upon
+        // exiting this function, or else any consequent Direct2D calls will be blocked.
+        //m_D2DMultithread->Leave();
 
         return succesful;
     }
@@ -204,11 +248,11 @@ namespace GraphControl::DX
                             {
                                 auto lineColors = m_graph->GetOptions().GetGraphColors();
 
-                            if (formulaId >= 0 && static_cast<unsigned int>(formulaId) < lineColors.size())
-                            {
-                                auto dotColor = lineColors[formulaId];
-                                m_nearestPointRenderer.SetColor(D2D1::ColorF(dotColor.R * 65536 + dotColor.G * 256 + dotColor.B, 1.0));
-                            }
+                                if (formulaId >= 0 && static_cast<unsigned int>(formulaId) < lineColors.size())
+                                {
+                                    auto dotColor = lineColors[formulaId];
+                                    m_nearestPointRenderer.SetColor(D2D1::ColorF(dotColor.R * 65536 + dotColor.G * 256 + dotColor.B, 1.0));
+                                }
 
                                 m_TraceLocation = Point(nearestPointLocationX, nearestPointLocationY);
                                 m_nearestPointRenderer.Render(m_TraceLocation);
