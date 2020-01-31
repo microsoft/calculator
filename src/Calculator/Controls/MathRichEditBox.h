@@ -39,8 +39,8 @@ namespace CalculatorApp
 
         public:
             MathRichEditBoxFormatRequest(Platform::String^ originalText)
+                : m_OriginalText(originalText)
             {
-                m_OriginalText = originalText;
             }
         };
 

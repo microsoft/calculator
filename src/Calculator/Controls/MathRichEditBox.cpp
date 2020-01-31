@@ -195,7 +195,7 @@ void MathRichEditBox::SubmitEquation(EquationSubmissionSource source)
         auto formatRequest = ref new MathRichEditBoxFormatRequest(newVal);
         FormatRequest(this, formatRequest);
 
-        if (!formatRequest->FormattedText->IsEmpty())
+        if (formatRequest->FormattedText != nullptr && !formatRequest->FormattedText->IsEmpty())
         {
             newVal = formatRequest->FormattedText;
         }
