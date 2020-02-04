@@ -199,6 +199,10 @@ namespace GraphControl
         {
             if (auto analyzer = graph->GetAnalyzer())
             {
+                vector<Equation ^> equationVector;
+                equationVector.push_back(equation);
+                UpdateGraphOptions(graph->GetOptions(), equationVector);
+
                 if (analyzer->CanFunctionAnalysisBePerformed())
                 {
                     if (S_OK
