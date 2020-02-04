@@ -47,6 +47,18 @@ namespace GraphControl::DX
 
         bool RunRenderPass();
 
+        Windows::Foundation::IAsyncAction ^ RunRenderPassAsync(bool allowCancel = true);
+
+        Concurrency::critical_section& GetCriticalSection()
+        {
+            return m_criticalSection;
+        }
+
+        bool IsRenderPassSuccesful()
+        {
+            return m_isRenderPassSuccesful;
+        }
+
         // Indicates if we are in active tracing mode (the tracing box is being used and controlled through keyboard input)
         property bool ActiveTracing
         {
@@ -98,6 +110,8 @@ namespace GraphControl::DX
 
     private:
         bool Render();
+
+        bool RunRenderPassInternal();
 
         // Loaded/Unloaded
         void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
@@ -162,5 +176,11 @@ namespace GraphControl::DX
 
         // Are we currently showing the tracing value
         bool m_Tracing;
+
+        Concurrency::critical_section m_criticalSection;
+
+         Windows::Foundation::IAsyncAction ^ m_renderPass = nullptr;
+
+         bool m_isRenderPassSuccesful;
     };
 }
