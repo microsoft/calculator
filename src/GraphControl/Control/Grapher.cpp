@@ -199,7 +199,9 @@ namespace GraphControl
         {
             if (auto analyzer = graph->GetAnalyzer())
             {
-                graph->GetOptions().SetAllowKeyGraphFeaturesForFunctionsWithParameters(true);
+                vector<Equation ^> equationVector;
+                equationVector.push_back(equation);
+                UpdateGraphOptions(graph->GetOptions(), equationVector);
 
                 if (analyzer->CanFunctionAnalysisBePerformed())
                 {
