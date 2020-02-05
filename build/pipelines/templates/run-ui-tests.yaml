@@ -3,13 +3,11 @@
 parameters:
   platform: ''
   runsettingsFileName: ''
-  condition: ''
 
 jobs:
 - job: UITests${{ parameters.platform }}
   displayName: UITests ${{ parameters.platform }}
   dependsOn: Build${{ parameters.platform }}
-  condition: ${{ parameters.condition }}
   pool:
     vmImage: windows-2019
   variables:
@@ -49,3 +47,5 @@ jobs:
       runSettingsFile: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/${{ parameters.runsettingsFileName }}
       platform: ${{ parameters.platform }}
       configuration: Release
+      ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+        testFiltercriteria: Priority=0 
