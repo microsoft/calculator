@@ -39,6 +39,7 @@ jobs:
     inputs:
       filePath: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
       arguments: -Force
+
   - task: VSTest@2
     displayName: Run CalculatorUITests
     inputs:
