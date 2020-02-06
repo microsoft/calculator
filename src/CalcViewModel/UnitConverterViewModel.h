@@ -143,7 +143,6 @@ namespace CalculatorApp
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
 
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Category ^> ^, Categories);
-            OBSERVABLE_PROPERTY_RW(Category ^, CurrentCategory);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::ViewMode, Mode);
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Unit ^> ^, Units);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencySymbol1);
@@ -164,13 +163,33 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, IsDropDownOpen);
             OBSERVABLE_PROPERTY_RW(bool, IsDropDownEnabled);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsCurrencyLoadingVisible);
-            OBSERVABLE_PROPERTY_RW(bool, IsCurrencyCurrentCategory);
+            OBSERVABLE_NAMED_PROPERTY_R(bool, IsCurrencyCurrentCategory);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencyRatioEquality);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencyRatioEqualityAutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencyTimestamp);
             OBSERVABLE_NAMED_PROPERTY_RW(CalculatorApp::NetworkAccessBehavior, NetworkBehavior);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, CurrencyDataLoadFailed);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, CurrencyDataIsWeekOld);
+
+        public:
+            property Category ^ CurrentCategory
+            {
+                Category ^ get() { return m_CurrentCategory; }
+                void set(Category ^ value)
+                {
+                    if (m_CurrentCategory == value)
+                    {
+                        return;
+                    }
+                    m_CurrentCategory = value;
+                    if (value != nullptr)
+                    {
+                        auto currentCategory = value->GetModelCategory();
+                        IsCurrencyCurrentCategory = currentCategory.id == CalculatorApp::Common::NavCategory::Serialize(CalculatorApp::Common::ViewMode::Currency);
+                    }
+                    OnPropertyChanged("CurrentCategory");
+                }
+            }
 
             property Windows::UI::Xaml::Visibility SupplementaryVisibility
             {
@@ -321,7 +340,7 @@ namespace CalculatorApp
             std::wstring m_lastAnnouncedFrom;
             std::wstring m_lastAnnouncedTo;
             Platform::String ^ m_lastAnnouncedConversionResult;
-
+            Category ^ m_CurrentCategory;
             bool m_isCurrencyDataLoaded;
         };
 
