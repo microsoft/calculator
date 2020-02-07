@@ -59,6 +59,8 @@ KeyGraphFeaturesInfo ^ KeyGraphFeaturesInfo::Create(IGraphFunctionAnalysisData d
     res->ObliqueAsymptotes = ConvertWStringVector(data.ObliqueAsymptotes);
     res->TooComplexFeatures = data.TooComplexFeatures;
     res->AnalysisError = CalculatorApp::AnalysisErrorType::NoError;
+
+    TraceLogger::GetInstance()->LogFunctionAnalysisPerformed(res->TooComplexFeatures > 0 ? L"Some features were too complex to calculate." : ref new String());
     return res;
 }
 
@@ -66,5 +68,18 @@ KeyGraphFeaturesInfo ^ KeyGraphFeaturesInfo::Create(CalculatorApp::AnalysisError
 {
     auto res = ref new KeyGraphFeaturesInfo();
     res->AnalysisError = type;
+
+    String ^ errorMessage = ref new String();
+
+    if (res->AnalysisError == CalculatorApp::AnalysisErrorType::AnalysisCouldNotBePerformed)
+    {
+        errorMessage = L"Analysis could not be performed.";
+    }
+    else if (res->AnalysisError == CalculatorApp::AnalysisErrorType::AnalysisNotSupported)
+    {
+        errorMessage = L"Analysis is not supported.";
+    }
+
+    TraceLogger::GetInstance()->LogFunctionAnalysisPerformed(errorMessage);
     return res;
 }

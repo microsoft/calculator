@@ -676,3 +676,8 @@ void GraphingCalculator::GraphMenuFlyoutItem_Click(Object ^ sender, RoutedEventA
     dataPackage->SetBitmap(bitmapStream);
     ::Clipboard::SetContent(dataPackage);
 }
+
+void GraphingCalculator::OnVisualStateChanged(Object ^ sender, VisualStateChangedEventArgs ^ e)
+{
+    TraceLogger::GetInstance()->LogVisualStateChanged(ViewMode::Graphing, e->NewState->Name, false);
+}

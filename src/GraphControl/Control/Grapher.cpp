@@ -254,6 +254,21 @@ namespace GraphControl
             }
         }
 
+        int valid = 0;
+        int invalid = 0;
+        for (Equation ^ eq : Equations)
+        {
+            if (eq->HasGraphError)
+            {
+                invalid++;
+            }
+            if (eq->IsValidated)
+            {
+                valid++;
+            }
+        }
+        TraceLogger::GetInstance()->LogEquationAdded(valid, invalid);
+
         GraphPlottedEvent(this, ref new RoutedEventArgs());
     }
 

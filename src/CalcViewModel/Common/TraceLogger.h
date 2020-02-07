@@ -3,12 +3,9 @@
 
 #pragma once
 
-#include "CalcManager/Command.h"
 #include "TraceActivity.h"
 #include "NavCategory.h"
 #include "CalculatorButtonUser.h"
-
-static const int maxFunctionSize = (int)CalculationManager::Command::CommandBINEDITEND;
 
 // A trace logging provider can only be instantiated and registered once per module.
 // This class implements a singleton model ensure that only one instance is created.
@@ -48,7 +45,7 @@ public
         void LogConverterInputReceived(CalculatorApp::Common::ViewMode mode);
         void LogNavBarOpened();
         void LogError(CalculatorApp::Common::ViewMode mode, Platform::String ^ functionName, Platform::String ^ errorString);
-    internal :
+     internal:
         void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e);
         void LogWinRTException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ winrt::hresult_error const& e);
         void LogPlatformException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ Platform::Exception ^ e);

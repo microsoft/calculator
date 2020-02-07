@@ -12,6 +12,7 @@
 #include "Common.h"
 #include "Models/KeyGraphFeaturesInfo.h"
 #include <ppltasks.h>
+#include "Logger/TraceLogger.h"
 
 namespace GraphControl
 {
