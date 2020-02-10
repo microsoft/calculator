@@ -154,14 +154,12 @@ namespace CalculatorApp
     {
         auto service = TryResolveRuntimeWindowService(serviceId);
 
-        if (service)
-        {
-            return service;
-        }
-        else
+        if (!service)
         {
             throw ref new InvalidArgumentException(serviceId.Name + L" not found");
         }
+        
+        return service;
     }
 
     _Ret_maybenull_ Object ^ WindowFrameService::TryResolveRuntimeWindowService(TypeName serviceId)
