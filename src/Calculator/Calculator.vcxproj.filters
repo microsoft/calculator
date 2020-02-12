@@ -328,6 +328,9 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\ViewState.cpp" />
+    <ClCompile Include="ApplicationViewModeTrigger.cpp">
+      <Filter>Views\StateTriggers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -435,6 +438,9 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\ViewState.h" />
+    <ClInclude Include="ApplicationViewModeTrigger.h">
+      <Filter>Views\StateTriggers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

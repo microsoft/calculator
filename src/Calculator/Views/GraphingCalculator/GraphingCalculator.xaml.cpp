@@ -428,9 +428,9 @@ void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventAr
     IsKeyGraphFeaturesVisible = false;
 }
 
-Visibility GraphingCalculator::ShouldDisplayPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel)
+Microsoft::UI::Xaml::Controls::TwoPaneViewPriority GraphingCalculator::GetPanePriority(bool isEquationModeActivated)
 {
-    return (!isSmallState || isEquationModeActivated ^ isGraphPanel) ? ::Visibility::Visible : ::Visibility::Collapsed;
+    return isEquationModeActivated ? Microsoft::UI::Xaml::Controls::TwoPaneViewPriority::Pane2 : Microsoft::UI::Xaml::Controls::TwoPaneViewPriority::Pane1;
 }
 
 Platform::String ^ GraphingCalculator::GetInfoForSwitchModeToggleButton(bool isChecked)

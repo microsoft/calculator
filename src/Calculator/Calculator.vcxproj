@@ -235,6 +235,7 @@
     <ClInclude Include="AboutFlyout.xaml.h">
       <DependentUpon>AboutFlyout.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="ApplicationViewModeTrigger.h" />
     <ClInclude Include="Common\AppLifecycleLogger.h" />
     <ClInclude Include="Common\KeyboardShortcutManager.h" />
     <ClInclude Include="Common\ValidatingConverters.h" />
@@ -406,6 +407,7 @@
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="ApplicationViewModeTrigger.cpp" />
     <ClCompile Include="Common\AppLifecycleLogger.cpp" />
     <ClCompile Include="Common\KeyboardShortcutManager.cpp" />
     <ClCompile Include="Common\ViewState.cpp" />

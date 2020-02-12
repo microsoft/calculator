@@ -41,6 +41,7 @@
 #include "winrt/Windows.System.UserProfile.h"
 #include "winrt/Windows.UI.ViewManagement.h"
 #include "winrt/Windows.UI.Xaml.h"
+#include "winrt/Windows.System.Profile.h"
 
 // Project Headers
 #include "App.xaml.h"
