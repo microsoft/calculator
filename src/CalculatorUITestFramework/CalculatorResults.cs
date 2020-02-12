@@ -3,6 +3,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium.Windows;
 using System;
+using System.Text.RegularExpressions;
 
 namespace CalculatorUITestFramework
 {
@@ -19,16 +20,36 @@ namespace CalculatorUITestFramework
         /// <returns>The string shown in the UI.</returns>
         public string GetAoTCalculatorResultText()
         {
-            return this.CalculatorAlwaysOnTopResults.Text.Replace("Display is", string.Empty).Trim();
+            var rx = new Regex(@"-?[0-9]+[\,\.]?[0-9]*");
+            var matches = rx.Match(this.CalculatorResult.Text);
+            if (matches.Success)
+            {
+                return matches.Value;
+            }
+            else
+            {
+                return this.CalculatorAlwaysOnTopResults.Text.Trim();
+            }
         }
+
         /// <summary>
         /// Gets the text from the display control and removes the narrator text that is not displayed in the UI.
         /// </summary>
         /// <returns>The string shown in the UI.</returns>
         public string GetCalculatorResultText()
         {
-            return this.CalculatorResult.Text.Replace("Display is", string.Empty).Trim();
+            var rx = new Regex(@"-?[0-9]+[\,\.]?[0-9]*");
+            var matches = rx.Match(this.CalculatorResult.Text);
+            if (matches.Success)
+            {
+                return matches.Value;
+            }
+            else
+            {
+                return this.CalculatorResult.Text.Trim();
+            }
         }
+
         /// <summary>
         /// Gets the text from the Calculator Expression control and removes narrator text that is not displayed in the UI.
         /// </summary>
@@ -37,6 +58,7 @@ namespace CalculatorUITestFramework
         {
             return this.CalculatorExpression.Text.Replace("Expression is", string.Empty).Trim();
         }
+
         /// <summary>
         /// Verifies that CalculatorResult is not null
         /// </summary>
@@ -45,6 +67,7 @@ namespace CalculatorUITestFramework
         {
             Assert.IsNotNull(this.CalculatorResult);
         }
+
         /// <summary>
         /// Verifies that Calculator Expression is clear
         /// </summary>

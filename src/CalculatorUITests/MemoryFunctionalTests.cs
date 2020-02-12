@@ -47,7 +47,7 @@ namespace CalculatorUITests
         [TestInitialize]
         public void TestInit()
         {
-            page.CalculatorApp.EnsureCalculatorHasFocus();
+            CalculatorApp.EnsureCalculatorHasFocus();
             page.EnsureCalculatorIsInStandardMode();
             page.EnsureCalculatorResultTextIsZero();
         }
@@ -80,15 +80,15 @@ namespace CalculatorUITests
             moveToListView.MoveToElement(memoryItems[0]);
             moveToListView.ContextClick(memoryItems[0]);
             moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
+            CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
             Assert.IsTrue(memoryItems[0].Text.Equals("0", StringComparison.InvariantCultureIgnoreCase));
 
             moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowUp + Keys.ArrowUp + Keys.Enter);
+            CalculatorApp.Window.SendKeys(Keys.ArrowUp + Keys.ArrowUp + Keys.Enter);
             Assert.IsTrue(memoryItems[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
 
             moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
+            CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
             var memoryItems2 = page.MemoryPanel.GetAllMemoryListViewItems();
             Assert.IsTrue(memoryItems2[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
 
@@ -111,17 +111,17 @@ namespace CalculatorUITests
             moveToListView.MoveToElement(memoryItems[0]);
             moveToListView.ContextClick(memoryItems[0]);
             moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
+            CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
             Assert.IsTrue(memoryItems[0].Text.Equals("0", StringComparison.InvariantCultureIgnoreCase));
 
             page.MemoryPanel.OpenMemoryFlyout();
             moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowUp + Keys.ArrowUp + Keys.Enter);
+            CalculatorApp.Window.SendKeys(Keys.ArrowUp + Keys.ArrowUp + Keys.Enter);
             Assert.IsTrue(memoryItems[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
 
             page.MemoryPanel.OpenMemoryFlyout();
             moveToListView.Perform();
-            page.CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
+            CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
             var memoryItems2 = page.MemoryPanel.GetAllMemoryListViewItems();
             Assert.IsTrue(memoryItems2[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
 

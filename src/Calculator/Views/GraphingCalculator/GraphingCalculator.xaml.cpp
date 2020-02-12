@@ -552,7 +552,7 @@ void CalculatorApp::GraphingCalculator::AddTracePointerShadow()
     auto dropShadow = compositor->CreateDropShadow();
     dropShadow->BlurRadius = 6;
     dropShadow->Opacity = 0.33f;
-    dropShadow->Offset = ::Numerics::float3(2, 2, 0); 
+    dropShadow->Offset = ::Numerics::float3(2, 2, 0);
     dropShadow->Mask = CursorPath->GetAlphaMask();
 
     auto shadowSpriteVisual = compositor->CreateSpriteVisual();
@@ -585,5 +585,17 @@ void GraphingCalculator::OnEquationFormatRequested(Object ^ sender, MathRichEdit
     if (!e->OriginalText->IsEmpty())
     {
         e->FormattedText = GraphingControl->FormatMathML(e->OriginalText);
+    }
+}
+
+void GraphingCalculator::SetDefaultFocus()
+{
+    if (IsSmallState)
+    {
+        SwitchModeToggleButton->Focus(::FocusState::Programmatic);
+    }
+    else
+    {
+        EquationInputAreaControl->Focus(::FocusState::Programmatic);
     }
 }

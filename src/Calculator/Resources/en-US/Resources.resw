@@ -1486,11 +1486,11 @@
     <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Keep on top</value>
+    <value>Keep on top (Alt+Up)</value>
     <comment>This is the tool tip automation name for the Always-on-Top button when in normal mode.</comment>
   </data>
   <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Back to full view</value>
+    <value>Back to full view (Alt+Down)</value>
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">

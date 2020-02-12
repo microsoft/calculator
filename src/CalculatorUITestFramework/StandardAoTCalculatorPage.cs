@@ -14,21 +14,24 @@ namespace CalculatorUITestFramework
     /// </summary>
     public class StandardAoTCalculatorPage
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
-        public CalculatorApp CalculatorApp = new CalculatorApp();
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public NavigationMenu NavigationMenu = new NavigationMenu();
         public WindowsElement EnterAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("NormalAlwaysOnTopButton");
         public WindowsElement ExitAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("ExitAlwaysOnTopButton");
         public AppiumWebElement ToolTip => WinAppDriver.Instance.CalculatorSession.FindElementByClassName("ToolTip").FindElementByClassName("TextBlock");
 
+        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+
+        ///// <summary>
+        ///// Navigates from AoT(Keep on top) to Standard
+        ///// </summary>
         public void NavigateToStandardMode()
         {
             string source = this.session.PageSource;
             if (source.Contains("ExitAlwaysOnTopButton"))
             {
                 this.ExitAlwaysOnTopButton.Click();
-                Assert.AreEqual("Standard", this.CalculatorApp.GetCalculatorHeaderText());
+                Assert.AreEqual("Standard", CalculatorApp.GetCalculatorHeaderText());
             }
             else
             {
@@ -43,6 +46,7 @@ namespace CalculatorUITestFramework
                 }
             }
         }
+
         ///// <summary>
         ///// Ensures the calculator is in AoT(Keep on top) mode, and verifies that the AoT mode through the absence of the header
         ///// </summary>
@@ -60,6 +64,7 @@ namespace CalculatorUITestFramework
                 }
             }
         }
+
         ///// <summary>
         ///// Gets the AoT ToolTip text
         ///// </summary>
@@ -88,6 +93,7 @@ namespace CalculatorUITestFramework
             var ToolTipText = ToolTip.Text.ToString();
             return ToolTipText;
         }
+
         ///// <summary>
         ///// Checks in AoT (Keep on top) button is present
         ///// </summary>
@@ -105,6 +111,7 @@ namespace CalculatorUITestFramework
             }
             return AoTPresent.ToString();
         }
+
         ///// <summary>
         ///// Checks Standard calculator to see if it's in AoT (Keep on top)
         ///// </summary>
@@ -122,6 +129,7 @@ namespace CalculatorUITestFramework
             }
             return InAoTMode.ToString();
         }
+
         /// <summary>
         /// If the Invert button is not displayed, resize the window
         /// Two attempts are made, the the button is not found a "not found" exception is thrown

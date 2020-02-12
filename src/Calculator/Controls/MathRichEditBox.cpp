@@ -12,6 +12,7 @@ using namespace std;
 using namespace Windows::ApplicationModel;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Text;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::System;
 
@@ -178,6 +179,15 @@ void MathRichEditBox::BackSpace()
 
 void MathRichEditBox::SubmitEquation(EquationSubmissionSource source)
 {
+    // Clear formatting since the graph control doesn't work with bold/underlines
+    auto range = this->TextDocument->GetRange(0, this->TextDocument->Selection->EndPosition);
+
+    if (range != nullptr)
+    {
+        range->CharacterFormat->Bold = FormatEffect::Off;
+        range->CharacterFormat->Underline = UnderlineType::None;
+    }
+
     auto newVal = GetMathTextProperty();
     if (MathText != newVal)
     {
@@ -185,7 +195,7 @@ void MathRichEditBox::SubmitEquation(EquationSubmissionSource source)
         auto formatRequest = ref new MathRichEditBoxFormatRequest(newVal);
         FormatRequest(this, formatRequest);
 
-        if (!formatRequest->FormattedText->IsEmpty())
+        if (formatRequest->FormattedText != nullptr && !formatRequest->FormattedText->IsEmpty())
         {
             newVal = formatRequest->FormattedText;
         }

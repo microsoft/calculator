@@ -47,11 +47,13 @@ public
             {
                 if (value < Min)
                 {
-                    value = Min;
+                    Min = value;
+                    RaisePropertyChanged(L"Min");
                 }
                 else if (value > Max)
                 {
-                    value = Max;
+                    Max = value;
+                    RaisePropertyChanged(L"Max");
                 }
 
                 if (Value != value)

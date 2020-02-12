@@ -272,8 +272,8 @@ public
         void OnEquationChanged(Equation ^ equation);
         void OnEquationStyleChanged(Equation ^ equation);
         void OnEquationLineEnabledChanged(Equation ^ equation);
-        bool TryUpdateGraph(bool keepCurrentView);
-        void TryPlotGraph(bool keepCurrentView, bool shouldRetry);
+        concurrency::task<bool> TryUpdateGraph(bool keepCurrentView);
+        concurrency::task<void> TryPlotGraph(bool keepCurrentView, bool shouldRetry);
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
         std::vector<Equation ^> GetGraphableEquations();
         void SetGraphArgs();

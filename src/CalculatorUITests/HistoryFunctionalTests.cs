@@ -47,7 +47,7 @@ namespace CalculatorUITests
         [TestInitialize]
         public void TestInit()
         {
-            page.CalculatorApp.EnsureCalculatorHasFocus();
+            CalculatorApp.EnsureCalculatorHasFocus();
             page.EnsureCalculatorIsInStandardMode();
             page.EnsureCalculatorResultTextIsZero();
         }

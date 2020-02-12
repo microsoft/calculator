@@ -11,7 +11,6 @@ namespace CalculatorUITestFramework
     public class StandardCalculatorPage
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
-        public CalculatorApp CalculatorApp = new CalculatorApp();
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public MemoryPanel MemoryPanel = new MemoryPanel();
         public HistoryPanel HistoryPanel = new HistoryPanel();

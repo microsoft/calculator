@@ -12,16 +12,15 @@ namespace CalculatorUITestFramework
 {
     public class HistoryPanel
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
-        public CalculatorApp CalculatorApp = new CalculatorApp();
         public WindowsElement HistoryButton => this.session.TryFindElementByAccessibilityId("HistoryButton");
-        private WindowsElement HistoryLabel => this.session.TryFindElementByAccessibilityId("HistoryLabel");
-        private AppiumWebElement HistoryEmpty => this.session.TryFindElementByAccessibilityId("DockPivot").FindElementByAccessibilityId("HistoryEmpty");
-        private WindowsElement HistoryListView => this.session.TryFindElementByAccessibilityId("HistoryListView");
         public WindowsElement ListViewItem => this.session.FindElementByClassName("ListViewItem");
-        private WindowsElement ResultTextBlock => this.session.TryFindElementByAccessibilityId("ResultTextBlock");
         public WindowsElement ClearHistoryButton => this.session.TryFindElementByAccessibilityId("ClearHistory");
+
+        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsElement HistoryLabel => this.session.TryFindElementByAccessibilityId("HistoryLabel");
+        private WindowsElement HistoryListView => this.session.TryFindElementByAccessibilityId("HistoryListView");
         private WindowsElement HistoryFlyout => this.session.TryFindElementByAccessibilityId("HistoryFlyout");
+
 
         /// <summary>
         /// Opens the History Pane by clicking the History pivot label.
@@ -31,6 +30,7 @@ namespace CalculatorUITestFramework
             this.ResizeWindowToDisplayHistoryLabel();
             this.HistoryLabel.Click();
         }
+
         /// <summary>
         /// Gets all of the history items listed in the History Pane.
         /// </summary>
@@ -40,6 +40,7 @@ namespace CalculatorUITestFramework
             OpenHistoryPanel();
             return this.HistoryListView.FindElementsByClassName("ListViewItem");
         }
+
         /// <summary>
         /// Opens the History Pane and clicks the delete button if it is visible.
         /// </summary>
@@ -53,69 +54,41 @@ namespace CalculatorUITestFramework
                 this.ClearHistoryButton.Click();
             }
         }
+
         /// <summary>
         /// If the History label is not displayed, resize the window
         /// Two attempts are made; the label is not found a "not found" exception is thrown
         /// </summary>
         public void ResizeWindowToDisplayHistoryLabel()
         {
+            // Put the calculator in the upper left region of the screen
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
-            if (this.session.PageSource.Contains("HistoryLabel"))
-            {
-                return;
-            }
-            else
-            {
-                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(1200, 1050);
-                if (this.session.PageSource.Contains("HistoryLabel"))
-                {
-                    return;
-                }
-                else
-                {
-                    WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(2097, 1282);
-                }
-                if(this.session.PageSource.Contains("HistoryLabel"))
-                {
-                    return;
-                }
-                else
-                {
-                    throw new NotFoundException("Could not the History Label");
-                }
-            }
+            GrowWindowToHistoryLabel(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
         }
+
         ///// <summary>
         ///// If the History button is not displayed, resize the window
         ///// </summary>
         public void ResizeWindowToDisplayHistoryButton()
         {
+            // Put the calculator in the upper left region of the screen
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
-            if (this.session.PageSource.Contains("HistoryLabel"))
-            {
-                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(464, 464);
-                if (this.session.PageSource.Contains("HistoryButton"))
-                {
-                    return;
-                }
-                else
-                {
-                    throw new NotFoundException("Could not the History Button");
-                }
-            }
+            ShrinkWindowToHistoryButton(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
         }
+
         /// <summary>
         /// Opens the History Flyout.
         /// </summary>
         public void OpenHistoryFlyout()
         {
             this.ResizeWindowToDisplayHistoryButton();
-            this.CalculatorApp.EnsureCalculatorHasFocus();
-            this.CalculatorApp.Header.SendKeys(Keys.Control + "h" + Keys.Control);
+            CalculatorApp.EnsureCalculatorHasFocus();
+            CalculatorApp.Window.SendKeys(Keys.Control + "h" + Keys.Control);
             Actions moveToHistoryFlyout = new Actions(WinAppDriver.Instance.CalculatorSession);
             moveToHistoryFlyout.MoveToElement(HistoryFlyout);
             moveToHistoryFlyout.Perform();
         }
+
         /// <summary>
         /// Gets all of the History items listed in the History Flyout.
         /// </summary>
@@ -124,6 +97,46 @@ namespace CalculatorUITestFramework
         {
             OpenHistoryFlyout();
             return this.HistoryListView.FindElementsByClassName("ListViewItem");
+        }
+
+        /// <summary>
+        /// Increases the size of the window until History label for the History panel is visible
+        /// </summary>
+        private void GrowWindowToHistoryLabel(int width)
+        {
+            if (width > 2100)
+            {
+                throw new NotFoundException("Could not the History Label");
+            }
+
+            if (!this.session.PageSource.Contains("HistoryLabel"))
+            {
+                var height = WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Height;
+                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
+                //give window time to render new size
+                System.Threading.Thread.Sleep(10);
+                GrowWindowToHistoryLabel(width + 100);
+            }
+        }
+
+        /// <summary>
+        /// Decreases the size of the window until History button is visible
+        /// </summary>
+        private void ShrinkWindowToHistoryButton(int width)
+        {
+            if (width < 464)
+            {
+                throw new NotFoundException("Could not the History Button");
+            }
+
+            if (!this.session.PageSource.Contains("HistoryButton"))
+            {
+                var height = WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Height;
+                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
+                //give window time to render new size
+                System.Threading.Thread.Sleep(10);
+                ShrinkWindowToHistoryButton(width - 100);
+            }
         }
     }
 }
