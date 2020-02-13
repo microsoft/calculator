@@ -8,7 +8,6 @@ namespace CalculatorUITestFramework
 {
     public class NumberPad
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
         public WindowsElement Num0Button => this.session.TryFindElementByAccessibilityId("num0Button");
         public WindowsElement Num1Button => this.session.TryFindElementByAccessibilityId("num1Button");
         public WindowsElement Num2Button => this.session.TryFindElementByAccessibilityId("num2Button");
@@ -21,6 +20,8 @@ namespace CalculatorUITestFramework
         public WindowsElement Num9Button => this.session.TryFindElementByAccessibilityId("num9Button");
         public WindowsElement DecimalButton => this.session.TryFindElementByAccessibilityId("decimalSeparatorButton");
         public WindowsElement NegateButton => this.session.TryFindElementByAccessibilityId("negateButton");
+
+        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
 
         /// <summary>
         /// Translates a number into the Calculator button clicks.
