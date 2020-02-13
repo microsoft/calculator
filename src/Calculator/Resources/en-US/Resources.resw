@@ -4174,6 +4174,10 @@
     <value>Start tracing</value>
     <comment>This is the tooltip/automation name for the graphing calculator start tracing button</comment>
   </data>
+  <data name="graphAutomationName" xml:space="preserve">
+    <value>Graph viewing window, x-axis bounded by %1 and %2, y-axis bounded by %3 and %4, displaying %5 equations</value>
+    <comment>{Locked="%1","%2, %3, %4, %5"}. </comment>
+    </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Configure slider</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
