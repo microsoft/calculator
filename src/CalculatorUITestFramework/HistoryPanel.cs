@@ -123,9 +123,9 @@ namespace CalculatorUITestFramework
         /// </summary>
         private void ShrinkWindowToShowHistoryButton(int width)
         {
-            if (width < 464)
+            if (width < 200)
             {
-                throw new NotFoundException("Could not the History Button");
+                throw new NotFoundException("Could not find the History Button");
             }
 
             if (!this.session.PageSource.Contains("HistoryButton"))

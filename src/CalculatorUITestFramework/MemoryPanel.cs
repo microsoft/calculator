@@ -147,9 +147,9 @@ namespace CalculatorUITestFramework
         /// </summary>
         private void ShrinkWindowToShowMemoryButton(int width)
         {
-            if (width < 464)
+            if (width < 200)
             {
-                throw new NotFoundException("Could not the Memory Button");
+                throw new NotFoundException("Could not find the Memory Button");
             }
 
             //Page source contains differnt memory button types, using hotkey info is for this specific memory button
