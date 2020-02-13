@@ -28,7 +28,7 @@ namespace CalculatorUITests
             page.NavigateToStandardCalculator();
 
             // Ensure that calculator window is large enough to display the memory/history panel; a good size for most tests
-            page.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
+            page.MemoryPanel.ResizeWindowToDisplayMemoryLabel();
         }
 
         /// <summary>
@@ -71,8 +71,8 @@ namespace CalculatorUITests
         {
             //Verify context menu MC, M+, M-, and verify the clear memory button in the Memory panel
             page.StandardOperators.NumberPad.Num3Button.Click();
-            page.MemoryPanel.MemButton.Click();
-            page.MemoryPanel.MemButton.Click();
+            page.MemoryPanel.NumberpadMSButton.Click();
+            page.MemoryPanel.NumberpadMSButton.Click();
             page.MemoryPanel.OpenMemoryPanel();
 
             Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
@@ -92,7 +92,7 @@ namespace CalculatorUITests
             var memoryItems2 = page.MemoryPanel.GetAllMemoryListViewItems();
             Assert.IsTrue(memoryItems2[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
 
-            page.MemoryPanel.ClearMemory.Click();
+            page.MemoryPanel.PanelClearMemoryButton.Click();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
         }
 
@@ -102,8 +102,8 @@ namespace CalculatorUITests
         {
             //Verify context menu MC, M+, M-, and ClearMemoryItemButton, and verify the clear memory button in the Memory flyout
             page.StandardOperators.NumberPad.Num3Button.Click();
-            page.MemoryPanel.MemButton.Click();
-            page.MemoryPanel.MemButton.Click();
+            page.MemoryPanel.NumberpadMSButton.Click();
+            page.MemoryPanel.NumberpadMSButton.Click();
 
             page.MemoryPanel.OpenMemoryFlyout();
             var memoryItems = page.MemoryPanel.GetAllMemoryFlyoutListViewItems();
@@ -126,10 +126,10 @@ namespace CalculatorUITests
             Assert.IsTrue(memoryItems2[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
 
             page.MemoryPanel.OpenMemoryFlyout();
-            page.MemoryPanel.ClearMemory.Click();
+            page.MemoryPanel.PanelClearMemoryButton.Click();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
 
-            page.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
+            page.MemoryPanel.ResizeWindowToDisplayMemoryLabel();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
         }
 

@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
@@ -14,16 +13,13 @@ namespace CalculatorUITestFramework
 {
     public class MemoryPanel
     {
-        public WindowsElement MemoryClear => this.session.TryFindElementByAccessibilityId("ClearMemoryButton");
-        public WindowsElement MemRecall => this.session.TryFindElementByAccessibilityId("MemRecall");
-        public WindowsElement MemPlus => this.session.TryFindElementByAccessibilityId("MemPlus");
-        public WindowsElement MemMinus => this.session.TryFindElementByAccessibilityId("MemMinus");
-        public WindowsElement MemButton => this.session.TryFindElementByAccessibilityId("memButton");
-        public WindowsElement MemoryButton => this.session.TryFindElementByAccessibilityId("MemoryButton");
-        public WindowsElement ClearMemoryItemButton => this.session.TryFindElementByAccessibilityId("MClearButton");
-        public WindowsElement MemMinusItem => this.session.TryFindElementByAccessibilityId("MSubButton");
-        public WindowsElement MemPlusItem => this.session.TryFindElementByAccessibilityId("MAddButton");
-        public WindowsElement ClearMemory => this.session.TryFindElementByAccessibilityId("ClearMemory");
+        public WindowsElement NumberpadMCButton => this.session.TryFindElementByAccessibilityId("ClearMemoryButton");
+        public WindowsElement NumberpadMRButton => this.session.TryFindElementByAccessibilityId("MemRecall");
+        public WindowsElement NumberpadMPlusButton => this.session.TryFindElementByAccessibilityId("MemPlus");
+        public WindowsElement NumberpadMMinusButton => this.session.TryFindElementByAccessibilityId("MemMinus");
+        public WindowsElement NumberpadMSButton => this.session.TryFindElementByAccessibilityId("memButton");
+        public WindowsElement MemoryFlyoutButton => this.session.TryFindElementByAccessibilityId("MemoryButton");
+        public WindowsElement PanelClearMemoryButton => this.session.TryFindElementByAccessibilityId("ClearMemory");
         public WindowsElement ListViewItem => this.session.FindElementByClassName("ListViewItem");
 
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
@@ -38,7 +34,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void OpenMemoryPanel()
         {
-            this.ResizeWindowToDiplayMemoryLabel();
+            this.ResizeWindowToDisplayMemoryLabel();
             this.MemoryLabel.Click();
             this.MemoryPane.WaitForDisplayed();
         }
@@ -64,7 +60,7 @@ namespace CalculatorUITestFramework
             {
                 if (this.session.PageSource.Contains("ClearMemoryButton"))
                 {
-                    this.ClearMemory.Click();
+                    this.PanelClearMemoryButton.Click();
                 }
             }
             catch (WebDriverException ex)
@@ -83,21 +79,21 @@ namespace CalculatorUITestFramework
         /// If the Memory label is not displayed, resize the window
         /// Two attempts are made, the the lable is not found a "not found" exception is thrown
         /// </summary>
-        public void ResizeWindowToDiplayMemoryLabel()
+        public void ResizeWindowToDisplayMemoryLabel()
         {
             // Put the calculator in the upper left region of the screen
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
-            GrowWindowToMemoryLabel(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
+            GrowWindowToShowMemoryLabel(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
         }
 
         /// <summary>
         /// If the Memory button is not displayed, resize the window
         /// </summary>
-        public void ResizeWindowToDiplayMemoryButton()
+        public void ResizeWindowToDisplayMemoryButton()
         {
             // Put the calculator in the upper left region of the screen
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
-            ShrinkWindowToMemoryButton(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
+            ShrinkWindowToShowMemoryButton(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
         }
 
         /// <summary>
@@ -105,10 +101,10 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void OpenMemoryFlyout()
         {
-            this.ResizeWindowToDiplayMemoryButton();
+            this.ResizeWindowToDisplayMemoryButton();
             CalculatorApp.EnsureCalculatorHasFocus();
             Actions moveToMemoryButton = new Actions(WinAppDriver.Instance.CalculatorSession);
-            moveToMemoryButton.MoveToElement(MemoryButton);
+            moveToMemoryButton.MoveToElement(MemoryFlyoutButton);
             moveToMemoryButton.Perform();
             CalculatorApp.Window.SendKeys(Keys.Alt + "m" + Keys.Alt);
             Actions moveToMemoryFlyout = new Actions(WinAppDriver.Instance.CalculatorSession);
@@ -129,7 +125,7 @@ namespace CalculatorUITestFramework
         /// <summary>
         /// Increases the size of the window until Memory label for the Memory panel is visible
         /// </summary>
-        private void GrowWindowToMemoryLabel(int width)
+        private void GrowWindowToShowMemoryLabel(int width)
         {
             if (width > 2100)
             {
@@ -142,27 +138,28 @@ namespace CalculatorUITestFramework
                 WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
                 //give window time to render new size
                 System.Threading.Thread.Sleep(10);
-                GrowWindowToMemoryLabel(width + 100);
+                GrowWindowToShowMemoryLabel(width + 100);
             }
         }
 
         /// <summary>
         /// Decreases the size of the window until Memory button is visible
         /// </summary>
-        private void ShrinkWindowToMemoryButton(int width)
+        private void ShrinkWindowToShowMemoryButton(int width)
         {
             if (width < 464)
             {
                 throw new NotFoundException("Could not the Memory Button");
             }
 
-            if (!this.session.PageSource.Contains("MemoryButton"))
+            //Page source contains differnt memory button types, using hotkey info is for this specific memory button
+            if (!this.session.PageSource.Contains("Alt, M"))
             {
                 var height = WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Height;
                 WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
                 //give window time to render new size
                 System.Threading.Thread.Sleep(10);
-                ShrinkWindowToMemoryButton(width - 100);
+                ShrinkWindowToShowMemoryButton(width - 100);
             }
         }
     }

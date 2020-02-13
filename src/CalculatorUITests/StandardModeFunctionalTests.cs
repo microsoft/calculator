@@ -5,7 +5,6 @@ using CalculatorUITestFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using System;
-using System.Drawing;
 
 namespace CalculatorUITests
 {
@@ -186,20 +185,20 @@ namespace CalculatorUITests
         {
             //Verifies memory buttons
             page.StandardOperators.NumberPad.Num1Button.Click();
-            page.MemoryPanel.MemButton.Click();
+            page.MemoryPanel.NumberpadMSButton.Click();
             var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
             Assert.IsTrue(memoryItems[0].Text.Equals("1", StringComparison.InvariantCultureIgnoreCase)); //verifies memory button
-            page.MemoryPanel.MemPlus.Click();
+            page.MemoryPanel.NumberpadMPlusButton.Click();
             Assert.IsTrue(memoryItems[0].Text.Equals("2", StringComparison.InvariantCultureIgnoreCase)); //verifies memory plus button
-            page.MemoryPanel.MemRecall.Click();
+            page.MemoryPanel.NumberpadMRButton.Click();
             Assert.AreEqual("2", page.CalculatorResults.GetCalculatorResultText()); //verifies memory recall button
             page.StandardOperators.MinusButton.Click();
             page.StandardOperators.NumberPad.Num1Button.Click();
             page.StandardOperators.EqualButton.Click();
-            page.MemoryPanel.MemMinus.Click();
+            page.MemoryPanel.NumberpadMMinusButton.Click();
             Assert.IsTrue(memoryItems[0].Text.Equals("1", StringComparison.InvariantCultureIgnoreCase));
             Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText()); //verifies MemMinus button
-            page.MemoryPanel.MemoryClear.Click();
+            page.MemoryPanel.NumberpadMCButton.Click();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty")); //verifies the Memory panel's memory clear button
         }
         #endregion
@@ -334,33 +333,6 @@ namespace CalculatorUITests
             Assert.AreEqual("-0.1", page.CalculatorResults.GetCalculatorResultText()); //verifies negate hotkey
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("9.9", page.CalculatorResults.GetCalculatorResultText()); //verifies calculation with decimal point and negative number
-        }
-
-        [TestMethod]
-        [Priority(1)]
-        public void KeyboardInput_HistoryHotkeys()
-        {
-            ////Verifies history hotkeys
-            /// To-do: Commenting this section out until following active issue in calculator is fixed
-            /// - Active issue "Bug 23811901: Clicking on the History Label causes the [Shift] + [Ctrl] + [D] hotkeys to break" causes this case to fail
-
-            ////Verifies history buttons
-            //CalculatorApp.EnsureCalculatorHasFocus();
-            //CalculatorApp.Window.SendKeys("4");
-            //CalculatorApp.Window.SendKeys(Keys.Multiply);
-            //CalculatorApp.Window.SendKeys("5");
-            //CalculatorApp.Window.SendKeys(Keys.Divide);
-            //CalculatorApp.Window.SendKeys("6");
-            //CalculatorApp.Window.SendKeys(Keys.Equal);
-            //page.HistoryPanel.ResizeWindowToDisplayHistoryButton();
-            //CalculatorApp.Window.SendKeys(Keys.Control + "h" + Keys.Control);
-            //var historyFlyoutItems = page.HistoryPanel.GetAllHistoryFlyoutListViewItems();
-            //Assert.IsTrue(historyFlyoutItems[0].Text.Equals("4 × 5 ÷ 6= 3.333333333333333", StringComparison.InvariantCultureIgnoreCase)); //verifies History button hotkeys
-            //page.HistoryPanel.ResizeWindowToDisplayHistoryLabel();
-            //var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            //Assert.IsTrue(historyItems[0].Text.Equals("4 × 5 ÷ 6= 3.333333333333333", StringComparison.InvariantCultureIgnoreCase));
-            //CalculatorApp.Window.SendKeys(Keys.Shift + Keys.Control + "h" + Keys.Control + Keys.Shift);
-            //Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty")); //verifies the History panel's clear history button hotkeys
         }
 
         [TestMethod]
@@ -658,9 +630,9 @@ namespace CalculatorUITests
         [Priority(0)]
         public void AoT_Tootip()
         {
-            Assert.AreEqual("Keep on top", page.StandardAoTCalculatorPage.GetAoTToolTipText());
+            Assert.AreEqual("Keep on top (Alt+Up)", page.StandardAoTCalculatorPage.GetAoTToolTipText());
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
-            Assert.AreEqual("Back to full view", page.StandardAoTCalculatorPage.GetAoTToolTipText());
+            Assert.AreEqual("Back to full view (Alt+Down)", page.StandardAoTCalculatorPage.GetAoTToolTipText());
         }
 
         [TestMethod]
@@ -735,7 +707,7 @@ namespace CalculatorUITests
         public void AoT_ErrorMessage_ResultUndefined()
         {
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
-            page.StandardAoTCalculatorPage.ResizeAoTWindowToDiplayInvertButton();
+            page.StandardAoTCalculatorPage.ResizeAoTWindowToDisplayInvertButton();
             page.StandardOperators.DivideButton.Click();
             page.StandardOperators.NumberPad.Num0Button.Click();
             page.StandardOperators.EqualButton.Click();
@@ -749,7 +721,7 @@ namespace CalculatorUITests
         public void AoT_ErrorMessage_CannotDivideByZero()
         {
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
-            page.StandardAoTCalculatorPage.ResizeAoTWindowToDiplayInvertButton();
+            page.StandardAoTCalculatorPage.ResizeAoTWindowToDisplayInvertButton();
             page.StandardOperators.ClearButton.Click();
             page.StandardOperators.InvertButton.Click();
             page.StandardAoTCalculatorPage.AoTModeCheck();
@@ -762,7 +734,7 @@ namespace CalculatorUITests
         public void AoT_ErrorMessage_MessageRetentionUponExitingAoT()
         {
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
-            page.StandardAoTCalculatorPage.ResizeAoTWindowToDiplayInvertButton();
+            page.StandardAoTCalculatorPage.ResizeAoTWindowToDisplayInvertButton();
             page.StandardOperators.ClearButton.Click();
             page.StandardOperators.InvertButton.Click();
             page.StandardAoTCalculatorPage.AoTModeCheck();

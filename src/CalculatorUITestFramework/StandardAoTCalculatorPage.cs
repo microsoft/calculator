@@ -134,36 +134,30 @@ namespace CalculatorUITestFramework
         /// If the Invert button is not displayed, resize the window
         /// Two attempts are made, the the button is not found a "not found" exception is thrown
         /// </summary>
-        public void ResizeAoTWindowToDiplayInvertButton()
+        public void ResizeAoTWindowToDisplayInvertButton()
         {
-            string source = this.session.PageSource;
-            if (source.Contains("invertButton"))
+            // Put the calculator in the upper left region of the screen
+            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
+            GrowWindowToShowInvertButton(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Height);
+        }
+
+        /// <summary>
+        /// Increases the size of the window until History label for the History panel is visible
+        /// </summary>
+        private void GrowWindowToShowInvertButton(int height)
+        {
+            if (height > 1000)
             {
-                return;
+                throw new NotFoundException("Could not find the Invert Button");
             }
-            else
+
+            if (!this.session.PageSource.Contains("invertButton"))
             {
-                Size newWindowSize = new Size(502, 502);
-                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
-                source = this.session.PageSource;
-                if (source.Contains("invertButton"))
-                {
-                    return;
-                }
-                else
-                {
-                    Size newWindowSize2 = new Size(750, 850);
-                    WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
-                }
-                source = this.session.PageSource;
-                if (source.Contains("invertButton"))
-                {
-                    return;
-                }
-                else
-                {
-                    throw new NotFoundException("Could not find the Invert Button");
-                }
+                var width = WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width;
+                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
+                //give window time to render new size
+                System.Threading.Thread.Sleep(10);
+                GrowWindowToShowInvertButton(width + 100);
             }
         }
     }

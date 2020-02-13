@@ -3,7 +3,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium.Windows;
 using System;
-using System.Text.RegularExpressions;
 
 namespace CalculatorUITestFramework
 {
@@ -20,16 +19,7 @@ namespace CalculatorUITestFramework
         /// <returns>The string shown in the UI.</returns>
         public string GetAoTCalculatorResultText()
         {
-            var rx = new Regex(@"-?[0-9]+[\,\.]?[0-9]*");
-            var matches = rx.Match(this.CalculatorResult.Text);
-            if (matches.Success)
-            {
-                return matches.Value;
-            }
-            else
-            {
-                return this.CalculatorAlwaysOnTopResults.Text.Trim();
-            }
+            return this.CalculatorAlwaysOnTopResults.Text.Replace("Display is", string.Empty).Trim();
         }
 
         /// <summary>
@@ -38,16 +28,7 @@ namespace CalculatorUITestFramework
         /// <returns>The string shown in the UI.</returns>
         public string GetCalculatorResultText()
         {
-            var rx = new Regex(@"-?[0-9]+[\,\.]?[0-9]*");
-            var matches = rx.Match(this.CalculatorResult.Text);
-            if (matches.Success)
-            {
-                return matches.Value;
-            }
-            else
-            {
-                return this.CalculatorResult.Text.Trim();
-            }
+            return this.CalculatorResult.Text.Replace("Display is", string.Empty).Trim();
         }
 
         /// <summary>

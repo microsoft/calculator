@@ -21,7 +21,6 @@ namespace CalculatorUITestFramework
         private WindowsElement HistoryListView => this.session.TryFindElementByAccessibilityId("HistoryListView");
         private WindowsElement HistoryFlyout => this.session.TryFindElementByAccessibilityId("HistoryFlyout");
 
-
         /// <summary>
         /// Opens the History Pane by clicking the History pivot label.
         /// </summary>
@@ -63,7 +62,7 @@ namespace CalculatorUITestFramework
         {
             // Put the calculator in the upper left region of the screen
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
-            GrowWindowToHistoryLabel(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
+            GrowWindowToShowHistoryLabel(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
         }
 
         ///// <summary>
@@ -73,7 +72,7 @@ namespace CalculatorUITestFramework
         {
             // Put the calculator in the upper left region of the screen
             WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
-            ShrinkWindowToHistoryButton(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
+            ShrinkWindowToShowHistoryButton(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
         }
 
         /// <summary>
@@ -102,7 +101,7 @@ namespace CalculatorUITestFramework
         /// <summary>
         /// Increases the size of the window until History label for the History panel is visible
         /// </summary>
-        private void GrowWindowToHistoryLabel(int width)
+        private void GrowWindowToShowHistoryLabel(int width)
         {
             if (width > 2100)
             {
@@ -115,14 +114,14 @@ namespace CalculatorUITestFramework
                 WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
                 //give window time to render new size
                 System.Threading.Thread.Sleep(10);
-                GrowWindowToHistoryLabel(width + 100);
+                GrowWindowToShowHistoryLabel(width + 100);
             }
         }
 
         /// <summary>
         /// Decreases the size of the window until History button is visible
         /// </summary>
-        private void ShrinkWindowToHistoryButton(int width)
+        private void ShrinkWindowToShowHistoryButton(int width)
         {
             if (width < 464)
             {
@@ -135,7 +134,7 @@ namespace CalculatorUITestFramework
                 WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
                 //give window time to render new size
                 System.Threading.Thread.Sleep(10);
-                ShrinkWindowToHistoryButton(width - 100);
+                ShrinkWindowToShowHistoryButton(width - 100);
             }
         }
     }

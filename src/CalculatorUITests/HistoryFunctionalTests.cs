@@ -28,7 +28,7 @@ namespace CalculatorUITests
             page.NavigateToStandardCalculator();
 
             // Ensure that calculator window is large enough to display the memory/history panel; a good size for most tests
-            page.MemoryPanel.ResizeWindowToDiplayMemoryLabel();
+            page.MemoryPanel.ResizeWindowToDisplayMemoryLabel();
         }
 
         /// <summary>
