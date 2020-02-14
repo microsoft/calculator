@@ -328,7 +328,7 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\ViewState.cpp" />
-    <ClCompile Include="Delayer.cpp" />
+    <ClCompile Include="Utils\Delayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -436,7 +436,7 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\ViewState.h" />
-    <ClInclude Include="Delayer.h" />
+    <ClInclude Include="Utils\Delayer.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
