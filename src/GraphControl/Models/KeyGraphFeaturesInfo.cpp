@@ -60,7 +60,8 @@ KeyGraphFeaturesInfo ^ KeyGraphFeaturesInfo::Create(IGraphFunctionAnalysisData d
     res->TooComplexFeatures = data.TooComplexFeatures;
     res->AnalysisError = CalculatorApp::AnalysisErrorType::NoError;
 
-    TraceLogger::GetInstance()->LogFunctionAnalysisPerformed(res->TooComplexFeatures > 0 ? L"Some features were too complex to calculate." : ref new String());
+    TraceLogger::GetInstance()->LogFunctionAnalysisPerformed(
+        res->TooComplexFeatures > 0 ? L"Some features were too complex to calculate. TooComplexFeatures Flag: " + res->TooComplexFeatures : ref new String());
     return res;
 }
 

@@ -19,8 +19,9 @@ public
         static TraceLogger ^ GetInstance();
         bool GetTraceLoggingProviderEnabled();
 
-        void LogEquationAdded(int currentValidEquations, int currentInvalidEquations);
+        void LogEquationCountChanged(int currentValidEquations, int currentInvalidEquations);
         void LogFunctionAnalysisPerformed(Platform::String ^ errorMessage);
+        void LogVariableCountChanged(uint64 numVariables);
 
     private:
         // Create an instance of TraceLogger

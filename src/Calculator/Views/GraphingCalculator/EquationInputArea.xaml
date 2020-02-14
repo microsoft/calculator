@@ -130,9 +130,11 @@
                             <Slider Grid.Column="1"
                                     Margin="8,0,8,-6"
                                     VerticalAlignment="Center"
+                                    DataContext="{x:Bind}"
                                     Maximum="{x:Bind Max, Mode=TwoWay}"
                                     Minimum="{x:Bind Min, Mode=TwoWay}"
                                     StepFrequency="{x:Bind Step, Mode=TwoWay}"
+                                    ValueChanged="Slider_ValueChanged"
                                     Value="{x:Bind Value, Mode=TwoWay}"/>
 
                             <Grid Grid.Row="1"

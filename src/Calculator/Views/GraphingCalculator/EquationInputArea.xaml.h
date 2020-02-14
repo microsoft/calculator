@@ -12,6 +12,8 @@
 #include "Controls/EquationTextBox.h"
 #include "Converters/BooleanNegationConverter.h"
 #include "Controls/MathRichEditBox.h"
+#include "CalcViewModel/Common/TraceLogger.h"
+#include "Delayer.h"
 
 namespace CalculatorApp
 {
@@ -36,7 +38,6 @@ public
 
         static Windows::UI::Xaml::Media::SolidColorBrush
             ^ ToSolidColorBrush(Windows::UI::Color color) { return ref new Windows::UI::Xaml::Media::SolidColorBrush(color); }
-
     private:
         void OnPropertyChanged(Platform::String ^ propertyName);
         void OnEquationsPropertyChanged();
@@ -65,6 +66,8 @@ public
         void SubmitTextbox(Windows::UI::Xaml::Controls::TextBox ^ textbox);
         void VariableAreaTapped(Platform::Object ^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         void EquationTextBox_EquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ e);
+        void Slider_ValueChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs ^ e);
+        void OnDelayerAction(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
         CalculatorApp::ViewModel::EquationViewModel ^ GetViewModelFromEquationTextBox(Platform::Object ^ sender);
 

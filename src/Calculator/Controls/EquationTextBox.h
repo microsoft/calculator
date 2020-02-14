@@ -6,6 +6,7 @@
 #include "CalcViewModel/Common/Utils.h"
 #include "CalcViewModel/GraphingCalculator/EquationViewModel.h"
 #include "Calculator/Controls/MathRichEditBox.h"
+#include "CalcViewModel/Common/TraceLogger.h"
 
 namespace CalculatorApp
 {

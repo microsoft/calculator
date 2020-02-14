@@ -19,8 +19,9 @@ namespace GraphControl
     constexpr auto GraphingMode = L"Graphing";
 
     // Diagnostics events. Uploaded to asimov.
-    constexpr auto EVENT_NAME_EQUATION_ADDED = L"EquationAdded";
+    constexpr auto EVENT_NAME_EQUATION_COUNT_CHANGED = L"EquationCountChanged";
     constexpr auto EVENT_NAME_FUNCTION_ANALYSIS_PERFORMED = L"FunctionAnalysisPerformed";
+    constexpr auto EVENT_NAME_VARIABLES_COUNT_CHANGED = L"VariblesCountChanged";
 
     constexpr auto PDT_PRIVACY_DATA_TAG = L"PartA_PrivTags";
     constexpr auto PDT_PRODUCT_AND_SERVICE_USAGE = 0x0000'0000'0200'0000u;
@@ -84,7 +85,7 @@ namespace GraphControl
     }
 #pragma endregion
 
-    void TraceLogger::LogEquationAdded(int currentValidEquations, int currentInvalidEquations)
+    void TraceLogger::LogEquationCountChanged(int currentValidEquations, int currentInvalidEquations)
     {
         static bool firstRun = true;
         if (firstRun)
@@ -123,7 +124,7 @@ namespace GraphControl
         fields.AddUInt64(L"TotalValidFunctions", TotalValidEquations);
         fields.AddUInt64(L"TotalInvalidFunctions", TotalInvalidEquations);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_EQUATION_ADDED, fields);
+        LogLevel2Event(EVENT_NAME_EQUATION_COUNT_CHANGED, fields);
     }
 
     void TraceLogger::LogFunctionAnalysisPerformed(String ^ errorMessage)
@@ -134,5 +135,18 @@ namespace GraphControl
         fields.AddString(L"ErrorMessage", errorMessage->Data());
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_FUNCTION_ANALYSIS_PERFORMED, fields);
+    }
+
+    void TraceLogger::LogVariableCountChanged(uint64 numVariables)
+    {
+        if (!GetTraceLoggingProviderEnabled())
+            return;
+
+        LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
+        fields.AddString(L"Mode", GraphingMode);
+        fields.AddUInt64(L"NumberVariables", numVariables);
+        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
+        LogLevel2Event(EVENT_NAME_VARIABLES_COUNT_CHANGED, fields);
     }
 }

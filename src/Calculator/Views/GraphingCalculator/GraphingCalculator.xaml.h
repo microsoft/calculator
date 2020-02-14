@@ -9,6 +9,7 @@
 #include "Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h"
 #include "Views\GraphingCalculator\GraphingNumPad.xaml.h"
 #include "Views\GraphingCalculator\GraphingSettings.xaml.h"
+#include "CalcViewModel/Common/TraceLogger.h"
 
 namespace CalculatorApp
 {

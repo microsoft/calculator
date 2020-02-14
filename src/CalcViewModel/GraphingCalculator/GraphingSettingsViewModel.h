@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "../Common/Utils.h"
+#include "CalcViewModel/Common/TraceLogger.h"
 
 namespace CalculatorApp::ViewModel
 {
@@ -226,6 +227,7 @@ namespace CalculatorApp::ViewModel
                 if (value && m_Graph != nullptr && m_Graph->TrigUnitMode != (int)Graphing::EvalTrigUnitMode::Radians)
                 {
                     m_Graph->TrigUnitMode = (int)Graphing::EvalTrigUnitMode::Radians;
+                    TraceLogger::GetInstance()->LogGraphSettingsChanged("TrigUnits");
                     RaisePropertyChanged(L"TrigModeRadians");
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeGradians");
@@ -244,6 +246,7 @@ namespace CalculatorApp::ViewModel
                 if (value && m_Graph != nullptr && m_Graph->TrigUnitMode != (int)Graphing::EvalTrigUnitMode::Degrees)
                 {
                     m_Graph->TrigUnitMode = (int)Graphing::EvalTrigUnitMode::Degrees;
+                    TraceLogger::GetInstance()->LogGraphSettingsChanged("TrigUnits");
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeRadians");
                     RaisePropertyChanged(L"TrigModeGradians");
@@ -262,6 +265,7 @@ namespace CalculatorApp::ViewModel
                 if (value && m_Graph != nullptr && m_Graph->TrigUnitMode != (int)Graphing::EvalTrigUnitMode::Grads)
                 {
                     m_Graph->TrigUnitMode = (int)Graphing::EvalTrigUnitMode::Grads;
+                    TraceLogger::GetInstance()->LogGraphSettingsChanged("TrigUnits");
                     RaisePropertyChanged(L"TrigModeGradians");
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeRadians");

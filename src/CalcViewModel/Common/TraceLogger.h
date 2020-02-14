@@ -45,6 +45,12 @@ public
         void LogConverterInputReceived(CalculatorApp::Common::ViewMode mode);
         void LogNavBarOpened();
         void LogError(CalculatorApp::Common::ViewMode mode, Platform::String ^ functionName, Platform::String ^ errorString);
+        void LogShowHideButtonClicked(Platform::String ^ buttonState);
+        void LogGraphButtonClicked(Platform::String ^ buttonName);
+        void LogGraphLineStyleChanged(Platform::String ^ style);
+        void LogVariableChanged(Platform::String ^ inputChangedType);
+        void LogVariableSettingsChanged(Platform::String ^ setting);
+        void LogGraphSettingsChanged(Platform::String ^ settingType);
      internal:
         void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e);
         void LogWinRTException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ winrt::hresult_error const& e);

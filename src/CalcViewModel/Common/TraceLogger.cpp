@@ -35,6 +35,12 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_VISUAL_STATE_CHANGED = L"VisualStateChanged";
     constexpr auto EVENT_NAME_CONVERTER_INPUT_RECEIVED = L"ConverterInputReceived";
     constexpr auto EVENT_NAME_INPUT_PASTED = L"InputPasted";
+    constexpr auto EVENT_NAME_SHOW_HIDE_BUTTON_CLICKED = L"ShowHideButtonClicked";
+    constexpr auto EVENT_NAME_GRAPH_BUTTON_CLICKED = L"GraphButtonClicked";
+    constexpr auto EVENT_NAME_GRAPH_LINE_STYLE_CHANGED = L"GraphLineStyleChanged";
+    constexpr auto EVENT_NAME_VARIABLE_CHANGED = L"VariableChanged";
+    constexpr auto EVENT_NAME_VARIABLE_SETTING_CHANGED = L"VariableSettingChanged";
+    constexpr auto EVENT_NAME_GRAPH_SETTINGS_CHANGED = L"GraphSettingsChanged";
 
     constexpr auto EVENT_NAME_EXCEPTION = L"Exception";
 
@@ -383,5 +389,82 @@ namespace CalculatorApp
         fields.AddString(L"Mode", NavCategory::GetFriendlyName(mode)->Data());
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_INPUT_PASTED, fields);
+    }
+
+    void TraceLogger::LogShowHideButtonClicked(String ^ buttonState)
+    {
+        if (!GetTraceLoggingProviderEnabled())
+            return;
+
+        LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
+        fields.AddString(L"Mode", NavCategory::GetFriendlyName(ViewMode::Graphing)->Data());
+        fields.AddString(L"ButtonState", buttonState->Data());
+        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
+        LogLevel2Event(EVENT_NAME_SHOW_HIDE_BUTTON_CLICKED, fields);
+    }
+
+    void TraceLogger::LogGraphButtonClicked(String ^ buttonName)
+    {
+        if (!GetTraceLoggingProviderEnabled())
+            return;
+
+        LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
+        fields.AddString(L"Mode", NavCategory::GetFriendlyName(ViewMode::Graphing)->Data());
+        fields.AddString(L"ButtonName", buttonName->Data());
+        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
+        LogLevel2Event(EVENT_NAME_GRAPH_BUTTON_CLICKED, fields);
+    }
+
+    void TraceLogger::LogGraphLineStyleChanged(String ^ style)
+    {
+        if (!GetTraceLoggingProviderEnabled())
+            return;
+
+        LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
+        fields.AddString(L"Mode", NavCategory::GetFriendlyName(ViewMode::Graphing)->Data());
+        fields.AddString(L"StyleType", style->Data());
+        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
+        LogLevel2Event(EVENT_NAME_GRAPH_LINE_STYLE_CHANGED, fields);
+    }
+
+    void TraceLogger::LogVariableChanged(String ^ inputChangedType)
+    {
+        if (!GetTraceLoggingProviderEnabled())
+            return;
+
+        LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
+        fields.AddString(L"Mode", NavCategory::GetFriendlyName(ViewMode::Graphing)->Data());
+        fields.AddString(L"InputChangedType", inputChangedType->Data());
+        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
+        LogLevel2Event(EVENT_NAME_VARIABLE_CHANGED, fields);
+    }
+    void TraceLogger::LogVariableSettingsChanged(String ^ setting)
+    {
+        if (!GetTraceLoggingProviderEnabled())
+            return;
+
+        LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
+        fields.AddString(L"Mode", NavCategory::GetFriendlyName(ViewMode::Graphing)->Data());
+        fields.AddString(L"SettingChanged", setting->Data());
+        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
+        LogLevel2Event(EVENT_NAME_VARIABLE_SETTING_CHANGED, fields);
+    }
+
+    void TraceLogger::LogGraphSettingsChanged(String ^ settingType)
+    {
+        if (!GetTraceLoggingProviderEnabled())
+            return;
+
+        LoggingFields fields{};
+        fields.AddGuid(L"SessionGuid", sessionGuid);
+        fields.AddString(L"Mode", NavCategory::GetFriendlyName(ViewMode::Graphing)->Data());
+        fields.AddString(L"SettingType", settingType->Data());
+        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
+        LogLevel2Event(EVENT_NAME_GRAPH_SETTINGS_CHANGED, fields);
     }
 }

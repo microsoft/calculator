@@ -41,6 +41,8 @@ void EquationStylePanelControl::SelectionChanged(Object ^ /*sender */, Selection
         {
             SelectedColor = brush->Color;
         }
+
+        TraceLogger::GetInstance()->LogGraphLineStyleChanged(L"Color");
     }
 }
 

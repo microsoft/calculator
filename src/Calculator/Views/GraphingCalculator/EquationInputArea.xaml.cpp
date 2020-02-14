@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "EquationInputArea.xaml.h"
 #include "Utils/VisualTree.h"
+#include <Calculator\Delayer.h>
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -219,6 +220,8 @@ void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, R
 {
     auto eq = GetViewModelFromEquationTextBox(sender);
     eq->IsLineEnabled = !eq->IsLineEnabled;
+
+    TraceLogger::GetInstance()->LogShowHideButtonClicked(eq->IsLineEnabled ? "Show" : "Hide");
 }
 
 void EquationInputArea::EquationTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e)
@@ -333,21 +336,25 @@ void EquationInputArea::SubmitTextbox(TextBox ^ sender)
     {
         val = validateDouble(sender->Text, variableViewModel->Value);
         variableViewModel->Value = val;
+        TraceLogger::GetInstance()->LogVariableChanged(L"ValueTextBox");
     }
     else if (sender->Name == "MinTextBox")
     {
         val = validateDouble(sender->Text, variableViewModel->Min);
         variableViewModel->Min = val;
+        TraceLogger::GetInstance()->LogVariableSettingsChanged(L"MinTextBox");
     }
     else if (sender->Name == "MaxTextBox")
     {
         val = validateDouble(sender->Text, variableViewModel->Max);
         variableViewModel->Max = val;
+        TraceLogger::GetInstance()->LogVariableSettingsChanged(L"MaxTextBox");
     }
     else if (sender->Name == "StepTextBox")
     {
         val = validateDouble(sender->Text, variableViewModel->Step);
         variableViewModel->Step = val;
+        TraceLogger::GetInstance()->LogVariableSettingsChanged(L"StepTextBox");
     }
     else
     {
@@ -417,6 +424,41 @@ void EquationInputArea::VariableAreaTapped(Object ^ sender, TappedRoutedEventArg
 void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
 {
     EquationFormatRequested(sender, e);
+}
+
+void EquationInputArea::Slider_ValueChanged(Object ^ sender, RangeBaseValueChangedEventArgs ^ e)
+{
+    static Map<String ^, Delayer ^> ^ variableSliders = ref new Map<String ^, Delayer ^>();
+
+    auto slider = static_cast<Slider ^>(sender);
+    auto variableVM = static_cast<VariableViewModel ^>(slider->DataContext);
+    if (variableVM == nullptr)
+    {
+        return;
+    }
+
+    auto name = variableVM->Name;
+
+    if (!variableSliders->HasKey(name))
+    {
+        TimeSpan timeSpan;
+        timeSpan.Duration = 10000000; // The duration is 1 second. TimeSpan durations are expressed in 100 nanosecond units. 
+        Delayer ^ delayer = ref new Delayer(timeSpan);
+        delayer->Action += ref new RoutedEventHandler(this, &EquationInputArea::OnDelayerAction);
+        delayer->Start();
+        variableSliders->Insert(name, delayer);
+    }
+
+    else
+    {
+        auto delayer = variableSliders->Lookup(name);
+        delayer->ResetAndStart();
+    }
+}
+
+void EquationInputArea::OnDelayerAction(Object ^ sender, RoutedEventArgs ^ e)
+{
+    TraceLogger::GetInstance()->LogVariableChanged("Slider");
 }
 
 EquationViewModel ^ EquationInputArea::GetViewModelFromEquationTextBox(Object ^ sender)
