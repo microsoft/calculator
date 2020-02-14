@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "EquationInputArea.xaml.h"
 #include "Utils/VisualTree.h"
-#include <Calculator\Delayer.h>
+#include "Utils/Delayer.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -25,6 +25,8 @@ using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Input;
 using namespace GraphControl;
 using namespace Calculator::Utils;
+
+using nanoseconds = std::chrono::nanoseconds;
 
 namespace
 {
@@ -336,7 +338,10 @@ void EquationInputArea::SubmitTextbox(TextBox ^ sender)
     {
         val = validateDouble(sender->Text, variableViewModel->Value);
         variableViewModel->Value = val;
-        TraceLogger::GetInstance()->LogVariableChanged(L"ValueTextBox");
+        if (sender->FocusState != Windows::UI::Xaml::FocusState::Unfocused)
+        {
+            TraceLogger::GetInstance()->LogVariableChanged(L"ValueTextBox");
+        }
     }
     else if (sender->Name == "MinTextBox")
     {
@@ -431,6 +436,12 @@ void EquationInputArea::Slider_ValueChanged(Object ^ sender, RangeBaseValueChang
     static Map<String ^, Delayer ^> ^ variableSliders = ref new Map<String ^, Delayer ^>();
 
     auto slider = static_cast<Slider ^>(sender);
+
+    if (slider->FocusState == Windows::UI::Xaml::FocusState::Unfocused)
+    {
+        return;
+    }
+
     auto variableVM = static_cast<VariableViewModel ^>(slider->DataContext);
     if (variableVM == nullptr)
     {
@@ -442,7 +453,7 @@ void EquationInputArea::Slider_ValueChanged(Object ^ sender, RangeBaseValueChang
     if (!variableSliders->HasKey(name))
     {
         TimeSpan timeSpan;
-        timeSpan.Duration = 10000000; // The duration is 1 second. TimeSpan durations are expressed in 100 nanosecond units. 
+        timeSpan.Duration = 10000000; // The duration is 1 second. TimeSpan durations are expressed in 100 nanosecond units.
         Delayer ^ delayer = ref new Delayer(timeSpan);
         delayer->Action += ref new RoutedEventHandler(this, &EquationInputArea::OnDelayerAction);
         delayer->Start();

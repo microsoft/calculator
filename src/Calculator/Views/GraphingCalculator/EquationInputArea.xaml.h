@@ -13,7 +13,6 @@
 #include "Converters/BooleanNegationConverter.h"
 #include "Controls/MathRichEditBox.h"
 #include "CalcViewModel/Common/TraceLogger.h"
-#include "Delayer.h"
 
 namespace CalculatorApp
 {
