@@ -4176,7 +4176,7 @@
   </data>
   <data name="graphAutomationName" xml:space="preserve">
     <value>Graph viewing window, x-axis bounded by %1 and %2, y-axis bounded by %3 and %4, displaying %5 equations</value>
-    <comment>{Locked="%1","%2, %3, %4, %5"}. </comment>
+    <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
     </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Configure slider</value>
