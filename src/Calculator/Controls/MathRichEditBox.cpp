@@ -111,7 +111,10 @@ void MathRichEditBox::SetMathTextProperty(String ^ newValue)
 
 void CalculatorApp::Controls::MathRichEditBox::OnLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args)
 {
-    SubmitEquation(EquationSubmissionSource::FOCUS_LOST);
+    if (!this->IsReadOnly)
+    {
+        SubmitEquation(EquationSubmissionSource::FOCUS_LOST);
+    }
 }
 
 void CalculatorApp::Controls::MathRichEditBox::OnKeyUp(Platform::Object ^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e)
