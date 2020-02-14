@@ -111,7 +111,7 @@ void MathRichEditBox::SetMathTextProperty(String ^ newValue)
 
 void CalculatorApp::Controls::MathRichEditBox::OnLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args)
 {
-    if (!IsReadOnly)
+    if (!this->IsReadOnly)
     {
         SubmitEquation(EquationSubmissionSource::FOCUS_LOST);
     }
