@@ -16,12 +16,11 @@ namespace CalculatorApp
         Object ^ VisibilityNegationConverter::Convert(Object ^ value, TypeName /*targetType*/, Object ^ /*parameter*/, String ^ /*language*/)
         {
             auto boxedVisibility = dynamic_cast<Box<Visibility> ^>(value);
-            Visibility visibility = Visibility::Collapsed;
             if (boxedVisibility != nullptr && boxedVisibility->Value == Visibility::Collapsed)
             {
-                visibility = Visibility::Visible;
+                return Visibility::Visible;
             }
-            return visibility;
+            return Visibility::Collapsed;
         }
 
         Object ^ VisibilityNegationConverter::ConvertBack(Object ^ value, TypeName targetType, Object ^ parameter, String ^ language)
