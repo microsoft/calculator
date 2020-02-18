@@ -462,7 +462,6 @@ namespace GraphControl
 
     void Grapher::UpdateVariables()
     {
-        static uint64 maxVariableCount = 0;
         auto updatedVariables = ref new Map<String ^, double>();
 
         if (m_graph)
@@ -489,11 +488,7 @@ namespace GraphControl
         Variables = updatedVariables;
         VariablesUpdated(this, Variables);
 
-        if (Variables->Size > maxVariableCount)
-        {
-            TraceLogger::GetInstance()->LogVariableCountChanged(Variables->Size);
-            maxVariableCount = Variables->Size;
-        }
+        TraceLogger::GetInstance()->LogVariableCountChanged(Variables->Size);
     }
 
     void Grapher::SetVariable(Platform::String ^ variableName, double newValue)
