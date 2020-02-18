@@ -84,13 +84,6 @@ GraphingCalculator::GraphingCalculator()
     virtualKey->Key = (VirtualKey)187; // OemAdd key
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomInButton->KeyboardAccelerators->Append(virtualKey);
-
-    // add shadow to the trace pointer
-    AddTracePointerShadow();
-    // hide the shadow in high contrast mode
-    CursorShadow->Visibility = m_accessibilitySettings->HighContrast ? ::Visibility::Collapsed : ::Visibility::Visible;
-    m_accessibilitySettings->HighContrastChanged +=
-        ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &GraphingCalculator::OnHighContrastChanged);
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
@@ -193,9 +186,12 @@ void GraphingCalculator::OnTracePointChanged(Point newPoint)
 
 void CalculatorApp::GraphingCalculator::OnPointerPointChanged(Windows::Foundation::Point newPoint)
 {
-    // Move the pointer glyph to where it is supposed to be.
-    Canvas::SetLeft(TracePointer, newPoint.X);
-    Canvas::SetTop(TracePointer, newPoint.Y);
+    if (TracePointer != nullptr)
+    {
+        // Move the pointer glyph to where it is supposed to be.
+        Canvas::SetLeft(TracePointer, newPoint.X);
+        Canvas::SetTop(TracePointer, newPoint.Y);
+    }
 }
 
 GraphingCalculatorViewModel ^ GraphingCalculator::ViewModel::get()
@@ -431,6 +427,11 @@ Visibility GraphingCalculator::ShouldDisplayPanel(bool isSmallState, bool isEqua
     return (!isSmallState || isEquationModeActivated ^ isGraphPanel) ? ::Visibility::Visible : ::Visibility::Collapsed;
 }
 
+bool GraphingCalculator::ShouldLoadPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel)
+{
+    return (!isSmallState || isEquationModeActivated ^ isGraphPanel) ? true : false;
+}
+
 Platform::String ^ GraphingCalculator::GetInfoForSwitchModeToggleButton(bool isChecked)
 {
     if (isChecked)
@@ -493,6 +494,25 @@ void GraphingCalculator::TraceValuePopup_SizeChanged(Object ^ sender, SizeChange
 
 void CalculatorApp::GraphingCalculator::ActiveTracing_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
+    if (!m_cursorShadowInitialized)
+    {
+        this->FindName(L"TraceCanvas");
+
+        // add shadow to the trace pointer
+        AddTracePointerShadow();
+
+        // hide the shadow in high contrast mode
+        CursorShadow->Visibility = m_accessibilitySettings->HighContrast ? ::Visibility::Collapsed : ::Visibility::Visible;
+
+        m_accessibilitySettings->HighContrastChanged +=
+            ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &GraphingCalculator::OnHighContrastChanged);
+
+        Canvas::SetLeft(TracePointer, TraceCanvas->ActualWidth / 2 + 40);
+        Canvas::SetTop(TracePointer, TraceCanvas->ActualHeight / 2 - 40);
+
+        m_cursorShadowInitialized = true;
+    }
+
     FocusManager::TryFocusAsync(GraphingControl, ::FocusState::Programmatic);
 
     m_activeTracingKeyUpToken = Window::Current->CoreWindow->KeyUp +=
@@ -568,11 +588,14 @@ void GraphingCalculator::OnSettingsFlyout_Closing(FlyoutBase ^ sender, FlyoutBas
     args->Cancel = graphingSetting->CanBeClose();
 }
 
-void GraphingCalculator::LeftGrid_SizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ e)
+void GraphingCalculator::Canvas_SizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ e)
 {
     // Initialize the pointer to the correct location to match initial value in GraphControl\DirectX\RenderMain.cpp
-    Canvas::SetLeft(TracePointer, e->NewSize.Width / 2 + 40);
-    Canvas::SetTop(TracePointer, e->NewSize.Height / 2 - 40);
+    if (TracePointer != nullptr)
+    {
+        Canvas::SetLeft(TracePointer, e->NewSize.Width / 2 + 40);
+        Canvas::SetTop(TracePointer, e->NewSize.Height / 2 - 40);
+    }
 }
 
 void GraphingCalculator::OnHighContrastChanged(AccessibilitySettings ^ sender, Object ^ /*args*/)
@@ -596,6 +619,7 @@ void GraphingCalculator::SetDefaultFocus()
     }
     else
     {
+        this->FindName(L"RightGrid");
         EquationInputAreaControl->Focus(::FocusState::Programmatic);
     }
 }

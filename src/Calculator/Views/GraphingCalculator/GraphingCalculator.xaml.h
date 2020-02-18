@@ -35,6 +35,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         }
 
         static Windows::UI::Xaml::Visibility ShouldDisplayPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel);
+        static bool ShouldLoadPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel);
         static Platform::String ^ GetInfoForSwitchModeToggleButton(bool isChecked);
         static Windows::UI::Xaml::Visibility ManageEditVariablesButtonVisibility(unsigned int numberOfVariables);
         static Platform::String ^ GetTracingLegend(Platform::IBox<bool> ^ isTracing);
@@ -86,9 +87,9 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         Windows::Foundation::EventRegistrationToken m_ActiveTracingPointerCaptureLost;
         CalculatorApp::ViewModel::GraphingCalculatorViewModel ^ m_viewModel;
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
-        void
-            OnSettingsFlyout_Closing(Windows::UI::Xaml::Controls::Primitives::FlyoutBase ^ sender, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs ^ args);
-        void LeftGrid_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
+        bool m_cursorShadowInitialized;
+        void OnSettingsFlyout_Closing(Windows::UI::Xaml::Controls::Primitives::FlyoutBase ^ sender, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs ^ args);
+        void Canvas_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
         void OnEquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ e);
     };

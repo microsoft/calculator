@@ -386,6 +386,11 @@ double EquationInputArea::validateDouble(String ^ value, double defaultValue)
     return numberOfVariables == 0 ? ::Visibility::Collapsed : ::Visibility::Visible;
 }
 
+bool EquationInputArea::ManageEditVariablesButtonLoaded(unsigned int numberOfVariables)
+{
+    return numberOfVariables == 0 ? false : true;
+}
+
 String ^ EquationInputArea::GetChevronIcon(bool isCollapsed)
 {
     return isCollapsed ? L"\uE70E" : L"\uE70D";
