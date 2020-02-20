@@ -12,7 +12,6 @@ namespace CalculatorUITestFramework
     public class ProgrammerCalculatorPage
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
-        public GlobalCalculatorUI GlobalCalculatorUI = new GlobalCalculatorUI();
         public ScientificOperatorsPanel ScientificOperators = new ScientificOperatorsPanel();
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public ProgrammerOperatorsPanel ProgrammerOperators = new ProgrammerOperatorsPanel();
@@ -27,7 +26,6 @@ namespace CalculatorUITestFramework
         {
             // Ensure that calculator is in scientific mode
             NavigationMenu.ChangeCalculatorMode(CalculatorMode.ProgrammerCalculator);
-            CalculatorResults.CalculatorResultsDisplayIsPresent();
         }
 
         /// <summary>
@@ -49,7 +47,7 @@ namespace CalculatorUITestFramework
             MemoryPanel.ResizeWindowToDisplayMemoryLabel();
             if (source.Contains("ClearMemory"))
             {
-                MemoryPanel.ClearMemory.Click();
+                MemoryPanel.NumberpadMCButton.Click();
             }
         }
     }

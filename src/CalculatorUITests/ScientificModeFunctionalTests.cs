@@ -52,7 +52,7 @@ namespace CalculatorUITests
             {
                 page.ClearAll();
             }
-            page.GlobalCalculatorUI.EnsureCalculatorHasFocus();
+            CalculatorApp.EnsureCalculatorHasFocus();
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
             page.ScientificOperators.ResetFEButton(fEButtonState.Normal);
         }

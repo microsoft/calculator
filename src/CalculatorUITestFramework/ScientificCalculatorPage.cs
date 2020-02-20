@@ -12,7 +12,6 @@ namespace CalculatorUITestFramework
     public class ScientificCalculatorPage
     {
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
-        public GlobalCalculatorUI GlobalCalculatorUI = new GlobalCalculatorUI();
         public ScientificOperatorsPanel ScientificOperators = new ScientificOperatorsPanel();
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public MemoryPanel MemoryPanel = new MemoryPanel();
@@ -26,7 +25,6 @@ namespace CalculatorUITestFramework
         {
             // Ensure that calculator is in scientific mode
             this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.ScientificCalculator);
-            this.CalculatorResults.CalculatorResultsDisplayIsPresent();
         }
 
         /// <summary>

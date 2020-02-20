@@ -52,7 +52,7 @@ namespace CalculatorUITests
             {
                 page.ClearAll();
             }
-            page.GlobalCalculatorUI.EnsureCalculatorHasFocus();
+            CalculatorApp.EnsureCalculatorHasFocus();
             page.ProgrammerOperators.SetArithmeticShift();
             page.ProgrammerOperators.ResetWordSize();
             page.ProgrammerOperators.ResetNumberSystem();
