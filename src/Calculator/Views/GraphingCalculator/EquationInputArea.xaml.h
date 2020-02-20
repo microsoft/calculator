@@ -66,7 +66,6 @@ public
         void VariableAreaTapped(Platform::Object ^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         void EquationTextBox_EquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ e);
         void Slider_ValueChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs ^ e);
-        void OnDelayerAction(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
         CalculatorApp::ViewModel::EquationViewModel ^ GetViewModelFromEquationTextBox(Platform::Object ^ sender);
 

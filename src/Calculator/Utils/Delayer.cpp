@@ -19,7 +19,7 @@ Delayer::Delayer(TimeSpan timeSpan)
 void Delayer::Timer_Tick(Object ^ sender, Object ^ e)
 {
     m_timer->Stop();
-    Action(this, ref new RoutedEventArgs());
+    Action(this, nullptr);
 }
 
 void Delayer::Start()

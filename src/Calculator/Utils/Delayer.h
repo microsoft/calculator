@@ -17,7 +17,7 @@ public
         void ResetAndStart();
         void Stop();
 
-        event Windows::UI::Xaml::RoutedEventHandler ^ Action;
+        event Windows::Foundation::EventHandler<Platform::Object ^> ^ Action;
 
      private:
         void Timer_Tick(Platform::Object ^ sender, Platform::Object ^ e);

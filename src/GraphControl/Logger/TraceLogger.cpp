@@ -17,6 +17,8 @@ namespace GraphControl
     static reader_writer_lock s_traceLoggerLock;
 
     constexpr auto GraphingMode = L"Graphing";
+    constexpr auto SessionGuid = L"SessionGuid";
+    constexpr auto CalcMode = L"CalcMode";
 
     // Diagnostics events. Uploaded to asimov.
     constexpr auto EVENT_NAME_EQUATION_COUNT_CHANGED = L"EquationCountChanged";
@@ -117,8 +119,8 @@ namespace GraphControl
         PreviousInvalidEquations = currentInvalidEquations;
 
         LoggingFields fields{};
-        fields.AddGuid(L"SessionGuid", sessionGuid);
-        fields.AddString(L"CalcMode", GraphingMode);
+        fields.AddGuid(SessionGuid, sessionGuid);
+        fields.AddString(CalcMode, GraphingMode);
         fields.AddUInt64(L"ConcurrentValidFunctions", currentValidEquations);
         fields.AddUInt64(L"ConcurrentInvalidFunctions", currentInvalidEquations);
         fields.AddUInt64(L"TotalValidFunctions", TotalValidEquations);
@@ -130,8 +132,8 @@ namespace GraphControl
     void TraceLogger::LogFunctionAnalysisPerformed(String ^ errorMessage)
     {
         LoggingFields fields{};
-        fields.AddGuid(L"SessionGuid", sessionGuid);
-        fields.AddString(L"CalcMode", GraphingMode);
+        fields.AddGuid(SessionGuid, sessionGuid);
+        fields.AddString(CalcMode, GraphingMode);
         fields.AddString(L"ErrorMessage", errorMessage->Data());
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_FUNCTION_ANALYSIS_PERFORMED, fields);
@@ -147,8 +149,8 @@ namespace GraphControl
         if (numVariables > maxVariableCount)
         {
         LoggingFields fields{};
-        fields.AddGuid(L"SessionGuid", sessionGuid);
-        fields.AddString(L"Mode", GraphingMode);
+        fields.AddGuid(SessionGuid, sessionGuid);
+        fields.AddString(CalcMode, GraphingMode);
         fields.AddUInt64(L"NumberVariables", numVariables);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_VARIABLES_COUNT_CHANGED, fields);

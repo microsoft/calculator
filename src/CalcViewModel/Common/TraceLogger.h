@@ -25,8 +25,37 @@ namespace CalculatorApp
         }
     };
 
-public
-    ref class TraceLogger sealed
+    public enum class GraphSettingsType
+    {
+        Grid,
+        TrigUnits
+    };
+
+    public enum class GraphButton
+    {
+        StylePicker,
+        RemoveFunction,
+        ActiveTracingChecked,
+        ActiveTracingUnchecked,
+        GraphSettings,
+        Share,
+        ZoomIn,
+        ZoomOut,
+        ZoomReset
+    };
+
+    public enum class VisibilityButtonState
+    {
+        Show,
+        Hide
+    };
+
+    public enum class LineStyleType
+    {
+        Color
+    };
+
+public ref class TraceLogger sealed
     {
     public:
         static TraceLogger ^ GetInstance();
@@ -45,14 +74,13 @@ public
         void LogConverterInputReceived(CalculatorApp::Common::ViewMode mode);
         void LogNavBarOpened();
         void LogError(CalculatorApp::Common::ViewMode mode, Platform::String ^ functionName, Platform::String ^ errorString);
-        void LogShowHideButtonClicked(Platform::String ^ buttonState);
-        void LogGraphButtonClicked(Platform::String ^ buttonName);
-        void LogGraphLineStyleChanged(Platform::String ^ style);
+        void LogShowHideButtonClicked(VisibilityButtonState buttonState);
+        void LogGraphButtonClicked(GraphButton buttonName);
+        void LogGraphLineStyleChanged(LineStyleType style);
         void LogVariableChanged(Platform::String ^ inputChangedType);
         void LogVariableSettingsChanged(Platform::String ^ setting);
-        void LogGraphSettingsChanged(Platform::String ^ settingType);
-     internal:
-        void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e);
+        void LogGraphSettingsChanged(GraphSettingsType settingsType);
+        internal : void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e);
         void LogWinRTException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ winrt::hresult_error const& e);
         void LogPlatformException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ Platform::Exception ^ e);
         void LogInputPasted(CalculatorApp::Common::ViewMode mode);

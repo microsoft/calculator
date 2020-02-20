@@ -223,7 +223,7 @@ void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, R
     auto eq = GetViewModelFromEquationTextBox(sender);
     eq->IsLineEnabled = !eq->IsLineEnabled;
 
-    TraceLogger::GetInstance()->LogShowHideButtonClicked(eq->IsLineEnabled ? "Show" : "Hide");
+    TraceLogger::GetInstance()->LogShowHideButtonClicked(eq->IsLineEnabled ? VisibilityButtonState::Show : VisibilityButtonState::Hide);
 }
 
 void EquationInputArea::EquationTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e)
@@ -338,10 +338,7 @@ void EquationInputArea::SubmitTextbox(TextBox ^ sender)
     {
         val = validateDouble(sender->Text, variableViewModel->Value);
         variableViewModel->Value = val;
-        if (sender->FocusState != Windows::UI::Xaml::FocusState::Unfocused)
-        {
-            TraceLogger::GetInstance()->LogVariableChanged(L"ValueTextBox");
-        }
+        TraceLogger::GetInstance()->LogVariableChanged(L"ValueTextBox");
     }
     else if (sender->Name == "MinTextBox")
     {
@@ -455,7 +452,10 @@ void EquationInputArea::Slider_ValueChanged(Object ^ sender, RangeBaseValueChang
         TimeSpan timeSpan;
         timeSpan.Duration = 10000000; // The duration is 1 second. TimeSpan durations are expressed in 100 nanosecond units.
         Delayer ^ delayer = ref new Delayer(timeSpan);
-        delayer->Action += ref new RoutedEventHandler(this, &EquationInputArea::OnDelayerAction);
+        delayer->Action += ref new EventHandler<Platform::Object ^>([this, name](Platform::Object ^ sender, Platform::Object ^ e) {
+            TraceLogger::GetInstance()->LogVariableChanged("Slider");
+            variableSliders->Remove(name);
+        });
         delayer->Start();
         variableSliders->Insert(name, delayer);
     }
@@ -465,11 +465,6 @@ void EquationInputArea::Slider_ValueChanged(Object ^ sender, RangeBaseValueChang
         auto delayer = variableSliders->Lookup(name);
         delayer->ResetAndStart();
     }
-}
-
-void EquationInputArea::OnDelayerAction(Object ^ sender, RoutedEventArgs ^ e)
-{
-    TraceLogger::GetInstance()->LogVariableChanged("Slider");
 }
 
 EquationViewModel ^ EquationInputArea::GetViewModelFromEquationTextBox(Object ^ sender)
