@@ -62,6 +62,10 @@ namespace CalculatorUITestFramework
                 {
                     this.PanelClearMemoryButton.Click();
                 }
+                else
+                {
+                    return;
+                }
             }
             catch (WebDriverException ex)
             {
@@ -70,7 +74,6 @@ namespace CalculatorUITestFramework
                     Assert.IsNotNull(this.MemoryPaneEmptyLabel);
                     return;
                 }
-
                 throw;
             }
         }
