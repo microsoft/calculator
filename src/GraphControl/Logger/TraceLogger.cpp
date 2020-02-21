@@ -144,19 +144,11 @@ namespace GraphControl
         if (!GetTraceLoggingProviderEnabled())
             return;
 
-        static uint64 maxVariableCount = 0;
-
-        if (numVariables > maxVariableCount)
-        {
         LoggingFields fields{};
         fields.AddGuid(SessionGuid, sessionGuid);
         fields.AddString(CalcMode, GraphingMode);
         fields.AddUInt64(L"NumberVariables", numVariables);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_VARIABLES_COUNT_CHANGED, fields);
-        maxVariableCount = numVariables;
-        }
-
-
     }
 }

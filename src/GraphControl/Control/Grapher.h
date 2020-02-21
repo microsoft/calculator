@@ -297,8 +297,7 @@ public
 
         void SetEquationsAsValid();
         void SetEquationErrors();
-        std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>>
-        TryInitializeGraph(bool keepCurrentView, _In_ const Graphing::IExpression* graphingExp = nullptr);
+        std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> TryInitializeGraph(bool keepCurrentView, _In_ const Graphing::IExpression* graphingExp = nullptr);
 
     private:
         DX::RenderMain ^ m_renderMain = nullptr;
