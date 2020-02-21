@@ -171,6 +171,7 @@ namespace GraphControl
         // Reset these properties if the equation is requesting to be graphed again
         equation->HasGraphError = false;
         equation->IsValidated = false;
+        equation->IsLineEnabled = true;
 
         TryPlotGraph(false, true);
     }
