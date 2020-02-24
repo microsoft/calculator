@@ -810,9 +810,7 @@
                         </DataTemplate>
                     </mux:ItemsRepeater.ItemTemplate>
                 </mux:ItemsRepeater>
-                <StackPanel x:Name="VariableStackPanel"
-                            Visibility="{x:Bind local:EquationInputArea.ManageEditVariablesButtonVisibility(Variables.Size), Mode=OneWay}"
-                            x:Load="{x:Bind local:EquationInputArea.ManageEditVariablesButtonLoaded(Variables.Size), Mode=OneWay}">
+                <StackPanel x:Name="VariableStackPanel" x:Load="{x:Bind local:EquationInputArea.ManageEditVariablesButtonLoaded(Variables.Size), Mode=OneWay}">
                     <Rectangle Height="1"
                                Margin="12"
                                Fill="#33000000"/>

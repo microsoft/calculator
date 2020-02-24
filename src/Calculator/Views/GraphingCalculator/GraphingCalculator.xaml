@@ -611,8 +611,7 @@
               Grid.Row="1"
               Grid.RowSpan="2"
               Grid.Column="1"
-              Visibility="{x:Bind local:GraphingCalculator.ShouldDisplayPanel(IsSmallState, SwitchModeToggleButton.IsOn, x:False), Mode=OneWay}"
-              x:Load="{x:Bind local:GraphingCalculator.ShouldLoadPanel(IsSmallState, SwitchModeToggleButton.IsOn, x:False), Mode=OneWay}">
+              Visibility="{x:Bind local:GraphingCalculator.ShouldDisplayPanel(IsSmallState, SwitchModeToggleButton.IsOn, x:False), Mode=OneWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="2.2*" MaxHeight="400"/>

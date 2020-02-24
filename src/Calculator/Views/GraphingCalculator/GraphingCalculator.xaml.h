@@ -35,7 +35,6 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         }
 
         static Windows::UI::Xaml::Visibility ShouldDisplayPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel);
-        static bool ShouldLoadPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel);
         static Platform::String ^ GetInfoForSwitchModeToggleButton(bool isChecked);
         static Windows::UI::Xaml::Visibility ManageEditVariablesButtonVisibility(unsigned int numberOfVariables);
         static Platform::String ^ GetTracingLegend(Platform::IBox<bool> ^ isTracing);

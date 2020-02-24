@@ -427,11 +427,6 @@ Visibility GraphingCalculator::ShouldDisplayPanel(bool isSmallState, bool isEqua
     return (!isSmallState || isEquationModeActivated ^ isGraphPanel) ? ::Visibility::Visible : ::Visibility::Collapsed;
 }
 
-bool GraphingCalculator::ShouldLoadPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel)
-{
-    return (!isSmallState || isEquationModeActivated ^ isGraphPanel) ? true : false;
-}
-
 Platform::String ^ GraphingCalculator::GetInfoForSwitchModeToggleButton(bool isChecked)
 {
     if (isChecked)
@@ -619,7 +614,6 @@ void GraphingCalculator::SetDefaultFocus()
     }
     else
     {
-        this->FindName(L"RightGrid");
         EquationInputAreaControl->Focus(::FocusState::Programmatic);
     }
 }

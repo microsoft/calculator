@@ -388,7 +388,7 @@ double EquationInputArea::validateDouble(String ^ value, double defaultValue)
 
 bool EquationInputArea::ManageEditVariablesButtonLoaded(unsigned int numberOfVariables)
 {
-    return numberOfVariables == 0 ? false : true;
+    return numberOfVariables != 0;
 }
 
 String ^ EquationInputArea::GetChevronIcon(bool isCollapsed)
