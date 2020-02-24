@@ -316,6 +316,7 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
         auto bitmapStream = GraphingControl->GetGraphBitmapStream();
 
         requestData->ResourceMap->Insert(ref new String(L"graph.png"), bitmapStream);
+        requestData->SetBitmap(bitmapStream);
 
         // Set the thumbnail image (in case the share target can't handle HTML)
         requestData->Properties->Thumbnail = bitmapStream;
