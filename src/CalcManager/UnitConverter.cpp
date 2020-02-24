@@ -361,11 +361,9 @@ wstring UnitConverter::Unquote(wstring_view s)
                 // Badly formatted
                 break;
             }
-            else
-            {
-                quotedSubString += *cursor;
-                unquotedString += unquoteConversions[quotedSubString];
-            }
+
+            quotedSubString += *cursor;
+            unquotedString += unquoteConversions[quotedSubString];
         }
         else
         {
