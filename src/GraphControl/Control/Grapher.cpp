@@ -486,10 +486,13 @@ namespace GraphControl
             }
         }
 
+        if (updatedVariables->Size != Variables->Size)
+        {
+            TraceLogger::GetInstance()->LogVariableCountChanged(Variables->Size);
+        }
+
         Variables = updatedVariables;
         VariablesUpdated(this, Variables);
-
-        TraceLogger::GetInstance()->LogVariableCountChanged(Variables->Size);
     }
 
     void Grapher::SetVariable(Platform::String ^ variableName, double newValue)

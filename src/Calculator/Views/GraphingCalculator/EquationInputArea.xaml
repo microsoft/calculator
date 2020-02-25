@@ -15,6 +15,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
+            <converters:BooleanNegationConverter x:Name="BooleanNegationConverter"/>
 
             <DataTemplate x:Key="VariableDataTemplate" x:DataType="vm:VariableViewModel">
                 <Grid DataContext="{x:Bind}" Tapped="VariableAreaTapped">
@@ -393,7 +394,8 @@
                                               Grid.Column="1"
                                               MinWidth="44"
                                               MinHeight="44"
-                                              VerticalAlignment="Stretch">
+                                              VerticalAlignment="Stretch"
+                                              IsChecked="{TemplateBinding IsEquationLineDisabled}">
                                     <ToggleButton.Content>
                                         <StackPanel HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"

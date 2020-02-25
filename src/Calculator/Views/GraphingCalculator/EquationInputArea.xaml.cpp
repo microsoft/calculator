@@ -132,15 +132,6 @@ void EquationInputArea::EquationTextBox_Submitted(Object ^ sender, MathRichEditB
         || (submission->Source == EquationSubmissionSource::FOCUS_LOST && submission->HasTextChanged && eq->Expression != nullptr
             && eq->Expression->Length() > 0))
     {
-        auto eqButton = VisualTree::FindDescendantByName(tb, "EquationButton");
-        if (eqButton != nullptr)
-        {
-            auto equationButton = dynamic_cast<ToggleButton ^>(eqButton);
-            if (eq->IsLineEnabled && equationButton->IsChecked)
-            {
-                equationButton->IsChecked = false;
-            }
-        }
         unsigned int index = 0;
         if (Equations->IndexOf(eq, &index))
         {
@@ -232,7 +223,7 @@ void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, R
     auto eq = GetViewModelFromEquationTextBox(sender);
     eq->IsLineEnabled = !eq->IsLineEnabled;
 
-    TraceLogger::GetInstance()->LogShowHideButtonClicked(eq->IsLineEnabled ? VisibilityButtonState::Show : VisibilityButtonState::Hide);
+    TraceLogger::GetInstance()->LogShowHideButtonClicked(eq->IsLineEnabled ? false : true);
 }
 
 void EquationInputArea::EquationTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e)

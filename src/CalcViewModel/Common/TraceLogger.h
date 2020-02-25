@@ -44,12 +44,6 @@ namespace CalculatorApp
         ZoomReset
     };
 
-    public enum class VisibilityButtonState
-    {
-        Show,
-        Hide
-    };
-
     public enum class LineStyleType
     {
         Color
@@ -74,7 +68,7 @@ public ref class TraceLogger sealed
         void LogConverterInputReceived(CalculatorApp::Common::ViewMode mode);
         void LogNavBarOpened();
         void LogError(CalculatorApp::Common::ViewMode mode, Platform::String ^ functionName, Platform::String ^ errorString);
-        void LogShowHideButtonClicked(VisibilityButtonState buttonState);
+        void LogShowHideButtonClicked(bool isHide);
         void LogGraphButtonClicked(GraphButton buttonName);
         void LogGraphLineStyleChanged(LineStyleType style);
         void LogVariableChanged(Platform::String ^ inputChangedType);

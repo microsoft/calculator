@@ -129,12 +129,13 @@ namespace GraphControl
         LogLevel2Event(EVENT_NAME_EQUATION_COUNT_CHANGED, fields);
     }
 
-    void TraceLogger::LogFunctionAnalysisPerformed(String ^ errorMessage)
+    void TraceLogger::LogFunctionAnalysisPerformed(int analysisErrorType, uint32 tooComplexFlag)
     {
         LoggingFields fields{};
         fields.AddGuid(SessionGuid, sessionGuid);
         fields.AddString(CalcMode, GraphingMode);
-        fields.AddString(L"ErrorMessage", errorMessage->Data());
+        fields.AddInt32(L"AnalysisErrorType", analysisErrorType);
+        fields.AddUInt32(L"TooComplexFeatures", tooComplexFlag);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_FUNCTION_ANALYSIS_PERFORMED, fields);
     }

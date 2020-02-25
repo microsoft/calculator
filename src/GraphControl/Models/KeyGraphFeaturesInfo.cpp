@@ -60,8 +60,7 @@ KeyGraphFeaturesInfo ^ KeyGraphFeaturesInfo::Create(IGraphFunctionAnalysisData d
     res->TooComplexFeatures = data.TooComplexFeatures;
     res->AnalysisError = CalculatorApp::AnalysisErrorType::NoError;
 
-    TraceLogger::GetInstance()->LogFunctionAnalysisPerformed(
-        res->TooComplexFeatures > 0 ? L"Some features were too complex to calculate. TooComplexFeatures Flag: " + res->TooComplexFeatures : ref new String());
+    TraceLogger::GetInstance()->LogFunctionAnalysisPerformed(CalculatorApp::AnalysisErrorType::NoError, res->TooComplexFeatures);
     return res;
 }
 
@@ -70,17 +69,6 @@ KeyGraphFeaturesInfo ^ KeyGraphFeaturesInfo::Create(CalculatorApp::AnalysisError
     auto res = ref new KeyGraphFeaturesInfo();
     res->AnalysisError = type;
 
-    String ^ errorMessage = ref new String();
-
-    if (res->AnalysisError == CalculatorApp::AnalysisErrorType::AnalysisCouldNotBePerformed)
-    {
-        errorMessage = L"Analysis could not be performed.";
-    }
-    else if (res->AnalysisError == CalculatorApp::AnalysisErrorType::AnalysisNotSupported)
-    {
-        errorMessage = L"Analysis is not supported.";
-    }
-
-    TraceLogger::GetInstance()->LogFunctionAnalysisPerformed(errorMessage);
+    TraceLogger::GetInstance()->LogFunctionAnalysisPerformed(type, 0);
     return res;
 }
