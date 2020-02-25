@@ -566,7 +566,6 @@ void GraphingCalculator::OnSettingsFlyout_Closing(FlyoutBase ^ sender, FlyoutBas
 {
     auto flyout = static_cast<Flyout ^>(sender);
     auto graphingSetting = static_cast<GraphingSettings ^>(flyout->Content);
-    args->Cancel = graphingSetting->CanBeClose();
 }
 
 void GraphingCalculator::LeftGrid_SizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ e)
