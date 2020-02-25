@@ -62,8 +62,12 @@ void EquationTextBox::OnApplyTemplate()
         m_equationButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnEquationButtonClicked);
 
         auto toolTip = ref new ToolTip();
+
         auto equationButtonMessage = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip")
                                                                         : resProvider->GetResourceString(L"hideEquationButtonToolTip");
+
+        equationButtonMessage = LocalizationStringUtil::GetLocalizedString(equationButtonMessage, EquationButtonContentIndex);
+
         toolTip->Content = equationButtonMessage;
         ToolTipService::SetToolTip(m_equationButton, toolTip);
         AutomationProperties::SetName(m_equationButton, equationButtonMessage);
@@ -204,6 +208,7 @@ void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^
     auto resProvider = AppResourceProvider::GetInstance();
     auto equationButtonMessage = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip")
                                                                     : resProvider->GetResourceString(L"hideEquationButtonToolTip");
+    equationButtonMessage = LocalizationStringUtil::GetLocalizedString(equationButtonMessage, EquationButtonContentIndex);
     toolTip->Content = equationButtonMessage;
     ToolTipService::SetToolTip(m_equationButton, toolTip);
     AutomationProperties::SetName(m_equationButton, equationButtonMessage);
