@@ -13,6 +13,7 @@
 #include "Converters/BooleanNegationConverter.h"
 #include "Controls/MathRichEditBox.h"
 #include "CalcViewModel/Common/TraceLogger.h"
+#include "Utils/Delayer.h"
 
 namespace CalculatorApp
 {
@@ -73,5 +74,6 @@ public
         int m_lastLineColorIndex;
         int m_lastFunctionLabelIndex;
         ViewModel::EquationViewModel ^ m_equationToFocus;
+        Platform::Collections::Map<Platform::String ^, CalculatorApp::Delayer ^> ^ variableSliders;
     };
 }

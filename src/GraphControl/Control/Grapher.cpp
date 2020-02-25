@@ -171,7 +171,6 @@ namespace GraphControl
         // Reset these properties if the equation is requesting to be graphed again
         equation->HasGraphError = false;
         equation->IsValidated = false;
-        equation->IsLineEnabled = true;
 
         TryPlotGraph(false, true);
     }
@@ -480,15 +479,14 @@ namespace GraphControl
                     {
                         value = Variables->Lookup(key);
                     }
+                    else
+                    {
+                        TraceLogger::GetInstance()->LogVariableAdded(graphVariables.size());
+                    }
 
                     updatedVariables->Insert(key, value);
                 }
             }
-        }
-
-        if (updatedVariables->Size != Variables->Size)
-        {
-            TraceLogger::GetInstance()->LogVariableCountChanged(Variables->Size);
         }
 
         Variables = updatedVariables;

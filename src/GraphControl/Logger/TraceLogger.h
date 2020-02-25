@@ -21,7 +21,7 @@ public
 
         void LogEquationCountChanged(int currentValidEquations, int currentInvalidEquations);
         void LogFunctionAnalysisPerformed(int analysisErrorType, uint32 tooComplexFlag);
-        void LogVariableCountChanged(uint64 numVariables);
+        void LogVariableAdded(int variablesCount);
 
     private:
         // Create an instance of TraceLogger

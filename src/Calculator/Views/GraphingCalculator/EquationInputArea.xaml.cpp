@@ -4,7 +4,6 @@
 #include "pch.h"
 #include "EquationInputArea.xaml.h"
 #include "Utils/VisualTree.h"
-#include "Utils/Delayer.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -132,6 +131,7 @@ void EquationInputArea::EquationTextBox_Submitted(Object ^ sender, MathRichEditB
         || (submission->Source == EquationSubmissionSource::FOCUS_LOST && submission->HasTextChanged && eq->Expression != nullptr
             && eq->Expression->Length() > 0))
     {
+        eq->IsLineEnabled = true;
         unsigned int index = 0;
         if (Equations->IndexOf(eq, &index))
         {
@@ -430,8 +430,7 @@ void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender,
 
 void EquationInputArea::Slider_ValueChanged(Object ^ sender, RangeBaseValueChangedEventArgs ^ e)
 {
-    static Map<String ^, Delayer ^> ^ variableSliders = ref new Map<String ^, Delayer ^>();
-
+    //variableSliders = ref new Map<String ^, Delayer ^>();
     auto slider = static_cast<Slider ^>(sender);
 
     if (slider->FocusState == Windows::UI::Xaml::FocusState::Unfocused)

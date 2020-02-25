@@ -23,7 +23,7 @@ namespace GraphControl
     // Diagnostics events. Uploaded to asimov.
     constexpr auto EVENT_NAME_EQUATION_COUNT_CHANGED = L"EquationCountChanged";
     constexpr auto EVENT_NAME_FUNCTION_ANALYSIS_PERFORMED = L"FunctionAnalysisPerformed";
-    constexpr auto EVENT_NAME_VARIABLES_COUNT_CHANGED = L"VariblesCountChanged";
+    constexpr auto EVENT_NAME_VARIABLES_ADDED = L"VariablesAdded";
 
     constexpr auto PDT_PRIVACY_DATA_TAG = L"PartA_PrivTags";
     constexpr auto PDT_PRODUCT_AND_SERVICE_USAGE = 0x0000'0000'0200'0000u;
@@ -140,7 +140,7 @@ namespace GraphControl
         LogLevel2Event(EVENT_NAME_FUNCTION_ANALYSIS_PERFORMED, fields);
     }
 
-    void TraceLogger::LogVariableCountChanged(uint64 numVariables)
+    void TraceLogger::LogVariableAdded(int variablesCount)
     {
         if (!GetTraceLoggingProviderEnabled())
             return;
@@ -148,8 +148,7 @@ namespace GraphControl
         LoggingFields fields{};
         fields.AddGuid(SessionGuid, sessionGuid);
         fields.AddString(CalcMode, GraphingMode);
-        fields.AddUInt64(L"NumberVariables", numVariables);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_VARIABLES_COUNT_CHANGED, fields);
+        LogLevel2Event(EVENT_NAME_VARIABLES_ADDED, fields);
     }
 }
