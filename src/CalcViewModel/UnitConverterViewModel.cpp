@@ -171,9 +171,6 @@ void UnitConverterViewModel::OnCategoryChanged(Object ^ parameter)
 
 void UnitConverterViewModel::ResetCategory()
 {
-    UCM::Category currentCategory = CurrentCategory->GetModelCategory();
-    IsCurrencyCurrentCategory = currentCategory.id == NavCategory::Serialize(ViewMode::Currency);
-
     m_isInputBlocked = false;
     SetSelectedUnits();
 
