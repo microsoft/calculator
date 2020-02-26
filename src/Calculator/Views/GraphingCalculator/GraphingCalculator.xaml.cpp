@@ -600,3 +600,13 @@ void GraphingCalculator::SetDefaultFocus()
         EquationInputAreaControl->Focus(::FocusState::Programmatic);
     }
 }
+
+void GraphingCalculator::GraphMenuFlyoutItem_Click(Object ^ sender, RoutedEventArgs ^ e)
+{
+    auto dataPackage = ref new DataPackage();
+    dataPackage->RequestedOperation = ::DataPackageOperation::Copy;
+
+    auto bitmapStream = GraphingControl->GetGraphBitmapStream();
+    dataPackage->SetBitmap(bitmapStream);
+    ::Clipboard::SetContent(dataPackage);
+}
