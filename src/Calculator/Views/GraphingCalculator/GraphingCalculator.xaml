@@ -471,7 +471,7 @@
             </Grid.Resources>
             <graphControl:Grapher Name="GraphingControl"
                                   Style="{ThemeResource ThemedGrapherStyle}"
-                                  ForceProportionalAxes="True"
+                                  ForceProportionalAxes="False"
                                   LosingFocus="GraphingControl_LosingFocus"
                                   LostFocus="GraphingControl_LostFocus"
                                   RequestedTheme="Light"
