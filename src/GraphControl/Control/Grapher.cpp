@@ -199,6 +199,16 @@ namespace GraphControl
     {
         if (auto graph = GetGraph(equation))
         {
+            for (auto graphVar : graph->GetVariables())
+            {
+                auto key = ref new String(graphVar->GetVariableName().data());
+                if (Variables->HasKey(key))
+                {
+                    auto varValue = Variables->Lookup(key);
+                    graph->SetArgValue(key->Data(), varValue);
+                }
+            }
+
             if (auto analyzer = graph->GetAnalyzer())
             {
                 vector<Equation ^> equationVector;
@@ -443,8 +453,7 @@ namespace GraphControl
 
         if (m_graph != nullptr && m_renderMain != nullptr)
         {
-
-                auto workItemHandler = ref new WorkItemHandler([this, variableName, newValue](IAsyncAction ^ action) {
+            auto workItemHandler = ref new WorkItemHandler([this, variableName, newValue](IAsyncAction ^ action) {
                 m_renderMain->GetCriticalSection().lock();
                 m_graph->SetArgValue(variableName->Data(), newValue);
                 m_renderMain->GetCriticalSection().unlock();
@@ -453,7 +462,6 @@ namespace GraphControl
             });
 
             ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::None);
-
         }
     }
 
