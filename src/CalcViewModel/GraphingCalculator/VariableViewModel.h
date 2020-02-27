@@ -18,22 +18,64 @@ public
     [Windows::UI::Xaml::Data::Bindable] public ref class VariableViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
     {
     public:
-        VariableViewModel(Platform::String ^ name, double value)
+        VariableViewModel(Platform::String ^ name, GraphControl::Variable ^ variable)
             : m_Name(name)
-            , m_Value(value)
+            , m_variable{ variable }
             , m_SliderSettingsVisible(false)
-            , m_Min(0.0)
-            , m_Step(0.1)
-            , m_Max(2.0)
         {
         }
 
         OBSERVABLE_OBJECT();
         OBSERVABLE_PROPERTY_R(Platform::String ^, Name);
-        OBSERVABLE_PROPERTY_RW(double, Min);
-        OBSERVABLE_PROPERTY_RW(double, Step);
-        OBSERVABLE_PROPERTY_RW(double, Max);
         OBSERVABLE_PROPERTY_RW(bool, SliderSettingsVisible);
+
+        property double Min
+        {
+            double get()
+            {
+                return m_variable->Min;
+            }
+            void set(double value)
+            {
+                if (m_variable->Min != value)
+                {
+                    m_variable->Min = value;
+                    RaisePropertyChanged("Min");
+                }
+            }
+        }
+
+        property double Step
+        {
+            double get()
+            {
+                return m_variable->Step;
+            }
+            void set(double value)
+            {
+                if (m_variable->Step != value)
+                {
+                    m_variable->Step = value;
+                    RaisePropertyChanged("Step");
+                }
+            }
+        }
+
+        property double Max
+        {
+            double get()
+            {
+                return m_variable->Max;
+            }
+            void set(double value)
+            {
+                if (m_variable->Max != value)
+                {
+                    m_variable->Max = value;
+                    RaisePropertyChanged("Max");
+                }
+            }
+        }
 
         event Windows::Foundation::EventHandler<VariableChangedEventArgs> ^ VariableUpdated;
 
@@ -41,24 +83,24 @@ public
         {
             double get()
             {
-                return m_Value;
+                return m_variable->Value;
             }
             void set(double value)
             {
-                if (value < Min)
+                if (value < m_variable->Min)
                 {
-                    Min = value;
+                    m_variable->Min = value;
                     RaisePropertyChanged(L"Min");
                 }
-                else if (value > Max)
+                else if (value > m_variable->Max)
                 {
-                    Max = value;
+                    m_variable->Max = value;
                     RaisePropertyChanged(L"Max");
                 }
 
-                if (Value != value)
+                if (m_variable->Value != value)
                 {
-                    m_Value = value;
+                    m_variable->Value = value;
                     VariableUpdated(this, VariableChangedEventArgs{ Name, value });
                     RaisePropertyChanged(L"Value");
                 }
@@ -66,6 +108,6 @@ public
         }
 
     private:
-        double m_Value;
+        GraphControl::Variable ^ m_variable;
     };
 }

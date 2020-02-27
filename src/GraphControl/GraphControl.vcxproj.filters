@@ -59,6 +59,9 @@
     <ClInclude Include="Models\EquationCollection.h">
       <Filter>Models</Filter>
     </ClInclude>
+    <ClInclude Include="Models\Variable.h">
+      <Filter>Models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\generic.xaml">
@@ -69,6 +72,8 @@
     <None Include="$(ProjectDir)\GraphingImplOverrides.props" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>

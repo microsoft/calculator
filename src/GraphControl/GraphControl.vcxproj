@@ -294,6 +294,7 @@
     <ClInclude Include="Models\KeyGraphFeaturesInfo.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="Models\Variable.h" />
     <ClInclude Include="winrtHeaders.h" />
   </ItemGroup>
   <ItemGroup>
