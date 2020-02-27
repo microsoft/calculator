@@ -784,6 +784,16 @@
                       SelectionMode="None"
                       TabFocusNavigation="Local">
 
+                <!-- Removes animations from the ListView Style. -->
+                <ListView.Style>
+                    <Style TargetType="ListView">
+                        <Setter Property="ItemContainerTransitions">
+                            <Setter.Value>
+                                <TransitionCollection/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.Style>
 
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
