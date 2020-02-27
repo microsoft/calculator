@@ -276,7 +276,7 @@ public
         concurrency::task<void> TryPlotGraph(bool keepCurrentView, bool shouldRetry);
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
         std::vector<Equation ^> GetGraphableEquations();
-        void SetGraphArgs();
+        void SetGraphArgs(std::shared_ptr<Graphing::IGraph> graph);
         std::shared_ptr<Graphing::IGraph> GetGraph(GraphControl::Equation ^ equation);
         void UpdateVariables();
 
