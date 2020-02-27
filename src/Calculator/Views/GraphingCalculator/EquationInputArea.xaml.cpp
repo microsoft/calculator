@@ -149,7 +149,7 @@ void EquationInputArea::FocusEquationTextBox(EquationViewModel ^ equation)
     {
         return;
     }
-    auto container = EquationInputList->TryGetElement(index);
+    auto container = EquationInputList->ContainerFromIndex(index);
     if (container == nullptr)
     {
         return;
@@ -234,7 +234,7 @@ void EquationInputArea::EquationTextBox_Loaded(Object ^ sender, RoutedEventArgs 
         unsigned int index;
         if (Equations->IndexOf(copyEquationToFocus, &index))
         {
-            auto container = EquationInputList->TryGetElement(index);
+            auto container = static_cast<UIElement^>(EquationInputList->ContainerFromIndex(index));
             if (container != nullptr)
             {
                 container->StartBringIntoView();
@@ -264,7 +264,7 @@ void EquationInputArea::FocusEquationIfNecessary(CalculatorApp::Controls::Equati
         unsigned int index;
         if (Equations->IndexOf(m_equationToFocus, &index))
         {
-            auto container = EquationInputList->TryGetElement(index);
+            auto container = static_cast<UIElement ^>(EquationInputList->ContainerFromIndex(index));
             if (container != nullptr)
             {
                 container->StartBringIntoView();
