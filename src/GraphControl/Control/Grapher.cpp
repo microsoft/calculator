@@ -199,6 +199,8 @@ namespace GraphControl
     {
         if (auto graph = GetGraph(equation))
         {
+            SetGraphArgs(graph);
+
             if (auto analyzer = graph->GetAnalyzer())
             {
                 vector<Equation ^> equationVector;
@@ -300,7 +302,7 @@ namespace GraphControl
                 if (initResult != nullopt)
                 {
                     UpdateGraphOptions(m_graph->GetOptions(), validEqs);
-                    SetGraphArgs();
+                    SetGraphArgs(m_graph);
 
                     m_renderMain->Graph = m_graph;
 
@@ -329,7 +331,7 @@ namespace GraphControl
                     if (initResult != nullopt)
                     {
                         UpdateGraphOptions(m_graph->GetOptions(), validEqs);
-                        SetGraphArgs();
+                        SetGraphArgs(m_graph);
 
                         m_renderMain->Graph = m_graph;
                         co_await m_renderMain->RunRenderPassAsync();
@@ -366,15 +368,15 @@ namespace GraphControl
         }
     }
 
-    void Grapher::SetGraphArgs()
+    void Grapher::SetGraphArgs(shared_ptr<IGraph> graph)
     {
-        if (m_graph != nullptr && m_renderMain != nullptr)
+        if (graph != nullptr && m_renderMain != nullptr)
         {
             critical_section::scoped_lock lock(m_renderMain->GetCriticalSection());
 
             for (auto variable : Variables)
             {
-                m_graph->SetArgValue(variable->Key->Data(), variable->Value);
+                graph->SetArgValue(variable->Key->Data(), variable->Value);
             }
         }
     }
@@ -443,8 +445,7 @@ namespace GraphControl
 
         if (m_graph != nullptr && m_renderMain != nullptr)
         {
-
-                auto workItemHandler = ref new WorkItemHandler([this, variableName, newValue](IAsyncAction ^ action) {
+            auto workItemHandler = ref new WorkItemHandler([this, variableName, newValue](IAsyncAction ^ action) {
                 m_renderMain->GetCriticalSection().lock();
                 m_graph->SetArgValue(variableName->Data(), newValue);
                 m_renderMain->GetCriticalSection().unlock();
@@ -453,7 +454,6 @@ namespace GraphControl
             });
 
             ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::None);
-
         }
     }
 
