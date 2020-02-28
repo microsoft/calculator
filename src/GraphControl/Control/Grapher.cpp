@@ -287,6 +287,17 @@ namespace GraphControl
                         co_return false;
                     }
 
+                    unique_ptr<IExpression> expr;
+                    wstring parsableEquation = s_getGraphOpeningTags;
+                    parsableEquation += equationRequest;
+                    parsableEquation += s_getGraphClosingTags;
+
+                    // Wire up the corresponding error to an error message in the UI at some point
+                    if (!(expr = m_solver->ParseInput(parsableEquation)))
+                    {
+                        co_return false;
+                    }
+
                     request += equationRequest;
                 }
 
@@ -443,8 +454,7 @@ namespace GraphControl
 
         if (m_graph != nullptr && m_renderMain != nullptr)
         {
-
-                auto workItemHandler = ref new WorkItemHandler([this, variableName, newValue](IAsyncAction ^ action) {
+            auto workItemHandler = ref new WorkItemHandler([this, variableName, newValue](IAsyncAction ^ action) {
                 m_renderMain->GetCriticalSection().lock();
                 m_graph->SetArgValue(variableName->Data(), newValue);
                 m_renderMain->GetCriticalSection().unlock();
@@ -453,7 +463,6 @@ namespace GraphControl
             });
 
             ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::None);
-
         }
     }
 
