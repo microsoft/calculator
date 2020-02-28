@@ -430,9 +430,10 @@ void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender,
 
 void EquationInputArea::Slider_ValueChanged(Object ^ sender, RangeBaseValueChangedEventArgs ^ e)
 {
-    //variableSliders = ref new Map<String ^, Delayer ^>();
     auto slider = static_cast<Slider ^>(sender);
 
+    // The slider value updates when the user uses the TextBox to change the variable value.
+    // Check the focus state so that we don't trigger the event when the user used the textbox to change the variable value.
     if (slider->FocusState == Windows::UI::Xaml::FocusState::Unfocused)
     {
         return;

@@ -25,7 +25,7 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY(Platform::String ^, MathEquation);
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, HasError);
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, IsAddEquationMode);
-            DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, IsEquationLineDisabled);
+            DEPENDENCY_PROPERTY(bool, IsEquationLineDisabled);
 
             PROPERTY_R(bool, HasFocus);
 
@@ -72,7 +72,6 @@ namespace CalculatorApp
             void OnColorFlyoutClosed(Platform::Object ^ sender, Platform::Object ^ e);
 
             void OnHasErrorPropertyChanged(bool oldValue, bool newValue);
-            void OnIsEquationLineDisabledPropertyChanged(bool /*oldValue*/, bool newValue);
 
             CalculatorApp::Controls::MathRichEditBox ^ m_richEditBox;
             Windows::UI::Xaml::Controls::Primitives::ToggleButton ^ m_equationButton;

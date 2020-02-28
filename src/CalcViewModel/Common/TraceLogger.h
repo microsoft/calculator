@@ -68,7 +68,7 @@ public ref class TraceLogger sealed
         void LogConverterInputReceived(CalculatorApp::Common::ViewMode mode);
         void LogNavBarOpened();
         void LogError(CalculatorApp::Common::ViewMode mode, Platform::String ^ functionName, Platform::String ^ errorString);
-        void LogShowHideButtonClicked(bool isHide);
+        void LogShowHideButtonClicked(bool isHideButton);
         void LogGraphButtonClicked(GraphButton buttonName);
         void LogGraphLineStyleChanged(LineStyleType style);
         void LogVariableChanged(Platform::String ^ inputChangedType);

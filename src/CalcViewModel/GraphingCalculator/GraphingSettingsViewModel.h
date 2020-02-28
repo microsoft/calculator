@@ -248,10 +248,12 @@ namespace CalculatorApp::ViewModel
                 if (value && m_Graph != nullptr && m_Graph->TrigUnitMode != (int)Graphing::EvalTrigUnitMode::Degrees)
                 {
                     m_Graph->TrigUnitMode = (int)Graphing::EvalTrigUnitMode::Degrees;
-                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::TrigUnits);
+
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeRadians");
                     RaisePropertyChanged(L"TrigModeGradians");
+
+                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::TrigUnits);
                 }
             }
         }
@@ -267,10 +269,12 @@ namespace CalculatorApp::ViewModel
                 if (value && m_Graph != nullptr && m_Graph->TrigUnitMode != (int)Graphing::EvalTrigUnitMode::Grads)
                 {
                     m_Graph->TrigUnitMode = (int)Graphing::EvalTrigUnitMode::Grads;
-                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::TrigUnits);
+
                     RaisePropertyChanged(L"TrigModeGradians");
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeRadians");
+
+                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::TrigUnits);
                 }
             }
         }

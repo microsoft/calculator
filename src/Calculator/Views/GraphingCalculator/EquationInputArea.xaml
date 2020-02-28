@@ -395,7 +395,7 @@
                                               MinWidth="44"
                                               MinHeight="44"
                                               VerticalAlignment="Stretch"
-                                              IsChecked="{TemplateBinding IsEquationLineDisabled}">
+                                              IsChecked="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsEquationLineDisabled, Mode=TwoWay}">
                                     <ToggleButton.Content>
                                         <StackPanel HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"

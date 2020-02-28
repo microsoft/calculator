@@ -395,7 +395,7 @@ namespace CalculatorApp
         LogLevel2Event(EVENT_NAME_INPUT_PASTED, fields);
     }
 
-    void TraceLogger::LogShowHideButtonClicked(bool isHide)
+    void TraceLogger::LogShowHideButtonClicked(bool isHideButton)
     {
         if (!GetTraceLoggingProviderEnabled())
             return;
@@ -403,7 +403,7 @@ namespace CalculatorApp
         LoggingFields fields{};
         fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, GRPAHING_MODE);
-        fields.AddBoolean(L"ButtonState", isHide);
+        fields.AddBoolean(L"IsHideButton", isHideButton);
         fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_SHOW_HIDE_BUTTON_CLICKED, fields);
     }
