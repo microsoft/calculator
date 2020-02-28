@@ -29,6 +29,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace GraphControl;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, ForceProportionalAxes);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, UseCommaDecimalSeperator);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Variables);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Equations);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, AxesColor);
@@ -279,7 +280,14 @@ namespace GraphControl
 
                     if (numValidEquations++ > 0)
                     {
-                        request += L"<mo>,</mo>";
+                        if (!UseCommaDecimalSeperator)
+                        {
+                            request += L"<mo>,</mo>";
+                        }
+                        else
+                        {
+                            request += L"<mo>;</mo>";
+                        }
                     }
                     auto equationRequest = eq->GetRequest()->Data();
 
@@ -498,6 +506,20 @@ namespace GraphControl
     {
         m_calculatedForceProportional = newValue;
         TryUpdateGraph(false);
+    }
+
+    void Grapher::OnUseCommaDecimalSeperatorPropertyChanged(bool oldValue, bool newValue)
+    {
+        if (newValue)
+        {
+            m_solver->ParsingOptions().SetLocalizationType(::LocalizationType::DecimalCommaAndListSemicolon);
+            m_solver->FormatOptions().SetLocalizationType(::LocalizationType::DecimalCommaAndListSemicolon);
+        }
+        else
+        {
+            m_solver->ParsingOptions().SetLocalizationType(::LocalizationType::DecimalPointAndListComma);
+            m_solver->FormatOptions().SetLocalizationType(::LocalizationType::DecimalCommaAndListSemicolon);
+        }
     }
 
     void Grapher::OnPointerEntered(PointerRoutedEventArgs ^ e)

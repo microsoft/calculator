@@ -34,6 +34,7 @@ namespace Graphing
         virtual ~IParsingOptions() = default;
 
         virtual void SetFormatType(FormatType type) = 0;
+        virtual void SetLocalizationType(LocalizationType value) = 0;
     };
 
     struct IEvalOptions : public NonCopyable, public NonMoveable
@@ -50,6 +51,7 @@ namespace Graphing
 
         virtual void SetFormatType(FormatType type) = 0;
 		virtual void SetMathMLPrefix(const std::wstring& value) = 0;
+        virtual void SetLocalizationType(LocalizationType value) = 0;
     };
 
     struct IMathSolver : public NonCopyable, public NonMoveable

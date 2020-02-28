@@ -13,6 +13,10 @@ namespace MockGraphingImpl
         void SetFormatType(Graphing::FormatType type) override
         {
         }
+
+        void SetLocalizationType(Graphing::LocalizationType value) override
+        {
+        }
     };
 
     class EvalOptions : public Graphing::IEvalOptions
@@ -44,6 +48,10 @@ namespace MockGraphingImpl
         }
 
         void SetMathMLPrefix(const std::wstring& value) override
+        {
+        }
+
+        void SetLocalizationType(Graphing::LocalizationType value) override
         {
         }
     };
