@@ -618,10 +618,10 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
             newEntry.magnitude = log10(convertedValue);
             newEntry.value = convertedValue;
             newEntry.type = cur.first;
-            if (newEntry.type.isWhimsical == false)
-                intermediateVector.push_back(newEntry);
-            else
+            if (newEntry.type.isWhimsical)
                 intermediateWhimsicalVector.push_back(newEntry);
+            else
+                intermediateVector.push_back(newEntry);
         }
     }
 
@@ -667,10 +667,8 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         {
             return first.magnitude > second.magnitude;
         }
-        else
-        {
-            return abs(first.magnitude) < abs(second.magnitude);
-        }
+
+        return abs(first.magnitude) < abs(second.magnitude);
     });
 
     // Now that the list is sorted, iterate over it and populate the return vector with properly rounded and formatted return strings
@@ -770,10 +768,8 @@ shared_ptr<IConverterDataLoader> UnitConverter::GetDataLoaderForCategory(const C
     {
         return m_currencyDataLoader;
     }
-    else
-    {
-        return m_dataLoader;
-    }
+
+    return m_dataLoader;
 }
 
 /// <summary>
