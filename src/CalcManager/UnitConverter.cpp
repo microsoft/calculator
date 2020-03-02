@@ -667,8 +667,10 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         {
             return first.magnitude > second.magnitude;
         }
-
-        return abs(first.magnitude) < abs(second.magnitude);
+        else
+        {
+            return abs(first.magnitude) < abs(second.magnitude);
+        }
     });
 
     // Now that the list is sorted, iterate over it and populate the return vector with properly rounded and formatted return strings
@@ -768,8 +770,10 @@ shared_ptr<IConverterDataLoader> UnitConverter::GetDataLoaderForCategory(const C
     {
         return m_currencyDataLoader;
     }
-
-    return m_dataLoader;
+    else
+    {
+        return m_dataLoader;
+    }
 }
 
 /// <summary>
