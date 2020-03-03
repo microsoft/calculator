@@ -52,7 +52,8 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         FindName("RshLogicalButton");
     }
 
-    // Since arithmeticShiftButton defaults to IsChecked = true, this event an fire before we can load the deferred loaded controls. If that is the case, just return and do nothing.
+    // Since arithmeticShiftButton defaults to IsChecked = true, this event an fire before we can load the deferred loaded controls. If that is the case, just
+    // return and do nothing.
     if (RolButton == nullptr || RorButton == nullptr || RolCarryButton == nullptr || RorCarryButton == nullptr || LshLogicalButton == nullptr
         || RshLogicalButton == nullptr)
     {
@@ -61,7 +62,7 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
 
     CollapseBitshiftButtons();
 
-    auto radioButton = static_cast<RadioButton^>(sender);
+    auto radioButton = static_cast<RadioButton ^>(sender);
 
     if (radioButton == ArithmeticShiftButton)
     {
@@ -141,4 +142,20 @@ String ^ CalculatorProgrammerRadixOperators::ParenthesisCountToString(unsigned i
 void CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators::OpenParenthesisButton_GotFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     Model->SetOpenParenthesisCountNarratorAnnouncement();
+}
+
+void CalculatorProgrammerRadixOperators::ClearEntryButton_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
+{
+    if (ClearEntryButton->Visibility == ::Visibility::Collapsed && ClearButton->Visibility == ::Visibility::Visible)
+    {
+        ClearButton->Focus(::FocusState::Programmatic);
+    }
+}
+
+void CalculatorProgrammerRadixOperators::ClearButton_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
+{
+    if (ClearEntryButton->Visibility == ::Visibility::Visible && ClearButton->Visibility == ::Visibility::Collapsed)
+    {
+        ClearEntryButton->Focus(::FocusState::Programmatic);
+    }
 }

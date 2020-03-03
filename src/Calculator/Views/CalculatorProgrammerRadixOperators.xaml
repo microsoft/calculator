@@ -475,6 +475,7 @@
                                        AutomationProperties.AutomationId="clearButton"
                                        ButtonId="Clear"
                                        Content="C"
+                                       LostFocus="ClearButton_LostFocus"
                                        Visibility="{x:Bind Model.IsInputEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <controls:CalculatorButton x:Name="ClearEntryButton"
@@ -484,6 +485,7 @@
                                        AutomationProperties.AutomationId="clearEntryButton"
                                        ButtonId="ClearEntry"
                                        Content="CE"
+                                       LostFocus="ClearEntryButton_LostFocus"
                                        Visibility="{x:Bind Model.IsInputEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
 
             <controls:CalculatorButton x:Name="BackSpaceButton"
