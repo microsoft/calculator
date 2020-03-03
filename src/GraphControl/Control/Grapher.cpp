@@ -289,6 +289,17 @@ namespace GraphControl
                         co_return false;
                     }
 
+                    unique_ptr<IExpression> expr;
+                    wstring parsableEquation = s_getGraphOpeningTags;
+                    parsableEquation += equationRequest;
+                    parsableEquation += s_getGraphClosingTags;
+
+                    // Wire up the corresponding error to an error message in the UI at some point
+                    if (!(expr = m_solver->ParseInput(parsableEquation)))
+                    {
+                        co_return false;
+                    }
+
                     request += equationRequest;
                 }
 
