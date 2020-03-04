@@ -50,7 +50,7 @@ namespace Graphing
         virtual ~IFormatOptions() = default;
 
         virtual void SetFormatType(FormatType type) = 0;
-		virtual void SetMathMLPrefix(const std::wstring& value) = 0;
+        virtual void SetMathMLPrefix(const std::wstring& value) = 0;
         virtual void SetLocalizationType(LocalizationType value) = 0;
     };
 

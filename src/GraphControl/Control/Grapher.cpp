@@ -518,7 +518,7 @@ namespace GraphControl
         else
         {
             m_solver->ParsingOptions().SetLocalizationType(::LocalizationType::DecimalPointAndListComma);
-            m_solver->FormatOptions().SetLocalizationType(::LocalizationType::DecimalCommaAndListSemicolon);
+            m_solver->FormatOptions().SetLocalizationType(::LocalizationType::DecimalPointAndListComma);
         }
     }
 
