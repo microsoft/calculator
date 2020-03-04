@@ -74,6 +74,8 @@ GraphingCalculator::GraphingCalculator()
     // Update where the pointer value is (ie: where the user cursor from keyboard inputs moves the point to)
     GraphingControl->PointerValueChangedEvent += ref new PointerValueChangedEventHandler(this, &GraphingCalculator::OnPointerPointChanged);
 
+    GraphingControl->UseCommaDecimalSeperator = LocalizationSettings::GetInstance().GetDecimalSeparator() == ',';
+
     // OemMinus and OemAdd aren't declared in the VirtualKey enum, we can't add this accelerator XAML-side
     auto virtualKey = ref new KeyboardAccelerator();
     virtualKey->Key = (VirtualKey)189; // OemPlus key
