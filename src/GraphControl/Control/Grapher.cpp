@@ -539,9 +539,25 @@ namespace GraphControl
     {
         if (m_renderMain)
         {
-            PointerPoint ^ currPoint = e->GetCurrentPoint(/* relativeTo */ this);
-            m_renderMain->PointerLocation = currPoint->Position;
-            UpdateTracingChanged();
+            Point currPosition = e->GetCurrentPoint(/* relativeTo */ this)->Position;
+            m_renderMain->PointerLocation = currPosition;
+
+            if (m_renderMain->ActiveTracing)
+            {
+                PointerValueChangedEvent(currPosition);
+                ActiveTraceCursorPosition = currPosition;
+
+                if (m_cachedCursor == nullptr)
+                {
+                    m_cachedCursor = ::CoreWindow::GetForCurrentThread()->PointerCursor;
+                    ::CoreWindow::GetForCurrentThread()->PointerCursor = nullptr;
+                }
+            }
+            else if (m_cachedCursor != nullptr)
+            {
+                ::CoreWindow::GetForCurrentThread()->PointerCursor = m_cachedCursor;
+                m_cachedCursor = nullptr;
+            }
 
             e->Handled = true;
         }
@@ -554,6 +570,12 @@ namespace GraphControl
             m_renderMain->DrawNearestPoint = false;
             TracingChangedEvent(false);
             e->Handled = true;
+        }
+
+        if (m_cachedCursor != nullptr)
+        {
+            ::CoreWindow::GetForCurrentThread()->PointerCursor = m_cachedCursor;
+            m_cachedCursor = nullptr;
         }
     }
 
