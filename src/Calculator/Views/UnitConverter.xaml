@@ -32,11 +32,13 @@
                        TextWrapping="NoWrap"/>
         </DataTemplate>
 
-        <DataTemplate x:Key="SelectedUnitTemplate" x:DataType="vm:Unit">
+        <!-- Native bindings can't be use with this template, it will launch an exception when ComboxBox.SelectedItem == null -->
+        <!-- if you switch between modes when no currencies are available for example) -->
+        <DataTemplate x:Key="SelectedUnitTemplate">
             <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
                        FontWeight="SemiBold"
-                       AutomationProperties.Name="{x:Bind AccessibleName}"
-                       Text="{x:Bind Name}"
+                       AutomationProperties.Name="{Binding AccessibleName, Mode=OneTime, FallbackValue=''}"
+                       Text="{Binding Name, Mode=OneTime, FallbackValue=''}"
                        TextWrapping="NoWrap"/>
         </DataTemplate>
 
@@ -440,9 +442,9 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-            <VisualStateGroup x:Name="CurrencyLoadingStates">
+            <VisualStateGroup x:Name="UnitLoadedStates">
                 <VisualStateGroup.Transitions>
-                    <VisualTransition From="CurrencyLoadingState" To="CurrencyLoadedState">
+                    <VisualTransition From="UnitNotLoadedState" To="UnitLoadedState">
                         <Storyboard>
                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Units1" Storyboard.TargetProperty="Visibility">
                                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
@@ -489,7 +491,7 @@
                         </Storyboard>
                     </VisualTransition>
                 </VisualStateGroup.Transitions>
-                <VisualState x:Name="CurrencyLoadingState">
+                <VisualState x:Name="UnitNotLoadedState">
                     <VisualState.Setters>
                         <Setter Target="CurrencyRatioEqualityBlock.Opacity" Value="0"/>
                         <Setter Target="CurrencyTimestampTextBlock.Opacity" Value="0"/>
@@ -500,17 +502,7 @@
                         <Setter Target="Value2Container.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="CurrencyLoadedState">
-                    <VisualState.Setters>
-                        <Setter Target="CurrencyRatioEqualityBlock.Opacity" Value="1"/>
-                        <Setter Target="CurrencyTimestampTextBlock.Opacity" Value="1"/>
-                        <Setter Target="CurrencyLoadingGrid.Visibility" Value="Collapsed"/>
-                        <Setter Target="Units1.Visibility" Value="Visible"/>
-                        <Setter Target="Value1Container.Visibility" Value="Visible"/>
-                        <Setter Target="Units2.Visibility" Value="Visible"/>
-                        <Setter Target="Value2Container.Visibility" Value="Visible"/>
-                    </VisualState.Setters>
-                </VisualState>
+                <VisualState x:Name="UnitLoadedState"/>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
@@ -576,12 +568,12 @@
                   DropDownClosed="UpdateDropDownState"
                   DropDownOpened="UpdateDropDownState"
                   FlowDirection="{x:Bind LayoutDirection}"
-                  IsEnabled="{Binding IsDropDownEnabled}"
                   IsEnabledChanged="Units1_IsEnabledChanged"
                   ItemTemplate="{StaticResource UnitTemplate}"
                   ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
                   SelectedItem="{Binding Unit1, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
-                  TabIndex="2"/>
+                  TabIndex="2"
+                  IsEnabled="{Binding IsDropDownEnabled}"/>
 
         <Grid x:Name="Value2Container"
               Grid.Row="3"
@@ -626,11 +618,11 @@
                   DropDownClosed="UpdateDropDownState"
                   DropDownOpened="UpdateDropDownState"
                   FlowDirection="{x:Bind LayoutDirection}"
-                  IsEnabled="{Binding IsDropDownEnabled}"
                   ItemTemplate="{StaticResource UnitTemplate}"
                   ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
                   SelectedItem="{Binding Unit2, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
-                  TabIndex="4"/>
+                  TabIndex="4"
+                  IsEnabled="{Binding IsDropDownEnabled}"/>
 
         <StackPanel x:Name="SupplementaryResultsPanelInGrid"
                     Grid.Row="5"

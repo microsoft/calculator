@@ -3876,7 +3876,7 @@
     <comment>{Locked}This is the shortcut for the zoom reset button.</comment>
   </data>
   <data name="zoomResetButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Reset View</value>
+    <value>Reset View (Ctrl + 0)</value>
     <comment>This is the tool tip automation name for the Calculator zoom reset button.</comment>
   </data>
   <data name="zoomResetButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3884,7 +3884,7 @@
     <comment>Screen reader prompt for the reset zoom button.</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Zoom In</value>
+    <value>Zoom In (Ctrl + plus)</value>
     <comment>This is the tool tip automation name for the Calculator zoom in button.</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3892,7 +3892,7 @@
     <comment>Screen reader prompt for the zoom in button.</comment>
   </data>
   <data name="zoomOutButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Zoom Out</value>
+    <value>Zoom Out (Ctrl + minus)</value>
     <comment>This is the tool tip automation name for the Calculator zoom out button.</comment>
   </data>
   <data name="zoomOutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4159,12 +4159,12 @@
     <comment>This is the text for the for the equation style context menu command</comment>
   </data>
   <data name="showEquationButtonToolTip" xml:space="preserve">
-    <value>Show</value>
-    <comment>This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator</comment>
+    <value>Show equation %1</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator. %1 is the equation number.</comment>
   </data>
   <data name="hideEquationButtonToolTip" xml:space="preserve">
-    <value>Hide</value>
-    <comment>This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator</comment>
+    <value>Hide equation %1</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator. %1 is the equation number.</comment>
   </data>
   <data name="disableTracingButtonToolTip" xml:space="preserve">
     <value>Stop tracing</value>

@@ -618,10 +618,10 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
             newEntry.magnitude = log10(convertedValue);
             newEntry.value = convertedValue;
             newEntry.type = cur.first;
-            if (newEntry.type.isWhimsical == false)
-                intermediateVector.push_back(newEntry);
-            else
+            if (newEntry.type.isWhimsical)
                 intermediateWhimsicalVector.push_back(newEntry);
+            else
+                intermediateVector.push_back(newEntry);
         }
     }
 
