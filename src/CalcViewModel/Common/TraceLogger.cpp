@@ -44,37 +44,14 @@ namespace CalculatorApp
 
     constexpr auto EVENT_NAME_EXCEPTION = L"Exception";
 
-    constexpr auto PDT_PRIVACY_DATA_TAG = L"PartA_PrivTags";
-    constexpr auto PDT_PRODUCT_AND_SERVICE_USAGE = 0x0000'0000'0200'0000u;
-
-    constexpr auto SESSION_GUID = L"SessionGuid";
     constexpr auto CALC_MODE = L"CalcMode";
     constexpr auto GRPAHING_MODE = L"Graphing";
-
-#ifdef SEND_DIAGNOSTICS
-    // c.f. WINEVENT_KEYWORD_RESERVED_63-56 0xFF00000000000000 // Bits 63-56 - channel keywords
-    // c.f. WINEVENT_KEYWORD_*              0x00FF000000000000 // Bits 55-48 - system-reserved keywords
-    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_1 = 0x0000800000000000; // Bit 47
-    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_2 = 0x0000400000000000; // Bit 46
-    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_3 = 0x0000200000000000; // Bit 45
-#else
-    // define all Keyword options as 0 when we do not want to upload app diagnostics
-    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_1 = 0;
-    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_2 = 0;
-    constexpr int64_t MICROSOFT_KEYWORD_LEVEL_3 = 0;
-#endif
 
 #pragma region TraceLogger setup and cleanup
 
     TraceLogger::TraceLogger()
-        : g_calculatorProvider(
-            L"MicrosoftCalculator",
-            LoggingChannelOptions(GUID{ 0x4f50731a, 0x89cf, 0x4782, 0xb3, 0xe0, 0xdc, 0xe8, 0xc9, 0x4, 0x76, 0xba }),
-            GUID{ 0x905ca09, 0x610e, 0x401e, 0xb6, 0x50, 0x2f, 0x21, 0x29, 0x80, 0xb9, 0xe0 })
-        , // Unique providerID {0905CA09-610E-401E-B650-2F212980B9E0}
-        m_appLaunchActivity{ nullptr }
     {
-        CoCreateGuid(&sessionGuid);
+        
     }
 
     TraceLogger ^ TraceLogger::GetInstance()
@@ -82,33 +59,6 @@ namespace CalculatorApp
         static TraceLogger ^ s_selfInstance = ref new TraceLogger();
         return s_selfInstance;
     }
-
-    bool TraceLogger::GetTraceLoggingProviderEnabled()
-    {
-        return g_calculatorProvider.Enabled();
-    }
-
-#pragma region Tracing methods
-    void TraceLogger::LogLevel1Event(wstring_view eventName, LoggingFields fields)
-    {
-        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_1));
-    }
-
-    void TraceLogger::LogLevel2Event(wstring_view eventName, LoggingFields fields)
-    {
-        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_2));
-    }
-
-    void TraceLogger::LogLevel3Event(wstring_view eventName, LoggingFields fields)
-    {
-        g_calculatorProvider.LogEvent(eventName, fields, LoggingLevel::Verbose, LoggingOptions(MICROSOFT_KEYWORD_LEVEL_3));
-    }
-
-    unique_ptr<TraceActivity> TraceLogger::CreateTraceActivity(wstring_view eventName, LoggingFields fields)
-    {
-        return make_unique<TraceActivity>(g_calculatorProvider, eventName, fields);
-    }
-#pragma endregion
 
     // return true if windowId is logged once else return false
     bool TraceLogger::IsWindowIdInLog(int windowId)
@@ -126,18 +76,12 @@ namespace CalculatorApp
 
     void TraceLogger::LogVisualStateChanged(ViewMode mode, String ^ state, bool isAlwaysOnTop)
     {
-        if (!GetTraceLoggingProviderEnabled())
-        {
-            return;
-        }
-
-        LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
+        LoggingFields fields;
+       
         fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
         fields.AddString(L"VisualState", state->Data());
         fields.AddBoolean(L"IsAlwaysOnTop", isAlwaysOnTop);
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_VISUAL_STATE_CHANGED, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_VISUAL_STATE_CHANGED), fields);
     }
 
     void TraceLogger::LogWindowCreated(ViewMode mode, int windowId)
@@ -148,121 +92,77 @@ namespace CalculatorApp
             windowIdLog.push_back(windowId);
         }
 
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
         fields.AddUInt64(L"NumOfOpenWindows", currentWindowCount);
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_WINDOW_ON_CREATED, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_WINDOW_ON_CREATED, fields);
     }
 
     void TraceLogger::LogModeChange(ViewMode mode)
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         if (NavCategory::IsValidViewMode(mode))
         {
-            LoggingFields fields{};
-            fields.AddGuid(SESSION_GUID, sessionGuid);
+            LoggingFields fields{};;
             fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
-            fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-            LogLevel2Event(EVENT_NAME_MODE_CHANGED, fields);
+            TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_MODE_CHANGED, fields);
         }
     }
 
     void TraceLogger::LogHistoryItemLoad(ViewMode mode, int historyListSize, int loadedIndex)
     {
-        if (!GetTraceLoggingProviderEnabled())
-        {
-            return;
-        }
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
         fields.AddInt32(L"HistoryListSize", historyListSize);
         fields.AddInt32(L"HistoryItemIndex", loadedIndex);
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_HISTORY_ITEM_LOAD, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_HISTORY_ITEM_LOAD, fields);
     }
 
     void TraceLogger::LogMemoryItemLoad(ViewMode mode, int memoryListSize, int loadedIndex)
     {
-        if (!GetTraceLoggingProviderEnabled())
-        {
-            return;
-        }
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
         fields.AddInt32(L"MemoryListSize", memoryListSize);
         fields.AddInt32(L"MemoryItemIndex", loadedIndex);
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_MEMORY_ITEM_LOAD, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_MEMORY_ITEM_LOAD, fields);
     }
 
     void TraceLogger::LogError(ViewMode mode, Platform::String ^ functionName, Platform::String ^ errorString)
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
         fields.AddString(L"FunctionName", functionName->Data());
         fields.AddString(L"Message", errorString->Data());
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
 
     void TraceLogger::LogStandardException(ViewMode mode, wstring_view functionName, const exception& e)
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
         fields.AddString(L"FunctionName", functionName);
         wstringstream exceptionMessage;
         exceptionMessage << e.what();
         fields.AddString(L"Message", exceptionMessage.str());
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
 
     void TraceLogger::LogWinRTException(ViewMode mode, wstring_view functionName, hresult_error const& e)
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
         fields.AddString(L"FunctionName", functionName);
         fields.AddString(L"Message", e.message());
         fields.AddInt32(L"HRESULT", e.code());
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
 
     void TraceLogger::LogPlatformException(ViewMode mode, wstring_view functionName, Platform::Exception ^ e)
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
         fields.AddString(L"FunctionName", functionName);
         fields.AddString(L"Message", e->Message->Data());
         fields.AddInt32(L"HRESULT", e->HResult);
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
         LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
     }
 
@@ -315,9 +215,6 @@ namespace CalculatorApp
 
     void TraceLogger::LogButtonUsage()
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         // Writer lock for the buttonLog resource
         reader_writer_lock::scoped_lock lock(s_traceLoggerLock);
 
@@ -341,10 +238,8 @@ namespace CalculatorApp
         }
 
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(L"ButtonUsage", buttonUsageString->Data());
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_BUTTON_USAGE, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_BUTTON_USAGE, fields);
 
         buttonLog.clear();
     }
@@ -353,122 +248,77 @@ namespace CalculatorApp
     {
         const wchar_t* calculationType = AddSubtractMode ? L"AddSubtractMode" : L"DateDifferenceMode";
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(ViewMode::Date)->Data());
         fields.AddString(L"CalculationType", calculationType);
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_DATE_CALCULATION_MODE_USED, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_DATE_CALCULATION_MODE_USED, fields);
     }
 
     void TraceLogger::LogConverterInputReceived(ViewMode mode)
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_CONVERTER_INPUT_RECEIVED, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_CONVERTER_INPUT_RECEIVED, fields);
     }
 
     void TraceLogger::LogNavBarOpened()
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_NAV_BAR_OPENED, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_NAV_BAR_OPENED, fields);
     }
 
     void TraceLogger::LogInputPasted(ViewMode mode)
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_INPUT_PASTED, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_INPUT_PASTED, fields);
     }
 
     void TraceLogger::LogShowHideButtonClicked(bool isHideButton)
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, GRPAHING_MODE);
         fields.AddBoolean(L"IsHideButton", isHideButton);
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_SHOW_HIDE_BUTTON_CLICKED, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_SHOW_HIDE_BUTTON_CLICKED, fields);
     }
 
     void TraceLogger::LogGraphButtonClicked(GraphButton buttonName)
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, GRPAHING_MODE);
         fields.AddInt16(L"ButtonName", static_cast<int16>(buttonName));
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_GRAPH_BUTTON_CLICKED, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_GRAPH_BUTTON_CLICKED, fields);
     }
 
     void TraceLogger::LogGraphLineStyleChanged(LineStyleType style)
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, GRPAHING_MODE);
         fields.AddInt16(L"StyleType", static_cast<int16>(style));
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_GRAPH_LINE_STYLE_CHANGED, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_GRAPH_LINE_STYLE_CHANGED, fields);
     }
 
     void TraceLogger::LogVariableChanged(String ^ inputChangedType)
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, GRPAHING_MODE);
         fields.AddString(L"InputChangedType", inputChangedType->Data());
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_VARIABLE_CHANGED, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_VARIABLE_CHANGED, fields);
     }
     void TraceLogger::LogVariableSettingsChanged(String ^ setting)
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
         fields.AddString(CALC_MODE, GRPAHING_MODE);
         fields.AddString(L"SettingChanged", setting->Data());
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_VARIABLE_SETTING_CHANGED, fields);
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_VARIABLE_SETTING_CHANGED, fields);
     }
 
     void TraceLogger::LogGraphSettingsChanged(GraphSettingsType settingType)
     {
-        if (!GetTraceLoggingProviderEnabled())
-            return;
-
         LoggingFields fields{};
-        fields.AddGuid(SESSION_GUID, sessionGuid);
+
         fields.AddString(CALC_MODE, GRPAHING_MODE);
         fields.AddInt16(L"SettingType", static_cast<int16>(settingType));
-        fields.AddUInt64(PDT_PRIVACY_DATA_TAG, PDT_PRODUCT_AND_SERVICE_USAGE);
-        LogLevel2Event(EVENT_NAME_GRAPH_SETTINGS_CHANGED, fields);
+
+        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_GRAPH_SETTINGS_CHANGED, fields);
     }
 }

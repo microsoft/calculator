@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include "TraceActivity.h"
 #include "NavCategory.h"
 #include "CalculatorButtonUser.h"
 
@@ -53,7 +52,7 @@ public ref class TraceLogger sealed
     {
     public:
         static TraceLogger ^ GetInstance();
-        bool GetTraceLoggingProviderEnabled();
+
         void LogModeChange(CalculatorApp::Common::ViewMode mode);
         void LogHistoryItemLoad(CalculatorApp::Common::ViewMode mode, int historyListSize, int loadedIndex);
         void LogMemoryItemLoad(CalculatorApp::Common::ViewMode mode, int memoryListSize, int loadedIndex);
@@ -83,24 +82,8 @@ public ref class TraceLogger sealed
         // Create an instance of TraceLogger
         TraceLogger();
 
-        // As mentioned in Microsoft's Privacy Statement(https://privacy.microsoft.com/en-US/privacystatement#maindiagnosticsmodule),
-        // sampling is involved in Microsoft's diagnostic data collection process.
-        // These keywords provide additional input into how frequently an event might be sampled.
-        // The lower the level of the keyword, the higher the possibility that the corresponding event may be sampled.
-        void LogLevel1Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields);
-        void LogLevel2Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields);
-        void LogLevel3Event(std::wstring_view eventName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields);
-
-        std::unique_ptr<TraceActivity> CreateTraceActivity(std::wstring_view activityName, winrt::Windows::Foundation::Diagnostics::LoggingFields fields);
-
-        winrt::Windows::Foundation::Diagnostics::LoggingChannel g_calculatorProvider;
-
         std::vector<ButtonLog> buttonLog;
         std::vector<int> windowIdLog;
-
-        GUID sessionGuid;
         uint64 currentWindowCount = 0;
-
-        winrt::Windows::Foundation::Diagnostics::LoggingActivity m_appLaunchActivity;
     };
 }
