@@ -98,21 +98,28 @@ void EquationInputArea::AddNewEquation()
 void EquationInputArea::EquationTextBox_GotFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     KeyboardShortcutManager::HonorShortcuts(false);
+
+    auto eq = GetViewModelFromEquationtextBox(sender);
+    if (eq != nullptr)
+    {
+        eq->GraphEquation->IsSelected = true;
+    }
 }
 
 void EquationInputArea::EquationTextBox_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
     KeyboardShortcutManager::HonorShortcuts(true);
+
+    auto eq = GetViewModelFromEquationtextBox(sender);
+    if (eq != nullptr)
+    {
+        eq->GraphEquation->IsSelected = false;
+    }
 }
 
 void EquationInputArea::EquationTextBox_Submitted(Object ^ sender, MathRichEditBoxSubmission ^ submission)
 {
-    auto tb = static_cast<EquationTextBox ^>(sender);
-    if (tb == nullptr)
-    {
-        return;
-    }
-    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
+    auto eq = GetViewModelFromEquationtextBox(sender);
     if (eq == nullptr)
     {
         return;
@@ -176,8 +183,7 @@ void EquationInputArea::FocusEquationTextBox(EquationViewModel ^ equation)
 
 void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
-    auto tb = static_cast<EquationTextBox ^>(sender);
-    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
+    auto eq = GetViewModelFromEquationtextBox(sender);
     unsigned int index;
 
     if (Equations->IndexOf(eq, &index))
@@ -206,15 +212,12 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
 
 void EquationInputArea::EquationTextBox_KeyGraphFeaturesButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
-    auto tb = static_cast<EquationTextBox ^>(sender);
-    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
-    KeyGraphFeaturesRequested(this, eq);
+    KeyGraphFeaturesRequested(this, GetViewModelFromEquationtextBox(sender));
 }
 
 void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
-    auto tb = static_cast<EquationTextBox ^>(sender);
-    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
+    auto eq = GetViewModelFromEquationtextBox(sender);
     eq->IsLineEnabled = !eq->IsLineEnabled;
 }
 
@@ -410,8 +413,21 @@ void EquationInputArea::VariableAreaTapped(Object ^ sender, TappedRoutedEventArg
         }
     }
 }
-  
+
 void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
 {
     EquationFormatRequested(sender, e);
+}
+
+EquationViewModel ^ EquationInputArea::GetViewModelFromEquationtextBox(Object ^ sender)
+{
+    auto tb = static_cast<EquationTextBox ^>(sender);
+    if (tb == nullptr)
+    {
+        return nullptr;
+    }
+
+    auto eq = static_cast<EquationViewModel ^>(tb->DataContext);
+
+    return eq;
 }

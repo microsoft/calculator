@@ -15,17 +15,18 @@
 
 namespace CalculatorApp
 {
-    public ref class EquationInputArea sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
-	{
-	public:
-		EquationInputArea();
+public
+    ref class EquationInputArea sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+    {
+    public:
+        EquationInputArea();
 
         OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<ViewModel::EquationViewModel ^> ^, Equations);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<ViewModel::VariableViewModel ^> ^, Variables);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Windows::UI::Xaml::Media::SolidColorBrush ^> ^, AvailableColors);
-        event Windows::Foundation::EventHandler<ViewModel::EquationViewModel^>^ KeyGraphFeaturesRequested;
-        event Windows::Foundation::EventHandler<CalculatorApp::Controls::MathRichEditBoxFormatRequest^> ^ EquationFormatRequested;
+        event Windows::Foundation::EventHandler<ViewModel::EquationViewModel ^> ^ KeyGraphFeaturesRequested;
+        event Windows::Foundation::EventHandler<CalculatorApp::Controls::MathRichEditBoxFormatRequest ^> ^ EquationFormatRequested;
 
     public:
         static Windows::UI::Xaml::Visibility ManageEditVariablesButtonVisibility(unsigned int numberOfVariables);
@@ -37,20 +38,20 @@ namespace CalculatorApp
             ^ ToSolidColorBrush(Windows::UI::Color color) { return ref new Windows::UI::Xaml::Media::SolidColorBrush(color); }
 
     private:
-        void OnPropertyChanged(Platform::String^ propertyName);
+        void OnPropertyChanged(Platform::String ^ propertyName);
         void OnEquationsPropertyChanged();
 
         void AddNewEquation();
 
-        void EquationTextBox_GotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void EquationTextBox_LostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void EquationTextBox_GotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void EquationTextBox_LostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void EquationTextBox_Submitted(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxSubmission ^ e);
 
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
         void ReloadAvailableColors(bool isHighContrast);
         void FocusEquationTextBox(ViewModel::EquationViewModel ^ equation);
 
-        void EquationTextBox_RemoveButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void EquationTextBox_RemoveButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void EquationTextBox_KeyGraphFeaturesButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void EquationTextBox_EquationButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void EquationTextBox_Loaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
@@ -64,6 +65,8 @@ namespace CalculatorApp
         void SubmitTextbox(Windows::UI::Xaml::Controls::TextBox ^ textbox);
         void VariableAreaTapped(Platform::Object ^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         void EquationTextBox_EquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ e);
+
+        CalculatorApp::ViewModel::EquationViewModel ^ GetViewModelFromEquationtextBox(Platform::Object ^ sender);
 
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         int m_lastLineColorIndex;
