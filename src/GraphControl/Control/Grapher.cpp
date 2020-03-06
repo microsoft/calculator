@@ -255,6 +255,8 @@ namespace GraphControl
     {
         optional<vector<shared_ptr<IEquation>>> initResult = nullopt;
         bool successful = false;
+        m_errorCode = 0;
+        m_errorType = 0;
 
         if (m_renderMain && m_graph != nullptr)
         {
@@ -303,7 +305,7 @@ namespace GraphControl
                     parsableEquation += s_getGraphClosingTags;
 
                     // Wire up the corresponding error to an error message in the UI at some point
-                    if (!(expr = m_solver->ParseInput(parsableEquation)))
+                    if (!(expr = m_solver->ParseInput(parsableEquation, m_errorCode, m_errorType)))
                     {
                         co_return false;
                     }
@@ -314,7 +316,7 @@ namespace GraphControl
                 request += s_getGraphClosingTags;
             }
 
-            if (graphExpression = m_solver->ParseInput(request))
+            if (graphExpression = m_solver->ParseInput(request, m_errorCode, m_errorType))
             {
                 initResult = TryInitializeGraph(keepCurrentView, graphExpression.get());
 
@@ -382,6 +384,8 @@ namespace GraphControl
         {
             if (!eq->IsValidated)
             {
+                eq->GraphErrorType = static_cast<ErrorType>(m_errorType);
+                eq->GraphErrorCode = m_errorCode;
                 eq->HasGraphError = true;
             }
         }
@@ -408,7 +412,7 @@ namespace GraphControl
         request += equation->GetRequest()->Data();
         request += s_getGraphClosingTags;
 
-        if (unique_ptr<IExpression> graphExpression = m_solver->ParseInput(request))
+        if (unique_ptr<IExpression> graphExpression = m_solver->ParseInput(request, m_errorCode, m_errorType))
         {
             if (graph->TryInitialize(graphExpression.get()))
             {
@@ -901,7 +905,7 @@ String ^ Grapher::ConvertToLinear(String ^ mmlString)
 {
     m_solver->FormatOptions().SetFormatType(FormatType::LinearInput);
 
-    auto expression = m_solver->ParseInput(mmlString->Data());
+    auto expression = m_solver->ParseInput(mmlString->Data(), m_errorCode, m_errorType);
     auto linearExpression = m_solver->Serialize(expression.get());
 
     m_solver->FormatOptions().SetFormatType(s_defaultFormatType);
@@ -911,7 +915,7 @@ String ^ Grapher::ConvertToLinear(String ^ mmlString)
 
 String ^ Grapher::FormatMathML(String ^ mmlString)
 {
-    auto expression = m_solver->ParseInput(mmlString->Data());
+    auto expression = m_solver->ParseInput(mmlString->Data(), m_errorCode, m_errorType);
     auto formattedExpression = m_solver->Serialize(expression.get());
     return ref new String(formattedExpression.c_str());
 }

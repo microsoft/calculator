@@ -321,6 +321,7 @@
                                                 <Setter Target="EquationBoxBorder.BorderThickness" Value="1"/>
                                                 <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource EquationBoxErrorBorderBrush}"/>
                                                 <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource EquationBoxErrorBackgroundBrush}"/>
+                                                <Setter Target="RemoveButton.Visibility" Value="Visible"/>
                                                 <Setter Target="ErrorIcon.Visibility" Value="Visible"/>
                                             </VisualState.Setters>
                                         </VisualState>
@@ -341,7 +342,7 @@
                                                 <Setter Target="ColorChooserButton.Visibility" Value="Collapsed"/>
                                                 <Setter Target="FunctionButton.Visibility" Value="Collapsed"/>
                                                 <Setter Target="RemoveButton.Visibility" Value="Visible"/>
-                                                <Setter Target="ErrorIcon.Visibility" Value="Collapsed"/>
+                                                <Setter Target="ErrorIcon.Visibility" Value="Visible"/>
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="Disabled">
@@ -564,6 +565,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <controls:MathRichEditBox x:Name="MathRichEditBox"
                                                                   x:Uid="mathRichEditBox"
@@ -680,7 +682,18 @@
                                                 </ResourceDictionary>
                                             </ToggleButton.Resources>
                                         </ToggleButton>
-                                        <Grid x:Name="RemoveButtonPanel" Grid.Column="3">
+                                        <FontIcon x:Name="ErrorIcon"
+                                                  Grid.Column="3"
+                                                  MinWidth="28"
+                                                  VerticalAlignment="Stretch"
+                                                  Foreground="{ThemeResource ButtonForeground}"
+                                                  FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                  FontSize="16"
+                                                  AutomationProperties.AccessibilityView="Raw"
+                                                  Glyph="&#xE7BA;"
+                                                  ToolTipService.ToolTip="{TemplateBinding ErrorText}"
+                                                  Visibility="Collapsed"/>
+                                        <Grid x:Name="RemoveButtonPanel" Grid.Column="4">
                                             <Button x:Name="RemoveButton"
                                                     x:Uid="removeButton"
                                                     MinWidth="34"
@@ -719,7 +732,7 @@
                                             </Button>
                                         </Grid>
                                         <Button x:Name="DeleteButton"
-                                                Grid.Column="3"
+                                                Grid.Column="4"
                                                 MinWidth="34"
                                                 Margin="1,2"
                                                 VerticalAlignment="Stretch"
@@ -756,16 +769,6 @@
                                                 </ResourceDictionary>
                                             </Button.Resources>
                                         </Button>
-                                        <FontIcon x:Name="ErrorIcon"
-                                                  Grid.Column="3"
-                                                  MinWidth="28"
-                                                  VerticalAlignment="Stretch"
-                                                  Foreground="{ThemeResource ButtonForeground}"
-                                                  FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                  FontSize="16"
-                                                  AutomationProperties.AccessibilityView="Raw"
-                                                  Glyph="&#xE7BA;"
-                                                  Visibility="Collapsed"/>
                                     </Grid>
                                 </Border>
                             </Grid>
@@ -793,6 +796,7 @@
                                                       EquationColor="{x:Bind local:EquationInputArea.ToSolidColorBrush(LineColor), Mode=OneWay}"
                                                       EquationFormatRequested="EquationTextBox_EquationFormatRequested"
                                                       EquationSubmitted="EquationTextBox_Submitted"
+                                                      ErrorText="{x:Bind vm:EquationViewModel.EquationErrorText(GraphEquation.GraphErrorType, GraphEquation.GraphErrorCode), Mode=OneWay}"
                                                       GotFocus="EquationTextBox_GotFocus"
                                                       HasError="{x:Bind GraphEquation.HasGraphError, Mode=OneWay}"
                                                       IsAddEquationMode="{x:Bind IsLastItemInList, Mode=OneWay}"

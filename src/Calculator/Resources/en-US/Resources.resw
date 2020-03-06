@@ -4106,6 +4106,272 @@
     <value>Unable to calculate the range for this function.</value>
     <comment>Error displayed when Range is not returned from the analyzer.</comment>
   </data>
+
+    <data name="Overflow" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="RequireRadiansMode" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="TooComplexToSolve" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="RequireDegreesMode" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="FactorialInvalidArgument" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="Factorial2InvalidArgument" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="FactorialCannotPerformOnLargeNumber" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="ModuloCannotPerformOnFloat" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="InvalidArgumentsInMathFunctions" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="EquationTooComplexToSolveSymbolic" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="EquationHasNoSolution" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="EquationTooComplexToSolve" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="EquationTooComplexToPlot" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="DivideByZero" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="InequalityTooComplexToSolve" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="InequalityHasNoSolution" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="MutuallyExclusiveConditions" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="InvalidIntervalOperation" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="OutOfDomain" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="GE_NotSupported" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="GE_GeneralError" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="GE_TooComplexToSolve" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="ParenthesisMismatch" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="UnmatchedParenthesis" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="TooManyDecimalPoints" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="DecimalPointWithoutDigits" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="UnexpectedEndOfExpression" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="UnexpectedToken" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="InvalidToken" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="TooManyEquals" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="EqualWithoutSolveVariable" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="EqualWithoutGraphVariable" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+  <data name="InvalidEquationSyntax" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+    </data>
+    <data name="EmptyExpression" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="EqualWithoutEquation" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="InvalidEquationFormat" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+  <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+    </data>
+    <data name="IncorrectNumParameter" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="InvalidGraphingCommand" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="InvalidVariableNameFormat" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="BracketMismatch" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="UnmatchedBracket" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="CommandsMustBeAtTopLevel" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="InvalidMathMLFormat" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="UnknownMathMLEntity" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="UnknownMathMLElement" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="CannotUseIInReal" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="GeneralError" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="InvalidNumberDigit" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="InvalidNumberBase" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="InvalidVariableSpecification" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="ExpectingLogicalOperands" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="ExpectingScalarOperands" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="CannotMixLogicalScalarInList" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="CannotUseIndexVarInOpLimits" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="CannotUseIndexVarInLimPoint" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="UnclosedStringLiteral" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="InvalidGraphingOptionsSyntax" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="InvalidGraphingOptionLocation" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="CannotUseComplexInfinityInReal" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="CannotUseIInInequalitySolving" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="RichEditSerializationError" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="RichEditInitialization" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="RichEditInlineObjectStructure" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="RichEditMissingArgument" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+    <data name="RichEditGeneralError" xml:space="preserve">
+    <value></value>
+    <comment></comment>
+  </data>
+ 
   <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Back</value>
     <comment>This is the tooltip for the back button in the equation analysis page in the graphing calculator</comment>

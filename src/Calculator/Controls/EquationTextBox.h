@@ -24,6 +24,7 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY(Platform::String ^, MathEquation);
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, HasError);
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, IsAddEquationMode);
+            DEPENDENCY_PROPERTY(Platform::String ^, ErrorText);
 
             PROPERTY_R(bool, HasFocus);
 

@@ -27,6 +27,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonContentIndex);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, HasError);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, IsAddEquationMode);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, MathEquation);
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, ErrorText);
 
 EquationTextBox::EquationTextBox()
 {

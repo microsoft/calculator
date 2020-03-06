@@ -115,7 +115,7 @@ namespace MockGraphingImpl
             return m_formatOptions;
         }
 
-        std::unique_ptr<Graphing::IExpression> ParseInput(const std::wstring& input) override
+        std::unique_ptr<Graphing::IExpression> ParseInput(const std::wstring& input, int& errorCodeOut, int& errorTypeOut) override
         {
             if (input.empty())
             {
