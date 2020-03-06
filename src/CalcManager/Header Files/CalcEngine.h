@@ -33,7 +33,7 @@
 // This is expected to be in same order as IDM_QWORD, IDM_DWORD etc.
 enum class NUM_WIDTH
 {
-    QWORD_WIDTH = 0, // Number width of 64 bits mode (default)
+    QWORD_WIDTH, // Number width of 64 bits mode (default)
     DWORD_WIDTH, // Number width of 32 bits mode
     WORD_WIDTH,  // Number width of 16 bits mode
     BYTE_WIDTH   // Number width of 16 bits mode
