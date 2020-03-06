@@ -25,8 +25,6 @@ using namespace Windows::UI::Xaml::Input;
 using namespace GraphControl;
 using namespace Calculator::Utils;
 
-using nanoseconds = std::chrono::nanoseconds;
-
 namespace
 {
     inline constexpr auto maxEquationSize = 14;
@@ -338,7 +336,7 @@ void EquationInputArea::SubmitTextbox(TextBox ^ sender)
     {
         val = validateDouble(sender->Text, variableViewModel->Value);
         variableViewModel->Value = val;
-        TraceLogger::GetInstance()->LogVariableChanged(L"ValueTextBox");
+        TraceLogger::GetInstance()->LogVariableChanged(L"ValueTextBox", variableViewModel->Name);
     }
     else if (sender->Name == "MinTextBox")
     {
@@ -453,7 +451,7 @@ void EquationInputArea::Slider_ValueChanged(Object ^ sender, RangeBaseValueChang
         timeSpan.Duration = 10000000; // The duration is 1 second. TimeSpan durations are expressed in 100 nanosecond units.
         Delayer ^ delayer = ref new Delayer(timeSpan);
         delayer->Action += ref new EventHandler<Platform::Object ^>([this, name](Platform::Object ^ sender, Platform::Object ^ e) {
-            TraceLogger::GetInstance()->LogVariableChanged("Slider");
+            TraceLogger::GetInstance()->LogVariableChanged("Slider", name);
             variableSliders->Remove(name);
         });
         delayer->Start();

@@ -16,9 +16,8 @@ namespace GraphControl
 {
     static reader_writer_lock s_traceLoggerLock;
 
-    constexpr auto GraphingMode = L"Graphing";
-    constexpr auto SessionGuid = L"SessionGuid";
-    constexpr auto CalcMode = L"CalcMode";
+    constexpr auto GRAPHING_MODE = L"Graphing";
+    constexpr auto CALC_MODE = L"CalcMode";
 
     // Diagnostics events. Uploaded to asimov.
     constexpr auto EVENT_NAME_EQUATION_COUNT_CHANGED = L"EquationCountChanged";
@@ -63,27 +62,28 @@ namespace GraphControl
         PreviousInvalidEquations = currentInvalidEquations;
 
         auto fields = ref new LoggingFields();
-        fields->AddString(ref new String(CalcMode), ref new String(GraphingMode));
-        fields->AddUInt64(ref new String(L"ConcurrentValidFunctions"), currentValidEquations);
-        fields->AddUInt64(ref new String(L"ConcurrentInvalidFunctions"), currentInvalidEquations);
-        fields->AddUInt64(ref new String(L"TotalValidFunctions"), TotalValidEquations);
-        fields->AddUInt64(ref new String(L"TotalInvalidFunctions"), TotalInvalidEquations);
-        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_EQUATION_COUNT_CHANGED), fields);
+        fields->AddString(StringReference(CALC_MODE), StringReference(GRAPHING_MODE));
+        fields->AddUInt64(StringReference(L"ConcurrentValidFunctions"), currentValidEquations);
+        fields->AddUInt64(StringReference(L"ConcurrentInvalidFunctions"), currentInvalidEquations);
+        fields->AddUInt64(StringReference(L"TotalValidFunctions"), TotalValidEquations);
+        fields->AddUInt64(StringReference(L"TotalInvalidFunctions"), TotalInvalidEquations);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_EQUATION_COUNT_CHANGED), fields);
     }
 
     void TraceLogger::LogFunctionAnalysisPerformed(int analysisErrorType, uint32 tooComplexFlag)
     {
         auto fields = ref new LoggingFields();
-        fields->AddString(ref new String(CalcMode), ref new String(GraphingMode));
-        fields->AddInt32(ref new String(L"AnalysisErrorType"), analysisErrorType);
-        fields->AddUInt32(ref new String(L"TooComplexFeatures"), tooComplexFlag);
-        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_FUNCTION_ANALYSIS_PERFORMED), fields);
+        fields->AddString(StringReference(CALC_MODE), StringReference(GRAPHING_MODE));
+        fields->AddInt32(StringReference(L"AnalysisErrorType"), analysisErrorType);
+        fields->AddUInt32(StringReference(L"TooComplexFeatures"), tooComplexFlag);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_FUNCTION_ANALYSIS_PERFORMED), fields);
     }
 
     void TraceLogger::LogVariableAdded(int variablesCount)
     {
         auto fields = ref new LoggingFields();
-        fields->AddString(ref new String(CalcMode), ref new String(GraphingMode));
-        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_VARIABLES_ADDED), fields);
+        fields->AddString(StringReference(CALC_MODE), StringReference(GRAPHING_MODE));
+        fields->AddInt64(StringReference(L"VariableCount"), variablesCount);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_VARIABLES_ADDED), fields);
     }
 }
