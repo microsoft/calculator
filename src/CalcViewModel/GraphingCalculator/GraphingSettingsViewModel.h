@@ -275,6 +275,7 @@ namespace CalculatorApp::ViewModel
     public:
         void SetGrapher(GraphControl::Grapher ^ grapher);
         void InitRanges();
+        void ResetView();
         bool HasError();
 
     private:
