@@ -479,14 +479,15 @@ namespace GraphControl
                     {
                         value = Variables->Lookup(key);
                     }
-                    else
-                    {
-                        TraceLogger::GetInstance()->LogVariableAdded(graphVariables.size());
-                    }
 
                     updatedVariables->Insert(key, value);
                 }
             }
+        }
+
+        if (Variables->Size != updatedVariables->Size)
+        {
+            TraceLogger::GetInstance()->LogVariableCountChanged(updatedVariables->Size);
         }
 
         Variables = updatedVariables;

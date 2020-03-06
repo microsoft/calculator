@@ -428,6 +428,11 @@ void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender,
 
 void EquationInputArea::Slider_ValueChanged(Object ^ sender, RangeBaseValueChangedEventArgs ^ e)
 {
+    if (variableSliders == nullptr)
+    {
+        variableSliders = ref new Map<String ^, Delayer ^>();
+    }
+
     auto slider = static_cast<Slider ^>(sender);
 
     // The slider value updates when the user uses the TextBox to change the variable value.

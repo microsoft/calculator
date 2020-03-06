@@ -22,7 +22,7 @@ namespace GraphControl
     // Diagnostics events. Uploaded to asimov.
     constexpr auto EVENT_NAME_EQUATION_COUNT_CHANGED = L"EquationCountChanged";
     constexpr auto EVENT_NAME_FUNCTION_ANALYSIS_PERFORMED = L"FunctionAnalysisPerformed";
-    constexpr auto EVENT_NAME_VARIABLES_ADDED = L"VariablesAdded";
+    constexpr auto EVENT_NAME_VARIABLES_COUNT_CHANGED = L"VariablesCountChanged";
 
     TraceLogger ^ TraceLogger::GetInstance()
     {
@@ -79,11 +79,11 @@ namespace GraphControl
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_FUNCTION_ANALYSIS_PERFORMED), fields);
     }
 
-    void TraceLogger::LogVariableAdded(int variablesCount)
+    void TraceLogger::LogVariableCountChanged(int variablesCount)
     {
         auto fields = ref new LoggingFields();
         fields->AddString(StringReference(CALC_MODE), StringReference(GRAPHING_MODE));
         fields->AddInt64(StringReference(L"VariableCount"), variablesCount);
-        TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_VARIABLES_ADDED), fields);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_VARIABLES_COUNT_CHANGED), fields);
     }
 }
