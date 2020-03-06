@@ -81,7 +81,9 @@ void UnitConverter::OnPropertyChanged(_In_ Object ^ sender, _In_ PropertyChanged
     {
         SetCurrencyTimestampFontWeight();
     }
-    else if (propertyName == UnitConverterViewModel::IsCurrencyLoadingVisiblePropertyName)
+    else if (
+        propertyName == UnitConverterViewModel::IsCurrencyLoadingVisiblePropertyName
+        || propertyName == UnitConverterViewModel::IsCurrencyCurrentCategoryPropertyName)
     {
         OnIsDisplayVisibleChanged();
     }
@@ -318,18 +320,21 @@ void UnitConverter::Units1_IsEnabledChanged(Object ^ sender, DependencyPropertyC
 
 void UnitConverter::OnIsDisplayVisibleChanged()
 {
-    if (Model->IsCurrencyLoadingVisible)
+    if (!Model->IsCurrencyCurrentCategory)
     {
-        VisualStateManager::GoToState(this, L"CurrencyLoadingState", false);
-        StartProgressRingWithDelay();
+        VisualStateManager::GoToState(this, UnitLoadedState->Name, false);
     }
     else
     {
-        HideProgressRing();
-
-        if (Model->IsCurrencyCurrentCategory && !Model->CurrencyTimestamp->IsEmpty())
+        if (Model->IsCurrencyLoadingVisible)
         {
-            VisualStateManager::GoToState(this, L"CurrencyLoadedState", true);
+            VisualStateManager::GoToState(this, UnitNotLoadedState->Name, false);
+            StartProgressRingWithDelay();
+        }
+        else
+        {
+            HideProgressRing();
+            VisualStateManager::GoToState(this, !Model->CurrencyTimestamp->IsEmpty() ? UnitLoadedState->Name : UnitNotLoadedState->Name, true);
         }
     }
 }

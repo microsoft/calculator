@@ -40,6 +40,7 @@ public
 
         DEPENDENCY_PROPERTY_OWNER(Grapher);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, ForceProportionalAxes, true);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, UseCommaDecimalSeperator, false);
         DEPENDENCY_PROPERTY_WITH_DEFAULT(
             SINGLE_ARG(Windows::Foundation::Collections::IObservableMap<Platform::String ^, double> ^),
             Variables,
@@ -268,6 +269,7 @@ public
 
     private:
         void OnForceProportionalAxesPropertyChanged(bool oldValue, bool newValue);
+        void OnUseCommaDecimalSeperatorPropertyChanged(bool oldValue, bool newValue);
         void OnEquationsPropertyChanged(EquationCollection ^ oldValue, EquationCollection ^ newValue);
         void OnAxesColorPropertyChanged(Windows::UI::Color oldValue, Windows::UI::Color newValue);
         void OnGraphBackgroundPropertyChanged(Windows::UI::Color oldValue, Windows::UI::Color newValue);
@@ -278,7 +280,7 @@ public
         concurrency::task<void> TryPlotGraph(bool keepCurrentView, bool shouldRetry);
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
         std::vector<Equation ^> GetGraphableEquations();
-        void SetGraphArgs();
+        void SetGraphArgs(std::shared_ptr<Graphing::IGraph> graph);
         std::shared_ptr<Graphing::IGraph> GetGraph(GraphControl::Equation ^ equation);
         void UpdateVariables();
 

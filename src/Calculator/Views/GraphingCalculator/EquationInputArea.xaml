@@ -393,8 +393,7 @@
                                               MinHeight="44"
                                               VerticalAlignment="Stretch">
                                     <ToggleButton.Content>
-                                        <StackPanel x:Name="FunctionNumberLabel"
-                                                    HorizontalAlignment="Center"
+                                        <StackPanel HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     Background="Transparent"
                                                     FlowDirection="LeftToRight"
@@ -803,9 +802,7 @@
                                                       MathEquation="{x:Bind Expression, Mode=TwoWay}"
                                                       RemoveButtonClicked="EquationTextBox_RemoveButtonClicked">
                                 <controls:EquationTextBox.ColorChooserFlyout>
-                                    <Flyout x:Name="ColorChooserFlyout"
-                                            x:Uid="ColorChooserFlyout"
-                                            Placement="Bottom">
+                                    <Flyout x:Uid="ColorChooserFlyout" Placement="Bottom">
                                         <local:EquationStylePanelControl SelectedColor="{x:Bind LineColor, Mode=TwoWay}"/>
                                     </Flyout>
                                 </controls:EquationTextBox.ColorChooserFlyout>
@@ -813,12 +810,11 @@
                         </DataTemplate>
                     </mux:ItemsRepeater.ItemTemplate>
                 </mux:ItemsRepeater>
-                <StackPanel Visibility="{x:Bind local:EquationInputArea.ManageEditVariablesButtonVisibility(Variables.Size), Mode=OneWay}">
+                <StackPanel x:Name="VariableStackPanel" x:Load="{x:Bind local:EquationInputArea.ManageEditVariablesButtonLoaded(Variables.Size), Mode=OneWay}">
                     <Rectangle Height="1"
                                Margin="12"
                                Fill="#33000000"/>
-                    <mux:ItemsRepeater x:Name="VariableListView"
-                                       ItemTemplate="{StaticResource VariableDataTemplate}"
+                    <mux:ItemsRepeater ItemTemplate="{StaticResource VariableDataTemplate}"
                                        ItemsSource="{x:Bind Variables, Mode=OneWay}"
                                        TabFocusNavigation="Local">
                         <mux:ItemsRepeater.Transitions>
