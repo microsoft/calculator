@@ -1253,16 +1253,16 @@ void StandardCalculatorViewModel::SetMemorizedNumbersString()
     m_standardCalculatorManager.SetMemorizedNumbersString();
 }
 
-ANGLE_TYPE GetAngleTypeFromCommand(Command command)
+AngleType GetAngleTypeFromCommand(Command command)
 {
     switch (command)
     {
     case Command::CommandDEG:
-        return ANGLE_DEG;
+        return AngleType::Degrees;
     case Command::CommandRAD:
-        return ANGLE_RAD;
+        return AngleType::Radians;
     case Command::CommandGRAD:
-        return ANGLE_GRAD;
+        return AngleType::Gradians;
     default:
         throw ref new Exception(E_FAIL, L"Invalid command type");
     }
@@ -1279,7 +1279,7 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
     if (IsUnaryOp(command) && command != Command::CommandSIGN)
     {
         int angleCmd = static_cast<int>(m_standardCalculatorManager.GetCurrentDegreeMode());
-        ANGLE_TYPE angleType = GetAngleTypeFromCommand(static_cast<Command>(angleCmd));
+        AngleType angleType = GetAngleTypeFromCommand(static_cast<Command>(angleCmd));
 
         if (IsTrigOp(command))
         {

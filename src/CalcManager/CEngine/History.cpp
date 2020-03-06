@@ -210,7 +210,7 @@ bool CHistoryCollector::FOpndAddedToHistory()
 // This is does the postfix to prefix translation of the input and adds the text to the history. Eg. doing 2 + 4 (sqrt),
 // this routine will ensure the last sqrt call unary operator, actually goes back in history and wraps 4 in sqrt(4)
 //
-void CHistoryCollector::AddUnaryOpToHistory(int nOpCode, bool fInv, ANGLE_TYPE angletype)
+void CHistoryCollector::AddUnaryOpToHistory(int nOpCode, bool fInv, AngleType angletype)
 {
     int iCommandEnd;
     // When successfully applying a unary op, there should be an opnd already
@@ -230,15 +230,15 @@ void CHistoryCollector::AddUnaryOpToHistory(int nOpCode, bool fInv, ANGLE_TYPE a
         else
         {
             CalculationManager::Command angleOpCode;
-            if (angletype == ANGLE_DEG)
+            if (angletype == AngleType::Degrees)
             {
                 angleOpCode = CalculationManager::Command::CommandDEG;
             }
-            else if (angletype == ANGLE_RAD)
+            else if (angletype == AngleType::Radians)
             {
                 angleOpCode = CalculationManager::Command::CommandRAD;
             }
-            else // (angletype == ANGLE_GRAD)
+            else // (angletype == AngleType::Gradians)
             {
                 angleOpCode = CalculationManager::Command::CommandGRAD;
             }
