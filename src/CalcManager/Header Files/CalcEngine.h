@@ -179,9 +179,9 @@ private:
     CalcEngine::Rational TruncateNumForIntMath(CalcEngine::Rational const& rat);
     CalcEngine::Rational SciCalcFunctions(CalcEngine::Rational const& rat, uint32_t op);
     CalcEngine::Rational DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs);
-    void SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwidth);
+    void SetRadixTypeAndNumWidth(RadixType radixtype, NUM_WIDTH numwidth);
     int32_t DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
-    uint32_t NRadixFromRadixType(RADIX_TYPE radixtype);
+    uint32_t NRadixFromRadixType(RadixType radixtype);
     double GenerateRandomNumber();
 
     bool TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno);

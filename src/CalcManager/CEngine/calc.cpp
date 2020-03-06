@@ -105,7 +105,7 @@ CCalcEngine::CCalcEngine(
 
     m_maxTrigonometricNum = RationalMath::Pow(10, 100);
 
-    SetRadixTypeAndNumWidth(DEC_RADIX, m_numwidth);
+    SetRadixTypeAndNumWidth(RadixType::Decimal, m_numwidth);
     SettingsChanged();
     DisplayNum();
 }

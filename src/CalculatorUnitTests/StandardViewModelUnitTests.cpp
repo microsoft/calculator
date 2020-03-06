@@ -510,19 +510,19 @@ namespace CalculatorUnitTests
         TEST_METHOD(ProgrammerModeButtonsDisable)
         {
             /* m_viewModel->IsProgrammer = true;
-            m_viewModel->SwitchProgrammerModeBase(OCT_RADIX);
+            m_viewModel->SwitchProgrammerModeBase(RADIX_TYPE::OCT_RADIX);
             VERIFY_IS_TRUE(m_viewModel->AreOCTButtonsEnabled);
             VERIFY_IS_FALSE(m_viewModel->AreHEXButtonsEnabled);
             VERIFY_IS_FALSE(m_viewModel->AreDECButtonsEnabled);
-            m_viewModel->SwitchProgrammerModeBase(DEC_RADIX);
+            m_viewModel->SwitchProgrammerModeBase(RADIX_TYPE::DEC_RADIX);
             VERIFY_IS_FALSE(m_viewModel->AreHEXButtonsEnabled);
             VERIFY_IS_TRUE(m_viewModel->AreDECButtonsEnabled);
             VERIFY_IS_TRUE(m_viewModel->AreOCTButtonsEnabled);
-            m_viewModel->SwitchProgrammerModeBase(HEX_RADIX);
+            m_viewModel->SwitchProgrammerModeBase(RADIX_TYPE::HEX_RADIX);
             VERIFY_IS_TRUE(m_viewModel->AreHEXButtonsEnabled);
             VERIFY_IS_TRUE(m_viewModel->AreDECButtonsEnabled);
             VERIFY_IS_TRUE(m_viewModel->AreOCTButtonsEnabled);
-            m_viewModel->SwitchProgrammerModeBase(BIN_RADIX);
+            m_viewModel->SwitchProgrammerModeBase(RADIX_TYPE::BIN_RADIX);
             VERIFY_IS_FALSE(m_viewModel->AreHEXButtonsEnabled);
             VERIFY_IS_FALSE(m_viewModel->AreDECButtonsEnabled);
             VERIFY_IS_FALSE(m_viewModel->AreOCTButtonsEnabled);*/

@@ -26,22 +26,22 @@ namespace CalculatorApp
             auto resourceLoader = AppResourceProvider::GetInstance();
             switch (boxedInt->Value)
             {
-            case RADIX_TYPE::BIN_RADIX:
+            case RadixType::Binary:
             {
                 convertedValue = resourceLoader->GetResourceString("Bin");
                 break;
             }
-            case RADIX_TYPE::OCT_RADIX:
+            case RadixType::Octal:
             {
                 convertedValue = resourceLoader->GetResourceString("Oct");
                 break;
             }
-            case RADIX_TYPE::DEC_RADIX:
+            case RadixType::Decimal:
             {
                 convertedValue = resourceLoader->GetResourceString("Dec");
                 break;
             }
-            case RADIX_TYPE::HEX_RADIX:
+            case RadixType::Hex:
             {
                 convertedValue = resourceLoader->GetResourceString("Hex");
                 break;

@@ -633,7 +633,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     case IDM_OCT:
     case IDM_BIN:
     {
-        SetRadixTypeAndNumWidth((RADIX_TYPE)(wParam - IDM_HEX), (NUM_WIDTH)-1);
+        SetRadixTypeAndNumWidth((RadixType)(wParam - IDM_HEX), (NUM_WIDTH)-1);
         m_HistoryCollector.UpdateHistoryExpression(m_radix, m_precision);
         break;
     }
@@ -649,7 +649,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         }
 
         // Compat. mode BaseX: Qword, Dword, Word, Byte
-        SetRadixTypeAndNumWidth((RADIX_TYPE)-1, (NUM_WIDTH)(wParam - IDM_QWORD));
+        SetRadixTypeAndNumWidth((RadixType)-1, (NUM_WIDTH)(wParam - IDM_QWORD));
         break;
 
     case IDM_DEG:

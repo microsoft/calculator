@@ -576,20 +576,20 @@ namespace CalculationManager
         m_pHistory->ClearHistory();
     }
 
-    void CalculatorManager::SetRadix(RADIX_TYPE iRadixType)
+    void CalculatorManager::SetRadix(RadixType iRadixType)
     {
         switch (iRadixType)
         {
-        case RADIX_TYPE::HEX_RADIX:
+        case RadixType::Hex:
             m_currentCalculatorEngine->ProcessCommand(IDC_HEX);
             break;
-        case RADIX_TYPE::DEC_RADIX:
+        case RadixType::Decimal:
             m_currentCalculatorEngine->ProcessCommand(IDC_DEC);
             break;
-        case RADIX_TYPE::OCT_RADIX:
+        case RadixType::Octal:
             m_currentCalculatorEngine->ProcessCommand(IDC_OCT);
             break;
-        case RADIX_TYPE::BIN_RADIX:
+        case RadixType::Binary:
             m_currentCalculatorEngine->ProcessCommand(IDC_BIN);
             break;
         default:

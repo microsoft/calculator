@@ -9,7 +9,7 @@ using namespace std;
 
 // To be called when either the radix or num width changes. You can use -1 in either of these values to mean
 // dont change that.
-void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwidth)
+void CCalcEngine::SetRadixTypeAndNumWidth(RadixType radixtype, NUM_WIDTH numwidth)
 {
     // When in integer mode, the number is represented in 2's complement form. When a bit width is changing, we can
     // change the number representation back to sign, abs num form in ratpak. Soon when display sees this, it will
@@ -30,7 +30,7 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwid
         }
     }
 
-    if (radixtype >= HEX_RADIX && radixtype <= BIN_RADIX)
+    if (radixtype >= RadixType::Hex && radixtype <= RadixType::Binary)
     {
         m_radix = NRadixFromRadixType(radixtype);
         // radixtype is not even saved
@@ -62,17 +62,20 @@ int32_t CCalcEngine::DwWordBitWidthFromeNumWidth(NUM_WIDTH /*numwidth*/)
     return wmax;
 }
 
-uint32_t CCalcEngine::NRadixFromRadixType(RADIX_TYPE radixtype)
+uint32_t CCalcEngine::NRadixFromRadixType(RadixType radixtype)
 {
-    static constexpr uint32_t rgnRadish[4] = { 16, 10, 8, 2 }; /* Number bases in the same order as radixtype */
-    uint32_t radix = 10;
-
-    // convert special bases into symbolic values
-    if (radixtype >= 0 && (size_t)radixtype < size(rgnRadish))
+    switch (radixtype)
     {
-        radix = rgnRadish[radixtype];
+    case RadixType::Hex:
+        return 16;
+    case RadixType::Octal:
+        return 8;
+    case RadixType::Binary:
+        return 2;
+    case RadixType::Decimal:
+    default:
+        return 10;
     }
-    return radix;
 }
 
 //  Toggles a given bit into the number representation. returns true if it changed it actually.

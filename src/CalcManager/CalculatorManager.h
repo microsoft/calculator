@@ -116,7 +116,7 @@ namespace CalculationManager
         {
             return m_savedCommands;
         }
-        void SetRadix(RADIX_TYPE iRadixType);
+        void SetRadix(RadixType iRadixType);
         void SetMemorizedNumbersString();
         std::wstring GetResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix);
         void SetPrecision(int32_t precision);
