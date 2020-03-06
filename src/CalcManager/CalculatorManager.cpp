@@ -33,6 +33,7 @@ namespace CalculationManager
         , m_savedDegreeMode(Command::CommandDEG)
         , m_pStdHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
         , m_pSciHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
+        , m_pHistory(nullptr)
     {
         CCalcEngine::InitialOneTimeOnlySetup(*m_resourceProvider);
     }
