@@ -15,9 +15,8 @@ namespace CalculationManager
 
     enum class CalculatorMode
     {
-        StandardMode,
-        ScientificMode,
-        ProgrammerMode,
+        Standard = 0,
+        Scientific,
     };
 
     enum class CalculatorPrecision
@@ -125,7 +124,7 @@ namespace CalculationManager
         wchar_t DecimalSeparator();
 
         std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistoryItems();
-        std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistoryItems(_In_ CalculationManager::CALCULATOR_MODE mode);
+        std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistoryItems(_In_ CalculatorMode mode);
         std::shared_ptr<HISTORYITEM> const& GetHistoryItem(_In_ unsigned int uIdx);
         bool RemoveHistoryItem(_In_ unsigned int uIdx);
         void ClearHistory();
@@ -134,7 +133,7 @@ namespace CalculationManager
             return m_pHistory->MaxHistorySize();
         }
         CalculationManager::Command GetCurrentDegreeMode();
-        void SetHistory(_In_ CALCULATOR_MODE eMode, _In_ std::vector<std::shared_ptr<HISTORYITEM>> const& history);
+        void SetHistory(_In_ CalculatorMode eMode, _In_ std::vector<std::shared_ptr<HISTORYITEM>> const& history);
         void SetInHistoryItemLoadMode(_In_ bool isHistoryItemLoadMode);
     };
 }

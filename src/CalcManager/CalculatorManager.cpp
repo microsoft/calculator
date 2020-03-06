@@ -551,9 +551,9 @@ namespace CalculationManager
         return m_pHistory->GetHistory();
     }
 
-    vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems(_In_ CALCULATOR_MODE mode)
+    vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems(_In_ CalculatorMode mode)
     {
-        return (mode == CM_STD) ? m_pStdHistory->GetHistory() : m_pSciHistory->GetHistory();
+        return (mode == CalculatorMode::Standard) ? m_pStdHistory->GetHistory() : m_pSciHistory->GetHistory();
     }
 
     shared_ptr<HISTORYITEM> const& CalculatorManager::GetHistoryItem(_In_ unsigned int uIdx)
@@ -623,16 +623,16 @@ namespace CalculationManager
         return m_currentDegreeMode;
     }
 
-    void CalculatorManager::SetHistory(_In_ CALCULATOR_MODE eMode, _In_ vector<shared_ptr<HISTORYITEM>> const& history)
+    void CalculatorManager::SetHistory(_In_ CalculatorMode eMode, _In_ vector<shared_ptr<HISTORYITEM>> const& history)
     {
         CalculatorHistory* pHistory = nullptr;
 
         switch (eMode)
         {
-        case CM_STD:
+        case CalculatorMode::Standard:
             pHistory = m_pStdHistory.get();
             break;
-        case CM_SCI:
+        case CalculatorMode::Scientific:
             pHistory = m_pSciHistory.get();
             break;
         }
