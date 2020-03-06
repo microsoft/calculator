@@ -8,15 +8,15 @@
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
+using namespace TraceLogging;
 using namespace Concurrency;
 using namespace std;
 using namespace Platform;
-using namespace winrt;
-using namespace winrt::Windows::Foundation;
-using namespace winrt::Windows::Foundation::Diagnostics;
-using namespace winrt::Windows::Globalization;
-using namespace winrt::Windows::Globalization::DateTimeFormatting;
-using namespace winrt::Windows::System::UserProfile;
+using namespace Windows::Foundation;
+using namespace Windows::Foundation::Diagnostics;
+using namespace Windows::Globalization;
+using namespace Windows::Globalization::DateTimeFormatting;
+using namespace Windows::System::UserProfile;
 
 namespace CalculatorApp
 {
@@ -76,12 +76,12 @@ namespace CalculatorApp
 
     void TraceLogger::LogVisualStateChanged(ViewMode mode, String ^ state, bool isAlwaysOnTop)
     {
-        LoggingFields fields;
+        auto fields = ref new LoggingFields();
        
-        fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
-        fields.AddString(L"VisualState", state->Data());
-        fields.AddBoolean(L"IsAlwaysOnTop", isAlwaysOnTop);
-        TraceLogging::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_VISUAL_STATE_CHANGED), fields);
+        fields->AddString(ref new String(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddString(ref new String(L"VisualState"), state);
+        fields->AddBoolean(ref new String(L"IsAlwaysOnTop"), isAlwaysOnTop);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_VISUAL_STATE_CHANGED), fields);
     }
 
     void TraceLogger::LogWindowCreated(ViewMode mode, int windowId)
@@ -92,78 +92,68 @@ namespace CalculatorApp
             windowIdLog.push_back(windowId);
         }
 
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
-        fields.AddUInt64(L"NumOfOpenWindows", currentWindowCount);
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_WINDOW_ON_CREATED, fields);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddUInt64(ref new String(L"NumOfOpenWindows"), currentWindowCount);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_WINDOW_ON_CREATED), fields);
     }
 
     void TraceLogger::LogModeChange(ViewMode mode)
     {
         if (NavCategory::IsValidViewMode(mode))
         {
-            LoggingFields fields{};;
-            fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
-            TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_MODE_CHANGED, fields);
+            auto fields = ref new LoggingFields();;
+            fields->AddString(ref new String(CALC_MODE), NavCategory::GetFriendlyName(mode));
+            TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_MODE_CHANGED), fields);
         }
     }
 
     void TraceLogger::LogHistoryItemLoad(ViewMode mode, int historyListSize, int loadedIndex)
     {
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
-        fields.AddInt32(L"HistoryListSize", historyListSize);
-        fields.AddInt32(L"HistoryItemIndex", loadedIndex);
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_HISTORY_ITEM_LOAD, fields);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddInt32(ref new String(L"HistoryListSize"), historyListSize);
+        fields->AddInt32(ref new String(L"HistoryItemIndex"), loadedIndex);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_HISTORY_ITEM_LOAD), fields);
     }
 
     void TraceLogger::LogMemoryItemLoad(ViewMode mode, int memoryListSize, int loadedIndex)
     {
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
-        fields.AddInt32(L"MemoryListSize", memoryListSize);
-        fields.AddInt32(L"MemoryItemIndex", loadedIndex);
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_MEMORY_ITEM_LOAD, fields);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddInt32(ref new String(L"MemoryListSize"), memoryListSize);
+        fields->AddInt32(ref new String(L"MemoryItemIndex"), loadedIndex);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_MEMORY_ITEM_LOAD), fields);
     }
 
     void TraceLogger::LogError(ViewMode mode, Platform::String ^ functionName, Platform::String ^ errorString)
     {
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
-        fields.AddString(L"FunctionName", functionName->Data());
-        fields.AddString(L"Message", errorString->Data());
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddString(ref new String(L"FunctionName"), functionName);
+        fields->AddString(ref new String(L"Message"), errorString);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_EXCEPTION), fields);
     }
 
     void TraceLogger::LogStandardException(ViewMode mode, wstring_view functionName, const exception& e)
     {
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
-        fields.AddString(L"FunctionName", functionName);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddString(ref new String(L"FunctionName"), ref new String(functionName.data()));
         wstringstream exceptionMessage;
         exceptionMessage << e.what();
-        fields.AddString(L"Message", exceptionMessage.str());
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
-    }
-
-    void TraceLogger::LogWinRTException(ViewMode mode, wstring_view functionName, hresult_error const& e)
-    {
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
-        fields.AddString(L"FunctionName", functionName);
-        fields.AddString(L"Message", e.message());
-        fields.AddInt32(L"HRESULT", e.code());
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
+        fields->AddString(ref new String(L"Message"), ref new String(exceptionMessage.str().data()));
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_EXCEPTION), fields);
     }
 
     void TraceLogger::LogPlatformException(ViewMode mode, wstring_view functionName, Platform::Exception ^ e)
     {
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
-        fields.AddString(L"FunctionName", functionName);
-        fields.AddString(L"Message", e->Message->Data());
-        fields.AddInt32(L"HRESULT", e->HResult);
-        LogLevel2Event(EVENT_NAME_EXCEPTION, fields);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddString(ref new String(L"FunctionName"), ref new String(functionName.data()));
+        fields->AddString(ref new String(L"Message"), e->Message);
+        fields->AddInt32(ref new String(L"HRESULT"), e->HResult);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_EXCEPTION), fields);
     }
 
     void TraceLogger::UpdateButtonUsage(NumbersAndOperatorsEnum button, ViewMode mode)
@@ -237,9 +227,9 @@ namespace CalculatorApp
             }
         }
 
-        LoggingFields fields{};
-        fields.AddString(L"ButtonUsage", buttonUsageString->Data());
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_BUTTON_USAGE, fields);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(L"ButtonUsage"), buttonUsageString);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_BUTTON_USAGE), fields);
 
         buttonLog.clear();
     }
@@ -247,78 +237,77 @@ namespace CalculatorApp
     void TraceLogger::LogDateCalculationModeUsed(bool AddSubtractMode)
     {
         const wchar_t* calculationType = AddSubtractMode ? L"AddSubtractMode" : L"DateDifferenceMode";
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(ViewMode::Date)->Data());
-        fields.AddString(L"CalculationType", calculationType);
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_DATE_CALCULATION_MODE_USED, fields);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), NavCategory::GetFriendlyName(ViewMode::Date));
+        fields->AddString(ref new String(L"CalculationType"), ref new String(calculationType));
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_DATE_CALCULATION_MODE_USED), fields);
     }
 
     void TraceLogger::LogConverterInputReceived(ViewMode mode)
     {
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_CONVERTER_INPUT_RECEIVED, fields);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_CONVERTER_INPUT_RECEIVED), fields);
     }
 
     void TraceLogger::LogNavBarOpened()
     {
-        LoggingFields fields{};
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_NAV_BAR_OPENED, fields);
+        auto fields = ref new LoggingFields();
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_NAV_BAR_OPENED), fields);
     }
 
     void TraceLogger::LogInputPasted(ViewMode mode)
     {
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, NavCategory::GetFriendlyName(mode)->Data());
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_INPUT_PASTED, fields);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_INPUT_PASTED), fields);
     }
 
     void TraceLogger::LogShowHideButtonClicked(bool isHideButton)
     {
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, GRPAHING_MODE);
-        fields.AddBoolean(L"IsHideButton", isHideButton);
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_SHOW_HIDE_BUTTON_CLICKED, fields);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), ref new String(GRPAHING_MODE));
+        fields->AddBoolean(ref new String(L"IsHideButton"), isHideButton);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_SHOW_HIDE_BUTTON_CLICKED), fields);
     }
 
     void TraceLogger::LogGraphButtonClicked(GraphButton buttonName)
     {
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, GRPAHING_MODE);
-        fields.AddInt16(L"ButtonName", static_cast<int16>(buttonName));
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_GRAPH_BUTTON_CLICKED, fields);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), ref new String(GRPAHING_MODE));
+        fields->AddInt16(ref new String(L"ButtonName"), static_cast<int16>(buttonName));
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_GRAPH_BUTTON_CLICKED), fields);
     }
 
     void TraceLogger::LogGraphLineStyleChanged(LineStyleType style)
     {
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, GRPAHING_MODE);
-        fields.AddInt16(L"StyleType", static_cast<int16>(style));
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_GRAPH_LINE_STYLE_CHANGED, fields);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), ref new String(GRPAHING_MODE));
+        fields->AddInt16(ref new String(L"StyleType"), static_cast<int16>(style));
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_GRAPH_LINE_STYLE_CHANGED), fields);
     }
 
     void TraceLogger::LogVariableChanged(String ^ inputChangedType)
     {
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, GRPAHING_MODE);
-        fields.AddString(L"InputChangedType", inputChangedType->Data());
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_VARIABLE_CHANGED, fields);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), ref new String(GRPAHING_MODE));
+        fields->AddString(ref new String(L"InputChangedType"), inputChangedType);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_VARIABLE_CHANGED), fields);
     }
     void TraceLogger::LogVariableSettingsChanged(String ^ setting)
     {
-        LoggingFields fields{};
-        fields.AddString(CALC_MODE, GRPAHING_MODE);
-        fields.AddString(L"SettingChanged", setting->Data());
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_VARIABLE_SETTING_CHANGED, fields);
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), ref new String(GRPAHING_MODE));
+        fields->AddString(ref new String(L"SettingChanged"), setting);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_VARIABLE_SETTING_CHANGED), fields);
     }
 
     void TraceLogger::LogGraphSettingsChanged(GraphSettingsType settingType)
     {
-        LoggingFields fields{};
+        auto fields = ref new LoggingFields();
+        fields->AddString(ref new String(CALC_MODE), ref new String(GRPAHING_MODE));
+        fields->AddInt16(L"SettingType", static_cast<int16>(settingType));
 
-        fields.AddString(CALC_MODE, GRPAHING_MODE);
-        fields.AddInt16(L"SettingType", static_cast<int16>(settingType));
-
-        TraceLogging::GetInstance()->LogLevel2Event(EVENT_NAME_GRAPH_SETTINGS_CHANGED, fields);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(ref new String(EVENT_NAME_GRAPH_SETTINGS_CHANGED), fields);
     }
 }

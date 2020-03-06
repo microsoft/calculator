@@ -61,15 +61,11 @@
       <Filter>Models</Filter>
     </ClInclude>
     <ClInclude Include="Logger\TraceLogger.h" />
-    <ClInclude Include="Logger\TraceActivity.h" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\generic.xaml">
       <Filter>Themes</Filter>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(ProjectDir)\GraphingImplOverrides.props" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="$(GraphingImplDll)" />

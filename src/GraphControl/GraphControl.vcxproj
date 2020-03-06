@@ -284,9 +284,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(IsStoreBuild)' == 'True'">
-      <ClCompile>
-          <AdditionalOptions>/DSEND_DIAGNOSTICS %(AdditionalOptions)</AdditionalOptions>
-      </ClCompile>
+    <ClCompile>
+      <AdditionalOptions>/DSEND_DIAGNOSTICS %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Control\Grapher.h" />
@@ -294,7 +294,6 @@
     <ClInclude Include="DirectX\DirectXHelper.h" />
     <ClInclude Include="DirectX\NearestPointRenderer.h" />
     <ClInclude Include="DirectX\RenderMain.h" />
-    <ClInclude Include="Logger\TraceActivity.h" />
     <ClInclude Include="Logger\TraceLogger.h" />
     <ClInclude Include="Models\Equation.h" />
     <ClInclude Include="Models\EquationCollection.h" />
@@ -328,6 +327,11 @@
   <ItemGroup Condition="$([MSBuild]::ValueOrDefault($(UseMockGraphingImpl), true))">
     <ProjectReference Include="$(SolutionDir)\GraphingImpl\GraphingImpl.vcxproj">
       <Project>{52E03A58-B378-4F50-8BFB-F659FB85E790}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TraceLogging\TraceLogging.vcxproj">
+      <Project>{fc81ff41-02cd-4cd9-9bc5-45a1e39ac6ed}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

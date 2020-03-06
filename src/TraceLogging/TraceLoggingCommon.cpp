@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "TraceLogging.h"
+#include "TraceLoggingCommon.h"
 
-using namespace CalculatorApp;
+using namespace TraceLogging;
 using namespace std;
 using namespace Platform;;
 using namespace Windows::Foundation;
@@ -27,7 +27,7 @@ constexpr auto SESSION_GUID = L"SessionGuid";
 constexpr auto PDT_PRIVACY_DATA_TAG = L"PartA_PrivTags";
 constexpr auto PDT_PRODUCT_AND_SERVICE_USAGE = 0x0000'0000'0200'0000u;
 
-TraceLogging::TraceLogging()
+TraceLoggingCommon::TraceLoggingCommon()
     : g_calculatorProvider(
         ref new LoggingChannel(
         L"MicrosoftCalculator",
@@ -39,18 +39,18 @@ TraceLogging::TraceLogging()
     CoCreateGuid(&sessionGuid);
 }
 
- TraceLogging ^ TraceLogging::GetInstance()
+ TraceLoggingCommon ^ TraceLoggingCommon::GetInstance()
 {
-    static TraceLogging ^ s_selfInstance = ref new TraceLogging();
+     static TraceLoggingCommon ^ s_selfInstance = ref new TraceLoggingCommon();
     return s_selfInstance;
 }
 
-bool TraceLogging::GetTraceLoggingProviderEnabled()
+bool TraceLoggingCommon::GetTraceLoggingProviderEnabled()
 {
     return g_calculatorProvider->Enabled;
 }
 
-void TraceLogging::LogLevel1Event(String ^ eventName, LoggingFields ^ fields)
+void TraceLoggingCommon::LogLevel1Event(String ^ eventName, LoggingFields ^ fields)
 {
     if (!GetTraceLoggingProviderEnabled())
     {
@@ -63,7 +63,7 @@ void TraceLogging::LogLevel1Event(String ^ eventName, LoggingFields ^ fields)
     g_calculatorProvider->LogEvent(eventName, fields, LoggingLevel::Verbose, ref new LoggingOptions(MICROSOFT_KEYWORD_LEVEL_1));
 }
 
-void TraceLogging::LogLevel2Event(String ^ eventName, LoggingFields  ^ fields)
+void TraceLoggingCommon::LogLevel2Event(String ^ eventName, LoggingFields ^ fields)
 {
     if (!GetTraceLoggingProviderEnabled())
     {
@@ -75,7 +75,7 @@ void TraceLogging::LogLevel2Event(String ^ eventName, LoggingFields  ^ fields)
     g_calculatorProvider->LogEvent(eventName, fields, LoggingLevel::Verbose, ref new LoggingOptions(MICROSOFT_KEYWORD_LEVEL_2));
 }
 
-void TraceLogging::LogLevel3Event(String ^ eventName, LoggingFields ^ fields)
+void TraceLoggingCommon::LogLevel3Event(String ^ eventName, LoggingFields ^ fields)
 {
     if (!GetTraceLoggingProviderEnabled())
     {

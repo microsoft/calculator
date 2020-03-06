@@ -8,10 +8,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="TraceLogging.cpp" />
+    <ClCompile Include="TraceLoggingCommon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="TraceLogging.h" />
+    <ClInclude Include="TraceLoggingCommon.h" />
   </ItemGroup>
 </Project>

@@ -3,14 +3,12 @@
 
 #pragma once
 
-#include "TraceActivity.h"
-
-namespace CalculatorApp
+namespace TraceLogging
 {
-    public ref class TraceLogging sealed
+    public ref class TraceLoggingCommon sealed
     {
     public:
-        static TraceLogging ^ GetInstance();
+        static TraceLoggingCommon ^ GetInstance();
 
         // As mentioned in Microsoft's Privacy Statement(https://privacy.microsoft.com/en-US/privacystatement#maindiagnosticsmodule),
         // sampling is involved in Microsoft's diagnostic data collection process.
@@ -20,9 +18,11 @@ namespace CalculatorApp
         void LogLevel2Event(Platform::String ^ eventName, Windows::Foundation::Diagnostics::LoggingFields ^ fields);
         void LogLevel3Event(Platform::String ^ eventName, Windows::Foundation::Diagnostics::LoggingFields ^ fields);
 
-    private:
-        TraceLogging();
         bool GetTraceLoggingProviderEnabled();
+
+    private:
+        TraceLoggingCommon();
+
 
         Windows::Foundation::Diagnostics::LoggingChannel ^ g_calculatorProvider;
         Windows::Foundation::Diagnostics::LoggingActivity ^ m_appLaunchActivity;
