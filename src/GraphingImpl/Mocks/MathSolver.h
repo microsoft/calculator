@@ -125,6 +125,10 @@ namespace MockGraphingImpl
             return std::make_unique<MockExpression>(MockExpression{});
         }
 
+        void HRErrorToErrorInfo(HRESULT hr, int& errorCodeOut, int& errorTypeOut)
+        {
+        }
+
         std::shared_ptr<Graphing::IGraph> CreateGrapher(const Graphing::IExpression* expression) override;
 
         std::shared_ptr<Graphing::IGraph> CreateGrapher() override;

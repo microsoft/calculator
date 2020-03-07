@@ -339,7 +339,12 @@ namespace GraphControl
                         // If we failed to render then we have already lost the previous graph
                         shouldKeepPreviousGraph = false;
                         initResult = nullopt;
+                        m_solver->HRErrorToErrorInfo(m_renderMain->GetRenderError(), m_errorCode, m_errorType);
                     }
+                }
+                else
+                {
+                    m_solver->HRErrorToErrorInfo(m_graph->GetInitializationError(), m_errorCode, m_errorType);
                 }
             }
 

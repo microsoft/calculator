@@ -315,67 +315,49 @@ namespace CalculatorApp::ViewModel
                 return resLoader->GetString(L"Overflow");
                 break;
             case (EvaluationErrorCode::RequireRadiansMode):
-                return resLoader->GetString(L"RequireRadiansMode");;
+                return resLoader->GetString(L"RequireRadiansMode");
                 break;
             case (EvaluationErrorCode::TooComplexToSolve):
-                return resLoader->GetString(L"TooComplexToSolve");;
+                return resLoader->GetString(L"TooComplexToSolve");
                 break;
             case (EvaluationErrorCode::RequireDegreesMode):
-                return resLoader->GetString(L"RequireDegreesMode");;
+                return resLoader->GetString(L"RequireDegreesMode");
                 break;
             case (EvaluationErrorCode::FactorialInvalidArgument):
-                return resLoader->GetString(L"FactorialInvalidArgument");;
-                break;
             case (EvaluationErrorCode::Factorial2InvalidArgument):
-                return resLoader->GetString(L"Factorial2InvalidArgument");;
+                return resLoader->GetString(L"FactorialInvalidArgument");
                 break;
             case (EvaluationErrorCode::FactorialCannotPerformOnLargeNumber):
-                return resLoader->GetString(L"FactorialCannotPerformOnLargeNumber");;
+                return resLoader->GetString(L"FactorialCannotPerformOnLargeNumber");
                 break;
             case (EvaluationErrorCode::ModuloCannotPerformOnFloat):
-                return resLoader->GetString(L"ModuloCannotPerformOnFloat");;
-                break;
-            case (EvaluationErrorCode::InvalidArgumentsInMathFunctions):
-                return resLoader->GetString(L"InvalidArgumentsInMathFunctions");;
-                break;
-            case (EvaluationErrorCode::EquationTooComplexToSolveSymbolic):
-                return resLoader->GetString(L"EquationTooComplexToSolveSymbolic");;
-                break;
-            case (EvaluationErrorCode::EquationHasNoSolution):
-                return resLoader->GetString(L"EquationHasNoSolution");;
+                return resLoader->GetString(L"ModuloCannotPerformOnFloat");
                 break;
             case (EvaluationErrorCode::EquationTooComplexToSolve):
-                return resLoader->GetString(L"EquationTooComplexToSolve");;
-                break;
+            case (EvaluationErrorCode::EquationTooComplexToSolveSymbolic):
             case (EvaluationErrorCode::EquationTooComplexToPlot):
-                return resLoader->GetString(L"EquationTooComplexToPlot");;
+            case (EvaluationErrorCode::InequalityTooComplexToSolve):
+            case (EvaluationErrorCode::GE_TooComplexToSolve):
+                return resLoader->GetString(L"EquationTooComplexToSolve");
+                break;
+            case (EvaluationErrorCode::EquationHasNoSolution):
+            case (EvaluationErrorCode::InequalityHasNoSolution):
+                return resLoader->GetString(L"EquationHasNoSolution");
                 break;
             case (EvaluationErrorCode::DivideByZero):
-                return resLoader->GetString(L"DivideByZero");;
-                break;
-            case (EvaluationErrorCode::InequalityTooComplexToSolve):
-                return resLoader->GetString(L"InequalityTooComplexToSolve");;
-                break;
-            case (EvaluationErrorCode::InequalityHasNoSolution):
-                return resLoader->GetString(L"InequalityHasNoSolution");;
+                return resLoader->GetString(L"DivideByZero");
                 break;
             case (EvaluationErrorCode::MutuallyExclusiveConditions):
-                return resLoader->GetString(L"MutuallyExclusiveConditions");;
-                break;
-            case (EvaluationErrorCode::InvalidIntervalOperation):
-                return resLoader->GetString(L"InvalidIntervalOperation");;
+                return resLoader->GetString(L"MutuallyExclusiveConditions");
                 break;
             case (EvaluationErrorCode::OutOfDomain):
-                return resLoader->GetString(L"OutOfDomain");;
+                return resLoader->GetString(L"OutOfDomain");
                 break;
             case (EvaluationErrorCode::GE_NotSupported):
-                return resLoader->GetString(L"GE_NotSupported");;
+                return resLoader->GetString(L"GE_NotSupported");
                 break;
-            case (EvaluationErrorCode::GE_GeneralError):
-                return resLoader->GetString(L"GE_GeneralError");;
-                break;
-            case (EvaluationErrorCode::GE_TooComplexToSolve):
-                return resLoader->GetString(L"GE_TooComplexToSolve");;
+            default:
+                return resLoader->GetString(L"GeneralError");
                 break;
             }
         }
@@ -384,140 +366,91 @@ namespace CalculatorApp::ViewModel
             switch (static_cast<SyntaxErrorCode>(errorCode))
             {
             case (SyntaxErrorCode::ParenthesisMismatch):
-                return resLoader->GetString(L"ParenthesisMismatch");;
+                return resLoader->GetString(L"ParenthesisMismatch");
                 break;
             case (SyntaxErrorCode::UnmatchedParenthesis):
-                return resLoader->GetString(L"UnmatchedParenthesis");;
+                return resLoader->GetString(L"UnmatchedParenthesis");
                 break;
             case (SyntaxErrorCode::TooManyDecimalPoints):
-                return resLoader->GetString(L"TooManyDecimalPoints");;
+                return resLoader->GetString(L"TooManyDecimalPoints");
                 break;
             case (SyntaxErrorCode::DecimalPointWithoutDigits):
-                return resLoader->GetString(L"DecimalPointWithoutDigits");;
+                return resLoader->GetString(L"DecimalPointWithoutDigits");
                 break;
             case (SyntaxErrorCode::UnexpectedEndOfExpression):
-                return resLoader->GetString(L"UnexpectedEndOfExpression");;
+                return resLoader->GetString(L"UnexpectedEndOfExpression");
                 break;
             case (SyntaxErrorCode::UnexpectedToken):
-                return resLoader->GetString(L"UnexpectedToken");;
+                return resLoader->GetString(L"UnexpectedToken");
                 break;
             case (SyntaxErrorCode::InvalidToken):
-                return resLoader->GetString(L"InvalidToken");;
+                return resLoader->GetString(L"InvalidToken");
                 break;
             case (SyntaxErrorCode::TooManyEquals):
-                return resLoader->GetString(L"TooManyEquals");;
-                break;
-            case (SyntaxErrorCode::EqualWithoutSolveVariable):
-                return resLoader->GetString(L"EqualWithoutSolveVariable");;
+                return resLoader->GetString(L"TooManyEquals");
                 break;
             case (SyntaxErrorCode::EqualWithoutGraphVariable):
-                return resLoader->GetString(L"EqualWithoutGraphVariable");;
+                return resLoader->GetString(L"EqualWithoutGraphVariable");
                 break;
-            case(SyntaxErrorCode::InvalidEquationSyntax):
-                return resLoader->GetString(L"InvalidEquationSyntax");;
+            case (SyntaxErrorCode::InvalidEquationSyntax):
+            case (SyntaxErrorCode::InvalidEquationFormat):
+                return resLoader->GetString(L"InvalidEquationSyntax");
                 break;
             case (SyntaxErrorCode::EmptyExpression):
-                return resLoader->GetString(L"EmptyExpression");;
+                return resLoader->GetString(L"EmptyExpression");
                 break;
             case (SyntaxErrorCode::EqualWithoutEquation):
-                return resLoader->GetString(L"EqualWithoutEquation");;
+                return resLoader->GetString(L"EqualWithoutEquation");
                 break;
-            case (SyntaxErrorCode::InvalidEquationFormat):
-                return resLoader->GetString(L"InvalidEquationFormat");;
-                break;
-            case(SyntaxErrorCode::ExpectParenthesisAfterFunctionName):
-                return resLoader->GetString(L"ExpectParenthesisAfterFunctionName");;
+            case (SyntaxErrorCode::ExpectParenthesisAfterFunctionName):
+                return resLoader->GetString(L"ExpectParenthesisAfterFunctionName");
                 break;
             case (SyntaxErrorCode::IncorrectNumParameter):
-                return resLoader->GetString(L"IncorrectNumParameter");;
-                break;
-            case (SyntaxErrorCode::InvalidGraphingCommand):
-                return resLoader->GetString(L"InvalidGraphingCommand");;
+                return resLoader->GetString(L"IncorrectNumParameter");
                 break;
             case (SyntaxErrorCode::InvalidVariableNameFormat):
-                return resLoader->GetString(L"InvalidVariableNameFormat");;
+                return resLoader->GetString(L"InvalidVariableNameFormat");
                 break;
             case (SyntaxErrorCode::BracketMismatch):
-                return resLoader->GetString(L"BracketMismatch");;
+                return resLoader->GetString(L"BracketMismatch");
                 break;
             case (SyntaxErrorCode::UnmatchedBracket):
-                return resLoader->GetString(L"UnmatchedBracket");;
-                break;
-            case (SyntaxErrorCode::CommandsMustBeAtTopLevel):
-                return resLoader->GetString(L"CommandsMustBeAtTopLevel");;
-                break;
-            case (SyntaxErrorCode::InvalidMathMLFormat):
-                return resLoader->GetString(L"InvalidMathMLFormat");;
-                break;
-            case (SyntaxErrorCode::UnknownMathMLEntity):
-                return resLoader->GetString(L"UnknownMathMLEntity");;
-                break;
-            case (SyntaxErrorCode::UnknownMathMLElement):
-                return resLoader->GetString(L"UnknownMathMLElement");;
+                return resLoader->GetString(L"UnmatchedBracket");
                 break;
             case (SyntaxErrorCode::CannotUseIInReal):
-                return resLoader->GetString(L"CannotUseIInReal");;
-                break;
-            case (SyntaxErrorCode::GeneralError):
-                return resLoader->GetString(L"GeneralError");;
+                return resLoader->GetString(L"CannotUseIInReal");
                 break;
             case (SyntaxErrorCode::InvalidNumberDigit):
-                return resLoader->GetString(L"InvalidNumberDigit");;
+                return resLoader->GetString(L"InvalidNumberDigit");
                 break;
             case (SyntaxErrorCode::InvalidNumberBase):
-                return resLoader->GetString(L"InvalidNumberBase");;
+                return resLoader->GetString(L"InvalidNumberBase");
                 break;
-            case(SyntaxErrorCode::InvalidVariableSpecification):
-                return resLoader->GetString(L"InvalidVariableSpecification");;
+            case (SyntaxErrorCode::InvalidVariableSpecification):
+                return resLoader->GetString(L"InvalidVariableSpecification");
                 break;
             case (SyntaxErrorCode::ExpectingLogicalOperands):
-                return resLoader->GetString(L"ExpectingLogicalOperands");;
-                break;
             case (SyntaxErrorCode::ExpectingScalarOperands):
-                return resLoader->GetString(L"ExpectingScalarOperands");;
+                return resLoader->GetString(L"ExpectingLogicalOperands");
                 break;
-            case (SyntaxErrorCode::CannotMixLogicalScalarInList):
-                return resLoader->GetString(L"CannotMixLogicalScalarInList");;
+            case (SyntaxErrorCode::CannotUseIndexVarInOpLimits):
+                return resLoader->GetString(L"CannotUseIndexVarInOpLimits");
                 break;
-            case(SyntaxErrorCode::CannotUseIndexVarInOpLimits):
-                return resLoader->GetString(L"CannotUseIndexVarInOpLimits");;
-                break;
-            case(SyntaxErrorCode::CannotUseIndexVarInLimPoint):
-                return resLoader->GetString(L"Overflow");;
-                break;
-            case(SyntaxErrorCode::UnclosedStringLiteral):
-                return resLoader->GetString(L"UnclosedStringLiteral");;
-                break;
-            case (SyntaxErrorCode::InvalidGraphingOptionsSyntax):
-                return resLoader->GetString(L"InvalidGraphingOptionsSyntax");;
-                break;
-            case(SyntaxErrorCode::InvalidGraphingOptionLocation):
-                return resLoader->GetString(L"InvalidGraphingOptionLocation");;
+            case (SyntaxErrorCode::CannotUseIndexVarInLimPoint):
+                return resLoader->GetString(L"Overflow");
                 break;
             case (SyntaxErrorCode::CannotUseComplexInfinityInReal):
-                return resLoader->GetString(L"CannotUseComplexInfinityInReal");;
+                return resLoader->GetString(L"CannotUseComplexInfinityInReal");
                 break;
             case (SyntaxErrorCode::CannotUseIInInequalitySolving):
-                return resLoader->GetString(L"CannotUseIInInequalitySolving");;
+                return resLoader->GetString(L"CannotUseIInInequalitySolving");
                 break;
-            case (SyntaxErrorCode::RichEditSerializationError):
-                return resLoader->GetString(L"RichEditSerializationError");;
-                break;
-            case (SyntaxErrorCode::RichEditInitialization):
-                return resLoader->GetString(L"RichEditInitialization");;
-                break;
-            case (SyntaxErrorCode::RichEditInlineObjectStructure):
-                return resLoader->GetString(L"RichEditInlineObjectStructure");;
-                break;
-            case (SyntaxErrorCode::RichEditMissingArgument):
-                return resLoader->GetString(L"RichEditMissingArgument");;
-                break;
-            case (SyntaxErrorCode::RichEditGeneralError):
-                return resLoader->GetString(L"RichEditGeneralError");;
+            default:
+                return resLoader->GetString(L"GeneralError");
                 break;
             }
         }
 
-        return "Abort";
+        return resLoader->GetString(L"GeneralError");
     }
 }

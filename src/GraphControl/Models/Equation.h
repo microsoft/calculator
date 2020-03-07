@@ -40,9 +40,6 @@ namespace GraphControl
         // x mod y, and one of them is not an integer
         ModuloCannotPerformOnFloat = -5,
 
-        // example1: identityMatrix(pi)   example2: variance(matrix{{1}})
-        InvalidArgumentsInMathFunctions = -6,
-
         // below are equation solving specific errors
 
         // example1: sin(x)+x=2    example2: x^4-x^3-8x=9
@@ -68,9 +65,6 @@ namespace GraphControl
 
         // An exression contains logical conditions that are mutually exclusive
         MutuallyExclusiveConditions = -43,
-
-        // An interval operation contains an invalid interval
-        InvalidIntervalOperation = -44,
 
         // Arbitrary Precision Evaluation input is out of domain
         OutOfDomain = -101,
@@ -111,9 +105,6 @@ namespace GraphControl
         // example: solve(x+3=8=x)
         TooManyEquals = 8,
 
-        // example: solve(4+83=9)
-        EqualWithoutSolveVariable = 9,
-
         // example: ploteq(4+83=9)
         EqualWithoutGraphVariable = 10,
 
@@ -137,9 +128,6 @@ namespace GraphControl
         // example: root(a)    (expecting 2 parameters)
         IncorrectNumParameter = 26,
 
-        // example: show(plot(sin(x)), x^2) (expecting all children of show to be 2d plot commands)
-        InvalidGraphingCommand = 31,
-
         // exmaple: "x_", "x_@", "x__1"
         InvalidVariableNameFormat = 32,
 
@@ -148,9 +136,6 @@ namespace GraphControl
 
         // found { without matching }
         UnmatchedBracket = 35,
-
-        // example1: neval(neval(1))  example2: 3+plot2d(sin(x))  example3: (2->x)->y
-        CommandsMustBeAtTopLevel = 39,
 
         // syntax error in MathML format. Used only if CasContext.ParsingOptions.FormatType is MathML or MathMLNoWrapper
         InvalidMathMLFormat = 40,
@@ -193,17 +178,6 @@ namespace GraphControl
         // in limit, the index variable is used in the limit point
         // example: limit(sin(x), x, x-1)
         CannotUseIndexVarInLimPoint = 62,
-
-        // string literals are allowed in graphing options. if we find the open " but didn't find the matching closing ",
-        // this error is raised
-        UnclosedStringLiteral = 63,
-
-        // syntax error in graphing options specification
-        InvalidGraphingOptionsSyntax = 64,
-
-        // the graphing option is a valid syntax, but applied on the wrong operator. E.g. apply 3D options to a 2D plot,
-        // apply a "show" command-only option to plot commands, etc
-        InvalidGraphingOptionLocation = 65,
 
         /// ComplexInfinity cannot be used in real number field
         CannotUseComplexInfinityInReal = 72,

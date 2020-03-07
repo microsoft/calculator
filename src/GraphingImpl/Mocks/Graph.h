@@ -29,6 +29,11 @@ namespace MockGraphingImpl
             return std::nullopt;
         }
 
+        HRESULT GetInitializationError()
+        {
+            return S_OK;
+        }
+
         virtual Graphing::IGraphingOptions& GetOptions()
         {
             return m_graphingOptions;
