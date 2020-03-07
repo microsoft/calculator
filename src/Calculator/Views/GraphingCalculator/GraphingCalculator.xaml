@@ -471,7 +471,10 @@
             </Grid.Resources>
             <graphControl:Grapher Name="GraphingControl"
                                   Style="{ThemeResource ThemedGrapherStyle}"
+                                  AutomationProperties.Name="{x:Bind GraphControlAutomationName, Mode=OneWay}"
                                   ForceProportionalAxes="False"
+                                  GraphPlottedEvent="GraphingControl_GraphPlottedEvent"
+                                  GraphViewChangedEvent="GraphingControl_GraphViewChangedEvent"
                                   LosingFocus="GraphingControl_LosingFocus"
                                   LostFocus="GraphingControl_LostFocus"
                                   RequestedTheme="Light"

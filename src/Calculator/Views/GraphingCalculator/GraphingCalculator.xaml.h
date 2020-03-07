@@ -27,6 +27,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         COMMAND_FOR_METHOD(ZoomResetButtonPressed, GraphingCalculator::OnZoomResetCommand);
         OBSERVABLE_PROPERTY_R(bool, IsKeyGraphFeaturesVisible);
         DEPENDENCY_PROPERTY(bool, IsSmallState);
+        DEPENDENCY_PROPERTY(Platform::String ^, GraphControlAutomationName);
 
         property CalculatorApp::ViewModel::GraphingCalculatorViewModel^ ViewModel
         {
@@ -65,6 +66,8 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void GraphingControl_LostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void GraphingControl_LosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
         void GraphingControl_VariablesUpdated(Platform::Object ^ sender, Object ^ args);
+        void GraphingControl_GraphViewChangedEvent(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void GraphingControl_GraphPlottedEvent(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnEquationKeyGraphFeaturesRequested(Platform::Object ^ sender, CalculatorApp::ViewModel::EquationViewModel ^ e);
         void OnKeyGraphFeaturesClosed(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void TraceValuePopup_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
@@ -77,6 +80,8 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void SwitchModeToggleButton_Toggled(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void DisplayGraphSettings();
         void AddTracePointerShadow();
+
+        void UpdateGraphAutomationName();
 
     private:
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;

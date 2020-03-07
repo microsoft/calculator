@@ -31,6 +31,8 @@ public
         event TracingValueChangedEventHandler ^ TracingValueChangedEvent;
         event PointerValueChangedEventHandler ^ PointerValueChangedEvent;
         event TracingChangedEventHandler ^ TracingChangedEvent;
+        event Windows::UI::Xaml::RoutedEventHandler ^ GraphViewChangedEvent;
+        event Windows::UI::Xaml::RoutedEventHandler ^ GraphPlottedEvent;
         virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler ^ PropertyChanged;
 
     public:
