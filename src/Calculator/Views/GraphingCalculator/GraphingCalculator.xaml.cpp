@@ -87,6 +87,8 @@ GraphingCalculator::GraphingCalculator()
     virtualKey->Key = (VirtualKey)187; // OemAdd key
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomInButton->KeyboardAccelerators->Append(virtualKey);
+
+    SharedShadow->Receivers->Append(GraphingControl);
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
