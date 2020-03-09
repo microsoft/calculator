@@ -102,11 +102,19 @@
                        FontSize="20"
                        FontWeight="Medium"
                        AutomationProperties.HeadingLevel="Level1"/>
-            <TextBlock x:Name="GridHeading"
-                       x:Uid="GridHeading"
-                       Margin="0,12,0,6"
-                       Style="{StaticResource SubTitleTextBoxStyle}"
-                       AutomationProperties.HeadingLevel="Level2"/>
+            <Grid Margin="0,12,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="GridHeading"
+                           x:Uid="GridHeading"
+                           Style="{StaticResource SubTitleTextBoxStyle}"
+                           AutomationProperties.HeadingLevel="Level2"/>
+                <HyperlinkButton x:Uid="ResetViewButton"
+                                 Grid.Column="1"
+                                 Click="ResetViewButton_Clicked"/>
+            </Grid>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
