@@ -280,7 +280,7 @@ namespace GraphControl
         {
             TraceLogger::GetInstance()->LogEquationCountChanged(valid, invalid);
         }
-        TraceLogger::GetInstance()->LogEquationAdded(valid, invalid);
+
         m_trigUnitsChanged = false;
         GraphPlottedEvent(this, ref new RoutedEventArgs());
     }
