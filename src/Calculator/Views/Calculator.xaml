@@ -659,8 +659,7 @@
                     Content="&#xe81c;"
                     ExitDisplayModeOnAccessKeyInvoked="False"
                     TabIndex="2"
-                    Visibility="{x:Bind local:Calculator.ShouldDisplayHistoryButton(Model.IsAlwaysOnTop, Model.IsProgrammer, DockPanel.Visibility), Mode=OneWay}"
-                    IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
+                    Visibility="{x:Bind local:Calculator.ShouldDisplayHistoryButton(Model.IsAlwaysOnTop, Model.IsProgrammer, DockPanel.Visibility), Mode=OneWay}">
                 <FlyoutBase.AttachedFlyout>
                     <Flyout x:Name="HistoryFlyout"
                             AutomationProperties.AutomationId="HistoryFlyout"
