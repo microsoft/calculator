@@ -87,9 +87,6 @@
 
                     <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="#33EB5757"/>
                     <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="#FFEB5757"/>
-                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
-                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
-                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="White"/>
                     <SolidColorBrush x:Key="SliderLegendBrush" Color="#B2ffffff"/>
 
                     <Style x:Key="VariableContainerStyle" TargetType="Border">
@@ -182,10 +179,8 @@
 
                     <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="#33EB5757"/>
                     <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="#FFEB5757"/>
-                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
-                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
-                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="Black"/>
                     <SolidColorBrush x:Key="SliderLegendBrush" Color="#B2000000"/>
+
                     <Style x:Key="VariableContainerStyle" TargetType="Border">
                         <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltMediumLowBrush}"/>
                     </Style>
@@ -231,11 +226,8 @@
 
                     <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="Red"/>
-                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{StaticResource SystemColorButtonFaceColor}"/>
-                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{StaticResource SystemColorButtonFaceColor}"/>
-                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="{StaticResource SystemColorButtonTextColor}"/>
-                    <SolidColorBrush x:Key="VariablesBackgroundBrush" Color="{StaticResource SystemColorBackgroundColor}"/>
                     <SolidColorBrush x:Key="SliderLegendBrush" Color="{StaticResource SystemColorWindowTextColor}"/>
+
                     <Style x:Key="VariableContainerStyle" TargetType="Border">
                         <Setter Property="Background" Value="{StaticResource SystemColorWindowColor}"/>
                         <Setter Property="BorderThickness" Value="1"/>

@@ -88,7 +88,10 @@ GraphingCalculator::GraphingCalculator()
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomInButton->KeyboardAccelerators->Append(virtualKey);
 
-    SharedShadow->Receivers->Append(GraphingControl);
+    if (Windows::Foundation::Metadata::ApiInformation::IsTypePresent(L"Windows.UI.Xaml.Media.ThemeShadow"))
+    {
+        SharedShadow->Receivers->Append(GraphingControl);
+    }
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
@@ -579,7 +582,7 @@ void CalculatorApp::GraphingCalculator::AddTracePointerShadow()
     dropShadow->Mask = CursorPath->GetAlphaMask();
 
     auto shadowSpriteVisual = compositor->CreateSpriteVisual();
-    shadowSpriteVisual->Size = ::Numerics::float2(static_cast<float>(CursorPath->ActualWidth), static_cast<float>(CursorPath->ActualHeight));
+    shadowSpriteVisual->Size = ::Numerics::float2(18, 18);
     shadowSpriteVisual->Shadow = dropShadow;
     ::Hosting::ElementCompositionPreview::SetElementChildVisual(CursorShadow, shadowSpriteVisual);
 }

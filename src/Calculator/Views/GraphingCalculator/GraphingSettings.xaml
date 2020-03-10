@@ -75,6 +75,24 @@
             <DataTemplate x:Key="XYTextBoxHeaderTemplate" x:DataType="x:String">
                 <TextBlock FontSize="14" Text="{x:Bind}"/>
             </DataTemplate>
+
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="White"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="Black"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="HighContrast">
+                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{StaticResource SystemColorButtonFaceColor}"/>
+                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{StaticResource SystemColorButtonFaceColor}"/>
+                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="{StaticResource SystemColorButtonTextColor}"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
 
