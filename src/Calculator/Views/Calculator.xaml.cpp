@@ -150,7 +150,6 @@ void Calculator::OnLoaded(_In_ Object ^, _In_ RoutedEventArgs ^)
 
 Platform::String ^ Calculator::GetCurrentLayoutState()
 {
-
     if (IsProgrammer)
     {
         return L"Programmer";
@@ -195,7 +194,7 @@ void Calculator::UpdateViewState()
 
 void Calculator::AnimateCalculator(bool resultAnimate)
 {
-    static auto uiSettings = ref new UISettings(); 
+    static auto uiSettings = ref new UISettings();
     if (uiSettings->AnimationsEnabled)
     {
         m_doAnimate = true;
@@ -679,6 +678,11 @@ void Calculator::DockPanelTapped(_In_ TappedRoutedEventArgs ^ e)
 void Calculator::UnregisterEventHandlers()
 {
     ExpressionText->UnregisterEventHandlers();
+    AlwaysOnTopResults->UnregisterEventHandlers();
+    if (DualScreenExpressionText != nullptr)
+    {
+        DualScreenExpressionText->UnregisterEventHandlers();
+    }
 }
 
 void Calculator::OnErrorVisualStateCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e)

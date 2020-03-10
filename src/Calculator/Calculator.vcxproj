@@ -16,7 +16,6 @@
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <AppxDefaultResourceQualifierUAP_Contrast>black</AppxDefaultResourceQualifierUAP_Contrast>
     <AppxBundle>Always</AppxBundle>
-    <PackageCertificateKeyFile>TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
   </PropertyGroup>
@@ -253,6 +252,7 @@
     </ClInclude>
     <ClInclude Include="Controls\RadixButton.h" />
     <ClInclude Include="Controls\SupplementaryItemsControl.h" />
+    <ClInclude Include="Controls\TwoPaneViewCX.h" />
     <ClInclude Include="Converters\BooleanNegationConverter.h" />
     <ClInclude Include="Converters\BooleanToVisibilityConverter.h" />
     <ClInclude Include="Converters\ExpressionItemTemplateSelector.h" />
@@ -423,6 +423,7 @@
     </ClCompile>
     <ClCompile Include="Controls\RadixButton.cpp" />
     <ClCompile Include="Controls\SupplementaryItemsControl.cpp" />
+    <ClCompile Include="Controls\TwoPaneViewCX.cpp" />
     <ClCompile Include="Converters\BooleanNegationConverter.cpp" />
     <ClCompile Include="Converters\BooleanToVisibilityConverter.cpp" />
     <ClCompile Include="Converters\ExpressionItemTemplateSelector.cpp" />
@@ -961,7 +962,7 @@
   </Target>
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets" Condition="Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" />
-    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.3.200213001\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.3.200213001\build\native\Microsoft.UI.Xaml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -969,6 +970,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.3.200213001\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.3.200213001\build\native\Microsoft.UI.Xaml.targets'))" />
   </Target>
 </Project>

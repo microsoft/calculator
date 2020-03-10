@@ -25,12 +25,16 @@ public
         /* The view mode that will cause the trigger to fire. */
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(AppViewMode, ViewMode, AppViewMode::Normal);
 
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(double, MinWindowHeight, -1);
+
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(double, MinWindowWidth, -1);
     private:
         void OnViewModePropertyChanged(AppViewMode oldValue, AppViewMode newValue);
+        void OnMinWindowHeightPropertyChanged(double oldValue, double newValue);
+        void OnMinWindowWidthPropertyChanged(double oldValue, double newValue);
         void WindowSizeChanged(_In_ Platform::Object ^ sender, _In_ Windows::UI::Core::WindowSizeChangedEventArgs ^ e);
         void UpdateTrigger();
     private:
-        bool _isWindows10X;
         Windows::Foundation::EventRegistrationToken m_windowSizeEventToken;
     };
 }

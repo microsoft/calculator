@@ -2,13 +2,14 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:contract7Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,7)"
+             xmlns:controls="using:CalculatorApp.Controls"
              xmlns:converters="using:CalculatorApp.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:graphControl="using:GraphControl"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              xmlns:states="using:CalculatorApp.Views.StateTriggers"
-             xmlns:winui="using:Microsoft.UI.Xaml.Controls"
              x:Name="Control"
              DataContextChanged="GraphingCalculator_DataContextChanged"
              mc:Ignorable="d">
@@ -408,7 +409,11 @@
                         <Setter Target="GraphingNumPad.Margin" Value="0,0,24,0"/>
                         <Setter Target="KeyGraphFeaturesControl.Margin" Value="0,40,0,0"/>
                         <Setter Target="EquationInputAreaControl.Margin" Value="0,40,0,0"/>
-                        <Setter Target="TwoPaneView.TallModeConfiguration" Value="TopBottom"/>
+                        <Setter Target="PaneView.TallModeConfiguration">
+                            <Setter.Value>
+                                <muxc:TwoPaneViewTallModeConfiguration>TopBottom</muxc:TwoPaneViewTallModeConfiguration>
+                            </Setter.Value>
+                        </Setter>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState>
@@ -421,24 +426,8 @@
                 </VisualState>
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1260"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="TwoPaneView.Pane2Length" Value="420"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="900"/>
-                    </VisualState.StateTriggers>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="800"/>
                     </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="TwoPaneView.Pane2Length" Value="300"/>
-                    </VisualState.Setters>
                 </VisualState>
                 <VisualState>
                     <VisualState.StateTriggers>
@@ -446,7 +435,11 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Control.IsSmallState" Value="True"/>
-                        <Setter Target="TwoPaneView.WideModeConfiguration" Value="SinglePane"/>
+                        <Setter Target="PaneView.WideModeConfiguration">
+                            <Setter.Value>
+                                <muxc:TwoPaneViewWideModeConfiguration>SinglePane</muxc:TwoPaneViewWideModeConfiguration>
+                            </Setter.Value>
+                        </Setter>
                         <Setter Target="RightGrid.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="RightGrid.(Grid.Column)" Value="0"/>
                         <Setter Target="SwitchModeToggleButton.Visibility" Value="Visible"/>
@@ -467,18 +460,18 @@
                       ToolTipService.ToolTip="{x:Bind local:GraphingCalculator.GetInfoForSwitchModeToggleButton(SwitchModeToggleButton.IsOn), Mode=OneWay}"
                       Visibility="Collapsed"/>
 
-        <winui:TwoPaneView x:Name="TwoPaneView"
-                           Grid.Row="1"
-                           MinTallModeHeight="Infinity"
-                           MinWideModeWidth="0"
-                           Pane1Length="2*"
-                           Pane2Length="1*"
-                           PanePriority="{x:Bind local:GraphingCalculator.GetPanePriority(SwitchModeToggleButton.IsOn), Mode=OneWay}"
-                           TallModeConfiguration="SinglePane">
-            <winui:TwoPaneView.Pane1>
-                <Grid x:Name="LeftGrid"
-                      Padding="0,4,0,0"
-                      SizeChanged="LeftGrid_SizeChanged">
+        <controls:TwoPaneViewCX x:Name="PaneView"
+                                Grid.Row="1"
+                                MinTallModeHeight="Infinity"
+                                MinWideModeWidth="0"
+                                Pane1Length="2*"
+                                Pane2Length="1*"
+                                Pane2MaxLength="420"
+                                Pane2MinLength="300"
+                                PanePriority="{x:Bind local:GraphingCalculator.GetPanePriority(SwitchModeToggleButton.IsOn), Mode=OneWay}"
+                                TallModeConfiguration="SinglePane">
+            <controls:TwoPaneViewCX.Pane1>
+                <Grid x:Name="LeftGrid" Padding="0,4,0,0">
                     <Grid.Resources>
                         <ResourceDictionary>
                             <ResourceDictionary.ThemeDictionaries>
@@ -666,8 +659,8 @@
                                    AutomationProperties.LiveSetting="Polite"/>
                     </Border>
                 </Grid>
-            </winui:TwoPaneView.Pane1>
-            <winui:TwoPaneView.Pane2>
+            </controls:TwoPaneViewCX.Pane1>
+            <controls:TwoPaneViewCX.Pane2>
                 <Grid x:Name="RightGrid">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -705,7 +698,7 @@
                                           Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
 
                 </Grid>
-            </winui:TwoPaneView.Pane2>
-        </winui:TwoPaneView>
+            </controls:TwoPaneViewCX.Pane2>
+        </controls:TwoPaneViewCX>
     </Grid>
 </UserControl>

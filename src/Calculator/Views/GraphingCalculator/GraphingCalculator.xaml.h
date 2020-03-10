@@ -10,6 +10,7 @@
 #include "Views\GraphingCalculator\GraphingNumPad.xaml.h"
 #include "Views\GraphingCalculator\GraphingSettings.xaml.h"
 #include "ApplicationViewModeTrigger.h"
+#include "Controls\TwoPaneViewCX.h"
 
 namespace CalculatorApp
 {

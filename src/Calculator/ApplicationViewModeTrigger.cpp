@@ -9,10 +9,11 @@ using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(ApplicationViewModeTrigger, ViewMode);
+DEPENDENCY_PROPERTY_INITIALIZATION(ApplicationViewModeTrigger, MinWindowHeight);
+DEPENDENCY_PROPERTY_INITIALIZATION(ApplicationViewModeTrigger, MinWindowWidth);
 
 ApplicationViewModeTrigger::ApplicationViewModeTrigger()
 {
-    _isWindows10X = AnalyticsInfo::VersionInfo->DeviceFamily == L"Windows.Core";
     m_windowSizeEventToken = Window::Current->SizeChanged += ref new WindowSizeChangedEventHandler(this, &ApplicationViewModeTrigger::WindowSizeChanged);
     UpdateTrigger();
 }
@@ -26,11 +27,26 @@ void ApplicationViewModeTrigger::OnViewModePropertyChanged(_In_ AppViewMode /*ol
 {
     UpdateTrigger();
 }
+void ApplicationViewModeTrigger::OnMinWindowHeightPropertyChanged(double /*oldValue*/, double /*newValue*/)
+{
+    UpdateTrigger();
+}
+
+void ApplicationViewModeTrigger::OnMinWindowWidthPropertyChanged(double /*oldValue*/, double /*newValue*/)
+{
+    UpdateTrigger();
+}
 
 void ApplicationViewModeTrigger::UpdateTrigger()
 {
     auto applicationView = ApplicationView::GetForCurrentView();
     auto viewMode = applicationView->ViewMode;
+    if (applicationView->VisibleBounds.Width < this->MinWindowWidth || applicationView->VisibleBounds.Height < this->MinWindowHeight)
+    {
+        SetActive(false);
+        return;
+    }
+
     switch ((int)viewMode)
     {
     case 0 /*ApplicationViewMode::Default*/:
@@ -42,7 +58,7 @@ void ApplicationViewModeTrigger::UpdateTrigger()
     case 2 /*ApplicationViewMode::Spanning*/:
 
         // We will need to update this code to use new SpanningRects API instead of DisplayRegions when the app will use the SDK for windows 10 2004.
-        auto displayRegions = ApplicationView::GetForCurrentView()->GetDisplayRegions();
+        auto displayRegions = applicationView->GetDisplayRegions();
         if (displayRegions->Size == 2)
         {
             auto display1 = displayRegions->GetAt(0);
