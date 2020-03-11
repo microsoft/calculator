@@ -3948,7 +3948,7 @@
     <comment>Label for the Line Color section of the style picker</comment>
   </data>
   <data name="KeyGraphFeaturesLabel.Text" xml:space="preserve">
-    <value>Key Graph Features</value>
+    <value>Function analysis</value>
     <comment>Title for KeyGraphFeatures Control</comment>
   </data>
   <data name="KGFHorizontalAsymptotesNone" xml:space="preserve">
@@ -4115,16 +4115,16 @@
     <comment>This is the automation name for the back button in the equation analysis page in the graphing calculator</comment>
   </data>
   <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Analyze equation</value>
-    <comment>This is the tooltip for the analyze equation button</comment>
+    <value>Analyze function</value>
+    <comment>This is the tooltip for the analyze function button</comment>
   </data>
   <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Analyze equation</value>
-    <comment>This is the automation name for the analyze equation button</comment>
+    <value>Analyze function</value>
+    <comment>This is the automation name for the analyze function button</comment>
   </data>
   <data name="functionAnalysisMenuItem" xml:space="preserve">
-    <value>Analyze equation</value>
-    <comment>This is the text for the for the analyze equation context menu command</comment>
+    <value>Analyze function</value>
+    <comment>This is the text for the for the analyze function context menu command</comment>
   </data>
   <data name="removeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Remove equation</value>
@@ -4174,6 +4174,10 @@
     <value>Start tracing</value>
     <comment>This is the tooltip/automation name for the graphing calculator start tracing button</comment>
   </data>
+  <data name="graphAutomationName" xml:space="preserve">
+    <value>Graph viewing window, x-axis bounded by %1 and %2, y-axis bounded by %3 and %4, displaying %5 equations</value>
+    <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
+    </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Configure slider</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -4203,8 +4207,8 @@
     <comment>Announcement used in Graphing Calculator when switching to the graph mode</comment>
   </data>
   <data name="GridHeading.Text" xml:space="preserve">
-    <value>Grid</value>
-    <comment>Heading for grid extents on the settings </comment>
+    <value>Window</value>
+    <comment>Heading for window extents on the settings </comment>
   </data>
   <data name="TrigModeDegrees.Content" xml:space="preserve">
     <value>Degrees</value>
@@ -4222,6 +4226,10 @@
     <value>Units</value>
     <comment>Heading for Unit's on the settings</comment>
   </data>
+  <data name="ResetViewButton.Content" xml:space="preserve">
+    <value>Reset view</value>
+    <comment>Hyperlink button to reset the view of the graph</comment>
+  </data>
   <data name="GraphSettingsXMax.Header" xml:space="preserve">
     <value>X-Max</value>
     <comment>X maximum value header</comment>
@@ -4238,10 +4246,6 @@
     <value>Y-Min</value>
     <comment>Y minimum value header</comment>
   </data>
-  <data name="equationMathRichEditBox.PlaceholderText" xml:space="preserve">
-    <value>Enter an equation</value>
-    <comment>Used in the Graphing Calculator to indicate to users that they can enter an equation in the textbox</comment>
-  </data>
   <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Grid options</value>
     <comment>This is the tooltip text for the grid options button in Graphing Calculator</comment>
@@ -4255,8 +4259,12 @@
     <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
   </data>
   <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
-    <value>Enter an equation</value>
+    <value>Enter an expression</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
+  </data>
+  <data name="GraphCopyMenuItem.Text">
+    <value>Copy</value>
+    <comment>Copy menu item for the graph context menu</comment>
   </data>
   <data name="cutEquationMenuItem.Text" xml:space="preserve">
     <value>Cut</value>

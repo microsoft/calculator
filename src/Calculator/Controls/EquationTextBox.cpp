@@ -80,7 +80,7 @@ void EquationTextBox::OnApplyTemplate()
 
     if (m_richEditContextMenu != nullptr)
     {
-        m_richEditContextMenu->Opening += ref new EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpening);
+        m_richEditContextMenu->Opened += ref new EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpened);
     }
 
     if (m_deleteButton != nullptr)
@@ -416,11 +416,11 @@ bool EquationTextBox::RichEditHasContent()
     return !text->IsEmpty();
 }
 
-void EquationTextBox::OnRichEditMenuOpening(Object ^ /*sender*/, Object ^ /*args*/)
+void EquationTextBox::OnRichEditMenuOpened(Object ^ /*sender*/, Object ^ /*args*/)
 {
     if (m_kgfEquationMenuItem != nullptr)
     {
-        m_kgfEquationMenuItem->IsEnabled = m_HasFocus && RichEditHasContent();
+        m_kgfEquationMenuItem->IsEnabled = m_HasFocus && !HasError && RichEditHasContent();
     }
 
     if (m_colorChooserMenuItem != nullptr)
