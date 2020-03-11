@@ -16,6 +16,7 @@
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <AppxDefaultResourceQualifierUAP_Contrast>black</AppxDefaultResourceQualifierUAP_Contrast>
     <AppxBundle>Always</AppxBundle>
+    <PackageCertificateKeyFile>TemporaryKey.pfx</PackageCertificateKeyFile>	
     <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
   </PropertyGroup>
@@ -234,7 +235,6 @@
     <ClInclude Include="AboutFlyout.xaml.h">
       <DependentUpon>AboutFlyout.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="ApplicationViewModeTrigger.h" />
     <ClInclude Include="Common\AppLifecycleLogger.h" />
     <ClInclude Include="Common\KeyboardShortcutManager.h" />
     <ClInclude Include="Common\ValidatingConverters.h" />
@@ -329,6 +329,7 @@
     <ClInclude Include="Views\OperatorsPanel.xaml.h">
       <DependentUpon>Views\OperatorsPanel.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="Views\StateTriggers\ApplicationViewModeTrigger.h" />
     <ClInclude Include="Views\StateTriggers\AspectRatioTrigger.h" />
     <ClInclude Include="Views\StateTriggers\ControlSizeTrigger.h" />
     <ClInclude Include="Views\SupplementaryResults.xaml.h">
@@ -407,7 +408,6 @@
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="ApplicationViewModeTrigger.cpp" />
     <ClCompile Include="Common\AppLifecycleLogger.cpp" />
     <ClCompile Include="Common\KeyboardShortcutManager.cpp" />
     <ClCompile Include="Common\ViewState.cpp" />
@@ -506,6 +506,7 @@
     <ClCompile Include="Views\OperatorsPanel.xaml.cpp">
       <DependentUpon>Views\OperatorsPanel.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="Views\StateTriggers\ApplicationViewModeTrigger.cpp" />
     <ClCompile Include="Views\StateTriggers\AspectRatioTrigger.cpp" />
     <ClCompile Include="Views\StateTriggers\ControlSizeTrigger.cpp" />
     <ClCompile Include="Views\SupplementaryResults.xaml.cpp">

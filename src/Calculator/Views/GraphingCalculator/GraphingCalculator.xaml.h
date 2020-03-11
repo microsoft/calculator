@@ -9,7 +9,7 @@
 #include "Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h"
 #include "Views\GraphingCalculator\GraphingNumPad.xaml.h"
 #include "Views\GraphingCalculator\GraphingSettings.xaml.h"
-#include "ApplicationViewModeTrigger.h"
+#include "Views\StateTriggers\ApplicationViewModeTrigger.h"
 #include "Controls\TwoPaneViewCX.h"
 
 namespace CalculatorApp

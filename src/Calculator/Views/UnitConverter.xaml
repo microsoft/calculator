@@ -306,6 +306,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Pane2Panel.Margin" Value="12"/>
+                        <Setter Target="Pane1Panel.Margin" Value="24,48,0,0"/>
                         <Setter Target="RowDisplay1.Height" Value="4*"/>
                         <Setter Target="RowUnit1.Height" Value="2*"/>
                         <Setter Target="RowDisplay2.Height" Value="4*"/>
