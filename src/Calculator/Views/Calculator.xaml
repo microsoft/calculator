@@ -825,7 +825,7 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel x:Name="DualScreenResultPanel"
                                 Padding="0,0,12,0"
-                                VerticalAlignment="Bottom"
+                                VerticalAlignment="Center"
                                 Visibility="Collapsed"
                                 x:Load="False">
                         <controls:OverflowTextBlock x:Name="DualScreenExpressionText"

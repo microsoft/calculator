@@ -280,7 +280,43 @@
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="Layout">
-                <VisualState x:Name="PortraitLayout"/>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <triggers:ApplicationViewModeTrigger ViewMode="DoubleLandscape"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Pane2Panel.Margin" Value="12"/>
+                        <Setter Target="Pane1Panel.Margin" Value="24,48,0,48"/>
+                        <Setter Target="SupplementaryResults.VerticalAlignment" Value="Top"/>
+                        <Setter Target="Value1.Style" Value="{ThemeResource ValueLargeStyle}"/>
+                        <Setter Target="Value2.Style" Value="{ThemeResource ValueLargeStyle}"/>
+                        <Setter Target="CurrencySymbol1Block.Style" Value="{ThemeResource CurrencySymbolLargeStyle}"/>
+                        <Setter Target="CurrencySymbol2Block.Style" Value="{ThemeResource CurrencySymbolLargeStyle}"/>
+                        <Setter Target="Units1.Height" Value="44"/>
+                        <Setter Target="Units2.Height" Value="44"/>
+                        <Setter Target="ConverterNegateButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
+                        <Setter Target="ClearEntryButtonPos0.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
+                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle34}"/>
+                        <Setter Target="SupplementaryResultsPanelInGrid.Padding" Value="12,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <triggers:ApplicationViewModeTrigger ViewMode="DoublePortrait"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Pane2Panel.Margin" Value="12"/>
+                        <Setter Target="RowDisplay1.Height" Value="4*"/>
+                        <Setter Target="RowUnit1.Height" Value="2*"/>
+                        <Setter Target="RowDisplay2.Height" Value="4*"/>
+                        <Setter Target="RowUnit2.Height" Value="2*"/>
+                        <Setter Target="RowDltrUnits.Height" Value="2*"/>
+                        <Setter Target="ConverterNumPad.(Grid.Row)" Value="1"/>
+                        <Setter Target="ConverterNumPad.(Grid.RowSpan)" Value="5"/>
+                        <Setter Target="SupplementaryResults.VerticalAlignment" Value="Top"/>
+                        <Setter Target="Pane2RowTopNav.Height" Value="{StaticResource HamburgerHeightGridLength}"/>
+                    </VisualState.Setters>
+                </VisualState>
                 <VisualState x:Name="LandscapeLayout">
                     <VisualState.StateTriggers>
                         <triggers:AspectRatioTrigger ActiveIfEqual="True"
@@ -475,31 +511,6 @@
                 </VisualState>
                 <VisualState x:Name="UnitLoadedState"/>
             </VisualStateGroup>
-            <VisualStateGroup>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <triggers:ApplicationViewModeTrigger ViewMode="DoubleLandscape"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="Pane2Panel.Margin" Value="12"/>
-                        <Setter Target="Pane1Panel.Margin" Value="24,48,0,48"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <triggers:ApplicationViewModeTrigger ViewMode="DoubleLandscape"/>
-                        <triggers:ApplicationViewModeTrigger ViewMode="DoublePortrait"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="Pane2Panel.Margin" Value="12"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0"/>
-                    </VisualState.StateTriggers>
-                </VisualState>
-            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
         <controls:TwoPaneViewCX x:Name="TwoPaneView"
@@ -528,9 +539,10 @@
                                        Height="Auto"
                                        MinHeight="48"/>
                     </Grid.RowDefinitions>
-                    <Grid x:Name="CurrencyLoadingGrid" Visibility="Collapsed"
+                    <Grid x:Name="CurrencyLoadingGrid"
                           Grid.Row="1"
-                          Grid.RowSpan="5">
+                          Grid.RowSpan="5"
+                          Visibility="Collapsed">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="10*"/>
                             <RowDefinition Height="7*"/>

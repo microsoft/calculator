@@ -43,7 +43,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(TwoPaneViewCX, MinTallModeHeight);
 
 TwoPaneViewCX::TwoPaneViewCX()
 {
-    this->DefaultStyleKey = L"Time.Controls.TwoPaneViewCX";
+    this->DefaultStyleKey = L"CalculatorApp.Controls.TwoPaneViewCX";
     this->SizeChanged += ref new Windows::UI::Xaml::SizeChangedEventHandler(this, &TwoPaneViewCX::OnSizeChanged);
     m_windowSizeChangedToken = Window::Current->SizeChanged +=
         ref new Windows::UI::Xaml::WindowSizeChangedEventHandler(this, &TwoPaneViewCX::OnWindowSizeChanged);
