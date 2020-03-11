@@ -66,7 +66,7 @@ public
         void VariableAreaTapped(Platform::Object ^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         void EquationTextBox_EquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ e);
 
-        CalculatorApp::ViewModel::EquationViewModel ^ GetViewModelFromEquationtextBox(Platform::Object ^ sender);
+        CalculatorApp::ViewModel::EquationViewModel ^ GetViewModelFromEquationTextBox(Platform::Object ^ sender);
 
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         int m_lastLineColorIndex;
