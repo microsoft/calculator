@@ -11,8 +11,7 @@
 namespace GraphControl
 {
 
-public
-    ref class TraceLogger sealed
+    public ref class TraceLogger sealed
     {
     internal:
         static TraceLogger ^ GetInstance();
@@ -22,7 +21,6 @@ public
         void LogVariableCountChanged(int variablesCount);
 
     private:
-        // Create an instance of TraceLogger
         TraceLogger()
         {
         }

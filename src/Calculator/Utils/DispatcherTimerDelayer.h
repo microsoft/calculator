@@ -7,11 +7,10 @@
 
 namespace CalculatorApp
 {
-public
-    ref class Delayer sealed
+    public ref class DispatcherTimerDelayer sealed
     {
     public:
-        Delayer(Windows::Foundation::TimeSpan timeSpan);
+        DispatcherTimerDelayer(Windows::Foundation::TimeSpan timeSpan);
 
         void Start();
         void ResetAndStart();
@@ -19,7 +18,7 @@ public
 
         event Windows::Foundation::EventHandler<Platform::Object ^> ^ Action;
 
-     private:
+    private:
         void Timer_Tick(Platform::Object ^ sender, Platform::Object ^ e);
 
         Windows::UI::Xaml::DispatcherTimer ^ m_timer;

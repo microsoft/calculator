@@ -8,32 +8,32 @@ using namespace CalculatorApp;
 using namespace Windows::UI::Xaml;
 using namespace Windows::Foundation;
 
-Delayer::Delayer(TimeSpan timeSpan)
+DispatcherTimerDelayer::DispatcherTimerDelayer(TimeSpan timeSpan)
 {
     m_timer = ref new DispatcherTimer();
     m_timer->Interval = timeSpan;
     auto interval = m_timer->Interval;
-    m_timer->Tick += ref new EventHandler<Object ^>(this, &Delayer::Timer_Tick);
+    m_timer->Tick += ref new EventHandler<Object ^>(this, &DispatcherTimerDelayer::Timer_Tick);
 }
 
-void Delayer::Timer_Tick(Object ^ sender, Object ^ e)
+void DispatcherTimerDelayer::Timer_Tick(Object ^ sender, Object ^ e)
 {
     m_timer->Stop();
     Action(this, nullptr);
 }
 
-void Delayer::Start()
+void DispatcherTimerDelayer::Start()
 {
     m_timer->Start();
 }
 
-void Delayer::ResetAndStart()
+void DispatcherTimerDelayer::ResetAndStart()
 {
     m_timer->Stop();
     m_timer->Start();
 }
 
-void Delayer::Stop()
+void DispatcherTimerDelayer::Stop()
 {
     m_timer->Stop();
 }

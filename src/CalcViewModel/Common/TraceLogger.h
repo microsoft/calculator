@@ -48,7 +48,7 @@ namespace CalculatorApp
         Color
     };
 
-public ref class TraceLogger sealed
+    public ref class TraceLogger sealed
     {
     public:
         static TraceLogger ^ GetInstance();
@@ -73,7 +73,8 @@ public ref class TraceLogger sealed
         void LogVariableChanged(Platform::String ^ inputChangedType, Platform::String ^ variableName);
         void LogVariableSettingsChanged(Platform::String ^ setting);
         void LogGraphSettingsChanged(GraphSettingsType settingsType);
-        internal : void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e);
+        internal:
+        void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e);
         void LogPlatformException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ Platform::Exception ^ e);
         void LogInputPasted(CalculatorApp::Common::ViewMode mode);
 
