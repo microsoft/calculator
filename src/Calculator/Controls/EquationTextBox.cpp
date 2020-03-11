@@ -62,8 +62,11 @@ void EquationTextBox::OnApplyTemplate()
         m_equationButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnEquationButtonClicked);
 
         auto toolTip = ref new ToolTip();
-        auto equationButtonMessage = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip")
-                                                                        : resProvider->GetResourceString(L"hideEquationButtonToolTip");
+
+        auto equationButtonMessage = LocalizationStringUtil::GetLocalizedString(
+            m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip")
+                                               : resProvider->GetResourceString(L"hideEquationButtonToolTip"), EquationButtonContentIndex);
+
         toolTip->Content = equationButtonMessage;
         ToolTipService::SetToolTip(m_equationButton, toolTip);
         AutomationProperties::SetName(m_equationButton, equationButtonMessage);
@@ -71,7 +74,7 @@ void EquationTextBox::OnApplyTemplate()
 
     if (m_richEditContextMenu != nullptr)
     {
-        m_richEditContextMenu->Opening += ref new EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpening);
+        m_richEditContextMenu->Opened += ref new EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpened);
     }
 
     if (m_deleteButton != nullptr)
@@ -202,8 +205,11 @@ void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^
 
     auto toolTip = ref new ToolTip();
     auto resProvider = AppResourceProvider::GetInstance();
-    auto equationButtonMessage = m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip")
-                                                                    : resProvider->GetResourceString(L"hideEquationButtonToolTip");
+
+    auto equationButtonMessage = LocalizationStringUtil::GetLocalizedString(
+        m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip")
+                                           : resProvider->GetResourceString(L"hideEquationButtonToolTip"), EquationButtonContentIndex);
+
     toolTip->Content = equationButtonMessage;
     ToolTipService::SetToolTip(m_equationButton, toolTip);
     AutomationProperties::SetName(m_equationButton, equationButtonMessage);
@@ -338,11 +344,11 @@ bool EquationTextBox::RichEditHasContent()
     return !text->IsEmpty();
 }
 
-void EquationTextBox::OnRichEditMenuOpening(Object ^ /*sender*/, Object ^ /*args*/)
+void EquationTextBox::OnRichEditMenuOpened(Object ^ /*sender*/, Object ^ /*args*/)
 {
     if (m_kgfEquationMenuItem != nullptr)
     {
-        m_kgfEquationMenuItem->IsEnabled = m_HasFocus && RichEditHasContent();
+        m_kgfEquationMenuItem->IsEnabled = m_HasFocus && !HasError && RichEditHasContent();
     }
 
     if (m_colorChooserMenuItem != nullptr)

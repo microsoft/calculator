@@ -29,6 +29,7 @@ namespace CalculatorApp
 
     public:
         static Windows::UI::Xaml::Visibility ManageEditVariablesButtonVisibility(unsigned int numberOfVariables);
+        static bool EquationInputArea::ManageEditVariablesButtonLoaded(unsigned int numberOfVariables);
 
         static Platform::String ^ GetChevronIcon(bool isCollapsed);
 

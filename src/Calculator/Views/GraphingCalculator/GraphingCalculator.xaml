@@ -378,9 +378,9 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Name="RootGrid">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="RowHamburger" Height="{StaticResource HamburgerHeightGridLength}"/>
+            <RowDefinition Height="{StaticResource HamburgerHeightGridLength}"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -428,7 +428,6 @@
         <Grid x:Name="LeftGrid"
               Grid.Row="1"
               Padding="0,4,0,0"
-              SizeChanged="LeftGrid_SizeChanged"
               Visibility="{x:Bind ShouldDisplayPanel(IsSmallState, SwitchModeToggleButton.IsOn, x:True), Mode=OneWay}">
             <Grid.Resources>
                 <ResourceDictionary>
@@ -472,12 +471,23 @@
             </Grid.Resources>
             <graphControl:Grapher Name="GraphingControl"
                                   Style="{ThemeResource ThemedGrapherStyle}"
-                                  ForceProportionalAxes="True"
+                                  AutomationProperties.Name="{x:Bind GraphControlAutomationName, Mode=OneWay}"
+                                  ForceProportionalAxes="False"
+                                  GraphPlottedEvent="GraphingControl_GraphPlottedEvent"
+                                  GraphViewChangedEvent="GraphingControl_GraphViewChangedEvent"
                                   LosingFocus="GraphingControl_LosingFocus"
                                   LostFocus="GraphingControl_LostFocus"
                                   RequestedTheme="Light"
                                   UseSystemFocusVisuals="True"
-                                  VariablesUpdated="GraphingControl_VariablesUpdated"/>
+                                  VariablesUpdated="GraphingControl_VariablesUpdated">
+                <graphControl:Grapher.ContextFlyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem x:Uid="GraphCopyMenuItem"
+                                        Click="GraphMenuFlyoutItem_Click"
+                                        Icon="Copy"/>
+                    </MenuFlyout>
+                </graphControl:Grapher.ContextFlyout>
+            </graphControl:Grapher>
             <Border MinHeight="36"
                     Margin="0,12,12,0"
                     HorizontalAlignment="Right"
@@ -501,8 +511,7 @@
                                   Glyph="&#xE3B3;"/>
                     </ToggleButton>
 
-                    <Button x:Name="Share"
-                            x:Uid="shareButton"
+                    <Button x:Uid="shareButton"
                             MinWidth="40"
                             Style="{ThemeResource ThemedGraphButtonStyle}"
                             Click="OnShareClick">
@@ -523,7 +532,9 @@
                     </Button>
                 </StackPanel>
             </Border>
-            <Canvas>
+            <Canvas x:Name="TraceCanvas"
+                    SizeChanged="Canvas_SizeChanged"
+                    x:Load="False">
                 <Grid x:Name="TracePointer" Visibility="Collapsed">
                     <Border x:Name="CursorShadow"/>
                     <Path x:Name="CursorPath"

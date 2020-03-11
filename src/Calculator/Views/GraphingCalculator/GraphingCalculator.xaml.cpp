@@ -53,6 +53,7 @@ using namespace Windows::UI::ViewManagement;
 constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, IsSmallState);
+DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, GraphControlAutomationName);
 
 GraphingCalculator::GraphingCalculator()
     : m_accessibilitySettings{ ref new AccessibilitySettings() }
@@ -74,6 +75,8 @@ GraphingCalculator::GraphingCalculator()
     // Update where the pointer value is (ie: where the user cursor from keyboard inputs moves the point to)
     GraphingControl->PointerValueChangedEvent += ref new PointerValueChangedEventHandler(this, &GraphingCalculator::OnPointerPointChanged);
 
+    GraphingControl->UseCommaDecimalSeperator = LocalizationSettings::GetInstance().GetDecimalSeparator() == ',';
+
     // OemMinus and OemAdd aren't declared in the VirtualKey enum, we can't add this accelerator XAML-side
     auto virtualKey = ref new KeyboardAccelerator();
     virtualKey->Key = (VirtualKey)189; // OemPlus key
@@ -84,13 +87,6 @@ GraphingCalculator::GraphingCalculator()
     virtualKey->Key = (VirtualKey)187; // OemAdd key
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomInButton->KeyboardAccelerators->Append(virtualKey);
-
-    // add shadow to the trace pointer
-    AddTracePointerShadow();
-    // hide the shadow in high contrast mode
-    CursorShadow->Visibility = m_accessibilitySettings->HighContrast ? ::Visibility::Collapsed : ::Visibility::Visible;
-    m_accessibilitySettings->HighContrastChanged +=
-        ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &GraphingCalculator::OnHighContrastChanged);
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
@@ -125,6 +121,8 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
 
     m_variableUpdatedToken = ViewModel->VariableUpdated +=
         ref new EventHandler<VariableChangedEventArgs>(this, &CalculatorApp::GraphingCalculator::OnVariableChanged);
+
+    UpdateGraphAutomationName();
 }
 
 void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationViewModel ^> ^ sender, IVectorChangedEventArgs ^ event)
@@ -193,9 +191,12 @@ void GraphingCalculator::OnTracePointChanged(Point newPoint)
 
 void CalculatorApp::GraphingCalculator::OnPointerPointChanged(Windows::Foundation::Point newPoint)
 {
-    // Move the pointer glyph to where it is supposed to be.
-    Canvas::SetLeft(TracePointer, newPoint.X);
-    Canvas::SetTop(TracePointer, newPoint.Y);
+    if (TracePointer != nullptr)
+    {
+        // Move the pointer glyph to where it is supposed to be.
+        Canvas::SetLeft(TracePointer, newPoint.X);
+        Canvas::SetTop(TracePointer, newPoint.Y);
+    }
 }
 
 GraphingCalculatorViewModel ^ GraphingCalculator::ViewModel::get()
@@ -494,6 +495,25 @@ void GraphingCalculator::TraceValuePopup_SizeChanged(Object ^ sender, SizeChange
 
 void CalculatorApp::GraphingCalculator::ActiveTracing_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
+    if (!m_cursorShadowInitialized)
+    {
+        this->FindName(L"TraceCanvas");
+
+        // add shadow to the trace pointer
+        AddTracePointerShadow();
+
+        // hide the shadow in high contrast mode
+        CursorShadow->Visibility = m_accessibilitySettings->HighContrast ? ::Visibility::Collapsed : ::Visibility::Visible;
+
+        m_accessibilitySettings->HighContrastChanged +=
+            ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &GraphingCalculator::OnHighContrastChanged);
+
+        Canvas::SetLeft(TracePointer, TraceCanvas->ActualWidth / 2 + 40);
+        Canvas::SetTop(TracePointer, TraceCanvas->ActualHeight / 2 - 40);
+
+        m_cursorShadowInitialized = true;
+    }
+
     FocusManager::TryFocusAsync(GraphingControl, ::FocusState::Programmatic);
 
     m_activeTracingKeyUpToken = Window::Current->CoreWindow->KeyUp +=
@@ -566,14 +586,16 @@ void GraphingCalculator::OnSettingsFlyout_Closing(FlyoutBase ^ sender, FlyoutBas
 {
     auto flyout = static_cast<Flyout ^>(sender);
     auto graphingSetting = static_cast<GraphingSettings ^>(flyout->Content);
-    args->Cancel = graphingSetting->CanBeClose();
 }
 
-void GraphingCalculator::LeftGrid_SizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ e)
+void GraphingCalculator::Canvas_SizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ e)
 {
     // Initialize the pointer to the correct location to match initial value in GraphControl\DirectX\RenderMain.cpp
-    Canvas::SetLeft(TracePointer, e->NewSize.Width / 2 + 40);
-    Canvas::SetTop(TracePointer, e->NewSize.Height / 2 - 40);
+    if (TracePointer != nullptr)
+    {
+        Canvas::SetLeft(TracePointer, e->NewSize.Width / 2 + 40);
+        Canvas::SetTop(TracePointer, e->NewSize.Height / 2 - 40);
+    }
 }
 
 void GraphingCalculator::OnHighContrastChanged(AccessibilitySettings ^ sender, Object ^ /*args*/)
@@ -599,4 +621,56 @@ void GraphingCalculator::SetDefaultFocus()
     {
         EquationInputAreaControl->Focus(::FocusState::Programmatic);
     }
+}
+
+void GraphingCalculator::GraphingControl_GraphViewChangedEvent(Object ^ sender, RoutedEventArgs ^ e)
+{
+    UpdateGraphAutomationName();
+
+    auto announcement = CalculatorAnnouncement::GetGraphViewChangedAnnouncement(GraphControlAutomationName);
+    auto peer = FrameworkElementAutomationPeer::FromElement(GraphingControl);
+    if (peer != nullptr)
+    {
+        peer->RaiseNotificationEvent(announcement->Kind, announcement->Processing, announcement->Announcement, announcement->ActivityId);
+    }
+}
+
+void GraphingCalculator::GraphingControl_GraphPlottedEvent(Object ^ sender, RoutedEventArgs ^ e)
+{
+    UpdateGraphAutomationName();
+}
+
+void GraphingCalculator::UpdateGraphAutomationName()
+{
+    int numEquations = 0;
+    double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
+
+    // Only count equations that are graphed
+    for (auto equation : ViewModel->Equations)
+    {
+        if (equation->GraphEquation->IsValidated)
+        {
+            numEquations++;
+        }
+    }
+
+    GraphingControl->GetDisplayRanges(&xAxisMin, &xAxisMax, &yAxisMin, &yAxisMax);
+
+    GraphControlAutomationName = LocalizationStringUtil::GetLocalizedString(
+        AppResourceProvider::GetInstance()->GetResourceString(L"graphAutomationName"),
+        xAxisMin.ToString(),
+        xAxisMax.ToString(),
+        yAxisMin.ToString(),
+        yAxisMax.ToString(),
+        numEquations.ToString());
+}
+
+void GraphingCalculator::GraphMenuFlyoutItem_Click(Object ^ sender, RoutedEventArgs ^ e)
+{
+    auto dataPackage = ref new DataPackage();
+    dataPackage->RequestedOperation = ::DataPackageOperation::Copy;
+
+    auto bitmapStream = GraphingControl->GetGraphBitmapStream();
+    dataPackage->SetBitmap(bitmapStream);
+    ::Clipboard::SetContent(dataPackage);
 }

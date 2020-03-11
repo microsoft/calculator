@@ -71,7 +71,7 @@ namespace CalculatorApp::ViewModel
                 }
                 RaisePropertyChanged("XError");
                 RaisePropertyChanged("XMin");
-                UpdateDisplayRange(true);
+                UpdateDisplayRange();
             }
         }
 
@@ -112,7 +112,7 @@ namespace CalculatorApp::ViewModel
                 }
                 RaisePropertyChanged("XError");
                 RaisePropertyChanged("XMax");
-                UpdateDisplayRange(true);
+                UpdateDisplayRange();
             }
         }
 
@@ -153,7 +153,7 @@ namespace CalculatorApp::ViewModel
                 }
                 RaisePropertyChanged("YError");
                 RaisePropertyChanged("YMin");
-                UpdateDisplayRange(false);
+                UpdateDisplayRange();
             }
         }
 
@@ -194,7 +194,7 @@ namespace CalculatorApp::ViewModel
                 }
                 RaisePropertyChanged("YError");
                 RaisePropertyChanged("YMax");
-                UpdateDisplayRange(false);
+                UpdateDisplayRange();
             }
         }
 
@@ -270,11 +270,12 @@ namespace CalculatorApp::ViewModel
         }
 
     public:
-        void UpdateDisplayRange(bool XValuesModified);
+        void UpdateDisplayRange();
 
     public:
         void SetGrapher(GraphControl::Grapher ^ grapher);
         void InitRanges();
+        void ResetView();
         bool HasError();
 
     private:

@@ -57,38 +57,12 @@ void GraphingSettings::GridSettingsTextBox_PreviewKeyDown(Platform::Object ^ sen
     }
 }
 
-bool GraphingSettings::CanBeClose()
-{
-    auto focusedElement = FocusManager::GetFocusedElement();
-
-    // Move focus so we are sure all values are in sync with the VM
-    if (focusedElement != nullptr)
-    {
-        if (focusedElement->Equals(SettingsXMin))
-        {
-            auto textbox = static_cast<TextBox ^>(focusedElement);
-            ViewModel->XMin = textbox->Text;
-        }
-        else if (focusedElement->Equals(SettingsXMax))
-        {
-            auto textbox = static_cast<TextBox ^>(focusedElement);
-            ViewModel->XMax = textbox->Text;
-        }
-        else if (focusedElement->Equals(SettingsYMin))
-        {
-            auto textbox = static_cast<TextBox ^>(focusedElement);
-            ViewModel->YMin = textbox->Text;
-        }
-        else if (focusedElement->Equals(SettingsYMax))
-        {
-            auto textbox = static_cast<TextBox ^>(focusedElement);
-            ViewModel->YMax = textbox->Text;
-        }
-    }
-    return ViewModel != nullptr && ViewModel->HasError();
-}
-
 void GraphingSettings::RefreshRanges()
 {
     ViewModel->InitRanges();
+}
+
+void GraphingSettings::ResetViewButton_Clicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    ViewModel->ResetView();
 }

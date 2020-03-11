@@ -29,6 +29,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace GraphControl;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, ForceProportionalAxes);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, UseCommaDecimalSeperator);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Variables);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Equations);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, AxesColor);
@@ -83,6 +84,7 @@ namespace GraphControl
     void Grapher::ZoomFromCenter(double scale)
     {
         ScaleRange(0, 0, scale);
+        GraphViewChangedEvent(this, ref new RoutedEventArgs());
     }
 
     void Grapher::ScaleRange(double centerX, double centerY, double scale)
@@ -94,6 +96,7 @@ namespace GraphControl
                 if (SUCCEEDED(renderer->ScaleRange(centerX, centerY, scale)))
                 {
                     m_renderMain->RunRenderPass();
+                    GraphViewChangedEvent(this, ref new RoutedEventArgs());
                 }
             }
         }
@@ -108,6 +111,7 @@ namespace GraphControl
                 if (SUCCEEDED(renderer->ResetRange()))
                 {
                     m_renderMain->RunRenderPass();
+                    GraphViewChangedEvent(this, ref new RoutedEventArgs());
                 }
             }
         }
@@ -199,6 +203,8 @@ namespace GraphControl
     {
         if (auto graph = GetGraph(equation))
         {
+            SetGraphArgs(graph);
+
             if (auto analyzer = graph->GetAnalyzer())
             {
                 vector<Equation ^> equationVector;
@@ -246,6 +252,8 @@ namespace GraphControl
                 co_await TryUpdateGraph(keepCurrentView);
             }
         }
+
+        GraphPlottedEvent(this, ref new RoutedEventArgs());
     }
 
     task<bool> Grapher::TryUpdateGraph(bool keepCurrentView)
@@ -277,12 +285,30 @@ namespace GraphControl
 
                     if (numValidEquations++ > 0)
                     {
-                        request += L"<mo>,</mo>";
+                        if (!UseCommaDecimalSeperator)
+                        {
+                            request += L"<mo>,</mo>";
+                        }
+                        else
+                        {
+                            request += L"<mo>;</mo>";
+                        }
                     }
                     auto equationRequest = eq->GetRequest()->Data();
 
                     // If the equation request failed, then fail graphing.
                     if (equationRequest == nullptr)
+                    {
+                        co_return false;
+                    }
+
+                    unique_ptr<IExpression> expr;
+                    wstring parsableEquation = s_getGraphOpeningTags;
+                    parsableEquation += equationRequest;
+                    parsableEquation += s_getGraphClosingTags;
+
+                    // Wire up the corresponding error to an error message in the UI at some point
+                    if (!(expr = m_solver->ParseInput(parsableEquation)))
                     {
                         co_return false;
                     }
@@ -300,7 +326,7 @@ namespace GraphControl
                 if (initResult != nullopt)
                 {
                     UpdateGraphOptions(m_graph->GetOptions(), validEqs);
-                    SetGraphArgs();
+                    SetGraphArgs(m_graph);
 
                     m_renderMain->Graph = m_graph;
 
@@ -329,7 +355,7 @@ namespace GraphControl
                     if (initResult != nullopt)
                     {
                         UpdateGraphOptions(m_graph->GetOptions(), validEqs);
-                        SetGraphArgs();
+                        SetGraphArgs(m_graph);
 
                         m_renderMain->Graph = m_graph;
                         co_await m_renderMain->RunRenderPassAsync();
@@ -366,15 +392,15 @@ namespace GraphControl
         }
     }
 
-    void Grapher::SetGraphArgs()
+    void Grapher::SetGraphArgs(shared_ptr<IGraph> graph)
     {
-        if (m_graph != nullptr && m_renderMain != nullptr)
+        if (graph != nullptr && m_renderMain != nullptr)
         {
             critical_section::scoped_lock lock(m_renderMain->GetCriticalSection());
 
             for (auto variablePair : Variables)
             {
-                m_graph->SetArgValue(variablePair->Key->Data(), variablePair->Value->Value);
+                graph->SetArgValue(variablePair->Key->Data(), variablePair->Value->Value);
             }
         }
     }
@@ -499,6 +525,20 @@ namespace GraphControl
         TryUpdateGraph(false);
     }
 
+    void Grapher::OnUseCommaDecimalSeperatorPropertyChanged(bool oldValue, bool newValue)
+    {
+        if (newValue)
+        {
+            m_solver->ParsingOptions().SetLocalizationType(::LocalizationType::DecimalCommaAndListSemicolon);
+            m_solver->FormatOptions().SetLocalizationType(::LocalizationType::DecimalCommaAndListSemicolon);
+        }
+        else
+        {
+            m_solver->ParsingOptions().SetLocalizationType(::LocalizationType::DecimalPointAndListComma);
+            m_solver->FormatOptions().SetLocalizationType(::LocalizationType::DecimalPointAndListComma);
+        }
+    }
+
     void Grapher::OnPointerEntered(PointerRoutedEventArgs ^ e)
     {
         if (m_renderMain)
@@ -569,6 +609,7 @@ namespace GraphControl
         const auto [centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, ActualWidth, ActualHeight);
 
         ScaleRange(centerX, centerY, scale);
+        GraphViewChangedEvent(this, ref new RoutedEventArgs());
 
         e->Handled = true;
     }
@@ -642,6 +683,7 @@ namespace GraphControl
                 if (needsRenderPass)
                 {
                     m_renderMain->RunRenderPass();
+                    GraphViewChangedEvent(this, ref new RoutedEventArgs());
                 }
             }
         }
