@@ -53,6 +53,7 @@ using namespace Windows::UI::ViewManagement;
 constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, IsSmallState);
+DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, GraphControlAutomationName);
 
 GraphingCalculator::GraphingCalculator()
     : m_accessibilitySettings{ ref new AccessibilitySettings() }
@@ -73,6 +74,8 @@ GraphingCalculator::GraphingCalculator()
 
     // Update where the pointer value is (ie: where the user cursor from keyboard inputs moves the point to)
     GraphingControl->PointerValueChangedEvent += ref new PointerValueChangedEventHandler(this, &GraphingCalculator::OnPointerPointChanged);
+
+    GraphingControl->UseCommaDecimalSeperator = LocalizationSettings::GetInstance().GetDecimalSeparator() == ',';
 
     // OemMinus and OemAdd aren't declared in the VirtualKey enum, we can't add this accelerator XAML-side
     auto virtualKey = ref new KeyboardAccelerator();
@@ -118,6 +121,8 @@ void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement 
 
     m_variableUpdatedToken = ViewModel->VariableUpdated +=
         ref new EventHandler<VariableChangedEventArgs>(this, &CalculatorApp::GraphingCalculator::OnVariableChanged);
+
+    UpdateGraphAutomationName();
 }
 
 void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationViewModel ^> ^ sender, IVectorChangedEventArgs ^ event)
@@ -616,4 +621,56 @@ void GraphingCalculator::SetDefaultFocus()
     {
         EquationInputAreaControl->Focus(::FocusState::Programmatic);
     }
+}
+
+void GraphingCalculator::GraphingControl_GraphViewChangedEvent(Object ^ sender, RoutedEventArgs ^ e)
+{
+    UpdateGraphAutomationName();
+
+    auto announcement = CalculatorAnnouncement::GetGraphViewChangedAnnouncement(GraphControlAutomationName);
+    auto peer = FrameworkElementAutomationPeer::FromElement(GraphingControl);
+    if (peer != nullptr)
+    {
+        peer->RaiseNotificationEvent(announcement->Kind, announcement->Processing, announcement->Announcement, announcement->ActivityId);
+    }
+}
+
+void GraphingCalculator::GraphingControl_GraphPlottedEvent(Object ^ sender, RoutedEventArgs ^ e)
+{
+    UpdateGraphAutomationName();
+}
+
+void GraphingCalculator::UpdateGraphAutomationName()
+{
+    int numEquations = 0;
+    double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
+
+    // Only count equations that are graphed
+    for (auto equation : ViewModel->Equations)
+    {
+        if (equation->GraphEquation->IsValidated)
+        {
+            numEquations++;
+        }
+    }
+
+    GraphingControl->GetDisplayRanges(&xAxisMin, &xAxisMax, &yAxisMin, &yAxisMax);
+
+    GraphControlAutomationName = LocalizationStringUtil::GetLocalizedString(
+        AppResourceProvider::GetInstance()->GetResourceString(L"graphAutomationName"),
+        xAxisMin.ToString(),
+        xAxisMax.ToString(),
+        yAxisMin.ToString(),
+        yAxisMax.ToString(),
+        numEquations.ToString());
+}
+
+void GraphingCalculator::GraphMenuFlyoutItem_Click(Object ^ sender, RoutedEventArgs ^ e)
+{
+    auto dataPackage = ref new DataPackage();
+    dataPackage->RequestedOperation = ::DataPackageOperation::Copy;
+
+    auto bitmapStream = GraphingControl->GetGraphBitmapStream();
+    dataPackage->SetBitmap(bitmapStream);
+    ::Clipboard::SetContent(dataPackage);
 }

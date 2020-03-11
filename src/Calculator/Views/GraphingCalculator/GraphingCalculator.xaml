@@ -471,12 +471,23 @@
             </Grid.Resources>
             <graphControl:Grapher Name="GraphingControl"
                                   Style="{ThemeResource ThemedGrapherStyle}"
+                                  AutomationProperties.Name="{x:Bind GraphControlAutomationName, Mode=OneWay}"
                                   ForceProportionalAxes="False"
+                                  GraphPlottedEvent="GraphingControl_GraphPlottedEvent"
+                                  GraphViewChangedEvent="GraphingControl_GraphViewChangedEvent"
                                   LosingFocus="GraphingControl_LosingFocus"
                                   LostFocus="GraphingControl_LostFocus"
                                   RequestedTheme="Light"
                                   UseSystemFocusVisuals="True"
-                                  VariablesUpdated="GraphingControl_VariablesUpdated"/>
+                                  VariablesUpdated="GraphingControl_VariablesUpdated">
+                <graphControl:Grapher.ContextFlyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem x:Uid="GraphCopyMenuItem"
+                                        Click="GraphMenuFlyoutItem_Click"
+                                        Icon="Copy"/>
+                    </MenuFlyout>
+                </graphControl:Grapher.ContextFlyout>
+            </graphControl:Grapher>
             <Border MinHeight="36"
                     Margin="0,12,12,0"
                     HorizontalAlignment="Right"
