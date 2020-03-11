@@ -833,9 +833,24 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackPanel x:Name="VariableStackPanel" x:Load="{x:Bind local:EquationInputArea.ManageEditVariablesButtonLoaded(Variables.Size), Mode=OneWay}">
+                <StackPanel.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="DividerBrush" Color="#33000000" />
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Dark">
+                                <SolidColorBrush x:Key="DividerBrush" Color="#60FFFFFF"/>
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="HighContrast">
+                                <SolidColorBrush x:Key="DividerBrush" Color="Transparent" />
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </StackPanel.Resources>
                 <Rectangle Height="1"
                            Margin="12"
-                           Fill="#33000000"/>
+                           Fill="{ThemeResource DividerBrush}"/>
                 <ListView IsItemClickEnabled="False"
                           ItemTemplate="{StaticResource VariableDataTemplate}"
                           ItemsSource="{x:Bind Variables, Mode=OneWay}"
