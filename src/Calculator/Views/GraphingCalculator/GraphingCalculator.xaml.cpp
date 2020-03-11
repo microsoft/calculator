@@ -49,8 +49,9 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::UI::Popups;
 using namespace Windows::UI::ViewManagement;
+namespace MUXC = Microsoft::UI::Xaml::Controls;
 
-constexpr auto sc_ViewModelPropertyName = L"ViewModel";
+    constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, IsSmallState);
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, GraphControlAutomationName);
@@ -428,9 +429,9 @@ void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventAr
     IsKeyGraphFeaturesVisible = false;
 }
 
-Microsoft::UI::Xaml::Controls::TwoPaneViewPriority GraphingCalculator::GetPanePriority(bool isEquationModeActivated)
+MUXC::TwoPaneViewPriority GraphingCalculator::GetPanePriority(bool isEquationModeActivated)
 {
-    return isEquationModeActivated ? Microsoft::UI::Xaml::Controls::TwoPaneViewPriority::Pane2 : Microsoft::UI::Xaml::Controls::TwoPaneViewPriority::Pane1;
+    return isEquationModeActivated ? MUXC::TwoPaneViewPriority::Pane2 : MUXC::TwoPaneViewPriority::Pane1;
 }
 
 Platform::String ^ GraphingCalculator::GetInfoForSwitchModeToggleButton(bool isChecked)

@@ -62,11 +62,10 @@ namespace CalculatorApp
         m_windowActivatedToken = Window::Current->Activated +=
             ref new Windows::UI::Xaml::WindowActivatedEventHandler(this, &CalculatorApp::TitleBar::OnWindowActivated);
         // Set properties
-        SetTitleBarHeight();
-        SetTitleBarControlColors();
-
-        SetTitleBarVisibility();
-        SetTitleBarPadding();
+        this->SetTitleBarHeight();
+        this->SetTitleBarControlColors();
+        this->SetTitleBarVisibility();
+        this->SetTitleBarPadding();
     }
 
     void TitleBar::OnUnloaded(_In_ Object ^ /*sender*/, _In_ RoutedEventArgs ^ /*e*/)

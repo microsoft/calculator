@@ -16,7 +16,7 @@ public
     // We can't use the TwoPaneView control from the SDK or from Microsoft.UI.Xaml because of a bug with C++ apps.
     // (see this issue: https://github.com/microsoft/microsoft-ui-xaml/pull/2045)
     // This class is a C++/CX port of the C++/WinRT version of Microsoft.UI.Xaml (commit b3a2e45) which include the patch to fix the crash.
-    // This fork should be removed and replaced by the real TwoPaneView when Microsoft.UI.Xaml will release a new nuget package including the patch.
+    // This fork adds also 4 new properties Pane1MinLength, Pane2MinLength, Pane1MaxLength, Pane2MaxLength
 public
     ref class TwoPaneViewCX sealed : public Windows::UI::Xaml::Controls::Control, [Windows::Foundation::Metadata::Default] ITwoPaneViewCX
     {
