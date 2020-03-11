@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "Delayer.h"
+#include "DispatcherTimerDelayer.h"
 
 using namespace CalculatorApp;
 using namespace Windows::UI::Xaml;

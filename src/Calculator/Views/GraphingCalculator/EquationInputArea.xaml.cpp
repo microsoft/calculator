@@ -430,7 +430,7 @@ void EquationInputArea::Slider_ValueChanged(Object ^ sender, RangeBaseValueChang
 {
     if (variableSliders == nullptr)
     {
-        variableSliders = ref new Map<String ^, Delayer ^>();
+        variableSliders = ref new Map<String ^, DispatcherTimerDelayer ^>();
     }
 
     auto slider = static_cast<Slider ^>(sender);
@@ -454,7 +454,7 @@ void EquationInputArea::Slider_ValueChanged(Object ^ sender, RangeBaseValueChang
     {
         TimeSpan timeSpan;
         timeSpan.Duration = 10000000; // The duration is 1 second. TimeSpan durations are expressed in 100 nanosecond units.
-        Delayer ^ delayer = ref new Delayer(timeSpan);
+        DispatcherTimerDelayer ^ delayer = ref new DispatcherTimerDelayer(timeSpan);
         delayer->Action += ref new EventHandler<Platform::Object ^>([this, name](Platform::Object ^ sender, Platform::Object ^ e) {
             TraceLogger::GetInstance()->LogVariableChanged("Slider", name);
             variableSliders->Remove(name);
