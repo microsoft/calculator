@@ -567,7 +567,6 @@ namespace GraphControl
         if (m_renderMain)
         {
             Point currPosition = e->GetCurrentPoint(/* relativeTo */ this)->Position;
-            m_renderMain->PointerLocation = currPosition;
 
             if (m_renderMain->ActiveTracing)
             {
@@ -582,8 +581,17 @@ namespace GraphControl
             }
             else if (m_cachedCursor != nullptr)
             {
+                m_renderMain->PointerLocation = currPosition;
+
                 ::CoreWindow::GetForCurrentThread()->PointerCursor = m_cachedCursor;
                 m_cachedCursor = nullptr;
+
+                UpdateTracingChanged();
+            }
+            else
+            {
+                m_renderMain->PointerLocation = currPosition;
+                UpdateTracingChanged();
             }
 
             e->Handled = true;

@@ -45,6 +45,8 @@ namespace GraphControl::DX
 
         void CreateWindowSizeDependentResources();
 
+        bool RenderMain::CanRenderPoint();
+
         bool RunRenderPass();
 
         Windows::Foundation::IAsyncAction ^ RunRenderPassAsync(bool allowCancel = true);
@@ -78,7 +80,12 @@ namespace GraphControl::DX
                 if (m_activeTracingPointerLocation != newValue)
                 {
                     m_activeTracingPointerLocation = newValue;
-                    RunRenderPass();
+
+                    bool wasPointRendered = m_Tracing;
+                    if (CanRenderPoint() || wasPointRendered)
+                    {
+                        RunRenderPass();
+                    }
                 }
             }
         }
