@@ -837,13 +837,13 @@
                     <ResourceDictionary>
                         <ResourceDictionary.ThemeDictionaries>
                             <ResourceDictionary x:Key="Light">
-                                <SolidColorBrush x:Key="DividerBrush" Color="#33000000" />
+                                <SolidColorBrush x:Key="DividerBrush" Color="#33000000"/>
                             </ResourceDictionary>
                             <ResourceDictionary x:Key="Dark">
                                 <SolidColorBrush x:Key="DividerBrush" Color="#60FFFFFF"/>
                             </ResourceDictionary>
                             <ResourceDictionary x:Key="HighContrast">
-                                <SolidColorBrush x:Key="DividerBrush" Color="Transparent" />
+                                <SolidColorBrush x:Key="DividerBrush" Color="Transparent"/>
                             </ResourceDictionary>
                         </ResourceDictionary.ThemeDictionaries>
                     </ResourceDictionary>
@@ -864,10 +864,11 @@
                             <Setter Property="Margin" Value="1,0,1,0"/>
                         </Style>
                     </ListView.ItemContainerStyle>
+                    <ListView.ItemContainerTransitions>
+                        <TransitionCollection/>
+                    </ListView.ItemContainerTransitions>
                     <ListView.Transitions>
-                        <TransitionCollection>
-                            <AddDeleteThemeTransition/>
-                        </TransitionCollection>
+                        <TransitionCollection/>
                     </ListView.Transitions>
                 </ListView>
             </StackPanel>
