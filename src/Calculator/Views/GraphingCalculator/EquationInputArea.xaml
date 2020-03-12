@@ -15,6 +15,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
+            <converters:BooleanNegationConverter x:Name="BooleanNegationConverter"/>
 
             <DataTemplate x:Key="VariableDataTemplate" x:DataType="vm:VariableViewModel">
                 <Grid DataContext="{x:Bind}" Tapped="VariableAreaTapped">
@@ -130,9 +131,11 @@
                             <Slider Grid.Column="1"
                                     Margin="8,0,8,-6"
                                     VerticalAlignment="Center"
+                                    DataContext="{x:Bind}"
                                     Maximum="{x:Bind Max, Mode=TwoWay}"
                                     Minimum="{x:Bind Min, Mode=TwoWay}"
                                     StepFrequency="{x:Bind Step, Mode=TwoWay}"
+                                    ValueChanged="Slider_ValueChanged"
                                     Value="{x:Bind Value, Mode=TwoWay}"/>
 
                             <Grid Grid.Row="1"
@@ -391,7 +394,8 @@
                                               Grid.Column="1"
                                               MinWidth="44"
                                               MinHeight="44"
-                                              VerticalAlignment="Stretch">
+                                              VerticalAlignment="Stretch"
+                                              IsChecked="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsEquationLineDisabled, Mode=TwoWay}">
                                     <ToggleButton.Content>
                                         <StackPanel HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"

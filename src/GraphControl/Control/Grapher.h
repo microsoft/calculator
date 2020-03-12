@@ -12,6 +12,7 @@
 #include "Common.h"
 #include "Models/KeyGraphFeaturesInfo.h"
 #include <ppltasks.h>
+#include "Logger/TraceLogger.h"
 
 namespace GraphControl
 {
@@ -126,6 +127,7 @@ public
                 if (value != (int)m_solver->EvalOptions().GetTrigUnitMode())
                 {
                     m_solver->EvalOptions().SetTrigUnitMode((Graphing::EvalTrigUnitMode)value);
+                    m_trigUnitsChanged = true;
                     PlotGraph(true);
                 }
             }
@@ -296,6 +298,7 @@ public
         void SetEquationsAsValid();
         void SetEquationErrors();
         std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> TryInitializeGraph(bool keepCurrentView, _In_ const Graphing::IExpression* graphingExp = nullptr);
+
     private:
         DX::RenderMain ^ m_renderMain = nullptr;
 
@@ -317,6 +320,7 @@ public
         const std::shared_ptr<Graphing::IGraph> m_graph;
         bool m_calculatedForceProportional = false;
         bool m_tracingTracking;
+        bool m_trigUnitsChanged;
         enum KeysPressedSlots
         {
             Left,

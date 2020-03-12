@@ -129,6 +129,7 @@ void EquationInputArea::EquationTextBox_Submitted(Object ^ sender, MathRichEditB
         || (submission->Source == EquationSubmissionSource::FOCUS_LOST && submission->HasTextChanged && eq->Expression != nullptr
             && eq->Expression->Length() > 0))
     {
+        eq->IsLineEnabled = true;
         unsigned int index = 0;
         if (Equations->IndexOf(eq, &index))
         {
@@ -219,6 +220,8 @@ void EquationInputArea::EquationTextBox_EquationButtonClicked(Object ^ sender, R
 {
     auto eq = GetViewModelFromEquationTextBox(sender);
     eq->IsLineEnabled = !eq->IsLineEnabled;
+
+    TraceLogger::GetInstance()->LogShowHideButtonClicked(eq->IsLineEnabled ? false : true);
 }
 
 void EquationInputArea::EquationTextBox_Loaded(Object ^ sender, RoutedEventArgs ^ e)
@@ -333,21 +336,25 @@ void EquationInputArea::SubmitTextbox(TextBox ^ sender)
     {
         val = validateDouble(sender->Text, variableViewModel->Value);
         variableViewModel->Value = val;
+        TraceLogger::GetInstance()->LogVariableChanged(L"ValueTextBox", variableViewModel->Name);
     }
     else if (sender->Name == "MinTextBox")
     {
         val = validateDouble(sender->Text, variableViewModel->Min);
         variableViewModel->Min = val;
+        TraceLogger::GetInstance()->LogVariableSettingsChanged(L"MinTextBox");
     }
     else if (sender->Name == "MaxTextBox")
     {
         val = validateDouble(sender->Text, variableViewModel->Max);
         variableViewModel->Max = val;
+        TraceLogger::GetInstance()->LogVariableSettingsChanged(L"MaxTextBox");
     }
     else if (sender->Name == "StepTextBox")
     {
         val = validateDouble(sender->Text, variableViewModel->Step);
         variableViewModel->Step = val;
+        TraceLogger::GetInstance()->LogVariableSettingsChanged(L"StepTextBox");
     }
     else
     {
@@ -417,6 +424,50 @@ void EquationInputArea::VariableAreaTapped(Object ^ sender, TappedRoutedEventArg
 void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
 {
     EquationFormatRequested(sender, e);
+}
+
+void EquationInputArea::Slider_ValueChanged(Object ^ sender, RangeBaseValueChangedEventArgs ^ e)
+{
+    if (variableSliders == nullptr)
+    {
+        variableSliders = ref new Map<String ^, DispatcherTimerDelayer ^>();
+    }
+
+    auto slider = static_cast<Slider ^>(sender);
+
+    // The slider value updates when the user uses the TextBox to change the variable value.
+    // Check the focus state so that we don't trigger the event when the user used the textbox to change the variable value.
+    if (slider->FocusState == Windows::UI::Xaml::FocusState::Unfocused)
+    {
+        return;
+    }
+
+    auto variableVM = static_cast<VariableViewModel ^>(slider->DataContext);
+    if (variableVM == nullptr)
+    {
+        return;
+    }
+
+    auto name = variableVM->Name;
+
+    if (!variableSliders->HasKey(name))
+    {
+        TimeSpan timeSpan;
+        timeSpan.Duration = 10000000; // The duration is 1 second. TimeSpan durations are expressed in 100 nanosecond units.
+        DispatcherTimerDelayer ^ delayer = ref new DispatcherTimerDelayer(timeSpan);
+        delayer->Action += ref new EventHandler<Platform::Object ^>([this, name](Platform::Object ^ sender, Platform::Object ^ e) {
+            TraceLogger::GetInstance()->LogVariableChanged("Slider", name);
+            variableSliders->Remove(name);
+        });
+        delayer->Start();
+        variableSliders->Insert(name, delayer);
+    }
+
+    else
+    {
+        auto delayer = variableSliders->Lookup(name);
+        delayer->ResetAndStart();
+    }
 }
 
 EquationViewModel ^ EquationInputArea::GetViewModelFromEquationTextBox(Object ^ sender)

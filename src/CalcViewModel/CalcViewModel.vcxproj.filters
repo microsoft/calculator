@@ -169,9 +169,6 @@
     <ClInclude Include="DataLoaders\UnitConverterDataLoader.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
-    <ClInclude Include="Common\TraceActivity.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="DataLoaders\DataLoaderMockConstants.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
@@ -200,7 +197,7 @@
       <Filter>GraphingCalculator</Filter>
     </ClInclude>
     <ClInclude Include="Common\DelegateCommand.h">
-	    <Filter>Common</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

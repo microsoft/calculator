@@ -197,7 +197,16 @@ namespace GraphControl
             return;
         }
 
-        PlotGraph(true);
+        bool keepCurrentView = true;
+
+        // If the equation has changed, the IsLineEnabled state is reset.
+        // This checks if the equation has been reset and sets keepCurrentView to false in this case.
+        if (!equation->HasGraphError && !equation->IsValidated && equation->IsLineEnabled)
+        {
+            keepCurrentView = false;
+        }
+
+        PlotGraph(keepCurrentView);
     }
 
     KeyGraphFeaturesInfo ^ Grapher::AnalyzeEquation(Equation ^ equation)
@@ -254,6 +263,25 @@ namespace GraphControl
             }
         }
 
+        int valid = 0;
+        int invalid = 0;
+        for (Equation ^ eq : Equations)
+        {
+            if (eq->HasGraphError)
+            {
+                invalid++;
+            }
+            if (eq->IsValidated)
+            {
+                valid++;
+            }
+        }
+        if (!m_trigUnitsChanged)
+        {
+            TraceLogger::GetInstance()->LogEquationCountChanged(valid, invalid);
+        }
+
+        m_trigUnitsChanged = false;
         GraphPlottedEvent(this, ref new RoutedEventArgs());
     }
 
@@ -455,6 +483,11 @@ namespace GraphControl
                     updatedVariables->Insert(key, value);
                 }
             }
+        }
+
+        if (Variables->Size != updatedVariables->Size)
+        {
+            TraceLogger::GetInstance()->LogVariableCountChanged(updatedVariables->Size);
         }
 
         Variables = updatedVariables;
@@ -968,6 +1001,7 @@ optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bo
         m_graph->GetRenderer()->GetDisplayRanges(xMin, xMax, yMin, yMax);
         auto initResult = m_graph->TryInitialize(graphingExp);
         m_graph->GetRenderer()->SetDisplayRanges(xMin, xMax, yMin, yMax);
+
         return initResult;
     }
     else

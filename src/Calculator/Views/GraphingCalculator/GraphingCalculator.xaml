@@ -390,7 +390,7 @@
                               MaxWidth="420"/>
         </Grid.ColumnDefinitions>
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
+            <VisualStateGroup CurrentStateChanged="OnVisualStateChanged">
                 <VisualState x:Name="ColumnsState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="800"/>

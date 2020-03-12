@@ -59,6 +59,8 @@ KeyGraphFeaturesInfo ^ KeyGraphFeaturesInfo::Create(IGraphFunctionAnalysisData d
     res->ObliqueAsymptotes = ConvertWStringVector(data.ObliqueAsymptotes);
     res->TooComplexFeatures = data.TooComplexFeatures;
     res->AnalysisError = CalculatorApp::AnalysisErrorType::NoError;
+
+    TraceLogger::GetInstance()->LogFunctionAnalysisPerformed(CalculatorApp::AnalysisErrorType::NoError, res->TooComplexFeatures);
     return res;
 }
 
@@ -66,5 +68,7 @@ KeyGraphFeaturesInfo ^ KeyGraphFeaturesInfo::Create(CalculatorApp::AnalysisError
 {
     auto res = ref new KeyGraphFeaturesInfo();
     res->AnalysisError = type;
+
+    TraceLogger::GetInstance()->LogFunctionAnalysisPerformed(type, 0);
     return res;
 }
