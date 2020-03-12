@@ -4266,4 +4266,24 @@
     <value>Copy</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
+  <data name="cutEquationMenuItem.Text" xml:space="preserve">
+    <value>Cut</value>
+    <comment>Cut menu item from the Equation TextBox</comment>
+  </data>
+  <data name="copyEquationMenuItem.Text" xml:space="preserve">
+    <value>Copy</value>
+    <comment>Copy menu item from the Equation TextBox</comment>
+  </data>
+  <data name="pasteEquationMenuItem.Text" xml:space="preserve">
+    <value>Paste</value>
+    <comment>Paste menu item from the Equation TextBox</comment>
+  </data>
+  <data name="undoEquationMenuItem.Text" xml:space="preserve">
+    <value>Undo</value>
+    <comment>Undo menu item from the Equation TextBox</comment>
+  </data>
+  <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
+    <value>Select All</value>
+    <comment>Select all menu item from the Equation TextBox</comment>
+  </data>
 </root>

@@ -582,6 +582,20 @@
                                                                   TextWrapping="NoWrap">
                                             <controls:MathRichEditBox.ContextFlyout>
                                                 <MenuFlyout x:Name="MathRichEditContextMenu">
+                                                    <MenuFlyoutItem x:Name="CutMenuItem"
+                                                                    x:Uid="cutEquationMenuItem"
+                                                                    Icon="Cut"/>
+                                                    <MenuFlyoutItem x:Name="CopyMenuItem"
+                                                                    x:Uid="copyEquationMenuItem"
+                                                                    Icon="Copy"/>
+                                                    <MenuFlyoutItem x:Name="PasteMenuItem"
+                                                                    x:Uid="pasteEquationMenuItem"
+                                                                    Icon="Paste"/>
+                                                    <MenuFlyoutItem x:Name="UndoMenuItem"
+                                                                    x:Uid="undoEquationMenuItem"
+                                                                    Icon="Undo"/>
+                                                    <MenuFlyoutItem x:Name="SelectAllMenuItem" x:Uid="selectAllEquationMenuItem"/>
+                                                    <MenuFlyoutSeparator/>
                                                     <MenuFlyoutItem x:Name="FunctionAnalysisMenuItem">
                                                         <MenuFlyoutItem.Icon>
                                                             <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xE3B5;"/>
