@@ -5,7 +5,6 @@
 
 #include "Common.h"
 
-
 // A trace logging provider can only be instantiated and registered once per module.
 // This class implements a singleton model ensure that only one instance is created.
 namespace GraphControl
