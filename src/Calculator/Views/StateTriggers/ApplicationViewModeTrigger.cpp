@@ -47,7 +47,7 @@ void ApplicationViewModeTrigger::UpdateTrigger()
         return;
     }
 
-    switch ((int)viewMode)
+    switch (static_cast<int>(viewMode))
     {
     case 0 /*ApplicationViewMode::Default*/:
         SetActive(this->ViewMode == AppViewMode::Normal);
@@ -66,12 +66,12 @@ void ApplicationViewModeTrigger::UpdateTrigger()
             if (display1->WorkAreaSize.Width > display1->WorkAreaSize.Height && display1->WorkAreaSize.Height == display2->WorkAreaSize.Height)
             {
                 SetActive(this->ViewMode == AppViewMode::DoubleLandscape);
-                break;
+                return;
             }
             else if (display1->WorkAreaSize.Height > display1->WorkAreaSize.Width && display1->WorkAreaSize.Width == display2->WorkAreaSize.Width)
             {
                 SetActive(this->ViewMode == AppViewMode::DoublePortrait);
-                break;
+                return;
             }
         }
         SetActive(this->ViewMode == AppViewMode::Normal);
