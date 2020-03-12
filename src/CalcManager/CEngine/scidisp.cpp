@@ -215,10 +215,12 @@ int CCalcEngine::IsNumberInvalid(const wstring& numberString, int iMaxExp, int i
 \****************************************************************************/
 vector<uint32_t> CCalcEngine::DigitGroupingStringToGroupingVector(wstring_view groupingString)
 {
-    vector<uint32_t> grouping{};
+    vector<uint32_t> grouping;
     uint32_t currentGroup = 0;
     wchar_t* next = nullptr;
-    for (const wchar_t* itr = groupingString.data(); *itr != L'\0'; ++itr)
+    const wchar_t* begin = groupingString.data();
+    const wchar_t* end = begin + groupingString.length();
+    for (auto itr = begin; itr != end; ++itr)
     {
         // Try to parse a grouping number from the string
         currentGroup = wcstoul(itr, &next, 10);
@@ -232,7 +234,7 @@ vector<uint32_t> CCalcEngine::DigitGroupingStringToGroupingVector(wstring_view g
         // If we found a grouping and aren't at the end of the string yet,
         // jump to the next position in the string (the ';').
         // The loop will then increment us to the next character, which should be a number.
-        if (next && (static_cast<size_t>(next - groupingString.data()) < groupingString.length()))
+        if (next && (static_cast<size_t>(next - begin) < groupingString.length()))
         {
             itr = next;
         }
@@ -312,7 +314,7 @@ wstring CCalcEngine::GroupDigits(wstring_view delimiter, vector<uint32_t> const&
         ritr = displayString.rbegin();
     }
 
-    wstringstream groupedStream{};
+    wstring result;
     uint32_t groupingSize = 0;
 
     auto groupItr = grouping.begin();
@@ -323,7 +325,7 @@ wstring CCalcEngine::GroupDigits(wstring_view delimiter, vector<uint32_t> const&
     auto reverse_end = displayString.rend() - (isNumNegative ? 1 : 0);
     while (ritr != reverse_end)
     {
-        groupedStream << *ritr++;
+        result += *ritr++;
         groupingSize++;
 
         // If a group is complete, add a separator
@@ -332,7 +334,7 @@ wstring CCalcEngine::GroupDigits(wstring_view delimiter, vector<uint32_t> const&
         // - we are at the end of the digit string
         if (currGrouping != 0 && (groupingSize % currGrouping) == 0 && ritr != reverse_end)
         {
-            groupedStream << wstring{ delimiter };
+            result += delimiter;
             groupingSize = 0; // reset for a new group
 
             // Shift the grouping to next values if they exist
@@ -364,11 +366,10 @@ wstring CCalcEngine::GroupDigits(wstring_view delimiter, vector<uint32_t> const&
     // now copy the negative sign if it is there
     if (isNumNegative)
     {
-        groupedStream << displayString[0];
+        result += displayString[0];
     }
 
-    auto groupedString = groupedStream.str();
-    wstring result(groupedString.rbegin(), groupedString.rend());
+    reverse(result.begin(), result.end());
     // Add the right (fractional or exponential) part of the number to the final string.
     if (hasDecimal)
     {

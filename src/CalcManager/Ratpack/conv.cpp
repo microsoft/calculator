@@ -145,7 +145,7 @@ void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER* const src)
 //
 //-----------------------------------------------------------------------------
 
-void _destroynum(_In_ PNUMBER pnum)
+void _destroynum(_Frees_ptr_opt_ PNUMBER pnum)
 
 {
     if (pnum != nullptr)
@@ -167,7 +167,7 @@ void _destroynum(_In_ PNUMBER pnum)
 //
 //-----------------------------------------------------------------------------
 
-void _destroyrat(_In_ PRAT prat)
+void _destroyrat(_Frees_ptr_opt_ PRAT prat)
 
 {
     if (prat != nullptr)
@@ -741,8 +741,10 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
         destroynum(pnumret);
         pnumret = nullptr;
     }
-
-    stripzeroesnum(pnumret, precision);
+    else
+    {
+        stripzeroesnum(pnumret, precision);
+    }
 
     return pnumret;
 }
@@ -760,7 +762,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
 //
 //-----------------------------------------------------------------------------
 
-PRAT i32torat(_In_ int32_t ini32)
+PRAT i32torat(int32_t ini32)
 
 {
     PRAT pratret = nullptr;
@@ -784,7 +786,7 @@ PRAT i32torat(_In_ int32_t ini32)
 //
 //-----------------------------------------------------------------------------
 
-PRAT Ui32torat(_In_ uint32_t inui32)
+PRAT Ui32torat(uint32_t inui32)
 
 {
     PRAT pratret = nullptr;
@@ -1202,78 +1204,73 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
     }
 
     // Begin building the result string
-    wstringstream resultStream{};
+    wstring result;
 
     // Make sure negative zeros aren't allowed.
     if ((pnum->sign == -1) && (length > 0))
     {
-        resultStream << L'-';
+        result = L'-';
     }
 
     if (exponent <= 0 && !useSciForm)
     {
-        resultStream << L'0';
-        resultStream << g_decimalSeparator;
+        result += L'0';
+        result += g_decimalSeparator;
         // Used up a digit unaccounted for.
     }
 
     while (exponent < 0)
     {
-        resultStream << L'0';
+        result += L'0';
         exponent++;
     }
 
     while (length > 0)
     {
         exponent--;
-        resultStream << DIGITS[*pmant--];
+        result += DIGITS[*pmant--];
         length--;
 
         // Be more regular in using a decimal point.
         if (exponent == 0)
         {
-            resultStream << g_decimalSeparator;
+            result += g_decimalSeparator;
         }
     }
 
     while (exponent > 0)
     {
-        resultStream << L'0';
+        result += L'0';
         exponent--;
         // Be more regular in using a decimal point.
         if (exponent == 0)
         {
-            resultStream << g_decimalSeparator;
+            result += g_decimalSeparator;
         }
     }
 
     if (useSciForm)
     {
-        resultStream << (radix == 10 ? L'e' : L'^');
-        resultStream << (eout < 0 ? L'-' : L'+');
+        result += (radix == 10 ? L'e' : L'^');
+        result += (eout < 0 ? L'-' : L'+');
         eout = abs(eout);
-        wstringstream exponentStream{};
+        wstring expString{};
         do
         {
-            exponentStream << DIGITS[eout % radix];
+            expString += DIGITS[eout % radix];
             eout /= radix;
         } while (eout > 0);
 
-        auto expString = exponentStream.str();
-        for (auto ritr = expString.rbegin(); ritr != expString.rend(); ritr++)
-        {
-            resultStream << *ritr;
-        }
+        result.insert(result.end(), expString.crbegin(), expString.crend());
     }
 
     // Remove trailing decimal
-    auto resultString = resultStream.str();
-    if (!resultString.empty() && resultString.back() == g_decimalSeparator)
+    if (!result.empty() && result.back() == g_decimalSeparator)
     {
-        resultString.pop_back();
+        result.pop_back();
     }
 
-    return resultString;
+    return result;
 }
 
 //-----------------------------------------------------------------------------

@@ -6,6 +6,7 @@
 
 using namespace CalculatorApp::Common::Automation;
 using namespace Platform;
+using namespace Windows::UI::Xaml::Automation::Peers;
 
 namespace CalculatorApp::Common::Automation
 {
@@ -22,6 +23,8 @@ namespace CalculatorApp::Common::Automation
         StringReference DisplayCopied(L"DisplayCopied");
         StringReference OpenParenthesisCountChanged(L"OpenParenthesisCountChanged");
         StringReference NoParenthesisAdded(L"NoParenthesisAdded");
+        StringReference GraphModeChanged(L"GraphModeChanged");
+        StringReference GraphViewChanged(L"GraphViewChanged");
     }
 }
 
@@ -138,4 +141,22 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetNoRightParenthesisAddedAnnounc
         CalculatorActivityIds::NoParenthesisAdded,
         AutomationNotificationKind::ActionCompleted,
         AutomationNotificationProcessing::ImportantMostRecent);
+}
+
+NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphModeChangedAnnouncement(Platform::String ^ announcement)
+{
+    return ref new NarratorAnnouncement(
+        announcement,
+        CalculatorActivityIds::GraphModeChanged,
+        AutomationNotificationKind::ActionCompleted,
+        AutomationNotificationProcessing::ImportantMostRecent);
+}
+
+NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphViewChangedAnnouncement(Platform::String ^ announcement)
+{
+    return ref new NarratorAnnouncement(
+        announcement,
+        CalculatorActivityIds::GraphViewChanged,
+        AutomationNotificationKind::ActionCompleted,
+        AutomationNotificationProcessing::MostRecent);
 }

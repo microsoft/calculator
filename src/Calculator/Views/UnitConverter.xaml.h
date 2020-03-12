@@ -8,7 +8,7 @@
 
 #include "Views/UnitConverter.g.h"
 #include "Common/AlwaysSelectedCollectionView.h"
-#include "CalcViewModel/Common/ValidatingConverters.h"
+#include "Common/ValidatingConverters.h"
 #include "Converters/BooleanToVisibilityConverter.h"
 #include "Converters/VisibilityNegationConverter.h"
 #include "CalcViewModel/UnitConverterViewModel.h"
@@ -87,7 +87,6 @@ namespace CalculatorApp
 
         Windows::UI::Xaml::DispatcherTimer ^ m_delayTimer;
 
-        bool m_isAnimationEnabled;
         void SupplementaryResultsPanelInGrid_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
         void OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e);
     };

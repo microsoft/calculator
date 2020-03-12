@@ -9,8 +9,8 @@ pr: none
 
 variables:
   versionMajor: 10
-  versionMinor: 1907
-  versionBuild: $[counter('10.1907.*', 0)]
+  versionMinor: 2001
+  versionBuild: $[counter('10.2001.*', 0)]
   versionPatch: 0
 
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
@@ -30,11 +30,6 @@ jobs:
     platform: ARM
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-- template: ./templates/build-app-internal.yaml
-  parameters:
-    platform: ARM64
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
-
 - template: ./templates/run-ui-tests.yaml
   parameters:
     platform: x64
@@ -48,16 +43,10 @@ jobs:
 - template: ./templates/run-unit-tests.yaml
   parameters:
     platform: x64
-    reimageServiceConnection: macool-sandbox-interactiveDesktopRS5
-    reimageSubscriptionId: 012a8008-c00f-45b3-9828-41ebba30141d
-    reimageResourceGroup: interactiveDesktopRS5
 
 - template: ./templates/run-unit-tests.yaml
   parameters:
     platform: x86
-    reimageServiceConnection: macool-sandbox-interactiveDesktopRS5
-    reimageSubscriptionId: 012a8008-c00f-45b3-9828-41ebba30141d
-    reimageResourceGroup: interactiveDesktopRS5
 
 - template: ./templates/package-appxbundle.yaml
 

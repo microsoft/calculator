@@ -177,6 +177,11 @@ namespace CalculatorEngineTests
 
             groupingVector = { 4, 7, 0 };
             VERIFY_ARE_EQUAL(groupingVector, CCalcEngine::DigitGroupingStringToGroupingVector(L"4;16;7;25;0"), L"Verify we ignore oversize grouping");
+
+            groupingVector = { 3, 0 };
+            constexpr wstring_view nonRepeatingGrouping = L"3;0;0";
+            constexpr wstring_view repeatingGrouping = nonRepeatingGrouping.substr(0, 3);
+            VERIFY_ARE_EQUAL(groupingVector, CCalcEngine::DigitGroupingStringToGroupingVector(repeatingGrouping), L"Verify we don't go past the end of wstring_view range");
         }
 
         TEST_METHOD(TestGroupDigits)

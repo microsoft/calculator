@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "WindowFrameService.h"
-#include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "Common/KeyboardShortcutManager.h"
 #include "CalcViewModel/Common/TraceLogger.h"
 
 using namespace concurrency;
@@ -118,7 +118,7 @@ namespace CalculatorApp
 
     void WindowFrameService::OnConsolidated(_In_ ApplicationView ^ sender, _In_ ApplicationViewConsolidatedEventArgs ^ e)
     {
-        TraceLogger::GetInstance().UpdateWindowCount();
+        TraceLogger::GetInstance()->DecreaseWindowCount();
         auto parent = m_parent.Resolve<App>();
         if (parent != nullptr)
         {

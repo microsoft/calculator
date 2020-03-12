@@ -29,21 +29,21 @@ namespace CalculatorApp
 
         DEPENDENCY_PROPERTY_OWNER(CalculatorScientificOperators);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, IsErrorVisualState, false);
-        DEPENDENCY_PROPERTY_WITH_DEFAULT(bool, IsWideLayout, false);
 
-        bool IsShiftEnabled(bool isWideLayout, bool isErrorState)
-        {
-            return !(isWideLayout || isErrorState);
-        }
         void OpenParenthesisButton_GotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         Platform::String ^ ParenthesisCountToString(unsigned int count);
 
     private:
-        void ShortLayout_Completed(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
-        void WideLayout_Completed(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void OnIsErrorVisualStatePropertyChanged(bool oldValue, bool newValue);
-        void shiftButton_Check(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void shiftButton_IsEnabledChanged(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ e);
+        void ShiftButton_Check(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void ShiftButton_Uncheck(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void TrigFlyoutShift_Toggle(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void TrigFlyoutHyp_Toggle(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void FlyoutButton_Clicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void ShiftButton_IsEnabledChanged(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::DependencyPropertyChangedEventArgs ^ e);
         void SetOperatorRowVisibility();
+        void SetTrigRowVisibility();
+        void ClearEntryButton_LostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void ClearButton_LostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }

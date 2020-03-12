@@ -26,12 +26,13 @@ namespace CalculatorUITestFramework
         Pressure,
         Angle
     }
+
     public class NavigationMenu
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
-
         public WindowsElement NavigationMenuButton => this.session.TryFindElementByAccessibilityId("TogglePaneButton");
         public WindowsElement NavigationMenuPane => this.session.TryFindElementByClassName("SplitViewPane");
+
+        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
 
         /// <summary>
         /// Changes the mode using the navigation menu in the UI

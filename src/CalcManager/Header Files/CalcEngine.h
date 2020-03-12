@@ -14,10 +14,10 @@
 *
 \****************************************************************************/
 
+#include <random>
 #include "CCommand.h"
 #include "EngineStrings.h"
 #include "../Command.h"
-#include "../CalculatorVector.h"
 #include "../ExpressionCommand.h"
 #include "RadixType.h"
 #include "History.h" // for History Collector
@@ -68,6 +68,10 @@ public:
     {
         return m_bError;
     }
+    bool IsInputEmpty()
+    {
+        return m_input.IsEmpty() && (m_numberString.empty() || m_numberString == L"0");
+    }
     bool FInRecordingState()
     {
         return m_bRecord;
@@ -75,7 +79,7 @@ public:
     void SettingsChanged();
     bool IsCurrentTooBigForTrig();
     int GetCurrentRadix();
-    std::wstring GetCurrentResultForRadix(uint32_t radix, int32_t precision);
+    std::wstring GetCurrentResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix);
     void ChangePrecision(int32_t precision)
     {
         m_precision = precision;
@@ -94,7 +98,7 @@ public:
     {
         return s_engineStrings[std::to_wstring(ids)];
     }
-    static std::wstring_view GetString(std::wstring ids)
+    static std::wstring_view GetString(std::wstring_view ids)
     {
         return s_engineStrings[ids];
     }
@@ -103,6 +107,7 @@ public:
         return GetString(IdStrFromCmdId(nOpCode));
     }
     static std::wstring_view OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE angletype);
+    static std::wstring_view OpCodeToBinaryString(int nOpCode, bool isIntegerMode);
 
 private:
     bool m_fPrecedence;
@@ -147,11 +152,16 @@ private:
     NUM_WIDTH m_numwidth;                    // one of qword, dword, word or byte mode.
     int32_t m_dwWordBitWidth;                // # of bits in currently selected word size
 
+    std::unique_ptr<std::mt19937> m_randomGeneratorEngine;
+    std::unique_ptr<std::uniform_real_distribution<>> m_distr;
+
+    uint64_t m_carryBit;
+
     CHistoryCollector m_HistoryCollector; // Accumulator of each line of history as various commands are processed
 
     std::array<CalcEngine::Rational, NUM_WIDTH_LENGTH> m_chopNumbers;      // word size enforcement
     std::array<std::wstring, NUM_WIDTH_LENGTH> m_maxDecimalValueStrings;   // maximum values represented by a given word width based off m_chopNumbers
-    static std::unordered_map<std::wstring, std::wstring> s_engineStrings; // the string table shared across all instances
+    static std::unordered_map<std::wstring_view, std::wstring> s_engineStrings; // the string table shared across all instances
     wchar_t m_decimalSeparator;
     wchar_t m_groupSeparator;
 
@@ -165,12 +175,14 @@ private:
     void DisplayAnnounceBinaryOperator();
     void SetPrimaryDisplay(const std::wstring& szText, bool isError = false);
     void ClearTemporaryValues();
+    void ClearDisplay();
     CalcEngine::Rational TruncateNumForIntMath(CalcEngine::Rational const& rat);
     CalcEngine::Rational SciCalcFunctions(CalcEngine::Rational const& rat, uint32_t op);
     CalcEngine::Rational DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs);
     void SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwidth);
     int32_t DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
     uint32_t NRadixFromRadixType(RADIX_TYPE radixtype);
+    double GenerateRandomNumber();
 
     bool TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno);
     void CheckAndAddLastBinOpToHistory(bool addToHistory = true);

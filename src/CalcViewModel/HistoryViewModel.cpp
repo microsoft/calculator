@@ -36,12 +36,6 @@ HistoryViewModel::HistoryViewModel(_In_ CalculationManager::CalculatorManager* c
     ItemSize = 0;
 }
 
-void HistoryViewModel::RestoreCompleteHistory()
-{
-    RestoreHistory(CalculationManager::CALCULATOR_MODE::CM_STD);
-    RestoreHistory(CalculationManager::CALCULATOR_MODE::CM_SCI);
-}
-
 // this will reload Items with the history list based on current mode
 void HistoryViewModel::ReloadHistory(_In_ ViewMode currentMode)
 {
@@ -120,7 +114,7 @@ void HistoryViewModel::ShowItem(_In_ HistoryItemViewModel ^ e)
 {
     unsigned int index;
     Items->IndexOf(e, &index);
-    TraceLogger::GetInstance().LogHistoryItemLoad((ViewMode)m_currentMode, ItemSize, (int)(index));
+    TraceLogger::GetInstance()->LogHistoryItemLoad((ViewMode)m_currentMode, ItemSize, (int)(index));
     HistoryItemClicked(e);
 }
 
@@ -164,7 +158,11 @@ void HistoryViewModel::OnClearCommand(_In_ Platform::Object ^ e)
             UpdateItemSize();
         }
 
-        MakeHistoryClearedNarratorAnnouncement(HistoryResourceKeys::HistoryCleared, m_localizedHistoryCleared);
+        if (m_localizedHistoryCleared == nullptr)
+        {
+            m_localizedHistoryCleared = AppResourceProvider::GetInstance()->GetResourceString(HistoryResourceKeys::HistoryCleared);
+        }
+        HistoryAnnouncement = CalculatorAnnouncement::GetHistoryClearedAnnouncement(m_localizedHistoryCleared);
     }
 }
 
@@ -263,16 +261,16 @@ void HistoryViewModel::ClearHistory()
 void HistoryViewModel::SaveHistory()
 {
     ApplicationDataContainer ^ historyContainer = GetHistoryContainer(m_currentMode);
-    auto currentHistoryVector = m_calculatorManager->GetHistoryItems(m_currentMode);
+    auto const& currentHistoryVector = m_calculatorManager->GetHistoryItems(m_currentMode);
     bool failure = false;
     int index = 0;
     Platform::String ^ serializedHistoryItem;
 
-    for (auto iter = currentHistoryVector.begin(); iter != currentHistoryVector.end(); ++iter)
+    for (auto const& item : currentHistoryVector)
     {
         try
         {
-            serializedHistoryItem = SerializeHistoryItem(*iter);
+            serializedHistoryItem = SerializeHistoryItem(item);
             historyContainer->Values->Insert(index.ToString(), serializedHistoryItem);
         }
         catch (Platform::Exception ^)
@@ -369,11 +367,4 @@ bool HistoryViewModel::IsValid(_In_ CalculationManager::HISTORYITEM item)
 void HistoryViewModel::UpdateItemSize()
 {
     ItemSize = Items->Size;
-}
-
-void HistoryViewModel::MakeHistoryClearedNarratorAnnouncement(String ^ resourceKey, String ^ &formatVariable)
-{
-    String ^ announcement = LocalizationStringUtil::GetLocalizedNarratorAnnouncement(resourceKey, formatVariable);
-
-    HistoryAnnouncement = CalculatorAnnouncement::GetHistoryClearedAnnouncement(announcement);
 }

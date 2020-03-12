@@ -30,15 +30,16 @@ namespace CalculatorApp
 
         DEPENDENCY_PROPERTY_OWNER(CalculatorProgrammerRadixOperators);
 
+        void checkDefaultBitShift();
+
     private:
-        void Shift_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void SetVisibilityBinding(Windows::UI::Xaml::FrameworkElement ^ element, Platform::String ^ path, Windows::UI::Xaml::Data::IValueConverter ^ converter);
-        void OnLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void OnUnloaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void ProgModeRadixChange();
+        void BitshiftFlyout_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void FlyoutButton_Clicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void CollapseBitshiftButtons();
 
         bool m_isErrorVisualState;
-        Windows::Foundation::EventRegistrationToken m_progModeRadixChangeToken;
         void OpenParenthesisButton_GotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void ClearEntryButton_LostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void ClearButton_LostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }

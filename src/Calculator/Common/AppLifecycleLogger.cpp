@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "AppLifecycleLogger.h"
-#include "CalcViewModel/Common/TraceActivity.h"
+#include <winmeta.h>
 
 using namespace std;
 using namespace winrt;

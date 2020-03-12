@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -13,8 +13,8 @@ using namespace Platform;
 HistoryItemViewModel::HistoryItemViewModel(
     String ^ expression,
     String ^ result,
-    _In_ const shared_ptr<CalculatorVector<pair<wstring, int>>>& spTokens,
-    _In_ const shared_ptr<CalculatorVector<shared_ptr<IExpressionCommand>>>& spCommands)
+    _In_ const shared_ptr<vector<pair<wstring, int>>>& spTokens,
+    _In_ const shared_ptr<vector<shared_ptr<IExpressionCommand>>>& spCommands)
     : m_expression(expression)
     , m_result(result)
     , m_spTokens(spTokens)
@@ -27,47 +27,16 @@ HistoryItemViewModel::HistoryItemViewModel(
 
 String
     ^ HistoryItemViewModel::GetAccessibleExpressionFromTokens(
-        _In_ shared_ptr<CalculatorVector<pair<wstring, int>>> const& spTokens,
+        _In_ shared_ptr<vector<pair<wstring, int>>> const& spTokens,
         _In_ String ^ fallbackExpression)
 {
     // updating accessibility names for expression and result
-    wstringstream accExpression{};
-    accExpression << L"";
+    wstring accExpression{};
 
-    unsigned int nTokens;
-    HRESULT hr = spTokens->GetSize(&nTokens);
-    if (SUCCEEDED(hr))
+    for (const auto& tokenItem : *spTokens)
     {
-        pair<wstring, int> tokenItem;
-        for (unsigned int i = 0; i < nTokens; i++)
-        {
-            hr = spTokens->GetAt(i, &tokenItem);
-            if (FAILED(hr))
-            {
-                break;
-            }
-
-            wstring token = tokenItem.first;
-            accExpression << LocalizationService::GetNarratorReadableToken(StringReference(token.c_str()))->Data();
-        }
+        accExpression += LocalizationService::GetNarratorReadableToken(StringReference(tokenItem.first.c_str()))->Data();
     }
 
-    if (SUCCEEDED(hr))
-    {
-        wstring expressionSuffix{};
-        hr = spTokens->GetExpressionSuffix(&expressionSuffix);
-        if (SUCCEEDED(hr))
-        {
-            accExpression << expressionSuffix;
-        }
-    }
-
-    if (FAILED(hr))
-    {
-        return LocalizationService::GetNarratorReadableString(fallbackExpression);
-    }
-    else
-    {
-        return ref new String(accExpression.str().c_str());
-    }
+    return ref new String(accExpression.c_str());
 }

@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium.Windows;
 
 namespace CalculatorUITestFramework
@@ -11,20 +10,23 @@ namespace CalculatorUITestFramework
     /// </summary>
     public class StandardCalculatorPage
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public MemoryPanel MemoryPanel = new MemoryPanel();
         public HistoryPanel HistoryPanel = new HistoryPanel();
         public NavigationMenu NavigationMenu = new NavigationMenu();
-        public WindowsElement Header => this.session.TryFindElementByAccessibilityId("Header");
+        public StandardAoTCalculatorPage StandardAoTCalculatorPage = new StandardAoTCalculatorPage();
+        public CalculatorResults CalculatorResults = new CalculatorResults();
 
-        public WindowsElement CalculatorResult => this.session.TryFindElementByAccessibilityId("CalculatorResults");
+        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
 
+        /// <summary>
+        /// Navigates the caclulator to Standard mode and ensures that it is in standard mode
+        /// </summary>
         public void NavigateToStandardCalculator()
         {
             // Ensure that calculator is in standard mode
             this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            Assert.IsNotNull(CalculatorResult);
+            this.CalculatorResults.IsResultsDisplayPresent();
         }
 
         /// <summary>
@@ -32,18 +34,47 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ClearAll()
         {
+            this.StandardAoTCalculatorPage.NavigateToStandardMode();
+            this.MemoryPanel.ResizeWindowToDisplayMemoryLabel();
             this.StandardOperators.ClearButton.Click();
-            this.MemoryPanel.MemoryClear.Click();
+            this.MemoryPanel.NumberpadMCButton.Click();
             this.HistoryPanel.ClearHistory();
         }
 
-        /// <summary>
-        /// Gets the text from the display control and removes the narrator text that is not displayed in the UI.
-        /// </summary>
-        /// <returns>The string shown in the UI.</returns>
-        public string GetCalculatorResultText()
+        ///// <summary>
+        ///// Ensures that the calculator result text is zero; if not, clears all
+        ///// </summary>
+        public void EnsureCalculatorResultTextIsZero()
         {
-            return this.CalculatorResult.Text.Replace("Display is", string.Empty).Trim();
+            if ("0" != this.CalculatorResults.GetCalculatorResultText())
+            {
+                this.ClearAll();
+            }
+        }
+
+        ///// <summary>
+        ///// Ensures that the calculator is in Standard Mode
+        ///// </summary>
+        public void EnsureCalculatorIsInStandardMode()
+        {
+            string source = WinAppDriver.Instance.CalculatorSession.PageSource;
+            if (source.Contains("Header"))
+            {
+                string header = CalculatorApp.Header.Text;
+                if (header == "Standard")
+                {
+                    return;
+                }
+                else
+                {
+                    this.NavigateToStandardCalculator();
+                }
+            }
+            else
+            {
+                this.StandardAoTCalculatorPage.NavigateToStandardMode();
+            }
         }
     }
+
 }

@@ -44,7 +44,8 @@ namespace CalculatorApp
             Data = 13,
             Pressure = 14,
             Angle = 15,
-            Currency = 16
+            Currency = 16,
+            Graphing = 17
         };
 
     public
@@ -66,7 +67,10 @@ namespace CalculatorApp
                 wchar_t const* glyph,
                 CategoryGroupType group,
                 MyVirtualKey vKey,
-                bool categorySupportsNegative)
+                wchar_t const* aKey,
+                bool categorySupportsNegative,
+                bool enabled,
+                bool isPreview)
                 : viewMode(mode)
                 , serializationId(id)
                 , friendlyName(name)
@@ -74,7 +78,10 @@ namespace CalculatorApp
                 , glyph(glyph)
                 , groupType(group)
                 , virtualKey(vKey)
+                , accessKey(aKey)
                 , supportsNegative(categorySupportsNegative)
+                , isEnabled(enabled)
+                , isPreview(isPreview)
             {
             }
 
@@ -85,7 +92,10 @@ namespace CalculatorApp
             const wchar_t* const glyph;
             const CategoryGroupType groupType;
             const MyVirtualKey virtualKey;
+            const wchar_t* const accessKey;
             const bool supportsNegative;
+            const bool isEnabled;
+            const bool isPreview;
         };
 
     private
@@ -109,45 +119,18 @@ namespace CalculatorApp
         {
         public:
             OBSERVABLE_OBJECT();
+            PROPERTY_R(Platform::String ^, Name);
+            PROPERTY_R(Platform::String ^, AutomationName);
+            PROPERTY_R(Platform::String ^, Glyph);
+            PROPERTY_R(ViewMode, Mode);
+            PROPERTY_R(Platform::String ^, AccessKey);
+            PROPERTY_R(bool, SupportsNegative);
+            PROPERTY_R(bool, IsEnabled);
+            PROPERTY_R(bool, IsPreview);
 
             property Platform::String
-                ^ Name { Platform::String ^ get() { return m_name; } }
+                ^ AutomationId { Platform::String ^ get() { return m_Mode.ToString(); } }
 
-                property Platform::String
-                ^ AutomationName { Platform::String ^ get() { return m_automationName; } }
-
-                property Platform::String
-                ^ Glyph { Platform::String ^ get() { return m_glyph; } }
-
-                property int Position
-            {
-                int get()
-                {
-                    return m_position;
-                }
-            }
-
-            property ViewMode Mode
-            {
-                ViewMode get()
-                {
-                    return m_viewMode;
-                }
-            }
-
-            property Platform::String
-                ^ AutomationId { Platform::String ^ get() { return m_viewMode.ToString(); } }
-
-                property Platform::String
-                ^ AccessKey { Platform::String ^ get() { return m_accessKey; } }
-
-                property bool SupportsNegative
-            {
-                bool get()
-                {
-                    return m_supportsNegative;
-                }
-            }
 
             // For saving/restoring last mode used.
             static int Serialize(ViewMode mode);
@@ -156,9 +139,10 @@ namespace CalculatorApp
 
             static bool IsValidViewMode(ViewMode mode);
             static bool IsCalculatorViewMode(ViewMode mode);
+            static bool IsGraphingCalculatorViewMode(ViewMode mode);
             static bool IsDateCalculatorViewMode(ViewMode mode);
             static bool IsConverterViewMode(ViewMode mode);
-
+            static bool IsViewModePreview(ViewMode mode);
             static Platform::String ^ GetFriendlyName(ViewMode mode);
             static Platform::String ^ GetNameResourceKey(ViewMode mode);
             static CategoryGroupType GetGroupType(ViewMode mode);
@@ -178,16 +162,19 @@ namespace CalculatorApp
                            Platform::String ^ accessKey,
                            Platform::String ^ mode,
                            ViewMode viewMode,
-                           bool supportsNegative)
-                : m_name(name)
-                , m_automationName(automationName)
-                , m_glyph(glyph)
-                , m_accessKey(accessKey)
-                , m_mode(mode)
-                , m_viewMode(viewMode)
-                , m_supportsNegative(supportsNegative)
+                           bool supportsNegative,
+                           bool isEnabled,
+                           bool isPreview)
+                : m_Name(name)
+                , m_AutomationName(automationName)
+                , m_Glyph(glyph)
+                , m_AccessKey(accessKey)
+                , m_modeString(mode)
+                , m_Mode(viewMode)
+                , m_SupportsNegative(supportsNegative)
+                , m_IsEnabled(isEnabled)
+                , m_IsPreview(isPreview)
             {
-                m_position = NavCategory::GetPosition(m_viewMode);
             }
 
             static std::vector<MyVirtualKey> GetCategoryAcceleratorKeys();
@@ -195,14 +182,7 @@ namespace CalculatorApp
         private:
             static bool IsModeInCategoryGroup(ViewMode mode, CategoryGroupType groupType);
 
-            ViewMode m_viewMode;
-            Platform::String ^ m_name;
-            Platform::String ^ m_automationName;
-            Platform::String ^ m_glyph;
-            Platform::String ^ m_accessKey;
-            Platform::String ^ m_mode;
-            int m_position;
-            bool m_supportsNegative;
+            Platform::String ^ m_modeString;
         };
 
         [Windows::UI::Xaml::Data::Bindable] public ref class NavCategoryGroup sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
@@ -216,15 +196,11 @@ namespace CalculatorApp
 
             static Windows::Foundation::Collections::IObservableVector<NavCategoryGroup ^> ^ CreateMenuOptions();
 
-            static Platform::String ^ GetHeaderResourceKey(CategoryGroupType type);
-
             internal : static NavCategoryGroup ^ CreateCalculatorCategory();
             static NavCategoryGroup ^ CreateConverterCategory();
 
         private:
             NavCategoryGroup(const NavCategoryGroupInitializer& groupInitializer);
-
-            static std::vector<NavCategoryInitializer> GetInitializerCategoryGroup(CategoryGroupType groupType);
         };
     }
 }

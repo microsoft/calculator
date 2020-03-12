@@ -32,11 +32,13 @@
                        TextWrapping="NoWrap"/>
         </DataTemplate>
 
-        <DataTemplate x:Key="SelectedUnitTemplate" x:DataType="vm:Unit">
+        <!-- Native bindings can't be use with this template, it will launch an exception when ComboxBox.SelectedItem == null -->
+        <!-- if you switch between modes when no currencies are available for example) -->
+        <DataTemplate x:Key="SelectedUnitTemplate">
             <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
                        FontWeight="SemiBold"
-                       AutomationProperties.Name="{x:Bind AccessibleName}"
-                       Text="{x:Bind Name}"
+                       AutomationProperties.Name="{Binding AccessibleName, Mode=OneTime, FallbackValue=''}"
+                       Text="{Binding Name, Mode=OneTime, FallbackValue=''}"
                        TextWrapping="NoWrap"/>
         </DataTemplate>
 
@@ -260,14 +262,6 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
 
-        <Storyboard x:Name="TimestampFadeInAnimation">
-            <DoubleAnimation Duration="0:0:1"
-                             From="0"
-                             Storyboard.TargetName="CurrencyTimestampTextBlock"
-                             Storyboard.TargetProperty="Opacity"
-                             To="1"/>
-        </Storyboard>
-
         <MenuFlyout x:Key="CalculationResultContextMenu">
             <MenuFlyoutItem x:Name="CopyMenuItem"
                             x:Uid="CopyMenuItem"
@@ -448,14 +442,75 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+            <VisualStateGroup x:Name="UnitLoadedStates">
+                <VisualStateGroup.Transitions>
+                    <VisualTransition From="UnitNotLoadedState" To="UnitLoadedState">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Units1" Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Value1Container" Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Units2" Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Value2Container" Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <DoubleAnimation Duration="0:0:1"
+                                             From="0"
+                                             Storyboard.TargetName="CurrencyRatioEqualityBlock"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"/>
+                            <DoubleAnimation Duration="0:0:1"
+                                             From="0"
+                                             Storyboard.TargetName="CurrencyTimestampTextBlock"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"/>
+                            <DoubleAnimation Duration="0:0:1"
+                                             From="0"
+                                             Storyboard.TargetName="Units1"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"/>
+                            <DoubleAnimation Duration="0:0:1"
+                                             From="0"
+                                             Storyboard.TargetName="Value1Container"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"/>
+                            <DoubleAnimation Duration="0:0:1"
+                                             From="0"
+                                             Storyboard.TargetName="Units2"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"/>
+                            <DoubleAnimation Duration="0:0:1"
+                                             From="0"
+                                             Storyboard.TargetName="Value2Container"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"/>
+                        </Storyboard>
+                    </VisualTransition>
+                </VisualStateGroup.Transitions>
+                <VisualState x:Name="UnitNotLoadedState">
+                    <VisualState.Setters>
+                        <Setter Target="CurrencyRatioEqualityBlock.Opacity" Value="0"/>
+                        <Setter Target="CurrencyTimestampTextBlock.Opacity" Value="0"/>
+                        <Setter Target="CurrencyLoadingGrid.Visibility" Value="Visible"/>
+                        <Setter Target="Units1.Visibility" Value="Collapsed"/>
+                        <Setter Target="Value1Container.Visibility" Value="Collapsed"/>
+                        <Setter Target="Units2.Visibility" Value="Collapsed"/>
+                        <Setter Target="Value2Container.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="UnitLoadedState"/>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
         <Grid x:Name="CurrencyLoadingGrid"
               Grid.Row="1"
               Grid.RowSpan="5"
               Grid.Column="0"
-              Grid.ColumnSpan="4"
-              Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+              Grid.ColumnSpan="4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10*"/>
                 <RowDefinition Height="7*"/>
@@ -475,8 +530,7 @@
               Grid.Row="1"
               Grid.Column="1"
               HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
-              Style="{ThemeResource ValueContainerStyle}"
-              Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+              Style="{ThemeResource ValueContainerStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -497,7 +551,6 @@
                                         ContextCanceled="OnContextCanceled"
                                         ContextRequested="OnContextRequested"
                                         DisplayValue="{x:Bind Model.Value1, Mode=OneWay}"
-                                        ExpressionVisibility="Collapsed"
                                         FlowDirection="{x:Bind LayoutDirection}"
                                         IsActive="{Binding Value1Active, Mode=TwoWay}"
                                         KeyDown="OnValueKeyDown"
@@ -515,20 +568,18 @@
                   DropDownClosed="UpdateDropDownState"
                   DropDownOpened="UpdateDropDownState"
                   FlowDirection="{x:Bind LayoutDirection}"
-                  IsEnabled="{Binding IsDropDownEnabled}"
                   IsEnabledChanged="Units1_IsEnabledChanged"
                   ItemTemplate="{StaticResource UnitTemplate}"
                   ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
                   SelectedItem="{Binding Unit1, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
                   TabIndex="2"
-                  Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
+                  IsEnabled="{Binding IsDropDownEnabled}"/>
 
         <Grid x:Name="Value2Container"
               Grid.Row="3"
               Grid.Column="1"
               HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
-              Style="{ThemeResource ValueContainerStyle}"
-              Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+              Style="{ThemeResource ValueContainerStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -550,7 +601,6 @@
                                         ContextCanceled="OnContextCanceled"
                                         ContextRequested="OnContextRequested"
                                         DisplayValue="{x:Bind Model.Value2, Mode=OneWay}"
-                                        ExpressionVisibility="Collapsed"
                                         FlowDirection="{x:Bind LayoutDirection}"
                                         IsActive="{Binding Value2Active, Mode=TwoWay}"
                                         KeyDown="OnValueKeyDown"
@@ -568,12 +618,11 @@
                   DropDownClosed="UpdateDropDownState"
                   DropDownOpened="UpdateDropDownState"
                   FlowDirection="{x:Bind LayoutDirection}"
-                  IsEnabled="{Binding IsDropDownEnabled}"
                   ItemTemplate="{StaticResource UnitTemplate}"
                   ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
                   SelectedItem="{Binding Unit2, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
                   TabIndex="4"
-                  Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
+                  IsEnabled="{Binding IsDropDownEnabled}"/>
 
         <StackPanel x:Name="SupplementaryResultsPanelInGrid"
                     Grid.Row="5"
@@ -583,8 +632,7 @@
                     HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
                     VerticalAlignment="Top"
                     FlowDirection="{x:Bind LayoutDirection}"
-                    SizeChanged="SupplementaryResultsPanelInGrid_SizeChanged"
-                    Visibility="{x:Bind Model.IsCurrencyLoadingVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+                    SizeChanged="SupplementaryResultsPanelInGrid_SizeChanged">
             <local:SupplementaryResults x:Name="SupplementaryResults"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
@@ -644,7 +692,8 @@
               Grid.Column="1"
               Margin="3,0,3,3"
               FlowDirection="LeftToRight"
-              RenderTransformOrigin="0.5,0.5">
+              RenderTransformOrigin="0.5,0.5"
+              XYFocusKeyboardNavigation="Enabled">
             <Grid.RenderTransform>
                 <CompositeTransform/>
             </Grid.RenderTransform>
@@ -703,7 +752,7 @@
                                        x:Uid="converterNegateButton"
                                        Grid.Row="4"
                                        Grid.Column="0"
-                                       Style="{StaticResource SymbolOperatorButtonStyle}"
+                                       Style="{StaticResource SymbolOperatorKeypadButtonStyle}"
                                        FontSize="16"
                                        ButtonId="Negate"
                                        Content="&#xF898;"
