@@ -1774,6 +1774,7 @@
                 <Setter Property="VerticalAlignment" Value="Stretch"/>
                 <Setter Property="MinWideModeWidth" Value="641"/>
                 <Setter Property="MinTallModeHeight" Value="641"/>
+                <Setter Property="IsTabStop" Value="False"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Controls:TwoPaneViewCX">
@@ -1861,12 +1862,14 @@
 
                                 <contract7Present:ScrollViewer x:Name="PART_Pane1ScrollViewer"
                                                                Grid.Column="0"
+                                                               IsTabStop="False"
                                                                VerticalScrollBarVisibility="Auto">
                                     <Border Child="{TemplateBinding Pane1}"/>
                                 </contract7Present:ScrollViewer>
 
                                 <contract7Present:ScrollViewer x:Name="PART_Pane2ScrollViewer"
                                                                Grid.Column="2"
+                                                               IsTabStop="False"
                                                                VerticalScrollBarVisibility="Auto">
                                     <Border Child="{TemplateBinding Pane2}"/>
                                 </contract7Present:ScrollViewer>
