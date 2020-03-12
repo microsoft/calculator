@@ -854,7 +854,7 @@
                     <Border x:Name="DockPanel"
                             x:Uid="DockPanel"
                             Grid.ColumnSpan="2"
-                            BorderBrush="#20000000"
+                            BorderBrush="{ThemeResource DividerBrush}"
                             BorderThickness="0"
                             AutomationProperties.HeadingLevel="Level1"
                             Visibility="Collapsed">

@@ -565,7 +565,10 @@ void GraphingCalculator::DisplayGraphSettings()
     auto flyoutGraphSettings = ref new Flyout();
     flyoutGraphSettings->Content = graphSettings;
     flyoutGraphSettings->Closing += ref new TypedEventHandler<FlyoutBase ^, FlyoutBaseClosingEventArgs ^>(this, &GraphingCalculator::OnSettingsFlyout_Closing);
-    flyoutGraphSettings->ShowAt(GraphSettingsButton);
+
+    auto options = ref new FlyoutShowOptions();
+    options->Placement = FlyoutPlacementMode::BottomEdgeAlignedRight;
+    flyoutGraphSettings->ShowAt(GraphSettingsButton, options);
 }
 
 void CalculatorApp::GraphingCalculator::AddTracePointerShadow()

@@ -86,7 +86,7 @@
                     <SolidColorBrush x:Key="EquationBrush12" Color="#FFF7630C"/>
                     <SolidColorBrush x:Key="EquationBrush13" Color="#FF8E562E"/>
                     <SolidColorBrush x:Key="EquationBrush14" Color="#FF000000"/>
-
+                    <SolidColorBrush x:Key="DividerBrush" Color="#60FFFFFF"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
                     <Thickness x:Key="HighContrastThicknessTop">0,0,0,0</Thickness>
@@ -165,6 +165,7 @@
                     <SolidColorBrush x:Key="EquationBrush12" Color="#FFF7630C"/>
                     <SolidColorBrush x:Key="EquationBrush13" Color="#FF8E562E"/>
                     <SolidColorBrush x:Key="EquationBrush14" Color="#FF000000"/>
+                    <SolidColorBrush x:Key="DividerBrush" Color="#33000000"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
                     <Thickness x:Key="HighContrastThicknessTop">0,1,0,0</Thickness>
@@ -199,6 +200,7 @@
                     <SolidColorBrush x:Key="EquationBrush2" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="EquationBrush3" Color="{ThemeResource SystemColorHotlightColor}"/>
                     <SolidColorBrush x:Key="EquationBrush4" Color="{ThemeResource SystemColorWindowTextColor}"/>
+                    <SolidColorBrush x:Key="DividerBrush" Color="Transparent"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 
