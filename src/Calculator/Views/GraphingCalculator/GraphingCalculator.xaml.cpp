@@ -420,12 +420,14 @@ void GraphingCalculator::OnEquationKeyGraphFeaturesRequested(Object ^ sender, Eq
         auto keyGraphFeatureInfo = GraphingControl->AnalyzeEquation(equationViewModel->GraphEquation);
         equationViewModel->PopulateKeyGraphFeatures(keyGraphFeatureInfo);
         IsKeyGraphFeaturesVisible = true;
+        equationViewModel->GraphEquation->IsSelected = true;
     }
 }
 
 void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventArgs ^ e)
 {
     IsKeyGraphFeaturesVisible = false;
+    ViewModel->SelectedEquation->GraphEquation->IsSelected = false;
 }
 
 Visibility GraphingCalculator::ShouldDisplayPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel)

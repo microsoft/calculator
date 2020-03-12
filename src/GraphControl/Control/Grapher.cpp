@@ -179,6 +179,7 @@ namespace GraphControl
     {
         if (m_graph)
         {
+            m_graph->TryResetSelection();
             UpdateGraphOptions(m_graph->GetOptions(), GetGraphableEquations());
         }
 
@@ -325,6 +326,13 @@ namespace GraphControl
 
                 if (initResult != nullopt)
                 {
+                    auto graphedEquations = initResult.value();
+
+                    for (int i = 0; i < validEqs.size(); i++)
+                    {
+                        validEqs[i]->GraphedEquation = graphedEquations[i];
+                    }
+
                     UpdateGraphOptions(m_graph->GetOptions(), validEqs);
                     SetGraphArgs(m_graph);
 
@@ -498,6 +506,11 @@ namespace GraphControl
             {
                 auto lineColor = eq->LineColor;
                 graphColors.emplace_back(lineColor.R, lineColor.G, lineColor.B, lineColor.A);
+
+                if (eq->IsSelected)
+                {
+                    eq->GraphedEquation->TrySelectEquation();
+                }
             }
             options.SetGraphColors(graphColors);
         }
