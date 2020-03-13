@@ -4334,6 +4334,10 @@
     <value>Start tracing</value>
     <comment>This is the tooltip/automation name for the graphing calculator start tracing button</comment>
   </data>
+  <data name="graphAutomationName" xml:space="preserve">
+    <value>Graph viewing window, x-axis bounded by %1 and %2, y-axis bounded by %3 and %4, displaying %5 equations</value>
+    <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
+    </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Configure slider</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -4382,6 +4386,10 @@
     <value>Units</value>
     <comment>Heading for Unit's on the settings</comment>
   </data>
+  <data name="ResetViewButton.Content" xml:space="preserve">
+    <value>Reset view</value>
+    <comment>Hyperlink button to reset the view of the graph</comment>
+  </data>
   <data name="GraphSettingsXMax.Header" xml:space="preserve">
     <value>X-Max</value>
     <comment>X maximum value header</comment>
@@ -4417,5 +4425,25 @@
   <data name="GraphCopyMenuItem.Text">
     <value>Copy</value>
     <comment>Copy menu item for the graph context menu</comment>
+  </data>
+  <data name="cutEquationMenuItem.Text" xml:space="preserve">
+    <value>Cut</value>
+    <comment>Cut menu item from the Equation TextBox</comment>
+  </data>
+  <data name="copyEquationMenuItem.Text" xml:space="preserve">
+    <value>Copy</value>
+    <comment>Copy menu item from the Equation TextBox</comment>
+  </data>
+  <data name="pasteEquationMenuItem.Text" xml:space="preserve">
+    <value>Paste</value>
+    <comment>Paste menu item from the Equation TextBox</comment>
+  </data>
+  <data name="undoEquationMenuItem.Text" xml:space="preserve">
+    <value>Undo</value>
+    <comment>Undo menu item from the Equation TextBox</comment>
+  </data>
+  <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
+    <value>Select All</value>
+    <comment>Select all menu item from the Equation TextBox</comment>
   </data>
 </root>

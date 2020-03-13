@@ -71,6 +71,26 @@ void GraphingSettingsViewModel::InitRanges()
     m_dontUpdateDisplayRange = false;
 }
 
+void GraphingSettingsViewModel::ResetView()
+{
+    if (m_Graph != nullptr)
+    {
+        m_Graph->ResetGrid();
+        InitRanges();
+        m_XMinError = false;
+        m_XMaxError = false;
+        m_YMinError = false;
+        m_YMaxError = false;
+
+        RaisePropertyChanged("XError");
+        RaisePropertyChanged("XMin");
+        RaisePropertyChanged("XMax");
+        RaisePropertyChanged("YError");
+        RaisePropertyChanged("YMin");
+        RaisePropertyChanged("YMax");
+    }
+}
+
 void GraphingSettingsViewModel::UpdateDisplayRange()
 {
     if (m_Graph == nullptr || m_dontUpdateDisplayRange || HasError())
@@ -79,6 +99,8 @@ void GraphingSettingsViewModel::UpdateDisplayRange()
     }
 
     m_Graph->SetDisplayRanges(m_XMinValue, m_XMaxValue, m_YMinValue, m_YMaxValue);
+
+    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Grid);
 }
 
 bool GraphingSettingsViewModel::HasError()

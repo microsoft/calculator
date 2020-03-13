@@ -23,5 +23,6 @@ namespace CalculatorApp
         void RefreshRanges();
     private:
         void GridSettingsTextBox_PreviewKeyDown(Platform::Object ^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);
+        void ResetViewButton_Clicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }

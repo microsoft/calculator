@@ -6,6 +6,7 @@
 #include "CalcViewModel/Common/Utils.h"
 #include "CalcViewModel/GraphingCalculator/EquationViewModel.h"
 #include "Calculator/Controls/MathRichEditBox.h"
+#include "CalcViewModel/Common/TraceLogger.h"
 
 namespace CalculatorApp
 {
@@ -25,6 +26,7 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, HasError);
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, IsAddEquationMode);
             DEPENDENCY_PROPERTY(Platform::String ^, ErrorText);
+            DEPENDENCY_PROPERTY(bool, IsEquationLineDisabled);
 
             PROPERTY_R(bool, HasFocus);
 
@@ -59,7 +61,13 @@ namespace CalculatorApp
             void OnRemoveButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnColorChooserButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnFunctionButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-            void OnRichEditMenuOpening(Platform::Object ^ sender, Platform::Object ^ args);
+            void OnRichEditMenuOpened(Platform::Object ^ sender, Platform::Object ^ args);
+
+            void OnCutClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+            void OnCopyClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+            void OnPasteClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+            void OnUndoClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+            void OnSelectAllClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
             void OnColorFlyoutOpened(Platform::Object ^ sender, Platform::Object ^ e);
             void OnColorFlyoutClosed(Platform::Object ^ sender, Platform::Object ^ e);
@@ -74,6 +82,11 @@ namespace CalculatorApp
             Windows::UI::Xaml::Controls::Primitives::ToggleButton ^ m_colorChooserButton;
 
             Windows::UI::Xaml::Controls::MenuFlyout^ m_richEditContextMenu;
+            Windows::UI::Xaml::Controls::MenuFlyoutItem ^ m_cutMenuItem;
+            Windows::UI::Xaml::Controls::MenuFlyoutItem ^ m_copyMenuItem;
+            Windows::UI::Xaml::Controls::MenuFlyoutItem ^ m_pasteMenuItem;
+            Windows::UI::Xaml::Controls::MenuFlyoutItem ^ m_undoMenuItem;
+            Windows::UI::Xaml::Controls::MenuFlyoutItem ^ m_selectAllMenuItem;
             Windows::UI::Xaml::Controls::MenuFlyoutItem^ m_kgfEquationMenuItem;
             Windows::UI::Xaml::Controls::MenuFlyoutItem^ m_removeMenuItem;
             Windows::UI::Xaml::Controls::MenuFlyoutItem^ m_colorChooserMenuItem;

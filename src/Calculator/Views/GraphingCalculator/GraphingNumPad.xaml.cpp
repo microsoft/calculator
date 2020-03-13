@@ -203,6 +203,7 @@ void GraphingNumPad::Button_Clicked(Platform::Object ^ sender, DependencyPropert
     if (mathRichEdit != nullptr && sender != nullptr)
     {
         auto id = button->ButtonId;
+        TraceLogger::GetInstance()->UpdateButtonUsage(id, CalculatorApp::Common::ViewMode::Graphing);
         auto output = buttonOutput.find(id);
         mathRichEdit->InsertText(std::get<0>(output->second), std::get<1>(output->second), std::get<2>(output->second));
     }
@@ -214,6 +215,7 @@ void GraphingNumPad::SubmitButton_Clicked(Platform::Object ^ /*sender*/, RoutedE
     if (mathRichEdit != nullptr)
     {
         mathRichEdit->SubmitEquation(CalculatorApp::Controls::EquationSubmissionSource::ENTER_KEY);
+        TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::Submit, CalculatorApp::Common::ViewMode::Graphing);
     }
 }
 
@@ -224,6 +226,7 @@ void GraphingNumPad::ClearButton_Clicked(Platform::Object ^ /*sender*/, RoutedEv
     {
         mathRichEdit->MathText = L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"></math>";
         mathRichEdit->SubmitEquation(CalculatorApp::Controls::EquationSubmissionSource::PROGRAMMATIC);
+        TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::Clear, CalculatorApp::Common::ViewMode::Graphing);
     }
 }
 
@@ -233,6 +236,7 @@ void GraphingNumPad::BackSpaceButton_Clicked(Platform::Object ^ /*sender*/, Rout
     if (mathRichEdit != nullptr)
     {
         mathRichEdit->BackSpace();
+        TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::Backspace, CalculatorApp::Common::ViewMode::Graphing);
     }
 }
 

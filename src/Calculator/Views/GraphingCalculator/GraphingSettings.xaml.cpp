@@ -61,3 +61,8 @@ void GraphingSettings::RefreshRanges()
 {
     ViewModel->InitRanges();
 }
+
+void GraphingSettings::ResetViewButton_Clicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    ViewModel->ResetView();
+}

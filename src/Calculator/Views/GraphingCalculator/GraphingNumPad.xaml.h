@@ -7,6 +7,7 @@
 #include "CalcViewModel/GraphingCalculator/GraphingCalculatorViewModel.h"
 #include "Views/GraphingCalculator/EquationInputArea.xaml.h"
 #include "CalcViewModel/Common/CalculatorButtonUser.h"
+#include "CalcViewModel/Common/TraceLogger.h"
 
 namespace CalculatorApp
 {
