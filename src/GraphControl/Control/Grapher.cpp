@@ -397,7 +397,7 @@ namespace GraphControl
                     initResult = m_graph->TryInitialize();
                     if (initResult != nullopt)
                     {
-                        UpdateGraphOptions(m_graph->GetOptions(), validEqs);
+                        UpdateGraphOptions(m_graph->GetOptions(), vector<Equation^>());
                         SetGraphArgs(m_graph);
 
                         m_renderMain->Graph = m_graph;
@@ -524,7 +524,7 @@ namespace GraphControl
                 m_graph->SetArgValue(variableName->Data(), newValue);
                 m_renderMain->GetCriticalSection().unlock();
 
-                m_renderMain->RunRenderPassAsync();
+                m_renderMain->RunRenderPass();
             });
 
             ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::None);
@@ -549,7 +549,7 @@ namespace GraphControl
                 auto lineColor = eq->LineColor;
                 graphColors.emplace_back(lineColor.R, lineColor.G, lineColor.B, lineColor.A);
 
-                if (eq->IsSelected)
+                if (eq->GraphedEquation != nullptr && !eq->HasGraphError && eq->IsSelected)
                 {
                     eq->GraphedEquation->TrySelectEquation();
                 }
