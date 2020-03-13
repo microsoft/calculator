@@ -93,10 +93,18 @@ namespace GraphControl
         {
             if (auto renderer = m_graph->GetRenderer())
             {
+                m_renderMain->GetCriticalSection().lock();
+
                 if (SUCCEEDED(renderer->ScaleRange(centerX, centerY, scale)))
                 {
+                    m_renderMain->GetCriticalSection().unlock();
+
                     m_renderMain->RunRenderPass();
                     GraphViewChangedEvent(this, ref new RoutedEventArgs());
+                }
+                else
+                {
+                    m_renderMain->GetCriticalSection().unlock();
                 }
             }
         }
@@ -683,11 +691,15 @@ namespace GraphControl
                     translationX /= -width;
                     translationY /= height;
 
+                    m_renderMain->GetCriticalSection().lock();
+
                     if (FAILED(renderer->MoveRangeByRatio(translationX, translationY)))
                     {
+                        m_renderMain->GetCriticalSection().unlock();
                         return;
                     }
 
+                    m_renderMain->GetCriticalSection().unlock();
                     needsRenderPass = true;
                 }
 
@@ -701,11 +713,15 @@ namespace GraphControl
                     const auto& pos = e->Position;
                     const auto [centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, width, height);
 
+                    m_renderMain->GetCriticalSection().lock();
+
                     if (FAILED(renderer->ScaleRange(centerX, centerY, scale)))
                     {
+                        m_renderMain->GetCriticalSection().unlock();
                         return;
                     }
 
+                    m_renderMain->GetCriticalSection().unlock();
                     needsRenderPass = true;
                 }
 

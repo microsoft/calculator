@@ -90,7 +90,7 @@ namespace GraphControl::DX
             bool wasPointRendered = m_Tracing;
             if (CanRenderPoint() || wasPointRendered)
             {
-                RunRenderPass();
+                RunRenderPassAsync();
             }
         }
     }
@@ -104,7 +104,7 @@ namespace GraphControl::DX
             bool wasPointRendered = m_Tracing;
             if (CanRenderPoint() || wasPointRendered)
             {
-                RunRenderPass();
+                RunRenderPassAsync();
             }
         }
     }
@@ -118,7 +118,7 @@ namespace GraphControl::DX
             bool wasPointRendered = m_Tracing;
             if (CanRenderPoint() || wasPointRendered)
             {
-                RunRenderPass();
+                RunRenderPassAsync();
             }
         }
     }
@@ -144,8 +144,6 @@ namespace GraphControl::DX
 
     bool RenderMain::CanRenderPoint()
     {
-        m_Tracing = false;
-
         if (m_drawNearestPoint || m_drawActiveTracing)
         {
             Point trackPoint = m_pointerLocation;
@@ -154,6 +152,15 @@ namespace GraphControl::DX
             {
                 trackPoint = m_activeTracingPointerLocation;
             }
+
+            if (!m_criticalSection.try_lock())
+            {
+                return false;
+            }
+
+            m_criticalSection.unlock();
+
+            critical_section::scoped_lock lock(m_criticalSection);
 
             int formulaId = -1;
             float nearestPointLocationX, nearestPointLocationY;
@@ -171,6 +178,10 @@ namespace GraphControl::DX
                             tValueOut)
                         == S_OK;
             m_Tracing = m_Tracing && !isnan(nearestPointLocationX) && !isnan(nearestPointLocationY);
+        }
+        else
+        {
+            m_Tracing = false;
         }
 
         return m_Tracing;
