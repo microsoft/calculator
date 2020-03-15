@@ -36,9 +36,8 @@ namespace
             IDC_RSHF,3, IDC_LSHF,3, IDC_RSHFL,3,
             IDC_MOD,3, IDC_DIV,3, IDC_MUL,3,
             IDC_PWR,4, IDC_ROOT,4, IDC_LOGBASEX,4 };
-        unsigned int iPrec;
 
-        iPrec = 0;
+        unsigned int iPrec = 0;
         while ((iPrec < size(rgbPrec)) && (nopCode != rgbPrec[iPrec]))
         {
             iPrec += 2;
@@ -104,7 +103,8 @@ void CCalcEngine::ProcessCommand(OpCode wParam)
 
 void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 {
-    int nx, ni;
+    int nx;
+    int ni;
 
     // Save the last command.  Some commands are not saved in this manor, these
     // commands are:
@@ -203,7 +203,6 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         // Change the operation if last input was operation.
         if (IsBinOpCode(m_nLastCom))
         {
-            int nPrev;
             bool fPrecInvToHigher = false; // Is Precedence Inversion from lower to higher precedence happening ??
 
             m_nOpCode = (int)wParam;
@@ -214,7 +213,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             // Here * is m_nPrevOpCode, m_currentVal is 2  (by 1*2), m_nLastCom is +, m_nOpCode is ^
             if (m_fPrecedence && 0 != m_nPrevOpCode)
             {
-                nPrev = NPrecedenceOfOp(m_nPrevOpCode);
+                int nPrev = NPrecedenceOfOp(m_nPrevOpCode);
                 nx = NPrecedenceOfOp(m_nLastCom);
                 ni = NPrecedenceOfOp(m_nOpCode);
                 if (nx <= nPrev && ni > nPrev) // condition for Precedence Inversion
