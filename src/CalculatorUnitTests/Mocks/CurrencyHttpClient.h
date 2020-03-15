@@ -47,7 +47,7 @@ namespace CalculatorApp
             {
                 unsigned int get()
                 {
-                    return 128u
+                    return 128u;
                 }
             }
 
