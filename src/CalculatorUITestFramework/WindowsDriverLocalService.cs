@@ -119,11 +119,8 @@ namespace CalculatorUITestFramework
             GC.SuppressFinalize(this);
         }
 
-        public Uri ServiceUrl
-        {
-            // Note: append /wd/hub to the URL if you're directing the test at Appium
-            get { return new Uri($"http://{this.IP.ToString()}:{Convert.ToString(this.Port)}"); }
-        }
+        // Note: append /wd/hub to the URL if you're directing the test at Appium
+        public Uri ServiceUrl => new Uri($"http://{this.IP.ToString()}:{Convert.ToString(this.Port)}");
 
         private void DestroyProcess()
         {
