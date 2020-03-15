@@ -13,19 +13,19 @@ using namespace std;
 using namespace UnitConversionManager;
 using namespace CalcManager::NumberFormattingUtils;
 
-static constexpr uint32_t EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT = 3;
-static constexpr uint32_t EXPECTEDSERIALIZEDUNITTOKENCOUNT = 6;
-static constexpr uint32_t EXPECTEDSTATEDATATOKENCOUNT = 5;
-static constexpr uint32_t EXPECTEDMAPCOMPONENTTOKENCOUNT = 2;
+static constexpr uint32_t EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT = 3U;
+static constexpr uint32_t EXPECTEDSERIALIZEDUNITTOKENCOUNT = 6U;
+static constexpr uint32_t EXPECTEDSTATEDATATOKENCOUNT = 5U;
+static constexpr uint32_t EXPECTEDMAPCOMPONENTTOKENCOUNT = 2U;
 
-static constexpr int32_t MAXIMUMDIGITSALLOWED = 15;
-static constexpr int32_t OPTIMALDIGITSALLOWED = 7;
+static constexpr uint32_t MAXIMUMDIGITSALLOWED = 15U;
+static constexpr uint32_t OPTIMALDIGITSALLOWED = 7U;
 
 static constexpr wchar_t LEFTESCAPECHAR = L'{';
 static constexpr wchar_t RIGHTESCAPECHAR = L'}';
 
-static const double OPTIMALDECIMALALLOWED = pow(10, -1 * (OPTIMALDIGITSALLOWED - 1));
-static const double MINIMUMDECIMALALLOWED = pow(10, -1 * (MAXIMUMDIGITSALLOWED - 1));
+static const double OPTIMALDECIMALALLOWED = 1e-6; // pow(10, -1 * (OPTIMALDIGITSALLOWED - 1));
+static const double MINIMUMDECIMALALLOWED = 1e-14; // pow(10, -1 * (MAXIMUMDIGITSALLOWED - 1));
 
 unordered_map<wchar_t, wstring> quoteConversions;
 unordered_map<wstring, wchar_t> unquoteConversions;
@@ -643,15 +643,15 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         wstring roundedString;
         if (abs(entry.value) < 100)
         {
-            roundedString = RoundSignificantDigits(entry.value, 2);
+            roundedString = RoundSignificantDigits(entry.value, 2U);
         }
         else if (abs(entry.value) < 1000)
         {
-            roundedString = RoundSignificantDigits(entry.value, 1);
+            roundedString = RoundSignificantDigits(entry.value, 1U);
         }
         else
         {
-            roundedString = RoundSignificantDigits(entry.value, 0);
+            roundedString = RoundSignificantDigits(entry.value, 0U);
         }
         if (stod(roundedString) != 0.0 || m_currentCategory.supportsNegative)
         {
@@ -681,15 +681,15 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         wstring roundedString;
         if (abs(entry.value) < 100)
         {
-            roundedString = RoundSignificantDigits(entry.value, 2);
+            roundedString = RoundSignificantDigits(entry.value, 2U);
         }
         else if (abs(entry.value) < 1000)
         {
-            roundedString = RoundSignificantDigits(entry.value, 1);
+            roundedString = RoundSignificantDigits(entry.value, 1U);
         }
         else
         {
-            roundedString = RoundSignificantDigits(entry.value, 0);
+            roundedString = RoundSignificantDigits(entry.value, 0U);
         }
 
         // How to work out which is the best whimsical value to add to the vector?
@@ -888,15 +888,15 @@ void UnitConverter::Calculate()
         }
         else
         {
-            int numPreDecimal = GetNumberDigitsWholeNumberPart(returnValue);
+            const unsigned int numPreDecimal = GetNumberDigitsWholeNumberPart(returnValue);
             if (numPreDecimal > MAXIMUMDIGITSALLOWED || (returnValue != 0 && abs(returnValue) < MINIMUMDECIMALALLOWED))
             {
                 m_returnDisplay = ToScientificNumber(returnValue);
             }
             else
             {
-                int currentNumberSignificantDigits = GetNumberDigits(m_currentDisplay);
-                int precision;
+                const unsigned int currentNumberSignificantDigits = GetNumberDigits(m_currentDisplay);
+                unsigned int precision;
                 if (abs(returnValue) < OPTIMALDECIMALALLOWED)
                 {
                     precision = MAXIMUMDIGITSALLOWED;
@@ -905,7 +905,7 @@ void UnitConverter::Calculate()
                 {
                     // Fewer digits are needed following the decimal if the number is large,
                     // we calculate the number of decimals necessary based on the number of digits in the integer part.
-                    precision = max(0, max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits)) - numPreDecimal);
+                    precision = max(0U, max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits)) - numPreDecimal);
                 }
 
                 m_returnDisplay = RoundSignificantDigits(returnValue, precision);
