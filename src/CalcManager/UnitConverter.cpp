@@ -209,7 +209,7 @@ vector<wstring> UnitConverter::StringToVector(wstring_view w, wstring_view delim
     while (delimiterIndex != wstring_view::npos)
     {
         serializedTokens.emplace_back(w.substr(startIndex, delimiterIndex - startIndex));
-        startIndex = delimiterIndex + (int)delimiter.size();
+        startIndex = delimiterIndex + static_cast<int>(delimiter.size());
         delimiterIndex = w.find(delimiter, startIndex);
     }
     if (addRemainder)
