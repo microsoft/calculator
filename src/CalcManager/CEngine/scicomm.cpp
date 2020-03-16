@@ -37,14 +37,14 @@ namespace
             IDC_MOD,3, IDC_DIV,3, IDC_MUL,3,
             IDC_PWR,4, IDC_ROOT,4, IDC_LOGBASEX,4 };
 
-        for (unsigned int iPrec = 0; iPrec < size(rgbPrec); iPrec +=2 )
+        for (unsigned int iPrec = 0; iPrec < size(rgbPrec); iPrec += 2)
         {
             if (nopCode == rgbPrec[iPrec]) 
             {
                 return rgbPrec[iPrec + 1];
             }
         }
-        return rgbPrec[1];
+        return 0;
     }
 }
 
