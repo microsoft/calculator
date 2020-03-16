@@ -69,8 +69,7 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
     PRAT mpy = nullptr;
 
     // Set up constants and initial conditions
-    const int32_t oldprec = precision;
-    PRAT ratprec = i32torat(oldprec);
+    PRAT ratprec = i32torat(precision);
 
     // Find the best 'A' for convergence to the required precision.
     a = i32torat(radix);
