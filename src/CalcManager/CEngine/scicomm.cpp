@@ -517,11 +517,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 
     case IDC_OPENP:
     case IDC_CLOSEP:
-        nx = 0;
-        if (wParam == IDC_OPENP)
-        {
-            nx = 1;
-        }
+        nx = (wParam == IDC_OPENP);
 
         // -IF- the Paren holding array is full and we try to add a paren
         // -OR- the paren holding array is empty and we try to remove a
