@@ -407,10 +407,6 @@ void Calculator::UpdateHistoryState()
     {
         // flyout view
         DockHistoryHolder->Child = nullptr;
-        if (!IsProgrammer)
-        {
-            HistoryButton->Visibility = ::Visibility::Visible;
-        }
     }
 }
 
