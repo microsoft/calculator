@@ -244,9 +244,9 @@ Unit UnitConverter::StringToUnit(wstring_view w)
     serializedUnit.name = Unquote(tokenList[1]);
     serializedUnit.accessibleName = serializedUnit.name;
     serializedUnit.abbreviation = Unquote(tokenList[2]);
-    serializedUnit.isConversionSource = (tokenList[3].compare(L"1") == 0);
-    serializedUnit.isConversionTarget = (tokenList[4].compare(L"1") == 0);
-    serializedUnit.isWhimsical = (tokenList[5].compare(L"1") == 0);
+    serializedUnit.isConversionSource = (tokenList[3] == L"1");
+    serializedUnit.isConversionTarget = (tokenList[4] == L"1");
+    serializedUnit.isWhimsical = (tokenList[5] == L"1");
     return serializedUnit;
 }
 
@@ -256,7 +256,7 @@ Category UnitConverter::StringToCategory(wstring_view w)
     assert(tokenList.size() == EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT);
     Category serializedCategory;
     serializedCategory.id = wcstol(Unquote(tokenList[0]).c_str(), nullptr, 10);
-    serializedCategory.supportsNegative = (tokenList[1].compare(L"1") == 0);
+    serializedCategory.supportsNegative = (tokenList[1] == L"1");
     serializedCategory.name = Unquote(tokenList[2]);
     return serializedCategory;
 }
@@ -896,7 +896,7 @@ void UnitConverter::Calculate()
             else
             {
                 int currentNumberSignificantDigits = GetNumberDigits(m_currentDisplay);
-                int precision = 0;
+                int precision;
                 if (abs(returnValue) < OPTIMALDECIMALALLOWED)
                 {
                     precision = MAXIMUMDIGITSALLOWED;
