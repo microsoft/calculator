@@ -559,7 +559,7 @@ future<pair<bool, wstring>> UnitConverter::RefreshCurrencyRatios()
     }
 
     shared_future<bool> sharedLoadResult = loadDataResult.share();
-    return async([this, currencyDataLoader, sharedLoadResult]() {
+    return async([currencyDataLoader, sharedLoadResult]() {
         sharedLoadResult.wait();
         bool didLoad = sharedLoadResult.get();
         wstring timestamp;
