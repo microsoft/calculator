@@ -62,8 +62,12 @@ namespace CalculatorApp
         void TextBoxLosingFocus(Windows::UI::Xaml::Controls::TextBox ^ textbox, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
         void TextBoxKeyDown(Windows::UI::Xaml::Controls::TextBox ^ textbox, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);
         void SubmitTextbox(Windows::UI::Xaml::Controls::TextBox ^ textbox);
+        void VariableAreaClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void VariableAreaButtonTapped(Platform::Object ^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         void VariableAreaTapped(Platform::Object ^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         void EquationTextBox_EquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ e);
+
+        void ToggleVariableArea(CalculatorApp::ViewModel::VariableViewModel ^ selectedVariableViewModel);
 
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         int m_lastLineColorIndex;

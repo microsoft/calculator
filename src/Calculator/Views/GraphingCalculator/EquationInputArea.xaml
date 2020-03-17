@@ -206,11 +206,17 @@
                                              Text="{x:Bind Max, Mode=OneWay}"/>
                                 </Grid>
                             </Grid>
-                            <FontIcon Margin="0,6,0,0"
-                                      VerticalAlignment="Center"
-                                      FontFamily="{StaticResource CalculatorFontFamily}"
-                                      FontSize="9"
-                                      Glyph="{x:Bind local:EquationInputArea.GetChevronIcon(SliderSettingsVisible), Mode=OneWay}"/>
+                            <Button x:Uid="VariableAreaSettings"
+                                    Margin="0,6,0,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Background="Transparent"
+                                    Click="VariableAreaClicked"
+                                    Tapped="VariableAreaButtonTapped">
+                                <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
+                                          FontSize="9"
+                                          Glyph="{x:Bind local:EquationInputArea.GetChevronIcon(SliderSettingsVisible), Mode=OneWay}"/>
+                            </Button>
                         </StackPanel>
                     </Border>
                 </Grid>

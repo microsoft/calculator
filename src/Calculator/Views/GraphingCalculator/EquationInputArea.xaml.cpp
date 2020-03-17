@@ -234,7 +234,7 @@ void EquationInputArea::EquationTextBox_Loaded(Object ^ sender, RoutedEventArgs 
         unsigned int index;
         if (Equations->IndexOf(copyEquationToFocus, &index))
         {
-            auto container = EquationInputList->TryGetElement(index);
+            auto container = static_cast<UIElement ^>(EquationInputList->ContainerFromIndex(index));
             if (container != nullptr)
             {
                 container->StartBringIntoView();
@@ -398,7 +398,28 @@ String ^ EquationInputArea::GetChevronIcon(bool isCollapsed)
 
 void EquationInputArea::VariableAreaTapped(Object ^ sender, TappedRoutedEventArgs ^ e)
 {
-    auto selectedVariableViewModel = static_cast<VariableViewModel ^>(static_cast<Grid ^>(sender)->DataContext);
+    ToggleVariableArea(static_cast<VariableViewModel ^>(static_cast<FrameworkElement ^>(sender)->DataContext));
+}
+
+void EquationInputArea::VariableAreaButtonTapped(Object ^ sender, TappedRoutedEventArgs ^ e)
+{
+    e->Handled = true;
+}
+  
+void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
+{
+    EquationFormatRequested(sender, e);
+}
+
+}
+
+void EquationInputArea::VariableAreaClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    ToggleVariableArea(static_cast<VariableViewModel ^>(static_cast<Button ^>(sender)->DataContext));
+}
+
+void EquationInputArea::ToggleVariableArea(VariableViewModel ^ selectedVariableViewModel)
+{
     selectedVariableViewModel->SliderSettingsVisible = !selectedVariableViewModel->SliderSettingsVisible;
 
     // Collapse all other slider settings that are open
@@ -409,9 +430,3 @@ void EquationInputArea::VariableAreaTapped(Object ^ sender, TappedRoutedEventArg
             variableViewModel->SliderSettingsVisible = false;
         }
     }
-}
-  
-void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
-{
-    EquationFormatRequested(sender, e);
-}

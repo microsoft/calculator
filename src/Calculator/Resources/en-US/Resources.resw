@@ -4258,6 +4258,10 @@
     <value>Graph Options</value>
     <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
   </data>
+  <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Variable options</value>
+    <comment>Screen reader prompt for the variable settings button</comment>
+  </data>
   <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
     <value>Enter an expression</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
