@@ -202,6 +202,7 @@ public
         GreaterThan,
         GreaterThanOrEqualTo,
         X,
-        Y
+        Y,
+        Submit
     };
 }

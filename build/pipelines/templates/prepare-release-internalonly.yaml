@@ -90,8 +90,6 @@ jobs:
       pathtoPublish: $(XES_VPACKMANIFESTDIRECTORY)\$(XES_VPACKMANIFESTNAME)
       artifactName: vpack\app
 
-    # TODO (macool): create and push internal test packages and test config
-
   - task: UniversalPackages@0
     displayName: Download internals package
     inputs:

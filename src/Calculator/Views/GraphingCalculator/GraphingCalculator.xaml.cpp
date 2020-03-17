@@ -217,6 +217,7 @@ void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object ^ sender, 
 {
     // Ask the OS to start a share action.
     DataTransferManager::ShowShareUI();
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::Share);
 }
 
 // When share is invoked (by the user or programmatically) the event handler we registered will be called to populate the data package with the
@@ -348,16 +349,19 @@ void GraphingCalculator::OnVariableChanged(Platform::Object ^ sender, VariableCh
 void GraphingCalculator::OnZoomInCommand(Object ^ /* parameter */)
 {
     GraphingControl->ZoomFromCenter(zoomInScale);
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::ZoomIn);
 }
 
 void GraphingCalculator::OnZoomOutCommand(Object ^ /* parameter */)
 {
     GraphingControl->ZoomFromCenter(zoomOutScale);
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::ZoomOut);
 }
 
 void GraphingCalculator::OnZoomResetCommand(Object ^ /* parameter */)
 {
     GraphingControl->ResetGrid();
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::ZoomReset);
 }
 
 String ^ GraphingCalculator::GetTracingLegend(Platform::IBox<bool> ^ isTracing)
@@ -420,12 +424,14 @@ void GraphingCalculator::OnEquationKeyGraphFeaturesRequested(Object ^ sender, Eq
         auto keyGraphFeatureInfo = GraphingControl->AnalyzeEquation(equationViewModel->GraphEquation);
         equationViewModel->PopulateKeyGraphFeatures(keyGraphFeatureInfo);
         IsKeyGraphFeaturesVisible = true;
+        equationViewModel->GraphEquation->IsSelected = true;
     }
 }
 
 void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventArgs ^ e)
 {
     IsKeyGraphFeaturesVisible = false;
+    ViewModel->SelectedEquation->GraphEquation->IsSelected = false;
 }
 
 Visibility GraphingCalculator::ShouldDisplayPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel)
@@ -523,6 +529,7 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_Checked(Platform::Object ^
     KeyboardShortcutManager::IgnoreEscape(false);
 
     TracePointer->Visibility = ::Visibility::Visible;
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::ActiveTracingChecked);
 }
 
 void CalculatorApp::GraphingCalculator::ActiveTracing_Unchecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
@@ -541,6 +548,7 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_Unchecked(Platform::Object
     KeyboardShortcutManager::HonorEscape();
 
     TracePointer->Visibility = ::Visibility::Collapsed;
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::ActiveTracingUnchecked);
 }
 
 void CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args)
@@ -555,6 +563,7 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp(Windows::UI::Core::C
 void GraphingCalculator::GraphSettingsButton_Click(Object ^ sender, RoutedEventArgs ^ e)
 {
     DisplayGraphSettings();
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::GraphSettings);
 }
 
 void GraphingCalculator::DisplayGraphSettings()
@@ -673,4 +682,9 @@ void GraphingCalculator::GraphMenuFlyoutItem_Click(Object ^ sender, RoutedEventA
     auto bitmapStream = GraphingControl->GetGraphBitmapStream();
     dataPackage->SetBitmap(bitmapStream);
     ::Clipboard::SetContent(dataPackage);
+}
+
+void GraphingCalculator::OnVisualStateChanged(Object ^ sender, VisualStateChangedEventArgs ^ e)
+{
+    TraceLogger::GetInstance()->LogVisualStateChanged(ViewMode::Graphing, e->NewState->Name, false);
 }

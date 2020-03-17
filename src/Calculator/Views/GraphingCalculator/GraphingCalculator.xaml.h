@@ -9,6 +9,7 @@
 #include "Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h"
 #include "Views\GraphingCalculator\GraphingNumPad.xaml.h"
 #include "Views\GraphingCalculator\GraphingSettings.xaml.h"
+#include "CalcViewModel/Common/TraceLogger.h"
 
 namespace CalculatorApp
 {
@@ -97,6 +98,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
         void OnEquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ e);
         void GraphMenuFlyoutItem_Click(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e);
     };
 
 }
