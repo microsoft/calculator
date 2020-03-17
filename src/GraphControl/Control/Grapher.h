@@ -4,9 +4,10 @@
 #pragma once
 
 #include "DirectX/RenderMain.h"
-#include "../Models/Equation.h"
-#include "../Models/EquationCollection.h"
-#include "../Utils.h"
+#include "Models/Equation.h"
+#include "Models/EquationCollection.h"
+#include "Models/Variable.h"
+#include "Utils.h"
 #include "IGraphAnalyzer.h"
 #include "IMathSolver.h"
 #include "Common.h"
@@ -43,9 +44,9 @@ public
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, ForceProportionalAxes, true);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, UseCommaDecimalSeperator, false);
         DEPENDENCY_PROPERTY_WITH_DEFAULT(
-            SINGLE_ARG(Windows::Foundation::Collections::IObservableMap<Platform::String ^, double> ^),
+            SINGLE_ARG(Windows::Foundation::Collections::IObservableMap<Platform::String ^, GraphControl::Variable ^> ^),
             Variables,
-            SINGLE_ARG(ref new Platform::Collections::Map<Platform::String ^, double>()));
+            SINGLE_ARG(ref new Platform::Collections::Map<Platform::String ^, GraphControl::Variable ^>()));
         DEPENDENCY_PROPERTY_R_WITH_DEFAULT_AND_CALLBACK(GraphControl::EquationCollection ^, Equations, nullptr);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, AxesColor, Windows::UI::Colors::Transparent);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, GraphBackground, Windows::UI::Colors::Transparent);
@@ -105,7 +106,7 @@ public
             }
         }
 
-        event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String ^, double> ^> ^ VariablesUpdated;
+        event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String ^, Variable ^> ^> ^ VariablesUpdated;
         void SetVariable(Platform::String ^ variableName, double newValue);
         Platform::String ^ ConvertToLinear(Platform::String ^ mmlString);
         Platform::String ^ FormatMathML(Platform::String ^ mmlString);
@@ -333,6 +334,7 @@ public
         bool m_KeysPressed[5];
         bool m_Moving;
         Windows::UI::Xaml::DispatcherTimer ^ m_TracingTrackingTimer;
+        Windows::UI::Core::CoreCursor ^ m_cachedCursor;
         int m_errorType;
         int m_errorCode;
 
