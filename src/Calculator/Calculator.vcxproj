@@ -16,7 +16,7 @@
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <AppxDefaultResourceQualifierUAP_Contrast>black</AppxDefaultResourceQualifierUAP_Contrast>
     <AppxBundle>Always</AppxBundle>
-    <PackageCertificateKeyFile>TemporaryKey.pfx</PackageCertificateKeyFile>
+    <!--<PackageCertificateKeyFile>TemporaryKey.pfx</PackageCertificateKeyFile>-->
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
   </PropertyGroup>

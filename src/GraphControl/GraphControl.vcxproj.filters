@@ -71,9 +71,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(ProjectDir)\GraphingImplOverrides.props" />
-  </ItemGroup>
-  <ItemGroup>
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>
