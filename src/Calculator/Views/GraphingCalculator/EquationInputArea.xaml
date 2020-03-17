@@ -826,7 +826,8 @@
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="vm:EquationViewModel">
-                        <controls:EquationTextBox x:Uid="EquationInputButton"
+                        <controls:EquationTextBox x:Name="EquationInputButton"
+                                                  x:Uid="EquationInputButton"
                                                   Margin="1,0,1,2"
                                                   Style="{StaticResource EquationTextBoxStyle}"
                                                   DataContext="{x:Bind Mode=OneWay}"
@@ -836,7 +837,7 @@
                                                   EquationColor="{x:Bind local:EquationInputArea.ToSolidColorBrush(LineColor), Mode=OneWay}"
                                                   EquationFormatRequested="EquationTextBox_EquationFormatRequested"
                                                   EquationSubmitted="EquationTextBox_Submitted"
-                                                      ErrorText="{x:Bind vm:EquationViewModel.EquationErrorText(GraphEquation.GraphErrorType, GraphEquation.GraphErrorCode), Mode=OneWay}"
+                                                  ErrorText="{x:Bind vm:EquationViewModel.EquationErrorText(GraphEquation.GraphErrorType, GraphEquation.GraphErrorCode), Mode=OneWay}"
                                                   GotFocus="EquationTextBox_GotFocus"
                                                   HasError="{x:Bind GraphEquation.HasGraphError, Mode=OneWay}"
                                                   IsAddEquationMode="{x:Bind IsLastItemInList, Mode=OneWay}"
@@ -859,13 +860,13 @@
                     <ResourceDictionary>
                         <ResourceDictionary.ThemeDictionaries>
                             <ResourceDictionary x:Key="Light">
-                                <SolidColorBrush x:Key="DividerBrush" Color="#33000000" />
+                                <SolidColorBrush x:Key="DividerBrush" Color="#33000000"/>
                             </ResourceDictionary>
                             <ResourceDictionary x:Key="Dark">
                                 <SolidColorBrush x:Key="DividerBrush" Color="#60FFFFFF"/>
                             </ResourceDictionary>
                             <ResourceDictionary x:Key="HighContrast">
-                                <SolidColorBrush x:Key="DividerBrush" Color="Transparent" />
+                                <SolidColorBrush x:Key="DividerBrush" Color="Transparent"/>
                             </ResourceDictionary>
                         </ResourceDictionary.ThemeDictionaries>
                     </ResourceDictionary>

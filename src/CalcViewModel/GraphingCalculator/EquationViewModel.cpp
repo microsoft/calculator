@@ -338,7 +338,7 @@ namespace CalculatorApp::ViewModel
             case (EvaluationErrorCode::EquationTooComplexToPlot):
             case (EvaluationErrorCode::InequalityTooComplexToSolve):
             case (EvaluationErrorCode::GE_TooComplexToSolve):
-                return resLoader->GetString(L"EquationTooComplexToSolve");
+                return resLoader->GetString(L"TooComplexToSolve");
                 break;
             case (EvaluationErrorCode::EquationHasNoSolution):
             case (EvaluationErrorCode::InequalityHasNoSolution):
