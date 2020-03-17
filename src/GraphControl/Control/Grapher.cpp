@@ -442,9 +442,9 @@ namespace GraphControl
         {
             critical_section::scoped_lock lock(m_renderMain->GetCriticalSection());
 
-            for (auto variable : Variables)
+            for (auto variablePair : Variables)
             {
-                graph->SetArgValue(variable->Key->Data(), variable->Value);
+                graph->SetArgValue(variablePair->Key->Data(), variablePair->Value->Value);
             }
         }
     }
@@ -470,7 +470,7 @@ namespace GraphControl
 
     void Grapher::UpdateVariables()
     {
-        auto updatedVariables = ref new Map<String ^, double>();
+        auto updatedVariables = ref new Map<String ^, Variable ^>();
 
         if (m_graph)
         {
@@ -483,12 +483,19 @@ namespace GraphControl
                     auto key = ref new String(graphVar->GetVariableName().data());
                     double value = 1.0;
 
+                    Variable ^ variable;
+
                     if (Variables->HasKey(key))
                     {
-                        value = Variables->Lookup(key);
+                        variable = Variables->Lookup(key);
                     }
 
-                    updatedVariables->Insert(key, value);
+                    if (variable == nullptr)
+                    {
+                        variable = ref new Variable(1.0);
+                    }
+
+                    updatedVariables->Insert(key, variable);
                 }
             }
         }
@@ -504,17 +511,11 @@ namespace GraphControl
 
     void Grapher::SetVariable(Platform::String ^ variableName, double newValue)
     {
-        if (Variables->HasKey(variableName))
+        if (!Variables->HasKey(variableName))
         {
-            if (Variables->Lookup(variableName) == newValue)
-            {
-                return;
-            }
-
-            Variables->Remove(variableName);
+            Variables->Insert(variableName, ref new Variable(newValue));
         }
 
-        Variables->Insert(variableName, newValue);
 
         if (m_graph != nullptr && m_renderMain != nullptr)
         {

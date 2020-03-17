@@ -10,6 +10,7 @@ using namespace Platform::Collections;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::UI::Xaml::Data;
+using namespace GraphControl;
 
 namespace CalculatorApp::ViewModel
 {
@@ -24,12 +25,12 @@ namespace CalculatorApp::ViewModel
     {
     }
 
-    void GraphingCalculatorViewModel::UpdateVariables(IMap<String ^, double> ^ variables)
+    void GraphingCalculatorViewModel::UpdateVariables(IMap<String ^, Variable ^> ^ variables)
     {
         Variables->Clear();
-        for (auto var : variables)
+        for (auto variablePair : variables)
         {
-            auto variable = ref new VariableViewModel(var->Key, var->Value);
+            auto variable = ref new VariableViewModel(variablePair->Key, variablePair->Value);
             variable->VariableUpdated += ref new EventHandler<VariableChangedEventArgs>([this, variable](Object ^ sender, VariableChangedEventArgs e) {
                 VariableUpdated(variable, VariableChangedEventArgs{ e.variableName, e.newValue });
             });
