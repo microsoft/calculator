@@ -150,7 +150,6 @@ void Calculator::OnLoaded(_In_ Object ^, _In_ RoutedEventArgs ^)
 
 Platform::String ^ Calculator::GetCurrentLayoutState()
 {
-
     if (IsProgrammer)
     {
         return L"Programmer";
@@ -195,7 +194,7 @@ void Calculator::UpdateViewState()
 
 void Calculator::AnimateCalculator(bool resultAnimate)
 {
-    static auto uiSettings = ref new UISettings(); 
+    static auto uiSettings = ref new UISettings();
     if (uiSettings->AnimationsEnabled)
     {
         m_doAnimate = true;
@@ -408,10 +407,6 @@ void Calculator::UpdateHistoryState()
     {
         // flyout view
         DockHistoryHolder->Child = nullptr;
-        if (!IsProgrammer)
-        {
-            HistoryButton->Visibility = ::Visibility::Visible;
-        }
     }
 }
 
@@ -703,6 +698,11 @@ void Calculator::OnMemoryAccessKeyInvoked(_In_ UIElement ^ sender, _In_ AccessKe
 
 void CalculatorApp::Calculator::OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e)
 {
+    if (!IsStandard && !IsScientific && !IsProgrammer)
+    {
+        return;
+    }
+
     auto mode = IsStandard ? ViewMode::Standard : IsScientific ? ViewMode::Scientific : ViewMode::Programmer;
     TraceLogger::GetInstance()->LogVisualStateChanged(mode, e->NewState->Name, IsAlwaysOnTop);
 }

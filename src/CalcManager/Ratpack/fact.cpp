@@ -67,13 +67,9 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
     PRAT sum = nullptr;
     PRAT err = nullptr;
     PRAT mpy = nullptr;
-    PRAT ratprec = nullptr;
-    PRAT ratRadix = nullptr;
-    int32_t oldprec;
 
     // Set up constants and initial conditions
-    oldprec = precision;
-    ratprec = i32torat(oldprec);
+    PRAT ratprec = i32torat(precision);
 
     // Find the best 'A' for convergence to the required precision.
     a = i32torat(radix);
@@ -102,7 +98,7 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
     exprat(&tmp, radix, precision);
     mulrat(&term, tmp, precision);
     lograt(&term, precision);
-    ratRadix = i32torat(radix);
+    const auto ratRadix = i32torat(radix);
     DUPRAT(tmp, ratRadix);
     lograt(&tmp, precision);
     subrat(&term, tmp, precision);
@@ -173,7 +169,6 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
     mulrat(&sum, mpy, precision);
 
     // And cleanup
-    precision = oldprec;
     destroyrat(ratprec);
     destroyrat(err);
     destroyrat(term);

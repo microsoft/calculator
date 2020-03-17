@@ -41,7 +41,6 @@ unsigned int CalculatorHistory::AddToHistory(
     _In_ shared_ptr<vector<shared_ptr<IExpressionCommand>>> const& commands,
     wstring_view result)
 {
-    unsigned int addedIndex;
     shared_ptr<HISTORYITEM> spHistoryItem = make_shared<HISTORYITEM>();
 
     spHistoryItem->historyItemVector.spTokens = tokens;
@@ -53,9 +52,7 @@ unsigned int CalculatorHistory::AddToHistory(
     // in the history doesn't get broken for RTL languages
     spHistoryItem->historyItemVector.expression = L'\u202d' + generatedExpression + L'\u202c';
     spHistoryItem->historyItemVector.result = wstring(result);
-    addedIndex = AddItem(spHistoryItem);
-
-    return addedIndex;
+    return AddItem(spHistoryItem);
 }
 
 unsigned int CalculatorHistory::AddItem(_In_ shared_ptr<HISTORYITEM> const& spHistoryItem)
@@ -66,19 +63,18 @@ unsigned int CalculatorHistory::AddItem(_In_ shared_ptr<HISTORYITEM> const& spHi
     }
 
     m_historyItems.push_back(spHistoryItem);
-    unsigned int lastIndex = static_cast<unsigned>(m_historyItems.size() - 1);
-    return lastIndex;
+    return static_cast<unsigned>(m_historyItems.size() - 1);
 }
 
 bool CalculatorHistory::RemoveItem(unsigned int uIdx)
 {
-    if (uIdx > m_historyItems.size() - 1)
+    if (uIdx < m_historyItems.size())
     {
-        return false;
+        m_historyItems.erase(m_historyItems.begin() + uIdx);
+        return true;
     }
 
-    m_historyItems.erase(m_historyItems.begin() + uIdx);
-    return true;
+    return false;
 }
 
 vector<shared_ptr<HISTORYITEM>> const& CalculatorHistory::GetHistory()

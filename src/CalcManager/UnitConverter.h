@@ -6,8 +6,8 @@
 #include <vector>
 #include <unordered_map>
 #include <future>
-#include "sal_cross_platform.h"  // for SAL
-#include <memory> // for std::shared_ptr
+#include "sal_cross_platform.h" // for SAL
+#include <memory>               // for std::shared_ptr
 
 namespace UnitConversionManager
 {
@@ -18,11 +18,11 @@ namespace UnitConversionManager
         Unit()
         {
         }
-        Unit(int id, std::wstring name, std::wstring abbreviation, bool isConversionSource, bool isConversionTarget, bool isWhimsical)
+        Unit(int id, std::wstring_view name, std::wstring abbreviation, bool isConversionSource, bool isConversionTarget, bool isWhimsical)
             : id(id)
             , name(name)
             , accessibleName(name)
-            , abbreviation(abbreviation)
+            , abbreviation(std::move(abbreviation))
             , isConversionSource(isConversionSource)
             , isConversionTarget(isConversionTarget)
             , isWhimsical(isWhimsical)
@@ -31,23 +31,26 @@ namespace UnitConversionManager
 
         Unit(
             int id,
-            std::wstring currencyName,
-            std::wstring countryName,
+            std::wstring_view currencyName,
+            std::wstring_view countryName,
             std::wstring abbreviation,
             bool isRtlLanguage,
             bool isConversionSource,
             bool isConversionTarget)
             : id(id)
-            , abbreviation(abbreviation)
+            , abbreviation(std::move(abbreviation))
             , isConversionSource(isConversionSource)
             , isConversionTarget(isConversionTarget)
             , isWhimsical(false)
         {
-            std::wstring nameValue1 = isRtlLanguage ? currencyName : countryName;
-            std::wstring nameValue2 = isRtlLanguage ? countryName : currencyName;
+            auto nameValue1 = isRtlLanguage ? currencyName : countryName;
+            auto nameValue2 = isRtlLanguage ? countryName : currencyName;
 
-            name = nameValue1 + L" - " + nameValue2;
-            accessibleName = nameValue1 + L" " + nameValue2;
+            name = nameValue1;
+            name.append(L" - ").append(nameValue2);
+
+            accessibleName = nameValue1;
+            accessibleName.append(1, L' ').append(nameValue2);
         }
 
         int id;
@@ -84,7 +87,7 @@ namespace UnitConversionManager
 
         Category(int id, std::wstring name, bool supportsNegative)
             : id(id)
-            , name(name)
+            , name(std::move(name))
             , supportsNegative(supportsNegative)
         {
         }

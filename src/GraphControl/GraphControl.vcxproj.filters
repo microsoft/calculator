@@ -32,6 +32,7 @@
     <ClCompile Include="Models\Equation.cpp">
       <Filter>Models</Filter>
     </ClCompile>
+    <ClCompile Include="Logger\TraceLogger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -59,14 +60,15 @@
     <ClInclude Include="Models\EquationCollection.h">
       <Filter>Models</Filter>
     </ClInclude>
+    <ClInclude Include="Models\Variable.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger\TraceLogger.h" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\generic.xaml">
       <Filter>Themes</Filter>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(ProjectDir)\GraphingImplOverrides.props" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="$(GraphingImplDll)" />

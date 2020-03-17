@@ -596,15 +596,13 @@ void _dumprawrat(_In_ const wchar_t* varname, _In_ PRAT rat, wostream& out)
 void _dumprawnum(_In_ const wchar_t* varname, _In_ PNUMBER num, wostream& out)
 
 {
-    int i;
-
     out << L"NUMBER " << varname << L" = {\n";
     out << L"\t" << num->sign << L",\n";
     out << L"\t" << num->cdigit << L",\n";
     out << L"\t" << num->exp << L",\n";
     out << L"\t{ ";
 
-    for (i = 0; i < num->cdigit; i++)
+    for (int i = 0; i < num->cdigit; i++)
     {
         out << L" " << num->mant[i] << L",";
     }
@@ -681,10 +679,9 @@ void trimit(_Inout_ PRAT* px, int32_t precision)
 {
     if (!g_ftrueinfinite)
     {
-        int32_t trim;
         PNUMBER pp = (*px)->pp;
         PNUMBER pq = (*px)->pq;
-        trim = g_ratio * (min((pp->cdigit + pp->exp), (pq->cdigit + pq->exp)) - 1) - precision;
+        int32_t trim = g_ratio * (min((pp->cdigit + pp->exp), (pq->cdigit + pq->exp)) - 1) - precision;
         if (trim > g_ratio)
         {
             trim /= g_ratio;

@@ -27,6 +27,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonContentIndex);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, HasError);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, IsAddEquationMode);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, MathEquation);
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, IsEquationLineDisabled);
 
 EquationTextBox::EquationTextBox()
 {
@@ -44,6 +45,11 @@ void EquationTextBox::OnApplyTemplate()
     m_kgfEquationMenuItem = dynamic_cast<MenuFlyoutItem ^>(GetTemplateChild("FunctionAnalysisMenuItem"));
     m_removeMenuItem = dynamic_cast<MenuFlyoutItem ^>(GetTemplateChild("RemoveFunctionMenuItem"));
     m_colorChooserMenuItem = dynamic_cast<MenuFlyoutItem ^>(GetTemplateChild("ChangeFunctionStyleMenuItem"));
+    m_cutMenuItem = dynamic_cast<MenuFlyoutItem ^>(GetTemplateChild("CutMenuItem"));
+    m_copyMenuItem = dynamic_cast<MenuFlyoutItem ^>(GetTemplateChild("CopyMenuItem"));
+    m_pasteMenuItem = dynamic_cast<MenuFlyoutItem ^>(GetTemplateChild("PasteMenuItem"));
+    m_undoMenuItem = dynamic_cast<MenuFlyoutItem ^>(GetTemplateChild("UndoMenuItem"));
+    m_selectAllMenuItem = dynamic_cast<MenuFlyoutItem ^>(GetTemplateChild("SelectAllMenuItem"));
 
     auto resProvider = AppResourceProvider::GetInstance();
 
@@ -64,7 +70,7 @@ void EquationTextBox::OnApplyTemplate()
         auto toolTip = ref new ToolTip();
 
         auto equationButtonMessage = LocalizationStringUtil::GetLocalizedString(
-            m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip")
+            IsEquationLineDisabled ? resProvider->GetResourceString(L"showEquationButtonToolTip")
                                                : resProvider->GetResourceString(L"hideEquationButtonToolTip"), EquationButtonContentIndex);
 
         toolTip->Content = equationButtonMessage;
@@ -74,7 +80,7 @@ void EquationTextBox::OnApplyTemplate()
 
     if (m_richEditContextMenu != nullptr)
     {
-        m_richEditContextMenu->Opening += ref new EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpening);
+        m_richEditContextMenu->Opened += ref new EventHandler<Platform::Object ^>(this, &EquationTextBox::OnRichEditMenuOpened);
     }
 
     if (m_deleteButton != nullptr)
@@ -120,6 +126,31 @@ void EquationTextBox::OnApplyTemplate()
     {
         ColorChooserFlyout->Opened += ref new EventHandler<Object ^>(this, &EquationTextBox::OnColorFlyoutOpened);
         ColorChooserFlyout->Closed += ref new EventHandler<Object ^>(this, &EquationTextBox::OnColorFlyoutClosed);
+    }
+
+    if (m_cutMenuItem != nullptr)
+    {
+        m_cutMenuItem->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnCutClicked);
+    }
+
+    if (m_copyMenuItem != nullptr)
+    {
+        m_copyMenuItem->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnCopyClicked);
+    }
+
+    if (m_pasteMenuItem != nullptr)
+    {
+        m_pasteMenuItem->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnPasteClicked);
+    }
+
+    if (m_undoMenuItem != nullptr)
+    {
+        m_undoMenuItem->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnUndoClicked);
+    }
+
+    if (m_selectAllMenuItem != nullptr)
+    {
+        m_selectAllMenuItem->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnSelectAllClicked);
     }
 
     UpdateCommonVisualState();
@@ -207,7 +238,7 @@ void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^
     auto resProvider = AppResourceProvider::GetInstance();
 
     auto equationButtonMessage = LocalizationStringUtil::GetLocalizedString(
-        m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip")
+        IsEquationLineDisabled ? resProvider->GetResourceString(L"showEquationButtonToolTip")
                                            : resProvider->GetResourceString(L"hideEquationButtonToolTip"), EquationButtonContentIndex);
 
     toolTip->Content = equationButtonMessage;
@@ -237,8 +268,10 @@ void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e
 
     if (m_equationButton)
     {
-        m_equationButton->IsChecked = false;
+        IsEquationLineDisabled = false;
     }
+
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::RemoveFunction);
 
     VisualStateManager::GoToState(this, "Normal", true);
 }
@@ -248,12 +281,53 @@ void EquationTextBox::OnColorChooserButtonClicked(Object ^ sender, RoutedEventAr
     if (ColorChooserFlyout != nullptr && m_richEditBox != nullptr)
     {
         ColorChooserFlyout->ShowAt(m_richEditBox);
+        TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::StylePicker);
     }
 }
 
 void EquationTextBox::OnFunctionButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
     KeyGraphFeaturesButtonClicked(this, ref new RoutedEventArgs());
+}
+
+void EquationTextBox::OnCutClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->TextDocument->Selection->Cut();
+    }
+}
+
+void EquationTextBox::OnCopyClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->TextDocument->Selection->Copy();
+    }
+}
+
+void EquationTextBox::OnPasteClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->TextDocument->Selection->Paste(0);
+    }
+}
+
+void EquationTextBox::OnSelectAllClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->TextDocument->Selection->SetRange(0, m_richEditBox->TextDocument->Selection->EndPosition);
+    }
+}
+
+void EquationTextBox::OnUndoClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->TextDocument->Undo();
+    }
 }
 
 void EquationTextBox::UpdateButtonsVisualState()
@@ -344,16 +418,36 @@ bool EquationTextBox::RichEditHasContent()
     return !text->IsEmpty();
 }
 
-void EquationTextBox::OnRichEditMenuOpening(Object ^ /*sender*/, Object ^ /*args*/)
+void EquationTextBox::OnRichEditMenuOpened(Object ^ /*sender*/, Object ^ /*args*/)
 {
     if (m_kgfEquationMenuItem != nullptr)
     {
-        m_kgfEquationMenuItem->IsEnabled = m_HasFocus && RichEditHasContent();
+        m_kgfEquationMenuItem->IsEnabled = m_HasFocus && !HasError && RichEditHasContent();
     }
 
     if (m_colorChooserMenuItem != nullptr)
     {
         m_colorChooserMenuItem->IsEnabled = !HasError && !IsAddEquationMode;
+    }
+
+    if (m_richEditBox != nullptr && m_cutMenuItem != nullptr)
+    {
+        m_cutMenuItem->IsEnabled = m_richEditBox->TextDocument->CanCopy() && m_richEditBox->TextDocument->Selection->Length > 0;
+    }
+
+    if (m_richEditBox != nullptr && m_copyMenuItem != nullptr)
+    {
+        m_copyMenuItem->IsEnabled = m_richEditBox->TextDocument->CanCopy() && m_richEditBox->TextDocument->Selection->Length > 0;
+    }
+
+    if (m_richEditBox != nullptr && m_pasteMenuItem != nullptr)
+    {
+        m_pasteMenuItem->IsEnabled = m_richEditBox->TextDocument->CanPaste();
+    }
+
+    if (m_richEditBox != nullptr && m_undoMenuItem != nullptr)
+    {
+        m_undoMenuItem->IsEnabled = m_richEditBox->TextDocument->CanUndo();
     }
 }
 
