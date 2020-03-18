@@ -63,7 +63,6 @@ namespace GraphControl::DX
                 renderer->SetDpi(dpi, dpi);
 
                 renderer->SetGraphSize(static_cast<unsigned int>(m_swapChainPanel->ActualWidth), static_cast<unsigned int>(m_swapChainPanel->ActualHeight));
-              
             }
         }
     }
@@ -87,7 +86,12 @@ namespace GraphControl::DX
             {
                 m_Tracing = false;
             }
-            RunRenderPass();
+
+            bool wasPointRendered = m_Tracing;
+            if (CanRenderPoint() || wasPointRendered)
+            {
+                RunRenderPassAsync();
+            }
         }
     }
 
@@ -96,7 +100,12 @@ namespace GraphControl::DX
         if (m_pointerLocation != location)
         {
             m_pointerLocation = location;
-            RunRenderPass();
+
+            bool wasPointRendered = m_Tracing;
+            if (CanRenderPoint() || wasPointRendered)
+            {
+                RunRenderPassAsync();
+            }
         }
     }
 
@@ -105,7 +114,12 @@ namespace GraphControl::DX
         if (m_drawActiveTracing != value)
         {
             m_drawActiveTracing = value;
-            RunRenderPass();
+
+            bool wasPointRendered = m_Tracing;
+            if (CanRenderPoint() || wasPointRendered)
+            {
+                RunRenderPassAsync();
+            }
         }
     }
 
@@ -128,8 +142,101 @@ namespace GraphControl::DX
         }
     }
 
+    bool RenderMain::CanRenderPoint()
+    {
+        if (m_drawNearestPoint || m_drawActiveTracing)
+        {
+            Point trackPoint = m_pointerLocation;
+
+            if (m_drawActiveTracing)
+            {
+                trackPoint = m_activeTracingPointerLocation;
+            }
+
+            if (!m_criticalSection.try_lock())
+            {
+                return false;
+            }
+
+            m_criticalSection.unlock();
+
+            critical_section::scoped_lock lock(m_criticalSection);
+
+            int formulaId = -1;
+            float nearestPointLocationX, nearestPointLocationY;
+            double nearestPointValueX, nearestPointValueY, rhoValueOut, thetaValueOut, tValueOut;
+            m_Tracing = m_graph->GetRenderer()->GetClosePointData(
+                            trackPoint.X,
+                            trackPoint.Y,
+                            formulaId,
+                            nearestPointLocationX,
+                            nearestPointLocationY,
+                            nearestPointValueX,
+                            nearestPointValueY,
+                            rhoValueOut,
+                            thetaValueOut,
+                            tValueOut)
+                        == S_OK;
+            m_Tracing = m_Tracing && !isnan(nearestPointLocationX) && !isnan(nearestPointLocationY);
+        }
+        else
+        {
+            m_Tracing = false;
+        }
+
+        return m_Tracing;
+    }
+
     bool RenderMain::RunRenderPass()
     {
+        // Non async render passes cancel if they can't obtain the lock immediatly
+        if (!m_criticalSection.try_lock())
+        {
+            return false;
+        }
+
+        m_criticalSection.unlock();
+
+        critical_section::scoped_lock lock(m_criticalSection);
+
+        return RunRenderPassInternal();
+    }
+
+    IAsyncAction ^ RenderMain::RunRenderPassAsync(bool allowCancel)
+    {
+        // Try to cancel the renderPass that is in progress
+        if (m_renderPass != nullptr && m_renderPass->Status == ::AsyncStatus::Started)
+        {
+            m_renderPass->Cancel();
+        }
+
+        auto device = m_deviceResources;
+        auto workItemHandler = ref new WorkItemHandler([this, allowCancel](IAsyncAction ^ action) {
+            critical_section::scoped_lock lock(m_criticalSection);
+
+            // allowCancel is passed as false when the grapher relies on the render pass to validate that an equation can be succesfully rendered.
+            // Passing false garauntees that another render pass doesn't cancel this one.
+            if (allowCancel && action->Status == ::AsyncStatus::Canceled)
+            {
+                return;
+            }
+
+            RunRenderPassInternal();
+        });
+
+        m_renderPass = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::None);
+
+        return m_renderPass;
+    }
+
+    bool RenderMain::RunRenderPassInternal()
+    {
+        // We are accessing Direct3D resources directly without Direct2D's knowledge, so we
+        // must manually acquire and apply the Direct2D factory lock.
+        ID2D1Multithread* m_D2DMultithread;
+        m_deviceResources.GetD2DFactory()->QueryInterface(IID_PPV_ARGS(&m_D2DMultithread));
+        m_D2DMultithread->Enter();
+
         bool succesful = Render();
 
         if (succesful)
@@ -137,7 +244,12 @@ namespace GraphControl::DX
             m_deviceResources.Present();
         }
 
-        return succesful;
+        // It is absolutely critical that the factory lock be released upon
+        // exiting this function, or else any consequent Direct2D calls will be blocked.
+        m_D2DMultithread->Leave();
+
+        m_isRenderPassSuccesful = succesful;
+        return m_isRenderPassSuccesful;
     }
 
     // Renders the current frame according to the current application state.
@@ -204,11 +316,11 @@ namespace GraphControl::DX
                             {
                                 auto lineColors = m_graph->GetOptions().GetGraphColors();
 
-                            if (formulaId >= 0 && static_cast<unsigned int>(formulaId) < lineColors.size())
-                            {
-                                auto dotColor = lineColors[formulaId];
-                                m_nearestPointRenderer.SetColor(D2D1::ColorF(dotColor.R * 65536 + dotColor.G * 256 + dotColor.B, 1.0));
-                            }
+                                if (formulaId >= 0 && static_cast<unsigned int>(formulaId) < lineColors.size())
+                                {
+                                    auto dotColor = lineColors[formulaId];
+                                    m_nearestPointRenderer.SetColor(D2D1::ColorF(dotColor.R * 65536 + dotColor.G * 256 + dotColor.B, 1.0));
+                                }
 
                                 m_TraceLocation = Point(nearestPointLocationX, nearestPointLocationY);
                                 m_nearestPointRenderer.Render(m_TraceLocation);

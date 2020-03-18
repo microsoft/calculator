@@ -27,6 +27,7 @@ public
         OBSERVABLE_NAMED_PROPERTY_RW(bool, IsLineEnabled);
         OBSERVABLE_NAMED_PROPERTY_RW(bool, IsValidated);
         OBSERVABLE_NAMED_PROPERTY_RW(bool, HasGraphError);
+        OBSERVABLE_NAMED_PROPERTY_RW(bool, IsSelected);
         OBSERVABLE_NAMED_PROPERTY_RW(EquationLineStyle, EquationStyle);
 
         property Windows::UI::Color LineColor
@@ -43,7 +44,8 @@ public
 
         bool IsGraphableEquation();
 
-        internal : property std::shared_ptr<Graphing::IEquation> GraphedEquation
+    internal:
+        property std::shared_ptr<Graphing::IEquation> GraphedEquation
         {
             void set(std::shared_ptr<Graphing::IEquation> graphedEquation)
             {

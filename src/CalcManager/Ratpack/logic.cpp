@@ -21,7 +21,6 @@ void lshrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision)
 
 {
     PRAT pwr = nullptr;
-    int32_t intb;
 
     intrat(pa, radix, precision);
     if (!zernum((*pa)->pp))
@@ -32,7 +31,7 @@ void lshrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision)
             // Don't attempt lsh of anything big
             throw(CALC_E_DOMAIN);
         }
-        intb = rattoi32(b, radix, precision);
+        const int32_t intb = rattoi32(b, radix, precision);
         DUPRAT(pwr, rat_two);
         ratpowi32(&pwr, intb, precision);
         mulrat(pa, pwr, precision);
@@ -44,7 +43,6 @@ void rshrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision)
 
 {
     PRAT pwr = nullptr;
-    int32_t intb;
 
     intrat(pa, radix, precision);
     if (!zernum((*pa)->pp))
@@ -55,7 +53,7 @@ void rshrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision)
             // Don't attempt rsh of anything big and negative.
             throw(CALC_E_DOMAIN);
         }
-        intb = rattoi32(b, radix, precision);
+        const int32_t intb = rattoi32(b, radix, precision);
         DUPRAT(pwr, rat_two);
         ratpowi32(&pwr, intb, precision);
         divrat(pa, pwr, precision);

@@ -74,20 +74,20 @@ namespace Graphing
         uint8_t B;
         uint8_t A;
 
-        Color::Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a) noexcept
+        constexpr Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a) noexcept
             : R{ r }, G{ g }, B{ b }, A{ a }
         {}
 
-        Color::Color(uint8_t r, uint8_t g, uint8_t b) noexcept
+        constexpr Color(uint8_t r, uint8_t g, uint8_t b) noexcept
             : Color{ r, g, b, 0xFF }
         {}
 
-        Color::Color() noexcept
+        constexpr Color() noexcept
             : Color{ 0, 0, 0 }
         {}
 
 
-        explicit Color(uint32_t value) noexcept
+        constexpr explicit Color(uint32_t value) noexcept
             : Color{
                 static_cast<uint8_t>(value >> redChannelShift),
                 static_cast<uint8_t>(value >> greenChannelShift),
@@ -97,7 +97,7 @@ namespace Graphing
         {
         }
 
-        explicit operator uint32_t() const
+        constexpr explicit operator uint32_t() const
         {
             return (A << alphaChannelShift)
                 | (R << redChannelShift)

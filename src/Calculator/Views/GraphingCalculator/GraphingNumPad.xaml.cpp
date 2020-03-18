@@ -9,6 +9,7 @@
 #include "Controls/MathRichEditBox.h"
 
 using namespace CalculatorApp;
+using namespace CalculatorApp::Common;
 
 using namespace Platform;
 using namespace Windows::Foundation;
@@ -60,9 +61,9 @@ static const std::unordered_map<NumbersAndOperatorsEnum, std::tuple<Platform::St
     { NumbersAndOperatorsEnum::LogBaseE, { L"ln()", 3, 0 } },
     { NumbersAndOperatorsEnum::Sqrt, { L"sqrt()", 5, 0 } },
     { NumbersAndOperatorsEnum::CubeRoot, { L"cbrt()", 5, 0 } },
-    { NumbersAndOperatorsEnum::YRootX, { L"root(x,n)", 7, 1 } },
+    { NumbersAndOperatorsEnum::YRootX, { L"root(x" + StringReference(LocalizationSettings::GetInstance().GetListSeparator().data()) + L"n)", 7, 1 } },
     { NumbersAndOperatorsEnum::TwoPowerX, { L"2^", 2, 0 } },
-    { NumbersAndOperatorsEnum::LogBaseX, { L"log(b, x)", 4, 1 } },
+    { NumbersAndOperatorsEnum::LogBaseX, { "log(b" + StringReference(LocalizationSettings::GetInstance().GetListSeparator().data()) + L" x)", 4, 1 } },
     { NumbersAndOperatorsEnum::EPowerX, { L"e^", 4, 0 } },
     { NumbersAndOperatorsEnum::Abs, { L"abs()", 4, 0 } },
     { NumbersAndOperatorsEnum::X, { L"x", 1, 0 } },
@@ -90,13 +91,13 @@ static const std::unordered_map<NumbersAndOperatorsEnum, std::tuple<Platform::St
     { NumbersAndOperatorsEnum::Seven, { L"7", 1, 0 } },
     { NumbersAndOperatorsEnum::Eight, { L"8", 1, 0 } },
     { NumbersAndOperatorsEnum::Nine, { L"9", 1, 0 } },
-    { NumbersAndOperatorsEnum::Decimal, { L".", 1, 0 } },
+    { NumbersAndOperatorsEnum::Decimal, { StringReference(LocalizationSettings::GetInstance().GetDecimalSeparatorStr().data()), 1, 0 } },
 };
 
 GraphingNumPad::GraphingNumPad()
 {
     InitializeComponent();
-    const auto& localizationSettings = CalculatorApp::Common::LocalizationSettings::GetInstance();
+    const auto& localizationSettings = LocalizationSettings::GetInstance();
     DecimalSeparatorButton->Content = localizationSettings.GetDecimalSeparator();
     Num0Button->Content = localizationSettings.GetDigitSymbolFromEnUsDigit('0');
     Num1Button->Content = localizationSettings.GetDigitSymbolFromEnUsDigit('1');
@@ -202,6 +203,7 @@ void GraphingNumPad::Button_Clicked(Platform::Object ^ sender, DependencyPropert
     if (mathRichEdit != nullptr && sender != nullptr)
     {
         auto id = button->ButtonId;
+        TraceLogger::GetInstance()->UpdateButtonUsage(id, CalculatorApp::Common::ViewMode::Graphing);
         auto output = buttonOutput.find(id);
         mathRichEdit->InsertText(std::get<0>(output->second), std::get<1>(output->second), std::get<2>(output->second));
     }
@@ -213,6 +215,7 @@ void GraphingNumPad::SubmitButton_Clicked(Platform::Object ^ /*sender*/, RoutedE
     if (mathRichEdit != nullptr)
     {
         mathRichEdit->SubmitEquation(CalculatorApp::Controls::EquationSubmissionSource::ENTER_KEY);
+        TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::Submit, CalculatorApp::Common::ViewMode::Graphing);
     }
 }
 
@@ -223,6 +226,7 @@ void GraphingNumPad::ClearButton_Clicked(Platform::Object ^ /*sender*/, RoutedEv
     {
         mathRichEdit->MathText = L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"></math>";
         mathRichEdit->SubmitEquation(CalculatorApp::Controls::EquationSubmissionSource::PROGRAMMATIC);
+        TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::Clear, CalculatorApp::Common::ViewMode::Graphing);
     }
 }
 
@@ -232,6 +236,7 @@ void GraphingNumPad::BackSpaceButton_Clicked(Platform::Object ^ /*sender*/, Rout
     if (mathRichEdit != nullptr)
     {
         mathRichEdit->BackSpace();
+        TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::Backspace, CalculatorApp::Common::ViewMode::Graphing);
     }
 }
 

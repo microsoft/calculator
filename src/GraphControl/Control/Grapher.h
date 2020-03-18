@@ -4,14 +4,16 @@
 #pragma once
 
 #include "DirectX/RenderMain.h"
-#include "../Models/Equation.h"
-#include "../Models/EquationCollection.h"
-#include "../Utils.h"
+#include "Models/Equation.h"
+#include "Models/EquationCollection.h"
+#include "Models/Variable.h"
+#include "Utils.h"
 #include "IGraphAnalyzer.h"
 #include "IMathSolver.h"
 #include "Common.h"
 #include "Models/KeyGraphFeaturesInfo.h"
 #include <ppltasks.h>
+#include "Logger/TraceLogger.h"
 
 namespace GraphControl
 {
@@ -31,6 +33,8 @@ public
         event TracingValueChangedEventHandler ^ TracingValueChangedEvent;
         event PointerValueChangedEventHandler ^ PointerValueChangedEvent;
         event TracingChangedEventHandler ^ TracingChangedEvent;
+        event Windows::UI::Xaml::RoutedEventHandler ^ GraphViewChangedEvent;
+        event Windows::UI::Xaml::RoutedEventHandler ^ GraphPlottedEvent;
         virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler ^ PropertyChanged;
 
     public:
@@ -38,10 +42,11 @@ public
 
         DEPENDENCY_PROPERTY_OWNER(Grapher);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, ForceProportionalAxes, true);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(bool, UseCommaDecimalSeperator, false);
         DEPENDENCY_PROPERTY_WITH_DEFAULT(
-            SINGLE_ARG(Windows::Foundation::Collections::IObservableMap<Platform::String ^, double> ^),
+            SINGLE_ARG(Windows::Foundation::Collections::IObservableMap<Platform::String ^, GraphControl::Variable ^> ^),
             Variables,
-            SINGLE_ARG(ref new Platform::Collections::Map<Platform::String ^, double>()));
+            SINGLE_ARG(ref new Platform::Collections::Map<Platform::String ^, GraphControl::Variable ^>()));
         DEPENDENCY_PROPERTY_R_WITH_DEFAULT_AND_CALLBACK(GraphControl::EquationCollection ^, Equations, nullptr);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, AxesColor, Windows::UI::Colors::Transparent);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, GraphBackground, Windows::UI::Colors::Transparent);
@@ -101,7 +106,7 @@ public
             }
         }
 
-        event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String ^, double> ^> ^ VariablesUpdated;
+        event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String ^, Variable ^> ^> ^ VariablesUpdated;
         void SetVariable(Platform::String ^ variableName, double newValue);
         Platform::String ^ ConvertToLinear(Platform::String ^ mmlString);
         Platform::String ^ FormatMathML(Platform::String ^ mmlString);
@@ -123,6 +128,7 @@ public
                 if (value != (int)m_solver->EvalOptions().GetTrigUnitMode())
                 {
                     m_solver->EvalOptions().SetTrigUnitMode((Graphing::EvalTrigUnitMode)value);
+                    m_trigUnitsChanged = true;
                     PlotGraph(true);
                 }
             }
@@ -266,17 +272,18 @@ public
 
     private:
         void OnForceProportionalAxesPropertyChanged(bool oldValue, bool newValue);
+        void OnUseCommaDecimalSeperatorPropertyChanged(bool oldValue, bool newValue);
         void OnEquationsPropertyChanged(EquationCollection ^ oldValue, EquationCollection ^ newValue);
         void OnAxesColorPropertyChanged(Windows::UI::Color oldValue, Windows::UI::Color newValue);
         void OnGraphBackgroundPropertyChanged(Windows::UI::Color oldValue, Windows::UI::Color newValue);
         void OnEquationChanged(Equation ^ equation);
         void OnEquationStyleChanged(Equation ^ equation);
         void OnEquationLineEnabledChanged(Equation ^ equation);
-        bool TryUpdateGraph(bool keepCurrentView);
-        void TryPlotGraph(bool keepCurrentView, bool shouldRetry);
+        concurrency::task<bool> TryUpdateGraph(bool keepCurrentView);
+        concurrency::task<void> TryPlotGraph(bool keepCurrentView, bool shouldRetry);
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
         std::vector<Equation ^> GetGraphableEquations();
-        void SetGraphArgs();
+        void SetGraphArgs(std::shared_ptr<Graphing::IGraph> graph);
         std::shared_ptr<Graphing::IGraph> GetGraph(GraphControl::Equation ^ equation);
         void UpdateVariables();
 
@@ -292,6 +299,7 @@ public
         void SetEquationsAsValid();
         void SetEquationErrors();
         std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> TryInitializeGraph(bool keepCurrentView, _In_ const Graphing::IExpression* graphingExp = nullptr);
+
     private:
         DX::RenderMain ^ m_renderMain = nullptr;
 
@@ -313,6 +321,7 @@ public
         const std::shared_ptr<Graphing::IGraph> m_graph;
         bool m_calculatedForceProportional = false;
         bool m_tracingTracking;
+        bool m_trigUnitsChanged;
         enum KeysPressedSlots
         {
             Left,
@@ -325,6 +334,7 @@ public
         bool m_KeysPressed[5];
         bool m_Moving;
         Windows::UI::Xaml::DispatcherTimer ^ m_TracingTrackingTimer;
+        Windows::UI::Core::CoreCursor ^ m_cachedCursor;
 
     public:
         Windows::Storage::Streams::RandomAccessStreamReference ^ GetGraphBitmapStream();

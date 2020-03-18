@@ -24,7 +24,7 @@ namespace CalculatorApp::ViewModel
 
         event Windows::Foundation::EventHandler<VariableChangedEventArgs> ^ VariableUpdated;
 
-        void UpdateVariables(Windows::Foundation::Collections::IMap<Platform::String ^, double> ^ variables);
+        void UpdateVariables(Windows::Foundation::Collections::IMap<Platform::String ^, GraphControl::Variable ^> ^ variables);
 
         void SetSelectedEquation(EquationViewModel ^ equation);
     private:

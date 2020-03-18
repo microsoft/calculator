@@ -20,7 +20,7 @@ GraphingSettingsViewModel::GraphingSettingsViewModel()
     , m_XMaxError(false)
     , m_YMinError(false)
     , m_YMaxError(false)
-    , m_dontUpdateDisplayRange(false)
+    , m_dontUpdateDisplayRange()
     , m_XIsMinLastChanged(true)
     , m_YIsMinLastChanged(true)
 {
@@ -71,76 +71,36 @@ void GraphingSettingsViewModel::InitRanges()
     m_dontUpdateDisplayRange = false;
 }
 
-void GraphingSettingsViewModel::UpdateDisplayRange(bool XValuesModified)
+void GraphingSettingsViewModel::ResetView()
+{
+    if (m_Graph != nullptr)
+    {
+        m_Graph->ResetGrid();
+        InitRanges();
+        m_XMinError = false;
+        m_XMaxError = false;
+        m_YMinError = false;
+        m_YMaxError = false;
+
+        RaisePropertyChanged("XError");
+        RaisePropertyChanged("XMin");
+        RaisePropertyChanged("XMax");
+        RaisePropertyChanged("YError");
+        RaisePropertyChanged("YMin");
+        RaisePropertyChanged("YMax");
+    }
+}
+
+void GraphingSettingsViewModel::UpdateDisplayRange()
 {
     if (m_Graph == nullptr || m_dontUpdateDisplayRange || HasError())
     {
         return;
     }
 
-    if (m_Graph->ForceProportionalAxes)
-    {
-        // If ForceProportionalAxes is set, the graph will try to automatically adjust ranges to remain proportional.
-        // but without a logic to choose which values can be modified or not.
-        // To solve this problem, we calculate the new ranges here, taking care to not modify the current axis and
-        // modifying only the least recently updated value of the other axis.
-
-        if (XValuesModified)
-        {
-            if (m_YIsMinLastChanged)
-            {
-                auto yMaxValue = m_YMinValue + (m_XMaxValue - m_XMinValue) * m_Graph->ActualHeight / m_Graph->ActualWidth;
-                if (m_YMaxValue != yMaxValue)
-                {
-                    m_YMaxValue = yMaxValue;
-                    auto valueStr = to_wstring(m_YMaxValue);
-                    TrimTrailingZeros(valueStr);
-                    m_YMax = ref new String(valueStr.c_str());
-                    RaisePropertyChanged("YMax");
-                }
-            }
-            else
-            {
-                auto yMinValue = m_YMaxValue - (m_XMaxValue - m_XMinValue) * m_Graph->ActualHeight / m_Graph->ActualWidth;
-                if (m_YMinValue != yMinValue)
-                {
-                    m_YMinValue = yMinValue;
-                    auto valueStr = to_wstring(m_YMinValue);
-                    TrimTrailingZeros(valueStr);
-                    m_YMin = ref new String(valueStr.c_str());
-                    RaisePropertyChanged("YMin");
-                }
-            }
-        }
-        else
-        {
-            if (m_XIsMinLastChanged)
-            {
-                auto xMaxValue = m_XMinValue + (m_YMaxValue - m_YMinValue) * m_Graph->ActualWidth / m_Graph->ActualHeight;
-                if (m_XMaxValue != xMaxValue)
-                {
-                    m_XMaxValue = xMaxValue;
-                    auto valueStr = to_wstring(m_XMaxValue);
-                    TrimTrailingZeros(valueStr);
-                    m_XMax = ref new String(valueStr.c_str());
-                    RaisePropertyChanged("XMax");
-                }
-            }
-            else
-            {
-                auto xMinValue = m_XMaxValue - (m_YMaxValue - m_YMinValue) * m_Graph->ActualWidth / m_Graph->ActualHeight;
-                if (m_XMinValue != xMinValue)
-                {
-                    m_XMinValue = xMinValue;
-                    auto valueStr = to_wstring(m_XMinValue);
-                    TrimTrailingZeros(valueStr);
-                    m_XMin = ref new String(valueStr.c_str());
-                    RaisePropertyChanged("XMin");
-                }
-            }
-        }
-    }
     m_Graph->SetDisplayRanges(m_XMinValue, m_XMaxValue, m_YMinValue, m_YMaxValue);
+
+    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Grid);
 }
 
 bool GraphingSettingsViewModel::HasError()

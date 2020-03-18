@@ -314,7 +314,6 @@
     <ClInclude Include="Common\NavCategory.h" />
     <ClInclude Include="Common\NetworkManager.h" />
     <ClInclude Include="Common\NumberBase.h" />
-    <ClInclude Include="Common\TraceActivity.h" />
     <ClInclude Include="Common\TraceLogger.h" />
     <ClInclude Include="Common\Utils.h" />
     <ClInclude Include="DataLoaders\CurrencyDataLoader.h" />
@@ -382,6 +381,9 @@
     </ProjectReference>
     <ProjectReference Include="..\GraphControl\GraphControl.vcxproj">
       <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TraceLogging\TraceLogging.vcxproj">
+      <Project>{fc81ff41-02cd-4cd9-9bc5-45a1e39ac6ed}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemDefinitionGroup Condition="!Exists('DataLoaders\DataLoaderConstants.h')">

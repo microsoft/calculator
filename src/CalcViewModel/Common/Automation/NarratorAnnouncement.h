@@ -68,6 +68,7 @@ public
         static NarratorAnnouncement ^ GetNoRightParenthesisAddedAnnouncement(Platform::String ^ announcement);
 
         static NarratorAnnouncement ^ GetGraphModeChangedAnnouncement(Platform::String ^ announcement);
+        static NarratorAnnouncement ^ GetGraphViewChangedAnnouncement(Platform::String ^ announcement);
 
     };
 }

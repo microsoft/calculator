@@ -48,3 +48,5 @@ jobs:
       runSettingsFile: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/${{ parameters.runsettingsFileName }}
       platform: ${{ parameters.platform }}
       configuration: Release
+      ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+        testFiltercriteria: Priority=0 

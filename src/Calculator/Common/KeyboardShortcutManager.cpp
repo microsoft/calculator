@@ -642,6 +642,13 @@ void KeyboardShortcutManager::OnAcceleratorKeyActivated(CoreDispatcher ^, Accele
             return;
         }
 
+        // Ctrl is pressed in addition to alt, this means Alt Gr is intended.  do not navigate.
+        if ((static_cast<short>(Window::Current->CoreWindow->GetKeyState(VirtualKey::Control)) & static_cast<short>(CoreVirtualKeyStates::Down))
+            == static_cast<short>(CoreVirtualKeyStates::Down))
+        {
+            return;
+        }
+
         const auto& lookupMap = GetCurrentKeyDictionary(static_cast<MyVirtualKey>(key), altPressed);
         auto listItems = lookupMap.equal_range(static_cast<MyVirtualKey>(key));
         for (auto listIterator = listItems.first; listIterator != listItems.second; ++listIterator)

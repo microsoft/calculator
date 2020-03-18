@@ -81,6 +81,18 @@ namespace CalculatorApp
                 {
                     return LocalizationStringUtilInternal::GetLocalizedString(pMessage, param1->Data(), param2->Data(), param3->Data(), param4->Data());
                 }
+
+                static Platform::String
+                ^ GetLocalizedString(
+                    Platform::String ^ pMessage,
+                    Platform::String ^ param1,
+                    Platform::String ^ param2,
+                    Platform::String ^ param3,
+                    Platform::String ^ param4,
+                    Platform::String ^ param5)
+                {
+                    return LocalizationStringUtilInternal::GetLocalizedString(pMessage, param1->Data(), param2->Data(), param3->Data(), param4->Data(), param5->Data());
+                }
         };
     }
 }

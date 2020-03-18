@@ -5,6 +5,7 @@
 
 #include "EquationStylePanelControl.g.h"
 #include "CalcViewModel/Common/Utils.h"
+#include "CalcViewModel/Common/TraceLogger.h"
 
 namespace CalculatorApp
 {

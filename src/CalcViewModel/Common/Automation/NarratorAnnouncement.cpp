@@ -24,6 +24,7 @@ namespace CalculatorApp::Common::Automation
         StringReference OpenParenthesisCountChanged(L"OpenParenthesisCountChanged");
         StringReference NoParenthesisAdded(L"NoParenthesisAdded");
         StringReference GraphModeChanged(L"GraphModeChanged");
+        StringReference GraphViewChanged(L"GraphViewChanged");
     }
 }
 
@@ -149,4 +150,13 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphModeChangedAnnouncement(P
         CalculatorActivityIds::GraphModeChanged,
         AutomationNotificationKind::ActionCompleted,
         AutomationNotificationProcessing::ImportantMostRecent);
+}
+
+NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphViewChangedAnnouncement(Platform::String ^ announcement)
+{
+    return ref new NarratorAnnouncement(
+        announcement,
+        CalculatorActivityIds::GraphViewChanged,
+        AutomationNotificationKind::ActionCompleted,
+        AutomationNotificationProcessing::MostRecent);
 }

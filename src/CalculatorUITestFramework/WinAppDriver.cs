@@ -29,7 +29,6 @@ namespace CalculatorUITestFramework
 
         public WindowsDriver<WindowsElement> CalculatorSession { get; private set; }
 
-
         private WinAppDriver()
         {
         }
@@ -87,7 +86,6 @@ namespace CalculatorUITestFramework
                 this.windowsDriverService = null;
             }
         }
-
 
     }
 }

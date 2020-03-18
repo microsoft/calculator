@@ -67,8 +67,7 @@ void _addnum(PNUMBER* pa, PNUMBER b, uint32_t radix)
     MANTTYPE* pcha;      // pcha is a pointer to the mantissa of a.
     MANTTYPE* pchb;      // pchb is a pointer to the mantissa of b.
     MANTTYPE* pchc;      // pchc is a pointer to the mantissa of c.
-    int32_t cdigits;     // cdigits is the max count of the digits results
-                         // used as a counter.
+    int32_t cdigits;     // cdigits is the max count of the digits results used as a counter.
     int32_t mexp;        // mexp is the exponent of the result.
     MANTTYPE da;         // da is a single 'digit' after possible padding.
     MANTTYPE db;         // db is a single 'digit' after possible padding.
@@ -558,48 +557,34 @@ bool equnum(_In_ PNUMBER a, _In_ PNUMBER b)
 bool lessnum(_In_ PNUMBER a, _In_ PNUMBER b)
 
 {
-    int32_t diff;
-    MANTTYPE* pa;
-    MANTTYPE* pb;
-    int32_t cdigits;
-    int32_t ccdigits;
-    MANTTYPE da;
-    MANTTYPE db;
-
-    diff = (a->cdigit + a->exp) - (b->cdigit + b->exp);
+    int32_t diff = (a->cdigit + a->exp) - (b->cdigit + b->exp);
     if (diff < 0)
     {
         // The exponent of a is less than b
         return true;
     }
-    else
+    if (diff > 0)
     {
-        if (diff > 0)
+        return false;
+    }
+    MANTTYPE* pa = a->mant;
+    MANTTYPE* pb = b->mant;
+    pa += a->cdigit - 1;
+    pb += b->cdigit - 1;
+    int32_t cdigits = max(a->cdigit, b->cdigit);
+    int32_t ccdigits = cdigits;
+    for (; cdigits > 0; cdigits--)
+    {
+        MANTTYPE da = ((cdigits > (ccdigits - a->cdigit)) ? *pa-- : 0);
+        MANTTYPE db = ((cdigits > (ccdigits - b->cdigit)) ? *pb-- : 0);
+        diff = da - db;
+        if (diff)
         {
-            return false;
-        }
-        else
-        {
-            pa = a->mant;
-            pb = b->mant;
-            pa += a->cdigit - 1;
-            pb += b->cdigit - 1;
-            cdigits = max(a->cdigit, b->cdigit);
-            ccdigits = cdigits;
-            for (; cdigits > 0; cdigits--)
-            {
-                da = ((cdigits > (ccdigits - a->cdigit)) ? *pa-- : 0);
-                db = ((cdigits > (ccdigits - b->cdigit)) ? *pb-- : 0);
-                diff = da - db;
-                if (diff)
-                {
-                    return (diff < 0);
-                }
-            }
-            // In this case, they are equal.
-            return false;
+            return (diff < 0);
         }
     }
+    // In this case, they are equal.
+    return false;
 }
 
 //----------------------------------------------------------------------------

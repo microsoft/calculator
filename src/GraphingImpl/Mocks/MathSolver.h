@@ -13,6 +13,10 @@ namespace MockGraphingImpl
         void SetFormatType(Graphing::FormatType type) override
         {
         }
+
+        void SetLocalizationType(Graphing::LocalizationType value) override
+        {
+        }
     };
 
     class EvalOptions : public Graphing::IEvalOptions
@@ -46,6 +50,47 @@ namespace MockGraphingImpl
         void SetMathMLPrefix(const std::wstring& value) override
         {
         }
+
+        void SetLocalizationType(Graphing::LocalizationType value) override
+        {
+        }
+    };
+
+    class MockExpression : public Graphing::IExpression
+    {
+    public:
+        MockExpression()
+        {
+        }
+
+        unsigned int GetExpressionID() const override
+        {
+            return 0;
+        }
+        bool IsEmptySet() const
+        {
+            return false;
+        }
+    };
+
+    class MockVariable : public Graphing::IVariable
+    {
+    public:
+        MockVariable()
+        {
+        }
+
+        int GetVariableID() const override
+        {
+            return 0;
+        }
+        const std::wstring& GetVariableName() override
+        {
+            return varName;
+        }
+
+    private:
+        const std::wstring& varName = L"m";
     };
 
     class MathSolver : public Graphing::IMathSolver
@@ -72,7 +117,12 @@ namespace MockGraphingImpl
 
         std::unique_ptr<Graphing::IExpression> ParseInput(const std::wstring& input) override
         {
-            return nullptr;
+            if (input.empty())
+            {
+                return nullptr;
+            }
+
+            return std::make_unique<MockExpression>(MockExpression{});
         }
 
         std::shared_ptr<Graphing::IGraph> CreateGrapher(const Graphing::IExpression* expression) override;

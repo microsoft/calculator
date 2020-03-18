@@ -214,7 +214,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir);$(GraphingInterfaceDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -233,7 +233,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /d2CoroOptsWorkaround %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir);$(GraphingInterfaceDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -283,17 +283,24 @@
       <AdditionalLibraryDirectories>$(GraphingImplLibDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(IsStoreBuild)' == 'True'">
+    <ClCompile>
+      <AdditionalOptions>/DSEND_DIAGNOSTICS %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Control\Grapher.h" />
     <ClInclude Include="DirectX\DeviceResources.h" />
     <ClInclude Include="DirectX\DirectXHelper.h" />
     <ClInclude Include="DirectX\NearestPointRenderer.h" />
     <ClInclude Include="DirectX\RenderMain.h" />
+    <ClInclude Include="Logger\TraceLogger.h" />
     <ClInclude Include="Models\Equation.h" />
     <ClInclude Include="Models\EquationCollection.h" />
     <ClInclude Include="Models\KeyGraphFeaturesInfo.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="Models\Variable.h" />
     <ClInclude Include="winrtHeaders.h" />
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +308,7 @@
     <ClCompile Include="DirectX\DeviceResources.cpp" />
     <ClCompile Include="DirectX\NearestPointRenderer.cpp" />
     <ClCompile Include="DirectX\RenderMain.cpp" />
+    <ClCompile Include="Logger\TraceLogger.cpp" />
     <ClCompile Include="Models\Equation.cpp" />
     <ClCompile Include="Models\KeyGraphFeaturesInfo.cpp" />
     <ClCompile Include="pch.cpp">
@@ -320,6 +328,11 @@
   <ItemGroup Condition="$([MSBuild]::ValueOrDefault($(UseMockGraphingImpl), true))">
     <ProjectReference Include="$(SolutionDir)\GraphingImpl\GraphingImpl.vcxproj">
       <Project>{52E03A58-B378-4F50-8BFB-F659FB85E790}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TraceLogging\TraceLogging.vcxproj">
+      <Project>{fc81ff41-02cd-4cd9-9bc5-45a1e39ac6ed}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
