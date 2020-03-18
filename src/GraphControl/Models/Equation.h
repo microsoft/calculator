@@ -27,6 +27,7 @@ public
         OBSERVABLE_NAMED_PROPERTY_RW(bool, IsLineEnabled);
         OBSERVABLE_NAMED_PROPERTY_RW(bool, IsValidated);
         OBSERVABLE_NAMED_PROPERTY_RW(bool, HasGraphError);
+        OBSERVABLE_NAMED_PROPERTY_RW(bool, IsInequality);
         OBSERVABLE_NAMED_PROPERTY_RW(bool, IsSelected);
         OBSERVABLE_NAMED_PROPERTY_RW(EquationLineStyle, EquationStyle);
 
@@ -36,12 +37,10 @@ public
             void set(Windows::UI::Color value);
         }
 
-        static property Platform::String
-            ^ LineColorPropertyName { Platform::String ^ get(); }
+        static property Platform::String ^ LineColorPropertyName { Platform::String ^ get(); }
 
-            public : Platform::String
-                     ^ GetRequest();
-
+    public:
+        Platform::String ^ GetRequest();
         bool IsGraphableEquation();
 
     internal:

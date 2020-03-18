@@ -516,7 +516,6 @@ namespace GraphControl
             Variables->Insert(variableName, ref new Variable(newValue));
         }
 
-
         if (m_graph != nullptr && m_renderMain != nullptr)
         {
             auto workItemHandler = ref new WorkItemHandler([this, variableName, newValue](IAsyncAction ^ action) {
@@ -549,10 +548,13 @@ namespace GraphControl
                 auto lineColor = eq->LineColor;
                 graphColors.emplace_back(lineColor.R, lineColor.G, lineColor.B, lineColor.A);
 
-                eq->GraphedEquation->GetGraphEquationOptions()->SetLineStyle(static_cast<::Graphing::Renderer::LineStyle>(eq->EquationStyle));
-                if (eq->IsSelected)
+                if (eq->GraphedEquation != nullptr)
                 {
-                    eq->GraphedEquation->TrySelectEquation();
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetLineStyle(static_cast<::Graphing::Renderer::LineStyle>(eq->EquationStyle));
+                    if (eq->IsSelected)
+                    {
+                        eq->GraphedEquation->TrySelectEquation();
+                    }
                 }
             }
             options.SetGraphColors(graphColors);

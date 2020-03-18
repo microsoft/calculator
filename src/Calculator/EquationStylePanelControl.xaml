@@ -79,6 +79,7 @@
                              VerticalAlignment="Stretch"
                              Fill="{x:Bind}"
                              StrokeThickness="0"
+                             AutomationProperties.Name="{x:Bind local:EquationStylePanelControl.GetColorAutomationName((Brush))}"
                              UseLayoutRounding="false"/>
                 </DataTemplate>
             </GridView.ItemTemplate>
@@ -91,24 +92,26 @@
 
         <ComboBox x:Name="StyleChooserBox"
                   x:Uid="StyleChooserBox"
+                  MinWidth="200"
                   Margin="8,0"
-                  Header="Style"
                   Loaded="StyleChooserBox_Loaded"
                   SelectedItem="{x:Bind SelectedStyle}"
                   SelectionChanged="StyleChooserBox_SelectionChanged"
-                  Visibility="Visible">
+                  Visibility="Visible"
+                  IsEnabled="{x:Bind EnableLineStylePicker}">
             <ComboBox.ItemTemplate>
                 <!-- Set x:DataType to be Platform::Object so that we can pass it to the x:Bind function directly since we cannot pass an enum in c++/cx -->
                 <DataTemplate x:DataType="x:Object">
                     <Grid x:Name="LineGrid"
                           Height="20"
-                          MaxWidth="200">
+                          MaxWidth="200"
+                          AutomationProperties.Name="{x:Bind local:EquationStylePanelControl.GetLineAutomationName((x:Object))}">
                         <Line VerticalAlignment="Center"
-                              Stroke="Black"
+                              Stroke="{ThemeResource AppControlPageTextBaseHighColorBrush}"
                               StrokeThickness="2.5"
                               StrokeDashArray="{x:Bind local:EquationStylePanelControl.GetLinePattern((x:Object))}"
                               X1="0"
-                              X2="100"
+                              X2="200"
                               Y1="0"
                               Y2="0"/>
                     </Grid>

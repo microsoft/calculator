@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "EquationStylePanelControl.xaml.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
 
 using namespace CalculatorApp;
 
@@ -23,6 +24,7 @@ using namespace GraphControl;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationStylePanelControl, SelectedColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationStylePanelControl, SelectedStyle);
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationStylePanelControl, EnableLineStylePicker);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationStylePanelControl, AvailableColors);
 
 EquationStylePanelControl::EquationStylePanelControl()
@@ -33,8 +35,6 @@ EquationStylePanelControl::EquationStylePanelControl()
     allStyles->Append(::EquationLineStyle::Solid);
     allStyles->Append(::EquationLineStyle::Dash);
     allStyles->Append(::EquationLineStyle::Dot);
-    allStyles->Append(::EquationLineStyle::DashDot);
-    allStyles->Append(::EquationLineStyle::DashDotDot);
 
     StyleChooserBox->ItemsSource = allStyles;
 }
@@ -91,9 +91,7 @@ void EquationStylePanelControl::SelectColor(Color selectedColor)
     }
 }
 
-void CalculatorApp::EquationStylePanelControl::OnSelectedStylePropertyChanged(
-    GraphControl::EquationLineStyle,
-    GraphControl::EquationLineStyle newStyle)
+void CalculatorApp::EquationStylePanelControl::OnSelectedStylePropertyChanged(GraphControl::EquationLineStyle, GraphControl::EquationLineStyle newStyle)
 {
     SelectStyle(newStyle);
 }
@@ -130,9 +128,7 @@ void EquationStylePanelControl::StyleChooser_SelectionChanged(Object ^ sender, S
     }
 }
 
-void EquationStylePanelControl::StyleChooserBox_SelectionChanged(
-    Object ^ sender,
-    SelectionChangedEventArgs ^ e)
+void EquationStylePanelControl::StyleChooserBox_SelectionChanged(Object ^ sender, SelectionChangedEventArgs ^ e)
 {
     if (e->AddedItems->Size > 0)
     {
@@ -145,7 +141,90 @@ void EquationStylePanelControl::StyleChooserBox_Loaded(Object ^ sender, RoutedEv
     SelectStyle(SelectedStyle);
 }
 
-DoubleCollection ^ EquationStylePanelControl::GetLinePattern(Object ^line)
+String ^ EquationStylePanelControl::GetColorAutomationName(Brush ^ brush)
+{
+    auto resourceLoader = AppResourceProvider::GetInstance();
+    auto color = static_cast<SolidColorBrush ^ >(brush);
+
+    if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush1")))
+    {
+        return resourceLoader->GetResourceString("equationColor1AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush2")))
+    {
+        return resourceLoader->GetResourceString("equationColor2AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush3")))
+    {
+        return resourceLoader->GetResourceString("equationColor3AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush4")))
+    {
+        return resourceLoader->GetResourceString("equationColor4AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush5")))
+    {
+        return resourceLoader->GetResourceString("equationColor5AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush6")))
+    {
+        return resourceLoader->GetResourceString("equationColor6AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush7")))
+    {
+        return resourceLoader->GetResourceString("equationColor7AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush8")))
+    {
+        return resourceLoader->GetResourceString("equationColor8AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush9")))
+    {
+        return resourceLoader->GetResourceString("equationColor9AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush10")))
+    {
+        return resourceLoader->GetResourceString("equationColor10AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush11")))
+    {
+        return resourceLoader->GetResourceString("equationColor11AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush12")))
+    {
+        return resourceLoader->GetResourceString("equationColor12AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush13")))
+    {
+        return resourceLoader->GetResourceString("equationColor13AutomationName");
+    }
+    else
+    {
+        return resourceLoader->GetResourceString("equationColor14AutomationName");
+    }
+}
+
+String ^ EquationStylePanelControl::GetLineAutomationName(Object ^ line)
+{
+    auto resourceLoader = AppResourceProvider::GetInstance();
+    auto lineStyle = static_cast<Box<EquationLineStyle> ^>(line)->Value;
+
+    switch (lineStyle)
+    {
+    case ::EquationLineStyle::Dot:
+        return resourceLoader->GetResourceString("dotLineStyleAutomationName");
+        break;
+    case ::EquationLineStyle::Dash:
+        return resourceLoader->GetResourceString("dashLineStyleAutomationName");
+        break;
+    case ::EquationLineStyle::Solid:
+    default:
+        return resourceLoader->GetResourceString("solidLineStyleAutomationName");
+        break;
+    }
+}
+
+DoubleCollection ^ EquationStylePanelControl::GetLinePattern(Object ^ line)
 {
     auto lineStyle = static_cast<Box<EquationLineStyle> ^>(line)->Value;
 
@@ -157,24 +236,6 @@ DoubleCollection ^ EquationStylePanelControl::GetLinePattern(Object ^line)
         break;
     case ::EquationLineStyle::Dash:
         linePattern->Append(2);
-        linePattern->Append(1);
-        break;
-    case ::EquationLineStyle::DashDot:
-        linePattern->Append(2.5);
-        linePattern->Append(1);
-        linePattern->Append(1);
-        linePattern->Append(1);
-        linePattern->Append(2.5);
-        linePattern->Append(1);
-        linePattern->Append(1);
-        linePattern->Append(1);
-        break;
-    case ::EquationLineStyle::DashDotDot:
-        linePattern->Append(3);
-        linePattern->Append(1);
-        linePattern->Append(1);
-        linePattern->Append(1);
-        linePattern->Append(1);
         linePattern->Append(1);
         break;
     default:
