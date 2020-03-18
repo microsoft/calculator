@@ -91,7 +91,7 @@ void EquationStylePanelControl::SelectColor(Color selectedColor)
     }
 }
 
-void CalculatorApp::EquationStylePanelControl::OnSelectedStylePropertyChanged(GraphControl::EquationLineStyle, GraphControl::EquationLineStyle newStyle)
+void EquationStylePanelControl::OnSelectedStylePropertyChanged(EquationLineStyle, EquationLineStyle newStyle)
 {
     SelectStyle(newStyle);
 }
@@ -117,14 +117,6 @@ void EquationStylePanelControl::SelectStyle(EquationLineStyle selectedStyle)
         {
             comboBoxItem->IsSelected = false;
         }
-    }
-}
-
-void EquationStylePanelControl::StyleChooser_SelectionChanged(Object ^ sender, SelectionChangedEventArgs ^ e)
-{
-    if (e->AddedItems->Size > 0)
-    {
-        SelectedStyle = static_cast<EquationLineStyle>(e->AddedItems->GetAt(0));
     }
 }
 

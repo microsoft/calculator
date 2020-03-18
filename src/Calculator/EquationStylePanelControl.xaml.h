@@ -33,7 +33,6 @@ namespace CalculatorApp
         void SelectColor(Windows::UI::Color selectedColor);
         void OnSelectedStylePropertyChanged(GraphControl::EquationLineStyle oldStyle, GraphControl::EquationLineStyle newStyle);
         void SelectStyle(GraphControl::EquationLineStyle selectedStyle);
-        void StyleChooser_SelectionChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e);
         void StyleChooserBox_SelectionChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e);
         void StyleChooserBox_Loaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
