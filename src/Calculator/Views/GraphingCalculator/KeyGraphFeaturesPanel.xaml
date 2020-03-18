@@ -253,7 +253,8 @@
                     </StackPanel>
                 </StackPanel>
             </Button>
-            <controls:MathRichEditBox Grid.Column="1"
+            <controls:MathRichEditBox x:Uid="KGFEquationTextBox"
+                                      Grid.Column="1"
                                       Padding="10,0,6,0"
                                       VerticalAlignment="Stretch"
                                       VerticalContentAlignment="Center"

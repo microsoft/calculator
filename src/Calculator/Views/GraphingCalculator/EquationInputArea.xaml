@@ -18,7 +18,7 @@
             <converters:BooleanNegationConverter x:Name="BooleanNegationConverter"/>
 
             <DataTemplate x:Key="VariableDataTemplate" x:DataType="vm:VariableViewModel">
-                <Grid DataContext="{x:Bind}" Tapped="VariableAreaTapped">
+                <Grid DataContext="{x:Bind}" Tapped="VariableAreaTapped" x:Uid="VariableListViewItem">
                     <Grid.Resources>
                         <ResourceDictionary>
 
@@ -110,7 +110,7 @@
                                            FontStyle="Italic"
                                            Text="="/>
 
-                                <TextBox x:Name="ValueTextBox"
+                                <TextBox x:Uid="VariableValueTextBox"
                                          Grid.Column="2"
                                          Margin="6,0,0,0"
                                          Padding="0,10,0,0"
@@ -128,7 +128,8 @@
                                 </TextBox>
                             </Grid>
 
-                            <Slider Grid.Column="1"
+                            <Slider x:Uid="VariableValueSlider"
+                                    Grid.Column="1"
                                     Margin="8,0,8,-6"
                                     VerticalAlignment="Center"
                                     DataContext="{x:Bind}"
@@ -156,7 +157,7 @@
                                                Margin="0,12,4,0"
                                                VerticalAlignment="Center"
                                                FontSize="11"/>
-                                    <TextBox x:Name="MinTextBox"
+                                    <TextBox x:Uid="VariableMinTextBox"
                                              Grid.Column="1"
                                              MaxWidth="18"
                                              Padding="2,16,2,2"
@@ -177,7 +178,7 @@
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
                                                FontSize="11"/>
-                                    <TextBox x:Name="StepTextBox"
+                                    <TextBox x:Uid="VariableStepTextBox"
                                              Grid.Column="1"
                                              MaxWidth="18"
                                              Padding="2,16,2,2"
@@ -197,7 +198,7 @@
                                                Margin="0,12,4,0"
                                                VerticalAlignment="Center"
                                                FontSize="11"/>
-                                    <TextBox x:Name="MaxTextBox"
+                                    <TextBox x:Uid="VariableMaxTextBox"
                                              Grid.Column="1"
                                              MaxWidth="18"
                                              Padding="2,16,2,2"
@@ -803,9 +804,10 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel>
+        <StackPanel x:Uid="EquationInputPanel">
             <!-- This ListView and the one below should be replacted by an ItemRepeater once https://github.com/microsoft/microsoft-ui-xaml/issues/2011 is fixed. -->
             <ListView x:Name="EquationInputList"
+                      x:Uid="EquationInputList"
                       IsItemClickEnabled="False"
                       ItemsSource="{x:Bind Equations}"
                       SelectionMode="None"
@@ -832,8 +834,8 @@
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="vm:EquationViewModel">
-                        <controls:EquationTextBox x:Name="EquationInputButton"
-                                                  x:Uid="EquationInputButton"
+                        <controls:EquationTextBox
+                            x:Uid="EquationInputButton"
                                                   Margin="1,0,1,2"
                                                   Style="{StaticResource EquationTextBoxStyle}"
                                                   DataContext="{x:Bind Mode=OneWay}"
@@ -868,7 +870,8 @@
                 <Rectangle Height="1"
                            Margin="12"
                            Fill="{ThemeResource DividerBrush}"/>
-                <ListView IsItemClickEnabled="False"
+                <ListView x:Uid="VariableListView"
+                          IsItemClickEnabled="False"
                           ItemTemplate="{StaticResource VariableDataTemplate}"
                           ItemsSource="{x:Bind Variables, Mode=OneWay}"
                           SelectionMode="None"
