@@ -34,6 +34,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Variables);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Equations);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, AxesColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GraphBackground);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, LineWidth);
 
 namespace
 {
@@ -516,7 +517,6 @@ namespace GraphControl
             Variables->Insert(variableName, ref new Variable(newValue));
         }
 
-
         if (m_graph != nullptr && m_renderMain != nullptr)
         {
             auto workItemHandler = ref new WorkItemHandler([this, variableName, newValue](IAsyncAction ^ action) {
@@ -549,9 +549,15 @@ namespace GraphControl
                 auto lineColor = eq->LineColor;
                 graphColors.emplace_back(lineColor.R, lineColor.G, lineColor.B, lineColor.A);
 
-                if (eq->IsSelected)
+                if (eq->GraphedEquation)
                 {
-                    eq->GraphedEquation->TrySelectEquation();
+                    if (eq->IsSelected)
+                    {
+                        eq->GraphedEquation->TrySelectEquation();
+                    }
+
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetLineWidth(LineWidth);
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetSelectedEquationLineWidth(LineWidth + 1);
                 }
             }
             options.SetGraphColors(graphColors);
@@ -1037,6 +1043,19 @@ void Grapher::OnGraphBackgroundPropertyChanged(Windows::UI::Color /*oldValue*/, 
         auto color = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
         m_graph->GetOptions().SetBackColor(color);
         m_graph->GetOptions().SetBoxColor(color);
+    }
+}
+
+void Grapher::OnLineWidthPropertyChanged(double oldValue, double newValue)
+{
+    if (m_graph)
+    {
+        UpdateGraphOptions(m_graph->GetOptions(), GetGraphableEquations());
+        if (m_renderMain)
+        {
+            m_renderMain->SetPointRadius(LineWidth + 1);
+            m_renderMain->RunRenderPass();
+        }
     }
 }
 

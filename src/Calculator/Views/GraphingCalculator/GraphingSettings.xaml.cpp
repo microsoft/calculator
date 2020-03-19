@@ -66,3 +66,25 @@ void GraphingSettings::ResetViewButton_Clicked(Object ^ sender, RoutedEventArgs 
 {
     ViewModel->ResetView();
 }
+
+String ^ GraphingSettings::GetLineWidthAutomationName(double width)
+{
+    auto resourceLoader = AppResourceProvider::GetInstance();
+
+    if (width == 1.0)
+    {
+        return resourceLoader->GetResourceString("SmallLineWidthAutomationName");
+    }
+    else if(width == 2.0)
+    {
+        return resourceLoader->GetResourceString("MediumLineWidthAutomationName");
+    }
+    else if (width == 3.0)
+    {
+        return resourceLoader->GetResourceString("LargeLineWidthAutomationName");
+    }
+    else
+    {
+        return resourceLoader->GetResourceString("ExtraLargeLineWidthAutomationName");
+    }
+}

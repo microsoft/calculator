@@ -187,6 +187,11 @@ namespace GraphControl::DX
         return m_Tracing;
     }
 
+    void RenderMain::SetPointRadius(float radius)
+    {
+        m_nearestPointRenderer.SetRadius(radius);
+    }
+
     bool RenderMain::RunRenderPass()
     {
         // Non async render passes cancel if they can't obtain the lock immediatly
