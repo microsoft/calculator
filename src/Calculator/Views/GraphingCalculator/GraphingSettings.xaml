@@ -188,8 +188,7 @@
                       x:Uid="LineThicknessBox"
                       MinWidth="200"
                       Margin="0,12,0,0"
-                      SelectedItem="{x:Bind ViewModel.Graph.LineWidth, Mode=TwoWay}"
-                      Visibility="Visible">
+                      SelectedItem="{x:Bind ViewModel.Graph.LineWidth, Mode=TwoWay}">
                 <ComboBox.Items>
                     <x:Double>1.0</x:Double>
                     <x:Double>2.0</x:Double>
@@ -197,7 +196,6 @@
                     <x:Double>4.0</x:Double>
                 </ComboBox.Items>
                 <ComboBox.ItemTemplate>
-                    <!-- Set x:DataType to be Platform::Object so that we can pass it to the x:Bind function directly since we cannot pass an enum in c++/cx -->
                     <DataTemplate x:DataType="x:Double">
                         <Grid x:Name="LineGrid"
                               Height="20"
