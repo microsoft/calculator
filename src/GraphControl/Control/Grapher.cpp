@@ -34,6 +34,8 @@ DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Variables);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Equations);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, AxesColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GraphBackground);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GridLinesColor);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GraphTheme);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, LineWidth);
 
 namespace
@@ -1053,6 +1055,25 @@ void Grapher::OnGraphBackgroundPropertyChanged(Windows::UI::Color /*oldValue*/, 
         auto color = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
         m_graph->GetOptions().SetBackColor(color);
         m_graph->GetOptions().SetBoxColor(color);
+    }
+}
+
+
+void Grapher::OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue)
+{
+    if (m_graph)
+    {
+        auto gridLinesColor = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
+        m_graph->GetOptions().SetGridColor(gridLinesColor);
+    }
+}
+
+void Grapher::OnGraphThemePropertyChanged(Platform::String ^ oldValue, Platform::String ^ newValue)
+{
+    if (m_graph && oldValue != newValue)
+    {
+        GraphThemeUpdated(this, newValue);
+        m_renderMain->RunRenderPassAsync();
     }
 }
 

@@ -88,6 +88,8 @@ GraphingCalculator::GraphingCalculator()
     virtualKey->Key = (VirtualKey)187; // OemAdd key
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomInButton->KeyboardAccelerators->Append(virtualKey);
+
+    GraphingControl->GraphThemeUpdated += ref new EventHandler<Platform::String ^>(this, &GraphingCalculator::OnGraphThemeChanged);
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
@@ -691,4 +693,25 @@ void GraphingCalculator::GraphMenuFlyoutItem_Click(Object ^ sender, RoutedEventA
 void GraphingCalculator::OnVisualStateChanged(Object ^ sender, VisualStateChangedEventArgs ^ e)
 {
     TraceLogger::GetInstance()->LogVisualStateChanged(ViewMode::Graphing, e->NewState->Name, false);
+}
+
+void GraphingCalculator::OnGraphThemeChanged(Object ^ sender, String ^ args)
+{
+    auto appTheme = Application::Current->RequestedTheme.ToString();
+    if (args == "Light" || args == L"AlwaysLight" || (args == "MatchApp" && appTheme == L"Light"))
+    {
+        ControlPanelBackgroundBrush =
+            static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"LightThemeGraphControlCommandPanelBackgroundBrush"));
+        ControlPanelBorderBrush = static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"LightThemeGraphControlCommandPanelBorderBrush"));
+        ControlPanelForegroundBrush =
+            static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"LightThemeGraphControlCommandPanelForegroundBrush"));
+    }
+    if (args == "Dark" || (args == "MatchApp" && appTheme == L"Dark"))
+    {
+        ControlPanelBackgroundBrush = static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"DarkThemeGraphControlCommandPanelBackgroundBrush"));
+        ControlPanelBorderBrush =
+            static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"DarkThemeGraphControlCommandPanelBorderBrush"));
+        ControlPanelForegroundBrush =
+            static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"DarkThemeGraphControlCommandPanelForegroundBrush"));
+    }
 }

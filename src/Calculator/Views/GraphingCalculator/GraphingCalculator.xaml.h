@@ -31,6 +31,9 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         OBSERVABLE_PROPERTY_R(bool, IsKeyGraphFeaturesVisible);
         DEPENDENCY_PROPERTY(bool, IsSmallState);
         DEPENDENCY_PROPERTY(Platform::String ^, GraphControlAutomationName);
+        OBSERVABLE_PROPERTY_R(Windows::UI::Xaml::Media::SolidColorBrush ^, ControlPanelBackgroundBrush);
+        OBSERVABLE_PROPERTY_R(Windows::UI::Xaml::Media::SolidColorBrush ^, ControlPanelBorderBrush);
+        OBSERVABLE_PROPERTY_R(Windows::UI::Xaml::Media::SolidColorBrush ^, ControlPanelForegroundBrush);
 
         property CalculatorApp::ViewModel::GraphingCalculatorViewModel^ ViewModel
         {
@@ -61,6 +64,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void OnShowTracePopupChanged(bool newValue);
         void OnTracePointChanged(Windows::Foundation::Point newPoint);
         void OnPointerPointChanged(Windows::Foundation::Point newPoint);
+        void OnGraphThemeChanged(Platform::Object ^ sender, Platform::String ^ args);
     private:
         void OnDataRequested(
             Windows::ApplicationModel::DataTransfer::DataTransferManager ^ sender,

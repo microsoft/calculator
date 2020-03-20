@@ -10,6 +10,7 @@ using namespace CalcManager::NumberFormattingUtils;
 using namespace GraphControl;
 using namespace std;
 using namespace Platform;
+using namespace Windows::UI::Xaml;
 
 GraphingSettingsViewModel::GraphingSettingsViewModel()
     : m_XMinValue(0)
@@ -23,6 +24,8 @@ GraphingSettingsViewModel::GraphingSettingsViewModel()
     , m_dontUpdateDisplayRange()
     , m_XIsMinLastChanged(true)
     , m_YIsMinLastChanged(true)
+    , m_IsAlwaysLightTheme(true)
+    , m_IsMatchAppTheme(false)
 {
 }
 
@@ -36,6 +39,18 @@ void GraphingSettingsViewModel::SetGrapher(Grapher ^ grapher)
         }
     }
     Graph = grapher;
+
+    if (Graph->GraphTheme == L"MatchApp")
+    {
+        IsAlwaysLightTheme = false;
+        IsMatchAppTheme = true;
+    }
+    else
+    {
+        IsAlwaysLightTheme = true;
+        IsMatchAppTheme = false;
+    }
+
     InitRanges();
     RaisePropertyChanged(L"TrigUnit");
 }
@@ -106,4 +121,22 @@ void GraphingSettingsViewModel::UpdateDisplayRange()
 bool GraphingSettingsViewModel::HasError()
 {
     return m_XMinError || m_YMinError || m_XMaxError || m_YMaxError || XError || YError;
+}
+
+void GraphingSettingsViewModel::OnPropertyChanged(Platform::String ^ propertyName)
+{
+    if (propertyName == L"IsAlwaysLightTheme" && IsAlwaysLightTheme)
+    {
+        Graph->AxesColor = static_cast<Windows::UI::Color>(Application::Current->Resources->Lookup(L"LightThemeAxisColor"));
+        Graph->GraphBackground = static_cast<Windows::UI::Color>(Application::Current->Resources->Lookup(L"LightThemeGraphBackgroundColor"));
+        Graph->GridLinesColor = static_cast<Windows::UI::Color>(Application::Current->Resources->Lookup(L"LightThemeGridLinesColor"));
+        Graph->GraphTheme = L"AlwaysLight";
+    }
+    if (propertyName == L"IsMatchAppTheme" && IsMatchAppTheme)
+    {
+        Graph->AxesColor = static_cast<Windows::UI::Color>(Application::Current->Resources->Lookup(L"DarkThemeAxisColor"));
+        Graph->GraphBackground = static_cast<Windows::UI::Color>(Application::Current->Resources->Lookup(L"DarkThemeGraphBackgroundColor"));
+        Graph->GridLinesColor = static_cast<Windows::UI::Color>(Application::Current->Resources->Lookup(L"DarkThemeGridLinesColor"));
+        Graph->GraphTheme = L"MatchApp";
+    }
 }

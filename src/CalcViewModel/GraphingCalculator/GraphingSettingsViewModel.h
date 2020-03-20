@@ -10,12 +10,14 @@ namespace CalculatorApp::ViewModel
     [Windows::UI::Xaml::Data::Bindable] public ref class GraphingSettingsViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
     {
     public:
-        OBSERVABLE_OBJECT();
+        OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
         OBSERVABLE_PROPERTY_R(bool, YMinError);
         OBSERVABLE_PROPERTY_R(bool, XMinError);
         OBSERVABLE_PROPERTY_R(bool, XMaxError);
         OBSERVABLE_PROPERTY_R(bool, YMaxError);
         OBSERVABLE_PROPERTY_R(GraphControl::Grapher ^, Graph);
+        OBSERVABLE_PROPERTY_RW(bool, IsAlwaysLightTheme);
+        OBSERVABLE_PROPERTY_RW(bool, IsMatchAppTheme);
 
         GraphingSettingsViewModel();
 
@@ -289,6 +291,8 @@ namespace CalculatorApp::ViewModel
         bool HasError();
 
     private:
+        void OnPropertyChanged(Platform::String ^ propertyName);
+
         Platform::String ^ m_XMin;
         Platform::String ^ m_XMax;
         Platform::String ^ m_YMin;

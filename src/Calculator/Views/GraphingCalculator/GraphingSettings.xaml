@@ -212,6 +212,22 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+
+            <TextBlock x:Name="GraphThemeHeading"
+                       x:Uid="GraphThemeHeading"
+                       Margin="0,16,0,6"
+                       Style="{StaticResource SubTitleTextBoxStyle}"
+                       AutomationProperties.HeadingLevel="Level2"/>
+
+            <StackPanel Orientation="Vertical">
+                <RadioButton x:Name="AlwaysLightTheme"
+                             x:Uid="AlwaysLightTheme"
+                             IsChecked="{x:Bind ViewModel.IsAlwaysLightTheme, Mode=TwoWay}"/>
+                <RadioButton x:Name="MatchAppTheme"
+                             x:Uid="MatchAppTheme"
+                             Margin="1,0"
+                             IsChecked="{x:Bind ViewModel.IsMatchAppTheme, Mode=TwoWay}"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

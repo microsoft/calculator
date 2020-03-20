@@ -4534,4 +4534,16 @@
     <value>Black</value>
     <comment>Name of color in the color picker</comment>
   </data>
+  <data name="GraphThemeHeading.Text" xml:space="preserve">
+    <value>Theme</value>
+    <comment>Graph settings heading for the theme options</comment>
+  </data>
+  <data name="AlwaysLightTheme.Content" xml:space="preserve">
+    <value>Always light</value>
+    <comment>Graph settings option to set graph to light theme</comment>
+  </data>
+  <data name="MatchAppTheme.Content" xml:space="preserve">
+    <value>Match app theme</value>
+    <comment>Graph settings option to set graph to match the app theme</comment>
+  </data>
 </root>

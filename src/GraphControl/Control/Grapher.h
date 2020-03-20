@@ -50,6 +50,9 @@ public
         DEPENDENCY_PROPERTY_R_WITH_DEFAULT_AND_CALLBACK(GraphControl::EquationCollection ^, Equations, nullptr);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, AxesColor, Windows::UI::Colors::Transparent);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, GraphBackground, Windows::UI::Colors::Transparent);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, GridLinesColor, Windows::UI::Colors::Transparent);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Platform::String ^, GraphTheme, L"Light");
+
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(double, LineWidth, 2.0);
         // Pass active tracing turned on or off down to the renderer
         property bool ActiveTracing
@@ -107,6 +110,7 @@ public
         }
 
         event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String ^, Variable ^> ^> ^ VariablesUpdated;
+        event Windows::Foundation::EventHandler<Platform::String ^> ^ GraphThemeUpdated;
         void SetVariable(Platform::String ^ variableName, double newValue);
         Platform::String ^ ConvertToLinear(Platform::String ^ mmlString);
         Platform::String ^ FormatMathML(Platform::String ^ mmlString);
@@ -276,6 +280,8 @@ public
         void OnEquationsPropertyChanged(EquationCollection ^ oldValue, EquationCollection ^ newValue);
         void OnAxesColorPropertyChanged(Windows::UI::Color oldValue, Windows::UI::Color newValue);
         void OnGraphBackgroundPropertyChanged(Windows::UI::Color oldValue, Windows::UI::Color newValue);
+        void OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue);
+        void OnGraphThemePropertyChanged(Platform::String ^ oldValue, Platform::String ^ newValue);
         void OnLineWidthPropertyChanged(double oldValue, double newValue);
         void OnEquationChanged(Equation ^ equation);
         void OnEquationStyleChanged(Equation ^ equation);
