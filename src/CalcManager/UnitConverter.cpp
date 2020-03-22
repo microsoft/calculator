@@ -877,9 +877,9 @@ void UnitConverter::Calculate()
     else
     {
         double currentValue = stod(m_currentDisplay);
-        double returnValue = Convert(currentValue, conversionTable[m_toType]);
+        const double returnValue = Convert(currentValue, conversionTable[m_toType]);
 
-        auto isCurrencyConverter = m_currencyDataLoader != nullptr && m_currencyDataLoader->SupportsCategory(this->m_currentCategory);
+        const auto isCurrencyConverter = m_currencyDataLoader != nullptr && m_currencyDataLoader->SupportsCategory(this->m_currentCategory);
         if (isCurrencyConverter)
         {
             // We don't need to trim the value when it's a currency.
