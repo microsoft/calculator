@@ -63,14 +63,14 @@ void ApplicationViewModeTrigger::UpdateTrigger()
         {
             auto display1 = displayRegions->GetAt(0);
             auto display2 = displayRegions->GetAt(1);
-            if (display1->WorkAreaSize.Width > display1->WorkAreaSize.Height && display1->WorkAreaSize.Height == display2->WorkAreaSize.Height)
+            if (display1->WorkAreaOffset.X < display2->WorkAreaOffset.X && display1->WorkAreaOffset.Y == display2->WorkAreaOffset.Y)
             {
-                SetActive(this->ViewMode == AppViewMode::DoubleLandscape);
+                this->SetActive(this->ViewMode == AppViewMode::DoublePortrait);
                 return;
             }
-            else if (display1->WorkAreaSize.Height > display1->WorkAreaSize.Width && display1->WorkAreaSize.Width == display2->WorkAreaSize.Width)
+            else if (display1->WorkAreaOffset.X == display2->WorkAreaOffset.X && display1->WorkAreaOffset.Y < display2->WorkAreaOffset.Y)
             {
-                SetActive(this->ViewMode == AppViewMode::DoublePortrait);
+                this->SetActive(this->ViewMode == AppViewMode::DoubleLandscape);
                 return;
             }
         }
