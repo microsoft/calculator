@@ -1525,6 +1525,51 @@
     <Image Include="Assets\CalculatorWideTile.scale-400_contrast-white.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\Graphing.targetsize-16.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-16_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-16_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-20.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-20_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-20_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-24.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-24_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-24_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-32.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-32_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-32_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-64.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-64_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-64_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Assets\CalcMDL2.ttf">
@@ -1535,6 +1580,8 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
