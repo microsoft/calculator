@@ -286,15 +286,25 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <!-- Graph Theme Colors -->
+            <Color x:Key="LightThemeAxisColor">#000000</Color>
+            <Color x:Key="LightThemeGraphBackgroundColor">#FFFFFF</Color>
+            <Color x:Key="LightThemeGridLinesColor">#C6C6C6</Color>
+            <Color x:Key="DarkThemeAxisColor">#FFFFFF</Color>
+            <Color x:Key="DarkThemeGraphBackgroundColor">#1F1F1F</Color>
+            <Color x:Key="DarkThemeGridLinesColor">#4F4F4F</Color>
+
             <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
+           
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
                     <Style x:Key="ThemedSwitchModeToggleButtonStyle"
                            BasedOn="{StaticResource SwitchModeToggleButtonStyle}"
                            TargetType="ToggleButton"/>
                     <Style x:Key="GraphControlCommandPanel" TargetType="Border">
-                        <Setter Property="Background" Value="{Binding ControlPanelBackgroundBrush, Mode=OneWay}"/>
-                        <Setter Property="BorderBrush" Value="{Binding ControlPanelBorderBrush, Mode=OneWay}"/>
+                        <Setter Property="Background" Value="#303030"/>
+                        <Setter Property="BorderBrush" Value="#303030"/>
                         <Setter Property="BorderThickness" Value="0"/>
                         <Setter Property="CornerRadius" Value="4"/>
                     </Style>
@@ -332,23 +342,29 @@
                            BasedOn="{StaticResource SwitchModeToggleButtonStyle}"
                            TargetType="ToggleButton"/>
                     <Style x:Key="GraphControlCommandPanel" TargetType="Border">
-                        <Setter Property="Background" Value="{Binding ControlPanelBackgroundBrush, Mode=OneWay}"/>
-                        <Setter Property="BorderBrush" Value="{Binding ControlPanelBorderBrush, Mode=OneWay}"/>
+                        <Setter Property="Background" Value="#303030"/>
+                        <Setter Property="BorderBrush" Value="#303030"/>
                         <Setter Property="BorderThickness" Value="1"/>
                         <Setter Property="CornerRadius" Value="4"/>
                     </Style>
                     <Style x:Key="ThemedGraphRepeatButtonStyle"
                            BasedOn="{StaticResource GraphRepeatButtonStyle}"
-                           TargetType="RepeatButton"/>
+                           TargetType="RepeatButton">
+                        <Setter Property="Foreground" Value="#FFFFFF"/>
+                    </Style>
                     <Style x:Key="ThemedGraphButtonStyle"
                            BasedOn="{StaticResource GraphButtonStyle}"
-                           TargetType="Button"/>
+                           TargetType="Button">
+                        <Setter Property="Foreground" Value="#FFFFFF"/>
+                    </Style>
                     <Style x:Key="ThemedGraphToggleButtonStyle"
                            BasedOn="{StaticResource GraphToggleButtonStyle}"
-                           TargetType="ToggleButton"/>
+                           TargetType="ToggleButton">
+                        <Setter Property="Foreground" Value="#FFFFFF"/>
+                    </Style>
                     <Style x:Key="GraphTooltipStyle" TargetType="Border">
-                        <Setter Property="Background" Value="{Binding ControlPanelBackgroundBrush, Mode=OneWay}"/>
-                        <Setter Property="BorderBrush" Value="{Binding ControlPanelBorderBrush, Mode=OneWay}"/>
+                        <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
+                        <Setter Property="BorderBrush" Value="#e0e0e0"/>
                         <Setter Property="BorderThickness" Value="1"/>
                         <Setter Property="CornerRadius" Value="4"/>
                     </Style>
@@ -449,6 +465,22 @@
                         <Setter Target="RightGrid.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="RightGrid.(Grid.Column)" Value="0"/>
                         <Setter Target="SwitchModeToggleButton.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="GrapherThemes">
+                <VisualState x:Name="GrapherDarkTheme">
+                    <VisualState.Setters>
+                        <Setter Target="GraphingControl.AxesColor" Value="{StaticResource DarkThemeAxisColor}"/>
+                        <Setter Target="GraphingControl.GraphBackground" Value="{StaticResource DarkThemeGraphBackgroundColor}"/>
+                        <Setter Target="GraphingControl.GridLinesColor" Value="{StaticResource DarkThemeGridLinesColor}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="GrapherLightTheme">
+                    <VisualState.Setters>
+                        <Setter Target="GraphingControl.AxesColor" Value="{StaticResource LightThemeAxisColor}"/>
+                        <Setter Target="GraphingControl.GraphBackground" Value="{StaticResource LightThemeGraphBackgroundColor}"/>
+                        <Setter Target="GraphingControl.GridLinesColor" Value="{StaticResource LightThemeGridLinesColor}"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

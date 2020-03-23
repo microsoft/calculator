@@ -41,6 +41,7 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_VARIABLE_CHANGED = L"VariableChanged";
     constexpr auto EVENT_NAME_VARIABLE_SETTING_CHANGED = L"VariableSettingChanged";
     constexpr auto EVENT_NAME_GRAPH_SETTINGS_CHANGED = L"GraphSettingsChanged";
+    constexpr auto EVENT_NAME_GRAPH_THEME = L"GraphTheme";
 
     constexpr auto EVENT_NAME_EXCEPTION = L"Exception";
 
@@ -303,12 +304,21 @@ namespace CalculatorApp
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_VARIABLE_SETTING_CHANGED), fields);
     }
 
-    void TraceLogger::LogGraphSettingsChanged(GraphSettingsType settingType)
+    void TraceLogger::LogGraphSettingsChanged(GraphSettingsType settingType, String ^ settingValue)
     {
         auto fields = ref new LoggingFields();
         fields->AddString(StringReference(CALC_MODE), StringReference(GRAPHING_MODE));
         fields->AddInt16(L"SettingType", static_cast<int16>(settingType));
+        fields->AddString(L"SettingValue", settingValue);
 
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_GRAPH_SETTINGS_CHANGED), fields);
+    }
+    void TraceLogger::LogGraphTheme(Platform::String ^ graphTheme)
+    {
+        auto fields = ref new LoggingFields();
+        fields->AddString(StringReference(CALC_MODE), StringReference(GRAPHING_MODE));
+        fields->AddString(L"GraphTheme", graphTheme);
+
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_GRAPH_THEME), fields);
     }
 }

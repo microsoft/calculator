@@ -31,9 +31,6 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         OBSERVABLE_PROPERTY_R(bool, IsKeyGraphFeaturesVisible);
         DEPENDENCY_PROPERTY(bool, IsSmallState);
         DEPENDENCY_PROPERTY(Platform::String ^, GraphControlAutomationName);
-        OBSERVABLE_PROPERTY_R(Windows::UI::Xaml::Media::SolidColorBrush ^, ControlPanelBackgroundBrush);
-        OBSERVABLE_PROPERTY_R(Windows::UI::Xaml::Media::SolidColorBrush ^, ControlPanelBorderBrush);
-        OBSERVABLE_PROPERTY_R(Windows::UI::Xaml::Media::SolidColorBrush ^, ControlPanelForegroundBrush);
 
         property CalculatorApp::ViewModel::GraphingCalculatorViewModel^ ViewModel
         {
@@ -64,7 +61,6 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void OnShowTracePopupChanged(bool newValue);
         void OnTracePointChanged(Windows::Foundation::Point newPoint);
         void OnPointerPointChanged(Windows::Foundation::Point newPoint);
-        void OnGraphThemeChanged(Platform::Object ^ sender, Platform::String ^ args);
     private:
         void OnDataRequested(
             Windows::ApplicationModel::DataTransfer::DataTransferManager ^ sender,
@@ -89,6 +85,9 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void AddTracePointerShadow();
 
         void UpdateGraphAutomationName();
+        void OnColorValuesChanged(Windows::UI::ViewManagement::UISettings ^ sender, Platform::Object ^ args);
+        void UpdateGraphTheme(Windows::UI::Xaml::ApplicationTheme appTheme);
+        void OnGraphThemeSettingChanged(Platform::Object ^ sender, Platform::String ^ settingName);
 
     private:
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
@@ -99,6 +98,8 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         CalculatorApp::ViewModel::GraphingCalculatorViewModel ^ m_viewModel;
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         bool m_cursorShadowInitialized;
+        Windows::UI::ViewManagement::UISettings ^ m_uiSettings;
+        CalculatorApp::GraphingSettings ^ m_graphSettings;
         void OnSettingsFlyout_Closing(Windows::UI::Xaml::Controls::Primitives::FlyoutBase ^ sender, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs ^ args);
         void Canvas_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);

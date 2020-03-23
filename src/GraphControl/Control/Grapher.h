@@ -110,7 +110,6 @@ public
         }
 
         event Windows::Foundation::EventHandler<Windows::Foundation::Collections::IMap<Platform::String ^, Variable ^> ^> ^ VariablesUpdated;
-        event Windows::Foundation::EventHandler<Platform::String ^> ^ GraphThemeUpdated;
         void SetVariable(Platform::String ^ variableName, double newValue);
         Platform::String ^ ConvertToLinear(Platform::String ^ mmlString);
         Platform::String ^ FormatMathML(Platform::String ^ mmlString);

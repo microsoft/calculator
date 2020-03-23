@@ -234,7 +234,7 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeGradians");
 
-                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::TrigUnits);
+                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::TrigUnits, L"Radians");
                 }
             }
         }
@@ -255,7 +255,7 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeRadians");
                     RaisePropertyChanged(L"TrigModeGradians");
 
-                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::TrigUnits);
+                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::TrigUnits, L"Degrees");
                 }
             }
         }
@@ -276,12 +276,14 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeRadians");
 
-                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::TrigUnits);
+                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::TrigUnits, L"Gradians");
                 }
             }
         }
 
     public:
+        event Windows::Foundation::EventHandler<Platform::String ^> ^ GraphThemeSettingChanged;
+
         void UpdateDisplayRange();
 
     public:

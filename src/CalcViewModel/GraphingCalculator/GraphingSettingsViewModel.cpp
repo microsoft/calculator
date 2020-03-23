@@ -10,6 +10,7 @@ using namespace CalcManager::NumberFormattingUtils;
 using namespace GraphControl;
 using namespace std;
 using namespace Platform;
+using namespace Windows::Storage;
 using namespace Windows::UI::Xaml;
 
 GraphingSettingsViewModel::GraphingSettingsViewModel()
@@ -115,7 +116,7 @@ void GraphingSettingsViewModel::UpdateDisplayRange()
 
     m_Graph->SetDisplayRanges(m_XMinValue, m_XMaxValue, m_YMinValue, m_YMaxValue);
 
-    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Grid);
+    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Grid, L"");
 }
 
 bool GraphingSettingsViewModel::HasError()
@@ -127,16 +128,12 @@ void GraphingSettingsViewModel::OnPropertyChanged(Platform::String ^ propertyNam
 {
     if (propertyName == L"IsAlwaysLightTheme" && IsAlwaysLightTheme)
     {
-        Graph->AxesColor = static_cast<Windows::UI::Color>(Application::Current->Resources->Lookup(L"LightThemeAxisColor"));
-        Graph->GraphBackground = static_cast<Windows::UI::Color>(Application::Current->Resources->Lookup(L"LightThemeGraphBackgroundColor"));
-        Graph->GridLinesColor = static_cast<Windows::UI::Color>(Application::Current->Resources->Lookup(L"LightThemeGridLinesColor"));
-        Graph->GraphTheme = L"AlwaysLight";
+        GraphThemeSettingChanged(this, propertyName);
+        TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Theme, propertyName);
     }
     if (propertyName == L"IsMatchAppTheme" && IsMatchAppTheme)
     {
-        Graph->AxesColor = static_cast<Windows::UI::Color>(Application::Current->Resources->Lookup(L"DarkThemeAxisColor"));
-        Graph->GraphBackground = static_cast<Windows::UI::Color>(Application::Current->Resources->Lookup(L"DarkThemeGraphBackgroundColor"));
-        Graph->GridLinesColor = static_cast<Windows::UI::Color>(Application::Current->Resources->Lookup(L"DarkThemeGridLinesColor"));
-        Graph->GraphTheme = L"MatchApp";
+        GraphThemeSettingChanged(this, propertyName);
+        TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Theme, propertyName);
     }
 }

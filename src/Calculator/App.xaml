@@ -251,20 +251,6 @@
             <x:Double x:Key="CalcOperatorCaptionSize">14</x:Double>
             <x:Double x:Key="CalcOperatorTextIconCaptionSize">16</x:Double>
 
-            <!-- Graphing Mode Graph Colors -->
-            <Color x:Key="LightThemeAxisColor">#000000</Color>
-            <Color x:Key="LightThemeGraphBackgroundColor">#FFFFFF</Color>
-            <Color x:Key="LightThemeGridLinesColor">#C6C6C6</Color>
-            <Color x:Key="DarkThemeAxisColor">#FFFFFF</Color>
-            <Color x:Key="DarkThemeGraphBackgroundColor">#1F1F1F</Color>
-            <Color x:Key="DarkThemeGridLinesColor">#4F4F4F</Color>
-            <SolidColorBrush x:Key="LightThemeGraphControlCommandPanelBackgroundBrush" Color="{StaticResource SystemControlAcrylicElementBrush}"/>
-            <SolidColorBrush x:Key="LightThemeGraphControlCommandPanelBorderBrush" Color="#e0e0e0"/>
-            <SolidColorBrush x:Key="LightThemeGraphControlCommandPanelForegroundBrush" Color="{StaticResource SystemControlForegroundBaseHighBrush}"/>
-            <SolidColorBrush x:Key="DarkThemeGraphControlCommandPanelBackgroundBrush" Color="#303030"/>
-            <SolidColorBrush x:Key="DarkThemeGraphControlCommandPanelBorderBrush" Color="Transparent"/>
-            <SolidColorBrush x:Key="DarkThemeGraphControlCommandPanelForegroundBrush" Color="#FFFFFF"/>
-
             <!-- Base style for calc buttons -->
             <Style x:Key="CalcButtonStyle" TargetType="Controls:CalculatorButton">
                 <Setter Property="MinWidth" Value="24"/>

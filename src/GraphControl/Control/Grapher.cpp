@@ -16,6 +16,7 @@ using namespace Concurrency;
 using namespace Windows::Devices::Input;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::System;
 using namespace Windows::System::Threading;
@@ -1061,19 +1062,28 @@ void Grapher::OnGraphBackgroundPropertyChanged(Windows::UI::Color /*oldValue*/, 
 
 void Grapher::OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue)
 {
-    if (m_graph)
+    if (m_renderMain != nullptr && m_graph != nullptr)
     {
         auto gridLinesColor = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
         m_graph->GetOptions().SetGridColor(gridLinesColor);
+        m_renderMain->RunRenderPassAsync();
     }
 }
 
-void Grapher::OnGraphThemePropertyChanged(Platform::String ^ oldValue, Platform::String ^ newValue)
+void Grapher::OnGraphThemePropertyChanged(String ^ /*oldValue*/, String ^ newValue)
 {
-    if (m_graph && oldValue != newValue)
+    ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
+    if (localSettings == nullptr)
     {
-        GraphThemeUpdated(this, newValue);
-        m_renderMain->RunRenderPassAsync();
+        return;
+    }
+    if (newValue == L"MatchApp")
+    {
+        localSettings->Values->Insert(StringReference(L"IsGraphThemeMatchApp"), true);
+    }
+    if (newValue == L"AlwaysLight")
+    {
+        localSettings->Values->Insert(StringReference(L"IsGraphThemeMatchApp"), false);
     }
 }
 
